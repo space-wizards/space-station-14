@@ -1,4 +1,9 @@
 - type: soundCollection
+  id: PrinterPrint
+  files:
+  - /Audio/Machines/printer.ogg
+
+- type: soundCollection
   id: CargoPing
   files:
   - /Audio/Effects/Cargo/ping.ogg
@@ -12,3 +17,8 @@
   id: CargoToggleLimit
   files:
   - /Audio/Machines/quickbeep.ogg
+
+- type: soundCollection
+  id: CargoBeep
+  files:
+  - /Audio/Effects/Cargo/beep.ogg

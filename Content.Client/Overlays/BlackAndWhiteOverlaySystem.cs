@@ -1,7 +1,6 @@
 using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 
 namespace Content.Client.Overlays;
 

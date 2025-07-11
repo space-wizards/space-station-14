@@ -13,6 +13,7 @@ namespace Content.Client.Items.Systems;
 public sealed class ItemSystem : SharedItemSystem
 {
     [Dependency] private readonly IResourceCache _resCache = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -27,12 +28,12 @@ public sealed class ItemSystem : SharedItemSystem
 
     private void OnUnequipped(EntityUid uid, SpriteComponent component, GotUnequippedEvent args)
     {
-        component.Visible = true;
+        _sprite.SetVisible((uid, component), true);
     }
 
     private void OnEquipped(EntityUid uid, SpriteComponent component, GotEquippedEvent args)
     {
-        component.Visible = false;
+        _sprite.SetVisible((uid, component), false);
     }
 
     #region InhandVisuals
@@ -58,7 +59,7 @@ public sealed class ItemSystem : SharedItemSystem
         if (!item.InhandVisuals.TryGetValue(args.Location, out var layers))
         {
             // get defaults
-            if (!TryGetDefaultVisuals(uid, item, defaultKey,  out layers))
+            if (!TryGetDefaultVisuals(uid, item, defaultKey, out layers))
                 return;
         }
 

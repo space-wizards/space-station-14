@@ -144,8 +144,6 @@
     subtype: role-subtype-dragon
     exclusiveAntag: true
   - type: DragonRole
-  - type: RoleBriefing
-    briefing: dragon-role-briefing
 
 # Ninja
 - type: entity

@@ -517,15 +517,11 @@
     Tazinide: 1
 
 - type: reaction
-  id: SalicylicAcid
+  id: ArtifactGlue
   reactants:
-    Carbon:
+    SpaceGlue:
       amount: 1
-    Phenol:
-      amount: 1
-    Bicaridine:
-      amount: 1
-    SulfuricAcid:
+    Artifexium:
       amount: 1
   products:
-    SalicylicAcid: 4
+    ArtifactGlue: 2

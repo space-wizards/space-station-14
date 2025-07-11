@@ -11,7 +11,7 @@ public sealed partial class CargoAccountPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// Full IC name of the account.
@@ -36,4 +36,10 @@ public sealed partial class CargoAccountPrototype : IPrototype
     /// </summary>
     [DataField]
     public ProtoId<RadioChannelPrototype> RadioChannel;
+
+    /// <summary>
+    /// Paper prototype used for acquisition slips.
+    /// </summary>
+    [DataField]
+    public EntProtoId AcquisitionSlip;
 }

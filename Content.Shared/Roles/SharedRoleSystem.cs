@@ -281,11 +281,11 @@ public abstract class SharedRoleSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Removes all instances of a specific role from this mind.
+    /// Finds and removes all mind roles of a specific type
     /// </summary>
     /// <param name="mind">The mind to remove the role from.</param>
     /// <typeparam name="T">The type of the role to remove.</typeparam>
-    /// <returns>Returns false if the role did not exist. True if successful</returns>>
+    /// <returns>True if the role existed and was removed</returns>>
     public bool MindRemoveRole<T>(Entity<MindComponent?> mind) where T : IComponent
     {
         if (typeof(T) == typeof(MindRoleComponent))
@@ -294,25 +294,108 @@ public abstract class SharedRoleSystem : EntitySystem
         if (!Resolve(mind.Owner, ref mind.Comp))
             return false;
 
-        var found = false;
         var delete = new List<EntityUid>();
+        // If there were no matches and thus no mind role entity names, we'll need the component's name, to report what role failed to be removed
+        var original = "'" + typeof(T).Name + "'";
+        var deleteName = original;
+
         foreach (var role in mind.Comp.MindRoles)
         {
-            if (!HasComp<T>(role))
-                continue;
-
             if (!HasComp<MindRoleComponent>(role))
             {
                 Log.Error($"Encountered mind role entity {ToPrettyString(role)} without a {nameof(MindRoleComponent)}");
                 continue;
             }
 
+            if (!HasComp<T>(role))
+                continue;
+
             delete.Add(role);
-            found = true;
+            deleteName = RemoveRoleLogNameGeneration(deleteName, MetaData(role).EntityName, original);
         }
 
-        if (!found)
+        return MindRemoveRoleDo(mind, delete, deleteName);
+    }
+
+    private string RemoveRoleLogNameGeneration(string name, string newName, string original)
+    {
+        // If there were matches for deletion, this will run, and we get a new name to replace the original input
+        if (name == original)
+            name = "'" + newName + "'";
+        // It is theoretically possible to get multiple matches
+        // If they have different names, then we want all of them listed
+        else if (!name.Contains(newName))
+            // and we can't just drop the multiple names within a single ' ' section later, because that would
+            // make it look like it's one name that is just formatted to look like a list
+            name = name + ", " + "'" + newName + "'";
+
+        return name;
+    }
+
+    /// <summary>
+    /// Finds and removes all mind roles of a specific type
+    /// </summary>
+    /// <param name="mindId">The mind entity</param>
+    /// <typeparam name="T">The type of the role to remove.</typeparam>
+    /// <returns>True if the role existed and was removed</returns>
+    public bool MindRemoveRole<T>(EntityUid mindId) where T : IComponent
+    {
+        if (!TryComp<MindComponent>(mindId, out var mind))
+        {
+            Log.Error($"The specified mind entity '{ToPrettyString(mindId)}' does not have a {nameof(MindComponent)}");
             return false;
+        }
+
+        return MindRemoveRole<T>((mindId, mind));
+    }
+
+        /// <summary>
+    /// Finds and removes all mind roles of a specific type
+    /// </summary>
+    /// <param name="mind">The mind entity and component</param>
+    /// /// <param name="protoId">The prototype ID of the mind role to be removed</param>
+    /// <returns>True if the role existed and was removed</returns>
+    public bool MindRemoveRole(Entity<MindComponent?> mind, EntProtoId<MindRoleComponent> protoId)
+    {
+        if ( !Resolve(mind.Owner, ref mind.Comp))
+            return false;
+
+        // If there were no matches and thus no mind role entity names, we'll need the protoId, to report what role failed to be removed
+        var original = "'" + protoId + "'";
+        var deleteName = original;
+        var delete = new List<EntityUid>();
+        foreach (var role in mind.Comp.MindRoles)
+        {
+            if (!HasComp<MindRoleComponent>(role))
+            {
+                Log.Error($"Encountered mind role entity {ToPrettyString(role)} without a {nameof(MindRoleComponent)}");
+                continue;
+            }
+
+            var id = MetaData(role).EntityPrototype?.ID;
+            if (id is null || id != protoId)
+                continue;
+
+            delete.Add(role);
+            deleteName = RemoveRoleLogNameGeneration(deleteName, MetaData(role).EntityName, original);
+        }
+
+        return MindRemoveRoleDo(mind, delete, deleteName);
+    }
+
+    /// <summary>
+    /// Performs the actual role entity deletion.
+    /// </summary>
+    private bool MindRemoveRoleDo(Entity<MindComponent?> mind, List<EntityUid> delete, string? logName = "")
+    {
+        if ( !Resolve(mind.Owner, ref mind.Comp))
+            return false;
+
+        if (delete.Count <= 0)
+        {
+            Log.Warning($"Failed to remove mind role {logName} from {ToPrettyString(mind.Owner)} : mind does not have this role ");
+            return false;
+        }
 
         foreach (var role in delete)
         {
@@ -326,7 +409,7 @@ public abstract class SharedRoleSystem : EntitySystem
 
         _adminLogger.Add(LogType.Mind,
             LogImpact.Low,
-            $"All roles of type '{typeof(T).Name}' removed from mind of {ToPrettyString(mind.Comp.OwnedEntity)}");
+            $"All roles of type {logName} removed from mind of {ToPrettyString(mind.Comp.OwnedEntity)}");
 
         return true;
     }
@@ -340,24 +423,6 @@ public abstract class SharedRoleSystem : EntitySystem
             return;
 
         ent.Comp.Mind.Comp.MindRoles.Remove(ent.Owner);
-    }
-
-    /// <summary>
-    /// Finds and removes all mind roles of a specific type
-    /// </summary>
-    /// <param name="mindId">The mind entity</param>
-    /// <typeparam name="T">The type of the role to remove.</typeparam>
-    /// <returns>True if the role existed and was removed</returns>
-    public bool MindTryRemoveRole<T>(EntityUid mindId) where T : IComponent
-    {
-        if (typeof(T) == typeof(MindRoleComponent))
-            return false;
-
-        if (MindRemoveRole<T>(mindId))
-            return true;
-
-        Log.Warning($"Failed to remove role {typeof(T)} from {ToPrettyString(mindId)} : mind does not have role ");
-        return false;
     }
 
     /// <summary>

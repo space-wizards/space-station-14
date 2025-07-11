@@ -38,7 +38,7 @@ public sealed partial class SurveillanceCameraSetupWindow : DefaultWindow
     }
 
     // Pass in a list of frequency prototype IDs.
-    public void LoadAvailableNetworks(uint currentNetwork, List<string> networks)
+    public void LoadAvailableNetworks(uint currentNetwork, List<ProtoId<DeviceFrequencyPrototype>> networks)
     {
         NetworkSelector.Clear();
 

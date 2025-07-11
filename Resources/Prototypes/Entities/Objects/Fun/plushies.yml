@@ -1,0 +1,1247 @@
+## Plushies
+
+- type: entity
+  abstract: true
+  parent: [BaseItem, BaseStash]
+  id: BasePlushie
+  components:
+  - type: EmitSoundOnUse
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnActivate
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnCollide
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnLand
+    sound:
+      collection: ToyFall
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: ToySqueak
+  - type: UseDelay
+    delay: 1.0
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+  - type: StaticPrice
+    price: 5
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      collection: ToySqueak
+    delay: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: Tag
+    tags:
+    - Payload
+    - ClothMade
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieThrongler
+  name: throngler plushie
+  description: A stuffed toy to remind cargo techs of what they can no longer have.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/ThronglerPlushie.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 10
+  - type: Item
+    size: Ginormous
+    sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: ThronglerPlushie
+
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieGhost
+  name: ghost soft toy
+  description: The start of your personal GHOST GANG!
+  components:
+  - type: Sprite
+    sprite: Mobs/Ghosts/ghost_human.rsi
+    state: icon
+    noRot: true
+  - type: Item
+  - type: Physics
+    angularDamping: 0.02
+    linearDamping: 0.02
+    fixedRotation: true
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.98
+        friction: 0.01
+  - type: TileFrictionModifier
+    modifier: 0.1
+  - type: RandomWalk
+    accumulatorRatio: 0.5
+    maxSpeed: 1
+    minSpeed: 0.25
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: GhostPlushie
+  - type: Tag
+    tags:
+    - ForceableFollow
+    - PlushieGhost
+    - Payload
+
+- type: entity
+  parent: PlushieGhost
+  id: PlushieGhostRevenant
+  categories: [ DoNotMap ]
+  name: revenant soft toy
+  description: So soft it almost makes you want to take a nap...
+  components:
+  - type: Sprite
+    sprite: Mobs/Ghosts/revenant.rsi
+    state: icon
+    noRot: true
+  - type: Item
+    size: Normal
+  - type: MultiHandedItem
+  - type: Construction
+    graph: PlushieGhostRevenant
+    node: plushie
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: RevenantPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieBee
+  name: bee plushie
+  description: A cute toy that resembles an even cuter programmer. You'd have to be a monster to grind this up.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/bee.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: Objects/Fun/Plushies/bee.rsi
+  - type: Extractable
+    grindableSolutionName: bee
+  - type: SolutionContainerManager
+    solutions:
+      bee:
+        reagents:
+        - ReagentId: GroundBee
+          Quantity: 10
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: GroundBee
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/bee.rsi
+    slots:
+    - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: BeePlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieHampter
+  name: hampter plushie
+  description: A cute stuffed toy that resembles a hamster. Its face looks squished.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/hampter.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/hampter.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.04"
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: HamptrPlushie
+
+- type: entity
+  parent: PlushieBee
+  id: PlushieRGBee
+  name: RGBee plushie
+  description: A cute toy that resembles a bee plushie while you're on LSD.
+  components:
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    layers: [ 0 ]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        shader: unshaded
+      right:
+      - state: inhand-right
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        shader: unshaded
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieNuke
+  name: nukie plushie
+  description: A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/nukie.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/nukie.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.03"
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: NukiePlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieRouny
+  name: rouny plushie
+  description: Rouny.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/rouny.rsi
+    state: icon
+  - type: Rotatable
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/rouny.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.03"
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: RounyPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieLamp
+  name: lamp plushie
+  description: A light emitting friend!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/lamp.rsi
+    state: icon
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+    netsync: false
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: LampPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieArachind
+  name: arachnid plushie
+  description: An adorable stuffed toy that resembles an arachnid. It feels silky..
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/arachnid.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/arachnid.rsi
+    slots:
+    - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: ArachnidPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieLizard #Weh!
+  name: lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson. Made by CentComm as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/lizard.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Plushies/lizard.rsi
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/lizard.rsi
+    slots:
+    - HEAD
+  - type: Speech
+    speechVerb: Reptilian # for pais (In the secret stash)
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: LizardPlushie
+  - type: Tag
+    tags:
+    - Payload
+    - ClothMade
+    - PlushieLizard
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieExperiment #Arf!
+  name: experiment plushie
+  description: A plushie of a canid of sorts, it yearns to be detonated on a landmine.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/expi.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Plushies/expi.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        shader: shaded
+      right:
+      - state: inhand-right
+        shader: shaded
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        shader: shaded
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/expi.rsi
+    slots:
+    - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: ExperimentPlushie
+  - type: Tag
+    tags:
+    - Payload
+    - ClothMade
+
+- type: entity
+  parent: PlushieLizard
+  id: PlushieRainbowLizard #Weh but gay
+  name: rainbow lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson of every color. You just might trip while staring at it...
+  components:
+  - type: Sprite
+    state: rainbowlizardplush
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    layers: [ 0 ]
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: rainbowlizardplush-equipped-HELMET
+        shader: unshaded
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: rainbowlizardplush-inhand-left
+        shader: unshaded
+      right:
+      - state: rainbowlizardplush-inhand-right
+        shader: unshaded
+
+- type: entity
+  parent: PlushieLizard
+  id: PlushieLizardMirrored
+  suffix: Mirrored
+  components:
+  - type: Sprite
+    state: icon
+    scale: -1, 1
+
+- type: entity
+  parent: PlushieLizard
+  id: PlushieSpaceLizard #ᵂᵉʰ!
+  name: space lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson in an EVA suit. Made by CentComm as a token initiative to combat speciesism in space environments. "Welcome your new colleges as you do this plush, with open arms!"
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/lizard.rsi
+    state: plushie_spacelizard
+  - type: Item
+    sprite: Objects/Fun/Plushies/lizard.rsi
+    heldPrefix: spacelizard
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: Clothing
+    sprite: Objects/Fun/Plushies/lizard.rsi
+    slots:
+    - HEAD
+    quickEquip: false
+    clothingVisuals:
+      head:
+      - state: spacelizard-equipped-HELMET
+        offset: "0, 0.03"
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: SpaceLizardPlushie
+
+- type: entity
+  parent: PlushieLizard
+  id: PlushieLizardInversed #Hew!
+  name: drazil plushie
+  description: An adorable stuffed toy that resembles a lizardperson from an inversed dimension. Hew!
+  components:
+  - type: Sprite
+    state: plushie_lizard_inversed
+  - type: Item
+    heldPrefix: plushielizardinversed
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouHew
+        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: JuiceThatMakesYouHew
+          Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/lizard.rsi
+    equippedPrefix: plushielizardinversed
+    slots:
+    - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: InversedLizardPlushie
+
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieDiona
+  name: diona plushie
+  description: An adorable stuffed toy that resembles a diona. Love water and cuddles. Do not wet!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/diona.rsi
+    layers:
+    - state: plushie_diona
+    - state: plushie_diona1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+  - type: SolutionContainerManager
+    solutions:
+      plushie:
+        maxVol: 1
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: RefillableSolution
+    solution: plushie
+  - type: SolutionContainerVisuals
+    solutionName: plushie
+    maxFillLevels: 1
+    fillBaseName: plushie_diona
+    changeColor: false
+  - type: Appearance
+  - type: Reactive
+    reactions:
+    - reagents: [ Water ]
+      methods: [ Touch ]
+      effects:
+      - !type:AddToSolutionReaction
+        solution: plushie
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        density: 15
+        mask:
+        - ItemMask
+      rehydrate:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        hard: false
+        layer:
+        - LowImpassable
+  - type: CollisionWake
+    enabled: false
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/diona.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.09"
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: DionaPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieSharkBlue
+  name: blue shark soft toy
+  description: Big and safe to have by your side if you want to discover the world below the surface of the ocean.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/shark.rsi
+    state: blue
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    soundHit:
+      path: /Audio/Items/Toys/rawr.ogg
+    animation: WeaponArcBite
+  - type: Item
+    heldPrefix: blue
+    storedRotation: -90
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: BlueSharkPlushie
+  - type: Tag
+    tags:
+    - PlushieSharkBlue
+    - Payload
+    - ClothMade
+
+- type: entity
+  parent: PlushieSharkBlue
+  id: PlushieSharkPink
+  name: pink shark soft toy
+  description: Hehe shonk :)
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/shark.rsi
+    state: pink
+  - type: Item
+    heldPrefix: pink
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: PinkSharkPlushie
+  - type: Tag
+    tags:
+    - PlushieSharkPink
+    - Payload
+    - ClothMade
+
+- type: entity
+  parent: PlushieSharkBlue
+  id: PlushieSharkGrey
+  name: grey shark soft toy
+  description: A quiet, reserved kind of shonk. Loves to ride the grey tide.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/shark.rsi
+    state: grey
+  - type: Item
+    heldPrefix: grey
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: GreySharkPlushie
+  - type: Tag
+    tags:
+    - PlushieSharkGrey
+    - Payload
+    - ClothMade
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieRatvar
+  name: ratvar plushie
+  description: A large stuffed doll of the elder god Ratvar.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/ratvar.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: Objects/Fun/Plushies/ratvar.rsi
+  - type: MultiHandedItem
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/ratvar.rsi
+    slots:
+    - neck
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: RatvarPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieNar
+  name: nar'sie plushie
+  description: A large stuffed doll of the elder goddess Nar'Sie.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/narsie.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: Objects/Fun/Plushies/narsie.rsi
+  - type: MultiHandedItem
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/narsie.rsi
+    slots:
+    - neck
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: NarPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieCarp
+  name: carp plushie
+  description: An adorable stuffed toy that resembles the monstrous space carp.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/carp.rsi
+    state: carpplush
+  - type: Item
+    sprite: Objects/Fun/Plushies/carp.rsi
+    heldPrefix: carpplush
+    storedRotation: -90
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Effects/bite.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/bite.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Effects/bite.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Effects/bite.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/bite.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Effects/bite.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite # Rrrr!
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: CarpPlushie
+  - type: Tag
+    tags:
+    - Payload
+    - ClothMade
+    - PlushieCarp
+
+- type: entity
+  parent: PlushieCarp
+  id: PlushieMagicarp
+  name: magicarp plushie
+  description: An adorable stuffed toy resembling the exceedingly rare magicarp.
+  components:
+  - type: Sprite
+    state: magicplush
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: MagicarpPlushie
+
+- type: entity
+  parent: PlushieCarp
+  id: PlushieRainbowCarp
+  name: rainbow carp plushie
+  description: An adorable stuffed toy resembling the legendary rainbow carp.
+  components:
+  - type: Sprite
+    state: rainbowcarpplush
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    layers: [ 0 ]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: rainbowcarpplush-inhand-left
+        shader: unshaded
+      right:
+      - state: rainbowcarpplush-inhand-right
+        shader: unshaded
+
+- type: entity
+  parent: PlushieCarp
+  id: PlushieHolocarp
+  name: holocarp plushie
+  description: A holographic stuffed toy resembling science's nemesis - the holocarp.
+  components:
+  - type: Sprite
+    state: holoplush
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: HolocarpPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieSlime
+  name: slime plushie
+  description: An adorable stuffed toy that resembles a slime. It's basically a hacky sack.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/slime.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/slime.rsi
+    slots:
+    - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: SlimePlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieSnake
+  name: snake plushie
+  description: An adorable stuffed toy that resembles a snake.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/snake.rsi
+    state: icon
+  - type: Item
+    heldPrefix: plushiesnake
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    soundHit:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: Clothing
+    sprite: Objects/Fun/Plushies/snake.rsi
+    quickEquip: false
+    slots:
+    - NECK
+  - type: Speech
+    speechVerb: Reptilian # for pais (In the secret stash)
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: SnakePlushie
+
+- type: entity
+  parent: BasePlushie
+  id: ToyMouse
+  name: mouse toy
+  description: A colorful toy mouse!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toy_mouse.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: -90
+    soundHit:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toy_mouse.rsi
+    slots:
+    - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: MousePlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieVox
+  name: vox plushie
+  description: SKREEEEEEEEEEEE!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/vox.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/vox.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.09"
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: VoxPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieAtmosian
+  name: atmosian plushie
+  description: An adorable stuffed toy that resembles a brave atmosian. Unfortunately, he won't fix those depressurizations for you.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/atmosian.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/atmosian.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.04"
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: AtmosianPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieXeno
+  name: xeno plushie
+  description: An adorable stuffed toy that resembles a scary xenomorf. You're lucky it's just a toy.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/xeno.rsi
+    state: icon
+  - type: Item
+    size: Normal
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/xeno.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.03"
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: XenoPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushiePenguin
+  name: penguin plushie
+  description: I use arch btw!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/penguin.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/penguin.rsi
+    slots:
+    - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: PenguinPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieHuman
+  name: human plushie
+  description: This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is naked. The human is crying. The human is screaming.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/human.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Human/malescream_1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Human/malescream_2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Human/malescream_3.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Human/malescream_4.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Human/malescream_1.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Human/malescream_4.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Human/malescream_5.ogg
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/human.rsi
+    slots:
+    - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: HumanPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieMoth
+  name: moth plushie
+  description: Cute and fluffy moth plushie. Enjoy, bz!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/moth.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/Plushies/moth.rsi
+    slots:
+    - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: MothPlushie

@@ -16,6 +16,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
 using Content.Shared.NukeOps;
 using Content.Shared.Pinpointer;
@@ -23,12 +24,16 @@ using Content.Shared.Station.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
 [TestFixture]
 public sealed class NukeOpsTest
 {
+    private static readonly ProtoId<NpcFactionPrototype> SyndicateFaction = "Syndicate";
+    private static readonly ProtoId<NpcFactionPrototype> NanotrasenFaction = "NanoTrasen";
+
     /// <summary>
     /// Check that a nuke ops game mode can start without issue. I.e., that the nuke station and such all get loaded.
     /// </summary>
@@ -119,8 +124,8 @@ public sealed class NukeOpsTest
         Assert.That(entMan.HasComponent<NukeOperativeComponent>(player));
         Assert.That(roleSys.MindIsAntagonist(mind));
         Assert.That(roleSys.MindHasRole<NukeopsRoleComponent>(mind));
-        Assert.That(factionSys.IsMember(player, "Syndicate"), Is.True);
-        Assert.That(factionSys.IsMember(player, "NanoTrasen"), Is.False);
+        Assert.That(factionSys.IsMember(player, SyndicateFaction), Is.True);
+        Assert.That(factionSys.IsMember(player, NanotrasenFaction), Is.False);
         var roles = roleSys.MindGetAllRoleInfo(mind);
         var cmdRoles = roles.Where(x => x.Prototype == "NukeopsCommander");
         Assert.That(cmdRoles.Count(), Is.EqualTo(1));
@@ -130,8 +135,8 @@ public sealed class NukeOpsTest
         Assert.That(entMan.HasComponent<NukeOperativeComponent>(dummyEnts[1]));
         Assert.That(roleSys.MindIsAntagonist(dummyMind));
         Assert.That(roleSys.MindHasRole<NukeopsRoleComponent>(dummyMind));
-        Assert.That(factionSys.IsMember(dummyEnts[1], "Syndicate"), Is.True);
-        Assert.That(factionSys.IsMember(dummyEnts[1], "NanoTrasen"), Is.False);
+        Assert.That(factionSys.IsMember(dummyEnts[1], SyndicateFaction), Is.True);
+        Assert.That(factionSys.IsMember(dummyEnts[1], NanotrasenFaction), Is.False);
         roles = roleSys.MindGetAllRoleInfo(dummyMind);
         cmdRoles = roles.Where(x => x.Prototype == "NukeopsMedic");
         Assert.That(cmdRoles.Count(), Is.EqualTo(1));
@@ -146,8 +151,8 @@ public sealed class NukeOpsTest
             Assert.That(entMan.HasComponent<NukeOperativeComponent>(ent), Is.False);
             Assert.That(roleSys.MindIsAntagonist(mindCrew), Is.False);
             Assert.That(roleSys.MindHasRole<NukeopsRoleComponent>(mindCrew), Is.False);
-            Assert.That(factionSys.IsMember(ent, "Syndicate"), Is.False);
-            Assert.That(factionSys.IsMember(ent, "NanoTrasen"), Is.True);
+            Assert.That(factionSys.IsMember(ent, SyndicateFaction), Is.False);
+            Assert.That(factionSys.IsMember(ent, NanotrasenFaction), Is.True);
             var nukeroles = new List<string>() { "Nukeops", "NukeopsMedic", "NukeopsCommander" };
             Assert.That(roleSys.MindGetAllRoleInfo(mindCrew).Any(x => nukeroles.Contains(x.Prototype)), Is.False);
         }

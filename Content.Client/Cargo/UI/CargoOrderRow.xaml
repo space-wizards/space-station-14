@@ -11,11 +11,10 @@
         <BoxContainer Orientation="Vertical"
                       HorizontalExpand="True"
                       VerticalExpand="True">
-            <Label Name="ProductName"
+            <RichTextLabel Name="ProductName"
                    Access="Public"
                    HorizontalExpand="True"
-                   StyleClasses="LabelSubText"
-                   ClipText="True" />
+                   StyleClasses="LabelSubText" />
             <Label Name="Description"
                    Access="Public"
                    HorizontalExpand="True"

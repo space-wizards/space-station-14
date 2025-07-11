@@ -1,22 +1,22 @@
 - type: entity
+  parent: BaseEntitySpellAction
   id: ActionMindSwap
   name: Mind Swap
   description: Exchange bodies with another person!
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 300
-    itemIconStyle: BigAction
-    whitelist:
-      components:
-      - Body
-      - MindContainer
-    canTargetSelf: false
-    interactOnMiss: false
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/staff_animation.ogg
     icon:
       sprite: Mobs/Species/Human/organs.rsi
       state: brain
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body # this also allows borgs because that supercode uses Body for no reason
+      - PAI # intended to mindswap pAIs and AIs
+      - StationAiCore
     event: !type:MindSwapSpellEvent
   - type: SpeakOnAction
     sentence: action-speech-spell-mind-swap

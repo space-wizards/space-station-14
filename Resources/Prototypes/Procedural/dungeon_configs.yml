@@ -1,8 +1,11 @@
-# Base configs
+# Setups
 - type: dungeonConfig
-  id: PlanetBase
+  id: Experiment
   layers:
   - !type:PrefabDunGen
+    roomWhitelist:
+      tags:
+      - SalvageExperiment
     presets:
     - Bucket
     - Wow
@@ -11,28 +14,49 @@
 
   - !type:CorridorDunGen
     width: 3
+    tile: FloorSteel
 
   - !type:DungeonEntranceDunGen
     count: 2
+    tile: FloorSteel
+    contents: BaseAirlock
 
   - !type:RoomEntranceDunGen
+    tile: FloorSteel
+    contents: BaseAirlock
 
   - !type:EntranceFlankDunGen
+    tile: FloorSteel
+    contents: BaseWindow
 
   - !type:ExternalWindowDunGen
+    tile: FloorSteel
+    contents: BaseWindow
 
   - !type:WallMountDunGen
+    contents: ScienceLabsWalls
+    tile: FloorSteel
 
   - !type:BoundaryWallDunGen
+    wall: WallSolid
+    cornerWall: WallReinforced
+    tile: FloorSteel
 
   - !type:JunctionDunGen
     width: 1
+    tile: FloorSteel
+    contents: BaseAirlock
 
   - !type:JunctionDunGen
+    width: 3
+    tile: FloorSteel
+    contents: BaseAirlock
 
   - !type:AutoCablingDunGen
+    entity: CableApcExtension
 
   - !type:CornerClutterDunGen
+    contents: BaseClutter
 
   - !type:CorridorDecalSkirtingDunGen
     cardinalDecals:
@@ -51,44 +75,8 @@
       NorthWest: BrickTileWhiteInnerNw
       NorthEast: BrickTileWhiteInnerNe
 
-# Setups
-- type: dungeonConfig
-  id: Experiment
-  data:
-    colors:
-      Decals: "#D381C996"
-    entities:
-      Cabling: CableApcExtension
-      CornerWalls: WallReinforced
-      Walls: WallSolid
-    spawnGroups:
-      CornerClutter: BaseClutter
-      Entrance: BaseAirlock
-      EntranceFlank: BaseWindow
-      Junction: BaseAirlock
-      WallMounts: ScienceLabsWalls
-      Window: BaseWindow
-    tiles:
-      FallbackTile: FloorSteel
-    whitelists:
-      Rooms:
-        tags:
-        - SalvageExperiment
-  layers:
-  - !type:PrototypeDunGen
-    proto: PlanetBase
-
 - type: dungeonConfig
   id: Haunted
-  data:
-    entities:
-      Walls: WallRock
-    tiles:
-      FallbackTile: FloorCaveDrought
-    whitelists:
-      Rooms:
-        tags:
-        - Mineshaft
   layers:
   - !type:PrefabDunGen
     presets:
@@ -99,183 +87,304 @@
 
   - !type:WormCorridorDunGen
     width: 3
+    tile: FloorCaveDrought
 
   - !type:CorridorClutterDunGen
-    contents:
-    - id: FloraStalagmite
+    contents: HauntedClutter
 
   - !type:BoundaryWallDunGen
+    tile: FloorCaveDrought
+    wall: WallRock
+
+- type: entityTable
+  id: HauntedClutter
+  table: !type:GroupSelector
+    children:
+    - id: FloraStalagmite
 
 - type: dungeonConfig
   id: LavaBrig
-  data:
-    colors:
-      Decals: "#DE3A3A96"
-    entities:
-      Cabling: CableApcExtension
-      CornerWalls: WallReinforced
-      Walls: WallSolid
-    spawnGroups:
-      CornerClutter: BaseClutter
-      Entrance: LavaBrigEntrance
-      EntranceFlank: BaseWindow
-      Junction: BaseAirlock
-      WallMounts: ScienceLabsWalls
-      Window: BaseWindow
-    tiles:
-      FallbackTile: FloorDark
-    whitelists:
-      Rooms:
-        tags:
-        - LavaBrig
   layers:
-  - !type:PrototypeDunGen
-    proto: PlanetBase
+  - !type:PrefabDunGen
+    roomWhitelist:
+      tags:
+      - LavaBrig
+    presets:
+    - Bucket
+    - Wow
+    - SpaceShip
+    - Tall
+
+  - !type:CorridorDunGen
+    width: 3
+    tile: FloorDark
+
+  - !type:DungeonEntranceDunGen
+    count: 2
+    tile: FloorDark
+    contents: LavaBrigEntrance
+
+  - !type:RoomEntranceDunGen
+    tile: FloorDark
+    contents: BaseAirlock
+
+  - !type:EntranceFlankDunGen
+    tile: FloorDark
+    contents: BaseWindow
+
+  - !type:ExternalWindowDunGen
+    tile: FloorDark
+    contents: BaseWindow
+
+  - !type:WallMountDunGen
+    contents: ScienceLabsWalls
+    tile: FloorDark
+
+  - !type:BoundaryWallDunGen
+    wall: WallSolid
+    cornerWall: WallReinforced
+    tile: FloorDark
+
+  - !type:JunctionDunGen
+    width: 1
+    tile: FloorDark
+    contents: BaseAirlock
+
+  - !type:JunctionDunGen
+    width: 3
+    tile: FloorDark
+    contents: BaseAirlock
+
+  - !type:AutoCablingDunGen
+    entity: CableApcExtension
+
+  - !type:CornerClutterDunGen
+    contents: BaseClutter
+
+  - !type:CorridorDecalSkirtingDunGen
+    cardinalDecals:
+      South: BrickTileWhiteLineS
+      East: BrickTileWhiteLineE
+      North: BrickTileWhiteLineN
+      West: BrickTileWhiteLineW
+    cornerDecals:
+      SouthEast: BrickTileWhiteCornerSe
+      SouthWest: BrickTileWhiteCornerSw
+      NorthEast: BrickTileWhiteCornerNe
+      NorthWest: BrickTileWhiteCornerNw
+    pocketDecals:
+      SouthWest: BrickTileWhiteInnerSw
+      SouthEast: BrickTileWhiteInnerSe
+      NorthWest: BrickTileWhiteInnerNw
+      NorthEast: BrickTileWhiteInnerNe
 
 - type: dungeonConfig
   id: Mineshaft
-  data:
-    entities:
-      Cabling: Catwalk
-    spawnGroups:
-      CornerClutter: MineshaftClutter
-      Entrance: BaseWoodWall
-      EntranceFlank: BaseWoodWall
-      Junction: BaseWoodSupport
-      Window: BaseWoodWall
-    tiles:
-      FallbackTile: FloorCaveDrought
-    whitelists:
-      Rooms:
-        tags:
-        - Mineshaft
   layers:
-  - !type:PrototypeDunGen
-    proto: PlanetBase
+  - !type:PrefabDunGen
+    roomWhitelist:
+      tags:
+      - Mineshaft
+    presets:
+    - Bucket
+    - Wow
+    - SpaceShip
+    - Tall
+
+  - !type:CorridorDunGen
+    width: 3
+    tile: FloorCaveDrought
+
+  - !type:DungeonEntranceDunGen
+    count: 2
+    tile: FloorCaveDrought
+    contents: BaseWoodWall
+
+  - !type:RoomEntranceDunGen
+    tile: FloorCaveDrought
+    contents: BaseWoodWall
+
+  - !type:EntranceFlankDunGen
+    tile: FloorCaveDrought
+    contents: BaseWoodWall
+
+  - !type:ExternalWindowDunGen
+    tile: FloorCaveDrought
+    contents: BaseWoodWall
+
+  # No wallmounts
+
+  # No boundary wall
+
+  - !type:JunctionDunGen
+    width: 1
+    tile: FloorCaveDrought
+    contents: BaseWoodSupport
+
+  - !type:JunctionDunGen
+    width: 3
+    tile: FloorCaveDrought
+    contents: BaseWoodSupport
+
+  - !type:AutoCablingDunGen
+    entity: Catwalk
+
+  - !type:CornerClutterDunGen
+    contents: MineshaftClutter
+
+# TODO: Check decal skirting fix contents in code.
 
 - type: dungeonConfig
   id: SnowyLabs
-  data:
-    colors:
-      Decals: "#4cc7aa96"
-    entities:
-      Cabling: CableApcExtension
-      CornerWalls: WallSilver
-      Walls: WallSilver
-    spawnGroups:
-      CornerClutter: BaseClutter
-      Entrance: SnowyLabsEntrance
-      EntranceFlank: BaseWindow
-      Junction: BaseAirlock
-      WallMounts: SnowyLabsWalls
-      Window: BaseWindow
-    tiles:
-      FallbackTile: FloorSteel
-    whitelists:
-      Rooms:
-        tags:
-        - SnowyLabs
   layers:
-  - !type:PrototypeDunGen
-    proto: PlanetBase
+  - !type:PrefabDunGen
+    roomWhitelist:
+      tags:
+      - SnowyLabs
+    presets:
+    - Bucket
+    - Wow
+    - SpaceShip
+    - Tall
+
+  - !type:CorridorDunGen
+    width: 3
+    tile: FloorSteel
+
+  - !type:DungeonEntranceDunGen
+    count: 2
+    tile: FloorSteel
+    contents: BaseAirlock
+
+  - !type:RoomEntranceDunGen
+    tile: FloorSteel
+    contents: BaseAirlock
+
+  - !type:EntranceFlankDunGen
+    tile: FloorSteel
+    contents: BaseWindow
+
+  - !type:ExternalWindowDunGen
+    tile: FloorSteel
+    contents: BaseWindow
+
+  - !type:WallMountDunGen
+    contents: SnowyLabsWalls
+    tile: FloorSteel
+
+  - !type:BoundaryWallDunGen
+    wall: WallSilver
+    tile: FloorSteel
+
+  - !type:JunctionDunGen
+    width: 1
+    tile: FloorSteel
+    contents: BaseAirlock
+
+  - !type:JunctionDunGen
+    width: 3
+    tile: FloorSteel
+    contents: BaseAirlock
+
+  - !type:AutoCablingDunGen
+    entity: CableApcExtension
 
 # Spawn groups
 # Basic
-- type: entitySpawnEntry
+- type: entityTable
   id: BaseClutter
-  entries:
-  - id: PottedPlantRandom
-    amount: 1
+  table: !type:GroupSelector
+    children:
+    - id: PottedPlantRandom
+      amount: 1
 
-- type: entitySpawnEntry
+- type: entityTable
   id: BaseAirlock
-  entries:
-  - id: CableApcExtension
-  - id: AirlockGlass
+  table: !type:GroupSelector
+    children:
+    - id: CableApcExtension
+    - id: AirlockGlass
 
-- type: entitySpawnEntry
+- type: entityTable
   id: BaseWindow
-  entries:
-  - id: Grille
-  - id: Window
+  table: !type:GroupSelector
+    children:
+    - id: Grille
+    - id: Window
 
 # Lava brig
-- type: entitySpawnEntry
+- type: entityTable
   id: LavaBrigEntrance
-  entries:
-  - id: CableApcExtension
-  - id: AirlockSecurityGlassLocked
+  table: !type:GroupSelector
+    children:
+    - id: CableApcExtension
+    - id: AirlockSecurityGlassLocked
 
 # Mineshaft
-- type: entitySpawnEntry
+- type: entityTable
   id: BaseWoodWall
-  entries:
-  - id: RandomWoodenWall
+  table: !type:GroupSelector
+    children:
+    - id: RandomWoodenWall
 
-- type: entitySpawnEntry
+- type: entityTable
   id: BaseWoodSupport
-  entries:
-  - id: RandomWoodenSupport
+  table: !type:GroupSelector
+    children:
+    - id: RandomWoodenSupport
 
-- type: entitySpawnEntry
+- type: entityTable
   id: MineshaftClutter
-  entries:
-  - id: RandomStalagmiteOrCrystal
-    amount: 1
+  table: !type:GroupSelector
+    children:
+    - id: RandomStalagmiteOrCrystal
+      amount: 1
 
-- type: entitySpawnEntry
+- type: entityTable
   id: MineshaftWalls
-  entries:
-  # Ore
-  - id: WallRockSalt
-    prob: 0.6
-    orGroup: content
-  - id: WallRockCoal
-    prob: 0.6
-    orGroup: content
-  - id: WallRockTin
-    prob: 0.4
-    orGroup: content
-  - id: WallMining
-    prob: 0.8
-    orGroup: content
+  table: !type:GroupSelector
+    children:
+    # Ore
+    - id: WallRockSalt
+      prob: 0.6
+    - id: WallRockCoal
+      prob: 0.6
+    - id: WallRockTin
+      prob: 0.4
+    - id: WallMining
+      prob: 0.8
 
 # Science lab
-- type: entitySpawnEntry
+- type: entityTable
   id: ScienceLabsWalls
-  entries:
-  # Posters
-  - id: RandomPosterLegit
-    orGroup: content
-  - id: ExtinguisherCabinetFilled
-    prob: 0.2
-    orGroup: content
-  - id: RandomPainting
-    prob: 0.05
-    orGroup: content
-  - id: IntercomCommon
-    prob: 0.1
-    orGroup: content
+  table: !type:GroupSelector
+    children:
+    # Posters
+    - id: RandomPosterLegit
+    - id: ExtinguisherCabinetFilled
+      prob: 0.2
+    - id: RandomPainting
+      prob: 0.05
+    - id: IntercomCommon
+      prob: 0.1
 
 # Snowy labs
-- type: entitySpawnEntry
+- type: entityTable
   id: SnowyLabsEntrance
-  entries:
-  - id: CableApcExtension
-  - id: AirlockFreezerHydroponicsLocked
+  table: !type:GroupSelector
+    children:
+    - id: CableApcExtension
+    - id: AirlockFreezerHydroponicsLocked
 
-- type: entitySpawnEntry
+- type: entityTable
   id: SnowyLabsWalls
-  entries:
-  # Posters
-  - id: RandomPosterLegit
-    orGroup: content
-  - id: ExtinguisherCabinetFilled
-    prob: 0.2
-    orGroup: content
-  - id: RandomPainting
-    prob: 0.05
-    orGroup: content
-  - id: IntercomScience
-    prob: 0.1
-    orGroup: content
+  table: !type:GroupSelector
+    children:
+    # Posters
+    - id: RandomPosterLegit
+    - id: ExtinguisherCabinetFilled
+      prob: 0.2
+    - id: RandomPainting
+      prob: 0.05
+    - id: IntercomScience
+      prob: 0.1

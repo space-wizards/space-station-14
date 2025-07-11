@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Content.Server.Destructible;
 using Content.Server.PowerCell;
 using Content.Shared.Speech.Components;
 using Content.Shared.Damage;
@@ -11,6 +12,7 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
 
     public override void Initialize()
     {
@@ -35,7 +37,7 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
             }
             currentChargeLevel = Math.Clamp(currentChargeLevel, 0.0f, 1.0f);
             // Corrupt due to low power (drops characters on longer messages)
-            args.Message = CorruptPower(args.Message, currentChargeLevel, ref ent.Comp);
+            args.Message = CorruptPower(args.Message, currentChargeLevel, ent.Comp);
         }
 
         if (ent.Comp.EnableDamageCorruption)
@@ -50,11 +52,11 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
                 damage = damageable.TotalDamage;
             }
             // Corrupt due to damage (drop, repeat, replace with symbols)
-            args.Message = CorruptDamage(args.Message, damage, ref ent.Comp);
+            args.Message = CorruptDamage(args.Message, damage, ent);
         }
     }
 
-    public string CorruptPower(string message, float chargeLevel, ref DamagedSiliconAccentComponent comp)
+    public string CorruptPower(string message, float chargeLevel, DamagedSiliconAccentComponent comp)
     {
         // The first idxMin characters are SAFE
         var idxMin = comp.StartPowerCorruptionAtCharIdx;
@@ -104,12 +106,23 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
         return outMsg.ToString();
     }
 
-    private string CorruptDamage(string message, FixedPoint2 totalDamage, ref DamagedSiliconAccentComponent comp)
+    private string CorruptDamage(string message, FixedPoint2 totalDamage, Entity<DamagedSiliconAccentComponent> ent)
     {
         var outMsg = new StringBuilder();
+
+        // If this is not specified, use the Destructible threshold for destruction or breakage
+        var damageAtMaxCorruption = ent.Comp.DamageAtMaxCorruption;
+        if (damageAtMaxCorruption is null)
+        {
+            if (!TryComp<DestructibleComponent>(ent, out var destructible))
+                return message;
+
+            damageAtMaxCorruption = _destructibleSystem.DestroyedAt(ent, destructible);
+        }
+
         // Linear interpolation of character damage probability
-        var damagePercent = Math.Clamp((float)totalDamage / (float)comp.DamageAtMaxCorruption, 0, 1);
-        var chanceToCorruptLetter = damagePercent * comp.MaxDamageCorruption;
+        var damagePercent = Math.Clamp((float)totalDamage / (float)damageAtMaxCorruption, 0, 1);
+        var chanceToCorruptLetter = damagePercent * ent.Comp.MaxDamageCorruption;
         foreach (var letter in message)
         {
             if (_random.Prob(chanceToCorruptLetter)) // Corrupt!

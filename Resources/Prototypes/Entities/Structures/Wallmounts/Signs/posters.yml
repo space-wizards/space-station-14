@@ -11,6 +11,15 @@
     snapCardinals: true
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 5
@@ -600,6 +609,33 @@
     - type: Sprite
       state: poster63_contraband
 
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandExoAcid
+  name: "Exomorph Warning: Acid Spit!"
+  description: "This poster warns you about an exomorph's acidic spit. Not that such exomorphs are real... Right?"
+  components:
+  - type: Sprite
+    state: poster64_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandExoRun
+  name: "Exomorph Warning: Run Away!"
+  description: "This poster warns you about an athletic exomorph capable of dragging away anyone who gets caught; so don't get caught!"
+  components:
+  - type: Sprite
+    state: poster65_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandExoChomp
+  name: "Exomorph Warning: Dangerous Bites!"
+  description: "This poster warns you about the lethal bites exomorphs can have. Don't become an alien snack!"
+  components:
+  - type: Sprite
+    state: poster66_contraband
+
 # Legit
 - type: entity
   parent: PosterBase
@@ -1086,6 +1122,15 @@
   components:
   - type: Sprite
     state: poster54_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitHelio
+  name: Helio Logistics ad
+  description: "A poster advertising Helio Logistics and their adorable mascot. The slogan reads 'Come rain or shine, we deliver on time.'"
+  components:
+  - type: Sprite
+    state: poster55_legit
 
 #maps
 

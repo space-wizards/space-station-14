@@ -24,7 +24,9 @@
     - category: Hunger
     - category: Thirst
     - alertType: Magboots
+    - alertType: Rooted
     - alertType: Pacified
+    - alertType: Stealthy
 
 - type: entity
   id: AlertSpriteView
@@ -436,6 +438,19 @@
     state: icon
   name: alerts-pacified-name
   description: alerts-pacified-desc
+
+- type: alert
+  id: Stealthy
+  clickEvent: !type:ToggleThievingEvent
+  icons:
+  - sprite: /Textures/Interface/Alerts/stealthy.rsi
+    state: stealthy-off
+  - sprite: /Textures/Interface/Alerts/stealthy.rsi
+    state: stealthy-on
+  name: alerts-stealthy-name
+  description: alerts-stealthy-desc
+  minSeverity: 0
+  maxSeverity: 1
 
 - type: alert
   id: Adrenaline

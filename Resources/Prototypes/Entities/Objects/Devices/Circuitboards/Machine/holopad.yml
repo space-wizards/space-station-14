@@ -7,6 +7,6 @@
     - type: MachineBoard
       prototype: Holopad
       stackRequirements:
-        Capacitor: 4
+        Manipulator: 4
         Cable: 4
         Glass: 2

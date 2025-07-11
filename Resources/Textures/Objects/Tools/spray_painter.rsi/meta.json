@@ -1,22 +1,33 @@
 {
-   "copyright" : "Taken from https://github.com/tgstation/tgstation at commit a21274e56ae84b2c96e8b6beeca805df3d5402e8, Inhand sprites by onesch",
-   "license" : "CC-BY-SA-3.0",
-   "size" : {
-      "x" : 32,
-      "y" : 32
-   },
-   "states" : [
-      {
-         "name" : "spray_painter"
-      },
-      {
-          "name": "inhand-left",
-          "directions": 4
-      },
-      {
-          "name": "inhand-right",
-          "directions": 4
-      }
-   ],
-   "version" : 1
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation at commit a21274e56ae84b2c96e8b6beeca805df3d5402e8, Inhand sprites by onesch, ammo by Paradoxmi (Discord).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "spray_painter"
+        },
+        {
+            "name": "ammo"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "ammo-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "ammo-inhand-right",
+            "directions": 4
+        }
+    ]
 }

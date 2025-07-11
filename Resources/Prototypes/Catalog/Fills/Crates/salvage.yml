@@ -92,6 +92,119 @@
 
 - type: entity
   parent: CrateGenericSteel
+  id: CrateCrusherDagger
+  name: crusher dagger crate
+  description: Contains 4 crusher daggers for use by salvage.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: WeaponCrusherDagger
+        amount: 4
+
+# Salvage rewards
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateSeismicCharge
+  name: seismic charge crate
+  description: Contains 6 seismic charges for use by salvage.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: SeismicCharge
+        amount: 6
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateDoubleEmergencyTank
+  name: double emergency tank crate
+  description: Contains 2 double emergency oxygen tanks and 2 double emergency nitrogen tanks
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: DoubleEmergencyOxygenTankFilled
+          amount: 2
+        - id: DoubleEmergencyNitrogenTankFilled
+          amount: 2
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateCrusher
+  name: crusher crate
+  description: Contains 2 crushers for use by salvage.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: WeaponCrusher
+        amount: 2
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateFulton
+  name: fulton crate
+  description: Contains a fulton beacon and 8 fultons.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: FultonBeacon
+        - id: Fulton
+          amount: 8
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateVoidJetpack
+  name: void jetpack crate
+  description: Contains a single void jetpack.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: JetpackVoidFilled
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateSalvageHardsuit
+  name: salvage hardsuit crate
+  description: Contains a salvage hardsuit, breath mask, and oxygen tank.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingOuterHardsuitSalvage
+        - id: ClothingMaskBreath
+        - id: OxygenTankFilled
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateCrusherGlaive
+  name: crusher glaive crate
+  description: Contains a crusher glaive for use by salvage.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: WeaponCrusherGlaive
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateSupremeSalvagerCloak
+  name: supreme salvager cloak crate
+  description: Contains a cloak only to be worn by supreme salvagers. Wearing it undeservedly will result in your doom.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: ClothingNeckCloakSalvagerSupreme
+
+- type: entity
+  parent: CrateGenericSteel
   id: CratePartsT3
   name: tier 3 parts crate
   description: Contains 5 random tier 3 parts for upgrading machines.

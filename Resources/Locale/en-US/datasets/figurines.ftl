@@ -134,9 +134,9 @@ figurines-ce-6 = Power's out again.
 figurines-engineer-1 = SINGULOOSE!
 figurines-engineer-2 = TESLOOSE!
 figurines-engineer-3 = What is AME?
-figurines-engineer-4 = Free insuls at engineering
+figurines-engineer-4 = Free insuls at Engineering!
 figurines-engineer-5 = Where'd the power go?
-figurines-engineer-6 = Someone bombed medbay... again...
+figurines-engineer-6 = Someone bombed the medbay... again...
 figurines-engineer-7 = Well, why don't you come and fix it?
 
 figurines-atmostech-1 = I put plasma in distro.
@@ -148,7 +148,7 @@ figurines-atmostech-6 = Distro? That's short for disposal.
 figurines-atmostech-7 = TEG: Thermal Energy? Gone!
 
 figurines-rd-1 = Blowing up all of the borgs!
-figurines-rd-2 = Tier 3 arsenal? No way.
+figurines-rd-2 = Tier 3 Arsenal? No way.
 figurines-rd-3 = Now where did I leave my hardsuit...?
 figurines-rd-4 = Now you're thinking with portals!
 figurines-rd-5 = The cake is a lie!
@@ -245,22 +245,22 @@ figurines-nukie-3 = The nuke makes boom.
 figurines-nukie-4 = What's the code?
 figurines-nukie-5 = Commander...? ...That's a balloon...
 
-figurines-nukie-elite-1 = Not a word in nanotrasen.
+figurines-nukie-elite-1 = Not a word in Nanotrasen.
 figurines-nukie-elite-2 = THAT'S A KEG!
-figurines-nukie-elite-3 = Guys are you alive?
+figurines-nukie-elite-3 = Guys, are you alive?
 figurines-nukie-elite-4 = Breach and clear!
 figurines-nukie-elite-5 = Leave no survivors.
 figurines-nukie-elite-6 = Good work, team.
 
 figurines-nukie-commander-1 = GET DAT FUKKEN DISK!
 figurines-nukie-commander-2 = Fuckin' flukies.
-figurines-nukie-commander-3 = The syndicate sends its regards.
+figurines-nukie-commander-3 = The Syndicate sends its regards.
 figurines-nukie-commander-4 = Failure is not an option.
 figurines-nukie-commander-5 = Whoops.
 
 figurines-footsoldier-1 = I'm an evil boy. Less boy every day, more evil every day.
 figurines-footsoldier-2 = Who will you choose? Them or us? Us or them?
-figurines-footsoldier-3 = Glory to the syndicate!
+figurines-footsoldier-3 = Glory to the Syndicate!
 figurines-footsoldier-4 = Down with Nanotrasen!
 figurines-footsoldier-5 = I'd rather die than join Nanotrasen.
 

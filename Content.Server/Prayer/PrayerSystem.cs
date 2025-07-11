@@ -35,7 +35,7 @@ public sealed class PrayerSystem : EntitySystem
     private void AddPrayVerb(EntityUid uid, PrayableComponent comp, GetVerbsEvent<ActivationVerb> args)
     {
         // if it doesn't have an actor and we can't reach it then don't add the verb
-        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+        if (!TryComp(args.User, out ActorComponent? actor))
             return;
 
         // this is to prevent ghosts from using it
@@ -48,7 +48,7 @@ public sealed class PrayerSystem : EntitySystem
             Icon = comp.VerbImage,
             Act = () =>
             {
-                if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))
+                if (comp.BibleUserOnly && !TryComp<BibleUserComponent>(args.User, out var bibleUser))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-pray-locked"), uid, actor.PlayerSession, PopupType.Large);
                     return;

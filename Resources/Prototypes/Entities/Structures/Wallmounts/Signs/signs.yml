@@ -1247,6 +1247,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignDetective
+  name: Detective sign
+  description: A sign depicting the detective's office.
+  components:
+  - type: Sprite
+    state: detective
+
+- type: entity
+  parent: BaseSign
   id: SignPlaque
   name: golden plaque
   description: A prestigious golden plaque.

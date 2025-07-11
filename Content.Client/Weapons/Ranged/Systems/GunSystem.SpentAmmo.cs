@@ -29,9 +29,7 @@ public sealed partial class GunSystem
         else
             state = component.State;
 
-        sprite.LayerSetState(AmmoVisualLayers.Base, state);
-        if (sprite.LayerExists(AmmoVisualLayers.Tip)){
-            sprite.RemoveLayer(AmmoVisualLayers.Tip);
-        }
+        _sprite.LayerSetRsiState((uid, sprite), AmmoVisualLayers.Base, state);
+        _sprite.RemoveLayer((uid, sprite), AmmoVisualLayers.Tip, false);
     }
 }

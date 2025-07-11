@@ -9,6 +9,8 @@ namespace Content.Client.UserInterface.Systems.DamageOverlays.Overlays;
 
 public sealed class DamageOverlay : Overlay
 {
+    private static readonly ProtoId<ShaderPrototype> CircleMaskShader = "GradientCircleMask";
+
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -49,9 +51,9 @@ public sealed class DamageOverlay : Overlay
     {
         // TODO: Replace
         IoCManager.InjectDependencies(this);
-        _oxygenShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").InstanceUnique();
-        _critShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").InstanceUnique();
-        _bruteShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").InstanceUnique();
+        _oxygenShader = _prototypeManager.Index(CircleMaskShader).InstanceUnique();
+        _critShader = _prototypeManager.Index(CircleMaskShader).InstanceUnique();
+        _bruteShader = _prototypeManager.Index(CircleMaskShader).InstanceUnique();
     }
 
     protected override void Draw(in OverlayDrawArgs args)

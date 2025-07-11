@@ -1,9 +1,9 @@
-using Content.Server.Administration.Commands;
 using Content.Server.Antag;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
+using Content.Server.Clothing.Systems;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
@@ -20,26 +20,16 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly OutfitSystem _outfit = default!;
 
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string DefaultTraitorRule = "Traitor";
+    private static readonly EntProtoId DefaultTraitorRule = "Traitor";
+    private static readonly EntProtoId DefaultInitialInfectedRule = "Zombie";
+    private static readonly EntProtoId DefaultNukeOpRule = "LoneOpsSpawn";
+    private static readonly EntProtoId DefaultRevsRule = "Revolutionary";
+    private static readonly EntProtoId DefaultThiefRule = "Thief";
+    private static readonly ProtoId<StartingGearPrototype> PirateGearId = "PirateGear";
 
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string DefaultInitialInfectedRule = "Zombie";
-
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string DefaultNukeOpRule = "LoneOpsSpawn";
-
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string DefaultRevsRule = "Revolutionary";
-
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string DefaultThiefRule = "Thief";
-
-    [ValidatePrototypeId<StartingGearPrototype>]
-    private const string PirateGearId = "PirateGear";
-
-    private readonly EntProtoId _paradoxCloneRuleId = "ParadoxCloneSpawn";
+    private static readonly EntProtoId ParadoxCloneRuleId = "ParadoxCloneSpawn";
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -126,7 +116,7 @@ public sealed partial class AdminVerbSystem
             Act = () =>
             {
                 // pirates just get an outfit because they don't really have logic associated with them
-                SetOutfitCommand.SetOutfit(args.Target, PirateGearId, EntityManager);
+                _outfit.SetOutfit(args.Target, PirateGearId);
             },
             Impact = LogImpact.High,
             Message = string.Join(": ", pirateName, Loc.GetString("admin-verb-make-pirate")),
@@ -171,7 +161,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "ParadoxClone"),
             Act = () =>
             {
-                var ruleEnt = _gameTicker.AddGameRule(_paradoxCloneRuleId);
+                var ruleEnt = _gameTicker.AddGameRule(ParadoxCloneRuleId);
 
                 if (!TryComp<ParadoxCloneRuleComponent>(ruleEnt, out var paradoxCloneRuleComp))
                     return;

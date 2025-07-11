@@ -24,6 +24,7 @@
 
 - type: construction
   id: CrateFreezer
+  name: construction-recipe-crate-freezer
   graph: CrateFreezer
   startNode: start
   targetNode: done
@@ -40,6 +41,7 @@
 
 - type: construction
   id: BigBox
+  name: construction-recipe-big-box
   graph: BaseBigBox
   startNode: start
   targetNode: basebigbox
@@ -48,6 +50,7 @@
 
 - type: construction
   id: BoxCardboard
+  name: construction-recipe-box-cardboard
   graph: BoxCardboard
   startNode: start
   targetNode: boxcardboard

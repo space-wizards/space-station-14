@@ -82,6 +82,23 @@
           min: 5
 
 - type: reagent
+  parent: Artifexium
+  id: ArtifactGlue
+  name: reagent-name-artifact-glue
+  desc: reagent-desc-artifact-glue
+  flavor: artifactglue
+  physicalDesc: reagent-physical-desc-non-newtonian
+  color: "#827394"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ArtifactDurabilityRestore
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+
+- type: reagent
   id: Benzene
   name: reagent-name-benzene
   desc: reagent-desc-benzene
@@ -185,13 +202,3 @@
         key: Adrenaline
         component: IgnoreSlowOnDamage
         time: 120
-
-- type: reagent
-  id: SalicylicAcid
-  name: reagent-name-salicylic-acid
-  desc: reagent-desc-salicylic-acid
-  physicalDesc: reagent-physical-desc-powdery
-  flavor: bitter
-  color: "#FFFFFF"
-  boilingPoint: 55.5
-  meltingPoint: -50.0

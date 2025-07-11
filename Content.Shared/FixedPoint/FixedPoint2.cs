@@ -303,15 +303,7 @@ namespace Content.Shared.FixedPoint
 
         public readonly int CompareTo(FixedPoint2 other)
         {
-            if (other.Value > Value)
-            {
-                return -1;
-            }
-            if (other.Value < Value)
-            {
-                return 1;
-            }
-            return 0;
+            return Value.CompareTo(other.Value);
         }
 
     }

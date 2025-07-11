@@ -78,7 +78,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
 
     private void OnRefreshMovementSpeedModifiers(EntityUid uid, SpeedModifiedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
+        if (!TryComp<PhysicsComponent>(uid, out var physicsComponent))
             return;
 
         var walkSpeed = 0.0f;
@@ -113,7 +113,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
                 var evSlippery = new GetSlowedOverSlipperyModifierEvent();
                 RaiseLocalEvent(uid, ref evSlippery);
 
-                if (MathHelper.CloseTo(evSlippery.SlowdownModifier, 1))
+                if (!MathHelper.CloseTo(evSlippery.SlowdownModifier, 1))
                 {
                     walkSpeed += evSlippery.SlowdownModifier;
                     sprintSpeed += evSlippery.SlowdownModifier;

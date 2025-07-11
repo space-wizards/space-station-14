@@ -116,14 +116,13 @@
     sprite: Objects/Consumable/Drinks/mug_green.rsi
 
 - type: entity
-  parent: DrinkBaseCup #this one doesn't have the proper layers in the rsi
+  parent: DrinkBaseMug
   id: DrinkMugDog
   name: funny dog mug
   description: It looks like a cartoon beagle.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_dog.rsi
-    state: icon-3
 
 - type: entity
   parent: DrinkBaseMug
@@ -330,7 +329,7 @@
     solutions:
       drink:
         reagents:
-        - ReagentId: Water
+        - ReagentId: JuiceGrape
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lean.rsi

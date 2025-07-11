@@ -1,0 +1,133 @@
+## This file contains duplicated pipe prototypes with
+## different layer offsets to faciliate mapping
+
+# Layer 1
+- type: entity
+  abstract: true
+  id: GasPipeLayerAlt1
+  components:
+  - type: AtmosPipeLayers
+    pipeLayer: 1
+
+# Layer 2
+- type: entity
+  abstract: true
+  id: GasPipeLayerAlt2
+  components:
+  - type: AtmosPipeLayers
+    pipeLayer: 2
+
+# GasPipeStraight
+- type: entity
+  parent: [GasPipeLayerAlt1, GasPipeStraight]
+  id: GasPipeStraightAlt1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt1
+    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - type: Construction
+    node: straightAlt1
+
+- type: entity
+  parent: [GasPipeLayerAlt2, GasPipeStraight]
+  id: GasPipeStraightAlt2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt2
+    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+  - type: Construction
+    node: straightAlt2
+
+# GasPipeHalf
+- type: entity
+  parent: [GasPipeLayerAlt1, GasPipeHalf]
+  id: GasPipeHalfAlt1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt1
+    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - type: Construction
+    node: halfAlt1
+
+- type: entity
+  parent: [GasPipeLayerAlt2, GasPipeHalf]
+  id: GasPipeHalfAlt2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt2
+    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+  - type: Construction
+    node: halfAlt2
+
+# GasPipeBend
+- type: entity
+  parent: [GasPipeLayerAlt1, GasPipeBend]
+  id: GasPipeBendAlt1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt1
+    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - type: Construction
+    node: bendAlt1
+
+- type: entity
+  parent: [GasPipeLayerAlt2, GasPipeBend]
+  id: GasPipeBendAlt2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt2
+    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+  - type: Construction
+    node: bendAlt2
+
+# GasPipeTJunction
+- type: entity
+  parent: [GasPipeLayerAlt1, GasPipeTJunction]
+  id: GasPipeTJunctionAlt1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt1
+    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - type: Construction
+    node: tjunctionAlt1
+
+- type: entity
+  parent: [GasPipeLayerAlt2, GasPipeTJunction]
+  id: GasPipeTJunctionAlt2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt2
+    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+  - type: Construction
+    node: tjunctionAlt2
+
+# GasPipeFourway
+- type: entity
+  parent: [GasPipeLayerAlt1, GasPipeFourway]
+  id: GasPipeFourwayAlt1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt1
+    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - type: Construction
+    node: fourwayAlt1
+
+- type: entity
+  parent: [GasPipeLayerAlt2, GasPipeFourway]
+  id: GasPipeFourwayAlt2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt2
+    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+  - type: Construction
+    node: fourwayAlt2

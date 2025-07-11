@@ -19,3 +19,14 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: ReporterChameleonOutfit
+  job: Reporter
+  equipment:
+    head: ClothingHeadHatFedoraGrey
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterCoatTrench
+    neck: ClothingNeckTieRed
+    gloves: ClothingHandsGlovesFingerless

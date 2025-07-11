@@ -14,6 +14,14 @@
       - material: Steel
         amount: 2
         doAfter: 1
+    - to: signaller
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+      - material: Cable
+        amount: 1
+        doAfter: 1
     - to: trunk
       steps:
       - material: Steel
@@ -42,6 +50,11 @@
         amount: 2
         doAfter: 1
     - to: yJunction
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: xJunction
       steps:
       - material: Steel
         amount: 2
@@ -103,6 +116,20 @@
       steps:
       - tool: Welding
         doAfter: 1
+  - node: signaller
+    entity: DisposalSignaller
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: CableApcStack1 # I have no idea why this does not work
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
   - node: trunk
     entity: DisposalTrunk
     edges:
@@ -157,6 +184,22 @@
       steps:
       - tool: Screwing
         doAfter: 1
+  - node: yJunction
+    entity: DisposalYJunction
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+    - to: junctionflipped
+      steps:
+      - tool: Screwing
+        doAfter: 1
   - node: junctionflipped
     entity: DisposalJunctionFlipped
     edges:
@@ -169,12 +212,12 @@
       steps:
       - tool: Welding
         doAfter: 1
-    - to: yJunction
+    - to: xJunction
       steps:
       - tool: Screwing
         doAfter: 1
-  - node: yJunction
-    entity: DisposalYJunction
+  - node: xJunction
+    entity: DisposalXJunction
     edges:
     - to: start
       completed:
@@ -189,10 +232,7 @@
       steps:
       - tool: Screwing
         doAfter: 1
-    - to: junctionflipped
-      steps:
-      - tool: Screwing
-        doAfter: 1
+  # DisposalBend
   - node: bend
     entity: DisposalBend
     edges:

@@ -6,8 +6,8 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Objects/Fun/toys.rsi
-          state: plushie_h
+        - sprite: Objects/Fun/Plushies/bee.rsi
+          state: icon
     - type: RandomSpawner
       rarePrototypes:
         - FoamBlade
@@ -101,7 +101,7 @@
       - ToyFigurineLawyer
       - ToyFigurineCargoTech
       - ToyFigurineSalvage
-      - ToyFigurineQuartermaster   
+      - ToyFigurineQuartermaster
       - ToyFigurineChiefEngineer
       - ToyFigurineAtmosTech
       - ToyFigurineEngineer

@@ -1,41 +1,140 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from shiptest at commmit https://github.com/shiptest-ss13/Shiptest/commit/440a15fb476a20d77ba28c1fe315c1b659032ce8, edited by Alekshhh, N2 lockers edited by Lamrr",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    { "name": "atmos_door" },
-    { "name": "black_door" },
-    { "name": "blue_door" },
-    { "name": "emergency" },
-    { "name": "emergency_door" },
-    { "name": "emergency_open" },
-    { "name": "fire" },
-    { "name": "fire_door" },
-    { "name": "fire_open" },
-    { "name": "generic" },
-    { "name": "generic_door" },
-    { "name": "generic_icon" },
-    { "name": "generic_open" },
-    { "name": "gray_door" },
-    { "name": "green_door" },
-    { "name": "locked" },
-    { "name": "med" },
-    { "name": "med_door" },
-    { "name": "med_open" },
-    { "name": "mixed_door" },
-    { "name": "n2" },
-    { "name": "n2_door" },
-    { "name": "n2_open" },
-    { "name": "orange_door" },
-    { "name": "pink_door" },
-    { "name": "red_door" },
-    { "name": "unlocked" },
-    { "name": "welded" },
-    { "name": "white_door" },
-    { "name": "yellow_door" }
-  ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from shiptest at commmit https://github.com/shiptest-ss13/Shiptest/commit/440a15fb476a20d77ba28c1fe315c1b659032ce8, edited by Alekshhh, N2 lockers edited by Lamrr, Evac lockers by EmoGarbage404 (GitHub), genpop* derived from Wizards Den SS14 by K-Dynamic (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "atmos_door"
+        },
+        {
+            "name": "black_door"
+        },
+        {
+            "name": "blue_door"
+        },
+        {
+            "name": "emergency"
+        },
+        {
+            "name": "emergency_door"
+        },
+        {
+            "name": "emergency_open"
+        },
+        {
+            "name": "fire"
+        },
+        {
+            "name": "fire_door"
+        },
+        {
+            "name": "fire_open"
+        },
+        {
+            "name": "generic"
+        },
+        {
+            "name": "generic_door"
+        },
+        {
+            "name": "generic_icon"
+        },
+        {
+            "name": "generic_open"
+        },
+        {
+            "name": "gray_door"
+        },
+        {
+            "name": "green_door"
+        },
+        {
+            "name": "locked"
+        },
+        {
+            "name": "med"
+        },
+        {
+            "name": "med_door"
+        },
+        {
+            "name": "med_open"
+        },
+        {
+            "name": "mixed_door"
+        },
+        {
+            "name": "n2"
+        },
+        {
+            "name": "n2_door"
+        },
+        {
+            "name": "n2_open"
+        },
+        {
+            "name": "orange_door"
+        },
+        {
+            "name": "pink_door"
+        },
+        {
+            "name": "red_door"
+        },
+        {
+            "name": "unlocked"
+        },
+        {
+            "name": "welded"
+        },
+        {
+            "name": "white_door"
+        },
+        {
+            "name": "yellow_door"
+        },
+        {
+            "name": "eng"
+        },
+        {
+            "name": "eng_open"
+        },
+        {
+            "name": "eng_evac_door"
+        },
+        {
+            "name": "genpop"
+        },
+        {
+            "name": "genpop_open"
+        },
+        {
+            "name": "genpop_door_1"
+        },
+        {
+            "name": "genpop_door_2"
+        },
+        {
+            "name": "genpop_door_3"
+        },
+        {
+            "name": "genpop_door_4"
+        },
+        {
+            "name": "genpop_door_5"
+        },
+        {
+            "name": "genpop_door_6"
+        },
+        {
+            "name": "genpop_door_7"
+        },
+        {
+            "name": "genpop_door_8"
+        }
+    ]
 }

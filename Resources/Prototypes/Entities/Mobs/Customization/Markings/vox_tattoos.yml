@@ -53,3 +53,31 @@
   sprites:
   - sprite: Mobs/Customization/vox_tattoos.rsi
     state: nightling_s
+    
+- type: marking
+  id: TattooEyeVoxRight
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: tattoo_eye_vox_r
+
+- type: marking
+  id: TattooEyeVoxLeft
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: tattoo_eye_vox_l

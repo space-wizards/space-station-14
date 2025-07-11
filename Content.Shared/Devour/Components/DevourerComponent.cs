@@ -12,19 +12,19 @@ namespace Content.Shared.Devour.Components;
 [Access(typeof(SharedDevourSystem))]
 public sealed partial class DevourerComponent : Component
 {
-    [DataField("devourAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? DevourAction = "ActionDevour";
 
-    [DataField("devourActionEntity")]
+    [DataField]
     public EntityUid? DevourActionEntity;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundDevour")]
+    [DataField]
     public SoundSpecifier? SoundDevour = new SoundPathSpecifier("/Audio/Effects/demon_consume.ogg")
     {
         Params = AudioParams.Default.WithVolume(-3f),
     };
 
-    [DataField("devourTime")]
+    [DataField]
     public float DevourTime = 3f;
 
     /// <summary>
@@ -33,10 +33,10 @@ public sealed partial class DevourerComponent : Component
     /// NOTE: original intended design was to increase this proportionally with damage thresholds, but those proved quite difficult to get consistently. right now it devours the structure at a fixed timer.
     /// </remarks>
     /// </summary>
-    [DataField("structureDevourTime")]
+    [DataField]
     public float StructureDevourTime = 10f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundStructureDevour")]
+    [DataField]
     public SoundSpecifier? SoundStructureDevour = new SoundPathSpecifier("/Audio/Machines/airlock_creaking.ogg")
     {
         Params = AudioParams.Default.WithVolume(-3f),
@@ -47,10 +47,10 @@ public sealed partial class DevourerComponent : Component
     /// </summary>
     public Container Stomach = default!;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("shouldStoreDevoured")]
-    public bool ShouldStoreDevoured = true;
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("whitelist")]
+    /// <summary>
+    /// Determines what things the devourer can consume.
+    /// </summary>
+    [DataField]
     public EntityWhitelist? Whitelist = new()
     {
         Components = new[]
@@ -60,21 +60,30 @@ public sealed partial class DevourerComponent : Component
     };
 
     /// <summary>
+    /// Determines what things end up in the dragon's stomach if they eat it.
+    /// If it isn't in the whitelist, it's deleted.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? StomachStorageWhitelist;
+
+    /// <summary>
+    /// Determine's the dragon's food preference.  If the eaten thing matches,
+    /// it is rewarded with the reward chemical.  If null, all food is fine.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? FoodPreferenceWhitelist;
+
+    /// <summary>
     /// The chemical ID injected upon devouring
     /// </summary>
-    [DataField("chemical", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
     public string Chemical = "Ichor";
 
     /// <summary>
     /// The amount of ichor injected per devour
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("healRate")]
+    [DataField]
     public float HealRate = 15f;
 
-    /// <summary>
-    /// The favorite food not only feeds you, but also heals
-    /// </summary>
-    [DataField("foodPreference")]
-    public FoodPreference FoodPreference = FoodPreference.All;
 }
 

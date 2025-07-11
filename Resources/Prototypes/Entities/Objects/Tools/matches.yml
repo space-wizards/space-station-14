@@ -108,3 +108,43 @@
     tags:
     - Trash
   - type: SpaceGarbage
+
+- type: entity
+  parent: [Matchbox, BaseSyndicateContraband]
+  id: GorlexMatchbox
+  name: Gorlex match box
+  description: "A pneumatic match box styled after the Gorlex Marauders' equipment. Contains 24 matches."
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Lighters/gorlex.rsi
+  - type: Item
+    sprite: Objects/Tools/Lighters/gorlex.rsi
+  - type: Storage
+    grid:
+    - 0,0,11,1
+  - type: StorageFill
+    contents:
+      - id: GorlexMatchstick
+        amount: 24
+  - type: Matchbox
+
+- type: entity
+  name: match stick
+  parent: [Matchstick, BaseSyndicateContraband]
+  id: GorlexMatchstick
+  description: A military grade match stick, used for lighting fine smokables and noncombatants alike.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Lighters/gorlexmatch.rsi
+    layers:
+      - state: match_unlit
+  - type: Item
+    sprite: Objects/Tools/Lighters/gorlexmatch.rsi
+    heldPrefix: unlit
+    size: Tiny
+  - type: PointLight
+    enabled: false
+    radius: 3
+    color: green
+  - type: Matchstick
+    duration: 30

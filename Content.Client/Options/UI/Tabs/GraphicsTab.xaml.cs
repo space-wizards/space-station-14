@@ -20,6 +20,7 @@ public sealed partial class GraphicsTab : Control
         RobustXamlLoader.Load(this);
 
         Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
+        Control.AddOptionCheckBox(CCVars.AmbientOcclusion, AmbientOcclusionCheckBox);
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
 

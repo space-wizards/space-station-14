@@ -35,8 +35,7 @@
   parent: ClothingShoesBaseButcherable
   id: ClothingShoeSlippersDuck
   name: ducky slippers
-  # description: You wish these made quacking sounds as you walked.
-  description: Comfy, yet haunted by the ghosts of ducks you fed bread to as a child.
+  description: You wish these made quacking sounds as you walked. It's a good thing they don't, though.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Misc/duck-slippers.rsi
@@ -44,7 +43,7 @@
     sprite: Clothing/Shoes/Misc/duck-slippers.rsi
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: FootstepDuck
+      collection: FootstepCarpet
       params:
         variation: 0.07
   - type: Construction
@@ -63,7 +62,7 @@
     sprite: Clothing/Shoes/Misc/lizard-slippers.rsi
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: FootstepLizardSlippers
+      collection: FootstepCarpet
       params:
         variation: 0.02
   - type: Construction
@@ -128,7 +127,7 @@
     sprite: Clothing/Shoes/Boots/speedboots.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Shoes/Boots/speedboots.rsi
   - type: ToggleClothing
@@ -139,8 +138,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: {state: icon-on}
           False: {state: icon}
   - type: StaticPrice
@@ -156,12 +155,14 @@
     tags: []
 
 - type: entity
+  parent: BaseAction
   id: ActionToggleSpeedBoots
   name: Toggle Speed Boots
   description: Toggles the speed boots on and off.
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigItem
+  - type: InstantAction
     event: !type:ToggleActionEvent
 
 - type: entity
@@ -181,3 +182,30 @@
     price: 75
   - type: Tag
     tags: [ ]
+   
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsJump
+  name: jump boots
+  description: High-tech boots that give you the incredible ability to JUMP! With these boots you can jump over lava, chasms and weird chemicals on the floor!
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/jumpboots.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/jumpboots.rsi
+  - type: JumpAbility
+    jumpDistance: 4
+    jumpSound: /Audio/Effects/stealthoff.ogg
+  - type: ActionGrant
+    actions:
+    - ActionGravityJump 
+  - type: ItemActionGrant
+    actions:
+    - ActionGravityJump
+    activeIfWorn: true
+  - type: StaticPrice
+    price: 220
+  - type: Tag
+    tags: []

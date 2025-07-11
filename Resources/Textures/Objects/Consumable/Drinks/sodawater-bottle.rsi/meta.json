@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "modified from space-up_bottle.rsi and inspired by sodawater.rsi by Prole0 (GitHub)",
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon_open"
+        },
+        {
+            "name": "icon_empty"
+        },
+        {
+            "name": "fill-1"
+        },
+        {
+            "name": "fill-2"
+        },
+        {
+            "name": "fill-3"
+        },
+        {
+            "name": "fill-4"
+        },
+        {
+            "name": "fill-5"
+        }
+    ]
+}

@@ -1,0 +1,57 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432, holoplush and magicplush modified by deltanedas (github), rainbowcarplush and inhand sprites modified from carpplush and inhand sprites by ArtisticRoomba",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "carpplush"
+        },
+        {
+            "name": "carpplush-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "carpplush-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "magicplush"
+        },
+        {
+            "name": "holoplush",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "rainbowcarpplush"
+        },
+        {
+            "name": "rainbowcarpplush-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "rainbowcarpplush-inhand-right",
+            "directions": 4
+        }
+    ]
+}

@@ -119,10 +119,6 @@
   - type: Storage
     grid:
     - 0,0,4,1
-  - type: StorageFill
-    contents:
-    - id: CigaretteRandom
-      amount: 10
   - type: ItemCounter
     count:
       tags: [Cigarette]
@@ -196,34 +192,6 @@
       amount: 10
 
 - type: entity
-  id: CigPackMixedMedical
-  parent: CigPackMixedBase
-  name: Dan's soaked smokes
-  suffix: Medical
-  description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
-  - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
-  - type: StorageFill
-    contents:
-    - id: CigaretteIron
-    - id: CigaretteTricordrazine
-    - id: CigaretteDylovene
-    - id: CigaretteDermaline
-    - id: CigaretteArithrazine
-    - id: CigaretteBicaridine
-    - id: CigaretteIpecac
-    - id: CigaretteOmnizine
-      prob: 0.25
-    - id: CigaretteDexalin
-      prob: 0.25
-    - id: CigarettePax
-      prob: 0.10
-
-
-- type: entity
   id: CigPackMixed
   parent: CigPackMixedBase
   name: Dan's soaked smokes
@@ -234,52 +202,67 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
-  - type: StorageFill
-    contents:
-    - id: CigaretteBbqSauce
-      prob: 0.70
-    - id: CigaretteBlackPepper
-      prob: 0.70
-    - id: CigaretteCapsaicinOil
-      prob: 0.70
-    - id: CigaretteBread
-      prob: 0.70
-    - id: CigaretteMilk
-      prob: 0.70
-    - id: CigaretteBanana
-      prob: 0.10
-    - id: CigaretteTHC
-      prob: 0.70
-    - id: CigaretteTricordrazine
-      prob: 0.25
-    - id: CigaretteSpaceDrugs
-      prob: 0.50
-    - id: CigaretteLicoxide
-      prob: 0.10
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        rolls: !type:RangeNumberSelector
+          range: 2, 9
+        tableId: RandomSoakedSmokeTable
 
-- type: entity
-  id: CigPackMixedNasty
-  parent: CigPackMixedBase
-  name: Dan's soaked smokes
-  suffix: Nasty
-  description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
-  - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
-  - type: StorageFill
-    contents:
-    - id: CigaretteSpaceDrugs
-      amount: 2
-    - id: CigaretteWeldingFuel
-      amount: 2
-    - id: CigaretteMold
-      amount: 2
-    - id: CigaretteTHC
+# Entity tables
+
+- type: entityTable
+  id: RandomSoakedSmokeTable
+  table: !type:GroupSelector
+    children:
     - id: CigaretteLicoxide
-      prob: 0.50
-    - id: CigarettePax
-      prob: 0.10
-    - id: CigaretteMuteToxin
-      prob: 0.05
+      weight: 1
+    - id: CigaretteFrezon
+      weight: 1
+    - id: CigarettePhlogiston
+      weight: 1
+    - id: CigaretteWeldingFuel
+      weight: 3
+    - id: CigaretteMold
+      weight: 3
+    - id: CigaretteRadium
+      weight: 3
+    - id: CigaretteOmnizine
+      weight: 4
+    - id: CigaretteTricordrazine
+      weight: 4
+    - id: CigaretteIron
+      weight: 4
+    - id: CigaretteDylovene
+      weight: 4
+    - id: CigaretteDermaline
+      weight: 4
+    - id: CigaretteArithrazine
+      weight: 4
+    - id: CigaretteBicaridine
+      weight: 4
+    - id: CigaretteDexalin
+      weight: 4
+    - id: CigaretteHaloperidol
+      weight: 6
+    - id: CigaretteLaughter
+      weight: 6
+    - id: CigaretteLipolicide
+      weight: 6
+    - id: CigaretteSodiumPolyacrylate
+      weight: 6
+    - id: CigaretteRobustHarvest
+      weight: 6
+    - id: CigaretteBanana
+      weight: 7
+    - id: CigaretteBlackPepper
+      weight: 7
+    - id: CigaretteCapsaicinOil
+      weight: 7
+    - id: CigaretteBbqSauce
+      weight: 7
+    - id: CigaretteNutriment
+      weight: 7
+    - id: CigaretteSaline
+      weight: 7
+

@@ -141,7 +141,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             Category = VerbCategory.Insert,
             Act = () =>
             {
-                _handsSystem.TryDropIntoContainer(args.User, args.Using.Value, component.Container, checkActionBlocker: false, args.Hands);
+                _handsSystem.TryDropIntoContainer((args.User, args.Hands), args.Using.Value, component.Container, checkActionBlocker: false);
                 _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Using.Value)} into {ToPrettyString(uid)}");
                 AfterInsert(uid, component, args.Using.Value, args.User);
             }

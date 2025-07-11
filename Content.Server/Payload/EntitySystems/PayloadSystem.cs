@@ -21,7 +21,6 @@ public sealed class PayloadSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
     private static readonly ProtoId<TagPrototype> PayloadTag = "Payload";
@@ -92,18 +91,18 @@ public sealed class PayloadSystem : EntitySystem
         // ANY payload trigger that gets inserted can grant components. It is up to the construction graphs to determine trigger capacity.
         foreach (var (name, data) in trigger.Components)
         {
-            if (!_componentFactory.TryGetRegistration(name, out var registration))
+            if (!Factory.TryGetRegistration(name, out var registration))
                 continue;
 
             if (HasComp(uid, registration.Type))
                 continue;
 
-            if (_componentFactory.GetComponent(registration.Type) is not Component component)
+            if (Factory.GetComponent(registration.Type) is not Component component)
                 continue;
 
             var temp = (object) component;
             _serializationManager.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(uid, (Component) temp!);
+            AddComp(uid, (Component) temp!);
 
             trigger.GrantedComponents.Add(registration.Type);
         }
@@ -118,7 +117,7 @@ public sealed class PayloadSystem : EntitySystem
 
         foreach (var type in trigger.GrantedComponents)
         {
-            EntityManager.RemoveComponent(uid, type);
+            RemComp(uid, type);
         }
 
         trigger.GrantedComponents.Clear();

@@ -236,6 +236,20 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
+  parent: BoxSurvival
+  id: BoxMimeMoth
+  suffix: Mime, Emergency moth
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodBreadBaguetteCotton
+    - id: DrinkWaterBottleFull
+
+- type: entity
   parent: BoxCardboard
   id: BoxSurvivalSyndicate
   name: extended-capacity survival box

@@ -152,6 +152,43 @@
     - DisposalTagger
 
 - type: entity
+  id: DisposalSignaller
+  parent: DisposalPipeBase
+  name: disposal signaller
+  description: A pipe that emits a signal when in item goes through it.
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "pipe" ]
+      state: conpipe-signaller
+  - type: DisposalTube
+    containerId: DisposalTransit
+  - type: DisposalTransit
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: DeviceLinkSource
+    ports:
+    - ItemDetected
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DisposalSignaller
+  - type: ContainerContainer
+    containers:
+      DisposalTransit: !type:Container
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: conpipe-signaller }
+          Anchored: { state: pipe-signaller }
+  - type: Construction
+    graph: DisposalPipe
+    node: pipe
+    containers:
+    - DisposalTransit
+
+- type: entity
   id: DisposalTrunk
   parent: DisposalPipeBase
   name: disposal trunk
@@ -356,6 +393,7 @@
         mask:
         - SubfloorMask
   - type: Construction
+    graph: DisposalPipe
     node: junctionflipped
     containers:
     - DisposalJunction
@@ -397,6 +435,48 @@
   - type: Construction
     graph: DisposalPipe
     node: yJunction
+    containers:
+    - DisposalJunction
+
+- type: entity
+  id: DisposalXJunction
+  parent: DisposalPipeBase
+  name: disposal x-junction
+  description: A four-way junction. The arrow indicates where items exit.
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "pipe" ]
+      state: conpipe-x
+    visible: true
+  - type: DisposalTube
+    containerId: DisposalJunction
+  - type: DisposalJunction
+    degrees:
+    - 0
+    - -90
+    - 180
+    - 90
+  - type: ContainerContainer
+    containers:
+      DisposalJunction: !type:Container
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: conpipe-x }
+          Anchored: { state: pipe-x }
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - SubfloorMask
+  - type: Construction
+    graph: DisposalPipe
+    node: xJunction
     containers:
     - DisposalJunction
 

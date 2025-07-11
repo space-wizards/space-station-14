@@ -237,21 +237,24 @@
 
 # Represents which damage types should be modified
 # in relation to how they cause bleed rate.
+# Make sure to add any new damage type here.
 - type: damageModifierSet
   id: BloodlossHuman
   coefficients:
-    Blunt: 0.08
-    Slash: 0.25
-    Piercing: 0.2
-    Shock: 0.0
-    Cold: 0.0
-    Heat: -0.5 # heat damage cauterizes wounds, but will still hurt obviously.
-    Poison: 0.0
-    Radiation: 0.0
     Asphyxiation: 0.0
     Bloodloss: 0.0 # no double dipping
-    Cellular: 0.0
+    Blunt: 0.08
     Caustic: 0.0
+    Cellular: 0.0
+    Cold: 0.0
+    Heat: -0.5 # heat damage cauterizes wounds, but will still hurt obviously.
+    Holy: 0
+    Piercing: 0.2
+    Poison: 0.0
+    Radiation: 0.0
+    Shock: 0.0
+    Slash: 0.25
+    Structural: 0.0
 
 - type: damageModifierSet
   id: SlimePet # Very survivable slimes

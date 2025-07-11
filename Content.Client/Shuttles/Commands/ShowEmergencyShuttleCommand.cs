@@ -3,15 +3,15 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Shuttles.Commands;
 
-public sealed class ShowEmergencyShuttleCommand : IConsoleCommand
+public sealed class ShowEmergencyShuttleCommand : LocalizedEntityCommands
 {
-    public string Command => "showemergencyshuttle";
-    public string Description => "Shows the expected position of the emergency shuttle";
-    public string Help => $"{Command}";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    [Dependency] private readonly ShuttleSystem _shuttle = default!;
+
+    public override string Command => "showemergencyshuttle";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var tstalker = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>();
-        tstalker.EnableShuttlePosition ^= true;
-        shell.WriteLine($"Set emergency shuttle debug to {tstalker.EnableShuttlePosition}");
+        _shuttle.EnableShuttlePosition ^= true;
+        shell.WriteLine(Loc.GetString($"cmd-showemergencyshuttle-status", ("status", _shuttle.EnableShuttlePosition)));
     }
 }

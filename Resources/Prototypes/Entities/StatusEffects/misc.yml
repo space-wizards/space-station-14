@@ -1,0 +1,52 @@
+- type: entity
+  id: StatusEffectBase
+  abstract: true
+  components:
+  - type: StatusEffect
+  - type: Sprite
+    drawdepth: Effects
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: StatusEffectBase
+  id: MobStatusEffectBase
+  abstract: true
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+
+# The creature sleeps so heavily that nothing can wake him up. Not even its own death.
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectForcedSleeping
+  name: forced sleep
+  components:
+  - type: ForcedSleepingStatusEffect
+
+# This creature is asleep because it's disconnected from the game.
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectSSDSleeping
+  name: forced sleep
+  components:
+  - type: ForcedSleepingStatusEffect
+
+# Blurs your vision and makes you randomly fall asleep
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectDrowsiness
+  name: drowsiness
+  components:
+  - type: DrowsinessStatusEffect
+
+# Adds drugs overlay
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectSeeingRainbow
+  name: hallucinations
+  components:
+  - type: SeeingRainbowsStatusEffect
