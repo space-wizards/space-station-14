@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Alert;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -14,7 +13,6 @@ namespace Content.Shared.StatusEffectNew;
 /// </summary>
 public abstract partial class SharedStatusEffectsSystem : EntitySystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
@@ -28,9 +26,6 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         base.Initialize();
 
         InitializeRelay();
-
-        SubscribeLocalEvent<StatusEffectComponent, StatusEffectAppliedEvent>(OnStatusEffectApplied);
-        SubscribeLocalEvent<StatusEffectComponent, StatusEffectRemovedEvent>(OnStatusEffectRemoved);
 
         SubscribeLocalEvent<StatusEffectContainerComponent, ComponentInit>(OnStatusContainerInit);
         SubscribeLocalEvent<StatusEffectContainerComponent, ComponentShutdown>(OnStatusContainerShutdown);
@@ -115,17 +110,6 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         Dirty(args.Entity, statusComp);
     }
 
-    private void AddStatusEffectTime(EntityUid effect, TimeSpan delta)
-    {
-        if (!_effectQuery.TryComp(effect, out var effectComp))
-            return;
-
-        effectComp.EndEffectTime += delta;
-        Dirty(effect, effectComp);
-
-        ShowAlertIfNeeded(effectComp);
-    }
-
     private void SetStatusEffectTime(EntityUid effect, TimeSpan? duration)
     {
         if (!_effectQuery.TryComp(effect, out var effectComp))
@@ -142,8 +126,6 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
             effectComp.EndEffectTime = _timing.CurTime + duration;
 
         Dirty(effect, effectComp);
-
-        ShowAlertIfNeeded(effectComp);
     }
 
     private void UpdateStatusEffectTime(EntityUid effect, TimeSpan? duration)
@@ -167,20 +149,6 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         }
 
         Dirty(effect, effectComp);
-
-        ShowAlertIfNeeded(effectComp);
-    }
-
-
-    private void OnStatusEffectApplied(Entity<StatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
-    {
-        ShowAlertIfNeeded(ent);
-    }
-
-    private void OnStatusEffectRemoved(Entity<StatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
-    {
-        if (ent.Comp is { AppliedTo: { } appliedTo, Alert: { } alert })
-            _alerts.ClearAlert(appliedTo, alert);
     }
 
     private bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
@@ -235,25 +203,37 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
             return false;
 
         statusEffect = effect;
-
-        if (duration != null)
-            effectComp.EndEffectTime = _timing.CurTime + duration;
-
-        Dirty(effect.Value, effectComp);
+        SetStatusEffectEndTime((effect.Value, effectComp), _timing.CurTime + duration);
 
         return true;
     }
 
-    private void ShowAlertIfNeeded(StatusEffectComponent effectComp)
+    private void AddStatusEffectTime(EntityUid effect, TimeSpan delta)
     {
-        if (effectComp is not { AppliedTo: { } appliedTo, Alert: { } alert })
+        if (!_effectQuery.TryComp(effect, out var effectComp))
             return;
 
-        (TimeSpan, TimeSpan)? cooldown = null;
-        if (effectComp.EndEffectTime is { } endTime)
-            cooldown  = (_timing.CurTime, endTime);
+        // If we don't have an end time set, we want to just make the status effect end in delta time from now.
+        SetStatusEffectEndTime((effect, effectComp), (effectComp.EndEffectTime ?? _timing.CurTime) + delta);
+    }
 
-        _alerts.ShowAlert(appliedTo, alert, cooldown: cooldown);
+    private void SetStatusEffectEndTime(Entity<StatusEffectComponent?> ent, TimeSpan? endTime)
+    {
+        if (!_effectQuery.Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.EndEffectTime == endTime)
+            return;
+
+        ent.Comp.EndEffectTime = endTime;
+
+        if (ent.Comp.AppliedTo is not { } appliedTo)
+            return; // Not much we can do!
+
+        var ev = new StatusEffectEndTimeUpdatedEvent(appliedTo, endTime);
+        RaiseLocalEvent(ent, ref ev);
+
+        Dirty(ent);
     }
 }
 
@@ -274,3 +254,11 @@ public readonly record struct StatusEffectRemovedEvent(EntityUid Target);
 /// </summary>
 [ByRefEvent]
 public record struct BeforeStatusEffectAddedEvent(EntProtoId Effect, bool Cancelled = false);
+
+/// <summary>
+/// Raised on an effect entity when its <see cref="StatusEffectComponent.EndEffectTime"/> is updated in any way.
+/// </summary>
+/// <param name="Target">The entity the effect is attached to.</param>
+/// <param name="EndTime">The new end time of the status effect, included for convenience.</param>
+[ByRefEvent]
+public record struct StatusEffectEndTimeUpdatedEvent(EntityUid Target, TimeSpan? EndTime);

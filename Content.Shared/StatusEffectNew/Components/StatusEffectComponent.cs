@@ -22,12 +22,6 @@ public sealed partial class StatusEffectComponent : Component
     public EntityUid? AppliedTo;
 
     /// <summary>
-    /// Status effect indication for the player. If Null, no Alert will be displayed.
-    /// </summary>
-    [DataField]
-    public ProtoId<AlertPrototype>? Alert;
-
-    /// <summary>
     /// When this effect will end. If Null, the effect lasts indefinitely.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
