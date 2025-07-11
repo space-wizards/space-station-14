@@ -18,18 +18,31 @@ public sealed class HolidaySystem : SharedHolidaySystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<TickerLobbyStatusEvent>(EnterLobby); // TODO find a way to do this in shared
+        SubscribeNetworkEvent<HolidaysRefreshedEvent>(RefreshHolidays);
 
         SubscribeLocalEvent<HolidayRsiSwapComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    private void EnterLobby(TickerLobbyStatusEvent _)
+    /// <summary>
+    ///     Update's client holiday list.
+    /// </summary>
+    /// <param name="args">Sent by server HolidaySystem when changing holidays.</param>
+    private void RefreshHolidays(HolidaysRefreshedEvent args)
     {
-        RefreshCurrentHolidays();
+        CurrentHolidays.Clear();
+
+        foreach (var holiday in args.Holidays)
+        {
+            CurrentHolidays.Add(holiday);
+        }
     }
 
+    /// <summary>
+    ///     Swaps the rsi of particularly festive entities during the holiday.
+    /// </summary>
     private void OnAppearanceChange(Entity<HolidayRsiSwapComponent> ent, ref AppearanceChangeEvent args)
     {
+        // Get the holiday enum
         if (!_appearance.TryGetData<string>(ent, HolidayVisuals.Holiday, out var data, args.Component))
             return;
 

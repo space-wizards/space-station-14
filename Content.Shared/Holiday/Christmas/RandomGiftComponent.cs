@@ -8,7 +8,7 @@ namespace Content.Shared.Holiday.Christmas;
 /// <summary>
 /// This is used for gifts with COMPLETELY random things.
 /// </summary>
-[RegisterComponent, Access(typeof(RandomGiftSystem))]
+[RegisterComponent, AutoGenerateComponentState, Access(typeof(RandomGiftSystem))]
 public sealed partial class RandomGiftComponent : Component
 {
     /// <summary>
@@ -39,7 +39,7 @@ public sealed partial class RandomGiftComponent : Component
     /// <summary>
     /// The currently selected entity to give out. Used so content viewers can see inside.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntProtoId? SelectedEntity;
 
     /// <summary>

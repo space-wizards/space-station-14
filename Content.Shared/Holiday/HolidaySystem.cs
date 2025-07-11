@@ -3,6 +3,7 @@ using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Holiday
 {
@@ -16,71 +17,23 @@ namespace Content.Shared.Holiday
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
-        [ViewVariables]
         protected readonly List<HolidayPrototype> CurrentHolidays = new(); // Should this be a HashSet?
 
-        // CCvar
-        [ViewVariables]
-        protected bool Enabled = true;
+        // CCvar.
+        protected bool _enabled;
 
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
+            Subs.CVar(_configManager, CCVars.HolidaysEnabled, value => _enabled = value, true);
 
-            Subs.CVar(_configManager, CCVars.HolidaysEnabled, OnHolidaysEnableChange);
             SubscribeLocalEvent<HolidayVisualsComponent, ComponentInit>(OnVisualsInit);
         }
 
         /// <summary>
-        ///     Iterates through all <see cref="HolidayPrototype"/>s and sets if they should be active.
+        ///     Sets an enum so festive entities know what holiday(s) it is.
         /// </summary>
-        protected void RefreshCurrentHolidays()
-        {
-            CurrentHolidays.Clear();
-
-            // If we're festive-less, leave CurrentHolidays empty
-            if (!Enabled)
-            {
-                RaiseLocalEvent(new HolidaysRefreshedEvent(Enumerable.Empty<HolidayPrototype>()));
-                return;
-            }
-
-            var now = DateTime.Now;
-
-            // Festively find what holidays we're celebrating
-            foreach (var holiday in _prototypeManager.EnumeratePrototypes<HolidayPrototype>())
-            {
-                if (holiday.ShouldCelebrate(now))
-                {
-                    CurrentHolidays.Add(holiday);
-                }
-            }
-
-            RaiseLocalEvent(new HolidaysRefreshedEvent(CurrentHolidays));
-        }
-
-        /// <summary>
-        ///     Function called at round start to run shenanigans (code) stored by each active holiday.
-        /// </summary>
-        protected void DoCelebrate()
-        {
-            foreach (var holiday in CurrentHolidays)
-            {
-                holiday.Celebrate();
-            }
-        }
-
-        /// <summary>
-        ///     Function used when getting CCvar.
-        /// </summary>
-        private void OnHolidaysEnableChange(bool enabled)
-        {
-            Enabled = enabled;
-
-            RefreshCurrentHolidays();
-        }
-
         private void OnVisualsInit(Entity<HolidayVisualsComponent> ent, ref ComponentInit args)
         {
             foreach (var (key, holidays) in ent.Comp.Holidays)
@@ -94,17 +47,20 @@ namespace Content.Shared.Holiday
 
         #region Public API
 
-        /// <returns> All currently active holidays. </returns>
+        /// <returns> All currently active holidays (if cvar is enabled). </returns>
         [PublicAPI]
         public IEnumerable<HolidayPrototype> GetCurrentHolidays()
         {
-            return CurrentHolidays;
+            return !_enabled ? Enumerable.Empty<HolidayPrototype>() : CurrentHolidays;
         }
 
-        /// <returns> True if "holiday" is currently celebrated. </returns>
+        /// <returns> True if argument is currently celebrated. Always false if cvar is false. </returns>
         [PublicAPI]
         public bool IsCurrentlyHoliday(ProtoId<HolidayPrototype> holiday)
         {
+            if (!_enabled)
+                return false;
+
             return _prototypeManager.TryIndex(holiday, out var prototype)
                    && CurrentHolidays.Contains(prototype);
         }
@@ -115,13 +71,9 @@ namespace Content.Shared.Holiday
     /// <summary>
     ///     Event for when the list of currently active holidays has been refreshed.
     /// </summary>
-    public sealed class HolidaysRefreshedEvent : EntityEventArgs
+    [Serializable, NetSerializable]
+    public sealed class HolidaysRefreshedEvent(IEnumerable<HolidayPrototype> holidays) : EntityEventArgs
     {
-        public readonly IEnumerable<HolidayPrototype> Holidays;
-
-        public HolidaysRefreshedEvent(IEnumerable<HolidayPrototype> holidays)
-        {
-            Holidays = holidays;
-        }
+        public readonly IEnumerable<HolidayPrototype> Holidays = holidays;
     }
 }
