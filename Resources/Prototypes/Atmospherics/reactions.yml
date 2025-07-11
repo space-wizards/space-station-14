@@ -40,6 +40,62 @@
   - !type:FrezonProductionReaction {}
 
 - type: gasReaction
+  id: ElectrovaeEMP
+  priority: 2
+  minimumRequirements:
+  - 0     # oxygen
+  - 0     # nitrogen
+  - 0     # carbon dioxide
+  - 0     # plasma
+  - 0     # tritium
+  - 0     # vapor
+  - 0     # ammonia
+  - 0     # n2o
+  - 0     # frezon
+  - 0     # electrovae
+  - 0.01  # charged electrovae
+  effects:
+  - !type:ChargedElectrovaeEmpReaction {}
+
+- type: gasReaction
+  id: ChargeElectrovae
+  priority: 3
+  minimumRequirements:
+  - 0     # oxygen
+  - 0     # nitrogen
+  - 0     # carbon dioxide
+  - 0     # plasma
+  - 0     # tritium
+  - 0     # vapor
+  - 0     # ammonia
+  - 0     # n2o
+  - 0     # frezon
+  - 0.01  # electrovae
+  - 0     # charged electrovae
+  effects:
+  - !type:ElectrovaeChargeReaction {}
+
+- type: gasReaction
+  id: ElectrovaeProduction
+  priority: 4
+  minimumTemperature: 39.15
+  maximumTemperature: 149.15
+  minimumRequirements:
+  - 0     # oxygen
+  - 0.01  # nitrogen
+  - 0     # carbon dioxide
+  - 0     # plasma
+  - 0.01  # tritium
+  - 0     # vapor
+  - 0     # ammonia
+  - 0.01  # n2o
+  - 0     # frezon
+  - 0     # electrovae
+  - 0     # charged electrovae
+  effects:
+  - !type:ElectrovaeProductionReaction {}
+
+- type: gasReaction
   id: AmmoniaOxygenReaction
   priority: 2
   minimumTemperature: 323.149
