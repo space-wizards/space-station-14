@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Coolsurf6
-  changes:
-  - message: Attachbodypart command now functions as intended.
-    type: Fix
-  id: 8250
-  time: '2025-04-19T01:23:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34577
 - author: metalgearsloth
   changes:
   - message: Fix disarm swing sound even if a disarm isn't possible on the target.
@@ -3886,3 +3879,14 @@
   id: 8762
   time: '2025-07-10T21:37:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38914
+- author: Ertanic and whatston3
+  changes:
+  - message: The spray painter can now paint gas canisters, crates, lockers, and floor
+      decals.
+    type: Add
+  - message: The spray painter now consumes compressed paint, available from the YouTool
+      or printable in the autolathe.
+    type: Tweak
+  id: 8763
+  time: '2025-07-11T00:36:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37341
