@@ -121,6 +121,8 @@
       weight: 2.0
     - id: XenoArtifactEffectCreationGasAmmonia
       weight: 3.0
+    - id: XenoArtifactEffectCreationGasElectrovae
+      weight: 1.0
     - id: XenoArtifactEffectCreationGasFrezon
       weight: 1.0
     - id: XenoArtifactEffectCreationGasNitrousOxide
@@ -1346,6 +1348,15 @@
   - type: XAECreateGas
     gases:
       Ammonia: 300
+
+- type: entity
+  id: XenoArtifactEffectCreationGasElectrovae
+  parent: BaseXenoArtifactEffect
+  description: Expels electrovae
+  components:
+  - type: XAECreateGas
+    gases:
+      Electrovae: 300
 
 - type: entity
   id: XenoArtifactEffectCreationGasFrezon
