@@ -358,9 +358,13 @@
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
+    - FullAuto #Just allows people to hold down left click
+  - type: Battery 
+    maxCharge: 3000 # ~2:30 minutes for recharge
+    startingCharge: 3000
   - type: HitscanBatteryAmmoProvider
     proto: IgnitionRedLaser
-    fireCost: 62.5
+    fireCost: 30
   - type: StaticPrice
     price: 300
 

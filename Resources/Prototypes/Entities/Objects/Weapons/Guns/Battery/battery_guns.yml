@@ -252,9 +252,18 @@
     magState: mag
     steps: 5
     zeroVisible: true
+  - type: Gun #Starlight - Start
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto #Just allows people to hold down left click
+  - type: Battery 
+    maxCharge: 3000 # ~2:30 minutes for recharge
+    startingCharge: 3000
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
-    fireCost: 62.5
+    fireCost: 30 #Starlight - End
 
 #- type: entity
 #  name: pulse pistol
@@ -370,7 +379,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
     proto: RedHeavyLaser
-    fireCost: 100
+    fireCost: 40 #Starlight
   - type: Tag
     tags:
     - TurretCompatibleWeapon
@@ -427,7 +436,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
     proto: XrayLaser
-    fireCost: 100
+    fireCost: 40 #Starlight
   - type: MagazineVisuals
     magState: mag
     steps: 5
