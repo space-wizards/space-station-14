@@ -15,7 +15,7 @@
                 Columns="3"
                 HorizontalAlignment="Center"
                 Margin="5"
-                ButtonList="1,5,10,15,20,25,30,50,100"
+                ButtonList="1,2,3,4,5,10,15,20,25,30,50,100"
                 RadioGroup="True">
             </ui:ButtonGrid>
             <Control VerticalExpand="True" />

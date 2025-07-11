@@ -34,6 +34,15 @@ namespace Content.Shared.Chemistry
                 case "1":
                     ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U1;
                     break;
+                case "2":
+                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U2;
+                    break;
+                case "3":
+                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U3;
+                    break;
+                case "4":
+                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U4;
+                    break;
                 case "5":
                     ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U5;
                     break;
@@ -98,6 +107,9 @@ namespace Content.Shared.Chemistry
     public enum ReagentDispenserDispenseAmount
     {
         U1 = 1,
+        U2 = 2,
+        U3 = 3,
+        U4 = 4,
         U5 = 5,
         U10 = 10,
         U15 = 15,
