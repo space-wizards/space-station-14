@@ -223,6 +223,7 @@
   - type: ActiveRadio
     channels:
     - Binary
+  - type: CyborgSparkEffect
 
 - type: entity
   parent: [ BaseBorgiChassis, BaseBorgTransponder ]
@@ -238,7 +239,10 @@
         state: corgi
       name: borgi
     - type: IonStormTarget
-    - type: CyborgSparkEffect
+    - type: Access
+      enabled: false
+      tags:
+      - Borg
 
 - type: entity
   parent: BaseStationBorgiChassis
