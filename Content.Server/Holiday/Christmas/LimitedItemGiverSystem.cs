@@ -39,8 +39,8 @@ public sealed class LimitedItemGiverSystem : EntitySystem
         if (comp.GrantedPlayers.Contains(actor.PlayerSession.UserId) ||
             comp.RequiredHoliday is { } holiday && !_holiday.IsCurrentlyHoliday(holiday))
         {
-            if (comp.DeniedPopup is { } denied)
-                _popup.PopupEntity(Loc.GetString(comp.DeniedPopup), giver, args.User);
+            if (comp.DeniedPopup is { } deniedLoc)
+                _popup.PopupEntity(Loc.GetString(deniedLoc), giver, args.User);
 
             return;
         }
@@ -57,7 +57,7 @@ public sealed class LimitedItemGiverSystem : EntitySystem
 
         comp.GrantedPlayers.Add(actor.PlayerSession.UserId);
 
-        if (comp.ReceivedPopup is { } received)
-            _popup.PopupEntity(Loc.GetString(comp.ReceivedPopup), giver, args.User);
+        if (comp.ReceivedPopup is { } receivedLoc)
+            _popup.PopupEntity(Loc.GetString(receivedLoc), giver, args.User);
     }
 }

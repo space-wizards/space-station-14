@@ -14,7 +14,7 @@ public sealed partial class LimitedItemGiverComponent : Component
     /// <summary>
     /// Santa knows who you are behind the screen, only one gift per player per round!
     /// </summary>
-    public HashSet<NetUserId> GrantedPlayers = new();
+    public readonly HashSet<NetUserId> GrantedPlayers = new();
 
     /// <summary>
     /// Selects what entities can be given out by the giver.

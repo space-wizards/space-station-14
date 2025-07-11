@@ -14,7 +14,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Holiday.Christmas;
 
 /// <summary>
-///     This handles granting players their gift.
+///     System for granting players a totally random item when using an entity.
 /// </summary>
 public sealed class RandomGiftSystem : EntitySystem
 {
