@@ -27,30 +27,13 @@
 
 - type: entity
   id: OrganDionaBrain
-  parent: [BaseDionaOrgan, OrganHumanBrain, BaseOrganBrain]
+  parent: [BaseOrganBrain, BaseDionaOrgan]
   name: brain
   description: "The central hub of a diona's pseudo-neurological activity, its root-like tendrils search for its former body."
   components:
-  - type: Item
-    size: Small
-    heldPrefix: brain
   - type: Sprite
     state: brain
-  - type: SolutionContainerManager
-    solutions:
-      organ:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-      Lung:
-        maxVol: 100
-        canReact: False
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: GreyMatter
-          Quantity: 5
+
 
 - type: entity
   id: OrganDionaEyes
