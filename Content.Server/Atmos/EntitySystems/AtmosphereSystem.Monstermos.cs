@@ -413,18 +413,11 @@ namespace Content.Server.Atmos.EntitySystems
                         DebugTools.Assert(otherTile.AdjacentBits.IsFlagSet(direction));
                         DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
 
-                        Log.Debug("PRE-considering direction " + otherTile.GridIndices + " and " + otherTile2.GridIndices + ", allowed flow " + otherTile.AdjacentBits + ", and " + otherTile2.AdjacentBits);
-                        ConsiderFirelocks(ent, otherTile, otherTile2);
-                        Log.Debug("Checking dir flags at " + otherTile.GridIndices + ", allowed flow " + otherTile.AdjacentBits + ", desired flow " + direction);
 
-
-                        Log.Debug("POST-considering direction " + otherTile.GridIndices + " and"  + otherTile2.GridIndices + ", allowed flow " + otherTile.AdjacentBits + ", and " + otherTile2.AdjacentBits);
                         // The firelocks might have closed on us.
                         if (!otherTile.AdjacentBits.IsFlagSet(direction))
-                        {
-                            Log.Debug("CONTINUED AT " + otherTile.GridIndices);
                             continue;
-                        }
+
                         otherTile2.MonstermosInfo = new MonstermosInfo { LastQueueCycle = queueCycle };
                         _depressurizeTiles[tileCount++] = otherTile2;
                         if (tileCount >= limit)
