@@ -211,7 +211,11 @@ public static class ServerPackaging
             contentAssemblies,
             cancel: cancel);
 
-        await RobustServerPackaging.WriteServerResources(contentDir, inputPassResources, cancel);
+        await RobustServerPackaging.WriteServerResources(
+            contentDir,
+            inputPassResources,
+            SharedPackaging.AdditionalIgnoredResources,
+            cancel);
 
         if (hybridAcz)
         {
