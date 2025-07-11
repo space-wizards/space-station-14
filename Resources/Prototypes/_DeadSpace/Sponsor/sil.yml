@@ -62,6 +62,8 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
+  - type: HardsuitIdentification
+    nonlethal: true
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
