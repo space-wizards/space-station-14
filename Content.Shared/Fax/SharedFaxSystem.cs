@@ -65,7 +65,6 @@ public abstract class SharedFaxSystem : EntitySystem
         SubscribeLocalEvent<FaxMachineComponent, GotEmaggedEvent>(OnEmagged);
 
         // UI
-        SubscribeLocalEvent<FaxMachineComponent, AfterActivatableUIOpenEvent>(OnToggleInterface);
         SubscribeLocalEvent<FaxMachineComponent, FaxFileMessage>(OnFileButtonPressed);
         SubscribeLocalEvent<FaxMachineComponent, FaxCopyMessage>(OnCopyButtonPressed);
         SubscribeLocalEvent<FaxMachineComponent, FaxSendMessage>(OnSendButtonPressed);
@@ -253,11 +252,6 @@ public abstract class SharedFaxSystem : EntitySystem
             return;
 
         args.Handled = true;
-    }
-
-    private void OnToggleInterface(Entity<FaxMachineComponent> ent, ref AfterActivatableUIOpenEvent args)
-    {
-        UpdateUserInterface(ent);
     }
 
     private void OnFileButtonPressed(Entity<FaxMachineComponent> ent, ref FaxFileMessage args)
