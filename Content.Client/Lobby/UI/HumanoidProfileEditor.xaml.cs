@@ -527,7 +527,17 @@ namespace Content.Client.Lobby.UI
                 group.Add(trait.ID);
             }
 
-            BoxContainer? firstCategory = null;
+            var firstCategory = false;
+            var disableTraitLabel = new Label
+            {
+                Text = Loc.GetString("humanoid-profile-editor-antag-disable-trait"),
+                FontColorOverride = Color.Gray,
+                Margin = new Thickness(0, 10, 0, 0),
+                StyleClasses = { StyleBase.StyleClassItalic },
+                SizeFlagsStretchRatio = 3,
+                HorizontalExpand = true,
+            };
+
             // Create UI view from model
             foreach (var (categoryId, categoryTraits) in traitGroups)
             {
@@ -549,8 +559,11 @@ namespace Content.Client.Lobby.UI
                         VerticalAlignment = VAlignment.Bottom,
                     });
 
-                    if (firstCategory == null)
-                        firstCategory = box;
+                    if (!firstCategory)
+                    {
+                        firstCategory = true;
+                        box.AddChild(disableTraitLabel);
+                    }
 
                     TraitsList.AddChild(box);
                 }
@@ -568,10 +581,7 @@ namespace Content.Client.Lobby.UI
 
                     selector.Container.PanelOverride = new StyleBoxFlat(bgColor);
                     selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
-                    selector.CheckboxAntagDisable.Disabled = !selector.Preference || !trait.AllowAntagDisable;
-
-                    if (!trait.AllowAntagDisable)
-                        selector.CheckboxAntagDisable.Visible = false;
+                    selector.CheckboxAntagDisable.Visible = selector.Preference && trait.AllowAntagDisable;
 
                     if (selector.Preference)
                         selectionCount += trait.Cost;
@@ -582,12 +592,12 @@ namespace Content.Client.Lobby.UI
                     {
                         if (preference)
                         {
-                            selector.CheckboxAntagDisable.Disabled = false;
+                            selector.CheckboxAntagDisable.Visible = false;
                             Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
                         }
                         else
                         {
-                            selector.CheckboxAntagDisable.Disabled = true;
+                            selector.CheckboxAntagDisable.Visible = true;
                             Profile?.AntagDisableTraitPreferences.Remove(trait.ID);
                             Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
                         }
@@ -632,22 +642,11 @@ namespace Content.Client.Lobby.UI
                         selector.Checkbox.Label.FontColorOverride = Color.Red;
                     }
 
+                    if (selector.CheckboxAntagDisable.Visible)
+                        disableTraitLabel.FontColorOverride = Color.White;
+
                     TraitsList.AddChild(selector);
                 }
-            }
-
-            // If there's a category, add a note
-            if (firstCategory != null)
-            {
-                var disableTraitLabel = new Label
-                {
-                    Text = Loc.GetString("humanoid-profile-editor-antag-disable-trait"),
-                    Margin = new Thickness(0, 10, 0, 0),
-                    StyleClasses = { StyleBase.StyleClassItalic },
-                    SizeFlagsStretchRatio = 3,
-                    HorizontalExpand = true,
-                };
-                firstCategory.AddChild(disableTraitLabel);
             }
         }
 

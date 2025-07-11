@@ -37,6 +37,12 @@ public sealed class TraitSystem : EntitySystem
             return;
         }
 
+        if (args.Profile.TraitPreferences.Count == 0)
+            return;
+
+        // We add the TraitsComponent here to remember all the traits that were applied
+        var traitsComp = EnsureComp<TraitsComponent>(args.Mob);
+
         foreach (var traitId in args.Profile.TraitPreferences)
         {
             if (!_prototypeManager.TryIndex<TraitPrototype>(traitId, out var traitPrototype))
@@ -51,6 +57,8 @@ public sealed class TraitSystem : EntitySystem
 
             // Add all components required by the prototype
             EntityManager.AddComponents(args.Mob, traitPrototype.Components, false);
+
+            traitsComp.AppliedTraits.Add(new (traitId, args.Profile.AntagDisableTraitPreferences.Contains(traitId)));
 
             // Add item required by the trait
             if (traitPrototype.TraitGear == null)
@@ -71,27 +79,31 @@ public sealed class TraitSystem : EntitySystem
     // We optionally disable traits for antags that should have them disabled.
     private void OnRoleAddedEvent(RoleAddedEvent args)
     {
-        if (args.Mind.OwnedEntity == null || args.Mind.UserId == null || args.MindRole.AntagPrototype == null || !_prototypeManager.TryIndex(args.MindRole.AntagPrototype, out var antag) || !antag.RevertTraits)
+        if (args.MindEntity.Comp.OwnedEntity == null || args.MindRoleEntity.Comp.AntagPrototype == null)
             return;
 
-        // TODO: When we have a proper way to track character profiles to characters, it should be used here instead.
-        var pref = (HumanoidCharacterProfile) _preferences.GetPreferences(args.Mind.UserId.Value).SelectedCharacter;
+        if (!TryComp<TraitsComponent>(args.MindEntity.Comp.OwnedEntity, out var traitsComp) ||
+            !_prototypeManager.TryIndex(args.MindRoleEntity.Comp.AntagPrototype, out var antag) || !antag.RevertTraits)
+            return;
 
-        foreach (var traitId in pref.TraitPreferences)
+        var traitSet = traitsComp.AppliedTraits;
+
+        foreach (var trait in traitSet)
         {
-            if (!pref.AntagDisableTraitPreferences.Contains(traitId))
+            if (!trait.Revertable)
                 continue;
 
-            if (!_prototypeManager.TryIndex(traitId, out var traitPrototype))
+            if (!_prototypeManager.TryIndex(trait.Trait, out var traitPrototype))
             {
-                Log.Warning($"No trait found with ID {traitId}!");
+                Log.Warning($"No trait found with ID {trait.Trait}!");
                 return;
             }
 
-            if (_whitelistSystem.CheckBoth(args.Mind.OwnedEntity.Value, traitPrototype.Blacklist, traitPrototype.Whitelist))
+            if (_whitelistSystem.CheckBoth(args.MindEntity.Comp.OwnedEntity.Value, traitPrototype.Blacklist, traitPrototype.Whitelist))
                 continue;
 
-            EntityManager.RemoveComponents(args.Mind.OwnedEntity.Value, traitPrototype.Components);
+            EntityManager.RemoveComponents(args.MindEntity.Comp.OwnedEntity.Value, traitPrototype.Components);
+            traitsComp.AppliedTraits.Remove(trait);
         }
     }
 }

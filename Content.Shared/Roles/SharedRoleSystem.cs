@@ -151,8 +151,7 @@ public abstract class SharedRoleSystem : EntitySystem
         //Meaning any mind role checks could return wrong results, since they just return the first match they find
 
         var mindRoleId = Spawn(protoId, MapCoordinates.Nullspace);
-        EnsureComp<MindRoleComponent>(mindRoleId);
-        var mindRoleComp = Comp<MindRoleComponent>(mindRoleId);
+        var mindRoleComp = EnsureComp<MindRoleComponent>(mindRoleId);
 
         mindRoleComp.Mind = (mindId,mind);
         if (jobPrototype is not null)
@@ -170,7 +169,7 @@ public abstract class SharedRoleSystem : EntitySystem
 
         // RoleType refresh, Role time tracking, Update Admin playerlist
 
-        var message = new RoleAddedEvent(mindRoleId, mindRoleComp, mindId, mind, update, silent);
+        var message = new RoleAddedEvent((mindRoleId, mindRoleComp), (mindId, mind), update, silent);
         RaiseLocalEvent(mindId, message, true);
 
         var name = Loc.GetString(protoEnt.Name);

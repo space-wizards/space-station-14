@@ -614,7 +614,7 @@ namespace Content.Shared.Preferences
 
 
             var antagDisableTraits = AntagDisableTraitPreferences
-                .Where(prototypeManager.HasIndex)
+                .Where(id => prototypeManager.TryIndex(id, out var trait) && trait.AllowAntagDisable && traits.Contains(id))
                 .ToList();
 
             Name = name;
@@ -638,10 +638,10 @@ namespace Content.Shared.Preferences
             _antagPreferences.UnionWith(antags);
 
             _traitPreferences.Clear();
-            _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager));
+            _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager, true));
 
             _antagDisableTraitPreferences.Clear();
-            _antagDisableTraitPreferences.UnionWith(GetValidTraits(antagDisableTraits, prototypeManager));
+            _antagDisableTraitPreferences.UnionWith(GetValidTraits(antagDisableTraits, prototypeManager, false));
 
             // Checks prototypes exist for all loadouts and dump / set to default if not.
             var toRemove = new ValueList<string>();
@@ -666,7 +666,7 @@ namespace Content.Shared.Preferences
         /// <summary>
         /// Takes in an IEnumerable of traits and returns a List of the valid traits.
         /// </summary>
-        public List<ProtoId<TraitPrototype>> GetValidTraits(IEnumerable<ProtoId<TraitPrototype>> traits, IPrototypeManager protoManager)
+        public List<ProtoId<TraitPrototype>> GetValidTraits(IEnumerable<ProtoId<TraitPrototype>> traits, IPrototypeManager protoManager, bool evaluateGroups)
         {
             // Track points count for each group.
             var groups = new Dictionary<string, int>();
@@ -683,6 +683,10 @@ namespace Content.Shared.Preferences
                     result.Add(trait);
                     continue;
                 }
+
+                // If we don't concern ourselves with groups, we stop here.
+                if (!evaluateGroups)
+                    continue;
 
                 // No category so dump it.
                 if (!protoManager.TryIndex(traitProto.Category, out var category))

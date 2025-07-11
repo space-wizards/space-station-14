@@ -25,10 +25,10 @@ public sealed class JobSystem : SharedJobSystem
 
     private void OnRoleAddedEvent(RoleAddedEvent args)
     {
-        MindOnDoGreeting(args.MindId, args.Mind, args);
+        MindOnDoGreeting(args.MindEntity.Owner, args.MindEntity.Comp, args);
 
         if (args.RoleTypeUpdate)
-            _roles.RoleUpdateMessage(args.Mind);
+            _roles.RoleUpdateMessage(args.MindEntity.Comp);
     }
 
     private void OnRoleRemovedEvent(RoleRemovedEvent args)
