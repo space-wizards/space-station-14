@@ -187,6 +187,11 @@ public sealed class RespiratorSystem : EntitySystem
         return (ent.Comp.Saturation > ent.Comp.SuffocationThreshold);
     }
 
+    /// <summary>
+    /// Checks if it's safe for a given entity to breathe the air from the environment it is currently situated in.
+    /// </summary>
+    /// <param name="ent">The entity attempting to metabolize the gas.</param>
+    /// <returns>Returns true only if the air is not toxic, and it wouldn't suffocate.</returns>
     public bool CanMetabolizeInhaledAir(Entity<RespiratorComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -206,12 +211,11 @@ public sealed class RespiratorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks if a given entity can safely metabolize a given gas mixture. Returns false if it would start suffocating,
-    /// or if the air is toxic.
+    /// Checks if a given entity can safely metabolize a given gas mixture.
     /// </summary>
     /// <param name="ent">The entity attempting to metabolize the gas.</param>
     /// <param name="gas">The gas mixture we are trying to metabolize.</param>
-    /// <returns></returns>
+    /// <returns>Returns true only if the gas mixture is not toxic, and it wouldn't suffocate.</returns>
     public bool CanMetabolizeInhaledAir(Entity<RespiratorComponent?> ent, GasMixture gas)
     {
         if (!Resolve(ent, ref ent.Comp))
