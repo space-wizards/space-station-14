@@ -601,10 +601,8 @@ namespace Content.Server.Atmos.EntitySystems
             // This ensures that UpdateAdjacentTiles has updated data before updating flags.
             // This allows monstermos' floodfill check that determines if firelocks have dropped
             // to work correctly.
-            var tilegridAtmosTile = GetOrNewTile(ent.Owner, ent.Comp1, tile.GridIndices);
-            var othergridAtmosTile = GetOrNewTile(ent.Owner, ent.Comp1, other.GridIndices);
-            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, tilegridAtmosTile);
-            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, othergridAtmosTile);
+            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, tile);
+            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, other);
 
             UpdateAdjacentTiles(ent, tile);
             UpdateAdjacentTiles(ent, other);
