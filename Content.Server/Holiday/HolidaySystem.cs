@@ -5,7 +5,7 @@ using Content.Shared.Holiday;
 namespace Content.Server.Holiday;
 
 // To move to shared, this needs
-//      - a good way to periodically updated the holiday (i.e. shared knowing when we go to lobby)
+//      - tracking when we go to lobby or start the round
 //      - serverwide announcements in shared
 /// <inheritdoc />
 public sealed class HolidaySystem : SharedHolidaySystem
@@ -25,10 +25,10 @@ public sealed class HolidaySystem : SharedHolidaySystem
         if (!Enabled)
             return;
 
-        switch (eventArgs.New)
+        switch (eventArgs.New) // Part one of keeping this in server
         {
             case GameRunLevel.PreRoundLobby:
-                RefreshCurrentHolidays(); // Part one of keeping this in server
+                RefreshCurrentHolidays();
                 break;
             case GameRunLevel.InRound:
                 DoGreet();
