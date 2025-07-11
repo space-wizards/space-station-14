@@ -23,7 +23,7 @@
     Bola: 6
   # security officers need to follow a diet regimen!
   contrabandInventory:
-    WeaponMeleeNeedle: 2
+    WeaponMeleeNeedle: 3
     FoodDonutHomer: 12
     FoodBoxDonut: 2
     #box evidence
