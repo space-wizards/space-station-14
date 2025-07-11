@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Whitelist;
@@ -77,53 +78,59 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         effectComp.EndEffectTime += delta;
         Dirty(effect, effectComp);
 
-        if (effectComp is { AppliedTo: not null, Alert: not null })
-        {
-            (TimeSpan Start, TimeSpan End)? cooldown = effectComp.EndEffectTime is null
-                ? null
-                : (_timing.CurTime, effectComp.EndEffectTime.Value);
-            _alerts.ShowAlert(
-                effectComp.AppliedTo.Value,
-                effectComp.Alert.Value,
-                cooldown: cooldown
-            );
-        }
+        ShowAlertIfNeeded(effectComp);
     }
 
-    private void SetStatusEffectTime(EntityUid effect, TimeSpan duration)
+    private void SetStatusEffectTime(EntityUid effect, TimeSpan? duration)
     {
         if (!_effectQuery.TryComp(effect, out var effectComp))
             return;
 
-        effectComp.EndEffectTime = _timing.CurTime + duration;
+        if (duration is null)
+        {
+            if(effectComp.EndEffectTime is null)
+                return;
+
+            effectComp.EndEffectTime = null;
+        }
+        else
+            effectComp.EndEffectTime = _timing.CurTime + duration;
+
         Dirty(effect, effectComp);
 
-        if (effectComp is { AppliedTo: not null, Alert: not null })
-        {
-            (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null
-                ? null
-                : (_timing.CurTime, effectComp.EndEffectTime.Value);
-            _alerts.ShowAlert(
-                effectComp.AppliedTo.Value,
-                effectComp.Alert.Value,
-                cooldown: cooldown
-            );
-        }
+        ShowAlertIfNeeded(effectComp);
     }
+
+    private void UpdateStatusEffectTime(EntityUid effect, TimeSpan? duration)
+    {
+        if (!_effectQuery.TryComp(effect, out var effectComp))
+            return;
+
+        // It's already infinitely long
+        if (effectComp.EndEffectTime is null)
+            return;
+
+        if (duration is null)
+            effectComp.EndEffectTime = null;
+        else
+        {
+            var newEndTime = _timing.CurTime + duration;
+            if (effectComp.EndEffectTime >= newEndTime)
+                return;
+
+            effectComp.EndEffectTime = newEndTime;
+        }
+
+        Dirty(effect, effectComp);
+
+        ShowAlertIfNeeded(effectComp);
+    }
+
 
     private void OnStatusEffectApplied(Entity<StatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        if (ent.Comp is { AppliedTo: not null, Alert: not null })
-        {
-            (TimeSpan, TimeSpan)? cooldown = ent.Comp.EndEffectTime is null
-                ? null
-                : (_timing.CurTime, ent.Comp.EndEffectTime.Value);
-            _alerts.ShowAlert(
-                ent.Comp.AppliedTo.Value,
-                ent.Comp.Alert.Value,
-                cooldown: cooldown
-            );
-        }
+        StatusEffectComponent statusEffect = ent;
+        ShowAlertIfNeeded(statusEffect);
     }
 
     private void OnStatusEffectRemoved(Entity<StatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
@@ -153,6 +160,64 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
             return false;
 
         return true;
+    }
+
+    /// <summary>
+    /// Attempts to add a status effect to the specified entity. Returns True if the effect is added, does not check if one
+    /// already exists as it's intended to be called after a check for an existing effect has already failed.
+    /// </summary>
+    /// <param name="target">The target entity to which the effect should be added.</param>
+    /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
+    /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
+    /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if we couldn't create one.</param>
+    private bool TryAddStatusEffect(
+        EntityUid target,
+        EntProtoId effectProto,
+        [NotNullWhen(true)] out EntityUid? statusEffect,
+        TimeSpan? duration = null
+    )
+    {
+        statusEffect = null;
+        if (!CanAddStatusEffect(target, effectProto))
+            return false;
+
+        var container = EnsureComp<StatusEffectContainerComponent>(target);
+
+        //And only if all checks passed we spawn the effect
+        var effect = PredictedSpawnAttachedTo(effectProto, Transform(target).Coordinates);
+        _transform.SetParent(effect, target);
+        if (!_effectQuery.TryComp(effect, out var effectComp))
+            return false;
+
+        statusEffect = effect;
+
+        if (duration != null)
+            effectComp.EndEffectTime = _timing.CurTime + duration;
+
+        container.ActiveStatusEffects.Add(effect);
+        effectComp.AppliedTo = target;
+        Dirty(target, container);
+        Dirty(effect, effectComp);
+
+        var ev = new StatusEffectAppliedEvent(target);
+        RaiseLocalEvent(effect, ref ev);
+
+        return true;
+    }
+
+    private void ShowAlertIfNeeded(StatusEffectComponent effectComp)
+    {
+        if (effectComp is { AppliedTo: not null, Alert: not null })
+        {
+            (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null
+                ? null
+                : (_timing.CurTime, effectComp.EndEffectTime.Value);
+            _alerts.ShowAlert(
+                effectComp.AppliedTo.Value,
+                effectComp.Alert.Value,
+                cooldown: cooldown
+            );
+        }
     }
 }
 
