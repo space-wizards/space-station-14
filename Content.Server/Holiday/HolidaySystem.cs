@@ -55,7 +55,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
             }
         }
 
-        RaiseNetworkEvent(new HolidaysRefreshedEvent(CurrentHolidays));
+        RaiseNetworkEvent(new HolidaysRefreshedEvent(now));
     }
 
     /// <summary>

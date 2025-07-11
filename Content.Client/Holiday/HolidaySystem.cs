@@ -1,6 +1,7 @@
 using Content.Shared.Holiday;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Holiday;
@@ -8,6 +9,7 @@ namespace Content.Client.Holiday;
 /// <inheritdoc />
 public sealed class HolidaySystem : SharedHolidaySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
@@ -29,10 +31,14 @@ public sealed class HolidaySystem : SharedHolidaySystem
     private void RefreshHolidays(HolidaysRefreshedEvent args)
     {
         CurrentHolidays.Clear();
-
-        foreach (var holiday in args.Holidays)
+        
+        // Festively find what holidays we're celebrating
+        foreach (var holiday in _prototypeManager.EnumeratePrototypes<HolidayPrototype>())
         {
-            CurrentHolidays.Add(holiday);
+            if (holiday.ShouldCelebrate(args.Now))
+            {
+                CurrentHolidays.Add(holiday);
+            }
         }
     }
 

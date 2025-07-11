@@ -72,8 +72,8 @@ namespace Content.Shared.Holiday
     ///     Event for when the list of currently active holidays has been refreshed.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class HolidaysRefreshedEvent(IEnumerable<HolidayPrototype> holidays) : EntityEventArgs
+    public sealed class HolidaysRefreshedEvent(DateTime now) : EntityEventArgs
     {
-        public readonly IEnumerable<HolidayPrototype> Holidays = holidays;
+        public readonly DateTime Now = now;
     }
 }
