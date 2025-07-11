@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Serialization;
@@ -28,9 +29,9 @@ public record struct EdibleEvent(EntityUid User, bool Destroy, bool Cancelled);
 /// <param name="Handled">Did a system successfully ingest this item?</param>
 /// <param name="User">The entity that is trying to feed and therefore raising the event</param>
 /// <param name="Ingested">What are we trying to ingest?</param>
-/// <param name="Solution">The solution we're attempting to ingest. </param> // TODO: Maybe get the solution during this event...
+/// <param name="Ingest">Should we actually try and ingest? Or are we just testing if it's even possible </param>
 [ByRefEvent]
-public record struct CanIngestEvent(bool Handled, EntityUid User, Entity<EdibleComponent?> Ingested, Solution? Solution);
+public record struct CanIngestEvent(bool Handled, EntityUid User, Entity<EdibleComponent?> Ingested, bool Ingest);
 
 /// <summary>
 ///     Raised directed at the consumer when attempting to ingest something.
@@ -38,7 +39,7 @@ public record struct CanIngestEvent(bool Handled, EntityUid User, Entity<EdibleC
 [ByRefEvent]
 public record struct IngestionAttemptEvent(bool Cancelled) : IInventoryRelayEvent
 {
-    public SlotFlags TargetSlots { get; set; } = SlotFlags.HEAD | SlotFlags.MASK;
+    public SlotFlags TargetSlots { get; set; }
     /// <summary>
     ///     The equipment that is blocking consumption. Should only be non-null if the event was canceled.
     /// </summary>
@@ -52,12 +53,22 @@ public record struct IngestionAttemptEvent(bool Cancelled) : IInventoryRelayEven
 public sealed partial class EatingDoAfterEvent : SimpleDoAfterEvent;
 
 /// <summary>
-/// Raised on an entity when it successfully eats an item of food
+/// We use this to
 /// </summary>
-/// <param name="Food">The food item in question being eaten</param>
+/// <param name="User"></param>
 [ByRefEvent]
-public record struct EatenEvent(EntityUid Food);
+public record struct BeforeEatenEvent(EntityUid User);
 
+/// <summary>
+/// Raised on an entity when it is being made to be eaten.
+/// </summary>
+/// <param name="User">Who is doing the action?</param>
+/// <param name="Target">Who is doing the eating?</param>
+/// <param name="Destroy">Whether we should be destroyed after we're done being eaten.</param>
+[ByRefEvent]
+public record struct EatenEvent(EntityUid User, EntityUid Target, Solution Split, bool Destroy = false);
+
+// TODO: This can probably go.
 /// <summary>
 /// Raised directed at the food after finishing eating a food before it's deleted.
 /// Cancel this if you want to do something special before a food is deleted.
@@ -70,6 +81,7 @@ public sealed class BeforeFullyEatenEvent : CancellableEntityEventArgs
     public EntityUid User;
 }
 
+// TODO: This should go if possible or at least be retooled
 /// <summary>
 /// Raised directed at the food after finishing eating it and before it's deleted.
 /// </summary>

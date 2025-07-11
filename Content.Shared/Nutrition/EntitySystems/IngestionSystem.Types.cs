@@ -1,4 +1,5 @@
-﻿using Content.Shared.Nutrition.Components;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
@@ -23,14 +24,33 @@ public sealed partial class IngestionSystem
         if (entity.Owner == user || !args.CanInteract || !args.CanAccess)
             return;
 
-        // We want to see if we can ingest this item, but we don't actually want to ingest it.
-        if (!TryIngest(args.User, args.User, entity, false))
+        // TODO: This might not need to be a bool or even return anything???
+        if (!TryGetIngestionVerb(user, entity, entity.Comp.Type, out var verb))
             return;
+
+        args.Verbs.Add(verb);
+    }
+
+    /// <summary>
+    /// Tries to get the ingestion verbs for a given user entity and ingestible entity
+    /// </summary>
+    /// <param name="user">The one getting the verbs who would be doing the eating.</param>
+    /// <param name="ingested"></param>
+    /// <param name="type"></param>
+    /// <param name="verb"></param>
+    /// <returns></returns>
+    private bool TryGetIngestionVerb(EntityUid user, EntityUid ingested, NutritionType type, [NotNullWhen(true)] out AlternativeVerb? verb)
+    {
+        verb = null;
+
+        // We want to see if we can ingest this item, but we don't actually want to ingest it.
+        if (!TryIngest(user, user, ingested, false))
+            return false;
 
         SpriteSpecifier icon;
         string text;
 
-        switch (entity.Comp.Type)
+        switch (type)
         {
             case NutritionType.Food:
                 icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png"));
@@ -41,22 +61,22 @@ public sealed partial class IngestionSystem
                 text = Loc.GetString("drink-system-verb-drink");
                 break;
             default:
-                Log.Error($"Entity {ToPrettyString(entity)} doesn't have a proper Nutrition type or its verb isn't properly set up.");
-                return;
+                Log.Error($"Entity {ToPrettyString(ingested)} doesn't have a proper Nutrition type or its verb isn't properly set up.");
+                return false;
         }
 
-        AlternativeVerb verb = new()
+        verb = new()
         {
             Act = () =>
             {
-                TryIngest(user, user, entity);
+                TryIngest(user, user, ingested);
             },
             Icon = icon,
             Text = text,
             Priority = -1
         };
 
-        args.Verbs.Add(verb);
+        return true;
     }
 
     private string GetStringNoun(EdibleComponent component)
