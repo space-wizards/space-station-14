@@ -56,9 +56,7 @@ public sealed partial class ReadyManifestUi : DefaultWindow
                 {
                     Orientation = BoxContainer.LayoutOrientation.Vertical,
                     HorizontalExpand = true,
-                    Name = department.ID,
-                    ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
-                        ("departmentName", departmentName))
+                    Name = department.ID
                 };
 
                 category.AddChild(new Label()

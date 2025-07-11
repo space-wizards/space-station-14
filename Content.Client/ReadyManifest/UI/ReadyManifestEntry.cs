@@ -41,16 +41,9 @@ public sealed class ReadyManifestEntry : GridContainer
             HorizontalExpand = true
         };
 
-        if (jobCounts.ContainsKey(job.ID))
-        {
-            var jobCount = jobCounts[job.ID];
-            var color = jobCount > 0 ? Color.White : Color.Red;
-            readyCount.SetMessage(jobCount.ToString(), null, color);
-        }
-        else
-        {
-            readyCount.SetMessage("0", null, Color.Red);
-        }
+        var jobCount = jobCounts.ContainsKey(job.ID) ? jobCounts[job.ID] : 0;
+        var color = jobCount > 0 ? Color.White : Color.Red;
+        readyCount.SetMessage(jobCount.ToString(), null, color);
 
         jobContainer.AddChild(icon);
         jobContainer.AddChild(title);
