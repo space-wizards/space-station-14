@@ -1250,7 +1250,7 @@
     - type: Sprite
       sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
       layers:
-        - state: icon
+        - state: plushie_borg
     - type: ItemToggle
       onUse: false
       verbToggleOn: plushie-voicebox-activate
