@@ -1157,7 +1157,33 @@
       components:
         - type: Advertise
           pack: PlushiesPercy
+          minimumWait: 120
+          maximumWait: 240
+        - type: TextToSpeech
+          voice: medic
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieAsh
+  name: Ash Plushie
+  description: The station’s most huggable psychologist. It has a label on it reading "Property of Forkus the Dorkus"
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/ash_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/ash_plushie.rsi
+      layers:
+        - state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesAsh
           minimumWait: 5
           maximumWait: 10
         - type: TextToSpeech
-          voice: medic
+          voice: wanderer

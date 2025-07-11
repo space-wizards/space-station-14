@@ -475,3 +475,14 @@
   conditions:
     - !type:ListingLimitedStockCondition
       stock: 2
+
+- type: listing
+  id: VendorPlushieAsh
+  productEntity: PlushieAsh
+  cost:
+    NTCredit: 15
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
