@@ -26,7 +26,7 @@
   - ChiefEngineer
   - Atmospherics
   - Brig
-  - Hypersleep
+  - Cryogenics
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

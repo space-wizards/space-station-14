@@ -27,7 +27,7 @@
   - Chemistry
   - ChiefMedicalOfficer
   - Brig
-  - Hypersleep
+  - Cryogenics
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
