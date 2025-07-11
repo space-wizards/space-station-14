@@ -1,8 +1,6 @@
-using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.Holiday;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Holiday;
 
@@ -10,7 +8,6 @@ namespace Content.Server.Holiday;
 public sealed class HolidaySystem : SharedHolidaySystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -46,15 +43,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
 
         var now = DateTime.Now;
 
-        // Festively find what holidays we're celebrating
-        foreach (var holiday in _prototypeManager.EnumeratePrototypes<HolidayPrototype>())
-        {
-            if (holiday.ShouldCelebrate(now))
-            {
-                CurrentHolidays.Add(holiday);
-            }
-        }
-
+        SetActiveHolidays(now);
         RaiseNetworkEvent(new HolidaysRefreshedEvent(now));
     }
 
