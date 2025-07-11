@@ -476,7 +476,7 @@
   name: reagent-name-electrovae
   desc: reagent-desc-electrovae
   physicalDesc: reagent-physical-desc-gaseous
-  flavor: electric
+  flavor: bitter
   color: "#0022FF"
   recognizable: true
   boilingPoint: -127.3
