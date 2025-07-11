@@ -1185,6 +1185,8 @@
       damage:
         types:
           Heat: 1
+    - type: Damageable
+      damageModifierSet: Wood
     - type: FireVisuals
       sprite: Effects/fire.rsi
       normalState: fire
@@ -1231,7 +1233,7 @@
       components:
         - type: Advertise
           pack: PlushiesPoley
-          minimumWait: 120
-          maximumWait: 240
+          minimumWait: 5
+          maximumWait: 10
         - type: TextToSpeech
           voice: neon
