@@ -82,14 +82,14 @@ public sealed partial class FaxMachineComponent : Component
     public Queue<FaxPrintout> PrintingQueue { get; set; } = new();
 
     /// <summary>
-    /// Message sending timeout
+    /// The times at which actions will be complete
     /// </summary>
     [ViewVariables]
     [DataField, AutoNetworkedField]
     public Dictionary<FaxActions, TimeSpan> ReadyTimes = new();
 
     /// <summary>
-    /// Message sending timeout
+    /// Timeout of each action
     /// </summary>
     [ViewVariables]
     [DataField, AutoNetworkedField]
@@ -100,7 +100,7 @@ public sealed partial class FaxMachineComponent : Component
     };
 
     /// <summary>
-    /// Message sending timeout
+    /// State of action being performed.
     /// </summary>
     [ViewVariables]
     [DataField, AutoNetworkedField]
