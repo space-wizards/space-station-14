@@ -480,7 +480,18 @@
   id: VendorPlushieAsh
   productEntity: PlushieAsh
   cost:
-    NTCredit: 15
+    NTCredit: 19
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+      
+- type: listing
+  id: VendorPlushiePoley
+  productEntity: PlushiePoley
+  cost:
+    NTCredit: 13
   categories:
     - SLCrew
   conditions:

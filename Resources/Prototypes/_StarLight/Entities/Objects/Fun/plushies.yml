@@ -1179,6 +1179,28 @@
       onUse: false
       verbToggleOn: plushie-voicebox-activate
       verbToggleOff: plushie-voicebox-deactivate
+    - type: Flammable
+      fireSpread: true
+      alwaysCombustible: true
+      damage:
+        types:
+          Heat: 1
+    - type: FireVisuals
+      sprite: Effects/fire.rsi
+      normalState: fire
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 15
+          behaviors:
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                Ash:
+                  min: 1
+                  max: 1
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
     - type: ComponentToggler
       components:
         - type: Advertise
@@ -1187,3 +1209,29 @@
           maximumWait: 240
         - type: TextToSpeech
           voice: wanderer
+
+- type: entity
+  parent: PlushieHuman
+  id: PlushiePoley
+  name: Poley Plushie
+  description: Geniuine Worst Miner, But Best At Meatshield.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/poley_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/poley_plushie.rsi
+      layers:
+        - state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesPoley
+          minimumWait: 120
+          maximumWait: 240
+        - type: TextToSpeech
+          voice: neon
