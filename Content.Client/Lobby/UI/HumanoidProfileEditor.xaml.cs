@@ -531,7 +531,6 @@ namespace Content.Client.Lobby.UI
             var disableTraitLabel = new Label
             {
                 Text = Loc.GetString("humanoid-profile-editor-antag-disable-trait"),
-                FontColorOverride = Color.Gray,
                 Margin = new Thickness(0, 10, 0, 0),
                 StyleClasses = { StyleBase.StyleClassItalic },
                 SizeFlagsStretchRatio = 3,
@@ -581,7 +580,10 @@ namespace Content.Client.Lobby.UI
 
                     selector.Container.PanelOverride = new StyleBoxFlat(bgColor);
                     selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
-                    selector.CheckboxAntagDisable.Visible = selector.Preference && trait.AllowAntagDisable;
+                    selector.CheckboxAntagDisable.Visible = trait.AllowAntagDisable;
+                    selector.CheckboxAntagDisable.Disabled = !selector.Preference;
+                    if (!selector.Preference)
+                        selector.CheckboxAntagDisable.Modulate = Color.FromHex("#d6d6d6");
 
                     if (selector.Preference)
                         selectionCount += trait.Cost;
@@ -592,12 +594,12 @@ namespace Content.Client.Lobby.UI
                     {
                         if (preference)
                         {
-                            selector.CheckboxAntagDisable.Visible = false;
+                            selector.CheckboxAntagDisable.Disabled = true;
                             Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
                         }
                         else
                         {
-                            selector.CheckboxAntagDisable.Visible = true;
+                            selector.CheckboxAntagDisable.Disabled = false;
                             Profile?.AntagDisableTraitPreferences.Remove(trait.ID);
                             Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
                         }
@@ -643,7 +645,7 @@ namespace Content.Client.Lobby.UI
                     }
 
                     if (selector.CheckboxAntagDisable.Visible)
-                        disableTraitLabel.FontColorOverride = Color.White;
+                        disableTraitLabel.Visible = true;
 
                     TraitsList.AddChild(selector);
                 }
