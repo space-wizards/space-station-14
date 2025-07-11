@@ -49,8 +49,11 @@ public sealed class RespiratorSystem : EntitySystem
         UpdatesAfter.Add(typeof(MetabolizerSystem));
         SubscribeLocalEvent<RespiratorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+
+        // BodyComp stuff
         SubscribeLocalEvent<BodyComponent, InhaledGasEvent>(OnGasInhaled);
         SubscribeLocalEvent<BodyComponent, ExhaledGasEvent>(OnGasExhaled);
+        SubscribeLocalEvent<BodyComponent, CanMetabolizeGasEvent>(CanBodyMetabolizeGas);
         SubscribeLocalEvent<BodyComponent, SuffocationEvent>(OnSuffocation);
         SubscribeLocalEvent<BodyComponent, StopSuffocatingEvent>(OnStopSuffocating);
     }
@@ -184,10 +187,6 @@ public sealed class RespiratorSystem : EntitySystem
         return (ent.Comp.Saturation > ent.Comp.SuffocationThreshold);
     }
 
-    /// <summary>
-    /// Check whether or not an entity can metabolize inhaled air without suffocating or taking damage (i.e., no toxic
-    /// gasses).
-    /// </summary>
     public bool CanMetabolizeInhaledAir(Entity<RespiratorComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -206,51 +205,55 @@ public sealed class RespiratorSystem : EntitySystem
         return ev.Gas is not null && CanMetabolizeInhaledAir(ent, ev.Gas);
     }
 
+    /// <summary>
+    /// Checks if a given entity can safely metabolize a given gas mixture. Returns false if it would start suffocating,
+    /// or if the air is toxic.
+    /// </summary>
+    /// <param name="ent">The entity attempting to metabolize the gas.</param>
+    /// <param name="gas">The gas mixture we are trying to metabolize.</param>
+    /// <returns></returns>
     public bool CanMetabolizeInhaledAir(Entity<RespiratorComponent?> ent, GasMixture gas)
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        // Properly try to inhale the given gas mixture
-        var inhaleEv = new InhaledGasEvent(gas);
-        RaiseLocalEvent(ent, ref inhaleEv);
+        var ev = new CanMetabolizeGasEvent(gas);
+        RaiseLocalEvent(ent, ref ev);
 
-        if (!inhaleEv.Handled || !inhaleEv.Succeeded)
+        if (!ev.Handled || ev.Toxic)
             return false;
 
-        // Exhaling will give the gas back so we need to remove the gas from the mixture.
-        // If it doesn't give the gas back content integration tests should fail.
-        gas.RemoveVolume(ent.Comp.BreathVolume);
-
-        var success = CanMetabolizeGas((ent, ent.Comp));
-
-        Exhale(ent, gas);
-
-        return success;
+        return ev.Saturation > ent.Comp.UpdateInterval.TotalSeconds;
     }
 
     /// <summary>
     /// Tries to safely metabolize the current solutions in a body's lungs.
     /// </summary>
-    private bool CanMetabolizeGas(Entity<RespiratorComponent, BodyComponent?> ent)
+    private void CanBodyMetabolizeGas(Entity<BodyComponent> ent, ref CanMetabolizeGasEvent args)
     {
-        if (!Resolve(ent, ref ent.Comp2))
-            return false;
+        if (args.Handled)
+            return;
 
         var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));
         if (organs.Count == 0)
-            return false;
+            return;
 
-        float saturation = 0;
+        var solution = _lungSystem.GasToReagent(args.Gas);
+
+        var saturation = 0f;
         foreach (var organ in organs)
         {
-            var solution = _lungSystem.GasToReagent(organ.Comp1.Air);
             saturation += GetSaturation(solution, organ.Owner, out var toxic);
-            if (toxic)
-                return false;
+            if (!toxic)
+                continue;
+
+            args.Handled = true;
+            args.Toxic = true;
+            return;
         }
 
-        return saturation > ent.Comp1.UpdateInterval.TotalSeconds;
+        args.Handled = true;
+        args.Saturation = saturation;
     }
 
     public bool TryInhaleGasToBody(Entity<BodyComponent?> entity, GasMixture gas)
@@ -433,20 +436,56 @@ public sealed class RespiratorSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Event raised when an entity first tries to inhale that returns a GasMixture from a given location.
+/// </summary>
+/// <param name="Gas">The gas that gets returned, null if there is none.</param>
+/// <param name="Respirator">The Respirator component of the entity attempting to inhale</param>
 [ByRefEvent]
 public record struct InhaleLocationEvent(GasMixture? Gas, RespiratorComponent Respirator);
 
+/// <summary>
+/// Event raised when an entity first tries to exhale a gas, determines where the gas they're exhaling will be sent.
+/// </summary>
+/// <param name="Gas">The gas mixture that the exhaled gas will be merged into.</param>
 [ByRefEvent]
 public record struct ExhaleLocationEvent(GasMixture? Gas);
 
+/// <summary>
+/// Event raised when an entity successfully inhales a gas, attempts to find a place to put the gas.
+/// </summary>
+/// <param name="Gas">The gas we're inhaling.</param>
+/// <param name="Handled">Whether a system has responded appropriately.</param>
+/// <param name="Succeeded">Whether we successfully managed to inhale the gas</param>
 [ByRefEvent]
 public record struct InhaledGasEvent(GasMixture Gas, bool Handled = false, bool Succeeded = false);
 
+/// <summary>
+/// Event raised when an entity is exhaling
+/// </summary>
+/// <param name="Gas">The gas mixture we're exhaling into.</param>
+/// <param name="Handled">Whether we have successfully exhaled or not.</param>
 [ByRefEvent]
 public record struct ExhaledGasEvent(GasMixture Gas, bool Handled = false);
 
+/// <summary>
+/// Raised when an entity starts suffocating and when suffocation progresses.
+/// </summary>
 [ByRefEvent]
 public record struct SuffocationEvent;
 
+/// <summary>
+/// Raised when an entity that was suffocating stops suffocating.
+/// </summary>
 [ByRefEvent]
 public record struct StopSuffocatingEvent;
+
+/// <summary>
+/// An event raised to inhalation handlers that asks them nicely to simulate what it would be like to metabolize
+/// a given volume of gas, without actually metabolizing it.
+/// </summary>
+/// <param name="Gas">The gas mixture we are testing.</param>
+/// <param name="Toxic">Whether the gas returns as toxic to any respirator.</param>
+/// <param name="Saturation">The amount of saturation we got from the gas.</param>
+[ByRefEvent]
+public record struct CanMetabolizeGasEvent(GasMixture Gas, bool Toxic = false, float Saturation = 0f, bool Handled = false);
