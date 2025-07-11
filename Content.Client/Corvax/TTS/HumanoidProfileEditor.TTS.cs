@@ -67,6 +67,10 @@ public sealed partial class HumanoidProfileEditor
         {
             SetVoice(_voiceList[firstVoiceChoiceId].ID);
         }
+
+        // DS14-TTS-search-start
+        VoiceButton.ResetSearch();
+        // DS14-TTS-search-end
     }
 
     private void PlayPreviewTTS()

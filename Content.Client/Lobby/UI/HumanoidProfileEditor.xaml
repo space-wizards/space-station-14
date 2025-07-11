@@ -2,6 +2,7 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         xmlns:ds="clr-namespace:Content.Client.DeadSpace.UserInterface.Controls"
          xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
          HorizontalExpand="True">
         <!-- Left side -->
@@ -105,7 +106,7 @@
                                 <BoxContainer HorizontalExpand="True" Visible="False" Name="TTSContainer">
                                     <Label Text="{Loc 'humanoid-profile-editor-voice-label'}" />
                                     <Control HorizontalExpand="True"/>
-                                    <OptionButton Name="VoiceButton" HorizontalAlignment="Right" />
+                                    <ds:SearchOptionButton Name="VoiceButton" PlaceHolder="{Loc 'humanoid-profile-editor-voice-search-placeholder'}" HorizontalAlignment="Right" />
 									<Button Name="VoicePlayButton" Text="{Loc 'humanoid-profile-editor-voice-play'}" MaxWidth="80" />
                                 </BoxContainer>
                                 <!-- Corvax-TTS-End -->
