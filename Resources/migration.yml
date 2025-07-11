@@ -689,3 +689,4 @@ ClothingNeckHeadphones: ClothingMultipleHeadphones
 CryogenicSleepUnitSpawnerLateJoin: HyperSleepUnitSpawnerLateJoin
 CryogenicSleepUnitSpawner: HyperSleepUnitSpawner
 CryogenicSleepUnit: HyperSleepUnitSpawner
+SignDirectionalCryo: SignDirectionalHypersleep

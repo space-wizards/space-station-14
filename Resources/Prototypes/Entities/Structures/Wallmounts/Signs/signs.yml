@@ -72,9 +72,9 @@
 
 - type: entity
   parent: BaseSignDirectional
-  id: SignDirectionalCryo
-  name: cryo sign
-  description: A direction sign, pointing out the way to cryogenics.
+  id: SignDirectionalHypersleep
+  name: hypersleep sign
+  description: A direction sign, pointing out the way to hypersleep storage.
   components:
   - type: Sprite
     state: direction_cryo

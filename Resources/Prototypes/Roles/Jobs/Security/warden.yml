@@ -23,7 +23,7 @@
   - Service
   - External
   - Detective
-  - Cryogenics
+  - Hypersleep
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

@@ -21,7 +21,7 @@
   - Maintenance
   - ResearchDirector
   - Brig
-  - Cryogenics
+  - Hypersleep
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

@@ -17,17 +17,17 @@
   - Command
   - ChiefEngineer
   - ChiefMedicalOfficer
-  - Cryogenics
+  - Hypersleep
   - HeadOfPersonnel
   - HeadOfSecurity
   - Quartermaster
   - ResearchDirector
-  
+
 - type: accessLevel
   id: EmergencyShuttleRepealAll
   name: id-card-access-level-emergency-shuttle-repeal
   canAddToIdCard: false
 
 - type: accessLevel
-  id: Cryogenics
-  name: id-card-access-level-cryogenics
+  id: Hypersleep
+  name: id-card-access-level-hypersleep
