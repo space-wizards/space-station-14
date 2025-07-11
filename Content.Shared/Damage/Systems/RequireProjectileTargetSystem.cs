@@ -30,7 +30,7 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
             CompOrNull<TargetedProjectileComponent>(other)?.Target != ent)
         {
             // Prevents shooting out of while inside of crates
-            var shooter = Resolve(ref projectile.Shooter);
+            var shooter = Resolve(projectile.Shooter);
             if (!shooter.HasValue)
                 return;
 

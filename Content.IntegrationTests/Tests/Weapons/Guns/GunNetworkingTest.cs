@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Shared.Weapons.Ranged.Systems;
-using Robust.Server.Player;
 
 namespace Content.IntegrationTests.Tests.Weapons.Guns;
 

@@ -62,8 +62,7 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
             component.Amount <= 0 ||
             _whitelistSystem.IsWhitelistFail(component.Whitelist, args.OtherEntity) ||
             !TryComp<ProjectileComponent>(uid, out var projectile) ||
-            projectile.Weapon == null ||
-            Resolve(ref projectile.Weapon) is not { } weapon)
+            !TryGetEntity(projectile.Weapon, out var weapon))
         {
             return;
         }
@@ -71,7 +70,7 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
         // Markers are exclusive, deal with it.
         var marker = EnsureComp<DamageMarkerComponent>(args.OtherEntity);
         marker.Damage = new DamageSpecifier(component.Damage);
-        marker.Marker = weapon;
+        marker.Marker = weapon.Value;
         marker.EndTime = _timing.CurTime + component.Duration;
         component.Amount--;
         Dirty(args.OtherEntity, marker);

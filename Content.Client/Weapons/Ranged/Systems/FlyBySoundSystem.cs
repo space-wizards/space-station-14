@@ -30,7 +30,7 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
         if (attachedEnt == null ||
             args.OtherEntity != attachedEnt ||
             TryComp<ProjectileComponent>(uid, out var projectile) &&
-            Resolve(ref projectile.Shooter) == attachedEnt)
+            Resolve(projectile.Shooter) == attachedEnt)
         {
             return;
         }

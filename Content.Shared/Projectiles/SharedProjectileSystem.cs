@@ -96,7 +96,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         // Raise a specific event for projectiles.
         if (TryComp(embeddable, out ProjectileComponent? projectile))
         {
-            var ev = new ProjectileEmbedEvent(Resolve(ref projectile.Shooter), Resolve(ref projectile.Weapon), args.Target);
+            var ev = new ProjectileEmbedEvent(Resolve(projectile.Shooter), Resolve(projectile.Weapon), args.Target);
             RaiseLocalEvent(embeddable, ref ev);
         }
     }
@@ -200,7 +200,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
     {
-        if (component.IgnoreShooter && (args.OtherEntity == Resolve(ref component.Shooter) || args.OtherEntity == Resolve(ref component.Weapon)))
+        if (component.IgnoreShooter && (args.OtherEntity == Resolve(component.Shooter) || args.OtherEntity == Resolve(component.Weapon)))
         {
             args.Cancelled = true;
         }
@@ -208,10 +208,10 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     public void SetShooter(EntityUid id, ProjectileComponent component, EntityUid shooterId)
     {
-        if (Resolve(ref component.Shooter) == shooterId)
+        if (Resolve(component.Shooter) == shooterId)
             return;
 
-        component.Shooter = GetWeakReference(ref shooterId);
+        component.Shooter = GetWeakReference(shooterId);
         Dirty(id, component);
     }
 

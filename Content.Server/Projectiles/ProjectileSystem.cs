@@ -44,7 +44,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             return;
         }
 
-        var shooter = Resolve(ref component.Shooter);
+        var shooter = Resolve(component.Shooter);
         var ev = new ProjectileHitEvent(component.Damage * _damageableSystem.UniversalProjectileDamageModifier, target, shooter);
         RaiseLocalEvent(uid, ref ev);
 
@@ -67,7 +67,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
             _adminLogger.Add(LogType.BulletHit,
                 LogImpact.Medium,
-                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(shooter.Value):user} hit {otherName:target} and dealt {modifiedDamage.GetTotal():damage} damage");
+                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(shooter):user} hit {otherName:target} and dealt {modifiedDamage.GetTotal():damage} damage");
         }
 
         // If penetration is to be considered, we need to do some checks to see if the projectile should stop.
