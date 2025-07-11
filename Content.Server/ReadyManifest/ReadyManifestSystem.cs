@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
@@ -15,18 +16,20 @@ namespace Content.Server.ReadyManifest;
 public sealed class ReadyManifestSystem : EntitySystem
 {
     [Dependency] private readonly EuiManager _euiManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly PlayTimeTrackingSystem _playTimeTracking = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    private readonly Dictionary<ICommonSession, ReadyManifestEui> _openEuis = [];
     private Dictionary<ProtoId<JobPrototype>, int> _jobCounts = [];
+    private readonly Dictionary<ICommonSession, ReadyManifestEui> _openEuis = [];
 
     public override void Initialize()
     {
         SubscribeNetworkEvent<RequestReadyManifestMessage>(OnRequestReadyManifest);
-        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
         SubscribeLocalEvent<PlayerToggleReadyEvent>(OnPlayerToggleReady);
+        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
     }
 
     private void OnRoundStarting(RoundStartingEvent ev)
@@ -59,7 +62,8 @@ public sealed class ReadyManifestSystem : EntitySystem
         }
 
         var profile = (HumanoidCharacterProfile)preferences.SelectedCharacter;
-        var profileJobs = FilterPlayerJobs(profile);
+        var player = _playerManager.GetSessionById(userId);
+        var profileJobs = FilterPlayerJobs(profile, player);
 
         if (_gameTicker.PlayerGameStatuses[userId] == PlayerGameStatus.ReadyToPlay)
         {
@@ -92,10 +96,11 @@ public sealed class ReadyManifestSystem : EntitySystem
             if (status == PlayerGameStatus.ReadyToPlay)
             {
                 HumanoidCharacterProfile profile;
+                var player = _playerManager.GetSessionById(userId);
                 if (_prefsManager.TryGetCachedPreferences(userId, out var preferences))
                 {
                     profile = (HumanoidCharacterProfile)preferences.SelectedCharacter;
-                    var profileJobs = FilterPlayerJobs(profile);
+                    var profileJobs = FilterPlayerJobs(profile, player);
                     foreach (var jobId in profileJobs)
                     {
                         jobCounts.TryGetValue(jobId, out var value);
@@ -107,15 +112,15 @@ public sealed class ReadyManifestSystem : EntitySystem
         _jobCounts = jobCounts;
     }
 
-    private List<ProtoId<JobPrototype>> FilterPlayerJobs(HumanoidCharacterProfile profile)
+    private List<ProtoId<JobPrototype>> FilterPlayerJobs(HumanoidCharacterProfile profile, ICommonSession player)
     {
         var jobs = profile.JobPriorities.Keys.Select(k => new ProtoId<JobPrototype>(k)).ToList();
         List<ProtoId<JobPrototype>> priorityJobs = [];
         foreach (var job in jobs)
         {
             var priority = profile.JobPriorities[job];
-            // For jobs that are rolled before others, such as Command, we want to check for any priority since they'll always be filled
-            if (priority == JobPriority.High || _prototypeManager.Index(job).Weight >= 10 && priority > JobPriority.Never)
+            // For jobs that are rolled before others such as Command, we want to check for any priority since they'll always be filled
+            if ((priority == JobPriority.High || _prototypeManager.Index(job).Weight > 0 && priority > JobPriority.Never) && _playTimeTracking.IsAllowed(player, job))
             {
                 priorityJobs.Add(job);
             }
