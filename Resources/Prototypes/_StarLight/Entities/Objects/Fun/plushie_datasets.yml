@@ -57,3 +57,9 @@
   values:
     prefix: plushie-oog-
     count: 6
+
+- type: localizedDataset
+  id: PlushiesPercy
+  values:
+    prefix: plushie-percy-
+    count: 6

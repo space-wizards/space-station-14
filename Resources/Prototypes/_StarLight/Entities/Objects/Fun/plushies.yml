@@ -1135,3 +1135,29 @@
       maximumWait: 240
     - type: TextToSpeech
       voice: heavy
+
+- type: entity
+  parent: PlushieHuman
+  id: PlushiePercy
+  name: Percy Plushie
+  description: A cute plushie of the Vassal to the Grey King himself, Percival Beck. It smells faintly of old cigarettes.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/percy_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/percy_plushie.rsi
+      layers:
+        - state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesPercy
+          minimumWait: 5
+          maximumWait: 10
+        - type: TextToSpeech
+          voice: medic
