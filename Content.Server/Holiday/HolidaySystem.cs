@@ -39,8 +39,6 @@ public sealed class HolidaySystem : SharedHolidaySystem
     /// </summary>
     private void RefreshCurrentHolidays()
     {
-        CurrentHolidays.Clear();
-
         var now = DateTime.Now;
 
         SetActiveHolidays(now);

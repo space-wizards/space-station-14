@@ -89,7 +89,7 @@ public abstract class SharedHolidaySystem : EntitySystem
 ///     Event for when the list of currently active holidays has been refreshed.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class HolidaysRefreshedEvent(DateTime now)
+public sealed class HolidaysRefreshedEvent(DateTime now) : EntityEventArgs
 {
     public readonly DateTime Now = now;
 }
