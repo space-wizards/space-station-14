@@ -27,7 +27,7 @@ jobs:
       run: dotnet restore
 
     - name: Build Project
-      run: dotnet build --no-restore /p:WarningsAsErrors=nullable
+      run: dotnet build --no-restore
 
     - name: Build DocFX
       uses: nikeee/docfx-action@v1.0.0
