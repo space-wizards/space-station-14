@@ -464,3 +464,14 @@
   conditions:
     - !type:ListingLimitedStockCondition
       stock: 2
+
+- type: listing
+  id: VendorPlushiePercy
+  productEntity: PlushiePercy
+  cost:
+    NTCredit: 15
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
