@@ -1240,5 +1240,27 @@ Entries:
   id: 150
   time: '2025-06-30T21:09:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38531
+- author: Smugman
+  changes:
+  - message: Added the ID locked CentComm flippo for admeme use
+    type: Add
+  id: 151
+  time: '2025-07-07T18:53:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35514
+- author: perryprog
+  changes:
+  - message: Admin ghosts can now interact with things beneath subfloors, such as
+      disposal routers.
+    type: Tweak
+  id: 152
+  time: '2025-07-10T11:14:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38813
+- author: VerinSenpai
+  changes:
+  - message: The showrules command now has autocomplete.
+    type: Tweak
+  id: 153
+  time: '2025-07-11T17:48:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38855
 Name: Admin
 Order: 2

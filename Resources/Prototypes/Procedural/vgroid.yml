@@ -117,8 +117,8 @@
 
 - type: dungeonConfig
   id: VGRoidSmaller
-  minOffset: 60
-  maxOffset: 80
+  minOffset: 40
+  maxOffset: 60
   layers:
   - !type:NoiseDistanceDunGen
     size: 150, 150
@@ -151,7 +151,6 @@
   maxCount: 3
   layers:
   - !type:ExteriorDunGen
-    penetration: 5,15
     proto: Experiment
   - !type:EntityTableDunGen
     minCount: 25
@@ -229,16 +228,5 @@
   layers:
   - !type:FillGridDunGen
     entity: IronRock
-    threshold: -0.95
-    size: 350, 350
-    distanceConfig: !type:DunGenEuclideanSquaredDistance
-      blendWeight: -0.50
-    reservedNoise:
-      frequency: 0.080
-      noiseType: OpenSimplex2
-      fractalType: FBm
-      octaves: 5
-      lacunarity: 1.5
-      gain: 0.5
     allowedTiles:
     - FloorAsteroidSand

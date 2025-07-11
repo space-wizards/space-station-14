@@ -18,7 +18,6 @@ public sealed partial class DungeonJob
         // Grab all of the room bounds
         // Then, work out connections between them
         var roomBorders = new Dictionary<DungeonRoom, HashSet<Vector2i>>(dungeon.Rooms.Count);
-        var flank = gen.Flank;
 
         foreach (var room in dungeon.Rooms)
         {
@@ -108,30 +107,18 @@ public sealed partial class DungeonJob
                         continue;
 
                     width--;
-                    var tileVariant = _tile.GetVariantTile((ContentTileDefinition)tileDef, random);
-                    _maps.SetTile(_gridUid, _grid, node, tileVariant);
-                    AddLoadedTile(node, tileVariant);
+                    _maps.SetTile(_gridUid, _grid, node, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
 
                     if (flankContents != null && nodeDistances.Count - i <= 2)
                     {
-                        var uids = _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(flankContents, random));
-
-                        foreach (var uid in uids)
-                        {
-                            AddLoadedEntity(node, uid);
-                        }
+                        _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(flankContents, random));
                     }
                     else
                     {
                         // Iterate neighbors and check for blockers, if so bulldoze
                         ClearDoor(dungeon, _grid, node);
 
-                        var uids = _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(contents, random));
-
-                        foreach (var uid in uids)
-                        {
-                            AddLoadedEntity(node, uid);
-                        }
+                        _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(contents, random));
                     }
 
                     if (width == 0)
