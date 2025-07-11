@@ -1183,7 +1183,7 @@
       components:
         - type: Advertise
           pack: PlushiesAsh
-          minimumWait: 5
-          maximumWait: 10
+          minimumWait: 120
+          maximumWait: 240
         - type: TextToSpeech
           voice: wanderer
