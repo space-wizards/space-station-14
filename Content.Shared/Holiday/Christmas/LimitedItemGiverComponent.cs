@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Storage;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Holiday.Christmas;
@@ -18,24 +19,24 @@ public sealed partial class LimitedItemGiverComponent : Component
     /// <summary>
     /// Selects what entities can be given out by the giver.
     /// </summary>
-    [DataField("spawnEntries", required: true)]
+    [DataField(required: true)]
     public List<EntitySpawnEntry> SpawnEntries = default!;
 
     /// <summary>
     /// The (localized) message shown upon receiving something.
     /// </summary>
-    [DataField("receivedPopup", required: true)]
-    public string ReceivedPopup = default!;
+    [DataField]
+    public LocId? ReceivedPopup;
 
     /// <summary>
     /// The (localized) message shown upon being denied.
     /// </summary>
-    [DataField("deniedPopup", required: true)]
-    public string DeniedPopup = default!;
+    [DataField]
+    public LocId? DeniedPopup;
 
     /// <summary>
     /// The holiday required for this giver to work, if any.
     /// </summary>
-    [DataField("requiredHoliday", customTypeSerializer: typeof(PrototypeIdSerializer<HolidayPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string? RequiredHoliday = null;
+    [DataField]
+    public ProtoId<HolidayPrototype>? RequiredHoliday;
 }

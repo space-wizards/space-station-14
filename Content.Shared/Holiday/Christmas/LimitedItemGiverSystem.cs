@@ -7,43 +7,56 @@ using Robust.Shared.Player;
 namespace Content.Shared.Holiday.Christmas;
 
 /// <summary>
-/// This handles handing out items from item givers.
+///     This handles handing out items from item givers that only give one item per actual player.
 /// </summary>
 public sealed class LimitedItemGiverSystem : EntitySystem
 {
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedHolidaySystem _holiday = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<LimitedItemGiverComponent, InteractHandEvent>(OnInteractHand);
     }
 
-    private void OnInteractHand(EntityUid uid, LimitedItemGiverComponent component, InteractHandEvent args)
+    /// <summary>
+    ///     Triggers when a player clicks ent. Gives them a gift only once.
+    /// </summary>
+    private void OnInteractHand(Entity<LimitedItemGiverComponent> ent, ref InteractHandEvent args)
     {
+        var (giver, comp) = ent;
+
+        // Santa knows who you are
         if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
-        if (component.GrantedPlayers.Contains(actor.PlayerSession.UserId) || (component.RequiredHoliday is not null && !_holiday.IsCurrentlyHoliday(component.RequiredHoliday)))
+        // No present if you've received one, or it's not the required holiday (if any)
+        if (comp.GrantedPlayers.Contains(actor.PlayerSession.UserId) ||
+            comp.RequiredHoliday is { } holiday && !_holiday.IsCurrentlyHoliday(holiday))
         {
-            _popup.PopupClient(Loc.GetString(component.DeniedPopup), uid, args.User);
+            if (comp.DeniedPopup is { } denied)
+                _popup.PopupClient(Loc.GetString(denied), giver, args.User);
+
             return;
         }
 
-        var toGive = EntitySpawnCollection.GetSpawns(component.SpawnEntries);
+        var toGive = EntitySpawnCollection.GetSpawns(comp.SpawnEntries);
         var coords = Transform(args.User).Coordinates;
 
+        // Get your gifts here
         foreach (var item in toGive)
         {
-            if (item is null)
-                continue;
-
-            var spawned = Spawn(item, coords);
+            var spawned = PredictedSpawnAtPosition(item, coords);
             _hands.PickupOrDrop(args.User, spawned);
         }
 
-        component.GrantedPlayers.Add(actor.PlayerSession.UserId);
-        _popup.PopupClient(Loc.GetString(component.ReceivedPopup), uid, args.User);
+        comp.GrantedPlayers.Add(actor.PlayerSession.UserId);
+
+        if (comp.ReceivedPopup is { } received)
+            _popup.PopupClient(Loc.GetString(received), giver, args.User);
     }
 }
