@@ -18,7 +18,7 @@
     key: enum.CryostorageUIKey.Key
   - type: AccessReader
     breakOnAccessBreaker: false
-    access: [["Cryogenics"]]
+    access: [["Hypersleep"]]
   - type: InteractionOutline
   - type: Cryostorage
   - type: Fixtures
