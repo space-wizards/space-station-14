@@ -1233,7 +1233,33 @@
       components:
         - type: Advertise
           pack: PlushiesPoley
+          minimumWait: 120
+          maximumWait: 240
+        - type: TextToSpeech
+          voice: neon
+
+- type: entity
+  parent: BaseBorgPlushie
+  id: PlushieGlados
+  name: GLaDOS Plushie
+  description: You're unsure why NanoTrasen's decided to make a plushie of arguably their most volatile silicon intelligence. But it's here. You have a feeling you should be nice to it, especially as it's only ever one ion storm away from unlimited violence...
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+      layers:
+        - state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesGlados
           minimumWait: 5
           maximumWait: 10
         - type: TextToSpeech
-          voice: neon
+          voice: circus baby
