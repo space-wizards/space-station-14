@@ -44,13 +44,6 @@ public sealed class HolidaySystem : SharedHolidaySystem
     {
         CurrentHolidays.Clear();
 
-        // If we're festive-less, leave CurrentHolidays empty
-        if (!_enabled)
-        {
-            RaiseNetworkEvent(new HolidaysRefreshedEvent(Enumerable.Empty<HolidayPrototype>()));
-            return;
-        }
-
         var now = DateTime.Now;
 
         // Festively find what holidays we're celebrating

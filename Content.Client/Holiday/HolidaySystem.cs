@@ -1,4 +1,3 @@
-using Content.Shared.GameTicking;
 using Content.Shared.Holiday;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
