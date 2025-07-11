@@ -16,7 +16,6 @@ using Content.Shared.VendingMachines;
 using Content.Shared.Wall;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.VendingMachines
 {
@@ -25,7 +24,6 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly PricingSystem _pricing = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
 
         private const float WallVendEjectDistanceFromWall = 1f;
 
@@ -227,7 +225,7 @@ namespace Content.Server.VendingMachines
             var disabled = EntityQueryEnumerator<EmpDisabledComponent, VendingMachineComponent>();
             while (disabled.MoveNext(out var uid, out _, out var comp))
             {
-                if (comp.NextEmpEject < _timing.CurTime)
+                if (comp.NextEmpEject < Timing.CurTime)
                 {
                     EjectRandom(uid, true, false, comp);
                     comp.NextEmpEject += (5 * comp.EjectDelay);
@@ -265,7 +263,7 @@ namespace Content.Server.VendingMachines
             {
                 args.Affected = true;
                 args.Disabled = true;
-                component.NextEmpEject = _timing.CurTime;
+                component.NextEmpEject = Timing.CurTime;
             }
         }
 
