@@ -73,17 +73,17 @@
     zeroVisible: true
   - type: HitscanBatteryAmmoProvider
     proto: DisablerBolt
-    fireCost: 100
+    fireCost: 50
   - type: Appearance
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: DisablerBolt
-      fireCost: 100
+      fireCost: 50
       visualState: disable
       magState: disable
       heldPrefix: disable4
     - proto: RedLaserBeam
-      fireCost: 65
+      fireCost: 66.6
       visualState: kill
       magState: kill
       heldPrefix: kill4
