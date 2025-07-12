@@ -219,8 +219,10 @@ namespace Content.Server.Database
             // So just pull down the whole list into memory.
             var queryBans = await GetAllRoleBans(db.SqliteDbContext, includeUnbanned);
 
+            var exempt = await GetBanExemptionCore(db, userId) ?? default;
+
             return queryBans
-                .Where(b => RoleBanMatches(b, address, userId, hwId, modernHWIds))
+                .Where(b => RoleBanMatches(b, address, userId, hwId, modernHWIds, exempt))
                 .Select(ConvertRoleBan)
                 .ToList()!;
         }
@@ -244,9 +246,13 @@ namespace Content.Server.Database
             IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
-            ImmutableArray<ImmutableArray<byte>>? modernHWIds)
+            ImmutableArray<ImmutableArray<byte>>? modernHWIds,
+            ServerBanExemptFlags exempt)
         {
-            if (address != null && ban.Address is not null && address.IsInSubnet(ban.Address.ToTuple().Value))
+            if (address != null
+                && ban.Address is not null
+                && address.IsInSubnet(ban.Address.ToTuple().Value)
+                && !exempt.HasFlag(ServerBanExemptFlags.IP))
             {
                 return true;
             }
