@@ -1,5 +1,10 @@
+#
+# This will contain all food trees for doughs
+# This should include normal and cotton, but not cakes
+# Bun should be moved from burger.yml to here
+
 - type: constructionGraph
-  id: DoughRope
+  id: CookingDough
   start: start
   graph:
   - node: start
@@ -9,11 +14,27 @@
       steps:
       - tool: Rolling
         doAfter: 1
+    - to: cookedBun
+      steps:
+      - minTemperature: 330
+
   - node: rolled
     entity: FoodDoughRope
+    edges:
+    - to: cookedBagel
+      steps:
+      - minTemperature: 330
+
+  - node: cookedBun
+    entity: FoodBreadBun
+
+  - node: cookedBagel
+    entity: FoodBagel
+
+
 
 - type: constructionGraph
-  id: DoughRopeCotton
+  id: CookingCottonDough
   start: start
   graph:
   - node: start
@@ -23,5 +44,19 @@
       steps:
       - tool: Rolling
         doAfter: 1
+    - to: cookedCottonBun
+      steps:
+      - minTemperature: 330
+
   - node: rolled
     entity: FoodDoughCottonRope
+    edges:
+    - to: cookedCottonBagel
+      steps:
+      - minTemperature: 330
+
+  - node: cookedCottonBun
+    entity: FoodCottonBun
+
+  - node: cookedCottonBagel
+    entity: FoodCottonBagel
