@@ -1917,6 +1917,18 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await db.DbContext.SaveChangesAsync();
         }
 
+        public async Task TruncateParrotMemory(TimeSpan maxMessageAge)
+        {
+            await using var db = await GetDb();
+
+            var deleteBefore = DateTime.UtcNow - maxMessageAge;
+
+            await db.DbContext.PlayerMessage
+                .Where(message => message.Type == PlayerMessageType.Parrot)
+                .Where(message => message.CreatedAt < deleteBefore)
+                .ExecuteDeleteAsync();
+        }
+
         #endregion
 
         public abstract Task SendNotification(DatabaseNotification notification);

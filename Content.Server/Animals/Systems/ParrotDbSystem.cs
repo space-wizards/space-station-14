@@ -4,6 +4,7 @@ using Content.Server.Animals.Components;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
+using Content.Server.GameTicking.Events;
 using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -34,6 +35,16 @@ public sealed partial class ParrotDbSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ParrotDbMemoryComponent, LearnEvent>(OnLearn);
+
+        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
+    }
+
+    /// <summary>
+    /// Called when a round has started. We do some DB cleaning here
+    /// </summary>
+    private void OnRoundStarting(RoundStartingEvent ev)
+    {
+        _db.TruncateParrotMemory(_config.GetCVar(CCVars.ParrotMaximumMessageAge));
     }
 
     private void OnLearn(Entity<ParrotDbMemoryComponent> entity, ref LearnEvent args)

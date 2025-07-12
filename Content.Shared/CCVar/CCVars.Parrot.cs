@@ -17,4 +17,11 @@ public sealed partial class CCVars
         CVar.SERVER,
         "Minimum overall playtime a player needs for their messages to be committed to the database by a parrot"
     );
+
+    public static readonly CVarDef<TimeSpan> ParrotMaximumMessageAge = CVarDef.Create(
+        "parrot.db_max_message_age",
+        TimeSpan.FromDays(30),
+        CVar.SERVER,
+        "Maximum age of parrot messages stored in the database.  Messages are cleaned up every round."
+    );
 }
