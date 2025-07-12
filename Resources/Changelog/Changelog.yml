@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SharkSnake98
-  changes:
-  - message: Added 12 new, varied drinks for the bartender to mix during shifts.
-    type: Add
-  id: 8253
-  time: '2025-04-19T05:12:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36287
 - author: Ko4erga
   changes:
   - message: Added new color turtlenecks in WinterDrobe.
@@ -3891,3 +3884,10 @@
   id: 8765
   time: '2025-07-11T17:18:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32588
+- author: TiniestShark
+  changes:
+  - message: Added inhand sprites to all bottled drinks.
+    type: Add
+  id: 8766
+  time: '2025-07-12T14:28:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38937
