@@ -867,6 +867,7 @@
   components:
   - type: ParrotMemory
     learnChance: 0.5 # polly is smarter
+  - type: ParrotDbMemory
   - type: Vocalizer
     maxVocalizeInterval: 240 # polly is chattier
   - type: Grammar

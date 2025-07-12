@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.ParrotMessages;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
@@ -1818,6 +1819,102 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             await db.DbContext.SaveChangesAsync();
             return true;
+        }
+
+        #endregion
+
+
+        #region Parrots
+
+        public async IAsyncEnumerable<PlayerMessage> GetRandomParrotMemories(int limit)
+        {
+            await using var db = await GetDb();
+
+            // get count of records
+            var count = db.DbContext.PlayerMessage
+                .Where(message => message.Type == PlayerMessageType.Parrot)
+                .Count();
+
+            if (count == 0)
+                yield break;
+
+            var random = new Random();
+
+            for (var i = 0; i < limit && i < count; i++)
+            {
+                var selectedMemory = db.DbContext.PlayerMessage
+                    .Where(message => message.Type == PlayerMessageType.Parrot)
+                    .ElementAt(random.Next(0, count));
+
+                yield return selectedMemory;
+            }
+        }
+
+        public async IAsyncEnumerable<ExtendedPlayerMessage> GetParrotMemories(bool blocked)
+        {
+            await using var db = await GetDb();
+
+            var messageQuery = db.DbContext.PlayerMessage
+                .Where(message => message.Type == PlayerMessageType.Parrot)
+                .Where(message => message.Block == blocked);
+
+            var messagePlayers = messageQuery.Select(message => message.SourcePlayer);
+
+            var playerQuery = db.DbContext.Player
+                .Where(player => messagePlayers.Contains(player.UserId))
+                .Select(player => new
+                {
+                    player.UserId,
+                    UserName = player.LastSeenUserName,
+                });
+
+            var joined = messageQuery.Join(playerQuery,
+                message => message.SourcePlayer,
+                player => player.UserId,
+                resultSelector: (message, player) => new ExtendedPlayerMessage(
+                    message.Id,
+                    message.Text,
+                    message.Round,
+                    player.UserName,
+                    message.SourcePlayer,
+                    message.Block
+                ));
+
+            await foreach (var result in joined.AsAsyncEnumerable())
+            {
+                yield return result;
+            }
+        }
+
+        public async Task AddParrotMemory(string message, Guid sourcePlayer, int roundId)
+        {
+            await using var db = await GetDb();
+
+            var newMessage = new PlayerMessage()
+            {
+                Text = message,
+                Type = PlayerMessageType.Parrot,
+                SourcePlayer = sourcePlayer,
+                Round = roundId,
+                CreatedAt = DateTime.UtcNow,
+            };
+
+            db.DbContext.PlayerMessage
+                .Add(newMessage);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task SetParrotMemoryBlock(int messageId, bool blocked)
+        {
+            await using var db = await GetDb();
+
+            var message = await db.DbContext.PlayerMessage
+                .Where(message => message.Id == messageId)
+                .SingleAsync();
+
+            message.Block = blocked;
+
+            await db.DbContext.SaveChangesAsync();
         }
 
         #endregion

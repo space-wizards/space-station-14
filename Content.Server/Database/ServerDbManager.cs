@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.ParrotMessages;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
@@ -361,6 +362,18 @@ namespace Content.Server.Database
         /// </remarks>
         /// <param name="notification">The notification to send.</param>
         Task SendNotification(DatabaseNotification notification);
+
+        #endregion
+
+        #region Parrots
+
+        IAsyncEnumerable<ExtendedPlayerMessage> GetParrotMemories(bool blocked);
+
+        IAsyncEnumerable<PlayerMessage> GetRandomParrotMemories(int limit);
+
+        Task AddParrotMemory(string message, Guid sourcePlayer, int roundId);
+
+        Task SetParrotMemoryBlock(int messageId, bool blocked);
 
         #endregion
     }
@@ -1070,6 +1083,31 @@ namespace Content.Server.Database
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.SendNotification(notification));
         }
+
+        #region Parrots
+
+        public IAsyncEnumerable<ExtendedPlayerMessage> GetParrotMemories(bool blocked)
+        {
+            return RunDbCommand(() => _db.GetParrotMemories(blocked));
+        }
+
+        public IAsyncEnumerable<PlayerMessage> GetRandomParrotMemories(int limit)
+        {
+            return RunDbCommand(() => _db.GetRandomParrotMemories(limit));
+        }
+
+        public Task AddParrotMemory(string message, Guid sourcePlayer, int roundId)
+        {
+            return RunDbCommand(() => _db.AddParrotMemory(message, sourcePlayer, roundId));
+        }
+
+        public Task SetParrotMemoryBlock(int messageId, bool blocked)
+        {
+            return RunDbCommand(() => _db.SetParrotMemoryBlock(messageId, blocked));
+        }
+
+        #endregion
+
 
         private async void HandleDatabaseNotification(DatabaseNotification notification)
         {

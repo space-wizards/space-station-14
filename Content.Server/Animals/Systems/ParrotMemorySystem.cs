@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.Animals.Components;
+using Content.Server.GameTicking.Events;
 using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Server.Radio;
@@ -193,6 +194,9 @@ public sealed partial class ParrotMemorySystem : EntitySystem
 
         var newMemory = new SpeechMemory(sourceNetUserId, message);
 
+        var learnEvent = new LearnEvent(message, source);
+        RaiseLocalEvent(entity, ref learnEvent);
+
         // add a new message if there is space in the memory
         if (entity.Comp.SpeechMemories.Count < entity.Comp.MaxSpeechMemory)
         {
@@ -245,3 +249,6 @@ public sealed partial class ParrotMemorySystem : EntitySystem
         }
     }
 }
+
+[ByRefEvent]
+public record struct LearnEvent(string Message, EntityUid SourcePlayer);

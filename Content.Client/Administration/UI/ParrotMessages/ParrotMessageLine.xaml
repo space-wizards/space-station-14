@@ -1,0 +1,13 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+              Orientation="Vertical">
+    <BoxContainer Orientation="Horizontal">
+        <Label Name="ParrotMessageText" Text="test message" HorizontalExpand="True"></Label>
+        <cc:HSeparator Margin="4 0" />
+        <cc:CommandButton Name="ParrotMessagePlayerButton" Text="Player" Command="" ToolTip="{Loc 'parrot-messages-line-ahelp-tooltip'}"></cc:CommandButton>
+        <Label Name="ParrotMessagePlayerText" Visible="False" Text="{Loc 'parrot-messages-line-ahelp-not-current-round'}"></Label>
+        <cc:HSeparator Margin="4 0" />
+        <Button Name="ParrotBlockButton" Text="Block" Access="Public" ToolTip="{Loc 'parrot-messages-line-block-tooltip'}" MinWidth="100"></Button>
+    </BoxContainer>
+    <cc:VSeparator Margin="0 2"></cc:VSeparator>
+</BoxContainer>
