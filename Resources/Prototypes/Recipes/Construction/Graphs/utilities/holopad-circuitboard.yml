@@ -1,0 +1,18 @@
+- type: constructionGraph
+  id: HolopadBoard
+  start: normal
+  graph:
+  - node: normal
+    entity: HolopadMachineCircuitboard
+    edges:
+    - to: long-range
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: long-range
+    entity: HolopadLongRangeMachineCircuitboard
+    edges:
+    - to: normal
+      steps:
+      - tool: Screwing
+        doAfter: 2
