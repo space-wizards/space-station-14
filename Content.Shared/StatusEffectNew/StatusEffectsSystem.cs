@@ -104,14 +104,14 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         var ev = new StatusEffectRemovedEvent(ent);
         RaiseLocalEvent(args.Entity, ref ev);
 
-        // Clear AppliedTo after events are handled so event handlers can use it
-        // Why not just delete it? Well, that might end up being best, but this
-        // could theoretically allow for moving status effects from one entity
-        // to another. That might be good to have for polymorphs or something.
+        // Clear AppliedTo after events are handled so event handlers can use it.
         if (statusComp.AppliedTo == null)
             return;
 
-        statusComp.AppliedTo = ent;
+        // Why not just delete it? Well, that might end up being best, but this
+        // could theoretically allow for moving status effects from one entity
+        // to another. That might be good to have for polymorphs or something.
+        statusComp.AppliedTo = null;
         Dirty(args.Entity, statusComp);
     }
 
