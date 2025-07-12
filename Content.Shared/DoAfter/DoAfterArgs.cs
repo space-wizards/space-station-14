@@ -92,6 +92,12 @@ public sealed partial class DoAfterArgs
     public bool BreakOnHandChange = true;
 
     /// <summary>
+    ///     Whether the do-after should get interrupted if the event target entity changes containers.
+    /// </summary>
+    [DataField]
+    public bool BreakOnContainerChange = true;
+
+    /// <summary>
     ///     Whether the do-after should get interrupted if we drop the
     ///     active item we started the do-after with
     ///     This does nothing if <see cref="NeedHand"/> is false.
