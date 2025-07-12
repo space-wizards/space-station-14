@@ -3,11 +3,13 @@ using Content.Server.Administration.Logs;
 using Content.Server.Animals.Components;
 using Content.Server.Database;
 using Content.Server.GameTicking;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -25,6 +27,7 @@ public sealed partial class ParrotDbSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly ISharedPlaytimeManager _playtimeManager = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
 
     public override void Initialize()
     {
@@ -73,7 +76,7 @@ public sealed partial class ParrotDbSystem : EntitySystem
             return;
 
         // return if the player has too little playtime
-        if (overallPlaytime < entity.Comp.MinimumSourcePlaytime)
+        if (overallPlaytime < _config.GetCVar(CCVars.ParrotMinimumPlaytimeFilter))
             return;
 
         SaveMessageDb(entity, message, session.UserId);
@@ -135,7 +138,7 @@ public sealed partial class ParrotDbSystem : EntitySystem
             if (dbMemory.NextRefresh > gameTime)
                 continue;
 
-            dbMemory.NextRefresh += dbMemory.RefreshInterval;
+            dbMemory.NextRefresh += _config.GetCVar(CCVars.ParrotDbRefreshInterval);
 
             Task.Run(async () => await RefreshMemoryFromDb((uid, memory, dbMemory)));
         }
