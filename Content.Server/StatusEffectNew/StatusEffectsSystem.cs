@@ -1,3 +1,4 @@
+using Content.Server.Speech;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
 
@@ -11,6 +12,9 @@ public sealed partial class StatusEffectsSystem : SharedStatusEffectsSystem
         base.Initialize();
 
         SubscribeLocalEvent<StatusEffectContainerComponent, ComponentShutdown>(OnContainerShutdown);
+
+        // Serverside relays
+        SubscribeLocalEvent<StatusEffectContainerComponent, AccentGetEvent>(RelayStatusEffectEvent);
     }
 
     private void OnContainerShutdown(Entity<StatusEffectContainerComponent> ent, ref ComponentShutdown args)
