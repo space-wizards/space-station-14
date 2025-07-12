@@ -1782,6 +1782,19 @@
   categories:
     - UplinkWearables
 
+- type: listing
+  id: UplinkClothingHandsChameleonRipping
+  name: uplink-ripping-gloves-name
+  description: uplink-ripping-gloves-desc
+  productEntity: ClothingHandsChameleonRipping
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkWearables
+
  # Pointless
 
 - type: listing
