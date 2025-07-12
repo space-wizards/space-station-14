@@ -3,6 +3,7 @@ using Content.Shared.Popups;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
@@ -18,6 +19,7 @@ public abstract class SharedArtifactNukerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ArtifactNukerComponent, BeforeRangedInteractEvent>(OnBeforeRangedInteract);
+        SubscribeLocalEvent<ArtifactNukerComponent, ArtifactNukerIndexChangeMessage>(OnIndexChange);
     }
 
     public void OnBeforeRangedInteract(Entity<ArtifactNukerComponent> ent, ref BeforeRangedInteractEvent args)
@@ -45,7 +47,22 @@ public abstract class SharedArtifactNukerSystem : EntitySystem
             args.Handled = true;
         }
     }
+
+    public static void OnIndexChange(Entity<ArtifactNukerComponent> ent, ref ArtifactNukerIndexChangeMessage args)
+    {
+        ent.Comp.Index = args.Index;
+    }
 }
+
+#region events and messages
 
 [ByRefEvent]
 public record struct AttemptNukeArtifact(Entity<ArtifactNukerComponent> Nuker, EntityUid User);
+
+[Serializable, NetSerializable]
+public sealed class ArtifactNukerIndexChangeMessage(int index) : BoundUserInterfaceMessage
+{
+    public readonly int Index = index;
+}
+
+#endregion
