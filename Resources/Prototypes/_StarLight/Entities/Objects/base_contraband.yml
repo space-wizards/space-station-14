@@ -28,7 +28,7 @@
   components:
   - type: Contraband
     allowedDepartments: [ Security ]
-    allowedJobs: [ SalvageSpecialist, SalvageSpecialist ]
+    allowedJobs: [ SalvageSpecialist, MiningSpecialist ]
 
 - type: entity
   id: BaseEngineeringSalvageContraband
