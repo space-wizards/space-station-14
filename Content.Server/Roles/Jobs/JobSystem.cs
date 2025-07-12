@@ -34,7 +34,7 @@ public sealed class JobSystem : SharedJobSystem
     private void OnRoleRemovedEvent(RoleRemovedEvent args)
     {
         if (args.RoleTypeUpdate)
-            _roles.RoleUpdateMessage(args.Mind);
+            _roles.RoleUpdateMessage(args.MindEntity.Comp);
     }
 
     private void MindOnDoGreeting(EntityUid mindId, MindComponent component, RoleAddedEvent args)

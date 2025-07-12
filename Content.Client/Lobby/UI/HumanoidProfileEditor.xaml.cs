@@ -582,8 +582,6 @@ namespace Content.Client.Lobby.UI
                     selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
                     selector.CheckboxAntagDisable.Visible = trait.AllowAntagDisable;
                     selector.CheckboxAntagDisable.Disabled = !selector.Preference;
-                    if (!selector.Preference)
-                        selector.CheckboxAntagDisable.Modulate = Color.FromHex("#d6d6d6");
 
                     if (selector.Preference)
                         selectionCount += trait.Cost;

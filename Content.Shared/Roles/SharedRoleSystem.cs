@@ -403,7 +403,7 @@ public abstract class SharedRoleSystem : EntitySystem
 
         var update = MindRolesUpdate(mind);
 
-        var message = new RoleRemovedEvent(mind.Owner, mind.Comp, update);
+        var message = new RoleRemovedEvent((mind.Owner, mind.Comp), update);
         RaiseLocalEvent(mind, message, true);
 
         _adminLogger.Add(LogType.Mind,
