@@ -143,6 +143,8 @@
         - id: NitrogenTankFilled
         - id: ClothingOuterHardsuitSecurity
           amount: 2
+        - id: ClothingMaskGasSecurity
+          amount: 2
         - id: JetpackSecurity
   - type: AccessReader
     access: [["Security"]]
