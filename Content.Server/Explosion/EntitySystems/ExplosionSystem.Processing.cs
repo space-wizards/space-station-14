@@ -525,11 +525,19 @@ public sealed partial class ExplosionSystem
             effectiveIntensity -= type.TileBreakRerollReduction;
 
             // does this have a base-turf that we can break it down to?
-            if (string.IsNullOrEmpty(tileDef.BaseTurf))
+            if (tileDef.BaseTurf == null || tileDef.BaseTurf.Count == 0)
                 break;
 
-            if (_tileDefinitionManager[tileDef.BaseTurf] is not ContentTileDefinition newDef)
+            if (tileDef.BaseTurf != null && tileDef.BaseTurf.Count > 0 &&
+                           _tileDefinitionManager.TryGetDefinition(tileDef.BaseTurf[0], out var baseTurfDef) &&
+                           baseTurfDef is ContentTileDefinition newDef)
+            {
+                tileDef = newDef;
+            }
+            else
+            {
                 break;
+            }
 
             if (newDef.MapAtmosphere && !canCreateVacuum)
                 break;
