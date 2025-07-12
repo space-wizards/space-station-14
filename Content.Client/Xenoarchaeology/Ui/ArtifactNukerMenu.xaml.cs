@@ -9,8 +9,7 @@ namespace Content.Client.Xenoarchaeology.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class ArtifactNukerMenu : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _ent = default!;
-    public Action<string>? IndexChanged;
+    public Action<int>? IndexChanged;
 
     public ArtifactNukerMenu()
     {
@@ -19,26 +18,18 @@ public sealed partial class ArtifactNukerMenu : FancyWindow
         IoCManager.InjectDependencies(this);
 
         IndexLineEdit.OnTextChanged += OnIndexChanged;
-    }
-
-    /// <summary>
-    /// Sets entity that represents hand-held xeno artifact node scanner for which window is opened.
-    /// Closes window if <see cref="NodeScannerComponent"/> is not present on entity.
-    /// </summary>
-    public void SetIndex(EntityUid scannerEntityUid)
-    {
-        if (!_ent.TryGetComponent<ArtifactNukerComponent>(scannerEntityUid, out var comp))
-        {
-            Close();
-            return;
-        }
-        if (int.TryParse(IndexLineEdit.Text, out var index))
-            comp.Index = index;
+        IndexLineEdit.OnTextEntered += OnIndexEnter;
     }
 
     private void OnIndexChanged(LineEdit.LineEditEventArgs obj)
     {
         if (!int.TryParse(obj.Text, out _))
             return;
+    }
+
+    private void OnIndexEnter(LineEdit.LineEditEventArgs obj)
+    {
+        if (int.TryParse(obj.Text, out var index))
+            IndexChanged?.Invoke(index);
     }
 }
