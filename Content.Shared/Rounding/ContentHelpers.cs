@@ -110,7 +110,11 @@
                 return 0;
             }
 
-            return (int) Math.Round(actual / max * levels, MidpointRounding.ToZero);
+            // This is necessary if the stack size is the same as the number of levels.
+            // If this doesn't happen, it starts at 1 instead of 0 and will skip the first state.
+            var mod = levels == (int) max ? 1 : 0;
+
+            return (int) Math.Round(actual / max * levels, MidpointRounding.ToZero) - mod;
         }
     }
 }
