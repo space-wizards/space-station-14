@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Speech.Accents;
+﻿namespace Content.Shared.Speech;
 
 public sealed class AccentGetEvent : EntityEventArgs
 {

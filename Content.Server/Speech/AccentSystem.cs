@@ -1,7 +1,6 @@
 using System.Text.RegularExpressions;
-using Content.Server.Chat;
 using Content.Server.Chat.Systems;
-using Content.Shared.Speech.Accents;
+using Content.Shared.Speech;
 
 namespace Content.Server.Speech;
 
