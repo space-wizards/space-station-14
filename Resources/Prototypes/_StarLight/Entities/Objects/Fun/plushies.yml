@@ -1251,6 +1251,14 @@
       sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
       layers:
         - state: plushie_borg
+    - type: Item
+      inhandVisuals:
+        left:
+        - state: bee-inhand-left
+          shader: unshaded
+        right:
+        - state: bee-inhand-right
+          shader: unshaded
     - type: ItemToggle
       onUse: false
       verbToggleOn: plushie-voicebox-activate
