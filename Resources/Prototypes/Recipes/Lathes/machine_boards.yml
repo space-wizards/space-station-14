@@ -251,6 +251,11 @@
   id: DawInstrumentMachineCircuitboard
   result: DawInstrumentMachineCircuitboard
 
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseServiceMachineRecipeCategory ]
+  id: FaxMachineCircuitboard
+  result: FaxMachineCircuitboard
+
 # Bar
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseServiceMachineRecipeCategory ]
