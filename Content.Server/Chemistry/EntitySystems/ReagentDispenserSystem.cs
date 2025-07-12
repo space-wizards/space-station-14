@@ -14,6 +14,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Content.Shared.Labels.Components;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Storage;
 using Content.Server.Hands.Systems;
 
@@ -28,6 +29,7 @@ namespace Content.Server.Chemistry.EntitySystems
     {
         [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedStorageSystem _storage = default!;
         [Dependency] private readonly SolutionTransferSystem _solutionTransferSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
@@ -49,6 +51,7 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserDispenseReagentMessage>(OnDispenseReagentMessage);
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserEjectContainerMessage>(OnEjectReagentMessage);
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserClearContainerSolutionMessage>(OnClearContainerSolutionMessage);
+            SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserInsertStorageMessage>(OnInsertStorageMessage);
 
             SubscribeLocalEvent<ReagentDispenserComponent, MapInitEvent>(OnMapInit, before: new[] { typeof(ItemSlotsSystem) });
         }
@@ -180,6 +183,11 @@ namespace Content.Server.Chemistry.EntitySystems
             _solutionContainerSystem.RemoveAllSolution(solution.Value);
             UpdateUiState(reagentDispenser);
             ClickSound(reagentDispenser);
+        }
+
+        private void OnInsertStorageMessage(Entity<ReagentDispenserComponent> ent, ref ReagentDispenserInsertStorageMessage args)
+        {
+            _storage.PlayerInsertHeldEntity(ent.Owner, args.Actor);
         }
 
         private void ClickSound(Entity<ReagentDispenserComponent> reagentDispenser)
