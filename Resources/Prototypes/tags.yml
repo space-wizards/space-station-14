@@ -88,6 +88,9 @@
   id: Boll
 
 - type: Tag
+  id: Bone
+
+- type: Tag
   id: Book
 
 - type: Tag
