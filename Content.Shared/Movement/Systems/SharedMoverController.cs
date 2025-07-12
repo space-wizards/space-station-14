@@ -92,6 +92,7 @@ public abstract partial class SharedMoverController : VirtualController
         MapQuery = GetEntityQuery<MapComponent>();
 
         SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
+        SubscribeLocalEvent<InputMoverComponent, AnchorStateChangedEvent>(OnAnchorState);
 
         InitializeInput();
         InitializeRelay();
@@ -625,5 +626,11 @@ public abstract partial class SharedMoverController : VirtualController
             args.Modifier *= ent.Comp.BaseWeightlessFriction;
         else
             args.Modifier *= ent.Comp.BaseFriction;
+    }
+
+    private void OnAnchorState(Entity<InputMoverComponent> entity, ref AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
+            PhysicsSystem.SetBodyType(entity, BodyType.KinematicController);
     }
 }
