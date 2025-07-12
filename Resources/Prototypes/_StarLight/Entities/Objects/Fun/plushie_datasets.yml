@@ -117,3 +117,9 @@
   values:
     prefix: plushie-redwoods-
     count: 8
+    
+- type: localizedDataset
+  id: PlushiesKilla
+  values:
+    prefix: plushie-killa-
+    count: 5
