@@ -42,7 +42,7 @@
 - type: entity
   name: explosive grenade
   description: Grenade that creates a small but devastating explosion.
-  parent: [GrenadeBase, BaseSyndicateContraband]
+  parent: [GrenadeBase, BaseCentcommContraband]
   id: ExGrenade
   components:
   - type: ExplodeOnTrigger
@@ -360,7 +360,7 @@
 - type: entity
   name: EMP grenade
   description: A grenade designed to wreak havoc on electronic systems.
-  parent: [GrenadeBase, BaseSyndicateContraband]
+  parent: [GrenadeBase, BaseCentcommContraband]
   id: EmpGrenade
   components:
   - type: Sprite
