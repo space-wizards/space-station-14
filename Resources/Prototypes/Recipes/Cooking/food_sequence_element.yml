@@ -102,6 +102,7 @@
   tags:
   - Cooked
   - Meat
+  - Bacon
 
 # Bear meat
 
@@ -186,6 +187,18 @@
   tags:
   - Cooked
   - Meat
+
+# Fried Egg
+
+- type: foodSequenceElement
+  id: MealFriedEgg
+  name: food-sequence-content-friedegg
+  sprites:
+  - sprite: Objects/Consumable/Food/meals.rsi
+    state: friedegg
+  tags:
+  - Meat
+  - Egg
 
 # Crab meat
 
@@ -852,6 +865,7 @@
     state: produce
   tags:
   - Vegetable
+  - Chili
 
 - type: foodSequenceElement
   id: ChiliPepperSkewer

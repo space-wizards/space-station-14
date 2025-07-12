@@ -452,6 +452,11 @@
   - type: Tag
     tags:
     - Meat
+    - Egg
+  - type: FoodSequenceElement
+    entries:
+      Burger: MealFriedEgg
+      Taco: MealFriedEgg
 # Tastes like egg, salt, pepper.
 
 - type: entity

@@ -73,10 +73,11 @@ food-sequence-content-hamster = hamster
 food-sequence-content-suppermatter = suppermatter
 food-sequence-content-capfruit = capfruit
 food-sequence-content-berries = berries
-food-sequence-content-spacemans-trumpet = spaceman's trupmet
+food-sequence-content-spacemans-trumpet = spaceman's trumpet
 food-sequence-content-cherry = cherry
 food-sequence-content-snail = snail
 food-sequence-content-anomaly-berry = anomaly berry
+food-sequence-content-friedegg = fried egg
 
 # BURGERS
 

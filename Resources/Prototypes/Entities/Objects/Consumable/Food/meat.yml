@@ -185,6 +185,7 @@
     tags:
     - Raw
     - Meat
+    - Bacon
   - type: Sprite
     state: bacon
   - type: SolutionContainerManager
@@ -1004,6 +1005,7 @@
     tags:
     - Cooked
     - Meat
+    - Bacon
   - type: Sprite
     layers:
     - state: bacon-cooked

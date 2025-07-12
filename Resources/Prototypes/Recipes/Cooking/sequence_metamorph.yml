@@ -14,7 +14,6 @@
   - !type:IngredientsWithTags # 1 meat cutlet
     tags:
     - Cooked
-    - Cutlet
     - Meat
     count:
       min: 1
@@ -22,6 +21,26 @@
   - !type:IngredientsWithTags # 1 cheese
     tags:
     - Cheese
+    count:
+      min: 1
+      max: 2
+  - !type:LastElementHasTags # last bun
+    tags:
+    - Bun
+
+- type: metamorphRecipe
+  id: FoodBurgerPlain
+  key: Burger
+  result: FoodBurgerPlain
+  rules:
+  - !type:SequenceLength
+    range:
+      min: 2
+      max: 3
+  - !type:IngredientsWithTags # 1 meat cutlet
+    tags:
+    - Cooked
+    - Meat
     count:
       min: 1
       max: 2
@@ -41,7 +60,6 @@
   - !type:IngredientsWithTags # 1 chicken meat
     tags:
     - Cooked
-    - Cutlet
     - Meat
     - Chicken
     count:
@@ -52,6 +70,87 @@
     count:
      min: 3
      max: 7
+  - !type:LastElementHasTags # last bun
+    tags:
+    - Bun
+
+
+- type: metamorphRecipe
+  id: FoodBurgerBig
+  key: Burger
+  result: FoodBurgerBig
+  rules:
+  - !type:SequenceLength
+    range:
+      min: 7
+      max: 8
+  - !type:IngredientsWithTags # 2 meat cutlets
+    tags:
+    - Cooked
+    - Meat
+    count:
+      min: 2
+      max: 3
+  - !type:IngredientsWithTags # 1 tomato
+    tags:
+    - Vegetable
+    - Fruit
+    count:
+      min: 1
+      max: 2
+  - !type:IngredientsWithTags # 2 onion slices
+    tags:
+    - Vegetable
+    - Slice
+    count:
+      min: 2
+      max: 3
+  - !type:IngredientsWithTags # 1 cheese slice
+    tags:
+    - Cheese
+    count:
+      min: 1
+      max: 2
+  - !type:LastElementHasTags # last bun
+    tags:
+    - Bun
+
+- type: metamorphRecipe
+  id: FoodBurgerSuper
+  key: Burger
+  result: FoodBurgerSuper
+  rules:
+  - !type:SequenceLength
+    range:
+      min: 9
+      max: 10
+  - !type:IngredientsWithTags # 2 meat cutlets
+    tags:
+    - Cooked
+    - Meat
+    count:
+      min: 2
+      max: 3
+  - !type:IngredientsWithTags # 2 tomatoes
+    tags:
+    - Vegetable
+    - Fruit
+    count:
+      min: 2
+      max: 3
+  - !type:IngredientsWithTags # 2 cheese slices
+    tags:
+    - Cheese
+    count:
+      min: 2
+      max: 3
+  - !type:IngredientsWithTags # 2 fried eggs
+    tags:
+    - Meat
+    - Egg
+    count:
+      min: 2
+      max: 3
   - !type:LastElementHasTags # last bun
     tags:
     - Bun
@@ -78,6 +177,86 @@
     - Bun
 
 - type: metamorphRecipe
+  id: FoodBurgerFive
+  key: Burger
+  result: FoodBurgerFive
+  rules:
+  - !type:SequenceLength
+    range:
+      min: 5
+      max: 6
+  - !type:IngredientsWithTags # 1 Meat Cutlet
+    tags:
+    - Cooked
+    - Meat
+    count:
+      min: 1
+      max: 2
+  - !type:IngredientsWithTags # 3 Chili Peppers
+    tags:
+    - Vegetable
+    - Chili
+    count:
+      min: 3
+      max: 4
+  - !type:LastElementHasTags # last bun
+    tags:
+    - Bun
+
+- type: metamorphRecipe
+  id: FoodBurgerMcguffin
+  key: Burger
+  result: FoodBurgerMcguffin
+  rules:
+  - !type:SequenceLength
+    range:
+      min: 4
+      max: 5
+  - !type:IngredientsWithTags # 1 cheese slice
+    tags:
+    - Cheese
+    count:
+      min: 1
+      max: 2
+  - !type:IngredientsWithTags # 2 fried eggs
+    tags:
+    - Meat
+    - Egg
+    count:
+      min: 2
+      max: 3
+  - !type:LastElementHasTags # last bun
+    tags:
+    - Bun
+
+- type: metamorphRecipe
+  id: FoodBurgerBacon
+  key: Burger
+  result: FoodBurgerBacon
+  rules:
+  - !type:SequenceLength
+    range:
+      min: 4
+      max: 5
+  - !type:IngredientsWithTags # 1 bacon
+    tags:
+    - Cooked
+    - Bacon
+    - Meat
+    count:
+      min: 1
+      max: 2
+  - !type:IngredientsWithTags # 2 cheese slices
+    tags:
+    - Cheese
+    count:
+      min: 2
+      max: 3
+  - !type:LastElementHasTags # last bun
+    tags:
+    - Bun
+
+- type: metamorphRecipe
   id: FoodBurgerDuck
   key: Burger
   result: FoodBurgerDuck
@@ -89,7 +268,6 @@
   - !type:IngredientsWithTags # 1 duck meat
     tags:
     - Cooked
-    - Cutlet
     - Meat
     - Duck
     count:
