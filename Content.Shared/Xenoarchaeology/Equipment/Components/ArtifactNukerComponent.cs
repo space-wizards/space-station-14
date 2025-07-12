@@ -5,6 +5,7 @@ namespace Content.Shared.Xenoarchaeology.Equipment.Components;
 ///     Related logic lies in the <see cref="SharedArtifactNukerSystem"/>
 /// </summary>
 [RegisterComponent]
+[Access(typeof(SharedArtifactNukerSystem))]
 public sealed partial class ArtifactNukerComponent : Component
 {
     /// <summary>
@@ -18,10 +19,4 @@ public sealed partial class ArtifactNukerComponent : Component
     /// </summary>
     [DataField]
     public float EnergyDrain = 50;
-
-    /// <summary>
-    ///     Index of the artifact node that will be attempted to nuke.
-    /// </summary>
-    [ViewVariables]
-    public int? Index;
 }
