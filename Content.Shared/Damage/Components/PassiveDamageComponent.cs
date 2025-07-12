@@ -18,6 +18,12 @@ public sealed partial class PassiveDamageComponent : Component
     public List<MobState> AllowedStates = new();
 
     /// <summary>
+    /// What types should have their DamageCap counted seperately, along with if/how much lower that cap should be.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public DamageSpecifier SeperateDamageCap = new();
+
+    /// <summary>
     /// Damage / Healing per interval dealt to the entity every interval
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
