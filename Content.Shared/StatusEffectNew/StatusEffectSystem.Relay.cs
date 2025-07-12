@@ -3,7 +3,7 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.StatusEffectNew;
 
-public sealed partial class StatusEffectsSystem
+public abstract partial class StatusEffectsSystem
 {
     private void InitializeRelay()
     {
