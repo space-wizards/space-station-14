@@ -1,8 +1,8 @@
-using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Xenoarchaeology.Artifact;
-using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Popups;
+using Content.Shared.Xenoarchaeology.Artifact.Components;
+using Content.Shared.Xenoarchaeology.Artifact;
+using Content.Shared.Xenoarchaeology.Equipment.Components;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
@@ -26,7 +26,7 @@ public abstract class SharedArtifactNukerSystem : EntitySystem
         {
             if (!TryComp<XenoArtifactComponent>(args.Target, out var comp))
             {
-                _popup.PopupClient(Loc.GetString(ent.Comp.PopupNotArtifact), args.User);
+                _popup.PopupClient(Loc.GetString("artifact-nuker-popup-notartifact"), args.User);
                 args.Handled = true;
                 return;
             }
@@ -34,16 +34,18 @@ public abstract class SharedArtifactNukerSystem : EntitySystem
             var xenoComp = (args.Target.Value, comp);
             if (_xenoSys.GetActiveNodes(xenoComp) is [])
             {
-                _popup.PopupClient(Loc.GetString(ent.Comp.PopupZeroNodes), args.User);
+                _popup.PopupClient(Loc.GetString("artifact-nuker-popup-zeronodes"), args.User);
                 args.Handled = true;
                 return;
             }
 
-            var refEvent = new AttemptNukeArtifact(ent.Comp, args.User);
+            var refEvent = new AttemptNukeArtifact(ent, args.User);
             RaiseLocalEvent(args.Target.Value, ref refEvent);
+            _popup.PopupClient(Loc.GetString("artifact-nuker-popup-success"), args.User, PopupType.Medium);
             args.Handled = true;
         }
     }
 }
 
-[ByRefEvent] public record struct AttemptNukeArtifact(ArtifactNukerComponent Nuker, EntityUid User);
+[ByRefEvent]
+public record struct AttemptNukeArtifact(Entity<ArtifactNukerComponent> Nuker, EntityUid User);

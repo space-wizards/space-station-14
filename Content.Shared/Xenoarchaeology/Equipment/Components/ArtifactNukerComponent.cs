@@ -4,18 +4,15 @@ namespace Content.Shared.Xenoarchaeology.Equipment.Components;
 [Access(typeof(SharedArtifactNukerSystem))]
 public sealed partial class ArtifactNukerComponent : Component
 {
-    #region Gameplay stuff
     /// <summary>
     ///     When true, activates nuked node.
     /// </summary>
     [DataField]
     public bool ActivateNode = true;
-    #endregion
 
-    #region LocIDs
-    // Not a datafields because serialisation doesn't makes any sense?
-    public string PopupNotArtifact = "";
-
-    public string PopupZeroNodes = "";
-    #endregion
+    /// <summary>
+    ///     Amount of energy that will be drained when nuker used.
+    /// </summary>
+    [DataField]
+    public float EnergyDrain = 50;
 }

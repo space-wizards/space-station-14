@@ -1,12 +1,14 @@
 - type: entity
   id: ArtifactNuker
-  parent: BaseItem
+  parent: [ PowerCellSlotSmallItem, BaseItem ]
   name: artifact nUKer
   description: Used to safely destroy active nodes in artifact.
   components:
   - type: ArtifactNuker
   - type: Sprite
-    sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
+    sprite: Objects/Specific/Xenoarchaeology/artifact_nuker.rsi # Damn this sprite sucks. Someone resprite please 🙏🙏🙏
     state: icon
   - type: Item
-    sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
+    sprite: Objects/Specific/Xenoarchaeology/artifact_nuker.rsi
+  - type: UseDelay
+    delay: 3
