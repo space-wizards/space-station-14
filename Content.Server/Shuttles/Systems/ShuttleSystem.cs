@@ -104,6 +104,13 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
             return;
 
         EnsureComp<ShuttleComponent>(ev.EntityUid);
+
+        if (HasComp<RoofComponent>(ev.EntityUid))
+        {
+            RemComp<ImplicitRoofComponent>(ev.EntityUid);
+            return;
+        }
+
         EnsureComp<ImplicitRoofComponent>(ev.EntityUid);
     }
 
