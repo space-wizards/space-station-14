@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.Animals.Components;
-using Content.Server.GameTicking.Events;
 using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Server.Radio;
