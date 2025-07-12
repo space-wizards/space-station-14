@@ -30,6 +30,12 @@
   maxValue: 9999
 
 - type: nameIdentifierGroup
+  id: Xenoborg
+  prefix: Xi
+  minValue: 1000
+  maxValue: 9999
+
+- type: nameIdentifierGroup
   id: StationAi
   prefix: AI
   minValue: 100
