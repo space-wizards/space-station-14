@@ -839,7 +839,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("admin_ooc_color");
 
-                    b.PrimitiveCollection<List<string>>("ConstructionFavorites")
+                    b.PrimitiveCollection<string[]>("ConstructionFavorites")
                         .IsRequired()
                         .HasColumnType("text[]")
                         .HasColumnName("construction_favorites");
