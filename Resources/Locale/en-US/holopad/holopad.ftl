@@ -46,7 +46,7 @@ holopad-ai-is-unable-to-activate-projector = You are unable to activate the holo
 # Mapping prototypes
 # General
 holopad-general-tools = General - Tools
-holopad-general-cryosleep = General - Cryosleep
+holopad-general-hypersleep = General - Hypersleep
 holopad-general-theater = General - Theater
 holopad-general-disposals = General - Disposals
 holopad-general-eva = General - EVA Storage

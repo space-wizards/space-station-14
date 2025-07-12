@@ -470,7 +470,7 @@
 - type: entity
   parent: BaseSign
   id: SignHyperSleep
-  name: cryosleep sign
+  name: hypersleep sign
   description: Just like that? You're gonna chicken out?
   components:
   - type: Sprite
