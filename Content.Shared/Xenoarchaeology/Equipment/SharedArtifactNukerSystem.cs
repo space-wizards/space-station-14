@@ -7,11 +7,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
-/// <summary>
-///     Logic for the <see cref="SharedArtifactNukerSystem"/>.
-///     For the proper prediction it splited into 3 parts:
-///     this one, Server and Client.
-/// </summary>
 public abstract class SharedArtifactNukerSystem : EntitySystem
 {
     //Disabled because my IDE don't likes protected "_systems"
@@ -46,31 +41,23 @@ public abstract class SharedArtifactNukerSystem : EntitySystem
                 return;
             }
 
-            if (ent.Comp.Index is null)
-            {
-                _popup.PopupClient(Loc.GetString("artifact-nuker-popup-noindex"), args.User);
-                args.Handled = true;
-                return;
-            }
-
-            var refEvent = new AttemptNukeArtifact(ent, args.User, ent.Comp.Index.Value);
+            var refEvent = new AttemptNukeArtifact(ent, args.User);
             RaiseLocalEvent(args.Target.Value, ref refEvent);
             _popup.PopupClient(Loc.GetString("artifact-nuker-popup-success"), args.User, PopupType.Medium);
             args.Handled = true;
         }
     }
 
-    public void OnIndexChange(Entity<ArtifactNukerComponent> ent, ref ArtifactNukerIndexChangeMessage args)
+    public static void OnIndexChange(Entity<ArtifactNukerComponent> ent, ref ArtifactNukerIndexChangeMessage args)
     {
         ent.Comp.Index = args.Index;
-        Dirty(ent);
     }
 }
 
 #region events and messages
 
 [ByRefEvent]
-public record struct AttemptNukeArtifact(Entity<ArtifactNukerComponent> Nuker, EntityUid User, int index);
+public record struct AttemptNukeArtifact(Entity<ArtifactNukerComponent> Nuker, EntityUid User);
 
 [Serializable, NetSerializable]
 public sealed class ArtifactNukerIndexChangeMessage(int index) : BoundUserInterfaceMessage
