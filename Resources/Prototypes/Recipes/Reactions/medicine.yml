@@ -576,9 +576,11 @@
   minTemp: 370
   reactants:
     Blood:
-      amount: 3
-    Omnizine:
-      amount: 1
+      amount: 2
+    Diphenhydramine:
+      amount: 2
+    Desoxyephedrine:
+      amount: 2
     Cryoxadone:
       amount: 2
   products:
