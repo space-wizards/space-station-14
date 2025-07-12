@@ -648,6 +648,9 @@
   id: FoodBakedBrownieBatch
   description: A pan of brownies.
   components:
+  - type: Item
+    size: Normal
+    storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
       - sweet
@@ -701,6 +704,9 @@
   id: FoodBakedCannabisBrownieBatch
   description: A pan of "special" brownies.
   components:
+  - type: Item
+    size: Normal
+    storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
       - sweet
@@ -783,6 +789,12 @@
   id: FoodBakedCroissant
   description: Buttery, flaky goodness.
   components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: -2,-4
   - type: FlavorProfile
     flavors:
       - bread
@@ -811,6 +823,11 @@
   id: FoodBakedCroissantCotton
   description: Buttery, flaky, fibery goodness.
   components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
   - type: FlavorProfile
     flavors:
     - bread
@@ -843,6 +860,8 @@
   id: FoodBakedGrilledCheeseSandwich
   description: Bread and cheese toasted with butter, perfect for a chilly day in space.
   components:
+  - type: Item
+    size: Small
   - type: FlavorProfile
     flavors:
       - cheesy
@@ -868,6 +887,8 @@
   name: cotton grilled cheese sandwich
   description: Cotton bread slightly burnt in butter, with melted cheese. Moths find it difficult to resist this combination.
   components:
+  - type: Item
+    size: Small
   - type: FlavorProfile
     flavors:
     - cheesy
