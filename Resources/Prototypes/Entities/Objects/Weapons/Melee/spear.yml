@@ -117,7 +117,6 @@
     equippedFillBaseName: -fill-
     equippedMaxFillLevels: 1
 
-
 - type: entity
   name: reinforced spear
   parent: Spear
@@ -217,7 +216,7 @@
 
 - type: entity
   name: sharkminnow tooth spear
-  parent: Spear 
+  parent: Spear
   id: SpearSharkMinnow
   description: A spear with a sharkminnow tooth as a tip.
   components:
