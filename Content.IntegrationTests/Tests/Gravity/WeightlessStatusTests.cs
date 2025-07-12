@@ -19,6 +19,7 @@ namespace Content.IntegrationTests.Tests.Gravity
   - type: Alerts
   - type: Physics
     bodyType: Dynamic
+  - type: Weightlessness
 
 - type: entity
   name: WeightlessGravityGeneratorDummy
