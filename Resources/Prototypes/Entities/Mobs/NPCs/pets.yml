@@ -320,6 +320,9 @@
     attributes:
       proper: true
       gender: male
+  - type: Speech
+    speechVerb: Canine
+    speechSounds: Dog
   - type: Tag
     tags:
     - CannotSuicide
@@ -419,6 +422,9 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalWalter
+  - type: Speech
+    speechVerb: Canine
+    speechSounds: Dog
 
 - type: entity
   name: Morty
@@ -738,9 +744,7 @@
       200: Dead
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/Effects/Footsteps/slime1.ogg
-      params:
-        volume: -6
+      collection: FootstepSlime
   - type: Tag
     tags:
     - FootstepSound
@@ -854,3 +858,21 @@
 #  - type: AlwaysRevolutionaryConvertible
   - type: StealTarget
     stealGroup: AnimalTropico
+
+- type: entity
+  name: Polly the parrot
+  parent: MobParrotBase
+  id: MobPollyParrot
+  description: An expert in quantum cracker theory
+  components:
+  - type: ParrotMemory
+    learnChance: 0.5 # polly is smarter
+  - type: Vocalizer
+    maxVocalizeInterval: 240 # polly is chattier
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Loadout
+    prototypes: [ MobPollyGear ]
+

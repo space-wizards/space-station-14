@@ -90,6 +90,10 @@
   - type: Food
     trash: 
     - FoodFrozenPopsicleTrash
+  - type: Tag
+    tags:
+    - Fruit
+    - Creamsicle
 
 - type: entity
   name: berry creamsicle
@@ -109,6 +113,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Creamsicle
 
 - type: entity
   name: jumbo ice-cream

@@ -6,10 +6,10 @@ namespace Content.Shared.Speech;
 ///     Handles replacing speech verbs and other conditional chat modifications like bolding or font type depending
 ///     on punctuation or by directly overriding the prototype.
 /// </summary>
-[Prototype("speechVerb")]
+[Prototype]
 public sealed partial class SpeechVerbPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = default!;
+    [IdDataField] public string ID { get; private set; } = default!;
 
     /// <summary>
     ///     Loc strings to be passed to the chat wrapper. 'says', 'states', etc.

@@ -4,9 +4,9 @@ gun-fire-rate-examine = Fire rate is [color={$color}]{$fireRate}[/color] per sec
 gun-selector-verb = Change to {$mode}
 gun-selected-mode = Selected {$mode}
 gun-disabled = You can't use guns!
-gun-clumsy = The gun blows up in your face!
 gun-set-fire-mode = Set to {$mode}
 gun-magazine-whitelist-fail = That won't fit into the gun!
+gun-magazine-fired-empty = No ammo left!
 
 # SelectiveFire
 gun-SemiAuto = semi-auto
@@ -49,3 +49,7 @@ gun-revolver-insert = Inserted
 gun-revolver-spin = Spin revolver
 gun-revolver-spun = Spun
 gun-speedloader-empty = Speedloader empty
+
+# GunSpreadModifier
+examine-gun-spread-modifier-reduction = The spread has been reduced by [color=yellow]{$percentage}%[/color].
+examine-gun-spread-modifier-increase = The spread has been increased by [color=yellow]{$percentage}%[/color].

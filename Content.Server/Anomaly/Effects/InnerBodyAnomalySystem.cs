@@ -4,7 +4,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.Jittering;
 using Content.Server.Mind;
 using Content.Server.Stunnable;
-using Content.Shared.Actions;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
@@ -16,6 +15,7 @@ using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Anomaly.Effects;
@@ -24,11 +24,10 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly AnomalySystem _anomaly = default!;
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly JitteringSystem _jitter = default!;
     [Dependency] private readonly MindSystem _mind = default!;
@@ -105,7 +104,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
         if (ent.Comp.StartMessage is not null &&
             _mind.TryGetMind(ent, out _, out var mindComponent) &&
-            mindComponent.Session != null)
+            _player.TryGetSessionById(mindComponent.UserId, out var session))
         {
             var message = Loc.GetString(ent.Comp.StartMessage);
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
@@ -114,12 +113,12 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
                 wrappedMessage,
                 default,
                 false,
-                mindComponent.Session.Channel,
+                session.Channel,
                 _messageColor);
 
             _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
 
-            _adminLog.Add(LogType.Anomaly,LogImpact.Extreme,$"{ToPrettyString(ent)} became anomaly host.");
+            _adminLog.Add(LogType.Anomaly,LogImpact.Medium,$"{ToPrettyString(ent)} became anomaly host.");
         }
         Dirty(ent);
     }
@@ -140,7 +139,8 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
     private void OnSeverityChanged(Entity<InnerBodyAnomalyComponent> ent, ref AnomalySeverityChangedEvent args)
     {
-        if (!_mind.TryGetMind(ent, out _, out var mindComponent) || mindComponent.Session == null)
+        if (!_mind.TryGetMind(ent, out _, out var mindComponent) ||
+            !_player.TryGetSessionById(mindComponent.UserId, out var session))
             return;
 
         var message = string.Empty;
@@ -175,7 +175,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
             wrappedMessage,
             default,
             false,
-            mindComponent.Session.Channel,
+            session.Channel,
             _messageColor);
 
         _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
@@ -217,7 +217,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
         if (ent.Comp.EndMessage is not null &&
             _mind.TryGetMind(ent, out _, out var mindComponent) &&
-            mindComponent.Session != null)
+            _player.TryGetSessionById(mindComponent.UserId, out var session))
         {
             var message = Loc.GetString(ent.Comp.EndMessage);
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
@@ -226,7 +226,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
                 wrappedMessage,
                 default,
                 false,
-                mindComponent.Session.Channel,
+                session.Channel,
                 _messageColor);
 
 

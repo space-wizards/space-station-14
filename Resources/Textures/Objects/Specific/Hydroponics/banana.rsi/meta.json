@@ -1,84 +1,92 @@
 {
-  "version": 1,
-   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/6be7633abca9f1a51cab1020500cf0776ce78e5c",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "dead"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/6be7633abca9f1a51cab1020500cf0776ce78e5c, inhands by mubururu_ (github), Growth stages, harvest, dead, and produce created by Chaoticaa (GitHub)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "harvest"
-    },
-    {
-      "name": "produce"
-    },
-    {
-      "name": "peel"
-    },
-    {
-      "name": "peel2"
-    },
-    {
-      "name": "peel3"
-    },
-    {
-      "name": "peel-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "peel-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "baked-peel"
-    },
-    {
-      "name": "baked-peel2"
-    },
-    {
-      "name": "baked-peel3"
-    },
-    {
-      "name": "baked-peel-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "baked-peel-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "seed"
-    },
-    {
-      "name": "stage-1"
-    },
-    {
-      "name": "stage-2"
-    },
-    {
-      "name": "stage-3"
-    },
-    {
-      "name": "stage-4"
-    },
-    {
-      "name": "stage-5"
-    },
-    {
-      "name": "stage-6"
-    },
-    {
-      "name": "primed",
-      "delays": [
-        [
-          4.9,
-          0.1
-        ]
-      ]
-    }
-  ]
+    "states": [
+        {
+            "name": "dead"
+        },
+        {
+            "name": "harvest"
+        },
+        {
+            "name": "produce"
+        },
+        {
+            "name": "peel"
+        },
+        {
+            "name": "peel2"
+        },
+        {
+            "name": "peel3"
+        },
+        {
+            "name": "peel-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "peel-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "baked-peel"
+        },
+        {
+            "name": "baked-peel2"
+        },
+        {
+            "name": "baked-peel3"
+        },
+        {
+            "name": "baked-peel-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "baked-peel-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "seed"
+        },
+        {
+            "name": "stage-1"
+        },
+        {
+            "name": "stage-2"
+        },
+        {
+            "name": "stage-3"
+        },
+        {
+            "name": "stage-4"
+        },
+        {
+            "name": "stage-5"
+        },
+        {
+            "name": "stage-6"
+        },
+        {
+            "name": "produce-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "produce-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "primed",
+            "delays": [
+                [
+                    4.9,
+                    0.1
+                ]
+            ]
+        }
+    ]
 }

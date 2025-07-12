@@ -13,6 +13,7 @@ using Content.Shared.Storage.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Wires;
+using Content.Shared.Item.ItemToggle.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
@@ -28,6 +29,7 @@ public sealed class LockSystem : EntitySystem
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
@@ -39,7 +41,7 @@ public sealed class LockSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated);
+        SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated, before: [typeof(ActivatableUISystem)]);
         SubscribeLocalEvent<LockComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
         SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
@@ -54,6 +56,8 @@ public sealed class LockSystem : EntitySystem
 
         SubscribeLocalEvent<ActivatableUIRequiresLockComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
         SubscribeLocalEvent<ActivatableUIRequiresLockComponent, LockToggledEvent>(LockToggled);
+
+        SubscribeLocalEvent<ItemToggleRequiresLockComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
     }
 
     private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
@@ -69,13 +73,11 @@ public sealed class LockSystem : EntitySystem
         // Only attempt an unlock by default on Activate
         if (lockComp.Locked && lockComp.UnlockOnClick)
         {
-            TryUnlock(uid, args.User, lockComp);
-            args.Handled = true;
+            args.Handled = TryUnlock(uid, args.User, lockComp);
         }
         else if (!lockComp.Locked && lockComp.LockOnClick)
         {
-            TryLock(uid, args.User, lockComp);
-            args.Handled = true;
+            args.Handled = TryLock(uid, args.User, lockComp);
         }
     }
 
@@ -117,7 +119,7 @@ public sealed class LockSystem : EntitySystem
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
 
-        if (!HasUserAccess(uid, user, quiet: false))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false))
             return false;
 
         if (!skipDoAfter && lockComp.LockTime != TimeSpan.Zero)
@@ -142,6 +144,9 @@ public sealed class LockSystem : EntitySystem
     public void Lock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
     {
         if (!Resolve(uid, ref lockComp))
+            return;
+
+        if (lockComp.Locked)
             return;
 
         if (user is { Valid: true })
@@ -172,6 +177,9 @@ public sealed class LockSystem : EntitySystem
     public void Unlock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
     {
         if (!Resolve(uid, ref lockComp))
+            return;
+
+        if (!lockComp.Locked)
             return;
 
         if (user is { Valid: true })
@@ -210,7 +218,7 @@ public sealed class LockSystem : EntitySystem
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
 
-        if (!HasUserAccess(uid, user, quiet: false))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false))
             return false;
 
         if (!skipDoAfter && lockComp.UnlockTime != TimeSpan.Zero)
@@ -277,7 +285,7 @@ public sealed class LockSystem : EntitySystem
 
     private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
             return;
 
         AlternativeVerb verb = new()
@@ -295,7 +303,10 @@ public sealed class LockSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, LockComponent component, ref GotEmaggedEvent args)
     {
-        if (!component.Locked || !component.BreakOnEmag)
+        if (!_emag.CompareFlag(args.Type, EmagType.Access))
+            return;
+
+        if (!component.Locked || !component.BreakOnAccessBreaker)
             return;
 
         _audio.PlayPredicted(component.UnlockSound, uid, args.UserUid);
@@ -307,7 +318,7 @@ public sealed class LockSystem : EntitySystem
         var ev = new LockToggledEvent(false);
         RaiseLocalEvent(uid, ref ev, true);
 
-        RemComp<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged
+        args.Repeatable = true;
         args.Handled = true;
     }
 
@@ -390,7 +401,11 @@ public sealed class LockSystem : EntitySystem
         {
             args.Cancel();
             if (lockComp.Locked)
+            {
                 _sharedPopupSystem.PopupClient(Loc.GetString("entity-storage-component-locked-message"), uid, args.User);
+            }
+
+            _audio.PlayPredicted(component.AccessDeniedSound, uid, args.User);
         }
     }
 
@@ -400,5 +415,20 @@ public sealed class LockSystem : EntitySystem
             return;
 
         _activatableUI.CloseAll(uid);
+    }
+    private void OnActivateAttempt(EntityUid uid, ItemToggleRequiresLockComponent component, ref ItemToggleActivateAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked != component.RequireLocked)
+        {
+            args.Cancelled = true;
+            if (lockComp.Locked)
+                _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-generic-fail",
+                ("target", Identity.Entity(uid, EntityManager))),
+                uid,
+                args.User);
+        }
     }
 }

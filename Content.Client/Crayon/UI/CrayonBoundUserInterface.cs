@@ -21,11 +21,10 @@ namespace Content.Client.Crayon.UI
         protected override void Open()
         {
             base.Open();
-            _menu = this.CreateWindow<CrayonWindow>();
+            _menu = this.CreateWindowCenteredLeft<CrayonWindow>();
             _menu.OnColorSelected += SelectColor;
             _menu.OnSelected += Select;
             PopulateCrayons();
-            _menu.OpenCenteredLeft();
         }
 
         private void PopulateCrayons()

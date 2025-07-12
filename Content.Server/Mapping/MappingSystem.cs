@@ -2,12 +2,12 @@ using System.IO;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -21,16 +21,16 @@ public sealed class MappingSystem : EntitySystem
     [Dependency] private readonly IConsoleHost _conHost = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IResourceManager _resMan = default!;
-    [Dependency] private readonly MapLoaderSystem _map = default!;
+    [Dependency] private readonly MapLoaderSystem _loader = default!;
 
     // Not a comp because I don't want to deal with this getting saved onto maps ever
     /// <summary>
     ///     map id -> next autosave timespan & original filename.
     /// </summary>
     /// <returns></returns>
-    private Dictionary<MapId, (TimeSpan next, string fileName)> _currentlyAutosaving = new();
+    private Dictionary<EntityUid, (TimeSpan next, string fileName)> _currentlyAutosaving = new();
 
     private bool _autosaveEnabled;
 
@@ -60,25 +60,29 @@ public sealed class MappingSystem : EntitySystem
         if (!_autosaveEnabled)
             return;
 
-        foreach (var (map, (time, name))in _currentlyAutosaving.ToArray())
+        foreach (var (uid, (time, name))in _currentlyAutosaving)
         {
             if (_timing.RealTime <= time)
                 continue;
 
-            if (!_mapManager.MapExists(map) || _mapManager.IsMapInitialized(map))
+            if (LifeStage(uid) >= EntityLifeStage.MapInitialized)
             {
-                Log.Warning($"Can't autosave map {map}; it doesn't exist, or is initialized. Removing from autosave.");
-                _currentlyAutosaving.Remove(map);
-                return;
+                Log.Warning($"Can't autosave entity {uid}; it doesn't exist, or is initialized. Removing from autosave.");
+                _currentlyAutosaving.Remove(uid);
+                continue;
             }
 
-            var saveDir = Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), name);
+            _currentlyAutosaving[uid] = (CalculateNextTime(), name);
+            var saveDir = Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), name).Replace(Path.DirectorySeparatorChar, '/');
             _resMan.UserData.CreateDir(new ResPath(saveDir).ToRootedPath());
 
-            var path = Path.Combine(saveDir, $"{DateTime.Now.ToString("yyyy-M-dd_HH.mm.ss")}-AUTO.yml");
-            _currentlyAutosaving[map] = (CalculateNextTime(), name);
-            Log.Info($"Autosaving map {name} ({map}) to {path}. Next save in {ReadableTimeLeft(map)} seconds.");
-            _map.SaveMap(map, path);
+            var path = new ResPath(Path.Combine(saveDir, $"{DateTime.Now:yyyy-M-dd_HH.mm.ss}-AUTO.yml"));
+            Log.Info($"Autosaving map {name} ({uid}) to {path}. Next save in {ReadableTimeLeft(uid)} seconds.");
+
+            if (HasComp<MapComponent>(uid))
+                _loader.TrySaveMap(uid, path);
+            else
+                _loader.TrySaveGrid(uid, path);
         }
     }
 
@@ -87,34 +91,41 @@ public sealed class MappingSystem : EntitySystem
         return _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
     }
 
-    private double ReadableTimeLeft(MapId map)
+    private double ReadableTimeLeft(EntityUid uid)
     {
-        return Math.Round(_currentlyAutosaving[map].next.TotalSeconds - _timing.RealTime.TotalSeconds);
+        return Math.Round(_currentlyAutosaving[uid].next.TotalSeconds - _timing.RealTime.TotalSeconds);
     }
 
     #region Public API
 
-    public void ToggleAutosave(MapId map, string? path=null)
+    public void ToggleAutosave(MapId map, string? path = null)
+    {
+        if (_map.TryGetMap(map, out var uid))
+            ToggleAutosave(uid.Value, path);
+    }
+
+    public void ToggleAutosave(EntityUid uid, string? path=null)
     {
         if (!_autosaveEnabled)
             return;
 
-        if (path != null && _currentlyAutosaving.TryAdd(map, (CalculateNextTime(), Path.GetFileName(path))))
-        {
-            if (!_mapManager.MapExists(map) || _mapManager.IsMapInitialized(map))
-            {
-                Log.Warning("Tried to enable autosaving on non-existant or already initialized map!");
-                _currentlyAutosaving.Remove(map);
-                return;
-            }
+        if (_currentlyAutosaving.Remove(uid) || path == null)
+            return;
 
-            Log.Info($"Started autosaving map {path} ({map}). Next save in {ReadableTimeLeft(map)} seconds.");
-        }
-        else
+        if (LifeStage(uid) >= EntityLifeStage.MapInitialized)
         {
-            _currentlyAutosaving.Remove(map);
-            Log.Info($"Stopped autosaving on map {map}");
+            Log.Error("Tried to enable autosaving on a post map-init entity.");
+            return;
         }
+
+        if (!HasComp<MapComponent>(uid) && !HasComp<MapGridComponent>(uid))
+        {
+            Log.Error($"{ToPrettyString(uid)} is neither a grid or map");
+            return;
+        }
+
+        _currentlyAutosaving[uid] = (CalculateNextTime(), Path.GetFileName(path));
+        Log.Info($"Started autosaving map {path} ({uid}). Next save in {ReadableTimeLeft(uid)} seconds.");
     }
 
     #endregion
