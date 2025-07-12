@@ -196,8 +196,8 @@
       Welder:
         reagents:
         - ReagentId: WeldingFuel
-          Quantity: 65 # Just enough to weld two walls in a row.
-        maxVol: 65
+          Quantity: 60 # Just enough to weld two walls in a row.
+        maxVol: 60
   - type: Tool
     speedModifier: 0.7
   - type: PointLight
