@@ -9,7 +9,7 @@ namespace Content.Server.Traits.Assorted;
 /// </summary>
 public sealed class NarcolepsySystem : EntitySystem
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly SharedStatusEffectsSystem _sharedStatusEffects = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <inheritdoc/>
@@ -53,7 +53,7 @@ public sealed class NarcolepsySystem : EntitySystem
             // Make sure the sleep time doesn't cut into the time to next incident.
             narcolepsy.NextIncidentTime += duration;
 
-            _statusEffects.TryAddStatusEffectDuration(uid, SleepingSystem.StatusEffectForcedSleeping, TimeSpan.FromSeconds(duration));
+            _sharedStatusEffects.TryAddStatusEffectDuration(uid, SleepingSystem.StatusEffectForcedSleeping, TimeSpan.FromSeconds(duration));
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Content.Shared.StatusEffectNew.Components;
 /// Can be used for tracking currently applied status effects.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(StatusEffectsSystem))]
+[Access(typeof(SharedStatusEffectsSystem))]
 public sealed partial class StatusEffectContainerComponent : Component
 {
     public const string ContainerId = "status-effects";

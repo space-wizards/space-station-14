@@ -7,7 +7,7 @@ namespace Content.Shared.StatusEffectNew;
 /// <summary>
 /// Handles displaying status effects that should show an alert, optionally with a duration.
 /// </summary>
-public sealed class StatusEffectAlertSystem : EntitySystem
+public abstract class StatusEffectAlertSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;

@@ -11,7 +11,7 @@ namespace Content.Shared.StatusEffectNew;
 /// This system controls status effects, their lifetime, and provides an API for adding them to entities,
 /// removing them from entities, or getting information about current effects on entities.
 /// </summary>
-public sealed partial class StatusEffectsSystem : EntitySystem
+public abstract partial class SharedStatusEffectsSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;

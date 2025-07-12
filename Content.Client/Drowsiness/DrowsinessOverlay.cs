@@ -17,7 +17,7 @@ public sealed class DrowsinessOverlay : Overlay
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    private readonly StatusEffectsSystem _statusEffects = default!;
+    private readonly SharedStatusEffectsSystem _sharedStatusEffects = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
@@ -33,7 +33,7 @@ public sealed class DrowsinessOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
 
-        _statusEffects = _sysMan.GetEntitySystem<StatusEffectsSystem>();
+        _sharedStatusEffects = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
 
         _drowsinessShader = _prototypeManager.Index(Shader).InstanceUnique();
     }
@@ -45,7 +45,7 @@ public sealed class DrowsinessOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_statusEffects.TryGetEffectsEndTimeWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var endTime))
+        if (!_sharedStatusEffects.TryGetEffectsEndTimeWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var endTime))
             return;
 
         endTime ??= TimeSpan.MaxValue;

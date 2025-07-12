@@ -11,7 +11,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly SharedStatusEffectsSystem _sharedStatusEffects = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -46,7 +46,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
             // Make sure the sleep time doesn't cut into the time to next incident.
             drowsiness.NextIncidentTime += duration;
 
-            _statusEffects.TryAddStatusEffectDuration(statusEffect.AppliedTo.Value, SleepingSystem.StatusEffectForcedSleeping, duration);
+            _sharedStatusEffects.TryAddStatusEffectDuration(statusEffect.AppliedTo.Value, SleepingSystem.StatusEffectForcedSleeping, duration);
         }
     }
 }
