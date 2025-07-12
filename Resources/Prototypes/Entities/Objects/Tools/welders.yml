@@ -53,7 +53,7 @@
         types:
             Heat: 8
   - type: ItemToggleSize
-    activatedSize: Large
+    activatedSize: Ginormous
   - type: ItemToggleHot
   - type: ComponentToggler
     components:
@@ -110,12 +110,13 @@
   name: industrial welding tool
   parent: Welder
   id: WelderIndustrial
-  description: "An industrial welder with over double the fuel capacity."
+  description: "An industrial welder with a larger, but heavier fuel tank."
   components:
   - type: Sprite
     sprite: Objects/Tools/welder_industrial.rsi
   - type: Item
     sprite: Objects/Tools/welder_industrial.rsi
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       Welder:
@@ -128,12 +129,13 @@
   name: advanced industrial welding tool
   parent: WelderIndustrial
   id: WelderIndustrialAdvanced
-  description: "An advanced industrial welder with over double the fuel capacity and hotter flame."
+  description: "An advanced industrial welder with a hotter flame for faster welding. Its a bit heavier on account of its larger fuel tank."
   components:
   - type: Sprite
     sprite: Objects/Tools/welder_industrialadv.rsi
   - type: Item
     sprite: Objects/Tools/welder_industrialadv.rsi
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       Welder:
@@ -154,6 +156,7 @@
     sprite: Objects/Tools/welder_experimental.rsi
   - type: Item
     sprite: Objects/Tools/welder_experimental.rsi
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       Welder:
@@ -195,7 +198,7 @@
           Quantity: 50
         maxVol: 50
   - type: Tool
-    speedModifier: 0.7
+    speedModifier: 0.8 # Fast enough to weld just two solid walls in a row before running out of fuel.
   - type: PointLight
     enabled: false
     radius: 1.0

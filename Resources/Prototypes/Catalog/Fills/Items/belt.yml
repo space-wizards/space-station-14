@@ -23,7 +23,7 @@
       - id: Wrench
       - id: Screwdriver
       - id: Wirecutter
-      - id: Welder
+      - id: WelderIndustrial
       - id: Multitool
 
 - type: entity
