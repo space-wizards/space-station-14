@@ -116,7 +116,9 @@
     sprite: Objects/Tools/welder_industrial.rsi
   - type: Item
     sprite: Objects/Tools/welder_industrial.rsi
-    size: Normal
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
   - type: SolutionContainerManager
     solutions:
       Welder:
@@ -135,7 +137,6 @@
     sprite: Objects/Tools/welder_industrialadv.rsi
   - type: Item
     sprite: Objects/Tools/welder_industrialadv.rsi
-    size: Normal
   - type: SolutionContainerManager
     solutions:
       Welder:
@@ -195,10 +196,10 @@
       Welder:
         reagents:
         - ReagentId: WeldingFuel
-          Quantity: 50
-        maxVol: 50
+          Quantity: 65 # Just enough to weld two walls in a row.
+        maxVol: 65
   - type: Tool
-    speedModifier: 0.8 # Fast enough to weld just two solid walls in a row before running out of fuel.
+    speedModifier: 0.7
   - type: PointLight
     enabled: false
     radius: 1.0
