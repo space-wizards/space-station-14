@@ -721,9 +721,6 @@
           Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
-  - type: SolutionContainerVisuals
-    inHandsMaxFillLevels: 3
-    inHandsFillBaseName: -fill-
   - type: Label
     currentLabel: reagent-name-water
   - type: Sealable
