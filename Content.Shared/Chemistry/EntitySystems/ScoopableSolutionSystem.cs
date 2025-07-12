@@ -24,7 +24,10 @@ public sealed class ScoopableSolutionSystem : EntitySystem
 
     private void OnInteractUsing(Entity<ScoopableSolutionComponent> ent, ref InteractUsingEvent args)
     {
-        TryScoop(ent, args.Used, args.User);
+        if (args.Handled)
+            return;
+
+        args.Handled = TryScoop(ent, args.Used, args.User);
     }
 
     public bool TryScoop(Entity<ScoopableSolutionComponent> ent, EntityUid beaker, EntityUid user)

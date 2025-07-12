@@ -8,6 +8,11 @@
   - type: Sprite
   - type: Item
     size: Ginormous
+  - type: MultiHandedItem
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: Gun
     fireRate: 20
     selectedMode: FullAuto
@@ -31,7 +36,6 @@
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
     layers:
     - state: icon
-      map: ["enum.GunVisualLayers.Base"]
   - type: Item
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
   - type: Gun
@@ -41,11 +45,6 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMinigun
     capacity: 1000
-  - type: MagazineVisuals
-    magState: mag
-    steps: 4
-    zeroVisible: true
-  - type: Appearance
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container

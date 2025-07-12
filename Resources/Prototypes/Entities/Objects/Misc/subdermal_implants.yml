@@ -79,7 +79,7 @@
   parent: BaseSubdermalImplant
   id: TrackingImplant
   name: tracking implant
-  description: This implant has a tracking device attached to the suit sensor network, as well as a condition monitor for the Security radio channel.
+  description: This implant has a tracking device attached to the suit sensor network.
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
@@ -97,11 +97,6 @@
     - type: StationLimitedNetwork
     - type: WirelessNetworkConnection
       range: 500
-    - type: TriggerOnMobstateChange
-      mobState:
-      - Critical
-    - type: Rattle
-      radioChannel: "Security"
 
 #Traitor implants
 
@@ -119,7 +114,10 @@
         - Hands # no use giving a mouse a storage implant, but a monkey is another story...
     - type: Storage
       grid:
-      - 0,0,2,2
+      - 0,0,0,1
+      - 1,0,1,0
+      - 1,2,1,2
+      - 2,1,2,2
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
@@ -141,6 +139,18 @@
       whitelist:
         components:
         - Cuffable # useless if you cant be cuffed
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: RadioImplant
+  name: radio implant
+  description: This implant grants access to the Syndicate channel without a headset.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: RadioImplant
+    radioChannels:
+    - Syndicate
 
 - type: entity
   parent: [ BaseSubdermalImplant, StorePresetUplink ]
@@ -201,6 +211,23 @@
       whitelist:
         components:
         - HumanoidAppearance # syndies cant turn hamlet into a human
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseSubdermalImplant
+  id: ChameleonControllerImplant
+  name: chameleon controller implant
+  description: This implant allows you to instantly change the appearance of all worn chameleon clothing.
+  components:
+  - type: ChameleonControllerImplant
+  - type: SubdermalImplant
+    implantAction: ActionChameleonController
+  - type: UseDelay
+    delay: 1
+  - type: UserInterface
+    interfaces:
+      enum.ChameleonControllerKey.Key:
+        type: ChameleonControllerBoundUserInterface
 
 #Nuclear Operative/Special Exclusive implants
 
@@ -311,6 +338,17 @@
       - Dead
     - type: Rattle
 
+- type: entity
+  parent: BaseSubdermalImplant
+  id: FakeMindShieldImplant
+  name: fake mindshield implant
+  description: This implant allows the implanter to produce a fake signal that NT security huds use to identify individuals implanted with a mindshield.
+  categories: [ HideSpawnMenu ]
+  components:
+      - type: SubdermalImplant
+        implantAction: FakeMindShieldToggleAction
+      - type: FakeMindShieldImplant
+
 # Sec and Command implants
 
 - type: entity
@@ -321,7 +359,28 @@
   categories: [ HideSpawnMenu ]
   components:
    - type: SubdermalImplant
-     permanent: true
-   - type: Tag
-     tags:
-       - MindShield
+   - type: MindShieldImplant
+
+# Centcomm implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: RadioImplantCentcomm
+  name: radio implant
+  description: This implant grants access to the Centcomm channel without a headset. Only authorized for Centcomm employees.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: RadioImplant
+    radioChannels:
+    - CentCom
+
+- type: entity
+  parent: DeathRattleImplant
+  id: DeathRattleImplantCentcomm
+  name: centcomm death rattle implant
+  description: This implant will inform the Centcomm radio channel should the user fall into critical condition or die.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Rattle
+    radioChannel: CentCom

@@ -64,7 +64,7 @@
 
 - type: entity
   name: riot shield
-  parent: [ BaseShield, BaseRestrictedContraband ]
+  parent: [ BaseShield, BaseSecurityContraband ]
   id: RiotShield
   description: A large tower shield. Good for controlling crowds.
   components:
@@ -84,10 +84,10 @@
           Slash: 1
 
 - type: entity
-  name: riot laser shield
-  parent: [ BaseShield, BaseRestrictedContraband ]
+  name: laser shield
+  parent: [ BaseShield, BaseSecurityContraband ]
   id: RiotLaserShield
-  description: A riot shield built for withstanding lasers, but not much else.
+  description: A shield built for withstanding lasers, but not much else.
   components:
     - type: Sprite
       state: riot_laser-icon
@@ -104,10 +104,10 @@
           Heat: 1
 
 - type: entity
-  name: riot bullet shield
-  parent: [ BaseShield, BaseRestrictedContraband ]
+  name: ballistic shield
+  parent: [ BaseShield, BaseSecurityContraband ]
   id: RiotBulletShield
-  description: A ballistic riot shield built for withstanding bullets, but not much else.
+  description: A shield built for protecting against ballistics, but not much else.
   components:
     - type: Sprite
       state: riot_bullet-icon
@@ -320,7 +320,7 @@
 
 - type: entity
   name: mirror shield
-  parent: BaseShield
+  parent: [ BaseShield, BaseMagicalContraband ]
   id: MirrorShield
   description: Eerily glows red... you hear the geometer whispering
   components:
@@ -401,7 +401,7 @@
       heldPrefix: eshield
     - type: UseDelay
       delay: 0.5
-    - type: ToggleableLightVisuals
+    - type: ToggleableVisuals
       spriteLayer: shield
       inhandVisuals:
         left:
@@ -513,7 +513,7 @@
       heldPrefix: teleriot
     - type: UseDelay
       delay: 0.5
-    - type: ToggleableLightVisuals
+    - type: ToggleableVisuals
       spriteLayer: shield
       inhandVisuals:
         left:

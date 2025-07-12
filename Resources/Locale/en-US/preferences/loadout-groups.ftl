@@ -15,6 +15,7 @@ loadout-group-survival-syndicate = Github is forcing me to write text that is li
 loadout-group-breath-tool = Species-dependent breath tools
 loadout-group-tank-harness = Species-specific survival equipment
 loadout-group-EVA-tank = Species-specific gas tank
+loadout-group-vox-tank = Vox-specific gas tank
 loadout-group-pocket-tank-double = Species-specific double emergency tank in pocket
 loadout-group-survival-mime = Mime Survival Box
 
@@ -195,6 +196,8 @@ loadout-group-paramedic-head = Paramedic head
 loadout-group-paramedic-jumpsuit = Paramedic jumpsuit
 loadout-group-paramedic-outerclothing = Paramedic outer clothing
 loadout-group-paramedic-shoes = Paramedic shoes
+
+loadout-group-medical-glasses = Medical glasses
 
 # Wildcards
 loadout-group-reporter-jumpsuit = Reporter jumpsuit

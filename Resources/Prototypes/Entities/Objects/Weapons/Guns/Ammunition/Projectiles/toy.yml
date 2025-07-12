@@ -24,7 +24,7 @@
       - Trash
   - type: Ammo
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
+    sprite: Objects/Fun/Foam/foam_crossbow.rsi
     layers:
       - state: foamdart
   - type: EmbeddableProjectile

@@ -227,6 +227,9 @@ public abstract class SharedResearchSystem : EntitySystem
             return;
         component.MainDiscipline = prototype.Discipline;
         Dirty(uid, component);
+
+        var ev = new TechnologyDatabaseModifiedEvent();
+        RaiseLocalEvent(uid, ref ev);
     }
 
     /// <summary>
@@ -298,7 +301,7 @@ public abstract class SharedResearchSystem : EntitySystem
         component.UnlockedRecipes.Add(recipe);
         Dirty(uid, component);
 
-        var ev = new TechnologyDatabaseModifiedEvent();
+        var ev = new TechnologyDatabaseModifiedEvent(new List<string> { recipe });
         RaiseLocalEvent(uid, ref ev);
     }
 }
