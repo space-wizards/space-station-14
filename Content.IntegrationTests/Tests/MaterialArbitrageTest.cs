@@ -469,7 +469,7 @@ public sealed class MaterialArbitrageTest
                 await server.WaitPost(() =>
                 {
                     var ent = entManager.SpawnEntity(id, testMap.GridCoords);
-                    stackSys.SetCount(ent, 1);
+                    stackSys.SetCount((ent, null), 1);
                     priceCache[id] = price = pricing.GetPrice(ent, false);
                     entManager.DeleteEntity(ent);
                 });
