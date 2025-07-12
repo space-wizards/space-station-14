@@ -1,8 +1,10 @@
 using Robust.Client.UserInterface;
-using Content.Shared.Xenoarchaeology.Equipment;
 
 namespace Content.Client.Xenoarchaeology.Ui;
 
+/// <summary>
+/// BUI for hand-held xeno artifact scanner,  server-provided UI updates.
+/// </summary>
 public sealed class ArtifactNukerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
@@ -15,9 +17,9 @@ public sealed class ArtifactNukerBoundUserInterface(EntityUid owner, Enum uiKey)
 
         _menu = this.CreateWindow<ArtifactNukerMenu>();
 
-        _menu.IndexChanged += index =>
+        _menu.IndexChanged += name =>
         {
-            SendMessage(new ArtifactNukerIndexChangeMessage(index));
+            SendMessage(new BorgSetNameBuiMessage(name));
         };
     }
 
