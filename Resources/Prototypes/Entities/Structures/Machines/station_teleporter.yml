@@ -1,0 +1,131 @@
+- type: entity
+  parent: [ BaseMachinePowered ]
+  id: StationTeleporter
+  name: teleporter
+  description: The peak of bluespace technology. A giant teleporter that allow you to travel vast distances in the blink of an eye.
+  suffix: Unknown Coordinates, Without Autolink
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/station_teleporter.rsi
+    layers:
+    - state: base
+    - state: powered
+      shader: unshaded
+      visible: false
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - sprite: Effects/portal.rsi
+      state: portal-gray
+      map: ["Portal"]
+      shader: unshaded
+      visible: false
+  - type: ApcPowerReceiver
+    powerLoad: 2500
+    needsPower: true
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.LinkedEntityVisuals.HasAnyLinks:
+        Portal:
+          True: { visible: true }
+          False: { visible: false }
+  - type: AmbientSound
+    enabled: false
+    sound:
+      path: /Audio/Ambience/ambi_gateway.ogg
+    range: 5
+    volume: 8
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
+  - type: Appearance
+  - type: StationTeleporter
+    portalLayerMap: "Portal"
+  - type: Portal
+    randomTeleport: false
+    canTeleportToOtherMaps: true
+  - type: PointLight
+    enabled: false
+    radius: 3
+    energy: 1
+  - type: LitOnPowered
+
+- type: entity
+  parent: StationTeleporter
+  id: StationTeleporterNanotrasen
+  suffix: Unknown Coordinates, Nanotrasen Network
+  components:
+  - type: StationTeleporter
+    autoLinkKey: Nanotrasen
+
+- type: entity
+  parent: StationTeleporterNanotrasen
+  id: StationTeleporterCenter
+  suffix: Center, Nanotrasen
+  components:
+  - type: Label
+    currentLabel: teleporter-name-center
+
+- type: entity
+  parent: StationTeleporterNanotrasen
+  id: StationTeleporterSalvage
+  suffix: Salvage, Nanotrasen
+  components:
+  - type: Label
+    currentLabel: teleporter-name-salvage
+
+- type: entity
+  parent: StationTeleporterNanotrasen
+  id: StationTeleporterMedical
+  suffix: Medical, Nanotrasen
+  components:
+  - type: Label
+    currentLabel: teleporter-name-medical
+
+- type: entity
+  parent: StationTeleporterNanotrasen
+  id: StationTeleporterEngineering
+  suffix: Engineering, Nanotrasen
+  components:
+  - type: Label
+    currentLabel: teleporter-name-engineering
+
+- type: entity
+  parent: StationTeleporterNanotrasen
+  id: StationTeleporterSecurity
+  suffix: Security, Nanotrasen
+  components:
+  - type: Label
+    currentLabel: teleporter-name-security
+
+- type: entity
+  parent: StationTeleporterNanotrasen
+  id: StationTeleporterScience
+  suffix: Science, Nanotrasen
+  components:
+  - type: Label
+    currentLabel: teleporter-name-science
+
+- type: entity
+  parent: StationTeleporterNanotrasen
+  id: StationTeleporterCargo
+  suffix: Cargo, Nanotrasen
+  components:
+  - type: Label
+    currentLabel: teleporter-name-cargo

@@ -466,6 +466,105 @@
 
 - type: entity
   parent: BaseComputerAiAccess
+  id: ComputerStationTeleportersControl
+  name: station teleporters control console
+  description: Used to monitor station teleport system operations.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: teleporters_station
+    - map: ["computerLayerKeys"]
+      state: telesci_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3493c2"
+  - type: Computer
+    board: StationTeleportersControlCircuitboard
+  - type: ActivatableUIRequiresAccess
+  - type: ActivatableUI
+    key: enum.StationTeleporterConsoleUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.StationTeleporterConsoleUIKey.Key:
+        type: StationTeleporterConsoleBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: StationTeleporterConsole
+    portalColor: "#81ddeb"
+  - type: Storage
+    grid:
+    - 0,0,4,2
+    maxItemSize: Small
+    storageOpenSound: /Audio/Machines/door_lock_off.ogg
+    storageCloseSound: /Audio/Machines/door_lock_on.ogg
+    storageInsertSound: /Audio/Machines/id_insert.ogg
+    storageRemoveSound: /Audio/Machines/id_swipe.ogg
+    whitelist:
+      tags:
+      - FitInTeleporterConsole
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+      board: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+  - type: AccessReader
+    access: [["Command"]]
+  - type: Lock
+    unlockOnClick: false
+
+- type: entity
+  parent: ComputerStationTeleportersControl
+  id: ComputerStationTeleportersControlFilled
+  suffix: Autofilled, Nanotrasen Network
+  components:
+  - type: StationTeleporterConsole
+    autoLinkKey: Nanotrasen
+  
+- type: entity
+  parent: ComputerStationTeleportersControl
+  id: ComputerSyndicateTeleportersControl
+  name: syndicate teleporters control console
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: teleporters_syndicate
+    - map: ["computerLayerKeys"]
+      state: syndie_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: PointLight
+    color: "#c61414"
+  - type: Computer
+    board: SyndicateTeleportersControlCircuitboard
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+  - type: StationTeleporterConsole
+    portalColor: "#c61414"
+  
+- type: entity
+  parent: BaseComputerAiAccess
   id: ComputerResearchAndDevelopment
   name: R&D computer
   description: A computer used to interface with R&D tools.
