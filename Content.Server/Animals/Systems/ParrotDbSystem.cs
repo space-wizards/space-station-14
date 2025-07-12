@@ -42,9 +42,9 @@ public sealed partial class ParrotDbSystem : EntitySystem
     /// <summary>
     /// Called when a round has started. We do some DB cleaning here
     /// </summary>
-    private void OnRoundStarting(RoundStartingEvent ev)
+    private async void OnRoundStarting(RoundStartingEvent ev)
     {
-        _db.TruncateParrotMemory(_config.GetCVar(CCVars.ParrotMaximumMessageAge));
+        await Task.Run(async () => _db.TruncateParrotMemory(_config.GetCVar(CCVars.ParrotMaximumMessageAge)));
     }
 
     private void OnLearn(Entity<ParrotDbMemoryComponent> entity, ref LearnEvent args)
@@ -93,7 +93,7 @@ public sealed partial class ParrotDbSystem : EntitySystem
         SaveMessageDb(entity, message, session.UserId);
     }
 
-    public void SaveMessageDb(
+    private async void SaveMessageDb(
         EntityUid entity,
         string message,
         Guid sourcePlayerGuid)
@@ -104,7 +104,7 @@ public sealed partial class ParrotDbSystem : EntitySystem
         var currentRoundId = _ticker.RoundId;
 
         // actually save the message to the database
-        _db.AddParrotMemory(message, sourcePlayerGuid, currentRoundId);
+        await Task.Run(async () => await _db.AddParrotMemory(message, sourcePlayerGuid, currentRoundId));
     }
 
     /// <summary>
