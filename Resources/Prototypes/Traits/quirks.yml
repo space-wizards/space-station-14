@@ -7,7 +7,7 @@
   category: Quirks
   blacklist:
     components:
-    - Thieving
+    - Thieving # Blacklisted to prevent thieves losing pacifism when gaining an antag role.
   components:
   - type: Pacified
 

@@ -60,7 +60,7 @@
   blacklist:
     components:
       - BorgChassis
-      - MimePowers
+      - MimePowers # Blacklisted to prevent mimes losing mutedness when gaining an antag role.
   components:
     - type: Muted
 
