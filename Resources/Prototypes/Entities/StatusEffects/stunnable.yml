@@ -39,13 +39,14 @@
   name: stunned
   components:
   - type: StatusEffect
-    alert: Stun
     whitelist:
       components:
       - MobState
     blacklist:
       tags:
       - StunImmune
+  - type: StatusEffectAlert
+    alert: Stun
   - type: StunnedStatusEffect
 
 - type: entity
