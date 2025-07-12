@@ -20,6 +20,8 @@ using Robust.Shared.Random;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 using Content.Shared.Hands.Components;
+using Content.Shared.Kitchen;
+using Content.Shared.Mobs;
 
 namespace Content.Server.Forensics
 {
@@ -41,6 +43,9 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<ForensicsComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
+            SubscribeLocalEvent<DnaComponent, KitchenSpikedEvent>(OnKitchenSpiked);
+            SubscribeLocalEvent<ForensicsComponent, KitchenSpikeGetPieceEvent>(OnKitchenSpikeGetPiece);
+
             SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
@@ -116,6 +121,21 @@ namespace Content.Server.Forensics
         private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
         {
             CopyForensicsFrom(ent.Comp, args.Target);
+        }
+
+        private void OnKitchenSpiked(Entity<DnaComponent> ent, ref KitchenSpikedEvent args)
+        {
+            if (ent.Comp.DNA != null)
+            {
+                var forensicsComp = EnsureComp<ForensicsComponent>(args.SpikeUid);
+                forensicsComp.DNAs.Add(ent.Comp.DNA);
+            }
+            ApplyEvidence(args.SpikerUid, args.SpikeUid);
+        }
+
+        private void OnKitchenSpikeGetPiece(Entity<ForensicsComponent> ent, ref KitchenSpikeGetPieceEvent args)
+        {
+            ApplyEvidence(ent.Owner, args.PieceUid);
         }
 
         /// <summary>
