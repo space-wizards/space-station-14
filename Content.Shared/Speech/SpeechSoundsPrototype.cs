@@ -10,6 +10,12 @@ namespace Content.Shared.Speech
         [IdDataField]
         public string ID { get; private set; } = default!;
 
+        /// <summary>
+        ///     Name shown in the voicemask UI for this noise.
+        /// </summary>
+        [DataField(required: true)]
+        public LocId Name;
+
         //Variation is here instead of in SharedSpeechComponent since some sets of
         //sounds may require more fine tuned pitch variation than others.
         [DataField("variation")]
