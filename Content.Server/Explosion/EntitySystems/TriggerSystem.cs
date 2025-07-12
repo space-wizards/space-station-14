@@ -4,6 +4,7 @@ using Content.Server.Explosion.Components;
 using Content.Shared.Flash;
 using Content.Server.Electrocution;
 using Content.Server.Pinpointer;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Flash.Components;
 using Content.Server.Radio.EntitySystems;
@@ -103,6 +104,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredOffEvent>(OnStepTriggered);
             SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
+            SubscribeLocalEvent<TriggerOnSmokableExpendedComponent, SmokableSolutionEmptyEvent>(OnSmokableExpended);
             SubscribeLocalEvent<TriggerWhenEmptyComponent, OnEmptyGunShotEvent>(OnEmptyTriggered);
             SubscribeLocalEvent<RepeatingTriggerComponent, MapInitEvent>(OnRepeatInit);
 
@@ -290,6 +292,19 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnSlipTriggered(EntityUid uid, TriggerOnSlipComponent component, ref SlipEvent args)
         {
             Trigger(uid, args.Slipped);
+        }
+
+        /// <summary>
+        /// trigger's when a smokeable entity expends its reagents to 0.
+        /// </summary>
+        private void OnSmokableExpended(EntityUid uid, TriggerOnSmokableExpendedComponent component, ref SmokableSolutionEmptyEvent args)
+        {
+            if (component.LitBy != null)
+            {
+                Trigger(uid, component.LitBy);
+                return;
+            }
+            Trigger(uid, uid);
         }
 
         private void OnEmptyTriggered(EntityUid uid, TriggerWhenEmptyComponent component, ref OnEmptyGunShotEvent args)
