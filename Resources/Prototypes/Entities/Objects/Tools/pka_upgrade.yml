@@ -78,3 +78,23 @@
     examineText: gun-upgrade-examine-text-reload
   - type: GunUpgradeFireRate
     coefficient: 1.5
+
+- type: entity
+  id: PKAUpgradePierce
+  parent: BasePKAUpgrade
+  name: PKA modkit (piercing)
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay-1
+      color: "#e6e6e6"
+    - state: overlay-2
+      color: "#b4b4b4"
+    - state: overlay-3
+      color: "#c8c8c8"
+  - type: GunUpgrade
+    tags: [ GunUpgradePenetration ]
+    examineText: gun-upgrade-examine-text-piercing
+  - type: GunUpgradePenetration
+    threshold: 300 #pierces 2 rocks (hits 3)

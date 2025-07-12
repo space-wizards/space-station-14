@@ -670,6 +670,9 @@
   id: GunUpgradeDamage
 
 - type: Tag
+  id: GunUpgradePenetration
+
+- type: Tag
   id: GunUpgradeRange
 
 - type: Tag
