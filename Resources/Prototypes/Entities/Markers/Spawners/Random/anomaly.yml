@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: RandomAnomalySpawner
   name: random anomaly spawner
+  suffix: All
   parent: MarkerBase
   components:
   - type: Sprite
@@ -8,29 +9,31 @@
     - state: red
     - sprite: Structures/Specific/anomaly.rsi
       state: anom1
-  - type: RandomSpawner
-    chance: 1
-    prototypes:
-    - AnomalyPyroclastic
-    - AnomalyGravity
-    - AnomalyElectricity
-    - AnomalyFlesh
-    - AnomalyBluespace
-    - AnomalyIce
-    - RandomRockAnomalySpawner
-    - AnomalyLiquid
-    - AnomalyFlora
-    - AnomalyShadow
-    - AnomalyTech
-    #- AnomalySanta
-    rareChance: 0.3
-    rarePrototypes:
-    - RandomAnomalyInjectorSpawner
-    offset: 0.15 # not to put it higher. The anomaly sychnronizer looks for anomalies within this radius, and if the radius is higher, the anomaly can be attracted from a neighboring tile.
+  - type: EntityTableSpawner
+    offset: 0.15 # Do not put higher. The anomaly sychnronizer looks for anomalies within this radius, and if the radius is higher, the anomaly can be attracted from a neighboring tile.
+    table: !type:NestedSelector
+      tableId: AnomalyTable
+
+- type: entity
+  id: RandomCorporealAnomalySpawner
+  name: random anomaly spawner
+  suffix: Corporeal
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Specific/anomaly.rsi
+      state: anom5
+  - type: EntityTableSpawner
+    offset: 0.15
+    table: !type:NestedSelector
+      tableId: CorporealAnomalyTable
 
 - type: entity
   id: RandomRockAnomalySpawner
-  name: random rock anomaly spawner
+  name: random anomaly spawner
+  suffix: Rock
   parent: MarkerBase
   components:
   - type: Sprite
@@ -38,21 +41,15 @@
     - state: red
     - sprite: Structures/Specific/anomaly.rsi
       state: anom6
-  - type: RandomSpawner
-    prototypes:
-    - AnomalyRockIron
-    - AnomalyRockCoal
-    - AnomalyRockSilver
-    - AnomalyRockGold
-    - AnomalyRockQuartz
-    - AnomalyRockUranium
-    - AnomalyRockBananium
-    chance: 1
+  - type: EntityTableSpawner
     offset: 0.15
+    table: !type:NestedSelector
+      tableId: CorporealRockAnomalyTable
 
 - type: entity
   id: RandomAnomalyInjectorSpawner
-  name: random anomaly injector spawner
+  name: random anomaly spawner
+  suffix: Injector
   parent: MarkerBase
   components:
   - type: Sprite
@@ -60,17 +57,90 @@
     - state: red
     - sprite: Structures/Specific/Anomalies/tech_anom.rsi
       state: pulse
-  - type: RandomSpawner
-    prototypes:
-    - AnomalyTrapPyroclastic
-    - AnomalyTrapElectricity
-    - AnomalyTrapShadow
-    - AnomalyTrapIce
-    - AnomalyTrapFlora
-    - AnomalyTrapBluespace
-    - AnomalyTrapFlesh
-    - AnomalyTrapGravity
-    - AnomalyTrapTech
-    - AnomalyTrapRock
-    #- AnomalyTrapSanta
-    chance: 1
+  - type: EntityTableSpawner
+    offset: 0.15
+    table: !type:NestedSelector
+      tableId: InjectorAnomalyTable
+
+## Entity tables
+
+# All anomalies
+- type: entityTable
+  id: AnomalyTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: CorporealAnomalyTable
+      weight: 70
+    - !type:NestedSelector
+      tableId: InjectorAnomalyTable
+      weight: 30
+
+# Corporeal (normal) anomalies
+- type: entityTable
+  id: CorporealAnomalyTable
+  table: !type:GroupSelector
+    children:
+    - id: AnomalyPyroclastic
+    - id: AnomalyGravity
+    - id: AnomalyElectricity
+    - id: AnomalyFlesh
+    - id: AnomalyBluespace
+    - id: AnomalyIce
+    - id: AnomalyLiquid
+    - id: AnomalyFlora
+    - id: AnomalyShadow
+    - id: AnomalyTech
+    - !type:NestedSelector
+      tableId: CorporealRockAnomalyTable
+    # Holiday anomalies
+    - id: AnomalySanta
+      weight: 0.5   # Santa's power can be felt
+      conditions:
+      - !type:IsHolidayCondition
+        holiday: FestiveSeason
+    - id: AnomalySanta
+      weight: 1.5   # Santa's power is strong
+      conditions:
+      - !type:IsHolidayCondition
+        holiday: Christmas
+
+# Corporeal rock anomaly variants
+- type: entityTable
+  id: CorporealRockAnomalyTable
+  table: !type:GroupSelector
+    children:
+    - id: AnomalyRockIron
+    - id: AnomalyRockCoal
+    - id: AnomalyRockSilver
+    - id: AnomalyRockGold
+    - id: AnomalyRockQuartz
+    - id: AnomalyRockUranium
+    - id: AnomalyRockBananium
+
+# Infection type anomalies
+- type: entityTable
+  id: InjectorAnomalyTable
+  table: !type:GroupSelector
+    children:
+    - id: AnomalyTrapPyroclastic
+    - id: AnomalyTrapElectricity
+    - id: AnomalyTrapShadow
+    - id: AnomalyTrapIce
+    - id: AnomalyTrapFlora
+    - id: AnomalyTrapBluespace
+    - id: AnomalyTrapFlesh
+    - id: AnomalyTrapGravity
+    - id: AnomalyTrapTech
+    - id: AnomalyTrapRock
+    # Holiday anomalies
+    - id: AnomalyTrapSanta
+      weight: 0.5   # Santa's power can be felt
+      conditions:
+      - !type:IsHolidayCondition
+        holiday: FestiveSeason
+    - id: AnomalyTrapSanta
+      weight: 1.5   # Santa's power is strong
+      conditions:
+      - !type:IsHolidayCondition
+        holiday: Christmas
