@@ -56,9 +56,11 @@ public abstract partial class SharedMoverController : VirtualController
     protected EntityQuery<MovementSpeedModifierComponent> ModifierQuery;
     protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
     protected EntityQuery<PhysicsComponent> PhysicsQuery;
-    protected EntityQuery<RelayInputMoverComponent> RelayQuery;
     protected EntityQuery<PullableComponent> PullableQuery;
+    protected EntityQuery<RelayInputMoverComponent> RelayQuery;
     protected EntityQuery<TransformComponent> XformQuery;
+
+    private readonly HashSet<EntityUid> _entSet = new();
 
     private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
@@ -236,7 +238,7 @@ public abstract partial class SharedMoverController : VirtualController
 
             // If we're not on a grid, and not able to move in space check if we're close enough to a grid to touch.
             if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
-                touching |= IsAroundCollider(_lookup, (uid, physicsComponent, mobMover, xform));
+                touching |= IsAroundCollider(uid, physicsComponent, mobMover, xform);
 
             // If we're touching then use the weightless values
             if (touching)
@@ -449,25 +451,27 @@ public abstract partial class SharedMoverController : VirtualController
     /// <summary>
     /// Used for weightlessness to determine if we are near a wall.
     /// </summary>
-    private bool IsAroundCollider(EntityLookupSystem lookupSystem, Entity<PhysicsComponent, MobMoverComponent, TransformComponent> entity)
+    private bool IsAroundCollider(EntityUid uid, PhysicsComponent collider, MobMoverComponent mover, TransformComponent xform)
     {
-        var (uid, collider, mover, transform) = entity;
-        var enlargedAABB = _lookup.GetWorldAABB(entity.Owner, transform).Enlarged(mover.GrabRange);
+        _entSet.Clear();
+        // TODO: Pass in physics when fixtures is kill.
+        var aabb = _lookup.GetLocalHardAABB(uid);
+        var range = mover.GrabRange + Math.Max(aabb.Width, aabb.Height);
 
-        foreach (var otherEntity in lookupSystem.GetEntitiesIntersecting(transform.MapID, enlargedAABB))
+        _lookup.GetEntitiesInRange((uid, xform), range, _entSet, LookupFlags.Static | LookupFlags.Approximate);
+
+        foreach (var otherEntity in _entSet)
         {
-            if (otherEntity == uid)
-                continue; // Don't try to push off of yourself!
-
             if (!PhysicsQuery.TryComp(otherEntity, out var otherCollider))
                 continue;
 
+            // TODO: I don't think we even need top 2 checks anymore?
             // Only allow pushing off of anchored things that have collision.
             if (otherCollider.BodyType != BodyType.Static ||
                 !otherCollider.CanCollide ||
                 ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
                 (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
-                (TryComp(otherEntity, out PullableComponent? pullable) && pullable.BeingPulled))
+                (PullableQuery.TryComp(otherEntity, out var pullable) && pullable.BeingPulled))
             {
                 continue;
             }

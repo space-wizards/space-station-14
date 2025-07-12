@@ -25,7 +25,7 @@ public sealed partial class NPCImprintingOnSpawnBehaviourSystem : SharedNPCImpri
     private void OnMapInit(Entity<NPCImprintingOnSpawnBehaviourComponent> imprinting, ref MapInitEvent args)
     {
         HashSet<EntityUid> friends = new();
-        _lookup.GetEntitiesInRange(imprinting, imprinting.Comp.SpawnFriendsSearchRadius, friends);
+        _lookup.GetEntitiesInRange(imprinting.Owner, imprinting.Comp.SpawnFriendsSearchRadius, friends);
 
         foreach (var friend in friends)
         {
