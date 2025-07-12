@@ -691,3 +691,5 @@ CryogenicSleepUnitSpawner: HyperSleepUnitSpawner
 CryogenicSleepUnit: HyperSleepUnitSpawner
 SignCryo: SignHyperSleep
 SignDirectionalCryo: SignDirectionalHyperSleep
+DefaultStationBeaconCryosleep: DefaultStationBeaconHypersleep
+HolopadGeneralCryosleep: HolopadGeneralHypersleep
