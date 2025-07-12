@@ -77,7 +77,7 @@ public abstract partial class SharedToolSystem
         if (!tool.Qualities.ContainsAny(tileDef.DeconstructTools))
             return false;
 
-        if (string.IsNullOrWhiteSpace(tileDef.BaseTurf))
+        if (tileDef.BaseTurf == null || tileDef.BaseTurf.Count == 0)
             return false;
 
         if (comp.RequiresUnobstructed && _turfs.IsTileBlocked(gridUid, tileRef.GridIndices, CollisionGroup.MobMask))

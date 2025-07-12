@@ -173,7 +173,7 @@ public sealed class FloorTileSystem : EntitySystem
 
     public bool HasBaseTurf(ContentTileDefinition tileDef, string baseTurf)
     {
-        return tileDef.BaseTurf == baseTurf;
+        return tileDef.BaseTurf != null && tileDef.BaseTurf.Contains(baseTurf);
     }
 
     private void PlaceAt(EntityUid user, EntityUid gridUid, MapGridComponent mapGrid, EntityCoordinates location,
@@ -181,9 +181,10 @@ public sealed class FloorTileSystem : EntitySystem
     {
         _adminLogger.Add(LogType.Tile, LogImpact.Low, $"{ToPrettyString(user):actor} placed tile {_tileDefinitionManager[tileId].Name} at {ToPrettyString(gridUid)} {location}");
 
-        var random = new System.Random((int) _timing.CurTick.Value);
-        var variant = _tile.PickVariant((ContentTileDefinition) _tileDefinitionManager[tileId], random);
-        _map.SetTile(gridUid, mapGrid,location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
+        var random = new System.Random((int)_timing.CurTick.Value);
+        var variant = _tile.PickVariant((ContentTileDefinition)_tileDefinitionManager[tileId], random);
+        var tileRef = _map.GetTileRef(gridUid, mapGrid, location.Offset(new Vector2(offset, offset)));
+        _tile.ReplaceTile(tileRef, (ContentTileDefinition)_tileDefinitionManager[tileId], gridUid, mapGrid);
 
         _audio.PlayPredicted(placeSound, location, user);
     }
