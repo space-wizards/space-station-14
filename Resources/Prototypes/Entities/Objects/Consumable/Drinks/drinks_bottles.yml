@@ -215,6 +215,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: fill-
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
 
 # Large Glass Bottles
 
@@ -720,7 +722,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
   - type: SolutionContainerVisuals
-    inHandsMaxFillLevels: 2
+    inHandsMaxFillLevels: 3
     inHandsFillBaseName: -fill-
   - type: Label
     currentLabel: reagent-name-water
