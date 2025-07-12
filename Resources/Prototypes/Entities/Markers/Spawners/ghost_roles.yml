@@ -1,3 +1,6 @@
+# The mind roles specified here will be overwritten by the actual entities' GhostRoleComponent when they spawn
+# But the mind roles specified here are the ones checked for role bans when taking a ghost role!
+
 - type: entity
   abstract: true
   parent: MarkerBase
@@ -88,7 +91,7 @@
   - type: GhostRole
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeops
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -110,7 +113,7 @@
     description: ghost-role-information-loneop-description
     rules: ghost-role-information-loneop-rules
     mindRoles:
-    - MindRoleGhostRoleSoloAntagonist
+    - MindRoleNukeops
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -128,7 +131,7 @@
     description: roles-antag-nuclear-operative-commander-objective
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeopsCommander
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -140,7 +143,7 @@
     description: roles-antag-nuclear-operative-agent-objective
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeopsMedic
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -152,7 +155,7 @@
     description: roles-antag-nuclear-operative-objective
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeops
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -164,7 +167,7 @@
     description: ghost-role-information-space-dragon-description
     rules: ghost-role-information-space-dragon-rules
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleDragon
   - type: Sprite
     layers:
     - state: green
@@ -181,7 +184,7 @@
     description: ghost-role-information-space-ninja-description
     rules: ghost-role-information-antagonist-rules
     mindRoles:
-    - MindRoleGhostRoleSoloAntagonist
+    - MindRoleNinja
     raffle:
       settings: default
   - type: Sprite
@@ -201,7 +204,7 @@
     description: ghost-role-information-paradox-clone-description
     rules: ghost-role-information-antagonist-rules
     mindRoles:
-    - MindRoleGhostRoleSoloAntagonist
+    - MindRoleParadoxClone
     raffle:
       settings: default
   - type: Sprite
@@ -220,6 +223,8 @@
     name: ghost-role-information-derelict-cyborg-name
     description: ghost-role-information-derelict-cyborg-description
     rules: ghost-role-information-silicon-rules
+    mindRoles:
+    - MindRoleSubvertedSilicon
     raffle:
       settings: default
   - type: Sprite
@@ -240,7 +245,7 @@
     name: ghost-role-information-wizard-name
     description: ghost-role-information-wizard-desc
     mindRoles:
-    - MindRoleGhostRoleSoloAntagonist
+    - MindRoleWizard
     raffle:
       settings: default
   - type: Sprite
