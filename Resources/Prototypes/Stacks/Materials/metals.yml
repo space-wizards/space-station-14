@@ -1,9 +1,6 @@
-- type: material
-  id: Steel
-  stackEntity: SheetSteel1
-  name: materials-steel
-  icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: steel }
-  price: 0.15 # $15 for 1 unit
+# Heroes of the periodic table, and alloys
+
+# Pure metal
 
 - type: material
   id: Gold
@@ -22,6 +19,23 @@
   icon: { sprite: Objects/Materials/ingots.rsi, state: silver }
   color: "#C0C0C0"
   price: 0.60 # $60 for 1 unit
+
+- type: material
+  id: Uranium
+  stackEntity: SheetUranium1
+  name: materials-uranium
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: uranium }
+  color: "#32a852"
+  price: 0.85 # $85 for 1 unit
+
+# Alloy
+
+- type: material
+  id: Steel
+  stackEntity: SheetSteel1
+  name: materials-steel
+  icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: steel }
+  price: 0.15 # $15 for 1 unit
 
 - type: material
   id: Brass
