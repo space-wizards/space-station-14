@@ -1,4 +1,5 @@
 using Content.Shared.Hands.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Rotation;
@@ -22,6 +23,8 @@ public sealed class StandingStateSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<StandingStateComponent, AttemptMobCollideEvent>(OnMobCollide);
         SubscribeLocalEvent<StandingStateComponent, AttemptMobTargetCollideEvent>(OnMobTargetCollide);
+        SubscribeLocalEvent<StandingStateComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionModifiers);
+        SubscribeLocalEvent<StandingStateComponent, TileFrictionEvent>(OnTileFriction);
     }
 
     private void OnMobTargetCollide(Entity<StandingStateComponent> ent, ref AttemptMobTargetCollideEvent args)
@@ -38,6 +41,18 @@ public sealed class StandingStateSystem : EntitySystem
         {
             args.Cancelled = true;
         }
+    }
+
+    private void OnRefreshFrictionModifiers(Entity<StandingStateComponent> entity, ref RefreshFrictionModifiersEvent args)
+    {
+        if (!entity.Comp.Standing)
+            args.ModifyFriction(entity.Comp.FrictionModifier);
+    }
+
+    private void OnTileFriction(Entity<StandingStateComponent> entity, ref TileFrictionEvent args)
+    {
+        if (!entity.Comp.Standing)
+            args.Modifier *= entity.Comp.FrictionModifier;
     }
 
     public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
