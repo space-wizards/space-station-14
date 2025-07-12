@@ -643,6 +643,9 @@
   id: Goat
 
 - type: Tag
+  id: GoldenPlunger
+
+- type: Tag
   id: Goliath
 
 - type: Tag
@@ -1089,6 +1092,12 @@
 
 - type: Tag
   id: PlushieCarp
+
+- type: Tag
+  id: PlushieCarpHolo
+
+- type: Tag
+  id: PlushieCarpMagi
 
 - type: Tag
   id: PlushieGhost
