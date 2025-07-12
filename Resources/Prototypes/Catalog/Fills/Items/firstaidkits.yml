@@ -1,4 +1,4 @@
-#Entities found at entities/objects/specific/medical
+#Medkit Fills
 - type: entity
   id: MedkitFilled
   suffix: Filled
@@ -10,7 +10,6 @@
       - id: Ointment
       - id: Gauze
       - id: PillCanisterTricordrazine
-      # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
 
 - type: entity
   id: MedkitBurnFilled
@@ -109,3 +108,17 @@
     contents:
       - id: StimpackMini
         amount: 6
+
+## Other Medical Fills
+- type: entity
+  id: MedicalPouchCorpsmanFilled
+  suffix: Corpsman, Filled
+  parent: CorpsmanMedicalPouch
+  components:
+  - type: StorageFill
+    contents:
+      - id: ChemistryBottleEpinephrine
+        amount: 2
+      - id: ChemistryBottleEphedrine
+        amount: 2
+      - id: ChemistryBottleOmnizine
