@@ -180,7 +180,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         if (msg.ProduceData is not null)
         {
             var gases = _localizationHelper.GasesToLocalizedStrings(msg.ProduceData.ExudeGasses);
-            var (produce, producePlural) = _localizationHelper.ProduceToLocalizedStrings(msg.ProduceData.Produce);
+            var (produce, producePlural, firstProduce) = _localizationHelper.ProduceToLocalizedStrings(msg.ProduceData.Produce);
             var chemicals = _localizationHelper.ChemicalsToLocalizedStrings(msg.ProduceData.Chemicals);
 
             (string, object)[] parameters = [
@@ -189,7 +189,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
                 ("gases", gases),
                 ("potency", Loc.GetString(msg.ProduceData.Potency)),
                 ("seedless", msg.ProduceData.Seedless),
-                ("firstProduce", msg.ProduceData.Produce.FirstOrDefault() ?? ""),
+                ("firstProduce", firstProduce),
                 ("produce", produce),
                 ("producePlural", producePlural),
                 ("chemCount", msg.ProduceData.Chemicals.Count),
