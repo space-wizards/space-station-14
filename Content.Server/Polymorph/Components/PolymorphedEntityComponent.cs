@@ -18,7 +18,7 @@ public sealed partial class PolymorphedEntityComponent : Component
     /// The original entity that the player will revert back into
     /// </summary>
     [DataField(required: true)]
-    public EntityUid Parent;
+    public EntityUid? Parent;
 
     /// <summary>
     /// The amount of time that has passed since the entity was created
