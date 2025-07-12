@@ -21,7 +21,7 @@ public abstract partial class SharedStatusEffectsSystem
         RelayEvent((uid, component), args);
     }
 
-    protected void RelayEvent<T>(Entity<StatusEffectContainerComponent> statusEffect, ref T args) where T : struct
+    public void RelayEvent<T>(Entity<StatusEffectContainerComponent> statusEffect, ref T args) where T : struct
     {
         // this copies the by-ref event if it is a struct
         var ev = new StatusEffectRelayedEvent<T>(args);
@@ -33,7 +33,7 @@ public abstract partial class SharedStatusEffectsSystem
         args = ev.Args;
     }
 
-    protected void RelayEvent<T>(Entity<StatusEffectContainerComponent> statusEffect, T args) where T : class
+    public void RelayEvent<T>(Entity<StatusEffectContainerComponent> statusEffect, T args) where T : class
     {
         // this copies the by-ref event if it is a struct
         var ev = new StatusEffectRelayedEvent<T>(args);
