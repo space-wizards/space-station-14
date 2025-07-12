@@ -361,14 +361,11 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (hasLinking && HasComp<DeviceListComponent>(target) || hasLinking == configurator.LinkModeActive)
             return;
 
-        if (hasLinking)
-        {
-            SetMode(configuratorUid, configurator, userUid, true);
-            return;
-        }
-
-        if (HasComp<DeviceNetworkComponent>(target))
+        var hasNetworking = HasComp<DeviceNetworkComponent>(target);
+        if (hasNetworking)
             SetMode(configuratorUid, configurator, userUid, false);
+        else if (hasLinking)
+            SetMode(configuratorUid, configurator, userUid, true);
     }
 
     #endregion
