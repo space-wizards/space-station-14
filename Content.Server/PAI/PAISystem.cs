@@ -3,15 +3,14 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Instruments;
 using Content.Server.Kitchen.Components;
 using Content.Server.Store.Systems;
+using Content.Shared.Instruments;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
 using Content.Shared.PAI;
 using Content.Shared.Popups;
-using Content.Shared.Store;
+using Content.Shared.Radio.Components;
 using Content.Shared.Store.Components;
-using Content.Shared.Instruments;
 using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
 using System.Text;
 
 namespace Content.Server.PAI;
@@ -28,7 +27,7 @@ public sealed class PAISystem : SharedPAISystem
     /// <summary>
     /// Possible symbols that can be part of a scrambled pai's name.
     /// </summary>
-    private static readonly char[] SYMBOLS = new[] { '#', '~', '-', '@', '&', '^', '%', '$', '*', ' ' };
+    private static readonly char[] SYMBOLS = ['#', '~', '-', '@', '&', '^', '%', '$', '*', ' '];
 
     public override void Initialize()
     {
@@ -39,7 +38,14 @@ public sealed class PAISystem : SharedPAISystem
         SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<PAIComponent, BeingMicrowavedEvent>(OnMicrowaved);
 
+        SubscribeLocalEvent<PAIComponent, PersonalAIEncryptionEvent>(OnEncryption);
+
         SubscribeLocalEvent<PAIComponent, PAIShopActionEvent>(OnShop);
+    }
+
+    private void OnEncryption(Entity<PAIComponent> ent, ref PersonalAIEncryptionEvent _)
+    {
+        EnsureComp<EncryptionKeyHolderComponent>(ent);
     }
 
     private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
