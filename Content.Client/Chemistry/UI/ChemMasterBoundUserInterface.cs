@@ -40,12 +40,16 @@ namespace Content.Client.Chemistry.UI
                 new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
             _window.BufferDiscardButton.OnPressed += _ => SendMessage(
                 new ChemMasterSetModeMessage(ChemMasterMode.Discard));
+            _window.PillNumber.ValueChanged += _ => SendMessage(
+                new ChemMasterSetPillNumberMessage((uint)_window.PillNumber.Value));
+            _window.PillDosage.ValueChanged += _ => SendMessage(
+                new ChemMasterSetPillDosageMessage((uint)_window.PillDosage.Value));
             _window.CreatePillButton.OnPressed += _ => SendMessage(
-                new ChemMasterCreatePillsMessage(
-                    (uint) _window.PillDosage.Value, (uint) _window.PillNumber.Value, _window.LabelLine));
+                new ChemMasterCreatePillsMessage(_window.LabelLine));
+            _window.BottleDosage.ValueChanged += _ => SendMessage(
+                new ChemMasterSetBottleDosageMessage((uint)_window.BottleDosage.Value));
             _window.CreateBottleButton.OnPressed += _ => SendMessage(
-                new ChemMasterOutputToBottleMessage(
-                    (uint) _window.BottleDosage.Value, _window.LabelLine));
+                new ChemMasterOutputToBottleMessage(_window.LabelLine));
             _window.BufferSortButton.OnPressed += _ => SendMessage(
                     new ChemMasterSortingTypeCycleMessage());
 
@@ -69,7 +73,7 @@ namespace Content.Client.Chemistry.UI
         {
             base.UpdateState(state);
 
-            var castState = (ChemMasterBoundUserInterfaceState) state;
+            var castState = (ChemMasterBoundUserInterfaceState)state;
 
             _window?.UpdateState(castState); // Update window state
         }
