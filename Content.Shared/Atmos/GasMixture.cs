@@ -31,6 +31,8 @@ namespace Content.Shared.Atmos
 
         [DataField("immutable")]
         public bool Immutable { get; private set; }
+        [DataField("isInternal")]
+        public bool IsInternal { get; set; }
 
         [ViewVariables]
         public readonly float[] ReactionResults =
@@ -75,14 +77,15 @@ namespace Content.Shared.Atmos
         {
         }
 
-        public GasMixture(float volume = 0f)
+        public GasMixture(float volume = 0f, bool isInternal = false)
         {
             if (volume < 0)
                 volume = 0;
             Volume = volume;
+            IsInternal = isInternal;
         }
 
-        public GasMixture(float[] moles, float temp, float volume = Atmospherics.CellVolume)
+        public GasMixture(float[] moles, float temp, float volume = Atmospherics.CellVolume, bool isInternal = false)
         {
             if (moles.Length != Atmospherics.AdjustedNumberOfGases)
                 throw new InvalidOperationException($"Invalid mole array length");
@@ -94,6 +97,7 @@ namespace Content.Shared.Atmos
             _temperature = temp;
             Moles = moles;
             Volume = volume;
+            IsInternal = isInternal;
         }
 
         public GasMixture(GasMixture toClone)
@@ -106,7 +110,7 @@ namespace Content.Shared.Atmos
         {
             Immutable = true;
         }
-
+        
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float GetMoles(int gasId)
         {
