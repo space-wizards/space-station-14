@@ -26,6 +26,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.Themes;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Configuration;
@@ -526,6 +527,16 @@ namespace Content.Client.Lobby.UI
                 group.Add(trait.ID);
             }
 
+            var firstCategory = false;
+            var disableTraitLabel = new Label
+            {
+                Text = Loc.GetString("humanoid-profile-editor-antag-disable-trait"),
+                Margin = new Thickness(0, 10, 0, 0),
+                StyleClasses = { StyleBase.StyleClassItalic },
+                SizeFlagsStretchRatio = 3,
+                HorizontalExpand = true,
+            };
+
             // Create UI view from model
             foreach (var (categoryId, categoryTraits) in traitGroups)
             {
@@ -534,40 +545,78 @@ namespace Content.Client.Lobby.UI
                 if (categoryId != TraitCategoryPrototype.Default)
                 {
                     category = _prototypeManager.Index<TraitCategoryPrototype>(categoryId);
-                    // Label
-                    TraitsList.AddChild(new Label
+
+                    // Label box
+                    var box = new BoxContainer();
+                    box.AddChild(new Label
                     {
                         Text = Loc.GetString(category.Name),
                         Margin = new Thickness(0, 10, 0, 0),
                         StyleClasses = { StyleBase.StyleClassLabelHeading },
+                        SizeFlagsStretchRatio = 3,
+                        HorizontalExpand = true,
+                        VerticalAlignment = VAlignment.Bottom,
                     });
+
+                    if (!firstCategory)
+                    {
+                        firstCategory = true;
+                        box.AddChild(disableTraitLabel);
+                    }
+
+                    TraitsList.AddChild(box);
                 }
 
                 List<TraitPreferenceSelector?> selectors = new();
                 var selectionCount = 0;
+                int i = 0;
 
                 foreach (var traitProto in categoryTraits)
                 {
                     var trait = _prototypeManager.Index<TraitPrototype>(traitProto);
                     var selector = new TraitPreferenceSelector(trait);
+                    var bgColor = i % 2 == 0 ? Color.FromHex("#292B38") : Color.FromHex("#2F2F3B");
+                    i++;
 
+                    selector.Container.PanelOverride = new StyleBoxFlat(bgColor);
                     selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
+                    selector.CheckboxAntagDisable.Visible = trait.AllowAntagDisable;
+                    selector.CheckboxAntagDisable.Disabled = !selector.Preference;
+
                     if (selector.Preference)
                         selectionCount += trait.Cost;
+
+                    selector.AntagDisablePreference = Profile?.AntagDisableTraitPreferences.Contains(trait.ID) == true;
 
                     selector.PreferenceChanged += preference =>
                     {
                         if (preference)
                         {
+                            selector.CheckboxAntagDisable.Disabled = true;
                             Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
                         }
                         else
                         {
+                            selector.CheckboxAntagDisable.Disabled = false;
+                            Profile?.AntagDisableTraitPreferences.Remove(trait.ID);
                             Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
                         }
 
                         SetDirty();
                         RefreshTraits(); // If too many traits are selected, they will be reset to the real value.
+                    };
+                    selector.AntagDisablePreferenceChanged += preference =>
+                    {
+                        if (preference)
+                        {
+                            Profile?.AntagDisableTraitPreferences.Add(trait.ID);
+                        }
+                        else
+                        {
+                            Profile?.AntagDisableTraitPreferences.Remove(trait.ID);
+                        }
+
+                        SetDirty();
                     };
                     selectors.Add(selector);
                 }
@@ -592,6 +641,9 @@ namespace Content.Client.Lobby.UI
                     {
                         selector.Checkbox.Label.FontColorOverride = Color.Red;
                     }
+
+                    if (selector.CheckboxAntagDisable.Visible)
+                        disableTraitLabel.Visible = true;
 
                     TraitsList.AddChild(selector);
                 }

@@ -47,6 +47,12 @@ public sealed partial class AntagPrototype : IPrototype
     public HashSet<JobRequirement>? Requirements;
 
     /// <summary>
+    ///     If true, assignment of this antag will revert any traits eligible for reversal in TraitsComponent.
+    /// </summary>
+    [DataField]
+    public bool RevertTraits { get; private set; } = true;
+
+    /// <summary>
     /// Optional list of guides associated with this antag. If the guides are opened, the first entry in this list
     /// will be used to select the currently selected guidebook.
     /// </summary>
