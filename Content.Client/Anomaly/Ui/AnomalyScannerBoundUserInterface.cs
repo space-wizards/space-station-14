@@ -43,7 +43,7 @@ public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
         base.Dispose(disposing);
         if (!disposing)
             return;
-        _menu?.Dispose();
+        _menu?.Close();
     }
 }
 
