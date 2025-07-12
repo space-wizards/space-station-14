@@ -584,20 +584,29 @@ namespace Content.Server.Atmos.EntitySystems
             foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, tile.GridIndices))
             {
                 if (_firelockQuery.TryGetComponent(entity, out var firelock))
-                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
+                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStopAirtight((entity, firelock));
             }
 
             foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, other.GridIndices))
             {
                 if (_firelockQuery.TryGetComponent(entity, out var firelock))
-                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
+                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStopAirtight((entity, firelock));
             }
 
             if (!reconsiderAdjacent)
                 return;
 
+            // Before updating the adjacent tile flags that determine whether air is allowed to flow
+            // or not, we explicitly update airtight data on these tiles right now.
+            // This ensures that UpdateAdjacentTiles has updated data before updating flags.
+            // This allows monstermos' floodfill check that determines if firelocks have dropped
+            // to work correctly.
+            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, tile);
+            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, other);
+
             UpdateAdjacentTiles(ent, tile);
             UpdateAdjacentTiles(ent, other);
+
             InvalidateVisuals(ent, tile);
             InvalidateVisuals(ent, other);
         }
