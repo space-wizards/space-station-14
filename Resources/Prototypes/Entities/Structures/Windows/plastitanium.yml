@@ -23,8 +23,6 @@
       - Window
   - type: Physics
     bodyType: Static
-  - type: ExaminableDamage
-    messages: WindowMessages
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
     messagePerceivedByOthers: comp-window-knock
@@ -120,6 +118,8 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: RGlass
+  - type: ExaminableDamage
+    messages: WindowMessages
 
 - type: entity
   id: PlastitaniumWindowDiagonalBase
@@ -211,3 +211,5 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: RGlass
+  - type: ExaminableDamage
+    messages: WindowMessages
