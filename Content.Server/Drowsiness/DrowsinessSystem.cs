@@ -11,7 +11,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly SharedStatusEffectsSystem _statusEffects = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
