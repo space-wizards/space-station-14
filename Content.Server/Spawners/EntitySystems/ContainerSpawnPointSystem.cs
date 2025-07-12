@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameTicking;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Preferences;
@@ -22,20 +23,27 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<PlayerSpawningEvent>(HandlePlayerSpawning, before: new []{ typeof(SpawnPointSystem) });
+        // Order is arrivals → container spawn (cryosleep) → spawn points (includes fallback)
+        SubscribeLocalEvent<PlayerSpawningEvent>(HandlePlayerSpawning,
+            before: [typeof(SpawnPointSystem)],
+            after: [typeof(ArrivalsSystem)]);
     }
 
     public void HandlePlayerSpawning(PlayerSpawningEvent args)
     {
+        // Spawn already handled.
         if (args.SpawnResult != null)
             return;
 
-        // If it's just a spawn pref check if it's for cryo (silly).
-        if (args.HumanoidCharacterProfile?.SpawnPriority != SpawnPriorityPreference.Cryosleep &&
-            (!_proto.TryIndex(args.Job, out var jobProto) || jobProto.JobEntity == null))
-        {
+        // For start of round, we don't handle players with cryosleep as their spawn preference, /unless/ they have a
+        // set JobEntity, which may only be handleable by us. (Like for AI.)
+        if (_gameTicker.RunLevel != GameRunLevel.InRound
+            && args.HumanoidCharacterProfile?.SpawnPriority != SpawnPriorityPreference.Cryosleep
+            && (!_proto.TryIndex(args.Job, out var jobProto) || jobProto.JobEntity == null))
             return;
-        }
+
+        // For mid-round, we're the main fallback: arrival spawn checks have happened and didn't set a spawn, so we need
+        // to try to regardless of their spawn preferences.
 
         var query = EntityQueryEnumerator<ContainerSpawnPointComponent, ContainerManagerComponent, TransformComponent>();
         var possibleContainers = new List<Entity<ContainerSpawnPointComponent, ContainerManagerComponent, TransformComponent>>();
