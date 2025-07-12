@@ -1,4 +1,5 @@
 using Content.Shared.Atmos;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Botany.PlantAnalyzer;
@@ -72,12 +73,12 @@ public sealed class PlantAnalyzerPlantData(string seedDisplayName, float health,
 /// Information about the output of a plant (produce and gas).
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PlantAnalyzerProduceData(int yield, float potency, List<string> chemicals, List<string> produce, List<Gas> exudeGasses, bool seedless)
+public sealed class PlantAnalyzerProduceData(int yield, float potency, List<string> chemicals, List<EntProtoId> produce, List<Gas> exudeGasses, bool seedless)
 {
     public int Yield = yield;
     public string Potency = ObscurePotency(potency);
     public List<string> Chemicals = chemicals;
-    public List<string> Produce = produce;
+    public List<EntProtoId> Produce = produce;
     public List<Gas> ExudeGasses = exudeGasses;
     public bool Seedless = seedless;
 
