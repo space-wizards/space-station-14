@@ -1,4 +1,4 @@
-# For mantles
+# For Master Quartermasters; over-ear headset, mantle
 - type: loadoutEffectGroup
   id: MasterQM
   effects:
@@ -53,7 +53,7 @@
 
 - type: loadout
   id: QuartermasterMantle
-  equipment: 
+  equipment:
     neck: ClothingNeckMantleQM
   effects:
   - !type:GroupLoadoutEffect
@@ -69,3 +69,22 @@
   id: QuartermasterWintercoat
   equipment:
     outerClothing: ClothingOuterWinterQM
+
+# Ears
+- type: loadout
+  id: QuartermasterHeadset
+  equipment:
+    ears: ClothingHeadsetQM
+
+- type: loadout
+  id: QuartermasterAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltCargo
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterQM
+
+- type: startingGear
+  id: QuartermasterAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltCargo
