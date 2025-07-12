@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
@@ -11,6 +12,7 @@ namespace Content.Server.AlertLevel;
 
 public sealed class AlertLevelSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
@@ -64,7 +66,7 @@ public sealed class AlertLevelSystem : EntitySystem
             defaultLevel = alertLevelComponent.AlertLevels.Levels.Keys.First();
         }
 
-        SetLevel(args.Station, defaultLevel, false, false, true);
+        SetLevel(args.Station, defaultLevel, false, false, true, false, args.Station);
     }
 
     private void OnPrototypeReload(PrototypesReloadedEventArgs args)
@@ -89,7 +91,7 @@ public sealed class AlertLevelSystem : EntitySystem
                     defaultLevel = comp.AlertLevels.Levels.Keys.First();
                 }
 
-                SetLevel(uid, defaultLevel, true, true, true);
+                SetLevel(uid, defaultLevel, true, true, true, false, uid);
             }
         }
 
@@ -139,8 +141,9 @@ public sealed class AlertLevelSystem : EntitySystem
     /// <param name="announce">Say the alert level's announcement.</param>
     /// <param name="force">Force the alert change. This applies if the alert level is not selectable or not.</param>
     /// <param name="locked">Will it be possible to change level by crew.</param>
+    /// <param name="caller">Entity that called this method, for logging purposes.</param>
     public void SetLevel(EntityUid station, string level, bool playSound, bool announce, bool force = false,
-        bool locked = false, MetaDataComponent? dataComponent = null, AlertLevelComponent? component = null)
+        bool locked = false, EntityUid? caller = null, MetaDataComponent? dataComponent = null, AlertLevelComponent? component = null)
     {
         if (!Resolve(station, ref component, ref dataComponent)
             || component.AlertLevels == null
@@ -207,12 +210,23 @@ public sealed class AlertLevelSystem : EntitySystem
         }
 
         RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
+
+        // Logs who called SetLevel.
+        string callerString = caller.ToString() ?? "NULL";
+        if (caller.HasValue == false)
+        {
+            callerString = "UNKNOWN";
+        }
+        else
+        {
+            callerString = ToPrettyString(caller);
+        }
+        _adminLog.Add(Shared.Database.LogType.Trigger, Shared.Database.LogImpact.Medium, $"{callerString} changed alert level to {level} on station {station}.");
+
     }
 }
-
 public sealed class AlertLevelDelayFinishedEvent : EntityEventArgs
 {}
-
 public sealed class AlertLevelPrototypeReloadedEvent : EntityEventArgs
 {}
 
