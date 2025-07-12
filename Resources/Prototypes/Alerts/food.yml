@@ -1,0 +1,7 @@
+- type: alert
+  id: StatusEffectFoodMealBearsteak
+  icons:
+  - sprite: Objects/Consumable/Food/meals.rsi
+    state: bearsteak
+  name: alerts-food-meal-bearsteak-name
+  description: alerts-food-meal-bearsteak-desc
