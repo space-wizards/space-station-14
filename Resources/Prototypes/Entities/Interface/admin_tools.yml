@@ -1,0 +1,14 @@
+# dummy entity for the admin camera EUI
+# this gets parented to the person being observed
+
+- type: entity
+  id: AdminCamera
+  categories: [ HideSpawnMenu ]
+  name: admin camera
+  description: We are watching you.
+  components:
+  - type: Visibility
+    layer: 8 # Don't network this to anyone so cheat clients can't see it. We are adding a PVS override to the user.
+  - type: Eye # for the camera itself
+    drawFov: false
+    pvsScale: 0.8 # we don't need the full range
