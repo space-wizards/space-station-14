@@ -9,23 +9,26 @@ namespace Content.Shared.Movement.Components;
 public sealed partial class FrictionContactsComponent : Component
 {
     /// <summary>
+    /// Should this affect airborne mobs?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool AffectAirborne;
+
+    /// <summary>
     /// Modified mob friction while on FrictionContactsComponent
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public float MobFriction = 0.5f;
+    [DataField, AutoNetworkedField]
+    public float MobFriction = 0.05f;
 
     /// <summary>
     /// Modified mob friction without input while on FrictionContactsComponent
     /// </summary>
-    [AutoNetworkedField]
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MobFrictionNoInput = 0.05f;
+    [DataField, AutoNetworkedField]
+    public float? MobFrictionNoInput = 0.05f;
 
     /// <summary>
     /// Modified mob acceleration while on FrictionContactsComponent
     /// </summary>
-    [AutoNetworkedField]
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MobAcceleration = 2.0f;
+    [DataField, AutoNetworkedField]
+    public float MobAcceleration = 0.1f;
 }

@@ -1,0 +1,35 @@
+# Base prototypes
+
+- type: latheRecipe
+  abstract: true
+  id: BaseMechEquipmentRecipe
+  categories:
+  - Mech
+  - Parts
+  completetime: 10
+  materials:
+    Steel: 500
+    Plastic: 200
+
+## Recipes
+
+- type: latheRecipe
+  parent: BaseMechEquipmentRecipe
+  id: MechEquipmentGrabber
+  result: MechEquipmentGrabber
+
+- type: latheRecipe
+  parent: BaseMechEquipmentRecipe
+  id: MechEquipmentGrabberSmall
+  result: MechEquipmentGrabberSmall
+  materials:
+    Steel: 400
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseMechEquipmentRecipe
+  id: MechEquipmentHorn
+  result: MechEquipmentHorn
+  materials:
+    Steel: 500
+    Bananium: 200

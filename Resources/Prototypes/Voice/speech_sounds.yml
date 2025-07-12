@@ -71,6 +71,15 @@
     path: /Audio/Voice/Talk/Silicon/syndieborg_exclaim.ogg
 
 - type: speechSounds
+  id: Xenoborg
+  saySound:
+    path: /Audio/Voice/Xenoborg/xenoborg_talk.ogg
+  askSound:
+    path: /Audio/Voice/Xenoborg/xenoborg_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Xenoborg/xenoborg_exclaim.ogg
+
+- type: speechSounds
   id: Pai
   saySound:
     path: /Audio/Voice/Talk/pai.ogg
@@ -168,3 +177,12 @@
     path: /Audio/Animals/goat_bah.ogg
   exclaimSound:
     path: /Audio/Animals/goat_bah.ogg
+
+- type: speechSounds
+  id: Wawa
+  saySound:
+    path: /Audio/Animals/wawa_statement.ogg
+  askSound:
+    path: /Audio/Animals/wawa_question.ogg
+  exclaimSound:
+    path: /Audio/Animals/wawa_exclaim.ogg

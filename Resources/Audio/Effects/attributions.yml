@@ -241,3 +241,18 @@
   copyright: 'created by Vrymaa on Freesound and modified by Chaboricks'
   license: "CC0-1.0"
   source: https://freesound.org/people/Vrymaa/sounds/785128/
+
+- files: ["cig_light.ogg", "cig_snuff.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by mattroks101 for Bee Station. cig_snuff converted to mono"
+  source: "https://github.com/BeeStation/BeeStation-Hornet/pull/29"
+
+- files: [stealthoff.ogg]
+  copyright: 'TGStation at d4f678a1772007ff8d7eddd21cf7218c8e07bfc0'
+  license: "CC-BY-SA-3.0"
+  source: https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
+
+- files: ["soft_thump.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Clipped by FairlySadPanda (Github) from a sound created by CheChoDj (Freesound)"
+  source: "https://freesound.org/people/CheChoDj/sounds/609353/"
