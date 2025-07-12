@@ -456,7 +456,6 @@
     - HEAD
     quickEquip: false
 
-
 - type: entity
   name: baked banana peel
   parent: TrashBananaPeel
