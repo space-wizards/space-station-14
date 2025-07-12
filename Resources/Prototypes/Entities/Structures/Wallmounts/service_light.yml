@@ -29,3 +29,6 @@
       types:
         Heat: 5
     popupText: powered-light-component-burn-hand
+  - type: Tag
+    tags:
+    - VariationExempt

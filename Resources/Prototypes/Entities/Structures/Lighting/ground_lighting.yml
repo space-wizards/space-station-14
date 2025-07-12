@@ -168,3 +168,21 @@
       types:
         Heat: 1
     popupText: powered-light-component-burn-hand
+
+- type: entity
+  id: PoweredlightLightPostSmallVariationExempt
+  suffix: Variation Exempt
+  parent: PoweredLightPostSmall
+  components:
+  - type: Tag
+    tags:
+    - VariationExempt
+
+- type: entity
+  id: PoweredlightLightPostLEDVariationExempt
+  suffix: LED, Variation Exempt
+  parent: PoweredLEDLightPostSmall
+  components:
+  - type: Tag
+    tags:
+    - VariationExempt
