@@ -1,0 +1,15 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+            Title="{Loc 'ui-custom-stack-split-title'}"
+            Resizable="False">
+
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinSize="240 80">
+        <BoxContainer Orientation="Horizontal">
+            <LineEdit Name="AmountLineEdit" Access="Public" HorizontalExpand="True" PlaceHolder="{Loc 'ui-custom-stack-split-line-edit-placeholder'}"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+          <Label Name="MaximumAmount" Access="Public" />
+        </BoxContainer>
+        <Button Name="ApplyButton" Access="Public" Text="{Loc 'ui-custom-stack-split-apply'}"/>
+    </BoxContainer>
+</controls:FancyWindow>
