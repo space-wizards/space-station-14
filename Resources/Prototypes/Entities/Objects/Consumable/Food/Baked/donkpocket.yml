@@ -6,6 +6,8 @@
   abstract: true
   components:
   - type: Food
+    trash:
+    - DonkPocketBasicSleeve
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: SolutionContainerManager
@@ -113,6 +115,9 @@
       - cheap
   - type: Sprite
     state: plain
+  - type: Food
+    trash:
+    - DonkPocketSpicySleeve
 
 - type: entity
   name: warm spicy-pocket
@@ -149,6 +154,9 @@
       - cheap
   - type: Sprite
     state: teriyaki
+  - type: Food
+    trash:
+    - DonkPocketTeriyakiSleeve
 
 - type: entity
   name: warm teriyaki-pocket
@@ -270,6 +278,9 @@
           Quantity: 5
   - type: Sprite
     state: berry
+  - type: Food
+    trash:
+    - DonkPocketBerrySleeve
 
 - type: entity
   name: warm berry-pocket
@@ -310,6 +321,9 @@
           Quantity: 5
   - type: Sprite
     state: stonk
+  - type: Food
+    trash:
+    - DonkPocketStonkSleeve
 
 - type: entity
   name: warm stonk-pocket
@@ -409,6 +423,8 @@
     state: moth
   - type: Food
     requiresSpecialDigestion: true
+    trash:
+    - DonkPocketBasicSleeve
   - type: Tag
     tags:
     - ClothMade
@@ -429,3 +445,80 @@
           Quantity: 5
         - ReagentId: Omnizine
           Quantity: 2
+
+# Trash
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseItem
+  id: DonkPocketSleeve
+  name: donk pocket sleeve
+  description: The all important extremely patented donk pocket crisping sleeve.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    heldPrefix: sleeve
+    size: Tiny
+  - type: Tag
+    tags:
+    - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 12
+  - type: SpaceGarbage
+  - type: StaticPrice
+    price: 0
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
+  - type: Food
+    requiresSpecialDigestion: true
+    trash:
+    - DonkPocketBasicSleeve
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: DonkPocketSleeve
+  id: DonkPocketBasicSleeve
+  components:
+  - type: Sprite
+    state: sleeve
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: DonkPocketSleeve
+  id: DonkPocketBerrySleeve
+  components:
+  - type: Sprite
+    state: berry-sleeve
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: DonkPocketSleeve
+  id: DonkPocketSpicySleeve
+  components:
+  - type: Sprite
+    state: spicy-sleeve
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: DonkPocketSleeve
+  id: DonkPocketStonkSleeve
+  components:
+  - type: Sprite
+    state: stonk-sleeve
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: DonkPocketSleeve
+  id: DonkPocketTeriyakiSleeve
+  components:
+  - type: Sprite
+    state: teriyaki-sleeve
