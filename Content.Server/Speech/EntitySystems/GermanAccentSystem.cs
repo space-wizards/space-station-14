@@ -2,6 +2,7 @@ using System.Text;
 using Content.Server.Speech.Components;
 using Robust.Shared.Random;
 using System.Text.RegularExpressions;
+using Content.Shared.Speech.Accents;
 
 namespace Content.Server.Speech.EntitySystems;
 
