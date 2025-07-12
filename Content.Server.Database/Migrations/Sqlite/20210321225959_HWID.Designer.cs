@@ -12,6 +12,7 @@ namespace Content.Server.Database.Migrations.Sqlite
     [Migration("20210321225959_HWID")]
     partial class HWID
     {
+#if EF_DESIGNER
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
@@ -555,5 +556,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
 #pragma warning restore 612, 618
         }
+#endif
     }
 }

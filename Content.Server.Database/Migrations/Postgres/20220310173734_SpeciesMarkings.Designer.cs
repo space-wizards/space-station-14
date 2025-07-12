@@ -17,6 +17,7 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20220310173734_SpeciesMarkings")]
     partial class SpeciesMarkings
     {
+#if EF_DESIGNER
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
@@ -1036,5 +1037,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
+#endif
     }
 }
