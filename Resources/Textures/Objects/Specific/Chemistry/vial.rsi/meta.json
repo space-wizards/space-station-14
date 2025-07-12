@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Drawn by Ubaser, taken inspiration by /tg/'s vials",
+  "copyright": "Drawn by Ubaser, taken inspiration by /tg/'s vials. vial-1-open and vial-2 edits by iaada(GitHub)",
   "size": {
     "x": 32,
     "y": 32
@@ -51,7 +51,10 @@
       "directions": 4
     },
     {
-      "name": "vial-1"
+      "name": "vial-1-closed"
+    },
+    {
+      "name": "vial-1-open"
     },
     {
       "name": "vial-1-1"
@@ -70,6 +73,27 @@
     },
     {
       "name": "vial-1-6"
+    },
+    {
+      "name": "vial-2-closed"
+    },
+    {
+      "name": "vial-2-open"
+    },
+    {
+      "name": "vial-2-1"
+    },
+    {
+      "name": "vial-2-2"
+    },
+    {
+      "name": "vial-2-3"
+    },
+    {
+      "name": "vial-2-4"
+    },
+    {
+      "name": "vial-2-5"
     }
   ]
 }
