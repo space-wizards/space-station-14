@@ -1296,7 +1296,7 @@ public abstract class SharedStorageSystem : EntitySystem
         Angle startAngle;
         if (storageEnt.Comp.DefaultStorageOrientation == null)
         {
-            startAngle = Angle.FromDegrees(-itemEnt.Comp.StoredRotation);
+            startAngle = Angle.Zero;
         }
         else
         {
