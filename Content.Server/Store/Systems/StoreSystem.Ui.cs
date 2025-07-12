@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
+using Content.Server.GameplayMetrics;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
@@ -30,6 +31,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly BasicGameplayMetricsSystem _gameplayMetrics = default!;
 
     private void InitializeUi()
     {
@@ -265,6 +267,18 @@ public sealed partial class StoreSystem
         _admin.Add(LogType.StorePurchase,
             LogImpact.Low,
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {ToPrettyString(uid)}");
+
+        _gameplayMetrics.RecordMetric("StorePurchase",
+            new Dictionary<string, object?>
+            {
+                { "playerUid", buyer.ToString() },
+                { "storeUid", uid.ToString() },
+                { "storeProto", _gameplayMetrics.GetEntProtoIdOrNull(uid) },
+                { "listingProto", listing.ID },
+                { "cost", listing.Cost.ToDictionary(pair => pair.Key.Id, pair => pair.Value.ToString()) },
+                { "productActionProto", listing.ProductAction?.ToString() },
+                { "productEntityProto", listing.ProductEntity?.ToString() },
+            });
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
