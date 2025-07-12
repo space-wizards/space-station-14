@@ -14,17 +14,17 @@ public sealed partial class StatusEffectsSystem
         SubscribeLocalEvent<StatusEffectContainerComponent, AccentGetEvent>(RelayStatusEffectEvent);
     }
 
-    protected void RefRelayStatusEffectEvent<T>(EntityUid uid, StatusEffectContainerComponent component, ref T args) where T : struct
+    private void RefRelayStatusEffectEvent<T>(EntityUid uid, StatusEffectContainerComponent component, ref T args) where T : struct
     {
         RelayEvent((uid, component), ref args);
     }
 
-    protected void RelayStatusEffectEvent<T>(EntityUid uid, StatusEffectContainerComponent component, T args) where T : class
+    private void RelayStatusEffectEvent<T>(EntityUid uid, StatusEffectContainerComponent component, T args) where T : class
     {
         RelayEvent((uid, component), args);
     }
 
-    protected void RelayEvent<T>(Entity<StatusEffectContainerComponent> statusEffect, ref T args) where T : struct
+    public void RelayEvent<T>(Entity<StatusEffectContainerComponent> statusEffect, ref T args) where T : struct
     {
         // this copies the by-ref event if it is a struct
         var ev = new StatusEffectRelayedEvent<T>(args);
@@ -36,7 +36,7 @@ public sealed partial class StatusEffectsSystem
         args = ev.Args;
     }
 
-    protected void RelayEvent<T>(Entity<StatusEffectContainerComponent> statusEffect, T args) where T : class
+    public void RelayEvent<T>(Entity<StatusEffectContainerComponent> statusEffect, T args) where T : class
     {
         // this copies the by-ref event if it is a struct
         var ev = new StatusEffectRelayedEvent<T>(args);
