@@ -1,0 +1,24 @@
+- type: alert
+  id: ChangelingBiomassAlert
+  icons:
+  - sprite: /Textures/Interface/Alerts/changeling_biomass.rsi
+    state: bio16
+  alertViewEntity: AlertChangelingBiomassSpriteView
+  name: alerts-changeling-biomass-name
+  description: alerts-changeling-biomass-desc
+
+- type: entity
+  id: AlertChangelingBiomassSpriteView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GenericCounterAlert
+    centerGlyph: false
+  - type: Sprite
+    sprite: /Textures/Interface/Alerts/changeling_biomass.rsi
+    layers:
+    - map: [ "enum.AlertVisualLayers.Base" ]
+    - map: [ "1" ]
+      offset: 0.25, 0
+    - map: [ "10" ]
+      offset: 0.125, 0
+    - map: [ "100" ]
