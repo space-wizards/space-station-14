@@ -1,5 +1,9 @@
 namespace Content.Shared.Xenoarchaeology.Equipment.Components;
 
+/// <summary>
+///     Component that allows objects delete nodes in artifacts on interaction.
+///     Related logic lies in the <see cref="SharedArtifactNukerSystem"/>
+/// </summary>
 [RegisterComponent]
 [Access(typeof(SharedArtifactNukerSystem))]
 public sealed partial class ArtifactNukerComponent : Component

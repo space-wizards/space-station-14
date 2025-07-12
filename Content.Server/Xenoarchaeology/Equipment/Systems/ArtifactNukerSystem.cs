@@ -6,11 +6,13 @@ using System.Linq;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 
+/// <inheritdoc/>
 public sealed class ArtifactNukerSystem : SharedArtifactNukerSystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();

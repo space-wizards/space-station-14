@@ -1,18 +1,26 @@
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Timing;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
+/// <summary>
+///     Logic for the <see cref="SharedArtifactNukerSystem"/>.
+///     For the prediction it splited into 3 parts:
+///     this one, Server and Client.
+/// </summary>
 public abstract class SharedArtifactNukerSystem : EntitySystem
 {
     //Disabled because my IDE don't likes protected "_systems"
 #pragma warning disable IDE1006
     [Dependency] protected readonly SharedXenoArtifactSystem _xenoSys = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -38,6 +46,9 @@ public abstract class SharedArtifactNukerSystem : EntitySystem
                 args.Handled = true;
                 return;
             }
+
+            if (TryComp<UseDelayComponent>(ent, out var delay) && !_useDelay.TryResetDelay((ent, delay), true))
+                return;
 
             var refEvent = new AttemptNukeArtifact(ent, args.User);
             RaiseLocalEvent(args.Target.Value, ref refEvent);
