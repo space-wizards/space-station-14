@@ -286,6 +286,8 @@
   id: FoodDough
   description: A piece of dough.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
       - dough
@@ -304,6 +306,8 @@
   id: FoodDoughSlice
   description: A slice of dough. Can be cooked into a bun.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - dough
@@ -329,6 +333,8 @@
   id: FoodDoughRope
   description: A thin noodle of dough. Can be cooked into a bagel.
   components:
+  - type: Item
+    storedRotation: -45
   - type: FlavorProfile
     flavors:
       - dough
@@ -351,6 +357,8 @@
   id: FoodDoughCornmeal
   description: A piece of cornmeal dough.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
       - chalky
@@ -367,6 +375,8 @@
   id: FoodDoughCornmealSlice
   description: A slice of cornmeal dough.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - chalky
@@ -383,6 +393,8 @@
   id: FoodDoughTortilla
   description: A piece of tortilla dough.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
       - chalky
@@ -399,6 +411,8 @@
   id: FoodDoughTortillaSlice
   description: A slice of tortilla dough.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - chalky
@@ -418,6 +432,8 @@
   id: FoodDoughTortillaFlat
   description: A flattened slice of tortilla dough, cook this to get a taco shell.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - chalky
@@ -434,6 +450,8 @@
   id: FoodDoughCotton
   description: A piece of fabric dough.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
     - dough
@@ -466,6 +484,8 @@
   id: FoodDoughCottonSlice
   description: A slice of cotton dough.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
     - dough
@@ -495,6 +515,8 @@
   id: FoodDoughCottonRope
   description: A thin noodle of cotton dough. Can be cooked into a cotton bagel.
   components:
+  - type: Item
+    storedRotation: -45
   - type: FlavorProfile
     flavors:
     - dough
@@ -542,6 +564,8 @@
   id: FoodDoughPie
   description: Cook it to get a pie.
   components:
+  - type: Item
+    size: Normal
   - type: Sprite
     state: dough-pie
 
@@ -551,6 +575,10 @@
   id: FoodDoughFlat
   description: A flattened dough.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,1
   - type: Sprite
     state: dough-flat
   - type: Construction
@@ -566,6 +594,10 @@
   id: FoodDoughCottonFlat
   description: A flattened cotton dough.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,1
   - type: Sprite
     state: cotton-dough-flat
   - type: Construction
@@ -581,6 +613,10 @@
   id: FoodDoughPizzaBaked
   description: Add ingredients to make a pizza.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,1
   - type: Sprite
     state: pizzabread
 
@@ -590,6 +626,8 @@
   id: FoodCakeBatter
   description: Cook it to get a cake.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
       - sweetdough
@@ -602,6 +640,9 @@
   id: FoodButter
   description: A stick of delicious, golden, fatty goodness.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
   - type: Sprite
     state: butter
   - type: Slippery
@@ -723,6 +764,7 @@
       Taco: CheeseTaco
       Burger: CheeseBurger
   - type: Item
+    size: Tiny
     inhandVisuals:
       left:
       - state: cheesewedge-inhand-left
@@ -735,6 +777,10 @@
   id: FoodChevre
   description: A soft log of creamy Chèvre.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-2
   - type: FlavorProfile
     flavors:
       - nutty
@@ -760,6 +806,8 @@
   id: FoodChevreSlice
   description: A small disk of creamy Chèvre. An ideal adornment for French side dishes.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - nutty
@@ -785,6 +833,8 @@
   id: FoodTofu
   description: Solid white block with a subtle flavor.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
       - tofu
@@ -809,6 +859,8 @@
   id: FoodTofuSlice
   description: A slice of tofu. Ingredient of various vegetarian dishes.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - tofu
@@ -889,6 +941,11 @@
   id: FoodCroissantRaw
   description: Buttery, flaky goodness waiting to happen.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: -2,-4
   - type: FlavorProfile
     flavors:
       - dough
@@ -908,6 +965,11 @@
   id: FoodCroissantRawCotton
   description: Buttery, flaky, fibery goodness waiting to happen.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: -2,-4
   - type: FlavorProfile
     flavors:
     - dough
