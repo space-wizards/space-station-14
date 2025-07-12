@@ -69,6 +69,9 @@
     state: icon
   - type: Item
     size: Tiny
+  - type: PoorlyAttached
+    passiveDetachDuration: 1200 # 20 minutes
+    lossPerFall: 0.6 # This thing is kinda terrible
   - type: Tag
     tags:
     - Trash
