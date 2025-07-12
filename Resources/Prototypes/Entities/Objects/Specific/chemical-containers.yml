@@ -1,3 +1,5 @@
+# TODO: autogenerate these, bottles, pills, and vials based on the reagent definitions and not explicitly like this
+
 - type: entity
   name: jug
   parent: BaseItem
@@ -88,7 +90,6 @@
   parent: Jug
   suffix: carbon
   id: JugCarbon
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-carbon
@@ -103,7 +104,6 @@
   parent: Jug
   suffix: iodine
   id: JugIodine
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-iodine
@@ -118,7 +118,6 @@
   parent: Jug
   suffix: fluorine
   id: JugFluorine
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-fluorine
@@ -133,7 +132,6 @@
   parent: Jug
   suffix: chlorine
   id: JugChlorine
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-chlorine
@@ -148,7 +146,6 @@
   parent: Jug
   suffix: aluminium
   id: JugAluminium
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-aluminium
@@ -163,7 +160,6 @@
   parent: Jug
   suffix: phosphorus
   id: JugPhosphorus
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-phosphorus
@@ -178,7 +174,6 @@
   parent: Jug
   suffix: sulfur
   id: JugSulfur
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-sulfur
@@ -193,7 +188,6 @@
   parent: Jug
   suffix: silicon
   id: JugSilicon
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-silicon
@@ -208,7 +202,6 @@
   parent: Jug
   suffix: hydrogen
   id: JugHydrogen
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-hydrogen
@@ -223,7 +216,6 @@
   parent: Jug
   suffix: lithium
   id: JugLithium
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-lithium
@@ -238,7 +230,6 @@
   parent: Jug
   suffix: sodium
   id: JugSodium
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-sodium
@@ -253,7 +244,6 @@
   parent: Jug
   suffix: potassium
   id: JugPotassium
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-potassium
@@ -268,7 +258,6 @@
   parent: Jug
   suffix: radium
   id: JugRadium
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-radium
@@ -283,7 +272,6 @@
   parent: Jug
   suffix: iron
   id: JugIron
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-iron
@@ -298,7 +286,6 @@
   parent: Jug
   suffix: copper
   id: JugCopper
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-copper
@@ -313,7 +300,6 @@
   parent: Jug
   suffix: gold
   id: JugGold
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-gold
@@ -328,7 +314,6 @@
   parent: Jug
   suffix: mercury
   id: JugMercury
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-mercury
@@ -343,7 +328,6 @@
   parent: Jug
   suffix: silver
   id: JugSilver
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-silver
@@ -358,7 +342,6 @@
   parent: Jug
   suffix: ethanol
   id: JugEthanol
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-ethanol
@@ -373,7 +356,6 @@
   parent: Jug
   suffix: sugar
   id: JugSugar
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-sugar
@@ -388,7 +370,6 @@
   parent: Jug
   suffix: nitrogen
   id: JugNitrogen
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-nitrogen
@@ -403,7 +384,6 @@
   parent: Jug
   suffix: oxygen
   id: JugOxygen
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-oxygen
@@ -418,7 +398,6 @@
   parent: Jug
   suffix: Plant-B-Gone
   id: JugPlantBGone
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-plant-b-gone
@@ -433,7 +412,6 @@
   parent: Jug
   suffix: welding fuel
   id: JugWeldingFuel
-  categories: [ HideSpawnMenu ]
   components:
   - type: Label
     currentLabel: reagent-name-welding-fuel
@@ -442,4 +420,88 @@
       beaker:
         reagents:
         - ReagentId: WeldingFuel
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: bicaridine
+  id: JugBicaridine
+  components:
+  - type: Label
+    currentLabel: reagent-name-bicaridine
+  - type: SolutionContainerManager
+    solutions:
+      beakers:
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dermaline
+  id: JugDermaline
+  components:
+  - type: Label
+    currentLabel: reagent-name-dermaline
+  - type: SolutionContainerManager
+    solutions:
+      beakers:
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dexalin
+  id: JugDexalin
+  components:
+  - type: Label
+    currentLabel: reagent-name-dexalin
+  - type: SolutionContainerManager
+    solutions:
+      beakers:
+        reagents:
+        - ReagentId: Dexalin
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dexalin+
+  id: JugDexalinPlus
+  components:
+  - type: Label
+    currentLabel: reagent-name-dexalin-plus
+  - type: SolutionContainerManager
+    solutions:
+      beakers:
+        reagents:
+        - ReagentId: DexalinPlus
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dylovene
+  id: JugDylovene
+  components:
+  - type: Label
+    currentLabel: reagent-name-dylovene
+  - type: SolutionContainerManager
+    solutions:
+      beakers:
+        reagents:
+        - ReagentId: Dylovene
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: saline
+  id: JugSaline
+  components:
+  - type: Label
+    currentLabel: reagent-name-saline
+  - type: SolutionContainerManager
+    solutions:
+      beakers:
+        reagents:
+        - ReagentId: Saline
           Quantity: 200
