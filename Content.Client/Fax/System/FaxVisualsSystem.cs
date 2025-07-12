@@ -42,8 +42,7 @@ public sealed class FaxVisualsSystem : EntitySystem
                             LayerKey = FaxMachineVisuals.VisualState,
                             KeyFrames =
                             {
-                                new AnimationTrackSpriteFlick.KeyFrame(component.InsertingState, 0f),
-                                new AnimationTrackSpriteFlick.KeyFrame("icon", 2.4f),
+                                new AnimationTrackSpriteFlick.KeyFrame(component.InsertingState, 0f)
                             },
                         },
                     },
