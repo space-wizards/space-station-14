@@ -1,7 +1,6 @@
 using Content.Server.PowerCell;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Equipment;
-using Robust.Shared.Random;
 using System.Linq;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Systems;
@@ -10,7 +9,6 @@ namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 public sealed class ArtifactNukerSystem : SharedArtifactNukerSystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -25,7 +23,9 @@ public sealed class ArtifactNukerSystem : SharedArtifactNukerSystem
         if (!_powerCell.TryUseCharge(args.Nuker, args.Nuker.Comp.EnergyDrain, user: args.User))
             return;
 
-        var node = _random.Pick(_xenoSys.GetActiveNodes(ent));
+        if (!_xenoSys.TryGetNode(ent.Owner, args.index, out var nodenull))
+            return;
+        var node = nodenull.Value;
 
         var predecessors = _xenoSys.GetPredecessorNodes(ent.Owner, node)
             .ToList();

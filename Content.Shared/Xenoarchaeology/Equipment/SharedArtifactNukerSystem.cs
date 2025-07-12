@@ -49,26 +49,31 @@ public abstract class SharedArtifactNukerSystem : EntitySystem
                 return;
             }
 
-            if (TryComp<UseDelayComponent>(ent, out var delay) && !_useDelay.TryResetDelay((ent, delay), true))
+            if (ent.Comp.Index is null)
+            {
+                _popup.PopupClient(Loc.GetString("artifact-nuker-popup-noindex"), args.User);
+                args.Handled = true;
                 return;
+            }
 
-            var refEvent = new AttemptNukeArtifact(ent, args.User);
+            var refEvent = new AttemptNukeArtifact(ent, args.User, ent.Comp.Index.Value);
             RaiseLocalEvent(args.Target.Value, ref refEvent);
             _popup.PopupClient(Loc.GetString("artifact-nuker-popup-success"), args.User, PopupType.Medium);
             args.Handled = true;
         }
     }
 
-    public static void OnIndexChange(Entity<ArtifactNukerComponent> ent, ref ArtifactNukerIndexChangeMessage args)
+    public void OnIndexChange(Entity<ArtifactNukerComponent> ent, ref ArtifactNukerIndexChangeMessage args)
     {
         ent.Comp.Index = args.Index;
+        Dirty(ent);
     }
 }
 
 #region events and messages
 
 [ByRefEvent]
-public record struct AttemptNukeArtifact(Entity<ArtifactNukerComponent> Nuker, EntityUid User);
+public record struct AttemptNukeArtifact(Entity<ArtifactNukerComponent> Nuker, EntityUid User, int index);
 
 [Serializable, NetSerializable]
 public sealed class ArtifactNukerIndexChangeMessage(int index) : BoundUserInterfaceMessage

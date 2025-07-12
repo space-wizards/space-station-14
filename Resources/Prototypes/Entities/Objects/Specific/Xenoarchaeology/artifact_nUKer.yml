@@ -12,3 +12,11 @@
     sprite: Objects/Specific/Xenoarchaeology/artifact_nuker.rsi
   - type: UseDelay
     delay: 3
+  - type: ActivatableUI
+    key: enum.ArtifactNukerUiKey.Key
+    singleUser: true
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+      enum.ArtifactNukerUiKey.Key:
+        type: ArtifactNukerBoundUserInterface
