@@ -10,7 +10,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
-    [Dependency] private readonly SharedStatusEffectsSystem _sharedStatusEffects = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     private DrowsinessOverlay _overlay = default!;
 
@@ -38,7 +38,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
         if (_player.LocalEntity != args.Target)
             return;
 
-        if (!_sharedStatusEffects.HasEffectComp<DrowsinessStatusEffectComponent>(_player.LocalEntity.Value))
+        if (!_statusEffects.HasEffectComp<DrowsinessStatusEffectComponent>(_player.LocalEntity.Value))
         {
             _overlay.CurrentPower = 0;
             _overlayMan.RemoveOverlay(_overlay);
@@ -55,7 +55,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
         if (_player.LocalEntity is null)
             return;
 
-        if (!_sharedStatusEffects.HasEffectComp<DrowsinessStatusEffectComponent>(_player.LocalEntity.Value))
+        if (!_statusEffects.HasEffectComp<DrowsinessStatusEffectComponent>(_player.LocalEntity.Value))
         {
             _overlay.CurrentPower = 0;
             _overlayMan.RemoveOverlay(_overlay);

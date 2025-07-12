@@ -1,14 +1,17 @@
+using Content.Shared.Speech.Accents;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Player;
 
 namespace Content.Shared.StatusEffectNew;
 
-public abstract partial class SharedStatusEffectsSystem
+public sealed partial class StatusEffectsSystem
 {
     private void InitializeRelay()
     {
         SubscribeLocalEvent<StatusEffectContainerComponent, LocalPlayerAttachedEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, LocalPlayerDetachedEvent>(RelayStatusEffectEvent);
+
+        SubscribeLocalEvent<StatusEffectContainerComponent, AccentGetEvent>(RelayStatusEffectEvent);
     }
 
     protected void RefRelayStatusEffectEvent<T>(EntityUid uid, StatusEffectContainerComponent component, ref T args) where T : struct

@@ -16,7 +16,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedStatusEffectsSystem _sharedStatusEffects = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     private bool _icSsdSleep;
     private float _icSsdSleepTime;
@@ -39,7 +39,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
         if (_icSsdSleep)
         {
             component.FallAsleepTime = TimeSpan.Zero;
-            _sharedStatusEffects.TryRemoveStatusEffect(uid, StatusEffectSSDSleeping);
+            _statusEffects.TryRemoveStatusEffect(uid, StatusEffectSSDSleeping);
         }
 
         Dirty(uid, component);
@@ -85,7 +85,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
                 ssd.FallAsleepTime <= _timing.CurTime &&
                 !TerminatingOrDeleted(uid))
             {
-                _sharedStatusEffects.TrySetStatusEffectDuration(uid, StatusEffectSSDSleeping, null);
+                _statusEffects.TrySetStatusEffectDuration(uid, StatusEffectSSDSleeping, null);
             }
         }
     }

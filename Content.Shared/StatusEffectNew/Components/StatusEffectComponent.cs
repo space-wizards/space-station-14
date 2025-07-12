@@ -10,7 +10,7 @@ namespace Content.Shared.StatusEffectNew.Components;
 /// Provides a link between the effect and the affected entity, and some data common to all status effects.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(SharedStatusEffectsSystem))]
+[Access(typeof(StatusEffectsSystem))]
 [EntityCategory("StatusEffects")]
 public sealed partial class StatusEffectComponent : Component
 {

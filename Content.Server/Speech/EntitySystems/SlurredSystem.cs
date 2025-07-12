@@ -1,6 +1,7 @@
 using System.Text;
 using Content.Server.Speech.Components;
 using Content.Shared.Drunk;
+using Content.Shared.Speech.Accents;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Random;
@@ -10,7 +11,7 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class SlurredSystem : SharedSlurredSystem
 {
-    [Dependency] private readonly SharedStatusEffectsSystem _status = default!;
+    [Dependency] private readonly StatusEffectsSystem _status = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
