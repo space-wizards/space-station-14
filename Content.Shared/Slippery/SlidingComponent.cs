@@ -11,6 +11,5 @@ public sealed partial class SlidingComponent : Component
     /// <summary>
     ///     The friction modifier that will be applied to any friction calculations.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float FrictionModifier;
+    [DataField, AutoNetworkedField] public float FrictionModifier;
 }

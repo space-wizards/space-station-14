@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Buckle.Components;
-using Content.Shared.Clothing.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
@@ -159,29 +158,22 @@ public abstract partial class SharedStunSystem
         if (entity.Comp.NextUpdate > GameTiming.CurTime)
             return false;
 
-        return !StandingBlocked(entity);
-    }
-
-    private bool StandingBlocked(Entity<KnockedDownComponent> entity)
-    {
         if (!_blocker.CanMove(entity))
-            return true;
+            return false;
 
         var ev = new StandUpAttemptEvent();
         RaiseLocalEvent(entity, ref ev);
 
         if (ev.Cancelled)
-            return true;
-
-        // Check if we would intersect with any entities by standing up
-        // Commented out to test if letting you try and stand while still on a table is better
-        /*if (GetStandingColliders(entity.Owner))
+            return false;
+        
+        if (IntersectingStandingColliders(entity.Owner))
         {
             _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
-            return true;
-        }*/
+            return false;
+        }
 
-        return false;
+        return true;
     }
 
     private void OnForceStandup(ForceStandUpEvent msg, EntitySessionEventArgs args)
@@ -201,12 +193,6 @@ public abstract partial class SharedStunSystem
 
         if (!HasComp<StandingStateComponent>(entity) || !CanStand(entity))
             return;
-
-        if (IntersectingStandingColliders(entity.Owner))
-        {
-            _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
-            return;
-        }
 
         if (!TryComp<StaminaComponent>(entity, out var stamina))
             return;
@@ -361,14 +347,8 @@ public abstract partial class SharedStunSystem
         if (args.Cancelled)
             return;
 
-        if (StandingBlocked(entity))
+        if (!CanStand(entity))
             return;
-
-        if (IntersectingStandingColliders(entity.Owner))
-        {
-            _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
-            return;
-        }
 
         RemComp<KnockedDownComponent>(entity);
 
