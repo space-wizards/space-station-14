@@ -16,7 +16,7 @@ public sealed partial class LimitedChargesComponent : Component
     /// <summary>
     ///     The max charges this action has.
     /// </summary>
-    [DataField, AutoNetworkedField, Access(Other = AccessPermissions.Read)]
+    [DataField, AutoNetworkedField]
     public int MaxCharges = 3;
 
     /// <summary>
