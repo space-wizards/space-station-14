@@ -606,3 +606,29 @@
     accent-skeleton-words-7: accent-skeleton-words-replace-7
     accent-skeleton-words-8: accent-skeleton-words-replace-8
     accent-skeleton-words-9: accent-skeleton-words-replace-9
+
+- type: accent
+  id: scandinavian
+  wordReplacements:
+    accent-scandinavian-words-1: accent-scandinavian-words-replace-1
+    accent-scandinavian-words-1-2: accent-scandinavian-words-replace-1
+    accent-scandinavian-words-2: accent-scandinavian-words-replace-2
+    accent-scandinavian-words-3: accent-scandinavian-words-replace-3
+    accent-scandinavian-words-4: accent-scandinavian-words-replace-4
+    accent-scandinavian-words-5: accent-scandinavian-words-replace-5
+    accent-scandinavian-words-6: accent-scandinavian-words-replace-6
+    accent-scandinavian-words-6-1: accent-scandinavian-words-replace-6
+    accent-scandinavian-words-7: accent-scandinavian-words-replace-7
+    accent-scandinavian-words-8: accent-scandinavian-words-replace-8
+    accent-scandinavian-words-9: accent-scandinavian-words-replace-9
+    accent-scandinavian-words-9-2: accent-scandinavian-words-replace-9
+    accent-scandinavian-words-10: accent-scandinavian-words-replace-10
+    accent-scandinavian-words-11: accent-scandinavian-words-replace-11
+    accent-scandinavian-words-12: accent-scandinavian-words-replace-12
+    accent-scandinavian-words-13: accent-scandinavian-words-replace-13
+    accent-scandinavian-words-14: accent-scandinavian-words-replace-14
+    accent-scandinavian-words-15: accent-scandinavian-words-replace-15
+    accent-scandinavian-words-16: accent-scandinavian-words-replace-16
+    accent-scandinavian-words-17: accent-scandinavian-words-replace-17
+    accent-scandinavian-words-18: accent-scandinavian-words-replace-18
+    accent-scandinavian-words-19: accent-scandinavian-words-replace-19
