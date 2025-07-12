@@ -261,3 +261,27 @@
   values:
     prefix: figurines-hamlet-
     count: 8
+
+- type: localizedDataset
+  id: FigurinesThief
+  values:
+    prefix: figurines-thief-
+    count: 5
+
+- type: localizedDataset
+  id: FigurinesSkeleton
+  values:
+    prefix: figurines-skeleton-
+    count: 5
+
+- type: localizedDataset
+  id: FigurinesOwlman
+  values:
+    prefix: figurines-owlman-
+    count: 5
+
+- type: localizedDataset
+  id: FigurinesGriffin
+  values:
+    prefix: figurines-griffin-
+    count: 5
