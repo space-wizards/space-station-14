@@ -1,4 +1,5 @@
 using Content.Client.Message;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Temperature;
@@ -12,19 +13,23 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets;
 public sealed partial class SensorInfo : BoxContainer
 {
     public Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? OnThresholdUpdate;
+    public event Action<string, AtmosSensorData>? OnToggleThresholds;
     public event Action<AtmosSensorData>? SensorDataCopied;
+
+    private AtmosSensorData _data;
     private string _address;
 
     private ThresholdControl _pressureThreshold;
     private ThresholdControl _temperatureThreshold;
     private Dictionary<Gas, ThresholdControl> _gasThresholds = new();
     private Dictionary<Gas, RichTextLabel> _gasLabels = new();
-    private Button _copySettings => CCopySettings;
+    private ConfirmButton _copySettings => CCopySettings;
 
     public SensorInfo(AtmosSensorData data, string address)
     {
         RobustXamlLoader.Load(this);
 
+        _data = data;
         _address = address;
 
         SensorAddress.Title = Loc.GetString("air-alarm-ui-window-listing-title", ("address", _address), ("state", data.AlarmState));
@@ -84,12 +89,19 @@ public sealed partial class SensorInfo : BoxContainer
 
         _copySettings.OnPressed += _ =>
         {
-            SensorDataCopied?.Invoke(data);
+            SensorDataCopied?.Invoke(_data);
+        };
+
+        ToggleThresholds.OnPressed += _ =>
+        {
+            OnToggleThresholds?.Invoke(_address, _data);
         };
     }
 
     public void ChangeData(AtmosSensorData data)
     {
+        _data = data;
+
         SensorAddress.Title = Loc.GetString("air-alarm-ui-window-listing-title", ("address", _address), ("state", data.AlarmState));
 
         AlarmStateLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state-indicator",
