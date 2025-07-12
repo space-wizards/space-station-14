@@ -78,8 +78,8 @@
   parent: PlastitaniumWindowSquareBase
   suffix: indestructible
   components:
-    - type: ExaminableDamage
-      messages: null
+  - type: ExaminableDamage
+    messages: null
 
 - type: entity
   id: PlastitaniumWindow
@@ -171,8 +171,8 @@
   parent: PlastitaniumWindowDiagonalBase
   suffix: diagonal, indestructible
   components:
-    - type: ExaminableDamage
-      messages: null
+  - type: ExaminableDamage
+    messages: null
 
 - type: entity
   id: PlastitaniumWindowDiagonal
