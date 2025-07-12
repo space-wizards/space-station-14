@@ -12,7 +12,6 @@ cargo-console-menu-points-label = Balance:{" "}
 cargo-console-menu-points-amount = ${$amount}
 cargo-console-menu-shuttle-status-label = Shuttle status:{" "}
 cargo-console-menu-shuttle-status-away-text = Away
-cargo-console-menu-shuttle-status-capacity = {$currentCoutn}/{$maxCapacity}
 cargo-console-menu-order-capacity-label = Order capacity:{" "}
 cargo-console-menu-call-shuttle-button = Activate telepad
 cargo-console-menu-permissions-button = Permissions
