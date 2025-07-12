@@ -1,6 +1,7 @@
 using System.Text;
 using Content.Server.Speech.Components;
 using Content.Shared.Drunk;
+using Content.Shared.Speech;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Prototypes;
