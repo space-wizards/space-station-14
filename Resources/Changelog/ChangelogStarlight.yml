@@ -9251,4 +9251,32 @@ Entries:
   id: 1275
   time: '2025-07-10T12:43:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1005
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed abductors not being able to reconnect after using the camera view.
+    type: Fix
+  id: 1276
+  time: '2025-07-13T03:58:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1025
+- author: Killer Tamashi
+  changes:
+  - message: Gave mercenary webbing a holster slot, for salv.
+    type: Add
+  id: 1277
+  time: '2025-07-13T05:53:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1004
+- author: Killer Tamashi
+  changes:
+  - message: Gave syndie webbing two holster slots, for scheming syndies.
+    type: Add
+  id: 1278
+  time: '2025-07-13T05:53:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1004
+- author: Killer Tamashi
+  changes:
+  - message: Brigmedic belt can now store pistols.
+    type: Fix
+  id: 1279
+  time: '2025-07-13T05:53:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1004
 
