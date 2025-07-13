@@ -30,12 +30,7 @@ public sealed partial class ElectrovaeChargeReaction : IGasReactionEffect
     {
         var initialE = mixture.GetMoles(Gas.Electrovae);
 
-        if (initialE < 0.01f)
-            return ReactionResult.NoReaction;
-
-        // Only process for tile atmospheres (not portable canisters)
-        if (holder is not TileAtmosphere tileAtmos)
-            return ReactionResult.NoReaction;
+        if (initialE < 0.01f || holder is not TileAtmosphere tileAtmos) return ReactionResult.NoReaction;
 
         var entMan = IoCManager.Resolve<IEntityManager>();
         var mapSystem = entMan.System<SharedMapSystem>();
@@ -64,20 +59,18 @@ public sealed partial class ElectrovaeChargeReaction : IGasReactionEffect
 
         var centerPos = mapSystem.ToCenterCoordinates(tileRef);
 
-        // Find all cable entities in the search radius (3x3 area centered on this tile)
+        // Find all cable entities in the search radius
         var cableEntities = lookup.GetEntitiesInRange(centerPos, Atmospherics.ElectrovaeChargeSearchRadius)
-            .Where(e => entMan.HasComponent<CableComponent>(e))
+            .Where(entMan.HasComponent<CableComponent>)
             .ToList();
 
-        if (cableEntities.Count == 0)
-            return ReactionResult.NoReaction;
+        if (cableEntities.Count == 0) return ReactionResult.NoReaction;
 
         // Track how much power we've drained and what types of cables we found
         var totalPowerDrained = 0f;
         var cablesFound = 0;
         var highVoltageCables = 0;
         var mediumVoltageCables = 0;
-        var lowVoltageCables = 0;
 
         // Calculate how much power we want to drain based on electrovae amount
         // More electrovae means more power can be drained
@@ -101,9 +94,6 @@ public sealed partial class ElectrovaeChargeReaction : IGasReactionEffect
                 case CableType.MediumVoltage:
                     mediumVoltageCables++;
                     break;
-                case CableType.Apc:
-                    lowVoltageCables++;
-                    break;
             }
 
             // Create a temporary power consumer on the cable to drain power
@@ -114,14 +104,13 @@ public sealed partial class ElectrovaeChargeReaction : IGasReactionEffect
             {
                 CableType.HighVoltage => 3.0f,
                 CableType.MediumVoltage => 1.5f,
-                CableType.Apc => 0.5f,
                 _ => 1.0f
             };
 
             var powerToDraw = desiredPowerDrain * powerMultiplier / cablesFound;
             tempConsumer.DrawRate = powerToDraw;
 
-            totalPowerDrained += powerToDraw * 0.1f;
+            totalPowerDrained = powerToDraw * 0.69f; // 69% of efficiency (max 207K)
 
             entMan.RemoveComponent<PowerConsumerComponent>(cable);
         }
@@ -132,9 +121,9 @@ public sealed partial class ElectrovaeChargeReaction : IGasReactionEffect
         var chargedElectrovaeProduced = totalPowerDrained * Atmospherics.ElectrovaeChargeConversionEfficiency / Atmospherics.ElectrovaeChargePowerDrainPerMole;
 
         if (highVoltageCables > 0)
-            chargedElectrovaeProduced *= 1.5f;  // 50% bonus for HV cables
+            chargedElectrovaeProduced *= 1.5f;  // 50% bonus for HV cables (max 4.14)
         else if (mediumVoltageCables > 0)
-            chargedElectrovaeProduced *= 1.2f;  // 20% bonus for MV cables
+            chargedElectrovaeProduced *= 1.2f;  // 20% bonus for MV cables (max 3.31)
 
         mixture.AdjustMoles(Gas.Electrovae, -chargedElectrovaeProduced);
         mixture.AdjustMoles(Gas.ChargedElectrovae, chargedElectrovaeProduced);
