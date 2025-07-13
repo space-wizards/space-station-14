@@ -2,6 +2,7 @@
 artifact-nuker-popup-notartifact = This isn't a xenoartifact!
 artifact-nuker-popup-zeronodes = It has no active nodes!
 artifact-nuker-popup-success = Node nuked!
+artifact-nuker-popup-noindex = Node ID field can't be empty!
 
 # UI
 artifact-nuker-ui-title = Artifact nUKer

@@ -14,6 +14,7 @@ public sealed class ArtifactNukerBoundUserInterface(EntityUid owner, Enum uiKey)
         base.Open();
 
         _menu = this.CreateWindow<ArtifactNukerMenu>();
+        _menu.GetIndex(Owner);
 
         _menu.IndexChanged += index =>
         {
