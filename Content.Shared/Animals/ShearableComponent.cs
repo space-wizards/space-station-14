@@ -109,12 +109,6 @@ public sealed partial class ShearableComponent : Component
     public SpriteSpecifier ShearingIcon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/scissors.svg.236dpi.png"));
 
     /// <summary>
-    ///     This is just for caching the resolved solution.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public Entity<SolutionComponent>? Solution;
-
-    /// <summary>
     ///     This is used for handling the shearable layer.
     ///     A special sprite layer that changes based on the mob's life state.
     ///     But can also be toggled by the shearable solution dropping blow a certain amount.

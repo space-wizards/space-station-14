@@ -45,18 +45,20 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <param name="ent">The shearable entity that will be checked.</param>
     /// <param name="comp">The shearable component (e.g. ent.Comp).</param>
     /// <param name="shearedProduct">An out variable of the resolved sheared product prototype.</param>
-    /// <param name="shearingSolution">An out variable of the resolved sheared product prototype.</param>
+    /// <param name="shearingSolutionState">An out variable of the resolved sheared product solution.</param>
+    /// <param name="shearingSolutionEntity">An out variable of the resolved sheared product solution entity.</param>
     /// <param name="usedItem">The held item that is being used to shear the target entity.</param>
     /// <param name="checkItem">If false then skip checking for the correct shearing tool.</param>
     /// <returns>
     ///     A <c>ShearableComponent.CheckShearReturns</c> enum of the result.
     /// </returns>
     /// <seealso cref="CheckShearReturns"/>
-    public CheckShearReturns CheckShear(EntityUid ent, ShearableComponent comp, out EntityPrototype shearedProduct, out Solution? shearingSolution, EntityUid? usedItem = null, bool checkItem = true)
+    public CheckShearReturns CheckShear(EntityUid ent, ShearableComponent comp, out EntityPrototype shearedProduct, out Solution? shearingSolutionState, out Entity<SolutionComponent>? shearingSolutionEnt, EntityUid? usedItem = null, bool checkItem = true)
     {
         // Set these to null in-case we return early.
         shearedProduct = _proto.Index(comp.ShearedProductID);
-        shearingSolution = null;
+        shearingSolutionState = null;
+        shearingSolutionEnt = null;
 
         // Are we checking items? Has a toolQuality been defined?
         // Even if we are checking items, if no toolQuality has been defined, then they're allowed to use anything, including an empty hand.
@@ -73,13 +75,13 @@ public sealed class SharedShearableSystem : EntitySystem
         // If so, True, otherwise False.
 
         // Resolves the targetSolutionName as a solution inside the shearable creature. Outputs the "solution" variable.
-        if (!_solutionContainer.ResolveSolution(ent, comp.TargetSolutionName, ref comp.Solution, out shearingSolution))
+        if (!_solutionContainer.ResolveSolution(ent, comp.TargetSolutionName, ref shearingSolutionEnt, out shearingSolutionState))
         {
             return CheckShearReturns.Error;
         }
 
         // Store solution.Volume in a variable to make calculations a bit clearer.
-        var targetSolutionQuantity = shearingSolution.Volume;
+        var targetSolutionQuantity = shearingSolutionState.Volume;
 
         // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
         // Then, divide by 1 because it's the reagent needed for 1 product.
@@ -132,13 +134,14 @@ public sealed class SharedShearableSystem : EntitySystem
     private void AttemptShear(Entity<ShearableComponent> ent, EntityUid userUid, EntityUid? toolUsed)
     {
         // Run all shearing checks.
-        switch (CheckShear(ent, ent.Comp, out var shearedProduct, out _, toolUsed))
+        switch (CheckShear(ent, ent.Comp, out var shearedProduct, out _, out _, toolUsed))
         {
             case CheckShearReturns.Success:
                 // ALL SYSTEMS GO!
                 break;
             case CheckShearReturns.WrongTool:
-                _popup.PopupClient(Loc.GetString("shearable-system-wrong-tool", ("target", Identity.Entity(ent.Owner, EntityManager)), ("shearVerb", (Loc.GetString(ent.Comp.Verb)).ToLower())), ent.Owner, userUid);
+                // Removed because it would cause excessive popups when e.g. you're feeding the sheep some food.
+                //_popup.PopupClient(Loc.GetString("shearable-system-wrong-tool", ("target", Identity.Entity(ent.Owner, EntityManager)), ("shearVerb", (Loc.GetString(ent.Comp.Verb)).ToLower())), ent.Owner, userUid);
                 return;
             case CheckShearReturns.InsufficientSolution:
                 // NO WOOL LEFT.
@@ -168,10 +171,10 @@ public sealed class SharedShearableSystem : EntitySystem
             return;
 
         // Check again and this time get the objects we need.
-        if (CheckShear(ent.Owner, ent.Comp, out var shearedProduct, out var shearingSolution, null, false) != CheckShearReturns.Success
+        if (CheckShear(ent.Owner, ent.Comp, out var shearedProduct, out var shearingSolutionState, out var shearingSolutionEnt, null, false) != CheckShearReturns.Success
             // shearingSolution must be resolved.
-            || shearingSolution is null
-            || ent.Comp.Solution is null)
+            || shearingSolutionState is null
+            || shearingSolutionEnt is null)
         {
             return;
         }
@@ -180,7 +183,7 @@ public sealed class SharedShearableSystem : EntitySystem
         args.Handled = true;
 
         // Store solution.Volume in a variable to make calculations a bit clearer.
-        var targetSolutionQuantity = shearingSolution.Volume;
+        var targetSolutionQuantity = shearingSolutionState.Volume;
 
         // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
         // Then, divide by 1 because it's the reagent needed for 1 product.
@@ -226,7 +229,7 @@ public sealed class SharedShearableSystem : EntitySystem
         }
 
         // Split the solution inside the creature by solutionToRemove, return what was removed.
-        var removedSolution = _solutionContainer.SplitSolution(ent.Comp.Solution.Value, solutionToRemove);
+        var removedSolution = _solutionContainer.SplitSolution(shearingSolutionEnt.Value, solutionToRemove);
 
         // Used for slightly altering the spawn position of sheared items.
         // Don't worry about how it works, it just does, I promise.
@@ -266,13 +269,12 @@ public sealed class SharedShearableSystem : EntitySystem
             toolUsed = args.Using.Value;
         }
 
-        // Check again and this time get the objects we need.
-        if (CheckShear(ent.Owner, ent.Comp, out _, out _, toolUsed, true) != CheckShearReturns.Success)
+        // Check.
+        if (CheckShear(ent.Owner, ent.Comp, out _, out _, out _, toolUsed, true) != CheckShearReturns.Success)
         {
             return;
         }
 
-        var uid = ent.Owner;
         var user = args.User;
 
         // Construct verb object.
@@ -304,7 +306,7 @@ public sealed class SharedShearableSystem : EntitySystem
         }
 
         // Checks whether the entity can be sheared and applies appropriate examine additions.
-        switch (CheckShear(ent, ent.Comp, out _, out _, checkItem: false))
+        switch (CheckShear(ent, ent.Comp, out _, out _, out _, checkItem: false))
         {
             case CheckShearReturns.Success:
                 // Check again if this description has been set.
@@ -319,7 +321,7 @@ public sealed class SharedShearableSystem : EntitySystem
                 {
                     // Tool quality names are a Loc string so look up that and lower-case it.
                     toolQuality = Loc.GetString(toolQualityProto.Name).ToLower();
-                    // If a Loc string isn't found then it will just return the same ID, which means it hasn't been configured right so just set it empty and don't use it.
+                    // If a Loc string isn't found then it will just return the same ID, which means it hasn't been configured right so just error and return.
                     if (string.Equals(toolQuality, toolQualityProto.Name.ToLower()))
                     {
                         Log.Debug($"Tried to generate examine text for a shearable entity \"{Name(ent.Owner)}\" but the configured toolQuality ({toolQualityProto.ID}) name: \"{toolQuality}\" is not a Loc string.");
