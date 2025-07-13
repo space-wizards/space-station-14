@@ -10,7 +10,6 @@
         Blunt: 6
     angle: 60
     attackRate: 1.25
-    animationRotation: -90
     wideAnimationRotation: -90
     animation: WeaponArcThrust
     soundHit:
@@ -44,7 +43,6 @@
         Blunt: 6
     angle: 60
     attackRate: 1
-    animationRotation: 45
     wideAnimationRotation: 45
     animation: WeaponArcThrust
     soundHit:
@@ -66,7 +64,6 @@
        Blunt: 12
     angle: 0
     attackRate: 1
-    animationRotation: 45
     wideAnimationRotation: 45
     animation: WeaponArcThrust
     soundHit:
@@ -97,7 +94,6 @@
        Blunt: 14
     angle: 60
     attackRate: 0.75
-    animationRotation: -45
     wideAnimationRotation: -45
     animation: WeaponArcThrust
     soundHit:

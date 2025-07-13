@@ -54,7 +54,6 @@
         Piercing: 9
         Slash: 6
     angle: 0
-    animationRotation: -135
     wideAnimationRotation: -135
     animation: WeaponArcThrust
     soundHit:
