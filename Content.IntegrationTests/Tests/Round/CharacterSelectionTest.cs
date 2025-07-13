@@ -10,6 +10,8 @@ using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Round;
 
@@ -66,13 +68,16 @@ public sealed class CharacterSelectionTest
           availableJobs:
             Captain: [ 1, 1 ]
             Passenger: [ -1, -1 ]
+            Mime: [ 1, 1 ]
 ";
 
     // a few little helper structs for test case definition readability
     public sealed class TestJobPriorities
     {
         public JobPriority Captain;
+        public JobPriority Mime;
         public JobPriority Passenger;
+        public JobPriority Boxer;
 
         public Dictionary<ProtoId<JobPrototype>, JobPriority> ToDictForPreferences()
         {
@@ -81,9 +86,17 @@ public sealed class CharacterSelectionTest
             {
                 dict.Add("Captain", Captain);
             }
+            if (Mime != JobPriority.Never)
+            {
+                dict.Add("Mime", Mime);
+            }
             if (Passenger != JobPriority.Never)
             {
                 dict.Add("Passenger", Passenger);
+            }
+            if (Boxer != JobPriority.Never)
+            {
+                dict.Add("Boxer", Boxer);
             }
             return dict;
         }
@@ -92,8 +105,11 @@ public sealed class CharacterSelectionTest
     public sealed class TestCharacter
     {
         public bool Captain;
+        public bool Mime;
         public bool Passenger;
+        public bool Boxer;
         public bool Traitor;
+        public bool ExpectToSpawn;
 
         public HumanoidCharacterProfile ToProfile()
         {
@@ -102,10 +118,18 @@ public sealed class CharacterSelectionTest
             {
                 profile = profile.WithJob("Captain");
             }
+            if (Mime)
+            {
+                profile = profile.WithJob("Mime");
+            }
             // default job set has passenger already
             if (!Passenger)
             {
                 profile = profile.WithoutJob("Passenger");
+            }
+            if (Boxer)
+            {
+                profile = profile.WithJob("Boxer");
             }
             if (Traitor)
             {
@@ -118,22 +142,98 @@ public sealed class CharacterSelectionTest
     public sealed class SelectionTestData
     {
         public TestJobPriorities JobPriorities;
-        public TestCharacter ExpectedCharacter;    // null if player should not be spawned
-        public List<TestCharacter> OtherCharacters = [];
+        public List<TestCharacter> Characters = [];
         public string ExpectedJobName = "";
         public bool ExpectTraitor;
+
+        public SelectionTestData WithCharacters(IEnumerable<TestCharacter> new_characters)
+        {
+            return new SelectionTestData()
+            {
+                JobPriorities = JobPriorities,
+                Characters = new_characters.ToList(),
+                ExpectedJobName = ExpectedJobName,
+                ExpectTraitor = ExpectTraitor
+            };
+        }
     }
+
+    public static readonly List<SelectionTestData> SelectionTestCaseData =
+    [
+        new()
+        {
+            JobPriorities = new TestJobPriorities() { Passenger = JobPriority.High },
+            Characters =
+            [
+                new TestCharacter() { Passenger = true, Traitor = true, ExpectToSpawn = true}
+            ],
+            ExpectedJobName = "Passenger",
+            ExpectTraitor = true
+        },
+        new() // Case 1 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
+        {
+            JobPriorities = new TestJobPriorities() { Captain = JobPriority.High },
+            Characters =
+            [
+                new TestCharacter() { Captain = true, Traitor = true, ExpectToSpawn = true }
+            ],
+            ExpectedJobName = "Captain",
+            ExpectTraitor = false
+        },
+        new() // Case 2 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
+        {
+            JobPriorities = new TestJobPriorities() { Mime = JobPriority.Medium, Passenger = JobPriority.Medium },
+            Characters =
+            [
+                new TestCharacter() { Mime = true, Traitor = true, ExpectToSpawn = true },
+                new TestCharacter() { Passenger = true },
+                new TestCharacter() { Passenger = true },
+                new TestCharacter() { Passenger = true },
+                new TestCharacter() { Passenger = true },
+                new TestCharacter() { Passenger = true },
+                new TestCharacter() { Captain = true }
+            ],
+            ExpectedJobName = "Mime",
+            ExpectTraitor = true
+        },
+        new()
+        {
+            JobPriorities = new TestJobPriorities() { Boxer = JobPriority.High },
+            Characters =
+            [
+                new TestCharacter() { Boxer = true, Traitor = true }
+            ]
+        }
+    ];
 
     // use a function for test data so we can use classes
     public static IEnumerable<SelectionTestData> SelectionTestCases()
     {
-        yield return new SelectionTestData()
+        foreach (var testCaseData in SelectionTestCaseData)
         {
-            JobPriorities = new TestJobPriorities(){Passenger = JobPriority.High},
-            ExpectedCharacter = new TestCharacter(){Passenger = true, Traitor = true},
-            ExpectedJobName = "Passenger",
-            ExpectTraitor = true
-        };
+            yield return testCaseData;
+
+            // test different orders of characters with the same rng seed to minimize effects of rng on tests
+            // (the rng seed is set in SelectionTest())
+            if (testCaseData.Characters.Count > 1)
+            {
+                var reversedCharacters = testCaseData.Characters.ShallowClone();
+                reversedCharacters.Reverse();
+                yield return testCaseData.WithCharacters(reversedCharacters);
+            }
+
+            if (testCaseData.Characters.Count > 2)
+            {
+                var rotatedCharacters = testCaseData.Characters.ShallowClone();
+                for (var i = 1; i < testCaseData.Characters.Count; i++)
+                {
+                    var movingCharacter = rotatedCharacters[0];
+                    rotatedCharacters.RemoveAt(0);
+                    rotatedCharacters.Add(movingCharacter);
+                    yield return testCaseData.WithCharacters(rotatedCharacters);
+                }
+            }
+        }
     }
 
     [Test]
@@ -153,6 +253,7 @@ public sealed class CharacterSelectionTest
         ticker.SetGamePreset(_traitorsMode);
 
         var cPref = pair.Client.ResolveDependency<IClientPreferencesManager>();
+        pair.Server.ResolveDependency<IRobustRandom>().SetSeed(0);
 
         await pair.ReallyBeIdle();
 
@@ -160,15 +261,14 @@ public sealed class CharacterSelectionTest
 
         await pair.Client.WaitAssertion(() =>
         {
-            if (data.ExpectedCharacter != null)
+            foreach (var character in data.Characters)
             {
-                expectedCharacterProfile = data.ExpectedCharacter.ToProfile();
-                cPref.CreateCharacter(expectedCharacterProfile);
-            }
-
-            foreach (var character in data.OtherCharacters)
-            {
-                cPref.CreateCharacter(character.ToProfile());
+                var profile = character.ToProfile();
+                cPref.CreateCharacter(profile);
+                if (character.ExpectToSpawn)
+                {
+                    expectedCharacterProfile = profile;
+                }
             }
 
             // delete initial default character now that there are other character(s) so it won't
@@ -180,20 +280,23 @@ public sealed class CharacterSelectionTest
 
         await pair.ReallyBeIdle();
 
+    //    pair.Server.ResolveDependency<IRobustRandom>().SetSeed(6);
+    //    pair.Client.ResolveDependency<IRobustRandom>().SetSeed(6);
+
         Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
         ticker.ToggleReadyAll(true);
         Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.ReadyToPlay));
         await pair.Server.WaitPost(() => ticker.StartRound());
-        await pair.RunTicksSync(30);
+        await pair.RunTicksSync(50);
 
         if (expectedCharacterProfile == null)
         {
-            Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
+            Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.Not.EqualTo(PlayerGameStatus.JoinedGame));
         }
         else
         {
+            Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.JoinedGame));
             pair.AssertJob(data.ExpectedJobName, pair.Player!);
-            var humanoidAppearanceSystem = pair.Server.System<HumanoidAppearanceSystem>();
             var antagSystem = pair.Server.System<AntagSelectionSystem>();
             var antags = antagSystem.GetPreSelectedAntagDefinitions(pair.Player);
             if (data.ExpectTraitor)
@@ -206,8 +309,9 @@ public sealed class CharacterSelectionTest
             {
                 Assert.That(antags.Count, Is.EqualTo(0));
             }
-            // TODO: check correct profile spawned
-            // and maybe check status??
+            var humanoidAppearanceSystem = pair.Server.System<HumanoidAppearanceSystem>();
+            var spawnedProfile = humanoidAppearanceSystem.GetBaseProfile(pair.Player!.AttachedEntity.Value);
+            Assert.That(spawnedProfile.MemberwiseEquals(expectedCharacterProfile), Is.True);
         }
 
         await pair.Server.WaitPost(() => ticker.RestartRound());
