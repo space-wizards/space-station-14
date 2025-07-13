@@ -177,8 +177,8 @@
     solutions:
       ammo:
         reagents:
-        - ReagentId: Nocturine #Starlight
-          Quantity: 3.5
+        - ReagentId: Nocturine #🌟Starlight🌟
+          Quantity: 3.5 #🌟Starlight🌟
   - type: SolutionTransfer
     maxTransferAmount: 3.5
 
@@ -232,7 +232,7 @@
       collection: ShellEject
     hitscan: PelletShotgunUraniumSpreadTrace
 
-- type: entity
+- type: entity #🌟Starlight🌟 
   id: ShellShotgunBreaching
   name: shell (.50 breaching)
   parent: [ BaseShellShotgun, BaseSyndicateContraband ]
