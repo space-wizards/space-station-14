@@ -1,8 +1,8 @@
 using System.Numerics;
-using Content.Shared.Body.Components;
 using Content.Shared.CardboardBox;
 using Content.Shared.CardboardBox.Components;
 using Content.Shared.Examine;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Robust.Client.GameObjects;
 
@@ -15,13 +15,13 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
-    private EntityQuery<BodyComponent> _bodyQuery;
+    private EntityQuery<MobStateComponent> _mobStateQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _bodyQuery = GetEntityQuery<BodyComponent>();
+        _mobStateQuery = GetEntityQuery<MobStateComponent>();
 
         SubscribeNetworkEvent<PlayBoxEffectMessage>(OnBoxEffect);
     }
@@ -66,8 +66,8 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
             if (!_examine.InRangeUnOccluded(sourcePos, mapPos, box.Distance, null))
                 continue;
 
-            // no effect for anything too exotic
-            if (!_bodyQuery.HasComp(mob))
+            // no effect for non-mobs that have MobMover, such as mechs and vehicles.
+            if (!_mobStateQuery.HasComp(mob))
                 continue;
 
             var ent = Spawn(box.Effect, mapPos);
