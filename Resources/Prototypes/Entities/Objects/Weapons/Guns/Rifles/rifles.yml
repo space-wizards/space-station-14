@@ -1,6 +1,6 @@
 - type: entity
   name: BaseWeaponRifle
-  parent: [BaseItem, BaseGunWieldable]
+  parent: [BaseItem, BaseGunWieldable, BaseGunMeleeLarge]
   id: BaseWeaponRifle
   description: A rooty tooty point and shooty.
   abstract: true
@@ -258,7 +258,7 @@
 
 - type: entity
   name: Foam Force Astro Ace
-  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  parent: [BaseGunMeleeLargeHarmless, BaseWeaponShotgun, BaseGunWieldable]
   id: WeaponRifleFoam
   description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
   components:

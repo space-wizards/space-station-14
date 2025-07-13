@@ -1,7 +1,7 @@
 - type: entity
   id: WeaponWaterGunBase
   abstract: true
-  parent: BaseItem
+  parent: [BaseItem, BaseGunMeleeSmallHarmless]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
