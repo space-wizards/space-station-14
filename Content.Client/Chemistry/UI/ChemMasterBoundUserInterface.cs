@@ -32,30 +32,30 @@ namespace Content.Client.Chemistry.UI
             _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
             // Setup static button actions.
-            _window.InputEjectButton.OnPressed += _ => SendMessage(
+            _window.InputEjectButton.OnPressed += _ => SendPredictedMessage(
                 new ItemSlotButtonPressedEvent(SharedChemMaster.InputSlotName));
-            _window.OutputEjectButton.OnPressed += _ => SendMessage(
+            _window.OutputEjectButton.OnPressed += _ => SendPredictedMessage(
                 new ItemSlotButtonPressedEvent(SharedChemMaster.OutputSlotName));
-            _window.BufferTransferButton.OnPressed += _ => SendMessage(
+            _window.BufferTransferButton.OnPressed += _ => SendPredictedMessage(
                 new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
-            _window.BufferDiscardButton.OnPressed += _ => SendMessage(
+            _window.BufferDiscardButton.OnPressed += _ => SendPredictedMessage(
                 new ChemMasterSetModeMessage(ChemMasterMode.Discard));
-            _window.CreatePillButton.OnPressed += _ => SendMessage(
+            _window.CreatePillButton.OnPressed += _ => SendPredictedMessage(
                 new ChemMasterCreatePillsMessage(
                     (uint) _window.PillDosage.Value, (uint) _window.PillNumber.Value, _window.LabelLine));
-            _window.CreateBottleButton.OnPressed += _ => SendMessage(
+            _window.CreateBottleButton.OnPressed += _ => SendPredictedMessage(
                 new ChemMasterOutputToBottleMessage(
                     (uint) _window.BottleDosage.Value, _window.LabelLine));
-            _window.BufferSortButton.OnPressed += _ => SendMessage(
+            _window.BufferSortButton.OnPressed += _ => SendPredictedMessage(
                     new ChemMasterSortingTypeCycleMessage());
 
             for (uint i = 0; i < _window.PillTypeButtons.Length; i++)
             {
                 var pillType = i;
-                _window.PillTypeButtons[i].OnPressed += _ => SendMessage(new ChemMasterSetPillTypeMessage(pillType));
+                _window.PillTypeButtons[i].OnPressed += _ => SendPredictedMessage(new ChemMasterSetPillTypeMessage(pillType));
             }
 
-            _window.OnReagentButtonPressed += (args, button) => SendMessage(new ChemMasterReagentAmountButtonMessage(button.Id, button.Amount, button.IsBuffer));
+            _window.OnReagentButtonPressed += (args, button) => SendPredictedMessage(new ChemMasterReagentAmountButtonMessage(button.Id, button.Amount, button.IsBuffer));
         }
 
         /// <summary>
