@@ -12,7 +12,6 @@ namespace Content.Shared.Animals;
 ///     Lets an entity be sheared by a tool to consume a reagent to spawn an amount of an item.
 ///     For example, sheep can be sheared to consume wool Solution to spawn cotton.
 /// </summary>
-
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ShearableComponent : Component
 {
