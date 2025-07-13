@@ -9295,5 +9295,12 @@ Entries:
   id: 1281
   time: '2025-07-13T10:10:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1027
+- author: DrSmugleaf
+  changes:
+  - message: Fixed carps, goliaths, and other hostile AI not targeting abductors.
+    type: Fix
+  id: 1282
+  time: '2025-07-13T10:11:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1028
 Order: -1
 
