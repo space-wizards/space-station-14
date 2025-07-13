@@ -97,7 +97,7 @@
     - type: RandomMetadata
       nameSegments:
       - NamesMilitaryLast
-      nameFormat: name-format-military-leader
+      nameFormat: name-format-ert-leader
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVA
@@ -164,7 +164,7 @@
     - type: RandomMetadata
       nameSegments:
       - NamesMilitaryLast
-      nameFormat: name-format-military-specialist
+      nameFormat: name-format-ert-specialist
     - type: Loadout
       prototypes: [ ERTChaplainGear ]
       roleLoadout: [ RoleSurvivalMilitaryDouble ]
@@ -217,7 +217,7 @@
     - type: RandomMetadata
       nameSegments:
       - NamesMilitaryLast
-      nameFormat: name-format-military-specialist
+      nameFormat: name-format-ert-specialist
     - type: Loadout
       prototypes: [ ERTJanitorGear ]
       roleLoadout: [ RoleSurvivalMilitaryDouble ]
@@ -269,7 +269,7 @@
     - type: RandomMetadata
       nameSegments:
       - NamesMilitaryLast
-      nameFormat: name-format-military-specialist
+      nameFormat: name-format-ert-specialist
     - type: Loadout
       prototypes: [ ERTEngineerGear ]
       roleLoadout: [ RoleSurvivalMilitaryDouble ]
@@ -308,7 +308,7 @@
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryLast
-    nameFormat: name-format-military-specialist
+    nameFormat: name-format-ert-pointman
   - type: Loadout
     prototypes: [ ERTEngineerGearArmed ]
     roleLoadout: [ RoleSurvivalMilitaryDouble ]
@@ -341,7 +341,7 @@
     - type: RandomMetadata
       nameSegments:
       - NamesMilitaryLast
-      nameFormat: name-format-military-officer
+      nameFormat: name-format-ert-officer
     - type: Loadout
       prototypes: [ ERTSecurityGear ]
       roleLoadout: [ RoleSurvivalMilitaryDouble ]
@@ -389,7 +389,7 @@
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryLast
-    nameFormat: name-format-military-rifle
+    nameFormat: name-format-ert-rifle
   - type: Loadout
     prototypes: [ ERTSecurityGearArmedRifle ]
     roleLoadout: [ RoleSurvivalMilitaryDouble ]
@@ -410,7 +410,7 @@
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryLast
-    nameFormat: name-format-military-grenade
+    nameFormat: name-format-ert-grenade
   - type: Loadout
     prototypes: [ ERTSecurityGearArmedGrenade ]
     roleLoadout: [ RoleSurvivalMilitaryDouble ]
@@ -431,7 +431,7 @@
   - type: RandomMetadata
     nameSegments:
     - NamesMilitaryLast
-    nameFormat: name-format-military-melee
+    nameFormat: name-format-ert-melee
   - type: Loadout
     prototypes: [ ERTSecurityGearArmedMelee ]
     roleLoadout: [ RoleSurvivalMilitaryDouble ]
@@ -464,7 +464,7 @@
     - type: RandomMetadata
       nameSegments:
       - NamesMilitaryLast
-      nameFormat: name-format-military-medic
+      nameFormat: name-format-ert-doctor
     - type: Loadout
       prototypes: [ ERTMedicalGear ]
       roleLoadout: [ RoleSurvivalMilitaryDouble ]
@@ -500,6 +500,10 @@
   parent: ERTMedicalEVA
   id: ERTMedicalArmed
   components:
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-ert-corpsman
   - type: Loadout
     prototypes: [ ERTMedicalGearArmed ]
     roleLoadout: [ RoleSurvivalMilitaryDouble ]

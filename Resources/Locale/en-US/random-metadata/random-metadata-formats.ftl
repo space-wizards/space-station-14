@@ -12,19 +12,20 @@ name-format-dragon = {$part0} {$part1}
 
 # "<title> <name>"
 name-format-nukie-generic = {$part0} {$part1}
-name-format-nukie-agent = Agent {$part0}
+name-format-nukie-agent = Corpsman {$part0}
 name-format-nukie-commander = Commander {$part0}
 name-format-nukie-operator = Operator {$part0}
 # "<title> <name>"
 name-format-ert = {$part0} {$part1}
-name-format-military-leader = Sergeant {$part0}
-name-format-military-specialist = Specialist {$part0}
-name-format-military-pointman = Pointman {$part0}
-name-format-military-officer = Officer {$part0}
-name-format-military-rifle = Rifleman {$part0}
-name-format-military-grenade = Grenadier {$part0}
-name-format-military-melee = Vanguard {$part0}
-name-format-military-medic = Corpsman {$part0}
+name-format-ert-leader = Sergeant {$part0}
+name-format-ert-specialist = Specialist {$part0}
+name-format-ert-pointman = Pointman {$part0}
+name-format-ert-officer = Officer {$part0}
+name-format-ert-rifle = Rifleman {$part0}
+name-format-ert-grenade = Grenadier {$part0}
+name-format-ert-melee = Vanguard {$part0}
+name-format-ert-doctor = Doctor {$part0}
+name-format-ert-corpsman = Corpsman {$part0}
 
 # "<appearance> <type>"
 name-format-book = {$part0} {$part1}
