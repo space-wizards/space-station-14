@@ -1,6 +1,6 @@
 - type: entity
-  id: [WeaponSprayNozzle, BaseGunMeleeHeavy]
-  parent: BaseItem
+  id: WeaponSprayNozzle
+  parent: [BaseItem, BaseGunMeleeSmall]
   name: spray nozzle
   description: A high-powered spray nozzle used in conjunction with a backpack-mounted water tank.
   components:
@@ -36,7 +36,3 @@
       - NozzleBackTank
   - type: UseDelay
     delay: 1.0
-  - type: MeleeWeapon
-    damage:
-      types:
-       Blunt: 5 #bulky but light, a truly awful melee weapon
