@@ -6,7 +6,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-
 namespace Content.Shared.Animals;
 
 /// <summary>
@@ -88,6 +87,15 @@ public sealed partial class ShearableComponent : Component
     /// </example>
     [DataField]
     public LocId UnShearableMarkupText = string.Empty;
+
+    /// <summary>
+    ///     A LocID of the verb used for shearing, this is used in some popups in-game. For example "you can't SHEAR that sheep".
+    /// </summary>
+    /// <example>
+    ///     verb: shearable-system-verb-shear
+    /// </example>
+    [DataField]
+    public LocId Verb = "shearable-system-verb-shear";
 
     /// <summary>
     ///     Specifies the shearing icon that appears in the context menu when right-clicking a shearable animal.
