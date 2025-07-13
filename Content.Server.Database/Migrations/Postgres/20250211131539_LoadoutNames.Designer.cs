@@ -18,6 +18,7 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20250211131539_LoadoutNames")]
     partial class LoadoutNames
     {
+#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -2113,5 +2114,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
+#endif
     }
 }

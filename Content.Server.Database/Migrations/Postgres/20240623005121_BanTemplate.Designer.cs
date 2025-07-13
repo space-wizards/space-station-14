@@ -18,6 +18,7 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20240623005121_BanTemplate")]
     partial class BanTemplate
     {
+#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1956,5 +1957,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
+#endif
     }
 }

@@ -18,6 +18,7 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20240318022005_AdminMessageDismiss")]
     partial class AdminMessageDismiss
     {
+#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1764,5 +1765,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
+#endif
     }
 }
