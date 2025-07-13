@@ -1,7 +1,7 @@
 using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
-using Content.Shared.Chunking;
+using Content.Server.Chunking;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Decals;
