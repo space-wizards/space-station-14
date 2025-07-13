@@ -111,7 +111,7 @@ public sealed class DevourSystem : EntitySystem
         // Delete if the thing isn't in the stomach storage whitelist (or the stomach whitelist is null/empty)
         else if (args.Args.Target != null)
         {
-            QueueDel(args.Args.Target.Value);
+            PredictedQueueDel(args.Args.Target.Value);
         }
 
         var xform = Transform(ent.Owner);
