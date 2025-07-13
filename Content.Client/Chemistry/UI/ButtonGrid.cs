@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 
@@ -9,16 +10,19 @@ namespace Content.Client.Chemistry.UI;
 /// </summary>
 public sealed class ButtonGrid : GridContainer
 {
-    private string _buttonList = "";
+    private List<string> _buttonList = [];
 
     /// <summary>
-    ///     A comma-seperated list of text to use for each button. These will be inserted sequentially.
+    /// A list of strings to use for each button. These will be inserted sequentially.
+    /// Duplicate strings are probably a bad idea.
     /// </summary>
-    public string ButtonList
+    public List<string> ButtonList
     {
         get => _buttonList;
         set
         {
+            if (_buttonList.SequenceEqual(value))
+                return;
             _buttonList = value;
             Update();
         }
@@ -78,17 +82,16 @@ public sealed class ButtonGrid : GridContainer
 
     private void Update()
     {
-        if (ButtonList == "")
+        if (ButtonList.Count == 0)
             return;
 
         Children.Clear();
         _buttons.Clear();
         var i = 0;
-        var list = ButtonList.Split(",");
 
         var group = new ButtonGroup();
 
-        foreach (var button in list)
+        foreach (var button in ButtonList)
         {
             var btn = new Button();
             btn.Text = button;
@@ -108,9 +111,9 @@ public sealed class ButtonGrid : GridContainer
 
             var row = i / Columns;
             var col = i % Columns;
-            var last = i == list.Length - 1;
+            var last = i == ButtonList.Count - 1;
             var lastCol = i == Columns - 1;
-            var lastRow = row == list.Length / Columns - 1;
+            var lastRow = row == ButtonList.Count / Columns - 1;
 
             if (row == 0 && (lastCol || last))
                 btn.AddStyleClass("OpenLeft");

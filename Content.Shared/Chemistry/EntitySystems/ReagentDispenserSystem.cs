@@ -61,7 +61,11 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             var inventory = GetInventory(reagentDispenser);
 
-            var state = new ReagentDispenserBoundUserInterfaceState(outputContainerInfo, GetNetEntity(outputContainer), inventory, reagentDispenser.Comp.DispenseAmount);
+            var state = new ReagentDispenserBoundUserInterfaceState(outputContainerInfo,
+                GetNetEntity(outputContainer),
+                inventory,
+                reagentDispenser.Comp.SelectableAmounts,
+                reagentDispenser.Comp.DispenseAmount);
             _userInterfaceSystem.SetUiState(reagentDispenser.Owner, ReagentDispenserUiKey.Key, state);
         }
 
@@ -120,7 +124,12 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         private void OnSetDispenseAmountMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserSetDispenseAmountMessage message)
         {
+            // No QOL-improving hacked clients allowed! Or something.
+            if (!reagentDispenser.Comp.SelectableAmounts.Contains(message.ReagentDispenserDispenseAmount))
+                return;
+
             reagentDispenser.Comp.DispenseAmount = message.ReagentDispenserDispenseAmount;
+            Dirty(reagentDispenser);
             UpdateUiState(reagentDispenser);
             ClickSound(reagentDispenser, message.Actor);
         }

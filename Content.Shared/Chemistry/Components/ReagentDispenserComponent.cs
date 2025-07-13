@@ -3,6 +3,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components
@@ -10,7 +11,7 @@ namespace Content.Shared.Chemistry.Components
     /// <summary>
     /// A machine that dispenses reagents into a solution container from containers in its storage slots.
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     [Access(typeof(ReagentDispenserSystem))]
     public sealed partial class ReagentDispenserComponent : Component
     {
@@ -22,59 +23,26 @@ namespace Content.Shared.Chemistry.Components
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentDispenserDispenseAmount DispenseAmount = ReagentDispenserDispenseAmount.U10;
+        [DataField, AutoNetworkedField]
+        public FixedPoint2 DispenseAmount = 10;
+
+        // Collection expression is a sandbox violation here. :(
+        // ReSharper disable once UseCollectionExpression
+        /// <summary>
+        /// What amount options to show in the reagent amount selector... thing.
+        /// </summary>
+        [DataField]
+        public List<FixedPoint2> SelectableAmounts = new() { 1, 5, 10, 15, 20, 25, 30, 50, 100 };
     }
 
     [Serializable, NetSerializable]
     public sealed class ReagentDispenserSetDispenseAmountMessage : BoundUserInterfaceMessage
     {
-        public readonly ReagentDispenserDispenseAmount ReagentDispenserDispenseAmount;
+        public readonly FixedPoint2 ReagentDispenserDispenseAmount;
 
-        public ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount amount)
+        public ReagentDispenserSetDispenseAmountMessage(FixedPoint2 amount)
         {
             ReagentDispenserDispenseAmount = amount;
-        }
-
-        /// <summary>
-        ///     Create a new instance from interpreting a String as an integer,
-        ///     throwing an exception if it is unable to parse.
-        /// </summary>
-        public ReagentDispenserSetDispenseAmountMessage(String s)
-        {
-            switch (s)
-            {
-                case "1":
-                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U1;
-                    break;
-                case "5":
-                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U5;
-                    break;
-                case "10":
-                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U10;
-                    break;
-                case "15":
-                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U15;
-                    break;
-                case "20":
-                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U20;
-                    break;
-                case "25":
-                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U25;
-                    break;
-                case "30":
-                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U30;
-                    break;
-                case "50":
-                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U50;
-                    break;
-                case "100":
-                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U100;
-                    break;
-                default:
-                    throw new Exception(
-                        $"Cannot convert the string `{s}` into a valid ReagentDispenser DispenseAmount");
-            }
         }
     }
 
@@ -109,19 +77,6 @@ namespace Content.Shared.Chemistry.Components
 
     }
 
-    public enum ReagentDispenserDispenseAmount
-    {
-        U1 = 1,
-        U5 = 5,
-        U10 = 10,
-        U15 = 15,
-        U20 = 20,
-        U25 = 25,
-        U30 = 30,
-        U50 = 50,
-        U100 = 100,
-    }
-
     [Serializable, NetSerializable]
     public sealed class ReagentInventoryItem(
         ItemStorageLocation storageLocation,
@@ -147,16 +102,24 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         public readonly List<ReagentInventoryItem> Inventory;
 
-        public readonly ReagentDispenserDispenseAmount SelectedDispenseAmount;
+        /// <summary>
+        /// Corresponds to <see cref="ReagentDispenserComponent.SelectableAmounts"/>.
+        /// </summary>
+        public readonly List<FixedPoint2> SelectableAmounts;
+
+        public readonly FixedPoint2 SelectedDispenseAmount;
+
 
         public ReagentDispenserBoundUserInterfaceState(ContainerInfo? outputContainer,
             NetEntity? outputContainerEntity,
             List<ReagentInventoryItem> inventory,
-            ReagentDispenserDispenseAmount selectedDispenseAmount)
+            List<FixedPoint2> selectableAmounts,
+            FixedPoint2 selectedDispenseAmount)
         {
             OutputContainer = outputContainer;
             OutputContainerEntity = outputContainerEntity;
             Inventory = inventory;
+            SelectableAmounts = selectableAmounts;
             SelectedDispenseAmount = selectedDispenseAmount;
         }
     }

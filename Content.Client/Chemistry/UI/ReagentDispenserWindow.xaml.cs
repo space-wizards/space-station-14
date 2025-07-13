@@ -91,6 +91,7 @@ namespace Content.Client.Chemistry.UI
             var castState = (ReagentDispenserBoundUserInterfaceState) state;
             UpdateContainerInfo(castState);
             UpdateReagentsList(castState.Inventory);
+            AmountGrid.ButtonList = castState.SelectableAmounts.Select(x => x.ToString()).ToList();
 
             _entityManager.TryGetEntity(castState.OutputContainerEntity, out var outputContainerEnt);
             View.SetEntity(outputContainerEnt);
@@ -99,7 +100,7 @@ namespace Content.Client.Chemistry.UI
             ClearButton.Disabled = castState.OutputContainer is null;
             EjectButton.Disabled = castState.OutputContainer is null;
 
-            AmountGrid.Selected = ((int)castState.SelectedDispenseAmount).ToString();
+            AmountGrid.Selected = castState.SelectedDispenseAmount.ToString();
         }
 
         /// <summary>

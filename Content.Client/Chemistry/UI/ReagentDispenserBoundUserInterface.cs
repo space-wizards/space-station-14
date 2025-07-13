@@ -39,10 +39,18 @@ namespace Content.Client.Chemistry.UI
             _window.EjectButton.OnPressed += _ => SendPredictedMessage(new ItemSlotButtonPressedEvent(ReagentDispenserComponent.OutputSlotName));
             _window.ClearButton.OnPressed += _ => SendPredictedMessage(new ReagentDispenserClearContainerSolutionMessage());
 
-            _window.AmountGrid.OnButtonPressed += s => SendPredictedMessage(new ReagentDispenserSetDispenseAmountMessage(s));
+            _window.AmountGrid.OnButtonPressed += OnAmountGridButtonPressed;
 
             _window.OnDispenseReagentButtonPressed += (location) => SendPredictedMessage(new ReagentDispenserDispenseReagentMessage(location));
             _window.OnEjectJugButtonPressed += (location) => SendPredictedMessage(new ReagentDispenserEjectContainerMessage(location));
+        }
+
+        private void OnAmountGridButtonPressed(string label)
+        {
+            if (!float.TryParse(label, out var amount))
+                return;
+
+            SendPredictedMessage(new ReagentDispenserSetDispenseAmountMessage(amount));
         }
 
         /// <summary>
