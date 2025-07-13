@@ -39,6 +39,7 @@
   cost: 5000
   recipeUnlocks:
   - NodeScanner
+  - ArtifactNuker
   - AnalysisComputerCircuitboard
   - ArtifactAnalyzerMachineCircuitboard
 
