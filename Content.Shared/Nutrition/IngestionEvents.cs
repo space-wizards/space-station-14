@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -20,9 +19,8 @@ public record struct IngestibleEvent(bool Cancelled = false);
 /// </summary>
 /// <param name="User">The entity trying to feed us to an entity.</param>
 /// <param name="Destroy">Will this entity be destroyed when it's eaten?</param>
-/// <param name="Cancelled">If something prevented us from accessing the reagents, the event is cancelled</param>
 [ByRefEvent]
-public record struct EdibleEvent(EntityUid User, bool Destroy, bool Cancelled = false)
+public record struct EdibleEvent(EntityUid User, bool Destroy)
 {
     public Entity<SolutionComponent>? Solution;
 
@@ -37,7 +35,7 @@ public record struct EdibleEvent(EntityUid User, bool Destroy, bool Cancelled = 
 /// <param name="Ingested">What are we trying to ingest?</param>
 /// <param name="Ingest">Should we actually try and ingest? Or are we just testing if it's even possible </param>
 [ByRefEvent]
-public record struct CanIngestEvent(EntityUid User, Entity<EdibleComponent?> Ingested, bool Ingest, bool Handled = false);
+public record struct CanIngestEvent(EntityUid User, EntityUid Ingested, bool Ingest, bool Handled = false);
 
 /// <summary>
 ///     Raised directed at the consumer when attempting to ingest something.

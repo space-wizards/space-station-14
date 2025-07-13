@@ -147,9 +147,6 @@ public sealed partial class IngestionSystem : EntitySystem
     {
         var food = args.Ingested;
 
-        if (!Resolve(food, ref food.Comp, false))
-            return;
-
         if (!_body.TryGetBodyOrganEntityComps<StomachComponent>(entity!, out var stomachs))
             return;
 
@@ -165,13 +162,30 @@ public sealed partial class IngestionSystem : EntitySystem
         }
 
         // Check if despite being able to digest the item something is blocking us from eating.
-        if (!CanIngestEdible(args.User, entity, args.Ingested))
+        if (!CanIngestEdible(args.User, entity, args.Ingested, out var solution))
             return;
 
         // Utensils?
 
-        args.Handled = _doAfter.TryStartDoAfter(GetEatingDoAfterArgs(args.User, entity, food!));
-        // TODO: Admin logs here ;_;
+        if (!_doAfter.TryStartDoAfter(GetEatingDoAfterArgs(args.User, entity, food!)))
+            return;
+
+        args.Handled = true;
+        var foodSolution = solution.Value.Comp.Solution;
+
+        if (args.User == entity.Owner)
+        {
+            var userName = Identity.Entity(args.User, EntityManager);
+            _popup.PopupEntity(Loc.GetString("food-system-force-feed", ("user", userName)), args.User, entity);
+
+            // logging
+            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(args.User):user} is forcing {ToPrettyString(entity):target} to eat {ToPrettyString(food):food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}");
+        }
+        else
+        {
+            // log voluntary eating
+            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(entity):target} is eating {ToPrettyString(food):food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}");
+        }
     }
 
     private void OnEatingDoAfter(Entity<BodyComponent> entity, ref EatingDoAfterEvent args)
@@ -330,6 +344,7 @@ public sealed partial class IngestionSystem : EntitySystem
             }
         }
 
+        // TODO: There has to be a better way to do this...
         if (GetUsesRemaining(entity!) > 0)
             return;
 

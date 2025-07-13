@@ -1,8 +1,6 @@
-﻿using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Hands.Components;
+﻿using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
-using Content.Shared.Tools.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
@@ -20,7 +18,7 @@ public sealed partial class IngestionSystem
     public void InitializeUtensils()
     {
         base.Initialize();
-        // TODO: I hate Utensils
+        // TODO: DON'T FORGET ABOUT THIS!!!
         SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract); //, after: new[] { typeof(ItemSlotsSystem), typeof(ToolOpenableSystem) });
 
         _utensilsQuery = GetEntityQuery<UtensilComponent>();

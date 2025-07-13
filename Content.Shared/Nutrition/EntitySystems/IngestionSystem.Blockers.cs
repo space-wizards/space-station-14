@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Clothing;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction.Components;

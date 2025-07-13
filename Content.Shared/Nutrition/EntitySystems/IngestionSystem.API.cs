@@ -110,8 +110,7 @@ public sealed partial class IngestionSystem
     }
 
     /// <summary>
-    /// Get the number of bites this food has left, based on how much food solution there is and how much of it to eat per bite.
-    /// OUUUGH
+    /// Estimate the number of bites this food has left, based on how much food solution there is and how much of it to eat per bite.
     /// </summary>
     public int GetUsesRemaining(Entity<EdibleComponent?> entity)
     {
