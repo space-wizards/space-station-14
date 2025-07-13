@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
@@ -11,6 +12,7 @@ using Content.Server.Discord.DiscordLink;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Server.GhostKick;
+using Content.Server.Github;
 using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
@@ -45,6 +47,8 @@ namespace Content.Server.Entry
 
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
+        private GithubBackgroundWorker _githubWorker = default!;
+        private GithubApiManager _gitManager = default!;
         private ServerUpdateManager _updateManager = default!;
         private PlayTimeTrackingManager? _playTimeTracking;
         private IEntitySystemManager? _sysMan;
@@ -93,12 +97,20 @@ namespace Content.Server.Entry
             {
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
+                _gitManager = IoCManager.Resolve<GithubApiManager>();
                 _updateManager = IoCManager.Resolve<ServerUpdateManager>();
                 _playTimeTracking = IoCManager.Resolve<PlayTimeTrackingManager>();
                 _connectionManager = IoCManager.Resolve<IConnectionManager>();
                 _sysMan = IoCManager.Resolve<IEntitySystemManager>();
                 _dbManager = IoCManager.Resolve<IServerDbManager>();
                 _watchlistWebhookManager = IoCManager.Resolve<IWatchlistWebhookManager>();
+
+                var githubClient = new GithubClient();
+                IoCManager.InjectDependencies(githubClient);
+                githubClient.Initialize();
+                _githubWorker = new GithubBackgroundWorker(githubClient);
+                IoCManager.InjectDependencies(_githubWorker);
+                _githubWorker.Initialize();
 
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
@@ -115,10 +127,20 @@ namespace Content.Server.Entry
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();
+
                 _playTimeTracking.Initialize();
                 _watchlistWebhookManager.Initialize();
+                _gitManager.Initialize(_githubWorker.Writer);
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
                 IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
+
+                Task.Factory.StartNew(
+                    async () =>
+                    {
+                        await _githubWorker.HandleQueue();
+                    },
+                    TaskCreationOptions.LongRunning
+                );
                 IoCManager.Resolve<IBugReportManager>().Initialize();
             }
         }
