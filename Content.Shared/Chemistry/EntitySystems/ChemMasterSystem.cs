@@ -1,26 +1,22 @@
-using Content.Server.Chemistry.Components;
-using Content.Server.Popups;
-using Content.Server.Storage.EntitySystems;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Labels.EntitySystems;
+using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Server.Audio;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
-namespace Content.Server.Chemistry.EntitySystems
+namespace Content.Shared.Chemistry.EntitySystems
 {
 
     /// <summary>
@@ -30,12 +26,12 @@ namespace Content.Server.Chemistry.EntitySystems
     [UsedImplicitly]
     public sealed class ChemMasterSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly AudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private readonly StorageSystem _storageSystem = default!;
+        [Dependency] private readonly SharedUserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
         [Dependency] private readonly LabelSystem _labelSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
