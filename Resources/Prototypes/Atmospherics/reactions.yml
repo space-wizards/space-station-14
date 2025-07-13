@@ -43,7 +43,7 @@
   id: ElectrovaeEMP
   priority: 2
   minimumRequirements:
-  - 0     # oxygen
+  - 0.01  # oxygen
   - 0     # nitrogen
   - 0     # carbon dioxide
   - 0     # plasma
@@ -53,7 +53,7 @@
   - 0     # n2o
   - 0     # frezon
   - 0     # electrovae
-  - 0.01  # charged electrovae
+  - 2     # charged electrovae
   effects:
   - !type:ChargedElectrovaeEmpReaction {}
 
@@ -85,8 +85,8 @@
   - 0.01  # nitrogen
   - 0     # carbon dioxide
   - 0     # plasma
-  - 0.01  # tritium
-  - 0     # vapor
+  - 0     # tritium
+  - 0.01  # vapor
   - 0     # ammonia
   - 0.01  # n2o
   - 0     # frezon
