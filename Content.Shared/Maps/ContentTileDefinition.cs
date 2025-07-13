@@ -43,7 +43,13 @@ namespace Content.Shared.Maps
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
         [DataField("baseTurf")]
-        public List<string>? BaseTurf { get; private set; } = new();
+        public string BaseTurf { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// On what tiles this tile can be placed.
+        /// </summary>
+        [DataField("baseWhitelist")]
+        public List<ProtoId<ContentTileDefinition>>? BaseWhitelist { get; private set; } = new();
 
         [DataField]
         public PrototypeFlags<ToolQualityPrototype> DeconstructTools { get; set; } = new();

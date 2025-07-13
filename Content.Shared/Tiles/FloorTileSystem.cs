@@ -144,7 +144,7 @@ public sealed class FloorTileSystem : EntitySystem
 
                 var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
-                if (HasBaseTurf(currentTileDefinition, baseTurf.ID))
+                if (CanPlaceOn(currentTileDefinition, baseTurf.ID))
                 {
                     if (!_stackSystem.Use(uid, 1, stack))
                         continue;
@@ -175,7 +175,20 @@ public sealed class FloorTileSystem : EntitySystem
 
     public bool HasBaseTurf(ContentTileDefinition tileDef, string baseTurf)
     {
-        return tileDef.BaseTurf != null && tileDef.BaseTurf.Contains(baseTurf);
+        return tileDef.BaseTurf == baseTurf;
+    }
+
+    private bool CanPlaceOn(ContentTileDefinition tileDef, string currentTurfId)
+    {
+        //Check exact BaseTurf match
+        if (!string.IsNullOrEmpty(tileDef.BaseTurf) && tileDef.BaseTurf == currentTurfId)
+            return true;
+
+        // Check whitelist match
+        if (tileDef.BaseWhitelist != null && tileDef.BaseWhitelist.Contains(currentTurfId))
+            return true;
+
+        return false;
     }
 
     private void PlaceAt(EntityUid user, EntityUid gridUid, MapGridComponent mapGrid, EntityCoordinates location,

@@ -6,6 +6,7 @@ using Content.Shared.Decals;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -26,12 +27,22 @@ public sealed class TileSystem : EntitySystem
 
     private int _tileStackingHistorySize;
 
-    //Tile history for deconstruction.
-    private readonly Dictionary<(EntityUid Grid, Vector2i Indices), Stack<string>> _tileBaseTurfHistory = new();
-
     public override void Initialize()
     {
+        base.Initialize();
+        SubscribeLocalEvent<GridInitializeEvent>(OnGridStartup);
         _cfg.OnValueChanged(CCVars.TileStackingHistorySize, value => _tileStackingHistorySize = value, true);
+    }
+
+    /// <summary>
+    /// On grid startup, ensure that we have Tile History.
+    /// </summary>
+    private void OnGridStartup(GridInitializeEvent ev)
+    {
+        if (HasComp<MapComponent>(ev.EntityUid))
+            return;
+
+        EnsureComp<TileHistoryComponent>(ev.EntityUid);
     }
 
     /// <summary>
@@ -132,13 +143,16 @@ public sealed class TileSystem : EntitySystem
         if (!Resolve(grid, ref component))
             return false;
 
-        var key = (grid, tileref.GridIndices);
+        var key = tileref.GridIndices;
 
-        //Create stack if there is none
-        if (!_tileBaseTurfHistory.TryGetValue(key, out var stack))
+        //Get or add the history component on the grid
+        var history = EnsureComp<TileHistoryComponent>(grid);
+
+        //Create stack if needed
+        if (!history.TileHistory.TryGetValue(key, out var stack))
         {
-            stack = new Stack<string>();
-            _tileBaseTurfHistory[key] = stack;
+            stack = new Stack<ProtoId<ContentTileDefinition>>();
+            history.TileHistory[key] = stack;
         }
 
         //Push current tile to the stack, if not empty
@@ -151,8 +165,8 @@ public sealed class TileSystem : EntitySystem
             if (_tileStackingHistorySize > 0 && stack.Count > _tileStackingHistorySize)
             {
                 //Trim the bottom-most (oldest) entry
-                var newStack = new Stack<string>(stack.Reverse().Take(_tileStackingHistorySize));
-                _tileBaseTurfHistory[key] = newStack;
+                var newStack = new Stack<ProtoId<ContentTileDefinition>>((IEnumerable<ProtoId<ContentTileDefinition>>)stack.Reverse().Take(_tileStackingHistorySize));
+                history.TileHistory[key] = newStack;
             }
         }
 
@@ -176,7 +190,7 @@ public sealed class TileSystem : EntitySystem
         var tileDef = (ContentTileDefinition)_tileDefinitionManager[tileRef.Tile.TypeId];
 
         //Can't deconstruct anything that doesn't have a base turf.
-        if (tileDef.BaseTurf is not { Count: > 0 })
+        if (string.IsNullOrEmpty(tileDef.BaseTurf))
             return false;
 
         var gridUid = tileRef.GridUid;
@@ -190,24 +204,24 @@ public sealed class TileSystem : EntitySystem
                 (_robustRandom.NextFloat() - 0.5f) * bounds,
                 (_robustRandom.NextFloat() - 0.5f) * bounds));
 
-        var keyHistory = (gridUid, indices);
-        string previousTileId;
+        var historyComp = EnsureComp<TileHistoryComponent>(gridUid);
+        ProtoId<ContentTileDefinition> previousTileId;
 
         //Pop from stack if we have history
-        if (_tileBaseTurfHistory.TryGetValue(keyHistory, out var stack) && stack.Count > 0)
+        if (historyComp.TileHistory.TryGetValue(indices, out var stack) && stack.Count > 0)
         {
             previousTileId = stack.Pop();
 
             //Clean up empty stacks to avoid memory buildup
             if (stack.Count == 0)
             {
-                _tileBaseTurfHistory.Remove(keyHistory);
+                historyComp.TileHistory.Remove(indices);
             }
         }
         else
         {
             //No stack? Assume BaseTurf[0] was the layer below
-            previousTileId = tileDef.BaseTurf[0];
+            previousTileId = tileDef.BaseTurf;
         }
 
         //Actually spawn the relevant tile item at the right position and give it some random offset.  
