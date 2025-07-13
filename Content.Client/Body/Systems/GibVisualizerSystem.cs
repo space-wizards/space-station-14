@@ -13,6 +13,7 @@ namespace Content.Client.Body.Systems;
 public sealed class GibVisualizerSystem : VisualizerSystem<SlimeGibSplatterComponent>
 {
     [Dependency] private readonly SpriteSystem _spriteSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();

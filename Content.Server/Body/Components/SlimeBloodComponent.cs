@@ -1,4 +1,5 @@
 namespace Content.Server.Body.Components;
+
 /// <summary>
 /// Used by the SlimeSystem to respond to BloodColorOverrideEvents.
 /// </summary>
