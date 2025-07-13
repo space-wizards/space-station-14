@@ -17,6 +17,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.NodeContainer;
 
@@ -53,6 +54,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
 
         // Grid events
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
+        SubscribeLocalEvent<MapGridComponent, PipeNodeGroupRemovedEvent>(OnPipeNodeGroupRemoved);
     }
 
     #region Event handling
@@ -294,6 +296,25 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
     #endregion
 
     #region Pipe net functions
+
+    private void OnPipeNodeGroupRemoved(Entity<MapGridComponent> ent, ref PipeNodeGroupRemovedEvent args)
+    {
+        // When a pipe node group is removed, we need to iterate over all of
+        // our pipe chunks and remove any entries with a matching net id.
+        // (We only need to check the chunks for the affected grid, though.)
+
+        if (!_gridAtmosPipeChunks.TryGetValue(ent, out var chunkData))
+            return;
+
+        foreach (var chunk in chunkData.Values)
+        {
+            foreach (var key in chunk.AtmosPipeData.Keys)
+            {
+                if (key.NetId == args.NetId)
+                    chunk.AtmosPipeData.Remove(key);
+            }
+        }
+    }
 
     private void RebuildAtmosPipeGrid(EntityUid gridUid, MapGridComponent grid)
     {
