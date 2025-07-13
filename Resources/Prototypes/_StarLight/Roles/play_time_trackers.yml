@@ -30,3 +30,6 @@
   
 - type: playTimeTracker
   id: JobMailTech
+
+- type: playTimeTracker
+  id: JobSalvageLead

@@ -37,6 +37,22 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: Surgeon
   jobName: job-name-surgeon
+  
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSalvageLead
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SalvageLead
+  jobName: job-name-salvagelead
+  
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSalvageSpec
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SalvageSpecialist
+  jobName: job-name-salvagespec
 
 - type: jobIcon
   parent: JobIcon
