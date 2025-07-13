@@ -123,6 +123,15 @@
     Silver: 250
 
 - type: latheRecipe
+  parent: BaseToolRecipe
+  id: ArtifactNuker
+  result: ArtifactNuker
+  materials:
+    Steel: 500
+    Glass: 400
+    Plastic: 50
+
+- type: latheRecipe
   id: ClothingBackpackHolding
   result: ClothingBackpackHolding
   completetime: 5
