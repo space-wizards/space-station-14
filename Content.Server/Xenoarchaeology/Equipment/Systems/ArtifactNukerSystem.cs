@@ -26,7 +26,8 @@ public sealed class ArtifactNukerSystem : SharedArtifactNukerSystem
         var nodes = _xenoSys.GetActiveNodes(ent);
         foreach (var node in nodes)
         {
-            if (args.Index != _xenoSys.GetNodeId(node))
+            var index = _xenoSys.GetNodeId(node);
+            if (args.Index != index)
                 continue;
 
             var predecessors = _xenoSys.GetPredecessorNodes(ent.Owner, node)

@@ -9,6 +9,7 @@ namespace Content.Client.Xenoarchaeology.Ui;
 public sealed partial class ArtifactNukerMenu : FancyWindow
 {
     public Action<string>? IndexChanged;
+    private string _validIndex;
 
     public ArtifactNukerMenu()
     {
@@ -16,19 +17,47 @@ public sealed partial class ArtifactNukerMenu : FancyWindow
 
         IoCManager.InjectDependencies(this);
 
+        _validIndex = IndexLineEdit.Text;
+
         IndexLineEdit.OnTextChanged += OnIndexChanged;
         IndexLineEdit.OnTextEntered += OnIndexEnter;
+        IndexLineEdit.OnFocusExit += OnNameFocusExit;
     }
 
     private void OnIndexChanged(LineEdit.LineEditEventArgs obj)
     {
-        if (!int.TryParse(obj.Text, out _))
+        if (!int.TryParse(obj.Text, out _) &&
+            !string.IsNullOrEmpty(obj.Text))
+        {
+            obj.Control.Text = _validIndex;
             return;
+        }
+
+        _validIndex = obj.Control.Text;
+        obj.Control.Text = _validIndex;
     }
 
     private void OnIndexEnter(LineEdit.LineEditEventArgs obj)
     {
-        if (int.TryParse(obj.Text, out var index))
-            IndexChanged?.Invoke(obj.Text);
+        if (!int.TryParse(obj.Text, out _) ||
+            !string.IsNullOrEmpty(obj.Text))
+        {
+            obj.Control.Text = _validIndex;
+            return;
+        }
+
+        IndexChanged?.Invoke(_validIndex);
+    }
+
+    private void OnNameFocusExit(LineEdit.LineEditEventArgs obj)
+    {
+        if (!int.TryParse(obj.Text, out _) ||
+            !string.IsNullOrEmpty(obj.Text))
+        {
+            obj.Control.Text = _validIndex;
+            return;
+        }
+
+        IndexChanged?.Invoke(_validIndex);
     }
 }

@@ -1,12 +1,21 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-                        xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                        Title="{Loc 'node-scan-display-title'}"
-                        MinSize="305 180"
-                        SetSize="305 180">
-    <BoxContainer Orientation="Horizontal" SeparationOverride="4" MinWidth="150">
-        <BoxContainer Orientation="Horizontal">
-            <Label Name="CurrentName" Text="{Loc 'agent-id-card-current-name'}" />
-            <LineEdit Name="IndexLineEdit"/>
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'artifact-nuker-ui-title'}"
+    MinSize="305 150"
+    SetSize="305 150"
+    Resizable="False">
+
+    <BoxContainer Orientation="Vertical" >
+        <controls:StripeBack>
+            <Label Name="UpLabel" Text="{Loc 'artifact-nuker-ui-uplabel'}" HorizontalAlignment="Center" StyleClasses="LabelSubText" Margin="5 0 0 5" />
+        </controls:StripeBack>
+        <BoxContainer Orientation="Horizontal" Margin="10 0 0 10" VerticalAlignment="Center">
+            <Label Name="CurrentName" Text="{Loc 'artifact-nuker-ui-id'}" HorizontalExpand="True" VerticalExpand="True"/>
+            <LineEdit Name="IndexLineEdit" HorizontalExpand="True" VerticalExpand="True"/>
         </BoxContainer>
+        <controls:StripeBack>
+            <Label Name="DownLabel" Text="{Loc 'artifact-nuker-ui-downlabel'}" HorizontalAlignment="Center" StyleClasses="LabelSubText" Margin="5 0 0 5" />
+        </controls:StripeBack>
     </BoxContainer>
+
 </controls:FancyWindow>
