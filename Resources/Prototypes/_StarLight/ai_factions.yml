@@ -116,3 +116,29 @@
     - Xenoborg
     - Dragon
     - Gorilla
+
+- type: npcFaction
+  id: Abductor
+  hostile: # SimpleHostile with additions so that it gets attacked by mobs
+  - NanoTrasen
+  - NanoTrasenSilicon # starlight
+  - Syndicate
+  - SyndicateSilicon # starlight
+  - DungeonSyndicate
+  - DungeonSoviet
+  - Passive
+  - PetsNT
+  - Zombie
+  - Revolutionary
+  - Abyss
+  - Vampire
+  - Changeling
+  - AllHostile
+  - Wizard
+  - Xenoborg
+  - Dragon
+  - Xeno
+  - Gorilla
+  # New
+  - Dragon
+  - SimpleHostile
