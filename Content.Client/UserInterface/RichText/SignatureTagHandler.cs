@@ -11,133 +11,132 @@ using Content.Shared.Humanoid;
 
 using Content.Client.Paper.UI;
 
-namespace Content.Client.UserInterface.RichText
+namespace Content.Client.UserInterface.RichText;
+
+/// <summary>
+/// Converts [signature] tags into clickable buttons that sign with the player's name.
+/// </summary>
+public sealed class SignatureTagHandler : IMarkupTagHandler
 {
-    /// <summary>
-    /// Converts [signature] tags into clickable buttons that sign with the player's name.
-    /// </summary>
-    public sealed class SignatureTagHandler : IMarkupTagHandler
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    public string Name => "signature";
+    private static int _signatureCounter = 0;
+
+    private static int GetSignatureIndex(MarkupNode node)
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        return _signatureCounter++;
+    }
 
-        public string Name => "signature";
-        private static int _signatureCounter = 0;
+    /// <summary>
+    /// Resets the signature counter to ensure consistent indexing across renders.
+    /// </summary>
+    public static void ResetSignatureCounter()
+    {
+        _signatureCounter = 0;
+    }
 
-        private static int GetSignatureIndex(MarkupNode node)
+    /// <summary>
+    /// Counts signature buttons before the clicked button to determine which [signature] tag it represents.
+    /// </summary>
+    private static int CountSignatureButtonsBefore(Control clickedButton)
+    {
+        var count = 0;
+        var root = clickedButton;
+
+        // Find the root container
+        while (root.Parent != null)
+            root = root.Parent;
+
+        // Count signature buttons in document order
+        var found = false;
+        CountSignatureButtonsRecursive(root, clickedButton, ref count, ref found);
+        return found ? count : 0;
+    }
+
+    private static void CountSignatureButtonsRecursive(Control control, Control target, ref int count, ref bool found)
+    {
+        if (found) return;
+
+        if (control is Button btn && btn.Text == Loc.GetString("paper-signature-sign-button"))
         {
-            return _signatureCounter++;
-        }
-
-        /// <summary>
-        /// Resets the signature counter to ensure consistent indexing across renders.
-        /// </summary>
-        public static void ResetSignatureCounter()
-        {
-            _signatureCounter = 0;
-        }
-
-        /// <summary>
-        /// Counts signature buttons before the clicked button to determine which [signature] tag it represents.
-        /// </summary>
-        private static int CountSignatureButtonsBefore(Control clickedButton)
-        {
-            var count = 0;
-            var root = clickedButton;
-
-            // Find the root container
-            while (root.Parent != null)
-                root = root.Parent;
-
-            // Count signature buttons in document order
-            var found = false;
-            CountSignatureButtonsRecursive(root, clickedButton, ref count, ref found);
-            return found ? count : 0;
-        }
-
-        private static void CountSignatureButtonsRecursive(Control control, Control target, ref int count, ref bool found)
-        {
-            if (found) return;
-
-            if (control is Button btn && btn.Text == Loc.GetString("paper-signature-sign-button"))
+            if (control == target)
             {
-                if (control == target)
-                {
-                    found = true;
-                    return;
-                }
-                count++;
+                found = true;
+                return;
             }
+            count++;
+        }
 
-            foreach (Control child in control.Children)
+        foreach (Control child in control.Children)
+        {
+            CountSignatureButtonsRecursive(child, target, ref count, ref found);
+        }
+    }
+
+    public SignatureTagHandler()
+    {
+        IoCManager.InjectDependencies(this);
+    }
+
+    public void PushDrawContext(MarkupNode node, MarkupDrawingContext context) { }
+    public void PopDrawContext(MarkupNode node, MarkupDrawingContext context) { }
+    public string TextBefore(MarkupNode node) => "";
+    public string TextAfter(MarkupNode node) => "";
+
+    /// <summary>
+    /// Creates a clickable signature button to replace the [signature] tag.
+    /// </summary>
+    public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
+    {
+        var btn = new Button
+        {
+            Text = Loc.GetString("paper-signature-sign-button"),
+            MinSize = new Vector2(60, 28),
+            MaxSize = new Vector2(60, 28),
+            Margin = new Thickness(4, 2, 4, 2)
+        };
+
+        var signatureIndex = GetSignatureIndex(node);
+        btn.Name = $"signature_{signatureIndex}";
+
+        btn.OnPressed += _ =>
+        {
+            var signature = GetPlayerSignature();
+
+            // Find the PaperWindow parent
+            var parent = btn.Parent;
+            while (parent != null && parent is not PaperWindow)
+                parent = parent.Parent;
+
+            if (parent is PaperWindow paperWindow)
             {
-                CountSignatureButtonsRecursive(child, target, ref count, ref found);
+                // Count buttons to determine which [signature] tag this represents
+                var buttonIndex = CountSignatureButtonsBefore(btn);
+                paperWindow.ReplaceSignature(buttonIndex, signature);
             }
-        }
+        };
 
-        public SignatureTagHandler()
-        {
-            IoCManager.InjectDependencies(this);
-        }
+        control = btn;
+        return true;
+    }
 
-        public void PushDrawContext(MarkupNode node, MarkupDrawingContext context) { }
-        public void PopDrawContext(MarkupNode node, MarkupDrawingContext context) { }
-        public string TextBefore(MarkupNode node) => "";
-        public string TextAfter(MarkupNode node) => "";
+    /// <summary>
+    /// Gets the player's character name for signing.
+    /// </summary>
+    private string GetPlayerSignature()
+    {
+        var playerEntity = _playerManager.LocalSession?.AttachedEntity;
+        if (playerEntity == null)
+            return Loc.GetString("paper-signature-unknown");
 
-        /// <summary>
-        /// Creates a clickable signature button to replace the [signature] tag.
-        /// </summary>
-        public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
-        {
-            var btn = new Button
-            {
-                Text = Loc.GetString("paper-signature-sign-button"),
-                MinSize = new Vector2(60, 28),
-                MaxSize = new Vector2(60, 28),
-                Margin = new Thickness(4, 2, 4, 2)
-            };
+        var name = "Unknown";
 
-            var signatureIndex = GetSignatureIndex(node);
-            btn.Name = $"signature_{signatureIndex}";
+        // Get character name from entity metadata
+        if (_entityManager.TryGetComponent<MetaDataComponent>(playerEntity.Value, out var meta))
+            name = meta.EntityName;
 
-            btn.OnPressed += _ =>
-            {
-                var signature = GetPlayerSignature();
-
-                // Find the PaperWindow parent
-                var parent = btn.Parent;
-                while (parent != null && parent is not PaperWindow)
-                    parent = parent.Parent;
-
-                if (parent is PaperWindow paperWindow)
-                {
-                    // Count buttons to determine which [signature] tag this represents
-                    var buttonIndex = CountSignatureButtonsBefore(btn);
-                    paperWindow.ReplaceSignature(buttonIndex, signature);
-                }
-            };
-
-            control = btn;
-            return true;
-        }
-
-        /// <summary>
-        /// Gets the player's character name for signing.
-        /// </summary>
-        private string GetPlayerSignature()
-        {
-            var playerEntity = _playerManager.LocalSession?.AttachedEntity;
-            if (playerEntity == null)
-                return Loc.GetString("paper-signature-unknown");
-
-            var name = "Unknown";
-
-            // Get character name from entity metadata
-            if (_entityManager.TryGetComponent<MetaDataComponent>(playerEntity.Value, out var meta))
-                name = meta.EntityName;
-
-            return name;
-        }
+        return name;
     }
 }

@@ -373,7 +373,7 @@ namespace Content.Client.Paper.UI
         /// <returns>Text with unfilled tags removed</returns>
         public static string CleanUnfilledTags(string text)
         {
-            return text.Replace("[form]", "").Replace("[signature]", "");
+            return text.Replace("[form]", string.Empty).Replace("[signature]", string.Empty);
         }
 
         /// <summary>
@@ -452,7 +452,7 @@ namespace Content.Client.Paper.UI
         /// <returns>Text with the specified form tag replaced, or original text if index not found</returns>
         private static string ReplaceNthFormTag(string text, int index, string replacement)
         {
-            var formTag = "[form]";
+            const string formTag = "[form]";
             var currentIndex = 0;
             var pos = 0;
 
@@ -488,7 +488,7 @@ namespace Content.Client.Paper.UI
         /// <returns>Text with the specified signature tag replaced, or original text if index not found</returns>
         private static string ReplaceNthSignatureTag(string text, int index, string replacement)
         {
-            var signatureTag = "[signature]";
+            const string signatureTag = "[signature]";
             var currentIndex = 0;
             var pos = 0;
 
