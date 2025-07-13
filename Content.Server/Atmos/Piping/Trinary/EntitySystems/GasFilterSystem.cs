@@ -64,9 +64,9 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             //starlight fix subtick
             float wantToTransfer = filter.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
             
-            // Calculate how much volume would be needed to reach the pressure limit
+            // Calculate how much volume from the input would be needed to reach the pressure limit in the output
             float spaceLeft = Atmospherics.MaxOutputPressure - outletNode.Air.Pressure;
-            float maxVolumeTransfer = spaceLeft * outletNode.Air.Volume / (outletNode.Air.Temperature * Atmospherics.R);
+            float maxVolumeTransfer = spaceLeft * inletNode.Air.Volume / inletNode.Air.Pressure;
             
             float clamped = Math.Clamp(wantToTransfer, 0, maxVolumeTransfer);
             //starlight end
