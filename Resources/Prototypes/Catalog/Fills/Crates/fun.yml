@@ -463,7 +463,7 @@
   description: Wait, what?
   id: CrateFunScurret
   parent: CratePlastic
-  components:
+  components: 
   - type: StorageFill
     contents:
     - id: MobEmotionalSupportScurret # How? Why?
@@ -477,3 +477,51 @@
     - id: ClothingNeckMantleQM
     - id: ClothingHeadsetCargo
 
+- type: entity
+  name: big chess set
+  description: Perfect for any high profile chess game. Takes up a 4x4 area.
+  id: CrateFunBigChess
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: FloorCarpetItemBoardChecker32
+      - id: LargeBlackKing
+        amount: 1
+      - id: LargeBlackQueen2
+      - id: LargeBlackBishop4
+      - id: LargeBlackKnight4
+      - id: LargeBlackRook4
+      - id: LargeBlackPawn8
+      - id: LargeWhiteKing
+        amount: 1
+      - id: LargeWhiteQueen2
+      - id: LargeWhiteBishop4
+      - id: LargeWhiteKnight4
+      - id: LargeWhiteRook4
+      - id: LargeWhitePawn8
+
+- type: entity
+  name: bigger chess set
+  description: Perfect for any really high profile chess game. Takes up an 8x8 area.
+  id: CrateFunBiggerChess
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: FloorCarpetItemBoardBlack32
+      - id: FloorCarpetItemBoardWhite32
+      - id: LargeBlackKing
+        amount: 1
+      - id: LargeBlackQueen2
+      - id: LargeBlackBishop4
+      - id: LargeBlackKnight4
+      - id: LargeBlackRook4
+      - id: LargeBlackPawn8
+      - id: LargeWhiteKing
+        amount: 1
+      - id: LargeWhiteQueen2
+      - id: LargeWhiteBishop4
+      - id: LargeWhiteKnight4
+      - id: LargeWhiteRook4
+      - id: LargeWhitePawn8
