@@ -28,18 +28,22 @@ public sealed class DevourSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<DevourerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<DevourerComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<DevourerComponent, DevourActionEvent>(OnDevourAction);
         SubscribeLocalEvent<DevourerComponent, DevourDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<DevourerComponent, BeingGibbedEvent>(OnGibContents);
     }
 
-    private void OnInit(Entity<DevourerComponent> ent, ref MapInitEvent args)
+    private void OnStartup(Entity<DevourerComponent> ent, ref ComponentStartup args)
     {
         //Devourer doesn't actually chew, since he sends targets right into his stomach.
         //I did it mom, I added ERP content into upstream. Legally!
         ent.Comp.Stomach = _containerSystem.EnsureContainer<Container>(ent.Owner, "stomach");
+    }
 
+    private void OnInit(Entity<DevourerComponent> ent, ref MapInitEvent args)
+    {
         _actionsSystem.AddAction(ent.Owner, ref ent.Comp.DevourActionEntity, ent.Comp.DevourAction);
     }
 
