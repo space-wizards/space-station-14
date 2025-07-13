@@ -1,12 +1,10 @@
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Content.Server.Atmos.Components;
+using Content.Server.Chunking;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;
-using Content.Shared.Chunking;
 using Content.Shared.GameTicking;
 using Content.Shared.Rounding;
 using JetBrains.Annotations;
@@ -15,25 +13,21 @@ using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-// ReSharper disable once RedundantUsingDirective
-
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
     public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
         [Robust.Shared.IoC.Dependency] private readonly IConfigurationManager _confMan = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
         [Robust.Shared.IoC.Dependency] private readonly IParallelManager _parMan = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
         [Robust.Shared.IoC.Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Robust.Shared.IoC.Dependency] private readonly ChunkingSystem _chunkingSys = default!;
 
@@ -48,10 +42,12 @@ namespace Content.Server.Atmos.EntitySystems
         // Oh look its more duplicated decal system code!
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
             new DefaultObjectPool<HashSet<Vector2i>>(
-                new DefaultPooledObjectPolicy<HashSet<Vector2i>>(), 64);
+                new DefaultPooledObjectPolicy<HashSet<Vector2i>>(),
+                64);
         private ObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>> _chunkViewerPool =
             new DefaultObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>>(
-                new DefaultPooledObjectPolicy<Dictionary<NetEntity, HashSet<Vector2i>>>(), 64);
+                new DefaultPooledObjectPolicy<Dictionary<NetEntity, HashSet<Vector2i>>>(),
+                64);
 
         private bool _doSessionUpdate;
 
@@ -78,7 +74,6 @@ namespace Content.Server.Atmos.EntitySystems
                 ChunkIndexPool = _chunkIndexPool,
                 Sessions = _sessions,
                 ChunkingSys = _chunkingSys,
-                MapManager = _mapManager,
                 ChunkViewerPool = _chunkViewerPool,
                 LastSentChunks = _lastSentChunks,
                 GridQuery = _gridQuery,
@@ -169,7 +164,8 @@ namespace Content.Server.Atmos.EntitySystems
         {
             return (byte) (ContentHelpers.RoundToLevels(
                 MathHelper.Clamp01((moles - molesVisible) /
-                                   (molesVisibleMax - molesVisible)) * 255, byte.MaxValue,
+                                   (molesVisibleMax - molesVisible)) * 255,
+                byte.MaxValue,
                 _thresholds) * 255 / (_thresholds - 1));
         }
 
@@ -191,7 +187,8 @@ namespace Content.Server.Atmos.EntitySystems
 
                 opacity = (byte) (ContentHelpers.RoundToLevels(
                     MathHelper.Clamp01((moles - gas.GasMolesVisible) /
-                                       (gas.GasMolesVisibleMax - gas.GasMolesVisible)) * 255, byte.MaxValue,
+                                       (gas.GasMolesVisibleMax - gas.GasMolesVisible)) * 255,
+                    byte.MaxValue,
                     _thresholds) * 255 / (_thresholds - 1));
             }
 
@@ -370,7 +367,6 @@ namespace Content.Server.Atmos.EntitySystems
             public int BatchSize => 2;
 
             public IEntityManager EntManager;
-            public IMapManager MapManager;
             public ChunkingSystem ChunkingSys;
             public GasTileOverlaySystem System;
             public ObjectPool<HashSet<Vector2i>> ChunkIndexPool;
