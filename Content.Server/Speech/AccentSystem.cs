@@ -1,25 +1,23 @@
 using System.Text.RegularExpressions;
-using Content.Server.Chat;
 using Content.Server.Chat.Systems;
-using Content.Shared.Speech.Accents;
+using Content.Shared.Speech;
 
-namespace Content.Server.Speech
+namespace Content.Server.Speech;
+
+public sealed class AccentSystem : EntitySystem
 {
-    public sealed class AccentSystem : EntitySystem
+    public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?‽])(?![\.!\?‽])", RegexOptions.Compiled);
+
+    public override void Initialize()
     {
-        public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?‽])(?![\.!\?‽])", RegexOptions.Compiled);
+        SubscribeLocalEvent<TransformSpeechEvent>(AccentHandler);
+    }
 
-        public override void Initialize()
-        {
-            SubscribeLocalEvent<TransformSpeechEvent>(AccentHandler);
-        }
+    private void AccentHandler(TransformSpeechEvent args)
+    {
+        var accentEvent = new AccentGetEvent(args.Sender, args.Message);
 
-        private void AccentHandler(TransformSpeechEvent args)
-        {
-            var accentEvent = new AccentGetEvent(args.Sender, args.Message);
-
-            RaiseLocalEvent(args.Sender, accentEvent, true);
-            args.Message = accentEvent.Message;
-        }
+        RaiseLocalEvent(args.Sender, accentEvent, true);
+        args.Message = accentEvent.Message;
     }
 }
