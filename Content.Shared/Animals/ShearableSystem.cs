@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Coordinates;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
@@ -10,7 +11,6 @@ using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Coordinates;
 using System.Numerics;
 
 namespace Content.Shared.Animals;
@@ -21,9 +21,9 @@ namespace Content.Shared.Animals;
 /// </summary>
 public sealed class SharedShearableSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
@@ -33,7 +33,7 @@ public sealed class SharedShearableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ShearableComponent, GetVerbsEvent<AlternativeVerb>>(AddShearVerb);
-        SubscribeLocalEvent<ShearableComponent, InteractUsingEvent>(OnClicked);
+        SubscribeLocalEvent<ShearableComponent, InteractUsingEvent>(OnInteractUsingEvent);
         SubscribeLocalEvent<ShearableComponent, ExaminedEvent>(Examined);
         SubscribeLocalEvent<ShearableComponent, ShearingDoAfterEvent>(OnSheared);
         SubscribeLocalEvent<ShearableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
@@ -52,30 +52,21 @@ public sealed class SharedShearableSystem : EntitySystem
     ///     A <c>ShearableComponent.CheckShearReturns</c> enum of the result.
     /// </returns>
     /// <seealso cref="CheckShearReturns"/>
-    public CheckShearReturns CheckShear(EntityUid ent, ShearableComponent comp, out EntityPrototype? shearedProduct, out Solution? shearingSolution, EntityUid? usedItem = null, bool checkItem = true)
+    public CheckShearReturns CheckShear(EntityUid ent, ShearableComponent comp, out EntityPrototype shearedProduct, out Solution? shearingSolution, EntityUid? usedItem = null, bool checkItem = true)
     {
         // Set these to null in-case we return early.
-        shearedProduct = null;
+        shearedProduct = _proto.Index(comp.ShearedProductID);
         shearingSolution = null;
 
-        // If checkItem is true, and comp.ToolQuality has been set then check return on wrong tool.
-        if (checkItem && comp.ToolQuality is not null)
+        // Are we checking items? Has a toolQuality been defined?
+        // Even if we are checking items, if no toolQuality has been defined, then they're allowed to use anything, including an empty hand.
+        if (checkItem && comp.ToolQuality is not null &&
+            // If so, is the player holding anything at all, and does that item have the correct toolQuality?
+            (usedItem == null || !_tool.HasQuality(usedItem.Value, comp.ToolQuality)))
         {
-            if (// Is the player holding an item?
-                usedItem == null
-                ||
-                // Does the held item have the correct toolQuality component quality?
-                !_tool.HasQuality(usedItem.Value, comp.ToolQuality)
-            )
-                return CheckShearReturns.WrongTool;
+            return CheckShearReturns.WrongTool;
         }
 
-        // Test if the configured product exists.
-        if (!_prototypeManager.TryIndex(comp.ShearedProductID, out shearedProduct))
-        {
-            Log.Debug($"An entity with the shearable component specifies an invalid shearedProductID: {comp.ShearedProductID}");
-            return CheckShearReturns.Error;
-        }
 
         // Everything below this point is just calculating whether the animal
         // has enough solution to spawn at least one item in the specified stack.
@@ -84,7 +75,6 @@ public sealed class SharedShearableSystem : EntitySystem
         // Resolves the targetSolutionName as a solution inside the shearable creature. Outputs the "solution" variable.
         if (!_solutionContainer.ResolveSolution(ent, comp.TargetSolutionName, ref comp.Solution, out shearingSolution))
         {
-            Log.Debug($"An entity with the shearable component specifies an invalid shearedProductID: {comp.ShearedProductID}");
             return CheckShearReturns.Error;
         }
 
@@ -127,7 +117,7 @@ public sealed class SharedShearableSystem : EntitySystem
     ///     Handles shearing when the player left-clicks an entity.
     ///     Doesn't run any checks, those are handled by AttemptShear.
     /// </summary>
-    private void OnClicked(Entity<ShearableComponent> ent, ref InteractUsingEvent args)
+    private void OnInteractUsingEvent(Entity<ShearableComponent> ent, ref InteractUsingEvent args)
     {
         // If no tool is specified then this might take over empty-hand interaction of an entity.
         // But, sheep have a default petting action so presumably this can also be overidden up the hierarchy.
@@ -148,18 +138,16 @@ public sealed class SharedShearableSystem : EntitySystem
                 // ALL SYSTEMS GO!
                 break;
             case CheckShearReturns.WrongTool:
+                _popup.PopupClient(Loc.GetString("shearable-system-wrong-tool", ("target", Identity.Entity(ent.Owner, EntityManager)), ("shearVerb", (Loc.GetString(ent.Comp.Verb)).ToLower())), ent.Owner, userUid);
                 return;
             case CheckShearReturns.InsufficientSolution:
-                // Check we have a resolved product.
-                if (shearedProduct is null)
-                    return;
                 // NO WOOL LEFT.
                 _popup.PopupClient(Loc.GetString("shearable-system-no-product", ("target", Identity.Entity(ent.Owner, EntityManager)), ("product", shearedProduct.Name)), ent.Owner, userUid);
                 return;
         }
 
         // Build arguments for calling TryStartDoAfter
-        var doargs = new DoAfterArgs(EntityManager, userUid, 5, new ShearingDoAfterEvent(), ent, ent, used: toolUsed)
+        var doArgs = new DoAfterArgs(EntityManager, userUid, 5, new ShearingDoAfterEvent(), ent, ent, used: toolUsed)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -167,7 +155,7 @@ public sealed class SharedShearableSystem : EntitySystem
         };
 
         // Triggers the ShearingDoAfter event.
-        _doAfterSystem.TryStartDoAfter(doargs);
+        _doAfter.TryStartDoAfter(doArgs);
     }
 
     /// <summary>
@@ -175,15 +163,13 @@ public sealed class SharedShearableSystem : EntitySystem
     /// </summary>
     private void OnSheared(Entity<ShearableComponent> ent, ref ShearingDoAfterEvent args)
     {
-
         // Check the action hasn't been cancelled, or hasn't already been handled, or that the player's hand is empty.
         if (args.Cancelled || args.Handled)
             return;
 
         // Check again and this time get the objects we need.
         if (CheckShear(ent.Owner, ent.Comp, out var shearedProduct, out var shearingSolution, null, false) != CheckShearReturns.Success
-            // shearedProduct and shearingSolution must be resolved.
-            || shearedProduct is null
+            // shearingSolution must be resolved.
             || shearingSolution is null
             || ent.Comp.Solution is null)
         {
@@ -223,7 +209,7 @@ public sealed class SharedShearableSystem : EntitySystem
         // productsPerSolution is set to 500. Therefore, the calculation is:
         // 500 * 500 / 100 = 2500.
         // We take the smaller of two values, we don't want to remove more reagent than we're using.
-        // Despite their being 5000 reagent availble, we end up only removing 2500, even though no limit has been set, why is this?
+        // Despite their being 5000 reagent available, we end up only removing 2500, even though no limit has been set, why is this?
         // I don't know... it seems to work OK though.
         var solutionToRemove = FixedPoint2.New(
             Math.Min(
@@ -269,7 +255,6 @@ public sealed class SharedShearableSystem : EntitySystem
     /// </summary>
     private void AddShearVerb(Entity<ShearableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-
         // Check if you are allowed to interact currently.
         if (!args.CanInteract)
             return;
@@ -295,7 +280,7 @@ public sealed class SharedShearableSystem : EntitySystem
             new()
             {
                 Act = () => AttemptShear(ent, user, toolUsed),
-                Text = Loc.GetString("shearable-system-verb-shear"),
+                Text = Loc.GetString(ent.Comp.Verb),
                 Icon = ent.Comp.ShearingIcon,
                 Priority = 2
             };
@@ -329,15 +314,16 @@ public sealed class SharedShearableSystem : EntitySystem
                 }
                 // Default to empty string, if we just can't resolve the tool quality for whatever reason localisation have a blank variable..
                 var toolQuality = string.Empty;
-                // If a ToolQuality has been specified set it's name to toolQuality so it appears in localisation.
-                if (_prototypeManager.TryIndex(ent.Comp.ToolQuality, out var toolQualityProto, false) && toolQualityProto is not null)
+                // If a ToolQuality has been specified set its name to toolQuality so it appears in localisation.
+                if (_proto.TryIndex(ent.Comp.ToolQuality, out var toolQualityProto, false))
                 {
                     // Tool quality names are a Loc string so look up that and lower-case it.
                     toolQuality = Loc.GetString(toolQualityProto.Name).ToLower();
                     // If a Loc string isn't found then it will just return the same ID, which means it hasn't been configured right so just set it empty and don't use it.
                     if (string.Equals(toolQuality, toolQualityProto.Name.ToLower()))
                     {
-                        toolQuality = string.Empty;
+                        Log.Debug($"Tried to generate examine text for a shearable entity \"{Name(ent.Owner)}\" but the configured toolQuality ({toolQualityProto.ID}) name: \"{toolQuality}\" is not a Loc string.");
+                        return;
                     }
                 }
                 // ALL SYSTEMS GO!

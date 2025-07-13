@@ -9,3 +9,4 @@ space-sheep-not-shearable-examine-markup = Her fleece is freshly sheared and [co
 
 rainbow-sheep-shearable-examine-markup = She has a fleece of rainbow leaves. With the right [color=#a4885c]{$toolQuality}[/color] tool, maybe you could prune some off.
 rainbow-sheep-not-shearable-examine-markup = Her fleece is freshly sheared and [color=#3b86ec]psychedelically[/color] bare.
+rainbow-sheep-shearable-verb = Prune

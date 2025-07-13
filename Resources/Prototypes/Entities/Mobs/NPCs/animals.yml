@@ -1243,6 +1243,7 @@
       toolQuality: Cutting
       shearableMarkupText: rainbow-sheep-shearable-examine-markup
       unShearableMarkupText: rainbow-sheep-not-shearable-examine-markup
+      verb: rainbow-sheep-shearable-verb
     - type: SolutionContainerManager
       solutions:
         udder:
