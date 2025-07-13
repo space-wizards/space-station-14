@@ -52,6 +52,10 @@
     - MedkitCombatFilled
     - EmergencyMedipen # End of first line
     - MedkitCombatFilled
+    - PowerCellHigh
+    - PowerCellHigh
+    - PowerCellHigh
+    - PowerCellHigh
     belt:
     - Stunbaton
     - Handcuffs
@@ -80,7 +84,7 @@
     - PinpointerNuclear
     - PhoneInstrument
     - HoloprojectorField
-    - Zipties
+    - Handcuffs
     belt:
     - Truncheon
     - Handcuffs
@@ -383,9 +387,9 @@
     - GrenadeBlast
     - CrowbarRed
     - MedkitCombatFilled # End of first line
-    - EmpGrenade
-    - EmpGrenade
-    - EmpGrenade
+    - GrenadeEMP
+    - GrenadeEMP
+    - GrenadeEMP
     - SmokeGrenade
     - GrenadeFlash
     - GrenadeFlash
@@ -523,9 +527,11 @@
     - CrowbarRed
     - Hypospray
     - DefibrillatorCompact
+    - MedkitCombatFilled
+    - ChemistryBottleEphedrine
+    - ChemistryBottleEphedrine
+    - MedkitCombatFilled
     - ClothingEyesGlassesChemical
-    - ChemistryBottleEphedrine
-    - ChemistryBottleEphedrine
     belt:
     - Truncheon
     - Handcuffs
