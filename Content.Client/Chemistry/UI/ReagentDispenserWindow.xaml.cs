@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chemistry;
@@ -23,6 +24,8 @@ namespace Content.Client.Chemistry.UI
         public event Action<ItemStorageLocation>? OnDispenseReagentButtonPressed;
         public event Action<ItemStorageLocation>? OnEjectJugButtonPressed;
 
+        private readonly Dictionary<ItemStorageLocation, ReagentCardControl> _cards = [];
+
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
         /// actual data isn't filled in until the server sends data about the dispenser.
@@ -42,21 +45,43 @@ namespace Content.Client.Chemistry.UI
             if (ReagentList == null)
                 return;
 
-            ReagentList.Children.Clear();
-            //Sort inventory by reagentLabel
-            inventory.Sort((x, y) => x.ReagentLabel.CompareTo(y.ReagentLabel));
+            // First figure out if any items were removed
+            var missing = _cards
+                .ExceptBy(inventory.Select(item => item.StorageLocation), card => card.Key);
 
-            foreach (var item in inventory)
+            foreach (var (location, card) in missing)
             {
-                var card = new ReagentCardControl(item);
-                card.OnPressed += OnDispenseReagentButtonPressed;
-                card.OnEjectButtonPressed += OnEjectJugButtonPressed;
-                ReagentList.Children.Add(card);
+                _cards.Remove(location);
+                ReagentList.RemoveChild(card);
+            }
+
+            // Makes sure the resulting cards stay alphabetical.
+            // We also need the index to make sure new items are inserted in
+            // the right place (and not the end).
+            var sortedInv = inventory
+                .OrderBy(item => item.ReagentLabel)
+                .Select((item, i) => (item, i));
+
+            // Then go through adding and updating cards as needed.
+            foreach (var (item, i) in sortedInv)
+            {
+                if (_cards.TryGetValue(item.StorageLocation, out var card))
+                {
+                    card.UpdateState(item);
+                    continue;
+                }
+
+                // New inventory item
+                var newCard = new ReagentCardControl(item);
+                newCard.OnPressed += OnDispenseReagentButtonPressed;
+                newCard.OnEjectButtonPressed += OnEjectJugButtonPressed;
+
+                ReagentList.Children.Add(newCard);
+                newCard.SetPositionInParent(i);
+                _cards[item.StorageLocation] = newCard;
             }
         }
 
-        // TODO: when hovering over buttons it plays the soft "click" sound a bunch on UI update
-        // If you see this in code review it means I forgor please remind me
         /// <summary>
         /// Update the UI state when new state data is received from the server.
         /// </summary>

@@ -20,15 +20,21 @@ public sealed partial class ReagentCardControl : Control
         RobustXamlLoader.Load(this);
 
         StorageLocation = item.StorageLocation;
+        EjectButtonIcon.Text = Loc.GetString("reagent-dispenser-window-eject-container-button");
+
+        UpdateState(item);
+
+        MainButton.OnPressed += _ => OnPressed?.Invoke(StorageLocation);
+        EjectButton.OnPressed += _ => OnEjectButtonPressed?.Invoke(StorageLocation);
+    }
+
+    public void UpdateState(ReagentInventoryItem item)
+    {
         ColorPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = item.ReagentColor };
         ReagentNameLabel.Text = item.ReagentLabel;
-        FillLabel.Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", item.Quantity));;
-        EjectButtonIcon.Text = Loc.GetString("reagent-dispenser-window-eject-container-button");
+        FillLabel.Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", item.Quantity));
 
         if (item.Quantity == 0.0)
             MainButton.Disabled = true;
-
-        MainButton.OnPressed += args => OnPressed?.Invoke(StorageLocation);
-        EjectButton.OnPressed += args => OnEjectButtonPressed?.Invoke(StorageLocation);
     }
 }

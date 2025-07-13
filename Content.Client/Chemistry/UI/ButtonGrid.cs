@@ -36,8 +36,13 @@ public sealed class ButtonGrid : GridContainer
         get => _selected;
         set
         {
+            if (RadioGroup && _selected is not null && _buttons.TryGetValue(_selected, out var oldButton))
+                oldButton.Pressed = false;
+
             _selected = value;
-            Update();
+
+            if (RadioGroup && _selected is not null && _buttons.TryGetValue(_selected, out var newButton))
+                newButton.Pressed = true;
         }
     }
 
@@ -69,12 +74,15 @@ public sealed class ButtonGrid : GridContainer
         }
     }
 
+    private Dictionary<string, Button> _buttons = [];
+
     private void Update()
     {
         if (ButtonList == "")
             return;
 
-        this.Children.Clear();
+        Children.Clear();
+        _buttons.Clear();
         var i = 0;
         var list = ButtonList.Split(",");
 
@@ -111,7 +119,8 @@ public sealed class ButtonGrid : GridContainer
             else
                 btn.AddStyleClass("OpenBoth");
 
-            this.Children.Add(btn);
+            Children.Add(btn);
+            _buttons.Add(button, btn);
 
             i++;
         }
