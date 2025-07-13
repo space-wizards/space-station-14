@@ -1,11 +1,8 @@
-using Content.Shared.Whitelist;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Shared.Chemistry;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Chemistry.Components
+namespace Content.Shared.Chemistry.Components
 {
     /// <summary>
     /// A machine that dispenses reagents into a solution container from containers in its storage slots.
