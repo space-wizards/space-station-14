@@ -432,7 +432,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
                 continue;
 
             var netId = GetPipeNodeNetId(pipeNode);
-            var subnet = new AtmosMonitoringConsoleSubnet(netId, pipeNode.CurrentPipeLayer, pipeColor.Color.ToHex());
+            var subnet = new AtmosMonitoringConsoleSubnet(netId, pipeNode.CurrentPipeLayer, pipeColor.Color);
             var pipeDirection = pipeNode.CurrentPipeDirection;
 
             chunk.AtmosPipeData.TryGetValue(subnet, out var atmosPipeData);
