@@ -5,10 +5,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
 using Robust.Shared.IoC;
-using Robust.Client.Player;
-using Robust.Shared.GameObjects;
-using Content.Shared.Humanoid;
-
 using Content.Client.Paper.UI;
 
 namespace Content.Client.UserInterface.RichText;
@@ -18,9 +14,6 @@ namespace Content.Client.UserInterface.RichText;
 /// </summary>
 public sealed class SignatureTagHandler : IMarkupTagHandler
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-
     public string Name => "signature";
     private static int _signatureCounter = 0;
 
@@ -103,8 +96,6 @@ public sealed class SignatureTagHandler : IMarkupTagHandler
 
         btn.OnPressed += _ =>
         {
-            var signature = GetPlayerSignature();
-
             // Find the PaperWindow parent
             var parent = btn.Parent;
             while (parent != null && parent is not PaperWindow)
@@ -114,7 +105,8 @@ public sealed class SignatureTagHandler : IMarkupTagHandler
             {
                 // Count buttons to determine which [signature] tag this represents
                 var buttonIndex = CountSignatureButtonsBefore(btn);
-                paperWindow.ReplaceSignature(buttonIndex, signature);
+                // Send signature request to server instead of handling client-side
+                paperWindow.SendSignatureRequest(buttonIndex);
             }
         };
 
@@ -122,21 +114,5 @@ public sealed class SignatureTagHandler : IMarkupTagHandler
         return true;
     }
 
-    /// <summary>
-    /// Gets the player's character name for signing.
-    /// </summary>
-    private string GetPlayerSignature()
-    {
-        var playerEntity = _playerManager.LocalSession?.AttachedEntity;
-        if (playerEntity == null)
-            return Loc.GetString("paper-signature-unknown");
 
-        var name = "Unknown";
-
-        // Get character name from entity metadata
-        if (_entityManager.TryGetComponent<MetaDataComponent>(playerEntity.Value, out var meta))
-            name = meta.EntityName;
-
-        return name;
-    }
 }
