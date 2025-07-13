@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Devour.Components;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedDevourSystem))]
+[Access(typeof(DevourSystem))]
 public sealed partial class DevourerComponent : Component
 {
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
