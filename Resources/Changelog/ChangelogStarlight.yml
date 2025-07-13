@@ -1,4 +1,3 @@
-Order: -1
 Entries:
 - author: Rinary
   changes:
@@ -9280,4 +9279,13 @@ Entries:
   id: 1279
   time: '2025-07-13T05:53:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1004
+- author: DrSmugleaf
+  changes:
+  - message: Made the Starlight changelog tab the first tab on the changelog window,
+      and hid the maps changelog tab.
+    type: Tweak
+  id: 1280
+  time: '2025-07-13T10:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1026
+Order: -1
 
