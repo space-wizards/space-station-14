@@ -1,10 +1,9 @@
-using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
-using Content.Server.Chunking;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;
+using Content.Shared.Chunking;
 using Content.Shared.GameTicking;
 using Content.Shared.Rounding;
 using JetBrains.Annotations;
@@ -18,18 +17,19 @@ using Robust.Shared.Player;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using CS = System.Runtime.CompilerServices;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
     public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Robust.Shared.IoC.Dependency] private readonly IConfigurationManager _confMan = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IParallelManager _parMan = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Robust.Shared.IoC.Dependency] private readonly ChunkingSystem _chunkingSys = default!;
+        [Dependency] private readonly IConfigurationManager _confMan = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IParallelManager _parMan = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly ChunkingSystem _chunkingSys = default!;
 
         /// <summary>
         /// Per-tick cache of sessions.
@@ -133,7 +133,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void UpdateTickRate(float value) => _updateInterval = value > 0.0f ? 1 / value : float.MaxValue;
         private void UpdateThresholds(int value) => _thresholds = value;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [CS.MethodImpl(CS.MethodImplOptions.AggressiveInlining)]
         public void Invalidate(Entity<GasTileOverlayComponent?> grid, Vector2i index)
         {
             if (_query.Resolve(grid.Owner, ref grid.Comp))

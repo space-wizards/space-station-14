@@ -8,7 +8,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumerator;
 
-namespace Content.Server.Chunking;
+namespace Content.Shared.Chunking;
 
 /// <summary>
 ///     This system just exists to provide some utility functions for other systems that chunk data that needs to be
