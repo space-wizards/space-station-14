@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Virtual items (e.g. wielding) are now predicted.
-    type: Add
-  id: 8255
-  time: '2025-04-19T06:51:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36617
-- author: metalgearsloth
-  changes:
   - message: Fix charges sometimes breaking for auto-recharge devices such as RCDs.
     type: Fix
   id: 8256
@@ -3891,3 +3884,11 @@
   id: 8767
   time: '2025-07-13T16:11:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38634
+- author: Toast_Enjoyer, huaqas
+  changes:
+  - message: The Purchaseable Scurret now comes in a livestock crate instead of a
+      plastic one. Wawa!
+    type: Fix
+  id: 8768
+  time: '2025-07-13T16:48:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38951
