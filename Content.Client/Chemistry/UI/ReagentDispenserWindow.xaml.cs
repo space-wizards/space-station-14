@@ -55,6 +55,8 @@ namespace Content.Client.Chemistry.UI
             }
         }
 
+        // TODO: when hovering over buttons it plays the soft "click" sound a bunch on UI update
+        // If you see this in code review it means I forgor please remind me
         /// <summary>
         /// Update the UI state when new state data is received from the server.
         /// </summary>

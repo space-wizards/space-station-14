@@ -92,6 +92,11 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             foreach (var (storedContainer, storageLocation) in storage.StoredItems)
             {
+                // TODO: get a better solution to this
+                // If you see this in code review it means I forgor please remind me
+                if (!storedContainer.Valid)
+                    continue;
+
                 string reagentLabel;
                 if (TryComp<LabelComponent>(storedContainer, out var label) && !string.IsNullOrEmpty(label.CurrentLabel))
                     reagentLabel = label.CurrentLabel;
@@ -117,7 +122,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         {
             reagentDispenser.Comp.DispenseAmount = message.ReagentDispenserDispenseAmount;
             UpdateUiState(reagentDispenser);
-            ClickSound(reagentDispenser);
+            ClickSound(reagentDispenser, message.Actor);
         }
 
         private void OnDispenseReagentMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserDispenseReagentMessage message)
@@ -149,7 +154,7 @@ namespace Content.Shared.Chemistry.EntitySystems
             }
 
             UpdateUiState(reagentDispenser);
-            ClickSound(reagentDispenser);
+            ClickSound(reagentDispenser, message.Actor);
         }
 
         private void OnEjectReagentMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserEjectContainerMessage message)
@@ -175,12 +180,12 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             _solutionContainerSystem.RemoveAllSolution(solution.Value);
             UpdateUiState(reagentDispenser);
-            ClickSound(reagentDispenser);
+            ClickSound(reagentDispenser, message.Actor);
         }
 
-        private void ClickSound(Entity<ReagentDispenserComponent> reagentDispenser)
+        private void ClickSound(Entity<ReagentDispenserComponent> reagentDispenser, EntityUid actor)
         {
-            _audioSystem.PlayPvs(reagentDispenser.Comp.ClickSound, reagentDispenser, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPredicted(reagentDispenser.Comp.ClickSound, reagentDispenser, actor, AudioParams.Default.WithVolume(-2f));
         }
 
         /// <summary>

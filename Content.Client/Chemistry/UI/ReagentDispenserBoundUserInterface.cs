@@ -36,13 +36,13 @@ namespace Content.Client.Chemistry.UI
             _window.SetInfoFromEntity(EntMan, Owner);
 
             // Setup static button actions.
-            _window.EjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(ReagentDispenserComponent.OutputSlotName));
-            _window.ClearButton.OnPressed += _ => SendMessage(new ReagentDispenserClearContainerSolutionMessage());
+            _window.EjectButton.OnPressed += _ => SendPredictedMessage(new ItemSlotButtonPressedEvent(ReagentDispenserComponent.OutputSlotName));
+            _window.ClearButton.OnPressed += _ => SendPredictedMessage(new ReagentDispenserClearContainerSolutionMessage());
 
-            _window.AmountGrid.OnButtonPressed += s => SendMessage(new ReagentDispenserSetDispenseAmountMessage(s));
+            _window.AmountGrid.OnButtonPressed += s => SendPredictedMessage(new ReagentDispenserSetDispenseAmountMessage(s));
 
-            _window.OnDispenseReagentButtonPressed += (location) => SendMessage(new ReagentDispenserDispenseReagentMessage(location));
-            _window.OnEjectJugButtonPressed += (location) => SendMessage(new ReagentDispenserEjectContainerMessage(location));
+            _window.OnDispenseReagentButtonPressed += (location) => SendPredictedMessage(new ReagentDispenserDispenseReagentMessage(location));
+            _window.OnEjectJugButtonPressed += (location) => SendPredictedMessage(new ReagentDispenserEjectContainerMessage(location));
         }
 
         /// <summary>
