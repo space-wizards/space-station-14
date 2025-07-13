@@ -30,6 +30,10 @@
         Blunt: 0
     soundHit:
       collection: BoxingHit
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 0
 
 - type: entity
   id: BaseGunMeleeMedium # one-handed SMG-like weapons, some can be wielded and get a small bonus for doing so.
