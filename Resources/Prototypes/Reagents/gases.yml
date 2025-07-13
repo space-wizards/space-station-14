@@ -484,11 +484,6 @@
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 1.5
-  reactiveEffects:
-    Flammable:
-      methods: [ Touch ]
-      effects:
-      - !type:FlammableReaction
 
 - type: reagent
   id: ChargedElectrovae
@@ -508,18 +503,3 @@
       methods: [ Touch ]
       effects:
       - !type:FlammableReaction
-    Ingestion:
-      methods: [ Ingestion ]
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 1
-    Touch:
-      methods: [ Touch ]
-      effects:
-      - !type:EmpReactionEffect
-        rangePerUnit: 0.16
-        maxRange: 8
-        energyConsumption: 10000
-        duration: 10
