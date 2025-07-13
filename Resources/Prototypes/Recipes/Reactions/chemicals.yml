@@ -542,3 +542,19 @@
       amount: 1
   products:
     Lye: 2
+
+- type: reaction
+  id: ChargedElectrovaeEmpExplosion
+  impact: High
+  priority: 20
+  reactants:
+    ChargedElectrovae:
+      amount: 5
+    Oxygen:
+      amount: 1
+  effects:
+    - !type:EmpReactionEffect
+      rangePerUnit: 0.2
+      maxRange: 6
+      energyConsumption: 12500
+      duration: 15
