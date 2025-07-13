@@ -11,7 +11,7 @@ namespace Content.Shared.Nutrition;
 /// Raised on an entity to see if anything would prevent it from being Ingested no matter the method.
 /// </summary>
 [ByRefEvent]
-public record struct IngestibleEvent(bool Cancelled);
+public record struct IngestibleEvent(bool Cancelled = false);
 
 /// <summary>
 /// Raised on an entity with the <see cref="EdibleComponent"/> to check if anything is stopping
@@ -21,7 +21,7 @@ public record struct IngestibleEvent(bool Cancelled);
 /// <param name="Destroy">Will this entity be destroyed when it's eaten?</param>
 /// <param name="Cancelled">If something prevented us from accessing the reagents, the event is cancelled</param>
 [ByRefEvent]
-public record struct EdibleEvent(EntityUid User, bool Destroy, bool Cancelled);
+public record struct EdibleEvent(EntityUid User, bool Destroy, bool Cancelled = false);
 
 /// <summary>
 /// Raised when an entity is trying to ingest an entity to see if it has any component that can ingest it.
@@ -31,15 +31,14 @@ public record struct EdibleEvent(EntityUid User, bool Destroy, bool Cancelled);
 /// <param name="Ingested">What are we trying to ingest?</param>
 /// <param name="Ingest">Should we actually try and ingest? Or are we just testing if it's even possible </param>
 [ByRefEvent]
-public record struct CanIngestEvent(bool Handled, EntityUid User, Entity<EdibleComponent?> Ingested, bool Ingest);
+public record struct CanIngestEvent(EntityUid User, Entity<EdibleComponent?> Ingested, bool Ingest, bool Handled = false);
 
 /// <summary>
 ///     Raised directed at the consumer when attempting to ingest something.
 /// </summary>
 [ByRefEvent]
-public record struct IngestionAttemptEvent(bool Cancelled) : IInventoryRelayEvent
+public record struct IngestionAttemptEvent(SlotFlags TargetSlots, bool Cancelled = false) : IInventoryRelayEvent
 {
-    public SlotFlags TargetSlots { get; set; }
     /// <summary>
     ///     The equipment that is blocking consumption. Should only be non-null if the event was canceled.
     /// </summary>
@@ -56,17 +55,57 @@ public sealed partial class EatingDoAfterEvent : SimpleDoAfterEvent;
 /// We use this to
 /// </summary>
 /// <param name="User"></param>
+/// <param name="Min">The minimum amount we can transfer.</param>
+/// <param name="Max">The maximum amount we can transfer.</param>
+/// <param name="Solution">The solution we are transferring.</param>
 [ByRefEvent]
-public record struct BeforeEatenEvent(EntityUid User);
+public record struct BeforeEatenEvent(EntityUid User, EntityUid Target, FixedPoint2 Min, FixedPoint2 Max, Solution? Solution)
+{
+    // How much we would like to transfer, gets clamped by Min and Max.
+    public FixedPoint2 Transfer;
+
+    // Whether this event, and therefore eat attempt, should be cancelled.
+    public bool Cancelled;
+
+    public bool TryNewMinimum(FixedPoint2 newMin)
+    {
+        if (newMin > Max)
+            return false;
+
+        Min = newMin;
+        return true;
+    }
+
+    public bool TryNewMaximum(FixedPoint2 newMax)
+    {
+        if (newMax < Min)
+            return false;
+
+        Min = newMax;
+        return true;
+    }
+}
 
 /// <summary>
 /// Raised on an entity when it is being made to be eaten.
 /// </summary>
 /// <param name="User">Who is doing the action?</param>
 /// <param name="Target">Who is doing the eating?</param>
-/// <param name="Destroy">Whether we should be destroyed after we're done being eaten.</param>
+/// <param name="Split">The solution we're currently eating.</param>
+/// <param name="ForceFed">Whether we're being fed by someone else, checkec enough I might as well pass it.</param>
 [ByRefEvent]
-public record struct EatenEvent(EntityUid User, EntityUid Target, Solution Split, bool Destroy = false);
+public record struct IngestSolutionEvent(EntityUid User, EntityUid Target, Solution Split, bool ForceFed)
+{
+    // Should we refill the solution now that we've eaten it?
+    // This bool basically only exists because of stackable system.
+    public bool Refresh;
+
+    // Should we destroy the ingested entity?
+    public bool Destroy;
+
+    // Has this eaten event been handled? Used to prevent duplicate flavor popups and sound effects.
+    public bool Handled;
+};
 
 // TODO: This can probably go.
 /// <summary>

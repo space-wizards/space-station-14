@@ -28,7 +28,7 @@ public sealed partial class EdibleComponent : Component
     /// Should this entity be deleted when our solution is emptied?
     /// </summary>
     [DataField]
-    public bool DeleteOnEmpty;
+    public bool DeleteOnEmpty = true;
 
     /// <summary>
     /// Trash we spawn when eaten.
