@@ -1,4 +1,4 @@
-using Content.Shared.Speech.Accents;
+using Content.Shared.Speech;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Player;
 
