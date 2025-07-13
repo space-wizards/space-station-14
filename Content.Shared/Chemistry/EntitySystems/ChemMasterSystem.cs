@@ -86,7 +86,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             chemMaster.Comp.Mode = message.ChemMasterMode;
             UpdateUiState(chemMaster);
-            ClickSound(chemMaster);
+            ClickSound(chemMaster, message.Actor);
         }
 
         private void OnCycleSortingTypeMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSortingTypeCycleMessage message)
@@ -95,7 +95,7 @@ namespace Content.Shared.Chemistry.EntitySystems
             if (chemMaster.Comp.SortingType > ChemMasterSortingType.Latest)
                 chemMaster.Comp.SortingType = ChemMasterSortingType.None;
             UpdateUiState(chemMaster);
-            ClickSound(chemMaster);
+            ClickSound(chemMaster, message.Actor);
         }
 
         private void OnSetPillTypeMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSetPillTypeMessage message)
@@ -106,7 +106,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             chemMaster.Comp.PillType = message.PillType;
             UpdateUiState(chemMaster);
-            ClickSound(chemMaster);
+            ClickSound(chemMaster, message.Actor);
         }
 
         private void OnReagentButtonMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterReagentAmountButtonMessage message)
@@ -128,7 +128,7 @@ namespace Content.Shared.Chemistry.EntitySystems
                     return;
             }
 
-            ClickSound(chemMaster);
+            ClickSound(chemMaster, message.Actor);
         }
 
         private void TransferReagents(Entity<ChemMasterComponent> chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
@@ -211,7 +211,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             for (var i = 0; i < message.Number; i++)
             {
-                var item = Spawn(PillPrototypeId, Transform(container).Coordinates);
+                var item = PredictedSpawnAttachedTo(PillPrototypeId, Transform(container).Coordinates);
                 _storageSystem.Insert(container, item, out _, user: user, storage);
                 _labelSystem.Label(item, message.Label);
 
@@ -231,7 +231,7 @@ namespace Content.Shared.Chemistry.EntitySystems
             }
 
             UpdateUiState(chemMaster);
-            ClickSound(chemMaster);
+            ClickSound(chemMaster, message.Actor);
         }
 
         private void OnOutputToBottleMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterOutputToBottleMessage message)
@@ -263,7 +263,7 @@ namespace Content.Shared.Chemistry.EntitySystems
                 $"{ToPrettyString(user):user} bottled {ToPrettyString(container):bottle} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
 
             UpdateUiState(chemMaster);
-            ClickSound(chemMaster);
+            ClickSound(chemMaster, message.Actor);
         }
 
         private bool WithdrawFromBuffer(
@@ -281,7 +281,7 @@ namespace Content.Shared.Chemistry.EntitySystems
             if (solution.Volume == 0)
             {
                 if (user.HasValue)
-                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-empty-text"), user.Value);
+                    _popupSystem.PopupPredictedCursor(Loc.GetString("chem-master-window-buffer-empty-text"), user.Value);
                 return false;
             }
 
@@ -289,7 +289,7 @@ namespace Content.Shared.Chemistry.EntitySystems
             if (neededVolume > solution.Volume)
             {
                 if (user.HasValue)
-                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-low-text"), user.Value);
+                    _popupSystem.PopupPredictedCursor(Loc.GetString("chem-master-window-buffer-low-text"), user.Value);
                 return false;
             }
 
@@ -297,9 +297,9 @@ namespace Content.Shared.Chemistry.EntitySystems
             return true;
         }
 
-        private void ClickSound(Entity<ChemMasterComponent> chemMaster)
+        private void ClickSound(Entity<ChemMasterComponent> chemMaster, EntityUid actor)
         {
-            _audioSystem.PlayPvs(chemMaster.Comp.ClickSound, chemMaster, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPredicted(chemMaster.Comp.ClickSound, chemMaster, actor, AudioParams.Default.WithVolume(-2f));
         }
 
         private ContainerInfo? BuildInputContainerInfo(EntityUid? container)
