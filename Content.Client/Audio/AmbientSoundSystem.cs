@@ -37,9 +37,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     protected override void QueueUpdate(EntityUid uid, AmbientSoundComponent ambience)
         => _treeSys.QueueTreeUpdate(uid, ambience);
 
-    private AmbientSoundOverlay? _overlay;
     private int _maxAmbientCount;
-    private bool _overlayEnabled;
     private float _maxAmbientRange;
     private Vector2 MaxAmbientVector => new(_maxAmbientRange, _maxAmbientRange);
 
@@ -59,28 +57,6 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
 
     private readonly Dictionary<Entity<AmbientSoundComponent>, (EntityUid? Stream, SoundSpecifier Sound, string Path)> _playingSounds = new();
     private readonly Dictionary<string, int> _playingCount = new();
-
-    public bool OverlayEnabled
-    {
-        get => _overlayEnabled;
-        set
-        {
-            if (_overlayEnabled == value) return;
-            _overlayEnabled = value;
-            var overlayManager = IoCManager.Resolve<IOverlayManager>();
-
-            if (_overlayEnabled)
-            {
-                _overlay = new AmbientSoundOverlay(EntityManager, this, EntityManager.System<EntityLookupSystem>());
-                overlayManager.AddOverlay(_overlay);
-            }
-            else
-            {
-                overlayManager.RemoveOverlay(_overlay!);
-                _overlay = null;
-            }
-        }
-    }
 
     /// <summary>
     /// Is this AmbientSound actively playing right now?
