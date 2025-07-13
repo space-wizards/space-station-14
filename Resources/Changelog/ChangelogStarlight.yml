@@ -9287,5 +9287,13 @@ Entries:
   id: 1280
   time: '2025-07-13T10:09:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1026
+- author: DrSmugleaf
+  changes:
+  - message: Fixed vampire kill objective always being complete regardless of target
+      status.
+    type: Fix
+  id: 1281
+  time: '2025-07-13T10:10:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1027
 Order: -1
 
