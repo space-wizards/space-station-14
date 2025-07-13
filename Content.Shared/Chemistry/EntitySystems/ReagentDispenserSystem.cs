@@ -56,7 +56,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         private void UpdateUiState(Entity<ReagentDispenserComponent> reagentDispenser)
         {
-            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, ReagentDispenserComponent.OutputSlotName);
             var outputContainerInfo = BuildOutputContainerInfo(outputContainer);
 
             var inventory = GetInventory(reagentDispenser);
@@ -133,7 +133,7 @@ namespace Content.Shared.Chemistry.EntitySystems
             if (storedContainer == EntityUid.Invalid)
                 return;
 
-            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, ReagentDispenserComponent.OutputSlotName);
             if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
                 return;
 
@@ -169,7 +169,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         private void OnClearContainerSolutionMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserClearContainerSolutionMessage message)
         {
-            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, ReagentDispenserComponent.OutputSlotName);
             if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
                 return;
 
@@ -188,7 +188,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         /// </summary>
         private void OnMapInit(Entity<ReagentDispenserComponent> ent, ref MapInitEvent args)
         {
-            _itemSlotsSystem.AddItemSlot(ent.Owner, SharedReagentDispenser.OutputSlotName, ent.Comp.BeakerSlot);
+            _itemSlotsSystem.AddItemSlot(ent.Owner, ReagentDispenserComponent.OutputSlotName, ent.Comp.BeakerSlot);
         }
     }
 }
