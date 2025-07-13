@@ -126,5 +126,5 @@
   gasMolesVisible: 1.0
   gasVisbilityFactor: 3.0
   color: ddff00
-  reagent: Electrovae
+  reagent: ChargedElectrovae
   pricePerMole: 1.2
