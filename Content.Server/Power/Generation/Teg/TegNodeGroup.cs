@@ -127,19 +127,19 @@ public sealed class TegNodeGroup : BaseNodeGroup
 public sealed partial class TegNodeGenerator : Node
 {
     public override IEnumerable<Node> GetReachableNodes(
-        TransformComponent xform,
+        Entity<TransformComponent> xform,
         EntityQuery<NodeContainerComponent> nodeQuery,
         EntityQuery<TransformComponent> xformQuery,
         Entity<MapGridComponent>? grid,
         IEntityManager entMan)
     {
-        if (!xform.Anchored || grid is not { } gridEnt)
+        if (!xform.Comp.Anchored || grid is not { } gridEnt)
             yield break;
 
         var mapSystem = entMan.System<SharedMapSystem>();
-        var gridIndex = mapSystem.TileIndicesFor(gridEnt, xform.Coordinates);
+        var gridIndex = mapSystem.TileIndicesFor(gridEnt, xform.Comp.Coordinates);
 
-        var dir = xform.LocalRotation.GetDir();
+        var dir = xform.Comp.LocalRotation.GetDir();
         var a = FindCirculator(dir);
         var b = FindCirculator(dir.GetOpposite());
 
@@ -180,19 +180,19 @@ public sealed partial class TegNodeGenerator : Node
 public sealed partial class TegNodeCirculator : Node
 {
     public override IEnumerable<Node> GetReachableNodes(
-        TransformComponent xform,
+        Entity<TransformComponent> xform,
         EntityQuery<NodeContainerComponent> nodeQuery,
         EntityQuery<TransformComponent> xformQuery,
         Entity<MapGridComponent>? grid,
         IEntityManager entMan)
     {
-        if (!xform.Anchored || grid is not { } gridEnt)
+        if (!xform.Comp.Anchored || grid is not { } gridEnt)
             yield break;
 
         var mapSystem = entMan.System<SharedMapSystem>();
-        var gridIndex = mapSystem.TileIndicesFor(gridEnt, xform.Coordinates);
+        var gridIndex = mapSystem.TileIndicesFor(gridEnt, xform.Comp.Coordinates);
 
-        var dir = xform.LocalRotation.GetDir();
+        var dir = xform.Comp.LocalRotation.GetDir();
         var searchDir = dir.GetClockwise90Degrees();
         var targetIdx = gridIndex.Offset(searchDir);
 

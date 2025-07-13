@@ -156,7 +156,7 @@ namespace Content.Server.NodeContainer.Nodes
             CurrentPipeDirection = OriginalPipeDirection.RotatePipeDirection(xform.LocalRotation);
         }
 
-        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+        public override IEnumerable<Node> GetReachableNodes(Entity<TransformComponent> xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
             Entity<MapGridComponent>? grid,
@@ -180,11 +180,11 @@ namespace Content.Server.NodeContainer.Nodes
                 }
             }
 
-            if (!xform.Anchored || grid is not { } gridEnt)
+            if (!xform.Comp.Anchored || grid is not { } gridEnt)
                 yield break;
 
             var mapSystem = entMan.System<SharedMapSystem>();
-            var pos = mapSystem.TileIndicesFor(gridEnt, xform.Coordinates);
+            var pos = mapSystem.TileIndicesFor(gridEnt, xform.Comp.Coordinates);
 
             for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
             {
