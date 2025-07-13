@@ -113,7 +113,7 @@
   gasVisbilityFactor: 2.0
   color: 0022ff
   reagent: Electrovae
-  pricePerMole: 0.4
+  pricePerMole: 0.05
 
 - type: gas
   id: 10

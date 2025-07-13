@@ -244,27 +244,29 @@ namespace Content.Shared.Atmos
         public const float TritiumBurnTritFactor = 10f;
 
         public const float ElectrovaeProductionMaxEfficiencyTemperature = 84.15f;
-        public const float ElectrovaeProductionNitrogenRatio = 10f;
-        public const float ElectrovaeProductionTritRatio = 8.0f;
+        public const float ElectrovaeProductionNitrogenRatio = 6f;
+        public const float ElectrovaeProductionWaterVaporRatio = 5.5f;
         public const float ElectrovaeProductionConversionRate = 80f;
-
         public const float ElectrovaeChargePowerDrainPerMole = 50000f;
         public const float ElectrovaeChargeMinimumPowerDrain = 5000f;
         public const float ElectrovaeChargeMaximumPowerDrain = 100000f;
         public const float ElectrovaeChargeConversionEfficiency = 0.8f;
         public const int ElectrovaeChargeSearchRadius = 1;
 
-        public const float ChargedElectrovaeConsumedPerPulse = 1.0f;
-        public const float ChargedElectrovaeMinimumAmount = 1.0f;
+        public const float ChargedElectrovaeMinimumAmount = 2.0f;
         public const float ChargedElectrovaeBaseReactionChance = 0.2f;
-        public const float ChargedElectrovaeEmpRadius = 4.5f;
+        public const float ChargedElectrovaeEmpRadius = 1f;
         public const float ChargedElectrovaeEmpEnergy = 120f;
-        public const float ChargedElectrovaeEmpStunDuration = 3f;
+        public const float ChargedElectrovaeEmpStunDuration = 2f;
         public const float ChargedElectrovaeEmpChance = 0.3f;
-        public const float ChargedElectrovaeShockRadius = 3f;
+        public const float ChargedElectrovaeShockRadius = 1f;
         public const int ChargedElectrovaeShockDamage = 5;
-        public const float ChargedElectrovaeShockDuration = 3f;
+        public const float ChargedElectrovaeShockDuration = 2f;
         public const float ChargedElectrovaeShockChance = 0.5f;
+        /// <summary>
+        ///     Remove X mol of oxygen for each mol of charged electrovae.
+        /// </summary>
+        public const float ChargedElectrovaeOxygenEmpRatio = 0.2f;
 
         public const float FrezonCoolLowerTemperature = 23.15f;
 

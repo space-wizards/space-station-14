@@ -27,10 +27,11 @@ public sealed partial class ChargedElectrovaeEmpReaction : IGasReactionEffect
 
     public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
     {
-        var chargedElectrovae = mixture.GetMoles(Gas.ChargedElectrovae);
+        var initialCE = mixture.GetMoles(Gas.ChargedElectrovae);
+        var initialO = mixture.GetMoles(Gas.Oxygen);
 
         // Not enough charged electrovae to do anything
-        if (chargedElectrovae < Atmospherics.ChargedElectrovaeMinimumAmount)
+        if (initialCE < Atmospherics.ChargedElectrovaeMinimumAmount)
             return ReactionResult.NoReaction;
 
         // Only process for tile atmospheres (not portable canisters)
@@ -46,7 +47,7 @@ public sealed partial class ChargedElectrovaeEmpReaction : IGasReactionEffect
         var currentTime = timing.CurTime;
         var tileKey = (tileAtmos.GridIndex, tileAtmos.GridIndices);
 
-        var concentrationFactor = Math.Min(chargedElectrovae / 10f, 1f);
+        var concentrationFactor = Math.Min(initialCE / 10f, 1f);
 
         // Randomize the interval between pulses based on concentration
         var randomizedInterval = BaseEmpInterval * (1.5f - 0.5f * concentrationFactor);
@@ -68,54 +69,56 @@ public sealed partial class ChargedElectrovaeEmpReaction : IGasReactionEffect
         if (tileRef == default) return ReactionResult.NoReaction;
 
         var centerPos = mapSystem.ToCenterCoordinates(tileRef);
-
-        var consumeAmount = Math.Min(chargedElectrovae, Atmospherics.ChargedElectrovaeConsumedPerPulse);
-        mixture.AdjustMoles(Gas.ChargedElectrovae, -consumeAmount);
-
+        var consumeAmount = Math.Min(initialCE, Atmospherics.ChargedElectrovaeMinimumAmount);
         // This ensures effects are proportional to the amount of gas available
-        var powerScale = consumeAmount / Atmospherics.ChargedElectrovaeConsumedPerPulse;
+        var powerScale = consumeAmount / Atmospherics.ChargedElectrovaeMinimumAmount;
 
         // Random chance to trigger an EMP pulse based on power scale
-        if (random.Prob(Atmospherics.ChargedElectrovaeEmpChance * powerScale))
+        if (random.Prob(Atmospherics.ChargedElectrovaeEmpChance))
         {
-            var empRadius = Atmospherics.ChargedElectrovaeEmpRadius * random.NextFloat(0.8f, 1.2f) * powerScale;
+            var empRadius = Atmospherics.ChargedElectrovaeEmpRadius * powerScale;
             var empEnergy = Atmospherics.ChargedElectrovaeEmpEnergy * random.NextFloat(0.9f, 1.1f) * powerScale;
-            var empStun = Atmospherics.ChargedElectrovaeEmpStunDuration * random.NextFloat(0.7f, 1.3f) * powerScale;
+            var empStun = Atmospherics.ChargedElectrovaeEmpStunDuration * random.NextFloat(0.9f, 1.1f) * powerScale;
 
             empSystem.EmpPulse(centerPos, empRadius, empEnergy, empStun);
-        }
 
-        // Random chance to trigger electrical shocks to nearby entities
-        if (random.Prob(Atmospherics.ChargedElectrovaeShockChance * powerScale))
-        {
-            // Get required systems for electrocution and entity detection
-            var shockSystem = entMan.System<ElectrocutionSystem>();
-            var mobState = entMan.System<MobStateSystem>();
-            var shockQuery = entMan.GetEntityQuery<PhysicsComponent>();
-            var lookup = entMan.System<EntityLookupSystem>();
+            var oConsumed = Math.Min(initialO * Atmospherics.ChargedElectrovaeOxygenEmpRatio, consumeAmount * Atmospherics.ChargedElectrovaeOxygenEmpRatio);
 
-            var shockRadius = Atmospherics.ChargedElectrovaeShockRadius * random.NextFloat(0.9f, 1.1f) * powerScale;
+            mixture.AdjustMoles(Gas.ChargedElectrovae, -consumeAmount);
+            mixture.AdjustMoles(Gas.Oxygen, -oConsumed);
 
-            foreach (var entity in lookup.GetEntitiesInRange(centerPos, shockRadius))
+            // Random chance to trigger electrical shocks to nearby entities
+            if (random.Prob(Atmospherics.ChargedElectrovaeShockChance))
             {
-                if (!shockQuery.TryGetComponent(entity, out var physics) || !physics.CanCollide)
-                    continue;
+                // Get required systems for electrocution and entity detection
+                var shockSystem = entMan.System<ElectrocutionSystem>();
+                var mobState = entMan.System<MobStateSystem>();
+                var shockQuery = entMan.GetEntityQuery<PhysicsComponent>();
+                var lookup = entMan.System<EntityLookupSystem>();
 
-                if (mobState.IsAlive(entity) || mobState.IsCritical(entity))
+                var shockRadius = Atmospherics.ChargedElectrovaeShockRadius * random.NextFloat(0.9f, 1.1f) * powerScale;
+
+                foreach (var entity in lookup.GetEntitiesInRange(centerPos, shockRadius))
                 {
-                    var damage = (int)(Atmospherics.ChargedElectrovaeShockDamage * random.NextFloat(0.8f, 1.2f) * powerScale);
-                    var duration = TimeSpan.FromSeconds(Atmospherics.ChargedElectrovaeShockDuration * random.NextFloat(0.7f, 1.3f) * powerScale);
+                    if (!shockQuery.TryGetComponent(entity, out var physics) || !physics.CanCollide)
+                        continue;
 
-                    shockSystem.TryDoElectrocution(
-                        entity,
-                        null,
-                        damage,
-                        duration,
-                        true,
-                        1f,
-                        null,
-                        random.Prob(0.2f)
-                    );
+                    if (mobState.IsAlive(entity) || mobState.IsCritical(entity))
+                    {
+                        var damage = (int)(Atmospherics.ChargedElectrovaeShockDamage * random.NextFloat(0.8f, 1.2f) * powerScale);
+                        var duration = TimeSpan.FromSeconds(Atmospherics.ChargedElectrovaeShockDuration * random.NextFloat(0.7f, 1.3f) * powerScale);
+
+                        shockSystem.TryDoElectrocution(
+                            entity,
+                            null,
+                            damage,
+                            duration,
+                            true,
+                            1f,
+                            null,
+                            random.Prob(0.2f)
+                        );
+                    }
                 }
             }
         }
