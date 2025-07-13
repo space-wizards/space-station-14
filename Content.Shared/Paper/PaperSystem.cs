@@ -188,9 +188,6 @@ public sealed class PaperSystem : EntitySystem
         var ev = new PaperWriteAttemptEvent(entity.Owner);
         RaiseLocalEvent(args.Actor, ref ev);
 
-        var writeAfterEv = new PaperAfterWriteEvent(args.Actor);
-        RaiseLocalEvent(entity.Owner, ref writeAfterEv);
-
         if (ev.Cancelled)
             return;
 
@@ -215,6 +212,9 @@ public sealed class PaperSystem : EntitySystem
 
         entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
+
+        var writeAfterEv = new PaperAfterWriteEvent(args.Actor);
+        RaiseLocalEvent(entity.Owner, ref writeAfterEv);
     }
 
     private void OnRandomPaperContentMapInit(Entity<RandomPaperContentComponent> ent, ref MapInitEvent args)
@@ -323,10 +323,14 @@ public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
 /// <summary>
 /// Cancellable event for attempting to write on a piece of paper.
 /// </summary>
-/// <param name="paper">The paper that the writing will take place on.</param>
+/// <param name="Paper">The paper that the writing will take place on.</param>
 [ByRefEvent]
 public record struct PaperWriteAttemptEvent(EntityUid Paper, string? FailReason = null, bool Cancelled = false);
 
+/// <summary>
+/// Event, that is raised after writing on a piece of paper ON PAPER (not actor).
+/// </summary>
+/// <param name="Actor">Entity that wrote something in paper.</param>
 [ByRefEvent]
 public record struct PaperAfterWriteEvent(EntityUid Actor);
 
