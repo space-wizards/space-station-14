@@ -80,7 +80,7 @@ public sealed partial class IngestionSystem
     /// <param name="component">The component of the food item we're trying to eat.</param>
     /// <param name="utensils">The utensils needed to eat the food item.</param>
     /// <returns>True if we are able to eat the item.</returns>
-    private bool TryGetRequiredUtensils(Entity<HandsComponent?> entity, EdibleComponent component, out List<EntityUid> utensils)
+    private bool TryGetUtensils(Entity<HandsComponent?> entity, EdibleComponent component, out List<EntityUid> utensils)
     {
         utensils = new List<EntityUid>();
 
@@ -114,5 +114,38 @@ public sealed partial class IngestionSystem
         _popup.PopupClient(Loc.GetString("food-you-need-to-hold-utensil", ("utensil", component.Utensil ^ usedTypes)), entity, entity);
         return false;
 
+    }
+
+    private bool HasRequiredUtensils(Entity<HandsComponent?> entity, EdibleComponent component)
+    {
+        // If we don't need a utensil to eat this exit early
+        if (!component.UtensilRequired || component.Utensil == UtensilType.None)
+            return true;
+
+        if (!Resolve(entity, ref entity.Comp, false)) // If you have no hands then sure go ahead eat all you want.
+            return true;
+
+        var usedTypes = UtensilType.None;
+
+        foreach (var item in _hands.EnumerateHeld(entity))
+        {
+            // Is utensil?
+            if (!_utensilsQuery.TryComp(item, out var utensil))
+                continue;
+
+            // Do we have a new and unused utensil type?
+            if ((utensil.Types & component.Utensil) == 0 || (usedTypes & utensil.Types) == utensil.Types)
+                continue;
+
+            // Add to used list
+            usedTypes |= utensil.Types;
+        }
+
+        // If "required" field is set, try to block eating without proper utensils used
+        if (!component.UtensilRequired || (usedTypes & component.Utensil) == component.Utensil)
+            return true;
+
+        _popup.PopupClient(Loc.GetString("food-you-need-to-hold-utensil", ("utensil", component.Utensil ^ usedTypes)), entity, entity);
+        return false;
     }
 }

@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -21,7 +22,12 @@ public record struct IngestibleEvent(bool Cancelled = false);
 /// <param name="Destroy">Will this entity be destroyed when it's eaten?</param>
 /// <param name="Cancelled">If something prevented us from accessing the reagents, the event is cancelled</param>
 [ByRefEvent]
-public record struct EdibleEvent(EntityUid User, bool Destroy, bool Cancelled = false);
+public record struct EdibleEvent(EntityUid User, bool Destroy, bool Cancelled = false)
+{
+    public Entity<SolutionComponent>? Solution;
+
+    public bool Cancelled;
+}
 
 /// <summary>
 /// Raised when an entity is trying to ingest an entity to see if it has any component that can ingest it.
@@ -94,7 +100,7 @@ public record struct BeforeEatenEvent(EntityUid User, EntityUid Target, FixedPoi
 /// <param name="Split">The solution we're currently eating.</param>
 /// <param name="ForceFed">Whether we're being fed by someone else, checkec enough I might as well pass it.</param>
 [ByRefEvent]
-public record struct IngestSolutionEvent(EntityUid User, EntityUid Target, Solution Split, bool ForceFed)
+public record struct EatenEvent(EntityUid User, EntityUid Target, Solution Split, bool ForceFed)
 {
     // Should we refill the solution now that we've eaten it?
     // This bool basically only exists because of stackable system.
@@ -107,7 +113,7 @@ public record struct IngestSolutionEvent(EntityUid User, EntityUid Target, Solut
     public bool Handled;
 };
 
-// TODO: This can probably go.
+// TODO: This can definitely go.
 /// <summary>
 /// Raised directed at the food after finishing eating a food before it's deleted.
 /// Cancel this if you want to do something special before a food is deleted.
@@ -120,12 +126,11 @@ public sealed class BeforeFullyEatenEvent : CancellableEntityEventArgs
     public EntityUid User;
 }
 
-// TODO: This should go if possible or at least be retooled
 /// <summary>
 /// Raised directed at the food after finishing eating it and before it's deleted.
 /// </summary>
 [ByRefEvent]
-public readonly record struct AfterFullyEatenEvent(EntityUid User)
+public readonly record struct FullyEatenEvent(EntityUid User)
 {
     /// <summary>
     /// The entity that ate the food.

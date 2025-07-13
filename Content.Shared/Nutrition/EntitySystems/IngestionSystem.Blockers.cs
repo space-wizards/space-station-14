@@ -19,6 +19,7 @@ public sealed partial class IngestionSystem
         SubscribeLocalEvent<IngestionBlockerComponent, ItemMaskToggledEvent>(OnBlockerMaskToggled);
         SubscribeLocalEvent<IngestionBlockerComponent, IngestionAttemptEvent>(OnIngestionBlockerAttempt);
         SubscribeLocalEvent<IngestionBlockerComponent, InventoryRelayedEvent<IngestionAttemptEvent>>(OnIngestionBlockerAttempt);
+        SubscribeLocalEvent<EdibleComponent, EdibleEvent>(OnEdible);
         SubscribeLocalEvent<StorageComponent, EdibleEvent>(OnStorageEdible);
         SubscribeLocalEvent<ItemSlotsComponent, EdibleEvent>(OnItemSlotsEdible);
         SubscribeLocalEvent<OpenableComponent, EdibleEvent>(OnOpenableEdible);
@@ -52,6 +53,22 @@ public sealed partial class IngestionSystem
 
         args.Args.Cancelled = true;
         args.Args.Blocker = entity;
+    }
+
+    private void OnEdible(Entity<EdibleComponent> entity, ref EdibleEvent args)
+    {
+        if (args.Cancelled || args.Solution != null)
+            return;
+
+        if (entity.Comp.UtensilRequired && !HasRequiredUtensils(args.User, entity.Comp))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        // Check this last
+        if (_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out args.Solution))
+            args.Cancelled = true;
     }
 
     private void OnStorageEdible(Entity<StorageComponent> ent, ref EdibleEvent args)

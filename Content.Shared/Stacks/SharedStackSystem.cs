@@ -39,7 +39,7 @@ namespace Content.Shared.Stacks
             SubscribeLocalEvent<StackComponent, ExaminedEvent>(OnStackExamined);
             SubscribeLocalEvent<StackComponent, InteractUsingEvent>(OnStackInteractUsing);
             SubscribeLocalEvent<StackComponent, BeforeEatenEvent>(OnBeforeEaten);
-            SubscribeLocalEvent<StackComponent, IngestSolutionEvent>(OnEaten);
+            SubscribeLocalEvent<StackComponent, EatenEvent>(OnEaten);
 
             _vvm.GetTypeHandler<StackComponent>()
                 .AddPath(nameof(StackComponent.Count), (_, comp) => comp.Count, SetCount);
@@ -423,7 +423,7 @@ namespace Content.Shared.Stacks
             Popup.PopupClient(args.Target == args.User ? Loc.GetString("food-system-you-cannot-eat-any-more-other", ("target", args.Target)) : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Target, args.User);
         }
 
-        private void OnEaten(Entity<StackComponent> eaten, ref IngestSolutionEvent args)
+        private void OnEaten(Entity<StackComponent> eaten, ref EatenEvent args)
         {
             if (!Use(eaten, 1))
                 return;
