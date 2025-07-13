@@ -6,7 +6,7 @@
   components:
   - type: ArtifactNuker
   - type: Sprite
-    sprite: Objects/Specific/Xenoarchaeology/artifact_nuker.rsi # Damn this sprite sucks. Someone resprite please 🙏🙏🙏
+    sprite: Objects/Specific/Xenoarchaeology/artifact_nuker.rsi # Damn this sprite is so ugly. Someone resprite please 🙏🙏🙏
     state: icon
   - type: Item
     sprite: Objects/Specific/Xenoarchaeology/artifact_nuker.rsi

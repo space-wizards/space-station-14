@@ -29,7 +29,7 @@ public sealed partial class ArtifactNukerComponent : Component
     /// </summary>
     [ViewVariables]
     [AutoNetworkedField]
-    public int? Index;
+    public string? Index;
 }
 
 [Serializable, NetSerializable]

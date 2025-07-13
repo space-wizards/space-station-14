@@ -20,6 +20,7 @@ public abstract class SharedArtifactNukerSystem : EntitySystem
     [Dependency] protected readonly SharedXenoArtifactSystem _xenoSys = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+#pragma warning restore IDE1006
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -56,7 +57,10 @@ public abstract class SharedArtifactNukerSystem : EntitySystem
                 return;
             }
 
-            var refEvent = new AttemptNukeArtifact(ent, args.User, ent.Comp.Index.Value);
+            if (TryComp<UseDelayComponent>(ent, out var delay))
+                _useDelay.TryResetDelay((ent, delay), true);
+
+            var refEvent = new AttemptNukeArtifact(ent, args.User, ent.Comp.Index);
             RaiseLocalEvent(args.Target.Value, ref refEvent);
             _popup.PopupClient(Loc.GetString("artifact-nuker-popup-success"), args.User, PopupType.Medium);
             args.Handled = true;
@@ -70,15 +74,15 @@ public abstract class SharedArtifactNukerSystem : EntitySystem
     }
 }
 
-#region events and messages
+#region events & messages
 
 [ByRefEvent]
-public record struct AttemptNukeArtifact(Entity<ArtifactNukerComponent> Nuker, EntityUid User, int index);
+public record struct AttemptNukeArtifact(Entity<ArtifactNukerComponent> Nuker, EntityUid User, string Index);
 
 [Serializable, NetSerializable]
-public sealed class ArtifactNukerIndexChangeMessage(int index) : BoundUserInterfaceMessage
+public sealed class ArtifactNukerIndexChangeMessage(string index) : BoundUserInterfaceMessage
 {
-    public readonly int Index = index;
+    public readonly string Index = index;
 }
 
 #endregion

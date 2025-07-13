@@ -23,25 +23,28 @@ public sealed class ArtifactNukerSystem : SharedArtifactNukerSystem
         if (!_powerCell.TryUseCharge(args.Nuker, args.Nuker.Comp.EnergyDrain, user: args.User))
             return;
 
-        if (!_xenoSys.TryGetNode(ent.Owner, args.index, out var nodenull))
-            return;
-        var node = nodenull.Value;
-
-        var predecessors = _xenoSys.GetPredecessorNodes(ent.Owner, node)
-            .ToList();
-
-        var successors = _xenoSys.GetSuccessorNodes(ent.Owner, node)
-            .ToList();
-
-        for (var i = 0; i < predecessors.Count && i < successors.Count; i++)
-            _xenoSys.AddEdge(ent.Owner, predecessors[i], successors[i]);
-
-        if (args.Nuker.Comp.ActivateNode)
+        var nodes = _xenoSys.GetActiveNodes(ent);
+        foreach (var node in nodes)
         {
-            var coords = Transform(ent).Coordinates;
-            _xenoSys.ActivateNode(ent, node, args.User, null, coords);
-        }
+            if (args.Index != _xenoSys.GetNodeId(node))
+                continue;
 
-        _xenoSys.RemoveNode(ent.Owner, node.Owner);
+            var predecessors = _xenoSys.GetPredecessorNodes(ent.Owner, node)
+                .ToList();
+
+            var successors = _xenoSys.GetSuccessorNodes(ent.Owner, node)
+                .ToList();
+
+            for (var i = 0; i < predecessors.Count && i < successors.Count; i++)
+                _xenoSys.AddEdge(ent.Owner, predecessors[i], successors[i]);
+
+            if (args.Nuker.Comp.ActivateNode)
+            {
+                var coords = Transform(ent).Coordinates;
+                _xenoSys.ActivateNode(ent, node, args.User, null, coords);
+            }
+
+            _xenoSys.RemoveNode(ent.Owner, node.Owner);
+        }
     }
 }
