@@ -40,7 +40,7 @@
           - CanPilot
       - type: NpcFactionMember
         factions:
-        - SimpleHostile
+        - Abductor
       mindRoles:
       - MindRoleLoneAbductor
     - spawnerPrototype: AbductorAgentSpawner
@@ -65,7 +65,7 @@
           - CanPilot
       - type: NpcFactionMember
         factions:
-        - SimpleHostile
+        - Abductor
       mindRoles:
       - MindRoleLoneAbductor
       
