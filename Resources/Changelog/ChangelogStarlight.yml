@@ -9309,5 +9309,12 @@ Entries:
   id: 1283
   time: '2025-07-14T06:14:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1030
+- author: DrSmugleaf
+  changes:
+  - message: Fixed TTS leaking memory in replays.
+    type: Fix
+  id: 1284
+  time: '2025-07-14T08:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1031
 Order: -1
 
