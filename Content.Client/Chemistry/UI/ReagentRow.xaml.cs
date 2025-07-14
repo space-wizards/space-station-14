@@ -66,7 +66,7 @@ public sealed partial class ReagentRow : Control
 
     public void SetQuantity(FixedPoint2 quantity)
     {
-        ReagentQuantity.Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", quantity));
+        ReagentQuantityLabel.Text = ReagentQuantity.LocalizedQuantity(quantity);
     }
 
     public void SetRowColor(Color color)

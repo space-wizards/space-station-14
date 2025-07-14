@@ -2,11 +2,9 @@
     <PanelContainer Name="Row">
         <BoxContainer Name="InnerContainer">
             <Label Name="ReagentName" />
-            <Label Name="ReagentQuantity" StyleClasses="LabelSecondaryColor" />
-            <Control HorizontalExpand="True" />
-            <PanelContainer MinWidth="4"
-                            Margin="0 1"
-                            Name="ReagentColor" />
+            <Label Name="ReagentQuantityLabel" StyleClasses="LabelSecondaryColor" />
+            <PanelContainer Name="ReagentColor"
+                            HorizontalExpand="True" HorizontalAlignment="Right" MinWidth="4" Margin="0 1" />
             <!-- Buttons programatically get inserted here. -->
         </BoxContainer>
     </PanelContainer>

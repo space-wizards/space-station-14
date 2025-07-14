@@ -135,8 +135,7 @@ namespace Content.Client.Chemistry.UI
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
 
-            // TODO localize
-            BufferCurrentVolume.Text = $" {castState.BufferCurrentVolume?.Int() ?? 0}u";
+            BufferCurrentVolume.Text = " " + ReagentQuantity.LocalizedQuantity(castState.BufferCurrentVolume);
 
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
@@ -226,8 +225,7 @@ namespace Content.Client.Chemistry.UI
 
             _lastSortingType = state.SortingType;
 
-            // TODO localize
-            _bufferReagentList.UpdateLabels(null, $"{state.BufferCurrentVolume}u");
+            _bufferReagentList.UpdateLabels(null, ReagentQuantity.LocalizedQuantity(state.BufferCurrentVolume));
         }
 
         private void UpdateContainerInfo(ReagentList list, ContainerInfo? info)
@@ -247,11 +245,8 @@ namespace Content.Client.Chemistry.UI
                 list.Update([]);
             }
 
-            if (info is not { DisplayName: var name, CurrentVolume: var currentVol, MaxVolume: var maxVol })
-                return;
-
-            // TODO localize
-            list.UpdateLabels($"{name}: ", $"{currentVol}/{maxVol}");
+            if (info is { DisplayName: var name })
+                list.UpdateLabels($"{name}: ", info.LocalizedCapacity());
         }
 
         public string LabelLine
