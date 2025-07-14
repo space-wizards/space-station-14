@@ -1877,6 +1877,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     message.Round,
                     player.UserName,
                     message.SourcePlayer,
+                    message.CreatedAt,
                     message.Block
                 ));
 

@@ -7,6 +7,8 @@
         <Button Name="ParrotMessagePlayerButton" Text="Player" ToolTip="{Loc 'parrot-messages-line-ahelp-tooltip'}"></Button>
         <Label Name="ParrotMessagePlayerText" Visible="False" Text="{Loc 'parrot-messages-line-ahelp-not-current-round'}"></Label>
         <cc:HSeparator Margin="4 0" />
+        <Label Name="ParrotMessageDate"></Label>
+        <cc:HSeparator Margin="4 0" />
         <Button Name="ParrotBlockButton" Text="Block" Access="Public" ToolTip="{Loc 'parrot-messages-line-block-tooltip'}" MinWidth="100"></Button>
     </BoxContainer>
     <cc:VSeparator Margin="0 2"></cc:VSeparator>

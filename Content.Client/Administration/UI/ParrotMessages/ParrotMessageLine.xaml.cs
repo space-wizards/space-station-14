@@ -26,6 +26,8 @@ public sealed partial class ParrotMessageLine : BoxContainer
 
         ParrotMessagePlayerButton.Text = memory.SourcePlayerUserName;
 
+        ParrotMessageDate.Text = memory.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss");
+
         ParrotMessagePlayerButton.OnPressed += (_) =>
         {
             _uiManager.GetUIController<AHelpUIController>().Open(new NetUserId(memory.SourcePlayerGuid));

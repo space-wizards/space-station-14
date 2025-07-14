@@ -12,5 +12,6 @@ public sealed record ExtendedPlayerMessage(
     int SourceRound,
     string SourcePlayerUserName,
     Guid SourcePlayerGuid,
+    DateTime CreatedAt,
     bool Blocked
 );
