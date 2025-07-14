@@ -1,0 +1,67 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               MinSize="300 190"
+               SetSize="300 190"
+               Title="{Loc 'gas-tank-name'}">
+    <BoxContainer Orientation="Vertical" Margin="5">
+
+        <!-- Pressure -->
+        <Label Name="PressureLabel"
+               Text="{Loc 'gas-tank-pressure'}"
+               HorizontalAlignment="Left"
+               Margin="0 20 0 0"/>
+
+        <!-- Internals -->
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      Margin="0 20 0 0">
+            <!-- Display -->
+            <Label Name="InternalsLabel"
+                   Text="{Loc 'gas-tank-internals'}"
+                   HorizontalAlignment="Left"/>
+
+            <!-- Button -->
+            <Button Name="InternalsButton"
+                    Text="{Loc 'gas-tank-internals-button'}"
+                    MinSize="80 27"
+                    HorizontalAlignment="Right"
+                    Margin="0 0 10 0"/>
+        </BoxContainer>
+
+        <!-- Output Pressure -->
+        <Label Name="OutputPressure"
+               Text="{Loc 'gas-tank-output-pressure'}"
+               HorizontalAlignment="Center"
+               Margin="0 24 0 0" />
+
+        <!-- Pressure Container -->
+        <BoxContainer Orientation="Horizontal"
+                      VerticalExpand="True"
+                      HorizontalExpand="True"
+                      Margin="0 5 0 0">
+
+            <!-- Left button -->
+            <Button Name="LeftButton"
+                    Text="{Loc 'gas-tank-left-button'}"
+                    MinSize="32 28"
+                    Margin="0 0 1 0"/>
+
+            <!-- Center box -->
+            <BoxContainer Name="ContentBox"
+                          Orientation="Vertical"
+                          VerticalExpand="True"
+                          HorizontalExpand="True">
+                <LineEdit Name="FloatDisplay"
+                          Text="21.3"
+                          HorizontalAlignment="Left"
+                          Size="12"
+                          StyleClasses="OpenBoth"/>
+            </BoxContainer>
+
+            <!-- Right button -->
+            <Button Name="RightButton"
+                    Text="{Loc 'gas-tank-right-button'}"
+                    MinSize="32 28"
+                    Margin="1 0 0 0" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

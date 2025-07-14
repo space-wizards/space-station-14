@@ -3,6 +3,13 @@
 namespace Content.Shared.Atmos.Components;
 
 [Serializable, NetSerializable]
+public sealed class GasTankUpdateMessage(float pressure, bool internalsConnected) : BoundUserInterfaceMessage
+{
+    public float Pressure { get; } = pressure;
+    public bool InternalsConnected { get; } = internalsConnected;
+}
+
+[Serializable, NetSerializable]
 public enum SharedGasTankUiKey : byte
 {
     Key
@@ -12,9 +19,9 @@ public enum SharedGasTankUiKey : byte
 public sealed class GasTankToggleInternalsMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed class GasTankSetPressureMessage : BoundUserInterfaceMessage
+public sealed class GasTankSetPressureMessage(float pressure) : BoundUserInterfaceMessage
 {
-    public float Pressure;
+    public float Pressure = pressure;
 }
 
 [Serializable, NetSerializable]
