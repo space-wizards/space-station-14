@@ -1262,5 +1262,12 @@ Entries:
   id: 153
   time: '2025-07-11T17:48:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38855
+- author: perryprog
+  changes:
+  - message: The runverbas command should now work better with other toolshed commands.
+    type: Fix
+  id: 154
+  time: '2025-07-14T15:45:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38155
 Name: Admin
 Order: 2
