@@ -90,7 +90,12 @@ public sealed class TextToSpeechSystem : EntitySystem
 
         try
         {
+            // Setting capacity to 0 makes MemoryStream drop the reference to its buffer (byte array),
+            // letting it be garbage collected
+            // Dispose does not do this, at least as of time of writing
             stream.Capacity = 0;
+
+            // We also dispose it since we don't want it to be reused after the data is dropped
             stream.Dispose();
         }
         catch
