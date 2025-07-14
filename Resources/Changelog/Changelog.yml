@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Quantus
-  changes:
-  - message: Fixed the unusual delay in production after de-aging a plant with cryoxadone.
-    type: Fix
-  id: 8258
-  time: '2025-04-19T13:43:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34668
 - author: ArtisticRoomba
   changes:
   - message: The Go Go Hat now checks if your message matches either the name of the
@@ -3891,3 +3884,14 @@
   id: 8770
   time: '2025-07-13T20:50:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38972
+- author: Flareguy
+  changes:
+  - message: Added several new vox customization options, including additional tails,
+      hairstyles, and tattoos.
+    type: Add
+  - message: Added eyeshadow markings. They're available on every species except for
+      Moth and Arachnid.
+    type: Add
+  id: 8771
+  time: '2025-07-14T02:49:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38906
