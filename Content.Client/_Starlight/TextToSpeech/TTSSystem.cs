@@ -47,6 +47,8 @@ public sealed class TextToSpeechSystem : EntitySystem
         _cfg.OnValueChanged(StarlightCCVars.TTSClientEnabled, OnTtsClientOptionChanged, true);
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
         SubscribeNetworkEvent<AnnounceTtsEvent>(OnAnnounceTTSPlay);
+        SubscribeLocalEvent<ClientTTSAudioComponent, ComponentRemove>(OnClientTTSAudioRemove);
+        SubscribeLocalEvent<ClientTTSAudioComponent, EntityTerminatingEvent>(OnClientTTSAudioRemove);
     }
 
     public override void Shutdown()
@@ -80,6 +82,15 @@ public sealed class TextToSpeechSystem : EntitySystem
 
     private void OnAnnounceTTSPlay(AnnounceTtsEvent ev)
         => _ttsQueue.Enqueue((ev.Data, ev.AnnouncementSound, _announceVolume));
+
+    private void OnClientTTSAudioRemove<T>(Entity<ClientTTSAudioComponent> ent, ref T args)
+    {
+        if (ent.Comp.Stream is not { } stream)
+            return;
+
+        stream.Capacity = 0;
+        stream.Dispose();
+    }
 
     private void PlayQueue()
     {
@@ -126,11 +137,16 @@ public sealed class TextToSpeechSystem : EntitySystem
         using var stream = new MemoryStream(data);
         var audioStream = _audioManager.LoadAudioOggVorbis(stream);
 
-        return globally
+        var ent = globally
             ? _audio.PlayGlobal(audioStream, null, @params)
             : sourceUid != null
                 ? _audio.PlayEntity(audioStream, sourceUid.Value, null, @params)
                 : _audio.PlayGlobal(audioStream, null, @params);
+
+        if (ent != null)
+            EnsureComp<ClientTTSAudioComponent>(ent.Value.Entity).Stream = stream;
+
+        return ent;
     }
 
     public override void Update(float frameTime)
