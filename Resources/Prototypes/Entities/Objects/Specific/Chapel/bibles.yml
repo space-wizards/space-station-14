@@ -102,9 +102,9 @@
   id: BibleTorah
   components:
   - type: Sprite
-    sprite: Objects/Specific/Chapel/torah.rsi
+    sprite: Objects/Specific/Chapel/tanakh.rsi
   - type: Item
-    sprite: Objects/Specific/Chapel/torah.rsi
+    sprite: Objects/Specific/Chapel/tanakh.rsi
 
 - type: entity
   parent: Bible
