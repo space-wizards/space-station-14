@@ -14,12 +14,17 @@ comp-gas-tank-examine-closed-valve = Gas release valve is [color=green]closed[/c
 control-verb-open-control-panel-text = Open Control Panel
 
 ## UI
-gas-tank-window-internals-toggle-button = Toggle
+gas-tank-window-name = Air Tank
+gas-tank-window-toggle-button = Toggle
 gas-tank-window-output-pressure-label = Output Pressure
 gas-tank-window-tank-pressure-text = Pressure: {$tankPressure} kPA
-gas-tank-window-internal-text = Internals: {$status}
-gas-tank-window-internal-connected = [color=green]Connected[/color]
-gas-tank-window-internal-disconnected = [color=red]Disconnected[/color]
+gas-tank-window-internal-connected = Connect
+gas-tank-window-internal-disconnected = Disconnect
+gas-tank-window-valve = Gas release valve:
+gas-tank-window-valve-open = Open
+gas-tank-window-valve-close = Close
+gas-tank-window-left-button = - 0.3
+gas-tank-window-right-button = + 0.3
 
 ## Valve
 comp-gas-tank-open-valve = Open Valve

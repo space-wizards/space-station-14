@@ -1,0 +1,82 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               MinSize="350 200"
+               Resizable="False"
+               Title="{Loc 'gas-tank-window-name'}">
+    <BoxContainer Orientation="Vertical" Margin="1">
+
+        <!-- Pressure -->
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 5 0 0">
+            <Label Name="PressureLabel"
+                   Text="Pressure: 1000.000 kPA"
+                   HorizontalAlignment="Left"/>
+        </BoxContainer>
+
+        <!-- Internals -->
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      Margin="0 10 0 0">
+            <!-- Display -->
+            <Label Name="InternalsLabel"
+                   Text="Internals: "
+                   HorizontalAlignment="Left"/>
+
+            <!-- Button -->
+            <Button Name="InternalsButton"
+                    MinSize="112 28"
+                    MaxSize="112 28"
+                    HorizontalAlignment="Right"
+                    Margin="0 0 10 0"/>
+        </BoxContainer>
+
+        <!-- Release Valve -->
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      Margin="0 10 0 0">
+            <Label Name="ReleaseValveStatusLabel"
+                   Text="{Loc gas-tank-window-valve}"
+                   HorizontalAlignment="Center"
+                   MinSize="112 28"/>
+            <Button Name="ReleaseValve" MinSize="15, 28" Text="{Loc gas-tank-window-toggle-button}" Margin="5 0 0 0"/>
+        </BoxContainer>
+
+        <!-- Output Pressure -->
+        <Label Name="OutputPressure"
+               Text="{Loc gas-tank-window-output-pressure-label}"
+               HorizontalAlignment="Center"
+               Margin="0 24 0 0" />
+
+        <!-- Pressure Container -->
+        <BoxContainer Orientation="Horizontal"
+                      VerticalExpand="True"
+                      HorizontalExpand="True"
+                      HorizontalAlignment="Center"
+                      Margin="0 5 0 0">
+
+            <!-- Left button -->
+            <Button Name="LeftButton"
+                    Text="{Loc gas-tank-window-left-button}"
+                    Margin="0 0 5 10"
+                    MaxSize="52, 28"/>
+
+            <!-- Center box -->
+            <BoxContainer Name="ContentBox"
+                          Orientation="Vertical"
+                          VerticalExpand="True"
+                          HorizontalExpand="True"
+                          HorizontalAlignment="Center"
+                          Margin="0 0 0 10">
+                <LineEdit Name="FloatDisplay"
+                          Text="21.3"
+                          MinSize="112, 28"
+                          StyleClasses="OpenBoth"/>
+            </BoxContainer>
+
+            <!-- Right button -->
+            <Button Name="RightButton"
+                    Text="{Loc gas-tank-window-right-button}"
+                    Margin="5 0 0 10"
+                    MaxSize="52, 28"/>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>
