@@ -55,6 +55,7 @@
   - type: Instrument
     program: 6
     bank: 1
+    allowPercussion: true
   - type: Reflect
     reflectProb: 0.75 # surpise get tasered
     spread: 75
