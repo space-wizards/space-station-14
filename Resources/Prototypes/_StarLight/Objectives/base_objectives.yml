@@ -18,12 +18,7 @@
 
 - type: entity
   abstract: true
-  parent: BaseFreeObjective
+  parent: [BaseTraitorObjective, EscapeShuttleObjective]
   id: BaseStoryObjective
   components:
   - type: StoryObjective
-  - type: ObjectiveBlacklistRequirement
-    blacklist:
-      components:
-      - DieCondition
-      - SurviveCondition

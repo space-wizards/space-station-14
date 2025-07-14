@@ -51,7 +51,7 @@
 #    - type: Objective
 #      title: objective-retrieve-contraband
 #      icon:
-#        sprite: 
+#        sprite: /Objects/Clothing/Satchels/smugglers.rsi
 #        state: icon
 #        
 #
@@ -66,7 +66,7 @@
 #    - type: Objective
 #      title: objective-all-access
 #      icon:
-#        sprite:
+#        sprite: Objects/Tools/access_breaker.rsi
 #        state: icon
 #
 #- type: entity
@@ -80,19 +80,20 @@
 #    - type: Objective
 #      title: objective-arms-ring
 #      icon:
-#        sprite:
+#        sprite: Objects/Weapons/Guns/Rifles/ak.rsi
 #        state: icon
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseStoryObjective]
+  parent: BaseStoryObjective
   id: FrameObjective
+  description: 
   components:
     - type: Objective
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Misc/folders.rsi
-        state: folder-white
+        sprite: Objects/Misc/bureaucracy.rsi
+        state: syndicate_card
     - type: DepartmentObjective
       title: objective-framing
     - type: PickRandomDepartment
@@ -108,7 +109,7 @@
 #    - type: Objective
 #      title: objective-false-uprising
 #      icon:
-#        sprite:
+#        sprite: /Objects/Weapons/Melee/flash.rsi
 #        state: icon
 #
 #- type: entity
@@ -122,7 +123,7 @@
 #    - type: Objective
 #      title: objective-duelist
 #      icon:
-#        sprite:
+#        sprite: Objects/Weapons/Melee/captains_sabre.rsi
 #        state: icon
 #        
 #- type: entity
