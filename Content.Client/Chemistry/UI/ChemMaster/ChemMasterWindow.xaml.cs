@@ -26,10 +26,17 @@ namespace Content.Client.Chemistry.UI.ChemMaster
 
         private readonly SpriteSystem _sprite;
 
-        public event Action<ReagentId, FixedPoint2, bool>? OnReagentButtonPressed;
-        public readonly Button[] PillTypeButtons;
+        public event Action<(ReagentId Id, FixedPoint2 Amount, bool IsBuffer)>? OnReagentButton;
+        public event Action<string>? OnEjectButton;
+        public event Action<ChemMasterMode>? OnModeButton;
+        public event Action? OnSortButton;
+        public event Action<uint>? OnPillButton;
+        public event Action<(FixedPoint2 Dosage, uint Count, string Label)>? OnCreatePill;
+        public event Action<(FixedPoint2 Dosage, string Label)>? OnCreateBottle;
 
         private const string PillsRsiPath = "/Textures/Objects/Specific/Chemistry/pills.rsi";
+        private readonly Button[] _pillTypeButtons;
+
         private readonly string _noContainerText = Loc.GetString("chem-master-window-no-container-loaded-text");
 
         private readonly ReagentList _bufferReagentList;
@@ -51,8 +58,8 @@ namespace Content.Client.Chemistry.UI.ChemMaster
             // Pill rsi file should have states named as pill1, pill2, and so on.
             var resourcePath = new ResPath(PillsRsiPath);
             var pillTypeGroup = new ButtonGroup();
-            PillTypeButtons = new Button[20];
-            for (uint i = 0; i < PillTypeButtons.Length; i++)
+            _pillTypeButtons = new Button[SharedChemMaster.PillTypes];
+            for (uint i = 0; i < _pillTypeButtons.Length; i++)
             {
                 // For every button decide which stylebase to have
                 // Every row has 10 buttons
@@ -66,7 +73,7 @@ namespace Content.Client.Chemistry.UI.ChemMaster
                     styleBase = StyleBase.ButtonOpenRight;
 
                 // Generate buttons
-                PillTypeButtons[i] = new Button
+                var button = new Button
                 {
                     Access = AccessLevel.Public,
                     StyleClasses = { styleBase },
@@ -82,9 +89,14 @@ namespace Content.Client.Chemistry.UI.ChemMaster
                     TextureScale = new Vector2(1.75f, 1.75f),
                     Stretch = TextureRect.StretchMode.KeepCentered,
                 };
+                button.AddChild(pillTypeTexture);
 
-                PillTypeButtons[i].AddChild(pillTypeTexture);
-                Grid.AddChild(PillTypeButtons[i]);
+                // Avoid silly variable capture
+                var index = i;
+                button.OnPressed += _ => OnPillButton?.Invoke(index);
+
+                _pillTypeButtons[index] = button;
+                Grid.AddChild(button);
             }
 
             PillDosage.InitDefaultButtons();
@@ -110,10 +122,24 @@ namespace Content.Client.Chemistry.UI.ChemMaster
             InputContainerInfo.AddChild(_inputReagentList);
             OutputContainerInfo.AddChild(_outputReagentList);
 
+            // Register events
             _bufferReagentList.OnRowAmountPressed +=
-                (id, quantity) => OnReagentButtonPressed?.Invoke(id, quantity, true);
+                (id, quantity) => OnReagentButton?.Invoke((id, quantity, true));
             _inputReagentList.OnRowAmountPressed +=
-                (id, quantity) => OnReagentButtonPressed?.Invoke(id, quantity, false);
+                (id, quantity) => OnReagentButton?.Invoke((id, quantity, false));
+
+            InputEjectButton.OnPressed += _ => OnEjectButton?.Invoke(SharedChemMaster.InputSlotName);
+            OutputEjectButton.OnPressed += _ => OnEjectButton?.Invoke(SharedChemMaster.OutputSlotName);
+
+            BufferTransferButton.OnPressed += _ => OnModeButton?.Invoke(ChemMasterMode.Transfer);
+            BufferDiscardButton.OnPressed += _ => OnModeButton?.Invoke(ChemMasterMode.Discard);
+
+            BufferSortButton.OnPressed += _ => OnSortButton?.Invoke();
+
+            // Note that PillNumber has an IsValid that enforces it being positive.
+            CreatePillButton.OnPressed += _ =>
+                OnCreatePill?.Invoke((PillDosage.Value, (uint)PillNumber.Value, LabelLineEdit.Text));
+            CreateBottleButton.OnPressed += _ => OnCreateBottle?.Invoke((BottleDosage.Value, LabelLineEdit.Text));
         }
 
         /// <summary>
@@ -125,7 +151,7 @@ namespace Content.Client.Chemistry.UI.ChemMaster
             var castState = (ChemMasterBoundUserInterfaceState)state;
 
             if (castState.UpdateLabel)
-                LabelLine = GenerateLabel(castState);
+                LabelLineEdit.Text = GenerateLabel(castState);
 
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
@@ -148,11 +174,12 @@ namespace Content.Client.Chemistry.UI.ChemMaster
             var holdsReagents = output?.Reagents != null;
             var pillNumberMax = holdsReagents ? 0 : remainingCapacity;
             var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
-            var bufferVolume = castState.BufferCurrentVolume?.Int() ?? 0;
+            var bufferVolume = castState.BufferCurrentVolume ?? 0;
 
-            PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
+            var maxDosage = FixedPoint2.Min(bufferVolume, castState.PillDosageLimit);
+            PillDosage.Value = maxDosage.Int();
 
-            PillTypeButtons[castState.SelectedPillType].Pressed = true;
+            _pillTypeButtons[castState.SelectedPillType].Pressed = true;
 
             PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
             PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
@@ -164,16 +191,16 @@ namespace Content.Client.Chemistry.UI.ChemMaster
                 BottleDosage.Value = bottleAmountMax;
 
             // Avoid division by zero
-            if (PillDosage.Value > 0)
+            if (maxDosage > 0)
             {
-                PillNumber.Value = Math.Min(bufferVolume / PillDosage.Value, pillNumberMax);
+                PillNumber.Value = FixedPoint2.Min(bufferVolume / maxDosage, pillNumberMax).Int();
             }
             else
             {
                 PillNumber.Value = 0;
             }
 
-            BottleDosage.Value = Math.Min(bottleAmountMax, bufferVolume);
+            BottleDosage.Value = FixedPoint2.Min(bottleAmountMax, bufferVolume).Int();
         }
         /// <summary>
         /// Generate a product label based on reagents in the buffer.
@@ -237,12 +264,6 @@ namespace Content.Client.Chemistry.UI.ChemMaster
 
             if (info is { DisplayName: var name })
                 list.UpdateLabels($"{name}: ", info.LocalizedCapacity());
-        }
-
-        public string LabelLine
-        {
-            get => LabelLineEdit.Text;
-            set => LabelLineEdit.Text = value;
         }
     }
 }
