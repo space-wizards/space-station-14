@@ -3,7 +3,7 @@
                 xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
                 VerticalExpand="True" HorizontalExpand="True"
                 Title="{Loc parrot-messages-title}"
-                SetSize="800 400">
+                SetSize="1000 600">
     <PanelContainer StyleClasses="BackgroundDark">
         <TabContainer Name="MessageTabContainer" Access="Public">
             <parrotmessages:ParrotMessageList Name="ActiveMessages" Access="Public"></parrotmessages:ParrotMessageList>

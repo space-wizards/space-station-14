@@ -9,10 +9,14 @@ public sealed partial class ParrotMessageList : BoxContainer
 {
     public bool ShowBlocked { get; set; }
     public bool Initialized { get; private set; }
+    public bool Dirty { get; set; }
+
+    private int _messageCount;
 
     private void UpdateMessageCountText(int messageCount)
     {
-        ParrotMessageCountLabel.Text = Loc.GetString("parrot-messages-num-messages", ("messageCount", messageCount));
+        _messageCount = messageCount;
+        MessageCountLabel.Text = Loc.GetString("parrot-messages-num-messages", ("messageCount", _messageCount));
     }
 
     private ParrotMessageLine AddMessageLine(ExtendedPlayerMessage memory)
@@ -21,7 +25,7 @@ public sealed partial class ParrotMessageList : BoxContainer
 
         messageLine.SetMessage(memory);
 
-        ParrotMessageContainer.AddChild(messageLine);
+        MessageContainer.AddChild(messageLine);
 
         return messageLine;
     }
@@ -32,7 +36,7 @@ public sealed partial class ParrotMessageList : BoxContainer
 
         UpdateMessageCountText(parrotMemories.Count);
 
-        ParrotMessageContainer.RemoveAllChildren();
+        MessageContainer.RemoveAllChildren();
 
         foreach (var memory in parrotMemories)
         {
@@ -41,7 +45,8 @@ public sealed partial class ParrotMessageList : BoxContainer
             messageLine.ParrotBlockButton.OnPressed += (_) =>
             {
                 eui.ChangeMessageBlock(memory.MessageId, !memory.Blocked);
-                ParrotMessageContainer.RemoveChild(messageLine);
+                MessageContainer.RemoveChild(messageLine);
+                UpdateMessageCountText(_messageCount - 1);
             };
 
             // default text and tooltip refer to unblocked messages

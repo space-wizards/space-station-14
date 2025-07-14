@@ -10,9 +10,10 @@ public sealed class ParrotMessagesEuiState(List<ExtendedPlayerMessage> messages)
 }
 
 [Serializable, NetSerializable]
-public sealed class ParrotMessageRefreshMsg(bool showblocked) : EuiMessageBase
+public sealed class ParrotMessageRefreshMsg(bool showBlocked, bool currentRoundOnly) : EuiMessageBase
 {
-    public bool Showblocked { get; } = showblocked;
+    public bool ShowBlocked { get; } = showBlocked;
+    public bool CurrentRoundOnly { get; } = currentRoundOnly;
 }
 
 [Serializable, NetSerializable]

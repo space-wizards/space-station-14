@@ -18,10 +18,10 @@ public sealed partial class ParrotMessagesWindow : FancyWindow
         var currentActiveTab = MessageTabContainer.CurrentTab;
         var currentActiveChild = MessageTabContainer.GetChild(currentActiveTab);
 
-        if (currentActiveChild is not ParrotMessageList { } messageList)
+        if (currentActiveChild is not ParrotMessageList { } parrotMessageList)
             return null;
 
-        return messageList;
+        return parrotMessageList;
     }
 
     public void UpdateMessages(ParrotMessagesEui eui, ParrotMessagesEuiState parrotState)
@@ -29,5 +29,20 @@ public sealed partial class ParrotMessagesWindow : FancyWindow
         var activeList = GetActiveList();
 
         activeList?.UpdateMessages(eui, parrotState.Messages);
+    }
+
+    public void MarkInactiveListsDirty()
+    {
+        for (var i = 0; i < MessageTabContainer.ChildCount; i++)
+        {
+            if (i == MessageTabContainer.CurrentTab)
+                continue;
+
+            var child = MessageTabContainer.GetChild(i);
+            if (child is not ParrotMessageList { } parrotMessageList)
+                continue;
+
+            parrotMessageList.Dirty = true;
+        }
     }
 }

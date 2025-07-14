@@ -5,6 +5,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.UI.ParrotMessages;
 

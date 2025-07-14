@@ -1850,13 +1850,28 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             }
         }
 
-        public async IAsyncEnumerable<ExtendedPlayerMessage> GetParrotMemories(bool blocked)
+        public async IAsyncEnumerable<ExtendedPlayerMessage> GetParrotMemories(bool blocked, int? round, string? textFilter)
         {
             await using var db = await GetDb();
 
+            // general filtering by message type and whether the message is blocked
             var messageQuery = db.DbContext.PlayerMessage
                 .Where(message => message.Type == PlayerMessageType.Parrot)
                 .Where(message => message.Block == blocked);
+
+            // filter by round ID if set
+            if (round is not null)
+            {
+                messageQuery = messageQuery.Where(message => message.Round == round);
+            }
+
+            // filter by text if set. ignore case
+            if (textFilter is not null)
+            {
+                messageQuery = messageQuery.Where(
+                    message => message.Text.ToLower().Contains(textFilter.ToLower())
+                );
+            }
 
             var messagePlayers = messageQuery.Select(message => message.SourcePlayer);
 

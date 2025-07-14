@@ -367,7 +367,7 @@ namespace Content.Server.Database
 
         #region Parrots
 
-        IAsyncEnumerable<ExtendedPlayerMessage> GetParrotMemories(bool blocked);
+        IAsyncEnumerable<ExtendedPlayerMessage> GetParrotMemories(bool blocked, int? round = null, string? textFilter = null);
 
         IAsyncEnumerable<PlayerMessage> GetRandomParrotMemories(int limit);
 
@@ -1088,9 +1088,9 @@ namespace Content.Server.Database
 
         #region Parrots
 
-        public IAsyncEnumerable<ExtendedPlayerMessage> GetParrotMemories(bool blocked)
+        public IAsyncEnumerable<ExtendedPlayerMessage> GetParrotMemories(bool blocked, int? round = null, string? textFilter = null)
         {
-            return RunDbCommand(() => _db.GetParrotMemories(blocked));
+            return RunDbCommand(() => _db.GetParrotMemories(blocked, round, textFilter));
         }
 
         public IAsyncEnumerable<PlayerMessage> GetRandomParrotMemories(int limit)

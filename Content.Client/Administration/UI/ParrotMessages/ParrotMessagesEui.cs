@@ -17,26 +17,57 @@ public sealed class ParrotMessagesEui : BaseEui
         ParrotMessageWindow.OnOpen += InitializeMessageList;
         ParrotMessageWindow.OnClose += () => SendMessage(new CloseEuiMessage());
 
-        ParrotMessageWindow.MessageTabContainer.OnTabChanged += (_) => InitializeMessageList();
+        ParrotMessageWindow.MessageTabContainer.OnTabChanged += (_) => RefreshMessageList();
     }
 
     private void InitializeMessageList()
     {
-        // send a refresh if the list that is currently shown was never refreshed
+        // add event handlers for list controls if this was never initialized
         if (ParrotMessageWindow.GetActiveList() is not { Initialized: false } parrotMessageList)
             return;
 
-        parrotMessageList.ParrotMessageRefreshButton.OnPressed += (_) =>
-        {
-            SendMessage(new ParrotMessageRefreshMsg(parrotMessageList.ShowBlocked));
-        };
+        parrotMessageList.RefreshButton.OnPressed += (_) => SendRefresh(parrotMessageList);
+        parrotMessageList.CurrentRoundOnly.OnToggled += (_) => SendRefresh(parrotMessageList);
+        parrotMessageList.ApplyFilterButton.OnPressed += (_) => SendFilterChange(parrotMessageList);
+        parrotMessageList.ClearFilterButton.OnPressed += (_) => ClearFilter(parrotMessageList);
 
-        SendMessage(new ParrotMessageRefreshMsg(parrotMessageList.ShowBlocked));
+        SendRefresh(parrotMessageList);
+    }
+
+    private void RefreshMessageList()
+    {
+        // add event handlers for list controls if this was never initialized
+        if (ParrotMessageWindow.GetActiveList() is not { Dirty: true } parrotMessageList)
+            return;
+
+        SendRefresh(parrotMessageList);
+    }
+
+    private void SendRefresh(ParrotMessageList parrotMessageList)
+    {
+        SendMessage(new ParrotMessageRefreshMsg(
+            parrotMessageList.ShowBlocked,
+            parrotMessageList.CurrentRoundOnly.Pressed
+        ));
+    }
+
+    private void SendFilterChange(ParrotMessageList parrotMessageList)
+    {
+        SendMessage(new ParrotMessageFilterChangeMsg(
+            parrotMessageList.FilterLineEdit.Text
+        ));
+    }
+
+    private void ClearFilter(ParrotMessageList parrotMessageList)
+    {
+        parrotMessageList.FilterLineEdit.Text = "";
+        SendFilterChange(parrotMessageList);
     }
 
     public void ChangeMessageBlock(int messageId, bool block)
     {
         SendMessage(new ParrotMessageBlockChangeMsg(messageId, block));
+        ParrotMessageWindow.MarkInactiveListsDirty();
     }
 
     public override void HandleState(EuiStateBase state)
