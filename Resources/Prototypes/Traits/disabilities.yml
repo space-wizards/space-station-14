@@ -45,9 +45,9 @@
       cloneable: true
 
 - type: trait
-  id: Monochromancy
-  name: trait-monochromancy-name
-  description: trait-monochromancy-desc
+  id: Monochromacy
+  name: trait-monochromacy-name
+  description: trait-monochromacy-desc
   category: Disabilities
   components:
   - type: BlackAndWhiteOverlay

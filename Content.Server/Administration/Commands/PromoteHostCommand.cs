@@ -6,29 +6,28 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [UsedImplicitly]
-    public sealed class PromoteHostCommand : IConsoleCommand
+    public sealed class PromoteHostCommand : LocalizedCommands
     {
-        public string Command => "promotehost";
-        public string Description => "Grants client temporary full host admin privileges. Use this to bootstrap admins.";
-        public string Help => "Usage promotehost <player>";
+        [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "promotehost";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
-                shell.WriteLine("Expected exactly one argument.");
+                shell.WriteLine(Loc.GetString($"shell-need-exactly-one-argument"));
                 return;
             }
 
-            var plyMgr = IoCManager.Resolve<IPlayerManager>();
-            if (!plyMgr.TryGetSessionByUsername(args[0], out var targetPlayer))
+            if (!_playerManager.TryGetSessionByUsername(args[0], out var targetPlayer))
             {
-                shell.WriteLine("Unable to find a player by that name.");
+                shell.WriteLine(Loc.GetString($"shell-target-player-does-not-exist"));
                 return;
             }
 
-            var adminMgr = IoCManager.Resolve<IAdminManager>();
-            adminMgr.PromoteHost(targetPlayer);
+            _adminManager.PromoteHost(targetPlayer);
         }
     }
 }

@@ -10,6 +10,8 @@
     node: airlock
     containers:
     - board
+  - type: Paintable
+    group: null
 
 - type: entity
   parent: AirlockGlass
@@ -25,3 +27,5 @@
     - board
   - type: StaticPrice
     price: 165
+  - type: Paintable
+    group: null

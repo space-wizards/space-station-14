@@ -49,6 +49,7 @@
     <GuideEntityEmbed Entity="SignalControlledValve" Caption=""/>
     <GuideEntityEmbed Entity="PressureControlledValve" Caption=""/>
     <GuideEntityEmbed Entity="GasPassiveGate" Caption=""/>
+    <GuideEntityEmbed Entity="GasPressureRegulator" Caption=""/>
   </Box>
   <Box>
     ## Valves

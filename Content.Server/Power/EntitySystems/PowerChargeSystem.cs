@@ -85,8 +85,8 @@ public sealed class PowerChargeSystem : EntitySystem
         if (!Resolve(uid, ref powerReceiver))
             return;
 
-        if (user is { } )
-            _adminLogger.Add(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{ToPrettyString(user):player} set ${ToPrettyString(uid):target} to {(on ? "on" : "off")}");
+        if (user is { })
+            _adminLogger.Add(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{ToPrettyString(user):player} set {ToPrettyString(uid):target} to {(on ? "on" : "off")}");
 
         component.SwitchedOn = on;
         UpdatePowerState(component, powerReceiver);

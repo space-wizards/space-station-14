@@ -5,7 +5,7 @@
     <LangVersion>12</LangVersion>
     <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <WarningsAsErrors>nullable</WarningsAsErrors>
+    <WarningsAsErrors>RA0032;nullable</WarningsAsErrors>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>

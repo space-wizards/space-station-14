@@ -43,9 +43,9 @@ internal sealed class RandomWalkController : VirtualController
         var query = EntityQueryEnumerator<RandomWalkComponent, PhysicsComponent>();
         while (query.MoveNext(out var uid, out var randomWalk, out var physics))
         {
-            if (EntityManager.HasComponent<ActorComponent>(uid)
-            ||  EntityManager.HasComponent<ThrownItemComponent>(uid)
-            ||  EntityManager.HasComponent<FollowerComponent>(uid))
+            if (HasComp<ActorComponent>(uid)
+            || HasComp<ThrownItemComponent>(uid)
+            || HasComp<FollowerComponent>(uid))
                 continue;
 
             var curTime = _timing.CurTime;

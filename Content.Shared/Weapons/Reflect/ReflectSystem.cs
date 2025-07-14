@@ -15,6 +15,8 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Content.Shared.Examine;
+using Content.Shared.Localizations;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -45,6 +47,7 @@ public sealed class ReflectSystem : EntitySystem
         SubscribeLocalEvent<ReflectComponent, GotUnequippedEvent>(OnReflectUnequipped);
         SubscribeLocalEvent<ReflectComponent, GotEquippedHandEvent>(OnReflectHandEquipped);
         SubscribeLocalEvent<ReflectComponent, GotUnequippedHandEvent>(OnReflectHandUnequipped);
+        SubscribeLocalEvent<ReflectComponent, ExaminedEvent>(OnExamine);
     }
 
     private void OnReflectUserCollide(Entity<ReflectComponent> ent, ref ProjectileReflectAttemptEvent args)
@@ -200,4 +203,30 @@ public sealed class ReflectSystem : EntitySystem
         ent.Comp.InRightPlace = false;
         Dirty(ent);
     }
+
+    #region Examine
+    private void OnExamine(Entity<ReflectComponent> ent, ref ExaminedEvent args)
+    {
+        // This isn't examine verb or something just because it looks too much bad.
+        // Trust me, universal verb for the potential weapons, armor and walls looks awful.
+        var value = MathF.Round(ent.Comp.ReflectProb * 100, 1);
+
+        if (!_toggle.IsActivated(ent.Owner) || value == 0 || ent.Comp.Reflects == ReflectType.None)
+            return;
+
+        var compTypes = ent.Comp.Reflects.ToString().Split(", ");
+
+        List<string> typeList = new(compTypes.Length);
+
+        for (var i = 0; i < compTypes.Length; i++)
+        {
+            var type = Loc.GetString(("reflect-component-" + compTypes[i]).ToLower());
+            typeList.Add(type);
+        }
+
+        var msg = ContentLocalizationManager.FormatList(typeList);
+
+        args.PushMarkup(Loc.GetString("reflect-component-examine", ("value", value), ("type", msg)));
+    }
+    #endregion
 }

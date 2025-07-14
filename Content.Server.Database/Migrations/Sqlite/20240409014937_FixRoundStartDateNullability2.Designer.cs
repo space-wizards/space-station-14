@@ -14,6 +14,7 @@ namespace Content.Server.Database.Migrations.Sqlite
     [Migration("20240409014937_FixRoundStartDateNullability2")]
     partial class FixRoundStartDateNullability2
     {
+#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1693,5 +1694,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
 #pragma warning restore 612, 618
         }
+#endif
     }
 }

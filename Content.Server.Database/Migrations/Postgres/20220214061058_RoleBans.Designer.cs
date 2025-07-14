@@ -17,6 +17,7 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20220214061058_RoleBans")]
     partial class RoleBans
     {
+#if EF_DESIGNER
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
@@ -1037,5 +1038,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
+#endif
     }
 }

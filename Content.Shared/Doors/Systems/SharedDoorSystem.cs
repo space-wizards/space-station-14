@@ -23,6 +23,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -46,9 +47,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
 
-
-    [ValidatePrototypeId<TagPrototype>]
-    public const string DoorBumpTag = "DoorBumpOpener";
+    public static readonly ProtoId<TagPrototype> DoorBumpTag = "DoorBumpOpener";
 
     /// <summary>
     ///     A set of doors that are currently opening, closing, or just queued to open/close after some delay.

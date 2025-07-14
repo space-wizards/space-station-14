@@ -6,24 +6,23 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Permissions)]
-    public sealed class OpenPermissionsCommand : IConsoleCommand
+    public sealed class OpenPermissionsCommand : LocalizedEntityCommands
     {
-        public string Command => "permissions";
-        public string Description => "Opens the admin permissions panel.";
-        public string Help => "Usage: permissions";
+        [Dependency] private readonly EuiManager _euiManager = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "permissions";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine("This does not work from the server console.");
+                shell.WriteLine(Loc.GetString($"shell-cannot-run-command-from-server"));
                 return;
             }
 
-            var eui = IoCManager.Resolve<EuiManager>();
             var ui = new PermissionsEui();
-            eui.OpenEui(ui, player);
+            _euiManager.OpenEui(ui, player);
         }
     }
 }

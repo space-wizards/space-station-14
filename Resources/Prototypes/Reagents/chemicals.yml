@@ -82,6 +82,23 @@
           min: 5
 
 - type: reagent
+  parent: Artifexium
+  id: ArtifactGlue
+  name: reagent-name-artifact-glue
+  desc: reagent-desc-artifact-glue
+  flavor: artifactglue
+  physicalDesc: reagent-physical-desc-non-newtonian
+  color: "#827394"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ArtifactDurabilityRestore
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+
+- type: reagent
   id: Benzene
   name: reagent-name-benzene
   desc: reagent-desc-benzene

@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Sprites by discord user Deos#5630",
+    "copyright": "Sprites by discord user Deos#5630, inhand and helmet sprites by TiniestShark (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -12,6 +12,18 @@
         },
         {
             "name": "plushie_diona1"
+        },
+        {
+            "name": "equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
         }
     ]
 }

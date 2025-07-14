@@ -18,6 +18,7 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20240531011555_RoleWhitelist")]
     partial class RoleWhitelist
     {
+#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1909,5 +1910,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
+#endif
     }
 }

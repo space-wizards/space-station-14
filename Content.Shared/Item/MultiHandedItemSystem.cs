@@ -1,5 +1,4 @@
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Popups;
@@ -38,7 +37,7 @@ public sealed class MultiHandedItemSystem : EntitySystem
 
     private void OnAttemptPickup(Entity<MultiHandedItemComponent> ent, ref GettingPickedUpAttemptEvent args)
     {
-        if (TryComp<HandsComponent>(args.User, out var hands) && hands.CountFreeHands() >= ent.Comp.HandsNeeded)
+        if (_hands.CountFreeHands(args.User) >= ent.Comp.HandsNeeded)
             return;
 
         args.Cancel();

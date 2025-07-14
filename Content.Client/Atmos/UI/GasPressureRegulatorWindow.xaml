@@ -1,0 +1,96 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      SetSize="345 380"
+                      MinSize="345 380"
+                      Title="{Loc gas-pressure-regulator-ui-title}"
+                      Resizable="False">
+
+    <BoxContainer Orientation="Vertical">
+
+        <BoxContainer Orientation="Vertical" Margin="0 10 0 10">
+
+            <BoxContainer Orientation="Vertical" Align="Center">
+                <Label Text="{Loc gas-pressure-regulator-ui-outlet}" Align="Center" StyleClasses="LabelKeyText" />
+                <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Name="OutletPressureLabel" Text="N/A" Margin="0 0 4 0" />
+                    <Label Text="{Loc gas-pressure-regulator-ui-pressure-unit}" />
+                </BoxContainer>
+            </BoxContainer>
+
+            <BoxContainer Orientation="Horizontal" Align="Center">
+                <BoxContainer Orientation="Vertical" Align="Center" HorizontalExpand="True">
+                    <Label Text="{Loc gas-pressure-regulator-ui-target}" Align="Right" StyleClasses="LabelKeyText" />
+                    <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Label Name="TargetPressureLabel" Margin="0 0 4 0" />
+                        <Label Text="{Loc gas-pressure-regulator-ui-pressure-unit}" />
+                    </BoxContainer>
+                </BoxContainer>
+
+                <ProgressBar Name="ToTargetBar" MaxValue="1" SetSize="5 75" Margin="10" Vertical="True" />
+
+                <SpriteView Name="EntityView" SetSize="64 64" Scale="3 3" OverrideDirection="North" Margin="0" />
+
+                <ProgressBar Name="FlowRateBar" MaxValue="1" SetSize="5 75" Margin="10" Vertical="True" />
+
+                <BoxContainer Orientation="Vertical" Align="Center" HorizontalExpand="True">
+                    <Label Text="{Loc gas-pressure-regulator-ui-flow}" StyleClasses="LabelKeyText" />
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Name="CurrentFlowLabel" Text="N/A" Margin="0 0 4 0" />
+                        <Label Text="{Loc gas-pressure-regulator-ui-flow-rate-unit}" />
+                    </BoxContainer>
+                </BoxContainer>
+            </BoxContainer>
+
+            <BoxContainer Orientation="Vertical" Align="Center" Margin="1">
+                <Label Text="{Loc gas-pressure-regulator-ui-inlet}" Align="Center" StyleClasses="LabelKeyText" />
+                <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Name="InletPressureLabel" Text="N/A" Margin="0 0 4 0" />
+                    <Label Text="{Loc gas-pressure-regulator-ui-pressure-unit}" />
+                </BoxContainer>
+            </BoxContainer>
+
+        </BoxContainer>
+
+        <!-- Controls to Set Pressure -->
+        <controls:StripeBack Name="SetPressureStripeBack" HorizontalExpand="True">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="10 10 10 10">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <LineEdit Name="ThresholdInput" HorizontalExpand="True" MinSize="70 0" />
+                    <Button Name="SetThresholdButton" Text="{Loc gas-pressure-regulator-ui-set-threshold}"
+                            Disabled="True" Margin="5 0 0 0" />
+                </BoxContainer>
+
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 5 0 0">
+                    <Button Name="Subtract1000Button" Text="{Loc gas-pressure-regulator-ui-subtract-1000}"
+                            HorizontalExpand="True" Margin="0 2 2 0"
+                            StyleClasses="OpenBoth" />
+                    <Button Name="Subtract100Button" Text="{Loc gas-pressure-regulator-ui-subtract-100}"
+                            HorizontalExpand="True" Margin="0 2 2 0"
+                            StyleClasses="OpenBoth" />
+                    <Button Name="Subtract10Button" Text="{Loc gas-pressure-regulator-ui-subtract-10}"
+                            HorizontalExpand="True" Margin="0 2 2 0"
+                            StyleClasses="OpenBoth" />
+                    <Button Name="Add10Button" Text="{Loc gas-pressure-regulator-ui-add-10}" HorizontalExpand="True"
+                            Margin="0 2 2 0"
+                            StyleClasses="OpenBoth" />
+                    <Button Name="Add100Button" Text="{Loc gas-pressure-regulator-ui-add-100}"
+                            HorizontalExpand="True" Margin="0 2 2 0"
+                            StyleClasses="OpenBoth" />
+                    <Button Name="Add1000Button" Text="{Loc gas-pressure-regulator-ui-add-1000}"
+                            HorizontalExpand="True" Margin="0 2 2 0"
+                            StyleClasses="OpenBoth" />
+                </BoxContainer>
+
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 5 0 0">
+                    <Button Name="ZeroThresholdButton" Text="{Loc gas-pressure-regulator-ui-zero-threshold}"
+                            HorizontalExpand="True" Margin="0 0 5 0" />
+                    <Button Name="SetToCurrentPressureButton"
+                            Text="{Loc gas-pressure-regulator-ui-set-to-current-pressure}" HorizontalExpand="True" />
+                </BoxContainer>
+            </BoxContainer>
+        </controls:StripeBack>
+
+    </BoxContainer>
+
+</controls:FancyWindow>

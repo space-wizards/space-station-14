@@ -165,3 +165,28 @@
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_moth_l
+
+- type: marking
+  id: TattooEyeshadowUpper
+  # there are a lot of deliberate limitations with this marking that should be pointed out. some of them may seem overly restrictive on the surface, but most of them are fully intentional.
+  # this marking is meant to be supplementary so they are transparent. if you give this 255 alpha it will probably be really distracting looking and make the face very difficult to read
+  # the reason these are also not recolorable is because allowing for the full RGB range makes these look not very good (especially considering they are stackable, and ESPECIALLY considering vox can stack 3 at once.)
+  # this is not a very big issue on humans, but is much more pronounced on vox & other nonhuman species, where the skin being more colorful can make for some truly dreadful meshing with the sprite thats definitely not desired.
+  # some of these limitations could possibly be removed with better control over how the marking can be customized - possibly removing stacking, allowing recoloring & clamping higher-end colors for the eyeshadow, etc.
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: eyeshadow_upper
+
+- type: marking
+  id: TattooEyeshadowLower
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: eyeshadow_lower

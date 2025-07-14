@@ -106,6 +106,8 @@
     program: 79
   - type: Sprite
     sprite: Objects/Fun/Instruments/ocarina.rsi
+  - type: Item
+    size: Small
 
 - type: entity
   parent: BaseWoodwindInstrument

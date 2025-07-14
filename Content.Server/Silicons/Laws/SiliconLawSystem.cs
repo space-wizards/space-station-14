@@ -270,7 +270,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         };
         foreach (var law in proto.Laws)
         {
-            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
+            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law).ShallowClone());
         }
         laws.ObeysTo = proto.ObeysTo;
 

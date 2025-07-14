@@ -183,3 +183,27 @@
   - accent-words-tomato-3
   - accent-words-tomato-4
   - accent-words-tomato-5
+
+- type: accent
+  id: scurret
+  fullReplacements:
+  - accent-words-scurret-1
+  - accent-words-scurret-2
+  - accent-words-scurret-3
+  - accent-words-scurret-4
+  - accent-words-scurret-5
+  - accent-words-scurret-6
+  - accent-words-scurret-7
+  - accent-words-scurret-8
+  - accent-words-scurret-9
+  - accent-words-scurret-10
+  - accent-words-scurret-11
+  - accent-words-scurret-12
+  - accent-words-scurret-13
+  - accent-words-scurret-14
+  - accent-words-scurret-15
+  - accent-words-scurret-16
+  - accent-words-scurret-17
+  - accent-words-scurret-18
+  - accent-words-scurret-19
+  - accent-words-scurret-20

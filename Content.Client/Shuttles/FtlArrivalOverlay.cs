@@ -14,6 +14,8 @@ namespace Content.Client.Shuttles;
 /// </summary>
 public sealed class FtlArrivalOverlay : Overlay
 {
+    private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
+
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
 
     private EntityLookupSystem _lookups;
@@ -36,7 +38,7 @@ public sealed class FtlArrivalOverlay : Overlay
         _maps = _entManager.System<SharedMapSystem>();
         _sprites = _entManager.System<SpriteSystem>();
 
-        _shader = _protos.Index<ShaderPrototype>("unshaded").Instance();
+        _shader = _protos.Index(UnshadedShader).Instance();
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)

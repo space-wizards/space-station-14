@@ -63,7 +63,7 @@ namespace Content.Server.Voting
         }
     }
 
-    [AdminCommand(AdminFlags.Moderator)]
+    [AdminCommand(AdminFlags.Round)]
     public sealed class CreateCustomCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IVoteManager _voteManager = default!;
@@ -218,7 +218,7 @@ namespace Content.Server.Voting
         }
     }
 
-    [AdminCommand(AdminFlags.Moderator)]
+    [AdminCommand(AdminFlags.Round)]
     public sealed class CancelVoteCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -249,10 +249,9 @@ namespace Content.Server.Voting
 
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
-            var mgr = IoCManager.Resolve<IVoteManager>();
             if (args.Length == 1)
             {
-                var options = mgr.ActiveVotes
+                var options = _voteManager.ActiveVotes
                     .OrderBy(v => v.Id)
                     .Select(v => new CompletionOption(v.Id.ToString(), v.Title));
 

@@ -185,7 +185,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         if (!force)
             _popup.PopupPredicted(Loc.GetString("delivery-unlocked-self", ("delivery", deliveryName)),
-                Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
+                Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Entity(user, EntityManager)), ("possadj", user)), user, user);
 
         return true;
     }
@@ -213,7 +213,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         if (!force)
             _popup.PopupPredicted(Loc.GetString("delivery-opened-self", ("delivery", deliveryName)),
-                Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
+                Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Entity(user, EntityManager)), ("possadj", user)), user, user);
 
         if (!_container.TryGetContainer(ent, ent.Comp.Container, out var container))
             return;

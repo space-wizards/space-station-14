@@ -131,10 +131,10 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
 
         var newHairStyle = hairStyles.Count > 0
             ? random.Pick(hairStyles)
-            : HairStyles.DefaultHairStyle;
+            : HairStyles.DefaultHairStyle.Id;
 
         var newFacialHairStyle = facialHairStyles.Count == 0 || sex == Sex.Female
-            ? HairStyles.DefaultFacialHairStyle
+            ? HairStyles.DefaultFacialHairStyle.Id
             : random.Pick(facialHairStyles);
 
         var newHairColor = random.Pick(HairStyles.RealisticHairColors);
@@ -153,8 +153,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         switch (skinType)
         {
             case HumanoidSkinColor.HumanToned:
-                var tone = Math.Round(Humanoid.SkinColor.HumanSkinToneFromColor(newSkinColor));
-                newSkinColor = Humanoid.SkinColor.HumanSkinTone((int)tone);
+                newSkinColor = Humanoid.SkinColor.HumanSkinTone(random.Next(0, 101));
                 break;
             case HumanoidSkinColor.Hues:
                 break;

@@ -17,6 +17,7 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20231024041204_DropAdminLogEntity")]
     partial class DropAdminLogEntity
     {
+#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1731,5 +1732,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
+#endif
     }
 }

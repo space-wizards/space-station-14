@@ -9,6 +9,7 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Hands.EntitySystems;
 
@@ -23,6 +24,8 @@ public abstract partial class SharedHandsSystem
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualSystem = default!;
 
+    public event Action<Entity<HandsComponent>, string, HandLocation>? OnPlayerAddHand;
+    public event Action<Entity<HandsComponent>, string>? OnPlayerRemoveHand;
     protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
 
     public override void Initialize()
@@ -33,6 +36,9 @@ public abstract partial class SharedHandsSystem
         InitializeDrop();
         InitializePickup();
         InitializeRelay();
+
+        SubscribeLocalEvent<HandsComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<HandsComponent, MapInitEvent>(OnMapInit);
     }
 
     public override void Shutdown()
@@ -41,71 +47,94 @@ public abstract partial class SharedHandsSystem
         CommandBinds.Unregister<SharedHandsSystem>();
     }
 
-    public virtual void AddHand(EntityUid uid, string handName, HandLocation handLocation, HandsComponent? handsComp = null)
+    private void OnInit(Entity<HandsComponent> ent, ref ComponentInit args)
     {
-        if (!Resolve(uid, ref handsComp, false))
-            return;
-
-        if (handsComp.Hands.ContainsKey(handName))
-            return;
-
-        var container = ContainerSystem.EnsureContainer<ContainerSlot>(uid, handName);
-        container.OccludesLight = false;
-
-        var newHand = new Hand(handName, handLocation, container);
-        handsComp.Hands.Add(handName, newHand);
-        handsComp.SortedHands.Add(handName);
-
-        if (handsComp.ActiveHand == null)
-            SetActiveHand(uid, newHand, handsComp);
-
-        RaiseLocalEvent(uid, new HandCountChangedEvent(uid));
-        Dirty(uid, handsComp);
+        var container = EnsureComp<ContainerManagerComponent>(ent);
+        foreach (var id in ent.Comp.Hands.Keys)
+        {
+            ContainerSystem.EnsureContainer<ContainerSlot>(ent, id, container);
+        }
     }
 
-    public virtual void RemoveHand(EntityUid uid, string handName, HandsComponent? handsComp = null)
+    private void OnMapInit(Entity<HandsComponent> ent, ref MapInitEvent args)
     {
-        if (!Resolve(uid, ref handsComp, false))
+        if (ent.Comp.ActiveHandId == null)
+            SetActiveHand(ent.AsNullable(), ent.Comp.SortedHands.FirstOrDefault());
+    }
+
+    /// <summary>
+    /// Adds a hand with the given container id and supplied location to the specified entity.
+    /// </summary>
+    public void AddHand(Entity<HandsComponent?> ent, string handName, HandLocation handLocation)
+    {
+        AddHand(ent, handName, new Hand(handLocation));
+    }
+
+    /// <summary>
+    /// Adds a hand with the given container id and supplied hand definition to the given entity.
+    /// </summary>
+    public void AddHand(Entity<HandsComponent?> ent, string handName, Hand hand)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        if (!handsComp.Hands.Remove(handName, out var hand))
+        if (ent.Comp.Hands.ContainsKey(handName))
             return;
 
-        handsComp.SortedHands.Remove(hand.Name);
-        TryDrop(uid, hand, null, false, true, handsComp);
-        if (hand.Container != null)
-            ContainerSystem.ShutdownContainer(hand.Container);
+        var container = ContainerSystem.EnsureContainer<ContainerSlot>(ent, handName);
+        container.OccludesLight = false;
 
-        if (handsComp.ActiveHand == hand)
-            TrySetActiveHand(uid, handsComp.SortedHands.FirstOrDefault(), handsComp);
+        ent.Comp.Hands.Add(handName, hand);
+        ent.Comp.SortedHands.Add(handName);
+        Dirty(ent);
 
-        RaiseLocalEvent(uid, new HandCountChangedEvent(uid));
-        Dirty(uid, handsComp);
+        OnPlayerAddHand?.Invoke((ent, ent.Comp), handName, hand.Location);
+
+        if (ent.Comp.ActiveHandId == null)
+            SetActiveHand(ent, handName);
+
+        RaiseLocalEvent(ent, new HandCountChangedEvent(ent));
+    }
+
+    /// <summary>
+    /// Removes the specified hand from the specified entity
+    /// </summary>
+    public virtual void RemoveHand(Entity<HandsComponent?> ent, string handName)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        OnPlayerRemoveHand?.Invoke((ent, ent.Comp), handName);
+
+        TryDrop(ent, handName, null, false);
+
+        if (!ent.Comp.Hands.Remove(handName))
+            return;
+
+        if (ContainerSystem.TryGetContainer(ent, handName, out var container))
+            ContainerSystem.ShutdownContainer(container);
+
+        ent.Comp.SortedHands.Remove(handName);
+        if (ent.Comp.ActiveHandId == handName)
+            TrySetActiveHand(ent, ent.Comp.SortedHands.FirstOrDefault());
+
+        RaiseLocalEvent(ent, new HandCountChangedEvent(ent));
+        Dirty(ent);
     }
 
     /// <summary>
     /// Gets rid of all the entity's hands.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="handsComp"></param>
-    public void RemoveHands(EntityUid uid, HandsComponent? handsComp = null)
+    public void RemoveHands(Entity<HandsComponent?> ent)
     {
-        if (!Resolve(uid, ref handsComp))
+        if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        RemoveHands(uid, EnumerateHands(uid), handsComp);
-    }
-
-    private void RemoveHands(EntityUid uid, IEnumerable<Hand> hands, HandsComponent handsComp)
-    {
-        if (!hands.Any())
-            return;
-
-        var hand = hands.First();
-        RemoveHand(uid, hand.Name, handsComp);
-
-        // Repeats it for any additional hands.
-        RemoveHands(uid, hands, handsComp);
+        var handIds = new List<string>(ent.Comp.Hands.Keys);
+        foreach (var handId in handIds)
+        {
+            RemoveHand(ent, handId);
+        }
     }
 
     private void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
@@ -119,15 +148,15 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     ///     Get any empty hand. Prioritizes the currently active hand.
     /// </summary>
-    public bool TryGetEmptyHand(EntityUid uid, [NotNullWhen(true)] out Hand? emptyHand, HandsComponent? handComp = null)
+    public bool TryGetEmptyHand(Entity<HandsComponent?> ent, [NotNullWhen(true)] out string? emptyHand)
     {
         emptyHand = null;
-        if (!Resolve(uid, ref handComp, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        foreach (var hand in EnumerateHands(uid, handComp))
+        foreach (var hand in EnumerateHands(ent))
         {
-            if (hand.IsEmpty)
+            if (HandIsEmpty(ent, hand))
             {
                 emptyHand = hand;
                 return true;
@@ -137,28 +166,20 @@ public abstract partial class SharedHandsSystem
         return false;
     }
 
-    public bool TryGetActiveHand(Entity<HandsComponent?> entity, [NotNullWhen(true)] out Hand? hand)
-    {
-        if (!Resolve(entity, ref entity.Comp, false))
-        {
-            hand = null;
-            return false;
-        }
-
-        hand = entity.Comp.ActiveHand;
-        return hand != null;
-    }
-
+    /// <summary>
+    /// Attempts to retrieve the item held in the entity's active hand.
+    /// </summary>
     public bool TryGetActiveItem(Entity<HandsComponent?> entity, [NotNullWhen(true)] out EntityUid? item)
     {
-        if (!TryGetActiveHand(entity, out var hand))
-        {
-            item = null;
+        item = null;
+        if (!Resolve(entity, ref entity.Comp, false))
             return false;
-        }
 
-        item = hand.HeldEntity;
-        return item != null;
+        if (!TryGetHeldItem(entity, entity.Comp.ActiveHandId, out var held))
+            return false;
+
+        item = held;
+        return true;
     }
 
     /// <summary>
@@ -174,55 +195,73 @@ public abstract partial class SharedHandsSystem
         return item.Value;
     }
 
-    public Hand? GetActiveHand(Entity<HandsComponent?> entity)
+    /// <summary>
+    /// Gets the current active hand's Id for the specified entity
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public string? GetActiveHand(Entity<HandsComponent?> entity)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, false))
             return null;
 
-        return entity.Comp.ActiveHand;
+        return entity.Comp.ActiveHandId;
     }
 
+    /// <summary>
+    /// Gets the current active hand's held entity for the specified entity
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
     public EntityUid? GetActiveItem(Entity<HandsComponent?> entity)
     {
-        return GetActiveHand(entity)?.HeldEntity;
+        if (!Resolve(entity, ref entity.Comp, false))
+            return null;
+
+        return GetHeldItem(entity, entity.Comp.ActiveHandId);
+    }
+
+    public bool ActiveHandIsEmpty(Entity<HandsComponent?> entity)
+    {
+        return GetActiveItem(entity) == null;
     }
 
     /// <summary>
     ///     Enumerate over hands, starting with the currently active hand.
     /// </summary>
-    public IEnumerable<Hand> EnumerateHands(EntityUid uid, HandsComponent? handsComp = null)
+    public IEnumerable<string> EnumerateHands(Entity<HandsComponent?> ent)
     {
-        if (!Resolve(uid, ref handsComp, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             yield break;
 
-        if (handsComp.ActiveHand != null)
-            yield return handsComp.ActiveHand;
+        if (ent.Comp.ActiveHandId != null)
+            yield return ent.Comp.ActiveHandId;
 
-        foreach (var name in handsComp.SortedHands)
+        foreach (var name in ent.Comp.SortedHands)
         {
-            if (name != handsComp.ActiveHand?.Name)
-                yield return handsComp.Hands[name];
+            if (name != ent.Comp.ActiveHandId)
+                yield return name;
         }
     }
 
     /// <summary>
     ///     Enumerate over held items, starting with the item in the currently active hand (if there is one).
     /// </summary>
-    public IEnumerable<EntityUid> EnumerateHeld(EntityUid uid, HandsComponent? handsComp = null)
+    public IEnumerable<EntityUid> EnumerateHeld(Entity<HandsComponent?> ent)
     {
-        if (!Resolve(uid, ref handsComp, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             yield break;
 
-        if (handsComp.ActiveHandEntity != null)
-            yield return handsComp.ActiveHandEntity.Value;
+        if (TryGetActiveItem(ent, out var activeHeld))
+            yield return activeHeld.Value;
 
-        foreach (var name in handsComp.SortedHands)
+        foreach (var name in ent.Comp.SortedHands)
         {
-            if (name == handsComp.ActiveHand?.Name)
+            if (name == ent.Comp.ActiveHandId)
                 continue;
 
-            if (handsComp.Hands[name].HeldEntity is { } held)
-                yield return held;
+            if (TryGetHeldItem(ent, name, out var held))
+                yield return held.Value;
         }
     }
 
@@ -231,18 +270,17 @@ public abstract partial class SharedHandsSystem
     /// </summary>
     /// <returns>True if the active hand was set to a NEW value. Setting it to the same value returns false and does
     /// not trigger interactions.</returns>
-    public virtual bool TrySetActiveHand(EntityUid uid, string? name, HandsComponent? handComp = null)
+    public bool TrySetActiveHand(Entity<HandsComponent?> ent, string? name)
     {
-        if (!Resolve(uid, ref handComp))
+        if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (name == handComp.ActiveHand?.Name)
+        if (name == ent.Comp.ActiveHandId)
             return false;
 
-        Hand? hand = null;
-        if (name != null && !handComp.Hands.TryGetValue(name, out hand))
+        if (name != null && !ent.Comp.Hands.ContainsKey(name))
             return false;
-        return SetActiveHand(uid, hand, handComp);
+        return SetActiveHand(ent, name);
     }
 
     /// <summary>
@@ -250,50 +288,50 @@ public abstract partial class SharedHandsSystem
     /// </summary>
     /// <returns>True if the active hand was set to a NEW value. Setting it to the same value returns false and does
     /// not trigger interactions.</returns>
-    public bool SetActiveHand(EntityUid uid, Hand? hand, HandsComponent? handComp = null)
+    public bool SetActiveHand(Entity<HandsComponent?> ent, string? handId)
     {
-        if (!Resolve(uid, ref handComp))
+        if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        if (hand == handComp.ActiveHand)
+        if (handId == ent.Comp.ActiveHandId)
             return false;
 
-        if (handComp.ActiveHand?.HeldEntity is { } held)
-            RaiseLocalEvent(held, new HandDeselectedEvent(uid));
+        if (TryGetActiveItem(ent, out var oldHeld))
+            RaiseLocalEvent(oldHeld.Value, new HandDeselectedEvent(ent));
 
-        if (hand == null)
+        if (handId == null)
         {
-            handComp.ActiveHand = null;
+            ent.Comp.ActiveHandId = null;
             return true;
         }
 
-        handComp.ActiveHand = hand;
-        OnHandSetActive?.Invoke((uid, handComp));
+        ent.Comp.ActiveHandId = handId;
+        OnHandSetActive?.Invoke((ent, ent.Comp));
 
-        if (hand.HeldEntity != null)
-            RaiseLocalEvent(hand.HeldEntity.Value, new HandSelectedEvent(uid));
+        if (TryGetHeldItem(ent, handId, out var newHeld))
+            RaiseLocalEvent(newHeld.Value, new HandSelectedEvent(ent));
 
-        Dirty(uid, handComp);
+        Dirty(ent);
         return true;
     }
 
     public bool IsHolding(Entity<HandsComponent?> entity, [NotNullWhen(true)] EntityUid? item)
     {
-        return IsHolding(entity, item, out _, entity);
+        return IsHolding(entity, item, out _);
     }
 
-    public bool IsHolding(EntityUid uid, [NotNullWhen(true)] EntityUid? entity, [NotNullWhen(true)] out Hand? inHand, HandsComponent? handsComp = null)
+    public bool IsHolding(Entity<HandsComponent?> ent, [NotNullWhen(true)] EntityUid? entity, [NotNullWhen(true)] out string? inHand)
     {
         inHand = null;
         if (entity == null)
             return false;
 
-        if (!Resolve(uid, ref handsComp, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        foreach (var hand in handsComp.Hands.Values)
+        foreach (var hand in ent.Comp.Hands.Keys)
         {
-            if (hand.HeldEntity == entity)
+            if (GetHeldItem(ent, hand) == entity)
             {
                 inHand = hand;
                 return true;
@@ -303,23 +341,89 @@ public abstract partial class SharedHandsSystem
         return false;
     }
 
-    public bool TryGetHand(EntityUid handsUid, string handId, [NotNullWhen(true)] out Hand? hand,
-        HandsComponent? hands = null)
+    /// <summary>
+    /// Attempts to retrieve the associated hand struct corresponding to a hand ID on a given entity.
+    /// </summary>
+    public bool TryGetHand(Entity<HandsComponent?> ent, [NotNullWhen(true)] string? handId, [NotNullWhen(true)] out Hand? hand)
     {
         hand = null;
 
-        if (!Resolve(handsUid, ref hands))
+        if (handId == null)
             return false;
 
-        return hands.Hands.TryGetValue(handId, out hand);
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        if (!ent.Comp.Hands.TryGetValue(handId, out var handsHand))
+            return false;
+
+        hand = handsHand;
+        return true;
+    }
+
+    /// <summary>
+    /// Gets the item currently held in the entity's specified hand. Returns null if no hands are present or there is no item.
+    /// </summary>
+    public EntityUid? GetHeldItem(Entity<HandsComponent?> ent, string? handId)
+    {
+        TryGetHeldItem(ent, handId, out var held);
+        return held;
+    }
+
+    /// <summary>
+    /// Gets the item currently held in the entity's specified hand. Returns false if no hands are present or there is no item.
+    /// </summary>
+    public bool TryGetHeldItem(Entity<HandsComponent?> ent, string? handId, [NotNullWhen(true)] out EntityUid? held)
+    {
+        held = null;
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        // Sanity check to make sure this is actually a hand.
+        if (handId == null || !ent.Comp.Hands.ContainsKey(handId))
+            return false;
+
+        if (!ContainerSystem.TryGetContainer(ent, handId, out var container))
+            return false;
+
+        held = container.ContainedEntities.FirstOrNull();
+        return held != null;
+    }
+
+    public bool HandIsEmpty(Entity<HandsComponent?> ent, string handId)
+    {
+        return GetHeldItem(ent, handId) == null;
+    }
+
+    public int GetHandCount(Entity<HandsComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return 0;
+
+        return ent.Comp.Hands.Count;
+    }
+
+    public int CountFreeHands(Entity<HandsComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return 0;
+
+        var free = 0;
+        foreach (var name in ent.Comp.Hands.Keys)
+        {
+            if (HandIsEmpty(ent, name))
+                free++;
+        }
+
+        return free;
     }
 
     public int CountFreeableHands(Entity<HandsComponent> hands)
     {
         var freeable = 0;
-        foreach (var hand in hands.Comp.Hands.Values)
+        foreach (var name in hands.Comp.Hands.Keys)
         {
-            if (hand.IsEmpty || CanDropHeld(hands, hand))
+            if (HandIsEmpty(hands.AsNullable(), name) || CanDropHeld(hands, name))
                 freeable++;
         }
 

@@ -28,7 +28,7 @@ public sealed partial class PowerCellSystem
             if (!TryGetBatteryFromSlot(uid, out var batteryEnt, out var battery, slot))
                 continue;
 
-            if (_battery.TryUseCharge(batteryEnt.Value, comp.DrawRate, battery))
+            if (_battery.TryUseCharge(batteryEnt.Value, comp.DrawRate * (float)comp.Delay.TotalSeconds, battery))
                 continue;
 
             var ev = new PowerCellSlotEmptyEvent();

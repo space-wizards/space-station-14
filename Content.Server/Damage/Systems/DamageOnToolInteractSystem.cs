@@ -31,7 +31,7 @@ namespace Content.Server.Damage.Systems
                 return;
 
             if (component.WeldingDamage is {} weldingDamage
-            && EntityManager.TryGetComponent(args.Used, out WelderComponent? welder)
+            && TryComp(args.Used, out WelderComponent? welder)
             && itemToggle.Activated
             && !welder.TankSafe)
             {

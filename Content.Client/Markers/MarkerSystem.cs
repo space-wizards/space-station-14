@@ -33,7 +33,7 @@ public sealed class MarkerSystem : EntitySystem
 
     private void UpdateVisibility(EntityUid uid)
     {
-        if (EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+        if (TryComp(uid, out SpriteComponent? sprite))
         {
             _sprite.SetVisible((uid, sprite), MarkersVisible);
         }

@@ -170,10 +170,12 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: SpaceVillainArcadeComputerCircuitboard
-  - type: Advertise
-    pack: SpaceVillainAds
-    minimumWait: 60 # Arcades are noisy
-    maximumWait: 240
+  - type: Vocalizer
+    minVocalizeInterval: 1m # Arcades are noisy
+    maxVocalizeInterval: 4m
+    hideChat: true
+  - type: DatasetVocalizer
+    dataset: SpaceVillainAds
   - type: SpeakOnUIClosed
     pack: SpaceVillainGoodbyes
 
@@ -215,9 +217,11 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard
-  - type: Advertise
-    pack: BlockGameAds
-    minimumWait: 60 # Arcades are noisy
-    maximumWait: 240
+  - type: Vocalizer
+    minVocalizeInterval: 1m # Arcades are noisy
+    maxVocalizeInterval: 4m
+    hideChat: true
+  - type: DatasetVocalizer
+    dataset: BlockGameAds
   - type: SpeakOnUIClosed
     pack: BlockGameGoodbyes

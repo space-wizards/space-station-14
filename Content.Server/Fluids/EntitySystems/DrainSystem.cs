@@ -174,7 +174,7 @@ public sealed class DrainSystem : SharedDrainSystem
                     // but queuedelete should be pretty safe.
                     if (!_solutionContainerSystem.ResolveSolution(puddle.Owner, puddle.Comp.SolutionName, ref puddle.Comp.Solution, out var puddleSolution))
                     {
-                        EntityManager.QueueDeleteEntity(puddle);
+                        QueueDel(puddle);
                         continue;
                     }
 

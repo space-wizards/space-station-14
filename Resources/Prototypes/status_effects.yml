@@ -1,6 +1,9 @@
 ﻿# Status effect prototypes.
 # Holds no actual logic, just some basic data about the effect.
 
+# Note: We have a new status effect system that needs all of these status effects to be fully ported to.
+# Adding new status effects under the old system is NOT RECOMMENDED.
+
 - type: statusEffect
   id: Stun
   alert: Stun
@@ -23,9 +26,6 @@
   id: AllCaps
 
 - type: statusEffect
-  id: SeeingRainbows
-
-- type: statusEffect
   id: Electrocution
 
 - type: statusEffect
@@ -46,9 +46,6 @@
   alert: Corporeal
 
 - type: statusEffect
-  id: ForcedSleep #I.e., they will not wake on damage or similar
-
-- type: statusEffect
   id: TemporaryBlindness
 
 - type: statusEffect
@@ -65,9 +62,6 @@
 
 - type: statusEffect
   id: RadiationProtection
-
-- type: statusEffect
-  id: Drowsiness #blurs your vision and makes you randomly fall asleep
 
 - type: statusEffect
   id: Adrenaline

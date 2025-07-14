@@ -43,7 +43,7 @@
   id: BaseThiefStealAnimalObjective
   components:
   - type: StealCondition
-    verifyMapExistence: false
+    verifyMapExistence: true
     checkAlive: true
     objectiveNoOwnerText: objective-condition-steal-title-alive-no-owner
     descriptionText: objective-condition-thief-animal-description
@@ -135,8 +135,6 @@
     verifyMapExistence: false
   - type: Objective
     difficulty: 0.7
-
-
 
 - type: entity
   parent: BaseThiefStealCollectionObjective

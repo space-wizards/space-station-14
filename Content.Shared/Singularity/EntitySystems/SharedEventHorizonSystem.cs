@@ -172,7 +172,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             _physics.SetHard(uid, collider, true, fixtures);
         }
 
-        EntityManager.Dirty(uid, fixtures);
+        Dirty(uid, fixtures);
     }
 
     #endregion Getters/Setters

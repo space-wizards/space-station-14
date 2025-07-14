@@ -7,6 +7,8 @@ namespace Content.Client.Cooldown
 {
     public sealed class CooldownGraphic : Control
     {
+        private static readonly ProtoId<ShaderPrototype> Shader = "CooldownAnimation";
+
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
@@ -15,7 +17,7 @@ namespace Content.Client.Cooldown
         public CooldownGraphic()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _protoMan.Index<ShaderPrototype>("CooldownAnimation").InstanceUnique();
+            _shader = _protoMan.Index(Shader).InstanceUnique();
         }
 
         /// <summary>

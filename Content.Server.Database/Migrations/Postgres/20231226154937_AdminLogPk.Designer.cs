@@ -17,6 +17,7 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20231226154937_AdminLogPk")]
     partial class AdminLogPk
     {
+#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1752,5 +1753,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
+#endif
     }
 }

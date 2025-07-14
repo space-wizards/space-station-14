@@ -458,6 +458,70 @@
 
 - type: entity
   parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsN
+  suffix: Solars, North
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-N
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsNE
+  suffix: Solars, Northeast
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-NE
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsE
+  suffix: Solars, East
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-E
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsSE
+  suffix: Solars, Southeast
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-SE
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsS
+  suffix: Solars, South
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-S
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsSW
+  suffix: Solars, Southwest
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-SW
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsW
+  suffix: Solars, West
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-W
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsNW
+  suffix: Solars, Northwest
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-NW
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
   id: DefaultStationBeaconGravGen
   suffix: Grav Gen
   components:
@@ -705,6 +769,70 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-escape-pod
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodN
+  suffix: Escape Pod, North
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-N
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodNE
+  suffix: Escape Pod, Northeast
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-NE
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodE
+  suffix: Escape Pod, East
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-E
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodSE
+  suffix: Escape Pod, Southeast
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-SE
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodS
+  suffix: Escape Pod, South
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-S
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodSW
+  suffix: Escape Pod, Southwest
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-SW
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodW
+  suffix: Escape Pod, West
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-W
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodNW
+  suffix: Escape Pod, Northwest
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-NW
 
 - type: entity
   parent: DefaultStationBeacon

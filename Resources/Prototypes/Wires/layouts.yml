@@ -205,7 +205,7 @@
   - !type:PowerWireAction
   - !type:AiInteractWireAction
   - !type:AccessWireAction
-  
+
 - type: wireLayout
   id: WeaponEnergyTurret
   dummyWires: 4
@@ -215,7 +215,7 @@
     pulseTimeout: 15
   - !type:AiInteractWireAction
   - !type:AccessWireAction
-  
+
 - type: wireLayout
   id: TurretControls
   dummyWires: 2
@@ -224,5 +224,11 @@
   - !type:PowerWireAction
     pulseTimeout: 15
   - !type:AiInteractWireAction
-  - !type:AccessWireAction 
-  
+  - !type:AccessWireAction
+
+- type: wireLayout
+  id: APC
+  dummyWires: 3
+  wires:
+  - !type:AccessWireAction
+  - !type:AiInteractWireAction
