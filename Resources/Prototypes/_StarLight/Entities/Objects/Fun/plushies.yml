@@ -1289,7 +1289,7 @@
           voice: circus baby
 
 - type: entity
-  parent: BaseBorgPlushie
+  parent: BaseVulpkaninPlushie
   id: PlushieRufia
   name: Rufia Plushie
   description: You stare at the plushie and it stares back, its blue eyes trying to tell you something, reminding you that... there is no such thing as free healthcare.
