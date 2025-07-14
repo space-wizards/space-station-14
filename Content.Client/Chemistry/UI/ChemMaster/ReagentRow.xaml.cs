@@ -9,11 +9,32 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.Chemistry.UI.ChemMaster;
 
+/// <summary>
+/// Represents a reagent in a compact row, with optional quantity buttons.
+/// <seealso cref="ReagentList" />
+/// <seealso cref="ChemMasterWindow" />
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class ReagentRow : Control
 {
+    /// <summary>
+    /// Invoked on a button pressed with the quantity that button represents.
+    /// </summary>
     public event Action<FixedPoint2>? OnAmountPressed;
 
+    /// <summary>
+    /// Construct a reagent row with an optional color tab and buttons.
+    /// </summary>
+    /// <param name="name">The localized name to display.</param>
+    /// <param name="quantity">The quantity of the reagent to show.</param>
+    /// <param name="buttonAmounts">
+    /// An ordered list of <see cref="FixedPoint2" />s that should be used for amount buttons. Use
+    /// <see cref="FixedPoint2.MaxValue" /> to represent transferring as much as possible.
+    /// </param>
+    /// <param name="colorTab">
+    /// The color of the small rectangle shown next to the buttons. If null, it won't be displayed.
+    /// </param>
+    /// <param name="rowColor">The color of the row.</param>
     public ReagentRow(string name,
         FixedPoint2 quantity,
         List<FixedPoint2> buttonAmounts,
@@ -61,11 +82,17 @@ public sealed partial class ReagentRow : Control
         return button;
     }
 
+    /// <summary>
+    /// Updates the quantity of the reagent shown in this row.
+    /// </summary>
     public void SetQuantity(FixedPoint2 quantity)
     {
         ReagentQuantityLabel.Text = ReagentQuantity.LocalizedQuantity(quantity);
     }
 
+    /// <summary>
+    /// Update the row color. Used for even/odd row coloring if the row gets moved.
+    /// </summary>
     public void SetRowColor(Color color)
     {
         Row.PanelOverride = new StyleBoxFlat(color);
