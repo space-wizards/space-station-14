@@ -1,5 +1,4 @@
 using Content.Shared.DeviceNetwork;
-using Content.Shared.Emag.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Robotics;
@@ -7,7 +6,6 @@ using Content.Shared.Silicons.Borgs.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Explosion.Components;
 using Content.Shared.Emag.Systems;
 using Robust.Shared.Utility;
 
@@ -122,7 +120,7 @@ public sealed partial class BorgSystem
 
         var message = Loc.GetString(ent.Comp.DestroyingPopup, ("name", Name(ent)));
         Popup.PopupEntity(message, ent);
-        _trigger.StartTimer(ent.Owner, user: null);
+        _trigger.ActivateTimerTrigger(ent.Owner);
 
         // prevent a shitter borg running into people
         RemComp<InputMoverComponent>(ent);

@@ -25,6 +25,9 @@ signal-port-description-dockstatus = This port is invoked with HIGH when docked 
 signal-port-name-middle = Middle
 signal-port-description-middle = This port is invoked whenever the lever is moved to the neutral position.
 
+signal-port-name-trigger-sender = Trigger
+signal-port-description-trigger-sender = This port is invoked whenever the device triggers.
+
 signal-port-name-timer-trigger = Timer Trigger
 signal-port-description-timer-trigger = This port is invoked whenever the timer triggers.
 

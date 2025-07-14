@@ -75,12 +75,6 @@
   defaultLinks: [ ArtifactAnalyzerReceiver ]
 
 - type: sourcePort
-  id: Timer
-  name: signal-port-name-timer-trigger
-  description: signal-port-description-timer-trigger
-  defaultLinks: [ AutoClose, On, Open, Forward, Trigger, Timer ]
-
-- type: sourcePort
   id: Start
   name: signal-port-name-timer-start
   description: signal-port-description-timer-start
@@ -156,3 +150,9 @@
   id: PowerDischarging
   name: signal-port-name-power-discharging
   description: signal-port-description-power-discharging
+
+- type: sourcePort
+  id: Trigger
+  name: signal-port-name-trigger-sender
+  description: signal-port-description-trigger-sender
+  defaultLinks: [ AutoClose, On, Open, Forward, Trigger, Timer ]

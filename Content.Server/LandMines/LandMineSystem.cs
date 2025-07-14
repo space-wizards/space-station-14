@@ -1,7 +1,6 @@
-using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Systems;
-using Robust.Shared.Audio;
+using Content.Shared.Trigger.Systems;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.LandMines;
@@ -33,6 +32,7 @@ public sealed class LandMineSystem : EntitySystem
 
     private void HandleStepOffTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOffEvent args)
     {
+        // TODO: Adjust to the new trigger system
         _trigger.Trigger(uid, args.Tripper);
     }
 

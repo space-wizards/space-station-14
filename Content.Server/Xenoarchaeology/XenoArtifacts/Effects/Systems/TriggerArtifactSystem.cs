@@ -1,4 +1,4 @@
-﻿using Content.Server.Explosion.EntitySystems;
+﻿using Content.Shared.Trigger.Systems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 
@@ -19,6 +19,7 @@ public sealed class TriggerArtifactSystem : EntitySystem
 
     private void OnArtifactActivated(EntityUid uid, TriggerArtifactComponent component, ArtifactActivatedEvent args)
     {
+        // TODO: Combine artifact effects with trigger effects.
         _trigger.Trigger(uid, args.Activator);
     }
 }

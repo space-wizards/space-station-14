@@ -1,5 +1,4 @@
 using Content.Server.Defusable.Components;
-using Content.Server.Explosion.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Wires;
@@ -8,13 +7,13 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.Defusable;
 using Content.Shared.Examine;
-using Content.Shared.Explosion.Components;
-using Content.Shared.Explosion.Components.OnTrigger;
 using Content.Shared.Popups;
+using Content.Shared.Trigger.Components;
+using Content.Shared.Trigger.Components.Effects;
+using Content.Shared.Trigger.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Defusable.Systems;
@@ -74,12 +73,13 @@ public sealed class DefusableSystem : SharedDefusableSystem
             {
                 args.PushMarkup(Loc.GetString("defusable-examine-defused", ("name", uid)));
             }
-            else if (comp.Activated && TryComp<ActiveTimerTriggerComponent>(uid, out var activeComp))
+            else if (comp.Activated)
             {
-                if (comp.DisplayTime)
+                var remaining = _trigger.GetRemainingTime(uid);
+                if (comp.DisplayTime && remaining != null)
                 {
                     args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid),
-                        ("time", MathF.Floor(activeComp.TimeRemaining))));
+                        ("time", Math.Floor(remaining.Value.TotalSeconds))));
                 }
                 else
                 {
@@ -139,16 +139,9 @@ public sealed class DefusableSystem : SharedDefusableSystem
         SetActivated(comp, true);
 
         _popup.PopupEntity(Loc.GetString("defusable-popup-begun", ("name", uid)), uid);
-        if (TryComp<OnUseTimerTriggerComponent>(uid, out var timerTrigger))
+        if (TryComp<TimerTriggerComponent>(uid, out var timerTrigger))
         {
-            _trigger.HandleTimerTrigger(
-                uid,
-                user,
-                timerTrigger.Delay,
-                timerTrigger.BeepInterval,
-                timerTrigger.InitialBeepDelay,
-                timerTrigger.BeepSound
-            );
+            _trigger.ActivateTimerTrigger((uid, timerTrigger));
         }
 
         RaiseLocalEvent(uid, new BombArmedEvent(uid));
@@ -168,7 +161,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
 
         RaiseLocalEvent(uid, new BombDetonatedEvent(uid));
 
-        _explosion.TriggerExplosive(uid, user:detonator);
+        _explosion.TriggerExplosive(uid, user: detonator);
         QueueDel(uid);
 
         _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
@@ -188,7 +181,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
         {
             SetUsable(comp, false);
             RemComp<ExplodeOnTriggerComponent>(uid);
-            RemComp<OnUseTimerTriggerComponent>(uid);
+            RemComp<TimerTriggerComponent>(uid);
         }
         RemComp<ActiveTimerTriggerComponent>(uid);
 
