@@ -1135,3 +1135,29 @@
       maximumWait: 240
     - type: TextToSpeech
       voice: heavy
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieVanilla
+  name: Vanilla Plushie
+  description: text here
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/vanilla_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/vanilla_plushie.rsi
+    layers: 
+      - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: Advertise
+      pack: PlushiesVanilla
+      minimumWait: 120
+      maximumWait: 240
+    - type: TextToSpeech
+      voice: heavy
