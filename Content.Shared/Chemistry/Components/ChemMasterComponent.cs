@@ -30,7 +30,7 @@ namespace Content.Shared.Chemistry.Components
         public ChemMasterSortingType SortingType = ChemMasterSortingType.None;
 
         [DataField("pillDosageLimit", required: true), ViewVariables(VVAccess.ReadWrite)]
-        public uint PillDosageLimit;
+        public FixedPoint2 PillDosageLimit;
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
@@ -92,11 +92,11 @@ namespace Content.Shared.Chemistry.Components
     [Serializable, NetSerializable]
     public sealed class ChemMasterCreatePillsMessage : BoundUserInterfaceMessage
     {
-        public readonly uint Dosage;
+        public readonly FixedPoint2 Dosage;
         public readonly uint Number;
         public readonly string Label;
 
-        public ChemMasterCreatePillsMessage(uint dosage, uint number, string label)
+        public ChemMasterCreatePillsMessage(FixedPoint2 dosage, uint number, string label)
         {
             Dosage = dosage;
             Number = number;
@@ -107,10 +107,10 @@ namespace Content.Shared.Chemistry.Components
     [Serializable, NetSerializable]
     public sealed class ChemMasterOutputToBottleMessage : BoundUserInterfaceMessage
     {
-        public readonly uint Dosage;
+        public readonly FixedPoint2 Dosage;
         public readonly string Label;
 
-        public ChemMasterOutputToBottleMessage(uint dosage, string label)
+        public ChemMasterOutputToBottleMessage(FixedPoint2 dosage, string label)
         {
             Dosage = dosage;
             Label = label;
@@ -201,7 +201,7 @@ namespace Content.Shared.Chemistry.Components
         public readonly FixedPoint2? BufferCurrentVolume;
         public readonly uint SelectedPillType;
 
-        public readonly uint PillDosageLimit;
+        public readonly FixedPoint2 PillDosageLimit;
 
         public readonly bool UpdateLabel;
 
@@ -213,7 +213,7 @@ namespace Content.Shared.Chemistry.Components
             IReadOnlyList<ReagentQuantity> bufferReagents,
             FixedPoint2 bufferCurrentVolume,
             uint selectedPillType,
-            uint pillDosageLimit,
+            FixedPoint2 pillDosageLimit,
             bool updateLabel)
         {
             InputContainerInfo = inputContainerInfo;
