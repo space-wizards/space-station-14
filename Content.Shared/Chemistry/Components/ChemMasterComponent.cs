@@ -16,6 +16,10 @@ namespace Content.Shared.Chemistry.Components
     [Access(typeof(ChemMasterSystem))]
     public sealed partial class ChemMasterComponent : Component
     {
+        // ReSharper disable once UseCollectionExpression
+        public static readonly List<FixedPoint2> ChemMasterAmountOptions =
+            new() { 1, 5, 10, 15, 20, 25, 30, 50, 100, FixedPoint2.MaxValue };
+
         [DataField("pillType"), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
         public uint PillType = 0;
 
@@ -72,11 +76,11 @@ namespace Content.Shared.Chemistry.Components
     public sealed class ChemMasterReagentAmountButtonMessage : BoundUserInterfaceMessage
     {
         public readonly ReagentId ReagentId;
-        public readonly ChemMasterReagentAmount Amount;
+        public readonly FixedPoint2 Amount;
         public readonly bool FromBuffer;
 
         public ChemMasterReagentAmountButtonMessage(ReagentId reagentId,
-            ChemMasterReagentAmount amount,
+            FixedPoint2 amount,
             bool fromBuffer)
         {
             ReagentId = reagentId;
@@ -130,32 +134,6 @@ namespace Content.Shared.Chemistry.Components
     [Serializable, NetSerializable]
     public sealed class ChemMasterSortingTypeCycleMessage : BoundUserInterfaceMessage;
 
-
-    public enum ChemMasterReagentAmount
-    {
-        U1 = 1,
-        U5 = 5,
-        U10 = 10,
-        U15 = 15,
-        U20 = 20,
-        U25 = 25,
-        U30 = 30,
-        U50 = 50,
-        U100 = 100,
-        All,
-    }
-
-    public static class ChemMasterReagentAmountToFixedPoint
-    {
-        public static FixedPoint2 GetFixedPoint(this ChemMasterReagentAmount amount)
-        {
-            if (amount == ChemMasterReagentAmount.All)
-                return FixedPoint2.MaxValue;
-            else
-                return FixedPoint2.New((int)amount);
-        }
-    }
-
     /// <summary>
     /// Information about the capacity and contents of a container for display in the UI
     /// </summary>
@@ -180,7 +158,7 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         /// A list of the entities and their sizes within the container
         /// </summary>
-        public List<(string Id, FixedPoint2 Quantity)>? Entities { get; init; }
+        public List<(NetEntity Id, FixedPoint2 Quantity)>? Entities { get; init; }
 
         public List<ReagentQuantity>? Reagents { get; init; }
 

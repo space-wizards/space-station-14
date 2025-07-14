@@ -1,0 +1,13 @@
+<Control xmlns="https://spacestation14.io">
+    <PanelContainer Name="Row">
+        <BoxContainer Name="InnerContainer">
+            <Label Name="ReagentName" />
+            <Label Name="ReagentQuantity" StyleClasses="LabelSecondaryColor" />
+            <Control HorizontalExpand="True" />
+            <PanelContainer MinWidth="4"
+                            Margin="0 1"
+                            Name="ReagentColor" />
+            <!-- Buttons programatically get inserted here. -->
+        </BoxContainer>
+    </PanelContainer>
+</Control>

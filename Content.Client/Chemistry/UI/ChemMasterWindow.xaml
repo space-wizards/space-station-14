@@ -19,10 +19,7 @@
                 </PanelContainer.PanelOverride>
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
-                    <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
-                    <BoxContainer Name="InputContainerInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
-                        <Label Text="{Loc 'chem-master-window-no-container-loaded-text'}" />
-                    </BoxContainer>
+                    <BoxContainer Name="InputContainerInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True" />
                 </ScrollContainer>
             </PanelContainer>
 
@@ -46,9 +43,7 @@
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Buffer reagent list -->
-                    <BoxContainer Name="BufferInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
-                        <Label Text="{Loc 'chem-master-window-buffer-empty-text'}" />
-                    </BoxContainer>
+                    <BoxContainer Name="BufferInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True" />
                 </ScrollContainer>
             </PanelContainer>
         </BoxContainer>
@@ -67,10 +62,7 @@
                 </PanelContainer.PanelOverride>
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
-                    <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
-                    <BoxContainer Name="OutputContainerInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
-                        <Label Text="{Loc 'chem-master-window-no-container-loaded-text'}" />
-                    </BoxContainer>
+                    <BoxContainer Name="OutputContainerInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True" />
                 </ScrollContainer>
             </PanelContainer>
 
