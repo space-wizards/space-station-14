@@ -58,7 +58,7 @@ namespace Content.Client.Chemistry.UI.ChemMaster
             // Pill rsi file should have states named as pill1, pill2, and so on.
             var resourcePath = new ResPath(PillsRsiPath);
             var pillTypeGroup = new ButtonGroup();
-            _pillTypeButtons = new Button[SharedChemMaster.PillTypes];
+            _pillTypeButtons = new Button[ChemMasterComponent.PillTypes];
             for (uint i = 0; i < _pillTypeButtons.Length; i++)
             {
                 // For every button decide which stylebase to have
@@ -104,7 +104,7 @@ namespace Content.Client.Chemistry.UI.ChemMaster
             BottleDosage.InitDefaultButtons();
 
             // Ensure label length is within the character limit.
-            LabelLineEdit.IsValid = s => s.Length <= SharedChemMaster.LabelMaxLength;
+            LabelLineEdit.IsValid = s => s.Length <= ChemMasterComponent.LabelMaxLength;
 
             Tabs.SetTabTitle(0, Loc.GetString("chem-master-window-input-tab"));
             Tabs.SetTabTitle(1, Loc.GetString("chem-master-window-output-tab"));
@@ -128,8 +128,8 @@ namespace Content.Client.Chemistry.UI.ChemMaster
             _inputReagentList.OnRowAmountPressed +=
                 (id, quantity) => OnReagentButton?.Invoke((id, quantity, false));
 
-            InputEjectButton.OnPressed += _ => OnEjectButton?.Invoke(SharedChemMaster.InputSlotName);
-            OutputEjectButton.OnPressed += _ => OnEjectButton?.Invoke(SharedChemMaster.OutputSlotName);
+            InputEjectButton.OnPressed += _ => OnEjectButton?.Invoke(ChemMasterComponent.InputSlotName);
+            OutputEjectButton.OnPressed += _ => OnEjectButton?.Invoke(ChemMasterComponent.OutputSlotName);
 
             BufferTransferButton.OnPressed += _ => OnModeButton?.Invoke(ChemMasterMode.Transfer);
             BufferDiscardButton.OnPressed += _ => OnModeButton?.Invoke(ChemMasterMode.Discard);

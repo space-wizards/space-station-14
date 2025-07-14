@@ -16,6 +16,14 @@ namespace Content.Shared.Chemistry.Components
     [Access(typeof(ChemMasterSystem))]
     public sealed partial class ChemMasterComponent : Component
     {
+        public const uint PillTypes = 20;
+        public const uint LabelMaxLength = 50;
+        public const string BottleSolutionName = "drink";
+        public const string BufferSolutionName = "buffer";
+        public const string PillSolutionName = "food";
+        public const string InputSlotName = "beakerSlot";
+        public const string OutputSlotName = "outputSlot";
+
         // ReSharper disable once UseCollectionExpression
         public static readonly List<FixedPoint2> ChemMasterAmountOptions =
             new() { 1, 5, 10, 15, 20, 25, 30, 50, 100, FixedPoint2.MaxValue };
@@ -34,20 +42,6 @@ namespace Content.Shared.Chemistry.Components
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
-    }
-
-    /// <summary>
-    /// This class holds constants that are shared between client and server.
-    /// </summary>
-    public sealed class SharedChemMaster
-    {
-        public const uint PillTypes = 20;
-        public const string BufferSolutionName = "buffer";
-        public const string InputSlotName = "beakerSlot";
-        public const string OutputSlotName = "outputSlot";
-        public const string PillSolutionName = "food";
-        public const string BottleSolutionName = "drink";
-        public const uint LabelMaxLength = 50;
     }
 
     [Serializable, NetSerializable]
