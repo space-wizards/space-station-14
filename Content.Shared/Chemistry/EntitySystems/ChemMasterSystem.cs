@@ -85,6 +85,7 @@ namespace Content.Shared.Chemistry.EntitySystems
                 return;
 
             chemMaster.Comp.Mode = message.ChemMasterMode;
+            Dirty(chemMaster);
             UpdateUiState(chemMaster);
             ClickSound(chemMaster, message.Actor);
         }
@@ -94,6 +95,8 @@ namespace Content.Shared.Chemistry.EntitySystems
             chemMaster.Comp.SortingType++;
             if (chemMaster.Comp.SortingType > ChemMasterSortingType.Latest)
                 chemMaster.Comp.SortingType = ChemMasterSortingType.None;
+
+            Dirty(chemMaster);
             UpdateUiState(chemMaster);
             ClickSound(chemMaster, message.Actor);
         }
@@ -105,6 +108,7 @@ namespace Content.Shared.Chemistry.EntitySystems
                 return;
 
             chemMaster.Comp.PillType = message.PillType;
+            Dirty(chemMaster);
             UpdateUiState(chemMaster);
             ClickSound(chemMaster, message.Actor);
         }
@@ -134,9 +138,10 @@ namespace Content.Shared.Chemistry.EntitySystems
         private void TransferReagents(Entity<ChemMasterComponent> chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
         {
             var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
+            // TODO this should be resolving the solution instead of using TryGet. (Likely applies elsewhere in here.)
             if (container is null ||
                 !_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSoln, out var containerSolution) ||
-                !_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var bufferSolution))
+                !_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var buffer, out var bufferSolution))
             {
                 return;
             }
@@ -154,6 +159,10 @@ namespace Content.Shared.Chemistry.EntitySystems
                 bufferSolution.AddReagent(id, amount);
             }
 
+            // AddReagent/RemoveReagent don't auto dirty. :(
+            Dirty(containerSoln.Value);
+            Dirty(buffer.Value);
+
             UpdateUiState(chemMaster, updateLabel: true);
         }
 
@@ -161,10 +170,11 @@ namespace Content.Shared.Chemistry.EntitySystems
         {
             if (fromBuffer)
             {
-                if (_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var bufferSolution))
+                if (_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var bufferEnt, out var bufferSolution))
+                {
                     bufferSolution.RemoveReagent(id, amount, preserveOrder: true);
-                else
-                    return;
+                    Dirty(bufferEnt.Value);
+                }
             }
             else
             {
@@ -172,10 +182,10 @@ namespace Content.Shared.Chemistry.EntitySystems
                 if (container is not null &&
                     _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution, out _))
                 {
+                    // I feel like this should maybe be using split but I can't think of any problem with not
                     _solutionContainerSystem.RemoveReagent(containerSolution.Value, id, amount);
+                    Dirty(containerSolution.Value);
                 }
-                else
-                    return;
             }
 
             UpdateUiState(chemMaster, updateLabel: fromBuffer);
@@ -273,7 +283,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         {
             outputSolution = null;
 
-            if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var solution))
+            if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var bufferEnt, out var solution))
             {
                 return false;
             }
@@ -294,6 +304,7 @@ namespace Content.Shared.Chemistry.EntitySystems
             }
 
             outputSolution = solution.SplitSolution(neededVolume);
+            Dirty(bufferEnt.Value);
             return true;
         }
 

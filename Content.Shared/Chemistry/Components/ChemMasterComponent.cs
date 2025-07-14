@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -7,17 +8,17 @@ namespace Content.Shared.Chemistry.Components
     /// An industrial grade chemical manipulator with pill and bottle production included.
     /// <seealso cref="ChemMasterSystem"/>
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     [Access(typeof(ChemMasterSystem))]
     public sealed partial class ChemMasterComponent : Component
     {
-        [DataField("pillType"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField("pillType"), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
         public uint PillType = 0;
 
-        [DataField("mode"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField("mode"), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
         public ChemMasterMode Mode = ChemMasterMode.Transfer;
 
-        [DataField]
+        [DataField, AutoNetworkedField]
         public ChemMasterSortingType SortingType = ChemMasterSortingType.None;
 
         [DataField("pillDosageLimit", required: true), ViewVariables(VVAccess.ReadWrite)]
