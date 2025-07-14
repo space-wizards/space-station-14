@@ -9302,5 +9302,12 @@ Entries:
   id: 1282
   time: '2025-07-13T10:11:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1028
+- author: DrSmugleaf
+  changes:
+  - message: Fixed TTS audio being recorded in replays, which makes them very large.
+    type: Fix
+  id: 1283
+  time: '2025-07-14T06:14:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1030
 Order: -1
 
