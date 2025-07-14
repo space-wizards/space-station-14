@@ -1287,3 +1287,28 @@
           maximumWait: 240
         - type: TextToSpeech
           voice: circus baby
+
+- type: entity
+  parent: BaseBorgPlushie
+  id: PlushieRufia
+  name: Rufia Plushie
+  description: You stare at the plushie and it stares back, its blue eyes trying to tell you something, reminding you that... there is no such thing as free healthcare.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/rufia_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/rufia_plushie.rsi
+      state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesRufia
+          minimumWait: 120
+          maximumWait: 240
+        - type: TextToSpeech
+          voice: himeko
