@@ -6,14 +6,15 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Atmos.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class GasTank : DefaultWindow
+public sealed partial class GasTankWindow : DefaultWindow
 {
     public event Action? ToggleInternalsPressed;
     public event Action<float>? OnSetPressure;
+    public event Action? OnToggleValvePressed;
 
     private float _currentPressure;
 
-    public GasTank()
+    public GasTankWindow()
     {
         RobustXamlLoader.Load(this);
 
@@ -22,14 +23,22 @@ public sealed partial class GasTank : DefaultWindow
         RightButton.OnPressed += RightButtonPressed;
         FloatDisplay.OnTextEntered += OnFloatEnteredOrExited;
         FloatDisplay.OnFocusExit += OnFloatEnteredOrExited;
+        ReleaseValve.OnPressed += OnToggleValve;
     }
 
-    public void UpdateDisplay(float pressure, bool internalsConnected)
+    public void UpdateDisplay(float pressure, double airPressure, bool valve, bool internalsConnected)
     {
+        ReleaseValve.Text = valve
+            ? Loc.GetString("gas-tank-window-open-valve")
+            : Loc.GetString("gas-tank-window-closed-valve");
+
         _currentPressure = pressure;
         FloatDisplay.Text = pressure.ToString("F1");
+        PressureLabel.Text = Loc.GetString("gas-tank-window-tank-pressure-text", ("tankPressure", airPressure.ToString("F")));
 
-        InternalsButton.Text = internalsConnected ? "Connected" : "Disconnected";
+        InternalsButton.Text = internalsConnected
+            ? Loc.GetString("gas-tank-window-internal-connected")
+            : Loc.GetString("gas-tank-window-internal-disconnected");
     }
 
     private void OnToggleInternals(BaseButton.ButtonEventArgs args)
@@ -53,5 +62,10 @@ public sealed partial class GasTank : DefaultWindow
             OnSetPressure?.Invoke(pressure);
         else
             FloatDisplay.Text = _currentPressure.ToString("F1");
+    }
+
+    private void OnToggleValve(BaseButton.ButtonEventArgs args)
+    {
+        OnToggleValvePressed?.Invoke();
     }
 }

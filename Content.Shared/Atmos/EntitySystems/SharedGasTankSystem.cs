@@ -34,6 +34,16 @@ public abstract class SharedGasTankSystem : EntitySystem
         SubscribeLocalEvent<GasTankComponent, GasTankSetPressureMessage>(OnGasTankSetPressure);
         SubscribeLocalEvent<GasTankComponent, GasTankToggleInternalsMessage>(OnGasTankToggleInternals);
         SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
+        SubscribeLocalEvent<GasTankComponent, GasTankToggleValveMessage>(OnToggleValve);
+    }
+
+    private void OnToggleValve(Entity<GasTankComponent> ent, ref GasTankToggleValveMessage args)
+    {
+        ent.Comp.IsValveOpen = !ent.Comp.IsValveOpen;
+        _audio.PlayPredicted(ent.Comp.ValveSound, ent, args.Actor);
+        Dirty(ent);
+
+        UpdateUserInterface(ent);
     }
 
     private void OnGasShutdown(Entity<GasTankComponent> gasTank, ref ComponentShutdown args)
@@ -43,7 +53,7 @@ public abstract class SharedGasTankSystem : EntitySystem
 
     private void OnGasTankToggleInternals(Entity<GasTankComponent> ent, ref GasTankToggleInternalsMessage args)
     {
-        ToggleInternals(ent, args.Actor);
+        ToggleInternals(ent, ent.Comp.User);
     }
 
     private void OnGasTankSetPressure(Entity<GasTankComponent> ent, ref GasTankSetPressureMessage args)
@@ -52,6 +62,8 @@ public abstract class SharedGasTankSystem : EntitySystem
 
         ent.Comp.OutputPressure = pressure;
         Dirty(ent);
+
+        UpdateUserInterface(ent);
     }
 
     public virtual void UpdateUserInterface(Entity<GasTankComponent> ent)
@@ -217,13 +229,6 @@ public abstract class SharedGasTankSystem : EntitySystem
 
     private bool ToggleInternals(Entity<GasTankComponent> ent, EntityUid? user = null)
     {
-        if (ent.Comp.IsConnected)
-        {
-            return DisconnectFromInternals(ent, user);
-        }
-        else
-        {
-            return ConnectToInternals(ent, user);
-        }
+        return ent.Comp.IsConnected ? DisconnectFromInternals(ent, user) : ConnectToInternals(ent, user);
     }
 }

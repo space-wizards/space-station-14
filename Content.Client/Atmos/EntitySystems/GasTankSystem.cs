@@ -1,3 +1,4 @@
+using Content.Client.Atmos.UI;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 
@@ -13,17 +14,17 @@ public sealed class GasTankSystem : SharedGasTankSystem
 
     private void OnGasTankState(Entity<GasTankComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (UI.TryGetOpenUi(ent.Owner, SharedGasTankUiKey.Key, out var bui))
+        if (UI.TryGetOpenUi<GasTankBoundUserInterface>(ent.Owner, SharedGasTankUiKey.Key, out var bui))
         {
-            bui.Update<GasTankBoundUserInterfaceState>();
+            bui.Update(ent.Comp);
         }
     }
 
     public override void UpdateUserInterface(Entity<GasTankComponent> ent)
     {
-        if (UI.TryGetOpenUi(ent.Owner, SharedGasTankUiKey.Key, out var bui))
+        if (UI.TryGetOpenUi<GasTankBoundUserInterface>(ent.Owner, SharedGasTankUiKey.Key, out var bui))
         {
-            bui.Update<GasTankBoundUserInterfaceState>();
+            bui.Update(ent.Comp);
         }
     }
 }

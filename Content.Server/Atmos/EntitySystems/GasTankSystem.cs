@@ -52,6 +52,8 @@ public sealed class GasTankSystem : SharedGasTankSystem
         UI.ServerSendUiMessage(ent.Owner,
             SharedGasTankUiKey.Key,
             new GasTankUpdateMessage(pressure,
+                ent.Comp.Air.Pressure,
+                ent.Comp.IsValveOpen,
                 internalsConnected));
     }
 

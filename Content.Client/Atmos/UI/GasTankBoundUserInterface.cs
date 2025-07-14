@@ -8,15 +8,24 @@ namespace Content.Client.Atmos.UI;
 public sealed class GasTankBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
-    private GasTank? _window;
+    private GasTankWindow? _window;
+
+    public void Update(GasTankComponent tankComp)
+    {
+        _window?.UpdateDisplay(tankComp.OutputPressure,
+            tankComp.Air.Pressure,
+            tankComp.IsValveOpen,
+            tankComp.IsConnected);
+    }
 
     protected override void Open()
     {
         base.Open();
 
-        _window = this.CreateWindowCenteredLeft<GasTank>();
+        _window = this.CreateWindowCenteredLeft<GasTankWindow>();
         _window.ToggleInternalsPressed += OnToggleInternals;
         _window.OnSetPressure += OnSetPressure;
+        _window.OnToggleValvePressed += OnPressValve;
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
@@ -26,7 +35,7 @@ public sealed class GasTankBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
 
         if (message is GasTankUpdateMessage update)
         {
-            _window.UpdateDisplay(update.Pressure, update.InternalsConnected);
+            _window.UpdateDisplay(update.Pressure, update.AirPressure, update.GasValve, update.InternalsConnected);
         }
     }
 
@@ -38,5 +47,10 @@ public sealed class GasTankBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
     private void OnSetPressure(float pressure)
     {
         SendMessage(new GasTankSetPressureMessage(pressure));
+    }
+
+    private void OnPressValve()
+    {
+        SendMessage(new GasTankToggleValveMessage());
     }
 }

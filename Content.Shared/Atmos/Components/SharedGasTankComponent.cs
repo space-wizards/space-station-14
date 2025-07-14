@@ -3,9 +3,11 @@
 namespace Content.Shared.Atmos.Components;
 
 [Serializable, NetSerializable]
-public sealed class GasTankUpdateMessage(float pressure, bool internalsConnected) : BoundUserInterfaceMessage
+public sealed class GasTankUpdateMessage(float pressure, double airPressure, bool gasValve, bool internalsConnected) : BoundUserInterfaceMessage
 {
     public float Pressure { get; } = pressure;
+    public double AirPressure { get; } = airPressure;
+    public bool GasValve { get; } = gasValve;
     public bool InternalsConnected { get; } = internalsConnected;
 }
 
@@ -27,5 +29,11 @@ public sealed class GasTankSetPressureMessage(float pressure) : BoundUserInterfa
 [Serializable, NetSerializable]
 public sealed class GasTankBoundUserInterfaceState : BoundUserInterfaceState
 {
-    public float TankPressure;
+    public float Pressure;
+    public double AirPressure;
+    public bool GasValve;
+    public bool InternalsConnected;
 }
+
+[Serializable, NetSerializable]
+public sealed class GasTankToggleValveMessage: BoundUserInterfaceMessage;
