@@ -94,22 +94,16 @@
 - type: tile
   id: IronsandPaved
   name: tiles-ironsand-paved
-  sprite: /Textures/Tiles/Asteroid/ironsand_paved.png
+  sprite: /Textures/Tiles/Asteroid/ironsand_uneven_paved.png
   variants: 4
   placementVariants:
   - 1.0
   - 1.0
   - 1.0
   - 1.0
-  edgeSpritePriority: 2
-  edgeSprites:
-    North: /Textures/Tiles/Asteroid/ironsand_paved_border_n.png
-    South: /Textures/Tiles/Asteroid/ironsand_paved_border_s.png
-    East: /Textures/Tiles/Asteroid/ironsand_paved_border_e.png
-    West: /Textures/Tiles/Asteroid/ironsand_paved_border_w.png
   baseTurf: Space
-  isSubfloor: true
+  isSubfloor: false
   footstepSounds:
-    collection: FootstepAsteroid
+    collection: FootstepTile
   friction: 1.5
   heatCapacity: 10000
