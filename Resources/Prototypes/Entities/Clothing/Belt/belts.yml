@@ -35,6 +35,7 @@
       components:
         - StationMap
         - SprayPainter
+        - SprayPainterAmmo
         - NetworkConfigurator
         - RCD
         - RCDAmmo
@@ -119,6 +120,7 @@
       components:
         - StationMap
         - SprayPainter
+        - SprayPainterAmmo
         - NetworkConfigurator
         - RCD
         - RCDAmmo
