@@ -35,8 +35,6 @@ namespace Content.Client.Chemistry.UI.ChemMaster
         private readonly ReagentList _inputReagentList;
         private readonly ReagentList _outputReagentList;
 
-        private ChemMasterSortingType? _lastSortingType;
-
         /// <summary>
         /// Create and initialize the chem master UI client-side. Creates the basic layout,
         /// actual data isn't filled in until the server sends data about the chem master.
@@ -214,14 +212,8 @@ namespace Content.Client.Chemistry.UI.ChemMaster
                 _ => Loc.GetString("chem-master-window-sort-type-none")
             };
 
-            // Setting the sorting type triggers a rebuild of the rows, so we
-            // set it to null if it hasn't changed.
-            _bufferReagentList.Update(state.BufferReagents.ToDictionary(
-                    r => new ReagentListId(r.Reagent),
-                    r => r.Quantity),
-                state.SortingType != _lastSortingType ? state.SortingType : null);
-
-            _lastSortingType = state.SortingType;
+            var reagentDict = state.BufferReagents.ToDictionary(r => new ReagentListId(r.Reagent), r => r.Quantity);
+            _bufferReagentList.Update(reagentDict, state.SortingType);
 
             _bufferReagentList.UpdateLabels(null, ReagentQuantity.LocalizedQuantity(state.BufferCurrentVolume));
         }

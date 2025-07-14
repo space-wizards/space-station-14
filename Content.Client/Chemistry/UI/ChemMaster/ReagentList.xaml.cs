@@ -45,14 +45,6 @@ public sealed partial class ReagentList : BoxContainer
         if (_reagents.Count == 0 && _emptyText is not null)
             ReagentContainer.RemoveAllChildren();
 
-        // For resorting we actually rebuild our rows because uh
-        // I can't get in-place reordering to work.
-        if (sortingType is not null)
-        {
-            _reagents.Clear();
-            ReagentContainer.RemoveAllChildren();
-        }
-
         // First we find out what's missing in the new list
         var toDelete = _reagents.ExceptBy(newReagents.Keys, x => x.Key);
 
@@ -84,6 +76,7 @@ public sealed partial class ReagentList : BoxContainer
             if (_reagents.TryGetValue(id, out var reagent))
             {
                 reagent.SetQuantity(quantity);
+                reagent.SetPositionInParent(i);
                 // We have to reset the row color since a new item could've
                 // been inserted above us, changing our index's parity.
                 reagent.SetRowColor(rowColor);
@@ -115,11 +108,16 @@ public sealed partial class ReagentList : BoxContainer
             var row = new ReagentRow(name, quantity, buttons, proto?.SubstanceColor, rowColor);
             ReagentContainer.AddChild(row);
             _reagents[id] = row;
-
+            // I'll be honest I didn't think we have to set the position here but we do.
+            // I suspect it's because we haven't invalidated the arrangement at this point yet?
             row.SetPositionInParent(i);
+
             // The default fallback shouldn't ever occur since we don't give ReagentId-less entries buttons.
             row.OnAmountPressed += amount => OnRowAmountPressed?.Invoke(id.Id ?? default, amount);
         }
+
+        // Actually reorder the rows.
+        ReagentContainer.InvalidateArrange();
 
         if (_reagents.Count == 0 && _emptyText is not null)
             ReagentContainer.AddChild(new Label { Text = _emptyText });
