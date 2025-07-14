@@ -1,3 +1,4 @@
+using System.Globalization;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
@@ -159,6 +160,19 @@ namespace Content.Shared.Chemistry
             DisplayName = displayName;
             CurrentVolume = currentVolume;
             MaxVolume = maxVolume;
+        }
+
+        /// <summary>
+        /// Returns the localized current versus max volume of the container (e.g., 50/100).
+        /// </summary>
+        /// <remarks>
+        /// I kinda wish it was 50u/100u but out of convention I won't change it.
+        /// </remarks>
+        public string LocalizedCapacity()
+        {
+            return Loc.GetString("reagent-container-available-capacity",
+                ("currentVolume", CurrentVolume.ToString(CultureInfo.CurrentCulture)),
+                ("maxVolume", MaxVolume.ToString(CultureInfo.CurrentCulture)));
         }
     }
 
