@@ -1,10 +1,9 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Chemistry.UI
+namespace Content.Client.Chemistry.UI.ChemMaster
 {
     /// <summary>
     /// Initializes a <see cref="ChemMasterWindow"/> and updates it when new server messages are received.

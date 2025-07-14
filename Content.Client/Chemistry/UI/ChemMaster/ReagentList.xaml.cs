@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Chemistry.UI;
+namespace Content.Client.Chemistry.UI.ChemMaster;
 
 [GenerateTypedNameReferences]
 public sealed partial class ReagentList : BoxContainer
