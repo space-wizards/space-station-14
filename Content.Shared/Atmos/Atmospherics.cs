@@ -251,18 +251,14 @@ namespace Content.Shared.Atmos
         public const float ElectrovaeChargeMinimumPowerDrain = 5000f;
         public const float ElectrovaeChargeMaximumPowerDrain = 100000f;
         public const float ElectrovaeChargeConversionEfficiency = 0.8f;
-        public const int ElectrovaeChargeSearchRadius = 1;
+        public const float ElectrovaeChargeSearchRadius = 0.5f;
 
         public const float ChargedElectrovaeMinimumAmount = 2.0f;
-        public const float ChargedElectrovaeBaseReactionChance = 0.2f;
+        public const float ChargedElectrovaeEmpChance = 0.01f;
         public const float ChargedElectrovaeEmpRadius = 1f;
-        public const float ChargedElectrovaeEmpEnergy = 120f;
-        public const float ChargedElectrovaeEmpStunDuration = 2f;
-        public const float ChargedElectrovaeEmpChance = 0.3f;
-        public const float ChargedElectrovaeShockRadius = 1f;
-        public const int ChargedElectrovaeShockDamage = 5;
-        public const float ChargedElectrovaeShockDuration = 2f;
-        public const float ChargedElectrovaeShockChance = 0.5f;
+        public const float ChargedElectrovaeEmpEnergy = 5000f;
+        public const float ChargedElectrovaeEmpDuration = 1f;
+        public const float ChargedElectrovaeCooldown = 8f;
         /// <summary>
         ///     Remove X mol of oxygen for each mol of charged electrovae.
         /// </summary>
