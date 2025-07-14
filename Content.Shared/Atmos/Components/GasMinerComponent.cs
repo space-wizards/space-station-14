@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Atmos.Components;
 
 [NetworkedComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState(fieldDeltas: true)]
 [RegisterComponent]
 public sealed partial class GasMinerComponent : Component
 {
@@ -16,14 +16,14 @@ public sealed partial class GasMinerComponent : Component
     public GasMinerState MinerState = GasMinerState.Disabled;
 
     /// <summary>
-    ///      If the number of moles in the external environment exceeds this number, no gas will be mined.
+    ///      If the number of moles in the external environment exceeds this number, no gas will be released.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public float MaxExternalAmount = float.PositiveInfinity;
 
     /// <summary>
-    ///      If the pressure (in kPA) of the external environment exceeds this number, no gas will be mined.
+    ///      If the pressure (in kPA) of the external environment exceeds this number, no gas will be released.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
@@ -44,11 +44,36 @@ public sealed partial class GasMinerComponent : Component
     public float SpawnTemperature = Atmospherics.T20C;
 
     /// <summary>
-    ///     Number of moles created per second when the miner is working.
+    ///     The number of moles released from the miner's internal storage, per second, when the miner is working,
+    ///         and if it has enough mols of gas stored to do so.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("releaseAmount")]
+    public float ReleaseRate = Atmospherics.MolesCellStandard * 20f;
+
+    /// <summary>
+    ///      The maximum number of moles that can be stored within the miner's internal storage at once.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float MaxStoredAmount = 2500;
+
+    /// <summary>
+    ///      The number of moles that are currently stored within the miner's internal storage, to be released later at the rate of <see cref="ReleaseAmount">.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    public float StoredAmount = 0f;
+
+    /// <summary>
+    ///      The <see cref="StoredAmount"/>, the last time which it was replicated. This is used so that continuous very small changes in <see cref="StoredAmount"/> being
+    ///         intentionally not replicated, will not adversly affect anyone who examines this.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
-    public float SpawnAmount = Atmospherics.MolesCellStandard * 20f;
+    public float LastReplicatedStoredAmount = 0f;
+
+    /// <summary>
+    ///     The number of moles that are mined, per second, into the miner's internal storage, not released.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("spawnAmount")]
+    public float MiningRate = Atmospherics.MolesCellStandard * 20f;
 }
 
 [Serializable, NetSerializable]

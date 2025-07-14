@@ -21,70 +21,77 @@ public sealed class GasMinerSystem : SharedGasMinerSystem
         SubscribeLocalEvent<GasMinerComponent, AtmosDeviceUpdateEvent>(OnMinerUpdated);
     }
 
-    private void OnMinerUpdated(Entity<GasMinerComponent> ent, ref AtmosDeviceUpdateEvent args)
+    private void ProcessMinerState(Entity<GasMinerComponent> ent, GasMinerState newState, float? possibleNewStoredAmount = null)
     {
-        var miner = ent.Comp;
-        var oldState = miner.MinerState;
-        float toSpawn;
+        var minerComponent = ent.Comp;
 
-        if (!GetValidEnvironment(ent, out var environment) || !Transform(ent).Anchored)
-        {
-            miner.MinerState = GasMinerState.Disabled;
-        }
-        // SpawnAmount is declared in mol/s so to get the amount of gas we hope to mine, we have to multiply this by
-        // how long we have been waiting to spawn it and further cap the number according to the miner's state.
-        else if ((toSpawn = CapSpawnAmount(ent, miner.SpawnAmount * args.dt, environment)) == 0)
-        {
-            miner.MinerState = GasMinerState.Idle;
-        }
-        else
-        {
-            miner.MinerState = GasMinerState.Working;
+        if (minerComponent.MinerState != newState)
+        { minerComponent.MinerState = newState; DirtyField(ent.Owner, minerComponent, nameof(minerComponent.MinerState)); }
 
-            // Time to mine some gas.
-            var merger = new GasMixture(1) { Temperature = miner.SpawnTemperature };
-            merger.SetMoles(miner.SpawnGas, toSpawn);
-            _atmosphereSystem.Merge(environment, merger);
-        }
-
-        if (miner.MinerState != oldState)
+        if (possibleNewStoredAmount is { } newStoredAmount && Math.Abs(minerComponent.LastReplicatedStoredAmount - newStoredAmount) >= float.Epsilon)
         {
-            Dirty(ent);
+            minerComponent.StoredAmount = newStoredAmount;
+            minerComponent.LastReplicatedStoredAmount = newStoredAmount;
+            DirtyField(ent.Owner, minerComponent, nameof(minerComponent.StoredAmount));
         }
     }
 
-    private bool GetValidEnvironment(Entity<GasMinerComponent> ent, [NotNullWhen(true)] out GasMixture? environment)
+    private void OnMinerUpdated(Entity<GasMinerComponent> ent, ref AtmosDeviceUpdateEvent args)
     {
-        var (uid, miner) = ent;
-        var transform = Transform(uid);
-        var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
+        var minerComponent = ent.Comp;
 
-        // Treat space as an invalid environment
-        if (_atmosphereSystem.IsTileSpace(transform.GridUid, transform.MapUid, position))
-        {
-            environment = null;
-            return false;
-        }
+        if (!GetValidEnvironment(ent, out var environment, out var transform, out var minerTilePosition) || !transform.Anchored)
+        { ProcessMinerState(ent, GasMinerState.Disabled); return; }
 
+        // The rates of moles mined/released are declared in mol/s, so to get the amount of gas we hope to mine, we have to multiply the rate by
+        // how long we have been waiting to spawn it and further cap the number depending on other factors.
+
+        // This is how many mols we can mine right now.
+        var molesMinedPerSecond = minerComponent.MiningRate * args.dt;
+
+        // Time to mine some gas. However, only mine as much as we can, and not too much that will exceed the internal storage.
+        minerComponent.StoredAmount = Math.Min(minerComponent.MaxStoredAmount, minerComponent.StoredAmount + molesMinedPerSecond);
+
+        // Although we can mine gas in space, it's bad for the environment to release it into space. Atleast like this.
+        if (_atmosphereSystem.IsTileSpace(transform.GridUid, transform.MapUid, minerTilePosition))
+        { ProcessMinerState(ent, GasMinerState.Idle, possibleNewStoredAmount: minerComponent.StoredAmount); return; }
+
+        // Don't release more gas than is actually stored in the miner.
+        float toSpawn = Math.Min(minerComponent.StoredAmount, CapSpawnAmount(ent, minerComponent.ReleaseRate * args.dt, environment));
+
+        if (toSpawn == 0)
+        { ProcessMinerState(ent, GasMinerState.Idle, possibleNewStoredAmount: minerComponent.StoredAmount); return; }
+
+        // Release the gas into the atmosphere.
+        var merger = new GasMixture(1) { Temperature = minerComponent.SpawnTemperature };
+        merger.SetMoles(minerComponent.SpawnGas, toSpawn);
+        _atmosphereSystem.Merge(environment, merger);
+
+        minerComponent.StoredAmount -= toSpawn;
+        ProcessMinerState(ent, GasMinerState.Working, possibleNewStoredAmount: minerComponent.StoredAmount);
+    }
+
+    private bool GetValidEnvironment(Entity<GasMinerComponent> ent, [NotNullWhen(true)] out GasMixture? environment, out TransformComponent transform, out Vector2i tilePosition)
+    {
+        var uid = ent.Owner;
+        transform = Transform(uid);
+
+        tilePosition = _transformSystem.GetGridOrMapTilePosition(uid, transform);
         environment = _atmosphereSystem.GetContainingMixture((uid, transform), true, true);
+
         return environment != null;
     }
 
     private float CapSpawnAmount(Entity<GasMinerComponent> ent, float toSpawnTarget, GasMixture environment)
     {
-        var (uid, miner) = ent;
+        var minerComponent = ent.Comp;
 
         // How many moles could we theoretically spawn. Cap by pressure and amount.
         var allowableMoles = Math.Min(
-            (miner.MaxExternalPressure - environment.Pressure) * environment.Volume / (miner.SpawnTemperature * Atmospherics.R),
-            miner.MaxExternalAmount - environment.TotalMoles);
+            (minerComponent.MaxExternalPressure - environment.Pressure) * environment.Volume / (minerComponent.SpawnTemperature * Atmospherics.R),
+            minerComponent.MaxExternalAmount - environment.TotalMoles);
 
         var toSpawnReal = Math.Clamp(allowableMoles, 0f, toSpawnTarget);
-
-        if (toSpawnReal < Atmospherics.GasMinMoles) {
-            return 0f;
-        }
-
-        return toSpawnReal;
+        return toSpawnReal < Atmospherics.GasMinMoles ? 0f : toSpawnReal;
     }
 }
