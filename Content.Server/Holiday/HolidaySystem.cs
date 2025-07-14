@@ -8,13 +8,18 @@ namespace Content.Server.Holiday;
 public sealed class HolidaySystem : SharedHolidaySystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+
+    private DateTime CurrentDate;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
+        RefreshCurrentHolidays();
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
+        _player.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent eventArgs)
@@ -29,7 +34,19 @@ public sealed class HolidaySystem : SharedHolidaySystem
                 DoCelebrate();
                 break;
             case GameRunLevel.PostRound:
+                // TODO post round celebration.
                 break;
+        }
+    }
+    
+    /// <summary>
+    ///     Send new client sessions the active holidays.
+    /// </summary>
+    private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+    {
+        if (e.NewStatus == SessionStatus.Connected)
+        {
+            RaiseNetworkEvent(new UpdateHolidaysEvent(CurrentDate), e.Session);
         }
     }
 
@@ -39,10 +56,10 @@ public sealed class HolidaySystem : SharedHolidaySystem
     /// </summary>
     private void RefreshCurrentHolidays()
     {
-        var now = DateTime.Now;
+        CurrentDate = DateTime.Now;
 
-        SetActiveHolidays(now);
-        RaiseNetworkEvent(new UpdateHolidaysEvent(now));
+        SetActiveHolidays(CurrentDate);
+        RaiseNetworkEvent(new UpdateHolidaysEvent(CurrentDate));
     }
 
     /// <summary>
