@@ -88,8 +88,15 @@ public sealed class TextToSpeechSystem : EntitySystem
         if (ent.Comp.Stream is not { } stream)
             return;
 
-        stream.Capacity = 0;
-        stream.Dispose();
+        try
+        {
+            stream.Capacity = 0;
+            stream.Dispose();
+        }
+        catch
+        {
+            // ignored, stream might be closed but we don't care as long as the data goes away
+        }
     }
 
     private void PlayQueue()
