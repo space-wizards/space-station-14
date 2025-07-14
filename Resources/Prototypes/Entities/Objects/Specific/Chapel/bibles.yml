@@ -97,9 +97,9 @@
 
 - type: entity
   parent: Bible
-  name: torah
+  name: tanakh
   description: "For God's chosen crewmembers"
-  id: BibleTorah
+  id: BibleTanakh
   components:
   - type: Sprite
     sprite: Objects/Specific/Chapel/tanakh.rsi

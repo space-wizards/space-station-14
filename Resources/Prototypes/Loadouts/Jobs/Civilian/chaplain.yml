@@ -110,7 +110,7 @@
     - BibleQuran
 
 - type: loadout
-  id: BibleTorah
+  id: BibleTanakh
   storage:
     back:
-    - BibleTorah
+    - BibleTanakh
