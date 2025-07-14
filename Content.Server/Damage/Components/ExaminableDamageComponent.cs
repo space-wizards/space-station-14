@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Damage.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Damage.Components;
 
@@ -9,8 +9,6 @@ namespace Content.Server.Damage.Components;
 [RegisterComponent]
 public sealed partial class ExaminableDamageComponent : Component
 {
-    [DataField("messages", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<ExaminableDamagePrototype>))]
-    public string? MessagesProtoId;
-
-    public ExaminableDamagePrototype? MessagesProto;
+    [DataField("messages", required: true)]
+    public ProtoId<ExaminableDamagePrototype>? MessagesProtoId;
 }
