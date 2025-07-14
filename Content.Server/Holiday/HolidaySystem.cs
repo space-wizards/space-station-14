@@ -51,8 +51,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
     }
 
     /// <summary>
-    ///     Iterates through all <see cref="HolidayPrototype"/>s and sets if they should be active.
-    ///     Networks active holidays to client.
+    ///     Sets the active holidays and networks to clients to do the same.
     /// </summary>
     private void RefreshCurrentHolidays()
     {
