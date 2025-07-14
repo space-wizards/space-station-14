@@ -9,18 +9,34 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chemistry.UI.ChemMaster;
 
+/// <summary>
+/// Handles displaying a list of <see cref="ReagentRow" />s with optional
+/// sorting and dispense amount button.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class ReagentList : BoxContainer
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
+    /// <summary>
+    /// Invoked with a reagent and quantity when its amount button is pressed.
+    /// </summary>
     public event Action<ReagentId, FixedPoint2>? OnRowAmountPressed;
 
     private readonly string? _emptyText;
     private readonly Dictionary<ReagentListId, ReagentRow> _reagents = [];
     private readonly List<FixedPoint2> _buttonAmounts;
 
+    /// <summary>
+    /// Creates a reagent list with given label and button amount settings.
+    /// </summary>
+    /// <param name="label">The localized "name" of this reagent list.</param>
+    /// <param name="buttonAmounts">
+    /// An ordered list of <see cref="FixedPoint2" />s that should be used for amount buttons. Use
+    /// <see cref="FixedPoint2.MaxValue" /> to represent transferring as much as possible.
+    /// </param>
+    /// <param name="emptyText">The localized text to display if there are no reagents to list.</param>
     public ReagentList(string label, List<FixedPoint2> buttonAmounts, string? emptyText = null)
     {
         RobustXamlLoader.Load(this);
@@ -31,6 +47,11 @@ public sealed partial class ReagentList : BoxContainer
         ListName.Text = label;
     }
 
+    /// <summary>
+    /// Update the displayed name and volume label of the list. Used for container-based reagent lists.
+    /// </summary>
+    /// <param name="label">The localized "name" of this reagent list. If null, no change is made.</param>
+    /// <param name="currentVolume">The localized text of how many units are present. If null, no change is made.</param>
     public void UpdateLabels(string? label, string? currentVolume)
     {
         if (label is not null)
@@ -39,6 +60,18 @@ public sealed partial class ReagentList : BoxContainer
             VolumeLabel.Text = currentVolume;
     }
 
+    /// <summary>
+    /// Updates the reagent list with new data and a given sorting method.
+    /// </summary>
+    /// <param name="newReagents">A mapping of <see cref="ReagentListId" />s to quantities present.</param>
+    /// <param name="sortingType">
+    /// The sorting type to be used. If null, the order is whatever enumeration order the dictionary has.
+    /// </param>
+    /// <remarks>
+    /// The sorting is not stable with respect to the previous sorting order. Instead, it's stable with respect to the
+    /// "oldest first" sorting order. This is probably fine. Also, technically the oldest first sorting order is not
+    /// defined because this isn't an ordered dictionary but. It's fine. Don't worry about it.
+    /// </remarks>
     public void Update(Dictionary<ReagentListId, FixedPoint2> newReagents, ChemMasterSortingType? sortingType = null)
     {
         // The label saying the container is empty could be in our list container:
@@ -59,7 +92,7 @@ public sealed partial class ReagentList : BoxContainer
             {
                 ChemMasterSortingType.Alphabetical => newReagents.OrderBy(x => GetNameForSorting(x.Key)),
                 ChemMasterSortingType.Quantity => newReagents.OrderBy(x => x.Value),
-                ChemMasterSortingType.Latest => newReagents.Reverse(),
+                ChemMasterSortingType.Latest => newReagents.Reverse(), // See remarks.
                 _ => newReagents
             })
             .Select((x, i) => (i, x)) // Add on an index for row colors
@@ -119,6 +152,7 @@ public sealed partial class ReagentList : BoxContainer
         // Actually reorder the rows.
         ReagentContainer.InvalidateArrange();
 
+        // No reagents, so put in the empty text if we have any
         if (_reagents.Count == 0 && _emptyText is not null)
             ReagentContainer.AddChild(new Label { Text = _emptyText });
     }
@@ -146,11 +180,13 @@ public record struct ReagentListId
     /// <summary>If not-null, this struct represents an entity with this id.</summary>
     public readonly NetEntity? Uid;
 
+    /// <inheritdoc cref="ReagentListId" />
     public ReagentListId(ReagentId Id)
     {
         this.Id = Id;
     }
 
+    /// <inheritdoc cref="ReagentListId" />
     public ReagentListId(NetEntity Uid)
     {
         this.Uid = Uid;
