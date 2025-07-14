@@ -36,15 +36,15 @@ public abstract class SharedJobSystem : EntitySystem
     {
         _inverseTrackerLookup.Clear();
 
-        // This breaks if you have N trackers to 1 JobId but future concern.
         foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
-            _inverseTrackerLookup.Add(job.PlayTimeTracker, job.ID);
+            _inverseTrackerLookup.TryAdd(job.PlayTimeTracker, job.ID);
         }
     }
 
     /// <summary>
-    /// Gets the corresponding Job Prototype to a <see cref="PlayTimeTrackerPrototype"/>
+    /// Gets the first corresponding Job Prototype to a <see cref="PlayTimeTrackerPrototype"/>
+    /// If two jobs share the same tracker, a Name field should be declared on the prototype.
     /// </summary>
     /// <param name="trackerProto"></param>
     /// <returns></returns>
