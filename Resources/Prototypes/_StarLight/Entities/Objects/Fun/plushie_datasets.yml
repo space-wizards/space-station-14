@@ -81,3 +81,9 @@
   values:
     prefix: plushie-Glados-
     count: 9
+
+- type: localizedDataset
+  id: PlushiesWEH
+  values:
+    prefix: plushie-weh-
+    count: 6
