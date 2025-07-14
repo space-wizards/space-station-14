@@ -54,7 +54,7 @@ public sealed partial class GasMinerComponent : Component
     ///      The maximum number of moles that can be stored within the miner's internal storage at once.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField]
-    public float MaxStoredAmount = 2500;
+    public float MaxStoredAmount = 2500f;
 
     /// <summary>
     ///      The number of moles that are currently stored within the miner's internal storage, to be released later at the rate of <see cref="ReleaseAmount">.
