@@ -51,19 +51,23 @@ public sealed partial class GasMinerComponent : Component
     public float ReleaseRate = Atmospherics.MolesCellStandard * 20f;
 
     /// <summary>
-    ///      The maximum number of moles that can be stored within the miner's internal storage at once.
+    ///     The maximum number of moles that can be stored within the miner's internal storage at once.
     /// </summary>
+    /// <remarks>
+    ///     This should not be infinite. Instead, <see cref="ReleaseRate"/> and <see cref="MiningRate"/>
+    ///         should be set to the same value, in order to effectively bypass internal gas storage.
+    /// </remarks
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public float MaxStoredAmount = 2500f;
 
     /// <summary>
-    ///      The number of moles that are currently stored within the miner's internal storage, to be released later at the rate of <see cref="ReleaseAmount">.
+    ///     The number of moles that are currently stored within the miner's internal storage, to be released later at the rate of <see cref="ReleaseRate">.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public float StoredAmount = 0f;
 
     /// <summary>
-    ///      The <see cref="StoredAmount"/>, the last time which it was replicated. This is used so that continuous very small changes in <see cref="StoredAmount"/> being
+    ///     The <see cref="StoredAmount"/>, the last time which it was replicated. This is used so that continuous very small changes in <see cref="StoredAmount"/> being
     ///         intentionally not replicated, will not adversly affect anyone who examines this.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
