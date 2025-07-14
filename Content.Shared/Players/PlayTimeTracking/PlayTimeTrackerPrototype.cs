@@ -14,14 +14,14 @@ public sealed partial class PlayTimeTrackerPrototype : IPrototype
 
     /// <summary>
     /// The localized name ID of this playtime tracker.
-    /// Only useful for jobs that share playtime trackers.
+    /// If this field is left null, it'll default to the first job that uses this tracker.
     /// </summary>
     [DataField]
     public LocId? Name { get; private set; } = default!;
 
     /// <summary>
     /// The ID of the department this job is apart of, if any.
-    /// Only useful for jobs that share playtime trackers.
+    /// This is used for defining role requirement error text colors, for trackers that are shared across multiple roles.
     /// </summary>
     [DataField]
     public ProtoId<DepartmentPrototype>? Department { get; private set; } = default!;

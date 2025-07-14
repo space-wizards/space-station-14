@@ -32,17 +32,12 @@ public sealed partial class RoleTimeRequirement : JobRequirement
     {
         reason = new FormattedMessage();
 
-        string proto = Role;
+        var trackerPrototype = protoManager.Index(Role);
+        var jobSystem = entManager.EntitySysManager.GetEntitySystem<SharedJobSystem>();
 
-        if (!protoManager.TryIndex<PlayTimeTrackerPrototype>(proto, out var trackerPrototype))
-            return false;
+        var jobID = jobSystem.GetJobPrototype(Role);
 
-        if (!entManager.EntitySysManager.TryGetEntitySystem(out SharedJobSystem? jobSystem))
-            return false;
-
-        var jobID = jobSystem.GetJobPrototype(proto);
-
-        playTimes.TryGetValue(proto, out var roleTime);
+        playTimes.TryGetValue(Role, out var roleTime);
         var roleDiffSpan = Time - roleTime;
         var roleDiff = roleDiffSpan.TotalMinutes;
         var formattedRoleDiff = ContentLocalizationManager.FormatPlaytime(roleDiffSpan);

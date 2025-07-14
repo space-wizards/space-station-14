@@ -163,20 +163,18 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
 
         foreach (var job in jobsToMap)
         {
-            if (job.PlayTimeTracker is not { } tracker)
+            if (job.PlayTimeTracker is not { } trackerProtoId)
                 continue;
 
-            if (!_prototypes.TryIndex<PlayTimeTrackerPrototype>(tracker, out var trackerProto))
+            if (usedTrackers.Contains(trackerProtoId))
                 continue;
 
-            if (usedTrackers.Contains(tracker))
-                continue;
+            var trackerProto = _prototypes.Index<PlayTimeTrackerPrototype>(trackerProtoId);
+            var name = trackerProto.Name ?? job.Name;
 
-            var name = trackerProto?.Name ?? job.Name;
-
-            if (_roles.TryGetValue(tracker, out var playtime))
+            if (_roles.TryGetValue(trackerProtoId, out var playtime))
             {
-                usedTrackers.Add(tracker);
+                usedTrackers.Add(trackerProtoId);
                 yield return new KeyValuePair<string, TimeSpan>(name, playtime);
             }
         }
