@@ -19,17 +19,12 @@ public sealed partial class ReagentList : BoxContainer
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
-    /// <summary>
-    /// Invoked with a reagent and quantity when its amount button is pressed.
-    /// </summary>
-    public event Action<ReagentId, FixedPoint2>? OnRowAmountPressed;
+    public event Action<(ReagentId Id, FixedPoint2 Amount)>? OnRowAmountPressed;
 
     private readonly Dictionary<ReagentListId, ReagentRow> _reagents = [];
     private readonly List<FixedPoint2> _buttonAmounts;
 
-    /// <summary>
-    /// Creates a reagent list with given label and button amount settings.
-    /// </summary>
+    /// <summary>Creates a reagent list with given label and button amount settings.</summary>
     /// <param name="label">The localized "name" of this reagent list.</param>
     /// <param name="buttonAmounts">
     /// An ordered list of <see cref="FixedPoint2" />s that should be used for amount buttons. Use
@@ -49,22 +44,19 @@ public sealed partial class ReagentList : BoxContainer
             EmptyTextLabel.Visible = false;
     }
 
-    /// <summary>
-    /// Update the displayed name and volume label of the list. Used for container-based reagent lists.
-    /// </summary>
-    /// <param name="label">The localized "name" of this reagent list. If null, no change is made.</param>
-    /// <param name="currentVolume">The localized text of how many units are present. If null, no change is made.</param>
-    public void UpdateLabels(string? label, string? currentVolume)
+    /// <summary>Sets the localized text of the list's name label.</summary>
+    public void SetNameLabel(string name)
     {
-        if (label is not null)
-            ListName.Text = label;
-        if (currentVolume is not null)
-            VolumeLabel.Text = currentVolume;
+        ListName.Text = name;
     }
 
-    /// <summary>
-    /// Updates the reagent list with new data and a given sorting method.
-    /// </summary>
+    /// <summary>Sets the localized text of the volume label.</summary>
+    public void SetVolumeLabel(string volume)
+    {
+        VolumeLabel.Text = volume;
+    }
+
+    /// <summary>Updates the reagent list with new data and a given sorting method.</summary>
     /// <param name="newReagents">A mapping of <see cref="ReagentListId" />s to quantities present.</param>
     /// <param name="sortingType">
     /// The sorting type to be used. If null, the order is whatever enumeration order the dictionary has.
@@ -148,7 +140,7 @@ public sealed partial class ReagentList : BoxContainer
             row.SetPositionInParent(i);
 
             // The default fallback shouldn't ever occur since we don't give ReagentId-less entries buttons.
-            row.OnAmountPressed += amount => OnRowAmountPressed?.Invoke(id.Id ?? default, amount);
+            row.OnAmountPressed += amount => OnRowAmountPressed?.Invoke((id.Id ?? default, amount));
         }
 
         // Actually reorder the rows.
