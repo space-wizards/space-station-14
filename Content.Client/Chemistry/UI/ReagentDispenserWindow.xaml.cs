@@ -135,7 +135,7 @@ namespace Content.Client.Chemistry.UI
                 var nameLabel = new Label { Text = $"{localizedName}: " };
                 var quantityLabel = new Label
                 {
-                    Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", quantity)),
+                    Text = ReagentQuantity.LocalizedQuantity(quantity),
                     StyleClasses = { StyleNano.StyleClassLabelSecondaryColor },
                 };
 
