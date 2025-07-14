@@ -36,6 +36,7 @@ public sealed partial class RoleTimeRequirement : JobRequirement
         var jobSystem = entManager.EntitySysManager.GetEntitySystem<SharedJobSystem>();
 
         var jobID = jobSystem.GetJobPrototype(Role);
+        var jobPrototype = protoManager.Index(jobID);
 
         playTimes.TryGetValue(Role, out var roleTime);
         var roleDiffSpan = Time - roleTime;
@@ -48,12 +49,10 @@ public sealed partial class RoleTimeRequirement : JobRequirement
         else if (jobSystem.TryGetDepartment(jobID, out var jobDepartment))
             departmentColor = jobDepartment.Color;
 
-        var name = string.Empty;
+        var name = jobPrototype.LocalizedName;
 
         if (trackerPrototype.Name is { } trackerName)
             name = Loc.GetString(trackerName);
-        else if (protoManager.TryIndex<JobPrototype>(jobID, out var jobPrototype))
-            name = jobPrototype.LocalizedName;
 
         if (!Inverted)
         {

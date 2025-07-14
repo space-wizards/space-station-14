@@ -17,7 +17,7 @@ public abstract class SharedJobSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
 
-    private readonly Dictionary<string, string> _inverseTrackerLookup = new();
+    private readonly Dictionary<ProtoId<PlayTimeTrackerPrototype>, List<ProtoId<JobPrototype>>> _inverseTrackerLookup = new();
 
     public override void Initialize()
     {
@@ -38,7 +38,8 @@ public abstract class SharedJobSystem : EntitySystem
 
         foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
-            _inverseTrackerLookup.TryAdd(job.PlayTimeTracker, job.ID);
+            var key = _inverseTrackerLookup.GetOrNew(job.PlayTimeTracker);
+            key.Add(job.ID);
         }
     }
 
@@ -48,9 +49,18 @@ public abstract class SharedJobSystem : EntitySystem
     /// </summary>
     /// <param name="trackerProto"></param>
     /// <returns></returns>
-    public string GetJobPrototype(string trackerProto)
+    public ProtoId<JobPrototype> GetJobPrototype(ProtoId<PlayTimeTrackerPrototype> trackerProto)
     {
-        DebugTools.Assert(_prototypes.HasIndex<PlayTimeTrackerPrototype>(trackerProto));
+        return _inverseTrackerLookup[trackerProto].FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Gets the list of <see cref="JobPrototype"/>s that have the given <see cref="PlayTimeTrackerPrototype"/>
+    /// </summary>
+    /// <param name="trackerProto"></param>
+    /// <returns></returns>
+    public List<ProtoId<JobPrototype>> GetJobPrototypes(ProtoId<PlayTimeTrackerPrototype> trackerProto)
+    {
         return _inverseTrackerLookup[trackerProto];
     }
 
