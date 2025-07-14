@@ -45,7 +45,7 @@ public sealed partial class GasMinerComponent : Component
 
     /// <summary>
     ///     The number of moles released from the miner's internal storage, per second, when the miner is working,
-    ///         and if it has enough mols of gas stored to do so.
+    ///         if it has enough mols of gas stored to do so.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("releaseAmount")]
     public float ReleaseRate = Atmospherics.MolesCellStandard * 20f;
