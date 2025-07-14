@@ -14,5 +14,5 @@ public sealed partial class ExaminableDamageComponent : Component
     /// The first message will be used at 0 damage with the others equally distributed across the range from undamaged to fully damaged.
     /// </summary>
     [DataField]
-    public ProtoId<LocalizedDatasetPrototype> Messages;
+    public ProtoId<LocalizedDatasetPrototype>? Messages;
 }
