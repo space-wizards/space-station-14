@@ -79,7 +79,7 @@
 - type: localizedDataset
   id: PlushiesGlados
   values:
-    prefix: plushie-Glados-
+    prefix: plushie-glados-
     count: 9
 
 - type: localizedDataset
