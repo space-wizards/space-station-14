@@ -2,6 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
+using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -21,7 +22,7 @@ namespace Content.Shared.DeathNote;
 /// 2. If the name, that is shared by multiple humanoid, is written, every humanoid with that name dies.
 /// 3. One Death Note can kill only 5 humanoids.
 /// 4. In order to use Death Note, one should pay 10 000 credits for each name.
-/// 5. Writing a name should look like this: "Name: {Name}" (also thinking about letting players write kill delays and damage types)
+/// 5. Writing a name should look like this: "{Name}, {KillDelay}" (John Marston, 40)
 public sealed class DeathNoteSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -36,6 +37,7 @@ public sealed class DeathNoteSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<DeathNoteComponent, PaperAfterWriteEvent>(OnPaperAfterWriteInteract);
+        SubscribeLocalEvent<DeathNoteComponent, InteractEvent>(OnInteract);
     }
 
     public override void Update(float frameTime)
@@ -55,6 +57,11 @@ public sealed class DeathNoteSystem : EntitySystem
         }
     }
 
+    private void OnInteract(Entity<DeathNoteComponent> ent, ref InteractEvent args)
+    {
+        ent.Comp.TouchedBy.Add(args.User);
+    }
+
     private void OnPaperAfterWriteInteract(Entity<DeathNoteComponent> ent, ref PaperAfterWriteEvent args)
     {
         // if the entity is not a paper, we don't do anything
@@ -65,23 +72,35 @@ public sealed class DeathNoteSystem : EntitySystem
 
         var lines = content.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
+        var showPopup = false;
+
         foreach (var line in lines)
         {
-            if (!line.StartsWith("Name: ", StringComparison.OrdinalIgnoreCase))
+            Log.Debug($"Processing line: {line}");
+            if (string.IsNullOrEmpty(line))
                 continue;
 
-            var name = line.Substring("Name: ".Length).Trim();
+            var parts = line.Split(',', 2, StringSplitOptions.RemoveEmptyEntries);
 
-            if (!CheckIfEligible(name, out var message, out var uid))
+            var name = parts[0].Trim();
+
+            var delay = 40f;
+
+            if (parts.Length == 2 && int.TryParse(parts[1].Trim(), out var parsedDelay) && parsedDelay > 0)
+                delay = parsedDelay;
+
+            Log.Debug($"Line processed: {name} - {delay}");
+
+            if (!CheckIfEligible(name, out var uid))
             {
-                _popupSystem.PopupEntity(message, ent.Owner, args.Actor, PopupType.Medium);
                 continue;
             }
 
-            // TODO hardcoded kill time, should be taken from the component
-            var killTime = _gameTiming.CurTime + TimeSpan.FromSeconds(40);
+            showPopup = true;
 
-            var targetComp = new DeathNoteTargetComponent(40, killTime);
+            var killTime = _gameTiming.CurTime + TimeSpan.FromSeconds(delay);
+
+            var targetComp = new DeathNoteTargetComponent(delay, killTime);
 
             AddComp(uid, targetComp);
 
@@ -90,9 +109,11 @@ public sealed class DeathNoteSystem : EntitySystem
             _adminLogs.Add(LogType.Chat,
                 LogImpact.High,
                 $"{Name(ent.Owner)} has written {name} in the Death Note. Target UID: {uid}");
-
-            _popupSystem.PopupEntity("You have written a name in the Death Note.", ent.Owner, args.Actor, PopupType.Medium);
         }
+
+        // If we have written at least one eligible name, we show the popup (So the player knows death note worked).
+        if(showPopup)
+            _popupSystem.PopupEntity("The name is written. The countdown begins.", ent.Owner, args.Actor, PopupType.Large);
     }
 
     // A person to be killed by DeathNote must:
@@ -102,32 +123,29 @@ public sealed class DeathNoteSystem : EntitySystem
     // 4. not be already killed by Death Note
 
     // If all these conditions are met, we return true and the entityUid of the person to kill.
-    private bool CheckIfEligible(string name, out string? message, out EntityUid entityUid)
+    private bool CheckIfEligible(string name, out EntityUid entityUid)
     {
         if (!TryFindEntityByName(name, out var uid) ||
             !TryComp<MobStateComponent>(uid, out var mob))
         {
-            message = "The name is invalid.";
             entityUid = default;
             return false;
         }
 
         if (_killedEntities.Contains(uid))
         {
-            message = "The person has been already killed by Death Note.";
             entityUid = default;
             return false;
         }
 
         if (mob.CurrentState == MobState.Dead)
         {
-            message = "The person is already dead.";
             entityUid = default;
             return false;
         }
 
+        Log.Debug($"{name} is eligible for Death Note.");
         entityUid = uid;
-        message = null;
         return true;
     }
 
