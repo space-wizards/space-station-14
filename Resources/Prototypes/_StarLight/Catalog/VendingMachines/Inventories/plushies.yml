@@ -519,3 +519,14 @@
   conditions:
     - !type:ListingLimitedStockCondition
       stock: 2
+
+- type: listing
+  id: VendorPlushieRufia
+  productEntity: PlushieRufia
+  cost:
+    NTCredit: 14
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
