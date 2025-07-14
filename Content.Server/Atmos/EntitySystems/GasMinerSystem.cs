@@ -46,11 +46,8 @@ public sealed class GasMinerSystem : SharedGasMinerSystem
         // The rates of moles mined/released are declared in mol/s, so to get the amount of gas we hope to mine, we have to multiply the rate by
         // how long we have been waiting to spawn it and further cap the number depending on other factors.
 
-        // This is how many mols we can mine right now.
-        var molesMinedPerSecond = minerComponent.MiningRate * args.dt;
-
         // Time to mine some gas. However, only mine as much as we can, and not too much that will exceed the internal storage.
-        minerComponent.StoredAmount = Math.Min(minerComponent.MaxStoredAmount, minerComponent.StoredAmount + molesMinedPerSecond);
+        minerComponent.StoredAmount = Math.Min(minerComponent.MaxStoredAmount, minerComponent.StoredAmount + minerComponent.MiningRate * args.dt);
 
         // Although we can mine gas in space, it's bad for the environment to release it into space. Atleast like this.
         if (_atmosphereSystem.IsTileSpace(transform.GridUid, transform.MapUid, minerTilePosition))

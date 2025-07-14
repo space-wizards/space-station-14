@@ -58,7 +58,7 @@ public sealed partial class GasMinerComponent : Component
     ///         should be set to the same value, in order to effectively bypass internal gas storage.
     /// </remarks
     [ViewVariables(VVAccess.ReadWrite), DataField]
-    public float MaxStoredAmount = 2500f;
+    public float MaxStoredAmount = 1200f;
 
     /// <summary>
     ///     The number of moles that are currently stored within the miner's internal storage, to be released later at the rate of <see cref="ReleaseRate">.
