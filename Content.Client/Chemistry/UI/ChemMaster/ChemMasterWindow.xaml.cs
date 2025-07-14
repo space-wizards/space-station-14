@@ -217,7 +217,7 @@ namespace Content.Client.Chemistry.UI.ChemMaster
             // Setting the sorting type triggers a rebuild of the rows, so we
             // set it to null if it hasn't changed.
             _bufferReagentList.Update(state.BufferReagents.ToDictionary(
-                    r => new ReagentListEntry(r.Reagent, null),
+                    r => new ReagentListId(r.Reagent),
                     r => r.Quantity),
                 state.SortingType != _lastSortingType ? state.SortingType : null);
 
@@ -232,11 +232,11 @@ namespace Content.Client.Chemistry.UI.ChemMaster
             // Technically the UI would display it fine, though.
             if (info?.Entities is { } entities)
             {
-                list.Update(entities.ToDictionary(ent => new ReagentListEntry(null, ent.Id), ent => ent.Quantity));
+                list.Update(entities.ToDictionary(ent => new ReagentListId(ent.Id), ent => ent.Quantity));
             }
             else if (info?.Reagents is { } reagents)
             {
-                list.Update(reagents.ToDictionary(r => new ReagentListEntry(r.Reagent, null), v => v.Quantity));
+                list.Update(reagents.ToDictionary(r => new ReagentListId(r.Reagent), v => v.Quantity));
             }
             else
             {

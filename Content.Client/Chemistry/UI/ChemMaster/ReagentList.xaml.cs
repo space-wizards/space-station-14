@@ -12,12 +12,13 @@ namespace Content.Client.Chemistry.UI.ChemMaster;
 [GenerateTypedNameReferences]
 public sealed partial class ReagentList : BoxContainer
 {
+    [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
     public event Action<ReagentId, FixedPoint2>? OnRowAmountPressed;
 
     private readonly string? _emptyText;
-    private readonly Dictionary<ReagentListEntry, ReagentRow> _reagents = [];
+    private readonly Dictionary<ReagentListId, ReagentRow> _reagents = [];
     private readonly List<FixedPoint2> _buttonAmounts;
 
     public ReagentList(string label, List<FixedPoint2> buttonAmounts, string? emptyText = null)
@@ -38,7 +39,7 @@ public sealed partial class ReagentList : BoxContainer
             VolumeLabel.Text = currentVolume;
     }
 
-    public void Update(Dictionary<ReagentListEntry, FixedPoint2> newReagents, ChemMasterSortingType? sortingType = null)
+    public void Update(Dictionary<ReagentListId, FixedPoint2> newReagents, ChemMasterSortingType? sortingType = null)
     {
         // The label saying the container is empty could be in our list container:
         if (_reagents.Count == 0 && _emptyText is not null)
@@ -90,10 +91,19 @@ public sealed partial class ReagentList : BoxContainer
             }
 
             ReagentPrototype? proto = null;
-            if (id.Id?.Prototype is { } protoId)
-                _protoMan.TryIndex(protoId, out proto);
-
-            var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
+            var name = Loc.GetString("chem-master-window-unknown-reagent-text");
+            if (id.Id?.Prototype is { } protoId
+                && _protoMan.TryIndex(protoId, out proto))
+            {
+                name = proto.LocalizedName;
+            }
+            else if (id.Uid is { } netId)
+            {
+                var eUid = _entMan.GetEntity(netId);
+                // Leaks identity of whoever's inside the pill bottle I guess.
+                // Should be fixed if we add honey I shrunk the kids antag.
+                name = _entMan.GetComponent<MetaDataComponent>(eUid).EntityName;
+            }
 
             // New reagent got added, so we make a row and shift it into place
             // If we can't find the reagent prototype this is probably an
@@ -115,7 +125,7 @@ public sealed partial class ReagentList : BoxContainer
             ReagentContainer.AddChild(new Label { Text = _emptyText });
     }
 
-    private string GetNameForSorting(ReagentListEntry entry)
+    private string GetNameForSorting(ReagentListId entry)
     {
         if (entry.Id is { Prototype: var protoId }
             && _protoMan.TryIndex<ReagentPrototype>(protoId, out var proto))
@@ -126,4 +136,25 @@ public sealed partial class ReagentList : BoxContainer
     }
 }
 
-public record struct ReagentListEntry(ReagentId? Id, NetEntity? Uid);
+/// <summary>
+/// Pretend this is a sum type. <see cref="ReagentList" /> only supports showing a list of reagents or a list of
+/// entities, and this represents the identifier for either case. At least one property should be non-null!
+/// </summary>
+public record struct ReagentListId
+{
+    /// <summary>If not-null, this struct represents a reagent with this <see cref="ReagentId"/>.</summary>
+    public readonly ReagentId? Id;
+
+    /// <summary>If not-null, this struct represents an entity with this id.</summary>
+    public readonly NetEntity? Uid;
+
+    public ReagentListId(ReagentId Id)
+    {
+        this.Id = Id;
+    }
+
+    public ReagentListId(NetEntity Uid)
+    {
+        this.Uid = Uid;
+    }
+}
