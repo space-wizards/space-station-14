@@ -55,7 +55,8 @@ namespace Content.Client.Chemistry.UI
                 _window.PillTypeButtons[i].OnPressed += _ => SendPredictedMessage(new ChemMasterSetPillTypeMessage(pillType));
             }
 
-            _window.OnReagentButtonPressed += (args, button) => SendPredictedMessage(new ChemMasterReagentAmountButtonMessage(button.Id, button.Amount, button.IsBuffer));
+            _window.OnReagentButtonPressed += (id, amount, isBuffer) =>
+                SendPredictedMessage(new ChemMasterReagentAmountButtonMessage(id, amount, isBuffer));
         }
 
         /// <summary>

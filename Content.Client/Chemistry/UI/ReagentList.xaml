@@ -1,0 +1,11 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical">
+    <BoxContainer>
+        <Label Name="ListName" />
+        <Label Name="VolumeLabel" StyleClasses="LabelSecondaryColor" />
+    </BoxContainer>
+    <BoxContainer Name="ReagentContainer"
+                  Orientation="Vertical">
+        <!-- Rows are programatically inserted here. -->
+    </BoxContainer>
+</BoxContainer>

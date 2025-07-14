@@ -28,10 +28,16 @@ namespace Content.Client.Chemistry.UI
 
         private readonly SpriteSystem _sprite;
 
-        public event Action<BaseButton.ButtonEventArgs, ReagentButton>? OnReagentButtonPressed;
+        public event Action<ReagentId, FixedPoint2, bool>? OnReagentButtonPressed;
         public readonly Button[] PillTypeButtons;
 
         private const string PillsRsiPath = "/Textures/Objects/Specific/Chemistry/pills.rsi";
+
+        private readonly ReagentList _bufferReagentList;
+        private readonly ReagentList _inputReagentList;
+        private readonly ReagentList _outputReagentList;
+
+        private ChemMasterSortingType? _lastSortingType;
 
         /// <summary>
         /// Create and initialize the chem master UI client-side. Creates the basic layout,
@@ -93,47 +99,26 @@ namespace Content.Client.Chemistry.UI
 
             Tabs.SetTabTitle(0, Loc.GetString("chem-master-window-input-tab"));
             Tabs.SetTabTitle(1, Loc.GetString("chem-master-window-output-tab"));
-        }
 
-        private ReagentButton MakeReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string styleClass)
-        {
-            var reagentTransferButton = new ReagentButton(text, amount, id, isBuffer, styleClass);
-            reagentTransferButton.OnPressed += args
-                => OnReagentButtonPressed?.Invoke(args, reagentTransferButton);
-            return reagentTransferButton;
-        }
-        /// <summary>
-        /// Conditionally generates a set of reagent buttons based on the supplied boolean argument.
-        /// This was moved outside of BuildReagentRow to facilitate conditional logic, stops indentation depth getting out of hand as well.
-        /// </summary>
-        private List<ReagentButton> CreateReagentTransferButtons(ReagentId reagent, bool isBuffer, bool addReagentButtons)
-        {
-            if (!addReagentButtons)
-                return new List<ReagentButton>(); // Return an empty list if reagentTransferButton creation is disabled.
+            // Initial reagent list setup
+            _bufferReagentList = new ReagentList(Loc.GetString("chem-master-window-buffer-label") + " ",
+                ChemMasterComponent.ChemMasterAmountOptions,
+                Loc.GetString("chem-master-window-buffer-empty-text"));
 
-            var buttonConfigs = new (string text, ChemMasterReagentAmount amount, string styleClass)[]
-            {
-                ("1", ChemMasterReagentAmount.U1, StyleBase.ButtonOpenBoth),
-                ("5", ChemMasterReagentAmount.U5, StyleBase.ButtonOpenBoth),
-                ("10", ChemMasterReagentAmount.U10, StyleBase.ButtonOpenBoth),
-                ("15", ChemMasterReagentAmount.U15, StyleBase.ButtonOpenBoth),
-                ("20", ChemMasterReagentAmount.U20, StyleBase.ButtonOpenBoth),
-                ("25", ChemMasterReagentAmount.U25, StyleBase.ButtonOpenBoth),
-                ("30", ChemMasterReagentAmount.U30, StyleBase.ButtonOpenBoth),
-                ("50", ChemMasterReagentAmount.U50, StyleBase.ButtonOpenBoth),
-                ("100", ChemMasterReagentAmount.U100, StyleBase.ButtonOpenBoth),
-                (Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, StyleBase.ButtonOpenLeft),
-            };
+            _inputReagentList = new ReagentList(Loc.GetString("chem-master-window-no-container-loaded-text"),
+                ChemMasterComponent.ChemMasterAmountOptions);
 
-            var buttons = new List<ReagentButton>();
+            _outputReagentList = new ReagentList(Loc.GetString("chem-master-window-no-container-loaded-text"),
+                []);
 
-            foreach (var (text, amount, styleClass) in buttonConfigs)
-            {
-                var reagentTransferButton = MakeReagentButton(text, amount, reagent, isBuffer, styleClass);
-                buttons.Add(reagentTransferButton);
-            }
+            BufferInfo.AddChild(_bufferReagentList);
+            InputContainerInfo.AddChild(_inputReagentList);
+            OutputContainerInfo.AddChild(_outputReagentList);
 
-            return buttons;
+            _bufferReagentList.OnRowAmountPressed +=
+                (id, quantity) => OnReagentButtonPressed?.Invoke(id, quantity, true);
+            _inputReagentList.OnRowAmountPressed +=
+                (id, quantity) => OnReagentButtonPressed?.Invoke(id, quantity, false);
         }
 
         /// <summary>
@@ -150,6 +135,7 @@ namespace Content.Client.Chemistry.UI
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
 
+            // TODO localize
             BufferCurrentVolume.Text = $" {castState.BufferCurrentVolume?.Int() ?? 0}u";
 
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
@@ -218,10 +204,8 @@ namespace Content.Client.Chemistry.UI
             BufferTransferButton.Pressed = state.Mode == ChemMasterMode.Transfer;
             BufferDiscardButton.Pressed = state.Mode == ChemMasterMode.Discard;
 
-            BuildContainerUI(InputContainerInfo, state.InputContainerInfo, true);
-            BuildContainerUI(OutputContainerInfo, state.OutputContainerInfo, false);
-
-            BufferInfo.Children.Clear();
+            UpdateContainerInfo(_inputReagentList, state.InputContainerInfo);
+            UpdateContainerInfo(_outputReagentList, state.OutputContainerInfo);
 
             // This has to happen here due to people possibly
             // setting sorting before putting any chemicals
@@ -233,201 +217,47 @@ namespace Content.Client.Chemistry.UI
                 _ => Loc.GetString("chem-master-window-sort-type-none")
             };
 
+            // Setting the sorting type triggers a rebuild of the rows, so we
+            // set it to null if it hasn't changed.
+            _bufferReagentList.Update(state.BufferReagents.ToDictionary(
+                    r => new ReagentListEntry(r.Reagent, null),
+                    r => r.Quantity),
+                state.SortingType != _lastSortingType ? state.SortingType : null);
 
-            if (!state.BufferReagents.Any())
-            {
-                BufferInfo.Children.Add(new Label { Text = Loc.GetString("chem-master-window-buffer-empty-text") });
+            _lastSortingType = state.SortingType;
 
-                return;
-            }
-
-            var bufferHBox = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal
-            };
-            BufferInfo.AddChild(bufferHBox);
-
-            var bufferLabel = new Label { Text = $"{Loc.GetString("chem-master-window-buffer-label")} " };
-            bufferHBox.AddChild(bufferLabel);
-            var bufferVol = new Label
-            {
-                Text = $"{state.BufferCurrentVolume}u",
-                StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
-            };
-            bufferHBox.AddChild(bufferVol);
-
-            // This sets up the needed data for sorting later in a list
-            // Its done this way to not repeat having to use same code twice (once for sorting
-            // and once for displaying)
-            var reagentList = new List<(ReagentId reagentId, string name, Color color, FixedPoint2 quantity)>();
-            foreach (var (reagent, quantity) in state.BufferReagents)
-            {
-                var reagentId = reagent;
-                _prototypeManager.TryIndex(reagentId.Prototype, out ReagentPrototype? proto);
-                var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-                var reagentColor = proto?.SubstanceColor ?? default(Color);
-                reagentList.Add(new (reagentId, name, reagentColor, quantity));
-            }
-
-            // We sort here since we need sorted list to be filled first.
-            // You can easily add any new params you need to it.
-            switch (state.SortingType)
-            {
-                case ChemMasterSortingType.Alphabetical:
-                    reagentList = reagentList.OrderBy(x => x.name).ToList();
-                    break;
-
-                case ChemMasterSortingType.Quantity:
-                    reagentList = reagentList.OrderByDescending(x => x.quantity).ToList();
-                    break;
-                case ChemMasterSortingType.Latest:
-                    reagentList = Enumerable.Reverse(reagentList).ToList();
-                    break;
-
-                case ChemMasterSortingType.None:
-                default:
-                    // This case is pointless but it is there for readability
-                    break;
-            }
-
-            // initialises rowCount to allow for striped rows
-            var rowCount = 0;
-            foreach (var reagent in reagentList)
-            {
-                BufferInfo.Children.Add(BuildReagentRow(reagent.color, rowCount++, reagent.name, reagent.reagentId, reagent.quantity, true, true));
-            }
+            // TODO localize
+            _bufferReagentList.UpdateLabels(null, $"{state.BufferCurrentVolume}u");
         }
 
-        private void BuildContainerUI(Control control, ContainerInfo? info, bool addReagentButtons)
+        private void UpdateContainerInfo(ReagentList list, ContainerInfo? info)
         {
-            control.Children.Clear();
-
-            if (info is null)
+            // Having Entities versus Reagents is mutually exclusive
+            // Technically the UI would display it fine, though.
+            if (info?.Entities is { } entities)
             {
-                control.Children.Add(new Label
-                {
-                    Text = Loc.GetString("chem-master-window-no-container-loaded-text")
-                });
+                list.Update(entities.ToDictionary(ent => new ReagentListEntry(null, ent.Id), ent => ent.Quantity));
+            }
+            else if (info?.Reagents is { } reagents)
+            {
+                list.Update(reagents.ToDictionary(r => new ReagentListEntry(r.Reagent, null), v => v.Quantity));
+            }
+            else
+            {
+                list.Update([]);
+            }
+
+            if (info is not { DisplayName: var name, CurrentVolume: var currentVol, MaxVolume: var maxVol })
                 return;
-            }
 
-            // Name of the container and its fill status (Ex: 44/100u)
-            control.Children.Add(new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                Children =
-                {
-                    new Label { Text = $"{info.DisplayName}: " },
-                    new Label
-                    {
-                        Text = $"{info.CurrentVolume}/{info.MaxVolume}",
-                        StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
-                    }
-                }
-            });
-            // Initialises rowCount to allow for striped rows
-            var rowCount = 0;
-
-            // Handle entities if they are not null
-            if (info.Entities != null)
-            {
-                foreach (var (id, quantity) in info.Entities.Select(x => (x.Id, x.Quantity)))
-                {
-                    control.Children.Add(BuildReagentRow(default(Color), rowCount++, id, default(ReagentId), quantity, false, addReagentButtons));
-                }
-            }
-
-            // Handle reagents if they are not null
-            if (info.Reagents != null)
-            {
-                foreach (var reagent in info.Reagents)
-                {
-                    _prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? proto);
-                    var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-                    var reagentColor = proto?.SubstanceColor ?? default(Color);
-
-                    control.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagent.Reagent, reagent.Quantity, false, addReagentButtons));
-                }
-            }
-        }
-        /// <summary>
-        /// Take reagent/entity data and present rows, labels, and buttons appropriately. todo sprites?
-        /// </summary>
-        private Control BuildReagentRow(Color reagentColor, int rowCount, string name, ReagentId reagent, FixedPoint2 quantity, bool isBuffer, bool addReagentButtons)
-        {
-            //Colors rows and sets fallback for reagentcolor to the same as background, this will hide colorPanel for entities hopefully
-            var rowColor1 = Color.FromHex("#1B1B1E");
-            var rowColor2 = Color.FromHex("#202025");
-            var currentRowColor = (rowCount % 2 == 1) ? rowColor1 : rowColor2;
-            if ((reagentColor == default(Color))|(!addReagentButtons))
-            {
-                reagentColor = currentRowColor;
-            }
-            //this calls the separated button builder, and stores the return to render after labels
-            var reagentButtonConstructors = CreateReagentTransferButtons(reagent, isBuffer, addReagentButtons);
-
-            // Create the row layout with the color panel
-            var rowContainer = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                Children =
-                {
-                    new Label { Text = $"{name}: " },
-                    new Label
-                    {
-                        Text = $"{quantity}u",
-                        StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
-                    },
-
-                    // Padding
-                    new Control { HorizontalExpand = true },
-                    // Colored panels for reagents
-                    new PanelContainer
-                    {
-                        Name = "colorPanel",
-                        VerticalExpand = true,
-                        MinWidth = 4,
-                        PanelOverride = new StyleBoxFlat
-                        {
-                            BackgroundColor = reagentColor
-                        },
-                        Margin = new Thickness(0, 1)
-                    }
-                }
-            };
-
-            // Add the reagent buttons after the color panel
-            foreach (var reagentTransferButton in reagentButtonConstructors)
-            {
-                rowContainer.AddChild(reagentTransferButton);
-            }
-            //Apply panencontainer to allow for striped rows
-            return new PanelContainer
-            {
-                PanelOverride = new StyleBoxFlat(currentRowColor),
-                Children = { rowContainer }
-            };
+            // TODO localize
+            list.UpdateLabels($"{name}: ", $"{currentVol}/{maxVol}");
         }
 
         public string LabelLine
         {
             get => LabelLineEdit.Text;
             set => LabelLineEdit.Text = value;
-        }
-    }
-
-    public sealed class ReagentButton : Button
-    {
-        public ChemMasterReagentAmount Amount { get; set; }
-        public bool IsBuffer = true;
-        public ReagentId Id { get; set; }
-        public ReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string styleClass)
-        {
-            AddStyleClass(styleClass);
-            Text = text;
-            Amount = amount;
-            Id = id;
-            IsBuffer = isBuffer;
         }
     }
 }

@@ -116,16 +116,16 @@ namespace Content.Shared.Chemistry.EntitySystems
         private void OnReagentButtonMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterReagentAmountButtonMessage message)
         {
             // Ensure the amount corresponds to one of the reagent amount buttons.
-            if (!Enum.IsDefined(typeof(ChemMasterReagentAmount), message.Amount))
+            if (!ChemMasterComponent.ChemMasterAmountOptions.Contains(message.Amount))
                 return;
 
             switch (chemMaster.Comp.Mode)
             {
                 case ChemMasterMode.Transfer:
-                    TransferReagents(chemMaster, message.ReagentId, message.Amount.GetFixedPoint(), message.FromBuffer);
+                    TransferReagents(chemMaster, message.ReagentId, message.Amount, message.FromBuffer);
                     break;
                 case ChemMasterMode.Discard:
-                    DiscardReagents(chemMaster, message.ReagentId, message.Amount.GetFixedPoint(), message.FromBuffer);
+                    DiscardReagents(chemMaster, message.ReagentId, message.Amount, message.FromBuffer);
                     break;
                 default:
                     // Invalid mode.
@@ -344,16 +344,16 @@ namespace Content.Shared.Chemistry.EntitySystems
             if (!TryComp(container, out StorageComponent? storage))
                 return null;
 
-            var pills = storage.Container.ContainedEntities.Select((Func<EntityUid, (string, FixedPoint2 quantity)>) (pill =>
+            var pills = storage.Container.ContainedEntities.Select((Func<EntityUid, (EntityUid, FixedPoint2 quantity)>) (pill =>
             {
                 _solutionContainerSystem.TryGetSolution(pill, SharedChemMaster.PillSolutionName, out _, out var solution);
                 var quantity = solution?.Volume ?? FixedPoint2.Zero;
-                return (Name(pill), quantity);
+                return (pill, quantity);
             })).ToList();
 
             return new ContainerInfo(name, _storageSystem.GetCumulativeItemAreas((container.Value, storage)), storage.Grid.GetArea())
             {
-                Entities = pills
+                Entities = pills.Select(x => (GetNetEntity(x.Item1), x.quantity)).ToList()
             };
         }
 
