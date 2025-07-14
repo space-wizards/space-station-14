@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/14/2025 21:36:41
-  entityCount: 26944
+  time: 07/14/2025 22:27:41
+  entityCount: 26949
 maps:
 - 1
 grids:
@@ -4378,7 +4378,7 @@ entities:
             1: 28672
           -9,6:
             1: 61440
-            5: 112
+            2: 112
           -8,7:
             0: 4144
             1: 52420
@@ -4574,9 +4574,9 @@ entities:
             1: 17476
           -9,2:
             0: 48
-            2: 28672
+            3: 28672
           -9,3:
-            2: 28784
+            3: 28784
           -12,-4:
             0: 61559
           -12,-5:
@@ -5105,11 +5105,11 @@ entities:
           -10,8:
             0: 65535
           -9,4:
-            3: 112
-            2: 28672
+            4: 112
+            3: 28672
           -9,5:
-            2: 112
-            4: 28672
+            3: 112
+            5: 28672
           -12,9:
             0: 30576
           -13,9:
@@ -6483,6 +6483,21 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
           - 0
           - 0
           - 0
@@ -6515,21 +6530,6 @@ entities:
           moles:
           - 0
           - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 6666.982
-          - 0
           - 0
           - 0
           - 0
@@ -9863,7 +9863,7 @@ entities:
       pos: -23.5,2.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -346552.4
+      secondsUntilStateChange: -346605.66
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10327,7 +10327,7 @@ entities:
       pos: -80.5,-10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -184103.36
+      secondsUntilStateChange: -184156.61
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11344,7 +11344,7 @@ entities:
       pos: 2.5,22.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -57537.66
+      secondsUntilStateChange: -57590.902
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11476,7 +11476,7 @@ entities:
       pos: 11.5,-29.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -40750.875
+      secondsUntilStateChange: -40804.117
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12040,7 +12040,7 @@ entities:
       pos: 6.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -175363.95
+      secondsUntilStateChange: -175417.2
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -124180,6 +124180,20 @@ entities:
     - type: Transform
       pos: -49.5,17.5
       parent: 2
+- proto: PosterContrabandBorgFancy
+  entities:
+  - uid: 26948
+    components:
+    - type: Transform
+      pos: 58.5,30.5
+      parent: 2
+- proto: PosterContrabandBorgFancyv2
+  entities:
+  - uid: 26949
+    components:
+    - type: Transform
+      pos: 52.5,35.5
+      parent: 2
 - proto: PosterContrabandClown
   entities:
   - uid: 1467
@@ -141081,6 +141095,18 @@ entities:
     - type: Transform
       pos: 22.5,-11.5
       parent: 2
+- proto: SpawnPointBorg
+  entities:
+  - uid: 26946
+    components:
+    - type: Transform
+      pos: 53.5,30.5
+      parent: 2
+  - uid: 26947
+    components:
+    - type: Transform
+      pos: 55.5,33.5
+      parent: 2
 - proto: SpawnPointBotanist
   entities:
   - uid: 26879
@@ -141351,6 +141377,13 @@ entities:
     components:
     - type: Transform
       pos: -57.5,-1.5
+      parent: 2
+- proto: SpawnPointPsychologist
+  entities:
+  - uid: 26945
+    components:
+    - type: Transform
+      pos: 19.5,-57.5
       parent: 2
 - proto: SpawnPointQuartermaster
   entities:
