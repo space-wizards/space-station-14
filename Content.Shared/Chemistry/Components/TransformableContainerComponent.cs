@@ -1,8 +1,7 @@
-using Content.Server.Animals.Systems;
-using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 
-namespace Content.Server.Chemistry.Components;
+namespace Content.Shared.Chemistry.Components;
 
 /// <summary>
 /// A container that transforms its appearance depending on the reagent it contains.
