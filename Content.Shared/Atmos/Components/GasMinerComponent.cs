@@ -55,7 +55,7 @@ public sealed partial class GasMinerComponent : Component
     /// </summary>
     /// <remarks>
     ///     This should not be infinite. Instead, <see cref="ReleaseRate"/> and <see cref="MiningRate"/>
-    ///         should be set to the same value, in order to effectively bypass internal gas storage.
+    ///         should both be of a lower or equal value compared to this.
     /// </remarks
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public float MaxStoredAmount = 1200f;
