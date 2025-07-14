@@ -1,71 +1,58 @@
-using Content.Client.Guidebook.Components;
 using Content.Client.UserInterface.Controls;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Chemistry.UI
+namespace Content.Client.Chemistry.UI;
+
+/// <summary>
+/// Initializes a <see cref="ReagentDispenserWindow"/> and updates it when new server messages are received.
+/// </summary>
+[UsedImplicitly]
+public sealed class ReagentDispenserBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
+    [ViewVariables]
+    private ReagentDispenserWindow? _window;
+
     /// <summary>
-    /// Initializes a <see cref="ReagentDispenserWindow"/> and updates it when new server messages are received.
+    /// Called each time a dispenser UI instance is opened. Generates the dispenser window and fills it with
+    /// relevant info. Sets the actions for static buttons.
     /// </summary>
-    [UsedImplicitly]
-    public sealed class ReagentDispenserBoundUserInterface : BoundUserInterface
+    protected override void Open()
     {
-        [ViewVariables]
-        private ReagentDispenserWindow? _window;
+        base.Open();
 
-        public ReagentDispenserBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
+        // Setup window layout/elements
+        _window = this.CreateWindow<ReagentDispenserWindow>();
+        _window.SetInfoFromEntity(EntMan, Owner);
 
-        /// <summary>
-        /// Called each time a dispenser UI instance is opened. Generates the dispenser window and fills it with
-        /// relevant info. Sets the actions for static buttons.
-        /// <para>Buttons which can change like reagent dispense buttons have their actions set in <see cref="UpdateReagentsList"/>.</para>
-        /// </summary>
-        protected override void Open()
-        {
-            base.Open();
+        // Setup static button actions.
+        _window.EjectButton.OnPressed += _ =>
+            SendPredictedMessage(new ItemSlotButtonPressedEvent(ReagentDispenserComponent.OutputSlotName));
+        _window.ClearButton.OnPressed += _ => SendPredictedMessage(new ReagentDispenserClearContainerSolutionMessage());
 
-            // Setup window layout/elements
-            _window = this.CreateWindow<ReagentDispenserWindow>();
-            _window.SetInfoFromEntity(EntMan, Owner);
+        _window.AmountGrid.OnButtonPressed += OnAmountGridButtonPressed;
 
-            // Setup static button actions.
-            _window.EjectButton.OnPressed += _ => SendPredictedMessage(new ItemSlotButtonPressedEvent(ReagentDispenserComponent.OutputSlotName));
-            _window.ClearButton.OnPressed += _ => SendPredictedMessage(new ReagentDispenserClearContainerSolutionMessage());
+        _window.OnDispenseReagentButtonPressed += location =>
+            SendPredictedMessage(new ReagentDispenserDispenseReagentMessage(location));
+        _window.OnEjectJugButtonPressed +=
+            location => SendPredictedMessage(new ReagentDispenserEjectContainerMessage(location));
+    }
 
-            _window.AmountGrid.OnButtonPressed += OnAmountGridButtonPressed;
+    private void OnAmountGridButtonPressed(string label)
+    {
+        if (!float.TryParse(label, out var amount))
+            return;
 
-            _window.OnDispenseReagentButtonPressed += (location) => SendPredictedMessage(new ReagentDispenserDispenseReagentMessage(location));
-            _window.OnEjectJugButtonPressed += (location) => SendPredictedMessage(new ReagentDispenserEjectContainerMessage(location));
-        }
+        SendPredictedMessage(new ReagentDispenserSetDispenseAmountMessage(amount));
+    }
 
-        private void OnAmountGridButtonPressed(string label)
-        {
-            if (!float.TryParse(label, out var amount))
-                return;
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        if (state is not ReagentDispenserBoundUserInterfaceState dispenserState)
+            return;
 
-            SendPredictedMessage(new ReagentDispenserSetDispenseAmountMessage(amount));
-        }
-
-        /// <summary>
-        /// Update the UI each time new state data is sent from the server.
-        /// </summary>
-        /// <param name="state">
-        /// Data of the <see cref="ReagentDispenserComponent"/> that this UI represents.
-        /// Sent from the server.
-        /// </param>
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-
-            var castState = (ReagentDispenserBoundUserInterfaceState) state;
-            _window?.UpdateState(castState); //Update window state
-        }
+        _window?.UpdateState(dispenserState);
     }
 }

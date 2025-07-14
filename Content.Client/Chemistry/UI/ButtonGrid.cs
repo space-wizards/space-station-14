@@ -1,6 +1,4 @@
-using System;
 using System.Linq;
-using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Chemistry.UI;
@@ -33,7 +31,7 @@ public sealed class ButtonGrid : GridContainer
     private string? _selected;
 
     /// <summary>
-    ///     Which button is currently selected. Only matters when <see cref="RadioGroup"/> is true.
+    /// Which button is currently selected. Only matters when <see cref="RadioGroup" /> is true.
     /// </summary>
     public string? Selected
     {
@@ -52,9 +50,7 @@ public sealed class ButtonGrid : GridContainer
 
     public Action<string>? OnButtonPressed;
 
-    /// <summary>
-    ///     <see cref="GridContainer.Columns"/>
-    /// </summary>
+    /// <seealso cref="GridContainer.Columns"/>
     public new int Columns
     {
         get => base.Columns;
@@ -65,9 +61,7 @@ public sealed class ButtonGrid : GridContainer
         }
     }
 
-    /// <summary>
-    ///     <see cref="GridContainer.Rows"/>
-    /// </summary>
+    /// <seealso cref="GridContainer.Rows"/>
     public new int Rows
     {
         get => base.Rows;
@@ -78,7 +72,7 @@ public sealed class ButtonGrid : GridContainer
         }
     }
 
-    private Dictionary<string, Button> _buttons = [];
+    private readonly Dictionary<string, Button> _buttons = [];
 
     private void Update()
     {
@@ -87,14 +81,13 @@ public sealed class ButtonGrid : GridContainer
 
         Children.Clear();
         _buttons.Clear();
-        var i = 0;
 
+        var i = 0;
         var group = new ButtonGroup();
 
         foreach (var button in ButtonList)
         {
-            var btn = new Button();
-            btn.Text = button;
+            var btn = new Button { Text = button };
             btn.OnPressed += _ =>
             {
                 if (RadioGroup)
@@ -102,11 +95,10 @@ public sealed class ButtonGrid : GridContainer
                 Selected = button;
                 OnButtonPressed?.Invoke(button);
             };
+
             if (button == Selected)
                 btn.Pressed = true;
-            var sep = HSeparationOverride ?? 0;
-            // ReSharper disable once PossibleLossOfFraction
-            // btn.SetWidth = (this.PixelWidth - sep * (Columns - 1)) / 3;
+
             btn.Group = group;
 
             var row = i / Columns;
