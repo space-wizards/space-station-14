@@ -4,8 +4,9 @@
         <Label Name="ListName" />
         <Label Name="VolumeLabel" StyleClasses="LabelSecondaryColor" />
     </BoxContainer>
-    <BoxContainer Name="ReagentContainer"
-                  Orientation="Vertical">
-        <!-- Rows are programatically inserted here. -->
+    <BoxContainer Orientation="Vertical">
+        <Label Name="EmptyTextLabel" />
+        <!-- Rows are programatically inserted into this next box container -->
+        <BoxContainer Orientation="Vertical" Name="ReagentContainer" />
     </BoxContainer>
 </BoxContainer>

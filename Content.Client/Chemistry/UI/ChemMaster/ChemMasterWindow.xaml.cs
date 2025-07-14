@@ -30,6 +30,7 @@ namespace Content.Client.Chemistry.UI.ChemMaster
         public readonly Button[] PillTypeButtons;
 
         private const string PillsRsiPath = "/Textures/Objects/Specific/Chemistry/pills.rsi";
+        private readonly string _noContainerText = Loc.GetString("chem-master-window-no-container-loaded-text");
 
         private readonly ReagentList _bufferReagentList;
         private readonly ReagentList _inputReagentList;
@@ -101,11 +102,9 @@ namespace Content.Client.Chemistry.UI.ChemMaster
                 ChemMasterComponent.ChemMasterAmountOptions,
                 Loc.GetString("chem-master-window-buffer-empty-text"));
 
-            _inputReagentList = new ReagentList(Loc.GetString("chem-master-window-no-container-loaded-text"),
-                ChemMasterComponent.ChemMasterAmountOptions);
+            _inputReagentList = new ReagentList(_noContainerText, ChemMasterComponent.ChemMasterAmountOptions);
 
-            _outputReagentList = new ReagentList(Loc.GetString("chem-master-window-no-container-loaded-text"),
-                []);
+            _outputReagentList = new ReagentList(_noContainerText, []);
 
             BufferInfo.AddChild(_bufferReagentList);
             InputContainerInfo.AddChild(_inputReagentList);
@@ -233,6 +232,7 @@ namespace Content.Client.Chemistry.UI.ChemMaster
             else
             {
                 list.Update([]);
+                list.UpdateLabels(_noContainerText, "");
             }
 
             if (info is { DisplayName: var name })

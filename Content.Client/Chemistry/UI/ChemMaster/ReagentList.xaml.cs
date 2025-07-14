@@ -24,7 +24,6 @@ public sealed partial class ReagentList : BoxContainer
     /// </summary>
     public event Action<ReagentId, FixedPoint2>? OnRowAmountPressed;
 
-    private readonly string? _emptyText;
     private readonly Dictionary<ReagentListId, ReagentRow> _reagents = [];
     private readonly List<FixedPoint2> _buttonAmounts;
 
@@ -42,9 +41,12 @@ public sealed partial class ReagentList : BoxContainer
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _emptyText = emptyText;
+        EmptyTextLabel.Text = emptyText;
         _buttonAmounts = buttonAmounts;
         ListName.Text = label;
+
+        if (string.IsNullOrEmpty(emptyText))
+            EmptyTextLabel.Visible = false;
     }
 
     /// <summary>
@@ -74,9 +76,9 @@ public sealed partial class ReagentList : BoxContainer
     /// </remarks>
     public void Update(Dictionary<ReagentListId, FixedPoint2> newReagents, ChemMasterSortingType? sortingType = null)
     {
-        // The label saying the container is empty could be in our list container:
-        if (_reagents.Count == 0 && _emptyText is not null)
-            ReagentContainer.RemoveAllChildren();
+        // If we have some sort of text to show, make it visible if there's going to be no reagents
+        if (!string.IsNullOrEmpty(EmptyTextLabel.Text))
+            EmptyTextLabel.Visible = newReagents.Count == 0;
 
         // First we find out what's missing in the new list
         var toDelete = _reagents.ExceptBy(newReagents.Keys, x => x.Key);
@@ -151,10 +153,6 @@ public sealed partial class ReagentList : BoxContainer
 
         // Actually reorder the rows.
         ReagentContainer.InvalidateArrange();
-
-        // No reagents, so put in the empty text if we have any
-        if (_reagents.Count == 0 && _emptyText is not null)
-            ReagentContainer.AddChild(new Label { Text = _emptyText });
     }
 
     private string GetNameForSorting(ReagentListId entry)
