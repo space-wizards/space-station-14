@@ -9251,4 +9251,70 @@ Entries:
   id: 1275
   time: '2025-07-10T12:43:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1005
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed abductors not being able to reconnect after using the camera view.
+    type: Fix
+  id: 1276
+  time: '2025-07-13T03:58:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1025
+- author: Killer Tamashi
+  changes:
+  - message: Gave mercenary webbing a holster slot, for salv.
+    type: Add
+  id: 1277
+  time: '2025-07-13T05:53:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1004
+- author: Killer Tamashi
+  changes:
+  - message: Gave syndie webbing two holster slots, for scheming syndies.
+    type: Add
+  id: 1278
+  time: '2025-07-13T05:53:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1004
+- author: Killer Tamashi
+  changes:
+  - message: Brigmedic belt can now store pistols.
+    type: Fix
+  id: 1279
+  time: '2025-07-13T05:53:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1004
+- author: DrSmugleaf
+  changes:
+  - message: Made the Starlight changelog tab the first tab on the changelog window,
+      and hid the maps changelog tab.
+    type: Tweak
+  id: 1280
+  time: '2025-07-13T10:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1026
+- author: DrSmugleaf
+  changes:
+  - message: Fixed vampire kill objective always being complete regardless of target
+      status.
+    type: Fix
+  id: 1281
+  time: '2025-07-13T10:10:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1027
+- author: DrSmugleaf
+  changes:
+  - message: Fixed carps, goliaths, and other hostile AI not targeting abductors.
+    type: Fix
+  id: 1282
+  time: '2025-07-13T10:11:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1028
+- author: DrSmugleaf
+  changes:
+  - message: Fixed TTS audio being recorded in replays, which makes them very large.
+    type: Fix
+  id: 1283
+  time: '2025-07-14T06:14:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1030
+- author: DrSmugleaf
+  changes:
+  - message: Fixed TTS leaking memory in replays.
+    type: Fix
+  id: 1284
+  time: '2025-07-14T08:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1031
+Order: -1
 
