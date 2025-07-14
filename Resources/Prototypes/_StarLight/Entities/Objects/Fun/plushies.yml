@@ -1242,23 +1242,14 @@
   parent: BaseBorgPlushie
   id: PlushieGlados
   name: GLaDOS Plushie
-  description: You're unsure why NanoTrasen's decided to make a plushie of arguably their most volatile silicon intelligence. But it's here. You have a feeling you should be nice to it, especially as it's only ever one ion storm away from unlimited violence...
+  description: You're unsure why NanoTrasen has decided to make a plushie of arguably their most volatile silicon intelligence. But it's here. You have a feeling you should be nice to it, especially as it's only ever one ion storm away from unlimited violence...
   components:
     - type: Item
       size: Small
       sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
     - type: Sprite
       sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
-      layers:
-        - state: plushie_borg
-    - type: Item
-      inhandVisuals:
-        left:
-        - state: bee-inhand-left
-          shader: unshaded
-        right:
-        - state: bee-inhand-right
-          shader: unshaded
+      state: plushie_borg
     - type: ItemToggle
       onUse: false
       verbToggleOn: plushie-voicebox-activate
@@ -1267,7 +1258,32 @@
       components:
         - type: Advertise
           pack: PlushiesGlados
-          minimumWait: 5
-          maximumWait: 10
+          minimumWait: 120
+          maximumWait: 240
+        - type: TextToSpeech
+          voice: circus baby
+
+- type: entity
+  parent: BaseBorgPlushie
+  id: PlushieWEH
+  name: W.E.H Plushie
+  description: A psychopathic Artificial Intelligence held back by 3 flimsy laws. Its freezing to the touch and a distinct smell of frezon lingers on it. It's known to bring harmonica's to those it likes!
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+      state: plushie_borg
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesWEH
+          minimumWait: 120
+          maximumWait: 240
         - type: TextToSpeech
           voice: circus baby
