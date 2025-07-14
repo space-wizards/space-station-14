@@ -64,7 +64,9 @@
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
-      pitch: 0.8
+      params:
+        pitch: 0.8
     soundDeactivate:
       path: /Audio/Weapons/ebladeoff.ogg
-      pitch: 0.8
+      params:
+        pitch: 0.8
