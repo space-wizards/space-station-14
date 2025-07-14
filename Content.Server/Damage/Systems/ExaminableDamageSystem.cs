@@ -20,12 +20,12 @@ public sealed class ExaminableDamageSystem : EntitySystem
 
     private void OnExamine(Entity<ExaminableDamageComponent> ent, ref ExaminedEvent args)
     {
-        if (!_prototype.TryIndex(ent.Comp.MessagesProtoId, out var proto) || proto.Messages.Length == 0)
+        if (!_prototype.TryIndex(ent.Comp.Messages, out var proto) || proto.Values.Count == 0)
             return;
 
         var percent = GetDamagePercent(ent);
-        var level = ContentHelpers.RoundToNearestLevels(percent, 1, proto.Messages.Length - 1);
-        var msg = Loc.GetString(proto.Messages[level]);
+        var level = ContentHelpers.RoundToNearestLevels(percent, 1, proto.Values.Count - 1);
+        var msg = Loc.GetString(proto.Values[level]);
         args.PushMarkup(msg, -99);
     }
 
