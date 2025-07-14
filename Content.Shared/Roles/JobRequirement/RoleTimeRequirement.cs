@@ -56,7 +56,7 @@ public sealed partial class RoleTimeRequirement : JobRequirement
         var name = string.Empty;
 
         if (trackerPrototype.Name is { } trackerName)
-            name = Loc.GetString(proto);
+            name = Loc.GetString(trackerName);
         else if (protoManager.TryIndex<JobPrototype>(jobID, out var jobPrototype))
             name = jobPrototype.LocalizedName;
 
