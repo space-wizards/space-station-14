@@ -102,9 +102,9 @@
   id: BibleTorah
   components:
   - type: Sprite
-    sprite: _Starlight/Objects/Specific/Chapel/torah.rsi
+    sprite: Objects/Specific/Chapel/torah.rsi
   - type: Item
-    sprite: _Starlight/Objects/Specific/Chapel/torah.rsi
+    sprite: Objects/Specific/Chapel/torah.rsi
 
 - type: entity
   parent: Bible
@@ -124,9 +124,9 @@
   id: BibleDruid
   components:
   - type: Sprite
-    sprite: _Starlight/Objects/Specific/Chapel/mysteryofthedruids.rsi
+    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
   - type: Item
-    sprite: _Starlight/Objects/Specific/Chapel/mysteryofthedruids.rsi
+    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
 
 - type: entity
   parent: Bible
@@ -135,9 +135,9 @@
   id: BibleCommunistManifesto
   components:
   - type: Sprite
-    sprite: _Starlight/Objects/Specific/Chapel/communistmanifesto.rsi
+    sprite: Objects/Specific/Chapel/communistmanifesto.rsi
   - type: Item
-    sprite: _Starlight/Objects/Specific/Chapel/communistmanifesto.rsi
+    sprite: Objects/Specific/Chapel/communistmanifesto.rsi
 
 - type: entity
   parent: Bible
@@ -146,9 +146,9 @@
   id: BibleSatanic
   components:
   - type: Sprite
-    sprite: _Starlight/Objects/Specific/Chapel/satanicbible.rsi
+    sprite: Objects/Specific/Chapel/satanicbible.rsi
   - type: Item
-    sprite: _Starlight/Objects/Specific/Chapel/satanicbible.rsi
+    sprite: Objects/Specific/Chapel/satanicbible.rsi
 
 - type: entity
   parent: Bible
@@ -157,6 +157,6 @@
   id: BibleNanoTrasen
   components:
   - type: Sprite
-    sprite: _Starlight/Objects/Specific/Chapel/codexnanotrasimus.rsi
+    sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi
   - type: Item
-    sprite: _Starlight/Objects/Specific/Chapel/codexnanotrasimus.rsi
+    sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi
