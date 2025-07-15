@@ -495,6 +495,13 @@ namespace Content.Server.Atmos.EntitySystems
             => React(mixture, holder, holderUid: null);
 
         /// <summary>
+        ///     Performs reactions for a given gas mixture on an optional holder
+        ///     with an optional entity.
+        /// </summary>
+        public ReactionResult React(GasMixture mixture, EntityUid? uid, IGasMixtureHolder? holder)
+            => React(mixture, holder, holderUid: uid);
+
+        /// <summary>
         ///     Performs reactions for a given gas mixture on an entity with a
         ///     component that inherits <see cref="IGasMixtureHolder"/> .
         /// </summary>
