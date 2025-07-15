@@ -160,16 +160,6 @@ public sealed class CharacterSelectionTest
 
     public static readonly List<SelectionTestData> SelectionTestCaseData =
     [
-        new()
-        {
-            JobPriorities = new TestJobPriorities() { Passenger = JobPriority.High },
-            Characters =
-            [
-                new TestCharacter() { Passenger = true, Traitor = true, ExpectToSpawn = true}
-            ],
-            ExpectedJobName = "Passenger",
-            ExpectTraitor = true
-        },
         new() // Case 1 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
         {
             JobPriorities = new TestJobPriorities() { Captain = JobPriority.High },
@@ -194,6 +184,16 @@ public sealed class CharacterSelectionTest
                 new TestCharacter() { Captain = true }
             ],
             ExpectedJobName = "Mime",
+            ExpectTraitor = true
+        },
+        new()
+        {
+            JobPriorities = new TestJobPriorities() { Passenger = JobPriority.High },
+            Characters =
+            [
+                new TestCharacter() { Passenger = true, Traitor = true, ExpectToSpawn = true}
+            ],
+            ExpectedJobName = "Passenger",
             ExpectTraitor = true
         },
         new()
@@ -280,14 +280,11 @@ public sealed class CharacterSelectionTest
 
         await pair.ReallyBeIdle();
 
-    //    pair.Server.ResolveDependency<IRobustRandom>().SetSeed(6);
-    //    pair.Client.ResolveDependency<IRobustRandom>().SetSeed(6);
-
         Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
         ticker.ToggleReadyAll(true);
         Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.ReadyToPlay));
         await pair.Server.WaitPost(() => ticker.StartRound());
-        await pair.RunTicksSync(50);
+        await pair.RunTicksSync(30);
 
         if (expectedCharacterProfile == null)
         {
