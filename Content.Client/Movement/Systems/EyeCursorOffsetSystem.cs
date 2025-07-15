@@ -1,8 +1,6 @@
 using System.Numerics;
 using Content.Client.Movement.Components;
 using Content.Shared.Camera;
-using Content.Shared.Inventory;
-using Content.Shared.Movement.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Map;
@@ -16,8 +14,6 @@ public sealed partial class EyeCursorOffsetSystem : EntitySystem
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedContentEyeSystem _contentEye = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
 
     // This value is here to make sure the user doesn't have to move their mouse
@@ -42,7 +38,7 @@ public sealed partial class EyeCursorOffsetSystem : EntitySystem
 
     public Vector2? OffsetAfterMouse(EntityUid uid, EyeCursorOffsetComponent? component)
     {
-        var localPlayer = _player.LocalPlayer?.ControlledEntity;
+        var localPlayer = _player.LocalEntity;
         var mousePos = _inputManager.MouseScreenPosition;
         var screenSize = _clyde.MainWindow.Size;
         var minValue = MathF.Min(screenSize.X / 2, screenSize.Y / 2) * _edgeOffset;

@@ -6,6 +6,7 @@ using Content.Server.Power.NodeGroups;
 using Content.Shared.DeviceLinking.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.NodeContainer;
 using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
 using Content.Shared.Timing;

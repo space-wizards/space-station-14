@@ -89,15 +89,21 @@
   - type: ChaoticJump
     jumpMinInterval: 8
     jumpMaxInterval: 15
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
   - type: WarpPoint
     follow: true
     location: tesla ball
+    blacklist:
+      tags:
+      - GhostOnlyWarp
   - type: Sprite
     drawdepth: Effects
     sprite: Structures/Power/Generation/Tesla/energy_ball.rsi
-    shader: unshaded
     layers:
     - state: energy_ball
+      shader: unshaded
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Effects/tesla_collapse.ogg
@@ -143,8 +149,8 @@
   - type: Sprite
     drawdepth: Effects
     sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
-    shader: unshaded
     layers:
     - state: tesla_projectile
+      shader: unshaded
   - type: Electrified
     requirePower: false

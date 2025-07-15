@@ -25,6 +25,9 @@
         enum.ConstructionVisuals.Layer:
           Primed: { state: primed }
           Unprimed: { state: icon }
+  - type: Tag
+    tags:
+    - HandGrenade
 
 - type: entity
   parent: [ProjectileGrenadeBase, BaseSecurityContraband]
@@ -40,8 +43,6 @@
   - type: ProjectileGrenade
     fillPrototype: PelletClusterRubber
     capacity: 30
-  - type: FlashOnTrigger
-    range: 7
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
@@ -80,6 +81,8 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   parent: [ProjectileGrenadeBase, BaseSyndicateContraband]
@@ -106,3 +109,5 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+  - type: StaticPrice
+    price: 1500

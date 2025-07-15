@@ -1,5 +1,6 @@
 ﻿using Content.Shared.GameTicking;
 using Content.Shared.NameIdentifier;
+using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -13,13 +14,13 @@ public sealed class NameIdentifierSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly NameModifierSystem _nameModifier = default!;
 
     /// <summary>
     /// Free IDs available per <see cref="NameIdentifierGroupPrototype"/>.
     /// </summary>
     [ViewVariables]
-    public readonly Dictionary<string, List<int>> CurrentIds = new();
+    public readonly Dictionary<string, List<int>> CurrentIds = [];
 
     public override void Initialize()
     {
@@ -27,23 +28,29 @@ public sealed class NameIdentifierSystem : EntitySystem
 
         SubscribeLocalEvent<NameIdentifierComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NameIdentifierComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<NameIdentifierComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(CleanupIds);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnReloadPrototypes);
 
         InitialSetupPrototypes();
     }
 
-    private void OnComponentShutdown(EntityUid uid, NameIdentifierComponent component, ComponentShutdown args)
+    private void OnComponentShutdown(Entity<NameIdentifierComponent> ent, ref ComponentShutdown args)
     {
-        if (CurrentIds.TryGetValue(component.Group, out var ids))
+        if (ent.Comp.Group is null)
+            return;
+
+        if (CurrentIds.TryGetValue(ent.Comp.Group, out var ids) && ids.Count > 0)
         {
             // Avoid inserting the value right back at the end or shuffling in place:
             // just pick a random spot to put it and then move that one to the end.
             var randomIndex = _robustRandom.Next(ids.Count);
             var random = ids[randomIndex];
-            ids[randomIndex] = component.Identifier;
+            ids[randomIndex] = ent.Comp.Identifier;
             ids.Add(random);
         }
+
+        _nameModifier.RefreshNameModifiers(ent.Owner);
     }
 
     /// <summary>
@@ -80,40 +87,57 @@ public sealed class NameIdentifierSystem : EntitySystem
             : $"{randomVal}";
     }
 
-    private void OnMapInit(EntityUid uid, NameIdentifierComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<NameIdentifierComponent> ent, ref MapInitEvent args)
     {
-        if (!_prototypeManager.TryIndex<NameIdentifierGroupPrototype>(component.Group, out var group))
+        if (ent.Comp.Group is null)
+            return;
+
+        if (!_prototypeManager.TryIndex(ent.Comp.Group, out var group))
             return;
 
         int id;
         string uniqueName;
 
         // If it has an existing valid identifier then use that, otherwise generate a new one.
-        if (component.Identifier != -1 &&
-            CurrentIds.TryGetValue(component.Group, out var ids) &&
-            ids.Remove(component.Identifier))
+        if (ent.Comp.Identifier != -1 &&
+            CurrentIds.TryGetValue(ent.Comp.Group, out var ids) &&
+            ids.Remove(ent.Comp.Identifier))
         {
-            id = component.Identifier;
+            id = ent.Comp.Identifier;
             uniqueName = group.Prefix is not null
                 ? $"{group.Prefix}-{id}"
                 : $"{id}";
         }
         else
         {
-            uniqueName = GenerateUniqueName(uid, group, out id);
-            component.Identifier = id;
+            uniqueName = GenerateUniqueName(ent, group, out id);
+            ent.Comp.Identifier = id;
         }
 
-        component.FullIdentifier = group.FullName
+        ent.Comp.FullIdentifier = group.FullName
             ? uniqueName
             : $"({uniqueName})";
 
-        var meta = MetaData(uid);
-        // "DR-1234" as opposed to "drone (DR-1234)"
-        _metaData.SetEntityName(uid, group.FullName
-            ? uniqueName
-            : $"{meta.EntityName} ({uniqueName})", meta);
-        Dirty(uid, component);
+        Dirty(ent);
+        _nameModifier.RefreshNameModifiers(ent.Owner);
+    }
+
+    private void OnRefreshNameModifiers(Entity<NameIdentifierComponent> ent, ref RefreshNameModifiersEvent args)
+    {
+        if (ent.Comp.Group is null)
+            return;
+
+        // Don't apply the modifier if the component is being removed
+        if (ent.Comp.LifeStage > ComponentLifeStage.Running)
+            return;
+
+        if (!_prototypeManager.TryIndex(ent.Comp.Group, out var group))
+            return;
+
+        var format = group.FullName ? "name-identifier-format-full" : "name-identifier-format-append";
+        // We apply the modifier with a low priority to keep it near the base name
+        // "Beep (Si-4562) the zombie" instead of "Beep the zombie (Si-4562)"
+        args.AddModifier(format, -10, ("identifier", ent.Comp.FullIdentifier));
     }
 
     private void InitialSetupPrototypes()
@@ -175,13 +199,13 @@ public sealed class NameIdentifierSystem : EntitySystem
 
         foreach (var proto in set.Modified.Values)
         {
-            var name_proto = (NameIdentifierGroupPrototype) proto;
+            var name_proto = (NameIdentifierGroupPrototype)proto;
 
             // Only bother adding new ones.
             if (CurrentIds.ContainsKey(proto.ID))
                 continue;
 
-            var ids  = GetOrCreateIdList(name_proto);
+            var ids = GetOrCreateIdList(name_proto);
             FillGroup(name_proto, ids);
         }
     }

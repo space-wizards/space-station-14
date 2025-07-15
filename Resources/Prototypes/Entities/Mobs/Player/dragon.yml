@@ -41,7 +41,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 5
-    weightlessModifier: 1.5
+    baseWeightlessModifier: 1.5
   - type: RandomSprite
     available:
     - enum.DamageStateVisualLayers.Base:
@@ -103,11 +103,9 @@
     - SlowedDown
     - Stutter
     - Electrocution
-    - ForcedSleep
     - TemporaryBlindness
     - Pacified
     - RadiationProtection
-    - Drowsiness
     - Adrenaline
   - type: Temperature
     heatDamageThreshold: 800
@@ -138,10 +136,14 @@
         Piercing: 15
         Slash: 15
   - type: Devourer
-    foodPreference: Humanoid
-    shouldStoreDevoured: true
+    foodPreferenceWhitelist:
+      components:
+      - HumanoidAppearance
+    stomachStorageWhitelist:
+      components:
+      - MobState
     chemical: Ichor
-    healRate: 15.0
+    healRate: 7.5
     whitelist:
       components:
       - MobState
@@ -154,6 +156,17 @@
     - DoorBumpOpener
   - type: Puller
     needsHands: false
+  - type: RandomMetadata
+    nameSegments:
+    - NamesDragon
+    - NamesDragonTitle
+    nameFormat: name-format-dragon
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 2.5 # fast because dragon strong
+    useSound:
+      path: /Audio/Items/crowbar.ogg
 
 - type: entity
   parent: BaseMobDragon
@@ -219,39 +232,55 @@
         Brute: 12
 
 - type: entity
+  parent: BaseAction
   id: ActionSpawnRift
   name: Summon Carp Rift
   description: Summons a carp rift that will periodically spawns carps.
   components:
-  - type: InstantAction
+  - type: Action
     icon:
       sprite: Interface/Actions/carp_rift.rsi
       state: icon
-    event: !type:DragonSpawnRiftActionEvent
     useDelay: 1
     priority: 3
+  - type: InstantAction
+    event: !type:DragonSpawnRiftActionEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionDevour
   name: "[color=red]Devour[/color]"
   description: Attempt to break a structure with your jaws or swallow a creature.
   components:
-  - type: EntityTargetAction
+  - type: Action
     icon: { sprite : Interface/Actions/devour.rsi, state: icon }
     iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
-    event: !type:DevourActionEvent
+    itemIconStyle: BigAction
     priority: 1
+  - type: TargetAction
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+      - Door
+      tags:
+      - Wall
+    event: !type:DevourActionEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionDragonsBreath
   name: "[color=orange]Dragon's Breath[/color]"
   description: Spew out flames at anyone foolish enough to attack you!
   components:
-  - type: WorldTargetAction
-    # TODO: actual sprite
+  - type: Action
+    # TODO: actual sprite and iconOn
     icon: { sprite : Objects/Weapons/Guns/Projectiles/magic.rsi, state: fireball }
-    event: !type:ActionGunShootEvent
+    itemIconStyle: BigAction
     priority: 2
+  - type: TargetAction
     checkCanAccess: false
     range: 0
-    itemIconStyle: BigAction
+  - type: WorldTargetAction
+    event: !type:ActionGunShootEvent
