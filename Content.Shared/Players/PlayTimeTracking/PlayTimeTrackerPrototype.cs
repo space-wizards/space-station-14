@@ -18,11 +18,4 @@ public sealed partial class PlayTimeTrackerPrototype : IPrototype
     /// </summary>
     [DataField]
     public LocId? Name { get; private set; } = default!;
-
-    /// <summary>
-    /// The ID of the department this job is apart of, if any.
-    /// This is used for defining role requirement error text colors, for trackers that are shared across multiple roles.
-    /// </summary>
-    [DataField]
-    public ProtoId<DepartmentPrototype>? Department { get; private set; } = default!;
 }

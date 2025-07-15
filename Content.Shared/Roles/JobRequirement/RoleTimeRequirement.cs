@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Localizations;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Preferences;
@@ -24,6 +25,8 @@ public sealed partial class RoleTimeRequirement : JobRequirement
     [DataField(required: true)]
     public TimeSpan Time;
 
+    public static readonly Color DefaultDepartmentColor = Color.Yellow;
+
     public override bool Check(IEntityManager entManager,
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
@@ -35,21 +38,31 @@ public sealed partial class RoleTimeRequirement : JobRequirement
         var trackerPrototype = protoManager.Index(Role);
         var jobSystem = entManager.EntitySysManager.GetEntitySystem<SharedJobSystem>();
 
-        var jobID = jobSystem.GetJobPrototype(Role);
-        var jobPrototype = protoManager.Index(jobID);
-
         playTimes.TryGetValue(Role, out var roleTime);
         var roleDiffSpan = Time - roleTime;
         var roleDiff = roleDiffSpan.TotalMinutes;
         var formattedRoleDiff = ContentLocalizationManager.FormatPlaytime(roleDiffSpan);
-        var departmentColor = Color.Yellow;
 
-        if (protoManager.TryIndex(trackerPrototype.Department, out var trackerDepartment))
-            departmentColor = trackerDepartment.Color;
-        else if (jobSystem.TryGetDepartment(jobID, out var jobDepartment))
-            departmentColor = jobDepartment.Color;
+        var jobList = jobSystem.GetJobPrototypes(Role);
 
-        var name = jobPrototype.LocalizedName;
+        DepartmentPrototype? chosenDepartment = null;
+        foreach (var jobId in jobList)
+        {
+            var jobProto = protoManager.Index(jobId);
+
+            if (!jobSystem.TryGetDepartment(jobId, out var dept))
+                continue;
+
+            if (chosenDepartment != null && chosenDepartment.Weight > dept.Weight)
+                continue;
+
+            chosenDepartment = dept;
+        }
+
+        var departmentColor = chosenDepartment?.Color ?? DefaultDepartmentColor;
+
+        var localizedNames = jobList.Select(jobId => protoManager.Index(jobId).LocalizedName).ToList();
+        var name = ContentLocalizationManager.FormatListToOr(localizedNames);
 
         if (trackerPrototype.Name is { } trackerName)
             name = Loc.GetString(trackerName);
