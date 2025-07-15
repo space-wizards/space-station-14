@@ -241,7 +241,6 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private bool ProcessReactions(Entity<SolutionComponent> soln, SortedSet<ReactionPrototype> reactions, ReactionMixerComponent? mixerComponent)
         {
-            HashSet<ReactionPrototype> toRemove = new();
             List<string>? products = null;
 
             // attempt to perform any applicable reaction
@@ -249,7 +248,6 @@ namespace Content.Shared.Chemistry.Reaction
             {
                 if (!CanReact(soln, reaction, mixerComponent, out var unitReactions))
                 {
-                    toRemove.Add(reaction);
                     continue;
                 }
 
