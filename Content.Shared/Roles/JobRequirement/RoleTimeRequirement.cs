@@ -48,8 +48,6 @@ public sealed partial class RoleTimeRequirement : JobRequirement
         DepartmentPrototype? chosenDepartment = null;
         foreach (var jobId in jobList)
         {
-            var jobProto = protoManager.Index(jobId);
-
             if (!jobSystem.TryGetDepartment(jobId, out var dept))
                 continue;
 
