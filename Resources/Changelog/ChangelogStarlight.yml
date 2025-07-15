@@ -9331,5 +9331,13 @@ Entries:
   id: 1286
   time: '2025-07-15T13:54:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1034
+- author: walksnatora
+  changes:
+  - message: 'removed dummy antag chance. Which was cause of eg: "NTRep on high but
+      it put me as surgeon and I didn''t get antag and there is no NTRep"'
+    type: Tweak
+  id: 1287
+  time: '2025-07-15T13:56:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1020
 Order: -1
 
