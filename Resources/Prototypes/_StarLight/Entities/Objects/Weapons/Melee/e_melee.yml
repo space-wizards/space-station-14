@@ -36,7 +36,7 @@
       types:
         Slash: 25
         Heat: 25
-        Structural: 40
+        Structural: 240
   - type: Item
     sprite: _Starlight/Objects/Weapons/Melee/marriage_axe-inhands.rsi
   - type: MultiHandedItem
