@@ -322,3 +322,37 @@
   - type: Item
     size: Huge
 
+#QM's Luxury Maxim Hardsuit
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseSalvageContraband ] #Starlight salvContra
+  id: ClothingOuterHardsuitLuxmax
+  name: QM's luxury maxim hardsuit
+  description: This luxury maxim hardsuit has been retrofitted with solid gold fittings and furnishings, making it more cumbersome, and less protective than a standard maxim hardsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/luxmax.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/luxmax.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.7
+        Radiation: 0.05
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitLuxmax
