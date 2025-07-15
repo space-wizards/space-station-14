@@ -330,9 +330,9 @@
   description: This luxury maxim hardsuit has been retrofitted with solid gold fittings and furnishings, making it more cumbersome, and less protective than a standard maxim hardsuit.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/luxmax.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/luxmax.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/luxmax.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/luxmax.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
