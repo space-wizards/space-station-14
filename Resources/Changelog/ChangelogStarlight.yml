@@ -9355,5 +9355,12 @@ Entries:
   id: 1289
   time: '2025-07-15T13:57:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1021
+- author: Trosling
+  changes:
+  - message: Knives can now be used as really terrible screwdrivers in a pinch
+    type: Tweak
+  id: 1290
+  time: '2025-07-15T13:59:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1024
 Order: -1
 
