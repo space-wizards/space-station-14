@@ -203,8 +203,8 @@
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 10000
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 1
+    sprintModifier: 1
   - type: Pierceable
     level: Metal
   - type: Armor
@@ -212,10 +212,10 @@
       coefficients:
         Blunt: 0.6
         Slash: 0.6
-        Piercing: 0.5
-        Heat: 0.5
-        Radiation: 0.5
-        Caustic: 0.5
+        Piercing: 0.6
+        Heat: 0.6
+        Radiation: 0.6
+        Caustic: 0.6
     staminaModifier: 0.3
     ingoreKnockdown: true
   - type: ExplosionResistance
@@ -227,11 +227,11 @@
     parent: true
     components:
     - type: Stealth
-      minVisibility: 0.3
-      maxVisibility: 0.3
-      lastVisibility: 0.3
+      minVisibility: 0.15
+      maxVisibility: 0.15
+      lastVisibility: 0.15
   - type: PowerCellDraw
-    drawRate: 1.8 # 200 seconds on the default cell
+    drawRate: 14 # roughly 200 seconds on the default cell
   - type: ToggleCellDraw
   - type: PowerCellSlot
     cellSlotId: cell_slot
@@ -243,7 +243,7 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellSmall
+        startingItem: PowerCellUltra
         disableEject: true
         whitelist:
           tags:
