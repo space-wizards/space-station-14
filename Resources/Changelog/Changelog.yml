@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix detailed examine buttons sometimes showing up incorrectly.
-    type: Fix
-  id: 8262
-  time: '2025-04-19T14:37:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33814
 - author: sowelipililimute
   changes:
   - message: Servers with the number of open inventories set to two have a new alignment
@@ -3895,3 +3888,12 @@
   id: 8774
   time: '2025-07-15T00:51:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38985
+- author: Velken
+  changes:
+  - message: Moproaches have been added to the game.
+    type: Add
+  - message: Moproaches can sometimes appear from the station's sewage system.
+    type: Add
+  id: 8775
+  time: '2025-07-15T02:47:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38700
