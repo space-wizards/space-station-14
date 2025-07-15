@@ -719,7 +719,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialBones
-  name: bones
+  name: charred bones
   suffix: Full
   components:
   - type: Stack
@@ -735,15 +735,6 @@
     - state: cotton_3
       map: ["base"]
   - type: Appearance
-  - type: Food
-  - type: BadFood
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Vitamin
-          Quantity: 3
   - type: Item
     heldPrefix: bones
 
