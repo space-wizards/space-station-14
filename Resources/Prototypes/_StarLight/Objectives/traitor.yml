@@ -39,54 +39,55 @@
   - type: StealCondition
     stealGroup: CMOLicenseSteal
     
-# Story Objectives
-#- type: entity
-#  parent: [BaseTraitorObjective, BaseStoryObjective]
-#  id: RetrieveContrabandObjective
-#  description: Retrieve any Syndicate gear that SEC confiscates this shift.
-#  components:
-#    - type: Objective
-#      difficulty: 2
-#      unique: false
-#    - type: Objective
-#      title: objective-retrieve-contraband
-#      icon:
-#        sprite: /Objects/Clothing/Satchels/smugglers.rsi
-#        state: icon
-#        
-#
-#- type: entity
-#  parent: [BaseTraitorObjective, BaseStoryObjective]
-#  id: AccessForAllObjective
-#  description: Hack non-airlock doors.
-#  components:
-#    - type: Objective
-#      difficulty: 2
-#      unique: false
-#    - type: Objective
-#      title: objective-all-access
-#      icon:
-#        sprite: Objects/Tools/access_breaker.rsi
-#        state: icon
-#
-#- type: entity
-#  parent: [BaseTraitorObjective, BaseStoryObjective]
-#  id: ArmsDealerObjective
-#  description: Open an underground arms trading ring.
-#  components:
-#    - type: Objective
-#      difficulty: 2
-#      unique: false
-#    - type: Objective
-#      title: objective-arms-ring
-#      icon:
-#        sprite: Objects/Weapons/Guns/Rifles/ak.rsi
-#        state: icon
+  # Story Objectives
+- type: entity
+  parent: [ BaseTraitorObjective, BaseStoryObjective ]
+  id: RetrieveContrabandObjective
+  description: Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: false
+    - type: Objective
+      title: objective-retrieve-contraband
+      icon:
+        sprite: /Objects/Clothing/Satchels/smugglers.rsi
+        state: icon
+
+
+- type: entity
+  parent: [ BaseTraitorObjective, BaseStoryObjective ]
+  id: AccessForAllObjective
+  description: But don't get caught. Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: false
+    - type: Objective
+      title: objective-all-access
+      icon:
+        sprite: Objects/Tools/access_breaker.rsi
+        state: icon
+
+- type: entity
+  parent: [ BaseTraitorObjective, BaseStoryObjective ]
+  id: ArmsDealerObjective
+  description: Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: false
+    - type: Objective
+      title: objective-arms-ring
+      icon:
+        sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+        state: icon   
+
 
 - type: entity
   parent: BaseStoryObjective
   id: FrameObjective
-  description: 
+  description: Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
       difficulty: 2
@@ -98,44 +99,44 @@
       title: objective-framing
     - type: PickRandomDepartment
 
-#- type: entity
-#  parent: [BaseTraitorObjective, BaseStoryObjective]
-#  id: FalseUprisingObjective
-#  description: Frame someone else as a Syndicate agent.
-#  components:
-#    - type: Objective
-#      difficulty: 2
-#      unique: false
-#    - type: Objective
-#      title: objective-false-uprising
-#      icon:
-#        sprite: /Objects/Weapons/Melee/flash.rsi
-#        state: icon
-#
-#- type: entity
-#  parent: [BaseTraitorObjective, BaseStoryObjective]
-#  id: DuelistObjective
-#  description: Challenge others to duels and win. You don't need to kill them, unless you want to.
-#  components:
-#    - type: Objective
-#      difficulty: 2
-#      unique: false
-#    - type: Objective
-#      title: objective-duelist
-#      icon:
-#        sprite: Objects/Weapons/Melee/captains_sabre.rsi
-#        state: icon
-#        
-#- type: entity
-#  parent: [ BaseTraitorObjective, BaseStoryObjective ]
-#  id: EspionageObjective
-#  description: Interrogate the NT rep and department heads for corporate secrets.
-#  components:
-#    - type: Objective
-#      difficulty: 2
-#      unique: false
-#    - type: Objective
-#      title: objective-espionage
-#      icon:
-#        sprite:
-#        state: icon
+- type: entity
+  parent: [BaseTraitorObjective, BaseStoryObjective]
+  id: FalseUprisingObjective
+  description:  Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: false
+    - type: Objective
+      title: objective-false-uprising
+      icon:
+        sprite: /Objects/Weapons/Melee/flash.rsi
+        state: icon
+
+- type: entity
+  parent: [BaseTraitorObjective, BaseStoryObjective]
+  id: DuelistObjective
+  description: You don't need to kill them, unless you want to.  Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: false
+    - type: Objective
+      title: objective-duelist
+      icon:
+        sprite: Objects/Weapons/Melee/captains_sabre.rsi
+        state: icon
+
+- type: entity
+  parent: [ BaseTraitorObjective, BaseStoryObjective ]
+  id: EspionageObjective
+  description: Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: false
+    - type: Objective
+      title: objective-espionage
+      icon:
+        sprite:
+        state: icon
