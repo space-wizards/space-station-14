@@ -24,8 +24,7 @@ public sealed class FlashOnTriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        // TODO: adjust to predicted flashes PR
-        _flash.FlashArea(target.Value, args.User, ent.Comp.Range, (float)ent.Comp.Duration.TotalSeconds * 1000f, probability: ent.Comp.Probability);
+        _flash.FlashArea(target.Value, args.User, ent.Comp.Range, ent.Comp.Duration, probability: ent.Comp.Probability);
         args.Handled = true;
     }
 }

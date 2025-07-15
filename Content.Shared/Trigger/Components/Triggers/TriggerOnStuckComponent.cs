@@ -6,5 +6,5 @@ namespace Content.Shared.Trigger.Components.Triggers;
 /// Triggers when an entity with <see cref="Sticky.Components.StickyComponent"/> is stuck to something.
 /// The user is the player doing so.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class TriggerOnStuckComponent : BaseTriggerOnXComponent;

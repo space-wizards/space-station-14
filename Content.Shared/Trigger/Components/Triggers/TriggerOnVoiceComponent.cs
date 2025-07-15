@@ -5,7 +5,7 @@ namespace Content.Shared.Trigger.Components.Triggers;
 /// <summary>
 /// Sends a trigger when the keyphrase is heard.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnVoiceComponent : BaseTriggerOnXComponent
 {
     /// <summary>

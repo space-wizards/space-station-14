@@ -6,7 +6,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// <summary>
 /// Spawns a protoype when triggered.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SpawnOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>

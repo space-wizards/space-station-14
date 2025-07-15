@@ -35,7 +35,7 @@ public sealed partial class TriggerSystem : EntitySystem
         {
             var mapCoords = _transform.GetMapCoordinates(target.Value, xform);
             if (ent.Comp.Predicted)
-                SpawnPredicted(ent.Comp.Proto, mapCoords);
+                EntityManager.PredictedSpawn(ent.Comp.Proto, mapCoords);
             else if (_net.IsServer)
                 Spawn(ent.Comp.Proto, mapCoords);
 
@@ -47,9 +47,9 @@ public sealed partial class TriggerSystem : EntitySystem
                 return;
 
             if (ent.Comp.Predicted)
-                SpawnPredicted(ent.Comp.Proto, coords);
+                PredictedSpawnAttachedTo(ent.Comp.Proto, coords);
             else if (_net.IsServer)
-                Spawn(ent.Comp.Proto, coords);
+                SpawnAttachedTo(ent.Comp.Proto, coords);
 
         }
     }

@@ -1,6 +1,6 @@
 using Content.IntegrationTests.Tests.Interaction;
-using Content.Server.Explosion.Components;
-using Content.Shared.Explosion.Components;
+using Content.Shared.Trigger.Components;
+using Content.Shared.Trigger.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
@@ -25,19 +25,19 @@ public sealed class ModularGrenadeTests : InteractionTest
         await InteractUsing(Cable);
 
         // Insert & remove trigger
-        AssertComp<OnUseTimerTriggerComponent>(false);
+        AssertComp<TimerTriggerComponent>(false);
         await InteractUsing(Trigger);
-        AssertComp<OnUseTimerTriggerComponent>();
+        AssertComp<TimerTriggerComponent>();
         await FindEntity(Trigger, LookupFlags.Uncontained, shouldSucceed: false);
         await InteractUsing(Pry);
-        AssertComp<OnUseTimerTriggerComponent>(false);
+        AssertComp<TimerTriggerComponent>(false);
 
         // Trigger was dropped to floor, not deleted.
         await FindEntity(Trigger, LookupFlags.Uncontained);
 
         // Re-insert
         await InteractUsing(Trigger);
-        AssertComp<OnUseTimerTriggerComponent>();
+        AssertComp<TimerTriggerComponent>();
 
         // Insert & remove payload.
         await InteractUsing(Payload);
@@ -61,8 +61,8 @@ public sealed class ModularGrenadeTests : InteractionTest
         await Drop();
 
         // Wait until grenade explodes
-        var timer = Comp<ActiveTimerTriggerComponent>();
-        while (timer.TimeRemaining >= 0)
+        var triggerSys = SEntMan.System<TriggerSystem>();
+        while (triggerSys.GetRemainingTime(ent)?.TotalSeconds >= 0.0)
         {
             await RunTicks(10);
         }

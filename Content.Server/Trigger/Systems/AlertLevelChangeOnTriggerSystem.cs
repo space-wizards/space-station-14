@@ -1,8 +1,9 @@
 using Content.Server.AlertLevel;
-using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Trigger;
+using Content.Shared.Trigger.Components.Effects;
 using Content.Server.Station.Systems;
 
-namespace Content.Server.AlertLevel.Systems;
+namespace Content.Server.Trigger.Systems;
 
 public sealed class AlertLevelChangeOnTriggerSystem : EntitySystem
 {
@@ -18,10 +19,14 @@ public sealed class AlertLevelChangeOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<AlertLevelChangeOnTriggerComponent> ent, ref TriggerEvent args)
     {
+        if (args.Key != null && !ent.Comp.EffectKeys.Contains(args.Key))
+            return;
+
         var stationUid = _station.GetOwningStation(ent.Owner);
-        if (!stationUid.HasValue)
+        if (stationUid == null)
             return;
 
         _alertLevelSystem.SetLevel(stationUid.Value, ent.Comp.Level, ent.Comp.PlaySound, ent.Comp.Announce, ent.Comp.Force);
+        args.Handled = true;
     }
 }

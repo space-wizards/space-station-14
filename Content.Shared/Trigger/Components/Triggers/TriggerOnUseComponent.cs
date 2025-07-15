@@ -1,5 +1,4 @@
-﻿using Content.Shared.Trigger.Components.Trigger;
-using Robust.Shared.GameStates;
+﻿using Robust.Shared.GameStates;
 
 namespace Content.Shared.Trigger.Components.Triggers;
 

@@ -31,7 +31,7 @@ public sealed class GibOnTriggerSystem : EntitySystem
             var items = _inventory.GetHandOrInventoryEntities(target.Value);
             foreach (var item in items)
             {
-                PredictedQueueDel(item, target);
+                PredictedQueueDel(item);
             }
         }
         _body.GibBody(ent.Owner, true);

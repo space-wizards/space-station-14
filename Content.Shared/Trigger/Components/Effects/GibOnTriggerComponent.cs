@@ -6,7 +6,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// Will gib the entity when triggered.
 /// If TargetUser is true the user will be gibbed instead.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GibOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>

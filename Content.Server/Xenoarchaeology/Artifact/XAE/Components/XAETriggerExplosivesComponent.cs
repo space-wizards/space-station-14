@@ -1,4 +1,4 @@
-using Content.Shared.Explosion.Components.OnTrigger;
+using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 
