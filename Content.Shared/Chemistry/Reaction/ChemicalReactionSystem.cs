@@ -230,7 +230,7 @@ namespace Content.Shared.Chemistry.Reaction
             // Someday, some brave soul will thread through an optional actor
             // argument in from every call of OnReaction up, all just to pass
             // it to PlayPredicted. I am not that brave soul.
-            // if (_netMan.IsServer)
+            if (_netMan.IsServer)
                 _audio.PlayPvs(reaction.Sound, soln);
         }
 
