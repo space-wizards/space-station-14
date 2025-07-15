@@ -1832,8 +1832,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             // get count of records
             var count = db.DbContext.PlayerMessage
-                .Where(message => message.Type == PlayerMessageType.Parrot)
-                .Count();
+                .Count(message => message.Type == PlayerMessageType.Parrot);
 
             if (count == 0)
                 yield break;
@@ -1873,6 +1872,10 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 );
             }
 
+            // descending CreatedAt so that newest come first
+            messageQuery = messageQuery.OrderByDescending(message => message.CreatedAt);
+
+            // join the player table to get username info
             var messagePlayers = messageQuery.Select(message => message.SourcePlayer);
 
             var playerQuery = db.DbContext.Player

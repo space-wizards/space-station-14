@@ -21,9 +21,11 @@ public sealed partial class ParrotMessageLine : BoxContainer
         IoCManager.Resolve(ref _uiManager);
     }
 
-    public void SetMessage(ExtendedPlayerMessage memory)
+    public void SetMessage(ExtendedPlayerMessage memory, int currentRound)
     {
         ParrotMessageText.Text = memory.MessageText;
+
+        ParrotRoundLabel.Visible = memory.SourceRound == currentRound;
 
         ParrotMessagePlayerButton.Text = memory.SourcePlayerUserName;
 

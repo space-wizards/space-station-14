@@ -31,7 +31,7 @@ public sealed class ParrotMessagesEui : BaseEui
 
     public override EuiStateBase GetNewState()
     {
-        return new ParrotMessagesEuiState(_parrotMessages);
+        return new ParrotMessagesEuiState(_parrotMessages, _currentRoundId);
     }
 
     public override async void HandleMessage(EuiMessageBase msg)
@@ -46,16 +46,12 @@ public sealed class ParrotMessagesEui : BaseEui
             case ParrotMessageRefreshMsg refreshMsg:
                 _currentRoundOnly = refreshMsg.CurrentRoundOnly;
                 _showBlocked = refreshMsg.ShowBlocked;
+                _textFilter = refreshMsg.FilterString;
                 RefreshParrotMessages();
 
                 break;
             case ParrotMessageBlockChangeMsg blockChangeMsg:
                 SetParrotMessageBlock(blockChangeMsg.MessageId, blockChangeMsg.Block);
-                break;
-
-            case ParrotMessageFilterChangeMsg filterChangeMsg:
-                _textFilter = filterChangeMsg.FilterString;
-                RefreshParrotMessages();
                 break;
         }
     }

@@ -28,7 +28,7 @@ public sealed partial class ParrotMessagesWindow : FancyWindow
     {
         var activeList = GetActiveList();
 
-        activeList?.UpdateMessages(eui, parrotState.Messages);
+        activeList?.UpdateMessages(eui, parrotState);
     }
 
     public void MarkInactiveListsDirty()

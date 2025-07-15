@@ -4,9 +4,9 @@ parrot-messages-title = Parrot messages
 # base controls
 parrot-messages-loading = Loading parrot messages...
 parrot-messages-num-messages = { $messageCount ->
-    [0] No parrot messages in this category.
-    [1] 1 parrot message in this category.
-    *[other] { $messageCount } parrot messages in this category.
+    [0] No parrot messages
+    [1] 1 parrot message
+    *[other] { $messageCount } parrot messages
 }
 
 parrot-messages-refresh = Refresh
@@ -18,6 +18,8 @@ parrot-messages-apply-filter = Apply filter
 parrot-messages-clear-filter = Clear filter
 
 # message line elements
+parrot-messages-line-current-round = Learnt this round
+
 parrot-messages-line-ahelp-tooltip = Ahelp this user.
 
 parrot-messages-line-block = Block

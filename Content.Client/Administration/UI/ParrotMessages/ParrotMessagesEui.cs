@@ -28,7 +28,7 @@ public sealed class ParrotMessagesEui : BaseEui
 
         parrotMessageList.RefreshButton.OnPressed += (_) => SendRefresh(parrotMessageList);
         parrotMessageList.CurrentRoundOnly.OnToggled += (_) => SendRefresh(parrotMessageList);
-        parrotMessageList.ApplyFilterButton.OnPressed += (_) => SendFilterChange(parrotMessageList);
+        parrotMessageList.ApplyFilterButton.OnPressed += (_) => SendRefresh(parrotMessageList);
         parrotMessageList.ClearFilterButton.OnPressed += (_) => ClearFilter(parrotMessageList);
 
         SendRefresh(parrotMessageList);
@@ -47,13 +47,7 @@ public sealed class ParrotMessagesEui : BaseEui
     {
         SendMessage(new ParrotMessageRefreshMsg(
             parrotMessageList.ShowBlocked,
-            parrotMessageList.CurrentRoundOnly.Pressed
-        ));
-    }
-
-    private void SendFilterChange(ParrotMessageList parrotMessageList)
-    {
-        SendMessage(new ParrotMessageFilterChangeMsg(
+            parrotMessageList.CurrentRoundOnly.Pressed,
             parrotMessageList.FilterLineEdit.Text
         ));
     }
@@ -61,7 +55,7 @@ public sealed class ParrotMessagesEui : BaseEui
     private void ClearFilter(ParrotMessageList parrotMessageList)
     {
         parrotMessageList.FilterLineEdit.Text = "";
-        SendFilterChange(parrotMessageList);
+        SendRefresh(parrotMessageList);
     }
 
     public void ChangeMessageBlock(int messageId, bool block)
