@@ -68,14 +68,15 @@
         mask:
         - Impassable
         - BulletImpassable
-  - type: Explosive
-    totalIntensity: 25
-    maxIntensity: 5
+  - type: Explosive # 90 dmg at epicenter
+    totalIntensity: 20
+    intensitySlope: 3
+    maxIntensity: 6
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 10
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
