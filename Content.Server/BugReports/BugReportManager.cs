@@ -50,7 +50,6 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
         _cfg.OnValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, x => _limits.MinimumPlaytimeToEnableBugReports = TimeSpan.FromMinutes(x), true);
         _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, x => _limits.MaximumBugReportsForPlayerPerRound = x, true);
         _cfg.OnValueChanged(CCVars.MinimumSecondsBetweenBugReports, x => _limits.MinimumTimeBetweenBugReports = TimeSpan.FromSeconds(x), true);
-
     }
 
     public void Restart()
@@ -159,34 +158,24 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
     {
         // todo: dont request entity system out of sim, check if you are in-sim before doing so. Bug report should work out of sim too.
         var ticker = _entity.System<GameTicker>();
-        BugReportMetaData metadata;
-        if (ticker.Preset == null)
+        var metadata = new BugReportMetaData
         {
-            metadata = new BugReportMetaData
-            {
-                Username = message.MsgChannel.UserName,
-                ServerName = _cfg.GetCVar(CCVars.AdminLogsServerName),
-                NumberOfPlayers = _player.PlayerCount,
-                SubmittedTime = DateTime.UtcNow,
-                BuildVersion = _cfg.GetCVar(CVars.BuildVersion),
-                EngineVersion = _cfg.GetCVar(CVars.BuildEngineVersion),
-            };
-        }
-        else
+            Username = message.MsgChannel.UserName,
+            PlayerGUID = message.MsgChannel.UserData.UserId,
+            ServerName = _cfg.GetCVar(CCVars.AdminLogsServerName),
+            NumberOfPlayers = _player.PlayerCount,
+            SubmittedTime = DateTime.UtcNow,
+            BuildVersion = _cfg.GetCVar(CVars.BuildVersion),
+            EngineVersion = _cfg.GetCVar(CVars.BuildEngineVersion),
+        };
+
+        // Only add these if your in round.
+        if (ticker.Preset != null)
         {
-            metadata = new BugReportMetaData
-            {
-                Username = message.MsgChannel.UserName,
-                ServerName = _cfg.GetCVar(CCVars.AdminLogsServerName),
-                NumberOfPlayers = _player.PlayerCount,
-                SubmittedTime = DateTime.UtcNow,
-                RoundTime = _timing.CurTime.Subtract(ticker.RoundStartTimeSpan),
-                RoundNumber = ticker.RoundId,
-                RoundType = Loc.GetString(ticker.CurrentPreset?.ModeTitle ?? "bug-report-report-unknown"),
-                Map = _map.GetSelectedMap()?.MapName ?? Loc.GetString("bug-report-report-unknown"),
-                BuildVersion = _cfg.GetCVar(CVars.BuildVersion),
-                EngineVersion = _cfg.GetCVar(CVars.BuildEngineVersion),
-            };
+            metadata.RoundTime = _timing.CurTime.Subtract(ticker.RoundStartTimeSpan);
+            metadata.RoundNumber = ticker.RoundId;
+            metadata.RoundType = Loc.GetString(ticker.CurrentPreset?.ModeTitle ?? "bug-report-report-unknown");
+            metadata.Map = _map.GetSelectedMap()?.MapName ?? Loc.GetString("bug-report-report-unknown");
         }
 
         return new ValidPlayerBugReportReceivedEvent(

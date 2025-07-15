@@ -5,13 +5,11 @@ using Content.Client.UserInterface.Systems.BugReport.Windows;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.BugReport;
 using Content.Shared.CCVar;
-using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
-using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
@@ -35,14 +33,12 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
 
     public void OnStateEntered(GameplayState state)
     {
-        _bugReportWindow = UIManager.CreateWindow<BugReportWindow>();
-
         SetupWindow();
     }
 
     public void OnStateExited(GameplayState state)
     {
-        _bugReportWindow.Close();
+        CleanupWindow();
     }
 
     public void LoadButton()
@@ -77,7 +73,14 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
 
         _bugReportWindow.OnBugReportSubmitted += OnBugReportSubmitted;
 
-        _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, x => BugReportButton.Visible = x, true);
+        _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, UpdateButtonVisibility, true);
+    }
+
+    private void CleanupWindow()
+    {
+        _bugReportWindow.CleanupCCvars();
+
+        _cfg.UnsubValueChanged(CCVars.EnablePlayerBugReports, UpdateButtonVisibility);
     }
 
     private void ToggleWindow()
@@ -98,5 +101,13 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
     private void ButtonToggleWindow(BaseButton.ButtonEventArgs obj)
     {
         ToggleWindow();
+    }
+
+    private void UpdateButtonVisibility(bool val)
+    {
+        if (BugReportButton == null)
+            return;
+
+        BugReportButton.Visible = val;
     }
 }

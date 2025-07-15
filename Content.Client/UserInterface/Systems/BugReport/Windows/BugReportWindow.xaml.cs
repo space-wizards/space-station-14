@@ -46,15 +46,7 @@ public sealed partial class BugReportWindow : DefaultWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, v => _enablePlayerBugReports = v, true);
-        _cfg.OnValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, v => _minimumPlaytimeBugReports = v, true);
-        _cfg.OnValueChanged(CCVars.MinimumSecondsBetweenBugReports, v => _minimumTimeBetweenBugReports = v, true);
-        _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, v => _maximumBugReportsPerRound = v, true);
-
-        _cfg.OnValueChanged(CCVars.MaximumBugReportTitleLength, v => _maximumBugReportTitleLength = v, true);
-        _cfg.OnValueChanged(CCVars.MinimumBugReportTitleLength, v => _minimumBugReportTitleLength = v, true);
-        _cfg.OnValueChanged(CCVars.MaximumBugReportDescriptionLength, v => _maximumBugReportDescriptionLength = v, true);
-        _cfg.OnValueChanged(CCVars.MinimumBugReportDescriptionLength, v => _minimumBugReportDescriptionLength = v, true);
+        SetupCCvars();
 
         // Hook up the events
         SubmitButton.OnPressed += _ => OnSubmitButtonPressed();
@@ -97,10 +89,11 @@ public sealed partial class BugReportWindow : DefaultWindow
         var invalidTitleLen = titleLen < _minimumBugReportTitleLength || titleLen > _maximumBugReportTitleLength;
         var invalidDescriptionLen = descriptionLen < _minimumBugReportDescriptionLength || descriptionLen > _maximumBugReportDescriptionLength;
 
-        TitleCharacterCounter.Text = titleLen + "/" + _maximumBugReportTitleLength;
+        TitleCharacterCounter.Text = Loc.GetString("bug-report-window-submit-char-split", ("typed", titleLen), ("total", _maximumBugReportTitleLength));
         TitleCharacterCounter.FontColorOverride = invalidTitleLen ? Color.Red : Color.Green;
 
-        DescriptionCharacterCounter.Text = descriptionLen + "/" + _maximumBugReportDescriptionLength;
+        DescriptionCharacterCounter.Text = Loc.GetString("bug-report-window-submit-char-split", ("typed", descriptionLen), ("total", _maximumBugReportDescriptionLength));
+
         DescriptionCharacterCounter.FontColorOverride = invalidDescriptionLen ? Color.Red : Color.Green;
 
         SubmitButton.Disabled = invalidTitleLen || invalidDescriptionLen;
@@ -167,4 +160,74 @@ public sealed partial class BugReportWindow : DefaultWindow
         if(DateTime.UtcNow - _lastIsEnabledUpdated > _isEnabledUpdateInterval)
             UpdateEnabled();
     }
+
+    #region ccvar functions
+
+    private void SetupCCvars()
+    {
+        _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, OnEnablePlayerBugReportsChanged, true);
+        _cfg.OnValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, OnMinimumPlaytimeChanged, true);
+        _cfg.OnValueChanged(CCVars.MinimumSecondsBetweenBugReports, OnMinimumTimeBetweenReportsChanged, true);
+        _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, OnMaximumReportsPerRoundChanged, true);
+
+        _cfg.OnValueChanged(CCVars.MaximumBugReportTitleLength, OnMaxTitleLengthChanged, true);
+        _cfg.OnValueChanged(CCVars.MinimumBugReportTitleLength, OnMinTitleLengthChanged, true);
+        _cfg.OnValueChanged(CCVars.MaximumBugReportDescriptionLength, OnMaxDescriptionLengthChanged, true);
+        _cfg.OnValueChanged(CCVars.MinimumBugReportDescriptionLength, OnMinDescriptionLengthChanged, true);
+    }
+
+    public void CleanupCCvars()
+    {
+        _cfg.UnsubValueChanged(CCVars.EnablePlayerBugReports, OnEnablePlayerBugReportsChanged);
+        _cfg.UnsubValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, OnMinimumPlaytimeChanged);
+        _cfg.UnsubValueChanged(CCVars.MinimumSecondsBetweenBugReports, OnMinimumTimeBetweenReportsChanged);
+        _cfg.UnsubValueChanged(CCVars.MaximumBugReportsPerRound, OnMaximumReportsPerRoundChanged);
+
+        _cfg.UnsubValueChanged(CCVars.MaximumBugReportTitleLength, OnMaxTitleLengthChanged);
+        _cfg.UnsubValueChanged(CCVars.MinimumBugReportTitleLength, OnMinTitleLengthChanged);
+        _cfg.UnsubValueChanged(CCVars.MaximumBugReportDescriptionLength, OnMaxDescriptionLengthChanged);
+        _cfg.UnsubValueChanged(CCVars.MinimumBugReportDescriptionLength, OnMinDescriptionLengthChanged);
+    }
+
+    private void OnEnablePlayerBugReportsChanged(bool value)
+    {
+        _enablePlayerBugReports = value;
+    }
+
+    private void OnMinimumPlaytimeChanged(int value)
+    {
+        _minimumPlaytimeBugReports = value;
+    }
+
+    private void OnMinimumTimeBetweenReportsChanged(int value)
+    {
+        _minimumTimeBetweenBugReports = value;
+    }
+
+    private void OnMaximumReportsPerRoundChanged(int value)
+    {
+        _maximumBugReportsPerRound = value;
+    }
+
+    private void OnMaxTitleLengthChanged(int value)
+    {
+        _maximumBugReportTitleLength = value;
+    }
+
+    private void OnMinTitleLengthChanged(int value)
+    {
+        _minimumBugReportTitleLength = value;
+    }
+
+    private void OnMaxDescriptionLengthChanged(int value)
+    {
+        _maximumBugReportDescriptionLength = value;
+    }
+
+    private void OnMinDescriptionLengthChanged(int value)
+    {
+        _minimumBugReportDescriptionLength = value;
+    }
+
+    #endregion
 }

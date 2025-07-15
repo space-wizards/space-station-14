@@ -1,3 +1,5 @@
+using Robust.Shared.Network;
+
 namespace Content.Server.BugReports;
 
 /// <summary>
@@ -31,6 +33,11 @@ public sealed class BugReportMetaData
     /// </summary>
     /// <example>piggylongsnout</example>
     public required string Username;
+
+    /// <summary>
+    /// The GUID of the player who reported the bug.
+    /// </summary>
+    public required NetUserId PlayerGUID;
 
     /// <summary>
     /// Name of the server from which bug report was issued.
