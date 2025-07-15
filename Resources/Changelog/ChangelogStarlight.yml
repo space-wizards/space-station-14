@@ -9362,5 +9362,44 @@ Entries:
   id: 1290
   time: '2025-07-15T13:59:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1024
+- author: Salem and Arkanic
+  changes:
+  - message: Eyes as a marking slot
+    type: Add
+  id: 1291
+  time: '2025-07-15T14:02:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/987
+- author: Salem and Arkanic
+  changes:
+  - message: Added Impstation Slime Markings, and base sprite with permission from
+      all those involved
+    type: Add
+  id: 1292
+  time: '2025-07-15T14:02:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/987
+- author: Salem and Arkanic
+  changes:
+  - message: Added two new hair styles that work well with Slimes, also from imp and
+      ported with permission
+    type: Add
+  id: 1293
+  time: '2025-07-15T14:02:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/987
+- author: Salem and Arkanic
+  changes:
+  - message: Ported a bunch of generic markings by sha-seng (human, dwarf, lizard,
+      slime, vulp)
+    type: Add
+  id: 1294
+  time: '2025-07-15T14:02:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/987
+- author: Salem and Arkanic
+  changes:
+  - message: Renamed Slime People to Laspi (Singular), Laspii (Plural), and Laspians
+      (Demonym) (Only on the UI, so this shouldn't cause any file-related problems)
+    type: Tweak
+  id: 1295
+  time: '2025-07-15T14:02:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/987
 Order: -1
 
