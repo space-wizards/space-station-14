@@ -1,28 +1,28 @@
 # base ui elements
-parrot-messages-title = Parrot messages
+parrot-memory-title = Parrot memory
 
 # base controls
-parrot-messages-loading = Loading parrot messages...
-parrot-messages-num-messages = { $messageCount ->
-    [0] No parrot messages
-    [1] 1 parrot message
-    *[other] { $messageCount } parrot messages
+parrot-memory-loading = Loading parrot memories...
+parrot-memory-num-memories = { $memoryCount ->
+    [0] No parrot memories
+    [1] 1 parrot memories
+    *[other] { $memoryCount } parrot memories
 }
 
-parrot-messages-refresh = Refresh
+parrot-memory-refresh = Refresh
 
 # filter
-parrot-messages-text-filter = Text filter
-parrot-messages-current-round-filter = Current round only
-parrot-messages-apply-filter = Apply filter
-parrot-messages-clear-filter = Clear filter
+parrot-memory-text-filter = Text filter
+parrot-memory-current-round-filter = Current round only
+parrot-memory-apply-filter = Apply filter
+parrot-memory-clear-filter = Clear filter
 
-# message line elements
-parrot-messages-line-current-round = Learnt this round
+# memory line elements
+parrot-memory-line-current-round = Learnt this round
 
-parrot-messages-line-ahelp-tooltip = Ahelp this user.
+parrot-memory-line-ahelp-tooltip = Ahelp this user.
 
-parrot-messages-line-block = Block
-parrot-messages-line-block-tooltip = Block this message, preventing it from being picked by entities using the parrot message database and preventing it from being learnt.
-parrot-messages-line-unblock = Unblock
-parrot-messages-line-unblock-tooltip = Unblock this message. If there is a Cvar set to discard old messages, this message may be discarded. Otherwise, this message can again be picked by entities using the parrot message database.
+parrot-memory-line-block = Block
+parrot-memory-line-block-tooltip = Block this memory, preventing it from being picked by entities using the parrot memory database and preventing it from being learnt.
+parrot-memory-line-unblock = Unblock
+parrot-memory-line-unblock-tooltip = Unblock this memory. If there is a Cvar set to discard old memories, this memory may be discarded. Otherwise, this memory can again be picked by entities using the parrot memory database.

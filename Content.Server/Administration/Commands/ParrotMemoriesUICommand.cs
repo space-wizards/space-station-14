@@ -6,11 +6,11 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class ParrotMessagesUICommand : LocalizedEntityCommands
+public sealed class ParrotMemoriesUICommand : LocalizedEntityCommands
 {
     [Dependency] private readonly EuiManager _euiManager = default!;
 
-    public override string Command => "parrotmessages";
+    public override string Command => "parrotmemories";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -20,7 +20,7 @@ public sealed class ParrotMessagesUICommand : LocalizedEntityCommands
             return;
         }
 
-        var ui = new ParrotMessagesEui();
+        var ui = new ParrotMemoryEui();
         _euiManager.OpenEui(ui, player);
     }
 }

@@ -1,0 +1,13 @@
+<ui:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:parrotmemories="clr-namespace:Content.Client.Administration.UI.ParrotMemories"
+                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                VerticalExpand="True" HorizontalExpand="True"
+                Title="{Loc parrot-memory-title}"
+                SetSize="1000 600">
+    <PanelContainer StyleClasses="BackgroundDark">
+        <TabContainer Name="MemoryTabContainer" Access="Public">
+            <parrotmemories:ParrotMemoryList Name="ActiveMemories" Access="Public"></parrotmemories:ParrotMemoryList>
+            <parrotmemories:ParrotMemoryList Name="BlockedMemories" Access="Public" ShowBlocked="True"></parrotmemories:ParrotMemoryList>
+        </TabContainer>
+    </PanelContainer>
+</ui:FancyWindow>
