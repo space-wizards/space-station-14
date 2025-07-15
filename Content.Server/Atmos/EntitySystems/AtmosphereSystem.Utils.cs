@@ -114,4 +114,20 @@ public partial class AtmosphereSystem
 
         _tile.PryTile(tileRef);
     }
+
+    /// <summary>
+    ///     Possibly gets the coordinates of an optionally given <see cref="EntityUid">,
+    ///     and then an optionally given <see cref="IGasMixtureHolder"/>.
+    /// </summary>
+    // Both args are nullable because this is exposed for use by reactions to get the position of the reaction.
+    public EntityCoordinates? GetMixtureHolderCoordinates(IGasMixtureHolder? holder, EntityUid? holderEntity)
+    {
+        if (holderEntity != null)
+            return Transform(holderEntity.Value).Coordinates;
+
+        if (holder is TileAtmosphere tileAtmosphere && _mapGridQuery.TryComp(tileAtmosphere.GridIndex, out var mapGridComponent))
+            return _mapSystem.GridTileToLocal(tileAtmosphere.GridIndex, mapGridComponent, tileAtmosphere.GridIndices);
+
+        return null;
+    }
 }

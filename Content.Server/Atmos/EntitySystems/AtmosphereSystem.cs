@@ -12,6 +12,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using System.Linq;
@@ -43,6 +44,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 
     private EntityQuery<GridAtmosphereComponent> _atmosQuery;
     private EntityQuery<MapAtmosphereComponent> _mapAtmosQuery;
+    private EntityQuery<MapGridComponent> _mapGridQuery;
     private EntityQuery<AirtightComponent> _airtightQuery;
     private EntityQuery<FirelockComponent> _firelockQuery;
     private HashSet<EntityUid> _entSet = new();
@@ -62,6 +64,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         InitializeMap();
 
         _mapAtmosQuery = GetEntityQuery<MapAtmosphereComponent>();
+        _mapGridQuery = GetEntityQuery<MapGridComponent>();
         _atmosQuery = GetEntityQuery<GridAtmosphereComponent>();
         _airtightQuery = GetEntityQuery<AirtightComponent>();
         _firelockQuery = GetEntityQuery<FirelockComponent>();

@@ -68,9 +68,10 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
             new GasCanisterBoundUserInterfaceState(canister.Air.Pressure, portStatus, tankPressure));
     }
 
-    private void OnCanisterUpdated(EntityUid uid, GasCanisterComponent canister, ref AtmosDeviceUpdateEvent args)
+    private void OnCanisterUpdated(Entity<GasCanisterComponent> ent, ref AtmosDeviceUpdateEvent args)
     {
-        _atmos.React(canister.Air, canister);
+        var (uid, canister) = ent;
+        _atmos.React(ent);
 
         if (!TryComp<NodeContainerComponent>(uid, out var nodeContainer)
             || !TryComp<AppearanceComponent>(uid, out var appearance))
