@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
 using Content.Server.Maps;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Maps;
@@ -124,6 +125,9 @@ public partial class AtmosphereSystem
     {
         if (holderEntity != null)
             return Transform(holderEntity.Value).Coordinates;
+
+        if (holder is PipeNode pipeNode)
+            return Transform(pipeNode.Owner).Coordinates;
 
         if (holder is TileAtmosphere tileAtmosphere && _mapGridQuery.TryComp(tileAtmosphere.GridIndex, out var mapGridComponent))
             return _mapSystem.GridTileToLocal(tileAtmosphere.GridIndex, mapGridComponent, tileAtmosphere.GridIndices);
