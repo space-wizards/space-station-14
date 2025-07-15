@@ -19,7 +19,7 @@
     UndergarmentTop: MobHumanoidAnyMarking
     UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobSlimeTorso
-    Eyes: MobHumanoidAnyMarking # imp, eye customization
+    Eyes: MobHumanoidAnyMarking # Starlight
     LArm: MobSlimeLArm
     RArm: MobSlimeRArm
     LHand: MobSlimeLHand
@@ -32,7 +32,7 @@
 - type: markingPoints
   id: MobSlimeMarkingLimits
   points:
-    Eyes: #imp, so they can pick their eyes
+    Eyes: # Starlight
       points: 1
       required: true
       defaultMarkings: [ SlimeEyesDefault ]
@@ -54,12 +54,12 @@
 
 - type: humanoidBaseSprite
   id: MobSlimeMarkingAlfa
-  layerAlpha: 0.65 # imp
+  layerAlpha: 0.65 # Starlight
 
 - type: humanoidBaseSprite
   id: MobSlimeMarkingFollowSkin
   markingsMatchSkin: true
-  layerAlpha: 0.75 # imp
+  layerAlpha: 0.75 # Starlight
 
 - type: humanoidBaseSprite
   id: MobSlimeHead
