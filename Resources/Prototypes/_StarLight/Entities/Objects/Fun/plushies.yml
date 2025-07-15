@@ -1316,7 +1316,7 @@
 - type: entity
   parent: PlushieHuman
   id: PlushieRomero
-  name: Die-cast Romero Plushie
+  name: Die-cast Romero "Plushie"
   description: A steel cast "plushie" of an infamous Head of Security. He looks angry and has a faint smell of ash. His gun and knife are sold separetly.
   components:
     - type: Item
@@ -1326,6 +1326,13 @@
       sprite: _Starlight/Objects/Fun/Plushies/romero_plushie.rsi
       layers:
         - state: icon
+    - type: MeleeWeapon
+      wideAnimationRotation: -135
+      damage:
+        types:
+          Blunt: 8
+      soundHit:
+        collection: MetalThud
     - type: ItemToggle
       onUse: false
       verbToggleOn: plushie-voicebox-activate
