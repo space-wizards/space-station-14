@@ -1,8 +1,7 @@
-﻿using Content.Shared.Atmos;
-using Content.Shared.Atmos.Piping.Binary.Components;
+﻿using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Localizations;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI
@@ -14,7 +13,7 @@ namespace Content.Client.Atmos.UI
     public sealed class GasVolumePumpBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
-        private const float MaxTransferRate = Atmospherics.MaxTransferRate;
+        private float _maxTransferRate;
 
         [ViewVariables]
         private GasVolumePumpWindow? _window;
@@ -29,38 +28,41 @@ namespace Content.Client.Atmos.UI
 
             _window = this.CreateWindow<GasVolumePumpWindow>();
 
+            if (EntMan.TryGetComponent(Owner, out GasVolumePumpComponent? pump))
+            {
+                _maxTransferRate = pump.MaxTransferRate;
+            }
+
             _window.ToggleStatusButtonPressed += OnToggleStatusButtonPressed;
             _window.PumpTransferRateChanged += OnPumpTransferRatePressed;
+            Update();
         }
 
         private void OnToggleStatusButtonPressed()
         {
             if (_window is null) return;
-            SendMessage(new GasVolumePumpToggleStatusMessage(_window.PumpStatus));
+
+            SendPredictedMessage(new GasVolumePumpToggleStatusMessage(_window.PumpStatus));
         }
 
         private void OnPumpTransferRatePressed(string value)
         {
             var rate = UserInputParser.TryFloat(value, out var parsed) ? parsed : 0f;
-            if (rate > MaxTransferRate)
-                rate = MaxTransferRate;
+            rate = Math.Clamp(rate, 0f, _maxTransferRate);
 
-            SendMessage(new GasVolumePumpChangeTransferRateMessage(rate));
+            SendPredictedMessage(new GasVolumePumpChangeTransferRateMessage(rate));
         }
 
-        /// <summary>
-        /// Update the UI state based on server-sent info
-        /// </summary>
-        /// <param name="state"></param>
-        protected override void UpdateState(BoundUserInterfaceState state)
+        public override void Update()
         {
-            base.UpdateState(state);
-            if (_window == null || state is not GasVolumePumpBoundUserInterfaceState cast)
+            base.Update();
+
+            if (_window is null || !EntMan.TryGetComponent(Owner, out GasVolumePumpComponent? pump))
                 return;
 
-            _window.Title = cast.PumpLabel;
-            _window.SetPumpStatus(cast.Enabled);
-            _window.SetTransferRate(cast.TransferRate);
+            _window.Title = Identity.Name(Owner, EntMan);
+            _window.SetPumpStatus(pump.Enabled);
+            _window.SetTransferRate(pump.TransferRate);
         }
     }
 }

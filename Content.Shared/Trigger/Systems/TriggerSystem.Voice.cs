@@ -57,13 +57,14 @@ public sealed partial class TriggerSystem
             return;
         }
 
-        if (!string.IsNullOrWhiteSpace(component.KeyPhrase) && message.Contains(component.KeyPhrase, StringComparison.InvariantCultureIgnoreCase))
+        if (!string.IsNullOrWhiteSpace(component.KeyPhrase) && message.IndexOf(component.KeyPhrase, StringComparison.InvariantCultureIgnoreCase) is var index and >= 0)
         {
             _adminLogger.Add(LogType.Trigger, LogImpact.Medium,
                     $"A voice-trigger on {ToPrettyString(ent):entity} was triggered by {ToPrettyString(args.Source):speaker} speaking the key-phrase {component.KeyPhrase}.");
             Trigger(ent, args.Source, ent.Comp.TriggerKey);
 
-            var voice = new VoiceTriggeredEvent(args.Source, message);
+            var messageWithoutPhrase = message.Remove(index, component.KeyPhrase.Length).Trim();
+            var voice = new VoiceTriggeredEvent(args.Source, message, messageWithoutPhrase);
             RaiseLocalEvent(ent, ref voice);
         }
     }

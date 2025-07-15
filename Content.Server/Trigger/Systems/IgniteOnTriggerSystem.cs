@@ -1,4 +1,4 @@
-using Content.Server.IgnitionSource;
+using Content.Shared.IgnitionSource;
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;
 using Robust.Shared.Timing;
@@ -11,7 +11,7 @@ namespace Content.Server.Trigger.Systems;
 public sealed class IgniteOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IgnitionSourceSystem _source = default!;
+    [Dependency] private readonly SharedIgnitionSourceSystem _source = default!;
 
     public override void Initialize()
     {

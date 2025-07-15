@@ -10,6 +10,7 @@ public sealed class ProximityTriggerAnimationSystem : EntitySystem
 {
     [Dependency] private readonly AnimationPlayerSystem _player = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     /*
      * Currently all of the appearance stuff is hardcoded for portable flashers
@@ -63,7 +64,7 @@ public sealed class ProximityTriggerAnimationSystem : EntitySystem
 
     private void OnProximityInit(EntityUid uid, TriggerOnProximityComponent component, ComponentInit args)
     {
-        EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
+        EnsureComp<AnimationPlayerComponent>(uid);
     }
 
     private void OnProxAppChange(EntityUid uid, TriggerOnProximityComponent component, ref AppearanceChangeEvent args)
@@ -82,7 +83,7 @@ public sealed class ProximityTriggerAnimationSystem : EntitySystem
         if (!_appearance.TryGetData<ProximityTriggerVisuals>(uid, ProximityTriggerVisualState.State, out var state, appearance))
             return;
 
-        if (!spriteComponent.LayerMapTryGet(ProximityTriggerVisualLayers.Base, out var layer))
+        if (!_sprite.LayerMapTryGet((uid, spriteComponent), ProximityTriggerVisualLayers.Base, out var layer, false))
             // Don't do anything if the sprite doesn't have the layer.
             return;
 
@@ -92,7 +93,7 @@ public sealed class ProximityTriggerAnimationSystem : EntitySystem
                 // Don't interrupt the flash animation
                 if (_player.HasRunningAnimation(uid, player, AnimKey)) return;
                 _player.Stop(uid, player, AnimKey);
-                spriteComponent.LayerSetState(layer, "on");
+                _sprite.LayerSetRsiState((uid, spriteComponent), layer, "on");
                 break;
             case ProximityTriggerVisuals.Active:
                 if (_player.HasRunningAnimation(uid, player, AnimKey)) return;
@@ -101,7 +102,7 @@ public sealed class ProximityTriggerAnimationSystem : EntitySystem
             case ProximityTriggerVisuals.Off:
             default:
                 _player.Stop(uid, player, AnimKey);
-                spriteComponent.LayerSetState(layer, "off");
+                _sprite.LayerSetRsiState((uid, spriteComponent), layer, "off");
                 break;
         }
     }

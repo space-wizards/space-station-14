@@ -37,7 +37,7 @@ public sealed class ShockOnTriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        _electrocution.TryDoElectrocution(target.Value, null, ent.Comp.Damage, ent.Comp.Duration, true);
+        _electrocution.TryDoElectrocution(target.Value, null, ent.Comp.Damage, ent.Comp.Duration, true, ignoreInsulation: true);
         args.Handled = true;
     }
 
