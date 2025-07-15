@@ -104,12 +104,6 @@
     - BibleSatanic
 
 - type: loadout
-  id: BibleQuran
-  storage:
-    back:
-    - BibleQuran
-
-- type: loadout
   id: BibleTanakh
   storage:
     back:
