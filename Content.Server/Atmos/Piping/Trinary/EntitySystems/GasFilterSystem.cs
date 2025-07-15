@@ -43,7 +43,6 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
-
         }
 
         private void OnInit(EntityUid uid, GasFilterComponent filter, ComponentInit args)
@@ -54,7 +53,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnFilterUpdated(EntityUid uid, GasFilterComponent filter, ref AtmosDeviceUpdateEvent args)
         {
             if (!filter.Enabled
-                || !_nodeContainer.TryGetNodes(uid, filter.InletName, filter.FilterName, filter.OutletName, out PipeNode? inletNode, out PipeNode? filterNode, out PipeNode? outletNode)
+                || !_nodeContainer.TryGetNodes(uid, filter.InletName, filter.FilterName, filter.OutletName,
+                    out PipeNode? inletNode, out PipeNode? filterNode, out PipeNode? outletNode)
                 || outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
@@ -63,23 +63,31 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             //starlight fix subtick
             float wantToTransfer = filter.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
-            
-            // Calculate if transferring wantToTransfer would exceed the pressure limit
-            float pressureIncrease = wantToTransfer * inletNode.Air.Pressure / inletNode.Air.Volume;
-            float finalPressure = outletNode.Air.Pressure + pressureIncrease;
-            
-            // Only clamp if we would exceed the limit
-            if (finalPressure > Atmospherics.MaxOutputPressure)
-            {
-                float spaceLeft = Atmospherics.MaxOutputPressure - outletNode.Air.Pressure;
-                wantToTransfer = spaceLeft * inletNode.Air.Volume / inletNode.Air.Pressure;
-            }
-            
-            float clamped = Math.Max(wantToTransfer, 0);
-            //starlight end
 
-            // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferVol = clamped; //starlight edit
+            // Get The Volume to transfer, do not attempt to transfer more than the pipe can hold.
+            float transferVolume = Math.Min(inletNode.Air.Volume, wantToTransfer);
+
+            // Calculate how many moles does this transfer contain
+            float transferMoles =
+                inletNode.Air.Pressure * transferVolume / (inletNode.Air.Temperature * Atmospherics.R);
+
+            // Calculate how many moles can outlet still contain
+            float molesSpaceLeft = (Atmospherics.MaxOutputPressure - outletNode.Air.Pressure) * outletNode.Air.Volume /
+                                   (outletNode.Air.Temperature * Atmospherics.R);
+
+            // Get the lower value of the two, and clamp it to the transfer rate
+            float actualMolesTransfered = Math.Clamp(transferMoles, 0, Math.Max(0, molesSpaceLeft));
+
+            float actualTransferVolume = 0;
+            if (actualMolesTransfered > 0 && inletNode.Air.Pressure > 0)
+            {
+                // Calculate how much volume is needed to transfer those moles
+                actualTransferVolume = actualMolesTransfered * inletNode.Air.Temperature * Atmospherics.R /
+                                       inletNode.Air.Pressure;
+            }
+
+            //starlight end
+            var transferVol = actualTransferVolume; //starlight edit
 
             if (transferVol <= 0)
             {
@@ -104,7 +112,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             _atmosphereSystem.Merge(outletNode.Air, removed);
         }
 
-        private void OnFilterLeaveAtmosphere(EntityUid uid, GasFilterComponent filter, ref AtmosDeviceDisabledEvent args)
+        private void OnFilterLeaveAtmosphere(EntityUid uid, GasFilterComponent filter,
+            ref AtmosDeviceDisabledEvent args)
         {
             filter.Enabled = false;
 
@@ -142,7 +151,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
 
             _userInterfaceSystem.SetUiState(uid, GasFilterUiKey.Key,
-                new GasFilterBoundUserInterfaceState(MetaData(uid).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
+                new GasFilterBoundUserInterfaceState(MetaData(uid).EntityName, filter.TransferRate, filter.Enabled,
+                    filter.FilteredGas));
         }
 
         private void UpdateAppearance(EntityUid uid, GasFilterComponent? filter = null)
@@ -162,13 +172,13 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             UpdateAppearance(uid, filter);
         }
 
-        private void OnTransferRateChangeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeRateMessage args)
+        private void OnTransferRateChangeMessage(EntityUid uid, GasFilterComponent filter,
+            GasFilterChangeRateMessage args)
         {
             filter.TransferRate = Math.Clamp(args.Rate, 0f, filter.MaxTransferRate);
             _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Actor):player} set the transfer rate on {ToPrettyString(uid):device} to {args.Rate}");
             DirtyUI(uid, filter);
-
         }
 
         private void OnSelectGasMessage(EntityUid uid, GasFilterComponent filter, GasFilterSelectGasMessage args)
@@ -184,7 +194,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 }
                 else
                 {
-                    Log.Warning($"{ToPrettyString(uid)} received GasFilterSelectGasMessage with an invalid ID: {args.ID}");
+                    Log.Warning(
+                        $"{ToPrettyString(uid)} received GasFilterSelectGasMessage with an invalid ID: {args.ID}");
                 }
             }
             else
@@ -211,13 +222,16 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 inletAirLocal.Volume = inlet.Volume;
                 args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-inlet"), inletAirLocal));
             }
-            if (_nodeContainer.TryGetNode(uid, component.FilterName, out PipeNode? filterNode) && filterNode.Air.Volume != 0f)
+
+            if (_nodeContainer.TryGetNode(uid, component.FilterName, out PipeNode? filterNode) &&
+                filterNode.Air.Volume != 0f)
             {
                 var filterNodeAirLocal = filterNode.Air.Clone();
                 filterNodeAirLocal.Multiply(filterNode.Volume / filterNode.Air.Volume);
                 filterNodeAirLocal.Volume = filterNode.Volume;
                 args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-filter"), filterNodeAirLocal));
             }
+
             if (_nodeContainer.TryGetNode(uid, component.OutletName, out PipeNode? outlet) && outlet.Air.Volume != 0f)
             {
                 var outletAirLocal = outlet.Air.Clone();
@@ -226,7 +240,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-outlet"), outletAirLocal));
             }
 
-            args.DeviceFlipped = inlet != null && filterNode != null && inlet.CurrentPipeDirection.ToDirection() == filterNode.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
+            args.DeviceFlipped = inlet != null && filterNode != null && inlet.CurrentPipeDirection.ToDirection() ==
+                filterNode.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
         }
     }
 }

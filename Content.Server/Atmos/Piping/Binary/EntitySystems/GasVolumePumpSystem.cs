@@ -41,7 +41,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         {
             if (!pump.Enabled ||
                 (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered) ||
-                !_nodeContainer.TryGetNodes(uid, pump.InletName, pump.OutletName, out PipeNode? inlet, out PipeNode? outlet))
+                !_nodeContainer.TryGetNodes(uid, pump.InletName, pump.OutletName, out PipeNode? inlet,
+                    out PipeNode? outlet))
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;
@@ -54,7 +55,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             pump.Blocked = false;
 
             // Pump mechanism won't do anything if the pressure is too high/too low unless you overclock it.
-            if ((inputStartingPressure < pump.LowerThreshold) || (outputStartingPressure > pump.HigherThreshold) && !pump.Overclocked)
+            if ((inputStartingPressure < pump.LowerThreshold) ||
+                (outputStartingPressure > pump.HigherThreshold) && !pump.Overclocked)
             {
                 pump.Blocked = true;
             }
@@ -65,30 +67,42 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 pump.Blocked = true;
             }
 
+            //starlight fix subtick
+            float wantToTransfer = pump.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
+
+            // Get The Volume to transfer, do not attempt to transfer more than the pipe can hold.
+            float transferVolume = Math.Min(inlet.Air.Volume, wantToTransfer);
+
+            // Calculate how many moles does this transfer contain
+            float transferMoles =
+                inlet.Air.Pressure * transferVolume / (inlet.Air.Temperature * Atmospherics.R);
+
+            // Calculate how many moles can outlet still contain
+            float molesSpaceLeft = (pump.HigherThreshold - outlet.Air.Pressure) * outlet.Air.Volume /
+                                   (outlet.Air.Temperature * Atmospherics.R);
+
+            // Get the lower value of the two, and clamp it to the transfer rate
+            float actualMolesTransfered = Math.Clamp(transferMoles, 0, Math.Max(0, molesSpaceLeft));
+
+            float actualTransferVolume = 0;
+            if (actualMolesTransfered > 0 && inlet.Air.Pressure > 0)
+            {
+                actualTransferVolume = actualMolesTransfered * inlet.Air.Temperature * Atmospherics.R /
+                                       inlet.Air.Pressure;
+            }
+            else
+            {
+                pump.Blocked = true;
+            }
+            //starlight end
+
             if (previouslyBlocked != pump.Blocked)
                 UpdateAppearance(uid, pump);
             if (pump.Blocked)
                 return;
 
-            //starlight fix subtick
-            float wantToTransfer = pump.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
-            
-            // Calculate if transferring wantToTransfer would exceed the pressure limit
-            float pressureIncrease = wantToTransfer * inlet.Air.Pressure / inlet.Air.Volume;
-            float finalPressure = outlet.Air.Pressure + pressureIncrease;
-            
-            // Only clamp if we would exceed the limit
-            if (finalPressure > pump.HigherThreshold)
-            {
-                float spaceLeft = pump.HigherThreshold - outlet.Air.Pressure;
-                wantToTransfer = spaceLeft * inlet.Air.Volume / inlet.Air.Pressure;
-            }
-            
-            float clamped = Math.Max(wantToTransfer, 0);
-            //starlight end
-
-            // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var removed = inlet.Air.RemoveVolume(clamped); //starlight edit
+            //starlight edit
+            var removed = inlet.Air.RemoveVolume(actualTransferVolume); //starlight edit
 
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)
@@ -108,7 +122,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             _ambientSoundSystem.SetAmbience(uid, removed.TotalMoles > 0f);
         }
 
-        private void OnVolumePumpLeaveAtmosphere(EntityUid uid, GasVolumePumpComponent pump, ref AtmosDeviceDisabledEvent args)
+        private void OnVolumePumpLeaveAtmosphere(EntityUid uid, GasVolumePumpComponent pump,
+            ref AtmosDeviceDisabledEvent args)
         {
             pump.Enabled = false;
             Dirty(uid, pump);
@@ -130,7 +145,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             {
                 case AtmosDeviceNetworkSystem.SyncData:
                     payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
-                    payload.Add(AtmosDeviceNetworkSystem.SyncData, new GasVolumePumpData(component.LastMolesTransferred));
+                    payload.Add(AtmosDeviceNetworkSystem.SyncData,
+                        new GasVolumePumpData(component.LastMolesTransferred));
 
                     _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
                     return;
