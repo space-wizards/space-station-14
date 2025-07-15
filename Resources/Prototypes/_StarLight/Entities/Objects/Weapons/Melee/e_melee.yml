@@ -62,6 +62,7 @@
   - type: MeleeWeapon
     wideAnimationRotation: 180
     attackRate: 0.8
+    autoAttack: true
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
