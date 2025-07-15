@@ -1,3 +1,5 @@
+using System.Collections.Frozen;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -6,9 +8,8 @@ using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Collections.Frozen;
-using System.Linq;
 
 
 namespace Content.Shared.Chemistry.Reaction
@@ -25,9 +26,10 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private const int MaxReactionIterations = 20;
 
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         /// <summary>
@@ -225,7 +227,11 @@ namespace Content.Shared.Chemistry.Reaction
                 effect.Effect(args);
             }
 
-            _audio.PlayPvs(reaction.Sound, soln);
+            // Someday, some brave soul will thread through an optional actor
+            // argument in from every call of OnReaction up, all just to pass
+            // it to PlayPredicted. I am not that brave soul.
+            if (_timing.IsFirstTimePredicted)
+                _audio.PlayPvs(reaction.Sound, soln);
         }
 
         /// <summary>
