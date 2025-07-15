@@ -1,12 +1,10 @@
 using System.Linq;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.DoAfter;
-using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
@@ -32,7 +30,6 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] protected readonly OpenableSystem Openable = default!;
     [Dependency] protected readonly ReactiveSystem Reactive = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -60,11 +57,6 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RefillableSolutionComponent, CanDragEvent>(OnRefillableCanDrag);
-        SubscribeLocalEvent<DumpableSolutionComponent, CanDropTargetEvent>(OnDumpCanDropTarget);
-        SubscribeLocalEvent<DrainableSolutionComponent, CanDropTargetEvent>(OnDrainCanDropTarget);
-        SubscribeLocalEvent<RefillableSolutionComponent, CanDropDraggedEvent>(OnRefillableCanDropDragged);
-
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<PuddleComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
@@ -78,7 +70,6 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
         CacheStandsout();
         InitializeSpillable();
-        InitializeTransfers();
     }
 
     public override void Update(float frameTime)
@@ -128,38 +119,6 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         UpdateSlow(entity, args.Solution);
         UpdateEvaporation(entity, args.Solution);
         UpdateAppearance((entity, entity.Comp));
-    }
-
-    private void OnRefillableCanDrag(Entity<RefillableSolutionComponent> entity, ref CanDragEvent args)
-    {
-        args.Handled = true;
-    }
-
-    private void OnDumpCanDropTarget(Entity<DumpableSolutionComponent> entity, ref CanDropTargetEvent args)
-    {
-        if (HasComp<DrainableSolutionComponent>(args.Dragged))
-        {
-            args.CanDrop = true;
-            args.Handled = true;
-        }
-    }
-
-    private void OnDrainCanDropTarget(Entity<DrainableSolutionComponent> entity, ref CanDropTargetEvent args)
-    {
-        if (HasComp<RefillableSolutionComponent>(args.Dragged))
-        {
-            args.CanDrop = true;
-            args.Handled = true;
-        }
-    }
-
-    private void OnRefillableCanDropDragged(Entity<RefillableSolutionComponent> entity, ref CanDropDraggedEvent args)
-    {
-        if (!HasComp<DrainableSolutionComponent>(args.Target) && !HasComp<DumpableSolutionComponent>(args.Target))
-            return;
-
-        args.CanDrop = true;
-        args.Handled = true;
     }
 
     private void OnGetFootstepSound(Entity<PuddleComponent> entity, ref GetFootstepSoundEvent args)
