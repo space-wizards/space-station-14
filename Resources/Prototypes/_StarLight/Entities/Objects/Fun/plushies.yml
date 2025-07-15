@@ -1312,3 +1312,29 @@
           maximumWait: 240
         - type: TextToSpeech
           voice: himeko
+
+- type: entity
+  parent: PlushieHuman
+  id: PlushieRomero
+  name: Die-cast Romero Plushie
+  description: A steel cast "plushie" of an infamous Head of Security. He looks angry and has a faint smell of ash. His gun and knife are sold separetly.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/romero_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/romero_plushie.rsi
+      layers:
+        - state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesRomero
+          minimumWait: 120
+          maximumWait: 240
+        - type: TextToSpeech
+          voice: volition
