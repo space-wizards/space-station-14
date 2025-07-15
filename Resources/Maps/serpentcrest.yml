@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/15/2025 19:50:13
-  entityCount: 27098
+  time: 07/15/2025 20:14:52
+  entityCount: 27099
 maps:
 - 1
 grids:
@@ -9911,7 +9911,7 @@ entities:
       pos: -23.5,2.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -350660.44
+      secondsUntilStateChange: -350670.3
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10477,7 +10477,7 @@ entities:
       pos: -80.5,-10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -188211.38
+      secondsUntilStateChange: -188221.23
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11500,7 +11500,7 @@ entities:
       pos: 2.5,22.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -61645.668
+      secondsUntilStateChange: -61655.53
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11632,7 +11632,7 @@ entities:
       pos: 11.5,-29.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -44858.883
+      secondsUntilStateChange: -44868.746
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12190,7 +12190,7 @@ entities:
       pos: 6.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -179471.97
+      secondsUntilStateChange: -179481.83
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -51956,6 +51956,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.350046,-0.8219223
       parent: 26470
+  - uid: 27099
+    components:
+    - type: Transform
+      pos: -6.625,0.671875
+      parent: 2
 - proto: Catwalk
   entities:
   - uid: 87
