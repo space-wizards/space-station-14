@@ -8,7 +8,6 @@
         <!-- Pressure -->
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 5 0 0">
             <Label Name="PressureLabel"
-                   Text="Pressure: 1000.000 kPA"
                    HorizontalAlignment="Left"/>
         </BoxContainer>
 
@@ -18,15 +17,15 @@
                       Margin="0 10 0 0">
             <!-- Display -->
             <Label Name="InternalsLabel"
-                   Text="Internals: "
+                   Text="{Loc gas-tank-window-internals}"
                    HorizontalAlignment="Left"/>
 
             <!-- Button -->
             <Button Name="InternalsButton"
-                    MinSize="112 28"
-                    MaxSize="112 28"
+                    MinSize="128 28"
+                    MaxSize="128 28"
                     HorizontalAlignment="Right"
-                    Margin="0 0 10 0"/>
+                    Margin="5 0 0 0"/>
         </BoxContainer>
 
         <!-- Release Valve -->
@@ -37,26 +36,37 @@
                    Text="{Loc gas-tank-window-valve}"
                    HorizontalAlignment="Center"
                    MinSize="112 28"/>
-            <Button Name="ReleaseValve" MinSize="15, 28" Text="{Loc gas-tank-window-toggle-button}" Margin="5 0 0 0"/>
+            <Button Name="ReleaseValveClose"
+                    StyleClasses="ButtonColorGreen"
+                    MinSize="15, 28"
+                    Text="{Loc gas-tank-window-valve-close}"
+                    Margin="5 0 0 0"/>
+            <Button Name="ReleaseValveOpen"
+                    StyleClasses="ButtonColorRed"
+                    MinSize="15, 28"
+                    Text="{Loc gas-tank-window-valve-open}"
+                    Margin="5 0 0 0"/>
         </BoxContainer>
+
+        <Control MinHeight="5"/>
 
         <!-- Output Pressure -->
         <Label Name="OutputPressure"
                Text="{Loc gas-tank-window-output-pressure-label}"
                HorizontalAlignment="Center"
-               Margin="0 24 0 0" />
+               Margin="0 10 0 0" />
 
         <!-- Pressure Container -->
         <BoxContainer Orientation="Horizontal"
                       VerticalExpand="True"
                       HorizontalExpand="True"
                       HorizontalAlignment="Center"
-                      Margin="0 5 0 0">
+                      Margin="0 5 0 10">
 
             <!-- Left button -->
             <Button Name="LeftButton"
                     Text="{Loc gas-tank-window-left-button}"
-                    Margin="0 0 5 10"
+                    Margin="0 0 5 0"
                     MaxSize="52, 28"/>
 
             <!-- Center box -->
@@ -64,8 +74,7 @@
                           Orientation="Vertical"
                           VerticalExpand="True"
                           HorizontalExpand="True"
-                          HorizontalAlignment="Center"
-                          Margin="0 0 0 10">
+                          HorizontalAlignment="Center">
                 <LineEdit Name="FloatDisplay"
                           Text="21.3"
                           MinSize="112, 28"
@@ -75,7 +84,7 @@
             <!-- Right button -->
             <Button Name="RightButton"
                     Text="{Loc gas-tank-window-right-button}"
-                    Margin="5 0 0 10"
+                    Margin="5 0 0 0"
                     MaxSize="52, 28"/>
         </BoxContainer>
     </BoxContainer>

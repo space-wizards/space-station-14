@@ -36,4 +36,7 @@ public sealed class GasTankBoundUserInterfaceState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class GasTankToggleValveMessage: BoundUserInterfaceMessage;
+public sealed class GasTankToggleValveMessage(bool shouldOpen) : BoundUserInterfaceMessage
+{
+    public bool shouldOpen = shouldOpen;
+}

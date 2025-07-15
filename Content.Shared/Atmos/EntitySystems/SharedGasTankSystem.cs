@@ -40,7 +40,7 @@ public abstract class SharedGasTankSystem : EntitySystem
     private void OnToggleValve(Entity<GasTankComponent> ent, ref GasTankToggleValveMessage args)
     {
         ent.Comp.IsValveOpen = !ent.Comp.IsValveOpen;
-        _audio.PlayPredicted(ent.Comp.ValveSound, ent, args.Actor);
+        _audio.PlayPredicted(ent.Comp.ValveSound, ent, ent.Comp.User);
         Dirty(ent);
 
         UpdateUserInterface(ent);

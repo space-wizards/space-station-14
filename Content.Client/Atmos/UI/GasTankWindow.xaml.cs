@@ -10,9 +10,10 @@ public sealed partial class GasTankWindow : DefaultWindow
 {
     public event Action? ToggleInternalsPressed;
     public event Action<float>? OnSetPressure;
-    public event Action? OnToggleValvePressed;
+    public event Action<bool>? OnToggleValvePressed;
 
     private float _currentPressure;
+    private bool _internalsConnected;
 
     public GasTankWindow()
     {
@@ -23,28 +24,31 @@ public sealed partial class GasTankWindow : DefaultWindow
         RightButton.OnPressed += RightButtonPressed;
         FloatDisplay.OnTextEntered += OnFloatEnteredOrExited;
         FloatDisplay.OnFocusExit += OnFloatEnteredOrExited;
-        ReleaseValve.OnPressed += OnToggleValve;
+        ReleaseValveClose.OnPressed += OnToggleValve;
+        ReleaseValveOpen.OnPressed += OnToggleValve;
     }
 
     public void UpdateDisplay(float pressure, double airPressure, bool valve, bool internalsConnected)
     {
         _currentPressure = pressure;
+        _internalsConnected = internalsConnected;
         FloatDisplay.Text = pressure.ToString("F1");
-        PressureLabel.Text = Loc.GetString("gas-tank-window-tank-pressure-text", ("tankPressure", airPressure.ToString("F")));
-
-        if (InternalsButton.Text == "")
-        {
-            InternalsButton.Text = "N/A";
-        }
+        PressureLabel.Text = Loc.GetString("gas-tank-window-tank-pressure-text", ("tankPressure", airPressure.ToString("F1")));
 
         InternalsButton.Text = internalsConnected
             ? Loc.GetString("gas-tank-window-internal-connected")
             : Loc.GetString("gas-tank-window-internal-disconnected");
 
-        ReleaseValve.Text = valve
-            ? Loc.GetString("gas-tank-window-valve-close")
-            : Loc.GetString("gas-tank-window-valve-open");
-        ReleaseValve.Modulate = valve ? Color.LightGreen : Color.Red;
+        if (valve)
+        {
+            ReleaseValveClose.Disabled = false;
+            ReleaseValveOpen.Disabled = true;
+        }
+        else
+        {
+            ReleaseValveClose.Disabled = true;
+            ReleaseValveOpen.Disabled = false;
+        }
     }
 
     private void OnToggleInternals(BaseButton.ButtonEventArgs args)
@@ -72,6 +76,6 @@ public sealed partial class GasTankWindow : DefaultWindow
 
     private void OnToggleValve(BaseButton.ButtonEventArgs args)
     {
-        OnToggleValvePressed?.Invoke();
+        OnToggleValvePressed?.Invoke(!_internalsConnected);
     }
 }

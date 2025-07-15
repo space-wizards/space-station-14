@@ -49,8 +49,8 @@ public sealed class GasTankBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
         SendMessage(new GasTankSetPressureMessage(pressure));
     }
 
-    private void OnPressValve()
+    private void OnPressValve(bool shouldOpen)
     {
-        SendMessage(new GasTankToggleValveMessage());
+        SendMessage(new GasTankToggleValveMessage(shouldOpen));
     }
 }
