@@ -108,17 +108,6 @@
 
 - type: entity
   parent: Bible
-  name: quran
-  description: "Prayer carpet not included"
-  id: BibleQuran
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/quran.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/quran.rsi
-
-- type: entity
-  parent: Bible
   name: druidic tablet
   description: "It's the mystery of the druids!"
   id: BibleDruid
