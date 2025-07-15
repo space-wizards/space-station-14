@@ -5,8 +5,11 @@
   description: A refrigerated storage unit for keeping items cold and fresh.
   components:
   - type: StationAiWhitelist
-  - type: Advertise
-    pack: SmartFridgeAds
+  - type: Vocalizer
+    hideChat: true
+  - type: VocalizerRequiresPower
+  - type: DatasetVocalizer
+    dataset: SmartFridgeAds
   - type: Speech
   - type: Appearance
   - type: Sprite
