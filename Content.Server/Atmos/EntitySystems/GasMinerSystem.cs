@@ -41,7 +41,10 @@ public sealed class GasMinerSystem : SharedGasMinerSystem
         var minerComponent = ent.Comp;
 
         if (!GetValidEnvironment(ent, out var environment, out var transform, out var minerTilePosition) || !transform.Anchored)
-        { ProcessMinerState(ent, GasMinerState.Disabled); return; }
+        {
+            ProcessMinerState(ent, GasMinerState.Disabled);
+            return;
+        }
 
         // The rates of moles mined/released are declared in mol/s, so to get the amount of gas we hope to mine, we have to multiply the rate by
         // how long we have been waiting to spawn it and further cap the number depending on other factors.
@@ -51,13 +54,18 @@ public sealed class GasMinerSystem : SharedGasMinerSystem
 
         // Although we can mine gas in space, it's bad for the environment to release it into space. Atleast like this.
         if (_atmosphereSystem.IsTileSpace(transform.GridUid, transform.MapUid, minerTilePosition))
-        { ProcessMinerState(ent, GasMinerState.Idle, possibleNewStoredAmount: minerComponent.StoredAmount); return; }
+        {
+            ProcessMinerState(ent, GasMinerState.Idle, possibleNewStoredAmount: minerComponent.StoredAmount);
+            return;
+        }
 
         // Don't release more gas than is actually stored in the miner.
-        float toSpawn = Math.Min(minerComponent.StoredAmount, CapSpawnAmount(ent, minerComponent.ReleaseRate * args.dt, environment));
-
+        var toSpawn = Math.Min(minerComponent.StoredAmount, CapSpawnAmount(ent, minerComponent.ReleaseRate * args.dt, environment));
         if (toSpawn == 0)
-        { ProcessMinerState(ent, GasMinerState.Idle, possibleNewStoredAmount: minerComponent.StoredAmount); return; }
+        {
+            ProcessMinerState(ent, GasMinerState.Idle, possibleNewStoredAmount: minerComponent.StoredAmount);
+            return;
+        }
 
         // Release the gas into the atmosphere.
         var merger = new GasMixture(1) { Temperature = minerComponent.SpawnTemperature };

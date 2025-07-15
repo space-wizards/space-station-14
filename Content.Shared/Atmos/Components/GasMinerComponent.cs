@@ -45,9 +45,9 @@ public sealed partial class GasMinerComponent : Component
 
     /// <summary>
     ///     The number of moles released from the miner's internal storage, per second, when the miner is working,
-    ///         if it has enough mols of gas stored to do so.
+    ///     if it has enough mols of gas stored to do so.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("releaseAmount")]
+    [DataField("releaseAmount")]
     public float ReleaseRate = Atmospherics.MolesCellStandard * 20f;
 
     /// <summary>
@@ -55,28 +55,28 @@ public sealed partial class GasMinerComponent : Component
     /// </summary>
     /// <remarks>
     ///     This should not be infinite. Instead, <see cref="ReleaseRate"/> and <see cref="MiningRate"/>
-    ///         should both be of a lower or equal value compared to this.
-    /// </remarks
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    ///     should both be of a lower or equal value compared to this.
+    /// </remarks>
+    [DataField]
     public float MaxStoredAmount = 1200f;
 
     /// <summary>
     ///     The number of moles that are currently stored within the miner's internal storage, to be released later at the rate of <see cref="ReleaseRate">.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float StoredAmount = 0f;
 
     /// <summary>
     ///     The <see cref="StoredAmount"/>, the last time which it was replicated. This is used so that continuous very small changes in <see cref="StoredAmount"/> being
-    ///         intentionally not replicated, will not adversly affect anyone who examines this.
+    ///     intentionally not replicated, will not adversly affect anyone who examines this.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadOnly)]
     public float LastReplicatedStoredAmount = 0f;
 
     /// <summary>
     ///     The number of moles that are mined, per second, into the miner's internal storage, not released.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("spawnAmount")]
+    [DataField("spawnAmount")]
     public float MiningRate = Atmospherics.MolesCellStandard * 20f;
 }
 
