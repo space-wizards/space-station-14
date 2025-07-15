@@ -220,7 +220,7 @@
         Heat: 0.9
 
 - type: entity
-  parent: ClothingHeadHardsuitBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitLuxmax
   categories: [ HideSpawnMenu ]
   name: QM's luxury maxim hardsuit helmet
@@ -231,12 +231,8 @@
   - type: Clothing
     sprite: _Starlight/Clothing/Head/Hardsuits/luxmax.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.08
+    highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Heat: 0.95
+  - type: PointLight
+    radius: 7
+    energy: 3
