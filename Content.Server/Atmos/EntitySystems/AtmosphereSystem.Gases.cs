@@ -459,7 +459,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
 #if DEBUG
-                if (prototype.MinimumRequirements.Length >= Atmospherics.TotalNumberOfGases)
+                if (prototype.MinimumRequirements.Length > Atmospherics.TotalNumberOfGases)
                     throw new InvalidOperationException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
 #endif
                 // If the list of minimum requirements is longer than the number of gases that exist, it'll be fucked up.
