@@ -64,14 +64,14 @@ public sealed partial class GasMinerComponent : Component
     ///     The number of moles that are currently stored within the miner's internal storage, to be released later at the rate of <see cref="ReleaseRate">.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float StoredAmount = 0f;
+    public float StoredAmount;
 
     /// <summary>
     ///     The <see cref="StoredAmount"/>, the last time which it was replicated. This is used so that continuous very small changes in <see cref="StoredAmount"/> being
     ///     intentionally not replicated, will not adversly affect anyone who examines this.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public float LastReplicatedStoredAmount = 0f;
+    public float LastReplicatedStoredAmount;
 
     /// <summary>
     ///     The number of moles that are mined, per second, into the miner's internal storage, not released.
