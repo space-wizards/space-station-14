@@ -1,0 +1,21 @@
+- type: entity
+  name: black notebook
+  parent: BoxFolderBase
+  id: DeathNote
+  suffix: DeathNote
+  description: A worn black notebook. It smells like old paper.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/deathnote.rsi
+    state: icon
+  - type: DeathNote
+  - type: Paper
+    content: deathnote-rules
+  - type: PaperLabelType
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+    requiresComplex: false
+  - type: UserInterface
+    interfaces:
+      enum.PaperUiKey.Key:
+        type: PaperBoundUserInterface

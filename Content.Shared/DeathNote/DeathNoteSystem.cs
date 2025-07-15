@@ -29,6 +29,7 @@ public sealed class DeathNoteSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly DamageableSystem _damageSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogs = default!;
+    [Dependency] private readonly PaperSystem _paperSystem = default!;
 
     // to keep a track of already killed people so they won't be killed again
     private readonly HashSet<EntityUid> _killedEntities = [];
@@ -39,6 +40,7 @@ public sealed class DeathNoteSystem : EntitySystem
         SubscribeLocalEvent<DeathNoteComponent, PaperAfterWriteEvent>(OnPaperAfterWriteInteract);
         SubscribeLocalEvent<DeathNoteComponent, InteractEvent>(OnInteract);
     }
+
 
     public override void Update(float frameTime)
     {
@@ -108,7 +110,7 @@ public sealed class DeathNoteSystem : EntitySystem
 
             _adminLogs.Add(LogType.Chat,
                 LogImpact.High,
-                $"{Name(ent.Owner)} has written {name} in the Death Note. Target UID: {uid}");
+                $"{Name(args.Actor)} has written {name} in the Death Note. Target UID: {uid}");
         }
 
         // If we have written at least one eligible name, we show the popup (So the player knows death note worked).

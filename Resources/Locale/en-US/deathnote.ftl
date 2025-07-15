@@ -1,0 +1,1 @@
+deathnote-rules = 1.

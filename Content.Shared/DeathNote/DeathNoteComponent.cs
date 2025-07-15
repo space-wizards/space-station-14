@@ -10,4 +10,7 @@ public sealed partial class DeathNoteComponent : Component
 {
     [ViewVariables]
     public HashSet<EntityUid> TouchedBy = new();
+
+    [DataField]
+    public bool HasRules;
 }
