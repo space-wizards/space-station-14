@@ -70,13 +70,12 @@
         - BulletImpassable
   - type: Explosive # 90 dmg at epicenter
     totalIntensity: 20
-    intensitySlope: 3
-    maxIntensity: 6
+    maxIntensity: 5
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 10
+        damage: 5
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
