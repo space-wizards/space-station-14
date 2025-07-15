@@ -36,6 +36,8 @@
         reagents:
           - ReagentId: Nicotine
             Quantity: 10
+  - type: Extractable # DS14
+    grindableSolutionName: smokable
 
 - type: entity
   parent: BaseSmokable
