@@ -44,9 +44,9 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DrinkSystem _drink = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly FoodSystem _food = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly IngestionSystem _ingestion = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
@@ -174,14 +174,14 @@ public sealed class NPCUtilitySystem : EntitySystem
         {
             case FoodValueCon:
             {
-                if (!TryComp<FoodComponent>(targetUid, out var food))
-                    return 0f;
+                // TODO: Solve this do not forget to do this.
 
                 // mice can't eat unpeeled bananas, need monkey's help
-                if (_openable.IsClosed(targetUid))
+                // also you need an open mouth and such.
+                if (_ingestion.CanIngest(owner, owner, targetUid))
                     return 0f;
 
-                if (!_food.IsDigestibleBy(owner, targetUid, food))
+                if (!_ingestion.TryIngest(owner, owner, targetUid, false))
                     return 0f;
 
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);

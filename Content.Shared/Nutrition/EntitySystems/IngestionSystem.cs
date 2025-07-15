@@ -3,6 +3,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
@@ -16,6 +17,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 
@@ -30,6 +32,7 @@ public sealed partial class IngestionSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly FlavorProfileSystem _flavorProfile = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedDestructibleSystem _destruct = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -47,9 +50,11 @@ public sealed partial class IngestionSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<EdibleComponent, ComponentInit>(OnEdibleInit);
+
         // Interactions
-        SubscribeLocalEvent<EdibleComponent, UseInHandEvent>(OnUseFoodInHand, after: new[] { typeof(OpenableSystem), typeof(InventorySystem) });
-        SubscribeLocalEvent<EdibleComponent, AfterInteractEvent>(OnFeedFood);
+        SubscribeLocalEvent<EdibleComponent, UseInHandEvent>(OnUseEdibleInHand, after: new[] { typeof(OpenableSystem), typeof(InventorySystem) });
+        SubscribeLocalEvent<EdibleComponent, AfterInteractEvent>(OnEdibleInteract);
 
         // Generic Eating Handlers
         SubscribeLocalEvent<EdibleComponent, BeforeEatenEvent>(OnBeforeEaten);
@@ -60,15 +65,20 @@ public sealed partial class IngestionSystem : EntitySystem
         SubscribeLocalEvent<BodyComponent, CanIngestEvent>(OnTryIngest);
         SubscribeLocalEvent<BodyComponent, EatingDoAfterEvent>(OnEatingDoAfter);
 
+        // Verbs
+        SubscribeLocalEvent<EdibleComponent, GetVerbsEvent<AlternativeVerb>>(AddEdibleVerbs);
+
+        // Misc
+        SubscribeLocalEvent<EdibleComponent, AttemptShakeEvent>(OnAttemptShake);
+
         InitializeBlockers();
-        InitializeTypes();
         InitializeUtensils();
     }
 
     /// <summary>
     /// Eat or drink an item
     /// </summary>
-    private void OnUseFoodInHand(Entity<EdibleComponent> entity, ref UseInHandEvent ev)
+    private void OnUseEdibleInHand(Entity<EdibleComponent> entity, ref UseInHandEvent ev)
     {
         if (ev.Handled)
             return;
@@ -79,7 +89,7 @@ public sealed partial class IngestionSystem : EntitySystem
     /// <summary>
     /// Feed someone else
     /// </summary>
-    private void OnFeedFood(Entity<EdibleComponent> entity, ref AfterInteractEvent args)
+    private void OnEdibleInteract(Entity<EdibleComponent> entity, ref AfterInteractEvent args)
     {
         if (args.Handled || args.Target == null || !args.CanReach)
             return;
@@ -87,21 +97,54 @@ public sealed partial class IngestionSystem : EntitySystem
         args.Handled = TryIngest(args.User, args.Target.Value, entity);
     }
 
+    private void OnEdibleInit(Entity<EdibleComponent> entity, ref ComponentInit args)
+    {
+        // Beakers, Soap and other items have drainable, and we should be able to eat that solution...
+        // If I could make drainable properly support sound effects and such I'd just have it use TryIngest itself
+        if (TryComp<DrainableSolutionComponent>(entity, out var existingDrainable))
+            entity.Comp.Solution = existingDrainable.Solution;
+        else
+            _solutionContainer.EnsureSolution(entity.Owner, entity.Comp.Solution, out _);
+
+        UpdateAppearance(entity);
+
+        // TODO: Why the fuck does this exist???
+        if (TryComp(entity, out RefillableSolutionComponent? refillComp))
+            refillComp.Solution = entity.Comp.Solution;
+    }
+
+    // TODO: Fix this method.
+    public void UpdateAppearance(Entity<EdibleComponent, AppearanceComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp2, false))
+            return;
+
+        var drainAvailable = EdibleVolume(entity);
+        _appearance.SetData(entity, FoodVisuals.Visual, drainAvailable.Float(), entity.Comp2);
+    }
+
+
     #region BodySystem
 
+    // TODO: The IsDigestibleBy bools should be API but they're too specific to the BodySystem to be API. Requires BodySystem rework.
     /// <summary>
-    ///     Returns true if <paramref name="stomachs"/> has a <see cref="StomachComponent.SpecialDigestible"/> that whitelists
-    ///     this <paramref name="food"/> (or if they even have enough stomachs in the first place).
+    /// Generic method which takes a list of stomachs, and checks if a given food item passes any stomach's whitelist
+    /// in a given list of stomachs.
     /// </summary>
-    private bool IsDigestibleBy(Entity<EdibleComponent?> food, List<Entity<StomachComponent, OrganComponent>> stomachs)
+    /// <param name="food">Entity being eaten</param>
+    /// <param name="stomachs">Stomachs available to digest</param>
+    public bool IsDigestibleBy(EntityUid food, List<Entity<StomachComponent, OrganComponent>> stomachs)
     {
-        if (!Resolve(food, ref food.Comp, false))
+        var ev = new IsDigestibleEvent();
+        RaiseLocalEvent(food, ref ev);
+
+        if (!ev.Digestible)
             return false;
 
-        if (food.Comp.RequireDead && _mobState.IsAlive(food))
-            return false;
+        if (ev.Universal)
+            return true;
 
-        if (food.Comp.RequiresSpecialDigestion)
+        if (ev.SpecialDigestion)
         {
             foreach (var ent in stomachs)
             {
@@ -127,14 +170,19 @@ public sealed partial class IngestionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Overflow method which takes a single stomach into account.
+    /// Generic method which takes a single stomach into account, and checks if a given food item passes a stomach whitelist.
     /// </summary>
-    private bool IsDigestibleBy(Entity<EdibleComponent?> food, Entity<StomachComponent, OrganComponent> stomach)
+    /// <param name="food">Entity being eaten</param>
+    /// <param name="stomach">Stomachs that is attempting to digest.</param>
+    public bool IsDigestibleBy(EntityUid food, Entity<StomachComponent, OrganComponent> stomach)
     {
-        if (!Resolve(food, ref food.Comp, false))
+        var ev = new IsDigestibleEvent();
+        RaiseLocalEvent(food, ref ev);
+
+        if (!ev.Digestible)
             return false;
 
-        if (food.Comp.RequiresSpecialDigestion)
+        if (ev.SpecialDigestion)
             return _whitelistSystem.IsWhitelistPass(stomach.Comp1.SpecialDigestible, food);
 
         if (stomach.Comp1.SpecialDigestible == null || !stomach.Comp1.IsSpecialDigestibleExclusive || _whitelistSystem.IsWhitelistPass(stomach.Comp1.SpecialDigestible, food))
@@ -162,18 +210,16 @@ public sealed partial class IngestionSystem : EntitySystem
         }
 
         // Check if despite being able to digest the item something is blocking us from eating.
-        if (!CanIngestEdible(args.User, entity, args.Ingested, out var solution))
+        if (!CanIngest(args.User, entity, args.Ingested, out var solution))
             return;
 
-        // Utensils?
-
-        if (!_doAfter.TryStartDoAfter(GetEatingDoAfterArgs(args.User, entity, food!)))
+        if (!_doAfter.TryStartDoAfter(GetEdibleDoAfterArgs(args.User, entity, food)))
             return;
 
         args.Handled = true;
         var foodSolution = solution.Value.Comp.Solution;
 
-        if (args.User == entity.Owner)
+        if (args.User != entity.Owner)
         {
             var userName = Identity.Entity(args.User, EntityManager);
             _popup.PopupEntity(Loc.GetString("food-system-force-feed", ("user", userName)), args.User, entity);
@@ -195,7 +241,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
         var food = args.Target.Value;
 
-        if (!CanIngestEdible(args.User, entity, food, out var solution))
+        if (!CanIngest(args.User, entity, food, out var solution))
             return;
 
         if (!_body.TryGetBodyOrganEntityComps<StomachComponent>(entity!, out var stomachs))
@@ -272,12 +318,15 @@ public sealed partial class IngestionSystem : EntitySystem
     /// <param name="user">Entity that is doing the action.</param>
     /// <param name="target">Entity that is eating.</param>
     /// <param name="food">Food entity we're trying to eat.</param>
-    /// <returns></returns>
-    private DoAfterArgs GetEatingDoAfterArgs(EntityUid user, EntityUid target, Entity<EdibleComponent> food)
+    /// <param name="delay">The time delay for our DoAfter</param> // TODO: Make sure to actually initialize this later...
+    /// <returns>Returns true if it was able to successfully start the DoAfter</returns>
+    private DoAfterArgs GetEdibleDoAfterArgs(EntityUid user, EntityUid target, EntityUid food, TimeSpan delay = default)
     {
         var forceFeed = user != target;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, food.Comp.Delay, new EatingDoAfterEvent(), target, food)
+        // TODO: Either use one of the existing events, or make a new event to get the DoAfterTime for eating...
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, new EatingDoAfterEvent(), target, food)
         {
             BreakOnHandChange = false,
             BreakOnMove = forceFeed,
@@ -336,7 +385,7 @@ public sealed partial class IngestionSystem : EntitySystem
         }
 
         // BREAK OUR UTENSILS
-        if (TryGetUtensils(args.User, entity.Comp, out var utensils))
+        if (TryGetUtensils(args.User, entity, out var utensils))
         {
             foreach (var utensil in utensils)
             {
@@ -344,11 +393,10 @@ public sealed partial class IngestionSystem : EntitySystem
             }
         }
 
-        // TODO: There has to be a better way to do this...
-        if (GetUsesRemaining(entity!) > 0)
+        if (GetUsesRemaining(entity!, args.Split.Volume) > 0)
             return;
 
-        args.Destroy = entity.Comp.DeleteOnEmpty;
+        args.Destroy = entity.Comp.DestroyOnEmpty;
     }
 
     private void OnFullyEaten(Entity<EdibleComponent> food, ref FullyEatenEvent args)
@@ -371,5 +419,25 @@ public sealed partial class IngestionSystem : EntitySystem
                 _hands.TryPickupAnyHand(args.User, spawnedTrash);
             }
         }
+    }
+
+    private void AddEdibleVerbs(Entity<EdibleComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        var user = args.User;
+
+        if (entity.Owner == user || !args.CanInteract || !args.CanAccess)
+            return;
+
+        // TODO: This might not need to be a bool or even return anything???
+        if (!TryGetIngestionVerb(user, entity, entity.Comp.EdibleType, out var verb))
+            return;
+
+        args.Verbs.Add(verb);
+    }
+
+    private void OnAttemptShake(Entity<EdibleComponent> entity, ref AttemptShakeEvent args)
+    {
+        if (IsEmpty(entity))
+            args.Cancelled = true;
     }
 }

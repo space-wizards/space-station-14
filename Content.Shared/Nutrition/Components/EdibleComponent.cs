@@ -28,10 +28,18 @@ public sealed partial class EdibleComponent : Component
     /// Should this entity be deleted when our solution is emptied?
     /// </summary>
     [DataField]
-    public bool DeleteOnEmpty = true;
+    public bool DestroyOnEmpty = true;
 
     /// <summary>
-    /// Trash we spawn when eaten.
+    /// If true, trying to drink when empty will not handle the event.
+    /// This means other systems such as equipping on use can run.
+    /// Example use-case is the bucket.
+    /// </summary>
+    [DataField]
+    public bool IgnoreEmpty;
+
+    /// <summary>
+    /// Trash we spawn when eaten, will not spawn if the item isn't deleted when empty.
     /// </summary>
     [DataField]
     public List<EntProtoId> Trash = new();
@@ -92,14 +100,14 @@ public sealed partial class EdibleComponent : Component
     /// What type of food are we, currently used for determining verbs and some checks.
     /// </summary>
     [DataField]
-    public NutritionType Type = NutritionType.Food;
+    public EdibleType EdibleType = EdibleType.Food;
 }
 
 /// <summary>
 /// Types of Edibles that exist.
 /// If you add a new one be sure to update IngestionSystem.Types
 /// </summary>
-public enum NutritionType
+public enum EdibleType
 {
     Food = 0,
     Drink = 1,

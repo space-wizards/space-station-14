@@ -14,7 +14,11 @@
     solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
-  - type: Drink
+  - type: Edible
+    useSound: /Audio/Items/drink.ogg
+    solution: drink
+    destroyOnEmpty: false
+    edibleType: drink
   - type: Sprite
     state: icon
   - type: MeleeWeapon

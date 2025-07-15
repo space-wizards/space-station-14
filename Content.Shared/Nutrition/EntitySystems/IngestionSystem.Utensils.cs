@@ -21,6 +21,8 @@ public sealed partial class IngestionSystem
         // TODO: DON'T FORGET ABOUT THIS!!!
         SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract); //, after: new[] { typeof(ItemSlotsSystem), typeof(ToolOpenableSystem) });
 
+        SubscribeLocalEvent<EdibleComponent, GetUtensilsEvent>(OnGetEdibleUtensils);
+
         _utensilsQuery = GetEntityQuery<UtensilComponent>();
     }
 
@@ -37,11 +39,11 @@ public sealed partial class IngestionSystem
 
     public bool TryUseUtensil(EntityUid user, EntityUid target, Entity<UtensilComponent> utensil)
     {
-        if (!TryComp(target, out FoodComponent? food))
-            return false;
+        var ev = new GetUtensilsEvent();
+        RaiseLocalEvent(target, ref ev);
 
         //Prevents food usage with a wrong utensil
-        if ((food.Utensil & utensil.Comp.Types) == 0)
+        if ((ev.Types & utensil.Comp.Types) == 0)
         {
             _popup.PopupClient(Loc.GetString("food-system-wrong-utensil", ("food", target), ("utensil", utensil.Owner)), user, user);
             return true;
@@ -75,16 +77,28 @@ public sealed partial class IngestionSystem
     /// Checks if we have the utensils required to eat a certain food item.
     /// </summary>
     /// <param name="entity">Entity that is trying to eat.</param>
-    /// <param name="component">The component of the food item we're trying to eat.</param>
+    /// <param name="food">The types of utensils we need.</param>
     /// <param name="utensils">The utensils needed to eat the food item.</param>
     /// <returns>True if we are able to eat the item.</returns>
-    private bool TryGetUtensils(Entity<HandsComponent?> entity, EdibleComponent component, out List<EntityUid> utensils)
+    public bool TryGetUtensils(Entity<HandsComponent?> entity, EntityUid food, out List<EntityUid> utensils)
+    {
+        var ev = new GetUtensilsEvent();
+        RaiseLocalEvent(food, ref ev);
+
+        return TryGetUtensils(entity, ev.Types, ev.RequiredTypes, out utensils);
+    }
+
+    public bool TryGetUtensils(Entity<HandsComponent?> entity, UtensilType types, UtensilType requiredTypes, out List<EntityUid> utensils)
     {
         utensils = new List<EntityUid>();
 
-        if (component.Utensil == UtensilType.None)
+        var required = requiredTypes != UtensilType.None;
+
+        // Why are we even here? Just to suffer?
+        if (types == UtensilType.None)
             return true;
 
+        // If you don't have hands you can eat anything I guess.
         if (!Resolve(entity, ref entity.Comp, false)) // You aren't allowed to eat with your hands in this hellish dystopia.
             return true;
 
@@ -97,7 +111,7 @@ public sealed partial class IngestionSystem
                 continue;
 
             // Do we have a new and unused utensil type?
-            if ((utensil.Types & component.Utensil) == 0 || (usedTypes & utensil.Types) == utensil.Types)
+            if ((utensil.Types & types) == 0 || (usedTypes & utensil.Types) == utensil.Types)
                 continue;
 
             // Add to used list
@@ -106,44 +120,34 @@ public sealed partial class IngestionSystem
         }
 
         // If "required" field is set, try to block eating without proper utensils used
-        if (!component.UtensilRequired || (usedTypes & component.Utensil) == component.Utensil)
+        if (!required || (usedTypes & requiredTypes) == requiredTypes)
             return true;
 
-        _popup.PopupClient(Loc.GetString("food-you-need-to-hold-utensil", ("utensil", component.Utensil ^ usedTypes)), entity, entity);
+        _popup.PopupClient(Loc.GetString("food-you-need-to-hold-utensil", ("utensil", requiredTypes ^ usedTypes)), entity, entity);
         return false;
 
     }
 
-    private bool HasRequiredUtensils(Entity<HandsComponent?> entity, EdibleComponent component)
+    /// <summary>
+    /// Checks if you have the required utensils based on a list of types.
+    /// Note it is assumed if you're calling this method that you need utensils.
+    /// </summary>
+    /// <param name="entity">The entity doing the action who has the utensils.</param>
+    /// <param name="types">The types of utensils we need.</param>
+    /// <returns>Returns true if we have the utensils we need.</returns>
+    public bool HasRequiredUtensils(EntityUid entity, UtensilType types)
     {
-        // If we don't need a utensil to eat this exit early
-        if (!component.UtensilRequired || component.Utensil == UtensilType.None)
-            return true;
+        return TryGetUtensils(entity, types, types, out _);
+    }
 
-        if (!Resolve(entity, ref entity.Comp, false)) // If you have no hands then sure go ahead eat all you want.
-            return true;
+    private void OnGetEdibleUtensils(Entity<EdibleComponent> entity, ref GetUtensilsEvent args)
+    {
+        if (entity.Comp.Utensil == UtensilType.None)
+            return;
 
-        var usedTypes = UtensilType.None;
-
-        foreach (var item in _hands.EnumerateHeld(entity))
-        {
-            // Is utensil?
-            if (!_utensilsQuery.TryComp(item, out var utensil))
-                continue;
-
-            // Do we have a new and unused utensil type?
-            if ((utensil.Types & component.Utensil) == 0 || (usedTypes & utensil.Types) == utensil.Types)
-                continue;
-
-            // Add to used list
-            usedTypes |= utensil.Types;
-        }
-
-        // If "required" field is set, try to block eating without proper utensils used
-        if (!component.UtensilRequired || (usedTypes & component.Utensil) == component.Utensil)
-            return true;
-
-        _popup.PopupClient(Loc.GetString("food-you-need-to-hold-utensil", ("utensil", component.Utensil ^ usedTypes)), entity, entity);
-        return false;
+        if (entity.Comp.UtensilRequired)
+            args.AddRequiredTypes(entity.Comp.Utensil);
+        else
+            args.Types |= entity.Comp.Utensil;
     }
 }

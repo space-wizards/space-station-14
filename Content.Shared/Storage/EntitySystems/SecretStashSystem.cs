@@ -67,7 +67,7 @@ public sealed class SecretStashSystem : EntitySystem
     {
         // TODO: When newmed is finished should do damage to teeth (Or something like that!)
         var damage = entity.Comp.DamageEatenItemInside;
-        if (HasItemInside(entity) && damage != null && _ingestion.GetUsesRemaining(entity.Owner) == 0)
+        if (HasItemInside(entity) && damage != null && _ingestion.GetUsesRemaining(entity.Owner, args.Split.Volume) == 0)
             _damageableSystem.TryChangeDamage(args.User, damage, true);
     }
 

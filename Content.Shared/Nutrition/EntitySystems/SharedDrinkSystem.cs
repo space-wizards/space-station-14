@@ -10,23 +10,29 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
 public abstract partial class SharedDrinkSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly FlavorProfileSystem _flavorProfile = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly IngestionSystem _ingestion = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
@@ -35,9 +41,23 @@ public abstract partial class SharedDrinkSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DrinkComponent, AttemptShakeEvent>(OnAttemptShake);
         SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
+
+        // TODO: Kill above subscriptions
+
+        SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUseDrinkInHand, after: new[] { typeof(OpenableSystem), typeof(InventorySystem) });
+        SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(OnUseDrink);
+
+        SubscribeLocalEvent<DrinkComponent, AttemptShakeEvent>(OnAttemptShake);
+
         SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
+
+        SubscribeLocalEvent<DrinkComponent, BeforeEatenEvent>(OnBeforeDrinkEaten);
+        SubscribeLocalEvent<DrinkComponent, EatenEvent>(OnDrinkEaten);
+
+        SubscribeLocalEvent<DrinkComponent, EdibleEvent>(OnDrink);
+
+        SubscribeLocalEvent<DrinkComponent, IsDigestibleEvent>(OnIsDigestible);
     }
 
     protected void OnAttemptShake(Entity<DrinkComponent> entity, ref AttemptShakeEvent args)
@@ -76,38 +96,6 @@ public abstract partial class SharedDrinkSystem : EntitySystem
             };
             args.PushMarkup(Loc.GetString(remainingString));
         }
-    }
-
-    private void AddDrinkVerb(Entity<DrinkComponent> entity, ref GetVerbsEvent<AlternativeVerb> ev)
-    {
-        if (entity.Owner == ev.User ||
-            !ev.CanInteract ||
-            !ev.CanAccess ||
-            !TryComp<BodyComponent>(ev.User, out var body) ||
-            !_body.TryGetBodyOrganEntityComps<StomachComponent>((ev.User, body), out var stomachs))
-            return;
-
-        // Make sure the solution exists
-        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solution))
-            return;
-
-        // no drinking from living drinks, have to kill them first.
-        if (_mobState.IsAlive(entity))
-            return;
-
-        var user = ev.User;
-        AlternativeVerb verb = new()
-        {
-            Act = () =>
-            {
-                TryDrink(user, user, entity.Comp, entity);
-            },
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/drink.svg.192dpi.png")),
-            Text = Loc.GetString("drink-system-verb-drink"),
-            Priority = 2
-        };
-
-        ev.Verbs.Add(verb);
     }
 
     protected FixedPoint2 DrinkVolume(EntityUid uid, DrinkComponent? component = null)
@@ -209,5 +197,122 @@ public abstract partial class SharedDrinkSystem : EntitySystem
 
         _doAfter.TryStartDoAfter(doAfterEventArgs);
         return true;
+    }
+
+    // TODO: All code above must die...
+
+    /// <summary>
+    /// Eat or drink an item
+    /// </summary>
+    private void OnUseDrinkInHand(Entity<DrinkComponent> entity, ref UseInHandEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        ev.Handled = _ingestion.TryIngest(ev.User, ev.User, entity);
+    }
+
+    /// <summary>
+    /// Feed someone else
+    /// </summary>
+    private void OnUseDrink(Entity<DrinkComponent> entity, ref AfterInteractEvent args)
+    {
+        if (args.Handled || args.Target == null || !args.CanReach)
+            return;
+
+        args.Handled = _ingestion.TryIngest(args.User, args.Target.Value, entity);
+    }
+
+    private void AddDrinkVerb(Entity<DrinkComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        var user = args.User;
+
+        if (entity.Owner == user || !args.CanInteract || !args.CanAccess)
+            return;
+
+        // TODO: This might not need to be a bool or even return anything???
+        if (!_ingestion.TryGetIngestionVerb(user, entity, EdibleType.Drink, out var verb))
+            return;
+
+        args.Verbs.Add(verb);
+    }
+
+    private void OnBeforeDrinkEaten(Entity<DrinkComponent> food, ref BeforeEatenEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        // Set it to transfer amount if it exists, otherwise eat the whole volume if possible.
+        args.Transfer = food.Comp.TransferAmount;
+    }
+
+    private void OnDrinkEaten(Entity<DrinkComponent> entity, ref EatenEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+
+        // TODO: This broke again I think...
+        // TODO: USE THIS AS A REFERENCE FOR THE NEW GET VERBS SYSTEM
+
+        _audio.PlayPredicted(entity.Comp.UseSound, args.Target, args.User, AudioParams.Default.WithVolume(-2f).WithVariation(0.25f));
+
+        var flavors = _flavorProfile.GetLocalizedFlavorsMessage(entity.Owner, args.Target, args.Split);
+
+        if (args.ForceFed)
+        {
+            var targetName = Identity.Entity(args.Target, EntityManager);
+            var userName = Identity.Entity(args.User, EntityManager);
+
+            _popup.PopupEntity(Loc.GetString("drink-component-force-feed-success", ("user", userName), ("flavors", flavors)), args.Target, args.Target);
+
+            _popup.PopupEntity(
+                Loc.GetString("drink-component-force-feed-success-user", ("target", targetName)),
+                args.User, args.User);
+
+            // log successful forced drinking
+            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity.Owner):user} forced {ToPrettyString(args.User):target} to drink {ToPrettyString(entity.Owner):drink}");
+        }
+        else
+        {
+            _popup.PopupClient(Loc.GetString("drink-component-try-use-drink-success-slurp-taste", ("flavors", flavors)), args.User, args.User);
+            _popup.PopupEntity(Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.PvsExcept(args.User), true);
+
+            // log successful voluntary drinking
+            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} drank {ToPrettyString(entity.Owner):drink}");
+        }
+
+        // BREAK OUR UTENSILS
+        if (_ingestion.TryGetUtensils(args.User, entity, out var utensils))
+        {
+            foreach (var utensil in utensils)
+            {
+                _ingestion.TryBreak(utensil, args.User);
+            }
+        }
+
+        if (_ingestion.GetUsesRemaining(entity, entity.Comp.Solution, args.Split.Volume) > 0)
+            return;
+
+        // Food is always destroyed...
+        args.Destroy = true;
+    }
+
+    private void OnDrink(Entity<DrinkComponent> food, ref EdibleEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (args.Cancelled || args.Solution != null)
+            return;
+
+        _solutionContainer.TryGetSolution(food.Owner, food.Comp.Solution, out args.Solution);
+    }
+
+    private void OnIsDigestible(Entity<DrinkComponent> ent, ref IsDigestibleEvent args)
+    {
+        // Anyone can drink from puddles on the floor!
+        args.UniversalDigestion();
     }
 }

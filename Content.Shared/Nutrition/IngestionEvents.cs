@@ -22,7 +22,7 @@ public record struct IngestibleEvent(bool Cancelled = false);
 [ByRefEvent]
 public record struct EdibleEvent(EntityUid User, bool Destroy)
 {
-    public Entity<SolutionComponent>? Solution;
+    public Entity<SolutionComponent>? Solution = null;
 
     public bool Cancelled;
 }
@@ -47,6 +47,39 @@ public record struct IngestionAttemptEvent(SlotFlags TargetSlots, bool Cancelled
     ///     The equipment that is blocking consumption. Should only be non-null if the event was canceled.
     /// </summary>
     public EntityUid? Blocker = null;
+}
+
+/// <summary>
+///     Checks if an entity is even digestible or not.
+/// </summary>
+/// <remarks>This method is currently needed for backwards compatibility with food and drink component.
+///          It also might be needed in the event items like trash and plushies have their edible component removed.
+///          There's no way to know whether this event will be made obsolete or not after Food and Drink Components
+///          are removed until after a proper body and digestion rework. Oh well!
+/// </remarks>
+[ByRefEvent]
+public record struct IsDigestibleEvent()
+{
+    public bool Digestible = false;
+
+    public bool SpecialDigestion = false;
+
+    // If this is true, SpecialDigestion will be ignored
+    public bool Universal = false;
+
+    // If it requires special digestion then it has to be digestible...
+    public void AddDigestible(bool special)
+    {
+        SpecialDigestion = special;
+        Digestible = true;
+    }
+
+    // This should only be used for if you're trying to drink pure reagents from a puddle or cup or something...
+    public void UniversalDigestion()
+    {
+        Universal = true;
+        Digestible = true;
+    }
 }
 
 /// <summary>
@@ -112,6 +145,7 @@ public record struct EatenEvent(EntityUid User, EntityUid Target, Solution Split
 };
 
 // TODO: This can definitely go.
+// TODO: MAKE SURE TO DELETE THIS.
 /// <summary>
 /// Raised directed at the food after finishing eating a food before it's deleted.
 /// Cancel this if you want to do something special before a food is deleted.
@@ -134,6 +168,24 @@ public readonly record struct FullyEatenEvent(EntityUid User)
     /// The entity that ate the food.
     /// </summary>
     public readonly EntityUid User = User;
+}
+
+/// <summary>
+/// Returns a list of Utensils that can be used to consume the entity, as well as a list of required types.
+/// </summary>
+[ByRefEvent]
+public record struct GetUtensilsEvent()
+{
+    public UtensilType Types = UtensilType.None;
+
+    public UtensilType RequiredTypes = UtensilType.None;
+
+    // Forces you to add to both lists if a utensil is required.
+    public void AddRequiredTypes(UtensilType type)
+    {
+        RequiredTypes |= type;
+        Types |= type;
+    }
 }
 
 /// <summary>

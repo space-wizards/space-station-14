@@ -54,9 +54,6 @@ public sealed class DrinkSystem : SharedDrinkSystem
         SubscribeLocalEvent<DrinkComponent, ComponentInit>(OnDrinkInit);
         // run before inventory so for bucket it always tries to drink before equipping (when empty)
         // run after openable so its always open -> drink
-        SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse, before: [typeof(ServerInventorySystem)], after: [typeof(OpenableSystem)]);
-        SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(AfterInteract);
-        SubscribeLocalEvent<DrinkComponent, ConsumeDoAfterEvent>(OnDoAfter);
     }
 
     /// <summary>
@@ -162,10 +159,6 @@ public sealed class DrinkSystem : SharedDrinkSystem
             return;
 
         if (_openable.IsClosed(args.Used.Value, args.Target.Value, predicted: true))
-            return;
-
-        // TODO this should really be checked every tick.
-        if (_food.IsMouthBlocked(args.Target.Value))
             return;
 
         // TODO this should really be checked every tick.

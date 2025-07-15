@@ -95,7 +95,7 @@
     flavors:
       - bun
       - meaty
-  - type: Edible # DEBUG TEST
+  - type: Edible
     transferAmount: 5
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi

@@ -1,6 +1,8 @@
 ﻿using System.Linq;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
@@ -18,10 +20,17 @@ public sealed partial class IngestionSystem
         SubscribeLocalEvent<IngestionBlockerComponent, ItemMaskToggledEvent>(OnBlockerMaskToggled);
         SubscribeLocalEvent<IngestionBlockerComponent, IngestionAttemptEvent>(OnIngestionBlockerAttempt);
         SubscribeLocalEvent<IngestionBlockerComponent, InventoryRelayedEvent<IngestionAttemptEvent>>(OnIngestionBlockerAttempt);
+
+        // Edible Event
         SubscribeLocalEvent<EdibleComponent, EdibleEvent>(OnEdible);
         SubscribeLocalEvent<StorageComponent, EdibleEvent>(OnStorageEdible);
         SubscribeLocalEvent<ItemSlotsComponent, EdibleEvent>(OnItemSlotsEdible);
         SubscribeLocalEvent<OpenableComponent, EdibleEvent>(OnOpenableEdible);
+
+        // Digestion Events
+        SubscribeLocalEvent<EdibleComponent, IsDigestibleEvent>(OnEdibleIsDigestible);
+        SubscribeLocalEvent<DrainableSolutionComponent, IsDigestibleEvent>(OnDrainableIsDigestible);
+        SubscribeLocalEvent<PuddleComponent, IsDigestibleEvent>(OnPuddleIsDigestible);
     }
 
     private void OnUnremovableIngestion(Entity<UnremoveableComponent> entity, ref IngestibleEvent args)
@@ -59,15 +68,19 @@ public sealed partial class IngestionSystem
         if (args.Cancelled || args.Solution != null)
             return;
 
-        if (entity.Comp.UtensilRequired && !HasRequiredUtensils(args.User, entity.Comp))
+        if (entity.Comp.UtensilRequired && !HasRequiredUtensils(args.User, entity.Comp.Utensil))
         {
             args.Cancelled = true;
             return;
         }
 
         // Check this last
-        if (_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out args.Solution))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out args.Solution) && !entity.Comp.IgnoreEmpty)
+        {
             args.Cancelled = true;
+            // TODO: GET VERBS EVENT
+            _popup.PopupClient(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", entity)), entity, args.User);
+        }
     }
 
     private void OnStorageEdible(Entity<StorageComponent> ent, ref EdibleEvent args)
@@ -102,5 +115,25 @@ public sealed partial class IngestionSystem
     {
         if (_openable.IsClosed(ent, args.User, ent.Comp))
             args.Cancelled = true;
+    }
+
+    private void OnEdibleIsDigestible(Entity<EdibleComponent> ent, ref IsDigestibleEvent args)
+    {
+        if (ent.Comp.RequireDead && _mobState.IsAlive(ent))
+            return;
+
+        args.AddDigestible(ent.Comp.RequiresSpecialDigestion);
+    }
+
+    private void OnDrainableIsDigestible(Entity<DrainableSolutionComponent> ent, ref IsDigestibleEvent args)
+    {
+        // If the solution is drainable we should be able to access the reagents directly...
+        args.UniversalDigestion();
+    }
+
+    private void OnPuddleIsDigestible(Entity<PuddleComponent> ent, ref IsDigestibleEvent args)
+    {
+        // Anyone can drink from puddles on the floor!
+        args.UniversalDigestion();
     }
 }

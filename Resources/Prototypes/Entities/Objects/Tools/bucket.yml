@@ -1,12 +1,9 @@
 - type: entity
-  parent: BaseItem
+  parent: DrinkBase
   id: Bucket
   name: bucket
   description: It's a boring old bucket.
   components:
-  - type: Drink
-    solution: bucket
-    ignoreEmpty: true
   - type: Clickable
   - type: Sprite
     sprite: Objects/Tools/bucket.rsi

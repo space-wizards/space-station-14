@@ -4,6 +4,8 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Verbs;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
@@ -16,7 +18,7 @@ public sealed partial class IngestionSystem
     // BodySystem has no way of telling us where the mouth is so we're making some assumptions.
     public const SlotFlags DefaultFlags = SlotFlags.HEAD | SlotFlags.MASK;
 
-    #region Generic
+    #region Ingestion
 
     /// <summary>
     /// Tries to make an entity ingest another entity.
@@ -76,12 +78,9 @@ public sealed partial class IngestionSystem
         return false;
     }
 
-    #endregion
-
-    #region EdibleComponent
-    public bool CanIngestEdible(EntityUid user, EntityUid target, Entity<EdibleComponent?> ingested)
+    public bool CanIngest(EntityUid user, EntityUid target, EntityUid ingested)
     {
-        return CanIngestEdible(user, target, ingested, out _);
+        return CanIngest(user, target, ingested, out _);
     }
 
     /// <summary>
@@ -92,39 +91,55 @@ public sealed partial class IngestionSystem
     /// <param name="ingested">The food item being eaten.</param>
     /// <param name="solution">The solution we will be consuming from.</param>
     /// <returns>Returns true if the user can feed the target with the ingested entity</returns>
-    public bool CanIngestEdible(EntityUid user,
+    public bool CanIngest(EntityUid user,
         EntityUid target,
-        Entity<EdibleComponent?> ingested,
+        EntityUid ingested,
         [NotNullWhen(true)] out Entity<SolutionComponent>? solution)
     {
         solution = null;
-
-        if (!Resolve(ingested, ref ingested.Comp))
-            return false;
 
         if (!HasMouthAvailable(user, target))
             return false;
 
         // If we don't have the tools to eat we can't eat.
-        return TryAccessSolution(ingested.Owner, user, out solution);
+        return TryAccessSolution(ingested, user, out solution);
     }
 
-    /// <summary>
-    /// Estimate the number of bites this food has left, based on how much food solution there is and how much of it to eat per bite.
-    /// </summary>
-    public int GetUsesRemaining(Entity<EdibleComponent?> entity)
+    #endregion
+
+    #region EdibleComponent
+
+    public int GetUsesRemaining(Entity<EdibleComponent?> ingested, FixedPoint2 splitVol)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(ingested, ref ingested.Comp))
             return 0;
 
-        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution) || solution.Volume == 0)
-            return 0;
+        return GetUsesRemaining(ingested, ingested.Comp.Solution, splitVol);
+    }
 
-        // eat all in 1 go, so non empty is 1 bite
-        if (entity.Comp.TransferAmount == null)
-            return 1;
+    public FixedPoint2 EdibleVolume(Entity<EdibleComponent> entity)
+    {
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
+            return FixedPoint2.Zero;
 
-        return Math.Max(1, (int) Math.Ceiling((solution.Volume / (FixedPoint2) entity.Comp.TransferAmount).Float()));
+        return solution.Volume;
+    }
+
+    public bool IsEmpty(Entity<EdibleComponent> entity)
+    {
+        return EdibleVolume(entity) == FixedPoint2.Zero;
+    }
+
+    // TODO: This method for NPCs
+    public float TotalHunger()
+    {
+        return 0f;
+    }
+
+    // TODO: This method for NPCs
+    public float TotalHydration()
+    {
+        return 0f;
     }
 
     #endregion
@@ -147,9 +162,104 @@ public sealed partial class IngestionSystem
         var ev = new EdibleEvent(user, delete);
         RaiseLocalEvent(ingested, ref ev);
 
-        ev.Solution = solution;
+        solution = ev.Solution;
 
-        return ev.Cancelled && solution != null;
+        return !ev.Cancelled && solution != null;
+    }
+
+    /// <summary>
+    /// Estimate the number of bites this food has left, based on how much food solution there is and how much of it to eat per bite.
+    /// </summary>
+    public int GetUsesRemaining(EntityUid uid, string solutionName, FixedPoint2 splitVol)
+    {
+        if (!_solutionContainer.TryGetSolution(uid, solutionName, out _, out var solution) || solution.Volume == 0)
+            return 0;
+
+        return Math.Max(1, (int) Math.Ceiling((solution.Volume / splitVol).Float()));
+    }
+
+    #endregion
+
+    #region Edible Types
+
+    // TODO: GET A NOUNS/VERBS METHOD.
+    // TODO: NOUNS/VERBS METHOD
+    // TODO: DON'T FUCKING FORGET
+
+    /// <summary>
+    /// Tries to get the ingestion verbs for a given user entity and ingestible entity
+    /// </summary>
+    /// <param name="user">The one getting the verbs who would be doing the eating.</param>
+    /// <param name="ingested"></param>
+    /// <param name="type"></param>
+    /// <param name="verb"></param>
+    /// <returns></returns>
+    public bool TryGetIngestionVerb(EntityUid user, EntityUid ingested, EdibleType type, [NotNullWhen(true)] out AlternativeVerb? verb)
+    {
+        verb = null;
+
+        // We want to see if we can ingest this item, but we don't actually want to ingest it.
+        if (!TryIngest(user, user, ingested, false))
+            return false;
+
+        SpriteSpecifier icon;
+        string text;
+
+        switch (type)
+        {
+            case EdibleType.Food:
+                icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png"));
+                text = Loc.GetString("food-system-verb-eat");
+                break;
+            case EdibleType.Drink:
+                icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/drink.svg.192dpi.png"));
+                text = Loc.GetString("drink-system-verb-drink");
+                break;
+            default:
+                Log.Error($"Entity {ToPrettyString(ingested)} doesn't have a proper Nutrition type or its verb isn't properly set up.");
+                return false;
+        }
+
+        verb = new()
+        {
+            Act = () =>
+            {
+                TryIngest(user, user, ingested);
+            },
+            Icon = icon,
+            Text = text,
+            Priority = -1
+        };
+
+        return true;
+    }
+
+    public string GetStringNoun(EdibleComponent component)
+    {
+        switch (component.EdibleType)
+        {
+            case EdibleType.Food:
+                return Loc.GetString("food");
+            case EdibleType.Drink:
+                return Loc.GetString("drink");
+            default:
+                Log.Error($"EdibleType {component.EdibleType} doesn't have a proper noun associated with it.");
+                return Loc.GetString("edible");
+        }
+    }
+
+    public string GetStringVerb(EdibleComponent component)
+    {
+        switch (component.EdibleType)
+        {
+            case EdibleType.Food:
+                return Loc.GetString("eat");
+            case EdibleType.Drink:
+                return Loc.GetString("drink");
+            default:
+                Log.Error($"EdibleType {component.EdibleType} doesn't have a proper verb associated with it.");
+                return Loc.GetString("edible");
+        }
     }
 
     #endregion
