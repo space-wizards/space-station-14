@@ -324,7 +324,7 @@
 
 #QM's Luxury Maxim Hardsuit
 - type: entity
-  parent: [ ClothingOuterHardsuitBase, BaseSalvageContraband ] #Starlight salvContra
+  parent: [ ClothingOuterHardsuitBase, BaseCommandContraband ]
   id: ClothingOuterHardsuitLuxmax
   name: QM's luxury maxim hardsuit
   description: This luxury maxim hardsuit has been retrofitted with solid gold fittings and furnishings, making it more cumbersome, and less protective than a standard maxim hardsuit.
