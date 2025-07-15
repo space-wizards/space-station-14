@@ -19,6 +19,18 @@
           shuttlePath: /Maps/Shuttles/arrivals_relic.yml
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_relic.yml
+        - type: GridSpawn
+          # groups:
+            # trade: !type:GridSpawnGroup
+            #   minCount: 3
+            #   maxCount: 3
+            #   # addComponents:
+            #     # - type: ProtectedGrid
+            #     # - type: TradeStation
+            #   paths:
+            #     - /Maps/Shuttles/trading_outpost.yml
+            #     - /Maps/Shuttles/trading_outpost.yml
+            #     - /Maps/Shuttles/trading_outpost.yml
         - type: StationJobs
           availableJobs:
             #command (7)
