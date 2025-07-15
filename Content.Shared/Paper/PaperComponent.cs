@@ -11,6 +11,9 @@ public sealed partial class PaperComponent : Component
     [DataField("content"), AutoNetworkedField]
     public string Content { get; set; } = "";
 
+    [DataField, AutoNetworkedField]
+    public List<string> Signatures = new List<string>(); // DS14-signatures
+
     [DataField("contentSize")]
     public int ContentSize { get; set; } = 6000;
 
@@ -37,12 +40,14 @@ public sealed partial class PaperComponent : Component
     {
         public readonly string Text;
         public readonly List<StampDisplayInfo> StampedBy;
+        public readonly List<string> Signatures; // DS14-signatures
         public readonly PaperAction Mode;
 
-        public PaperBoundUserInterfaceState(string text, List<StampDisplayInfo> stampedBy, PaperAction mode = PaperAction.Read)
+        public PaperBoundUserInterfaceState(string text, List<StampDisplayInfo> stampedBy, List<string> signatures, PaperAction mode = PaperAction.Read) // DS14-signatures
         {
             Text = text;
             StampedBy = stampedBy;
+            Signatures = signatures; // DS14-signatures
             Mode = mode;
         }
     }
@@ -75,6 +80,7 @@ public sealed partial class PaperComponent : Component
     public enum PaperVisuals : byte
     {
         Status,
+        Signature, // DS14-signatures
         Stamp
     }
 

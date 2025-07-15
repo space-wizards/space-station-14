@@ -11,6 +11,7 @@ using Robust.Shared.Utility;
 using Robust.Client.UserInterface.RichText;
 using Content.Client.UserInterface.RichText;
 using Robust.Shared.Input;
+using System.Linq;
 
 namespace Content.Client.Paper.UI
 {
@@ -252,6 +253,27 @@ namespace Content.Client.Paper.UI
             var msg = new FormattedMessage();
             msg.AddMarkupPermissive(state.Text);
 
+            // DS14-signatures-start
+            if (state.Signatures?.Count > 0)
+            {
+                string signaturesLine;
+
+                if (state.Signatures.Count <= 2)
+                {
+                    if (state.Signatures.Count == 1)
+                        signaturesLine = $"{state.Signatures[0]}";
+                    else
+                        signaturesLine = $"{state.Signatures[0]} и {state.Signatures[1]}";
+                }
+                else
+                {
+                    signaturesLine = string.Join(", ", state.Signatures.Select(s => $"{s}"));
+                }
+
+                msg.AddMarkupPermissive($"\n\n[color=#4169E1][italic]{signaturesLine}[/italic][/color]");
+            }
+            // DS14-signatures-end
+
             // For premade documents, we want to be able to edit them rather than
             // replace them.
             var shouldCopyText = 0 == Input.TextLength && 0 != state.Text.Length;
@@ -272,7 +294,7 @@ namespace Content.Client.Paper.UI
             }
             WrittenTextLabel.SetMessage(msg, _allowedTags, DefaultTextColor);
 
-            WrittenTextLabel.Visible = !isEditing && state.Text.Length > 0;
+            WrittenTextLabel.Visible = !isEditing && state.Text.Length > 0 || state.Signatures?.Count > 0; // DS14-signatures
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
 
             StampDisplay.RemoveAllChildren();

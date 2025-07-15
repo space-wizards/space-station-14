@@ -77,6 +77,7 @@
         type: PaperBoundUserInterface
   - type: FaxableObject
   - type: PaperVisuals
+  - type: SignaturePaper # DS14-signatures
 
 - type: entity
   name: paper scrap
