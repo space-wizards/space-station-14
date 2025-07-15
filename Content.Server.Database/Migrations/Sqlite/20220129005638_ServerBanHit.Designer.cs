@@ -14,6 +14,7 @@ namespace Content.Server.Database.Migrations.Sqlite
     [Migration("20220129005638_ServerBanHit")]
     partial class ServerBanHit
     {
+#if EF_DESIGNER
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
@@ -882,5 +883,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
 #pragma warning restore 612, 618
         }
+#endif
     }
 }
