@@ -9,7 +9,7 @@ namespace Content.Client.Administration.UI.ParrotMemories;
 public sealed partial class ParrotMemoryList : BoxContainer
 {
     public bool ShowBlocked { get; set; }
-    public bool Initialized { get; private set; }
+    public bool Initialized { get; set; }
     public bool Dirty { get; set; }
 
     private int _messageCount;
@@ -20,48 +20,15 @@ public sealed partial class ParrotMemoryList : BoxContainer
         Dirty = true;
     }
 
-    private void UpdateMemoryCountText(int messageCount)
+    public void UpdateMemoryCountText(int messageCount)
     {
         _messageCount = messageCount;
         MemoryCountLabel.Text = Loc.GetString("parrot-memory-num-memories", ("memoryCount", _messageCount));
     }
 
-    private ParrotMemoryLine AddMemoryLine(ExtendedPlayerMessage memory, int roundId)
+    public void DecrementMemoryCount(int i)
     {
-        var memoryLine = new ParrotMemoryLine();
-
-        memoryLine.SetMemory(memory, roundId);
-
-        MemoryContainer.AddChild(memoryLine);
-
-        return memoryLine;
-    }
-
-    public void UpdateMemories(ParrotMemoryEui eui, ParrotMemoryEuiState memoryState)
-    {
-        Initialized = true;
-
-        UpdateMemoryCountText(memoryState.Messages.Count);
-
-        MemoryContainer.RemoveAllChildren();
-
-        foreach (var message in memoryState.Messages)
-        {
-            var memoryLine = AddMemoryLine(message, memoryState.RoundId);
-
-            memoryLine.ParrotBlockButton.OnPressed += (_) =>
-            {
-                eui.SetMemoryBlocked(message.MessageId, !message.Blocked);
-                MemoryContainer.RemoveChild(memoryLine);
-                UpdateMemoryCountText(_messageCount - 1);
-            };
-
-            // default text and tooltip refer to unblocked messages
-            if (!message.Blocked)
-                continue;
-
-            memoryLine.ParrotBlockButton.Text = Loc.GetString("parrot-memory-line-unblock");
-            memoryLine.ParrotBlockButton.ToolTip = Loc.GetString("parrot-memory-line-unblock-tooltip");
-        }
+        _messageCount -= i;
+        UpdateMemoryCountText(_messageCount);
     }
 }

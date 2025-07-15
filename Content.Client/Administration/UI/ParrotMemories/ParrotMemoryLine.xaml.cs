@@ -13,15 +13,13 @@ public sealed partial class ParrotMemoryLine : BoxContainer
 {
     private readonly IUserInterfaceManager _uiManager;
 
-    public ParrotMemoryLine()
+    public ParrotMemoryLine(ExtendedPlayerMessage memory, int currentRound)
     {
         RobustXamlLoader.Load(this);
 
         IoCManager.Resolve(ref _uiManager);
-    }
 
-    public void SetMemory(ExtendedPlayerMessage memory, int currentRound)
-    {
+
         ParrotMemoryText.Text = memory.MessageText;
 
         ParrotRoundLabel.Visible = memory.SourceRound == currentRound;
@@ -34,5 +32,12 @@ public sealed partial class ParrotMemoryLine : BoxContainer
         {
             _uiManager.GetUIController<AHelpUIController>().Open(new NetUserId(memory.SourcePlayerGuid));
         };
+
+        // default text and tooltip refer to unblocked messages
+        if (!memory.Blocked)
+            return;
+
+        ParrotBlockButton.Text = Loc.GetString("parrot-memory-line-unblock");
+        ParrotBlockButton.ToolTip = Loc.GetString("parrot-memory-line-unblock-tooltip");
     }
 }

@@ -14,26 +14,38 @@ public sealed class ParrotMemoryEui : BaseEui
     {
         ParrotMemoryWindow = new ParrotMemoryWindow();
 
-        ParrotMemoryWindow.OnOpen += InitializeMemoryList;
+        ParrotMemoryWindow.OnOpen += InitializeMemoryLists;
         ParrotMemoryWindow.OnClose += () => SendMessage(new CloseEuiMessage());
 
         ParrotMemoryWindow.MemoryTabContainer.OnTabChanged += (_) => RefreshMemoryList();
     }
 
-    private void InitializeMemoryList()
+    /// <summary>
+    /// Function called when the parrot memory window is opened. This initializes
+    /// </summary>
+    private void InitializeMemoryLists()
     {
-        // add event handlers for list controls if this was never initialized
-        if (ParrotMemoryWindow.GetActiveList() is not { Initialized: false } parrotMemoryList)
+        // add event handlers for list controls if they were never initialized
+        foreach (var child in ParrotMemoryWindow.MemoryTabContainer.Children)
+        {
+            if (child is not ParrotMemoryList { Initialized: false } parrotMemoryList)
+                return;
+
+            parrotMemoryList.RefreshButton.OnPressed += (_) => SendRefresh(parrotMemoryList);
+            parrotMemoryList.CurrentRoundOnly.OnToggled += (_) => SendRefresh(parrotMemoryList);
+            parrotMemoryList.ApplyFilterButton.OnPressed += (_) => SendRefresh(parrotMemoryList);
+            parrotMemoryList.ClearFilterButton.OnPressed += (_) => ClearFilter(parrotMemoryList);
+        }
+
+        if (ParrotMemoryWindow.GetActiveList() is not { } activeList)
             return;
 
-        parrotMemoryList.RefreshButton.OnPressed += (_) => SendRefresh(parrotMemoryList);
-        parrotMemoryList.CurrentRoundOnly.OnToggled += (_) => SendRefresh(parrotMemoryList);
-        parrotMemoryList.ApplyFilterButton.OnPressed += (_) => SendRefresh(parrotMemoryList);
-        parrotMemoryList.ClearFilterButton.OnPressed += (_) => ClearFilter(parrotMemoryList);
-
-        SendRefresh(parrotMemoryList);
+        SendRefresh(activeList);
     }
 
+    /// <summary>
+    /// Send a refresh for the active memory list, re-loading the messages
+    /// </summary>
     private void RefreshMemoryList()
     {
         // add event handlers for list controls if this was never initialized
@@ -43,7 +55,10 @@ public sealed class ParrotMemoryEui : BaseEui
         SendRefresh(parrotMemoryList);
     }
 
-    private void SendRefresh(ParrotMemoryList parrotMemoryList)
+    /// <summary>
+    /// Send a refresh message to the server to get a new state
+    /// </summary>
+    public void SendRefresh(ParrotMemoryList parrotMemoryList)
     {
         SendMessage(new ParrotMemoryRefreshMsg(
             parrotMemoryList.ShowBlocked,
@@ -52,12 +67,20 @@ public sealed class ParrotMemoryEui : BaseEui
         ));
     }
 
-    private void ClearFilter(ParrotMemoryList parrotMemoryList)
+    /// <summary>
+    /// Clear the text filter on a list and send a refresh
+    /// </summary>
+    public void ClearFilter(ParrotMemoryList parrotMemoryList)
     {
         parrotMemoryList.FilterLineEdit.Text = "";
         SendRefresh(parrotMemoryList);
     }
 
+    /// <summary>
+    /// Set a memory to blocked or unblocked
+    /// </summary>
+    /// <param name="messageId">Player message ID of the memory</param>
+    /// <param name="block">True to block, false to unblock</param>
     public void SetMemoryBlocked(int messageId, bool block)
     {
         SendMessage(new SetParrotMemoryBlockedMsg(messageId, block));
@@ -68,10 +91,36 @@ public sealed class ParrotMemoryEui : BaseEui
     {
         base.HandleState(state);
 
-        if (state is not ParrotMemoryEuiState { } parrotState)
+        if (state is not ParrotMemoryEuiState { } memoryState)
             return;
 
-        ParrotMemoryWindow.UpdateMemories(this, parrotState);
+        var activeList = ParrotMemoryWindow.GetActiveList();
+
+        if (activeList is null)
+            return;
+
+        UpdateMemoryList(activeList, memoryState);
+    }
+
+    private void UpdateMemoryList(ParrotMemoryList memoryList, ParrotMemoryEuiState memoryState)
+    {
+        memoryList.UpdateMemoryCountText(memoryState.Messages.Count);
+
+        memoryList.MemoryContainer.RemoveAllChildren();
+
+        foreach (var message in memoryState.Messages)
+        {
+            var memoryLine = new ParrotMemoryLine(message, memoryState.RoundId);
+
+            memoryList.MemoryContainer.AddChild(memoryLine);
+
+            memoryLine.ParrotBlockButton.OnPressed += (_) =>
+            {
+                SetMemoryBlocked(message.MessageId, !message.Blocked);
+                memoryList.MemoryContainer.RemoveChild(memoryLine);
+                memoryList.DecrementMemoryCount(1);
+            };
+        }
     }
 
     public override void Opened()

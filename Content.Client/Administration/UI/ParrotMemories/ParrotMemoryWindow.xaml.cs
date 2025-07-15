@@ -24,13 +24,6 @@ public sealed partial class ParrotMemoryWindow : FancyWindow
         return parrotMemoryList;
     }
 
-    public void UpdateMemories(ParrotMemoryEui eui, ParrotMemoryEuiState parrotState)
-    {
-        var activeList = GetActiveList();
-
-        activeList?.UpdateMemories(eui, parrotState);
-    }
-
     public void MarkInactiveListsDirty()
     {
         for (var i = 0; i < MemoryTabContainer.ChildCount; i++)
