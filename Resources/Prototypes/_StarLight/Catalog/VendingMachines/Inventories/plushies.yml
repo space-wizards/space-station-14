@@ -530,3 +530,14 @@
   conditions:
     - !type:ListingLimitedStockCondition
       stock: 2
+
+- type: listing
+  id: VendorPlushieRufia
+  productEntity: PlushieRomero
+  cost:
+    NTCredit: 18
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
