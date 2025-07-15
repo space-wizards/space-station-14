@@ -9339,5 +9339,21 @@ Entries:
   id: 1287
   time: '2025-07-15T13:56:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1020
+- author: Salem
+  changes:
+  - message: Necrosol no longer requires Omni, but in its place now requires Desoxy,
+      and Diph, have fun chemists! :)
+    type: Tweak
+  id: 1288
+  time: '2025-07-15T13:57:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1021
+- author: Salem
+  changes:
+  - message: Necrosol heals 1 less brute, and 1 less burn, the guidebooks entry is
+      more appealing now because of that :3
+    type: Tweak
+  id: 1289
+  time: '2025-07-15T13:57:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1021
 Order: -1
 
