@@ -7,8 +7,8 @@ using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 
@@ -26,7 +26,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private const int MaxReactionIterations = 20;
 
-        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly INetManager _netMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -230,7 +230,7 @@ namespace Content.Shared.Chemistry.Reaction
             // Someday, some brave soul will thread through an optional actor
             // argument in from every call of OnReaction up, all just to pass
             // it to PlayPredicted. I am not that brave soul.
-            if (_timing.IsFirstTimePredicted)
+            // if (_netMan.IsServer)
                 _audio.PlayPvs(reaction.Sound, soln);
         }
 
