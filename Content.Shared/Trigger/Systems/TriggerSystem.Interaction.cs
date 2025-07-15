@@ -13,6 +13,7 @@ public sealed partial class TriggerSystem : EntitySystem
         SubscribeLocalEvent<TriggerOnUseComponent, UseInHandEvent>(OnUse);
 
         SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(HandleAnchorOnTrigger);
+        SubscribeLocalEvent<UseDelayOnTriggerComponent, TriggerEvent>(HandleUseDelayOnTrigger);
     }
 
     private void OnActivate(Entity<TriggerOnActivateComponent> ent, ref ActivateInWorldEvent args)
@@ -35,14 +36,37 @@ public sealed partial class TriggerSystem : EntitySystem
 
     private void HandleAnchorOnTrigger(Entity<AnchorOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        var xform = Transform(ent);
+        if (args.Key != null && !ent.Comp.EffectKeys.Contains(args.Key))
+            return;
+
+        var target = ent.Comp.TargetUser ? args.User : ent.Owner;
+
+        if (target == null)
+            return;
+
+        var xform = Transform(target.Value);
 
         if (xform.Anchored)
-            _transform.Unanchor(ent, xform);
+            _transform.Unanchor(target.Value, xform);
         else
-            _transform.AnchorEntity(ent, xform);
+            _transform.AnchorEntity(target.Value, xform);
 
         if (ent.Comp.RemoveOnTrigger)
-            RemCompDeferred<AnchorOnTriggerComponent>(ent);
+            RemCompDeferred<AnchorOnTriggerComponent>(target.Value);
+
+        args.Handled = true;
+    }
+
+    private void HandleUseDelayOnTrigger(Entity<UseDelayOnTriggerComponent> ent, ref TriggerEvent args)
+    {
+        if (args.Key != null && !ent.Comp.EffectKeys.Contains(args.Key))
+            return;
+
+        var target = ent.Comp.TargetUser ? args.User : ent.Owner;
+
+        if (target == null)
+            return;
+
+        args.Handled |= _useDelay.TryDelay(target);
     }
 }

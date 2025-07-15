@@ -267,7 +267,7 @@
     receiveFrequencyId: CyborgControl
     transmitFrequencyId: RoboticsConsole
     savableAddress: false
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 10
     examinable: false
     beepSound:

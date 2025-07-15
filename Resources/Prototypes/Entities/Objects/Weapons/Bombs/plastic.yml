@@ -54,7 +54,7 @@
     quickEquip: false
     equipDelay: 3
     unequipDelay: 6
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 10
     delayOptions: [10, 30, 60, 120, 300]
     initialBeepDelay: 0
@@ -94,7 +94,7 @@
     layers:
     - state: icon
       map: ["base"]
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 5
     delayOptions: [5, 10, 15, 20]
     initialBeepDelay: 0

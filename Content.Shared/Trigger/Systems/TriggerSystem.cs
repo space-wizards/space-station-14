@@ -1,15 +1,12 @@
-﻿using Content.Shared.Trigger;
-using Content.Shared.Trigger.Components;
-using Content.Shared.Trigger.Components.Effects;
-using Content.Shared.Trigger.Components.Triggers;
+﻿using Content.Shared.Trigger.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Popups;
+using Content.Shared.Timing;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
 
@@ -34,6 +31,7 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {

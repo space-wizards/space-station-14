@@ -23,7 +23,7 @@
       damage:
         types:
           Blunt: 5
-    - type: OnUseTimerTrigger
+    - type: TimerTrigger
       delay: 120
       beepSound:
         path: /Audio/Machines/Nuke/general_beep.ogg

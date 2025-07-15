@@ -16,7 +16,7 @@
     - state: wires
   - type: Item
     sprite: Objects/Weapons/Bombs/ied.rsi
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 5
     examinable: false
     initialBeepDelay: 0

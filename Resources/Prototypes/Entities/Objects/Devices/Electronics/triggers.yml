@@ -22,7 +22,7 @@
     price: 40
   - type: PayloadTrigger
     components:
-    - type: OnUseTimerTrigger
+    - type: TimerTrigger
       delay: 5
       delayOptions: [3, 5, 10, 15, 30]
       initialBeepDelay: 0
@@ -54,7 +54,7 @@
     - type: WirelessNetworkConnection
       range: 200
     - type: DeviceLinkSink
-    - type: OnUseTimerTrigger
+    - type: TimerTrigger
       delay: 3
       initialBeepDelay: 0
       beepSound:

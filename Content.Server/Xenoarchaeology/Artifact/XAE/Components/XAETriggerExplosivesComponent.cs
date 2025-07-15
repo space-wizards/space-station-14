@@ -1,9 +1,9 @@
-using Content.Shared.Trigger.Components.Effects;
+using Content.Shared.Explosion.Components;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 
 /// <summary>
-/// Activates 'trigger' for <see cref="ExplodeOnTriggerComponent"/>.
+/// Activates <see cref="ExplosiveComponent"/> to explode.
 /// </summary>
 [RegisterComponent, Access(typeof(XAETriggerExplosivesSystem))]
 public sealed partial class XAETriggerExplosivesComponent : Component;

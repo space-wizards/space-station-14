@@ -12,7 +12,7 @@
     sprite: Objects/Weapons/Bombs/spidercharge.rsi
     size: Small
   - type: SpiderCharge
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 10
     delayOptions: [5, 10, 30, 60]
     initialBeepDelay: 0

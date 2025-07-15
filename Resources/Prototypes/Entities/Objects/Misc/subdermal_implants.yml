@@ -270,11 +270,11 @@
   components:
     - type: SubdermalImplant
       permanent: true
-    - type: TriggerOnMobstateChange #Chains with OnUseTimerTrigger
+    - type: TriggerOnMobstateChange #Chains with TimerTrigger
       mobState:
       - Dead
       preventSuicide: true
-    - type: OnUseTimerTrigger
+    - type: TimerTrigger
       delay: 7
       initialBeepDelay: 0
       beepSound:
@@ -314,6 +314,7 @@
     deleteItems: true
   - type: SpawnOnTrigger
     proto: Acidifier
+    predicted: true
   - type: Tag
     tags:
     - SubdermalImplant

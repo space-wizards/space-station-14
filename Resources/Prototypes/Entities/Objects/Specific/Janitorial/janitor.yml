@@ -188,7 +188,7 @@
     totalIntensity: 30 # about a ~3 tile radius
     canCreateVacuum: false
   - type: DeleteOnTrigger
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     useVerbInstead: true
     beepInterval: .25
     beepSound:

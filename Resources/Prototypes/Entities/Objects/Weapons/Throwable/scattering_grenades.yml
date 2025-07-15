@@ -18,7 +18,7 @@
       behaviors:
       - !type:TriggerBehavior
   - type: ScatteringGrenade
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 3
   - type: Tag
     tags:
@@ -88,7 +88,7 @@
   - type: ScatteringGrenade
     fillPrototype: ExGrenade
     distance: 4
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
@@ -167,7 +167,7 @@
     fillPrototype: BulletFoam
     capacity: 30
     velocity: 30
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:

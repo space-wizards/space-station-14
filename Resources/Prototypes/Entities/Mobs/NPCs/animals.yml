@@ -2369,7 +2369,7 @@
   - type: Item
     size: Normal
     sprite: Mobs/Animals/grenadepenguin.rsi
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 10
     beepSound:
       path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use
@@ -3143,7 +3143,7 @@
     factions:
     - Syndicate
   - type: Access
-    tags: 
+    tags:
     - NuclearOperative
     - SyndicateAgent
   - type: MeleeWeapon

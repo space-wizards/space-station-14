@@ -48,7 +48,8 @@
       path: "/Audio/Effects/flash_bang.ogg"
   - type: SpawnOnTrigger
     proto: GrenadeFlashEffect
-  - type: OnUseTimerTrigger
+    predicted: true
+  - type: TimerTrigger
     initialBeepDelay: 0
     beepInterval: 2
     delay: 3.5
@@ -70,7 +71,7 @@
   - type: ProjectileGrenade
     fillPrototype: PelletClusterIncendiary
     capacity: 30
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
@@ -98,7 +99,7 @@
   - type: ProjectileGrenade
     fillPrototype: PelletClusterLethal
     capacity: 30
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:

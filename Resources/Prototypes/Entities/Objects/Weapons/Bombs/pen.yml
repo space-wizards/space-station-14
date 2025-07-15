@@ -5,7 +5,7 @@
   description: A dark ink pen.
   id: PenExploding
   components:
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 4
     examinable: false
   - type: Explosive
