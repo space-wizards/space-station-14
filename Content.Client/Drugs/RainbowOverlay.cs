@@ -12,13 +12,15 @@ namespace Content.Client.Drugs;
 
 public sealed class RainbowOverlay : Overlay
 {
+    private static readonly ProtoId<ShaderPrototype> Shader = "Rainbow";
+
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    private readonly SharedStatusEffectsSystem _statusEffects = default!;
+    private readonly StatusEffectsSystem _statusEffects = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
@@ -39,9 +41,9 @@ public sealed class RainbowOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
 
-        _statusEffects = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
+        _statusEffects = _sysMan.GetEntitySystem<StatusEffectsSystem>();
 
-        _rainbowShader = _prototypeManager.Index<ShaderPrototype>("Rainbow").InstanceUnique();
+        _rainbowShader = _prototypeManager.Index(Shader).InstanceUnique();
         _config.OnValueChanged(CCVars.ReducedMotion, OnReducedMotionChanged, invokeImmediately: true);
     }
 

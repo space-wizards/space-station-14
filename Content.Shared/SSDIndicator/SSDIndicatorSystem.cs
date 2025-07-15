@@ -16,7 +16,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedStatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     private bool _icSsdSleep;
     private float _icSsdSleepTime;
@@ -85,7 +85,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
                 ssd.FallAsleepTime <= _timing.CurTime &&
                 !TerminatingOrDeleted(uid))
             {
-                _statusEffects.TryAddStatusEffect(uid, StatusEffectSSDSleeping);
+                _statusEffects.TrySetStatusEffectDuration(uid, StatusEffectSSDSleeping, null);
             }
         }
     }
