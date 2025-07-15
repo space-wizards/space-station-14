@@ -30,6 +30,7 @@ public sealed class DevourSystem : EntitySystem
 
         SubscribeLocalEvent<DevourerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<DevourerComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<DevourerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<DevourerComponent, DevourActionEvent>(OnDevourAction);
         SubscribeLocalEvent<DevourerComponent, DevourDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<DevourerComponent, BeingGibbedEvent>(OnGibContents);
@@ -39,12 +40,17 @@ public sealed class DevourSystem : EntitySystem
     {
         //Devourer doesn't actually chew, since he sends targets right into his stomach.
         //I did it mom, I added ERP content into upstream. Legally!
-        ent.Comp.Stomach = _containerSystem.EnsureContainer<Container>(ent.Owner, "stomach");
+        ent.Comp.Stomach = _containerSystem.EnsureContainer<Container>(ent.Owner, DevourerComponent.StomachContainerId);
     }
 
     private void OnInit(Entity<DevourerComponent> ent, ref MapInitEvent args)
     {
         _actionsSystem.AddAction(ent.Owner, ref ent.Comp.DevourActionEntity, ent.Comp.DevourAction);
+    }
+
+    private void OnShutdown(Entity<DevourerComponent> ent, ref ComponentShutdown args)
+    {
+        _actionsSystem.RemoveAction(ent.Owner, ent.Comp.DevourActionEntity);
     }
 
     /// <summary>
@@ -118,8 +124,7 @@ public sealed class DevourSystem : EntitySystem
             PredictedQueueDel(args.Args.Target.Value);
         }
 
-        var xform = Transform(ent.Owner);
-        _audioSystem.PlayPredicted(ent.Comp.SoundDevour, xform.Coordinates, ent.Owner);
+        _audioSystem.PlayPredicted(ent.Comp.SoundDevour, ent.Owner, ent.Owner);
     }
 
     private void OnGibContents(Entity<DevourerComponent> ent, ref BeingGibbedEvent args)
