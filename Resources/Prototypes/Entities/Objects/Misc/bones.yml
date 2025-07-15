@@ -28,7 +28,7 @@
         - ReagentId: Vitamin
           Quantity: 3
   - type: Extractable
-    grindableSolution: food
+    grindableSolutionName: food
   - type: Food
     requiresSpecialDigestion: true
   - type: FlavorProfile
