@@ -77,7 +77,7 @@ public sealed class ParrotMemoryEui : BaseEui
     }
 
     /// <summary>
-    /// Set a memory to blocked or unblocked
+    /// Set a memory to blocked or unblocked and mark any inactive lists as dirty
     /// </summary>
     /// <param name="messageId">Player message ID of the memory</param>
     /// <param name="block">True to block, false to unblock</param>
@@ -102,10 +102,12 @@ public sealed class ParrotMemoryEui : BaseEui
         UpdateMemoryList(activeList, memoryState);
     }
 
+    // updates a memory list with new entries
     private void UpdateMemoryList(ParrotMemoryList memoryList, ParrotMemoryEuiState memoryState)
     {
         memoryList.UpdateMemoryCountText(memoryState.Messages.Count);
 
+        // remove all entries from this list
         memoryList.MemoryContainer.RemoveAllChildren();
 
         foreach (var message in memoryState.Messages)
@@ -114,6 +116,7 @@ public sealed class ParrotMemoryEui : BaseEui
 
             memoryList.MemoryContainer.AddChild(memoryLine);
 
+            // we have to dig into the control here to add blocking the memory and removing it from this list
             memoryLine.ParrotBlockButton.OnPressed += (_) =>
             {
                 SetMemoryBlocked(message.MessageId, !message.Blocked);
