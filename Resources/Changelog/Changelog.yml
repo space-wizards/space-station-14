@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: The Go Go Hat now checks if your message matches either the name of the
-      item or the label of the item. This allows people with accents to name their
-      items according to how their character would say the item, or for a faster retrieval
-      without having to type out the full name.
-    type: Tweak
-  id: 8259
-  time: '2025-04-19T14:11:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35658
-- author: GrownSamoyedDog
-  changes:
-  - message: Pineapple Juice Cartons are new and added to Booze-O-Mat.
-    type: Add
-  id: 8260
-  time: '2025-04-19T14:25:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34769
 - author: claustro305
   changes:
   - message: Fixed a bug where dragged objects would collide with wall mounted lights
@@ -3895,3 +3878,21 @@
   id: 8771
   time: '2025-07-14T02:49:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38906
+- author: Trosling
+  changes:
+  - message: Moved Bible/Holy Book choice to loadout options for chaplain.
+    type: Tweak
+  - message: Implemented new holy book sprites, as well as one existing one (space
+      quran).
+    type: Add
+  id: 8772
+  time: '2025-07-15T00:49:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38986
+- author: RedBookcase
+  changes:
+  - message: The Kardashev-Mosin's bayonet can now be used while the weapon is wielded.
+      Tally ho!
+    type: Add
+  id: 8773
+  time: '2025-07-15T00:49:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38295
