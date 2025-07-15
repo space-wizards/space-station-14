@@ -26,9 +26,13 @@ public sealed class GasMinerSystem : SharedGasMinerSystem
         var minerComponent = ent.Comp;
 
         if (minerComponent.MinerState != newState)
-        { minerComponent.MinerState = newState; DirtyField(ent.Owner, minerComponent, nameof(minerComponent.MinerState)); }
+        {
+            minerComponent.MinerState = newState;
+            DirtyField(ent.Owner, minerComponent, nameof(minerComponent.MinerState));
+        }
 
-        if (possibleNewStoredAmount is { } newStoredAmount && Math.Abs(minerComponent.LastReplicatedStoredAmount - newStoredAmount) >= float.Epsilon)
+        if (possibleNewStoredAmount is { } newStoredAmount &&
+             Math.Abs(minerComponent.LastReplicatedStoredAmount - newStoredAmount) >= float.Epsilon)
         {
             minerComponent.StoredAmount = newStoredAmount;
             minerComponent.LastReplicatedStoredAmount = newStoredAmount;
@@ -40,7 +44,8 @@ public sealed class GasMinerSystem : SharedGasMinerSystem
     {
         var minerComponent = ent.Comp;
 
-        if (!GetValidEnvironment(ent, out var environment, out var transform, out var minerTilePosition) || !transform.Anchored)
+        if (!GetValidEnvironment(ent, out var environment, out var transform, out var minerTilePosition) ||
+            !transform.Anchored)
         {
             ProcessMinerState(ent, GasMinerState.Disabled);
             return;

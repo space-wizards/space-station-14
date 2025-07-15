@@ -24,7 +24,8 @@ public abstract class SharedGasMinerSystem : EntitySystem
                 ("gas", Loc.GetString(_sharedAtmosphereSystem.GetGas(component.SpawnGas).Name))));
 
             // Display stats only about effective amount of gas mined, unless the miner is full, and it's mining and releasing rates are the same.
-            if (component.MiningRate == component.ReleaseRate && component.StoredAmount == component.MaxStoredAmount)
+            if (component.MiningRate == component.ReleaseRate &&
+                 component.StoredAmount == component.MaxStoredAmount)
                 args.PushText(Loc.GetString("gas-miner-amount-no-storage-text",
                     ("moles", $"{component.ReleaseRate:0.#}")));
             else
