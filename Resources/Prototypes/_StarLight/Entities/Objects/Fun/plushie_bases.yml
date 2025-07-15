@@ -162,3 +162,8 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Machines/warning_buzzer.ogg
+  - type: Tool
+    qualities:
+      - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
