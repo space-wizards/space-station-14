@@ -25,7 +25,7 @@ public sealed partial class RoleTimeRequirement : JobRequirement
     [DataField(required: true)]
     public TimeSpan Time;
 
-    public static readonly Color DefaultDepartmentColor = Color.Yellow;
+    private static readonly Color DefaultDepartmentColor = Color.Yellow;
 
     public override bool Check(IEntityManager entManager,
         IPrototypeManager protoManager,
