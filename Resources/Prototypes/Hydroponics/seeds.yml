@@ -1420,10 +1420,9 @@
     - FoodGatfruit
   mutationPrototypes:
     - fakeCapfruit
-    - realCapfruit
   lifespan: 65
-  maturation: 25
-  production: 25
+  maturation: 12
+  production: 12
   yield: 1
   potency: 10
   growthStages: 2
@@ -1448,8 +1447,8 @@
   productPrototypes:
     - FoodFakeCapfruit
   lifespan: 65
-  maturation: 25
-  production: 25
+  maturation: 12
+  production: 12
   yield: 1
   potency: 10
   growthStages: 2
@@ -1474,8 +1473,8 @@
   productPrototypes:
     - FoodRealCapfruit
   lifespan: 65
-  maturation: 25
-  production: 25
+  maturation: 12
+  production: 12
   yield: 1
   potency: 10
   growthStages: 2
