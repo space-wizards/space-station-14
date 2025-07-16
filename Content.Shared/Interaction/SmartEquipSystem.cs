@@ -174,6 +174,20 @@ public sealed class SmartEquipSystem : EntitySystem
         // case 3 (itemslot item):
         if (TryComp<ItemSlotsComponent>(slotItem, out var slots))
         {
+            // Starlight Start - Suit storage equip
+            if (handItem == null && equipmentSlot == "suitstorage")
+            {
+                if (!_inventory.CanUnequip(uid, equipmentSlot, out var suitStorageReason))
+                {
+                    _popup.PopupClient(Loc.GetString(suitStorageReason), uid, uid);
+                    return;
+                }
+
+                _inventory.TryUnequip(uid, equipmentSlot, inventory: inventory, predicted: true, checkDoafter: true);
+                _hands.TryPickup(uid, slotItem, handsComp: hands);
+                return;
+            }
+            // Starlight End
             if (handItem == null)
             {
                 ItemSlot? toEjectFrom = null;
