@@ -72,7 +72,7 @@ public abstract partial class SharedStunSystem
     {
         base.Update(frameTime);
 
-        if (!GameTiming.IsFirstTimePredicted)
+        if (GameTiming.ApplyingState)
             return;
 
         var query = EntityQueryEnumerator<KnockedDownComponent>();
@@ -83,12 +83,13 @@ public abstract partial class SharedStunSystem
                 continue;
 
             TryStanding(uid, out knockedDown.DoAfter);
+            DirtyField(uid, knockedDown, nameof(KnockedDownComponent.DoAfter));
         }
     }
 
     private void OnRejuvenate(Entity<KnockedDownComponent> entity, ref RejuvenateEvent args)
     {
-        entity.Comp.NextUpdate = GameTiming.CurTime;
+        SetKnockdownUpdate(entity, GameTiming.CurTime);
 
         if (entity.Comp.AutoStand)
             RemComp<KnockedDownComponent>(entity);
@@ -124,13 +125,17 @@ public abstract partial class SharedStunSystem
         entity.Comp.AutoStand = autoStand;
     }
 
-    public void CancelKnockdownDoAfter(KnockedDownComponent component)
+    public void CancelKnockdownDoAfter(Entity<KnockedDownComponent> entity)
     {
-        if (component.DoAfter == null)
-            return;
+        DoAfter.Cancel(entity.Comp.DoAfter);
+        entity.Comp.DoAfter = null;
+        DirtyField(entity!, nameof(KnockedDownComponent.DoAfter));
+    }
 
-        DoAfter.Cancel(component.DoAfter);
-        component.DoAfter = null;
+    public void SetKnockdownUpdate(Entity<KnockedDownComponent> entity, TimeSpan nextUpdate)
+    {
+        entity.Comp.NextUpdate = nextUpdate;
+        DirtyField(entity!, nameof(KnockedDownComponent.NextUpdate));
     }
 
     #endregion
@@ -146,13 +151,22 @@ public abstract partial class SharedStunSystem
             return;
 
         if (!TryComp<KnockedDownComponent>(playerEnt, out var component))
-            TryKnockdown(playerEnt, TimeSpan.FromSeconds(0.5), true, false); // TODO: Unhardcode these numbers
-        else
         {
-            component.AutoStand = true;
-            TryStanding(playerEnt, out component.DoAfter);
-            // See if this fixes prediction...
+            TryKnockdown(playerEnt, TimeSpan.FromSeconds(0.5), true, false); // TODO: Unhardcode these numbers
+            return;
         }
+
+        var stand = !component.DoAfter.HasValue;
+
+        if (stand)
+        {
+            TryStanding(playerEnt, out component.DoAfter);
+            DirtyField(playerEnt, component, nameof(KnockedDownComponent.DoAfter));
+        }
+        else
+            CancelKnockdownDoAfter((playerEnt, component));
+
+        ToggleAutoStand(playerEnt, stand);
     }
 
     public bool TryStanding(Entity<KnockedDownComponent?> entity, out DoAfterId? id)
@@ -166,9 +180,6 @@ public abstract partial class SharedStunSystem
 
         if (!CanStand((entity.Owner, entity.Comp)))
             return false;
-
-        // Don't want the update loop to cancel our stand attempt...
-        ToggleAutoStand(entity);
 
         var ev = new StandUpArgsEvent(state.StandTime);
         RaiseLocalEvent(entity, ref ev);
@@ -257,7 +268,7 @@ public abstract partial class SharedStunSystem
         }
 
         // If we have a DoAfter, cancel it
-        CancelKnockdownDoAfter(entity.Comp);
+        CancelKnockdownDoAfter(entity);
         // Remove Component
         RemComp<KnockedDownComponent>(entity);
 
@@ -276,6 +287,7 @@ public abstract partial class SharedStunSystem
         if (!TryStanding(entity.Owner, out entity.Comp.DoAfter))
             ForceStandUp(entity);
 
+        DirtyField(entity!, nameof(KnockedDownComponent.DoAfter));
         args.Handled = true;
     }
 
@@ -336,7 +348,7 @@ public abstract partial class SharedStunSystem
             return;
 
         if (args.DamageDelta.GetTotal() >= 5) // TODO: Unhardcode this
-            entity.Comp.NextUpdate = GameTiming.CurTime + TimeSpan.FromSeconds(0.5f);
+            SetKnockdownUpdate(entity, GameTiming.CurTime + TimeSpan.FromSeconds(0.5f));
     }
 
     #endregion

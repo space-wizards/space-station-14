@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Stunnable;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause, Access(typeof(SharedStunSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas:true), AutoGenerateComponentPause, Access(typeof(SharedStunSystem))]
 public sealed partial class KnockedDownComponent : Component
 {
     /// <summary>
@@ -22,7 +22,7 @@ public sealed partial class KnockedDownComponent : Component
     /// <summary>
     /// The Standing Up DoAfter.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public DoAfterId? DoAfter;
 
     /// <summary>

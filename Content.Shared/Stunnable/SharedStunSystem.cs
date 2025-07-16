@@ -189,9 +189,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (EnsureComp<KnockedDownComponent>(uid, out var component))
         {
             RefreshKnockedMovement((uid, component));
-
-            // TODO: Cancellation doesn't predict on the client at all...
-            CancelKnockdownDoAfter(component);
+            CancelKnockdownDoAfter((uid, component));
         }
         else
         {
@@ -206,10 +204,10 @@ public abstract partial class SharedStunSystem : EntitySystem
         {
             var knockedTime = GameTiming.CurTime + knockedEv.Time;
             if (TimeSpan.Compare(knockedTime, component.NextUpdate) == 1)
-                component.NextUpdate = knockedTime;
+                SetKnockdownUpdate((uid, component), knockedTime);
         }
         else
-            component.NextUpdate += knockedEv.Time;
+            SetKnockdownUpdate((uid, component), component.NextUpdate += knockedEv.Time);
 
         Alerts.ShowAlert(uid, KnockdownAlert, null, (GameTiming.CurTime, component.NextUpdate));
 
