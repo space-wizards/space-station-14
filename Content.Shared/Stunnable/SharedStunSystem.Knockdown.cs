@@ -123,8 +123,11 @@ public abstract partial class SharedStunSystem
         DirtyField(entity, entity.Comp, nameof(entity.Comp.AutoStand));
     }
 
-    public void CancelKnockdownDoAfter(Entity<KnockedDownComponent> entity)
+    public void CancelKnockdownDoAfter(Entity<KnockedDownComponent?> entity)
     {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
         if (entity.Comp.DoAfterId == null)
             return;
 
@@ -197,19 +200,19 @@ public abstract partial class SharedStunSystem
         ToggleAutoStand(playerEnt, stand);
     }
 
-    public bool TryStanding(Entity<KnockedDownComponent?> entity, out ushort? id)
+    public bool TryStanding(Entity<KnockedDownComponent?, StandingStateComponent?> entity, out ushort? id)
     {
         id = null;
         // If we aren't knocked down or can't be knocked down, then we did technically succeed in standing up
-        if (!Resolve(entity, ref entity.Comp, false) || !TryComp<StandingStateComponent>(entity, out var state))
+        if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
             return true;
 
-        id = entity.Comp.DoAfterId;
+        id = entity.Comp1.DoAfterId;
 
-        if (!CanStand((entity.Owner, entity.Comp)))
+        if (!CanStand((entity.Owner, entity.Comp1)))
             return false;
 
-        var ev = new StandUpArgsEvent(state.StandTime);
+        var ev = new StandUpArgsEvent(entity.Comp2.StandTime);
         RaiseLocalEvent(entity, ref ev);
 
         var doAfterArgs = new DoAfterArgs(EntityManager, entity, ev.DoAfterTime, new TryStandDoAfterEvent(), entity, entity)
@@ -261,42 +264,30 @@ public abstract partial class SharedStunSystem
         if (args.SenderSession.AttachedEntity is not {} user)
             return;
 
-        if (TryComp<KnockedDownComponent>(user, out var component))
-            ForceStandUp((user, component));
-
+        ForceStandUp(user);
     }
 
-    public void ForceStandUp(Entity<KnockedDownComponent> entity)
+    public void ForceStandUp(Entity<KnockedDownComponent?> entity)
     {
-        // That way if we fail to stand, the game will try to stand for us when we are able to
-        ToggleAutoStand(entity!, true);
-
-        if (!HasComp<StandingStateComponent>(entity) || StandingBlocked(entity))
+        if (!Resolve(entity, ref entity.Comp, false))
             return;
 
-        if (!TryComp<StaminaComponent>(entity, out var stamina))
+        // That way if we fail to stand, the game will try to stand for us when we are able to
+        ToggleAutoStand(entity, true);
+
+        if (!HasComp<StandingStateComponent>(entity) || StandingBlocked((entity, entity.Comp)))
             return;
 
         if (!_hands.TryGetEmptyHand(entity.Owner, out _))
             return;
 
-        var staminaDamage = stamina.ForceStandStamina;
-
-        // TODO: Raise an event to modify the stamina damage?
-
-        if (!Stamina.TryTakeStamina(entity, staminaDamage, stamina, visual: true))
-        {
-            _popup.PopupClient(Loc.GetString("knockdown-component-pushup-failure"), entity, entity, PopupType.MediumCaution);
+        if (!TryForceStand(entity.Owner))
             return;
-        }
 
         // If we have a DoAfter, cancel it
         CancelKnockdownDoAfter(entity);
         // Remove Component
         RemComp<KnockedDownComponent>(entity);
-
-        _popup.PopupClient(Loc.GetString("knockdown-component-pushup-success"), entity, entity);
-        _audio.PlayPredicted(stamina.ForceStandSuccessSound, entity.Owner, entity.Owner, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
 
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} has force stood up from knockdown.");
     }
@@ -308,10 +299,32 @@ public abstract partial class SharedStunSystem
 
         // If we're already trying to stand, or we fail to stand try forcing it
         if (!TryStanding(entity.Owner, out entity.Comp.DoAfterId))
-            ForceStandUp(entity);
+            ForceStandUp(entity!);
 
         DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.DoAfterId));
         args.Handled = true;
+    }
+
+    private bool TryForceStand(Entity<StaminaComponent?> entity)
+    {
+        // Can't force stand if no Stamina.
+        if (!Resolve(entity, ref entity.Comp, false))
+            return false;
+
+        var staminaDamage = entity.Comp.ForceStandStamina;
+
+        // TODO: Raise an event to modify the stamina damage?
+
+        if (!Stamina.TryTakeStamina(entity, staminaDamage, entity.Comp, visual: true))
+        {
+            _popup.PopupClient(Loc.GetString("knockdown-component-pushup-failure"), entity, entity, PopupType.MediumCaution);
+            return false;
+        }
+
+        _popup.PopupClient(Loc.GetString("knockdown-component-pushup-success"), entity, entity);
+        _audio.PlayPredicted(entity.Comp.ForceStandSuccessSound, entity.Owner, entity.Owner, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
+
+        return true;
     }
 
     /// <summary>
