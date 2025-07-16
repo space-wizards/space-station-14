@@ -1,3 +1,4 @@
+# region crew plushies
 - type: entity
   parent: BaseResomiPlushie
   id: PlushieMatthew
@@ -119,6 +120,18 @@
     sprite: _Starlight/Objects/Fun/Plushies/morgana_round_plushie.rsi
     layers: 
       - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: Advertise
+      pack: PlushiesMorgana
+      minimumWait: 120
+      maximumWait: 240
+    - type: TextToSpeech
+      voice: bettylabomba
 
 - type: entity
   parent: BaseResomiPlushie
@@ -203,7 +216,7 @@
       voice: heavy
       
 - type: entity
-  parent: BaseResomiPlushie
+  parent: PlushieHuman
   id: PlushieAmali
   name: amali plushie
   description: Flying high, shooting corporate enemies out of the sky. Glory to NanoTrasen!
@@ -227,6 +240,59 @@
       maximumWait: 240
     - type: TextToSpeech
       voice: ganyu
+
+- type: entity
+  parent: PlushieHuman
+  id: PlushieOog
+  name: Oog-man Plushie #I AM OOG-MAN
+  description: A marketable plushie of everyone's favourite caveman. It's missing it's clothes?
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/oog_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/oog_plushie.rsi
+    layers: 
+      - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: Advertise
+      pack: PlushiesOog
+      minimumWait: 120
+      maximumWait: 240
+    - type: TextToSpeech
+      voice: heavy
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieVanilla
+  name: Vanilla Plushie
+  description: She's a shy, affectionate, lovable fox!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/vanilla_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/vanilla_plushie.rsi
+    layers: 
+      - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: Advertise
+      pack: PlushiesVanilla
+      minimumWait: 120
+      maximumWait: 240
+    - type: TextToSpeech
+      voice: layla
+#end region
 
 - type: entity
   parent: PlushieHuman

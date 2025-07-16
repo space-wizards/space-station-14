@@ -463,7 +463,7 @@
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 2
+      stock: 1
 
 - type: listing
   id: VendorPlushiePercy
@@ -525,8 +525,15 @@
   productEntity: PlushieRufia
   cost:
     NTCredit: 14
+      stock: 1
+
+- type: listing
+  id: VendorPlushieVanilla
+  productEntity: PlushieVanilla
+  cost:
+    NTCredit: 20
   categories:
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 1
+      stock: 1 
