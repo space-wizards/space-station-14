@@ -220,6 +220,9 @@ public abstract partial class SharedStunSystem
         if (!CanStand((entity.Owner, entity.Comp)))
             return false;
 
+        if (IntersectingStandingColliders(entity.Owner))
+            return false;
+        
         var ev = new StandUpArgsEvent(state.StandTime);
         RaiseLocalEvent(entity, ref ev);
 
