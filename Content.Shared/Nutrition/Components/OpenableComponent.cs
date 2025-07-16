@@ -44,7 +44,7 @@ public sealed partial class OpenableComponent : Component
     /// It's still generic enough that you should change it if you make openable non-drinks, i.e. unwrap it first, peel it first.
     /// </summary>
     [DataField]
-    public LocId ClosedPopup = "examinable-solution-try-use-drink-not-open";
+    public LocId ClosedPopup = "drink-component-try-use-drink-not-open";
 
     /// <summary>
     /// Text to show in the verb menu for the "Open" action.

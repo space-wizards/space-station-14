@@ -43,6 +43,7 @@
     - Shake
   - type: ExaminableSolution
     solution: drink
+    heldOnly: true
     estimate: true
     opaque: true
 
