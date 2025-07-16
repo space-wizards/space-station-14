@@ -125,7 +125,7 @@
   id: UplinkDisposableTurret
   name: uplink-disposable-turret-name
   description: uplink-disposable-turret-desc
-  productEntity: ToolboxElectricalTurretFilled
+  productEntity: BoxWeaponTurretSyndicateDisposable
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 3
@@ -853,7 +853,8 @@
   id: UplinkDecoyDisk
   name: uplink-decoy-disk-name
   description: uplink-decoy-disk-desc
-  productEntity: NukeDiskFake
+  icon: { sprite: Objects/Misc/nukedisk.rsi, state: icon }
+  productEntity: BoxNukeDiskFake
   cost:
     Telecrystal: 1
   categories:
@@ -913,7 +914,8 @@
   id: UplinkSyndicateBombFake
   name: uplink-exploding-syndicate-bomb-fake-name
   description: uplink-exploding-syndicate-bomb-fake-desc
-  productEntity: SyndicateBombFake
+  icon: { sprite: Structures/Machines/bomb.rsi, state: syndicate-bomb }
+  productEntity: BoxSyndicateBombFake
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 1
@@ -1562,7 +1564,8 @@
   id: UplinkVoiceMask
   name: uplink-voice-mask-name
   description: uplink-voice-mask-desc
-  productEntity: ClothingMaskGasVoiceChameleon
+  icon: { sprite: /Textures/Clothing/Mask/gas.rsi, state: icon }
+  productEntity: BoxMaskGasVoiceChameleon
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 1
@@ -1609,7 +1612,8 @@
   id: UplinkClothingNoSlipsShoes
   name: uplink-clothing-no-slips-shoes-name
   description: uplink-clothing-no-slips-shoes-desc
-  productEntity: ClothingShoesChameleonNoSlips
+  icon: { sprite: /Textures/Clothing/Shoes/color.rsi, state: icon }
+  productEntity: BoxShoesChameleonNoSlips
   discountCategory: veryRareDiscounts
   discountDownTo:
     Telecrystal: 1
@@ -1766,7 +1770,8 @@
   id: UplinkClothingConductingGloves
   name: uplink-clothing-conducting-gloves-name
   description: uplink-clothing-conducting-gloves-desc
-  productEntity: ClothingHandsGlovesConducting
+  icon: { sprite: Clothing/Hands/Gloves/Color/yellow.rsi, state: icon }
+  productEntity: BoxGlovesConducting
   cost:
     Telecrystal: 2
   categories:
@@ -1974,7 +1979,8 @@
   id: uplinkRiggedBoxingGlovesPassenger
   name: uplink-rigged-boxing-gloves-name
   description: uplink-rigged-boxing-gloves-desc
-  productEntity: ClothingHandsGlovesBoxingRigged
+  icon: { sprite: Clothing/Hands/Gloves/Boxing/boxingblue.rsi, state: icon }
+  productEntity: BoxBoxingGlovesRigged
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 3
@@ -1991,7 +1997,8 @@
   id: uplinkRiggedBoxingGlovesBoxer
   name: uplink-rigged-boxing-gloves-name
   description: uplink-rigged-boxing-gloves-desc
-  productEntity: ClothingHandsGlovesBoxingRigged
+  icon: { sprite: Clothing/Hands/Gloves/Boxing/boxingblue.rsi, state: icon }
+  productEntity: BoxBoxingGlovesRigged
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 2
@@ -2046,7 +2053,8 @@
   id: uplinkRevolverCapGunFake
   name: uplink-revolver-cap-gun-fake-name
   description: uplink-revolver-cap-gun-fake-desc
-  productEntity: RevolverCapGunFake
+  icon: { sprite: Objects/Fun/capgun.rsi, state: icon }
+  productEntity: BoxCapGunFake
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 3
@@ -2065,7 +2073,7 @@
   name: uplink-banana-peel-explosive-name
   description: uplink-banana-peel-explosive-desc
   icon: { sprite: Objects/Specific/Hydroponics/banana.rsi, state: peel }
-  productEntity: TrashBananaPeelExplosiveUnarmed
+  productEntity: BoxBananaPeelExplosiveUnarmed
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 1
@@ -2082,7 +2090,8 @@
   id: UplinkClusterBananaPeel
   name: uplink-cluster-banana-peel-name
   description: uplink-cluster-banana-peel-desc
-  productEntity: ClusterBananaPeel
+  icon: { sprite: Objects/Specific/Hydroponics/banana.rsi, state: peel }
+  productEntity: BoxClusterBananaPeelExplosiveUnarmed
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 3

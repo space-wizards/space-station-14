@@ -352,7 +352,6 @@
   id: RevolverCapGunFake
   name: cap gun
   suffix: Fake
-  description: Looks almost like the real thing! Ages 8 and up.
   components:
   - type: RevolverAmmoProvider
     whitelist:
@@ -362,6 +361,21 @@
       - CartridgeMagnum
       - SpeedLoaderMagnum
     proto: CartridgeMagnumAP
+
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxCapGunFake
+  name: fake cap gun box
+  description: A box containing a fake cap gun (loaded with real bullets). Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: capgunfake
+  - type: SpawnItemsOnUse
+    items:
+    - id: RevolverCapGunFake
+    sound:
+      path: /Audio/Effects/unwrap.ogg
 
 - type: entity
   parent: BaseItem

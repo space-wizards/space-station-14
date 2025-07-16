@@ -94,6 +94,21 @@
     mustBeEquippedToUse: true
 
 - type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxBoxingGlovesRigged
+  name: rigged boxing gloves box
+  description: A box containing a pair of rigged boxing gloves. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: boxingglovesfake
+  - type: SpawnItemsOnUse
+    items:
+    - id: ClothingHandsGlovesBoxingRigged
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
   parent: [ClothingHandsBase, BaseCommandContraband]
   id: ClothingHandsGlovesCaptain
   name: captain gloves
