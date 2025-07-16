@@ -24,6 +24,7 @@ namespace Content.Shared.Slippery;
 public sealed class SlipperySystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedStaminaSystem _stamina = default!;
@@ -126,13 +127,12 @@ public sealed class SlipperySystem : EntitySystem
         {
             _stun.TryStun(other, component.SlipData.StunTime, true);
             _stamina.TakeStaminaDamage(other, component.StaminaDamage); // Note that this can stamCrit
-            _stun.TryFriction(other, component.FrictionStatusTime, true, component.SlipData.SlipFriction, component.SlipData.SlipFriction);
+            _movementMod.TryFriction(other, component.FrictionStatusTime, true, component.SlipData.SlipFriction, component.SlipData.SlipFriction);
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
         _stun.TryKnockdown(other, component.SlipData.KnockdownTime, true, true);
 
-        _adminLogger.Add(LogType.Slip, LogImpact.Low,
-            $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
+        _adminLogger.Add(LogType.Slip, LogImpact.Low, $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
     }
 }
 
