@@ -109,5 +109,5 @@ public sealed partial class DoAfter
 /// <remarks>
 ///     Can be used to track currently active do-afters to prevent simultaneous do-afters.
 /// </remarks>
-[Serializable, NetSerializable]
+[NetSerializable]
 public record struct DoAfterId(NetEntity Uid, ushort Index);
