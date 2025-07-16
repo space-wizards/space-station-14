@@ -29,7 +29,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Cuffs.Components;
 using Robust.Shared.Player;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -128,12 +127,17 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         return "rev-draw";
     }
 
+    /// <summary>
+    /// Returns the number of entities in a list that are escaping to Central Command alive and unrestrained.
+    /// </summary>
+    /// <param name="list">The list to get the number of escapees from.</param>
+    /// <returns></returns>
     private int GetEscapeCount(List<EntityUid> list)
     {
         var escapes = 0;
         foreach (var entity in GetCommandList())
         {
-            if (_emergencyShuttle.IsTargetEscaping(entity))
+            if (_emergencyShuttle.IsTargetEscaping(entity) && !(TryComp<CuffableComponent>(entity, out var cuffed) && cuffed.CuffedHandCount > 0))
             {
                 escapes++;
             }
@@ -170,13 +174,12 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             ));
             args.AddLine(Loc.GetString("rev-loyal-command",
             ("count", GetEscapeCount(GetCommandList())),
-            ("color", winType == "rev-crew-minor" ? "green" : "red")
+            ("color", winType == "rev-crew-minor" ? "sgreen" : "red")
             ));
             args.AddLine(Loc.GetString("headrev-escapes",
             ("count", escapedHeadRevs),
             ("color", winType == "rev-crew-minor" || escapedHeadRevs == 0 ? "red" : "green")
             ));
-
         }
 
         args.AddLine(Loc.GetString("rev-headrev-count", ("initialCount", sessionData.Count)));
@@ -259,20 +262,24 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Checks if all of command is dead and if so will remove all sec and command jobs if there were any left.
     /// </summary>
-    /// <remarks>
     /// is it supposed to remove all sec and command jobs because it doesn't and it didn't pre-rework either
-    /// </remarks>
     private bool CheckCommandLose()
     {
         return IsGroupDetainedOrDead(GetCommandList(), true, true, true);
     }
 
+    /// <summary>
+    /// Returns a list of all humanoid player-controlled entities, with the exception of Nuclear Operatives, Space Ninjas and Wizards.
+    /// </summary>
+    /// <returns></returns>
     private List<EntityUid> GetCrewList()
     {
         var crewList = new List<EntityUid>();
         var players = AllEntityQuery<HumanoidAppearanceComponent, ActorComponent>();
         while (players.MoveNext(out var uid, out _, out _))
         {
+            if (HasComp<NukeopsRoleComponent>(uid) || HasComp<NinjaRoleComponent>(uid) || HasComp<WizardRoleComponent>(uid))
+                continue;
             crewList.Add(uid);
         }
 
@@ -402,6 +409,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         return gone == list.Count || list.Count == 0;
     }
 
+    /// <summary>
+    /// Returns the percentage of a group that are either revolutionaries or head revolutionaries.
+    /// </summary>
+    /// <param name="list">The list to get the rev percentage of.</param>
+    /// <returns></returns>
     private float GetRevolutionaryPercentage(List<EntityUid> list)
     {
         var revs = 0;
