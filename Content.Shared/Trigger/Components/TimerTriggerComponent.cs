@@ -16,16 +16,16 @@ namespace Content.Shared.Trigger.Components;
 public sealed partial class TimerTriggerComponent : Component
 {
     /// <summary>
-    /// The key that will activate the timer.
+    /// The keys that will activate the timer.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string KeyIn = "timerStart";
+    public List<string> KeysIn = new() { "trigger" };
 
     /// <summary>
-    /// The keys that will trigger once the timer is finished.
+    /// The key that will trigger once the timer is finished.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string KeyOut = "timerStop";
+    public string? KeyOut = "timer";
 
     /// <summary>
     /// The time after which this timer will trigger after it is activated.

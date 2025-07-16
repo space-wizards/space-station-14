@@ -33,7 +33,7 @@ public sealed partial class TriggerOnMobstateChangeSystem : EntitySystem
     /// <summary>
     /// Checks if the user has any implants that prevent suicide to avoid some cheesy strategies
     /// Prevents suicide by handling the event without killing the user
-    /// TODO: This doesn't seem to work at the moment as the event is never checked for being handled
+    /// TODO: This doesn't seem to work at the moment as the event is never checked for being handled.
     /// </summary>
     private void OnSuicide(EntityUid uid, TriggerOnMobstateChangeComponent component, SuicideEvent args)
     {

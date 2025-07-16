@@ -74,16 +74,16 @@ public sealed partial class TriggerSystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        var @event = args;
+        var user = args.User;
         args.Verbs.Add(new AlternativeVerb()
         {
             Text = Loc.GetString(ent.Comp.IsRecording ? "verb-trigger-voice-stop" : "verb-trigger-voice-record"),
             Act = () =>
             {
                 if (ent.Comp.IsRecording)
-                    StopRecording(ent, @event.User);
+                    StopRecording(ent, user);
                 else
-                    StartRecording(ent, @event.User);
+                    StartRecording(ent, user);
             },
             Priority = 1
         });

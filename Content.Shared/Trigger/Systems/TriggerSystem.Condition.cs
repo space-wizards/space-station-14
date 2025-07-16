@@ -1,15 +1,10 @@
-﻿using Content.Shared.Timing;
-using Content.Shared.Trigger.Components.Conditions;
+﻿using Content.Shared.Trigger.Components.Conditions;
 using Content.Shared.Verbs;
-using Content.Shared.Whitelist;
 
 namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class TriggerSystem : EntitySystem
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
-
     private void InitializeCondition()
     {
         SubscribeLocalEvent<WhitelistTriggerConditionComponent, AttemptTriggerEvent>(OnWhitelistTriggerAttempt);

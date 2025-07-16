@@ -15,13 +15,13 @@ public sealed partial class TwoStageTriggerComponent : Component
     /// The keys that will activate the timer and add the given components (first stage).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<string> KeysIn = new() { "timerStart" };
+    public List<string> KeysIn = new() { "trigger" };
 
     /// <summary>
     /// The key that will trigger once the timer is finished (second stage).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string KeyOut = "timerStop";
+    public string? KeyOut = "stageTwo";
 
     /// <summary>
     /// How long it takes for the second stage to be triggered.

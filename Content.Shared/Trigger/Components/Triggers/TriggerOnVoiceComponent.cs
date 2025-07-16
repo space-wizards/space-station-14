@@ -4,6 +4,7 @@ namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
 /// Sends a trigger when the keyphrase is heard.
+/// The User is the speaker.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnVoiceComponent : BaseTriggerOnXComponent
@@ -30,7 +31,7 @@ public sealed partial class TriggerOnVoiceComponent : BaseTriggerOnXComponent
     /// Whether we are currently recording a new keyphrase.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IsRecording = false;
+    public bool IsRecording;
 
     /// <summary>
     /// Minimum keyphrase length.

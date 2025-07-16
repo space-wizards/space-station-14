@@ -45,7 +45,7 @@ public sealed partial class TriggerSystem : EntitySystem
     private void OnTimerTriggered(Entity<TimerTriggerComponent> ent, ref TriggerEvent args)
     {
         // don't trigger on null to prevent infinite loops
-        if (args.Key == ent.Comp.KeyIn)
+        if (ent.Comp.KeysIn.Contains(args.Key))
             args.Handled = ActivateTimerTrigger(ent.AsNullable(), args.User);
     }
 

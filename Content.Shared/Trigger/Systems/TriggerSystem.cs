@@ -1,8 +1,9 @@
-﻿using Content.Shared.Trigger.Components;
-using Content.Shared.Administration.Logs;
+﻿using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
+using Content.Shared.Trigger.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
@@ -32,6 +33,7 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -44,7 +46,6 @@ public sealed partial class TriggerSystem : EntitySystem
         InitializeTimer();
         InitializeSpawn();
         InitializeVoice();
-        InitializeTimedCollide();
     }
 
     /// <summary>

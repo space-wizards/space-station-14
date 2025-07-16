@@ -12,5 +12,5 @@ public abstract partial class BaseTriggerOnXComponent : Component
     /// The key that the trigger will activate.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string TriggerKey = "trigger";
+    public string? TriggerKey = "trigger";
 }

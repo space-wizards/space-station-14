@@ -67,6 +67,6 @@ public sealed partial class TriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        args.Handled |= _useDelay.TryDelay(target);
+        args.Handled |= _useDelay.TryResetDelay(target.Value, ent.Comp.CheckDelayed);
     }
 }

@@ -5,7 +5,6 @@ namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
 /// Triggers when this entity's mob state changes.
-/// There is null.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnMobstateChangeComponent : BaseTriggerOnXComponent

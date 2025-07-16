@@ -1,4 +1,5 @@
 using Content.Shared.Physics;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
@@ -10,7 +11,8 @@ namespace Content.Shared.Trigger.Components.Triggers;
 /// Triggers whenever an entity collides with a fixture attached to the owner of this component.
 /// The user is the entity that collided with the fixture.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class TriggerOnProximityComponent : BaseTriggerOnXComponent
 {
     /// <summary>
@@ -40,7 +42,6 @@ public sealed partial class TriggerOnProximityComponent : BaseTriggerOnXComponen
     /// <summary>
     /// Whether the entity needs to be anchored for the proximity to work.
     /// </summary>
-    [ViewVariables]
     [DataField, AutoNetworkedField]
     public bool RequiresAnchored = true;
 

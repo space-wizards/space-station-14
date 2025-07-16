@@ -270,7 +270,7 @@
   components:
     - type: SubdermalImplant
       permanent: true
-    - type: TriggerOnMobstateChange #Chains with TimerTrigger
+    - type: TriggerOnMobstateChange #activates the timer
       mobState:
       - Dead
       preventSuicide: true
@@ -282,8 +282,12 @@
         params:
           volume: -2
     - type: ExplodeOnTrigger
+      effectKeys:
+      - timer
     - type: GibOnTrigger
       deleteItems: true
+      effectKeys:
+      - timer
     - type: Explosive
       explosionType: Default
       totalIntensity: 3500
