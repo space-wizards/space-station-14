@@ -4,83 +4,97 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.StatusEffectNew;
 
-public abstract partial class SharedStatusEffectsSystem
+public sealed partial class StatusEffectsSystem
 {
     /// <summary>
-    /// Attempts to add a status effect to the specified entity. Returns True if the effect is added or it already exists
-    /// and has been successfully extended in time, returns False if the status effect cannot be applied to this entity,
-    /// or for any other reason.
+    /// Increments duration of status effect by <see cref="duration"/>.
+    /// Tries to add status effect if it is not yet present on entity.
     /// </summary>
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
     /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
-    /// <param name="resetCooldown">
-    /// If True, the effect duration time will be reset and reapplied. If False, the effect duration time will be overlaid with the existing one.
-    /// In the other case, the effect will either be added for the specified time or its time will be extended for the specified time.
-    /// </param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
-    public bool TryAddStatusEffect(
+    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied.</returns>
+    public bool TryAddStatusEffectDuration(
         EntityUid target,
         EntProtoId effectProto,
-        out EntityUid? statusEffect,
-        TimeSpan? duration = null,
-        bool resetCooldown = false
+        [NotNullWhen(true)] out EntityUid? statusEffect,
+        TimeSpan duration
     )
     {
-        statusEffect = null;
-        if (TryGetStatusEffect(target, effectProto, out var existingEffect))
-        {
-            statusEffect = existingEffect;
-            //We don't need to add the effect if it already exists
-            if (duration is null)
-                return true;
+        if (!TryGetStatusEffect(target, effectProto, out statusEffect))
+            return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
-            if (resetCooldown)
-                SetStatusEffectTime(existingEffect.Value, duration.Value);
-            else
-                AddStatusEffectTime(existingEffect.Value, duration.Value);
-
-            return true;
-        }
-
-        if (!CanAddStatusEffect(target, effectProto))
-            return false;
-
-        var container = EnsureComp<StatusEffectContainerComponent>(target);
-
-        //And only if all checks passed we spawn the effect
-        var effect = PredictedSpawnAttachedTo(effectProto, Transform(target).Coordinates);
-        statusEffect = effect;
-        _transform.SetParent(effect, target);
-        if (!_effectQuery.TryComp(effect, out var effectComp))
-            return false;
-
-        if (duration != null)
-            effectComp.EndEffectTime = _timing.CurTime + duration;
-
-        container.ActiveStatusEffects.Add(effect);
-        effectComp.AppliedTo = target;
-        Dirty(target, container);
-        Dirty(effect, effectComp);
-
-        var ev = new StatusEffectAppliedEvent(target);
-        RaiseLocalEvent(effect, ref ev);
+        AddStatusEffectTime(statusEffect.Value, duration);
 
         return true;
     }
 
+
+    ///<inheritdoc cref="TryAddStatusEffectDuration(Robust.Shared.GameObjects.EntityUid,Robust.Shared.Prototypes.EntProtoId,out Robust.Shared.GameObjects.EntityUid?,System.TimeSpan)"/>
+    public bool TryAddStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan duration)
+    {
+        return TryAddStatusEffectDuration(target, effectProto, out _, duration);
+    }
+
     /// <summary>
-    /// An overload of <see cref="TryAddStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
-    /// that doesn't return a status effect EntityUid.
+    /// Sets duration of status effect by <see cref="duration"/>.
+    /// Tries to add status effect if it is not yet present on entity.
     /// </summary>
-    public bool TryAddStatusEffect(
+    /// <param name="target">The target entity to which the effect should be added.</param>
+    /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
+    /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
+    /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
+    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied.</returns>
+    public bool TrySetStatusEffectDuration(
         EntityUid target,
         EntProtoId effectProto,
-        TimeSpan? duration = null,
-        bool resetCooldown = false
+        [NotNullWhen(true)] out EntityUid? statusEffect,
+        TimeSpan? duration = null
     )
     {
-        return TryAddStatusEffect(target, effectProto, out _, duration, resetCooldown);
+        if (!TryGetStatusEffect(target, effectProto, out statusEffect))
+            return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
+
+        SetStatusEffectTime(statusEffect.Value, duration);
+
+        return true;
+    }
+
+    /// <inheritdoc cref="TrySetStatusEffectDuration(Robust.Shared.GameObjects.EntityUid,Robust.Shared.Prototypes.EntProtoId,out Robust.Shared.GameObjects.EntityUid?,System.TimeSpan?)"/>
+    public bool TrySetStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan? duration = null)
+    {
+        return TrySetStatusEffectDuration(target, effectProto, out _, duration);
+    }
+
+    /// <summary>
+    /// Updates duration of effect to larger value between provided <see cref="duration"/> and current effect duration.
+    /// Tries to add status effect if it is not yet present on entity.
+    /// </summary>
+    /// <param name="target">The target entity to which the effect should be added.</param>
+    /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
+    /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
+    /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
+    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied.</returns>
+    public bool TryUpdateStatusEffectDuration(
+        EntityUid target,
+        EntProtoId effectProto,
+        [NotNullWhen(true)] out EntityUid? statusEffect,
+        TimeSpan? duration = null
+    )
+    {
+        if (!TryGetStatusEffect(target, effectProto, out statusEffect))
+            return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
+
+        UpdateStatusEffectTime(statusEffect.Value, duration);
+
+        return true;
+    }
+
+    /// <inheritdoc cref="TryUpdateStatusEffectDuration(Robust.Shared.GameObjects.EntityUid,Robust.Shared.Prototypes.EntProtoId,out Robust.Shared.GameObjects.EntityUid?,System.TimeSpan?)"/>
+    public bool TryUpdateStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan? duration = null)
+    {
+        return TryUpdateStatusEffectDuration(target, effectProto, out _, duration);
     }
 
     /// <summary>
@@ -89,28 +103,22 @@ public abstract partial class SharedStatusEffectsSystem
     /// </summary>
     public bool TryRemoveStatusEffect(EntityUid target, EntProtoId effectProto)
     {
-        if (_net.IsClient) //We cant remove the effect on the client (we need someone more robust at networking than me)
-            return false;
-
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             var meta = MetaData(effect);
-            if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
-            {
-                if (!_effectQuery.TryComp(effect, out var effectComp))
-                    return false;
 
-                var ev = new StatusEffectRemovedEvent(target);
-                RaiseLocalEvent(effect, ref ev);
+            if (meta.EntityPrototype is null
+                || meta.EntityPrototype != effectProto)
+                continue;
 
-                QueueDel(effect);
-                container.ActiveStatusEffects.Remove(effect);
-                Dirty(target, container);
-                return true;
-            }
+            if (!_effectQuery.HasComp(effect))
+                return false;
+
+            PredictedQueueDel(effect);
+            return true;
         }
 
         return false;
@@ -124,7 +132,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             var meta = MetaData(effect);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
@@ -143,7 +151,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
-        foreach (var e in container.ActiveStatusEffects)
+        foreach (var e in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             var meta = MetaData(e);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
@@ -174,7 +182,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!Resolve(uid, ref container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             var meta = MetaData(effect);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
@@ -188,6 +196,36 @@ public abstract partial class SharedStatusEffectsSystem
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Attempts to get the maximum time left for a given Status Effect Component, returns false if no such
+    /// component exists.
+    /// </summary>
+    /// <param name="uid">The target entity on which the effect is applied.</param>
+    /// <param name="time">Returns the EntityUid of the status effect with the most time left, and the end effect time
+    /// of that status effect.</param>
+    /// <returns> True if a status effect entity with the given component exists</returns>
+    public bool TryGetMaxTime<T>(EntityUid uid, out (EntityUid EffectEnt, TimeSpan? EndEffectTime) time) where T : IComponent
+    {
+        time = default;
+        if (!TryEffectsWithComp<T>(uid, out var status))
+            return false;
+
+        time.EndEffectTime = TimeSpan.Zero;
+
+        foreach (var effect in status)
+        {
+            if (effect.Comp2.EndEffectTime == null)
+            {
+                time = (effect.Owner, null);
+                return true;
+            }
+
+            if (effect.Comp2.EndEffectTime > time.EndEffectTime)
+                time = (effect.Owner, effect.Comp2.EndEffectTime);
+        }
+        return true;
     }
 
     /// <summary>
@@ -205,7 +243,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(uid, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             var meta = MetaData(effect);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
@@ -229,7 +267,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(uid, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             var meta = MetaData(effect);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
@@ -249,7 +287,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             if (HasComp<T>(effect))
                 return true;
@@ -267,7 +305,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             if (!_effectQuery.TryComp(effect, out var statusComp))
                 continue;
@@ -294,7 +332,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             if (!HasComp<T>(effect))
                 continue;
