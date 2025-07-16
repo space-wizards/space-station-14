@@ -1,4 +1,5 @@
-﻿using Content.Shared.Buckle.Components;
+﻿using Content.Shared.Alert;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
@@ -37,6 +38,8 @@ public abstract partial class SharedStunSystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
 
     private static readonly ProtoId<ItemSizePrototype> MaxItemSize = "Small";
+
+    public static readonly ProtoId<AlertPrototype> KnockdownAlert = "Knockdown";
 
     private void InitializeKnockdown()
     {
@@ -115,7 +118,7 @@ public abstract partial class SharedStunSystem
         entity.Comp.SpeedModifier = 1f;
 
         _standingState.Stand(entity);
-        Alerts.ClearAlert(entity, "Knockdown");
+        Alerts.ClearAlert(entity, KnockdownAlert);
     }
 
     #endregion
@@ -319,9 +322,7 @@ public abstract partial class SharedStunSystem
         if (!args.InterruptsDoAfters || !args.DamageIncreased || args.DamageDelta == null || GameTiming.ApplyingState)
             return;
 
-        var delta = args.DamageDelta.GetTotal();
-
-        if (delta >= 5) // TODO: Unhardcode this
+        if (args.DamageDelta.GetTotal() >= 5) // TODO: Unhardcode this
             entity.Comp.NextUpdate = GameTiming.CurTime + TimeSpan.FromSeconds(0.5f);
     }
 

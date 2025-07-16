@@ -233,46 +233,30 @@
   name: taser bolt
   id: BulletTaserSuper
   description: If you can see this, you've probably been stun-meta'd
-  parent: BaseBullet
+  parent: BulletTaser
   categories: [ HideSpawnMenu ]
   components:
-  - type: FlyBySound
-    sound:
-      collection: EnergyMiss
-      params:
-        volume: 5
   - type: Sprite
     noRot: true
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    color: "#ffabdb"
+    sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
+    color: "#ffff33"
     layers:
-    - state: spark
+    - state: tesla_projectile
       shader: unshaded
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      projectile:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.15,-0.45,0.15,0.15"
-        hard: false
-        mask:
-        - Impassable
-        - BulletImpassable
-      fly-by: *flybyfixture
-  - type: Ammo
   - type: Projectile
     damage:
       types:
-        Heat: 5
+        Shock: 5
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     forceSound: true
   - type: PointLight
     enabled: true
-    color: "#ffabdb"
+    color: "#ffff33"
     radius: 2.0
     energy: 7.01
+  - type: TimedDespawn
+    lifetime: 1.0 # Not so short range
   - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 10

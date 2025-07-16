@@ -577,40 +577,17 @@
 
 - type: entity
   name: elite taser
-  parent: [ BaseWeaponBatterySmall, BaseCentcommContraband ]
+  parent: [ BaseCentcommContraband, WeaponTaser ]
   id: WeaponTaserSuper
   suffix: ADMEME
-  description: A low-capacity, energy-based stun gun used by elite security teams to disable even the toughest of targets at any range.
+  description: A low-capacity, energy-based stun gun used by elite security teams to disable even the toughest of targets.
   components:
-  - type: Tag
-    tags:
-    - Taser
-    - Sidearm
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    layers:
-    - state: base
-      map: [ "enum.GunVisualLayers.Base" ]
-    - state: mag-unshaded-0
-      map: [ "enum.GunVisualLayers.MagUnshaded" ]
-      shader: unshaded
-  - type: Item
-    heldPrefix: taser4
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - Belt
   - type: Gun
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/taser.ogg
+      path: /Audio/Effects/tesla_collapse.ogg # The wrath of god...
   - type: ProjectileBatteryAmmoProvider
     proto: BulletTaserSuper
     fireCost: 200
-  - type: MagazineVisuals
-    magState: mag
-    steps: 5
-    zeroVisible: true
-  - type: Appearance
 
 - type: entity
   name: antique laser pistol

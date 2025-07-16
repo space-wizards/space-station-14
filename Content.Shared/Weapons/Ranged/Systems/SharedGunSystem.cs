@@ -15,7 +15,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Mech.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
-using Content.Shared.Slippery;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;

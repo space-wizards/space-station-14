@@ -7,7 +7,6 @@ using Content.Shared.Database;
 using Content.Shared.Friction;
 using Content.Shared.Gravity;
 using Content.Shared.Projectiles;
-using Content.Shared.Slippery;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;

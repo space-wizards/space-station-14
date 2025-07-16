@@ -53,7 +53,8 @@ public record struct StandUpArgsEvent(TimeSpan DoAfterTime);
 /// </summary>
 public sealed partial class KnockedDownAlertEvent : BaseAlertEvent;
 
-[ByRefEvent, Serializable, NetSerializable]
+[ByRefEvent]
+[Serializable, NetSerializable]
 public sealed partial class TryStandDoAfterEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]

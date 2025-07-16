@@ -24,7 +24,7 @@ public sealed class WormSystem : EntitySystem
     private void OnMapInit(Entity<WormComponent> ent, ref MapInitEvent args)
     {
         EnsureComp<KnockedDownComponent>(ent, out var knocked);
-        _alerts.ShowAlert(ent, "Knockdown");
+        _alerts.ShowAlert(ent, SharedStunSystem.KnockdownAlert);
         _stun.ToggleAutoStand((ent, knocked));
     }
 
