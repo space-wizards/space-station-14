@@ -129,6 +129,7 @@ public abstract partial class SharedStunSystem
             return;
 
         entity.Comp.AutoStand = autoStand;
+        DirtyField(entity, entity.Comp, nameof(entity.Comp.AutoStand));
     }
 
     public void CancelKnockdownDoAfter(Entity<KnockedDownComponent> entity)

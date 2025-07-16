@@ -216,7 +216,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         else
         {
             // Only update Autostand value if it's our first time being knocked down...
-            component.AutoStand = evAttempt.AutoStand;
+            ToggleAutoStand((uid, component), evAttempt.AutoStand);
         }
 
         var knockedEv = new KnockedDownEvent(time);
