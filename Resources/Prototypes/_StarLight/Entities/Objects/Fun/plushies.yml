@@ -1247,6 +1247,7 @@
     - type: Item
       size: Small
       sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+      state: plushie_borg
     - type: Sprite
       sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
     - type: ItemToggle
@@ -1271,6 +1272,7 @@
     - type: Item
       size: Small
       sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+      state: plushie_borg
     - type: Sprite
       sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
     - type: ItemToggle
