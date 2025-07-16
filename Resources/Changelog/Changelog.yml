@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Servers with the number of open inventories set to two have a new alignment
-      that doesn't shift as much when opening and closing multiple inventories
-    type: Tweak
-  id: 8263
-  time: '2025-04-19T14:40:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35041
 - author: ps3moira
   changes:
   - message: Removed interior shuttle walls
@@ -3897,3 +3889,10 @@
   id: 8775
   time: '2025-07-15T02:47:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38700
+- author: nabegator
+  changes:
+  - message: You can now put remote signallers into utility belts.
+    type: Tweak
+  id: 8776
+  time: '2025-07-16T00:43:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35212
