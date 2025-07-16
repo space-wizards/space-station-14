@@ -200,14 +200,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         var knockedEv = new KnockedDownEvent(time);
         RaiseLocalEvent(uid, ref knockedEv);
 
-        if (refresh)
-        {
-            var knockedTime = GameTiming.CurTime + knockedEv.Time;
-            if (TimeSpan.Compare(knockedTime, component.NextUpdate) == 1)
-                SetKnockdownUpdate((uid, component), knockedTime);
-        }
-        else
-            SetKnockdownUpdate((uid, component), component.NextUpdate += knockedEv.Time);
+        RefreshKnockdownTime((uid, component), knockedEv.Time, refresh);
 
         Alerts.ShowAlert(uid, KnockdownAlert, null, (GameTiming.CurTime, component.NextUpdate));
 

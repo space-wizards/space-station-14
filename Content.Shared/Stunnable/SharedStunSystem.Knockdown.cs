@@ -89,7 +89,7 @@ public abstract partial class SharedStunSystem
 
     private void OnRejuvenate(Entity<KnockedDownComponent> entity, ref RejuvenateEvent args)
     {
-        SetKnockdownUpdate(entity, GameTiming.CurTime);
+        SetKnockdownTime(entity, GameTiming.CurTime);
 
         if (entity.Comp.AutoStand)
             RemComp<KnockedDownComponent>(entity);
@@ -135,9 +135,36 @@ public abstract partial class SharedStunSystem
         DirtyField(entity!, nameof(KnockedDownComponent.DoAfterId));
     }
 
-    public void SetKnockdownUpdate(Entity<KnockedDownComponent> entity, TimeSpan nextUpdate)
+    public void RefreshKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan time, bool refresh = true)
     {
-        entity.Comp.NextUpdate = nextUpdate;
+        if (refresh)
+            UpdateKnockdownTime(entity, time);
+        else
+            AddKnockdownTime(entity, time);
+    }
+
+    public void SetKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan time)
+    {
+        entity.Comp.NextUpdate = time;
+        DirtyField(entity!, nameof(KnockedDownComponent.NextUpdate));
+    }
+
+    public void UpdateKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan time)
+    {
+        var knockedTime = GameTiming.CurTime + time;
+        if (entity.Comp.NextUpdate < knockedTime)
+            SetKnockdownTime(entity, knockedTime);
+    }
+
+    public void AddKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan time)
+    {
+        if (entity.Comp.NextUpdate < GameTiming.CurTime)
+        {
+            SetKnockdownTime(entity, GameTiming.CurTime + time);
+            return;
+        }
+
+        entity.Comp.NextUpdate += time;
         DirtyField(entity!, nameof(KnockedDownComponent.NextUpdate));
     }
 
@@ -204,34 +231,31 @@ public abstract partial class SharedStunSystem
         return true;
     }
 
+    private bool StandingBlocked(Entity<KnockedDownComponent> entity)
+    {
+        if (!CanStand(entity))
+            return true;
+
+        if (!IntersectingStandingColliders(entity.Owner))
+            return false;
+
+        _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
+        return true;
+
+    }
+
     private bool CanStand(Entity<KnockedDownComponent> entity)
     {
         if (entity.Comp.NextUpdate > GameTiming.CurTime)
             return false;
 
-        return !StandingBlocked(entity);
-    }
-
-    private bool StandingBlocked(Entity<KnockedDownComponent> entity)
-    {
         if (!Blocker.CanMove(entity))
-            return true;
+            return false;
 
         var ev = new StandUpAttemptEvent();
         RaiseLocalEvent(entity, ref ev);
 
-        if (ev.Cancelled)
-            return true;
-
-        // Check if we would intersect with any entities by standing up
-        // Commented out to test if letting you try and stand while still on a table is better
-        /*if (GetStandingColliders(entity.Owner))
-        {
-            _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
-            return true;
-        }*/
-
-        return false;
+        return !ev.Cancelled;
     }
 
     private void OnForceStandup(ForceStandUpEvent msg, EntitySessionEventArgs args)
@@ -249,14 +273,8 @@ public abstract partial class SharedStunSystem
         // That way if we fail to stand, the game will try to stand for us when we are able to
         ToggleAutoStand(entity!, true);
 
-        if (!HasComp<StandingStateComponent>(entity) || !CanStand(entity))
+        if (!HasComp<StandingStateComponent>(entity) || StandingBlocked(entity))
             return;
-
-        if (IntersectingStandingColliders(entity.Owner))
-        {
-            _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
-            return;
-        }
 
         if (!TryComp<StaminaComponent>(entity, out var stamina))
             return;
@@ -355,7 +373,7 @@ public abstract partial class SharedStunSystem
             return;
 
         if (args.DamageDelta.GetTotal() >= 5) // TODO: Unhardcode this
-            SetKnockdownUpdate(entity, GameTiming.CurTime + TimeSpan.FromSeconds(0.5f));
+            SetKnockdownTime(entity, GameTiming.CurTime + TimeSpan.FromSeconds(0.5f));
     }
 
     #endregion
@@ -382,15 +400,9 @@ public abstract partial class SharedStunSystem
     {
         entity.Comp.DoAfterId = null;
 
-        if (args.Cancelled)
-            return;
-
-        if (StandingBlocked(entity))
-            return;
-
-        if (IntersectingStandingColliders(entity.Owner))
+        if (args.Cancelled || StandingBlocked(entity))
         {
-            _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
+            DirtyField(entity!, nameof(KnockedDownComponent.DoAfterId));
             return;
         }
 
