@@ -2,6 +2,7 @@ using Content.Server.PowerCell;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Equipment;
 using System.Linq;
+using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 
@@ -9,6 +10,7 @@ namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 public sealed class ArtifactNukerSystem : SharedArtifactNukerSystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,18 +28,19 @@ public sealed class ArtifactNukerSystem : SharedArtifactNukerSystem
         var nodes = _xenoSys.GetActiveNodes(ent);
         foreach (var node in nodes)
         {
-            var index = _xenoSys.GetNodeId(node);
-            if (args.Index != index)
-                continue;
-
             var predecessors = _xenoSys.GetPredecessorNodes(ent.Owner, node)
                 .ToList();
 
             var successors = _xenoSys.GetSuccessorNodes(ent.Owner, node)
                 .ToList();
 
-            for (var i = 0; i < predecessors.Count && i < successors.Count; i++)
-                _xenoSys.AddEdge(ent.Owner, predecessors[i], successors[i]);
+            foreach (var successor in successors)
+            {
+                if (_xenoSys.GetPredecessorNodes(ent.Owner, node).Count == 0)
+                    _xenoSys.AddEdge(ent.Owner, successor, _random.Pick(successors));
+                else
+                    _xenoSys.AddEdge(ent.Owner, _random.Pick(predecessors), successor);
+            }
 
             if (args.Nuker.Comp.ActivateNode)
             {

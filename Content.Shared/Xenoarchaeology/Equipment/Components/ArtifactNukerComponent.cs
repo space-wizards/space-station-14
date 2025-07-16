@@ -1,4 +1,3 @@
-using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Xenoarchaeology.Equipment.Components;
@@ -8,7 +7,7 @@ namespace Content.Shared.Xenoarchaeology.Equipment.Components;
 ///     Related logic lies in the <see cref="SharedArtifactNukerSystem"/>
 /// </summary>
 [RegisterComponent]
-[NetworkedComponent, AutoGenerateComponentState]
+[NetworkedComponent]
 [Access(typeof(SharedArtifactNukerSystem))]
 public sealed partial class ArtifactNukerComponent : Component
 {
@@ -23,17 +22,4 @@ public sealed partial class ArtifactNukerComponent : Component
     /// </summary>
     [DataField]
     public float EnergyDrain = 50;
-
-    /// <summary>
-    ///     Index of the artifact node that will be attempted to nuke.
-    /// </summary>
-    [ViewVariables]
-    [AutoNetworkedField]
-    public string? Index;
-}
-
-[Serializable, NetSerializable]
-public enum ArtifactNukerUiKey : byte
-{
-    Key
 }

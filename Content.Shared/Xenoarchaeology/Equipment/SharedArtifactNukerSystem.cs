@@ -4,7 +4,6 @@ using Content.Shared.Timing;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
@@ -12,6 +11,7 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 ///     Logic for the <see cref="SharedArtifactNukerSystem"/>.
 ///     For the prediction it splited into 3 parts:
 ///     this one, Server and Client.
+///     Feel free to kill server and client systems and leave only this one when powercells and random will be predicted.
 /// </summary>
 public abstract class SharedArtifactNukerSystem : EntitySystem
 {
@@ -28,7 +28,6 @@ public abstract class SharedArtifactNukerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ArtifactNukerComponent, BeforeRangedInteractEvent>(OnBeforeRangedInteract);
-        SubscribeLocalEvent<ArtifactNukerComponent, ArtifactNukerIndexChangeMessage>(OnIndexChange);
     }
 
     public void OnBeforeRangedInteract(Entity<ArtifactNukerComponent> ent, ref BeforeRangedInteractEvent args)
@@ -50,39 +49,20 @@ public abstract class SharedArtifactNukerSystem : EntitySystem
                 return;
             }
 
-            if (ent.Comp.Index is null)
-            {
-                _popup.PopupClient(Loc.GetString("artifact-nuker-popup-noindex"), args.User);
-                args.Handled = true;
-                return;
-            }
-
             if (TryComp<UseDelayComponent>(ent, out var delay))
                 _useDelay.TryResetDelay((ent, delay), true);
 
-            var refEvent = new AttemptNukeArtifact(ent, args.User, ent.Comp.Index);
+            var refEvent = new AttemptNukeArtifact(ent, args.User);
             RaiseLocalEvent(args.Target.Value, ref refEvent);
             _popup.PopupClient(Loc.GetString("artifact-nuker-popup-success"), args.User, PopupType.Medium);
             args.Handled = true;
         }
     }
-
-    public void OnIndexChange(Entity<ArtifactNukerComponent> ent, ref ArtifactNukerIndexChangeMessage args)
-    {
-        ent.Comp.Index = args.Index;
-        Dirty(ent);
-    }
 }
 
-#region events & messages
+#region Events
 
 [ByRefEvent]
-public record struct AttemptNukeArtifact(Entity<ArtifactNukerComponent> Nuker, EntityUid User, string Index);
-
-[Serializable, NetSerializable]
-public sealed class ArtifactNukerIndexChangeMessage(string index) : BoundUserInterfaceMessage
-{
-    public readonly string Index = index;
-}
+public record struct AttemptNukeArtifact(Entity<ArtifactNukerComponent> Nuker, EntityUid User);
 
 #endregion
