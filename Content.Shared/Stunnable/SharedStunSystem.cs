@@ -191,7 +191,7 @@ public abstract partial class SharedStunSystem : EntitySystem
             RefreshKnockedMovement((uid, component));
 
             // TODO: Cancellation doesn't predict on the client at all...
-            DoAfter.Cancel(component.DoAfter);
+            CancelKnockdownDoAfter(component);
         }
         else
         {

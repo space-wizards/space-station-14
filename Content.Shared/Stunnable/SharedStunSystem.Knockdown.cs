@@ -124,6 +124,15 @@ public abstract partial class SharedStunSystem
         entity.Comp.AutoStand = autoStand;
     }
 
+    public void CancelKnockdownDoAfter(KnockedDownComponent component)
+    {
+        if (component.DoAfter == null)
+            return;
+
+        DoAfter.Cancel(component.DoAfter);
+        component.DoAfter = null;
+    }
+
     #endregion
 
     #region Knockdown Logic
@@ -248,7 +257,7 @@ public abstract partial class SharedStunSystem
         }
 
         // If we have a DoAfter, cancel it
-        DoAfter.Cancel(entity.Comp.DoAfter);
+        CancelKnockdownDoAfter(entity.Comp);
         // Remove Component
         RemComp<KnockedDownComponent>(entity);
 
