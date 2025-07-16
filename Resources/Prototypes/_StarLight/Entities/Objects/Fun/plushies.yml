@@ -1490,6 +1490,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/killa_plushie.rsi
     layers: 
       - state: KillaTamalePlush
+  - type: ItemToggle
     onUse: false
     verbToggleOn: plushie-voicebox-activate
     verbToggleOff: plushie-voicebox-deactivate
