@@ -1,0 +1,175 @@
+#equipment
+- type: listing
+  id: VendorGrapplingGun
+  productEntity: WeaponGrapplingGun
+  cost:
+    SalvageTicket: 40
+  categories:
+  - MiningEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorGClothingMaskGasExplorer
+  productEntity: ClothingMaskGasExplorer
+  cost:
+    SalvageTicket: 100
+  categories:
+  - MiningEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+    
+- type: listing
+  id: VendorMechClarke
+  productEntity: MechClarke
+  cost:
+    SalvageTicket: 700
+  categories:
+  - MiningEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerAccessCondition
+  
+#- type: listing
+#  id: VendorClothingOuterHardsuitMaxim
+#  productEntity: ClothingOuterHardsuitMaxim
+#  cost:
+#    SalvageTicket: 1500
+#  categories:
+#  - MiningEquipment
+#  conditions:
+#  - !type:ListingLimitedStockCondition
+#    stock: 3
+#  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorClothingOuterHardsuitLuxury
+  productEntity: ClothingOuterHardsuitLuxury
+  cost:
+    SalvageTicket: 150
+  categories:
+  - MiningEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorClothingOuterHardsuitSalvage
+  productEntity: ClothingOuterHardsuitSalvage
+  cost:
+    SalvageTicket: 250
+  categories:
+  - MiningEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+  
+#- type: listing
+#  id: VendorClothingOuterHardsuitSpatio
+#  productEntity: ClothingOuterHardsuitSpatio
+#  cost:
+#    SalvageTicket: 100
+#  categories:
+#  - MiningEquipment
+#  conditions:
+#  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorMiningDrill
+  productEntity: MiningDrill
+  cost:
+    SalvageTicket: 200
+  categories:
+  - MiningEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorMiningDrillDiamond
+  productEntity: MiningDrillDiamond
+  cost:
+    SalvageTicket: 400
+  categories:
+  - MiningEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorMineralScanner
+  productEntity: MineralScanner
+  cost:
+    SalvageTicket: 350
+  categories:
+  - MiningEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorWeaponMechMelleDrill
+  productEntity: WeaponMechMelleDrill
+  cost:
+    SalvageTicket: 400
+  categories:
+  - MiningEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorWeaponMechMelleDrillDiamond
+  productEntity: WeaponMechMelleDrillDiamond
+  cost:
+    SalvageTicket: 600
+  categories:
+  - MiningEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerAccessCondition
+  
+#consumables
+- type: listing
+  id: VendorMedkitAdvancedFilled
+  productEntity: MedkitAdvancedFilled
+  cost:
+    SalvageTicket: 250
+  categories:
+  - MiningConsumeables
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorMedkitFilled
+  productEntity: MedkitFilled
+  cost:
+    SalvageTicket: 150
+  categories:
+  - MiningConsumeables
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorMedkitCombatFilled
+  productEntity: MedkitCombatFilled
+  cost:
+    SalvageTicket: 400
+  categories:
+  - MiningConsumeables
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorBoxFlare
+  productEntity: BoxFlare
+  cost:
+    SalvageTicket: 15
+  categories:
+  - MiningConsumeables
+  conditions:
+  - !type:BuyerAccessCondition
