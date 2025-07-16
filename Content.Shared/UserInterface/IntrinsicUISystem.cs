@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 
 namespace Content.Shared.UserInterface;
 
@@ -49,6 +49,7 @@ public sealed class IntrinsicUISystem : EntitySystem
         if (attempt.Cancelled)
             return false;
 
+        RaiseLocalEvent(uid, new BeforeIntrinsicUIOpenEvent(uid, key)); // DS14-slimeperson-internal-magic-mirror
         return _uiSystem.TryToggleUi(uid, key, uid);
     }
 }
@@ -64,3 +65,16 @@ public sealed class IntrinsicUIOpenAttemptEvent : CancellableEntityEventArgs
         Key = key;
     }
 }
+
+// DS14-slimeperson-internal-magic-mirror-start
+public sealed class BeforeIntrinsicUIOpenEvent : CancellableEntityEventArgs
+{
+    public EntityUid User { get; }
+    public Enum? Key { get; }
+    public BeforeIntrinsicUIOpenEvent(EntityUid who, Enum? key)
+    {
+        User = who;
+        Key = key;
+    }
+}
+// DS14-slimeperson-internal-magic-mirror-end
