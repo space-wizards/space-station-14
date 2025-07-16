@@ -11,4 +11,16 @@ public sealed partial class ExaminableSolutionComponent : Component
     /// </summary>
     [DataField]
     public bool HeldOnly;
+
+    /// <summary>
+    /// If true then the solution needs to be open to show how full it is.
+    /// </summary>
+    [DataField]
+    public bool Opaque;
+
+    /// <summary>
+    /// Should we only give an estimate of fullness instead of the exact value?
+    /// </summary>
+    [DataField]
+    public bool Estimate;
 }

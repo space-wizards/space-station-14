@@ -18,6 +18,9 @@
   - type: SpaceGarbage
   - type: StaticPrice
     price: 0
+  - type: ExaminableSolution
+    solution: food
+    estimate: true
 
 # Packets
 
