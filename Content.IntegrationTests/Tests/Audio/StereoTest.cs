@@ -12,8 +12,88 @@ namespace Content.IntegrationTests.Tests.Audio;
 
 public sealed class StereoTest
 {
+    /// <summary>
+    /// Scans all registered component types for <see cref="SoundSpecifier"/> fields, then inspects
+    /// every <see cref="EntityPrototype"/> to make sure that the files assigned to those fields
+    /// are in mono format. Fields marked with <see cref="AllowStereoAttribute"/> are exempt from this check.
+    /// </summary>
     [Test]
-    public async Task CheckSoundSpecifiers()
+    public async Task CheckComponentSoundSpecifiers()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var client = pair.Client;
+        var protoMan = client.ProtoMan;
+        var compFactory = client.EntMan.ComponentFactory;
+        var resCache = client.Resolve<IResourceCache>();
+
+        await client.WaitAssertion(() =>
+        {
+            Assert.Multiple(() =>
+            {
+                Dictionary<string, List<FieldInfo>> soundSpecifierFields = [];
+                foreach (var componentType in compFactory.AllRegisteredTypes)
+                {
+                    var componentName = compFactory.GetComponentName(componentType);
+                    foreach (var field in componentType.GetFields())
+                    {
+                        // If the field has the [AllowStereo] attribute, we can ignore it
+                        if (field.HasCustomAttribute<AllowStereoAttribute>())
+                            continue;
+
+                        // Special handling for generic types
+                        if (field.FieldType.IsGenericType)
+                        {
+                            foreach (var typeArg in field.FieldType.GenericTypeArguments)
+                            {
+                                if (typeArg.IsAssignableTo(typeof(SoundSpecifier)))
+                                    soundSpecifierFields.GetOrNew(componentName).Add(field);
+                            }
+                            continue;
+                        }
+
+                        if (field.FieldType.IsAssignableTo(typeof(SoundSpecifier)))
+                            soundSpecifierFields.GetOrNew(componentName).Add(field);
+                    }
+                }
+
+                // Unlikely, but if no components have SoundSpecifier fields, we're done.
+                if (soundSpecifierFields.Count == 0)
+                    return;
+
+                foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
+                {
+                    foreach (var (componentName, fields) in soundSpecifierFields)
+                    {
+                        foreach (var (compName, compRegistryEntry) in proto.Components)
+                        {
+                            // Find the flagged component
+                            if (compName != componentName)
+                                continue;
+
+                            // Check the fields we flagged
+                            foreach (var field in fields)
+                            {
+                                var fieldValue = field.GetValue(compRegistryEntry.Component);
+                                var datafieldName = $"{compName}.{field.Name}";
+
+                                CheckValue(fieldValue, datafieldName, resCache, protoMan);
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>
+    /// Scans every registered prototype kind for <see cref="SoundSpecifier"/> fields, then inspects
+    /// every instance of those prototype kinds to make sure that the files assigned to those fields
+    /// are in mono format. Fields marked with <see cref="AllowStereoAttribute"/> are exempt from this check.
+    /// </summary>
+    [Test]
+    public async Task CheckPrototypeSoundSpecifiers()
     {
         await using var pair = await PoolManager.GetServerClient();
         var client = pair.Client;
