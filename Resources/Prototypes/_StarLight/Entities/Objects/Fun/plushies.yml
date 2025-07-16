@@ -1249,7 +1249,6 @@
       sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
     - type: Sprite
       sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
-      state: plushie_borg
     - type: ItemToggle
       onUse: false
       verbToggleOn: plushie-voicebox-activate
@@ -1274,7 +1273,6 @@
       sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
     - type: Sprite
       sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
-      state: plushie_borg
     - type: ItemToggle
       onUse: false
       verbToggleOn: plushie-voicebox-activate
