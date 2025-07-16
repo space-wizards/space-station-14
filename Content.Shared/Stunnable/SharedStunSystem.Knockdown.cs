@@ -241,6 +241,7 @@ public abstract partial class SharedStunSystem
             return false;
 
         _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
+        ToggleAutoStand(entity.Owner);
         return true;
 
     }
