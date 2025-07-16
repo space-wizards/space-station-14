@@ -1,4 +1,5 @@
-﻿using Content.Shared.Buckle.Components;
+﻿using Content.Shared.Alert;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
@@ -16,6 +17,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Stunnable;
 
@@ -29,6 +31,8 @@ public abstract partial class SharedStunSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
+
+    public static readonly ProtoId<AlertPrototype> KnockdownAlert = "Knockdown";
 
     private void InitializeKnockdown()
     {
@@ -105,7 +109,7 @@ public abstract partial class SharedStunSystem
         entity.Comp.SpeedModifier = 1f;
 
         _standingState.Stand(entity);
-        Alerts.ClearAlert(entity, "Knockdown");
+        Alerts.ClearAlert(entity, KnockdownAlert);
     }
 
     #endregion
@@ -322,9 +326,7 @@ public abstract partial class SharedStunSystem
         if (!args.InterruptsDoAfters || !args.DamageIncreased || args.DamageDelta == null || GameTiming.ApplyingState)
             return;
 
-        var delta = args.DamageDelta.GetTotal();
-
-        if (delta >= 5) // TODO: Unhardcode this
+        if (args.DamageDelta.GetTotal() >= 5) // TODO: Unhardcode this
             entity.Comp.NextUpdate = GameTiming.CurTime + TimeSpan.FromSeconds(0.5f);
     }
 

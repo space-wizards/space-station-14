@@ -21,7 +21,6 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;

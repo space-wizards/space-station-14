@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Movement.Systems;
 
 /// <summary>
-/// This handles...
+/// This handles the application of movement and friction modifiers to an entity as status effects.
 /// </summary>
 public sealed class MovementModStatusSystem : EntitySystem
 {
@@ -71,8 +71,12 @@ public sealed class MovementModStatusSystem : EntitySystem
     }
 
     /// <summary>
-    ///
+    /// Sets the friction status modifiers for a status effect.
     /// </summary>
+    /// <param name="status">The status effect entity we're modifying.</param>
+    /// <param name="friction">The friction modifier we're applying.</param>
+    /// <param name="acceleration">The acceleration modifier we're applying</param>
+    /// <param name="entity">The entity the status effect is attached to that we need to refresh.</param>
     private bool TrySetFrictionStatus(Entity<FrictionStatusEffectComponent?> status, float friction, float acceleration, EntityUid entity)
     {
         if (!Resolve(status, ref status.Comp, false))
