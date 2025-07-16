@@ -173,7 +173,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             ("color", commandRevPercent >= 0.5 || winType == "rev-crew-minor" ? "green" : "red")
             ));
             args.AddLine(Loc.GetString(GetEscapeCount(GetCommandList()) == 1 ? "rev-loyal-command-singular" : "rev-loyal-command",
-            ("count", GetEscapeCount(GetCommandList())),
+            ("count", GetEscapeCount(GetCommandList(false))),
             ("color", winType == "rev-crew-minor" ? "green" : "red")
             ));
             args.AddLine(Loc.GetString(GetEscapeCount(GetHeadRevList()) == 1 ? "headrev-escapes-singular" : "headrev-escapes",
@@ -285,13 +285,15 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         return crewList;
     }
-    private List<EntityUid> GetCommandList()
+    private List<EntityUid> GetCommandList(bool countRevs = true)
     {
         var commandList = new List<EntityUid>();
 
         var heads = AllEntityQuery<CommandStaffComponent>();
         while (heads.MoveNext(out var id, out _))
         {
+            if (!countRevs && (HasComp<RevolutionaryComponent>(id) || HasComp<HeadRevolutionaryComponent>(id)))
+                continue;
             commandList.Add(id);
         }
 
