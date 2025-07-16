@@ -9452,5 +9452,13 @@ Entries:
   id: 1302
   time: '2025-07-16T20:05:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1039
+- author: stickycheZ101
+  changes:
+  - message: given the QM some phresh drip (QM’s luxury maxim hardsuit has been added,
+      and added to RS QM lockers)
+    type: Add
+  id: 1303
+  time: '2025-07-16T20:17:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1033
 Order: -1
 
