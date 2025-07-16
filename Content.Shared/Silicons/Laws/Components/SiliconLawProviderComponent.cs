@@ -1,6 +1,6 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Audio;
 using Robust.Shared.Audio;
-using Content.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Silicons.Laws.Components;
 
