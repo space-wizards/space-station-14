@@ -156,7 +156,12 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         return _roles.TryGetValue("Overall", out var overallPlaytime) ? overallPlaytime : TimeSpan.Zero;
     }
 
-    public IEnumerable<KeyValuePair<string, TimeSpan>> FetchPlaytimeByRoles()
+    /// <summary>
+    /// Fetches an IEnumerable of the playtimes this client has, each section being a LocId and a Timespan.
+    /// The LocId is either the PlaytimeTracker's name or the Job's name.
+    /// </summary>
+    /// <returns>An IEnumerable of the playtimes this client has.</returns>
+    public IEnumerable<KeyValuePair<LocId, TimeSpan>> FetchPlaytimeByRoles()
     {
         var usedTrackers = new HashSet<string>();
         var jobsToMap = _prototypes.EnumeratePrototypes<JobPrototype>();
@@ -175,7 +180,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
             if (_roles.TryGetValue(trackerProtoId, out var playtime))
             {
                 usedTrackers.Add(trackerProtoId);
-                yield return new KeyValuePair<string, TimeSpan>(name, playtime);
+                yield return new KeyValuePair<LocId, TimeSpan>(name, playtime);
             }
         }
     }

@@ -49,6 +49,7 @@ public abstract class SharedJobSystem : EntitySystem
     /// </summary>
     /// <param name="trackerProto"></param>
     /// <returns></returns>
+    [Obsolete("Use SharedJobSystem.GetJobPrototypes")]
     public ProtoId<JobPrototype> GetJobPrototype(ProtoId<PlayTimeTrackerPrototype> trackerProto)
     {
         return _inverseTrackerLookup[trackerProto].FirstOrDefault();
@@ -131,6 +132,35 @@ public abstract class SharedJobSystem : EntitySystem
         }
 
         return found;
+    }
+
+    /// <summary>
+    /// Tries to get the highest weighted department in a list of JobPrototypes.
+    /// </summary>
+    /// <returns>The department with the highest weight.</returns>
+    public bool TryGetListHighestWeightDepartment(List<ProtoId<JobPrototype>> jobList, [NotNullWhen(true)] out DepartmentPrototype? chosenDepartment)
+    {
+        chosenDepartment = null;
+
+        foreach (var jobId in jobList)
+        {
+            if (!TryGetAllDepartments(jobId, out var departmentPrototypes) || departmentPrototypes.Count == 0)
+                continue;
+
+            departmentPrototypes.Sort((x, y) => y.Weight.CompareTo(x.Weight));
+
+            var newDepartment = departmentPrototypes[0];
+
+            if (chosenDepartment != null && chosenDepartment.Weight > newDepartment.Weight)
+                continue;
+
+            chosenDepartment = newDepartment;
+        }
+
+        if (chosenDepartment == null)
+            return false;
+
+        return true;
     }
 
     /// <summary>

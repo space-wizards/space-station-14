@@ -1,4 +1,3 @@
-using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Players.PlayTimeTracking;
@@ -14,7 +13,7 @@ public sealed partial class PlayTimeTrackerPrototype : IPrototype
 
     /// <summary>
     /// The localized name ID of this playtime tracker.
-    /// If this field is left null, it'll default to the first job that uses this tracker.
+    /// If this field is left null, it'll default to a list of every job that has this tracker.
     /// </summary>
     [DataField]
     public LocId? Name { get; private set; } = default!;

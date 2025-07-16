@@ -45,25 +45,16 @@ public sealed partial class RoleTimeRequirement : JobRequirement
 
         var jobList = jobSystem.GetJobPrototypes(Role);
 
-        DepartmentPrototype? chosenDepartment = null;
-        foreach (var jobId in jobList)
-        {
-            if (!jobSystem.TryGetDepartment(jobId, out var dept))
-                continue;
+        var departmentColor = DefaultDepartmentColor;
 
-            if (chosenDepartment != null && chosenDepartment.Weight > dept.Weight)
-                continue;
-
-            chosenDepartment = dept;
-        }
-
-        var departmentColor = chosenDepartment?.Color ?? DefaultDepartmentColor;
+        if (jobSystem.TryGetListHighestWeightDepartment(jobList, out var department))
+            departmentColor = department.Color;
 
         var localizedNames = jobList.Select(jobId => protoManager.Index(jobId).LocalizedName).ToList();
-        var name = ContentLocalizationManager.FormatListToOr(localizedNames);
+        var names = ContentLocalizationManager.FormatListToOr(localizedNames);
 
         if (trackerPrototype.Name is { } trackerName)
-            name = Loc.GetString(trackerName);
+            names = Loc.GetString(trackerName);
 
         if (!Inverted)
         {
@@ -73,7 +64,7 @@ public sealed partial class RoleTimeRequirement : JobRequirement
             reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                 "role-timer-role-insufficient",
                 ("time", formattedRoleDiff),
-                ("job", name),
+                ("job", names),
                 ("departmentColor", departmentColor.ToHex())));
             return false;
         }
@@ -83,7 +74,7 @@ public sealed partial class RoleTimeRequirement : JobRequirement
             reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                 "role-timer-role-too-high",
                 ("time", formattedRoleDiff),
-                ("job", name),
+                ("job", names),
                 ("departmentColor", departmentColor.ToHex())));
             return false;
         }
