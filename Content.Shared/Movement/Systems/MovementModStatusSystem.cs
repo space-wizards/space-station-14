@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
 
@@ -19,6 +20,28 @@ public sealed class MovementModStatusSystem : EntitySystem
     {
         SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectAppliedEvent>(OnFrictionStatusEffectApplied);
         SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRemovedEvent>(OnFrictionStatusEffectRemoved);
+
+        SubscribeLocalEvent<FrictionStatusModifierComponent, ComponentShutdown>(OnFrictionRemove);
+        SubscribeLocalEvent<FrictionStatusModifierComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionStatus);
+        SubscribeLocalEvent<FrictionStatusModifierComponent, TileFrictionEvent>(OnRefreshTileFrictionStatus);
+    }
+
+    private void OnFrictionRemove(Entity<FrictionStatusModifierComponent> ent, ref ComponentShutdown args)
+    {
+        ent.Comp.FrictionModifier = 1f;
+        ent.Comp.AccelerationModifier = 1f;
+        _movementSpeedModifier.RefreshFrictionModifiers(ent);
+    }
+
+    private void OnRefreshFrictionStatus(Entity<FrictionStatusModifierComponent> ent, ref RefreshFrictionModifiersEvent args)
+    {
+        args.ModifyFriction(ent.Comp.FrictionModifier);
+        args.ModifyAcceleration(ent.Comp.AccelerationModifier);
+    }
+
+    private void OnRefreshTileFrictionStatus(Entity<FrictionStatusModifierComponent> ent, ref TileFrictionEvent args)
+    {
+        args.Modifier *= ent.Comp.FrictionModifier;
     }
 
     /// <summary>

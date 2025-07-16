@@ -43,10 +43,6 @@ public abstract partial class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
         SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
-        SubscribeLocalEvent<Movement.Components.FrictionStatusModifierComponent, ComponentShutdown>(OnFrictionRemove);
-        SubscribeLocalEvent<Movement.Components.FrictionStatusModifierComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionStatus);
-        SubscribeLocalEvent<Movement.Components.FrictionStatusModifierComponent, TileFrictionEvent>(OnRefreshTileFrictionStatus);
-
         SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
         SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(OnStunShutdown);
 
@@ -140,13 +136,6 @@ public abstract partial class SharedStunSystem : EntitySystem
         component.SprintSpeedModifier = 1f;
         component.WalkSpeedModifier = 1f;
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
-    }
-
-    private void OnFrictionRemove(Entity<Movement.Components.FrictionStatusModifierComponent> ent, ref ComponentShutdown args)
-    {
-        ent.Comp.FrictionModifier = 1f;
-        ent.Comp.AccelerationModifier = 1f;
-        _movementSpeedModifier.RefreshFrictionModifiers(ent);
     }
 
     // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
@@ -327,17 +316,6 @@ public abstract partial class SharedStunSystem : EntitySystem
     private void OnRefreshMovespeed(EntityUid ent, SlowedDownComponent comp, RefreshMovementSpeedModifiersEvent args)
     {
         args.ModifySpeed(comp.WalkSpeedModifier, comp.SprintSpeedModifier);
-    }
-
-    private void OnRefreshFrictionStatus(Entity<Movement.Components.FrictionStatusModifierComponent> ent, ref RefreshFrictionModifiersEvent args)
-    {
-        args.ModifyFriction(ent.Comp.FrictionModifier);
-        args.ModifyAcceleration(ent.Comp.AccelerationModifier);
-    }
-
-    private void OnRefreshTileFrictionStatus(Entity<Movement.Components.FrictionStatusModifierComponent> ent, ref TileFrictionEvent args)
-    {
-        args.Modifier *= ent.Comp.FrictionModifier;
     }
 
     #endregion
