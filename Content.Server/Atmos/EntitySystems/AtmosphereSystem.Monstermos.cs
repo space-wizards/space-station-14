@@ -584,13 +584,13 @@ namespace Content.Server.Atmos.EntitySystems
             foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, tile.GridIndices))
             {
                 if (_firelockQuery.TryGetComponent(entity, out var firelock))
-                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStopAirtight((entity, firelock));
+                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
             }
 
             foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, other.GridIndices))
             {
                 if (_firelockQuery.TryGetComponent(entity, out var firelock))
-                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStopAirtight((entity, firelock));
+                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
             }
 
             if (!reconsiderAdjacent)
