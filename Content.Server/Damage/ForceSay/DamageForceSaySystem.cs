@@ -5,11 +5,11 @@ using Content.Shared.Damage.ForceSay;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Stunnable;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using static Content.Shared.Stunnable.SharedStunSystem;
 
 namespace Content.Server.Damage.ForceSay;
 

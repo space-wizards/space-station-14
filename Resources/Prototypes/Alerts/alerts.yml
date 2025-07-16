@@ -152,7 +152,7 @@
   id: Knockdown
   clickEvent: !type:KnockedDownAlertEvent
   icons:
-  - sprite: /Textures/Interface/Alerts/stunnable.rsi #Should definitely draw a proper icon
+  - sprite: /Textures/Interface/Alerts/stunnable.rsi
     state: knocked-down
   name: alerts-knockdown-name
   description: alerts-knockdown-desc

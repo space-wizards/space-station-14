@@ -209,37 +209,30 @@ public abstract partial class SharedStunSystem : EntitySystem
             return false;
 
         // Initialize our component with the relevant data we need if we don't have it
-        if (!TryComp<KnockedDownComponent>(uid, out var component))
-        {
-            var knockedDown = _component.GetComponent<KnockedDownComponent>();
-            knockedDown.AutoStand = evAttempt.AutoStand;
-            AddComp(uid, knockedDown);
-            component = knockedDown;
-        }
-        else
+        if (EnsureComp<KnockedDownComponent>(uid, out var component))
         {
             RefreshKnockedMovement((uid, component));
 
-            // TODO: This cancellation does not predict on the client at all
+            // TODO: Cancellation doesn't predict on the client at all...
             DoAfter.Cancel(component.DoAfter);
         }
-
-        var knockedEv = new KnockedDownEvent()
+        else
         {
-            KnockdownTime = time,
-        };
+            // Only update Autostand value if it's our first time being knocked down...
+            component.AutoStand = evAttempt.AutoStand;
+        }
+
+        var knockedEv = new KnockedDownEvent(time);
         RaiseLocalEvent(uid, ref knockedEv);
 
         if (refresh)
         {
-            var knockedTime = GameTiming.CurTime + knockedEv.KnockdownTime;
+            var knockedTime = GameTiming.CurTime + knockedEv.Time;
             if (TimeSpan.Compare(knockedTime, component.NextUpdate) == 1)
                 component.NextUpdate = knockedTime;
         }
         else
-            component.NextUpdate += knockedEv.KnockdownTime;
-
-        Dirty(uid, component);
+            component.NextUpdate += knockedEv.Time;
 
         Alerts.ShowAlert(uid, "Knockdown", null, (GameTiming.CurTime, component.NextUpdate));
 

@@ -74,6 +74,24 @@ public abstract partial class SharedStunSystem
             .Register<SharedStunSystem>();
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (!GameTiming.IsFirstTimePredicted)
+            return;
+
+        var query = EntityQueryEnumerator<KnockedDownComponent>();
+
+        while (query.MoveNext(out var uid, out var knockedDown))
+        {
+            if (!knockedDown.AutoStand || knockedDown.DoAfter.HasValue || knockedDown.NextUpdate > GameTiming.CurTime)
+                continue;
+
+            TryStanding(uid, out knockedDown.DoAfter);
+        }
+    }
+
     private void OnRejuvenate(Entity<KnockedDownComponent> entity, ref RejuvenateEvent args)
     {
         entity.Comp.NextUpdate = GameTiming.CurTime;
@@ -98,9 +116,18 @@ public abstract partial class SharedStunSystem
 
         _standingState.Stand(entity);
         Alerts.ClearAlert(entity, "Knockdown");
+    }
 
-        var ev = new KnockdownEndEvent();
-        RaiseLocalEvent(entity, ref ev);
+    #endregion
+
+    #region API
+
+    public void ToggleAutoStand(Entity<KnockedDownComponent?> entity, bool autoStand = false)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
+        entity.Comp.AutoStand = autoStand;
     }
 
     #endregion
@@ -118,7 +145,11 @@ public abstract partial class SharedStunSystem
         if (!TryComp<KnockedDownComponent>(playerEnt, out var component))
             TryKnockdown(playerEnt, TimeSpan.FromSeconds(0.5), true, false); // TODO: Unhardcode these numbers
         else
-            component.AutoStand = !TryStanding(playerEnt, out component.DoAfter); // Have a better way of doing this
+        {
+            component.AutoStand = true;
+            TryStanding(playerEnt, out component.DoAfter);
+            // See if this fixes prediction...
+        }
     }
 
     public bool TryStanding(Entity<KnockedDownComponent?> entity, out DoAfterId? id)
@@ -133,11 +164,10 @@ public abstract partial class SharedStunSystem
         if (!CanStand((entity.Owner, entity.Comp)))
             return false;
 
-        var ev = new StandUpArgsEvent()
-        {
-            DoAfterTime = state.StandTime,
-            AutoStand = entity.Comp.AutoStand,
-        };
+        // Don't want the update loop to cancel our stand attempt...
+        ToggleAutoStand(entity);
+
+        var ev = new StandUpArgsEvent(state.StandTime);
         RaiseLocalEvent(entity, ref ev);
 
         var doAfterArgs = new DoAfterArgs(EntityManager, entity, ev.DoAfterTime, new TryStandDoAfterEvent(), entity, entity)
@@ -189,7 +219,7 @@ public abstract partial class SharedStunSystem
     public void ForceStandUp(Entity<KnockedDownComponent> entity)
     {
         // That way if we fail to stand, the game will try to stand for us when we are able to
-        entity.Comp.AutoStand = true;
+        ToggleAutoStand(entity!, true);
 
         if (!HasComp<StandingStateComponent>(entity) || !CanStand(entity))
             return;
@@ -361,11 +391,7 @@ public abstract partial class SharedStunSystem
 
     private void RefreshKnockedMovement(Entity<KnockedDownComponent> ent)
     {
-        var ev = new KnockedDownRefreshEvent()
-        {
-            SpeedModifier = 1f,
-            FrictionModifier = 1f,
-        };
+        var ev = new KnockedDownRefreshEvent();
         RaiseLocalEvent(ent, ref ev);
 
         ent.Comp.SpeedModifier = ev.SpeedModifier;

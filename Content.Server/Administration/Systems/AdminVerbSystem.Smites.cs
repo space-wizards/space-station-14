@@ -953,7 +953,6 @@ public sealed partial class AdminVerbSystem
             Act = () =>
             {
                 EnsureComp<WormComponent>(args.Target);
-                _alerts.ShowAlert(args.Target, "Knockdown", null);
             },
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", crawlerName, Loc.GetString("admin-smite-crawler-description"))
