@@ -141,7 +141,7 @@ public abstract partial class SharedStunSystem
 
         DoAfter.Cancel(entity.Owner, entity.Comp.DoAfterId.Value);
         entity.Comp.DoAfterId = null;
-        DirtyField(entity!, nameof(KnockedDownComponent.DoAfterId));
+        DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.DoAfterId));
     }
 
     public void RefreshKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan time, bool refresh = true)
@@ -155,7 +155,7 @@ public abstract partial class SharedStunSystem
     public void SetKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan time)
     {
         entity.Comp.NextUpdate = time;
-        DirtyField(entity!, nameof(KnockedDownComponent.NextUpdate));
+        DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.NextUpdate));
     }
 
     public void UpdateKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan time)
@@ -174,7 +174,7 @@ public abstract partial class SharedStunSystem
         }
         
         entity.Comp.NextUpdate += time;
-        DirtyField(entity!, nameof(KnockedDownComponent.NextUpdate));
+        DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.NextUpdate));
     }
 
     #endregion
@@ -321,7 +321,7 @@ public abstract partial class SharedStunSystem
         if (!TryStanding(entity.Owner, out entity.Comp.DoAfterId))
             ForceStandUp(entity);
 
-        DirtyField(entity!, nameof(KnockedDownComponent.DoAfterId));
+        DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.DoAfterId));
         args.Handled = true;
     }
 
@@ -436,7 +436,7 @@ public abstract partial class SharedStunSystem
 
         if (args.Cancelled || StandingBlocked(entity))
         {
-            DirtyField(entity!, nameof(KnockedDownComponent.DoAfterId));
+            DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.DoAfterId));
             return;
         }
 
