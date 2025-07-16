@@ -1,61 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Unfolded bandanas/lab coats now fit in crates again.
-    type: Fix
-  id: 8195
-  time: '2025-04-16T11:54:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36625
-- author: metalgearsloth
-  changes:
-  - message: Fixes tippy messages being too sh-
-    type: Fix
-  id: 8196
-  time: '2025-04-16T12:23:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36616
-- author: SlamBamActionman
-  changes:
-  - message: Closed pet carriers no longer push players or lockers.
-    type: Fix
-  id: 8197
-  time: '2025-04-16T14:12:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36627
-- author: Flareguy, ArtisticRoomba
-  changes:
-  - message: Added the Temperature Gun. It can shoot body-temperature-changing bolts.
-      Unlock them through arsenal science today!
-    type: Add
-  - message: Experimental Battery Ammo technology is no longer available to research..
-    type: Remove
-  id: 8198
-  time: '2025-04-16T17:58:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35447
-- author: UpAndLeaves
-  changes:
-  - message: Most clothing will no longer provide protection against zombification
-    type: Tweak
-  - message: Blunt/Slash/Piercing resistance will now provide weak protection against
-      zombification.
-    type: Tweak
-  - message: Winter coats are now moderately effective against zombification.
-    type: Tweak
-  - message: Bio suits are now very effective against zombification.
-    type: Tweak
-  - message: Security bio suits are now lightly armored.
-    type: Tweak
-  - message: Bio suits now only have 5% slowdown.
-    type: Tweak
-  id: 8199
-  time: '2025-04-16T18:21:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36485
-- author: ScarKy0
-  changes:
-  - message: A basic sheet crate can now be ordered for 1660 spesos. It contains 30
-      steel, glass and plastic.
-    type: Add
-  id: 8200
-  time: '2025-04-16T19:20:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36419
 - author: sowelipililimute
   changes:
   - message: The medical and security techfabs now announce new recipes that they
@@ -3896,3 +3839,47 @@
   id: 8707
   time: '2025-06-23T11:32:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37640
+- author: metalgearsloth
+  changes:
+  - message: Added ambient occlusion to walls so they have shadows around them.
+    type: Add
+  id: 8708
+  time: '2025-06-24T07:56:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38276
+- author: BramvanZijp
+  changes:
+  - message: Added Stamina Damage resistance to the raid/hard-suits used by Nuclear
+      Operatives and Emergency Response Teams.
+    type: Tweak
+  id: 8709
+  time: '2025-06-24T13:04:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38526
+- author: Kittygyat
+  changes:
+  - message: Added a handheld station map to the borg thruster module!
+    type: Add
+  id: 8710
+  time: '2025-06-24T15:35:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38541
+- author: PJB3005
+  changes:
+  - message: Fixed various worn clothing items being invisible when seen through UI,
+      such as the examine popups.
+    type: Fix
+  id: 8711
+  time: '2025-06-24T20:47:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38042
+- author: AreYouConfused
+  changes:
+  - message: Bulldog bundle now accurately says what is included
+    type: Fix
+  id: 8712
+  time: '2025-06-24T21:58:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38558
+- author: Dragonjspider
+  changes:
+  - message: The Cutter Machine no longer makes Dark Techmaints floor tiles for free
+    type: Fix
+  id: 8713
+  time: '2025-06-25T01:46:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38557
