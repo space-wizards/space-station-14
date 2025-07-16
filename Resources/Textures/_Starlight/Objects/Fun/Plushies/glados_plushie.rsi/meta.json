@@ -8,14 +8,14 @@
   },
   "states": [
     {
-      "name": "plushie_borg"
+      "name": "icon"
     },
     {
-      "name": "plushieborg-inhand-left",
+      "name": "inhand-left",
       "directions": 4
     },
     {
-      "name": "plushieborg-inhand-right",
+      "name": "inhand-right",
       "directions": 4
     }
   ]
