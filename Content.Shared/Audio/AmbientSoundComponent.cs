@@ -17,6 +17,7 @@ public sealed partial class AmbientSoundComponent : Component, IComponentTreeEnt
     public bool Enabled { get; set; } = true;
 
     [DataField("sound", required: true), ViewVariables(VVAccess.ReadWrite)] // only for map editing
+    [AllowStereo]
     public SoundSpecifier Sound = default!;
 
     /// <summary>
