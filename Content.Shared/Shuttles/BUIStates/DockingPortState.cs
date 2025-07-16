@@ -18,7 +18,13 @@ public sealed class DockingPortState
 
     public NetEntity? GridDockedWith;
 
-    // The colours used on radar screens: HighlightedColor is used for all docks in standard view, and the currently focused dock in dock view. Color is used otherwise.
+    /// <summary>
+    /// The default colour used to shade a dock on a radar screen
+    /// </summary>
     public Color Color;
+
+    /// <summary>
+    /// The colour used to shade a dock on a radar screen if it is highlighted (hovered over/selected on docking screen/shown in the main ship radar)
+    /// </summary>
     public Color HighlightedColor;
 }
