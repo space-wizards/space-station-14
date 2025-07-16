@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ps3moira
-  changes:
-  - message: Removed interior shuttle walls
-    type: Remove
-  id: 8264
-  time: '2025-04-19T14:41:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34261
 - author: Minemoder
   changes:
   - message: Most roles on the station now require significantly less playtime playtime
@@ -3896,3 +3889,14 @@
   id: 8776
   time: '2025-07-16T00:43:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35212
+- author: ArtisticRoomba
+  changes:
+  - message: Firelocks will now properly drop fast enough to prevent the spacing of
+      an entire atmos volume.
+    type: Fix
+  - message: Only the necessary firelocks required to stop a spacing will drop when
+      a spacing is triggered, instead of all firelocks in a spaced volume.
+    type: Fix
+  id: 8777
+  time: '2025-07-16T03:18:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38918
