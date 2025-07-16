@@ -93,7 +93,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         foreach (var entity in list)
         {
-            if (_emergencyShuttle.IsTargetEscaping(entity))
+            if (_emergencyShuttle.IsTargetEscaping(entity) && !(TryComp<CuffableComponent>(entity, out var cuffed) && cuffed.CuffedHandCount > 0))
             {
                 return true;
             }
@@ -135,7 +135,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     private int GetEscapeCount(List<EntityUid> list)
     {
         var escapes = 0;
-        foreach (var entity in GetCommandList())
+        foreach (var entity in list)
         {
             if (_emergencyShuttle.IsTargetEscaping(entity) && !(TryComp<CuffableComponent>(entity, out var cuffed) && cuffed.CuffedHandCount > 0))
             {
@@ -165,16 +165,16 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             var escapedHeadRevs = GetEscapeCount(GetHeadRevList());
             var commandRevPercent = GetRevolutionaryPercentage(GetCommandList());
             args.AddLine(Loc.GetString("rev-crew-percentage",
-            ("%", GetRevolutionaryPercentage(GetCrewList())),
+            ("percentage", GetRevolutionaryPercentage(GetCrewList())),
             ("color", winType == "crew-minor" ? "green" : "yellow")
             ));
             args.AddLine(Loc.GetString("rev-command-percentage",
-            ("%", commandRevPercent),
+            ("percentage", commandRevPercent),
             ("color", commandRevPercent >= 0.5 || winType == "rev-crew-minor" ? "green" : "red")
             ));
             args.AddLine(Loc.GetString("rev-loyal-command",
             ("count", GetEscapeCount(GetCommandList())),
-            ("color", winType == "rev-crew-minor" ? "sgreen" : "red")
+            ("color", winType == "rev-crew-minor" ? "green" : "red")
             ));
             args.AddLine(Loc.GetString("headrev-escapes",
             ("count", escapedHeadRevs),
