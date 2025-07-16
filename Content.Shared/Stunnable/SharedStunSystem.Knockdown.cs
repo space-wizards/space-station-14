@@ -72,9 +72,6 @@ public abstract partial class SharedStunSystem
     {
         base.Update(frameTime);
 
-        if (GameTiming.ApplyingState)
-            return;
-
         var query = EntityQueryEnumerator<KnockedDownComponent>();
 
         while (query.MoveNext(out var uid, out var knockedDown))
