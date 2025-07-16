@@ -21,7 +21,6 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedMapSystem _mapping = default!;
         [Dependency] private readonly PointLightSystem _pointLight = default!;
-        [Dependency] private readonly AirtightSystem _airtight = default!;
 
         private const int UpdateInterval = 30;
         private int _accumulatedTicks;
