@@ -2,6 +2,7 @@
 using Content.Shared.Movement.Events;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Systems;
 
@@ -12,6 +13,7 @@ public sealed class MovementModStatusSystem : EntitySystem
 {
     public static readonly EntProtoId StatusEffectFriciton = "StatusEffectFriction";
 
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly StatusEffectsSystem _status = default!;
 
@@ -116,6 +118,9 @@ public sealed class MovementModStatusSystem : EntitySystem
 
     private void OnFrictionStatusEffectApplied(Entity<FrictionStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         EnsureComp<FrictionStatusModifierComponent>(args.Target);
         // This does not update Friction Modifiers since they may not have been initialized for the status effect yet. You'll need to do that yourself.
     }
