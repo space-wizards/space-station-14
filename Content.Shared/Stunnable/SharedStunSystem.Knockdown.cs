@@ -79,11 +79,11 @@ public abstract partial class SharedStunSystem
 
         while (query.MoveNext(out var uid, out var knockedDown))
         {
-            if (!knockedDown.AutoStand || knockedDown.DoAfter.HasValue || knockedDown.NextUpdate > GameTiming.CurTime)
+            if (!knockedDown.AutoStand || knockedDown.DoAfterId.HasValue || knockedDown.NextUpdate > GameTiming.CurTime)
                 continue;
 
-            TryStanding(uid, out knockedDown.DoAfter);
-            DirtyField(uid, knockedDown, nameof(KnockedDownComponent.DoAfter));
+            TryStanding(uid, out knockedDown.DoAfterId);
+            DirtyField(uid, knockedDown, nameof(KnockedDownComponent.DoAfterId));
         }
     }
 
@@ -127,9 +127,12 @@ public abstract partial class SharedStunSystem
 
     public void CancelKnockdownDoAfter(Entity<KnockedDownComponent> entity)
     {
-        DoAfter.Cancel(entity.Comp.DoAfter);
-        entity.Comp.DoAfter = null;
-        DirtyField(entity!, nameof(KnockedDownComponent.DoAfter));
+        if (entity.Comp.DoAfterId == null)
+            return;
+
+        DoAfter.Cancel(entity.Owner, entity.Comp.DoAfterId.Value);
+        entity.Comp.DoAfterId = null;
+        DirtyField(entity!, nameof(KnockedDownComponent.DoAfterId));
     }
 
     public void SetKnockdownUpdate(Entity<KnockedDownComponent> entity, TimeSpan nextUpdate)
@@ -156,12 +159,12 @@ public abstract partial class SharedStunSystem
             return;
         }
 
-        var stand = !component.DoAfter.HasValue;
+        var stand = !component.DoAfterId.HasValue;
 
         if (stand)
         {
-            TryStanding(playerEnt, out component.DoAfter);
-            DirtyField(playerEnt, component, nameof(KnockedDownComponent.DoAfter));
+            TryStanding(playerEnt, out component.DoAfterId);
+            DirtyField(playerEnt, component, nameof(KnockedDownComponent.DoAfterId));
         }
         else
             CancelKnockdownDoAfter((playerEnt, component));
@@ -169,14 +172,14 @@ public abstract partial class SharedStunSystem
         ToggleAutoStand(playerEnt, stand);
     }
 
-    public bool TryStanding(Entity<KnockedDownComponent?> entity, out DoAfterId? id)
+    public bool TryStanding(Entity<KnockedDownComponent?> entity, out ushort? id)
     {
         id = null;
         // If we aren't knocked down or can't be knocked down, then we did technically succeed in standing up
         if (!Resolve(entity, ref entity.Comp, false) || !TryComp<StandingStateComponent>(entity, out var state))
             return true;
 
-        id = entity.Comp.DoAfter;
+        id = entity.Comp.DoAfterId;
 
         if (!CanStand((entity.Owner, entity.Comp)))
             return false;
@@ -194,7 +197,11 @@ public abstract partial class SharedStunSystem
         };
 
         // If we try standing don't try standing again
-        return DoAfter.TryStartDoAfter(doAfterArgs, out id);
+        if (!DoAfter.TryStartDoAfter(doAfterArgs, out var doAfterId))
+            return false;
+
+        id = doAfterId.Value.Index;
+        return true;
     }
 
     private bool CanStand(Entity<KnockedDownComponent> entity)
@@ -284,10 +291,10 @@ public abstract partial class SharedStunSystem
             return;
 
         // If we're already trying to stand, or we fail to stand try forcing it
-        if (!TryStanding(entity.Owner, out entity.Comp.DoAfter))
+        if (!TryStanding(entity.Owner, out entity.Comp.DoAfterId))
             ForceStandUp(entity);
 
-        DirtyField(entity!, nameof(KnockedDownComponent.DoAfter));
+        DirtyField(entity!, nameof(KnockedDownComponent.DoAfterId));
         args.Handled = true;
     }
 
@@ -373,7 +380,7 @@ public abstract partial class SharedStunSystem
 
     private void OnStandDoAfter(Entity<KnockedDownComponent> entity, ref TryStandDoAfterEvent args)
     {
-        entity.Comp.DoAfter = null;
+        entity.Comp.DoAfterId = null;
 
         if (args.Cancelled)
             return;

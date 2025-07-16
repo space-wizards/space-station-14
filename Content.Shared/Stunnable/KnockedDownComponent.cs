@@ -23,7 +23,7 @@ public sealed partial class KnockedDownComponent : Component
     /// The Standing Up DoAfter.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public DoAfterId? DoAfter;
+    public ushort? DoAfterId;
 
     /// <summary>
     /// Friction modifier for knocked down players.
