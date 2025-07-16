@@ -240,6 +240,19 @@ public abstract partial class SharedStunSystem
         return true;
     }
 
+    private bool StandingBlocked(Entity<KnockedDownComponent> entity)
+    {
+        if (!CanStand(entity))
+            return true;
+
+        if (!IntersectingStandingColliders(entity.Owner))
+            return false;
+
+        _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
+        return true;
+
+    }
+
     private bool CanStand(Entity<KnockedDownComponent> entity)
     {
         if (entity.Comp.NextUpdate > GameTiming.CurTime)
@@ -269,7 +282,7 @@ public abstract partial class SharedStunSystem
         // That way if we fail to stand, the game will try to stand for us when we are able to
         ToggleAutoStand(entity!, true);
 
-        if (!HasComp<StandingStateComponent>(entity) || !CanStand(entity))
+        if (!HasComp<StandingStateComponent>(entity) || StandingBlocked(entity))
             return;
 
         if (!TryComp<StaminaComponent>(entity, out var stamina))
@@ -421,15 +434,9 @@ public abstract partial class SharedStunSystem
     {
         entity.Comp.DoAfterId = null;
 
-        if (args.Cancelled)
-            return;
-
-        if (!CanStand(entity))
-            return;
-        
-        if (IntersectingStandingColliders(entity.Owner))
+        if (args.Cancelled || StandingBlocked(entity))
         {
-            _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
+            DirtyField(entity!, nameof(KnockedDownComponent.DoAfterId));
             return;
         }
 
