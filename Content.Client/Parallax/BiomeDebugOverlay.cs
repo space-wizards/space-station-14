@@ -58,13 +58,13 @@ public sealed class BiomeDebugOverlay : Overlay
         var sb = new StringBuilder();
         var nodePos = _maps.WorldToTile(mapUid, grid, mousePos.Position);
 
-        if (_biomes.TryGetEntity(nodePos, biomeComp, grid, out var ent))
+        if (_biomes.TryGetEntity(nodePos, biomeComp, (mapUid, grid), out var ent))
         {
             var text = $"Entity: {ent}";
             sb.AppendLine(text);
         }
 
-        if (_biomes.TryGetDecals(nodePos, biomeComp.Layers, biomeComp.Seed, grid, out var decals))
+        if (_biomes.TryGetDecals(nodePos, biomeComp.Layers, biomeComp.Seed, (mapUid, grid), out var decals))
         {
             var text = $"Decals: {decals.Count}";
             sb.AppendLine(text);
@@ -76,7 +76,7 @@ public sealed class BiomeDebugOverlay : Overlay
             }
         }
 
-        if (_biomes.TryGetBiomeTile(nodePos, biomeComp.Layers, biomeComp.Seed, grid, out var tile))
+        if (_biomes.TryGetBiomeTile(nodePos, biomeComp.Layers, biomeComp.Seed, (mapUid, grid), out var tile))
         {
             var tileText = $"Tile: {_tileDefManager[tile.Value.TypeId].ID}";
             sb.AppendLine(tileText);

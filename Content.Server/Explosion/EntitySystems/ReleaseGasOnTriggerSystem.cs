@@ -66,20 +66,7 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
                 RemCompDeferred<ReleaseGasOnTriggerComponent>(uid);
                 continue;
             }
-
-            if (comp.ExponentialRise)
-                UpdateExponentialRise(comp, comp.RemoveFraction);
         }
-    }
-
-    /// <summary>
-    /// Updates the RemoveFraction for exponential rise.
-    /// </summary>
-    /// <remarks>See https://www.desmos.com/calculator/fx9gfrhoim</remarks>
-    private static void UpdateExponentialRise(ReleaseGasOnTriggerComponent comp, float baseFraction)
-    {
-        comp.TimesReleased++;
-        comp.RemoveFraction = 1f - MathF.Pow(1f - baseFraction, comp.TimesReleased);
     }
 
     private void UpdateAppearance(Entity<AppearanceComponent?> entity, bool state)
@@ -87,6 +74,6 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
         if (!Resolve(entity, ref entity.Comp, false))
             return;
 
-        _appearance.SetData(entity, ReleaseGasOnTriggerComponent.ReleaseGasOnTriggerVisuals.Key, state);
+        _appearance.SetData(entity, ReleaseGasOnTriggerVisuals.Key, state);
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
@@ -6,15 +7,12 @@ using Content.Shared.Mobs;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using System.Linq;
 
 namespace Content.Shared.Implants;
 
 public abstract class SharedSubdermalImplantSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
@@ -92,7 +90,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     /// Add a list of implants to a person.
     /// Logs any implant ids that don't have <see cref="SubdermalImplantComponent"/>.
     /// </summary>
-    public void AddImplants(EntityUid uid, IEnumerable<String> implants)
+    public void AddImplants(EntityUid uid, IEnumerable<EntProtoId> implants)
     {
         foreach (var id in implants)
         {

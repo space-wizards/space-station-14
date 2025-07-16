@@ -1,16 +1,18 @@
 - type: entity
+  parent: BaseAction
   id: ActionForceWall
   name: forcewall
   description: Creates a magical barrier.
   components:
-  - type: InstantAction
-    useDelay: 10
+  - type: Action
+    useDelay: 15
     itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/forcewall.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: shield
+  - type: InstantAction
     event: !type:InstantSpawnSpellEvent
       prototype: WallForce
       posData: !type:TargetInFront
