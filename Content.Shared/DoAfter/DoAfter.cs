@@ -13,7 +13,7 @@ public sealed partial class DoAfter
     [DataField("index", required:true)]
     public ushort Index;
 
-    public DoAfterId Id => new(Args.NetUser, Index);
+    public DoAfterId Id => new(Args.User, new DoAfterIndex(Index));
 
     [IncludeDataField]
     public DoAfterArgs Args = default!;
@@ -109,5 +109,11 @@ public sealed partial class DoAfter
 /// <remarks>
 ///     Can be used to track currently active do-afters to prevent simultaneous do-afters.
 /// </remarks>
-[NetSerializable]
-public record struct DoAfterId(NetEntity Uid, ushort Index);
+[Serializable]
+public record struct DoAfterId(EntityUid Uid, DoAfterIndex Index);
+
+[Serializable, NetSerializable]
+public record struct DoAfterIndex(ushort Index)
+{
+    public readonly ushort Index = Index;
+};

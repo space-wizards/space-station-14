@@ -151,7 +151,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         var tcs = new TaskCompletionSource<DoAfterStatus>();
-        component.AwaitedDoAfters.Add(id.Value.Index, tcs);
+        component.AwaitedDoAfters.Add(id.Value.Index.Index, tcs);
         return await tcs.Task;
     }
 
@@ -200,8 +200,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         args.NetUser = GetNetEntity(args.User);
         args.NetEventTarget = GetNetEntity(args.EventTarget);
 
-        id = new DoAfterId(args.NetUser, comp.NextId++);
-        var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
+        id = new DoAfterId(args.User, new DoAfterIndex(comp.NextId++));
+        var doAfter = new DoAfter(id.Value.Index.Index, args, GameTiming.CurTime);
 
         if (args.BreakOnMove)
             doAfter.UserPosition = Transform(args.User).Coordinates;
@@ -267,7 +267,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             blocked = blocked | args.BlockDuplicate | existing.Args.BlockDuplicate;
 
             if (args.CancelDuplicate || existing.Args.CancelDuplicate)
-                Cancel(args.User, existing.Index, component);
+                Cancel(existing.Id, component);
         }
 
         return !blocked;
@@ -316,18 +316,18 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     public void Cancel(DoAfterId? id, DoAfterComponent? comp = null)
     {
         if (id != null)
-            Cancel(GetEntity(id.Value.Uid), id.Value.Index, comp);
+            Cancel(id.Value.Uid, id.Value.Index, comp);
     }
 
     /// <summary>
     ///     Cancels an active DoAfter.
     /// </summary>
-    public void Cancel(EntityUid entity, ushort id, DoAfterComponent? comp = null)
+    public void Cancel(EntityUid entity, DoAfterIndex id, DoAfterComponent? comp = null)
     {
         if (!Resolve(entity, ref comp, false))
             return;
 
-        if (!comp.DoAfters.TryGetValue(id, out var doAfter))
+        if (!comp.DoAfters.TryGetValue(id.Index, out var doAfter))
         {
             Log.Error($"Attempted to cancel do after with an invalid id ({id}) on entity {ToPrettyString(entity)}");
             return;
@@ -355,7 +355,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     public DoAfterStatus GetStatus(DoAfterId? id, DoAfterComponent? comp = null)
     {
         if (id != null)
-            return GetStatus(GetEntity(id.Value.Uid), id.Value.Index, comp);
+            return GetStatus(id.Value.Uid, id.Value.Index, comp);
         else
             return DoAfterStatus.Invalid;
     }
@@ -363,12 +363,12 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     /// <summary>
     ///     Returns the current status of a DoAfter
     /// </summary>
-    public DoAfterStatus GetStatus(EntityUid entity, ushort id, DoAfterComponent? comp = null)
+    public DoAfterStatus GetStatus(EntityUid entity, DoAfterIndex id, DoAfterComponent? comp = null)
     {
         if (!Resolve(entity, ref comp, false))
             return DoAfterStatus.Invalid;
 
-        if (!comp.DoAfters.TryGetValue(id, out var doAfter))
+        if (!comp.DoAfters.TryGetValue(id.Index, out var doAfter))
             return DoAfterStatus.Invalid;
 
         if (doAfter.Cancelled)
@@ -388,10 +388,10 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (id == null)
             return false;
 
-        return GetStatus(GetEntity(id.Value.Uid), id.Value.Index, comp) == DoAfterStatus.Running;
+        return GetStatus(id.Value.Uid, id.Value.Index, comp) == DoAfterStatus.Running;
     }
 
-    public bool IsRunning(EntityUid entity, ushort id, DoAfterComponent? comp = null)
+    public bool IsRunning(EntityUid entity, DoAfterIndex id, DoAfterComponent? comp = null)
     {
         return GetStatus(entity, id, comp) == DoAfterStatus.Running;
     }
