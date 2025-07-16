@@ -22,7 +22,7 @@ public sealed partial class KnockedDownComponent : Component
     /// <summary>
     /// The Standing Up DoAfter.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public DoAfterId? DoAfter;
 
     /// <summary>
