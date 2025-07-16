@@ -474,7 +474,7 @@
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 2
+      stock: 1
 
 - type: listing
   id: VendorPlushieAsh
@@ -485,7 +485,7 @@
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 2
+      stock: 1
       
 - type: listing
   id: VendorPlushiePoley
@@ -496,7 +496,7 @@
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 2
+      stock: 1
 
 - type: listing
   id: VendorPlushieGlados
@@ -507,7 +507,7 @@
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 2
+      stock: 1
 
 - type: listing
   id: VendorPlushieWEH
@@ -518,7 +518,7 @@
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 2
+      stock: 1
 
 - type: listing
   id: VendorPlushieRufia
@@ -529,15 +529,4 @@
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 2
-
-- type: listing
-  id: VendorPlushieRufia
-  productEntity: PlushieRomero
-  cost:
-    NTCredit: 18
-  categories:
-    - SLCrew
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 2
+      stock: 1
