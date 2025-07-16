@@ -22,6 +22,25 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
     {
         SubscribeLocalEvent<MeleeThrowOnHitComponent, MeleeHitEvent>(OnMeleeHit);
         SubscribeLocalEvent<MeleeThrowOnHitComponent, ThrowDoHitEvent>(OnThrowHit);
+        SubscribeLocalEvent<MeleeThrowOnHitComponent, ThrownEvent>(OnThrow);
+        SubscribeLocalEvent<MeleeThrowOnHitComponent, LandEvent>(OnLand);
+    }
+
+    private void OnThrow(Entity<MeleeThrowOnHitComponent> ent, ref ThrownEvent args)
+    {
+        if (_delay.IsDelayed(ent.Owner))
+            return;
+
+        ent.Comp.HitWhileThrown = false;
+        ent.Comp.AllowThrowHit = true;
+    }
+
+    private void OnLand(Entity<MeleeThrowOnHitComponent> ent, ref LandEvent args)
+    {
+        if (ent.Comp.HitWhileThrown && !_delay.IsDelayed(ent.Owner))
+            _delay.TryResetDelay(ent.Owner);
+
+        ent.Comp.AllowThrowHit = false;
     }
 
     private void OnMeleeHit(Entity<MeleeThrowOnHitComponent> weapon, ref MeleeHitEvent args)
@@ -50,8 +69,13 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
         if (!weapon.Comp.ActivateOnThrown)
             return;
 
+        if (!weapon.Comp.AllowThrowHit)
+            return;
+
         if (!TryComp<PhysicsComponent>(args.Thrown, out var weaponPhysics))
             return;
+
+        weapon.Comp.HitWhileThrown = true;
 
         ThrowOnHitHelper(weapon, args.Component.Thrower, args.Target, weaponPhysics.LinearVelocity);
     }
