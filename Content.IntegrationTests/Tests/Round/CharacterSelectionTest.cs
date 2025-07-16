@@ -71,65 +71,27 @@ public sealed class CharacterSelectionTest
             Mime: [ 1, 1 ]
 ";
 
-    // a few little helper structs for test case definition readability
-    public sealed class TestJobPriorities
-    {
-        public JobPriority Captain;
-        public JobPriority Mime;
-        public JobPriority Passenger;
-        public JobPriority Boxer;
+    // some constants to help test case readability & also make the compiler catch typos
+    public static readonly ProtoId<JobPrototype> Captain = "Captain";
+    public static readonly ProtoId<JobPrototype> Passenger = "Passenger";
+    public static readonly ProtoId<JobPrototype> Mime = "Mime";
+    public static readonly ProtoId<JobPrototype> Clown = "Clown";
 
-        public Dictionary<ProtoId<JobPrototype>, JobPriority> ToDictForPreferences()
-        {
-            var dict = new Dictionary<ProtoId<JobPrototype>, JobPriority>();
-            if (Captain != JobPriority.Never)
-            {
-                dict.Add("Captain", Captain);
-            }
-            if (Mime != JobPriority.Never)
-            {
-                dict.Add("Mime", Mime);
-            }
-            if (Passenger != JobPriority.Never)
-            {
-                dict.Add("Passenger", Passenger);
-            }
-            if (Boxer != JobPriority.Never)
-            {
-                dict.Add("Boxer", Boxer);
-            }
-            return dict;
-        }
-    }
-
+    // helper structs for test case definition readability
     public sealed class TestCharacter
     {
-        public bool Captain;
-        public bool Mime;
-        public bool Passenger;
-        public bool Boxer;
+        public List<ProtoId<JobPrototype>> Jobs;
         public bool Traitor;
         public bool ExpectToSpawn;
 
         public HumanoidCharacterProfile ToProfile()
         {
             var profile = HumanoidCharacterProfile.Random().AsEnabled();
-            if (Captain)
+            // passenger is present by default, remove it first
+            profile = profile.WithoutJob(Passenger);
+            foreach (var job in Jobs)
             {
-                profile = profile.WithJob("Captain");
-            }
-            if (Mime)
-            {
-                profile = profile.WithJob("Mime");
-            }
-            // default job set has passenger already
-            if (!Passenger)
-            {
-                profile = profile.WithoutJob("Passenger");
-            }
-            if (Boxer)
-            {
-                profile = profile.WithJob("Boxer");
+                profile = profile.WithJob(job);
             }
             if (Traitor)
             {
@@ -141,20 +103,42 @@ public sealed class CharacterSelectionTest
 
     public sealed class SelectionTestData
     {
-        public TestJobPriorities JobPriorities;
+        public ProtoId<JobPrototype>? HighPrioJob;
+        public List<ProtoId<JobPrototype>> MediumPrioJobs = [];
+        public List<ProtoId<JobPrototype>> LowPrioJobs = [];
         public List<TestCharacter> Characters = [];
-        public string ExpectedJobName = "";
+        public ProtoId<JobPrototype>? ExpectedJob;
         public bool ExpectTraitor;
 
         public SelectionTestData WithCharacters(IEnumerable<TestCharacter> new_characters)
         {
             return new SelectionTestData()
             {
-                JobPriorities = JobPriorities,
+                HighPrioJob = HighPrioJob,
+                MediumPrioJobs = MediumPrioJobs,
+                LowPrioJobs = LowPrioJobs,
                 Characters = new_characters.ToList(),
-                ExpectedJobName = ExpectedJobName,
+                ExpectedJob = ExpectedJob,
                 ExpectTraitor = ExpectTraitor
             };
+        }
+
+        public Dictionary<ProtoId<JobPrototype>, JobPriority> MakeJobPrioDict()
+        {
+            var dict = new Dictionary<ProtoId<JobPrototype>, JobPriority>();
+            if (HighPrioJob.HasValue)
+            {
+                dict.Add(HighPrioJob.Value,  JobPriority.High);
+            }
+            foreach (var job in MediumPrioJobs)
+            {
+                dict.Add(job,  JobPriority.Medium);
+            }
+            foreach (var job in LowPrioJobs)
+            {
+                dict.Add(job,  JobPriority.Low);
+            }
+            return dict;
         }
     }
 
@@ -162,46 +146,46 @@ public sealed class CharacterSelectionTest
     [
         new() // Case 1 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
         {
-            JobPriorities = new TestJobPriorities() { Captain = JobPriority.High },
+            HighPrioJob = Captain,
             Characters =
             [
-                new TestCharacter() { Captain = true, Traitor = true, ExpectToSpawn = true }
+                new() { Jobs = [ Captain ], Traitor = true, ExpectToSpawn = true }
             ],
-            ExpectedJobName = "Captain",
+            ExpectedJob = Captain,
             ExpectTraitor = false
         },
         new() // Case 2 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
         {
-            JobPriorities = new TestJobPriorities() { Mime = JobPriority.Medium, Passenger = JobPriority.Medium },
+            MediumPrioJobs = [ Mime, Passenger ],
             Characters =
             [
-                new TestCharacter() { Mime = true, Traitor = true, ExpectToSpawn = true },
-                new TestCharacter() { Passenger = true },
-                new TestCharacter() { Passenger = true },
-                new TestCharacter() { Passenger = true },
-                new TestCharacter() { Passenger = true },
-                new TestCharacter() { Passenger = true },
-                new TestCharacter() { Captain = true }
+                new() { Jobs = [ Mime ], Traitor = true, ExpectToSpawn = true },
+                new() { Jobs = [ Passenger ] },
+                new() { Jobs = [ Passenger ] },
+                new() { Jobs = [ Passenger ] },
+                new() { Jobs = [ Passenger ] },
+                new() { Jobs = [ Passenger ] },
+                new() { Jobs = [ Captain ] }
             ],
-            ExpectedJobName = "Mime",
+            ExpectedJob = Mime,
             ExpectTraitor = true
         },
         new()
         {
-            JobPriorities = new TestJobPriorities() { Passenger = JobPriority.High },
+            HighPrioJob = Passenger,
             Characters =
             [
-                new TestCharacter() { Passenger = true, Traitor = true, ExpectToSpawn = true}
+                new() { Jobs = [ Passenger ], Traitor = true, ExpectToSpawn = true}
             ],
-            ExpectedJobName = "Passenger",
+            ExpectedJob = Passenger,
             ExpectTraitor = true
         },
         new()
         {
-            JobPriorities = new TestJobPriorities() { Boxer = JobPriority.High },
+            HighPrioJob = Clown,
             Characters =
             [
-                new TestCharacter() { Boxer = true, Traitor = true }
+                new() { Jobs = [ Clown ], Traitor = true }
             ]
         }
     ];
@@ -275,7 +259,7 @@ public sealed class CharacterSelectionTest
             // just be immediately re-created
             cPref.DeleteCharacter(0);
 
-            cPref.UpdateJobPriorities(data.JobPriorities.ToDictForPreferences());
+            cPref.UpdateJobPriorities(data.MakeJobPrioDict());
         });
 
         await pair.ReallyBeIdle();
@@ -293,7 +277,7 @@ public sealed class CharacterSelectionTest
         else
         {
             Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.JoinedGame));
-            pair.AssertJob(data.ExpectedJobName, pair.Player!);
+            pair.AssertJob(data.ExpectedJob.ToString(), pair.Player!);
             var antagSystem = pair.Server.System<AntagSelectionSystem>();
             var antags = antagSystem.GetPreSelectedAntagDefinitions(pair.Player);
             if (data.ExpectTraitor)
