@@ -12,7 +12,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
     private void InitializeEventListeners()
     {
         SubscribeLocalEvent<HandsComponent, StandUpArgsEvent>(OnStandupArgs);
-        SubscribeLocalEvent<HandsComponent, KnockedDownRefreshEvent>(OnKnockDownRefresh);
     }
 
     /// <summary>
@@ -24,14 +23,5 @@ public abstract partial class SharedHandsSystem : EntitySystem
             return;
 
         args.DoAfterTime *= (float)ent.Comp.Count / (hands.Value + ent.Comp.Count);
-    }
-
-    private void OnKnockDownRefresh(Entity<HandsComponent> ent,
-        ref KnockedDownRefreshEvent args)
-    {
-        if (!HasComp<KnockedDownComponent>(ent) || !TryCountEmptyHands(ent.Owner, out var hands) && !hands.HasValue)
-            return;
-
-        // TODO: Have it so the item you're holding reduce speed based on bulk...
     }
 }

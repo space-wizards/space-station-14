@@ -243,13 +243,6 @@
     layers:
     - state: tesla_projectile
       shader: unshaded
-  - type: Projectile
-    damage:
-      types:
-        Shock: 5
-    soundHit:
-      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
-    forceSound: true
   - type: PointLight
     enabled: true
     color: "#ffff33"
