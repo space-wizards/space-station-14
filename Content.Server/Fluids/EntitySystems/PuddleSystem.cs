@@ -427,7 +427,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             _tile.SetModifier(entity, 1f);
             slipComp.SlipData.SlipFriction = 1f;
             slipComp.AffectsSliding = false;
-            Dirty(entity);
+            Dirty(entity, slipComp);
             return;
         }
 
