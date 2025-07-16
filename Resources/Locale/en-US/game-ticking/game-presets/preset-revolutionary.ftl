@@ -71,3 +71,12 @@ rev-deconverted-text =
 
     You are no longer a revolutionary, so be nice.
 rev-deconverted-confirm = Confirm
+
+
+# New Rev Endscreen
+rev-major = [color=#6495ED]Revolution major victory![/color]
+rev-minor = [color=#6495ED]Revolution minor victory![/color]
+rev-draw = [color=yellow]Neutral outcome![/color]
+rev-crew-minor = [color=green]Crew minor victory![/color]
+rev-crew-major = [color=green]Crew major victory![/color]
+all-revs-failed = [color=crimson]All revolutionaries were killed or deconverted![/color]
