@@ -1,7 +1,4 @@
-using System.Numerics;
 using Robust.Shared.GameStates;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Weapons.Melee.Components;
 
@@ -9,7 +6,7 @@ namespace Content.Shared.Weapons.Melee.Components;
 /// This is used for a melee weapon that throws whatever gets hit by it in a line
 /// until it hits a wall or a time limit is exhausted.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(MeleeThrowOnHitSystem))]
 public sealed partial class MeleeThrowOnHitComponent : Component
 {
@@ -44,11 +41,12 @@ public sealed partial class MeleeThrowOnHitComponent : Component
     public bool ActivateOnThrown;
 
     /// <summary>
-    /// Whether the item has already landed, preventing it from hitting more people off-cooldown.
+    /// Whether the entity can apply knockback this instance of being thrown.
+    /// If true, the entity cannot apply knockback.
     /// </summary>
     [DataField, AutoNetworkedField]
     [ViewVariables(VVAccess.ReadOnly)]
-    public bool AllowThrowHit;
+    public bool ThrowOnCooldown;
 
     /// <summary>
     /// Whether this item has hit anyone while it was thrown.
