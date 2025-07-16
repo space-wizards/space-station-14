@@ -108,7 +108,10 @@ public sealed class StereoTest
         }
         else if (specifier is SoundCollectionSpecifier collectionSpecifier)
         {
-            var collectionPrototype = protoMan.Index<SoundCollectionPrototype>(collectionSpecifier.Collection);
+            if (collectionSpecifier.Collection is not { } collection)
+                return;
+
+            var collectionPrototype = protoMan.Index<SoundCollectionPrototype>(collection);
             foreach (var path in collectionPrototype.PickFiles)
             {
                 ValidateFromPath(path, datafieldName, resCache);
