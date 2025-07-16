@@ -728,7 +728,7 @@
   parent: SeedBase
   id: RealCapfruitSeeds
   name: packet of capfruit seeds
-  description: "Is it real, or is it fake?"
+  description: "These seeds grow into thin-rinded capguns. Earplugs not included."
   components:
     - type: Seed
       seedId: realCapfruit
