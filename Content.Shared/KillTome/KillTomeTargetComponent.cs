@@ -1,12 +1,12 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.DeathNote;
+namespace Content.Shared.KillTome;
 
 /// <summary>
-/// Entity with this component is a Death Note target.
+/// Entity with this component is a Kill Tome target.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class DeathNoteTargetComponent : Component
+public sealed partial class KillTomeTargetComponent : Component
 {
     [ViewVariables, AutoNetworkedField]
     public float KillDelay = 40f;
@@ -14,7 +14,7 @@ public sealed partial class DeathNoteTargetComponent : Component
     [AutoNetworkedField]
     public TimeSpan KillTime;
 
-    public DeathNoteTargetComponent(float killDelay, TimeSpan killTime)
+    public KillTomeTargetComponent(float killDelay, TimeSpan killTime)
     {
         KillDelay = killDelay;
         KillTime = killTime;

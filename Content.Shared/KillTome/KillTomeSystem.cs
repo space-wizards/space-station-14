@@ -8,19 +8,17 @@ using Content.Shared.Paper;
 using Content.Shared.Popups;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.DeathNote;
+namespace Content.Shared.KillTome;
 
 /// <summary>
-/// This handles Death Note functionality.
+/// This handles KillTome functionality.
 /// </summary>
 ///
 /// Death Note Rules:
 /// 1. One humanoid can be killed by Death Note only once.
-/// 2. If the name, that is shared by multiple humanoid, is written, every humanoid with that name dies.
-/// 3. One Death Note can kill only 5 humanoids.
-/// 4. In order to use Death Note, one should pay 10 000 credits for each name.
+/// 2. If the name, that is shared by multiple humanoid, is written, random humanoid with that name dies.
 /// 5. Writing a name should look like this: "{Name}, {KillDelay}" (John Marston, 40)
-public sealed class DeathNoteSystem : EntitySystem
+public sealed class KillTomeSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -33,28 +31,28 @@ public sealed class DeathNoteSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<DeathNoteComponent, PaperAfterWriteEvent>(OnPaperAfterWriteInteract);
+        SubscribeLocalEvent<KillTomeComponent, PaperAfterWriteEvent>(OnPaperAfterWriteInteract);
     }
 
 
     public override void Update(float frameTime)
     {
-        // This is used to check if the Death Note target is still valid.
+        // This is used to check if the Kill Tome target is still valid.
         // If the target is not valid, we remove the component.
-        var query = EntityQueryEnumerator<DeathNoteTargetComponent>();
+        var query = EntityQueryEnumerator<KillTomeTargetComponent>();
 
         while (query.MoveNext(out var uid, out var targetComp))
         {
             if (_gameTiming.CurTime < targetComp.KillTime)
                 continue;
 
-            RemCompDeferred<DeathNoteTargetComponent>(uid);
+            RemCompDeferred<KillTomeTargetComponent>(uid);
 
             Kill(uid);
         }
     }
 
-    private void OnPaperAfterWriteInteract(Entity<DeathNoteComponent> ent, ref PaperAfterWriteEvent args)
+    private void OnPaperAfterWriteInteract(Entity<KillTome.KillTomeComponent> ent, ref PaperAfterWriteEvent args)
     {
         // if the entity is not a paper, we don't do anything
         if (!TryComp<PaperComponent>(ent.Owner, out var paper))
@@ -89,7 +87,7 @@ public sealed class DeathNoteSystem : EntitySystem
 
             var killTime = _gameTiming.CurTime + TimeSpan.FromSeconds(delay);
 
-            var targetComp = new DeathNoteTargetComponent(delay, killTime);
+            var targetComp = new KillTomeTargetComponent(delay, killTime);
 
             AddComp(uid, targetComp);
 
@@ -97,15 +95,15 @@ public sealed class DeathNoteSystem : EntitySystem
 
             _adminLogs.Add(LogType.Chat,
                 LogImpact.High,
-                $"{ToPrettyString(args.Actor)} has written {ToPrettyString(uid)}'s name in the Death Note.");
+                $"{ToPrettyString(args.Actor)} has written {ToPrettyString(uid)}'s name in Kill Tome.");
         }
 
         // If we have written at least one eligible name, we show the popup (So the player knows death note worked).
         if(showPopup)
-            _popupSystem.PopupEntity(Loc.GetString("deathnote-kill-success"), ent.Owner, args.Actor, PopupType.Large);
+            _popupSystem.PopupEntity(Loc.GetString("killtome-kill-success"), ent.Owner, args.Actor, PopupType.Large);
     }
 
-    // A person to be killed by DeathNote must:
+    // A person to be killed by KillTome must:
     // 1. be with the name
     // 2. have HumanoidAppearanceComponent (so it targets only humanoids, obv)
     // 3. not be already dead

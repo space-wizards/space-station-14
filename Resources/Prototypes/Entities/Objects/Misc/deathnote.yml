@@ -1,16 +1,16 @@
 - type: entity
-  name: black note
+  name: black tome
   parent: BasePaper
-  id: DeathNote
-  suffix: DeathNote
-  description: A worn black note. It smells like old paper.
+  id: KillTome
+  suffix: KillTome
+  description: A worn black tome. It smells like old paper.
   components:
   - type: Sprite
-    sprite: Objects/Misc/deathnote.rsi
+    sprite: Objects/Misc/killtome.rsi
     state: icon
-  - type: DeathNote
+  - type: KillTome
   - type: Paper
-    content: deathnote-rules
+    content: killtome-rules
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
     requiresComplex: false

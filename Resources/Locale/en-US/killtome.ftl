@@ -1,4 +1,4 @@
-deathnote-rules =
+killtome-rules =
     Death Note Rules:
     1. The humanoid whose name is written in this note shall die.
     2. If the name, which is shared by multiple humanoids, is written, a random humanoid with that name dies.
@@ -7,4 +7,4 @@ deathnote-rules =
     5. Each name shall begin with a new line.
     6. Names must be written in the format: "Name, Delay" (e.g., John Doe, 40)
 
-deathnote-kill-success = The name is written. The countdown begins.
+killtome-kill-success = The name is written. The countdown begins.
