@@ -1,51 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: The Go Go Hat now checks if your message matches either the name of the
-      item or the label of the item. This allows people with accents to name their
-      items according to how their character would say the item, or for a faster retrieval
-      without having to type out the full name.
-    type: Tweak
-  id: 8259
-  time: '2025-04-19T14:11:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35658
-- author: GrownSamoyedDog
-  changes:
-  - message: Pineapple Juice Cartons are new and added to Booze-O-Mat.
-    type: Add
-  id: 8260
-  time: '2025-04-19T14:25:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34769
-- author: claustro305
-  changes:
-  - message: Fixed a bug where dragged objects would collide with wall mounted lights
-      and cameras.
-    type: Fix
-  id: 8261
-  time: '2025-04-19T14:29:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35908
-- author: metalgearsloth
-  changes:
-  - message: Fix detailed examine buttons sometimes showing up incorrectly.
-    type: Fix
-  id: 8262
-  time: '2025-04-19T14:37:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33814
-- author: sowelipililimute
-  changes:
-  - message: Servers with the number of open inventories set to two have a new alignment
-      that doesn't shift as much when opening and closing multiple inventories
-    type: Tweak
-  id: 8263
-  time: '2025-04-19T14:40:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35041
-- author: ps3moira
-  changes:
-  - message: Removed interior shuttle walls
-    type: Remove
-  id: 8264
-  time: '2025-04-19T14:41:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34261
 - author: Minemoder
   changes:
   - message: Most roles on the station now require significantly less playtime playtime
@@ -3895,3 +3848,55 @@
   id: 8771
   time: '2025-07-14T02:49:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38906
+- author: Trosling
+  changes:
+  - message: Moved Bible/Holy Book choice to loadout options for chaplain.
+    type: Tweak
+  - message: Implemented new holy book sprites, as well as one existing one (space
+      quran).
+    type: Add
+  id: 8772
+  time: '2025-07-15T00:49:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38986
+- author: RedBookcase
+  changes:
+  - message: The Kardashev-Mosin's bayonet can now be used while the weapon is wielded.
+      Tally ho!
+    type: Add
+  id: 8773
+  time: '2025-07-15T00:49:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38295
+- author: SlamBamActionman
+  changes:
+  - message: Throwable item hitboxes have been updated to better reflect their sprites.
+    type: Tweak
+  id: 8774
+  time: '2025-07-15T00:51:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38985
+- author: Velken
+  changes:
+  - message: Moproaches have been added to the game.
+    type: Add
+  - message: Moproaches can sometimes appear from the station's sewage system.
+    type: Add
+  id: 8775
+  time: '2025-07-15T02:47:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38700
+- author: nabegator
+  changes:
+  - message: You can now put remote signallers into utility belts.
+    type: Tweak
+  id: 8776
+  time: '2025-07-16T00:43:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35212
+- author: ArtisticRoomba
+  changes:
+  - message: Firelocks will now properly drop fast enough to prevent the spacing of
+      an entire atmos volume.
+    type: Fix
+  - message: Only the necessary firelocks required to stop a spacing will drop when
+      a spacing is triggered, instead of all firelocks in a spaced volume.
+    type: Fix
+  id: 8777
+  time: '2025-07-16T03:18:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38918
