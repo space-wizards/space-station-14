@@ -9401,5 +9401,35 @@ Entries:
   id: 1295
   time: '2025-07-15T14:02:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/987
+- author: RoadTrain
+  changes:
+  - message: Added a plushie of Vanilla Snow (no default spawn for now as I honest
+      to god wouldn't know how to do that)
+    type: Add
+  id: 1296
+  time: '2025-07-16T19:14:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1043
+- author: RoadTrain
+  changes:
+  - message: Amali's plushie now makes human noises
+    type: Tweak
+  id: 1297
+  time: '2025-07-16T19:14:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1043
+- author: RoadTrain
+  changes:
+  - message: Lowered oog-man plushie count in the hug dispenser to 1, to line up with
+      the others.
+    type: Tweak
+  id: 1298
+  time: '2025-07-16T19:14:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1043
+- author: RoadTrain
+  changes:
+  - message: Round morgana now has voice lines.
+    type: Fix
+  id: 1299
+  time: '2025-07-16T19:14:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1043
 Order: -1
 
