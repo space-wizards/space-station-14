@@ -219,7 +219,7 @@ public abstract partial class SharedStunSystem
 
         if (!CanStand((entity.Owner, entity.Comp)))
             return false;
-
+        
         var ev = new StandUpArgsEvent(state.StandTime);
         RaiseLocalEvent(entity, ref ev);
 
