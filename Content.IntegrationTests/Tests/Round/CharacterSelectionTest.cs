@@ -20,6 +20,8 @@ public sealed class CharacterSelectionTest
 {
 
     private static readonly string _map = "CharacterSelectionTestMap";
+
+    // this testing game mode attempts to make everyone a traitor
     private static readonly string _traitorsMode = "OopsAllTraitors";
 
     [TestPrototypes]
@@ -144,8 +146,31 @@ public sealed class CharacterSelectionTest
 
     public static readonly List<SelectionTestData> SelectionTestCaseData =
     [
-        new() // Case 1 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
+        // a player with one character & one job, traitor enabled, should spawn as that job and as a traitor
+        // (note that the game mode used for these tests attempts to make every player a traitor)
+        new()
         {
+            HighPrioJob = Passenger,
+            Characters =
+            [
+                new() { Jobs = [ Passenger ], Traitor = true, ExpectToSpawn = true}
+            ],
+            ExpectedJob = Passenger,
+            ExpectTraitor = true
+        },
+        // a player with only a job that doesn't appear on the station shouldn't spawn, even if they could be
+        // selected as a traitor
+        new()
+        {
+            HighPrioJob = Clown,
+            Characters =
+            [
+                new() { Jobs = [ Clown ], Traitor = true }
+            ]
+        },
+        // Case 1 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
+        // if a player has no antag-compatible jobs enabled they should not be selected as an antag
+        new() {
             HighPrioJob = Captain,
             Characters =
             [
@@ -154,7 +179,10 @@ public sealed class CharacterSelectionTest
             ExpectedJob = Captain,
             ExpectTraitor = false
         },
-        new() // Case 2 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
+        // Case 2 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
+        // a player that is selected as an antag should always roll a character & job compatible with that
+        // antag selection
+        new()
         {
             MediumPrioJobs = [ Mime, Passenger ],
             Characters =
@@ -169,24 +197,6 @@ public sealed class CharacterSelectionTest
             ],
             ExpectedJob = Mime,
             ExpectTraitor = true
-        },
-        new()
-        {
-            HighPrioJob = Passenger,
-            Characters =
-            [
-                new() { Jobs = [ Passenger ], Traitor = true, ExpectToSpawn = true}
-            ],
-            ExpectedJob = Passenger,
-            ExpectTraitor = true
-        },
-        new()
-        {
-            HighPrioJob = Clown,
-            Characters =
-            [
-                new() { Jobs = [ Clown ], Traitor = true }
-            ]
         }
     ];
 
