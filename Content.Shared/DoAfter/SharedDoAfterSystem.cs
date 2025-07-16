@@ -194,14 +194,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             return false;
         }
 
-        id = new DoAfterId(args.User, comp.NextId++);
-        var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
-
         // Networking yay
         args.NetTarget = GetNetEntity(args.Target);
         args.NetUsed = GetNetEntity(args.Used);
         args.NetUser = GetNetEntity(args.User);
         args.NetEventTarget = GetNetEntity(args.EventTarget);
+
+        id = new DoAfterId(args.NetUser, comp.NextId++);
+        var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
 
         if (args.BreakOnMove)
             doAfter.UserPosition = Transform(args.User).Coordinates;
@@ -316,7 +316,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     public void Cancel(DoAfterId? id, DoAfterComponent? comp = null)
     {
         if (id != null)
-            Cancel(id.Value.Uid, id.Value.Index, comp);
+            Cancel(GetEntity(id.Value.Uid), id.Value.Index, comp);
     }
 
     /// <summary>
@@ -355,7 +355,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     public DoAfterStatus GetStatus(DoAfterId? id, DoAfterComponent? comp = null)
     {
         if (id != null)
-            return GetStatus(id.Value.Uid, id.Value.Index, comp);
+            return GetStatus(GetEntity(id.Value.Uid), id.Value.Index, comp);
         else
             return DoAfterStatus.Invalid;
     }
@@ -388,7 +388,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (id == null)
             return false;
 
-        return GetStatus(id.Value.Uid, id.Value.Index, comp) == DoAfterStatus.Running;
+        return GetStatus(GetEntity(id.Value.Uid), id.Value.Index, comp) == DoAfterStatus.Running;
     }
 
     public bool IsRunning(EntityUid entity, ushort id, DoAfterComponent? comp = null)
