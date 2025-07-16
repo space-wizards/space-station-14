@@ -46,7 +46,7 @@ public sealed partial class DevourerComponent : Component
     /// <summary>
     /// The sound to play when finishing devouring something.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? SoundDevour = new SoundPathSpecifier("/Audio/Effects/demon_consume.ogg")
     {
         Params = AudioParams.Default.WithVolume(-3f),
@@ -55,7 +55,7 @@ public sealed partial class DevourerComponent : Component
     /// <summary>
     /// The sound to play when starting to devour a structure.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? SoundStructureDevour = new SoundPathSpecifier("/Audio/Machines/airlock_creaking.ogg")
     {
         Params = AudioParams.Default.WithVolume(-3f),
