@@ -676,3 +676,15 @@
       min: 1
       max: 1
       pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
+  id: DeathNoteSpawn
+  components:
+  - type: StationEvent
+    weight: 7.5
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 40
+  - type: RandomSpawnRule
+    prototype: DeathNote

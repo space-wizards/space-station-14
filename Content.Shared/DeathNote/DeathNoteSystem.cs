@@ -29,7 +29,6 @@ public sealed class DeathNoteSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly DamageableSystem _damageSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogs = default!;
-    [Dependency] private readonly PaperSystem _paperSystem = default!;
 
     // to keep a track of already killed people so they won't be killed again
     private readonly HashSet<EntityUid> _killedEntities = [];
@@ -38,7 +37,6 @@ public sealed class DeathNoteSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<DeathNoteComponent, PaperAfterWriteEvent>(OnPaperAfterWriteInteract);
-        SubscribeLocalEvent<DeathNoteComponent, InteractEvent>(OnInteract);
     }
 
 
@@ -59,11 +57,6 @@ public sealed class DeathNoteSystem : EntitySystem
         }
     }
 
-    private void OnInteract(Entity<DeathNoteComponent> ent, ref InteractEvent args)
-    {
-        ent.Comp.TouchedBy.Add(args.User);
-    }
-
     private void OnPaperAfterWriteInteract(Entity<DeathNoteComponent> ent, ref PaperAfterWriteEvent args)
     {
         // if the entity is not a paper, we don't do anything
@@ -78,7 +71,6 @@ public sealed class DeathNoteSystem : EntitySystem
 
         foreach (var line in lines)
         {
-            Log.Debug($"Processing line: {line}");
             if (string.IsNullOrEmpty(line))
                 continue;
 
@@ -90,8 +82,6 @@ public sealed class DeathNoteSystem : EntitySystem
 
             if (parts.Length == 2 && int.TryParse(parts[1].Trim(), out var parsedDelay) && parsedDelay > 0)
                 delay = parsedDelay;
-
-            Log.Debug($"Line processed: {name} - {delay}");
 
             if (!CheckIfEligible(name, out var uid))
             {
@@ -110,12 +100,12 @@ public sealed class DeathNoteSystem : EntitySystem
 
             _adminLogs.Add(LogType.Chat,
                 LogImpact.High,
-                $"{Name(args.Actor)} has written {name} in the Death Note. Target UID: {uid}");
+                $"{ToPrettyString(args.Actor)} has written {ToPrettyString(uid)}'s name in the Death Note.");
         }
 
         // If we have written at least one eligible name, we show the popup (So the player knows death note worked).
         if(showPopup)
-            _popupSystem.PopupEntity("The name is written. The countdown begins.", ent.Owner, args.Actor, PopupType.Large);
+            _popupSystem.PopupEntity(Loc.GetString("deathnote-kill-success"), ent.Owner, args.Actor, PopupType.Large);
     }
 
     // A person to be killed by DeathNote must:
@@ -146,7 +136,6 @@ public sealed class DeathNoteSystem : EntitySystem
             return false;
         }
 
-        Log.Debug($"{name} is eligible for Death Note.");
         entityUid = uid;
         return true;
     }

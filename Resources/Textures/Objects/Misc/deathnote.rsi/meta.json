@@ -8,10 +8,7 @@
   },
   "states": [
       {
-          "name": "folder-base"
-      },
-      {
-          "name": "folder-colormap"
+          "name": "icon"
       }
   ]
 }
