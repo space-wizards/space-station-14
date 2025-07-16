@@ -9445,5 +9445,12 @@ Entries:
   id: 1301
   time: '2025-07-16T19:54:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1040
+- author: beck-thompson
+  changes:
+  - message: Fixed mentor button styling.
+    type: Fix
+  id: 1302
+  time: '2025-07-16T20:05:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1039
 Order: -1
 
