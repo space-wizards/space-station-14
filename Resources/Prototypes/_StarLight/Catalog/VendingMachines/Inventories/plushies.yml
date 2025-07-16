@@ -487,16 +487,16 @@
     - !type:ListingLimitedStockCondition
       stock: 1
       
-- type: listing
-  id: VendorPlushiePoley
-  productEntity: PlushiePoley
-  cost:
-    NTCredit: 13
-  categories:
-    - SLCrew
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
+#- type: listing
+  #id: VendorPlushiePoley
+  #productEntity: PlushiePoley
+  #cost:
+    #NTCredit: 13
+  #categories:
+    #- SLCrew
+  #conditions:
+    #- !type:ListingLimitedStockCondition
+      #stock: 1
 
 - type: listing
   id: VendorPlushieGlados
