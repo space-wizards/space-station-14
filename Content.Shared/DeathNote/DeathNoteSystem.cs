@@ -2,13 +2,10 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
-using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Paper;
 using Content.Shared.Popups;
-using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.DeathNote;
