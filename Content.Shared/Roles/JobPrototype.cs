@@ -5,6 +5,7 @@ using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Traits;
 
 namespace Content.Shared.Roles
 {
@@ -171,6 +172,11 @@ namespace Content.Shared.Roles
         [DataField("wage")]
         public FixedPoint2 Wage { get; private set; } = 0;
         // end-backmen
+
+        // DS14-blueshield-disabilities-disallow-start
+        [DataField("traitsBlacklist")]
+        public IReadOnlyCollection<ProtoId<TraitPrototype>> TraitsBlacklist { get; private set; } = Array.Empty<ProtoId<TraitPrototype>>();
+        // DS14-blueshield-disabilities-disallow-end
     }
 
     /// <summary>
