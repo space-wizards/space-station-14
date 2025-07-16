@@ -82,7 +82,7 @@
       visualState: disable
       magState: disable
       heldPrefix: disable4
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 65
       visualState: kill
       magState: kill
@@ -113,7 +113,7 @@
     fireModes:
     - proto: DisablerBolt
       fireCost: 150
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 200
       conditions:
       - !type:AlertLevelCondition
@@ -196,7 +196,7 @@
         - yellow
         - red
         - gamma
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 66.6
       magState: lethal
       conditions:
@@ -250,11 +250,11 @@
       fireCost: 100
       magState: stun
       visualState: stun-unshaded
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 75
       magState: kill
       visualState: kill-unshaded
-    - proto: DestroyBolt
+    - proto: DestroyBeam
       fireCost: 750
       magState: destroy
       visualState: destroy-unshaded
@@ -422,10 +422,10 @@
     - proto: TaserBolt
       fireCost: 100
       magState: stun
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 100
       magState: kill
-    - proto: DestroyBolt
+    - proto: DestroyBeam
       fireCost: 100
       magState: destroy
 
@@ -463,11 +463,11 @@
       fireCost: 100
       magState: stun
       visualState: stun
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 100
       magState: kill
       visualState: kill
-    - proto: DestroyBolt
+    - proto: DestroyBeam
       fireCost: 200
       magState: destroy
       visualState: destroy
@@ -509,7 +509,7 @@
       fireCost: 75
       magState: disable
       visualState: disable
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 100
       magState: kill
       visualState: kill
@@ -545,7 +545,7 @@
       fireCost: 100
     - proto: AdvancedTaserBolt
       fireCost: 100
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 100
   - type: MagazineVisuals
     magState: mag
@@ -632,11 +632,11 @@
       fireCost: 100
       magState: stun
       visualState: stun
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 50
       magState: kill
       visualState: kill
-    - proto: DestroyBolt
+    - proto: DestroyBeam
       fireCost: 100
       magState: destroy
       visualState: destroy
@@ -686,11 +686,11 @@
       fireCost: 10
       magState: stun
       visualState: stun
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 5
       magState: kill
       visualState: kill
-    - proto: DestroyBolt
+    - proto: DestroyBeam
       fireCost: 10
       magState: destroy
       visualState: destroy
@@ -718,11 +718,11 @@
     steps: 5
     zeroVisible: true
   - type: HitscanBatteryAmmoProvider
-    proto: DestroyBolt
+    proto: DestroyBeam
     fireCost: 100
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: DestroyBolt
+    - proto: DestroyBeam
       fireCost: 100
       magState: destroy
       visualState: destroy

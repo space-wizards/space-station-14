@@ -470,6 +470,12 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: Storage
+    grid: # Starlight
+    - 0,0,1,0 #left
+    - 0,1,0,1 #left - cube
+    - 3,0,10,1
+    - 12,0,13,0 #right
+    - 12,1,12,1 #right - cube
     whitelist:
       tags:
         - CigPack
@@ -625,11 +631,16 @@
     sprite: Clothing/Belt/securitywebbing.rsi
 
 - type: entity
-  parent: [ ClothingBeltStorageBase, BaseSecurityCargoContraband ]
+  parent: [ ClothingBeltStorageBase, BaseSalvageContraband ] #Starlight salvContra
   id: ClothingBeltMercWebbing
   name: mercenary webbing
   description: Ideal for storing everything from ammo to weapons and combat essentials.
   components:
+  - type: Storage #Starlight
+    grid:
+    - 0,0,1,0 #left
+    - 0,1,0,1 #left - cube
+    - 3,0,10,1
   - type: Sprite
     sprite: Clothing/Belt/mercwebbing.rsi
   - type: Clothing
@@ -652,6 +663,13 @@
   name: chest rig
   description: A set of tactical webbing worn by Syndicate boarding parties.
   components:
+  - type: Storage #Starlight
+    grid:
+    - 0,0,1,0 #left
+    - 0,1,0,1 #left - cube
+    - 3,0,10,1
+    - 12,0,13,0 #right
+    - 12,1,12,1 #right - cube
   - type: Sprite
     sprite: Clothing/Belt/militarywebbing.rsi
   - type: Clothing
@@ -665,6 +683,13 @@
   name: medical chest rig
   description: A set of tactical webbing worn by Gorlex Marauder medic operatives.
   components:
+  - type: Storage #Starlight
+    grid:
+    - 0,0,1,0 #left
+    - 0,1,0,1 #left - cube
+    - 3,0,10,1
+    - 12,0,13,0 #right
+    - 12,1,12,1 #right - cube
   - type: Sprite
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Clothing

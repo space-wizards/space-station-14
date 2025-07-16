@@ -51,3 +51,9 @@
   values:
     prefix: plushie-amali-
     count: 4
+
+- type: localizedDataset
+  id: PlushiesOog
+  values:
+    prefix: plushie-oog-
+    count: 6

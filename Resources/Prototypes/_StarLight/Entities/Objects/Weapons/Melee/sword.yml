@@ -1,0 +1,178 @@
+- type: entity
+  name: makeshift sword
+  parent: [ BaseSword, BaseMinorContraband ]
+  id: SwordMakeshift
+  description: Some sharp steel affixed to a metal rod, it can hardly be called a sword.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/makeshift_sword.rsi
+  - type: MeleeWeapon
+    attackRate: 1
+    damage:
+      types:
+        Slash: 10
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+  - type: DisarmMalus
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Melee/makeshift_sword.rsi
+    slots:
+    - suitStorage
+  - type: Construction
+    graph: SwordMakeshiftGraph
+    node: sword
+
+- type: entity
+  name: improvised sword
+  parent: [ BaseSword, BaseMinorContraband ]
+  id: SwordImprovised
+  description: Not too sharp, but it does the job just fine.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/improvised_sword.rsi
+  - type: MeleeWeapon
+    attackRate: 1
+    damage:
+      types:
+        Slash: 14
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+  - type: DisarmMalus
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Melee/improvised_sword.rsi
+    slots:
+    - suitStorage
+  - type: Construction
+    graph: SwordImprovisedGraph
+    node: sword
+
+- type: entity
+  name: forged sword
+  parent: [ BaseSword, BaseMinorContraband ]
+  id: SwordForged
+  description: Made with plasteel, a single touch of the blade is enough to draw blood.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/forged_sword.rsi
+  - type: Reflect
+    reflectProb: .1
+    spread: 90
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 16
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+  - type: DisarmMalus
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Melee/forged_sword.rsi
+    slots:
+    - suitStorage
+  - type: Tag
+    tags:
+    - SwordForged
+
+- type: entity
+  name: dawnbreaker
+  parent: [ BaseSword, BaseMajorContraband, Welder ]
+  id: SwordFlaming
+  description: How do you perfect upon perfection? Why, use fire of course! Be the shining light through maints and fight valiantly! 
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/dawnbreaker.rsi
+    layers:
+    - state: icon
+    - state: welder_flame
+      visible: false
+      shader: unshaded
+      map: ["enum.ToggleableVisuals.Layer"]
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: PointLight
+    enabled: false
+    radius: 3
+  - type: Reflect
+    reflectProb: .1
+    spread: 90
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      collection: WelderOn
+      params:
+        variation: 0.125
+        volume: -5
+    soundDeactivate:
+      collection: WelderOff
+      params:
+        variation: 0.125
+        volume: -5
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+      params:
+        variation: 0.250
+        volume: -10
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+      params:
+        variation: 0.250
+        volume: -12
+    deactivatedSoundOnHitNoDamage:
+      collection: MetalThud
+    activatedDamage:
+        types:
+            Heat: 8
+            Slash: 10
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 16
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Melee/dawnbreaker.rsi
+  - type: DisarmMalus
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Melee/dawnbreaker.rsi
+    slots:
+    - suitStorage
+  - type: Construction
+    graph: SwordFlamingGraph
+    node: sword
+
+- type: entity
+  name: tidebreaker
+  parent: [ BaseSword, BaseMajorContraband ]
+  id: ClaymoreForged
+  description: The perfect weapon for an aspiring maints knight!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/tidebreaker.rsi
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Slash: 20
+        Structural: 10
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Melee/tidebreaker.rsi
+    slots:
+    - suitStorage
+  - type: DisarmMalus
+  - type: Scalpel
+  - type: SurgeryTool
+    successRate: 0.6
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg

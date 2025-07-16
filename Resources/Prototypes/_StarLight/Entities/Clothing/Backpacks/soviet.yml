@@ -86,6 +86,7 @@
   id: ClothingSatchelLeatherSovietOfficialLoadout
   name: leather satchel
   parent: ClothingBackpackSatchelLeather
+  suffix: USSP official
   description: A trend-setting satchel from a bygone era.
   components:
   - type: StorageFill
