@@ -83,4 +83,6 @@ all-revs-failed = [color=crimson]All revolutionaries were killed or deconverted!
 rev-crew-percentage = [color={$color}]{$percentage}% of the crew were converted to the revolution.[/color]
 rev-command-percentage = [color={$color}]{$percentage}% of Command were converted to the revolution.[/color]
 rev-loyal-command = [color={$color}]{$count} loyal Command members escaped to CentComm alive and unrestrained.[/color]
+rev-loyal-command-singular = [color={$color}]One loyal Command member escaped to CentComm alive and unrestrained.[/color]
 headrev-escapes = [color={$color}]{$count} Head Revolutionaries escaped to CentComm alive and unrestrained.[/color]
+headrev-escapes-singular = [color={$color}]One Head Revolutionary escaped to CentComm alive and unrestrained.[/color]

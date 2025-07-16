@@ -165,18 +165,18 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             var escapedHeadRevs = GetEscapeCount(GetHeadRevList());
             var commandRevPercent = GetRevolutionaryPercentage(GetCommandList());
             args.AddLine(Loc.GetString("rev-crew-percentage",
-            ("percentage", GetRevolutionaryPercentage(GetCrewList())),
+            ("percentage", GetRevolutionaryPercentage(GetCrewList()) * 100),
             ("color", winType == "crew-minor" ? "green" : "yellow")
             ));
             args.AddLine(Loc.GetString("rev-command-percentage",
-            ("percentage", commandRevPercent),
+            ("percentage", commandRevPercent * 100),
             ("color", commandRevPercent >= 0.5 || winType == "rev-crew-minor" ? "green" : "red")
             ));
-            args.AddLine(Loc.GetString("rev-loyal-command",
+            args.AddLine(Loc.GetString(GetEscapeCount(GetCommandList()) == 1 ? "rev-loyal-command-singular" : "rev-loyal-command",
             ("count", GetEscapeCount(GetCommandList())),
             ("color", winType == "rev-crew-minor" ? "green" : "red")
             ));
-            args.AddLine(Loc.GetString("headrev-escapes",
+            args.AddLine(Loc.GetString(GetEscapeCount(GetHeadRevList()) == 1 ? "headrev-escapes-singular" : "headrev-escapes",
             ("count", escapedHeadRevs),
             ("color", winType == "rev-crew-minor" || escapedHeadRevs == 0 ? "red" : "green")
             ));
