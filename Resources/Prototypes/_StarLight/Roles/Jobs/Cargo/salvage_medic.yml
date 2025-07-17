@@ -1,0 +1,37 @@
+﻿- type: job
+  id: SalvageMedic
+  name: job-name-salvagemedic
+  description: job-description-salvagemedic
+  playTimeTracker: JobSalvageMedic
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 28800 # 8 hrs
+  icon: "JobIconSalvageMedic"
+  startingGear: SalvageMedicGear
+  supervisors: job-supervisors-qm
+  canBeAntag: false
+  access:
+    - Cargo
+    - Salvage
+    - Maintenance
+    - Medical
+    - External
+    - Cryogenics
+  special:
+    - !type:AddImplantSpecial
+      implants: [ MindShieldImplant ]
+
+- type: startingGear
+  id: SalvageMedicGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist #TODO: add custom clothing
+    id: SalvagePDA #TODO: add custom PDA
+    ears: ClothingHeadsetCargo
+    #storage:
+    #back:
+    #- Stuff
+
