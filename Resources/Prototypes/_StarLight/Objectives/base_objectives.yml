@@ -15,3 +15,13 @@
         components:
           - SocialObjective
     - type: TeachALessonCondition
+
+- type: entity
+  abstract: true
+  parent: EscapeShuttleObjective
+  id: BaseStoryObjective
+  components:
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+        - EscapeShuttleCondition
