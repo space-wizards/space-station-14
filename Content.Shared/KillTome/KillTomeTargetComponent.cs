@@ -1,22 +1,13 @@
-using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.KillTome;
 
 /// <summary>
 /// Entity with this component is a Kill Tome target.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class KillTomeTargetComponent : Component
 {
-    [ViewVariables, AutoNetworkedField]
-    public float KillDelay = 40f;
-
-    [AutoNetworkedField]
+    [AutoNetworkedField, AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan KillTime;
-
-    public KillTomeTargetComponent(float killDelay, TimeSpan killTime)
-    {
-        KillDelay = killDelay;
-        KillTime = killTime;
-    }
 }

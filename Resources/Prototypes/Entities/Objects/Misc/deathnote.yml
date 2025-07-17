@@ -9,6 +9,10 @@
     sprite: Objects/Misc/killtome.rsi
     state: icon
   - type: KillTome
+    defaultkilldelay: 40
+    damage:
+      types:
+        Brute: 200
   - type: Paper
     content: killtome-rules
   - type: ActivatableUI

@@ -4,6 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Paper;
 using Content.Shared.Popups;
 using Robust.Shared.Timing;
@@ -17,16 +18,14 @@ namespace Content.Shared.KillTome;
 /// Death Note Rules:
 /// 1. One humanoid can be killed by Death Note only once.
 /// 2. If the name, that is shared by multiple humanoid, is written, random humanoid with that name dies.
-/// 5. Writing a name should look like this: "{Name}, {KillDelay}" (John Marston, 40)
+/// 3. Writing a name should look like this: "{Name}, {KillDelay}" (John Marston, 40)
 public sealed class KillTomeSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly DamageableSystem _damageSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogs = default!;
-
-    // to keep a track of already killed people so they won't be killed again
-    private readonly HashSet<EntityUid> _killedEntities = [];
+    [Dependency] private readonly NameModifierSystem _nameModifierSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -34,11 +33,10 @@ public sealed class KillTomeSystem : EntitySystem
         SubscribeLocalEvent<KillTomeComponent, PaperAfterWriteEvent>(OnPaperAfterWriteInteract);
     }
 
-
     public override void Update(float frameTime)
     {
-        // This is used to check if the Kill Tome target is still valid.
-        // If the target is not valid, we remove the component.
+        // Getting all the entities that are targeted by Kill Tome and checking if their kill time has passed.
+        // If it has, we kill them and remove the KillTomeTargetComponent.
         var query = EntityQueryEnumerator<KillTomeTargetComponent>();
 
         while (query.MoveNext(out var uid, out var targetComp))
@@ -46,13 +44,15 @@ public sealed class KillTomeSystem : EntitySystem
             if (_gameTiming.CurTime < targetComp.KillTime)
                 continue;
 
-            RemCompDeferred<KillTomeTargetComponent>(uid);
+            var comp = Comp<KillTomeComponent>(uid);
 
-            Kill(uid);
+            Kill(uid, comp);
+
+            RemCompDeferred<KillTomeTargetComponent>(uid);
         }
     }
 
-    private void OnPaperAfterWriteInteract(Entity<KillTome.KillTomeComponent> ent, ref PaperAfterWriteEvent args)
+    private void OnPaperAfterWriteInteract(Entity<KillTomeComponent> ent, ref PaperAfterWriteEvent args)
     {
         // if the entity is not a paper, we don't do anything
         if (!TryComp<PaperComponent>(ent.Owner, out var paper))
@@ -73,25 +73,27 @@ public sealed class KillTomeSystem : EntitySystem
 
             var name = parts[0].Trim();
 
-            var delay = 40f;
+            var delay = ent.Comp.DefaultKillDelay;
 
             if (parts.Length == 2 && int.TryParse(parts[1].Trim(), out var parsedDelay) && parsedDelay > 0)
                 delay = parsedDelay;
 
-            if (!CheckIfEligible(name, out var uid))
+            if (!CheckIfEligible(name, ent.Comp, out var uid))
             {
                 continue;
             }
 
+            // Compiler will complain if we don't check for null here.
+            if (uid is not { } realUid)
+                continue;
+
             showPopup = true;
 
-            var killTime = _gameTiming.CurTime + TimeSpan.FromSeconds(delay);
+            EnsureComp<KillTomeTargetComponent>(realUid, out var targetComp);
 
-            var targetComp = new KillTomeTargetComponent(delay, killTime);
+            targetComp.KillTime = _gameTiming.CurTime + TimeSpan.FromSeconds(delay);
 
-            AddComp(uid, targetComp);
-
-            _killedEntities.Add(uid);
+            ent.Comp.KilledEntities.Add(realUid);
 
             _adminLogs.Add(LogType.Chat,
                 LogImpact.High,
@@ -107,27 +109,27 @@ public sealed class KillTomeSystem : EntitySystem
     // 1. be with the name
     // 2. have HumanoidAppearanceComponent (so it targets only humanoids, obv)
     // 3. not be already dead
-    // 4. not be already killed by Death Note
+    // 4. not be already killed by Kill Tome
 
     // If all these conditions are met, we return true and the entityUid of the person to kill.
-    private bool CheckIfEligible(string name, out EntityUid entityUid)
+    private bool CheckIfEligible(string name, KillTomeComponent comp, out EntityUid? entityUid)
     {
         if (!TryFindEntityByName(name, out var uid) ||
             !TryComp<MobStateComponent>(uid, out var mob))
         {
-            entityUid = default;
+            entityUid = null;
             return false;
         }
 
-        if (_killedEntities.Contains(uid))
+        if (comp.KilledEntities.Contains(uid))
         {
-            entityUid = default;
+            entityUid = null;
             return false;
         }
 
         if (mob.CurrentState == MobState.Dead)
         {
-            entityUid = default;
+            entityUid = null;
             return false;
         }
 
@@ -139,9 +141,9 @@ public sealed class KillTomeSystem : EntitySystem
     {
         var query = EntityQueryEnumerator<HumanoidAppearanceComponent>();
 
-        while(query.MoveNext(out var uid, out var _))
+        while(query.MoveNext(out var uid, out _))
         {
-            if (!Name(uid).Equals(name, StringComparison.OrdinalIgnoreCase))
+            if (!_nameModifierSystem.GetBaseName(uid).Equals(name, StringComparison.OrdinalIgnoreCase))
                 continue;
 
             entityUid = uid;
@@ -152,16 +154,8 @@ public sealed class KillTomeSystem : EntitySystem
         return false;
     }
 
-    private void Kill(EntityUid uid)
+    private void Kill(EntityUid uid, KillTomeComponent killTomeComp)
     {
-        var damage = new DamageSpecifier();
-        damage.DamageDict.Add("Brute", 200);
-
-        if (!TryComp<DamageableComponent>(uid, out var comp))
-            return;
-
-        _damageSystem.SetDamage(uid, comp, damage);
-
-        _killedEntities.Add(uid);
+        _damageSystem.TryChangeDamage(uid, killTomeComp.Damage);
     }
 }
