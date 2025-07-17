@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Salvage borgs now start with a tool module
-    type: Add
-  id: 8269
-  time: '2025-04-19T20:33:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33336
 - author: Seam_Less
   changes:
   - message: Standardized the Sprites of most scarfs
@@ -3898,3 +3891,13 @@
   id: 8781
   time: '2025-07-17T17:01:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36425
+- author: ScarKy0
+  changes:
+  - message: There have been major tweaks to the contraband and emag vendor tables.
+      Mainly emagged inventories now only contain syndie flavor items(clothing and
+      similiar), while the rest has either been moved to the contraband inventory
+      or removed.
+    type: Tweak
+  id: 8782
+  time: '2025-07-17T21:36:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36839
