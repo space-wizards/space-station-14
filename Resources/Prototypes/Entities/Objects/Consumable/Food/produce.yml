@@ -10,7 +10,7 @@
   - type: Sprite
     state: produce
   # let cows eat raw produce like wheat and oats
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: Produce
   - type: PotencyVisuals

@@ -202,7 +202,7 @@ public sealed class NPCUtilitySystem : EntitySystem
             case DrinkValueCon:
             {
                 // can't drink closed drinks and can't drink with a mask on...
-                if (_ingestion.CanIngest(owner, owner, targetUid))
+                if (!_ingestion.CanIngest(owner, owner, targetUid))
                     return 0f;
 
                 // only drink when thirsty

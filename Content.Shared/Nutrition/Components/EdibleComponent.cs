@@ -1,6 +1,8 @@
 ﻿using Content.Shared.Body.Components;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Audio;
+using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition.Prototypes;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.Components;
@@ -9,7 +11,7 @@ namespace Content.Shared.Nutrition.Components;
 /// This is used on an entity with a solution container to flag a specific solution as being able to have its
 /// reagents consumed directly.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(IngestionSystem))]
 public sealed partial class EdibleComponent : Component
 {
     /// <summary>
@@ -17,12 +19,6 @@ public sealed partial class EdibleComponent : Component
     /// </summary>
     [DataField]
     public string Solution = "food";
-
-    /// <summary>
-    /// The sound we make when eaten.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier UseSound = new SoundCollectionSpecifier("eating");
 
     /// <summary>
     /// Should this entity be deleted when our solution is emptied?
@@ -64,12 +60,6 @@ public sealed partial class EdibleComponent : Component
     public bool RequiresSpecialDigestion;
 
     /// <summary>
-    /// The localization identifier for the ingestion message.
-    /// </summary>
-    [DataField]
-    public LocId Message = "edible-nom";
-
-    /// <summary>
     /// How long it takes to eat the food personally.
     /// </summary>
     [DataField]
@@ -89,18 +79,8 @@ public sealed partial class EdibleComponent : Component
     public bool RequireDead = true;
 
     /// <summary>
-    /// What type of food are we, currently used for determining verbs and some checks.
+    /// Verb, icon, and sound data for our edible.
     /// </summary>
     [DataField]
-    public EdibleType EdibleType = EdibleType.Food;
-}
-
-/// <summary>
-/// Types of Edibles that exist.
-/// If you add a new one be sure to update IngestionSystem.Types
-/// </summary>
-public enum EdibleType
-{
-    Food = 0,
-    Drink = 1,
+    public ProtoId<EdiblePrototype> Edible = IngestionSystem.Food;
 }

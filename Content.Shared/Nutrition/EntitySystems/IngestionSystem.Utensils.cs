@@ -1,15 +1,15 @@
-﻿using Content.Shared.Hands.Components;
+﻿using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Tools.EntitySystems;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed partial class IngestionSystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -18,8 +18,8 @@ public sealed partial class IngestionSystem
     public void InitializeUtensils()
     {
         base.Initialize();
-        // TODO: DON'T FORGET ABOUT THIS!!!
-        SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract); //, after: new[] { typeof(ItemSlotsSystem), typeof(ToolOpenableSystem) });
+
+        SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(ItemSlotsSystem), typeof(ToolOpenableSystem) });
 
         SubscribeLocalEvent<EdibleComponent, GetUtensilsEvent>(OnGetEdibleUtensils);
 

@@ -5,6 +5,7 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
@@ -18,15 +19,14 @@ using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Tools.EntitySystems;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
-using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
-/// <summary>
-/// This handles the ingestion of solutions.
-/// </summary>
 /// <remarks>
 /// I was warned about puddle system, I knew the risks with body system, but food and drink system?
 /// Food and Drink system was a sleeping titan, and I walked directly into it's gaping maw.
@@ -38,13 +38,18 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// Let young little contributors rest easy at night not knowing the horrible system that once lived beneath the
 /// bedrock of the codebase they now commit to.
 /// </remarks>
+/// <summary>
+/// This handles the ingestion of solutions and entities.
+/// </summary>
 public sealed partial class IngestionSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly FlavorProfileSystem _flavorProfile = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -65,7 +70,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
         // Interactions
         SubscribeLocalEvent<EdibleComponent, UseInHandEvent>(OnUseEdibleInHand, after: new[] { typeof(OpenableSystem), typeof(InventorySystem) });
-        SubscribeLocalEvent<EdibleComponent, AfterInteractEvent>(OnEdibleInteract);
+        SubscribeLocalEvent<EdibleComponent, AfterInteractEvent>(OnEdibleInteract, after: new[] { typeof(ItemSlotsSystem), typeof(ToolOpenableSystem) });
 
         // Generic Eating Handlers
         SubscribeLocalEvent<EdibleComponent, BeforeEatenEvent>(OnBeforeEaten);
@@ -85,7 +90,6 @@ public sealed partial class IngestionSystem : EntitySystem
         SubscribeLocalEvent<EdibleComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
 
         InitializeBlockers();
-        InitializeUtensils();
     }
 
     /// <summary>
@@ -96,7 +100,7 @@ public sealed partial class IngestionSystem : EntitySystem
         if (ev.Handled)
             return;
 
-        ev.Handled = TryIngest(ev.User, ev.User, entity);
+        ev.Handled = TryIngest(ev.User, entity);
     }
 
     /// <summary>
@@ -301,11 +305,18 @@ public sealed partial class IngestionSystem : EntitySystem
             return;
         }
 
-        var beforeEv = new BeforeEatenEvent(args.User, entity, FixedPoint2.Zero, highestAvailable, solution.Value.Comp.Solution);
+        var beforeEv = new BeforeEatenEvent(FixedPoint2.Zero, highestAvailable, solution.Value.Comp.Solution);
         RaiseLocalEvent(food, ref beforeEv);
 
         if (beforeEv.Cancelled)
+        {
+            // Very long x2
+            _popup.PopupClient(Loc.GetString("ingestion-you-cannot-ingest-any-more", ("verb", GetEdibleVerb(food))), entity, entity);
+            if (forceFed)
+                _popup.PopupClient(Loc.GetString("ingestion-other-cannot-ingest-any-more", ("target", entity), ("verb", GetEdibleVerb(food))),  args.Target.Value, args.User);
+
             return;
+        }
 
         var transfer = FixedPoint2.Clamp(beforeEv.Transfer, beforeEv.Min, beforeEv.Max);
 
@@ -392,7 +403,9 @@ public sealed partial class IngestionSystem : EntitySystem
 
         args.Handled = true;
 
-        _audio.PlayPredicted(entity.Comp.UseSound, args.Target, args.User, AudioParams.Default.WithVolume(-1f).WithVariation(0.20f));
+        var edible = _proto.Index(entity.Comp.Edible);
+
+        _audio.PlayPredicted(edible.UseSound, args.Target, args.User);
 
         var flavors = _flavorProfile.GetLocalizedFlavorsMessage(entity.Owner, args.Target, args.Split);
 
@@ -400,16 +413,16 @@ public sealed partial class IngestionSystem : EntitySystem
         {
             var targetName = Identity.Entity(args.Target, EntityManager);
             var userName = Identity.Entity(args.User, EntityManager);
-            _popup.PopupEntity(Loc.GetString("edible-force-feed-success", ("user", userName), ("verb", GetTypeVerb(entity.Comp.EdibleType)), ("flavors", flavors)), entity, entity);
+            _popup.PopupEntity(Loc.GetString("edible-force-feed-success", ("user", userName), ("verb", edible.Verb), ("flavors", flavors)), entity, entity);
 
-            _popup.PopupClient(Loc.GetString("edible-force-feed-success-user", ("target", targetName), ("verb", GetTypeVerb(entity.Comp.EdibleType))), args.User, args.User);
+            _popup.PopupClient(Loc.GetString("edible-force-feed-success-user", ("target", targetName), ("verb", edible.Verb)), args.User, args.User);
 
             // log successful forced feeding
             _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(entity):food}");
         }
         else
         {
-            _popup.PopupClient(Loc.GetString(entity.Comp.Message, ("food", entity.Owner), ("flavors", flavors)), args.User, args.User);
+            _popup.PopupClient(Loc.GetString(edible.Message, ("food", entity.Owner), ("flavors", flavors)), args.User, args.User);
 
             // log successful voluntary eating
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(entity):food}");
@@ -460,7 +473,7 @@ public sealed partial class IngestionSystem : EntitySystem
         if (entity.Owner == user || !args.CanInteract || !args.CanAccess)
             return;
 
-        if (!TryGetIngestionVerb(user, entity, entity.Comp.EdibleType, out var verb))
+        if (!TryGetIngestionVerb(user, entity, entity.Comp.Edible, out var verb))
             return;
 
         args.Verbs.Add(verb);

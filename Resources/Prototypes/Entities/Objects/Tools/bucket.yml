@@ -6,11 +6,9 @@
   components:
   - type: Clickable
   - type: Edible
-    useSound: /Audio/Items/drink.ogg
-    message: edible-slurp
+    edible: Drink
     solution: bucket
     destroyOnEmpty: false
-    edibleType: drink
   - type: Sprite
     sprite: Objects/Tools/bucket.rsi
     layers:

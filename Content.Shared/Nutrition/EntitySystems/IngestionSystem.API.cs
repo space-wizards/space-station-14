@@ -6,9 +6,9 @@ using Content.Shared.EntityEffects.Effects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
@@ -17,11 +17,13 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// </summary>
 public sealed partial class IngestionSystem
 {
+    // List of prototypes that other components or systems might want.
+    public static readonly ProtoId<EdiblePrototype> Food = "Food";
+    public static readonly ProtoId<EdiblePrototype> Drink = "Drink";
+
     public const float MaxFeedDistance = 1.0f; // We should really have generic interaction ranges like short, medium, long and use those instead...
     // BodySystem has no way of telling us where the mouth is so we're making some assumptions.
     public const SlotFlags DefaultFlags = SlotFlags.HEAD | SlotFlags.MASK;
-
-    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     #region Ingestion
 
@@ -43,6 +45,27 @@ public sealed partial class IngestionSystem
 
         var ingestionEv = new CanIngestEvent(user, ingested, ingest);
         RaiseLocalEvent(target, ref ingestionEv);
+
+        return ingestionEv.Handled;
+    }
+
+    /// <summary>
+    /// An entity is trying to ingest another entity in Space Station 14!!!
+    /// </summary>
+    /// <param name="user">The entity who is eating.</param>
+    /// <param name="ingested">The entity that is trying to be ingested.</param>
+    /// <param name="ingest">Whether we're actually ingesting the item or if we're just testing. If false, treat as "CanIngest"</param>
+    /// <returns>Returns true if we can ingest the item.</returns>
+    public bool TryIngest(EntityUid user, EntityUid ingested, bool ingest = true)
+    {
+        var eatEv = new IngestibleEvent();
+        RaiseLocalEvent(ingested, ref eatEv);
+
+        if (eatEv.Cancelled)
+            return false;
+
+        var ingestionEv = new CanIngestEvent(user, ingested, ingest);
+        RaiseLocalEvent(user, ref ingestionEv);
 
         return ingestionEv.Handled;
     }
@@ -83,20 +106,25 @@ public sealed partial class IngestionSystem
         return false;
     }
 
+    /// <summary>
+    ///     Checks if we can feed an edible solution to a target.
+    /// </summary>
+    /// <param name="user">The one doing the feeding</param>
+    /// <param name="target">The one being fed.</param>
+    /// <param name="ingested">The food item being eaten.</param>
+    /// <returns>Returns true if the user can feed the target with the ingested entity</returns>
     public bool CanIngest(EntityUid user, EntityUid target, EntityUid ingested)
     {
         return CanIngest(user, target, ingested, out _, out _);
     }
 
-    /// <summary>
-    ///     Checks if we can feed an edible solution to a target and returns the solution.
-    /// </summary>
+    /// <inheritdoc cref="CanIngest(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid)"/>
     /// <param name="user">The one doing the feeding</param>
     /// <param name="target">The one being fed.</param>
     /// <param name="ingested">The food item being eaten.</param>
     /// <param name="solution">The solution we will be consuming from.</param>
     /// <param name="time">The time it takes us to eat this entity if any.</param>
-    /// <returns>Returns true if the user can feed the target with the ingested entity</returns>
+    /// <returns>Returns true if the user can feed the target with the ingested entity and also returns a solution</returns>
     public bool CanIngest(EntityUid user,
         EntityUid target,
         EntityUid ingested,
@@ -110,7 +138,7 @@ public sealed partial class IngestionSystem
             return false;
 
         // If we don't have the tools to eat we can't eat.
-        return TryAccessSolution(ingested, user, out solution, out time);
+        return CanAccessSolution(ingested, user, out solution, out time);
     }
 
     #endregion
@@ -137,14 +165,6 @@ public sealed partial class IngestionSystem
                 _hands.TryPickupAnyHand(user, spawnedTrash);
             }
         }
-    }
-
-    public int GetUsesRemaining(Entity<EdibleComponent?> ingested, FixedPoint2 splitVol)
-    {
-        if (!Resolve(ingested, ref ingested.Comp))
-            return 0;
-
-        return GetUsesRemaining(ingested, ingested.Comp.Solution, splitVol);
     }
 
     public FixedPoint2 EdibleVolume(Entity<EdibleComponent> entity)
@@ -234,7 +254,7 @@ public sealed partial class IngestionSystem
     /// <param name="user">The entity trying to make the ingestion happening, not necessarily the one eating</param>
     /// <param name="solution">Solution we're returning</param>
     /// <param name="time">The time it takes us to eat this entity</param>
-    public bool TryAccessSolution(Entity<SolutionContainerManagerComponent?> ingested,
+    public bool CanAccessSolution(Entity<SolutionContainerManagerComponent?> ingested,
         EntityUid user,
         [NotNullWhen(true)] out Entity<SolutionComponent>? solution,
         out TimeSpan? time)
@@ -273,35 +293,19 @@ public sealed partial class IngestionSystem
     /// Tries to get the ingestion verbs for a given user entity and ingestible entity
     /// </summary>
     /// <param name="user">The one getting the verbs who would be doing the eating.</param>
-    /// <param name="ingested"></param>
-    /// <param name="type"></param>
-    /// <param name="verb"></param>
+    /// <param name="ingested">Entity being ingested.</param>
+    /// <param name="type">Edible prototype.</param>
+    /// <param name="verb">Verb we're returning.</param>
     /// <returns></returns>
-    public bool TryGetIngestionVerb(EntityUid user, EntityUid ingested, EdibleType type, [NotNullWhen(true)] out AlternativeVerb? verb)
+    public bool TryGetIngestionVerb(EntityUid user, EntityUid ingested, ProtoId<EdiblePrototype> type, [NotNullWhen(true)] out AlternativeVerb? verb)
     {
         verb = null;
 
         // We want to see if we can ingest this item, but we don't actually want to ingest it.
-        if (!TryIngest(user, user, ingested, false))
+        if (!TryIngest(user, ingested, false))
             return false;
 
-        SpriteSpecifier icon;
-        string text;
-
-        switch (type)
-        {
-            case EdibleType.Food:
-                icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png"));
-                text = Loc.GetString("ingestion-verb-food");
-                break;
-            case EdibleType.Drink:
-                icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/drink.svg.192dpi.png"));
-                text = Loc.GetString("ingestion-verb-drink");
-                break;
-            default:
-                Log.Error($"Entity {ToPrettyString(ingested)} doesn't have a proper Nutrition type or its verb isn't properly set up.");
-                return false;
-        }
+        var proto = _proto.Index(type);
 
         verb = new()
         {
@@ -309,8 +313,8 @@ public sealed partial class IngestionSystem
             {
                 TryIngest(user, user, ingested);
             },
-            Icon = icon,
-            Text = text,
+            Icon = proto.VerbIcon,
+            Text = proto.VerbName,
             Priority = -1
         };
 
@@ -325,21 +329,19 @@ public sealed partial class IngestionSystem
         if (ev.Type == null)
             return Loc.GetString("edible-noun-edible");
 
-        return GetTypeNoun(ev.Type.Value);
+        return GetProtoNoun(ev.Type.Value);
     }
 
-    public string GetTypeNoun(EdibleType type)
+    public string GetProtoNoun(ProtoId<EdiblePrototype> proto)
     {
-        switch (type)
-        {
-            case EdibleType.Food:
-                return Loc.GetString("edible-noun-food");
-            case EdibleType.Drink:
-                return Loc.GetString("edible-noun-drink");
-            default:
-                Log.Error($"EdibleType {type} doesn't have a proper noun associated with it.");
-                return Loc.GetString("edible-noun-edible");
-        }
+        var prototype = _proto.Index(proto);
+
+        return GetProtoNoun(prototype);
+    }
+
+    public string GetProtoNoun(EdiblePrototype proto)
+    {
+        return proto.Noun;
     }
 
     public string GetEdibleVerb(EntityUid entity)
@@ -350,21 +352,19 @@ public sealed partial class IngestionSystem
         if (ev.Type == null)
             return Loc.GetString("edible-verb-edible");
 
-        return GetTypeVerb(ev.Type.Value);
+        return GetProtoVerb(ev.Type.Value);
     }
 
-    public string GetTypeVerb(EdibleType type)
+    public string GetProtoVerb(ProtoId<EdiblePrototype> proto)
     {
-        switch (type)
-        {
-            case EdibleType.Food:
-                return Loc.GetString("edible-verb-food");
-            case EdibleType.Drink:
-                return Loc.GetString("edible-verb-drink");
-            default:
-                Log.Error($"EdibleType {type} doesn't have a proper verb associated with it.");
-                return Loc.GetString("edible-verb-edible");
-        }
+        var prototype = _proto.Index(proto);
+
+        return GetProtoVerb(prototype);
+    }
+
+    public string GetProtoVerb(EdiblePrototype proto)
+    {
+        return proto.Verb;
     }
 
     #endregion

@@ -420,7 +420,6 @@ namespace Content.Shared.Stacks
                 return;
 
             args.Cancelled = true;
-            Popup.PopupClient(args.Target == args.User ? Loc.GetString("food-system-you-cannot-eat-any-more-other", ("target", args.Target)) : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Target, args.User);
         }
 
         private void OnEaten(Entity<StackComponent> eaten, ref EatenEvent args)

@@ -85,7 +85,7 @@ public sealed class FoodSystem : EntitySystem
         if (entity.Owner == user || !args.CanInteract || !args.CanAccess)
             return;
 
-        if (!_ingestion.TryGetIngestionVerb(user, entity, EdibleType.Food, out var verb))
+        if (!_ingestion.TryGetIngestionVerb(user, entity, IngestionSystem.Food, out var verb))
             return;
 
         args.Verbs.Add(verb);
@@ -115,9 +115,9 @@ public sealed class FoodSystem : EntitySystem
         {
             var targetName = Identity.Entity(args.Target, EntityManager);
             var userName = Identity.Entity(args.User, EntityManager);
-            _popup.PopupEntity(Loc.GetString("edible-force-feed-success", ("user", userName), ("verb", _ingestion.GetTypeVerb(EdibleType.Food)), ("flavors", flavors)), entity, entity);
+            _popup.PopupEntity(Loc.GetString("edible-force-feed-success", ("user", userName), ("verb", _ingestion.GetProtoVerb(IngestionSystem.Food)), ("flavors", flavors)), entity, entity);
 
-            _popup.PopupClient(Loc.GetString("edible-force-feed-success-user", ("target", targetName), ("verb", _ingestion.GetTypeVerb(EdibleType.Food))), args.User, args.User);
+            _popup.PopupClient(Loc.GetString("edible-force-feed-success-user", ("target", targetName), ("verb", _ingestion.GetProtoVerb(IngestionSystem.Food))), args.User, args.User);
 
             // log successful forced feeding
             _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(entity):food}");
@@ -213,7 +213,7 @@ public sealed class FoodSystem : EntitySystem
         if (args.Type != null)
             return;
 
-        args.Type = EdibleType.Food;
+        args.Type = IngestionSystem.Food;
     }
 
     private void OnBeforeFullySliced(Entity<FoodComponent> food, ref BeforeFullySlicedEvent args)

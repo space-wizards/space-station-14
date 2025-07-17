@@ -15,11 +15,9 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: Edible
-    useSound: /Audio/Items/drink.ogg
-    message: edible-slurp
+    edible: Drink
     solution: drink
     destroyOnEmpty: false
-    edibleType: drink
   - type: Sprite
     state: icon
   - type: MeleeWeapon

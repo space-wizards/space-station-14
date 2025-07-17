@@ -29,6 +29,7 @@ ingestion-verb-drink = Drink
 edible-nom = Nom. {$flavors}
 edible-slurp = Slurp. {$flavors}
 edible-swallow = You swallow { THE($food) }
+edible-gulp = Gulp. {$flavors}
 
 edible-has-used-storage = You cannot {$verb} { THE($food) } with an item stored inside.
 
@@ -37,12 +38,14 @@ edible-has-used-storage = You cannot {$verb} { THE($food) } with an item stored 
 edible-noun-edible = edible
 edible-noun-food = food
 edible-noun-drink = drink
+edible-noun-pill = pill
 
 ## Verbs
 
 edible-verb-edible = ingest
 edible-verb-food = eat
 edible-verb-drink = drink
+edible-verb-pill = swallow
 
 ## Force feeding
 

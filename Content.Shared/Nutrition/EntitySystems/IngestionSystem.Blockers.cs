@@ -1,6 +1,8 @@
 ﻿using System.Linq;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
@@ -27,8 +29,8 @@ public sealed partial class IngestionSystem
 
         // Digestion Events
         SubscribeLocalEvent<EdibleComponent, IsDigestibleEvent>(OnEdibleIsDigestible);
-        //SubscribeLocalEvent<DrainableSolutionComponent, IsDigestibleEvent>(OnDrainableIsDigestible);
-        //SubscribeLocalEvent<PuddleComponent, IsDigestibleEvent>(OnPuddleIsDigestible);
+        SubscribeLocalEvent<DrainableSolutionComponent, IsDigestibleEvent>(OnDrainableIsDigestible);
+        SubscribeLocalEvent<PuddleComponent, IsDigestibleEvent>(OnPuddleIsDigestible);
     }
 
     private void OnUnremovableIngestion(Entity<UnremoveableComponent> entity, ref IngestibleEvent args)
@@ -119,17 +121,23 @@ public sealed partial class IngestionSystem
 
     private void OnEdibleIsDigestible(Entity<EdibleComponent> ent, ref IsDigestibleEvent args)
     {
-        // This is a super hacky solution in place of having a proper component that declares something as being
-        // a solution of purely drinkable reagents with nothing to stop us. Is it drainable? Probably not!
-        if (ent.Comp.EdibleType == EdibleType.Drink)
-        {
-            args.UniversalDigestion();
-            return;
-        }
-
         if (ent.Comp.RequireDead && _mobState.IsAlive(ent))
             return;
 
         args.AddDigestible(ent.Comp.RequiresSpecialDigestion);
+    }
+
+    /// <remarks>
+    /// Both of these assume that having this component means there's nothing stopping you from slurping up
+    /// pure reagent juice with absolutely nothing to stop you.
+    /// </remarks>
+    private void OnDrainableIsDigestible(Entity<DrainableSolutionComponent> ent, ref IsDigestibleEvent args)
+    {
+        args.UniversalDigestion();
+    }
+
+    private void OnPuddleIsDigestible(Entity<PuddleComponent> ent, ref IsDigestibleEvent args)
+    {
+        args.UniversalDigestion();
     }
 }

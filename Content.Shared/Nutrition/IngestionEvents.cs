@@ -3,12 +3,15 @@ using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nutrition;
 
 /// <summary>
-/// Raised on an entity to see if anything would prevent it from being Ingested no matter the method.
+/// Raised on an entity that is trying to be ingested to see if it has universal blockers preventing it from being
+/// ingested.
 /// </summary>
 [ByRefEvent]
 public record struct IngestibleEvent(bool Cancelled = false);
@@ -39,7 +42,8 @@ public record struct EdibleEvent(EntityUid User)
 public record struct CanIngestEvent(EntityUid User, EntityUid Ingested, bool Ingest, bool Handled = false);
 
 /// <summary>
-///     Raised directed at the consumer when attempting to ingest something.
+///     Raised on an entity that is consuming another entity to see if there is anything attached to the entity
+///     that is preventing it from doing the consumption.
 /// </summary>
 [ByRefEvent]
 public record struct IngestionAttemptEvent(SlotFlags TargetSlots, bool Cancelled = false) : IInventoryRelayEvent
@@ -51,7 +55,8 @@ public record struct IngestionAttemptEvent(SlotFlags TargetSlots, bool Cancelled
 }
 
 /// <summary>
-///     Checks if an entity is even digestible or not.
+///     Raised on an entity that is trying to be digested, aka turned from an entity into reagents.
+///     Returns its digestive properties or how difficult it is to convert to reagents.
 /// </summary>
 /// <remarks>This method is currently needed for backwards compatibility with food and drink component.
 ///          It also might be needed in the event items like trash and plushies have their edible component removed.
@@ -90,14 +95,15 @@ public record struct IsDigestibleEvent()
 public sealed partial class EatingDoAfterEvent : SimpleDoAfterEvent;
 
 /// <summary>
-/// We use this to
+/// We use this to determine if an entity should abort giving up its reagents at the last minute,
+/// as well as specifying how much of its reagents it should give up including minimums and maximums.
+/// If minimum exceeds the  maximum, the event will abort.
 /// </summary>
-/// <param name="User"></param>
 /// <param name="Min">The minimum amount we can transfer.</param>
 /// <param name="Max">The maximum amount we can transfer.</param>
 /// <param name="Solution">The solution we are transferring.</param>
 [ByRefEvent]
-public record struct BeforeEatenEvent(EntityUid User, EntityUid Target, FixedPoint2 Min, FixedPoint2 Max, Solution? Solution)
+public record struct BeforeEatenEvent(FixedPoint2 Min, FixedPoint2 Max, Solution? Solution)
 {
     // How much we would like to transfer, gets clamped by Min and Max.
     public FixedPoint2 Transfer;
@@ -184,7 +190,7 @@ public record struct GetUtensilsEvent()
 [ByRefEvent]
 public record struct GetEdibleTypeEvent
 {
-    public EdibleType? Type;
+    public ProtoId<EdiblePrototype>? Type;
 }
 
 /// <summary>

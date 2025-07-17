@@ -101,7 +101,7 @@ public abstract partial class SharedDrinkSystem : EntitySystem
         if (entity.Owner == user || !args.CanInteract || !args.CanAccess)
             return;
 
-        if (!_ingestion.TryGetIngestionVerb(user, entity, EdibleType.Drink, out var verb))
+        if (!_ingestion.TryGetIngestionVerb(user, entity, IngestionSystem.Drink, out var verb))
             return;
 
         args.Verbs.Add(verb);
@@ -132,9 +132,9 @@ public abstract partial class SharedDrinkSystem : EntitySystem
             var targetName = Identity.Entity(args.Target, EntityManager);
             var userName = Identity.Entity(args.User, EntityManager);
 
-            _popup.PopupEntity(Loc.GetString("edible-force-feed-success", ("user", userName), ("verb", _ingestion.GetTypeVerb(EdibleType.Drink)), ("flavors", flavors)), entity, entity);
+            _popup.PopupEntity(Loc.GetString("edible-force-feed-success", ("user", userName), ("verb", _ingestion.GetProtoVerb(IngestionSystem.Drink)), ("flavors", flavors)), entity, entity);
 
-            _popup.PopupClient(Loc.GetString("edible-force-feed-success-user", ("target", targetName), ("verb", _ingestion.GetTypeVerb(EdibleType.Drink))), args.User, args.User);
+            _popup.PopupClient(Loc.GetString("edible-force-feed-success-user", ("target", targetName), ("verb", _ingestion.GetProtoVerb(IngestionSystem.Drink))), args.User, args.User);
 
             // log successful forced drinking
             _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity.Owner):user} forced {ToPrettyString(args.User):target} to drink {ToPrettyString(entity.Owner):drink}");
@@ -146,15 +146,6 @@ public abstract partial class SharedDrinkSystem : EntitySystem
 
             // log successful voluntary drinking
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} drank {ToPrettyString(entity.Owner):drink}");
-        }
-
-        // BREAK OUR UTENSILS
-        if (_ingestion.TryGetUtensils(args.User, entity, out var utensils))
-        {
-            foreach (var utensil in utensils)
-            {
-                _ingestion.TryBreak(utensil, args.User);
-            }
         }
 
         if (_ingestion.GetUsesRemaining(entity, entity.Comp.Solution, args.Split.Volume) <= 0)
@@ -199,6 +190,6 @@ public abstract partial class SharedDrinkSystem : EntitySystem
         if (args.Type != null)
             return;
 
-        args.Type = EdibleType.Drink;
+        args.Type = IngestionSystem.Drink;
     }
 }
