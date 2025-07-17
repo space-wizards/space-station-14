@@ -112,9 +112,9 @@
   - type: ToggleTriggerCondition # for toggling the start on stuck ability
     keys:
     - stuck
-    toggleVerb: toggle-start-on-stick-verb
-    toggleOn: toggle-start-on-stick-on
-    toggleOff: toggle-start-on-stick-off
+    toggleVerb: toggle-trigger-condition-stick-verb
+    toggleOn: toggle-trigger-condition-stick-on
+    toggleOff: toggle-trigger-condition-stick-off
   - type: TimerTrigger
     keysIn:
     - trigger
