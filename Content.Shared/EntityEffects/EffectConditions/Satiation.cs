@@ -12,16 +12,30 @@ namespace Content.Shared.EntityEffects.EffectConditions;
 public sealed partial class Satiation : EntityEffectCondition
 {
     /// <summary>
-    /// The value at or above which this condition will fail.
+    /// The value above which this condition will fail. If <see cref="MaxInclusive"/> is false, the condition will fail
+    /// if at that value as well.
     /// </summary>
     [DataField]
     public float Max = float.PositiveInfinity;
 
     /// <summary>
-    /// The value at or below which this condition will fail.
+    /// The value below which this condition will fail. If <see cref="MinInclusive"/> is false, the condition will fail
+    /// if at that value as well.
     /// </summary>
     [DataField]
     public float Min = 0;
+
+    /// <summary>
+    /// If <c>true</c>, values exactly equal to <see cref="Max"/> will NOT fail.
+    /// </summary>
+    [DataField]
+    public bool MaxInclusive = false;
+
+    /// <summary>
+    /// If <c>true</c>, values exactly equal to <see cref="Min"/> will NOT fail.
+    /// </summary>
+    [DataField]
+    public bool MinInclusive = false;
 
     /// <summary>
     /// The type of satiation whose value will be considered.
@@ -40,7 +54,8 @@ public sealed partial class Satiation : EntityEffectCondition
             return false;
         }
 
-        return satiation > Min && satiation < Max;
+        return (MinInclusive && satiation >= Min || satiation > Min) &&
+                  (MaxInclusive && satiation >= Max || satiation > Max);
     }
 
     public override string GuidebookExplanation(IPrototypeManager prototype)
