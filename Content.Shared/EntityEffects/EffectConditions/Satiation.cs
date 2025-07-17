@@ -55,7 +55,7 @@ public sealed partial class Satiation : EntityEffectCondition
         }
 
         return (MinInclusive && satiation >= Min || satiation > Min) &&
-                  (MaxInclusive && satiation >= Max || satiation > Max);
+                  (MaxInclusive && satiation <= Max || satiation < Max);
     }
 
     public override string GuidebookExplanation(IPrototypeManager prototype)
