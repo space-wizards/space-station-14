@@ -9485,5 +9485,19 @@ Entries:
   id: 1306
   time: '2025-07-17T15:31:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1048
+- author: Dimyell
+  changes:
+  - message: Added Armor and Neck slot options to BSO Loadout
+    type: Add
+  id: 1307
+  time: '2025-07-17T15:37:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1014
+- author: Dimyell
+  changes:
+  - message: Several minor adjustments to BSO Coat and Formal Cloak sprites
+    type: Add
+  id: 1308
+  time: '2025-07-17T15:37:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1014
 Order: -1
 
