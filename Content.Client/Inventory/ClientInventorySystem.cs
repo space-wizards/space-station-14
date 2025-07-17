@@ -90,6 +90,12 @@ namespace Content.Client.Inventory
                     continue;
 
                 TryRemoveSlotDef(ent, slots, slot.Value);
+
+                if (_container.TryGetContainer(ent, slot.Key, out var container))
+                {
+                    _container.EmptyContainer(container, true);
+                    _container.ShutdownContainer(container);
+                }
             }
 
             // Add new slots that are missing from the new template
