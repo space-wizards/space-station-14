@@ -860,7 +860,7 @@ public sealed partial class ShuttleSystem
 
         // TODO: This should prefer the position's angle instead.
         // TODO: This is pretty crude for multiple landings.
-        if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid))
+        if (nearbyGrids.Count >= 1)
         {
             // Pick a random angle
             var offsetAngle = _random.NextAngle();
@@ -869,13 +869,9 @@ public sealed partial class ShuttleSystem
             var minRadius = MathF.Max(targetAABB.Width / 2f, targetAABB.Height / 2f);
             spawnPos = targetAABB.Center + offsetAngle.RotateVec(new Vector2(_random.NextFloat(minRadius + minOffset, minRadius + maxOffset), 0f));
         }
-        else if (shuttleBody != null)
-        {
-            (spawnPos, angle) = _transform.GetWorldPositionRotation(targetXform);
-        }
         else
         {
-            spawnPos = _transform.GetWorldPosition(targetXform);
+            spawnPos = _transform.ToWorldPosition(targetCoordinates);
         }
 
         var offset = Vector2.Zero;
@@ -896,10 +892,10 @@ public sealed partial class ShuttleSystem
         }
 
         // Rotate our localcenter around so we spawn exactly where we "think" we should (center of grid on the dot).
-        var transform = new Transform(spawnPos, angle);
-        spawnPos = Robust.Shared.Physics.Transform.Mul(transform, offset);
+        var transform = new Transform(_transform.ToWorldPosition(xform.Coordinates), angle);
+        var adjustedOffset = Robust.Shared.Physics.Transform.Mul(transform, offset);
 
-        coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos - offset);
+        coordinates = new EntityCoordinates(targetXform.MapUid.Value,  spawnPos + adjustedOffset);
         return true;
     }
 
