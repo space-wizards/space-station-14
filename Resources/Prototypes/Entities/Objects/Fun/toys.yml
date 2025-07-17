@@ -559,7 +559,7 @@
     sprite: Objects/Fun/toy_singularity.rsi
     state: icon
   - type: SingularityDistortion
-    intensity: 2000
+    intensity: 25
     falloffPower: 2.6
   - type: Item
     size: Normal
