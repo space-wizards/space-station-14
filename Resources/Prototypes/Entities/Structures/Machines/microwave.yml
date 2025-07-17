@@ -21,14 +21,14 @@
           Idle: { state: "mw" }
           Broken: { state: "mwb" }
           Cooking: { state: "mw" }
-        enum.MicrowaveVisualState.Off:
-          Off:
-            True: { visible: true }
-            False: { visible: false }
         enum.MicrowaveVisualizerLayers.BaseUnlit:
           Idle: { state: "mw_unlit" }
-          Broken: { state: "mw_unlit" }
+          Broken: { state: "mwb" }
           Cooking: { state: "mw_running_unlit" }
+        enum.MicrowaveVisualizerLayers.BaseOff:
+          Idle: { state: "mw0" }
+          Broken: { state: "mwb" }
+          Cooking: { state: "mw0" }
         bloodyunshaded:
           Idle: { visible: false }
           Broken: { visible: false }
@@ -70,10 +70,8 @@
     - state: mw0
       map: ["enum.MicrowaveVisualizerLayers.Base"]
     - state: mw0
-      map: ["off"]
-      visible: true
+      map: ["enum.MicrowaveVisualizerLayers.BaseOff"]
     - state: mw_unlit
-      shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
     - state: mwbloody0
       map: ["bloody"]
@@ -84,18 +82,18 @@
       visible: false
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Explosive
     explosionType: Default
     maxIntensity: 10
