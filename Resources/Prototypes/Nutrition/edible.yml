@@ -34,7 +34,6 @@
 # Pills!
 
 - type: edible
-  parent: Food
   id: Pill
   useSound: !type:SoundPathSpecifier
     params:
@@ -44,3 +43,5 @@
   message: edible-swallow
   verb: edible-verb-pill
   noun: edible-noun-pill
+  verbName: ingestion-verb-food
+  verbIcon: /Textures/Interface/VerbIcons/cutlery.svg.192dpi.png
