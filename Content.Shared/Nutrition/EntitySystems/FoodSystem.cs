@@ -47,6 +47,8 @@ public sealed class FoodSystem : EntitySystem
         SubscribeLocalEvent<FoodComponent, EatenEvent>(OnFoodEaten);
         SubscribeLocalEvent<FoodComponent, FullyEatenEvent>(OnFoodFullyEaten);
 
+        SubscribeLocalEvent<FoodComponent, GetUtensilsEvent>(OnGetUtensils);
+
         SubscribeLocalEvent<FoodComponent, IsDigestibleEvent>(OnIsFoodDigestible);
 
         SubscribeLocalEvent<FoodComponent, EdibleEvent>(OnFood);
@@ -197,6 +199,17 @@ public sealed class FoodSystem : EntitySystem
         // Check this last
         _solutionContainer.TryGetSolution(food.Owner, food.Comp.Solution, out args.Solution);
         args.Time += TimeSpan.FromSeconds(food.Comp.Delay);
+    }
+
+    private void OnGetUtensils(Entity<FoodComponent> entity, ref GetUtensilsEvent args)
+    {
+        if (entity.Comp.Utensil == UtensilType.None)
+            return;
+
+        if (entity.Comp.UtensilRequired)
+            args.AddRequiredTypes(entity.Comp.Utensil);
+        else
+            args.Types |= entity.Comp.Utensil;
     }
 
     // TODO: When DrinkComponent and FoodComponent are properly obseleted, make the IsDigestionBools in IngestionSystem private again.

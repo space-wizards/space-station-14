@@ -35,7 +35,7 @@ public sealed partial class IngestionSystem
     /// <returns>Returns true if we are now ingesting the item.</returns>
     public bool TryIngest(EntityUid user, EntityUid ingested)
     {
-        return AttemptIngest(user, user, ingested, true);
+        return TryIngest(user, user, ingested);
     }
 
     /// <inheritdoc cref="TryIngest(EntityUid,EntityUid)"/>
@@ -45,7 +45,7 @@ public sealed partial class IngestionSystem
     /// <param name="ingested">The entity that is trying to be ingested.</param>
     public bool TryIngest(EntityUid user, EntityUid target, EntityUid ingested)
     {
-        return AttemptIngest(user, user, ingested, true);
+        return AttemptIngest(user, target, ingested, true);
     }
 
     /// <summary>
@@ -64,17 +64,15 @@ public sealed partial class IngestionSystem
     /// </summary>
     /// <param name="user">The one performing the action</param>
     /// <param name="target">The target whose mouth is checked</param>
-    /// <param name="popupUid">Optional entity that will receive an informative pop-up identifying the blocking
-    /// piece of equipment.</param>
     /// <returns></returns>
-    public bool HasMouthAvailable(EntityUid user, EntityUid target, EntityUid? popupUid = null)
+    public bool HasMouthAvailable(EntityUid user, EntityUid target)
     {
-        return HasMouthAvailable(user, target, DefaultFlags, popupUid);
+        return HasMouthAvailable(user, target, DefaultFlags);
     }
 
-    /// <inheritdoc cref="HasMouthAvailable(EntityUid, EntityUid, EntityUid?)"/>
+    /// <inheritdoc cref="HasMouthAvailable(EntityUid, EntityUid)"/>
     /// Overflow which takes custom flags for a mouth being blocked, in case the entity has a mouth not on the face.
-    public bool HasMouthAvailable(EntityUid user, EntityUid target, SlotFlags flags, EntityUid? popupUid = null)
+    public bool HasMouthAvailable(EntityUid user, EntityUid target, SlotFlags flags)
     {
         if (!_transform.GetMapCoordinates(user).InRange(_transform.GetMapCoordinates(target), MaxFeedDistance))
         {
@@ -89,8 +87,8 @@ public sealed partial class IngestionSystem
         if (!attempt.Cancelled)
             return true;
 
-        if (attempt.Blocker != null && popupUid != null)
-            _popup.PopupClient(Loc.GetString("ingestion-remove-mask", ("entity", attempt.Blocker.Value)), user, popupUid.Value);
+        if (attempt.Blocker != null)
+            _popup.PopupClient(Loc.GetString("ingestion-remove-mask", ("entity", attempt.Blocker.Value)), target, user);
 
         return false;
     }
@@ -350,7 +348,7 @@ public sealed partial class IngestionSystem
                 TryIngest(user, user, ingested);
             },
             Icon = proto.VerbIcon,
-            Text = proto.VerbName,
+            Text = Loc.GetString(proto.VerbName),
             Priority = -1
         };
 
@@ -377,7 +375,7 @@ public sealed partial class IngestionSystem
 
     public string GetProtoNoun(EdiblePrototype proto)
     {
-        return proto.Noun;
+        return Loc.GetString(proto.Noun);
     }
 
     public string GetEdibleVerb(EntityUid entity)
@@ -400,7 +398,7 @@ public sealed partial class IngestionSystem
 
     public string GetProtoVerb(EdiblePrototype proto)
     {
-        return proto.Verb;
+        return Loc.GetString(proto.Verb);
     }
 
     #endregion

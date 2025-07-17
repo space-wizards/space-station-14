@@ -90,6 +90,7 @@ public sealed partial class IngestionSystem : EntitySystem
         SubscribeLocalEvent<EdibleComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
 
         InitializeBlockers();
+        InitializeUtensils();
     }
 
     /// <summary>
@@ -334,7 +335,7 @@ public sealed partial class IngestionSystem : EntitySystem
         var beforeEv = new BeforeEatenEvent(FixedPoint2.Zero, highestAvailable, solution.Value.Comp.Solution);
         RaiseLocalEvent(food, ref beforeEv);
 
-        if (beforeEv.Cancelled)
+        if (beforeEv.Cancelled || beforeEv.Min > beforeEv.Max)
         {
             // Very long x2
             _popup.PopupClient(Loc.GetString("ingestion-you-cannot-ingest-any-more", ("verb", GetEdibleVerb(food))), entity, entity);

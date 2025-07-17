@@ -2,23 +2,23 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Tools.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed partial class IngestionSystem
 {
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private EntityQuery<UtensilComponent> _utensilsQuery;
 
     public void InitializeUtensils()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(ItemSlotsSystem), typeof(ToolOpenableSystem) });
 
         SubscribeLocalEvent<EdibleComponent, GetUtensilsEvent>(OnGetEdibleUtensils);
@@ -65,12 +65,16 @@ public sealed partial class IngestionSystem
         if (!Resolve(entity, ref entity.Comp))
             return;
 
-        if (!_robustRandom.Prob(entity.Comp.BreakChance))
+        // TODO: Once we have predicted randomness delete this for something sane...
+        var seed = SharedRandomExtensions.HashCodeCombine(new() {(int)_timing.CurTick.Value, GetNetEntity(entity).Id, GetNetEntity(userUid).Id });
+        var rand = new System.Random(seed);
+
+        if (!rand.Prob(entity.Comp.BreakChance))
             return;
 
         _audio.PlayPredicted(entity.Comp.BreakSound, userUid, userUid, AudioParams.Default.WithVolume(-2f));
         // Not prediced because no random predicted
-        QueueDel(entity);
+        PredictedDel(entity.Owner);
     }
 
     /// <summary>
