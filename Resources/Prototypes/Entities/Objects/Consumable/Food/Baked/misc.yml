@@ -862,6 +862,39 @@
         - ReagentId: Vitamin
           Quantity: 3
 
+- type: entity
+  parent: FoodBakedBase
+  id: FoodBakedGrilledCheeseSandwichCotton
+  name: cotton grilled cheese sandwich
+  description: Cotton bread slightly burnt in butter, with melted cheese. Moths find it difficult to resist this combination.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cheesy
+    - bread
+    - cotton
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/misc.rsi
+    state: grilled-cheese-cotton
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 21
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: Butter
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 3
+
 # Entity Tables
 
 - type: entityTable

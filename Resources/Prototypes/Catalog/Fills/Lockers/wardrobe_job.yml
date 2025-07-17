@@ -1,18 +1,83 @@
- - type: entity
-   id: WardrobePrisonFilled
-   suffix: Filled
-   parent: WardrobePrison
-   description: "Contains a selection of nice orange clothes for people enjoying their stay in the brig."
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingUniformJumpsuitPrisoner
-         amount: 2
-       - id: ClothingUniformJumpskirtPrisoner
-         amount: 2
-       - id: ClothingShoesColorBlack
-         amount: 2
-       - id: ClothingMaskMuzzle
+- type: entity
+  id: WardrobePrisonFilled
+  suffix: Filled
+  parent: WardrobePrison
+  description: "Contains a selection of nice orange clothes for people enjoying their stay in the brig."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobePrison
+
+- type: entity
+  id: ClosetWallWardrobePrisonFilled
+  suffix: Filled
+  parent: ClosetWallOrange
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobePrison
+
+- type: entityTable
+  id: FillWardrobePrison
+  table: !type:AllSelector
+    children:
+    - !type:AllSelector
+      rolls: 2
+      children:
+      - id: ClothingUniformJumpsuitPrisoner
+      - id: ClothingUniformJumpskirtPrisoner
+      - id: ClothingShoesColorBlack
+    - id: ClothingMaskMuzzle
+    - !type:GroupSelector
+      prob: 0.15
+      rolls: 2
+      children:
+      - id: FoodSnackBoritos
+      - id: FoodSnackCheesie
+      - id: FoodSnackChips
+      - id: FoodSnackRaisins
+      - id: FoodSnackMREBrownie
+      - id: FoodSnackChocolate
+      - id: FoodSnackChowMein
+    - !type:GroupSelector
+      prob: 0.25
+      children:
+      - id: BookRandomStory
+      - id: BookRandom
+    - !type:GroupSelector
+      prob: 0.15
+      children:
+      - id: Flare
+      - id: BarberScissors
+      - id: FlippoLighter
+      - id: trayScanner
+      - id: Wristwatch
+      - id: ClothingNeckBling
+      - id: ClothingMultipleHeadphones
+      - id: DiceBag
+      - id: PersonalAI
+      - id: CrayonBox
+      - id: HarmonicaInstrument
+      - id: ToyAmongPequeno
+      - id: WhoopieCushion
+      - id: Brutepack
+      - id: StrangePill
+      - id: Shiv
+    - !type:GroupSelector
+      prob: 0.1
+      children:
+      - id: CigPackBlack
+      - id: Joint
+      - id: Blunt
+      - id: PackPaperRolling
+      - id: Cigarette
+        amount: !type:RangeNumberSelector
+          range: 1, 4
+      - id: GroundCannabis
+        amount: !type:RangeNumberSelector
+          range: 1, 6
 
 #- type: entity
 #  id: WardrobePajamaFilled
@@ -20,202 +85,304 @@
 #  parent: WardrobeWhite
 #  name: pajama wardrobe
 
- - type: entity
-   id: WardrobeRoboticsFilled
-   suffix: Filled
-   parent: WardrobeRobotics
-   description: "You can build a robot out of this locker."
-   components:
-   - type: StorageFill
-     contents:
-     - id: ClothingOuterCoatRobo
-       amount: 2
-     - id: ClothingUniformJumpsuitRoboticist
-     - id: ClothingUniformJumpskirtRoboticist
-     - id: ClothingShoesColorBlack
-       amount: 2
-     - id: ClothingHandsGlovesFingerless
-       amount: 2
+- type: entity
+  id: WardrobeRoboticsFilled
+  suffix: Filled
+  parent: WardrobeRobotics
+  description: "You can build a robot out of this locker."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeRobotics
 
- - type: entity
-   id: WardrobeChemistryFilled
-   suffix: Filled
-   parent: WardrobeChemistry
-   description: "The sleek orange threads contained within make you much less likely to be thrown out of the chemistry lab."
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingUniformJumpsuitChemistry
-       - id: ClothingBackpackChemistry
-       - id: ClothingShoesColorWhite
-       - id: ClothingOuterCoatLabChem
-       - id: ClothingUniformJumpskirtChemistry
+- type: entityTable
+  id: FillWardrobeRobotics
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitRoboticist
+    - id: ClothingUniformJumpskirtRoboticist
+    - !type:AllSelector
+      rolls: 2
+      children:
+      - id: ClothingOuterCoatRobo
+      - id: ClothingShoesColorBlack
+      - id: ClothingHandsGlovesFingerless
 
- - type: entity
-   id: WardrobeGeneticsFilled
-   suffix: Filled
-   parent: WardrobeGenetics
-   description: "The sleek blue threads contained within make you much less likely to be thrown out of the genetics lab."
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingUniformJumpsuitGenetics
-       - id: ClothingBackpackGenetics
-       - id: ClothingShoesColorWhite
-       - id: ClothingOuterCoatLabGene
-       - id: ClothingUniformJumpskirtGenetics
+- type: entity
+  id: WardrobeChemistryFilled
+  suffix: Filled
+  parent: WardrobeChemistry
+  description: "The sleek orange threads contained within make you much less likely to be thrown out of the chemistry lab."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeChemistry
 
- - type: entity
-   id: WardrobeVirologyFilled
-   suffix: Filled
-   parent: WardrobeVirology
-   description: "The sleek green threads contained within make you much less likely to be thrown out of the virology lab."
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingUniformJumpsuitVirology
-       - id: ClothingBackpackVirology
-       - id: ClothingShoesColorWhite
-       - id: ClothingOuterCoatLabViro
-       - id: ClothingUniformJumpskirtVirology
+- type: entityTable
+  id: FillWardrobeChemistry
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitChemistry
+    - id: ClothingBackpackChemistry
+    - id: ClothingShoesColorWhite
+    - id: ClothingOuterCoatLabChem
+    - id: ClothingUniformJumpskirtChemistry
 
- - type: entity
-   id: WardrobeScienceFilled
-   suffix: Filled
-   parent: WardrobeScience
-   description: "You've read a couple pop science articles, now it's time for the real deal."
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingUniformJumpsuitScientist
-       - id: ClothingBackpackScience
-       - id: ClothingShoesColorWhite
-       - id: ClothingOuterCoatRnd
-       - id: ClothingUniformJumpskirtScientist
-       - id: ClothingEyesGlasses
-         prob: 0.5
-       - id: CrowbarRed #The jojoke - hit video game Half-Life
-         prob: 0.1
+- type: entity
+  id: WardrobeGeneticsFilled
+  suffix: Filled
+  parent: WardrobeGenetics
+  description: "The sleek blue threads contained within make you much less likely to be thrown out of the genetics lab."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeGenetics
 
+- type: entityTable
+  id: FillWardrobeGenetics
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitGenetics
+    - id: ClothingBackpackGenetics
+    - id: ClothingShoesColorWhite
+    - id: ClothingOuterCoatLabGene
+    - id: ClothingUniformJumpskirtGenetics
 
- - type: entity
-   id: WardrobeBotanistFilled
-   suffix: Filled
-   parent: WardrobeBotanist
-   description: "Plant yourself among the plant men with these 100% natural plant-derived clothes."
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingUniformJumpsuitHydroponics
-       - id: ClothingBackpackHydroponics
-       - id: ClothingShoesColorBrown
-       - id: ClothingOuterApronBotanist
-       - id: ClothingUniformJumpskirtHydroponics
-       - id: ClothingUniformOveralls
-       - id: ClothingHeadHatTrucker #the hat itself is a subtle joke
-         prob: 0.15
-       - id: ClothingHandsGlovesLeather
-         prob: 0.5
+- type: entity
+  id: WardrobeVirologyFilled
+  suffix: Filled
+  parent: WardrobeVirology
+  description: "The sleek green threads contained within make you much less likely to be thrown out of the virology lab."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeVirology
 
- - type: entity
-   id: WardrobeMedicalDoctorFilled
-   suffix: Filled
-   parent: WardrobeMedicalDoctor
-   description: "We've all played doctor before, now practice medicine."
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingUniformJumpsuitMedicalDoctor
-       - id: ClothingBackpackMedical
-       - id: ClothingShoesColorWhite
-       - id: ClothingOuterCoatLab
-       - id: ClothingUniformJumpskirtMedicalDoctor
-       - id: ClothingHandsGlovesLatex
-         prob: 0.4
-       - id: ClothingEyesGlasses
-         prob: 0.3
+- type: entityTable
+  id: FillWardrobeVirology
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitVirology
+    - id: ClothingBackpackVirology
+    - id: ClothingShoesColorWhite
+    - id: ClothingOuterCoatLabViro
+    - id: ClothingUniformJumpskirtVirology
 
- - type: entity
-   id: WardrobeChapelFilled
-   suffix: Filled
-   parent: WardrobeChapel
-   description: "You have to look presentable for your flock."
-   components:
-   - type: StorageFill
-     contents: # todo chaplain backpack
-       - id: ClothingUniformJumpsuitChaplain
-       - id: ClothingShoesColorBlack
-       - id: ClothingUniformJumpskirtChaplain
+- type: entity
+  id: WardrobeScienceFilled
+  suffix: Filled
+  parent: WardrobeScience
+  description: "You've read a couple pop science articles, now it's time for the real deal."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeScience
 
- - type: entity
-   id: WardrobeSecurityFilled
-   suffix: Filled
-   parent: WardrobeSecurity
-   description: "Cross the thin red line."
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingUniformJumpsuitSec
-       - id: ClothingBackpackSecurity
-       - id: ClothingShoesBootsJack
-       - id: ClothingEyesGlassesSunglasses
-       - id: ClothingHeadHelmetBasic
-       - id: ClothingOuterArmorBasic
-       - id: ClothingUniformJumpskirtSec
+- type: entityTable
+  id: FillWardrobeScience
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitScientist
+    - id: ClothingBackpackScience
+    - id: ClothingShoesColorWhite
+    - id: ClothingOuterCoatRnd
+    - id: ClothingUniformJumpskirtScientist
+    - id: ClothingEyesGlasses
+      prob: 0.5
+    - id: CrowbarRed #The jojoke - hit video game Half-Life
+      prob: 0.1
 
- - type: entity
-   id: WardrobeCargoFilled
-   suffix: Filled
-   parent: WardrobeCargo
-   description: "This locker? Maybe 500 spesos. Brotherhood? Priceless."
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingHeadHatCargosoft
-       - id: ClothingUniformJumpsuitCargo
-       - id: ClothingBackpack
-       - id: ClothingShoesColorBlack
-       - id: ClothingUniformJumpskirtCargo
-       - id: ClothingHandsGlovesFingerless
-       - id: AppraisalTool
+- type: entity
+  id: WardrobeBotanistFilled
+  suffix: Filled
+  parent: WardrobeBotanist
+  description: "Plant yourself among the plant men with these 100% natural plant-derived clothes."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeBotanist
 
- - type: entity
-   id: WardrobeSalvageFilled
-   suffix: Filled
-   parent: WardrobeSalvage
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingBackpack
-       - id: ClothingShoesBootsSalvage
-         amount: 2
-       - id: ClothingUniformJumpsuitSalvageSpecialist
-         amount: 2
+- type: entityTable
+  id: FillWardrobeBotanist
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitHydroponics
+    - id: ClothingBackpackHydroponics
+    - id: ClothingShoesColorBrown
+    - id: ClothingOuterApronBotanist
+    - id: ClothingUniformJumpskirtHydroponics
+    - id: ClothingUniformOveralls
+    - id: ClothingHeadHatTrucker #the hat itself is a subtle joke
+      prob: 0.15
+    - id: ClothingHandsGlovesLeather
+      prob: 0.5
 
- - type: entity
-   id: WardrobeAtmosphericsFilled
-   suffix: Filled
-   parent: WardrobeAtmospherics
-   description: "This locker contains a uniform for atmospheric technicians."
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingUniformJumpsuitAtmos
-       - id: ClothingBackpackEngineering
-       - id: ClothingShoesColorWhite
-       - id: ClothingUniformJumpskirtAtmos
+- type: entity
+  id: WardrobeMedicalDoctorFilled
+  suffix: Filled
+  parent: WardrobeMedicalDoctor
+  description: "We've all played doctor before, now practice medicine."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeMedicalDoctor
 
- - type: entity
-   id: WardrobeEngineeringFilled
-   suffix: Filled
-   parent: WardrobeEngineering
-   description: "This locker contains a uniform for engineering or social engineering."
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingHeadHatHardhatYellow
-       - id: ClothingUniformJumpsuitEngineering
-       - id: ClothingBackpackEngineering
-       - id: ClothingShoesBootsWork
-       - id: ClothingOuterVestHazard
-       - id: ClothingUniformJumpskirtEngineering
+- type: entityTable
+  id: FillWardrobeMedicalDoctor
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitMedicalDoctor
+    - id: ClothingBackpackMedical
+    - id: ClothingShoesColorWhite
+    - id: ClothingOuterCoatLab
+    - id: ClothingUniformJumpskirtMedicalDoctor
+    - id: ClothingHandsGlovesLatex
+      prob: 0.4
+    - id: ClothingEyesGlasses
+      prob: 0.3
+
+- type: entity
+  id: WardrobeChapelFilled
+  suffix: Filled
+  parent: WardrobeChapel
+  description: "You have to look presentable for your flock."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeChapel
+
+- type: entityTable
+  id: FillWardrobeChapel
+  table: !type:AllSelector
+    children:
+    # todo chaplain backpack
+    - id: ClothingUniformJumpsuitChaplain
+    - id: ClothingShoesColorBlack
+    - id: ClothingUniformJumpskirtChaplain
+
+- type: entity
+  id: WardrobeSecurityFilled
+  suffix: Filled
+  parent: WardrobeSecurity
+  description: "Cross the thin red line."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeSecurity
+
+- type: entityTable
+  id: FillWardrobeSecurity
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitSec
+    - id: ClothingBackpackSecurity
+    - id: ClothingShoesBootsJack
+    - id: ClothingEyesGlassesSunglasses
+    - id: ClothingHeadHelmetBasic
+    - id: ClothingOuterArmorBasic
+    - id: ClothingUniformJumpskirtSec
+
+- type: entity
+  id: WardrobeCargoFilled
+  suffix: Filled
+  parent: WardrobeCargo
+  description: "This locker? Maybe 500 spesos. Brotherhood? Priceless."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeCargo
+
+- type: entityTable
+  id: FillWardrobeCargo
+  table: !type:AllSelector
+    children:
+    - id: ClothingHeadHatCargosoft
+    - id: ClothingUniformJumpsuitCargo
+    - id: ClothingBackpack
+    - id: ClothingShoesColorBlack
+    - id: ClothingUniformJumpskirtCargo
+    - id: ClothingHandsGlovesFingerless
+    - id: AppraisalTool
+
+- type: entity
+  id: WardrobeSalvageFilled
+  suffix: Filled
+  parent: WardrobeSalvage
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeSalvage
+
+- type: entityTable
+  id: FillWardrobeSalvage
+  table: !type:AllSelector
+    children:
+    - id: ClothingBackpack
+    - id: ClothingShoesBootsSalvage
+      amount: 2
+    - id: ClothingUniformJumpsuitSalvageSpecialist
+      amount: 2
+
+- type: entity
+  id: WardrobeAtmosphericsFilled
+  suffix: Filled
+  parent: WardrobeAtmospherics
+  description: "This locker contains a uniform for atmospheric technicians."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeAtmospherics
+
+- type: entity
+  id: ClosetWallWardrobeAtmosphericsFilled
+  suffix: Filled
+  parent: ClosetWallAtmospherics
+  description: "This locker contains a uniform for atmospheric technicians."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeAtmospherics
+
+- type: entityTable
+  id: FillWardrobeAtmospherics
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitAtmos
+    - id: ClothingBackpackEngineering
+    - id: ClothingShoesColorWhite
+    - id: ClothingUniformJumpskirtAtmos
+
+- type: entity
+  id: WardrobeEngineeringFilled
+  suffix: Filled
+  parent: WardrobeEngineering
+  description: "This locker contains a uniform for engineering or social engineering."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeEngineering
+
+- type: entityTable
+  id: FillWardrobeEngineering
+  table: !type:AllSelector
+    children:
+    - id: ClothingHeadHatHardhatYellow
+    - id: ClothingUniformJumpsuitEngineering
+    - id: ClothingBackpackEngineering
+    - id: ClothingShoesBootsWork
+    - id: ClothingOuterVestHazard
+    - id: ClothingUniformJumpskirtEngineering
