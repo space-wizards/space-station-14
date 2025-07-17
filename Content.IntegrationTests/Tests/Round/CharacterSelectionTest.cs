@@ -18,9 +18,10 @@ namespace Content.IntegrationTests.Tests.Round;
 [TestFixture]
 public sealed class CharacterSelectionTest
 {
-
+    // this map has slots for captain, mime, unlimited passengers, and no clowns
     private static readonly string _map = "CharacterSelectionTestMap";
 
+    // this game mode attempts to make everyone a traitor
     private static readonly string _traitorsMode = "OopsAllTraitors";
 
     [TestPrototypes]
@@ -153,6 +154,7 @@ public sealed class CharacterSelectionTest
         }
     }
 
+    // actual test case definitions for cases that should result in a specific character/job/traitor combination
     public static readonly List<SelectionTestData> SelectionTestCaseData =
     [
         // a player with one character & one job, traitor enabled, should spawn as that job and as a traitor
@@ -235,7 +237,7 @@ public sealed class CharacterSelectionTest
         }
     ];
 
-    // use a function for test data so we can use classes
+    // use a function for test data so we can use classes & also test different permutations of the same characters
     public static IEnumerable<SelectionTestData> SelectionTestCases()
     {
         foreach (var testCaseData in SelectionTestCaseData)
