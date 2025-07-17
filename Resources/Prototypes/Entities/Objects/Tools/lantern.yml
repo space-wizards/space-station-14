@@ -108,3 +108,18 @@
           enum.FlashVisualLayers.LightLayer:
             True: {visible: true}
             False: {visible: false}
+
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxLanternFlash
+  name: extra-bright lantern
+  description: A box containing an extra-bright lantern. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: lanternflash
+  - type: SpawnItemsOnUse
+    items:
+    - id: LanternFlash
+    sound:
+      path: /Audio/Effects/unwrap.ogg

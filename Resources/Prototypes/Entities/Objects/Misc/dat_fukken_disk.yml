@@ -46,8 +46,8 @@
 - type: entity
   parent: [BaseItem, BaseSyndicateContraband]
   id: BoxNukeDiskFake
-  name: fake nuclear authentication disk box
-  description: A box containing a fake nuke disk. Packaging disintegrates when opened, leaving no evidence behind.
+  name: decoy nuclear authentication disk box
+  description: A box containing a decoy nuclear authentication disk. Packaging disintegrates when opened, leaving no evidence behind.
   components:
   - type: Sprite
     sprite: Objects/Storage/boxicons.rsi

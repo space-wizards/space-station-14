@@ -779,7 +779,8 @@
   id: UplinkAgentIDCard
   name: uplink-agent-id-card-name
   description: uplink-agent-id-card-desc
-  productEntity: AgentIDCard
+  icon: { sprite: /Textures/Objects/Misc/id_cards.rsi, state: default }
+  productEntity: BoxAgentIDCard
   discountCategory: veryRareDiscounts
   discountDownTo:
     Telecrystal: 1
@@ -864,7 +865,8 @@
   id: UplinkUltrabrightLantern
   name: uplink-ultrabright-lantern-name
   description: uplink-ultrabright-lantern-desc
-  productEntity: LanternFlash
+  icon: { sprite: Objects/Tools/lantern.rsi, state: lantern }
+  productEntity: BoxLanternFlash
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 1
@@ -1598,7 +1600,7 @@
   id: UplinkChameleon
   name: uplink-chameleon-name
   description: uplink-chameleon-desc
-  productEntity: ClothingBackpackChameleonFill
+  productEntity: BoxBackpackChameleon
   icon: { sprite: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi, state: icon }
   discountCategory: usualDiscounts
   discountDownTo:
@@ -2206,7 +2208,7 @@
   name: uplink-cane-blade-name
   description: uplink-cane-blade-desc
   icon: { sprite:  Objects/Weapons/Melee/cane.rsi, state: cane}
-  productEntity: CaneSheathFilled
+  productEntity: BoxCaneBlade
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 2

@@ -350,8 +350,7 @@
 - type: entity
   parent: RevolverCapGun
   id: RevolverCapGunFake
-  name: cap gun
-  suffix: Fake
+  suffix: lethal
   components:
   - type: RevolverAmmoProvider
     whitelist:
@@ -365,12 +364,12 @@
 - type: entity
   parent: [BaseItem, BaseSyndicateContraband]
   id: BoxCapGunFake
-  name: fake cap gun box
-  description: A box containing a fake cap gun (loaded with real bullets). Packaging disintegrates when opened, leaving no evidence behind.
+  name: lethal cap gun box
+  description: A box containing a lethal cap gun. Packaging disintegrates when opened, leaving no evidence behind.
   components:
   - type: Sprite
     sprite: Objects/Storage/boxicons.rsi
-    state: capgunfake
+    state: capgunlethal
   - type: SpawnItemsOnUse
     items:
     - id: RevolverCapGunFake

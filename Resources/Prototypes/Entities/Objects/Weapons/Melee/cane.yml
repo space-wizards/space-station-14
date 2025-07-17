@@ -108,6 +108,6 @@
     state: canefake
   - type: SpawnItemsOnUse
     items:
-    - id: CaneSheath
+    - id: CaneSheathFilled
     sound:
       path: /Audio/Effects/unwrap.ogg
