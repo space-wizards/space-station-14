@@ -73,7 +73,7 @@
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
   - type: DeviceLinkSink
     ports:
-    - Timer
+    - Trigger
   - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
     explosionType: DemolitionCharge
     totalIntensity: 60
@@ -127,7 +127,7 @@
         volume: -6
   - type: DeviceLinkSink
     ports:
-    - Timer
+    - Trigger
   - type: Explosive
     explosionType: Cryo
     totalIntensity: 120
