@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Fixed backpack water tanks (spray nozzle) projectiles not properly cleaning
-      up puddles.
-    type: Fix
-  id: 8271
-  time: '2025-04-20T02:41:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35950
 - author: Blackern5000
   changes:
   - message: Reptilians can now have shark tails and a back fin.
@@ -3903,3 +3895,10 @@
   id: 8783
   time: '2025-07-17T22:00:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36843
+- author: SeaWyrm
+  changes:
+  - message: Four varieties of marble tile can now be produced at Cutter lathes.
+    type: Add
+  id: 8784
+  time: '2025-07-17T23:44:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38007
