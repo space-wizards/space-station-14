@@ -28,6 +28,7 @@ public sealed class SmartEquipSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    private const string SuitStorageSlot = "suitstorage"; // Starlight edit - Suit storage equip
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -59,7 +60,7 @@ public sealed class SmartEquipSystem : EntitySystem
     // Starlight Start - Suit storage equip
     private void HandleSmartEquipSuitStorage(ICommonSession? session)
     {
-        HandleSmartEquip(session, "suitstorage");
+        HandleSmartEquip(session, SuitStorageSlot);
     }
     // Starlight End
     
@@ -175,7 +176,7 @@ public sealed class SmartEquipSystem : EntitySystem
         if (TryComp<ItemSlotsComponent>(slotItem, out var slots))
         {
             // Starlight Start - Suit storage equip
-            if (handItem == null && equipmentSlot == "suitstorage")
+            if (handItem == null && equipmentSlot == SuitStorageSlot)
             {
                 if (!_inventory.CanUnequip(uid, equipmentSlot, out var suitStorageReason))
                 {
