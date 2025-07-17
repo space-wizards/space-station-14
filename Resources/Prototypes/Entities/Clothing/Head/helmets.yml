@@ -537,6 +537,13 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/justice.rsi
     equippedPrefix: off
+    # Starlight begin - inheritance fix
+    clothingVisuals:
+      head:
+        - state: off-equipped-HELMET
+      head-vox:
+        - state: off-equipped-HELMET-vox
+    # Starlight end
   - type: ItemToggle
     predictable: false # issues between ToggleCellDraw and ItemToggleActiveSound
     onUse: false
@@ -553,9 +560,11 @@
         volume: -4
   - type: UseDelay
     delay: 1.0
-  - type: ToggleClothing
-    action: ActionToggleJusticeHelm
-    mustEquip: false
+    # Starlight begin - redundant button, the normal sec helmet has a light toggle already
+    #  - type: ToggleClothing
+    #    action: ActionToggleJusticeHelm
+    #    mustEquip: false
+    # Starlight end
   - type: ItemTogglePointLight
   - type: ToggleableVisuals
     spriteLayer: light
