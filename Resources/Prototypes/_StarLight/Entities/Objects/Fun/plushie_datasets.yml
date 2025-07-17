@@ -99,3 +99,9 @@
   values:
     prefix: plushie-vanilla-
     count: 3
+
+- type: localizedDataset
+  id: PlushiesPoley
+  values:
+    prefix: plushie-poley-
+    count: 6
