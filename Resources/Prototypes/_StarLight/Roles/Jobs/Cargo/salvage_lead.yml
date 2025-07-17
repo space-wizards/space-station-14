@@ -8,7 +8,7 @@
       role: JobSalvageSpecialist
       time: 36000 # 10 hours
   icon: "JobIconSalvageLead"
-  startingGear: SalvageSpecialistGear
+  startingGear: SalvageLeadGear
   supervisors: job-supervisors-qm
   canBeAntag: false
   access:
@@ -21,23 +21,11 @@
     implants: [ MindShieldImplant ]
 
 - type: startingGear
-  id: SalvageSpecialistGear
+  id: SalvageLeadGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
-    id: SalvagePDA
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist #TODO: add custom clothing
+    id: SalvagePDA #TODO: add custom PDA
     ears: ClothingHeadsetCargo
   #storage:
     #back:
     #- Stuff
-
-- type: chameleonOutfit
-  id: SalvageSpecialistChameleonOutfit
-  job: SalvageSpecialist
-  equipment:
-    head: ClothingHeadHatCargosoft
-    eyes: ClothingEyesGlassesCheapSunglasses
-    mask: ClothingMaskGasExplorer
-    outerClothing: ClothingOuterWinterMiner
-    neck: ClothingNeckScarfStripedBrown
-    gloves: ClothingHandsGlovesColorBlack
-
