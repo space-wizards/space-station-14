@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using Content.Server.Objectives.Components;
+using Content.Server._Starlight.Objectives.Components;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Objectives.Systems;
+namespace Content.Server._Starlight.Objectives.Systems;
 
 public sealed class PickObjectiveTargetDepartmentSystem: EntitySystem
 {

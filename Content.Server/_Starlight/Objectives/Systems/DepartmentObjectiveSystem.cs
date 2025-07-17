@@ -1,8 +1,8 @@
-﻿using Content.Server.Objectives.Components;
+﻿using Content.Server._Starlight.Objectives.Components;
 using Content.Shared.Objectives.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Objectives.Systems;
+namespace Content.Server._Starlight.Objectives.Systems;
 
 public sealed class DepartmentObjectiveSystem : EntitySystem
 {

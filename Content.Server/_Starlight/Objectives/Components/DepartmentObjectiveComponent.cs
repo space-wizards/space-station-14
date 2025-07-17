@@ -1,8 +1,7 @@
-﻿using Content.Server.Objectives.Systems;
-using Content.Shared.Roles;
+﻿using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Objectives.Components;
+namespace Content.Server._Starlight.Objectives.Components;
 
 [RegisterComponent]
 public sealed partial class DepartmentObjectiveComponent : Component
