@@ -2369,6 +2369,7 @@
   - type: Item
     size: Normal
     sprite: Mobs/Animals/grenadepenguin.rsi
+  - type: TriggerOnUse
   - type: TimerTrigger
     delay: 10
     beepSound:
@@ -2382,6 +2383,8 @@
     intensitySlope: 20
     totalIntensity: 225
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Destructible
     thresholds:
     - trigger:

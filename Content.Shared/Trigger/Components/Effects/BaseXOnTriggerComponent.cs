@@ -1,3 +1,5 @@
+using Content.Shared.Trigger.Systems;
+
 namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
@@ -9,7 +11,7 @@ public abstract partial class BaseXOnTriggerComponent : Component
     /// The keys that will activate the effect.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<string> EffectKeys = new() { "trigger" };
+    public List<string> KeyIns = new() { TriggerSystem.DefaultTriggerKey };
 
     /// <summary>
     /// Set to true to make the user of the trigger the effect target.

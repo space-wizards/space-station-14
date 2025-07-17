@@ -12,9 +12,10 @@ public sealed partial class TriggerSystem : EntitySystem
     {
         SubscribeLocalEvent<RepeatingTriggerComponent, MapInitEvent>(OnRepeatInit);
         SubscribeLocalEvent<RandomTimerTriggerComponent, MapInitEvent>(OnRandomInit);
-        SubscribeLocalEvent<TimerTriggerComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<TimerTriggerComponent, ComponentShutdown>(OnTimerShutdown);
+        SubscribeLocalEvent<TimerTriggerComponent, ExaminedEvent>(OnTimerExamined);
         SubscribeLocalEvent<TimerTriggerComponent, TriggerEvent>(OnTimerTriggered);
-        SubscribeLocalEvent<TimerTriggerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
+        SubscribeLocalEvent<TimerTriggerComponent, GetVerbsEvent<AlternativeVerb>>(OnTimerGetAltVerbs);
     }
 
     // set the time of the first trigger after being spawned
@@ -36,7 +37,12 @@ public sealed partial class TriggerSystem : EntitySystem
         Dirty(ent.Owner, timerTriggerComp);
     }
 
-    private void OnExamined(Entity<TimerTriggerComponent> ent, ref ExaminedEvent args)
+    private void OnTimerShutdown(Entity<TimerTriggerComponent> ent, ref ComponentShutdown args)
+    {
+        RemComp<ActiveTimerTriggerComponent>(ent);
+    }
+
+    private void OnTimerExamined(Entity<TimerTriggerComponent> ent, ref ExaminedEvent args)
     {
         if (args.IsInDetailsRange && ent.Comp.Examinable)
             args.PushText(Loc.GetString("examine-trigger-timer", ("time", ent.Comp.Delay)));
@@ -44,15 +50,16 @@ public sealed partial class TriggerSystem : EntitySystem
 
     private void OnTimerTriggered(Entity<TimerTriggerComponent> ent, ref TriggerEvent args)
     {
-        // don't trigger on null to prevent infinite loops
-        if (ent.Comp.KeysIn.Contains(args.Key))
-            args.Handled = ActivateTimerTrigger(ent.AsNullable(), args.User);
+        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+            return;
+
+        args.Handled |= ActivateTimerTrigger(ent.AsNullable(), args.User);
     }
 
     /// <summary>
     /// Add an alt-click interaction that cycles through delays.
     /// </summary>
-    private void OnGetAltVerbs(Entity<TimerTriggerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnTimerGetAltVerbs(Entity<TimerTriggerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || args.Hands == null)
             return;
@@ -143,7 +150,7 @@ public sealed partial class TriggerSystem : EntitySystem
 
             comp.NextTrigger += comp.Delay;
             Dirty(uid, comp);
-            Trigger(uid, null, comp.TriggerKey);
+            Trigger(uid, null, comp.KeyOut);
         }
     }
 

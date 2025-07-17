@@ -15,6 +15,6 @@ public sealed partial class TriggerOnGunEmptySystem : EntitySystem
 
     private void OnEmptyGunShot(Entity<TriggerOnGunEmptyComponent> ent, ref OnEmptyGunShotEvent args)
     {
-        _trigger.Trigger(ent.Owner, args.User, ent.Comp.TriggerKey);
+        _trigger.Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
     }
 }

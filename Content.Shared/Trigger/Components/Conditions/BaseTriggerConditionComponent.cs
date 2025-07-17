@@ -1,3 +1,4 @@
+using Content.Shared.Trigger.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Trigger.Components.Conditions;
@@ -12,5 +13,5 @@ public abstract partial class BaseTriggerConditionComponent : Component
     /// The keys that are checked for the condition.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<string> ConditionKeys = new() { "trigger" };
+    public List<string> Keys = new() { TriggerSystem.DefaultTriggerKey };
 }

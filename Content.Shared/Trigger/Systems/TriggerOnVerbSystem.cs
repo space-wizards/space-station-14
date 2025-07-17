@@ -31,6 +31,6 @@ public sealed partial class TriggerOnVerbSystem : EntitySystem
 
     private void DoTrigger(Entity<TriggerOnVerbComponent> ent, EntityUid user)
     {
-        _trigger.Trigger(ent.Owner, user, ent.Comp.TriggerKey);
+        _trigger.Trigger(ent.Owner, user, ent.Comp.KeyOut);
     }
 }

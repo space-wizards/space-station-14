@@ -17,19 +17,19 @@ public sealed partial class TriggerSystem : EntitySystem
 
     private void OnWhitelistTriggerAttempt(Entity<WhitelistTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (args.Key == null || ent.Comp.ConditionKeys.Contains(args.Key))
+        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
             args.Cancelled |= !_whitelist.CheckBoth(args.User, ent.Comp.UserBlacklist, ent.Comp.UserWhitelist);
     }
 
     private void OnUseDelayTriggerAttempt(Entity<UseDelayTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (args.Key == null || ent.Comp.ConditionKeys.Contains(args.Key))
+        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
             args.Cancelled |= _useDelay.IsDelayed(ent.Owner, ent.Comp.UseDelayId);
     }
 
     private void OnToggleTriggerAttempt(Entity<ToggleTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (args.Key == null || ent.Comp.ConditionKeys.Contains(args.Key))
+        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
             args.Cancelled |= !ent.Comp.Enabled;
     }
 

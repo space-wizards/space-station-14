@@ -19,12 +19,12 @@ public sealed partial class TriggerSystem : EntitySystem
     private void OnCollide(Entity<TriggerOnCollideComponent> ent, ref StartCollideEvent args)
     {
         if (args.OurFixtureId == ent.Comp.FixtureID && (!ent.Comp.IgnoreOtherNonHard || args.OtherFixture.Hard))
-            Trigger(ent.Owner, args.OtherEntity, ent.Comp.TriggerKey);
+            Trigger(ent.Owner, args.OtherEntity, ent.Comp.KeyOut);
     }
 
     private void OnStepTriggered(Entity<TriggerOnStepTriggerComponent> ent, ref StepTriggeredOffEvent args)
     {
-        Trigger(ent, args.Tripper, ent.Comp.TriggerKey);
+        Trigger(ent, args.Tripper, ent.Comp.KeyOut);
     }
 
     private void OnTimedCollide(Entity<TriggerOnTimedCollideComponent> ent, ref StartCollideEvent args)
@@ -63,7 +63,7 @@ public sealed partial class TriggerSystem : EntitySystem
             {
                 if (collidingTime > curTime)
                 {
-                    Trigger(uid, collidingEntity, triggerOnTimedCollide.TriggerKey);
+                    Trigger(uid, collidingEntity, triggerOnTimedCollide.KeyOut);
                     triggerOnTimedCollide.Colliding[collidingEntity] += triggerOnTimedCollide.Threshold;
                     Dirty(uid, triggerOnTimedCollide);
                 }

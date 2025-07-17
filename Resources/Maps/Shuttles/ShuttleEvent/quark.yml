@@ -1351,6 +1351,8 @@ entities:
         intensity: 50
         type: SingularityDistortion
       - type: ExplodeOnTrigger
+        keysIn:
+        - stageTwo
       triggerDelay: 500
 - proto: GravityGeneratorMini
   entities:
@@ -1479,8 +1481,8 @@ entities:
 
                                            [bold]Crew of the NT-Quark[/bold]
 
-             [bold]Nuclear containment breach detected on long range 
-                 halcyon scanners. Seek immediate shelter. Avoid 
+             [bold]Nuclear containment breach detected on long range
+                 halcyon scanners. Seek immediate shelter. Avoid
                          contaminated materials. Do not panic.[/bold]
 
                               [color=red][bold]Alpha decay rates indicate estimated

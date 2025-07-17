@@ -23,6 +23,7 @@
       intensitySlope: 5
       maxIntensity: 4
     - type: ExplodeOnTrigger
+      keysIn: timer
     # If you nerf the syndicate bomb in any major way, this should probably drop down to at least 100s (not 90s to compensate for slower movement speed & less lag in SS14)
     # Unless, of course, you want the 90 seconds regardless. I can't stop you.
     - type: TimerTrigger

@@ -10,6 +10,7 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    // TODO: particle system
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

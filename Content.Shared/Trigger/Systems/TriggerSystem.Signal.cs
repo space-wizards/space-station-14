@@ -31,7 +31,7 @@ public sealed class TriggerOnSignalSystem : EntitySystem
 
     private void HandleSignalOnTrigger(Entity<SignalOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.EffectKeys.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
             return;
 
         _deviceLink.InvokePort(ent.Owner, ent.Comp.Port);
@@ -43,6 +43,6 @@ public sealed class TriggerOnSignalSystem : EntitySystem
         if (args.Port != ent.Comp.Port)
             return;
 
-        _trigger.Trigger(ent.Owner, args.Trigger, ent.Comp.TriggerKey);
+        _trigger.Trigger(ent.Owner, args.Trigger, ent.Comp.KeyOut);
     }
 }

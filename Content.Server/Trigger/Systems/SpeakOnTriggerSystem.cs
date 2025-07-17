@@ -21,7 +21,7 @@ public sealed class SpeakOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<SpeakOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.EffectKeys.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;

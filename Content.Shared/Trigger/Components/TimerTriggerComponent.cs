@@ -1,4 +1,5 @@
 using Content.Shared.Guidebook;
+using Content.Shared.Trigger.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -10,7 +11,7 @@ namespace Content.Shared.Trigger.Components;
 /// Starts a timer when activated by a trigger.
 /// Will cause a different trigger once the time is over.
 /// Can play a sound while the timer is active.
-/// The time can be set by other components, for example <see cref="RandomTimerTriggerComponent"/> or <see cref="VerbTimerTriggerComponent"/>.
+/// The time can be set by other components, for example <see cref="RandomTimerTriggerComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class TimerTriggerComponent : Component
@@ -19,7 +20,7 @@ public sealed partial class TimerTriggerComponent : Component
     /// The keys that will activate the timer.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<string> KeysIn = new() { "trigger" };
+    public List<string> KeysIn = new() { TriggerSystem.DefaultTriggerKey };
 
     /// <summary>
     /// The key that will trigger once the timer is finished.

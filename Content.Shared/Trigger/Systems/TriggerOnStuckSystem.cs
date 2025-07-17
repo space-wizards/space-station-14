@@ -16,6 +16,6 @@ public sealed class TriggerOnStuckSystem : EntitySystem
 
     private void OnStuck(Entity<TriggerOnStuckComponent> ent, ref EntityStuckEvent args)
     {
-        _trigger.Trigger(ent.Owner, args.User, ent.Comp.TriggerKey);
+        _trigger.Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
     }
 }

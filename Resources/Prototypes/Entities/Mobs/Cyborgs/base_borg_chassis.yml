@@ -275,8 +275,9 @@
       params:
         volume: -4
   # prevent any funnies if someone makes a cyborg item...
-  - type: AutomatedTimer
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   # explosion does most of its damage in the center and less at the edges
   - type: Explosive
     explosionType: Minibomb

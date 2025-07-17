@@ -27,7 +27,7 @@ public sealed partial class TriggerOnMobstateChangeSystem : EntitySystem
         if (!component.MobState.Contains(args.NewMobState))
             return;
 
-        _trigger.Trigger(uid, args.Origin, component.TriggerKey);
+        _trigger.Trigger(uid, args.Origin, component.KeyOut);
     }
 
     /// <summary>

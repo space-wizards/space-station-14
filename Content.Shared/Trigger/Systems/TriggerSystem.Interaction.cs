@@ -21,7 +21,7 @@ public sealed partial class TriggerSystem : EntitySystem
         if (args.Handled || !args.Complex)
             return;
 
-        Trigger(ent.Owner, args.User, ent.Comp.TriggerKey);
+        Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
         args.Handled = true;
     }
 
@@ -30,13 +30,13 @@ public sealed partial class TriggerSystem : EntitySystem
         if (args.Handled)
             return;
 
-        Trigger(ent.Owner, args.User, ent.Comp.TriggerKey);
+        Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
         args.Handled = true;
     }
 
     private void HandleAnchorOnTrigger(Entity<AnchorOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.EffectKeys.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
@@ -46,9 +46,9 @@ public sealed partial class TriggerSystem : EntitySystem
 
         var xform = Transform(target.Value);
 
-        if (xform.Anchored)
+        if (xform.Anchored && ent.Comp.CanUnAnchor)
             _transform.Unanchor(target.Value, xform);
-        else
+        else if (ent.Comp.CanAnchor)
             _transform.AnchorEntity(target.Value, xform);
 
         if (ent.Comp.RemoveOnTrigger)
@@ -59,7 +59,7 @@ public sealed partial class TriggerSystem : EntitySystem
 
     private void HandleUseDelayOnTrigger(Entity<UseDelayOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.EffectKeys.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;

@@ -19,7 +19,8 @@
       canToggleOn: false
     - type: TriggerOnStepTrigger
     - type: PreventableStepTrigger
-    - type: DamageUserOnTrigger
+    - type: DamageOnTrigger
+      targetUser: true
       damage:
         types:
           Blunt: 2 # base damage, scales based on mass
@@ -27,6 +28,7 @@
       sound: "/Audio/Items/Handcuffs/cuff_end.ogg"
       handle: false
     - type: EmitSoundOnTrigger
+      predicted: true
       sound: "/Audio/Items/snap.ogg"
     - type: Item
       sprite: Objects/Devices/mousetrap.rsi

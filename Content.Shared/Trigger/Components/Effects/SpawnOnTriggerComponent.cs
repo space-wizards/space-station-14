@@ -23,7 +23,7 @@ public sealed partial class SpawnOnTriggerComponent : BaseXOnTriggerComponent
     public bool UseMapCoords;
 
     /// <summary>
-    /// Whether or not to use SpawnPredicted, which predicts spawning for the given User.
+    /// Whether or not to use predicted spawning.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Predicted;

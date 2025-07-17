@@ -90,7 +90,7 @@ public sealed partial class TriggerSystem
 
         _appearance.SetData(ent.Owner, ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active);
 
-        Trigger(ent.Owner, user, ent.Comp.TriggerKey);
+        Trigger(ent.Owner, user, ent.Comp.KeyOut);
     }
 
     private void UpdateProximity()

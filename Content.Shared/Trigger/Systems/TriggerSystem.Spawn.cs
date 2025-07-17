@@ -16,12 +16,12 @@ public sealed partial class TriggerSystem : EntitySystem
 
     private void OnSpawnInit(Entity<TriggerOnSpawnComponent> ent, ref MapInitEvent args)
     {
-        Trigger(ent.Owner, null, ent.Comp.TriggerKey);
+        Trigger(ent.Owner, null, ent.Comp.KeyOut);
     }
 
     private void HandleSpawnOnTrigger(Entity<SpawnOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.EffectKeys.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
@@ -56,7 +56,7 @@ public sealed partial class TriggerSystem : EntitySystem
 
     private void HandleDeleteOnTrigger(Entity<DeleteOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.EffectKeys.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;

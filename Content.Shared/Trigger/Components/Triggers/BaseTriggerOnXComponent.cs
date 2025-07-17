@@ -1,3 +1,4 @@
+using Content.Shared.Trigger.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Trigger.Components.Triggers;
@@ -10,7 +11,8 @@ public abstract partial class BaseTriggerOnXComponent : Component
 {
     /// <summary>
     /// The key that the trigger will activate.
+    /// null will activate all triggers.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string? TriggerKey = "trigger";
+    public string? KeyOut = TriggerSystem.DefaultTriggerKey;
 }

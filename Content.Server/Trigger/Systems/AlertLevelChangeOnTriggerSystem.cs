@@ -19,7 +19,7 @@ public sealed class AlertLevelChangeOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<AlertLevelChangeOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.EffectKeys.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
             return;
 
         var stationUid = _station.GetOwningStation(ent.Owner);

@@ -16,7 +16,7 @@ public sealed partial class TriggerOnActivateImplantSystem : EntitySystem
 
     private void OnActivateImplant(Entity<TriggerOnActivateImplantComponent> ent, ref ActivateImplantEvent args)
     {
-        _trigger.Trigger(ent.Owner, args.Performer, ent.Comp.TriggerKey);
+        _trigger.Trigger(ent.Owner, args.Performer, ent.Comp.KeyOut);
         args.Handled = true;
     }
 }

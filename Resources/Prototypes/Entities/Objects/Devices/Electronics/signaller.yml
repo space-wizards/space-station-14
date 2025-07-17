@@ -12,6 +12,8 @@
   - type: Signaller
   - type: SignalOnTrigger
     port: Pressed
+  - type: UseDelayOnTrigger
+  - type: UseDelayTriggerCondition
   - type: UseDelay
   - type: StaticPrice
     price: 40

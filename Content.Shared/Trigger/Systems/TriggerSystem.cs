@@ -35,6 +35,8 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
+    public const string DefaultTriggerKey = "trigger";
+
     public override void Initialize()
     {
         base.Initialize();

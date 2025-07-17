@@ -61,7 +61,7 @@ public sealed partial class TriggerSystem
         {
             _adminLogger.Add(LogType.Trigger, LogImpact.Medium,
                     $"A voice-trigger on {ToPrettyString(ent):entity} was triggered by {ToPrettyString(args.Source):speaker} speaking the key-phrase {component.KeyPhrase}.");
-            Trigger(ent, args.Source, ent.Comp.TriggerKey);
+            Trigger(ent, args.Source, ent.Comp.KeyOut);
 
             var messageWithoutPhrase = message.Remove(index, component.KeyPhrase.Length).Trim();
             var voice = new VoiceTriggeredEvent(args.Source, message, messageWithoutPhrase);

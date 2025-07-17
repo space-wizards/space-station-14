@@ -17,7 +17,7 @@ public sealed class EmpOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<EmpOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.EffectKeys.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
