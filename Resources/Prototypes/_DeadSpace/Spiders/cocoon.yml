@@ -147,3 +147,4 @@
   - type: Appearance
   - type: ZombieImmune
   - type: ImmunitetInfectionDead
+  - type: Pullable

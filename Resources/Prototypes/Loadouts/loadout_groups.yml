@@ -13,12 +13,24 @@
   - PlushieSpaceLizard
   - ThreeCandles
   - Lighter
+  - FlippoLighter
   - CigPackGreen
   - CigPackRed
   - CigPackBlue
   - CigPackBlack
   - CigarCase
   - CigarGold
+  # DS14-pins-start
+  - ClothingNeckUSSPPin
+  - ClothingNeckDonkPin
+  - ClothingNeckEarthPin
+  - ClothingNeckLogistikaPin
+  - ClothingNeckDeForestPin
+  - ClothingNeckNakamuraPin
+  - ClothingNeckNanoTrasenPin
+  - ClothingNeckSyndicakePin
+  - ClothingNeckVitezstviPin
+  # DS14-pins-end
   - ClothingNeckLGBTPin
   - ClothingNeckAllyPin
   - ClothingNeckAromanticPin
@@ -183,6 +195,7 @@
   minLimit: 0
   loadouts:
   - HoPCloak
+  - HoPAltCloak
   - HoPMantle
 
 - type: loadoutGroup
@@ -498,6 +511,14 @@
   minLimit: 0
   loadouts:
   - JanitorWintercoat
+  - JanitorHazardVest
+
+- type: loadoutGroup
+  id: JanitorShoes
+  name: loadout-group-janitor-shoes
+  loadouts:
+  - PurpleShoes
+  - GaloshesShoes
 
 - type: loadoutGroup
   id: JanitorPlunger
@@ -1589,7 +1610,7 @@
   - MedicalDoctorBackpack
   - MedicalDoctorSatchel
   - MedicalDoctorDuffel
-  - MedicalDoctorSatchelBlueCat
+  - ChiefMedicalOfficerSatchelBlueCat
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerNeck

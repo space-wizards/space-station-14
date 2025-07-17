@@ -3,6 +3,7 @@
   name: shawerma recipe
   result: ADTShawermaDefault
   time: 20
+  group: Savory
   solids:
     FoodTomato: 1
     FoodMeatCutlet: 3
@@ -18,6 +19,7 @@
   name: cheese shawerma recipe
   result: ADTShawermaCheese
   time: 20
+  group: Savory
   solids:
     FoodTomato: 1
     FoodMeatCutlet: 3
@@ -34,6 +36,7 @@
   name: shawerma recipe
   result: ADTShawermaMeat
   time: 20
+  group: Savory
   solids:
     FoodMeatCutlet: 3
     FoodMeatCooked: 1

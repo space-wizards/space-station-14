@@ -26,6 +26,7 @@
         maxDistance: 2
   - type: UseDelay
     delay: 1.5
+  - type: SignatureTool # DS14-signatures
 
 - type: entity
   parent: Pen

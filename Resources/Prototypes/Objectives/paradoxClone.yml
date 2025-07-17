@@ -37,4 +37,3 @@
     requireDead: true # don't count missing evac as killing
   - type: TargetObjective
     title: objective-condition-kill-head-title # kill <name>, <job>
-

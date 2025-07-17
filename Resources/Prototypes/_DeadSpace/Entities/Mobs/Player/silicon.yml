@@ -1,0 +1,23 @@
+- type: entity
+  id: ServantCircuitBoard
+  parent: BaseElectronics
+  name: плата законов (Слуга)
+  description: Электронная плата, хранящая набор законов ИИ 'Слуга'.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: ServantLawset
+
+- type: entity
+  id: HivemindCircuitBoard
+  parent: BaseElectronics
+  name: плата законов (Коллективный Разум)
+  description: Электронная плата, хранящая набор законов ИИ 'Коллективный Разум'.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: HivemindLawset

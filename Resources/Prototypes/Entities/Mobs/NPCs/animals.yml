@@ -3026,6 +3026,11 @@
   parent: MobCatSpace
   description: Explosive kitten.
   components:
+  # DS14-start
+  - type: Item 
+    size: Huge 
+  - type: MultiHandedItem 
+  # DS14-end
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]

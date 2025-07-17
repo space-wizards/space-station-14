@@ -8,6 +8,16 @@
       role: JobChiefMedicalOfficer
       time: 72000 #20 hrs
 
+# Professional CMO Time
+- type: loadoutEffectGroup
+  id: ProfessionalCMO
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefMedicalOfficer
+      time: 54000 #15 hrs
+
 # Jumpsuit
 - type: loadout
   id: ChiefMedicalOfficerJumpsuit
@@ -58,6 +68,15 @@
   id: ChiefMedicalOfficerMantle
   equipment:
     neck: ClothingNeckMantleCMO
+
+# Back
+- type: loadout
+  id: ChiefMedicalOfficerSatchelBlueCat
+  equipment:
+    back: ClothingSatchelBlueCat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ProfessionalCMO
 
 # Outer clothing
 - type: loadout

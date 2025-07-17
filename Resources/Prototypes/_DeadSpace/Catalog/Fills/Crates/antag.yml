@@ -1,7 +1,5 @@
 - type: entity
   id: CrateWizardHardsuitBundle
-  name: стальной ящик
-  description: Большой контейнер для предметов.
   suffix: Скафандр волшебника
   parent: CrateGenericSteel
   components:

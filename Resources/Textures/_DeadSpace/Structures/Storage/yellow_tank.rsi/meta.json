@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/TauCetiStation/TauCetiClassic/commit/c449d65dff642f44f3e0d8a312f70aec43ab2eae edited by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "tank",
+      "directions": 4
+    },
+    {
+      "name": "icon_kvass"
+    },
+    {
+      "name": "tank_kvass",
+      "directions": 4
+    },
+    {
+      "name": "icon_beer"
+    },
+    {
+      "name": "tank_beer",
+      "directions": 4
+    }
+ ]
+}

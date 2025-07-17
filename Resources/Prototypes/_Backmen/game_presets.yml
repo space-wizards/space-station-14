@@ -12,4 +12,4 @@
     - BlobGameMode
     - BasicStationEventScheduler
     - BasicRoundstartVariation
-    - SubGamemodesRule
+    - SubGamemodesRuleNoWizard # DS14

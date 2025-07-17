@@ -43,6 +43,13 @@
   wageDepartment: Specific
   wage: 190
   #end-backmen: currency
+  # DS14-blueshield-disabilities-disallow-start
+  traitsBlacklist:
+    - Blindness
+    - PoorVision
+    - Muted
+    - Narcolepsy
+  # DS14-blueshield-disabilities-disallow-end
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

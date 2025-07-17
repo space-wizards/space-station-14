@@ -271,3 +271,34 @@
     tags:
     - Meat
     - Slice
+
+- type: entity
+  name: картофельное пюре
+  parent: FoodBowlBase
+  id: MashedPotatoes
+  description: Пюрешка. Не хватает только котлеток.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - potatoes
+      - creamy
+  - type: Food
+    transferAmount: 5
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/mashed-potatoes.rsi
+    layers:
+    - state: bowl
+    - state: mashed-potatoes
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
+  - type: Item
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/mashed-potatoes.rsi

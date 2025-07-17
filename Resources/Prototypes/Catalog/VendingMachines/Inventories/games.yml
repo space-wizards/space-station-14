@@ -17,6 +17,7 @@
     PaperCNCSheet: 6
     MysteryFigureBox: 2
     BooksBag: 3
+    CardBin: 2 # DS14
   contrabandInventory:
     Basketball: 1
     FoodSnackBoritos: 3

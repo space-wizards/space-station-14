@@ -4,7 +4,7 @@ meta:
   engineVersion: 252.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/17/2025 11:17:34
+  time: 06/28/2025 09:26:54
   entityCount: 13584
 maps:
 - 1
@@ -842,7 +842,7 @@ entities:
             2: 57344
           8,5:
             0: 272
-            4: 17472
+            3: 17472
           8,6:
             2: 65345
           8,7:
@@ -883,10 +883,10 @@ entities:
             0: 53759
           11,2:
             0: 4319
-            3: 49152
+            4: 49152
           11,3:
             0: 61457
-            3: 204
+            4: 204
           11,-1:
             0: 30583
           11,4:
@@ -898,9 +898,9 @@ entities:
             0: 28791
           12,2:
             0: 119
-            3: 28672
+            4: 28672
           12,3:
-            3: 119
+            4: 119
             0: 61440
           12,-1:
             0: 29311
@@ -1317,16 +1317,16 @@ entities:
             2: 65534
           9,5:
             5: 4368
-            3: 17472
+            4: 17472
           9,6:
             2: 7936
           10,5:
-            3: 4368
+            4: 4368
             6: 17472
           10,6:
             2: 3840
           11,5:
-            3: 21840
+            4: 21840
           11,6:
             2: 3856
           12,5:
@@ -1507,7 +1507,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -1522,7 +1522,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -5649,8 +5649,6 @@ entities:
 - proto: ActionToggleBlock
   entities:
   - uid: 12
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 11
@@ -5658,8 +5656,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 11
   - uid: 14
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 13
@@ -7559,7 +7555,7 @@ entities:
       pos: -18.5,33.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -8379.317
+      secondsUntilStateChange: -9569.246
       changeAirtight: False
       state: Opening
     - type: Docking
@@ -7575,7 +7571,7 @@ entities:
       pos: 0.5,-7.5
       parent: 13282
     - type: Door
-      secondsUntilStateChange: -8378.484
+      secondsUntilStateChange: -9568.413
       changeAirtight: False
       state: Opening
     - type: Docking
@@ -86842,63 +86838,63 @@ entities:
       pos: 8.5,19.5
       parent: 2
     - type: WarpPoint
-      location: hop's office
+      location: Офис ГП
   - uid: 13067
     components:
     - type: Transform
       pos: 16.5,-0.5
       parent: 2
     - type: WarpPoint
-      location: chemistry
+      location: Химическая лаборатория
   - uid: 13068
     components:
     - type: Transform
       pos: 8.5,25.5
       parent: 2
     - type: WarpPoint
-      location: captain's quarters
+      location: Каюта капитана
   - uid: 13069
     components:
     - type: Transform
       pos: 3.5,30.5
       parent: 2
     - type: WarpPoint
-      location: bridge
+      location: Мостик
   - uid: 13070
     components:
     - type: Transform
       pos: -1.5,17.5
       parent: 2
     - type: WarpPoint
-      location: vault
+      location: Хранилище
   - uid: 13071
     components:
     - type: Transform
       pos: 8.5,9.5
       parent: 2
     - type: WarpPoint
-      location: eva room
+      location: ВКД хранилище
   - uid: 13072
     components:
     - type: Transform
       pos: 58.5,2.5
       parent: 2
     - type: WarpPoint
-      location: particle accelerator
+      location: Ускоритель частиц
   - uid: 13073
     components:
     - type: Transform
       pos: 34.5,14.5
       parent: 2
     - type: WarpPoint
-      location: atmospherics
+      location: Атмосферный отсек
   - uid: 13074
     components:
     - type: Transform
       pos: 27.5,18.5
       parent: 2
     - type: WarpPoint
-      location: salvage
+      location: Утилизаторская
   - uid: 13075
     components:
     - type: Transform
@@ -86911,11 +86907,15 @@ entities:
     - type: Transform
       pos: 13.5,-14.5
       parent: 2
+    - type: WarpPoint
+      location: Морг
   - uid: 13077
     components:
     - type: Transform
       pos: -13.5,20.5
       parent: 2
+    - type: WarpPoint
+      location: Оружейная
   - uid: 13078
     components:
     - type: Transform

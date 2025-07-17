@@ -61,7 +61,6 @@
         - ReagentId: Cellulose
           Quantity: 3
 
-
 - type: entity
   parent: SheetPaper
   id: SheetPaper1
@@ -283,6 +282,7 @@
           - ReagentId: Fat
             Quantity: 3
           canReact: false
+    - type: Appearance # DS14
 
 - type: entity
   parent: MaterialSheetMeat
@@ -293,3 +293,37 @@
       state: meat
     - type: Stack
       count: 1
+
+# DS14-start
+
+- type: entity
+  parent: SheetPaper
+  id: SheetPaper10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: paper_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: SheetUranium
+  id: SheetUranium10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: uranium_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: MaterialSheetMeat
+  id: MaterialSheetMeat10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: meat_2
+  - type: Stack
+    count: 10
+
+# DS14-end

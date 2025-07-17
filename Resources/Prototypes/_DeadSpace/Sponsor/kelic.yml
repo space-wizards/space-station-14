@@ -7,21 +7,21 @@
   id: KelicHypospray
   entity: HypoKelic
   sponsorOnly: true
-  whitelistJobs: [ChiefMedicalOfficer, MedicalDoctor, Chemist]
+  whitelistJobs: [ChiefMedicalOfficer, SeniorPhysician, Chemist, MedicalDoctor, Paramedic, Coroner, MedicalIntern]
 
 - type: sponsorLoadout
   id: KelicWeaponCrusher
   entity: WeaponCrusherKelic
   sponsorOnly: true
   whitelistJobs: [SalvageSpecialist, SeniorSalvageSpecialist]
-  
+
 # Backpack
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackKelic
   name: сумка с функцией РИГ "MS-06"
-  description: Компактная, износостойкая сумка, специально созданная для скафандра MS-06. 
-#  categories: [ HideSpawnMenu ]
+  description: Компактная, износостойкая сумка, специально созданная для скафандра MS-06.
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/Kelic/backpack.rsi
@@ -33,10 +33,11 @@
     - 0,0,19,9
   - type: StorageFill
     contents:
-      - id: ClothingNeckKelic 
-      - id: ClothingBeltKelic 
+      - id: ClothingNeckKelic
+      - id: ClothingBeltKelic
       - id: ClothingShoesBootsMagKelic
       - id: ClothingHandsGlovesCombatKelic
+      - id: PaperLawKelic
       - id: PaperLawKelic
       - id: ClothingUniformJumpsuitKelic
       - id: ClothingEyesGlassesKelic
@@ -61,7 +62,7 @@
 
 # Belt
 - type: entity
-  parent: ClothingBeltChiefEngineer
+  parent: ClothingBeltStorageBase
   id: ClothingBeltKelic
   name: RX-79 «Core Belt»
   description: Лёгкий композитный пояс, надёжно удерживает инструменты и равномерно распределяет вес.
@@ -73,13 +74,20 @@
     sprite: _DeadSpace/Sponsor/Kelic/belt.rsi
   - type: Item
     size: Huge
+  - type: Storage
+    grid:
+    - 0,0,9,1
   - type: StorageFill
     contents:
       - id: PowerDrill
       - id: JawsOfLife
       - id: WelderExperimental
       - id: Multitool
-      
+      - id: trayScanner
+      - id: GasAnalyzer
+      - id: HandHeldMassScanner
+      - id: HolofanProjector
+
 # Neck
 - type: entity
   parent: ClothingNeckBase
@@ -129,6 +137,26 @@
     slots:
     - Tail
     hideOnToggle: true
+  - type: HardsuitSpeedBuff
+  - type: PowerCellDraw
+    drawRate: 3.6
+    enabled: false
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    fitsInCharger: false
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+      toggleable-clothing: !type:ContainerSlot {}
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+        disableEject: true
+        whitelist:
+          tags:
+          - PowerCell
 
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]

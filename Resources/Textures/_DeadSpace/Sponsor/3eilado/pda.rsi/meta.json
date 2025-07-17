@@ -1,30 +1,23 @@
 {
     "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Created by inspector_jeleshka (discord) for Space Station 14 server Мёртвый Космос",
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Made by inspector_jeleshka (discord) for Space Station 14 server Мёртвый Космос",
     "size": {
       "x": 32,
       "y": 32
     },
     "states": [
       {
-        "name": "id_overlay"
-      },
-      {
-        "name": "equipped-BELT",
-        "directions": 4
-      },
-      {
-        "name": "equipped-IDCARD",
-        "directions": 4
-      },
-      {
-        "name": "inhand-left",
-        "directions": 4
-      },
-      {
-        "name": "inhand-right",
-        "directions": 4
+        "name": "id_overlay",
+        "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
       },
       {
         "name": "insert_overlay"

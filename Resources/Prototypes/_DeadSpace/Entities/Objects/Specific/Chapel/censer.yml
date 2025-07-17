@@ -2,11 +2,13 @@
   parent: BaseItem
   id: Censer
   name: кадило
-  description: Кадило, усилинное для обороны священника от нечисти и не только. Наполняется жидкостями.
+  description: Кадило, которое модифицированно особой системой испарения святой воды, эта система позволяет пару оказывать лечебный эффект.
   components:
+  - type: UseDelay
+    delay: 30.0
   - type: SolutionContainerManager
     solutions:
-      drink:
+      сenser:
         maxVol: 100
         reagents:
           - ReagentId: Holywater
@@ -17,10 +19,8 @@
     sprite: _DeadSpace/Objects/Specific/Chapel/censer.rsi
     layers:
     - state: icon
-  - type: Spillable
-    solution: drink
   - type: RefillableSolution
-    solution: drink
+    solution: censer
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
@@ -30,10 +30,16 @@
       collection: MetalThud
     damage:
       types:
-        Blunt: 14
+        Blunt: 10
   - type: Clothing
     quickEquip: false
     slots:
     - Belt
-  - type: DrainableSolution
-    solution: drink
+  - type: Censer
+    heailng:
+      groups:
+        Brute: -15
+        Burn: -15
+        Airloss: -15
+  - type: ExaminableSolution
+    solution: censer

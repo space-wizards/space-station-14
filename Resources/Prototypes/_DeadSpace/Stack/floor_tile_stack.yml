@@ -1,0 +1,111 @@
+# Tiles
+- type: stack
+  id: FloorTileTerracotta
+  name: терракотовая плитка
+  spawn: FloorTileItemTerracotta
+  maxCount: 30
+
+- type: stack
+  id: FloorTileTerracottaDiagonal
+  name: терракотовая диагональная плитка
+  spawn: FloorTileItemTerracottaDiagonal
+  maxCount: 30
+
+- type: stack
+  id: FloorTileTerracottaHerringbone
+  name: терракотовая плитка ёлочкой
+  spawn: FloorTileItemTerracottaHerringbone
+  maxCount: 30
+
+- type: stack
+  id: FloorTileTerracottaSmall
+  name: терракотовые мини плиты
+  spawn: FloorTileItemTerracottaSmall
+  maxCount: 30
+
+- type: stack
+  id: FloorTileStone
+  name: каменный пол
+  spawn: FloorTileItemStone
+  maxCount: 30
+
+- type: stack
+  id: FloorTileCult
+  name: культовый пол
+  spawn: FloorTileItemCult
+  maxCount: 30
+
+# Shuttle tiles
+- type: stack
+  id: FloorTileStackShuttleMonoWhite
+  name: белый моно пол шаттла
+  spawn: FloorTileItemShuttleMonoWhite
+  maxCount: 30
+
+- type: stack
+  id: FloorTileStackShuttleMonoGrey
+  name: серый моно пол шаттла
+  spawn: FloorTileItemShuttleMonoGrey
+  maxCount: 30
+
+- type: stack
+  id: FloorTileStackShuttleMonoBlack
+  name: чёрный моно пол шаттла
+  spawn: FloorTileItemShuttleMonoBlack
+  maxCount: 30
+
+- type: stack
+  id: FloorTileStackShuttleMonoBlue
+  name: синий моно пол шаттла
+  spawn: FloorTileItemShuttleMonoBlue
+  maxCount: 30
+
+- type: stack
+  id: FloorTileStackShuttleMonoOrange
+  name: оранжевый моно пол шаттла
+  spawn: FloorTileItemShuttleMonoOrange
+  maxCount: 30
+
+- type: stack
+  id: FloorTileStackShuttleMonoPurple
+  name: фиолетовый моно пол шаттла
+  spawn: FloorTileItemShuttleMonoPurple
+  maxCount: 30
+
+- type: stack
+  id: FloorTileStackShuttleMonoRed
+  name: красный моно пол шаттла
+  spawn: FloorTileItemShuttleMonoRed
+  maxCount: 30
+
+# Fairy grass tiles
+- type: stack
+  id: FloorTileFairyGrass
+  name: сказочная трава
+  spawn: FloorTileItemFairyGrass
+  maxCount: 30
+
+- type: stack
+  id: FloorTileFairyAstroGrass
+  name: сказочная астро-трава
+  spawn: FloorTileItemFairyAstroGrass
+  maxCount: 30
+
+# Material tiles
+- type: stack
+  id: FloorTileDiamond
+  name: алмазный пол
+  spawn: FloorTileItemDiamond
+  maxCount: 30
+
+- type: stack
+  id: FloorTilePlasma
+  name: плазменный пол
+  spawn: FloorTileItemPlasma
+  maxCount: 30
+
+- type: stack
+  id: FloorTileUranium
+  name: урановый пол
+  spawn: FloorTileItemUranium
+  maxCount: 30

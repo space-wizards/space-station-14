@@ -689,7 +689,6 @@
           Quantity: 10
   - type: Tag
     tags:
-    - ClothMade
     - Trash
   - type: Sprite
     state: mre-wrapper

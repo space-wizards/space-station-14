@@ -23,6 +23,9 @@
   id: BorgModuleSecurity
 
 - type: Tag
+  id: CleanerGrenade
+
+- type: Tag
   id: ChefGoldenKnife
 
 - type: Tag
@@ -34,14 +37,20 @@
 - type: Tag
   id: FelinidFood
 
-- type: Tag 
+- type: Tag
   id: FittableInBackpackCase
 
-- type: Tag 
+- type: Tag
+  id: GoldenPlunger
+
+- type: Tag
   id: HardHat
 
 - type: Tag
   id: KatanaVjlados
+
+- type: Tag
+  id: LightReplacer
 
 - type: Tag
   id: MagazineEagle
@@ -59,13 +68,22 @@
   id: MagazineTommyGun
 
 - type: Tag
+  id: Plasteel
+
+- type: Tag
   id: MagazineTommyGunCap
+
+- type: Tag
+  id: SnapPop
+
+- type: Tag
+  id: SoapSyndie
 
 - type: Tag
   id: ToySword
 
 - type: Tag
-  id: SnapPop
+  id: TrashBagBlue
 
 - type: Tag
   id: WeldingMaskFlame

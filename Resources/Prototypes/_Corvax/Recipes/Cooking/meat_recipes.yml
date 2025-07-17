@@ -3,6 +3,7 @@
   name: pelmeni recipe
   result: FoodPelmeniBowl
   time: 10
+  group: Savory
   reagents:
     Water: 20
   solids:

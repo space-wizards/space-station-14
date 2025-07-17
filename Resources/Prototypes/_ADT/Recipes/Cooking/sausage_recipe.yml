@@ -3,6 +3,7 @@
   name: raw sausage recipe
   result: ADTFoodSausageRaw
   time: 10
+  group: Savory
   solids:
     FoodMeatCutlet: 1
   reagents:
@@ -15,5 +16,6 @@
   name: fried sausage recipe
   result: ADTFoodSausageFried
   time: 5
+  group: Savory
   solids:
     ADTFoodSausageRaw: 1

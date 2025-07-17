@@ -112,6 +112,11 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         if (player == null)
             return true;
 
+        // DS14-blueshield-disabilities-disallow-start
+        if (profile != null && !CheckTraitBlacklist(profile, job, out reason))
+            return false;
+        // DS14-blueshield-disabilities-disallow-start
+
         // DS14-sponsors-start
         if (_sponsorsManager?.TryGetInfo(out var sponsorInfo) == true && (sponsorInfo.AllowJob || sponsorInfo.AllowedMarkings.Contains(job.ID)))
             return true;
@@ -156,6 +161,21 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkupOrThrow(string.Join('\n', reasons));
         return reason == null;
     }
+
+    // DS14-blueshield-disabilities-disallow-start
+    public bool CheckTraitBlacklist(HumanoidCharacterProfile profile, JobPrototype job, [NotNullWhen(false)] out FormattedMessage? reason)
+    {
+        reason = default;
+
+        if (profile.TraitPreferences.Intersect(job.TraitsBlacklist).Any())
+        {
+            reason = FormattedMessage.FromUnformatted(Loc.GetString("role-trait-blacklist"));
+            return false;
+        }
+
+        return true;
+    }
+    // DS14-blueshield-disabilities-disallow-end
 
     public bool CheckWhitelist(JobPrototype job, [NotNullWhen(false)] out FormattedMessage? reason)
     {

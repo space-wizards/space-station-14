@@ -1,0 +1,13 @@
+- type: entity
+  id: PhotocopierMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: копировальный аппарат (машинная плата)
+  description: Из этой машинной платы собирается копировальный аппарат.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: PhotocopierBase
+      stackRequirements:
+        Plastic : 5
+        Steel : 5

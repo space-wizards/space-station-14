@@ -54,9 +54,9 @@
   - type: GhostRole
     name: ghost-role-information-closet-skeleton-name
     description: ghost-role-information-closet-skeleton-description
-    rules: ghost-role-information-closet-skeleton-rules
+    rules: ghost-role-information-nonantagonist-rules # DS14
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleNeutral # DS14
     raffle:
       settings: default
   - type: GhostTakeoverAvailable

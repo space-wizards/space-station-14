@@ -3,23 +3,25 @@
   name: croissant with cream recipe
   result: ADTFoodCroissantCream
   time: 10
+  group: Dessert
   reagents:
     Egg: 6
     Sugar: 5
     Cream: 5
   solids:
-    FoodDoughSlice: 1
+    FoodCroissantRaw: 1
 
 - type: microwaveMealRecipe
   id: ADTFoodCroissantChocolateRecipe
   name: croissant with chocolate recipe
   result: ADTFoodCroissantChocolate
   time: 10
+  group: Dessert
   reagents:
     Egg: 6
     Sugar: 5
   solids:
-    FoodDoughSlice: 1
+    FoodCroissantRaw: 1
     FoodSnackChocolateBar: 1
 
 - type: microwaveMealRecipe
@@ -27,11 +29,12 @@
   name: croissant with cheese recipe
   result: ADTFoodCroissantCheese
   time: 10
+  group: Dessert
   reagents:
     Egg: 6
     Sugar: 5
   solids:
-    FoodDoughSlice: 1
+    FoodCroissantRaw: 1
     FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
@@ -39,6 +42,7 @@
   name: hot dog
   result: ADTFoodHotDog
   time: 10
+  group: Savory
   reagents:
     Ketchup: 2
   solids:
@@ -50,6 +54,7 @@
   name: pig blanket
   result: FoodMealPigblanket
   time: 5
+  group: Savory
   solids:
     FoodDoughSlice: 1
     ADTFoodSausageRaw: 1

@@ -3,6 +3,7 @@
   name: fried egg with sausage recipe
   result: ADTFriedEggSausage
   time: 10
+  group: Breakfast
   reagents:
     Egg: 12
   solids:

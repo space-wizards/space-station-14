@@ -17,7 +17,7 @@ using System.Linq;
 using Content.Shared.Database;
 using Content.Server.Kitchen.Components;
 
-namespace Content.Server.DeadSpace.InfectorDead.EntitySystems;
+namespace Content.Server.DeadSpace.InfectorDead;
 
 public sealed partial class InfectorDeadSystem : EntitySystem
 {
@@ -28,7 +28,6 @@ public sealed partial class InfectorDeadSystem : EntitySystem
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    public const string KnifeTag = "Knife";
 
     public override void Initialize()
     {

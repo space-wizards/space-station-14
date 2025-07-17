@@ -4,6 +4,13 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitSecGrey
 
+# DS14-start
+- type: loadout
+  id: SecurityJumpsuitBlue
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSecBlue
+# DS14-end
+
 - type: loadout
   id: RedJumpskirt
   equipment:

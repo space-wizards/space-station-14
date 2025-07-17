@@ -26,6 +26,9 @@
           Quantity: 3
   - type: Item
     sprite: _ADT/Objects/Consumable/Food/shawerma.rsi
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: шаурма

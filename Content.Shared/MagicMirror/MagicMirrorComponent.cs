@@ -48,4 +48,9 @@ public sealed partial class MagicMirrorComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? ChangeHairSound = new SoundPathSpecifier("/Audio/Items/scissors.ogg");
+
+    // DS14-slimeperson-internal-magic-mirror-start
+    [DataField]
+    public bool Internal = false;
+    // DS14-slimeperson-internal-magic-mirror-end
 }

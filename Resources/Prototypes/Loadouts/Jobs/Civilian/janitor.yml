@@ -46,6 +46,22 @@
   equipment:
     outerClothing: ClothingOuterWinterJani
 
+- type: loadout
+  id: JanitorHazardVest
+  equipment:
+    outerClothing: ClothingOuterVestHazard
+
+# Shoes
+- type: loadout
+  id: PurpleShoes
+  equipment:
+    shoes: ClothingShoesColorPurple
+
+- type: loadout
+  id: GaloshesShoes
+  equipment:
+    shoes: ClothingShoesGaloshes
+
 # Misc
 - type: loadout
   id: JanitorGoldenPlunger

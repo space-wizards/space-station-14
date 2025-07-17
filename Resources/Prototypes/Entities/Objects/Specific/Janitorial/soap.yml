@@ -141,6 +141,10 @@
   - type: Residue
     residueAdjective: residue-slippery
     residueColor: residue-red
+  - type: Tag # DS14
+    tags:
+    - Soap
+    - SoapSyndie
 
 - type: entity
   name: soaplet

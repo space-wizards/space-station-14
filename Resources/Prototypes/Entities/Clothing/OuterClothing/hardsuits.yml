@@ -979,8 +979,11 @@
       coefficients:
         Blunt: 0.2 #best armor in the game
         Slash: 0.2
+        Poison: 0.05 # DS14-value: what is poison?
         Piercing: 0.2
         Heat: 0.1
+        Cold: 0.1
+        Shock: 0.1
         Radiation: 0.05
         Caustic: 0.1
         Stun: 0.05 # DS14-value: what is stun?

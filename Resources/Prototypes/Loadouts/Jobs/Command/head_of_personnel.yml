@@ -42,6 +42,14 @@
     neck: ClothingNeckCloakHop
 
 - type: loadout
+  id: HoPAltCloak
+  equipment:
+    neck: ADTClothingNeckHoPAltCloak
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ProfessionalHoP
+
+- type: loadout
   id: HoPMantle
   equipment:
     neck: ClothingNeckMantleHOP

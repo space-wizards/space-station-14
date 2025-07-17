@@ -1,0 +1,80 @@
+- type: constructionGraph
+  id: SinkGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: sinkWater
+      steps:
+      - material: Steel
+        amount: 10
+        doAfter: 2
+
+  - node: sinkWater
+    entity: Sink
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 10
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 2
+
+- type: constructionGraph
+  id: SinkWideGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: sinkWide
+      steps:
+      - material: Steel
+        amount: 10
+        doAfter: 3
+
+  - node: sinkWide
+    entity: SinkWide
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 10
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 2
+
+- type: constructionGraph
+  id: SinkStemlessGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: sinkStemlessWater
+      steps:
+      - material: Steel
+        amount: 10
+        doAfter: 2
+
+  - node: sinkStemlessWater
+    entity: SinkStemlessWater
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 10
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1

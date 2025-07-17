@@ -76,7 +76,7 @@ public sealed class DevaSystem : EntitySystem
     private void OnState(EntityUid uid, DevaComponent component, MobStateChangedEvent args)
     {
         if (_mobState.IsDead(uid))
-            _cocoon.TryEmptyCocoon(uid);
+            _cocoon.EmptyCocoon(uid);
     }
     private void OnRefresh(EntityUid uid, DevaComponent component, RefreshMovementSpeedModifiersEvent args)
     {
@@ -159,6 +159,14 @@ public sealed class DevaSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        EntityUid? prisonerTarget = _cocoon.GetPrisoner(uid);
+
+        if (prisonerTarget != null && !_cocoon.IsEntityInCocoon(uid, prisonerTarget.Value))
+        {
+            ReleasePrisoner(uid, component);
+            return;
+        }
+
         if (_gameTiming.CurTime <= component.DamageTick)
             return;
 
@@ -167,8 +175,6 @@ public sealed class DevaSystem : EntitySystem
             ReleasePrisoner(uid, component);
             return;
         }
-
-        EntityUid? prisonerTarget = _cocoon.GetPrisoner(uid);
 
         if (!TryComp<DamageableComponent>(prisonerTarget, out var damageable))
             return;
@@ -210,7 +216,7 @@ public sealed class DevaSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        _cocoon.TryEmptyCocoon(uid);
+        _cocoon.EmptyCocoon(uid);
         component.IsTrappedVictim = false;
         component.NextTickUtilPrison = _gameTiming.CurTime;
         UpdateDeva(uid, component);

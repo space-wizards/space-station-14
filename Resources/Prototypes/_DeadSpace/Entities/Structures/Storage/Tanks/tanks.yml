@@ -1,0 +1,57 @@
+# Kvass
+- type: entity
+  id: KvassTank
+  parent: StorageTank
+  name: бочка кваса
+  description: Та самая бочка с освежающим хлебным нектаром.
+  suffix: Пустой
+  components:
+  - type: Rotatable
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Storage/yellow_tank.rsi
+    layers:
+    - state: tank
+    - state: tank_kvass
+
+- type: entity
+  parent: KvassTank
+  id: KvassTankFull
+  suffix: Full
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Kvass
+          Quantity: 1500
+
+# Beer
+- type: entity
+  id: BeerTank
+  parent: StorageTank
+  name: бочка пива
+  description: Та самая бочка с янтарным хмельным напитком, что манит прохладой после трудового дня.
+  suffix: Пустой
+  components:
+  - type: Rotatable
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Storage/yellow_tank.rsi
+    layers:
+    - state: tank
+    - state: tank_beer
+
+- type: entity
+  parent: BeerTank
+  id: BeerTankFull
+  suffix: Полный
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Beer
+          Quantity: 1500

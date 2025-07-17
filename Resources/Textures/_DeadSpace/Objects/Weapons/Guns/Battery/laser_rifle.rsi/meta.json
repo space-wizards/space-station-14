@@ -14,7 +14,7 @@
             "name": "base"
         },
         {
-            "name": "mag-unshaded-1",
+            "name": "mag-unshaded-0",
             "delays": [
                 [
                     0.4,
@@ -22,6 +22,9 @@
                 ]
             ]
 		},
+        {
+            "name": "mag-unshaded-1"
+        },
         {
             "name": "mag-unshaded-2"
         },

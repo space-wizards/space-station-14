@@ -1,0 +1,19 @@
+- type: cargoProduct
+  id: FoodCrateKvassTank
+  icon:
+    sprite: _DeadSpace/Structures/Storage/yellow_tank.rsi
+    state: icon_kvass
+  product: KvassTankFull
+  cost: 2000
+  category: cargoproduct-category-name-food
+  group: market
+
+- type: cargoProduct
+  id: FoodCrateBeerTank
+  icon:
+    sprite: _DeadSpace/Structures/Storage/yellow_tank.rsi
+    state: icon_beer
+  product: BeerTankFull
+  cost: 3000
+  category: cargoproduct-category-name-food
+  group: market

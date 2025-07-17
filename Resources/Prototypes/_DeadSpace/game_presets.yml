@@ -12,7 +12,7 @@
     - Unitology
     - BasicStationEventScheduler
     - BasicRoundstartVariation
-    - SubGamemodesRule
+    - SubGamemodesRuleNoWizard
 
 - type: gamePreset
   id: SecretUnitology
@@ -28,7 +28,7 @@
     - Unitology
     - BasicStationEventScheduler
     - BasicRoundstartVariation
-    - SubGamemodesRule
+    - SubGamemodesRuleNoWizard
 
 - type: gamePreset
   id: SpiderTerror
@@ -44,7 +44,7 @@
     - SpiderTerror
     - BasicStationEventScheduler
     - BasicRoundstartVariation
-    - SubGamemodesRule
+    - SubGamemodesRuleNoWizard
 
 - type: gamePreset
   id: SecretSpiderTerror
@@ -60,4 +60,4 @@
     - SpiderTerror
     - BasicStationEventScheduler
     - BasicRoundstartVariation
-    - SubGamemodesRule
+    - SubGamemodesRuleNoWizard

@@ -1,0 +1,64 @@
+# Smokeables
+- type: loadout
+  id: FlippoLighter
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Command
+  storage:
+    back:
+    - FlippoLighter
+
+# Pins
+- type: loadout
+  id: ClothingNeckUSSPPin
+  storage:
+    back:
+    - ClothingNeckUSSPPin
+
+- type: loadout
+  id: ClothingNeckDonkPin
+  storage:
+    back:
+    - ClothingNeckDonkPin
+
+- type: loadout
+  id: ClothingNeckEarthPin
+  storage:
+    back:
+    - ClothingNeckEarthPin
+
+- type: loadout
+  id: ClothingNeckLogistikaPin
+  storage:
+    back:
+    - ClothingNeckLogistikaPin
+
+- type: loadout
+  id: ClothingNeckDeForestPin
+  storage:
+    back:
+    - ClothingNeckDeForestPin
+
+- type: loadout
+  id: ClothingNeckNakamuraPin
+  storage:
+    back:
+    - ClothingNeckNakamuraPin
+
+- type: loadout
+  id: ClothingNeckNanoTrasenPin
+  storage:
+    back:
+    - ClothingNeckNanoTrasenPin
+
+- type: loadout
+  id: ClothingNeckSyndicakePin
+  storage:
+    back:
+    - ClothingNeckSyndicakePin
+
+- type: loadout
+  id: ClothingNeckVitezstviPin
+  storage:
+    back:
+    - ClothingNeckVitezstviPin

@@ -113,12 +113,12 @@
   - type: SolutionContainerManager
     solutions:
       pen:
-        maxVol: 30
+        maxVol: 18
         reagents:
           - ReagentId: ZetaOne
             Quantity: 15
           - ReagentId: Phalanximine
-            Quantity: 15
+            Quantity: 3
   - type: Tag
     tags: []
 

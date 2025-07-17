@@ -1,0 +1,298 @@
+# Loadout Definitions
+- type: sponsorLoadout
+  id: qu0565
+  entity: ClothingBackpackqu0565
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackqu0565
+  name: рюкзак освободителя
+  description: Тактический чёрный рюкзак с чёрными контурными линиями, имеющий повышенную вместимость.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/qu0565/backpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/qu0565/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,19,9
+  - type: StorageFill
+    contents:
+    - id: ClothingBeltqu0565
+    - id: ClothingOuterHardsuitqu0565
+    - id: ClothingShoesBootsMagqu0565
+    - id: ClothingHandsGlovesCombatqu0565
+    - id: ClothingEyesGlassesqu0565
+    - id: Jetpackqu0565
+    - id: PaperLawqu0565
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Belt
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltqu0565
+  name: РПС освободителя
+  description: Чёрная РПС, оснащённая большим количеством карманов для снаряжения.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/qu0565/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/qu0565/belt.rsi
+  - type: Item
+    size: Huge
+  - type: Storage
+    grid:
+    - 0,0,9,1
+  - type: StorageFill
+    contents:
+    - id: JawsOfLifequ0565
+    - id: Multitoolqu0565
+    - id: PowerDrillqu0565
+    - id: WelderExperimentalqu0565
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitqu0565
+  name: скафандр освободителя
+  description: Угловатый серый скафандр, обеспечивающий максимальную защиту и свободу движений в вакууме.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/qu0565/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/qu0565/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitqu0565
+  - type: Item
+    size: Huge
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.6
+        Heat: 0.7
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Helmet
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitqu0565
+  name: шлем скафандра освободителя
+  description: Защитный чёрный шлем скафандра с голубым визором, обеспечивающий полный обзор и защиту в самых опасных условиях космоса.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/qu0565/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/qu0565/helmet.rsi
+  - type: PointLight
+    radius: 7
+    energy: 8
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesCombatqu0565
+  name: перчатки освободителя
+  description: Чёрные тактические перчатки с синими усилителями, обеспечивающие точный контроль над инструментами в любых условиях.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/qu0565/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/qu0565/gloves.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# HUD Glasses
+- type: entity
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesGlassesqu0565
+  name: визор освободителя
+  description: Тактический дисплей с голубым интерфейсом, выводящий всю необходимую информацию прямо перед глазами.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/qu0565/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/qu0565/hud.rsi
+  - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Jetpack
+- type: entity
+  id: Jetpackqu0565
+  parent: JetpackVoid
+  name: джетпак освободителя
+  description: Чёрный джетпак реактивными соплами, дающий полную свободу передвижения в невесомости.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/qu0565/jetpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/qu0565/jetpack.rsi
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      volume: 70
+      temperature: 293.15
+      moles:
+      - 11.315 # oxygen
+      - 11.315 # nitrogen
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagqu0565
+  name: магнитные ботинки освободителя
+  description: Синие магнитные ботинки с голубыми индикаторами, обеспечивающие устойчивость на любых поверхностях.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/qu0565/magboots.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/qu0565/magboots.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# JawsOfLife
+- type: entity
+  parent: SyndicateJawsOfLife
+  id: JawsOfLifequ0565
+  name: челюсти жизни освободителя
+  description: Синий инструмент с энергетическим полем на режущей кромке, способный разрезать любые преграды.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/qu0565/tools_jawsoflife.rsi
+    state: syn_jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: syn_inhand-left
+      right:
+      - state: syn_inhand-right
+    size: Normal
+  - type: MultipleTool
+    entries:
+    - behavior: Prying
+      sprite:
+        sprite: _DeadSpace/Sponsor/qu0565/tools_jawsoflife.rsi
+        state: syn_jaws_pry
+      useSound: /Audio/Items/jaws_pry.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+    - behavior: Cutting
+      sprite:
+        sprite: _DeadSpace/Sponsor/qu0565/tools_jawsoflife.rsi
+        state: syn_jaws_cutter
+      useSound: /Audio/Items/jaws_cut.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+
+# Multitool
+- type: entity
+  parent: Multitool
+  id: Multitoolqu0565
+  name: мультитул освободителя
+  description: Синий мультитул с сенсорными панелями, универсальный инструмент для любых задач.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/qu0565/tools_multitool.rsi
+
+# PowerDrill
+- type: entity
+  parent: PowerDrill
+  id: PowerDrillqu0565
+  name: дрель освободителя
+  description: Синяя дрель с энергетическими каналами, быстро справляющаяся с любыми задачами.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/qu0565/tools_powerdrill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: _DeadSpace/Sponsor/qu0565/tools_powerdrill.rsi
+    size: Small
+  - type: Tool
+    qualities:
+    - Screwing
+    speedModifier: 1.5
+    useSound: /Audio/Items/drill_use.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: Screwing
+      sprite:
+        sprite: _DeadSpace/Sponsor/qu0565/tools_powerdrill.rsi
+        state: drill_screw
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+    - behavior: Anchoring
+      sprite:
+        sprite: _DeadSpace/Sponsor/qu0565/tools_powerdrill.rsi
+        state: drill_bolt
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+
+# Welder
+- type: entity
+  parent: WelderExperimental
+  id: WelderExperimentalqu0565
+  name: сварочный аппарат освободителя
+  description: Синий сварочный аппарат с ярким пламенем.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/qu0565/tools_welder.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/qu0565/tools_welder.rsi
+
+# PaperLaw
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawqu0565
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-qu0565

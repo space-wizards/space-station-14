@@ -14,7 +14,10 @@ class Project:
         self.en_locale_prototypes_dir_path = os.path.join(self.en_locale_dir_path, 'ss14-ru', 'prototypes')
         self.ru_locale_prototypes_dir_path = os.path.join(self.ru_locale_dir_path, 'ss14-ru', 'prototypes')
         self.ru_locale_exclude_dir_paths_ds = ['_adt', '_backmen', '_deadspace', '_lw'] # DS14
-        self.exclude_dir_paths_ds = [r'_DeadSpace\Sponsor', r'_DeadSpace\Necromorfs', r'_DeadSpace\Spiders', r'_deadspace\sponsor'] # DS14
+        self.exclude_dir_paths_ds = [r'_DeadSpace\Sponsor', 
+                                     r'_DeadSpace\Necromorfs', r'_DeadSpace\Necromorphs', 
+                                     r'_DeadSpace\Spiders', 
+                                     r'_deadspace\sponsor'] # DS14
 
     def get_files_paths_by_dir(self, dir_path, files_extenstion):
         all_files = glob.glob(f'{dir_path}/**/*.{files_extenstion}', recursive=True)

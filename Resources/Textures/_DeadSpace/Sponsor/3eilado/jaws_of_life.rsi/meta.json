@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "modified from tgstation at commit https://github.com/tgstation/tgstation/commit/f07f847706d85b7cfa4b398e5175732212b69a63 by KingFroozy (Github), inhand for syn made by icekot8, resprite by inspector_jeleshka (discord) for Space Station 14 server Мёртвый Космос",
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Made by inspector_jeleshka (discord) for Space Station 14 server Мёртвый Космос",
   "size": {
     "x": 32,
     "y": 32
@@ -19,10 +19,6 @@
     },
     {
       "name": "inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "equipped-BELT",
       "directions": 4
     }
   ]

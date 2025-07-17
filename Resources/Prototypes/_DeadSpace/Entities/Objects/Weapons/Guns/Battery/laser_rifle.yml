@@ -32,6 +32,11 @@
   - type: Battery
     maxCharge: 1400
     startingCharge: 1400
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
 
 - type: entity
   name: плазменный заряд
