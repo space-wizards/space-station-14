@@ -21,6 +21,10 @@
           Idle: { state: "mw" }
           Broken: { state: "mwb" }
           Cooking: { state: "mw" }
+        enum.MicrowaveVisualState.Off:
+          Off:
+            True: { visible: true }
+            False: { visible: false }
         enum.MicrowaveVisualizerLayers.BaseUnlit:
           Idle: { state: "mw_unlit" }
           Broken: { state: "mw_unlit" }
@@ -65,6 +69,9 @@
     layers:
     - state: mw0
       map: ["enum.MicrowaveVisualizerLayers.Base"]
+    - state: mw0
+      map: ["off"]
+      visible: true
     - state: mw_unlit
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]

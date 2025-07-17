@@ -438,6 +438,12 @@ namespace Content.Server.Kitchen.EntitySystems
                 SetAppearance(ent, MicrowaveVisualState.Idle, ent.Comp);
                 StopCooking(ent);
             }
+            else
+            {
+                SetAppearance(ent, MicrowaveVisualState.Off, ent.Comp);
+                StopCooking(ent);
+            }
+
             UpdateUserInterfaceState(ent, ent.Comp);
         }
 
