@@ -49,7 +49,7 @@ public abstract class SharedJobSystem : EntitySystem
     /// </summary>
     /// <param name="trackerProto"></param>
     /// <returns></returns>
-    [Obsolete("Use SharedJobSystem.GetJobPrototypes")]
+    [Obsolete("Use SharedJobSystem.GetJobPrototypes, a tracker prototype can now have multiple jobs")]
     public ProtoId<JobPrototype> GetJobPrototype(ProtoId<PlayTimeTrackerPrototype> trackerProto)
     {
         return _inverseTrackerLookup[trackerProto].FirstOrDefault();
@@ -59,7 +59,7 @@ public abstract class SharedJobSystem : EntitySystem
     /// Gets the list of <see cref="JobPrototype"/>s that have the given <see cref="PlayTimeTrackerPrototype"/>
     /// </summary>
     /// <param name="trackerProto"></param>
-    /// <returns></returns>
+    /// <returns>A list of JobPrototype ProtoIds that have the given <see cref="PlayTimeTrackerPrototype"/></returns>
     public List<ProtoId<JobPrototype>> GetJobPrototypes(ProtoId<PlayTimeTrackerPrototype> trackerProto)
     {
         return _inverseTrackerLookup[trackerProto];
@@ -137,7 +137,7 @@ public abstract class SharedJobSystem : EntitySystem
     /// <summary>
     /// Tries to get the highest weighted department in a list of JobPrototypes.
     /// </summary>
-    /// <returns>The department with the highest weight.</returns>
+    /// <returns>A bool value based on whether the chosenDepartment out variable is null or not</returns>
     public bool TryGetListHighestWeightDepartment(List<ProtoId<JobPrototype>> jobList, [NotNullWhen(true)] out DepartmentPrototype? chosenDepartment)
     {
         chosenDepartment = null;

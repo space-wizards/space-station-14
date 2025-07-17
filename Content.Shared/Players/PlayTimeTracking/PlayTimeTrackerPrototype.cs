@@ -17,4 +17,10 @@ public sealed partial class PlayTimeTrackerPrototype : IPrototype
     /// </summary>
     [DataField]
     public LocId? Name { get; private set; } = default!;
+
+    /// <summary>
+    /// Whether this tracker should appear in the playtime stats menu.
+    /// </summary>
+    [DataField]
+    public bool ShowInStatsMenu { get; private set; } = true;
 }
