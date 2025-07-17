@@ -6,6 +6,7 @@ using Content.Shared.Audio;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Audio;
@@ -21,16 +22,18 @@ public sealed class StereoTest
     public async Task CheckComponentSoundSpecifiers()
     {
         await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var protoMan = server.ProtoMan;
+        var compFactory = server.EntMan.ComponentFactory;
+
         var client = pair.Client;
-        var protoMan = client.ProtoMan;
-        var compFactory = client.EntMan.ComponentFactory;
         var resCache = client.Resolve<IResourceCache>();
 
         await client.WaitAssertion(() =>
         {
             Assert.Multiple(() =>
             {
-                Dictionary<string, List<FieldInfo>> soundSpecifierFields = [];
+                Dictionary<string, HashSet<FieldInfo>> soundSpecifierFields = [];
                 foreach (var componentType in compFactory.AllRegisteredTypes)
                 {
                     var componentName = compFactory.GetComponentName(componentType);
@@ -49,6 +52,15 @@ public sealed class StereoTest
                                     soundSpecifierFields.GetOrNew(componentName).Add(field);
                             }
                             continue;
+                        }
+
+                        if (field.FieldType.HasCustomAttribute<DataDefinitionAttribute>())
+                        {
+                            foreach (var subField in field.FieldType.GetFields())
+                            {
+                                if (subField.FieldType.IsAssignableTo(typeof(SoundSpecifier)))
+                                    soundSpecifierFields.GetOrNew(componentName).Add(field);
+                            }
                         }
 
                         if (field.FieldType.IsAssignableTo(typeof(SoundSpecifier)))
@@ -73,9 +85,10 @@ public sealed class StereoTest
                             // Check the fields we flagged
                             foreach (var field in fields)
                             {
-                                var fieldValue = field.GetValue(compRegistryEntry.Component);
-                                var datafieldName = $"{compName}.{field.Name}";
+                                if (field.GetValue(compRegistryEntry.Component) is not { } fieldValue)
+                                    continue;
 
+                                var datafieldName = $"{compName}.{field.Name}";
                                 CheckValue(fieldValue, datafieldName, resCache, protoMan);
                             }
                         }
@@ -96,8 +109,10 @@ public sealed class StereoTest
     public async Task CheckPrototypeSoundSpecifiers()
     {
         await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var protoMan = server.ProtoMan;
+
         var client = pair.Client;
-        var protoMan = client.ProtoMan;
         var resCache = client.Resolve<IResourceCache>();
 
         await client.WaitAssertion(() =>
@@ -125,6 +140,15 @@ public sealed class StereoTest
                             continue;
                         }
 
+                        if (field.FieldType.HasCustomAttribute<DataDefinitionAttribute>())
+                        {
+                            foreach (var subField in field.FieldType.GetFields())
+                            {
+                                if (subField.FieldType.IsAssignableTo(typeof(SoundSpecifier)))
+                                    soundSpecifierFields.Add(field);
+                            }
+                        }
+
                         if (field.FieldType.IsAssignableTo(typeof(SoundSpecifier)))
                             soundSpecifierFields.Add(field);
                     }
@@ -139,9 +163,10 @@ public sealed class StereoTest
                         // Check the fields we flagged
                         foreach (var field in soundSpecifierFields)
                         {
-                            var datafieldName = $"{type.Name}.{field.Name}";
-                            var fieldValue = field.GetValue(proto);
+                            if (field.GetValue(proto) is not { } fieldValue)
+                                continue;
 
+                            var datafieldName = $"{type.Name}.{field.Name}";
                             CheckValue(fieldValue, datafieldName, resCache, protoMan);
                         }
                     }
@@ -175,6 +200,18 @@ public sealed class StereoTest
         // Make sure the test isn't missing any generic types
         Assert.That(value?.GetType().IsGenericType, Is.Not.True,
             $"Unhandled generic type containing SoundSpecifier: {value?.GetType()}");
+
+        if (value?.GetType().HasCustomAttribute<DataDefinitionAttribute>() == true)
+        {
+            foreach (var subField in value.GetType().GetFields())
+            {
+                if (!subField.FieldType.IsAssignableTo(typeof(SoundSpecifier)))
+                    continue;
+
+                var subFieldValue = subField.GetValue(value);
+                CheckValue(subFieldValue, $"{datafieldName}.{subField.Name}", resCache, protoMan);
+            }
+        }
 
         // Single, non-collection value
         CheckSpecifier(value, datafieldName, resCache, protoMan);
