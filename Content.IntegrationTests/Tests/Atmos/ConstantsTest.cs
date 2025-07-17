@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Prototypes;
+using Content.Shared.Atmos.Reactions;
 
 namespace Content.IntegrationTests.Tests.Atmos;
 
@@ -45,6 +47,10 @@ public sealed class ConstantsTest
                     Assert.That(validInteger, Is.True, $"GasPrototype {gas.ID} has an invalid ID. It has to be an integer between 0 and TotalNumberOfGases - 1.");
                     Assert.That(number, Is.InRange(0, Atmospherics.TotalNumberOfGases - 1), $"GasPrototype {gas.ID} has an invalid ID. It has to be an integer between 0 and TotalNumberOfGases - 1.");
                 }
+
+                var gasReactionProtos = protoManager.EnumeratePrototypes<GasReactionPrototype>().ToList();
+                foreach (var gasReaction in gasReactionProtos)
+                    Assert.That(gasReaction.MinimumRequirements.Length, Is.InRange(0, Atmospherics.TotalNumberOfGases - 1), $"GasReactionPrototype {gasReaction.ID} has an array of minimum gas requirements with length exceeding TotalNumberOfGases.");
             });
         });
         await pair.CleanReturnAsync();

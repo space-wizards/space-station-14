@@ -446,7 +446,7 @@ namespace Content.Server.Atmos.EntitySystems
         ///     Performs reactions for a given gas mixture on an optional holder and
         ///     optional <see cref="EntityUid"/> for that holder.
         /// </summary>
-        private ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, EntityUid? holderUid)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, EntityUid? holderUid = null)
         {
             var reaction = ReactionResult.NoReaction;
             var temperature = mixture.Temperature;
@@ -458,15 +458,8 @@ namespace Content.Server.Atmos.EntitySystems
                     temperature > prototype.MaximumTemperatureRequirement)
                     continue;
 
-#if DEBUG
-                if (prototype.MinimumRequirements.Length > Atmospherics.TotalNumberOfGases)
-                    throw new InvalidOperationException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
-#endif
-                // If the list of minimum requirements is longer than the number of gases that exist, it'll be fucked up.
-                var minimumRequirementCount = Math.Min(Atmospherics.TotalNumberOfGases, prototype.MinimumRequirements.Length);
                 var doReaction = true;
-
-                for (var i = 0; i < minimumRequirementCount; i++)
+                for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
                 {
                     var req = prototype.MinimumRequirements[i];
 
@@ -489,24 +482,11 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
-        ///     Performs reactions for a given gas mixture on an optional holder.
-        /// </summary>
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
-            => React(mixture, holder, holderUid: null);
-
-        /// <summary>
-        ///     Performs reactions for a given gas mixture on an optional holder
-        ///     with an optional entity.
-        /// </summary>
-        public ReactionResult React(GasMixture mixture, EntityUid? uid, IGasMixtureHolder? holder)
-            => React(mixture, holder, holderUid: uid);
-
-        /// <summary>
         ///     Performs reactions for a given gas mixture on an entity with a
         ///     component that inherits <see cref="IGasMixtureHolder"/> .
         /// </summary>
         public ReactionResult React<T>(Entity<T> holderEntity) where T : IComponent, IGasMixtureHolder
-            => React(holderEntity.Comp.Air, holderEntity.Comp, holderUid: holderEntity);
+            => React(holderEntity.Comp.Air, holderEntity.Comp, holderEntity);
 
         public enum GasCompareResult
         {
