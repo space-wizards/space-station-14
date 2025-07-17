@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
@@ -22,6 +23,7 @@ public partial class InventorySystem : EntitySystem
             .AddHandler(HandleViewVariablesSlots, ListViewVariablesSlots);
 
         SubscribeLocalEvent<InventoryComponent, AfterAutoHandleStateEvent>(AfterAutoState);
+        SubscribeLocalEvent<InventoryComponent, CloningEvent>(OnCloned);
     }
 
     private void ShutdownSlots()
@@ -53,6 +55,20 @@ public partial class InventorySystem : EntitySystem
 
         target = EntityUid.Invalid;
         return false;
+    }
+
+    private void OnCloned(Entity<InventoryComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var comp = EnsureComp<InventoryComponent>(args.CloneUid);
+        comp.TemplateId = ent.Comp.TemplateId;
+        comp.SpeciesId = ent.Comp.SpeciesId;
+        comp.Displacements = ent.Comp.Displacements;
+        comp.MaleDisplacements = ent.Comp.MaleDisplacements;
+        comp.FemaleDisplacements = ent.Comp.FemaleDisplacements;
+        Dirty(args.CloneUid, comp);
     }
 
     protected virtual void OnInit(EntityUid uid, InventoryComponent component, ComponentInit args)

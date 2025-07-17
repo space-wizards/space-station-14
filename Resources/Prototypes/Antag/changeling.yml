@@ -61,9 +61,9 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
-  - Inventory
   - Fixtures
   eventComponents:
+  - Inventory
   - Wagging
   - Vocal
   - Storage
