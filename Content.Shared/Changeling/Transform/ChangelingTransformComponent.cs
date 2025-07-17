@@ -42,7 +42,7 @@ public sealed partial class ChangelingTransformComponent : Component
     /// <summary>
     /// The currently active transform in the world
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public EntityUid? CurrentTransformSound;
 
     /// <summary>
