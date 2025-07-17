@@ -41,44 +41,41 @@
     
   # Story Objectives
 - type: entity
-  parent: [ BaseTraitorObjective, BaseStoryObjective ]
+  parent: BaseStoryObjective
   id: RetrieveContrabandObjective
-  description: Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  name: Retrieve any contraband confiscated by SEC this shift
+  description: Report to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
-      unique: false
-    - type: Objective
-      title: objective-retrieve-contraband
+      difficulty: 2.5
+      unique: true
       icon:
-        sprite: /Objects/Clothing/Satchels/smugglers.rsi
+        sprite: Clothing/Back/Satchels/smuggler.rsi
         state: icon
 
 
 - type: entity
-  parent: [ BaseTraitorObjective, BaseStoryObjective ]
+  parent: BaseStoryObjective
   id: AccessForAllObjective
-  description: But don't get caught. Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  name: Hack as many doors as you can
+  description: But don't get caught. Report to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
-      unique: false
-    - type: Objective
-      title: objective-all-access
+      difficulty: 2.5
+      unique: true
       icon:
         sprite: Objects/Tools/access_breaker.rsi
         state: icon
 
 - type: entity
-  parent: [ BaseTraitorObjective, BaseStoryObjective ]
+  parent: BaseStoryObjective
   id: ArmsDealerObjective
-  description: Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  name: Open an underground arms trading ring
+  description: Report to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
-      unique: false
-    - type: Objective
-      title: objective-arms-ring
+      difficulty: 2.5
+      unique: true
       icon:
         sprite: Objects/Weapons/Guns/Rifles/ak.rsi
         state: icon   
@@ -87,10 +84,10 @@
 - type: entity
   parent: BaseStoryObjective
   id: FrameObjective
-  description: Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description: Report to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
+      difficulty: 2.5
       unique: true
       icon:
         sprite: Objects/Misc/bureaucracy.rsi
@@ -100,43 +97,42 @@
     - type: PickRandomDepartment
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseStoryObjective]
+  parent: BaseStoryObjective
   id: FalseUprisingObjective
-  description:  Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  description:  Report to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
-      unique: false
-    - type: Objective
+      difficulty: 2.5
+      unique: true
+      icon:
+        sprite: Objects/Weapons/Melee/flash.rsi
+        state: flash
+    - type: DepartmentObjective
       title: objective-false-uprising
-      icon:
-        sprite: /Objects/Weapons/Melee/flash.rsi
-        state: icon
+    - type: PickRandomDepartment
 
 - type: entity
-  parent: [BaseTraitorObjective, BaseStoryObjective]
+  parent: BaseStoryObjective
   id: DuelistObjective
-  description: You don't need to kill them, unless you want to.  Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  name: Challenge others to duels and win
+  description: You don't need to kill them, unless you want to.  Report to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
-      unique: false
-    - type: Objective
-      title: objective-duelist
+      difficulty: 2.5
+      unique: true
       icon:
-        sprite: Objects/Weapons/Melee/captains_sabre.rsi
+        sprite: Objects/Weapons/Melee/captain_sabre.rsi
         state: icon
 
 - type: entity
-  parent: [ BaseTraitorObjective, BaseStoryObjective ]
+  parent: BaseStoryObjective
   id: EspionageObjective
-  description: Report to CentComm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  name: Interrogate the NT rep and department heads for corporate secrets.
+  description: Report to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
   components:
     - type: Objective
-      difficulty: 2
-      unique: false
-    - type: Objective
-      title: objective-espionage
+      difficulty: 2.5
+      unique: true
       icon:
-        sprite:
-        state: icon
+        sprite: Objects/Misc/Lights/lampint.rsi
+        state: lamp-int

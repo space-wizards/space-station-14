@@ -2,10 +2,10 @@
 - type: weightedRandom
   id: TraitorObjectiveGroupStory
   weights:
-#    RetrieveContrabandObjective: 1
-#    AccessForAllObjective: 1
-#    ArmsDealerObjective: 1
+    RetrieveContrabandObjective: 1
+    AccessForAllObjective: 1
+    ArmsDealerObjective: 1
     FrameObjective: 1
-#    FalseUprisingObjective: 1
-#    DuelistObjective: 1
-#    EspionageObjective: 1
+    FalseUprisingObjective: 1
+    DuelistObjective: 1
+    EspionageObjective: 1

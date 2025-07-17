@@ -18,7 +18,10 @@
 
 - type: entity
   abstract: true
-  parent: [BaseTraitorObjective, EscapeShuttleObjective]
+  parent: EscapeShuttleObjective
   id: BaseStoryObjective
   components:
-  - type: StoryObjective
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+        - EscapeShuttleCondition
