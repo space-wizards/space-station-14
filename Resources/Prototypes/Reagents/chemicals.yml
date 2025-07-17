@@ -55,9 +55,10 @@
   id: Lye
   name: reagent-name-lye
   desc: reagent-desc-lye
+  flavor: flavor-base-alkaline
   physicalDesc: reagent-physical-desc-alkaline
   color: "#ce5519"
-  metabolims:
+  metabolisms:
     Poison:
       effects:
       - !type:HealthChange
