@@ -15,6 +15,10 @@ namespace Content.Client.Light;
 /// </summary>
 public sealed class AmbientOcclusionOverlay : Overlay
 {
+    private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
+    private static readonly ProtoId<ShaderPrototype> StencilMaskShader = "StencilMask";
+    private static readonly ProtoId<ShaderPrototype> StencilEqualDrawShader = "StencilEqualDraw";
+
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
@@ -87,7 +91,7 @@ public sealed class AmbientOcclusionOverlay : Overlay
         args.WorldHandle.RenderInRenderTarget(_aoTarget,
             () =>
             {
-                worldHandle.UseShader(_proto.Index<ShaderPrototype>("unshaded").Instance());
+                worldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
                 var invMatrix = _aoTarget.GetWorldToLocalMatrix(viewport.Eye!, scale);
 
                 foreach (var entry in query.QueryAabb(mapId, worldBounds))
@@ -110,7 +114,7 @@ public sealed class AmbientOcclusionOverlay : Overlay
             () =>
             {
                 // Don't want lighting affecting it.
-                worldHandle.UseShader(_proto.Index<ShaderPrototype>("unshaded").Instance());
+                worldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
 
                 foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
                 {
@@ -131,11 +135,11 @@ public sealed class AmbientOcclusionOverlay : Overlay
             }, Color.Transparent);
 
         // Draw the stencil texture to depth buffer.
-        worldHandle.UseShader(_proto.Index<ShaderPrototype>("StencilMask").Instance());
+        worldHandle.UseShader(_proto.Index(StencilMaskShader).Instance());
         worldHandle.DrawTextureRect(_aoStencilTarget!.Texture, worldBounds);
 
         // Draw the Blurred AO texture finally.
-        worldHandle.UseShader(_proto.Index<ShaderPrototype>("StencilEqualDraw").Instance());
+        worldHandle.UseShader(_proto.Index(StencilEqualDrawShader).Instance());
         worldHandle.DrawTextureRect(_aoTarget!.Texture, worldBounds, color);
 
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
