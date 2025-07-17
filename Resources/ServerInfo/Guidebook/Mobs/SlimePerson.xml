@@ -1,5 +1,6 @@
 <Document>
-  # Laspii <!--Starlight, renaming of the Slimes-->
+  # Laspii 
+  <!--Starlight, renaming of the Slimes-->
 
   <Box>
     <GuideEntityEmbed Entity="MobSlimePerson" Caption=""/>
