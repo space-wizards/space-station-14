@@ -21,7 +21,6 @@ public sealed class CharacterSelectionTest
 
     private static readonly string _map = "CharacterSelectionTestMap";
 
-    // this testing game mode attempts to make everyone a traitor
     private static readonly string _traitorsMode = "OopsAllTraitors";
 
     [TestPrototypes]
@@ -85,20 +84,30 @@ public sealed class CharacterSelectionTest
         public List<ProtoId<JobPrototype>> Jobs;
         public bool Traitor;
         public bool ExpectToSpawn;
+        public bool Enabled = true;
 
         public HumanoidCharacterProfile ToProfile()
         {
-            var profile = HumanoidCharacterProfile.Random().AsEnabled();
+            var profile = HumanoidCharacterProfile.Random();
+
+            if (Enabled)
+            {
+                profile = profile.AsEnabled();
+            }
+
             // passenger is present by default, remove it first
             profile = profile.WithoutJob(Passenger);
+
             foreach (var job in Jobs)
             {
                 profile = profile.WithJob(job);
             }
+
             if (Traitor)
             {
                 profile = profile.WithAntagPreference("Traitor", true);
             }
+
             return profile;
         }
     }
@@ -167,6 +176,32 @@ public sealed class CharacterSelectionTest
             [
                 new() { Jobs = [ Clown ], Traitor = true }
             ]
+        },
+        // adapted from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-2926983119
+        new()
+        {
+            MediumPrioJobs = [ Captain, Passenger ],
+            Characters =
+            [
+                new() { Jobs = [ Captain ], Traitor = true },
+                new() { Jobs = [ Passenger ], Traitor = true, ExpectToSpawn = true }
+            ],
+            ExpectedJob = Passenger,
+            ExpectTraitor = true
+        },
+        // also adapted from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-2926983119
+        // BUT the behaviour described there was later changed as described in case 1 in
+        // https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219,
+        // so this tests the updated behaviour
+        new()
+        {
+            MediumPrioJobs = [ Captain, Passenger ],
+            Characters =
+            [
+                new() { Jobs = [ Captain ], Traitor = true, ExpectToSpawn = true },
+                new() { Jobs = [ Passenger ], Traitor = true, Enabled = false }
+            ],
+            ExpectedJob = Captain
         },
         // Case 1 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
         // if a player has no antag-compatible jobs enabled they should not be selected as an antag
