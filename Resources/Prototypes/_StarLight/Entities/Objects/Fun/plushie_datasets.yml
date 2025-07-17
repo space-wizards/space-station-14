@@ -70,12 +70,6 @@
     prefix: plushie-ash-
     count: 6
 
-#- type: localizedDataset
-  #id: PlushiesPoley
-  #values:
-    #prefix: plushie-poley-
-    #count: 6
-
 - type: localizedDataset
   id: PlushiesGlados
   values:
