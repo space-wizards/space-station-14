@@ -20,6 +20,7 @@ guide-entry-manualvalve = Manual Valve
 guide-entry-signalvalve = Signal Valve
 guide-entry-pneumaticvalve = Pneumatic Valve
 guide-entry-passivegate = Passive Gate
+guide-entry-ressureregulator = Pressure Regulator
 guide-entry-mixingandfiltering = Mixing and Filtering
 guide-entry-gascanisters = Gas Canisters
 guide-entry-thermomachines = Thermomachines

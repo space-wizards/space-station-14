@@ -77,10 +77,10 @@
       - GhostOnlyWarp
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
-    shader: unshaded
     layers:
     - map: [ "VisualLevel" ]
       state: singularity_1
+      shader: unshaded
   - type: GenericVisualizer
     visuals:
       enum.SingularityAppearanceKeys.Singularity:

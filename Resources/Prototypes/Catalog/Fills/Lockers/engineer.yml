@@ -3,60 +3,83 @@
   parent: ClosetTool
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterVestHazard
-        prob: 0.4
-      - id: FlashlightLantern
-        prob: 0.7
-      - id: Screwdriver
-        prob: 0.7
-      - id: Wrench
-        prob: 0.7
-      - id: Welder
-        prob: 0.7
-      - id: Crowbar
-        prob: 0.7
-      - id: Wirecutter
-        prob: 0.7
-      - id: Multitool
-        prob: 0.2
-      - id: trayScanner
-        prob: 0.7
-      - id: GasAnalyzer
-        prob: 0.7
-      - id: ClothingBeltUtility
-        prob: 0.2
-      - id: ClothingHandsGlovesColorYellow
-        prob: 0.05
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillClosetTool
+
+- type: entityTable
+  id: FillClosetTool
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterVestHazard
+      prob: 0.4
+    - id: FlashlightLantern
+      prob: 0.7
+    - id: Screwdriver
+      prob: 0.7
+    - id: Wrench
+      prob: 0.7
+    - id: Welder
+      prob: 0.7
+    - id: Crowbar
+      prob: 0.7
+    - id: Wirecutter
+      prob: 0.7
+    - id: Multitool
+      prob: 0.2
+    - id: trayScanner
+      prob: 0.7
+    - id: GasAnalyzer
+      prob: 0.7
+    - id: ClothingBeltUtility
+      prob: 0.2
+    - id: ClothingHandsGlovesColorYellow
+      prob: 0.05
+    - !type:GroupSelector
+      prob: 0.4
+      children:
       - id: ClothingHeadHatHardhatRed
-        prob: 0.4
-      - id: CableApcStack
-        prob: 0.3
-      - id: CableApcStack
-        prob: 0.3
-      - id: CableApcStack
-        prob: 0.3
-      - id: SprayPainter
-        prob: 0.7
+      - id: ClothingHeadHatHardhatBlue
+      - id: ClothingHeadHatHardhatOrange
+      - id: ClothingHeadHatHardhatWhite
+      - id: ClothingHeadHatHardhatYellow
+      - id: ClothingHeadHatHardhatYellowDark
+    - id: CableApcStack
+      prob: 0.3
+      rolls: !type:ConstantNumberSelector
+        value: 3
+    - id: SprayPainter
+      prob: 0.7
 
 - type: entity
   id: LockerElectricalSuppliesFilled
   suffix: Filled
   parent: LockerElectricalSupplies
   components:
-  - type: StorageFill
-    contents:
-      - id: ToolboxElectricalFilled
-        prob: 0.7
-      - id: FirelockElectronics
-        prob: 0.05
-      - id: APCElectronics
-        prob: 0.1
-      - id: CableMVStack
-        prob: 0.2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillElectricalSupplies
+
+- type: entityTable
+  id: FillElectricalSupplies
+  table: !type:AllSelector
+    children:
+    - id: ToolboxElectricalFilled
+      prob: 0.7
+    - id: FirelockElectronics
+      prob: 0.05
+    - id: APCElectronics
+      prob: 0.1
+    - !type:GroupSelector
+      prob: 0.5
+      children:
       - id: CableApcStack
-        prob: 0.3
+        weight: 5
+      - id: CableMVStack
+      - id: CableHVStack
+        weight: 0.5
 
 - type: entity
   id: LockerWeldingSuppliesFilled
@@ -104,73 +127,139 @@
   suffix: Filled, Hardsuit
   parent: LockerAtmospherics
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterHardsuitAtmos
-      - id: ClothingMaskGasAtmos
-      - id: ClothingOuterSuitAtmosFire
-      - id: ClothingHeadHelmetAtmosFire
-      - id: GasAnalyzer
-      - id: MedkitOxygenFilled
-      - id: HolofanProjector
-      - id: RCD
-      - id: RCDAmmo
-      - id: AirGrenade
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillLockerAtmospherics
+        - !type:NestedSelector
+          tableId: FillAtmosphericsHardsuit
 
 - type: entity
   id: LockerAtmosphericsFilled
   suffix: Filled
   parent: LockerAtmospherics
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingMaskGasAtmos
-      - id: ClothingOuterSuitAtmosFire
-      - id: ClothingHeadHelmetAtmosFire
-      - id: GasAnalyzer
-      - id: MedkitOxygenFilled
-      - id: HolofanProjector
-      - id: RCD
-      - id: RCDAmmo
-      - id: AirGrenade
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerAtmospherics
+
+- type: entityTable
+  id: FillLockerAtmospherics
+  table: !type:AllSelector
+    children:
+    - id: ClothingMaskGasAtmos
+    - id: ClothingOuterSuitAtmosFire
+    - id: ClothingHeadHelmetAtmosFire
+    - id: GasAnalyzer
+    - id: MedkitOxygenFilled
+    - id: HolofanProjector
+    - id: RCD
+    - id: RCDAmmo
+    - id: AirGrenade
+
+- type: entityTable
+  id: FillAtmosphericsHardsuit
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterHardsuitAtmos
+    - id: OxygenTankFilled
+    - id: ClothingMaskBreath
 
 - type: entity
   id: LockerEngineerFilledHardsuit
   suffix: Filled, Hardsuit
   parent: LockerEngineer
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterHardsuitEngineering
-      - id: ClothingHandsGlovesColorYellow
-      - id: ClothingMaskGas
-      - id: ClothingShoesBootsMag
-      - id: RCD
-      - id: RCDAmmo
-      - id: MetalFoamGrenade
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillLockerEngineer
+        - !type:NestedSelector
+          tableId: FillEngineerHardsuit
 
 - type: entity
   id: LockerEngineerFilled
   suffix: Filled
   parent: LockerEngineer
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHandsGlovesColorYellow
-      - id: ClothingMaskGas
-      - id: trayScanner
-      - id: RCD
-      - id: RCDAmmo
-      - id: MetalFoamGrenade
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEngineer
+
+- type: entityTable
+  id: FillLockerEngineer
+  table: !type:AllSelector
+    children:
+    - id: ClothingHandsGlovesColorYellow
+    - id: ClothingMaskGas
+    - id: trayScanner
+    - id: RCD
+    - id: RCDAmmo
+    - id: MetalFoamGrenade
+
+- type: entityTable
+  id: FillEngineerHardsuit
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterHardsuitEngineering
+    - id: OxygenTankFilled
+    - id: ClothingShoesBootsMag
+    - id: ClothingMaskBreath
 
 - type: entity
   id: ClosetRadiationSuitFilled
   parent: ClosetRadiationSuit
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterSuitRad
-        amount: 2
-      - id: GeigerCounter
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillRadiationSuit
+
+- type: entityTable
+  id: FillRadiationSuit
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterSuitRad
+      amount: !type:ConstantNumberSelector
+        value: 2
+    - id: GeigerCounter
+      amount: !type:ConstantNumberSelector
+        value: 2
+
+- type: entity
+  parent: LockerEvacRepair
+  id: LockerEvacRepairFilled
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEvacRepair
+
+- type: entity
+  parent: LockerWallEvacRepair
+  id: LockerWallEvacRepairFilled
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEvacRepair
+
+- type: entityTable
+  id: FillLockerEvacRepair
+  table: !type:AllSelector
+    children:
+    - id: BoxInflatable
+    - id: HolofanProjector
+    - id: MetalFoamGrenade
+      amount: 3
+    - id: AirGrenade
+      amount: 3
