@@ -79,7 +79,7 @@ public sealed class SatiationPrototype : IPrototype, IInheritingPrototype
     /// <summary>
     /// Icons to show to accompany <see cref="Alerts"/> when in the corresponding threshold.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationThreshold, ProtoId<AlertPrototype>>))]
+    [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationThreshold, ProtoId<SatiationIconPrototype>>))]
     public Dictionary<SatiationThreshold, ProtoId<SatiationIconPrototype>> Icons = [];
 
     #endregion
