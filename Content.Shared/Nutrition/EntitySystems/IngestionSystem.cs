@@ -121,8 +121,6 @@ public sealed partial class IngestionSystem : EntitySystem
         // Does this exist just to make tests fail? That way you have the proper yaml???
         if (TryComp<DrainableSolutionComponent>(entity, out var existingDrainable))
             entity.Comp.Solution = existingDrainable.Solution;
-        else
-            _solutionContainer.EnsureSolution(entity.Owner, entity.Comp.Solution, out _);
 
         UpdateAppearance(entity);
 
