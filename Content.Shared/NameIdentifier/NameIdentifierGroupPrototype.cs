@@ -15,7 +15,7 @@ public sealed partial class NameIdentifierGroupPrototype : IPrototype
     public bool FullName = false;
 
     [DataField("prefix")]
-    public string? Prefix;
+    public LocId? Prefix;
 
     [DataField("maxValue")]
     public int MaxValue = 1000;
