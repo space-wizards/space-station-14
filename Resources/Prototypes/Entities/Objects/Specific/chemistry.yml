@@ -601,7 +601,7 @@
     delay: 0.6
     forceFeedDelay: 2
     transferAmount: null
-    eatMessage: edible-swallow
+    message: edible-swallow
     useSound: /Audio/Items/pill.ogg
   - type: BadFood
   - type: FlavorProfile

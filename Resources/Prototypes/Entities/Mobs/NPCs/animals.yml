@@ -1054,7 +1054,7 @@
   - type: ExaminableHunger
   - type: Wooly
   - type: Edible
-    deleteOnEmpty: false
+    destroyOnEmpty: false
     solution: wool
     requiresSpecialDigestion: true
     requireDead: false
