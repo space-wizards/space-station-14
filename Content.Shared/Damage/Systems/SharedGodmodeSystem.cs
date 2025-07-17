@@ -1,14 +1,18 @@
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Destructible;
+using Content.Shared.Prototypes;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Slippery;
 using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Damage.Systems;
 
 public abstract class SharedGodmodeSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
@@ -34,7 +38,9 @@ public abstract class SharedGodmodeSystem : EntitySystem
 
     private void OnBeforeStatusEffect(EntityUid uid, GodmodeComponent component, ref BeforeStatusEffectAddedEvent args)
     {
-        args.Cancelled = true;
+        if (_protoMan.TryIndex(args.Effect.Id, out var proto)
+            && proto.HasComponent<CurableStatusEffectComponent>(Factory))
+            args.Cancelled = true;
     }
 
     private void OnBeforeStaminaDamage(EntityUid uid, GodmodeComponent component, ref BeforeStaminaDamageEvent args)
