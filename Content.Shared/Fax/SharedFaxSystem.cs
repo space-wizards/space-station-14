@@ -54,6 +54,7 @@ public abstract class SharedFaxSystem : EntitySystem
         // Hooks
         SubscribeLocalEvent<FaxMachineComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<FaxMachineComponent, ComponentRemove>(OnComponentRemove);
+        SubscribeLocalEvent<FaxMachineComponent, EntityUnpausedEvent>(OnEntityUnpausedEvent);
 
         SubscribeLocalEvent<FaxMachineComponent, EntInsertedIntoContainerMessage>(OnItemSlotChangedAny);
         SubscribeLocalEvent<FaxMachineComponent, EntRemovedFromContainerMessage>(OnItemSlotChangedAny);
@@ -132,6 +133,15 @@ public abstract class SharedFaxSystem : EntitySystem
     private void OnComponentRemove(Entity<FaxMachineComponent> ent, ref ComponentRemove args)
     {
         _itemSlotsSystem.RemoveItemSlot(ent.Owner, ent.Comp.PaperSlot);
+    }
+
+    private void OnEntityUnpausedEvent(Entity<FaxMachineComponent> ent, ref EntityUnpausedEvent args)
+    {
+        foreach (var action in ent.Comp.ReadyTimes.Keys)
+        {
+            ent.Comp.ReadyTimes[action] += args.PausedTime;
+        }
+        Dirty(ent);
     }
 
     private void OnItemSlotChangedAny<T>(Entity<FaxMachineComponent> ent, ref T args) where T: ContainerModifiedMessage
