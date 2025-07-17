@@ -234,6 +234,8 @@
   - type: Sprite
     sprite: Objects/Storage/boxes.rsi
     state: box_of_doom_big
+  - type: Item
+    size: Huge
   - type: SpawnItemsOnUse
     items:
     - id: ClothingBackpackChameleonFill
