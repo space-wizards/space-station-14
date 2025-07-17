@@ -895,7 +895,7 @@ public sealed partial class ShuttleSystem
         var transform = new Transform(_transform.ToWorldPosition(xform.Coordinates), angle);
         var adjustedOffset = Robust.Shared.Physics.Transform.Mul(transform, offset);
 
-        coordinates = new EntityCoordinates(targetXform.MapUid.Value,  spawnPos + adjustedOffset);
+        coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos + adjustedOffset);
         return true;
     }
 
