@@ -78,7 +78,7 @@ public sealed partial class IngestionSystem : EntitySystem
         SubscribeLocalEvent<EdibleComponent, FullyEatenEvent>(OnFullyEaten);
 
         // Body Component eating handler
-        SubscribeLocalEvent<BodyComponent, CanIngestEvent>(OnTryIngest);
+        SubscribeLocalEvent<BodyComponent, AttemptIngestEvent>(OnTryIngest);
         SubscribeLocalEvent<BodyComponent, EatingDoAfterEvent>(OnEatingDoAfter);
 
         // Verbs
@@ -116,6 +116,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
     private void OnEdibleInit(Entity<EdibleComponent> entity, ref ComponentInit args)
     {
+        // TODO: When Food and Drink component are kill make sure to nuke both TryComps and just have it update appearance...
         // Beakers, Soap and other items have drainable, and we should be able to eat that solution...
         // If I could make drainable properly support sound effects and such I'd just have it use TryIngest itself
         // Does this exist just to make tests fail? That way you have the proper yaml???
@@ -216,7 +217,7 @@ public sealed partial class IngestionSystem : EntitySystem
         return false;
     }
 
-    private void OnTryIngest(Entity<BodyComponent> entity, ref CanIngestEvent args)
+    private void OnTryIngest(Entity<BodyComponent> entity, ref AttemptIngestEvent args)
     {
         var food = args.Ingested;
 
@@ -235,7 +236,7 @@ public sealed partial class IngestionSystem : EntitySystem
         }
 
         // Check if despite being able to digest the item something is blocking us from eating.
-        if (!CanIngest(args.User, entity, args.Ingested, out var solution, out var time))
+        if (!CanConsume(args.User, entity, args.Ingested, out var solution, out var time))
             return;
 
         if (!_doAfter.TryStartDoAfter(GetEdibleDoAfterArgs(args.User, entity, food, time ?? TimeSpan.Zero)))
@@ -266,7 +267,13 @@ public sealed partial class IngestionSystem : EntitySystem
 
         var food = args.Target.Value;
 
-        if (!CanIngest(args.User, entity, food, out var solution, out _))
+        var blockerEv = new IngestibleEvent();
+        RaiseLocalEvent(food, ref blockerEv);
+
+        if (blockerEv.Cancelled)
+            return;
+
+        if (!CanConsume(args.User, entity, food, out var solution, out _))
             return;
 
         if (!_body.TryGetBodyOrganEntityComps<StomachComponent>(entity!, out var stomachs))

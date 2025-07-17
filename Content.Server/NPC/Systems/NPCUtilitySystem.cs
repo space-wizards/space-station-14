@@ -174,9 +174,8 @@ public sealed class NPCUtilitySystem : EntitySystem
         {
             case FoodValueCon:
             {
-                // mice can't eat unpeeled bananas, need monkey's help
-                // also you need an open mouth and such.
-                if (!_ingestion.CanIngest(owner, owner, targetUid))
+                // do we have a mouth available? Is the food item opened?
+                if (!_ingestion.CanConsume(owner, targetUid))
                     return 0f;
 
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
@@ -189,11 +188,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
                     return 0f;
 
-                // See if we can actually digest this item...
-                if (!_ingestion.TryIngest(owner, owner, targetUid, false))
-                    return 0f;
-
-                var nutrition = _ingestion.TotalNutrition(targetUid);
+                var nutrition = _ingestion.TotalNutrition(targetUid, owner);
                 if (nutrition <= 1.0f)
                     return 0f;
 
@@ -202,7 +197,7 @@ public sealed class NPCUtilitySystem : EntitySystem
             case DrinkValueCon:
             {
                 // can't drink closed drinks and can't drink with a mask on...
-                if (!_ingestion.CanIngest(owner, owner, targetUid))
+                if (!_ingestion.CanConsume(owner, targetUid))
                     return 0f;
 
                 // only drink when thirsty
@@ -214,6 +209,8 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
 
                 // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.
+                // We don't check if the solution is metabolizable cause all drinks should be currently.
+                // If that changes then simply use the other overflow.
                 var hydration = _ingestion.TotalHydration(targetUid);
                 if (hydration <= 1.0f)
                     return 0f;

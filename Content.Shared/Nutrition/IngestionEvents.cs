@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -39,7 +40,7 @@ public record struct EdibleEvent(EntityUid User)
 /// <param name="Ingested">What are we trying to ingest?</param>
 /// <param name="Ingest">Should we actually try and ingest? Or are we just testing if it's even possible </param>
 [ByRefEvent]
-public record struct CanIngestEvent(EntityUid User, EntityUid Ingested, bool Ingest, bool Handled = false);
+public record struct AttemptIngestEvent(EntityUid User, EntityUid Ingested, bool Ingest, bool Handled = false);
 
 /// <summary>
 ///     Raised on an entity that is consuming another entity to see if there is anything attached to the entity
@@ -190,7 +191,12 @@ public record struct GetUtensilsEvent()
 [ByRefEvent]
 public record struct GetEdibleTypeEvent
 {
-    public ProtoId<EdiblePrototype>? Type;
+    public ProtoId<EdiblePrototype>? Type { get; private set; }
+
+    public void SetPrototype([ForbidLiteral] ProtoId<EdiblePrototype> proto)
+    {
+        Type = proto;
+    }
 }
 
 /// <summary>

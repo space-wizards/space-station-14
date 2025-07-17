@@ -213,7 +213,7 @@ public sealed class FoodSystem : EntitySystem
         if (args.Type != null)
             return;
 
-        args.Type = IngestionSystem.Food;
+        args.SetPrototype(IngestionSystem.Food);
     }
 
     private void OnBeforeFullySliced(Entity<FoodComponent> food, ref BeforeFullySlicedEvent args)

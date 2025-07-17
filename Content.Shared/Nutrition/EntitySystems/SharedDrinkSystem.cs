@@ -190,6 +190,6 @@ public abstract partial class SharedDrinkSystem : EntitySystem
         if (args.Type != null)
             return;
 
-        args.Type = IngestionSystem.Drink;
+        args.SetPrototype(IngestionSystem.Drink);
     }
 }

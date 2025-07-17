@@ -32,21 +32,41 @@ public sealed partial class IngestionSystem
     /// </summary>
     /// <param name="user">The entity who is eating.</param>
     /// <param name="ingested">The entity that is trying to be ingested.</param>
-    /// <param name="ingest">Whether we're actually ingesting the item or if we're just testing. If false, treat as "CanIngest"</param>
-    /// <returns>Returns true if we can ingest the item.</returns>
-    public bool TryIngest(EntityUid user, EntityUid ingested, bool ingest = true)
+    /// <returns>Returns true if we are now ingesting the item.</returns>
+    public bool TryIngest(EntityUid user, EntityUid ingested)
     {
-        return TryIngest(user, user, ingested, ingest);
+        return AttemptIngest(user, user, ingested, true);
     }
 
-    /// <inheritdoc cref="TryIngest(EntityUid,EntityUid,bool)"/>
+    /// <inheritdoc cref="TryIngest(EntityUid,EntityUid)"/>
     /// <summary>Overload of TryIngest for if an entity is trying to make another entity ingest an entity</summary>
     /// <param name="user">The entity who is trying to make this happen.</param>
     /// <param name="target">The entity who is being made to ingest something.</param>
     /// <param name="ingested">The entity that is trying to be ingested.</param>
-    /// <param name="ingest">Whether we're actually ingesting the item or if we're just testing.</param>
+    public bool TryIngest(EntityUid user, EntityUid target, EntityUid ingested)
+    {
+        return AttemptIngest(user, user, ingested, true);
+    }
+
+    /// <summary>
+    /// Checks if we can ingest a given entity without actually ingesting it.
+    /// </summary>
+    /// <param name="user">The entity doing the ingesting.</param>
+    /// <param name="ingested">The ingested entity.</param>
+    /// <returns>Returns true if it's possible for the entity to ingest this item.</returns>
+    public bool CanIngest(EntityUid user, EntityUid ingested)
+    {
+        return AttemptIngest(user, user, ingested, false);
+    }
+
+    /// <summary>Raises events to see if it's possible to ingest </summary>
+    /// <param name="user">The entity who is trying to make this happen.</param>
+    /// <param name="target">The entity who is being made to ingest something.</param>
+    /// <param name="ingested">The entity that is trying to be ingested.</param>
+    /// <param name="ingest">Bool that determines whethere this is a Try or a Can effectively.
+    /// When set to true, it tries to ingest, when false it checks if we can.</param>
     /// <returns>Returns true if we can ingest the item.</returns>
-    public bool TryIngest(EntityUid user, EntityUid target, EntityUid ingested, bool ingest = true)
+    public bool AttemptIngest(EntityUid user, EntityUid target, EntityUid ingested, bool ingest)
     {
         var eatEv = new IngestibleEvent();
         RaiseLocalEvent(ingested, ref eatEv);
@@ -54,7 +74,7 @@ public sealed partial class IngestionSystem
         if (eatEv.Cancelled)
             return false;
 
-        var ingestionEv = new CanIngestEvent(user, ingested, ingest);
+        var ingestionEv = new AttemptIngestEvent(user, ingested, ingest);
         RaiseLocalEvent(target, ref ingestionEv);
 
         return ingestionEv.Handled;
@@ -96,26 +116,34 @@ public sealed partial class IngestionSystem
         return false;
     }
 
+    /// <inheritdoc cref="CanConsume(EntityUid,EntityUid)"/>
+    /// <param name="user">The entity that is consuming</param>
+    /// <param name="ingested">The entity that is being consumed</param>
+    public bool CanConsume(EntityUid user, EntityUid ingested)
+    {
+        return CanConsume(user, user, ingested, out _, out _);
+    }
+
     /// <summary>
-    ///     Checks if we can feed an edible solution to a target.
+    ///     Checks if we can feed an edible solution from an entity to a target.
     /// </summary>
     /// <param name="user">The one doing the feeding</param>
     /// <param name="target">The one being fed.</param>
     /// <param name="ingested">The food item being eaten.</param>
     /// <returns>Returns true if the user can feed the target with the ingested entity</returns>
-    public bool CanIngest(EntityUid user, EntityUid target, EntityUid ingested)
+    public bool CanConsume(EntityUid user, EntityUid target, EntityUid ingested)
     {
-        return CanIngest(user, target, ingested, out _, out _);
+        return CanConsume(user, target, ingested, out _, out _);
     }
 
-    /// <inheritdoc cref="CanIngest(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid)"/>
+    /// <inheritdoc cref="CanConsume(EntityUid,EntityUid,EntityUid)"/>
     /// <param name="user">The one doing the feeding</param>
     /// <param name="target">The one being fed.</param>
     /// <param name="ingested">The food item being eaten.</param>
     /// <param name="solution">The solution we will be consuming from.</param>
     /// <param name="time">The time it takes us to eat this entity if any.</param>
     /// <returns>Returns true if the user can feed the target with the ingested entity and also returns a solution</returns>
-    public bool CanIngest(EntityUid user,
+    public bool CanConsume(EntityUid user,
         EntityUid target,
         EntityUid ingested,
         [NotNullWhen(true)] out Entity<SolutionComponent>? solution,
@@ -170,8 +198,26 @@ public sealed partial class IngestionSystem
         return EdibleVolume(entity) == FixedPoint2.Zero;
     }
 
-    // Helps an NPC determine how much hydration they will get from eating a solution...
-    // Assumes we can eat the item already.
+    /// <summary>
+    /// Gets the total metabolizable nutrition from an entity, checks first if we can metabolize it.
+    /// If we can't then it's not worth any nutrition.
+    /// </summary>
+    /// <param name="entity">The consumed entity</param>
+    /// <param name="consumer">The entity doing the consuming</param>
+    /// <returns>The amount of nutrition the consumable is worth</returns>
+    public float TotalNutrition(Entity<EdibleComponent?> entity, EntityUid consumer)
+    {
+        if (!CanIngest(consumer, entity))
+            return 0f;
+
+        return TotalNutrition(entity);
+    }
+
+    /// <summary>
+    /// Gets the total metabolizable nutrition from an entity, assumes we can eat and metabolize it.
+    /// </summary>
+    /// <param name="entity">The consumed entity</param>
+    /// <returns>The amount of nutrition the consumable is worth</returns>
     public float TotalNutrition(Entity<EdibleComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
@@ -203,8 +249,26 @@ public sealed partial class IngestionSystem
         return total;
     }
 
-    // Helps an NPC determine how much hydration they will get from drinking a solution...
-    // Assumes we can drink the item.
+    /// <summary>
+    /// Gets the total metabolizable hydration from an entity, checks first if we can metabolize it.
+    /// If we can't then it's not worth any hydration.
+    /// </summary>
+    /// <param name="entity">The consumed entity</param>
+    /// <param name="consumer">The entity doing the consuming</param>
+    /// <returns>The amount of hydration the consumable is worth</returns>
+    public float TotalHydration(Entity<EdibleComponent?> entity, EntityUid consumer)
+    {
+        if (!CanIngest(consumer, entity))
+            return 0f;
+
+        return TotalNutrition(entity);
+    }
+
+    /// <summary>
+    /// Gets the total metabolizable hydration from an entity, assumes we can eat and metabolize it.
+    /// </summary>
+    /// <param name="entity">The consumed entity</param>
+    /// <returns>The amount of hydration the consumable is worth</returns>
     public float TotalHydration(Entity<EdibleComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
@@ -289,13 +353,13 @@ public sealed partial class IngestionSystem
     /// <param name="ingested">Entity being ingested.</param>
     /// <param name="type">Edible prototype.</param>
     /// <param name="verb">Verb we're returning.</param>
-    /// <returns></returns>
-    public bool TryGetIngestionVerb(EntityUid user, EntityUid ingested, ProtoId<EdiblePrototype> type, [NotNullWhen(true)] out AlternativeVerb? verb)
+    /// <returns>Returns true if we generated a verb.</returns>
+    public bool TryGetIngestionVerb(EntityUid user, EntityUid ingested, [ForbidLiteral] ProtoId<EdiblePrototype> type, [NotNullWhen(true)] out AlternativeVerb? verb)
     {
         verb = null;
 
         // We want to see if we can ingest this item, but we don't actually want to ingest it.
-        if (!TryIngest(user, ingested, false))
+        if (!CanIngest(user, ingested))
             return false;
 
         var proto = _proto.Index(type);
@@ -325,7 +389,7 @@ public sealed partial class IngestionSystem
         return GetProtoNoun(ev.Type.Value);
     }
 
-    public string GetProtoNoun(ProtoId<EdiblePrototype> proto)
+    public string GetProtoNoun([ForbidLiteral] ProtoId<EdiblePrototype> proto)
     {
         var prototype = _proto.Index(proto);
 
@@ -348,7 +412,7 @@ public sealed partial class IngestionSystem
         return GetProtoVerb(ev.Type.Value);
     }
 
-    public string GetProtoVerb(ProtoId<EdiblePrototype> proto)
+    public string GetProtoVerb([ForbidLiteral] ProtoId<EdiblePrototype> proto)
     {
         var prototype = _proto.Index(proto);
 

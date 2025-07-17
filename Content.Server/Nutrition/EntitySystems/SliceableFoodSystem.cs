@@ -158,7 +158,11 @@ public sealed class SliceableFoodSystem : EntitySystem
 
     private void OnComponentStartup(Entity<SliceableFoodComponent> entity, ref ComponentStartup args)
     {
+        // TODO: When Food Component is fully kill delete this awful method
         // This exists just to make tests fail I guess, awesome!
+        // If you're here because your test just failed, make sure that:
+        // Your food has the edible component
+        // It has a compatible solution
         var foodComp = EnsureComp<EdibleComponent>(entity);
         _solutionContainer.EnsureSolution(entity.Owner, foodComp.Solution, out _);
     }
