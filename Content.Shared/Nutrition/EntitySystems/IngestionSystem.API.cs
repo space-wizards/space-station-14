@@ -170,6 +170,8 @@ public sealed partial class IngestionSystem
         return EdibleVolume(entity) == FixedPoint2.Zero;
     }
 
+    // Helps an NPC determine how much hydration they will get from eating a solution...
+    // Assumes we can eat the item already.
     public float TotalNutrition(Entity<EdibleComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
@@ -202,6 +204,7 @@ public sealed partial class IngestionSystem
     }
 
     // Helps an NPC determine how much hydration they will get from drinking a solution...
+    // Assumes we can drink the item.
     public float TotalHydration(Entity<EdibleComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
