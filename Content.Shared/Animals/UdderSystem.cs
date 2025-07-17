@@ -139,7 +139,7 @@ public sealed class UdderSystem : EntitySystem
     {
         if (args.Using == null ||
              !args.CanInteract ||
-             !EntityManager.HasComponent<RefillableSolutionComponent>(args.Using.Value))
+             !HasComp<RefillableSolutionComponent>(args.Using.Value))
             return;
 
         var uid = entity.Owner;

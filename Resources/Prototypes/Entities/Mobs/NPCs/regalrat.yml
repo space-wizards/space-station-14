@@ -69,7 +69,6 @@
       Thirst:
         prototype: NormalSatiationThirst
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: regalrat

@@ -19,9 +19,9 @@
       - !type:Satiate
         satiationType: Thirst
         factor: 2
-      - !type:GenericStatusEffect
-        key: Drowsiness
-        time: 1.0
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 1
         type: Remove
 
 - type: reagent
@@ -83,9 +83,9 @@
       - !type:Satiate
         satiationType: Thirst
         factor: 2
-      - !type:GenericStatusEffect
-        key: Drowsiness
-        time: 2.0
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 2
         type: Remove
       - !type:AdjustReagent
         reagent: Theobromine
@@ -265,7 +265,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false  
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:

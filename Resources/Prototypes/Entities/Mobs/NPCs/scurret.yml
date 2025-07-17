@@ -56,7 +56,7 @@
   - type: Speech
     speechVerb: Wawa
     speechSounds: Wawa
-    allowedEmotes: ['Thump'] # They're 80% tail
+    allowedEmotes: ["Thump"] # They're 80% tail
   - type: TypingIndicator
     proto: moth
   - type: InteractionPopup
@@ -104,6 +104,38 @@
           32:
             sprite: Mobs/Animals/scurret/displacement.rsi
             state: neck
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: ears
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: eyes
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: mask
+      back:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: back
+  - type: Hands
+    leftHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Animals/scurret/displacement.rsi
+          state: hand
+
   - type: InventorySlots
   - type: Food
   - type: Satiation
@@ -111,7 +143,9 @@
       Hunger:
         prototype: ScurretHunger
   - type: BodyEmotes # Grants them clapping and so on.
-    soundsId: GeneralBodyEmotes
+    soundsId: Scurret
+  - type: Deathgasp
+    prototype: ScurretDeathgasp # You monster
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -139,6 +173,14 @@
     available:
     - enum.DamageStateVisualLayers.Base:
         scurret: ScurretColors
+  # They are of a mysterious gender.
+  - type: Grammar
+    attributes:
+      gender: epicene
+      proper: true
+  # Strips the name identifier from them, so they're just "Confident Waters" rather than "Confident Waters (123)"
+  - type: NameIdentifier
+    group: null
 
 # Emotional Support Scurrets have a ghost role and equipment. At the moment, these are intended to be used for admemes, but
 # feel free to hook them into random content.
@@ -169,4 +211,4 @@
   name: Emotional Support Scurret
   id: MobEmotionalSupportScurret
   parent: [MobScurret, MobBaseEmotionalSupportScurret]
-  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds's Pizza's "loyal workforce". This one is here as a temp.
+  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnold's Pizza's "loyal workforce". This one is here as a temp.

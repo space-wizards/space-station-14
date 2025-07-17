@@ -44,7 +44,7 @@
   - type: Tag
     tags:
     - HudMedical
-    - CorgiWearable
+    - PetWearable
     - WhitelistChameleon
 
 - type: entity
@@ -60,7 +60,7 @@
   - type: Tag
     tags:
     - HudSecurity
-    - CorgiWearable
+    - PetWearable
     - WhitelistChameleon
 
 - type: entity
@@ -76,7 +76,7 @@
   - type: ShowJobIcons
   - type: Tag
     tags:
-    - CorgiWearable
+    - PetWearable
     - WhitelistChameleon
 
 - type: entity
@@ -97,7 +97,7 @@
   - type: SolutionScanner
   - type: Tag
     tags:
-    - CorgiWearable
+    - PetWearable
     - WhitelistChameleon
 
 - type: entity
@@ -233,7 +233,7 @@
   - type: ShowSyndicateIcons
   - type: Tag
     tags:
-    - CorgiWearable
+    - PetWearable
     - WhitelistChameleon
 
 - type: entity
@@ -250,7 +250,7 @@
   - type: ShowHealthBars
   - type: Tag
     tags:
-    - CorgiWearable
+    - PetWearable
     - WhitelistChameleon
 
 - type: entity
@@ -270,7 +270,7 @@
     sprite: Clothing/Eyes/Hud/medpatch.rsi
   - type: Tag
     tags:
-    - CorgiWearable
+    - PetWearable
     - WhitelistChameleon
     - HudMedical
 
@@ -291,7 +291,7 @@
     sprite: Clothing/Eyes/Hud/secpatch.rsi
   - type: Tag
     tags:
-    - CorgiWearable
+    - PetWearable
     - WhitelistChameleon
     - HudSecurity
 
