@@ -28,8 +28,19 @@ public sealed partial class IngestionSystem
     #region Ingestion
 
     /// <summary>
-    /// Tries to make an entity ingest another entity.
+    /// An entity is trying to ingest another entity in Space Station 14!!!
     /// </summary>
+    /// <param name="user">The entity who is eating.</param>
+    /// <param name="ingested">The entity that is trying to be ingested.</param>
+    /// <param name="ingest">Whether we're actually ingesting the item or if we're just testing. If false, treat as "CanIngest"</param>
+    /// <returns>Returns true if we can ingest the item.</returns>
+    public bool TryIngest(EntityUid user, EntityUid ingested, bool ingest = true)
+    {
+        return TryIngest(user, user, ingested, ingest);
+    }
+
+    /// <inheritdoc cref="TryIngest(EntityUid,EntityUid,bool)"/>
+    /// <summary>Overload of TryIngest for if an entity is trying to make another entity ingest an entity</summary>
     /// <param name="user">The entity who is trying to make this happen.</param>
     /// <param name="target">The entity who is being made to ingest something.</param>
     /// <param name="ingested">The entity that is trying to be ingested.</param>
@@ -45,27 +56,6 @@ public sealed partial class IngestionSystem
 
         var ingestionEv = new CanIngestEvent(user, ingested, ingest);
         RaiseLocalEvent(target, ref ingestionEv);
-
-        return ingestionEv.Handled;
-    }
-
-    /// <summary>
-    /// An entity is trying to ingest another entity in Space Station 14!!!
-    /// </summary>
-    /// <param name="user">The entity who is eating.</param>
-    /// <param name="ingested">The entity that is trying to be ingested.</param>
-    /// <param name="ingest">Whether we're actually ingesting the item or if we're just testing. If false, treat as "CanIngest"</param>
-    /// <returns>Returns true if we can ingest the item.</returns>
-    public bool TryIngest(EntityUid user, EntityUid ingested, bool ingest = true)
-    {
-        var eatEv = new IngestibleEvent();
-        RaiseLocalEvent(ingested, ref eatEv);
-
-        if (eatEv.Cancelled)
-            return false;
-
-        var ingestionEv = new CanIngestEvent(user, ingested, ingest);
-        RaiseLocalEvent(user, ref ingestionEv);
 
         return ingestionEv.Handled;
     }
