@@ -22,6 +22,8 @@ cmd-roleban-hint-duration-6 = 1 month
 
 cmd-roleunban-desc = Pardons a player's role ban
 cmd-roleunban-help = Usage: roleunban <role ban id>
+cmd-roleunban-unable-to-parse-id = Unable to parse {$id} as a ban id integer.
+                                   {$help}
 
 ## Completion result hints
 cmd-roleunban-hint-1 = <role ban id>
