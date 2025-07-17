@@ -49,6 +49,7 @@
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
+      paper_label: !type:ContainerSlot # DS14
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -73,6 +74,17 @@
   - type: AntiRottingContainer
   - type: StaticPrice
     price: 200
+  - type: ItemSlots # DS14
+  - type: PaperLabel # DS14
+    labelSlot:
+      insertVerbText: comp-paper-label-insert
+      ejectVerbText: comp-paper-label-eject
+      whitelist:
+        components:
+        - Paper
+      blacklist:
+        tags:
+        - Book
 
 - type: entity
   id: Crematorium
