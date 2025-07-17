@@ -9460,5 +9460,30 @@ Entries:
   id: 1303
   time: '2025-07-16T20:17:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1033
+- author: Conflee
+  changes:
+  - message: Changed overall time requirement for Security Cadet from 30 hours to
+      20 hours
+    type: Tweak
+  id: 1304
+  time: '2025-07-17T15:31:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1048
+- author: Conflee
+  changes:
+  - message: Changed lockout time on Security Cadet from 15 hours to 20 hours, allowing
+      players to remain Cadets for longer if they feel the need to
+    type: Tweak
+  id: 1305
+  time: '2025-07-17T15:31:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1048
+- author: Conflee
+  changes:
+  - message: Changed time requirement for Security Officer from 2.5 hours as Security
+      Cadet to 10 hours as Security Cadet, to match intended unlock time in overrides
+      that wasn't being used properly
+    type: Tweak
+  id: 1306
+  time: '2025-07-17T15:31:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1048
 Order: -1
 
