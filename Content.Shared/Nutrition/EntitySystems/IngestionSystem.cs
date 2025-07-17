@@ -82,6 +82,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
         // Misc
         SubscribeLocalEvent<EdibleComponent, AttemptShakeEvent>(OnAttemptShake);
+        SubscribeLocalEvent<EdibleComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
 
         InitializeBlockers();
         InitializeUtensils();
@@ -113,6 +114,7 @@ public sealed partial class IngestionSystem : EntitySystem
     {
         // Beakers, Soap and other items have drainable, and we should be able to eat that solution...
         // If I could make drainable properly support sound effects and such I'd just have it use TryIngest itself
+        // Does this exist just to make tests fail? That way you have the proper yaml???
         if (TryComp<DrainableSolutionComponent>(entity, out var existingDrainable))
             entity.Comp.Solution = existingDrainable.Solution;
         else
@@ -441,26 +443,14 @@ public sealed partial class IngestionSystem : EntitySystem
         args.Destroy = entity.Comp.DestroyOnEmpty;
     }
 
-    private void OnFullyEaten(Entity<EdibleComponent> food, ref FullyEatenEvent args)
+    private void OnFullyEaten(Entity<EdibleComponent> entity, ref FullyEatenEvent args)
     {
-        if (food.Comp.Trash.Count == 0)
-            return;
+        SpawnTrash(entity, args.User);
+    }
 
-        var position = _transform.GetMapCoordinates(food);
-        var trashes = food.Comp.Trash;
-        var tryPickup = _hands.IsHolding(args.User, food, out _);
-
-        foreach (var trash in trashes)
-        {
-            var spawnedTrash = EntityManager.PredictedSpawn(trash, position);
-
-            // If the user is holding the item
-            if (tryPickup)
-            {
-                // Put the trash in the user's hand
-                _hands.TryPickupAnyHand(args.User, spawnedTrash);
-            }
-        }
+    private void OnBeforeFullySliced(Entity<EdibleComponent> entity, ref BeforeFullySlicedEvent args)
+    {
+        SpawnTrash(entity, args.User);
     }
 
     private void AddEdibleVerbs(Entity<EdibleComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)

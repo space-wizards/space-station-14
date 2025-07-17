@@ -5,6 +5,12 @@
   description: It's a boring old bucket.
   components:
   - type: Clickable
+  - type: Edible
+    useSound: /Audio/Items/drink.ogg
+    message: edible-slurp
+    solution: bucket
+    destroyOnEmpty: false
+    edibleType: drink
   - type: Sprite
     sprite: Objects/Tools/bucket.rsi
     layers:

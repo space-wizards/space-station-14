@@ -117,6 +117,28 @@ public sealed partial class IngestionSystem
 
     #region EdibleComponent
 
+    public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid user)
+    {
+        if (entity.Comp.Trash.Count == 0)
+            return;
+
+        var position = _transform.GetMapCoordinates(entity);
+        var trashes = entity.Comp.Trash;
+        var tryPickup = _hands.IsHolding(user, entity, out _);
+
+        foreach (var trash in trashes)
+        {
+            var spawnedTrash = EntityManager.PredictedSpawn(trash, position);
+
+            // If the user is holding the item
+            if (tryPickup)
+            {
+                // Put the trash in the user's hand
+                _hands.TryPickupAnyHand(user, spawnedTrash);
+            }
+        }
+    }
+
     public int GetUsesRemaining(Entity<EdibleComponent?> ingested, FixedPoint2 splitVol)
     {
         if (!Resolve(ingested, ref ingested.Comp))

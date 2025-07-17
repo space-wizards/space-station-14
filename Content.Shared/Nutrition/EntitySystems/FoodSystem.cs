@@ -52,6 +52,8 @@ public sealed class FoodSystem : EntitySystem
         SubscribeLocalEvent<FoodComponent, EdibleEvent>(OnFood);
 
         SubscribeLocalEvent<FoodComponent, GetEdibleTypeEvent>(OnGetEdibleType);
+
+        SubscribeLocalEvent<FoodComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
     }
 
     /// <summary>
@@ -212,5 +214,27 @@ public sealed class FoodSystem : EntitySystem
             return;
 
         args.Type = EdibleType.Food;
+    }
+
+    private void OnBeforeFullySliced(Entity<FoodComponent> food, ref BeforeFullySlicedEvent args)
+    {
+        if (food.Comp.Trash.Count == 0)
+            return;
+
+        var position = _transform.GetMapCoordinates(food);
+        var trashes = food.Comp.Trash;
+        var tryPickup = _hands.IsHolding(args.User, food, out _);
+
+        foreach (var trash in trashes)
+        {
+            var spawnedTrash = EntityManager.PredictedSpawn(trash, position);
+
+            // If the user is holding the item
+            if (tryPickup)
+            {
+                // Put the trash in the user's hand
+                _hands.TryPickupAnyHand(args.User, spawnedTrash);
+            }
+        }
     }
 }
