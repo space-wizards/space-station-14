@@ -5,7 +5,6 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
-using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
@@ -37,6 +36,7 @@ public sealed class SatiationSystem : EntitySystem
 
         SubscribeLocalEvent<SatiationComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SatiationComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<SatiationComponent, EntityUnpausedEvent>(OnEntityUnpaused);
         SubscribeLocalEvent<SatiationComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeed);
         SubscribeLocalEvent<SatiationComponent, RejuvenateEvent>(OnRejuvenate);
     }
@@ -71,10 +71,29 @@ public sealed class SatiationSystem : EntitySystem
     }
 
     /// <summary>
+    /// Handles pausing the <see cref="TimeSpan"/> fields in all of the values of <see cref="SatiationComponent.Satiations"/>.
+    /// </summary>
+    private static void OnEntityUnpaused(Entity<SatiationComponent> entity, ref EntityUnpausedEvent args)
+    {
+        foreach (var satiation in entity.Comp.Satiations.Values)
+        {
+            if (satiation.ProjectedThresholdChangeTime.HasValue)
+            {
+                satiation.ProjectedThresholdChangeTime =
+                    satiation.ProjectedThresholdChangeTime.Value + args.PausedTime;
+            }
+
+            satiation.NextContinuousEffectTime += args.PausedTime;
+        }
+    }
+
+    /// <summary>
     /// Applies a speed modifier when any satiation is at or below <see cref="SatiationThreshold.Concerned"/>.
     /// </summary>
-    private void OnRefreshMovementSpeed(Entity<SatiationComponent> entity,
-        ref RefreshMovementSpeedModifiersEvent args)
+    private void OnRefreshMovementSpeed(
+        Entity<SatiationComponent> entity,
+        ref RefreshMovementSpeedModifiersEvent args
+    )
     {
         if (_jetpack.IsUserFlying(entity))
         {
@@ -143,7 +162,10 @@ public sealed class SatiationSystem : EntitySystem
     /// Gets <paramref name="entity"/>'s current value of the satiation of <paramref name="type"/>. If this entity does
     /// not have that satiation, returns null.
     /// </summary>
-    public float? GetValueOrNull(Entity<SatiationComponent> entity, ProtoId<SatiationTypePrototype> type) =>
+    public float? GetValueOrNull(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type
+    ) =>
         entity.Comp.Satiations.TryGetValue(type, out var satiation)
             ? CalculateCurrentValue(satiation, _prototype.Index(satiation.Prototype))
             : null;
@@ -152,9 +174,11 @@ public sealed class SatiationSystem : EntitySystem
     /// Sets <paramref name="entity"/>'s current satiation of <paramref name="type"/> to a value corresponding to
     /// <paramref name="threshold"/>. If this entity does not have that satiation, has no effect.
     /// </summary>
-    public void SetValue(Entity<SatiationComponent> entity,
-        ProtoId<SatiationTypePrototype> type,
-        SatiationThreshold threshold)
+    public void SetValue(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
+        SatiationThreshold threshold
+    )
     {
         if (!entity.Comp.Satiations.TryGetValue(type, out var satiation))
             return;
@@ -168,7 +192,11 @@ public sealed class SatiationSystem : EntitySystem
     /// Sets <paramref name="entity"/>'s current satiation of <paramref name="type"/> to <paramref name="value"/>. If
     /// this entity does not have that satiation, has no effect.
     /// </summary>
-    public void SetValue(Entity<SatiationComponent> entity, ProtoId<SatiationTypePrototype> type, float value)
+    public void SetValue(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
+        float value
+    )
     {
         entity.Comp.Satiations.TryGetValue(type, out var satiation1);
         if (satiation1 is { } satiation)
@@ -181,9 +209,11 @@ public sealed class SatiationSystem : EntitySystem
     /// Sets <paramref name="entity"/>'s current satiation of <paramref name="type"/> to its current value plus
     /// <paramref name="amount"/>. If this entity does not have that satiation, has no effect.
     /// </summary>
-    public void ModifyValue(Entity<SatiationComponent> entity,
-        ProtoId<SatiationTypePrototype> type,
-        float amount)
+    public void ModifyValue(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
+        float amount
+    )
     {
         if (GetValueOrNull(entity, type) is { } currentValue)
         {
@@ -198,9 +228,11 @@ public sealed class SatiationSystem : EntitySystem
     /// </summary>
     /// <remarks>This is useful for situations where an action consumes satiation, so we need to check satiation values
     /// prior to executing the action, eg. Arachnids spinning web.</remarks>
-    public SatiationThreshold? GetThresholdWithDeltaOrNull(Entity<SatiationComponent> entity,
-        ProtoId<SatiationTypePrototype> type,
-        float delta)
+    public SatiationThreshold? GetThresholdWithDeltaOrNull(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
+        float delta
+    )
     {
         entity.Comp.Satiations.TryGetValue(type, out var satiation1);
         if (satiation1 is not { } satiation)
@@ -216,9 +248,10 @@ public sealed class SatiationSystem : EntitySystem
     /// Gets <paramref name="entity"/>'s current <see cref="SatiationThreshold"/> for the given <paramref name="type"/>.
     /// If this entity does not have that satiation, returns null.
     /// </summary>
-    public SatiationThreshold? GetThresholdOrNull(Entity<SatiationComponent> entity,
-        ProtoId<SatiationTypePrototype> type) =>
-        entity.Comp.Satiations.TryGetValue(type, out var satiation) ? satiation.CurrentThreshold : null;
+    public SatiationThreshold? GetThresholdOrNull(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type
+    ) => entity.Comp.Satiations.TryGetValue(type, out var satiation) ? satiation.CurrentThreshold : null;
 
     #endregion
 
@@ -229,8 +262,10 @@ public sealed class SatiationSystem : EntitySystem
     /// does not have an icon for its current state, returns null.
     /// </summary>
     /// <remarks>This should almost definitely never be used by anything other than the client's Overlay system</remarks>
-    public StatusIconPrototype? GetStatusIconOrNull(Entity<SatiationComponent> entity,
-        ProtoId<SatiationTypePrototype> type)
+    public StatusIconPrototype? GetStatusIconOrNull(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type
+    )
     {
         if (!entity.Comp.Satiations.TryGetValue(type, out var satiation))
         {
@@ -278,10 +313,12 @@ public sealed class SatiationSystem : EntitySystem
     /// updating obvious fields on the <see cref="SatiationComponent"/>, but since changes to the value also affect the
     /// current threshold, we need to consider all of the effects that has as well.
     /// </summary>
-    private void SetAuthoritativeValue(Entity<SatiationComponent> entity,
+    private void SetAuthoritativeValue(
+        Entity<SatiationComponent> entity,
         Satiation satiation,
         SatiationPrototype proto,
-        float value)
+        float value
+    )
     {
         // Check if the threshold has changed.
         var newThreshold = proto.ThresholdFor(value);
@@ -322,7 +359,8 @@ public sealed class SatiationSystem : EntitySystem
             satiation.ProjectedThresholdChangeTime = _timing.CurTime +
                                                      TimeSpan.FromSeconds(
                                                          (value - proto.Thresholds[nextLowerThreshold]) /
-                                                         satiation.ActualDecayRate);
+                                                         satiation.ActualDecayRate
+                                                     );
         }
 
         Dirty(entity);

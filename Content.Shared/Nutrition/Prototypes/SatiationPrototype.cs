@@ -7,7 +7,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 using Robust.Shared.Utility;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Shared.Nutrition.Prototypes;
 
@@ -74,13 +73,13 @@ public sealed class SatiationPrototype : IPrototype, IInheritingPrototype
     /// <summary>
     /// Alerts to show when in the corresponding threshold.
     /// </summary>
-    [DataField]
+    [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationThreshold, ProtoId<AlertPrototype>>))]
     public Dictionary<SatiationThreshold, ProtoId<AlertPrototype>> Alerts = [];
 
     /// <summary>
     /// Icons to show to accompany <see cref="Alerts"/> when in the corresponding threshold.
     /// </summary>
-    [DataField]
+    [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationThreshold, ProtoId<AlertPrototype>>))]
     public Dictionary<SatiationThreshold, ProtoId<SatiationIconPrototype>> Icons = [];
 
     #endregion
@@ -103,9 +102,11 @@ public sealed class SatiationPrototype : IPrototype, IInheritingPrototype
     /// Clamps <paramref name="value"/> between this prototype's <see cref="SatiationThreshold.Dead"/> and
     /// <see cref="SatiationThreshold.Full"/> values.
     /// </summary>
-    public float ClampSatiationWithinThresholds(float value) => Math.Clamp(value,
+    public float ClampSatiationWithinThresholds(float value) => Math.Clamp(
+        value,
         Thresholds[SatiationThreshold.Dead],
-        Thresholds[SatiationThreshold.Full]);
+        Thresholds[SatiationThreshold.Full]
+    );
 
     #endregion
 }

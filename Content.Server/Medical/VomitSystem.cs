@@ -11,6 +11,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.StatusEffect;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
@@ -33,6 +34,9 @@ namespace Content.Server.Medical
 
         private static readonly ProtoId<SoundCollectionPrototype> VomitCollection = "Vomit";
 
+        private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
+        private static readonly ProtoId<SatiationTypePrototype> ThirstSatiation = "Thirst";
+
         private readonly SoundSpecifier _vomitSound = new SoundCollectionSpecifier(VomitCollection,
             AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
 
@@ -50,8 +54,8 @@ namespace Content.Server.Medical
             if (TryComp<SatiationComponent>(uid, out var satiation))
             {
                 Entity<SatiationComponent> entity = (uid, satiation);
-                _satiation.ModifyValue(entity, "Hunger", hungerAdded);
-                _satiation.ModifyValue(entity, "Thirst", thirstAdded);
+                _satiation.ModifyValue(entity, HungerSatiation, hungerAdded);
+                _satiation.ModifyValue(entity, ThirstSatiation, thirstAdded);
             }
 
             // It fully empties the stomach, this amount from the chem stream is relatively small

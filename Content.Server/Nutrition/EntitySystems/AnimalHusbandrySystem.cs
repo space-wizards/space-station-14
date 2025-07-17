@@ -41,6 +41,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     private readonly HashSet<EntityUid> _birthQueue = new();
 
     private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
+    private static readonly ProtoId<SatiationTypePrototype> ThirstSatiation = "Thirst";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -168,7 +169,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
 
         // If has hunger or thirst, check that they're high enough.
         if (_satiation.GetThresholdOrNull((uid, satiation), HungerSatiation) is < SatiationThreshold.Okay ||
-            _satiation.GetThresholdOrNull((uid, satiation), "Thirst") is < SatiationThreshold.Okay)
+            _satiation.GetThresholdOrNull((uid, satiation), ThirstSatiation) is < SatiationThreshold.Okay)
         {
             return false;
         }

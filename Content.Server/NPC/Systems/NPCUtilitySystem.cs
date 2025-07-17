@@ -32,6 +32,7 @@ using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Nutrition.Prototypes;
 
 namespace Content.Server.NPC.Systems;
 
@@ -65,6 +66,9 @@ public sealed class NPCUtilitySystem : EntitySystem
 
     private ObjectPool<HashSet<EntityUid>> _entPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
+
+    private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
+    private static readonly ProtoId<SatiationTypePrototype> ThirstSatiation = "Thirst";
 
     // Temporary caches.
     private List<EntityUid> _entityList = new();
@@ -189,7 +193,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 // only eat when hungry or if it will eat anything
                 if (TryComp<SatiationComponent>(owner, out var satiation) &&
-                    _satiation.GetThresholdOrNull((owner, satiation), "Hunger") > SatiationThreshold.Okay &&
+                    _satiation.GetThresholdOrNull((owner, satiation), HungerSatiation) > SatiationThreshold.Okay &&
                     avoidBadFood)
                     return 0f;
 
@@ -210,7 +214,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 // only drink when thirsty
                 if (TryComp<SatiationComponent>(owner, out var satiation) &&
-                    _satiation.GetThresholdOrNull((owner, satiation), "Thirst") > SatiationThreshold.Okay)
+                    _satiation.GetThresholdOrNull((owner, satiation), ThirstSatiation) > SatiationThreshold.Okay)
                     return 0f;
 
                 // no janicow don't drink the blood puddle
