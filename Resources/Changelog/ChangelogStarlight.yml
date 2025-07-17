@@ -9523,5 +9523,12 @@ Entries:
   id: 1311
   time: '2025-07-17T16:47:51.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1049
+- author: Salem
+  changes:
+  - message: Fixed XML issue with slime guidebook
+    type: Fix
+  id: 1312
+  time: '2025-07-17T22:23:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1051
 Order: -1
 
