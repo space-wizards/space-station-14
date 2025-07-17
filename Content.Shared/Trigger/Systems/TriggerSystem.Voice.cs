@@ -30,8 +30,8 @@ public sealed partial class TriggerSystem
         if (args.IsInDetailsRange)
         {
             args.PushText(string.IsNullOrWhiteSpace(ent.Comp.KeyPhrase)
-                ? Loc.GetString("trigger-voice-uninitialized")
-                : Loc.GetString("examine-trigger-voice", ("keyphrase", ent.Comp.KeyPhrase)));
+                ? Loc.GetString("trigger-on-voice-uninitialized")
+                : Loc.GetString("trigger-on-voice-examine", ("keyphrase", ent.Comp.KeyPhrase)));
         }
     }
     private void OnListen(Entity<TriggerOnVoiceComponent> ent, ref ListenEvent args)
@@ -50,9 +50,9 @@ public sealed partial class TriggerSystem
             if (message.Length >= component.MinLength && message.Length <= component.MaxLength)
                 FinishRecording(ent, args.Source, args.Message);
             else if (message.Length > component.MaxLength)
-                _popup.PopupEntity(Loc.GetString("popup-trigger-voice-record-failed-too-long"), ent);
+                _popup.PopupEntity(Loc.GetString("trigger-on-voice-record-failed-too-long"), ent);
             else if (message.Length < component.MinLength)
-                _popup.PopupEntity(Loc.GetString("popup-trigger-voice-record-failed-too-short"), ent);
+                _popup.PopupEntity(Loc.GetString("trigger-on-voice-record-failed-too-short"), ent);
 
             return;
         }
@@ -77,7 +77,7 @@ public sealed partial class TriggerSystem
         var user = args.User;
         args.Verbs.Add(new AlternativeVerb()
         {
-            Text = Loc.GetString(ent.Comp.IsRecording ? "verb-trigger-voice-stop" : "verb-trigger-voice-record"),
+            Text = Loc.GetString(ent.Comp.IsRecording ? "trigger-on-voice-stop" : "trigger-on-voice-record"),
             Act = () =>
             {
                 if (ent.Comp.IsRecording)
@@ -93,7 +93,7 @@ public sealed partial class TriggerSystem
 
         args.Verbs.Add(new AlternativeVerb()
         {
-            Text = Loc.GetString("verb-trigger-voice-clear"),
+            Text = Loc.GetString("trigger-on-voice-clear"),
             Act = () =>
             {
                 ClearRecording(ent);
@@ -115,7 +115,7 @@ public sealed partial class TriggerSystem
         else
             _adminLogger.Add(LogType.Trigger, LogImpact.Low, $"A voice-trigger on {ToPrettyString(ent):entity} has started recording. User: {ToPrettyString(user.Value):user}");
 
-        _popup.PopupPredicted(Loc.GetString("popup-trigger-voice-start-recording"), ent, user);
+        _popup.PopupPredicted(Loc.GetString("trigger-on-voice-start-recording"), ent, user);
     }
 
     /// <summary>
@@ -128,7 +128,7 @@ public sealed partial class TriggerSystem
         if (string.IsNullOrWhiteSpace(ent.Comp.KeyPhrase))
             RemComp<ActiveListenerComponent>(ent);
 
-        _popup.PopupPredicted(Loc.GetString("popup-trigger-voice-stop-recording"), ent, user);
+        _popup.PopupPredicted(Loc.GetString("trigger-on-voice-stop-recording"), ent, user);
     }
 
 
@@ -144,7 +144,7 @@ public sealed partial class TriggerSystem
         _adminLogger.Add(LogType.Trigger, LogImpact.Low,
                 $"A voice-trigger on {ToPrettyString(ent):entity} has recorded a new keyphrase: '{ent.Comp.KeyPhrase}'. Recorded from {ToPrettyString(source):speaker}");
 
-        _popup.PopupEntity(Loc.GetString("popup-trigger-voice-recorded", ("keyphrase", ent.Comp.KeyPhrase!)), ent);
+        _popup.PopupEntity(Loc.GetString("trigger-on-voice-recorded", ("keyphrase", ent.Comp.KeyPhrase!)), ent);
     }
 
     /// <summary>

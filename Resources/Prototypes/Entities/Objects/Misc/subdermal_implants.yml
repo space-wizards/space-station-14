@@ -279,7 +279,6 @@
       preventSuicide: true
     - type: TimerTrigger
       delay: 7
-      initialBeepDelay: 0
       beepSound:
         path: /Audio/Machines/Nuke/general_beep.ogg
         params:

@@ -9,14 +9,18 @@
       drawdepth: SmallMobs # if mice can hide under tables, so can mousetraps
       layers:
       - state: mousetrap
-        map: ["enum.ToggleVisuals.Layer"]
+        map: ["enum.ToggleableVisuals.Layer"]
     - type: StepTrigger
       intersectRatio: 0.2
       requiredTriggeredSpeed: 2
     - type: Mousetrap
     - type: ItemToggle
+      soundActivate: "/Audio/Items/Handcuffs/cuff_end.ogg"
+      soundDeactivate: "/Audio/Items/snap.ogg"
+      popupActivate: mousetrap-on-activate
+      popupDeactivate: mousetrap-on-deactivate
     - type: ItemToggleOnTrigger
-      canToggleOn: false
+      canActivate: false
     - type: TriggerOnStepTrigger
     - type: PreventableStepTrigger
     - type: DamageOnTrigger
@@ -24,19 +28,13 @@
       damage:
         types:
           Blunt: 2 # base damage, scales based on mass
-    - type: EmitSoundOnUse
-      sound: "/Audio/Items/Handcuffs/cuff_end.ogg"
-      handle: false
-    - type: EmitSoundOnTrigger
-      predicted: true
-      sound: "/Audio/Items/snap.ogg"
     - type: Item
       sprite: Objects/Devices/mousetrap.rsi
     - type: Appearance
     - type: GenericVisualizer
       visuals:
-        enum.ToggleVisuals.Toggled:
-          enum.ToggleVisuals.Layer:
+        enum.ToggleableVisuals.Enabled:
+          enum.ToggleableVisuals.Layer:
             True: {state: mousetraparmed}
             False: {state: mousetrap}
     - type: Physics
@@ -71,6 +69,6 @@
   - type: Sprite
     layers:
     - state: mousetraparmed
-      map: ["enum.ToggleVisuals.Layer"]
+      map: ["enum.ToggleableVisuals.Layer"]
   - type: ItemToggle
     activated: true

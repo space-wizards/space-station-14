@@ -85,15 +85,15 @@ public sealed partial class TimerTriggerComponent : Component
     /// The popup to show the user when starting the timer, if any.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public LocId? Popup = "trigger-activated";
+    public LocId? Popup = "timer-trigger-activated";
 
     #region GuidebookData
 
     [GuidebookData]
-    public float? ShortestDelayOption => DelayOptions.Count != 0 ? null : (float)DelayOptions.Min().TotalSeconds;
+    public float? ShortestDelayOption => DelayOptions.Count == 0 ? null : (float)DelayOptions.Min().TotalSeconds;
 
     [GuidebookData]
-    public float? LongestDelayOption => DelayOptions.Count != 0 ? null : (float)DelayOptions.Max().TotalSeconds;
+    public float? LongestDelayOption => DelayOptions.Count == 0 ? null : (float)DelayOptions.Max().TotalSeconds;
 
     #endregion GuidebookData
 }

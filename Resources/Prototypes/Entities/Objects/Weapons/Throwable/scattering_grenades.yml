@@ -97,7 +97,6 @@
       path: "/Audio/Effects/beep1.ogg"
       params:
         volume: 5
-    initialBeepDelay: 0
     beepInterval: 0.5
   - type: EmitSoundOnTrigger
     keysIn:
@@ -182,7 +181,6 @@
       path: "/Audio/Effects/beep1.ogg"
       params:
         volume: 5
-    initialBeepDelay: 0
     beepInterval: 2
   - type: EmitSoundOnTrigger
     keysIn:

@@ -21,7 +21,7 @@ public sealed class SpeakOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<SpeakOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
@@ -29,10 +29,15 @@ public sealed class SpeakOnTriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        if (!_prototypeManager.TryIndex(ent.Comp.Pack, out var messagePack))
-            return;
-
-        var message = Loc.GetString(_random.Pick(messagePack.Values));
+        string message;
+        if (ent.Comp.Text != null)
+            message = Loc.GetString(ent.Comp.Text);
+        else
+        {
+            if (!_prototypeManager.TryIndex(ent.Comp.Pack, out var messagePack))
+                return;
+            message = Loc.GetString(_random.Pick(messagePack.Values));
+        }
         // Chatcode moment: messages starting with "." are considered radio messages.
         // Prepending ">" forces the message to be spoken instead.
         // TODO chat refactor: remove this

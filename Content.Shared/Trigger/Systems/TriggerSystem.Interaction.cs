@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Trigger.Components.Effects;
 
@@ -12,6 +13,7 @@ public sealed partial class TriggerSystem : EntitySystem
         SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<TriggerOnUseComponent, UseInHandEvent>(OnUse);
 
+        SubscribeLocalEvent<ItemToggleOnTriggerComponent, TriggerEvent>(HandleItemToggleOnTrigger);
         SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(HandleAnchorOnTrigger);
         SubscribeLocalEvent<UseDelayOnTriggerComponent, TriggerEvent>(HandleUseDelayOnTrigger);
     }
@@ -34,9 +36,28 @@ public sealed partial class TriggerSystem : EntitySystem
         args.Handled = true;
     }
 
+    private void HandleItemToggleOnTrigger(Entity<ItemToggleOnTriggerComponent> ent, ref TriggerEvent args)
+    {
+        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+            return;
+
+        var target = ent.Comp.TargetUser ? args.User : ent.Owner;
+
+        if (!TryComp<ItemToggleComponent>(target, out var itemToggle))
+            return;
+
+        var handled = false;
+        if (itemToggle.Activated && ent.Comp.CanDeactivate)
+            handled = _itemToggle.TryDeactivate((target.Value, itemToggle), args.User, ent.Comp.Predicted);
+        else if (ent.Comp.CanActivate)
+            handled = _itemToggle.TryActivate((target.Value, itemToggle), args.User, ent.Comp.Predicted);
+
+        args.Handled |= handled;
+    }
+
     private void HandleAnchorOnTrigger(Entity<AnchorOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
@@ -59,7 +80,7 @@ public sealed partial class TriggerSystem : EntitySystem
 
     private void HandleUseDelayOnTrigger(Entity<UseDelayOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;

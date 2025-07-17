@@ -13,8 +13,8 @@ namespace Content.Shared.Trigger.Components.Triggers;
 public sealed partial class TriggerOnVerbComponent : BaseTriggerOnXComponent
 {
     /// <summary>
-    /// The currently selected delay for the trigger.
+    /// The text to display in the verb.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public LocId Text = "trigger-verb";
+    public LocId Text = "trigger-on-verb-default";
 }

@@ -25,7 +25,7 @@ public abstract class SharedReleaseGasOnTriggerSystem : EntitySystem
     /// </summary>
     protected virtual void OnTrigger(Entity<ReleaseGasOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
 
         ent.Comp.Active = true;

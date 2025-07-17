@@ -1,5 +1,4 @@
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Popups;
 using Content.Shared.Trigger.Systems;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Shared.Physics.Components;
@@ -8,25 +7,17 @@ namespace Content.Shared.Mousetrap;
 
 public sealed class MousetrapSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MousetrapComponent, ItemToggledEvent>(OnToggled);
         SubscribeLocalEvent<MousetrapComponent, BeforeDamageOnTriggerEvent>(BeforeDamageOnTrigger);
         SubscribeLocalEvent<MousetrapComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
     }
 
-    private void OnToggled(Entity<MousetrapComponent> ent, ref ItemToggledEvent args)
-    {
-        _popup.PopupPredicted(args.Activated
-            ? Loc.GetString("mousetrap-on-activate")
-            : Loc.GetString("mousetrap-on-deactivate"), ent.Owner, args.User);
-    }
-
     // only allow step triggers to trigger if the trap is armed
+    // TODO: refactor Steptriggers to get rid of this
+    // they should just use the new trigger conditions
     private void OnStepTriggerAttempt(Entity<MousetrapComponent> ent, ref StepTriggerAttemptEvent args)
     {
         if (!TryComp<ItemToggleComponent>(ent, out var toggle))

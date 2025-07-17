@@ -11,6 +11,12 @@ namespace Content.Shared.Trigger.Components.Effects;
 public sealed partial class SpeakOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>
+    /// The text to speak. This has priority over Pack.
+    /// </summary>
+    [DataField]
+    public LocId? Text;
+
+    /// <summary>
     /// The identifier for the dataset prototype containing messages to be spoken by this entity.
     /// The spoken text will be picked randomly from it.
     /// </summary>

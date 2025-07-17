@@ -28,8 +28,8 @@ signal-port-description-middle = This port is invoked whenever the lever is move
 signal-port-name-trigger-sender = Trigger
 signal-port-description-trigger-sender = This port is invoked whenever the device triggers.
 
-signal-port-name-timer-trigger = Timer Trigger
-signal-port-description-timer-trigger = This port is invoked whenever the timer triggers.
+signal-port-name-timer-trigger = Timer
+signal-port-description-timer-trigger = This port is invoked whenever the timer is up.
 
 signal-port-name-timer-start = Timer Start
 signal-port-description-timer-start = This port is invoked whenever the timer starts.

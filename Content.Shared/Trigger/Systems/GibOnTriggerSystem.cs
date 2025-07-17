@@ -18,7 +18,7 @@ public sealed class GibOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<GibOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeyIns.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;

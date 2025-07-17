@@ -26,6 +26,7 @@
         damage: 10
       behaviors:
       - !type:TriggerBehavior
+        keyOut: timer # explode immediately
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
@@ -60,7 +61,6 @@
       path: "/Audio/Effects/beep1.ogg"
       params:
         volume: 5
-    initialBeepDelay: 0
     beepInterval: 2 # 2 beeps total (at 0 and 2)
 
 - type: entity
@@ -183,7 +183,6 @@
       path: /Audio/Effects/Grenades/SelfDestruct/SDS_Charge2.ogg
       params:
         volume: 30
-    initialBeepDelay: 0
     beepInterval: 16
 
 
@@ -210,10 +209,10 @@
   - type: EmitSoundOnTrigger
     keysIn:
     - timer
-    removeOnTrigger: true
     sound:
       path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
-      volume: 5
+      params:
+        volume: 5
   - type: AnchorOnTrigger
     keysIn:
     - timer
@@ -273,7 +272,8 @@
     - timer
     sound:
       path: /Audio/Effects/Grenades/Supermatter/whitehole_start.ogg
-      volume: 5
+      params:
+        volume: 5
   - type: AnchorOnTrigger
     keysIn:
     - timer
@@ -466,6 +466,8 @@
     - timer
     sound: /Audio/Items/smoke_grenade_smoke.ogg
   - type: DeleteOnTrigger
+    keysIn:
+    - timer
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Items/smoke_grenade_prime.ogg

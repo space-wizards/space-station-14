@@ -20,7 +20,6 @@
   - type: TimerTrigger
     delay: 5
     examinable: false
-    initialBeepDelay: 0
     beepSound:
       path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
       params:

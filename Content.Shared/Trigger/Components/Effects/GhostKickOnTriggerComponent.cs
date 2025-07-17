@@ -15,5 +15,5 @@ public sealed partial class GhostKickOnTriggerComponent : BaseXOnTriggerComponen
     /// The reason that will be displayed in the server log when a player is kicked.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public LocId Reason = "trigger-ghost-kick";
+    public LocId Reason = "ghost-kick-on-trigger-default";
 }

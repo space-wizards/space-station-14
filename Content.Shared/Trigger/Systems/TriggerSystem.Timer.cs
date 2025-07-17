@@ -45,7 +45,7 @@ public sealed partial class TriggerSystem : EntitySystem
     private void OnTimerExamined(Entity<TimerTriggerComponent> ent, ref ExaminedEvent args)
     {
         if (args.IsInDetailsRange && ent.Comp.Examinable)
-            args.PushText(Loc.GetString("examine-trigger-timer", ("time", ent.Comp.Delay)));
+            args.PushText(Loc.GetString("timer-trigger-examine", ("time", ent.Comp.Delay)));
     }
 
     private void OnTimerTriggered(Entity<TimerTriggerComponent> ent, ref TriggerEvent args)
@@ -72,7 +72,7 @@ public sealed partial class TriggerSystem : EntitySystem
         args.Verbs.Add(new AlternativeVerb()
         {
             Category = TimerOptions,
-            Text = Loc.GetString("verb-trigger-timer-cycle"),
+            Text = Loc.GetString("timer-trigger-verb-cycle"),
             Act = () => CycleDelay(ent, user),
             Priority = 1
         });
@@ -84,7 +84,7 @@ public sealed partial class TriggerSystem : EntitySystem
                 args.Verbs.Add(new AlternativeVerb()
                 {
                     Category = TimerOptions,
-                    Text = Loc.GetString("verb-trigger-timer-set-current", ("time", option)),
+                    Text = Loc.GetString("timer-trigger-verb-set-current", ("time", option)),
                     Disabled = true,
                     Priority = -100 * (int)option.TotalSeconds
                 });
@@ -94,13 +94,13 @@ public sealed partial class TriggerSystem : EntitySystem
                 args.Verbs.Add(new AlternativeVerb()
                 {
                     Category = TimerOptions,
-                    Text = Loc.GetString("verb-trigger-timer-set", ("time", option)),
+                    Text = Loc.GetString("timer-trigger-verb-set", ("time", option)),
                     Priority = -100 * (int)option.TotalSeconds,
                     Act = () =>
                     {
                         ent.Comp.Delay = option;
                         Dirty(ent);
-                        _popup.PopupClient(Loc.GetString("popup-trigger-timer-set", ("time", option)), user, user);
+                        _popup.PopupClient(Loc.GetString("timer-trigger-popup-set", ("time", option)), user, user);
                     }
                 });
             }

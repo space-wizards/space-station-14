@@ -86,7 +86,8 @@
     min: 8
     max: 10
   - type: ExplodeOnTrigger
-    keysIn: timer
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: DemolitionCharge
     totalIntensity: 450

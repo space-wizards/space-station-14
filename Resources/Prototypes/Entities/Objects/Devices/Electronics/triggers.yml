@@ -31,7 +31,6 @@
       keyOut: trigger
       delay: 5
       delayOptions: [3, 5, 10, 15, 30]
-      initialBeepDelay: 0
       beepSound:
         path: /Audio/Machines/Nuke/general_beep.ogg
         params:
@@ -67,7 +66,6 @@
       # use the default trigger key so it can activate any inserted payload
       keyOut: trigger
       delay: 3
-      initialBeepDelay: 0
       beepSound:
         path: /Audio/Machines/Nuke/general_beep.ogg
         params:
