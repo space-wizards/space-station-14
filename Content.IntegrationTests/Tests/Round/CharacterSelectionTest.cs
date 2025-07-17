@@ -309,4 +309,77 @@ public sealed class CharacterSelectionTest
         await pair.CleanReturnAsync();
     }
 
+    // run multiple round starts with the same set of characters, all of which are valid to select,
+    // and verify that which character is selected varies
+    [Test]
+    public async Task VarietyTest()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            DummyTicker = false,
+            Connected = true,
+            InLobby = true,
+        });
+        pair.Server.CfgMan.SetCVar(CCVars.GameMap, _map);
+
+        var ticker = pair.Server.System<GameTicker>();
+
+        ticker.SetGamePreset(_traitorsMode);
+
+        var cPref = pair.Client.ResolveDependency<IClientPreferencesManager>();
+        pair.Server.ResolveDependency<IRobustRandom>().SetSeed(0);
+
+        await pair.ReallyBeIdle();
+
+        await pair.Client.WaitAssertion(() =>
+        {
+            cPref.UpdateJobPriorities( new() {
+                { Passenger, JobPriority.Medium },
+                { Mime, JobPriority.Medium }
+            });
+            cPref.CreateCharacter(HumanoidCharacterProfile.Random().AsEnabled().WithJob(Passenger));
+            cPref.CreateCharacter(HumanoidCharacterProfile.Random().AsEnabled().WithJob(Passenger));
+            cPref.CreateCharacter(HumanoidCharacterProfile.Random().AsEnabled().WithJob(Mime));
+            cPref.CreateCharacter(HumanoidCharacterProfile.Random().AsEnabled().WithoutJob(Passenger).WithJob(Mime));
+        });
+
+        HashSet<int> selectedCharacterSlots = new();
+        var humanoidAppearanceSystem = pair.Server.System<HumanoidAppearanceSystem>();
+
+        for (var i = 0; i < 20; i++)
+        {
+            await pair.ReallyBeIdle();
+
+            Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value],
+                Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
+            ticker.ToggleReadyAll(true);
+            Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.ReadyToPlay));
+            await pair.Server.WaitPost(() => ticker.StartRound());
+            await pair.RunTicksSync(30);
+
+            Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.JoinedGame));
+            bool foundSelectedSlot = false;
+            foreach (var slot in cPref.Preferences.Characters.Keys)
+            {
+                if (cPref.Preferences.Characters[slot]
+                    .MemberwiseEquals(humanoidAppearanceSystem.GetBaseProfile(pair.Player!.AttachedEntity.Value)))
+                {
+                    foundSelectedSlot = true;
+                    selectedCharacterSlots.Add(slot);
+                }
+            }
+            Assert.That(foundSelectedSlot, Is.True);
+
+            await pair.Server.WaitPost(() => ticker.RestartRound());
+
+            if (selectedCharacterSlots.Count == cPref.Preferences.Characters.Count)
+            {
+                break;
+            }
+        }
+        Assert.That(selectedCharacterSlots.Count, Is.EqualTo(cPref.Preferences.Characters.Count));
+
+        await pair.CleanReturnAsync();
+    }
+
 }
