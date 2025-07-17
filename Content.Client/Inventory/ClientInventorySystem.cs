@@ -72,52 +72,13 @@ namespace Content.Client.Inventory
             UpdateInventoryTemplate(ent);
         }
 
-        private void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
+        protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
         {
-            if (!TryComp<InventorySlotsComponent>(ent, out var slots))
-                return;
+            base.UpdateInventoryTemplate(ent);
 
-            if (!_proto.TryIndex(ent.Comp.TemplateId, out var template))
-                return;
+            if (TryComp<InventorySlotsComponent>(ent.Owner, out var slots))
+                UpdateContainerData((ent, slots));
 
-            ent.Comp.Slots = template.Slots;
-            ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
-
-            // Remove any slots that are not in new template
-            foreach (var slot in slots.SlotData)
-            {
-                if (ent.Comp.Slots.Any(s => s.Name == slot.Key))
-                    continue;
-
-                TryRemoveSlotDef(ent, slots, slot.Value);
-
-                if (_container.TryGetContainer(ent, slot.Key, out var container))
-                {
-                    _container.EmptyContainer(container, true);
-                    _container.ShutdownContainer(container);
-                }
-            }
-
-            // Add new slots that are missing from the new template
-            foreach (var slot in ent.Comp.Slots)
-            {
-                if (slots.SlotData.Any(s => s.Key == slot.Name))
-                    continue;
-
-                TryAddSlotDef(ent, slots, slot);
-            }
-
-            // As the containers got cleared, we need to reassign them to ensure they're all in the same order as the slots.
-            // And they need to be in the same order cause inventory enumeration expects them to be.
-            for (var i = 0; i < ent.Comp.Containers.Length; i++)
-            {
-                var slot = ent.Comp.Slots[i];
-                var container = _container.EnsureContainer<ContainerSlot>(ent, slot.Name);
-                container.OccludesLight = false;
-                ent.Comp.Containers[i] = container;
-            }
-
-            UpdateContainerData((ent, slots));
             _clothingVisualsSystem.InitClothing(ent, ent.Comp);
             ReloadInventory();
         }
@@ -170,7 +131,7 @@ namespace Content.Client.Inventory
 
             foreach (var slot in component.Slots)
             {
-                TryRemoveSlotDef(uid, inventorySlots, slot);
+                TryRemoveSlotDef(uid, slot);
             }
 
             if (uid == _playerManager.LocalEntity)
@@ -205,7 +166,7 @@ namespace Content.Client.Inventory
 
             foreach (var slot in component.Slots)
             {
-                TryAddSlotDef(uid, inventorySlots, slot);
+                TryAddSlotDef(uid, slot);
             }
         }
 
@@ -251,8 +212,11 @@ namespace Content.Client.Inventory
                 EntitySlotUpdate?.Invoke(newData);
         }
 
-        public bool TryAddSlotDef(EntityUid owner, InventorySlotsComponent component, SlotDefinition newSlotDef)
+        public override bool TryAddSlotDef(EntityUid owner, SlotDefinition newSlotDef)
         {
+            if (!TryComp<InventorySlotsComponent>(owner, out var component))
+                return false;
+
             SlotData newSlotData = newSlotDef; //convert to slotData
             if (!component.SlotData.TryAdd(newSlotDef.Name, newSlotData))
                 return false;
@@ -263,8 +227,11 @@ namespace Content.Client.Inventory
             return true;
         }
 
-        public bool TryRemoveSlotDef(EntityUid owner, InventorySlotsComponent component, SlotDefinition newSlotDef)
+        public override bool TryRemoveSlotDef(EntityUid owner, SlotDefinition newSlotDef)
         {
+            if (!TryComp<InventorySlotsComponent>(owner, out var component))
+                return false;
+
             SlotData newSlotData = newSlotDef; //convert to slotData
             if (!component.SlotData.Remove(newSlotDef.Name))
                 return false;

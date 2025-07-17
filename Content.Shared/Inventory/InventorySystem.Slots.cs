@@ -79,7 +79,7 @@ public partial class InventorySystem : EntitySystem
         }
     }
 
-    private void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
+    protected virtual void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
     {
         if (ent.Comp.LifeStage < ComponentLifeStage.Initialized)
             return;
@@ -95,8 +95,18 @@ public partial class InventorySystem : EntitySystem
             if (!TryGetSlotContainer(ent.Owner, container.ID, out var deleteSlot, out var slotDef))
                 continue;
 
+            TryRemoveSlotDef(ent, slotDef);
+
             _containerSystem.EmptyContainer(deleteSlot, true);
             _containerSystem.ShutdownContainer(deleteSlot);
+        }
+
+        foreach (var slot in ent.Comp.Slots)
+        {
+            if (ent.Comp.Containers.Any(s => s.ID == slot.Name))
+                continue;
+
+            TryAddSlotDef(ent, slot);
         }
 
         ent.Comp.Slots = invTemplate.Slots;
@@ -122,6 +132,16 @@ public partial class InventorySystem : EntitySystem
         {
             _storageSystem.OpenStorageUI(entityUid.Value, uid, storageComponent, false);
         }
+    }
+
+    public virtual bool TryAddSlotDef(EntityUid owner, SlotDefinition newSlotDef)
+    {
+        return false;
+    }
+
+    public virtual bool TryRemoveSlotDef(EntityUid owner, SlotDefinition newSlotDef)
+    {
+        return false;
     }
 
     public bool TryGetSlotContainer(EntityUid uid, string slot, [NotNullWhen(true)] out ContainerSlot? containerSlot, [NotNullWhen(true)] out SlotDefinition? slotDefinition,
