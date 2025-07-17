@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: coffeeware, MilenVolf
-  changes:
-  - message: Most common mobs without hands now can't dump containers wtih solution
-      by drag and dropping.
-    type: Tweak
-  id: 8268
-  time: '2025-04-19T20:32:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33350
 - author: ScarKy0
   changes:
   - message: Salvage borgs now start with a tool module
@@ -3899,3 +3891,10 @@
   id: 8780
   time: '2025-07-17T16:34:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38319
+- author: Quantum-cross
+  changes:
+  - message: Anomalies make anomalous noises if you let them go supercritical
+    type: Add
+  id: 8781
+  time: '2025-07-17T17:01:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36425
