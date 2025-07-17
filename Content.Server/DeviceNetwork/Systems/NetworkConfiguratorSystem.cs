@@ -358,7 +358,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     {
         var hasLinking = HasComp<DeviceLinkSinkComponent>(target) || HasComp<DeviceLinkSourceComponent>(target);
 
-        if (hasLinking && HasComp<DeviceListComponent>(target) || hasLinking == configurator.LinkModeActive || HasComp<DeviceNetworkComponent>(target) == true && hasLinking)
+        if (hasLinking && HasComp<DeviceListComponent>(target) || hasLinking == configurator.LinkModeActive || HasComp<DeviceNetworkComponent>(target) && hasLinking)
             return;
 
         if (hasLinking)
