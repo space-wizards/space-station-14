@@ -54,7 +54,7 @@ public sealed class SmokeOnTriggerSystem : EntitySystem
 
         var coords = _map.MapToGrid(gridUid, mapCoords);
         var smoke = Spawn(ent.Comp.SmokePrototype, coords.SnapToGrid());
-        if (!TryComp<SmokeComponent>(ent, out var smokeComp))
+        if (!TryComp<SmokeComponent>(smoke, out var smokeComp))
         {
             Log.Error($"Smoke prototype {ent.Comp.SmokePrototype} was missing SmokeComponent");
             Del(smoke);
