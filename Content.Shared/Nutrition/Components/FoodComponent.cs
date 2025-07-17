@@ -5,7 +5,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.Components;
-
+[Obsolete("Migration to Content.Shared.Nutrition.Components.EdibleComponent is required")]
 [RegisterComponent, Access(typeof(FoodSystem), typeof(FoodSequenceSystem))]
 public sealed partial class FoodComponent : Component
 {

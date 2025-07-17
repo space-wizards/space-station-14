@@ -16,6 +16,7 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
+[Obsolete("Migration to Content.Shared.Nutrition.EntitySystems.IngestionSystem is required")]
 public abstract partial class SharedDrinkSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;

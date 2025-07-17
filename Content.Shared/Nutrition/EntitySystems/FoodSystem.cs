@@ -19,6 +19,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// <summary>
 /// Handles feeding attempts both on yourself and on the target.
 /// </summary>
+[Obsolete("Migration to Content.Shared.Nutrition.EntitySystems.IngestionSystem is required")]
 public sealed class FoodSystem : EntitySystem
 {
     [Dependency] private readonly FlavorProfileSystem _flavorProfile = default!;

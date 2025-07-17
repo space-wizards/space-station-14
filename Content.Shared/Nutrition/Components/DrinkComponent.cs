@@ -5,6 +5,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Nutrition.Components;
 
+[Obsolete("Migration to Content.Shared.Nutrition.Components.EdibleComponent is required")]
 [NetworkedComponent, AutoGenerateComponentState]
 [RegisterComponent, Access(typeof(SharedDrinkSystem))]
 public sealed partial class DrinkComponent : Component
