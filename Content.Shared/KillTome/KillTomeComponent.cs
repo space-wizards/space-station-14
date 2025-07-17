@@ -9,7 +9,7 @@ namespace Content.Shared.KillTome;
 public sealed partial class KillTomeComponent : Component
 {
     // if delay is not specified, it will use this default value
-    [DataField]
+    [DataField("defaultkilldelay")]
     public float DefaultKillDelay = 40f;
 
     [DataField]
