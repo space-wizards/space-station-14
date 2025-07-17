@@ -9507,5 +9507,13 @@ Entries:
   id: 1309
   time: '2025-07-17T15:49:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1010
+- author: KarmaKitsuna and Quantum
+  changes:
+  - message: Roleplayers rejoice! Added story objectives for traitors, and a system
+      which picks a department at random for objectives.
+    type: Add
+  id: 1310
+  time: '2025-07-17T16:43:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1047
 Order: -1
 
