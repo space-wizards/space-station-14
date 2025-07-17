@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Seam_Less
-  changes:
-  - message: Standardized the Sprites of most scarfs
-    type: Tweak
-  id: 8270
-  time: '2025-04-20T00:17:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35446
 - author: ArtisticRoomba
   changes:
   - message: Fixed backpack water tanks (spray nozzle) projectiles not properly cleaning
@@ -3901,3 +3894,12 @@
   id: 8782
   time: '2025-07-17T21:36:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36839
+- author: ScarKy0
+  changes:
+  - message: Added the acolyte armor to the chaplain's uplink.
+    type: Add
+  - message: Syndicate bundles are now correctly marked as syndicate contraband.
+    type: Fix
+  id: 8783
+  time: '2025-07-17T22:00:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36843
