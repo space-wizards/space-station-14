@@ -578,6 +578,9 @@
     staticPacks:
     - BioGenIngredientsStatic
     - BioGenMaterialsStatic
+  - type: EmagLatheRecipes
+    emagStaticPacks:
+    - BioGenEmagStatic
 
 - type: entity
   parent: BaseLathe
