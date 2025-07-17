@@ -1178,32 +1178,6 @@
 
 - type: entity
   parent: PlushieHuman
-  id: PlushieOog
-  name: Oog-man Plushie #I AM OOG-MAN
-  description: A marketable plushie of everyone's favourite caveman. It's missing it's clothes?
-  components:
-  - type: Item
-    size: Small
-    sprite: _Starlight/Objects/Fun/Plushies/oog_plushie.rsi
-  - type: Sprite
-    sprite: _Starlight/Objects/Fun/Plushies/oog_plushie.rsi
-    layers: 
-      - state: icon
-  - type: ItemToggle
-    onUse: false
-    verbToggleOn: plushie-voicebox-activate
-    verbToggleOff: plushie-voicebox-deactivate
-  - type: ComponentToggler
-    components:
-    - type: Advertise
-      pack: PlushiesOog
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: heavy
-
-- type: entity
-  parent: PlushieHuman
   id: PlushiePercy
   name: Percy Plushie
   description: A cute plushie of the Vassal to the Grey King himself, Percival Beck. It smells faintly of old cigarettes.
@@ -1277,32 +1251,6 @@
           maximumWait: 240
         - type: TextToSpeech
           voice: wanderer
-
-#- type: entity
-  #parent: PlushieHuman
-  #id: PlushiePoley
-  #name: Poley Plushie
-  #description: Geniuine Worst Miner, But Best At Meatshield.
-  #components:
-    #- type: Item
-      #size: Small
-      #sprite: _Starlight/Objects/Fun/Plushies/poley_plushie.rsi
-    #- type: Sprite
-      #sprite: _Starlight/Objects/Fun/Plushies/poley_plushie.rsi
-      #layers:
-        #- state: icon
-    #- type: ItemToggle
-      #onUse: false
-      #verbToggleOn: plushie-voicebox-activate
-      #verbToggleOff: plushie-voicebox-deactivate
-    #- type: ComponentToggler
-      #components:
-        #- type: Advertise
-          #pack: PlushiesPoley
-          #minimumWait: 120
-          #maximumWait: 240
-        #- type: TextToSpeech
-          #voice: neon
 
 - type: entity
   parent: BaseBorgPlushie
