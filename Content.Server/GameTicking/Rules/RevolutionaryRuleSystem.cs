@@ -106,7 +106,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (IsGroupDetainedOrDead(GetHeadRevList(), false, false, false))
             return "rev-crew-major";
 
-        var isCommandEscaping = IsGroupEscaping(GetCommandList());
+        var isCommandEscaping = IsGroupEscaping(GetCommandList(false));
         if (GetRevolutionaryPercentage(GetCommandList()) >= 0.5 && !isCommandEscaping)
             return "rev-major";
 
@@ -172,7 +172,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             ("percentage", commandRevPercent * 100),
             ("color", commandRevPercent >= 0.5 || winType == "rev-crew-minor" ? "green" : "red")
             ));
-            args.AddLine(Loc.GetString(GetEscapeCount(GetCommandList()) == 1 ? "rev-loyal-command-singular" : "rev-loyal-command",
+            args.AddLine(Loc.GetString(GetEscapeCount(GetCommandList(false)) == 1 ? "rev-loyal-command-singular" : "rev-loyal-command",
             ("count", GetEscapeCount(GetCommandList(false))),
             ("color", winType == "rev-crew-minor" ? "green" : "red")
             ));
@@ -425,6 +425,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 revs++;
         }
 
+        if (list.Count == 0) return 0f;
         return revs / list.Count;
     }
 }
