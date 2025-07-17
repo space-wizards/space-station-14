@@ -162,7 +162,7 @@ public sealed class SliceableFoodSystem : EntitySystem
         // This exists just to make tests fail I guess, awesome!
         // If you're here because your test just failed, make sure that:
         // Your food has the edible component
-        // It has a compatible solution
+        // The solution listed in the edible component exists
         var foodComp = EnsureComp<EdibleComponent>(entity);
         _solutionContainer.EnsureSolution(entity.Owner, foodComp.Solution, out _);
     }
