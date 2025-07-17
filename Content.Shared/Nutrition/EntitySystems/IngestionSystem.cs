@@ -27,6 +27,17 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// <summary>
 /// This handles the ingestion of solutions.
 /// </summary>
+/// <remarks>
+/// I was warned about puddle system, I knew the risks with body system, but food and drink system?
+/// Food and Drink system was a sleeping titan, and I walked directly into it's gaping maw.
+/// Between copy-pasted code, strange reliance on systems, being a pillar of chemistry for some reason,
+/// nothing could've prepared me for the horror that I had to endure. I saw the signs, comments of those who
+/// turned back, code that was made to be "just good enough" the fact that I got soaped by soap.yml, but I
+/// ignored them and pressed on.
+/// Let this remark be a reminder to those who come after, that I was here, and that I vanquished a great beast.
+/// Let young little contributors rest easy at night not knowing the horrible system that once lived beneath the
+/// bedrock of the codebase they now commit to.
+/// </remarks>
 public sealed partial class IngestionSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
