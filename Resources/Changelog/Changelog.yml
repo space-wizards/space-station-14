@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Fildrance
-  changes:
-  - message: fixed spessman getting stuck after unlocking portal node
-    type: Fix
-  id: 8266
-  time: '2025-04-19T17:07:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36719
 - author: VlaDOS1408
   changes:
   - message: Fixed Gravity gen menu resizing! Now it looks like it should.
@@ -3899,3 +3892,10 @@
   id: 8778
   time: '2025-07-16T20:27:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39018
+- author: SlamBamActionman
+  changes:
+  - message: Grilles under diagonal windows no longer electrocute you.
+    type: Fix
+  id: 8779
+  time: '2025-07-17T13:33:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39032
