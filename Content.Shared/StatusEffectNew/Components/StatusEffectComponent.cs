@@ -11,7 +11,7 @@ namespace Content.Shared.StatusEffectNew.Components;
 /// Provides a link between the effect and the affected entity, and some data common to all status effects.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(SharedStatusEffectsSystem))]
+[Access(typeof(StatusEffectsSystem))]
 [EntityCategory("StatusEffects")]
 public sealed partial class StatusEffectComponent : Component
 {
@@ -20,12 +20,6 @@ public sealed partial class StatusEffectComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? AppliedTo;
-
-    /// <summary>
-    /// Status effect indication for the player. If Null, no Alert will be displayed.
-    /// </summary>
-    [DataField]
-    public ProtoId<AlertPrototype>? Alert;
 
     /// <summary>
     /// When this effect will end. If Null, the effect lasts indefinitely.
