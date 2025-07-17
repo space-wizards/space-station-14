@@ -115,3 +115,27 @@
     - Trinkets
     - SecurityStar
     - GroupSpeciesBreathToolSecurity
+
+- type: roleLoadout
+  id: JobSalvageLead
+  groups: # TODO - add custom groups to Resources/Prototypes/_StarLight/Loadouts/loadout_groups.yml, reference here
+    - GroupTankHarness
+    - SalvageSpecialistBackpack
+    - SalvageSpecialistOuterClothing
+    - SalvageSpecialistShoes
+    - Glasses
+    - Survival
+    - Trinkets
+    - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: SalvageMedic
+  groups: # TODO - add custom groups to Resources/Prototypes/_StarLight/Loadouts/loadout_groups.yml, reference here
+    - GroupTankHarness
+    - SalvageSpecialistBackpack
+    - SalvageSpecialistOuterClothing
+    - SalvageSpecialistShoes
+    - Glasses
+    - Survival
+    - Trinkets
+    - GroupSpeciesBreathTool

@@ -1,0 +1,31 @@
+﻿#Salvave Lead
+# TODO - copy from salv specialist
+
+#Salvage Medic
+# TODO - copy from salv specialist
+
+#Salvage Specialist
+# located in Wizden's Resources/Prototypes/Catalog/Fills/Lockers/cargo.yml
+
+#Mining Specialist
+- type: entity
+  id: LockerMiningSpecialistFilled
+  suffix: Filled
+  parent: LockerMiningSpecialist
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingUniformJumpsuitMiningSpecialist
+        - id: ClothingMaskGasExplorer
+        - id: ClothingBeltUtilityFilled
+        - id: SurvivalKnife
+        - id: HandheldGPSBasic
+        - id: RadioHandheld
+        - id: RadioHandheldExpedition
+        - id: AppraisalTool
+        - id: ClothingOuterHardsuitSpaceHazard
+        - id: Flare
+        - id: JetpackMiniFilled
+        - id: Pickaxe
+        - id: Shovel
+        - id: OreBag
