@@ -23,6 +23,7 @@
     - id: MailTeleporterMachineCircuitboard
     - id: PlushieLance #starlight
     - id: RadioHandheldExpedition #starlight
+    - id: ClothingOuterHardsuitLuxmax #starlight
 
 - type: entity
   id: LockerQuarterMasterFilled

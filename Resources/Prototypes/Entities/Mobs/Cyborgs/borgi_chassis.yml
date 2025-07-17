@@ -202,6 +202,7 @@
     coldDamage:
       types:
         Cold: 0.03
+  - type: CyborgSparkEffect #starlight (even though this file should really be moved to the starlight folder)
 
 # Custom action for later modification for borgi.
 - type: entity

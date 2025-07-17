@@ -124,6 +124,31 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+
+- type: entity
+  parent: ClothingHeadHardsuitBase #[ ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitInfiltration
+  categories: [ HideSpawnMenu ]
+  name: syndicate infiltration hardsuit helmet
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/infiltrationsyndie.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/infiltrationsyndie.rsi
+  #- type: PointLight
+    #color: "#880808"
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 10000
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8  
+        
 # USSP
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase, BaseSovietContraband]
@@ -193,3 +218,21 @@
     modifiers:
       coefficients:
         Heat: 0.9
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitLuxmax
+  categories: [ HideSpawnMenu ]
+  name: QM's luxury maxim hardsuit helmet
+  description: This thing is made of solid gold, its a wonder you can keep your head up with it on.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/luxmax.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/luxmax.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: PointLight
+    radius: 7
+    energy: 3

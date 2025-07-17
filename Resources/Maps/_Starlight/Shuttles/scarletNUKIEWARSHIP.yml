@@ -705,8 +705,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         11:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 8
     components:
     - type: Transform
@@ -717,8 +716,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         10:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 9
     components:
     - type: Transform
@@ -735,8 +733,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         8:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 11
     components:
     - type: Transform
@@ -747,8 +744,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         7:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 12
     components:
     - type: Transform
@@ -7693,59 +7689,41 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         137:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         138:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         135:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         136:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         131:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         128:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         127:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         132:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         129:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         130:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         133:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         124:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         134:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         126:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         123:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         125:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         153:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         154:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 1078
     components:
     - type: MetaData
@@ -7757,47 +7735,33 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         164:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         165:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         163:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         161:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         162:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         155:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         156:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         157:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         158:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         166:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         167:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         169:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         168:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         170:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 1079
     components:
     - type: MetaData
@@ -7809,17 +7773,13 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         149:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         147:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         150:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         152:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignChem
   entities:
   - uid: 1080

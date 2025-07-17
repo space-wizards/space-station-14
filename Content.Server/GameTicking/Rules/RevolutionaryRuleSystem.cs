@@ -74,7 +74,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly IGameTiming _timing = default!; // Starlight
     [Dependency] private readonly ChatSystem _chatSystem = default!; // Starlight
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!; // Starlight
-    [Dependency] private readonly ContentAudioSystem _contentAudioSystem = default!; // Starlight
+    [Dependency] private readonly SpecialLobbyContentSystem _specialLobbyContent = default!; // Starlight
 
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
@@ -182,8 +182,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                         // Wait a short time to ensure the announcement is heard before ending the round
                         Timer.Spawn(TimeSpan.FromSeconds(4), () =>
                         {
-                            // Set the lobby music to play cosmonaut first
-                            _contentAudioSystem.SetLobbyPlaylistWithFirstTrack(ContentAudioSystem.RevVictoryMusic);
+                            // STARLIGHT: Set special lobby content for revolutionary victory using the modular system
+                            _specialLobbyContent.SetSpecialLobbyContent(uid);
                             
                             // End the round
                             // _audioSystem.PlayGlobal("/Audio/_Starlight/Misc/sov_win.ogg", filter, false);

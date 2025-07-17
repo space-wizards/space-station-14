@@ -29,3 +29,7 @@
 - type: lobbyBackground
   id: AgainstTheXeno
   background: /Textures/_Starlight/LobbyScreens/againstthexeno.webp
+
+- type: lobbyBackground
+  id: SOCOMOperation
+  background: /Textures/_Starlight/LobbyScreens/operation.webp

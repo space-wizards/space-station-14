@@ -14,6 +14,22 @@
     severity: AdvancedCyberlimbs
 
 - type: entity
+  id: BaseSalvageContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ SalvageSpecialist ]
+
+- type: entity
+  id: BaseSalvageMiningContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ SalvageSpecialist, MiningSpecialist ]
+
+- type: entity
   id: BaseSecuritySalvageContraband
   parent: BaseRestrictedContraband
   abstract: true
@@ -21,6 +37,15 @@
   - type: Contraband
     allowedDepartments: [ Security ]
     allowedJobs: [ SalvageSpecialist ]
+
+- type: entity
+  id: BaseSecurityMiningSalvageContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security ]
+    allowedJobs: [ SalvageSpecialist, MiningSpecialist ]
 
 - type: entity
   id: BaseEngineeringSalvageContraband

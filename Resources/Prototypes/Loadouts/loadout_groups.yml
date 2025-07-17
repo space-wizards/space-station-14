@@ -84,6 +84,7 @@
   - EmergencyNitrogen
   - EmergencyOxygen
   - LoadoutSpeciesVoxNitrogen
+  - EmergencyNonBreather # 🌟Starlight🌟
 
 # nitrogen or oxygen tank, depending on what your species needs
 - type: loadoutGroup
@@ -207,6 +208,8 @@
   - AncientJumpsuit
   - RainbowJumpsuit
   - RainbowJumpskirt
+  - GreyJumpsuit #starlight
+  - GreyJumpskirt #starlight
 
 - type: loadoutGroup
   id: AssistantFace
@@ -214,6 +217,7 @@
   minLimit: 0
   loadouts:
   - AssistantFace
+  - NeckGaiter #starlight
 
 - type: loadoutGroup
   id: AssistantGloves
@@ -221,7 +225,8 @@
   minLimit: 0
   loadouts:
   - AssistantGloves
-
+  - GreyGloves #starlight
+  
 - type: loadoutGroup
   id: CommonBackpack
   name: loadout-group-backpack
@@ -243,6 +248,9 @@
   minLimit: 0
   loadouts:
   - AssistantWintercoat
+  - GreyHoodieA #starlight
+  - GreyTrenchcoatA #starlight
+  - SpaceAssholeCoat #starlight
 
 - type: loadoutGroup
   id: AssistantShoes
@@ -501,6 +509,7 @@
   - EmergencyNitrogenClown
   - EmergencyOxygenClown
   - LoadoutSpeciesVoxNitrogen
+  - EmergencyNonBreatherClown # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: MimeHead
@@ -558,6 +567,7 @@
   - EmergencyOxygenMime
   - EmergencySpeciesMothMime
   - LoadoutSpeciesVoxNitrogen
+  - EmergencyNonBreatherMime # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: MusicianJumpsuit
@@ -852,6 +862,7 @@
   - EmergencyNitrogenExtended
   - EmergencyOxygenExtended
   - LoadoutSpeciesVoxNitrogen
+  - EmergencyNonBreatherExtended # 🌟Starlight🌟
 
 # Science
 - type: loadoutGroup
@@ -983,6 +994,7 @@
   minLimit: 0
   loadouts:
   - HeadofSecurityHead
+  - HeadofSecuritySheriff #Starlight
   - HeadofSecurityBeret
 
 - type: loadoutGroup
@@ -1155,6 +1167,7 @@
   loadouts:
   - JackBoots
   - SecurityWinterBoots
+  - HighHeelBoots # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: SecurityPDA
@@ -1211,6 +1224,7 @@
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
   - LoadoutSpeciesVoxNitrogen
+  - EmergencyNonbreatherSecurity # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: SecurityStar
@@ -1312,6 +1326,9 @@
   loadouts:
   - WhiteShoes
   - MedicalWinterBoots
+  - Heels # 🌟Starlight🌟
+  - LaceupShoes # 🌟Starlight🌟
+  - LeatherShoes # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: MedicalDoctorPDA
@@ -1416,6 +1433,7 @@
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
   - LoadoutSpeciesVoxNitrogen
+  - EmergencyNonBreatherMedical # 🌟Starlight🌟
 
 # Wildcards
 - type: loadoutGroup
@@ -1458,6 +1476,7 @@
   - EmergencyNitrogenSyndicate
   - EmergencyOxygenSyndicate
   - LoadoutSpeciesVoxNitrogen
+  - EmergencyNonBreatherSyndicate # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: GroupSpeciesBreathTool

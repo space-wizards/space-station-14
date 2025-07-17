@@ -217,6 +217,17 @@
     - Document
     - Trash
     - Paper
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.08,-0.20,0.08,0.20"
+        density: 2.5
+        mask:
+          - ItemMask
+        restitution: 0.3  # fite me
+        friction: 0.2
   - type: StaticPrice
     price: 0
   - type: NanoTaskPrinted

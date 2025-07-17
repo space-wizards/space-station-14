@@ -2,3 +2,8 @@
   id: abductorBlood
   flavorType: Base
   description: flavor-base-abductor-blood
+
+- type: flavor
+  id: draganspecial
+  flavorType: Complex
+  description: flavor-complex-dragan-special
