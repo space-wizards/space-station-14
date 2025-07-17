@@ -486,17 +486,6 @@
   conditions:
     - !type:ListingLimitedStockCondition
       stock: 1
-      
-#- type: listing
-  #id: VendorPlushiePoley
-  #productEntity: PlushiePoley
-  #cost:
-    #NTCredit: 13
-  #categories:
-    #- SLCrew
-  #conditions:
-    #- !type:ListingLimitedStockCondition
-      #stock: 1
 
 - type: listing
   id: VendorPlushieGlados
@@ -525,7 +514,22 @@
   productEntity: PlushieRufia
   cost:
     NTCredit: 14
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
       stock: 1
+
+#- type: listing
+  #id: VendorPlushieRomero
+  #productEntity: PlushieRromero
+  #cost:
+    #NTCredit: 17
+  #categories:
+    #- SLCrew
+  #conditions:
+    #- !type:ListingLimitedStockCondition
+      #stock: 1
 
 - type: listing
   id: VendorPlushieVanilla
