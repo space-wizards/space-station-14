@@ -18,11 +18,12 @@ public record struct IngestibleEvent(bool Cancelled = false);
 /// another entity from consuming the delicious reagents stored inside.
 /// </summary>
 /// <param name="User">The entity trying to feed us to an entity.</param>
-/// <param name="Destroy">Will this entity be destroyed when it's eaten?</param>
 [ByRefEvent]
-public record struct EdibleEvent(EntityUid User, bool Destroy)
+public record struct EdibleEvent(EntityUid User)
 {
     public Entity<SolutionComponent>? Solution = null;
+
+    public TimeSpan Time = TimeSpan.Zero;
 
     public bool Cancelled;
 }
@@ -142,20 +143,9 @@ public record struct EatenEvent(EntityUid User, EntityUid Target, Solution Split
 
     // Has this eaten event been handled? Used to prevent duplicate flavor popups and sound effects.
     public bool Handled;
-};
 
-// TODO: This can definitely go.
-// TODO: MAKE SURE TO DELETE THIS.
-/// <summary>
-/// Raised directed at the food after finishing eating a food before it's deleted.
-/// Cancel this if you want to do something special before a food is deleted.
-/// </summary>
-public sealed class BeforeFullyEatenEvent : CancellableEntityEventArgs
-{
-    /// <summary>
-    /// The person that ate the food.
-    /// </summary>
-    public EntityUid User;
+    // Should we try eating again?
+    public bool Repeat;
 }
 
 /// <summary>
@@ -186,6 +176,15 @@ public record struct GetUtensilsEvent()
         RequiredTypes |= type;
         Types |= type;
     }
+}
+
+/// <summary>
+/// Tries to get the best fitting edible type for an entity.
+/// </summary>
+[ByRefEvent]
+public record struct GetEdibleTypeEvent
+{
+    public EdibleType? Type;
 }
 
 /// <summary>

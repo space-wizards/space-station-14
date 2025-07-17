@@ -174,14 +174,9 @@ public sealed class NPCUtilitySystem : EntitySystem
         {
             case FoodValueCon:
             {
-                // TODO: Solve this do not forget to do this.
-
                 // mice can't eat unpeeled bananas, need monkey's help
                 // also you need an open mouth and such.
-                if (_ingestion.CanIngest(owner, owner, targetUid))
-                    return 0f;
-
-                if (!_ingestion.TryIngest(owner, owner, targetUid, false))
+                if (!_ingestion.CanIngest(owner, owner, targetUid))
                     return 0f;
 
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
@@ -194,15 +189,20 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
                     return 0f;
 
+                // See if we can actually digest this item...
+                if (!_ingestion.TryIngest(owner, owner, targetUid, false))
+                    return 0f;
+
+                var nutrition = _ingestion.TotalNutrition(targetUid);
+                if (nutrition <= 1.0f)
+                    return 0f;
+
                 return 1f;
             }
             case DrinkValueCon:
             {
-                if (!TryComp<DrinkComponent>(targetUid, out var drink))
-                    return 0f;
-
-                // can't drink closed drinks
-                if (_openable.IsClosed(targetUid))
+                // can't drink closed drinks and can't drink with a mask on...
+                if (_ingestion.CanIngest(owner, owner, targetUid))
                     return 0f;
 
                 // only drink when thirsty
@@ -214,7 +214,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
 
                 // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.
-                var hydration = _drink.TotalHydration(targetUid, drink);
+                var hydration = _ingestion.TotalHydration(targetUid);
                 if (hydration <= 1.0f)
                     return 0f;
 

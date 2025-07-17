@@ -31,14 +31,6 @@ public sealed partial class EdibleComponent : Component
     public bool DestroyOnEmpty = true;
 
     /// <summary>
-    /// If true, trying to drink when empty will not handle the event.
-    /// This means other systems such as equipping on use can run.
-    /// Example use-case is the bucket.
-    /// </summary>
-    [DataField]
-    public bool IgnoreEmpty;
-
-    /// <summary>
     /// Trash we spawn when eaten, will not spawn if the item isn't deleted when empty.
     /// </summary>
     [DataField]
@@ -72,10 +64,10 @@ public sealed partial class EdibleComponent : Component
     public bool RequiresSpecialDigestion;
 
     /// <summary>
-    /// The localization identifier for the eat message. Needs a "food" entity argument passed to it.
+    /// The localization identifier for the ingestion message.
     /// </summary>
     [DataField]
-    public LocId EatMessage = "food-nom";
+    public LocId Message = "edible-nom";
 
     /// <summary>
     /// How long it takes to eat the food personally.

@@ -1,6 +1,7 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -48,6 +49,8 @@ public sealed class FoodSystem : EntitySystem
         SubscribeLocalEvent<FoodComponent, IsDigestibleEvent>(OnIsFoodDigestible);
 
         SubscribeLocalEvent<FoodComponent, EdibleEvent>(OnFood);
+
+        SubscribeLocalEvent<FoodComponent, GetEdibleTypeEvent>(OnGetEdibleType);
     }
 
     /// <summary>
@@ -79,7 +82,6 @@ public sealed class FoodSystem : EntitySystem
         if (entity.Owner == user || !args.CanInteract || !args.CanAccess)
             return;
 
-        // TODO: This might not need to be a bool or even return anything???
         if (!_ingestion.TryGetIngestionVerb(user, entity, EdibleType.Food, out var verb))
             return;
 
@@ -102,8 +104,6 @@ public sealed class FoodSystem : EntitySystem
 
         args.Handled = true;
 
-        // TODO: This broke again I think...
-
         _audio.PlayPredicted(entity.Comp.UseSound, args.Target, args.User, AudioParams.Default.WithVolume(-1f).WithVariation(0.20f));
 
         var flavors = _flavorProfile.GetLocalizedFlavorsMessage(entity.Owner, args.Target, args.Split);
@@ -112,9 +112,9 @@ public sealed class FoodSystem : EntitySystem
         {
             var targetName = Identity.Entity(args.Target, EntityManager);
             var userName = Identity.Entity(args.User, EntityManager);
-            _popup.PopupEntity(Loc.GetString("food-system-force-feed-success", ("user", userName), ("flavors", flavors)), entity, entity);
+            _popup.PopupEntity(Loc.GetString("edible-force-feed-success", ("user", userName), ("verb", _ingestion.GetTypeVerb(EdibleType.Food)), ("flavors", flavors)), entity, entity);
 
-            _popup.PopupClient(Loc.GetString("food-system-force-feed-success-user", ("target", targetName)), args.User, args.User);
+            _popup.PopupClient(Loc.GetString("edible-force-feed-success-user", ("target", targetName), ("verb", _ingestion.GetTypeVerb(EdibleType.Food))), args.User, args.User);
 
             // log successful forced feeding
             _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(entity):food}");
@@ -137,7 +137,19 @@ public sealed class FoodSystem : EntitySystem
         }
 
         if (_ingestion.GetUsesRemaining(entity, entity.Comp.Solution, args.Split.Volume) > 0)
+        {
+            // Leave some of the consumer's DNA on the consumed item...
+            var ev = new TransferDnaEvent
+            {
+                Donor = args.Target,
+                Recipient = entity,
+                CanDnaBeCleaned = false,
+            };
+            RaiseLocalEvent(args.Target, ref ev);
+
+            args.Repeat = !args.ForceFed;
             return;
+        }
 
         // Food is always destroyed...
         args.Destroy = true;
@@ -181,6 +193,7 @@ public sealed class FoodSystem : EntitySystem
 
         // Check this last
         _solutionContainer.TryGetSolution(food.Owner, food.Comp.Solution, out args.Solution);
+        args.Time += TimeSpan.FromSeconds(food.Comp.Delay);
     }
 
     // TODO: When DrinkComponent and FoodComponent are properly obseleted, make the IsDigestionBools in IngestionSystem private again.
@@ -190,5 +203,13 @@ public sealed class FoodSystem : EntitySystem
             return;
 
         args.AddDigestible(ent.Comp.RequiresSpecialDigestion);
+    }
+
+    private void OnGetEdibleType(Entity<FoodComponent> ent, ref GetEdibleTypeEvent args)
+    {
+        if (args.Type != null)
+            return;
+
+        args.Type = EdibleType.Food;
     }
 }

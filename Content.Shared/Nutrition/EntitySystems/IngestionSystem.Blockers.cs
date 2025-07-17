@@ -1,8 +1,6 @@
 ﻿using System.Linq;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
@@ -29,8 +27,8 @@ public sealed partial class IngestionSystem
 
         // Digestion Events
         SubscribeLocalEvent<EdibleComponent, IsDigestibleEvent>(OnEdibleIsDigestible);
-        SubscribeLocalEvent<DrainableSolutionComponent, IsDigestibleEvent>(OnDrainableIsDigestible);
-        SubscribeLocalEvent<PuddleComponent, IsDigestibleEvent>(OnPuddleIsDigestible);
+        //SubscribeLocalEvent<DrainableSolutionComponent, IsDigestibleEvent>(OnDrainableIsDigestible);
+        //SubscribeLocalEvent<PuddleComponent, IsDigestibleEvent>(OnPuddleIsDigestible);
     }
 
     private void OnUnremovableIngestion(Entity<UnremoveableComponent> entity, ref IngestibleEvent args)
@@ -75,40 +73,42 @@ public sealed partial class IngestionSystem
         }
 
         // Check this last
-        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out args.Solution) && !entity.Comp.IgnoreEmpty)
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out args.Solution) || IsEmpty(entity))
         {
             args.Cancelled = true;
-            // TODO: GET VERBS EVENT
-            _popup.PopupClient(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", entity)), entity, args.User);
+
+            _popup.PopupClient(Loc.GetString("ingestion-try-use-is-empty", ("entity", entity)), entity, args.User);
+            return;
         }
+
+        // Time is additive because I said so.
+        args.Time += entity.Comp.Delay;
     }
 
     private void OnStorageEdible(Entity<StorageComponent> ent, ref EdibleEvent args)
     {
-        // We don't care about the items stored inside if we're not destroying the container
-        if (args.Cancelled || !args.Destroy)
+        if (args.Cancelled)
             return;
 
         if (!ent.Comp.Container.ContainedEntities.Any())
             return;
 
         args.Cancelled = true;
-        // TODO: Need a get nouns/verbs method
-        _popup.PopupClient(Loc.GetString("food-has-used-storage", ("food", ent)), args.User, args.User);
+
+        _popup.PopupClient(Loc.GetString("edible-has-used-storage", ("food", ent), ("verb", GetEdibleVerb(ent))), args.User, args.User);
     }
 
     private void OnItemSlotsEdible(Entity<ItemSlotsComponent> ent, ref EdibleEvent args)
     {
-        // We don't care about the items stored inside if we're not destroying the container
-        if (args.Cancelled || !args.Destroy)
+        if (args.Cancelled)
             return;
 
         if (!ent.Comp.Slots.Any(slot => slot.Value.HasItem))
             return;
 
         args.Cancelled = true;
-        // TODO: Need a get nouns/verbs method
-        _popup.PopupClient(Loc.GetString("food-has-used-storage", ("food", ent)), args.User, args.User);
+
+        _popup.PopupClient(Loc.GetString("edible-has-used-storage", ("food", ent), ("verb", GetEdibleVerb(ent))), args.User, args.User);
     }
 
     private void OnOpenableEdible(Entity<OpenableComponent> ent, ref EdibleEvent args)
@@ -119,21 +119,17 @@ public sealed partial class IngestionSystem
 
     private void OnEdibleIsDigestible(Entity<EdibleComponent> ent, ref IsDigestibleEvent args)
     {
+        // This is a super hacky solution in place of having a proper component that declares something as being
+        // a solution of purely drinkable reagents with nothing to stop us. Is it drainable? Probably not!
+        if (ent.Comp.EdibleType == EdibleType.Drink)
+        {
+            args.UniversalDigestion();
+            return;
+        }
+
         if (ent.Comp.RequireDead && _mobState.IsAlive(ent))
             return;
 
         args.AddDigestible(ent.Comp.RequiresSpecialDigestion);
-    }
-
-    private void OnDrainableIsDigestible(Entity<DrainableSolutionComponent> ent, ref IsDigestibleEvent args)
-    {
-        // If the solution is drainable we should be able to access the reagents directly...
-        args.UniversalDigestion();
-    }
-
-    private void OnPuddleIsDigestible(Entity<PuddleComponent> ent, ref IsDigestibleEvent args)
-    {
-        // Anyone can drink from puddles on the floor!
-        args.UniversalDigestion();
     }
 }

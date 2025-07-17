@@ -16,6 +16,7 @@
     canChangeTransferAmount: true
   - type: Edible
     useSound: /Audio/Items/drink.ogg
+    message: edible-slurp
     solution: drink
     destroyOnEmpty: false
     edibleType: drink
