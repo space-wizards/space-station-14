@@ -53,3 +53,80 @@
   sprites:
   - sprite: Mobs/Customization/vox_tattoos.rsi
     state: nightling_s
+
+- type: marking
+  id: TattooVoxTailRing
+  bodyPart: Tail
+  markingCategory: Overlay
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: tail_ring
+
+- type: marking
+  id: TattooEyeVoxRight
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: tattoo_eye_vox_r
+
+- type: marking
+  id: TattooEyeVoxLeft
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: tattoo_eye_vox_l
+
+- type: marking
+  id: TattooEyeshadowVoxSmall
+  # there are a lot of deliberate limitations with this marking that should be pointed out. some of them may seem overly restrictive on the surface, but most of them are fully intentional.
+  # this marking is meant to be supplementary so they are transparent. if you give this 255 alpha it will probably be really distracting looking and make the face very difficult to read
+  # the reason these are also not recolorable is because allowing for the full RGB range makes these look not very good (especially considering they are stackable, and ESPECIALLY considering vox can stack 3 at once.)
+  # this is not a very big issue on humans, but is much more pronounced on vox & other nonhuman species, where the skin being more colorful can make for some truly dreadful meshing with the sprite thats definitely not desired.
+  # some of these limitations could possibly be removed with better control over how the marking can be customized - possibly removing stacking, allowing recoloring & clamping higher-end colors for the eyeshadow, etc.
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Vox]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: eyeshadow_small
+
+- type: marking
+  id: TattooEyeshadowVoxMedium
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Vox]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: eyeshadow_medium
+
+- type: marking
+  id: TattooEyeshadowVoxLarge
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Vox]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: eyeshadow_large
