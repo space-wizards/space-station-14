@@ -9401,5 +9401,64 @@ Entries:
   id: 1295
   time: '2025-07-15T14:02:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/987
+- author: RoadTrain
+  changes:
+  - message: Added a plushie of Vanilla Snow (no default spawn for now as I honest
+      to god wouldn't know how to do that)
+    type: Add
+  id: 1296
+  time: '2025-07-16T19:14:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1043
+- author: RoadTrain
+  changes:
+  - message: Amali's plushie now makes human noises
+    type: Tweak
+  id: 1297
+  time: '2025-07-16T19:14:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1043
+- author: RoadTrain
+  changes:
+  - message: Lowered oog-man plushie count in the hug dispenser to 1, to line up with
+      the others.
+    type: Tweak
+  id: 1298
+  time: '2025-07-16T19:14:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1043
+- author: RoadTrain
+  changes:
+  - message: Round morgana now has voice lines.
+    type: Fix
+  id: 1299
+  time: '2025-07-16T19:14:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1043
+- author: beck-thompson
+  changes:
+  - message: Duplicate light action on justice helmet removed.
+    type: Remove
+  id: 1300
+  time: '2025-07-16T19:54:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1040
+- author: beck-thompson
+  changes:
+  - message: Fixed error sprite states for justice helmet.
+    type: Fix
+  id: 1301
+  time: '2025-07-16T19:54:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1040
+- author: beck-thompson
+  changes:
+  - message: Fixed mentor button styling.
+    type: Fix
+  id: 1302
+  time: '2025-07-16T20:05:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1039
+- author: stickycheZ101
+  changes:
+  - message: given the QM some phresh drip (QM’s luxury maxim hardsuit has been added,
+      and added to RS QM lockers)
+    type: Add
+  id: 1303
+  time: '2025-07-16T20:17:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1033
 Order: -1
 
