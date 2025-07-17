@@ -50,7 +50,7 @@ public sealed class ConstantsTest
 
                 var gasReactionProtos = protoManager.EnumeratePrototypes<GasReactionPrototype>().ToList();
                 foreach (var gasReaction in gasReactionProtos)
-                    Assert.That(gasReaction.MinimumRequirements.Length, Is.InRange(0, Atmospherics.TotalNumberOfGases - 1), $"GasReactionPrototype {gasReaction.ID} has an array of minimum gas requirements with length exceeding TotalNumberOfGases.");
+                    Assert.That(gasReaction.MinimumRequirements.Length, Is.InRange(0, Atmospherics.TotalNumberOfGases), $"GasReactionPrototype {gasReaction.ID} has an array of minimum gas requirements with length exceeding TotalNumberOfGases.");
             });
         });
         await pair.CleanReturnAsync();
