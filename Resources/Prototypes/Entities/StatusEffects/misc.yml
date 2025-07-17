@@ -20,6 +20,7 @@
       - MobState
 
 # Things that should be removed by rejuvenation should parent to this
+# Also blocks the status effect being added to godmode-ed entities.
 - type: entity
   parent: MobStatusEffectBase
   id: MobStatusEffectDebuff
