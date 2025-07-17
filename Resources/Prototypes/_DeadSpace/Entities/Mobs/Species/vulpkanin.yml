@@ -4,8 +4,8 @@
   abstract: true
   components:
   - type: Icon
-    sprite: Mobs/Species/Vulpkanin/parts.rsi
-    state: vulpkanin_m
+    sprite: _ADT/Mobs/Species/Vulpkanin/parts.rsi
+    state: full
   - type: HumanoidAppearance
     species: Vulpkanin
     hideLayersOnEquip:

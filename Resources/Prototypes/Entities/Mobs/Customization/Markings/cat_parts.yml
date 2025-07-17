@@ -3,7 +3,7 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Human, Dwarf]
-  sponsorOnly: true # Corvax-Sponsors
+  sponsorOnly: true
   coloring:
     default:
       type:
@@ -27,7 +27,7 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Human, Dwarf]
-  sponsorOnly: true # Corvax-Sponsors
+  sponsorOnly: true
   coloring:
     default:
       type:
@@ -39,4 +39,4 @@
         - !type:SkinColoring
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
-    state: tail_cat_wag # Corvax-Sponsors
+    state: tail_cat_wag

@@ -293,34 +293,34 @@
 
 # Markings
 
-- type: marking
-  id: BandagedEyeRightswitzerlaand
-  bodyPart: Head
-  markingCategory: Head
-  sponsorOnly: true
-  sprites:
-  - sprite: _DeadSpace/Sponsor/switzerlaand/markings.rsi
-    state: bandaged_R_eye
+# - type: marking
+#   id: BandagedEyeRightswitzerlaand
+#   bodyPart: Head
+#   markingCategory: Head
+#   sponsorOnly: true
+#   sprites:
+#   - sprite: _DeadSpace/Sponsor/switzerlaand/markings.rsi
+#     state: bandaged_R_eye
 
-- type: marking
-  id: BandagedEyeLeftswitzerlaand
-  bodyPart: Head
-  markingCategory: Head
-  sponsorOnly: true
-  sprites:
-  - sprite: _DeadSpace/Sponsor/switzerlaand/markings.rsi
-    state: bandaged_L_eye
+# - type: marking
+#   id: BandagedEyeLeftswitzerlaand
+#   bodyPart: Head
+#   markingCategory: Head
+#   sponsorOnly: true
+#   sprites:
+#   - sprite: _DeadSpace/Sponsor/switzerlaand/markings.rsi
+#     state: bandaged_L_eye
 
-- type: marking
-  id: switzerlaandTail
-  bodyPart: Tail
-  markingCategory: Tail
-  sponsorOnly: true
-  sprites:
-  - sprite: _DeadSpace/Sponsor/switzerlaand/markings.rsi
-    state: kitsune_primary
-  - sprite: _DeadSpace/Sponsor/switzerlaand/markings.rsi
-    state: kitsune_secondary
+# - type: marking
+#   id: switzerlaandTail
+#   bodyPart: Tail
+#   markingCategory: Tail
+#   sponsorOnly: true
+#   sprites:
+#   - sprite: _DeadSpace/Sponsor/switzerlaand/markings.rsi
+#     state: kitsune_primary
+#   - sprite: _DeadSpace/Sponsor/switzerlaand/markings.rsi
+#     state: kitsune_secondary
 
 - type: entity
   parent: PaperPrintedCentcomm

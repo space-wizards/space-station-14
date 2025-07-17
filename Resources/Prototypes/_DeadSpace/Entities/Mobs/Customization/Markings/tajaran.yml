@@ -36,7 +36,7 @@
 
 - type: marking
   id: BodyStripes
-  bodyPart: Chest
+  bodyPart: RFoot
   markingCategory: Overlay
   speciesRestriction: [Tajaran]
   sprites:
@@ -45,7 +45,7 @@
 
 - type: marking
   id: BodyBlots
-  bodyPart: Chest
+  bodyPart: RFoot
   markingCategory: Overlay
   speciesRestriction: [Tajaran]
   sprites:
@@ -54,7 +54,7 @@
 
 - type: marking
   id: patch2
-  bodyPart: [ Chest, RLeg, LLeg ]
+  bodyPart: RFoot
   markingCategory: Overlay
   speciesRestriction: [Tajaran]
   sprites:
@@ -63,7 +63,7 @@
 
 - type: marking
   id: BodySkeleton
-  bodyPart: Chest
+  bodyPart: RFoot
   markingCategory: Overlay
   speciesRestriction: [Tajaran]
   sprites:
@@ -72,7 +72,7 @@
 
 - type: marking
   id: arm1
-  bodyPart: LLeg
+  bodyPart: RFoot
   markingCategory: Overlay
   speciesRestriction: [Tajaran]
   sprites:
@@ -202,7 +202,7 @@
   markingCategory: Tail
   speciesRestriction: [Tajaran]
   sprites:
-    - sprite: Mobs/Species/CatSkin/parts.rsi
+    - sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
       state: tail_m
 
 - type: marking

@@ -85,8 +85,8 @@
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
       - map: [ "underwearb" ] # Sirena-Underwear
       - map: [ "underweart" ] # Sirena-Underwear
-      - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
-      - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
+      # - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
+      # - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
       # - map: [ "jumpsuit" ]
       - map: [ "enum.HumanoidVisualLayers.LHand" ]
       - map: [ "enum.HumanoidVisualLayers.RHand" ]

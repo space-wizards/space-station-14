@@ -20,7 +20,7 @@
   parent: [PartShark, BaseTorso]
   components:
   - type: Sprite
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: "torso_m"
   - type: Extractable
     juiceSolution:
@@ -36,7 +36,7 @@
   parent: [PartShark, BaseHead]
   components:
   - type: Sprite
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: "head_m"
   - type: Extractable
     juiceSolution:
@@ -52,7 +52,7 @@
   parent: [PartShark, BaseLeftArm]
   components:
   - type: Sprite
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: "l_arm"
 
 - type: entity
@@ -61,7 +61,7 @@
   parent: [PartShark, BaseRightArm]
   components:
   - type: Sprite
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: "r_arm"
 
 - type: entity
@@ -70,7 +70,7 @@
   parent: [PartShark, BaseLeftHand]
   components:
   - type: Sprite
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: "l_hand"
 
 - type: entity
@@ -79,7 +79,7 @@
   parent: [PartShark, BaseRightHand]
   components:
   - type: Sprite
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: "r_hand"
 
 - type: entity
@@ -88,7 +88,7 @@
   parent: [PartShark, BaseTail]
   components:
   - type: Sprite
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: "tail_m"
 
 - type: entity
@@ -97,7 +97,7 @@
   parent: [PartShark, BaseLeftLeg]
   components:
   - type: Sprite
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: "l_leg"
 
 - type: entity
@@ -106,7 +106,7 @@
   parent: [PartShark, BaseRightLeg]
   components:
   - type: Sprite
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: "r_leg"
 
 - type: entity
@@ -115,7 +115,7 @@
   parent: [PartShark, BaseLeftFoot]
   components:
   - type: Sprite
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: "l_foot"
 
 - type: entity
@@ -124,5 +124,5 @@
   parent: [PartShark, BaseRightFoot]
   components:
   - type: Sprite
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: "r_foot"

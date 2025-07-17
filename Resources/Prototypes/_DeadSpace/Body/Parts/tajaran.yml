@@ -20,7 +20,7 @@
   parent: [PartTajaran, BaseTorso]
   components:
   - type: Sprite
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: "torso_m"
   - type: Extractable
     juiceSolution:
@@ -36,7 +36,7 @@
   parent: [PartTajaran, BaseHead]
   components:
   - type: Sprite
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: "head_m"
   - type: Extractable
     juiceSolution:
@@ -52,7 +52,7 @@
   parent: [PartTajaran, BaseLeftArm]
   components:
   - type: Sprite
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: "l_arm"
 
 - type: entity
@@ -61,7 +61,7 @@
   parent: [PartTajaran, BaseRightArm]
   components:
   - type: Sprite
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: "r_arm"
 
 - type: entity
@@ -70,7 +70,7 @@
   parent: [PartTajaran, BaseLeftHand]
   components:
   - type: Sprite
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: "l_hand"
 
 - type: entity
@@ -79,7 +79,7 @@
   parent: [PartTajaran, BaseRightHand]
   components:
   - type: Sprite
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: "r_hand"
 
 - type: entity
@@ -88,7 +88,7 @@
   parent: [PartTajaran, BaseTail]
   components:
   - type: Sprite
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: "tail_m"
 
 - type: entity
@@ -97,7 +97,7 @@
   parent: [PartTajaran, BaseLeftLeg]
   components:
   - type: Sprite
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: "l_leg"
 
 - type: entity
@@ -106,7 +106,7 @@
   parent: [PartTajaran, BaseRightLeg]
   components:
   - type: Sprite
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: "r_leg"
 
 - type: entity
@@ -115,7 +115,7 @@
   parent: [PartTajaran, BaseLeftFoot]
   components:
   - type: Sprite
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: "l_foot"
 
 - type: entity
@@ -124,5 +124,5 @@
   parent: [PartTajaran, BaseRightFoot]
   components:
   - type: Sprite
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: "r_foot"

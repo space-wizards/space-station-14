@@ -4,7 +4,7 @@
   markingCategory: Tail
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: demon_tail
 
 - type: marking
@@ -13,7 +13,7 @@
   markingCategory: Tail
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: long
 
 - type: marking
@@ -22,7 +22,7 @@
   markingCategory: Tail
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: up
 
 - type: marking
@@ -31,7 +31,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: cow_ears
 
 - type: marking
@@ -40,7 +40,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: demon_ears
 
 - type: marking
@@ -49,7 +49,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: cow_horns
 
 - type: marking
@@ -58,7 +58,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: deer_antlers_horns
 
 - type: marking
@@ -67,7 +67,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: small_horns
 
 - type: marking
@@ -76,7 +76,7 @@
   markingCategory: Chest
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: cow_spots
 
 - type: marking
@@ -85,7 +85,7 @@
   markingCategory: Chest
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: guards_stripes
 
 - type: marking
@@ -94,7 +94,7 @@
   markingCategory: Chest
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: lines_emperos
 
 - type: marking
@@ -103,7 +103,7 @@
   markingCategory: Chest
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: queen_lines
 
 - type: marking
@@ -112,7 +112,7 @@
   markingCategory: Chest
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: tree_lines
 
 - type: marking
@@ -121,7 +121,7 @@
   markingCategory: Chest
   speciesRestriction: [Demon]
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: trinity_spots
 
 - type: marking
@@ -129,5 +129,5 @@
   bodyPart: FacialHair
   markingCategory: FacialHair
   sprites:
-  - sprite: _ADT/Mobs/Demon/custom.rsi
+  - sprite: _ADT/Mobs/Customization/demon.rsi
     state: goatee
