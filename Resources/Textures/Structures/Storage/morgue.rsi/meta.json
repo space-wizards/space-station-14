@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/31d88c7454e429a64fbae4a9f7b4aecaf838e9a1",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/31d88c7454e429a64fbae4a9f7b4aecaf838e9a1, paper bounty captains_paper and invoice by mutemaid (discord) for Space Station 14 server Мёртвый Космос",
   "size": {
     "x": 32,
     "y": 32
@@ -49,6 +49,22 @@
     },
     {
       "name": "morgue_tray",
+      "directions": 4
+    },
+    {
+      "name": "paper",
+      "directions": 4
+    },
+    {
+      "name": "bounty",
+      "directions": 4
+    },
+    {
+      "name": "captains_paper",
+      "directions": 4
+    },
+    {
+      "name": "invoice",
       "directions": 4
     }
   ]
