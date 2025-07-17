@@ -9499,5 +9499,13 @@ Entries:
   id: 1308
   time: '2025-07-17T15:37:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1014
+- author: IamSidzilla
+  changes:
+  - message: 7 new job icons. Specially made for the Syndicate, accessible though
+      your Agent ID. Glory to the Syndicate.
+    type: Add
+  id: 1309
+  time: '2025-07-17T15:49:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1010
 Order: -1
 
