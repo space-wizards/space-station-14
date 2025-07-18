@@ -1,8 +1,8 @@
-name-identifier-prefix-monkey = MK
-name-identifier-prefix-kobold = KB
-name-identifier-prefix-holoparasite = HOLO
-name-identifier-prefix-mmi = MMI
-name-identifier-prefix-positronic-brain = PB
-name-identifier-prefix-silicon = Si
-name-identifier-prefix-station-ai = AI
-name-identifier-prefix-telepad = TELE
+name-identifier-prefix-monkey = MK-{$number}
+name-identifier-prefix-kobold = KB-{$number}
+name-identifier-prefix-holoparasite = HOLO-{$number}
+name-identifier-prefix-mmi = MMI-{$number}
+name-identifier-prefix-positronic-brain = PB-{$number}
+name-identifier-prefix-silicon = Si-{$number}
+name-identifier-prefix-station-ai = AI-{$number}
+name-identifier-prefix-telepad = TELE-{$number}
