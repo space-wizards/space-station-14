@@ -242,13 +242,24 @@ public sealed partial class IngestionSystem : EntitySystem
     private void OnTryIngest(Entity<BodyComponent> entity, ref AttemptIngestEvent args)
     {
         var food = args.Ingested;
+        var forceFed = args.User != entity.Owner;
 
         if (!_body.TryGetBodyOrganEntityComps<StomachComponent>(entity!, out var stomachs))
             return;
 
         // Can we digest the specific item we're trying to eat?
         if (!IsDigestibleBy(args.Ingested, stomachs))
+        {
+            if (forceFed)
+            {
+                _popup.PopupClient(Loc.GetString("ingestion-cant-digest-other", ("target", entity), ("entity", food)), entity, args.User);
+            }
+            else
+                _popup.PopupClient(Loc.GetString("ingestion-cant-digest", ("entity", food)), entity, entity);
+
             return;
+        }
+
 
         // Exit early if we're just trying to get verbs
         if (!args.Ingest)
@@ -267,7 +278,7 @@ public sealed partial class IngestionSystem : EntitySystem
         args.Handled = true;
         var foodSolution = solution.Value.Comp.Solution;
 
-        if (args.User != entity.Owner)
+        if (forceFed)
         {
             var userName = Identity.Entity(args.User, EntityManager);
             _popup.PopupEntity(Loc.GetString("edible-force-feed", ("user", userName), ("verb", GetEdibleVerb(food))), args.User, entity);
@@ -326,9 +337,10 @@ public sealed partial class IngestionSystem : EntitySystem
         {
             // Very long
             _popup.PopupClient(Loc.GetString("ingestion-you-cannot-ingest-any-more", ("verb", GetEdibleVerb(food))), entity, entity);
-            if (forceFed)
-                _popup.PopupClient(Loc.GetString("ingestion-other-cannot-ingest-any-more", ("target", entity), ("verb", GetEdibleVerb(food))),  args.Target.Value, args.User);
+            if (!forceFed)
+                return;
 
+            _popup.PopupClient(Loc.GetString("ingestion-other-cannot-ingest-any-more", ("target", entity), ("verb", GetEdibleVerb(food))),  args.Target.Value, args.User);
             return;
         }
 
@@ -339,9 +351,10 @@ public sealed partial class IngestionSystem : EntitySystem
         {
             // Very long x2
             _popup.PopupClient(Loc.GetString("ingestion-you-cannot-ingest-any-more", ("verb", GetEdibleVerb(food))), entity, entity);
-            if (forceFed)
-                _popup.PopupClient(Loc.GetString("ingestion-other-cannot-ingest-any-more", ("target", entity), ("verb", GetEdibleVerb(food))),  args.Target.Value, args.User);
+            if (!forceFed)
+                return;
 
+            _popup.PopupClient(Loc.GetString("ingestion-other-cannot-ingest-any-more", ("target", entity), ("verb", GetEdibleVerb(food))),  args.Target.Value, args.User);
             return;
         }
 
