@@ -5,7 +5,6 @@
 ## When trying to ingest without the required utensil... but you gotta hold it
 ingestion-you-need-to-hold-utensil = You need to be holding {INDEFINITE($utensil)} {$utensil} to eat that!
 
-ingestion-try-use-not-open = Open {$owner} first!
 ingestion-try-use-is-empty = {CAPITALIZE(THE($entity))} is empty!
 ingestion-try-use-wrong-utensil = You can't {$verb} {THE($food)} with {INDEFINITE($utensil)} {$utensil}.
 

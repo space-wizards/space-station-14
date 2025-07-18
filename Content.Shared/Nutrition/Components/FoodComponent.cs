@@ -53,7 +53,7 @@ public sealed partial class FoodComponent : Component
     /// The localization identifier for the eat message. Needs a "food" entity argument passed to it.
     /// </summary>
     [DataField]
-    public LocId EatMessage = "food-nom";
+    public LocId EatMessage = "edible-nom";
 
     /// <summary>
     /// How long it takes to eat the food personally.
