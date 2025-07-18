@@ -92,7 +92,7 @@ public sealed class SlidingSystem : EntitySystem
     /// </summary>
     private bool CalculateSlidingModifier(Entity<SlidingComponent, PhysicsComponent?> entity, EntityUid? ignore = null)
     {
-        if (!Resolve(entity, ref entity.Comp2))
+        if (!Resolve(entity, ref entity.Comp2, false))
             return false;
 
         var friction = 0.0f;
