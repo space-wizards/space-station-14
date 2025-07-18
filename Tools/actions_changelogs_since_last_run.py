@@ -173,6 +173,7 @@ def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> lis
     message_lines = []
 
     for contributor_name, group in itertools.groupby(entries, lambda x: x["author"]):
+        message_lines.append("\n")
         message_lines.append(f"**{contributor_name}** updated:\n")
 
         for entry in group:
@@ -189,7 +190,8 @@ def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> lis
                     message = message[: DISCORD_SPLIT_LIMIT - 100].rstrip() + " [...]"
 
                 if url is not None:
-                    line = f"{emoji} - {message} [PR]({url}) \n"
+                    pr_number = url.split("/")[-1]
+                    line = f"{emoji} - {message} ([#{pr_number}]({url}))\n"
                 else:
                     line = f"{emoji} - {message}\n"
 
