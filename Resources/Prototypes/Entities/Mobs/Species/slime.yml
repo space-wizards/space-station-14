@@ -52,14 +52,15 @@
     damageContainer: Biological
     damageModifierSet: Slime
   - type: PassiveDamage # Around 8 damage a minute healed
-    allowedStates:
-    - Alive
-    damageCap: 65
-    damage:
-      types:
-        Heat: -0.14
-      groups:
-        Brute: -0.14
+    passiveDamageList:
+    - allowedStates:
+      - Alive
+      damageCap: 65
+      damage:
+        types:
+          Heat: -0.14
+        groups:
+          Brute: -0.14
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
