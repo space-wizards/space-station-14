@@ -53,6 +53,32 @@
       entity: SoapHomemade
 
 - type: reaction
+  id: CreateRegularSoap
+  quantized: true
+  reactants:
+    SoapReagent:
+      amount: 45
+    TableSalt:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: Soap
+
+- type: reaction
+  id: CreateNTSoap
+  quantized: true
+  reactants:
+    SoapReagent:
+      amount: 90
+    TableSalt:
+      amount: 5
+    Plasma:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapNT
+
+- type: reaction
   id: Meatification
   impact: Low
   quantized: true
