@@ -240,6 +240,9 @@ namespace Content.Shared.Atmos
 
         public const float TritiumBurnOxyFactor = 100f;
         public const float TritiumBurnTritFactor = 10f;
+        public const float TritiumRadiationFactor = 5600f;
+        public const float TritiumMinimumEnergyForRadiation = 18000f;
+        public const float MaxTritiumRadiation = 8.5f;
 
         public const float FrezonCoolLowerTemperature = 23.15f;
 

@@ -6,6 +6,8 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Maps;
+using Content.Shared.Radiation.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -149,8 +151,62 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
-    ///     Proxy method for spawning an entity at a position.
+    ///     If the provided mixture has a reaction entity corresponding
+    ///     to the <paramref name="key"/>, returns that. Otherwise,
+    ///     returns a newly spawned entity as the given
+    ///     <paramref name="protoId"/>, attached to the given
+    ///     <paramref name="coordinates"/>, and sets the mixture's
+    ///     <see cref="GasMixture.ReactionEntities"/> accordingly.
     /// </summary>
-    public EntityUid ProxySpawnEntityAtPosition(EntProtoId protoId, EntityCoordinates coordinates)
-        => SpawnAtPosition(protoId, coordinates);
+    /// <remarks>
+    ///     <see cref="GasMixture.ReactionEntities"/> must have an index
+    ///     for the provided key.
+    /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public EntityUid EnsureMixtureEntity(GasMixture mixture, byte key, EntProtoId protoId, EntityCoordinates coordinates)
+    {
+        ref EntityUid? entityElement = ref mixture.ReactionEntities[key];
+        if (entityElement is { } keyEntity && Exists(keyEntity))
+            return keyEntity;
+
+        var entity = Spawn(protoId, coordinates);
+        entityElement = entity;
+
+        return entity;
+    }
+
+    /// <summary>
+    ///     Set's the lifetime of an entity's <see cref="TimedDespawnComponent"/>,
+    ///     if it exists, to <paramref name="newLifetime"/>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void RefreshEntityTimedDespawn(EntityUid uid, float newLifetime)
+    {
+        if (TryComp<TimedDespawnComponent>(uid, out var timedDespawnComponent))
+            timedDespawnComponent.Lifetime = newLifetime;
+    }
+
+    /// <summary>
+    ///     Sets the radiation intensity and color of an entity if
+    ///     it has the required <see cref="RadiationSourceComponent"/>
+    ///     and <see cref="PointLightComponent"/>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void AdjustRadiationPulse(EntityUid uid, float radiationIntensity, Color color, float lightEnergy)
+    {
+        if (TryComp<RadiationSourceComponent>(uid, out var radiationSourceComponent))
+            radiationSourceComponent.Intensity = radiationIntensity;
+
+        if (TryComp<PointLightComponent>(uid, out var pointLightComponent))
+        {
+            var visible = lightEnergy > 0.1f;
+
+            _pointLightSystem.SetEnabled(uid, visible, pointLightComponent);
+            if (!visible)
+                return;
+
+            _pointLightSystem.SetColor(uid, color, pointLightComponent);
+            _pointLightSystem.SetEnergy(uid, lightEnergy, pointLightComponent);
+        }
+    }
 }

@@ -10,11 +10,23 @@ namespace Content.Server.Atmos.Reactions
     [DataDefinition]
     public sealed partial class TritiumFireReaction : IGasReactionEffect
     {
-        // We can't yaml-ize this but whatever.
         private static readonly EntProtoId RadiationPulseProtoId = new("TritiumReactionRadiationPulse");
-        private static Color GetRadiationPulseColor()
+
+        private static readonly Color WeakestRadiationPulseColor = new Color(26, 77, 255);
+        private static readonly Color StrongestRadiationPulseColor = new Color(179, 26, 255);
+
+        // Well we don't have a method for this, so..
+        private static Color LerpColor(Color current, Color goal, float fraction)
         {
-            return Color.Aquamarine;
+            var aRGB = new Span<float>([current.R, current.G, current.B]);
+            var bRGB = new Span<float>([goal.R, goal.G, goal.B]);
+
+            NumericsHelpers.Sub(bRGB, aRGB);
+            NumericsHelpers.Multiply(bRGB, fraction);
+            NumericsHelpers.Add(bRGB, aRGB);
+
+            var c = aRGB.ToArray();
+            return new Color(c[0], c[1], c[2]);
         }
 
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale, EntityUid? holderUid)
@@ -48,10 +60,6 @@ namespace Content.Server.Atmos.Reactions
             {
                 energyReleased += (Atmospherics.FireHydrogenEnergyReleased * burnedFuel);
 
-                // TODO ATMOS Radiation pulse here!
-                if (atmosphereSystem.TryGetMixtureHolderCoordinates(holder, holderUid, out var holderCoordinates))
-                    atmosphereSystem.ProxySpawnEntityAtPosition(RadiationPulseProtoId, holderCoordinates);
-
                 // Conservation of mass is important.
                 mixture.AdjustMoles(Gas.WaterVapor, burnedFuel);
 
@@ -64,6 +72,29 @@ namespace Content.Server.Atmos.Reactions
                 var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
                 if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
                     mixture.Temperature = ((temperature * oldHeatCapacity + energyReleased) / newHeatCapacity);
+
+                // ATMOS Radiation pulse here!
+                if (energyReleased > Atmospherics.TritiumMinimumEnergyForRadiation &&
+                     atmosphereSystem.TryGetMixtureHolderCoordinates(holder, holderUid, out var holderCoordinates))
+                {
+                    var radiationEntity = atmosphereSystem.EnsureMixtureEntity(
+                        mixture,
+                        (byte)GasReactionEntity.TritiumRadiation,
+                        RadiationPulseProtoId,
+                        holderCoordinates.Value);
+
+                    atmosphereSystem.RefreshEntityTimedDespawn(radiationEntity, 2);
+
+                    var fullRadiation = (energyReleased + Atmospherics.TritiumMinimumEnergyForRadiation) / Atmospherics.TritiumRadiationFactor;
+                    var radiation = MathF.Min(Atmospherics.MaxTritiumRadiation, fullRadiation);
+
+                    // the light emitted from tritium-combustion is very, very loosely based off of cherenkov radiation (its because its blue)
+                    // tihs is to signal to people that "OH FUCK THERE'S TRIT HERE.."
+                    atmosphereSystem.AdjustRadiationPulse(radiationEntity,
+                        radiation,
+                        LerpColor(WeakestRadiationPulseColor, StrongestRadiationPulseColor, radiation / Atmospherics.MaxTritiumRadiation),
+                        fullRadiation / Atmospherics.MaxTritiumRadiation);
+                }
             }
 
             if (location != null)

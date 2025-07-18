@@ -12,3 +12,11 @@ public enum GasReaction : byte
 {
     Fire = 0,
 }
+
+/// <summary>
+///     Enum that corresponds to an entity that a GasMixture may hold.
+/// </summary>
+public enum GasReactionEntity : byte
+{
+    TritiumRadiation = 0,
+}

@@ -39,6 +39,12 @@ namespace Content.Shared.Atmos
         };
 
         [ViewVariables]
+        public readonly EntityUid?[] ReactionEntities =
+        {
+            null,
+        };
+
+        [ViewVariables]
         public float TotalMoles
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
