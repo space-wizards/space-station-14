@@ -105,7 +105,7 @@ public sealed class NameIdentifierSystem : EntitySystem
         {
             id = ent.Comp.Identifier;
             uniqueName = group.Prefix is not null
-                ? Loc.GetString(group.Prefix, ("number", randomVal))
+                ? Loc.GetString(group.Prefix, ("number", id))
                 : $"{id}";
         }
         else
