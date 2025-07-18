@@ -55,7 +55,7 @@
   id: Lye
   name: reagent-name-lye
   desc: reagent-desc-lye
-  flavor: flavor-base-alkaline
+  flavor: alkaline
   physicalDesc: reagent-physical-desc-alkaline
   color: "#ce5519"
   metabolisms:
