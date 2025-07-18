@@ -6,6 +6,7 @@ using Content.Shared.Audio;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
@@ -14,16 +15,18 @@ namespace Content.IntegrationTests.Tests.Audio;
 public sealed class StereoTest
 {
     /// <summary>
-    /// Scans all registered component types for <see cref="SoundSpecifier"/> fields, then inspects
-    /// every <see cref="EntityPrototype"/> to make sure that the files assigned to those fields
+    /// Scans all registered component and prototype types for <see cref="SoundSpecifier"/> fields, then inspects
+    /// every <see cref="EntityPrototype"/> and <see cref="IPrototype"/> instance to make sure that the files assigned to those fields
     /// are in mono format. Fields marked with <see cref="AllowStereoAttribute"/> are exempt from this check.
     /// </summary>
     [Test]
-    public async Task CheckComponentSoundSpecifiers()
+    public async Task TestSoundSpecifiers()
     {
         await using var pair = await PoolManager.GetServerClient();
+
         var server = pair.Server;
         var protoMan = server.ProtoMan;
+        var reflectionMan = server.Resolve<IReflectionManager>();
         var compFactory = server.EntMan.ComponentFactory;
 
         var client = pair.Client;
@@ -31,196 +34,130 @@ public sealed class StereoTest
 
         await client.WaitAssertion(() =>
         {
-            Assert.Multiple(() =>
+            // Find all data definition types that may contain SoundSpecifiers.
+            // We get some false positives, but it's not a big deal.
+            var dataDefinitionTypes = reflectionMan.FindTypesWithAttribute<DataDefinitionAttribute>();
+            var dataDefinitions = GetRelevantFields(dataDefinitionTypes);
+
+            // Scan all prototype types for SoundSpecifier and DataDefinition fields
+            var prototypeFields = GetRelevantFields(protoMan.EnumeratePrototypeKinds());
+
+            // Iterate over the flagged prototype types
+            foreach (var (kind, fields) in prototypeFields)
             {
-                Dictionary<string, HashSet<FieldInfo>> soundSpecifierFields = [];
-                foreach (var componentType in compFactory.AllRegisteredTypes)
+                // Inspect all prototype instances of the type
+                foreach (var proto in protoMan.EnumeratePrototypes(kind))
                 {
-                    var componentName = compFactory.GetComponentName(componentType);
-                    foreach (var field in componentType.GetFields())
+                    // Check each flagged field
+                    foreach (var field in fields)
                     {
-                        // If the field has the [AllowStereo] attribute, we can ignore it
-                        if (field.HasCustomAttribute<AllowStereoAttribute>())
+                        // Skip if null
+                        if (field.GetValue(proto) is not { } fieldValue)
                             continue;
 
-                        // Special handling for generic types
-                        if (field.FieldType.IsGenericType)
-                        {
-                            foreach (var typeArg in field.FieldType.GenericTypeArguments)
-                            {
-                                if (typeArg.IsAssignableTo(typeof(SoundSpecifier)))
-                                    soundSpecifierFields.GetOrNew(componentName).Add(field);
-                            }
-                            continue;
-                        }
-
-                        if (field.FieldType.HasCustomAttribute<DataDefinitionAttribute>())
-                        {
-                            foreach (var subField in field.FieldType.GetFields())
-                            {
-                                if (subField.FieldType.IsAssignableTo(typeof(SoundSpecifier)))
-                                    soundSpecifierFields.GetOrNew(componentName).Add(field);
-                            }
-                        }
-
-                        if (field.FieldType.IsAssignableTo(typeof(SoundSpecifier)))
-                            soundSpecifierFields.GetOrNew(componentName).Add(field);
+                        CheckValue(fieldValue, kind.Name, dataDefinitions, resCache, protoMan);
                     }
                 }
+            }
 
-                // Unlikely, but if no components have SoundSpecifier fields, we're done.
-                if (soundSpecifierFields.Count == 0)
-                    return;
-
-                foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
-                {
-                    foreach (var (componentName, fields) in soundSpecifierFields)
-                    {
-                        foreach (var (compName, compRegistryEntry) in proto.Components)
-                        {
-                            // Find the flagged component
-                            if (compName != componentName)
-                                continue;
-
-                            // Check the fields we flagged
-                            foreach (var field in fields)
-                            {
-                                if (field.GetValue(compRegistryEntry.Component) is not { } fieldValue)
-                                    continue;
-
-                                var datafieldName = $"{compName}.{field.Name}";
-                                CheckValue(fieldValue, datafieldName, resCache, protoMan);
-                            }
-                        }
-                    }
-                }
-            });
-        });
-
-        await pair.CleanReturnAsync();
-    }
-
-    /// <summary>
-    /// Scans every registered prototype kind for <see cref="SoundSpecifier"/> fields, then inspects
-    /// every instance of those prototype kinds to make sure that the files assigned to those fields
-    /// are in mono format. Fields marked with <see cref="AllowStereoAttribute"/> are exempt from this check.
-    /// </summary>
-    [Test]
-    public async Task CheckPrototypeSoundSpecifiers()
-    {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
-        var protoMan = server.ProtoMan;
-
-        var client = pair.Client;
-        var resCache = client.Resolve<IResourceCache>();
-
-        await client.WaitAssertion(() =>
-        {
-            Assert.Multiple(() =>
+            // Scan all component types for SoundSpecifiers and DataDefinition fields
+            var componentFields = GetRelevantFields(compFactory.AllRegisteredTypes);
+            // Inspect all EntityPrototypes
+            foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
             {
-                foreach (var type in protoMan.EnumeratePrototypeKinds())
+                // Iterate over the flagged Component types
+                foreach (var (comp, fields) in componentFields)
                 {
-                    // Identify any fields in this prototype kind that contain SoundSpecifiers
-                    List<FieldInfo> soundSpecifierFields = [];
-                    foreach (var field in type.GetFields())
-                    {
-                        // If the field has the [AllowStereo] attribute, we can ignore it
-                        if (field.HasCustomAttribute<AllowStereoAttribute>())
-                            continue;
-
-                        // Special handling for generic types
-                        if (field.FieldType.IsGenericType)
-                        {
-                            foreach (var typeArg in field.FieldType.GenericTypeArguments)
-                            {
-                                if (typeArg.IsAssignableTo(typeof(SoundSpecifier)))
-                                    soundSpecifierFields.Add(field);
-                            }
-                            continue;
-                        }
-
-                        if (field.FieldType.HasCustomAttribute<DataDefinitionAttribute>())
-                        {
-                            foreach (var subField in field.FieldType.GetFields())
-                            {
-                                if (subField.FieldType.IsAssignableTo(typeof(SoundSpecifier)))
-                                    soundSpecifierFields.Add(field);
-                            }
-                        }
-
-                        if (field.FieldType.IsAssignableTo(typeof(SoundSpecifier)))
-                            soundSpecifierFields.Add(field);
-                    }
-
-                    // No fields contain SoundSpecifiers, so we're done with this prototype kind
-                    if (soundSpecifierFields.Count == 0)
+                    // Get the registered name of the component type
+                    var compName = compFactory.GetComponentName(comp);
+                    // Get the component data from the prototype, if it has it
+                    if (!proto.Components.TryGetComponent(compName, out var component))
                         continue;
 
-                    // Inspect all instances of this prototype kind
-                    foreach (var proto in protoMan.EnumeratePrototypes(type))
+                    // Iterate over the flagged fields
+                    foreach (var field in fields)
                     {
-                        // Check the fields we flagged
-                        foreach (var field in soundSpecifierFields)
-                        {
-                            if (field.GetValue(proto) is not { } fieldValue)
-                                continue;
+                        // Skip if null
+                        if (field.GetValue(component) is not { } fieldValue)
+                            continue;
 
-                            var datafieldName = $"{type.Name}.{field.Name}";
-                            CheckValue(fieldValue, datafieldName, resCache, protoMan);
-                        }
+                        CheckValue(fieldValue, comp.Name, dataDefinitions, resCache, protoMan);
                     }
                 }
-            });
+            }
         });
 
         await pair.CleanReturnAsync();
     }
 
-    private static void CheckValue(object? value, string datafieldName, IResourceCache resCache, IPrototypeManager protoMan)
+    private static Dictionary<Type, List<FieldInfo>> GetRelevantFields(IEnumerable<Type> types)
     {
-        // Special handling for collection types
-        if (value is IDictionary dict)
+        Dictionary<Type, List<FieldInfo>> dict = [];
+        foreach (var type in types)
         {
-            foreach (var v in dict.Values)
+            // Inspect all fields
+            foreach (var field in type.GetFields())
             {
-                CheckValue(v, datafieldName, resCache, protoMan);
-            }
-            return;
-        }
-        if (value is IList list)
-        {
-            foreach (var v in list)
-            {
-                CheckValue(v, datafieldName, resCache, protoMan);
-            }
-            return;
-        }
-
-        // Make sure the test isn't missing any generic types
-        Assert.That(value?.GetType().IsGenericType, Is.Not.True,
-            $"Unhandled generic type containing SoundSpecifier: {value?.GetType()}");
-
-        if (value?.GetType().HasCustomAttribute<DataDefinitionAttribute>() == true)
-        {
-            foreach (var subField in value.GetType().GetFields())
-            {
-                if (!subField.FieldType.IsAssignableTo(typeof(SoundSpecifier)))
+                // Ignore the field if it has AllowStereo
+                if (field.HasCustomAttribute<AllowStereoAttribute>())
                     continue;
 
-                var subFieldValue = subField.GetValue(value);
-                CheckValue(subFieldValue, $"{datafieldName}.{subField.Name}", resCache, protoMan);
+                // No infinite recursion
+                if (field.FieldType == type)
+                    continue;
+
+                // Flag the field if it might be relevant
+                if (IsRelevantType(field.FieldType))
+                    dict.GetOrNew(type).Add(field);
             }
         }
 
-        // Single, non-collection value
-        CheckSpecifier(value, datafieldName, resCache, protoMan);
+        return dict;
     }
 
-    private static void CheckSpecifier(object specifier, string datafieldName, IResourceCache resCache, IPrototypeManager protoMan)
+    private static void CheckValue(object value, string path, Dictionary<Type, List<FieldInfo>> dataDefs, IResourceCache resCache, IPrototypeManager protoMan)
+    {
+        if (value is SoundSpecifier soundSpecifier)
+        {
+            // Huzzah, we found a SoundSpecifier! Let's make sure it's mono
+            CheckSpecifier(soundSpecifier, path, resCache, protoMan);
+        }
+        else if (value is IList list)
+        {
+            // Recursively check each element of the list
+            foreach (var element in list)
+            {
+                CheckValue(element, path, dataDefs, resCache, protoMan);
+            }
+        }
+        else if (value is IDictionary dictionary)
+        {
+            // Recursively check each value in the dictionary
+            foreach (var v in dictionary.Values)
+            {
+                CheckValue(v, $"{path}.Value", dataDefs, resCache, protoMan);
+            }
+        }
+        else if (dataDefs.TryGetValue(value.GetType(), out var dataDefFields))
+        {
+            // The field contains a potentially-relevant DataDefinition type
+            // Recursively check any flagged fields for this type
+            foreach (var field in dataDefFields)
+            {
+                // Ignore null
+                if (field.GetValue(value) is not { } fieldValue)
+                    continue;
+
+                CheckValue(fieldValue, $"{path}.{field.Name}", dataDefs, resCache, protoMan);
+            }
+        }
+    }
+
+    private static void CheckSpecifier(SoundSpecifier specifier, string datafieldName, IResourceCache resCache, IPrototypeManager protoMan)
     {
         if (specifier is SoundPathSpecifier pathSpecifier)
         {
+            // Validate single file
             ValidateFromPath(pathSpecifier.Path, datafieldName, resCache);
         }
         else if (specifier is SoundCollectionSpecifier collectionSpecifier)
@@ -228,6 +165,7 @@ public sealed class StereoTest
             if (collectionSpecifier.Collection is not { } collection)
                 return;
 
+            // Validate all possible files
             var collectionPrototype = protoMan.Index<SoundCollectionPrototype>(collection);
             foreach (var path in collectionPrototype.PickFiles)
             {
@@ -241,5 +179,40 @@ public sealed class StereoTest
         var audio = resCache.GetResource<AudioResource>(path);
         Assert.That(audio.AudioStream.ChannelCount, Is.EqualTo(1),
             $"{path} has multiple channels, but {datafieldName} only allows mono audio.");
+    }
+
+    private static bool IsRelevantType(Type type)
+    {
+        // Primitive types obviously are not and do not contain SoundSpecifiers
+        if (type.IsPrimitive)
+            return false;
+
+        // SoundSpecifiers are obviously relevant - that's why we're here!
+        if (type.IsAssignableTo(typeof(SoundSpecifier)))
+            return true;
+
+        if (type.IsGenericType)
+        {
+            if (type.IsAssignableTo(typeof(IList)))
+            {
+                // Recursively check the list element type
+                return IsRelevantType(type.GenericTypeArguments[0]);
+            }
+
+            if (type.IsAssignableTo(typeof(IDictionary)))
+            {
+                // Recursively check the dictionary value type
+                // Don't check the key type because it's probably not needed?
+                return IsRelevantType(type.GenericTypeArguments[1]);
+            }
+        }
+
+        // Assume any DataDefinition field is relevant
+        // There will be false positives, but we'll just skip them when checking values
+        if (type.HasCustomAttribute<DataDefinitionAttribute>())
+            return true;
+
+        // None of the above, so we don't care
+        return false;
     }
 }
