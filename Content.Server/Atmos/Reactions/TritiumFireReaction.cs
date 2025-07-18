@@ -89,7 +89,7 @@ namespace Content.Server.Atmos.Reactions
                     var radiation = MathF.Min(Atmospherics.MaxTritiumRadiation, fullRadiation);
 
                     // the light emitted from tritium-combustion is very, very loosely based off of cherenkov radiation (its because its blue)
-                    // tihs is to signal to people that "OH FUCK THERE'S TRIT HERE.."
+                    // tihs is to signal to people that "OH FUCK THERE'S ALOT OF RADS"
                     atmosphereSystem.AdjustRadiationPulse(radiationEntity,
                         radiation,
                         LerpColor(WeakestRadiationPulseColor, StrongestRadiationPulseColor, radiation / Atmospherics.MaxTritiumRadiation),
