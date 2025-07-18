@@ -20,10 +20,6 @@
   name: lathe-category-parts
 
 - type: latheCategory
-  id: Robotics
-  name: lathe-category-robotics
-
-- type: latheCategory
   id: Tiles
   name: lathe-category-tiles
 
@@ -106,10 +102,22 @@
   id: Wood
   name: lathe-category-wood
 
+- type: latheCategory
+  id: Marble
+  name: lathe-category-marble
+
 # Science
 - type: latheCategory
   id: Mech
   name: lathe-category-mechs
+
+- type: latheCategory
+  id: Modules
+  name: lathe-category-modules
+
+- type: latheCategory
+  id: Robotics
+  name: lathe-category-robotics
 
 # Security TechFab
 - type: latheCategory

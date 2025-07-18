@@ -38,13 +38,13 @@ public sealed class UtensilSystem : EntitySystem
 
     public (bool Success, bool Handled) TryUseUtensil(EntityUid user, EntityUid target, Entity<UtensilComponent> utensil)
     {
-        if (!EntityManager.TryGetComponent(target, out FoodComponent? food))
+        if (!TryComp(target, out FoodComponent? food))
             return (false, false);
 
         //Prevents food usage with a wrong utensil
         if ((food.Utensil & utensil.Comp.Types) == 0)
         {
-            _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", target), ("utensil", utensil.Owner)), user, user);
+            _popupSystem.PopupClient(Loc.GetString("food-system-wrong-utensil", ("food", target), ("utensil", utensil.Owner)), user, user);
             return (false, true);
         }
 
@@ -67,7 +67,7 @@ public sealed class UtensilSystem : EntitySystem
         if (_robustRandom.Prob(component.BreakChance))
         {
             _audio.PlayPredicted(component.BreakSound, userUid, userUid, AudioParams.Default.WithVolume(-2f));
-            EntityManager.DeleteEntity(uid);
+            Del(uid);
         }
     }
 }

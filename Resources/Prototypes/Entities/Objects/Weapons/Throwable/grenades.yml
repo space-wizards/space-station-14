@@ -38,6 +38,16 @@
   - type: Tag
     tags:
     - HandGrenade
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
 - type: entity
   name: explosive grenade
@@ -449,10 +459,11 @@
   - type: SmokeOnTrigger
     duration: 10
     spreadAmount: 30
+    smokePrototype: TearGasSmokeWhite
     solution:
       reagents:
       - ReagentId: TearGas
-        Quantity: 50
+        Quantity: 20
 
 - type: entity
   parent: [ BaseEngineeringContraband, SmokeGrenade ]
