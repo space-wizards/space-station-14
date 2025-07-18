@@ -118,7 +118,7 @@
 
 - type: roleLoadout
   id: JobSalvageLead
-  groups: # TODO - add custom groups to Resources/Prototypes/_StarLight/Loadouts/loadout_groups.yml, reference here
+  groups: # DOTS - add custom groups to Resources/Prototypes/_StarLight/Loadouts/loadout_groups.yml, reference here
     - GroupTankHarness
     - SalvageSpecialistBackpack
     - SalvageSpecialistOuterClothing
@@ -130,7 +130,7 @@
 
 - type: roleLoadout
   id: SalvageMedic
-  groups: # TODO - add custom groups to Resources/Prototypes/_StarLight/Loadouts/loadout_groups.yml, reference here
+  groups: # DOTS - add custom groups to Resources/Prototypes/_StarLight/Loadouts/loadout_groups.yml, reference here
     - GroupTankHarness
     - SalvageSpecialistBackpack
     - SalvageSpecialistOuterClothing
