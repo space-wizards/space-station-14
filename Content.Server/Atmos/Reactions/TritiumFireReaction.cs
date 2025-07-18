@@ -83,13 +83,14 @@ namespace Content.Server.Atmos.Reactions
                         RadiationPulseProtoId,
                         holderCoordinates.Value);
 
-                    atmosphereSystem.RefreshEntityTimedDespawn(radiationEntity, 2);
+                    atmosphereSystem.RefreshEntityTimedDespawn(radiationEntity);
 
                     var fullRadiation = (energyReleased + Atmospherics.TritiumMinimumEnergyForRadiation) / Atmospherics.TritiumRadiationFactor;
                     var radiation = MathF.Min(Atmospherics.MaxTritiumRadiation, fullRadiation);
 
-                    // the light emitted from tritium-combustion is very, very loosely based off of cherenkov radiation (its because its blue)
-                    // tihs is to signal to people that "OH FUCK THERE'S ALOT OF RADS"
+                    // The light emitted from tritium-combustion is very, very loosely based off of cherenkov radiation (its because its blue)
+                    // Although green would be more fitting for trit (as trit is green), it's harder to recognise when it's not as intense, compared to blue.
+                    // The light is to signal to people that "OH FUCK THERE'S ALOT OF RADS".
                     atmosphereSystem.AdjustRadiationPulse(radiationEntity,
                         radiation,
                         LerpColor(WeakestRadiationPulseColor, StrongestRadiationPulseColor, radiation / Atmospherics.MaxTritiumRadiation),

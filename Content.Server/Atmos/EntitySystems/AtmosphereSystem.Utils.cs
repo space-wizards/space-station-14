@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
 using Content.Server.Maps;
@@ -122,21 +123,22 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
-    ///     Possibly gets the coordinates of an optionally given <see cref="EntityUid">,
-    ///     and then an optionally given <see cref="IGasMixtureHolder"/>.
+    ///     Possibly gets the coordinates of an optionally given <see cref="EntityUid"/>,
+    ///     and then an optionally given <see cref="IGasMixtureHolder"/>. If the holder
+    ///     is an entity, then the resulting coordinates will be INSIDE of the entity.
     /// </summary>
     // Both args are nullable because this is exposed for use by reactions to get the position of the reaction.
     public bool TryGetMixtureHolderCoordinates(IGasMixtureHolder? holder, EntityUid? holderEntity, [NotNullWhen(true)] out EntityCoordinates? holderCoordinates)
     {
         if (holderEntity != null)
         {
-            holderCoordinates = Transform(holderEntity.Value).Coordinates;
+            holderCoordinates = new EntityCoordinates(holderEntity.Value, Vector2.Zero);
             return true;
         }
 
         if (holder is PipeNode pipeNode)
         {
-            holderCoordinates = Transform(pipeNode.Owner).Coordinates;
+            holderCoordinates = new EntityCoordinates(pipeNode.Owner, Vector2.Zero);
             return true;
         }
 
@@ -162,6 +164,7 @@ public partial class AtmosphereSystem
     ///     <see cref="GasMixture.ReactionEntities"/> must have an index
     ///     for the provided key.
     /// </remarks>
+    /// <param name="coordinates">The coordinates at which the entity should spawn, ideally inside of another entity if it's not part of a tile atmosphere.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public EntityUid EnsureMixtureEntity(GasMixture mixture, byte key, EntProtoId protoId, EntityCoordinates coordinates)
     {
@@ -177,13 +180,13 @@ public partial class AtmosphereSystem
 
     /// <summary>
     ///     Set's the lifetime of an entity's <see cref="TimedDespawnComponent"/>,
-    ///     if it exists, to <paramref name="newLifetime"/>.
+    ///     if it exists, to <see cref="Atmospherics.ReactionEntityDespawnTimer"/>.
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void RefreshEntityTimedDespawn(EntityUid uid, float newLifetime)
+    public void RefreshEntityTimedDespawn(EntityUid uid)
     {
-        if (TryComp<TimedDespawnComponent>(uid, out var timedDespawnComponent))
-            timedDespawnComponent.Lifetime = newLifetime;
+        if (EnsureComp<TimedDespawnComponent>(uid, out var timedDespawnComponent))
+            timedDespawnComponent.Lifetime = Atmospherics.ReactionEntityDespawnTimer;
     }
 
     /// <summary>

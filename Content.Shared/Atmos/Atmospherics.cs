@@ -215,6 +215,13 @@ namespace Content.Shared.Atmos
         public const int AdjustedNumberOfGases = ((TotalNumberOfGases + 3) / 4) * 4;
 
         /// <summary>
+        ///     The value at which, every time a reaction occurs, the
+        ///     corresponding reaction entity's TimedDespawnComponent's
+        ///     lifetime gets set to.
+        /// </summary>
+        public const float ReactionEntityDespawnTimer = 2f;
+
+        /// <summary>
         ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
         /// </summary>
         public const float FireHydrogenEnergyReleased = 284e3f; // hydrogen is 284 kJ/mol
