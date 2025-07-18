@@ -56,8 +56,8 @@
     animation: WeaponArcBite
     damage:
       types:
-        Burn: 5
-        Slash: 5
+        Burn: 6
+        Slash: 6
   - type: IgniteOnMeleeHit
     fireStacks: 1
   - type: InputMover
@@ -80,7 +80,7 @@
   - type: PassiveDamage # Assuming one damage type, 6 HP a minute
     allowedStates:
     - Alive
-    damageCap: 30
+    damageCap: 40
     damage:
       types:
         Heat: -0.1
@@ -89,6 +89,21 @@
   - type: Flammable # Fireproof
     damage:
       types: {}
+  - type: Temperature
+    heatDamageThreshold: 999 #Let the hellhound walk through a plasmafire
+    coldDamageThreshold: 230 
+    currentTemperature: 310.15
+    coldDamage: 
+      types:
+        Cold : 0.1
+    specificHeat: 42
+    heatDamage:
+      types:
+        Heat : 1.5
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
   - type: Grammar
     attributes:
       gender: male
