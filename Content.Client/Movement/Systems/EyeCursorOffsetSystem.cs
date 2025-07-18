@@ -35,14 +35,13 @@ public sealed partial class EyeCursorOffsetSystem : EntitySystem
 
     public Vector2? OffsetAfterMouse(EntityUid uid, EyeCursorOffsetComponent? component)
     {
-        // We need the main viewport where the game content is displayed, as certain UI layouts (e.g. Separated Chat)
-        // can make it a different size to the game window.
+        // We need the main viewport where the game content is displayed, as certain UI layouts (e.g. Separated HUD) can make it a different size to the game window.
         if (_eyeManager.MainViewport is not ScalingViewport vp)
             return null;
 
-        var mousePos = _inputManager.MouseScreenPosition.Position; // Note: If we ever get a left-aligned separated HUD setting, this might need to be adjusted for that.
+        var mousePos = _inputManager.MouseScreenPosition.Position; // TODO: If we ever get a right-aligned Separated HUD setting, this might need to be adjusted for that.
 
-        var viewportSize = vp.PixelSize; // The size of the game viewport, including black bars - does not include the chatbox in separated view.
+        var viewportSize = vp.PixelSize; // The size of the game viewport, including black bars - does not include the chatbox in Separated HUD view.
         var scalingViewportSize = vp.ViewportSize * vp.CurrentRenderScale; // The size of the viewport in which the game is rendered (i.e. not including black bars). Note! Can extend outside the game window with certain zoom settings!
         var visibleViewportSize = Vector2.Min(viewportSize, scalingViewportSize); // The size of the game viewport that is "actually visible" to the player, cutting off over-extensions and not counting black bar padding.
 
