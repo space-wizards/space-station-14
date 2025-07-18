@@ -9460,5 +9460,75 @@ Entries:
   id: 1303
   time: '2025-07-16T20:17:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1033
+- author: Conflee
+  changes:
+  - message: Changed overall time requirement for Security Cadet from 30 hours to
+      20 hours
+    type: Tweak
+  id: 1304
+  time: '2025-07-17T15:31:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1048
+- author: Conflee
+  changes:
+  - message: Changed lockout time on Security Cadet from 15 hours to 20 hours, allowing
+      players to remain Cadets for longer if they feel the need to
+    type: Tweak
+  id: 1305
+  time: '2025-07-17T15:31:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1048
+- author: Conflee
+  changes:
+  - message: Changed time requirement for Security Officer from 2.5 hours as Security
+      Cadet to 10 hours as Security Cadet, to match intended unlock time in overrides
+      that wasn't being used properly
+    type: Tweak
+  id: 1306
+  time: '2025-07-17T15:31:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1048
+- author: Dimyell
+  changes:
+  - message: Added Armor and Neck slot options to BSO Loadout
+    type: Add
+  id: 1307
+  time: '2025-07-17T15:37:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1014
+- author: Dimyell
+  changes:
+  - message: Several minor adjustments to BSO Coat and Formal Cloak sprites
+    type: Add
+  id: 1308
+  time: '2025-07-17T15:37:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1014
+- author: IamSidzilla
+  changes:
+  - message: 7 new job icons. Specially made for the Syndicate, accessible though
+      your Agent ID. Glory to the Syndicate.
+    type: Add
+  id: 1309
+  time: '2025-07-17T15:49:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1010
+- author: KarmaKitsuna and Quantum
+  changes:
+  - message: Roleplayers rejoice! Added story objectives for traitors, and a system
+      which picks a department at random for objectives.
+    type: Add
+  id: 1310
+  time: '2025-07-17T16:43:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1047
+- author: Conflee and Eroph
+  changes:
+  - message: Changed Borg and AI job icons to match each other, and stand out from
+      other icons more (gray background, light blue icon)
+    type: Tweak
+  id: 1311
+  time: '2025-07-17T16:47:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1049
+- author: Salem
+  changes:
+  - message: Fixed XML issue with slime guidebook
+    type: Fix
+  id: 1312
+  time: '2025-07-17T22:23:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1051
 Order: -1
 
