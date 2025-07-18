@@ -25,9 +25,22 @@
       blue: '#0335FCFF'
       white: '#FFFFFFFF'
       black: '#333333FF'
+      # starlight edit start - add new colors
+      purple: '#AA7DCEFF'
+      pink: '#E49AB0FF'
+      light yellow: '#F2E94EFF'
+      light green: '#C4FFB2FF'
+      # starlight edit end
       # standard atmos pipes
       waste: '#990000'
       distro: '#0055cc'
+      # starlight edit start - add new colors for standard pipes
+      cold: '#087CA7FF'
+      hot: '#EF6F6CFF'
+      frezon: '#05B2DCFF'
+      ammonia: '#426B69FF'
+      tritium: '#8DE969FF'
+      # starlight edit end
       air: '#03fcd3'
       mix: '#947507'
   - type: StaticPrice
