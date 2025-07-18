@@ -38,7 +38,7 @@
       entity: Soap
 
 - type: reaction
-  id: CreateSoapHomemade
+  id: CreateSoapBlood
   impact: Low
   quantized: true
   reactants:
@@ -57,7 +57,7 @@
   quantized: true
   reactants:
     SoapReagent:
-      amount: 45
+      amount: 50
     TableSalt:
       amount: 5
   effects:
@@ -77,6 +77,64 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: SoapNT
+
+- type: reaction
+  id: CreateDeluxeSoap
+  quantized: true
+  reactants:
+    SoapReagent:
+      amount: 45
+    TableSalt:
+      amount: 5
+    JuiceBerry:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapDeluxe
+
+- type: reaction
+  id: CreateSyndieSoap
+  quantized: true
+  reactants:
+    SoapReagent:
+      amount: 45
+    TableSalt:
+      amount: 5
+    Hyperzine:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapSyndie
+
+- type: reaction
+  id: CreateBloodSoap
+  quantized: true
+  reactants:
+    SoapReagent:
+      amount: 45
+    TableSalt:
+      amount: 5
+    Blood:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapHomemade
+
+- type: reaction
+  id: CreateOmegaSoap
+  quantized: true
+  reactants:
+    SoapReagent:
+      amount: 40
+    TableSalt:
+      amount: 5
+    SpaceLube:
+      amount: 5
+    SpaceDrugs:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapOmega
 
 - type: reaction
   id: Meatification
