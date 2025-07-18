@@ -353,13 +353,22 @@
     - TelescopicShield
 
 - type: startingGear
-  parent: ERTSecurityGearEVA
   id: ERTSecurityGearArmedRifle
   equipment:
-    back: PortableRecharger
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    shoes: ClothingShoesBootsMagERT
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesHudSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    id: ERTSecurityPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltMilitaryWebbingERT
+    pocket2: CombatKnife
     suitstorage: WeaponRifleLecter
   inhand:
     - WeaponLaserCannon
+    - PortableRecharger
   storage:
     belt:
     - CrowbarRed
