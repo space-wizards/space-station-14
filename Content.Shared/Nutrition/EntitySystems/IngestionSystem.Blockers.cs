@@ -99,7 +99,7 @@ public sealed partial class IngestionSystem
 
         args.Cancelled = true;
 
-        _popup.PopupClient(Loc.GetString("edible-has-used-storage", ("food", ent), ("verb", GetEdibleVerb(ent))), args.User, args.User);
+        _popup.PopupClient(Loc.GetString("edible-has-used-storage", ("food", ent), ("verb", GetEdibleVerb(ent.Owner))), args.User, args.User);
     }
 
     private void OnItemSlotsEdible(Entity<ItemSlotsComponent> ent, ref EdibleEvent args)
@@ -112,7 +112,7 @@ public sealed partial class IngestionSystem
 
         args.Cancelled = true;
 
-        _popup.PopupClient(Loc.GetString("edible-has-used-storage", ("food", ent), ("verb", GetEdibleVerb(ent))), args.User, args.User);
+        _popup.PopupClient(Loc.GetString("edible-has-used-storage", ("food", ent), ("verb", GetEdibleVerb(ent.Owner))), args.User, args.User);
     }
 
     private void OnOpenableEdible(Entity<OpenableComponent> ent, ref EdibleEvent args)
