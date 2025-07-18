@@ -96,3 +96,19 @@ command-description-xenoartifact-unlockAllNodes =
     Unlocks all nodes of artifact.
 command-description-jobboard-completeJob =
     Completes a given salvage job board job for the station.
+command-description-storage-fasttake =
+    Takes the most recently placed item from the piped storage entity.
+command-description-storage-insert =
+    Inserts the piped entity into the given storage entity.
+command-description-inventory-getflags =
+    Gets all entities in slots on the piped inventory entity matching a certain slot flag.
+command-description-inventory-getnamed =
+    Gets all entities in slots on the piped inventory entity matching a certain slot name.
+command-description-inventory-forceput =
+    Puts a given entity on the first piped entity that has a slot matching the given flag, deleting any item previously in that slot.
+command-description-inventory-put =
+    Puts a given entity on the first piped entity that has a slot matching the given flag, unequiping any item previously in that slot.
+command-description-inventory-tryput =
+    Puts a given entity on the first piped entity that has a slot matching the given flag, failing if any item is in currently in that slot.
+command-description-inventory-ensure =
+    Puts a given entity on the first piped entity that has a slot matching the given flag if none exists, passing through the UID of whatever is in the slot by the end.
