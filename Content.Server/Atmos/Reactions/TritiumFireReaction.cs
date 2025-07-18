@@ -2,6 +2,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Reactions
 {
@@ -9,6 +10,13 @@ namespace Content.Server.Atmos.Reactions
     [DataDefinition]
     public sealed partial class TritiumFireReaction : IGasReactionEffect
     {
+        // We can't yaml-ize this but whatever.
+        private static readonly EntProtoId RadiationPulseProtoId = new("TritiumReactionRadiationPulse");
+        private static Color GetRadiationPulseColor()
+        {
+            return Color.Aquamarine;
+        }
+
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale, EntityUid? holderUid)
         {
             var energyReleased = 0f;
@@ -31,7 +39,7 @@ namespace Content.Server.Atmos.Reactions
             else
             {
                 burnedFuel = initialTrit;
-                mixture.SetMoles(Gas.Tritium, mixture.GetMoles(Gas.Tritium ) * (1 - 1 / Atmospherics.TritiumBurnTritFactor));
+                mixture.SetMoles(Gas.Tritium, mixture.GetMoles(Gas.Tritium) * (1 - 1 / Atmospherics.TritiumBurnTritFactor));
                 mixture.AdjustMoles(Gas.Oxygen, -mixture.GetMoles(Gas.Tritium));
                 energyReleased += (Atmospherics.FireHydrogenEnergyReleased * burnedFuel * (Atmospherics.TritiumBurnTritFactor - 1));
             }
@@ -41,6 +49,8 @@ namespace Content.Server.Atmos.Reactions
                 energyReleased += (Atmospherics.FireHydrogenEnergyReleased * burnedFuel);
 
                 // TODO ATMOS Radiation pulse here!
+                if (atmosphereSystem.TryGetMixtureHolderCoordinates(holder, holderUid, out var holderCoordinates))
+                    atmosphereSystem.ProxySpawnEntityAtPosition(RadiationPulseProtoId, holderCoordinates);
 
                 // Conservation of mass is important.
                 mixture.AdjustMoles(Gas.WaterVapor, burnedFuel);

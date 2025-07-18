@@ -7,6 +7,8 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Spawners;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -134,4 +136,10 @@ public partial class AtmosphereSystem
 
         return null;
     }
+
+    /// <summary>
+    ///     Proxy method for spawning an entity at a position.
+    /// </summary>
+    public EntityUid ProxySpawnEntityAtPosition(EntProtoId protoId, EntityCoordinates coordinates)
+        => SpawnAtPosition(protoId, coordinates);
 }

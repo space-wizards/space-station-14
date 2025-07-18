@@ -78,7 +78,7 @@
   <Box>
     <GuideEntityEmbed Entity="TritiumCanister" Caption=""/>
   </Box>
-  An extremely flammable radioactive gas that is used in the creation of frezon.
+  An extremely flammable radioactive gas that is used in the creation of frezon, which emits radiation in the process of it's combustion.
 
   Tritium is produced when burning plasma in a burn chamber, and can be used to create frezon gas in a complicated mixing process.
 

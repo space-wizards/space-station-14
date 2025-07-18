@@ -13,3 +13,24 @@
       collection:
         RadiationPulse
   - type: RadiationPulse
+
+- type: entity
+  name: radiation
+  id: TritiumReactionRadiationPulse
+  categories: [ HideSpawnMenu ]
+  description:
+  components:
+  - type: RadiationSource
+    intensity: 0 # This will depend on the strength of the tritium reaction so we keep it at 0 for now.
+    slope: 0.65
+  - type: TimedDespawn
+    lifetime: 1
+  - type: PointLight
+    enabled: true
+    radius: 3
+    energy: 5
+    netsync: false
+  - type: LightFade
+    duration: 0.5
+  - type: TimedDespawn
+    lifetime: 0.5
