@@ -357,10 +357,19 @@
   id: ERTSecurityGearArmedRifle
   equipment:
     back: PortableRecharger
-    belt: ClothingBeltMilitaryWebbingERTFilled
     suitstorage: WeaponRifleLecter
   inhand:
     - WeaponLaserCannon
+  storage:
+    belt:
+    - CrowbarRed
+    - Zipties
+    - MedkitCombatFilled
+    - MagazineRifle
+    - MagazineRifle
+    - MagazineRifleIncendiary
+    - MagazineRifleUranium
+    - Zipties
 
 - type: startingGear
   parent: ERTSecurityGearEVA
