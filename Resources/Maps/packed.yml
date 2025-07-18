@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/10/2025 17:35:48
-  entityCount: 15658
+  time: 07/18/2025 20:12:52
+  entityCount: 15659
 maps:
 - 126
 grids:
@@ -47686,7 +47686,7 @@ entities:
       pos: 26.5,37.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -39712.82
+      secondsUntilStateChange: -40033.777
       state: Closing
   - uid: 9362
     components:
@@ -71961,6 +71961,104 @@ entities:
       editingDisabled: True
     missingComponents:
     - FaxableObject
+  - uid: 5736
+    components:
+    - type: MetaData
+      desc: Looks like this was left here by a previous shift.
+      name: paper (Cryogenic Tube User Manual)
+    - type: Transform
+      pos: 61.7065,-0.53925574
+      parent: 2
+    - type: Paper
+      content: >
+        [head=2][bold]Cryogenic Tube User Manual[/bold][/head]
+
+
+        [head=3][bold]Operational Theory[/bold][/head]
+
+        Cryogenic chemicals represent a simple, and most importantly, economical means of treating patients. All cryogenic chemicals only work if the patient’s body temperature below a certain value: 213K with a few exceptions.
+
+        The cryogenic tube system is intended to safely lower a patient’s body temperature below this threshold, then treat them with said cryogenic chemicals.
+
+
+        [head=3][bold]Setup[/bold][/head]
+
+        1: Identify the pressure pump. Set its output pressure to 540kpa and switch it on.
+
+        2: Identify the gas filter. Set its filter to carbon dioxide, output pressure to maximum, and switch it on.
+
+        3: Identify the freezer. Set its temperature to 74K and switch it on.
+
+        4: Allow the system time to reach the correct temperature and pressure. You can view this progress by using a gas analyzer on the pressure pump or cryogenic tube. If temperature or pressure remains incorrect, consult your atmospherics department.
+
+        5: Fill one or more standard 50u beakers with cryogenic medicine. Do not insert the beaker into the tube: once inserted it will be immediately used, wasting it unless a patient of the correct temperature is inside.
+
+
+        [head=3][bold]Usage[/bold][/head]
+
+        1: Ensure the patient has no bleeding wounds, and is not wearing any insulate clothing such as a winter coat, scarf, or fur boots.
+
+        2: Place the patient inside the cryogenic tube. Ensure that no beaker is in the tube.
+
+        3: Use the tube’s display (accessible through the context menu) to view the patient’s health and temperature. Wait for their temperature to go below the threshold of your chosen medicine.
+
+        4: Place a standard 50u beaker of cryogenic medicine into the tube. As soon as it is inserted, it will begin transferring the liquid into the patient’s bloodstream. Continue to monitor their vitals on the display.
+
+        5: Once the desired effect has been achieved, eject the beaker and remove the patient from the tube. A injection of 5u Leporazine is recommended to quickly raise their body temp back to comfortable levels. 
+
+
+        [head=3][bold]Supported Chemicals[/bold][/head]
+
+        The following medicine has been approved for use in cryogenic tubes, and may be mixed by your chemists and Chief Medical Officer. All will metabolize at 0.5u/second, but required temperature may vary.
+
+        The following will refer to injury in standard damage units; this system should be familiar to any modern medical professional.
+
+
+        [bold]Cryoxadone (Cryox)[/bold]
+
+        The most common cryogenic medicine, and a jack of all trades. As it is easy to mix, your medical department should always have a supply of this on hand.
+
+        Under 213K temp, 1u heals 4 Brute, 6 burn, 6 airloss, and 4 toxin damage.
+
+
+        [bold]Doxarubixadone (Doxa)[/bold]
+
+        4 out of 5 doctors agree this is the most effective treatment for genetic damage. Fairly affordable.
+
+        Under 213K temp, 1u heals 2 genetic damage.
+
+
+        [bold]Aloxadone (Alox)[/bold]
+
+        Notably, this chemical works on deceased patients, making it useful for treating massive burn damage. Some ingredients require the assistance of botany.
+
+        Under 213K temp, 1u heals 4 heat, 4 shock, 4 cold, and 1.5 caustic damage.
+
+
+        [bold]Necrosol (Necro)[/bold]
+
+        Notably, this chemical works on deceased patients. Necrosol is synthesized with the rare and poorly understood Omnizine, and is the only way to heal patients afflicted by over 200 poison damage.
+
+        Under 213K temp, 1u heals 4 brute, 5 burn, and 2 poison.
+
+
+        [bold]Opporozidone (Oppo)[/bold]
+
+        Notably, this chemical works on deceased patients. Oppo is synthesized with the rare Cognizine, and is the only way to reverse the effects of body decomposition. Requires a lower temperature.
+
+        Under 150K temp, 1u reverts 20 seconds of body decomposition.
+
+
+        [head=3][bold]How Does It Work?[/bold][/head]
+
+        The gas pump pulls air from the room’s air distribution pipes into the cryogenic tube’s own pipe loop. The pressure of 540kpa is quite spesific: the higher the pressure in the tubes, the faster the patient can be cooled. However, SolGov regulations forbid subjecting unprotected patients to pressures above 550kpa, citing the risk of barotrauma.
+
+
+        The lower the temperature on the freezer, the faster the patient will cool. If Leporazine is available to raise body temperature after treatment, the freezer may safely be set to its lowest possible temperature.
+
+
+        The gas filter removes unwanted gasses from the pipe loop. This is most commonly carbon dioxide produced by the patient exhaling, but ammonia may also be produced by Vox patients or those experiencing decomposition. The removed gas will be routed directly into the room’s waste pipe, while filtered air will go back into the cryogenic tubes.
+      editingDisabled: True
   - uid: 7936
     components:
     - type: Transform
