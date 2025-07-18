@@ -376,6 +376,8 @@ namespace Content.Server.Database
 
         Task SetParrotMemoryBlock(int messageId, bool blocked);
 
+        Task SetParrotMemoryBlockPlayer(NetUserId playerId, bool blocked);
+
         Task TruncateParrotMemory(TimeSpan maxMessageAge);
 
         #endregion
@@ -1107,6 +1109,11 @@ namespace Content.Server.Database
         public Task SetParrotMemoryBlock(int messageId, bool blocked)
         {
             return RunDbCommand(() => _db.SetParrotMemoryBlock(messageId, blocked));
+        }
+
+        public Task SetParrotMemoryBlockPlayer(NetUserId playerId, bool blocked)
+        {
+            return RunDbCommand(() => _db.SetParrotMemoryBlockPlayer(playerId, blocked));
         }
 
         public Task TruncateParrotMemory(TimeSpan maxMessageAge)

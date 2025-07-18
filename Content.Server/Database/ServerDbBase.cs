@@ -1929,12 +1929,21 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
 
             var message = await db.DbContext.PlayerMessage
-                .Where(message => message.Id == messageId)
+                .Where(message => message.Id == messageId && message.Type == PlayerMessageType.Parrot)
                 .SingleAsync();
 
             message.Block = blocked;
 
             await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task SetParrotMemoryBlockPlayer(NetUserId playerId, bool blocked)
+        {
+            await using var db = await GetDb();
+
+            await db.DbContext.PlayerMessage
+                .Where(message => message.SourcePlayer == playerId && message.Type == PlayerMessageType.Parrot)
+                .ExecuteUpdateAsync(calls => calls.SetProperty(message => message.Block, blocked));
         }
 
         public async Task TruncateParrotMemory(TimeSpan maxMessageAge)

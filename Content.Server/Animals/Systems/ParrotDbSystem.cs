@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Systems;
 using Content.Server.Animals.Components;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -37,12 +38,30 @@ public sealed partial class ParrotDbSystem : EntitySystem
         SubscribeLocalEvent<ParrotDbMemoryComponent, LearnEvent>(OnLearn);
 
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
+
+        SubscribeLocalEvent<EraseEvent>(OnErase);
+    }
+
+    /// <summary>
+    /// Called when a player is erased. This ensures the memories from that player are blocked and the parrot memory is
+    /// refreshed
+    /// </summary>
+    private void OnErase(EraseEvent args)
+    {
+        _db.SetParrotMemoryBlockPlayer(args.PlayerNetUserId, true);
+
+        // refresh the memories of all parrots with a memorydb so that they can keep yapping undisturbed
+        var query = EntityQueryEnumerator<ParrotMemoryComponent, ParrotDbMemoryComponent>();
+        while (query.MoveNext(out var uid, out var memory, out var dbMemory))
+        {
+            Task.Run(async () => await RefreshMemoryFromDb((uid, memory, dbMemory)));
+        }
     }
 
     /// <summary>
     /// Called when a round has started. We do some DB cleaning here
     /// </summary>
-    private async void OnRoundStarting(RoundStartingEvent ev)
+    private async void OnRoundStarting(RoundStartingEvent args)
     {
         await Task.Run(async () => _db.TruncateParrotMemory(_config.GetCVar(CCVars.ParrotMaximumMessageAge)));
     }
@@ -59,34 +78,26 @@ public sealed partial class ParrotDbSystem : EntitySystem
     /// </summary>
     private void TrySaveMessageDb(Entity<ParrotDbMemoryComponent> entity, string message, EntityUid sourcePlayer)
     {
-        // return if the message source entity does not have a MindContainerComponent This should mean only
-        // player-controllable entities can commit messages to the database.
-        //
-        // Polly is likely to have a ParrotDbMemoryComponent, and is likely to be near stuff like EngiDrobes, so this
-        // should prevent the database filling up with "Afraid of radiation? Then wear yellow!" etc.
+        // first get the playerId. We want to be able to control these messages and clean them when someone says something
+        // bad, so all messages must have an associated player with this implementation
         if (!TryComp<MindContainerComponent>(sourcePlayer, out var mindContainer))
             return;
 
-        // return if this mindcontainer has no mind. Could happen with cogni'd entities that aren't player controlled yet
         if (!mindContainer.HasMind)
             return;
 
-        // return if the mind entity has no mind component. Should not happen
         if (!TryComp<MindComponent>(mindContainer.Mind, out var mindComponent))
             return;
 
-        // get the player sessionID
         if (!_playerManager.TryGetSessionById(mindComponent.UserId, out var session))
             return;
 
         // check player playtime before committing message
         var playtime = _playtimeManager.GetPlayTimes(session);
 
-        // return if the player is missing an overall playtime for whatever reason
         if (!playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var overallPlaytime))
             return;
 
-        // return if the player has too little playtime
         if (overallPlaytime < _config.GetCVar(CCVars.ParrotMinimumPlaytimeFilter))
             return;
 
