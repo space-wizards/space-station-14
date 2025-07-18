@@ -2062,7 +2062,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,4.5
       parent: 1
-- proto: SoapHomemade
+- proto: SoapBlood
   entities:
   - uid: 352
     components:
