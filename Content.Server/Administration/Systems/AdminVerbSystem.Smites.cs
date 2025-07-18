@@ -20,7 +20,6 @@ using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
-using Content.Shared.Alert;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Clumsy;
@@ -59,7 +58,6 @@ namespace Content.Server.Administration.Systems;
 public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly CreamPieSystem _creamPieSystem = default!;

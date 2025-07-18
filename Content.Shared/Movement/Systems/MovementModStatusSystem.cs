@@ -84,6 +84,7 @@ public sealed class MovementModStatusSystem : EntitySystem
 
         status.Comp.FrictionModifier = friction;
         status.Comp.AccelerationModifier = acceleration;
+        Dirty(status);
 
         return TryUpdateFrictionStatus(entity);
     }

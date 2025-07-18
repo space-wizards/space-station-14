@@ -170,22 +170,21 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     ///     Does this entity have any empty hands, and how many?
     /// </summary>
-    public bool TryCountEmptyHands(Entity<HandsComponent?> entity, [NotNullWhen(true)] out int? hands)
+    public int GetEmptyHandCount(Entity<HandsComponent?> entity)
     {
-        hands = 0;
-        var emptyHand = false;
         if (!Resolve(entity, ref entity.Comp, false) || entity.Comp.Count == 0)
-            return false;
+            return 0;
+
+        var hands = 0;
 
         foreach (var hand in EnumerateHands(entity))
         {
             if (!HandIsEmpty(entity, hand))
                 continue;
             hands++;
-            emptyHand = true;
         }
 
-        return emptyHand;
+        return hands;
     }
 
     /// <summary>

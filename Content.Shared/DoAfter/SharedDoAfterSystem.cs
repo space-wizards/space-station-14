@@ -194,14 +194,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             return false;
         }
 
+        id = new DoAfterId(args.User, comp.NextId++);
+        var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
+
         // Networking yay
         args.NetTarget = GetNetEntity(args.Target);
         args.NetUsed = GetNetEntity(args.Used);
         args.NetUser = GetNetEntity(args.User);
         args.NetEventTarget = GetNetEntity(args.EventTarget);
-
-        id = new DoAfterId(args.User, comp.NextId++);
-        var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
 
         if (args.BreakOnMove)
             doAfter.UserPosition = Transform(args.User).Coordinates;

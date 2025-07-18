@@ -35,7 +35,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
-using static Content.Shared.Stunnable.SharedStunSystem;
 
 namespace Content.Shared.Cuffs
 {
@@ -57,9 +56,13 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
 
+        private EntityQuery<HandcuffComponent> _cuffQuery;
+
         public override void Initialize()
         {
             base.Initialize();
+
+            _cuffQuery = GetEntityQuery<HandcuffComponent>();
 
             SubscribeLocalEvent<CuffableComponent, HandCountChangedEvent>(OnHandCountChanged);
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
@@ -90,7 +93,7 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
             SubscribeLocalEvent<HandcuffComponent, AddCuffDoAfterEvent>(OnAddCuffDoAfter);
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
-            SubscribeLocalEvent<CuffableComponent, StandUpArgsEvent>(OnCuffableStandupArgs);
+            SubscribeLocalEvent<CuffableComponent, GetStandUpTimeEvent>(OnCuffableStandupArgs);
             SubscribeLocalEvent<CuffableComponent, KnockedDownRefreshEvent>(OnCuffableKnockdownRefresh);
         }
 
@@ -426,21 +429,64 @@ namespace Content.Shared.Cuffs
         /// <summary>
         ///     Takes longer to stand up when cuffed
         /// </summary>
-        private void OnCuffableStandupArgs(Entity<CuffableComponent> ent, ref StandUpArgsEvent args)
+        private void OnCuffableStandupArgs(Entity<CuffableComponent> ent, ref GetStandUpTimeEvent time)
         {
-            if (!HasComp<KnockedDownComponent>(ent) || !IsCuffed(ent) || !TryComp<HandcuffComponent>(ent.Comp.LastAddedCuffs, out var handcuff))
+            if (!HasComp<KnockedDownComponent>(ent) || !IsCuffed(ent))
                 return;
 
-            args.DoAfterTime *= handcuff.StandupMod;
+            var cuffs = GetAllCuffs(ent.Comp);
+            var mod = 1f;
+
+            if (cuffs.Count == 0)
+                return;
+
+            foreach (var cuff in cuffs)
+            {
+                if (!_cuffQuery.TryComp(cuff, out var comp))
+                    continue;
+
+                // Get the worst modifier
+                mod = Math.Max(mod, comp.StandupMod);
+            }
+
+            time.DoAfterTime *= mod;
         }
 
         private void OnCuffableKnockdownRefresh(Entity<CuffableComponent> ent, ref KnockedDownRefreshEvent args)
         {
-            if (!IsCuffed(ent) || !TryComp<HandcuffComponent>(ent.Comp.LastAddedCuffs, out var handcuff))
+            if (!IsCuffed(ent))
                 return;
 
-            // TODO: Iterate through equipped cuffs you have in case the entity has more than one pair of hands or something
-            args.SpeedModifier *= HasComp<KnockedDownComponent>(ent) ? handcuff.KnockedMovementMod : handcuff.MovementMod;
+            var cuffs = GetAllCuffs(ent.Comp);
+            var mod = 1f;
+
+            if (cuffs.Count == 0)
+                return;
+
+            if (HasComp<KnockedDownComponent>(ent))
+            {
+                foreach (var cuff in cuffs)
+                {
+                    if (!_cuffQuery.TryComp(cuff, out var comp))
+                        continue;
+
+                    // Get the worst modifier
+                    mod = Math.Min(mod, comp.KnockedMovementMod);
+                }
+            }
+            else
+            {
+                foreach (var cuff in cuffs)
+                {
+                    if (!_cuffQuery.TryComp(cuff, out var comp))
+                        continue;
+
+                    // Get the worst modifier
+                    mod = Math.Min(mod, comp.MovementMod);
+                }
+            }
+
+            args.SpeedModifier *= mod;
         }
 
         /// <summary>

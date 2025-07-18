@@ -223,7 +223,7 @@ public sealed class ThrowingSystem : EntitySystem
 
         // Give thrower an impulse in the other direction
         if (pushbackRatio == 0.0f ||
-            !(physics.Mass > 0f) ||
+            physics.Mass == 0f ||
             !TryComp(user.Value, out PhysicsComponent? userPhysics))
             return;
         var msg = new ThrowPushbackAttemptEvent();
@@ -236,7 +236,7 @@ public sealed class ThrowingSystem : EntitySystem
         RaiseLocalEvent(user.Value, ref pushEv);
         const float massLimit = 5f;
 
-        if (pushEv.Push || _gravity.IsWeightless(user.Value)) // TODO: Make IsWeightless Event Based
+        if (pushEv.Push || _gravity.IsWeightless(user.Value))
             _physics.ApplyLinearImpulse(user.Value, -impulseVector / physics.Mass * pushbackRatio * MathF.Min(massLimit, physics.Mass), body: userPhysics);
     }
 }

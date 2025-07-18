@@ -116,7 +116,7 @@ public sealed class SlipperySystem : EntitySystem
 
         if (TryComp(other, out PhysicsComponent? physics) && !HasComp<SlidingComponent>(other))
         {
-            _physics.SetLinearVelocity(other, physics.LinearVelocity * component.SlipData.LaunchForwardsMultiplier);
+            _physics.SetLinearVelocity(other, physics.LinearVelocity * component.SlipData.LaunchForwardsMultiplier, body: physics);
 
             if (component.AffectsSliding && requiresContact)
                 EnsureComp<SlidingComponent>(other);

@@ -13,4 +13,10 @@ public sealed partial class SlidingComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float FrictionModifier;
+
+    /// <summary>
+    /// Hashset of contacting entities.
+    /// </summary>
+    [DataField]
+    public HashSet<EntityUid> Contacting;
 }

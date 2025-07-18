@@ -2,11 +2,11 @@ using System.Numerics;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
 using Content.Shared.Stunnable;
+using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Client.Animations;
-using Robust.Shared.Animations;
 using Robust.Shared.Random;
 
 namespace Content.Client.Stunnable;
@@ -14,7 +14,6 @@ namespace Content.Client.Stunnable;
 public sealed class StunSystem : SharedStunSystem
 {
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-    [Dependency] private readonly InputSystem _input = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
@@ -35,9 +34,6 @@ public sealed class StunSystem : SharedStunSystem
     private bool OnUseSecondary(in PointerInputCmdHandler.PointerInputCmdArgs args)
     {
         if (args.Session?.AttachedEntity is not {Valid: true} uid)
-            return false;
-
-        if (_input.Predicted)
             return false;
 
         if (args.EntityUid != uid || !HasComp<KnockedDownComponent>(uid) || !_combat.IsInCombatMode(uid))

@@ -390,7 +390,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         var shooterEv = new ShooterImpulseEvent();
         RaiseLocalEvent(user, ref shooterEv);
 
-        if (shooterEv.Push || _gravity.IsWeightless(user, userPhysics)) // TODO: Make IsWeightless Event Based
+        if (shooterEv.Push || _gravity.IsWeightless(user, userPhysics))
             CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
     }
 
@@ -632,6 +632,10 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 [ByRefEvent]
 public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
 
+/// <summary>
+/// Raised on an entity after firing a gun to see if any components or systems would allow this entity to be pushed
+/// by the gun they're firing. If true, GunSystem will create an impulse on our entity.
+/// </summary>
 [ByRefEvent]
 public record struct ShooterImpulseEvent()
 {

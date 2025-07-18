@@ -190,7 +190,7 @@ binds:
   mod1: Alt
 - function: OpenCharacterMenu
   type: State
-  key: P
+  key: U
 - function: OpenEmotesMenu
   type: State
   key: Y
