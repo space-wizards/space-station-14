@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nox38, BurgerMoth, ArtisticRoomba
-  changes:
-  - message: Added descriptions to all .35 auto cartridges, magazines, and ammo boxes.
-    type: Add
-  id: 8277
-  time: '2025-04-20T11:51:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36085
 - author: Pgriha
   changes:
   - message: SWAT, ERT, Riot and some other helmets are now hiding head markings.
@@ -3905,3 +3898,11 @@
   id: 8789
   time: '2025-07-18T11:41:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37731
+- author: notquitehadouken
+  changes:
+  - message: Mass scanner now shows any grid's distance from the current grid/entity
+      in tiles instead of from the top left corner of the UI in pixels
+    type: Fix
+  id: 8790
+  time: '2025-07-18T15:33:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39041
