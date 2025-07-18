@@ -77,7 +77,7 @@ public sealed partial class IngestionSystem
         }
 
         // Check this last
-        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out args.Solution) || IsEmpty(entity))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out args.Solution) || IsEmpty(entity) && !entity.Comp.DestroyOnEmpty)
         {
             args.Cancelled = true;
 

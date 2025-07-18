@@ -297,7 +297,10 @@ public sealed partial class IngestionSystem
         time = null;
 
         if (!Resolve(ingested, ref ingested.Comp))
+        {
+            _popup.PopupClient(Loc.GetString("ingestion-try-use-is-empty", ("entity", ingested)), ingested, user);
             return false;
+        }
 
         var ev = new EdibleEvent(user);
         RaiseLocalEvent(ingested, ref ev);
@@ -355,8 +358,11 @@ public sealed partial class IngestionSystem
         return true;
     }
 
-    public string GetEdibleNoun(EntityUid entity)
+    public string GetEdibleNoun(Entity<EdibleComponent?> entity)
     {
+        if (Resolve(entity, ref entity.Comp, false))
+            return GetProtoVerb(entity.Comp.Edible);
+
         var ev = new GetEdibleTypeEvent();
         RaiseLocalEvent(entity, ref ev);
 
@@ -378,8 +384,11 @@ public sealed partial class IngestionSystem
         return Loc.GetString(proto.Noun);
     }
 
-    public string GetEdibleVerb(EntityUid entity)
+    public string GetEdibleVerb(Entity<EdibleComponent?> entity)
     {
+        if (Resolve(entity, ref entity.Comp, false))
+            return GetProtoVerb(entity.Comp.Edible);
+
         var ev = new GetEdibleTypeEvent();
         RaiseLocalEvent(entity, ref ev);
 
