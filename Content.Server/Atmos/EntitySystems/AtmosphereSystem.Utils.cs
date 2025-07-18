@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
 using Content.Server.Maps;
@@ -121,17 +122,27 @@ public partial class AtmosphereSystem
     ///     and then an optionally given <see cref="IGasMixtureHolder"/>.
     /// </summary>
     // Both args are nullable because this is exposed for use by reactions to get the position of the reaction.
-    public EntityCoordinates? GetMixtureHolderCoordinates(IGasMixtureHolder? holder, EntityUid? holderEntity)
+    public bool TryGetMixtureHolderCoordinates(IGasMixtureHolder? holder, EntityUid? holderEntity, [NotNullWhen(true)] out EntityCoordinates? holderCoordinates)
     {
         if (holderEntity != null)
-            return Transform(holderEntity.Value).Coordinates;
+        {
+            holderCoordinates = Transform(holderEntity.Value).Coordinates;
+            return true;
+        }
 
         if (holder is PipeNode pipeNode)
-            return Transform(pipeNode.Owner).Coordinates;
+        {
+            holderCoordinates = Transform(pipeNode.Owner).Coordinates;
+            return true;
+        }
 
         if (holder is TileAtmosphere tileAtmosphere && _mapGridQuery.TryComp(tileAtmosphere.GridIndex, out var mapGridComponent))
-            return _mapSystem.GridTileToLocal(tileAtmosphere.GridIndex, mapGridComponent, tileAtmosphere.GridIndices);
+        {
+            holderCoordinates = _mapSystem.GridTileToLocal(tileAtmosphere.GridIndex, mapGridComponent, tileAtmosphere.GridIndices);
+            return true;
+        }
 
-        return null;
+        holderCoordinates = null;
+        return false;
     }
 }
