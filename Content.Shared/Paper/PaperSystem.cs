@@ -332,5 +332,5 @@ public record struct PaperWriteAttemptEvent(EntityUid Paper, string? FailReason 
 /// </summary>
 /// <param name="Actor">Entity that wrote something in paper.</param>
 [ByRefEvent]
-public record struct PaperAfterWriteEvent(EntityUid Actor);
+public readonly record struct PaperAfterWriteEvent(EntityUid Actor);
 

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -8,17 +9,20 @@ using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Paper;
 using Content.Shared.Popups;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.KillTome;
 
 /// <summary>
 /// This handles KillTome functionality.
 /// </summary>
-///
-/// Death Note Rules:
-/// 1. One humanoid can be killed by Death Note only once.
-/// 2. If the name, that is shared by multiple humanoid, is written, random humanoid with that name dies.
-/// 3. Writing a name should look like this: "{Name}, {KillDelay}" (John Marston, 40)
+
+///     Kill Tome Rules:
+// 1. The humanoid whose name is written in this note shall die.
+// 2. If the name is shared by multiple humanoids, a random humanoid with that name will die.
+// 3. Each name shall be written on a new line.
+// 4. Names must be written in the format: "Name, Delay (in seconds)" (e.g., John Doe, 40).
+// 5. A humanoid can be killed by the same Kill Tome only once.
 public sealed class KillTomeSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -75,7 +79,7 @@ public sealed class KillTomeSystem : EntitySystem
 
             var delay = ent.Comp.DefaultKillDelay;
 
-            if (parts.Length == 2 && int.TryParse(parts[1].Trim(), out var parsedDelay) && parsedDelay > 0)
+            if (parts.Length == 2 && Parse.TryInt32(parts[1].Trim(), out var parsedDelay) && parsedDelay > 0)
                 delay = parsedDelay;
 
             if (!CheckIfEligible(name, ent.Comp, out var uid))
@@ -101,7 +105,7 @@ public sealed class KillTomeSystem : EntitySystem
         }
 
         // If we have written at least one eligible name, we show the popup (So the player knows death note worked).
-        if(showPopup)
+        if (showPopup)
             _popupSystem.PopupEntity(Loc.GetString("killtome-kill-success"), ent.Owner, args.Actor, PopupType.Large);
     }
 
@@ -112,7 +116,7 @@ public sealed class KillTomeSystem : EntitySystem
     // 4. not be already killed by Kill Tome
 
     // If all these conditions are met, we return true and the entityUid of the person to kill.
-    private bool CheckIfEligible(string name, KillTomeComponent comp, out EntityUid? entityUid)
+    private bool CheckIfEligible(string name, KillTomeComponent comp, [NotNullWhen(true)] out EntityUid? entityUid)
     {
         if (!TryFindEntityByName(name, out var uid) ||
             !TryComp<MobStateComponent>(uid, out var mob))
@@ -121,7 +125,13 @@ public sealed class KillTomeSystem : EntitySystem
             return false;
         }
 
-        if (comp.KilledEntities.Contains(uid))
+        if (uid is not { } realUid)
+        {
+            entityUid = null;
+            return false;
+        }
+
+        if (comp.KilledEntities.Contains(realUid))
         {
             entityUid = null;
             return false;
@@ -137,11 +147,11 @@ public sealed class KillTomeSystem : EntitySystem
         return true;
     }
 
-    private bool TryFindEntityByName(string name, out EntityUid entityUid)
+    private bool TryFindEntityByName(string name, [NotNullWhen(true)] out EntityUid? entityUid)
     {
         var query = EntityQueryEnumerator<HumanoidAppearanceComponent>();
 
-        while(query.MoveNext(out var uid, out _))
+        while (query.MoveNext(out var uid, out _))
         {
             if (!_nameModifierSystem.GetBaseName(uid).Equals(name, StringComparison.OrdinalIgnoreCase))
                 continue;
@@ -150,7 +160,7 @@ public sealed class KillTomeSystem : EntitySystem
             return true;
         }
 
-        entityUid = default;
+        entityUid = null;
         return false;
     }
 

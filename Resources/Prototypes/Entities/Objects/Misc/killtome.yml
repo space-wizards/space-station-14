@@ -9,7 +9,7 @@
     sprite: Objects/Misc/killtome.rsi
     state: icon
   - type: KillTome
-    defaultkilldelay: 40
+    defaultKillDelay: 40
     damage:
       types:
         Brute: 200

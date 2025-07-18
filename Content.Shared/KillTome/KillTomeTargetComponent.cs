@@ -5,9 +5,12 @@ namespace Content.Shared.KillTome;
 /// <summary>
 /// Entity with this component is a Kill Tome target.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class KillTomeTargetComponent : Component
 {
-    [AutoNetworkedField, AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    /// <summary>
+    /// The time when the target is killed.
+    /// </summary>
+    [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan KillTime;
 }
