@@ -576,7 +576,8 @@ namespace Content.Server.Atmos.EntitySystems
 
         /// <summary>
         /// Drops any firelocks on the <see cref="tile"/> and <see cref="other"/> indices.
-        /// Also raises a
+        /// Also raises an <see cref="AtmosDeviceExplosiveDepressurizationEvent"/> on any
+        /// entity with an <see cref="AtmosDeviceComponent"/>.
         /// </summary>
         /// <param name="ent">The entity with grid information</param>
         /// <param name="tile">First tile we're checking for devices to operate on</param>
