@@ -40,9 +40,9 @@ public abstract class SharedGodmodeSystem : EntitySystem
     {
         // Don't apply the status effect if 1) we can't find an entity proto
         // for it (probably from old status effect system) or 2) we found the
-        // proto and it has a CurableStatusEffectComponent.
+        // proto and it has a RejuvenateRemovedStatusEffectComponent.
         if (!_protoMan.TryIndex(args.Effect.Id, out var proto, logError: false)
-            || proto.HasComponent<CurableStatusEffectComponent>(Factory))
+            || proto.HasComponent<RejuvenateRemovedStatusEffectComponent>(Factory))
             args.Cancelled = true;
     }
 

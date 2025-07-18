@@ -26,7 +26,7 @@
   id: MobStatusEffectDebuff
   abstract: true
   components:
-  - type: CurableStatusEffect
+  - type: RejuvenateRemovedStatusEffect
 
 - type: entity
   parent: MobStatusEffectDebuff
