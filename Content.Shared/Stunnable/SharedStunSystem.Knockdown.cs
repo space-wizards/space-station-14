@@ -104,7 +104,8 @@ public abstract partial class SharedStunSystem
 
     private void OnKnockInit(Entity<KnockedDownComponent> entity, ref ComponentInit args)
     {
-        _standingState.Down(entity, true, entity.Comp.AutoStand);
+        // Other systems should handle dropping held items...
+        _standingState.Down(entity, true, false);
         RefreshKnockedMovement(entity);
     }
 
@@ -242,7 +243,7 @@ public abstract partial class SharedStunSystem
 
         if (!TryComp<KnockedDownComponent>(playerEnt, out var component))
         {
-            TryKnockdown(playerEnt, DefaultKnockedDuration, true, false); // TODO: Unhardcode these numbers
+            TryKnockdown(playerEnt, DefaultKnockedDuration, true, false, false); // TODO: Unhardcode these numbers
             return;
         }
 

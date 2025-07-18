@@ -19,7 +19,7 @@ public record struct StunnedEvent;
 ///     Raised directed on an entity when it is knocked down.
 /// </summary>
 [ByRefEvent]
-public record struct KnockDownAttemptEvent(bool AutoStand)
+public record struct KnockDownAttemptEvent(bool AutoStand, bool Drop)
 {
     public bool Cancelled;
 }

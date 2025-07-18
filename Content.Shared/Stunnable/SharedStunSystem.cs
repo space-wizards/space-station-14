@@ -164,7 +164,7 @@ public abstract partial class SharedStunSystem : EntitySystem
     /// <summary>
     ///     Knocks down the entity, making it fall to the ground.
     /// </summary>
-    public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh, bool autoStand = true)
+    public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh, bool autoStand = true, bool drop = true)
     {
         if (time <= TimeSpan.Zero)
             return false;
@@ -173,7 +173,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (!HasComp<StandingStateComponent>(uid))
             return false;
 
-        var evAttempt = new KnockDownAttemptEvent(autoStand);
+        var evAttempt = new KnockDownAttemptEvent(autoStand, drop);
         RaiseLocalEvent(uid, ref evAttempt);
 
         if (evAttempt.Cancelled)
@@ -187,6 +187,13 @@ public abstract partial class SharedStunSystem : EntitySystem
         }
         else
         {
+            // Only drop items the first time we want to fall...
+            if (drop)
+            {
+                var ev = new DropHandItemsEvent();
+                RaiseLocalEvent(uid, ref ev);
+            }
+
             // Only update Autostand value if it's our first time being knocked down...
             SetAutoStand((uid, component), evAttempt.AutoStand);
         }
