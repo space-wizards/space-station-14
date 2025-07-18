@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: CubixThree
-  changes:
-  - message: Added plural pride pin.
-    type: Add
-  id: 8275
-  time: '2025-04-20T07:00:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36744
 - author: Helm
   changes:
   - message: You can now add any reagents to soup!
@@ -3901,3 +3894,12 @@
   id: 8787
   time: '2025-07-18T10:54:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38098
+- author: Quantum-cross
+  changes:
+  - message: Unwarmed honk pockets no longer contain omnizine
+    type: Fix
+  - message: Honk pockets make you honk
+    type: Fix
+  id: 8788
+  time: '2025-07-18T11:03:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38152
