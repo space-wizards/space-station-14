@@ -14,12 +14,22 @@ public sealed partial class NameIdentifierGroupPrototype : IPrototype
     [DataField("fullName")]
     public bool FullName = false;
 
-    [DataField("prefix")]
+    /// <summary>
+    /// Optional format identifier. If set, the name will be formatted using it (e.g., "MK-500").
+    /// If not set, only the numeric part will be used (e.g., "500").
+    /// </summary>
+    [DataField("format")]
     public LocId? Format;
 
+    /// <summary>
+    ///     The maximal value appearing in an identifier.
+    /// </summary>
     [DataField("maxValue")]
     public int MaxValue = 1000;
 
+    /// <summary>
+    ///     The minimal value appearing in an identifier.
+    /// </summary>
     [DataField("minValue")]
     public int MinValue = 0;
 }
