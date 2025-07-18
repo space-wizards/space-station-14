@@ -1,0 +1,15 @@
+<Document>
+  # Gas Recycling
+  Gas recycler is a machine that convert waste gasses into breathable ones.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasRecycler"/>
+  </Box>
+
+  They can recycle Carbon Dioxide and Nitrous Oxide into Oxygen and Nitrogen.
+
+  It has a two [textlink="pipenet" link="PipeNetworks"] connections, for gas input and output.
+
+  For the machine to work, tha gas needs to be pressurized to 3000 kPa, and heated to 573,15K.
+
+</Document>
