@@ -1306,6 +1306,7 @@
         - type: TextToSpeech
           voice: circus baby
 
+### this is bricking the whole PR, ill fix later
 - #type: entity
   #parent: BaseVulpkaninPlushie
   #id: PlushieRufia
@@ -1331,6 +1332,8 @@
         - #type: TextToSpeech
           #voice: himeko
 
+
+### will reenable when i get a batter sprite
 #- type: entity
   #parent: PlushieHuman
   #id: PlushieRomero
