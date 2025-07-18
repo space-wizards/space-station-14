@@ -4,11 +4,13 @@ const highp int SampleCount = 10; // a higher number makes the shader look bette
 
 // a simple radial blur
 void fragment() {
-    highp vec2 uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
-    highp vec2 direction = vec2(0.5, 0.5) - uv;
+    highp vec3 col = texture(SCREEN_TEXTURE, UV).xyz;
+    highp vec4 color = zTexture(UV);
+    highp vec2 direction = vec2(0.5, 0.5) - UV;
     for (int i=1; i <= SampleCount; i++)
     {
-        COLOR += zTextureSpec(SCREEN_TEXTURE, uv + float(i) * Strength / float(SampleCount) * direction);
+        col += zTextureSpec(SCREEN_TEXTURE, UV + float(i) * Strength / float(SampleCount) * direction).xyz;
     }
-    COLOR = COLOR / float(SampleCount);
+    col = col / float(SampleCount);
+    COLOR = vec4(vec3(col), color.a);
 }
