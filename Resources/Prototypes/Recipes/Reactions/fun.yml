@@ -100,7 +100,7 @@
       amount: 45
     TableSalt:
       amount: 5
-    Hyperzine:
+    Stimulants:
       amount: 5
   effects:
     - !type:CreateEntityReactionEffect
@@ -125,7 +125,7 @@
   quantized: true
   reactants:
     SoapReagent:
-      amount: 40
+      amount: 240
     TableSalt:
       amount: 5
     SpaceLube:
