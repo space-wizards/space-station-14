@@ -9,6 +9,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Nullable>enable</Nullable>
     <NoWarn>RA0003</NoWarn>
+    <DefineConstants Condition="'$(FullRelease)' != 'True'">$(DefineConstants);EF_DESIGNER</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
