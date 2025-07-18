@@ -106,6 +106,7 @@ public partial class InventorySystem : EntitySystem
         }
 
         // Add new slots from the new template.
+        ent.Comp.Slots = invTemplate.Slots;
         foreach (var slot in ent.Comp.Slots)
         {
             if (ent.Comp.Containers.Any(s => s.ID == slot.Name))
@@ -114,9 +115,8 @@ public partial class InventorySystem : EntitySystem
             TryAddSlotDef(ent, slot);
         }
 
-        // Recreate containers to ensure they are in the same order as the slots.
+        // Reassign containers to ensure they are in the same order as the slots.
         // This is done because the inventory enumerator expects them to be the same index.
-        ent.Comp.Slots = invTemplate.Slots;
         ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
         for (var i = 0; i < ent.Comp.Containers.Length; i++)
         {
