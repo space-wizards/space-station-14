@@ -5,8 +5,6 @@ using Content.Shared.Camera;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Map;
-using Robust.Client.Player;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Movement.Systems;
 
@@ -14,9 +12,6 @@ public sealed partial class EyeCursorOffsetSystem : EntitySystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     // This value is here to make sure the user doesn't have to move their mouse
     // all the way out to the edge of the screen to get the full offset.
