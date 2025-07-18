@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.NameIdentifier;
 
@@ -9,7 +9,7 @@ public sealed partial class NameIdentifierGroupPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    ///     Should the identifier become the full name, or just append?
+    /// Should the identifier become the full name, or just append?
     /// </summary>
     [DataField]
     public bool FullName = false;
@@ -22,13 +22,13 @@ public sealed partial class NameIdentifierGroupPrototype : IPrototype
     public LocId? Format;
 
     /// <summary>
-    ///     The maximal value appearing in an identifier.
+    /// The maximal value appearing in an identifier.
     /// </summary>
     [DataField]
     public int MaxValue = 1000;
 
     /// <summary>
-    ///     The minimal value appearing in an identifier.
+    /// The minimal value appearing in an identifier.
     /// </summary>
     [DataField]
     public int MinValue = 0;
