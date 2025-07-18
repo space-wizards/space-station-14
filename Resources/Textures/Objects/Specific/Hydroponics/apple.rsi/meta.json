@@ -17,6 +17,12 @@
             "name": "produce"
         },
         {
+            "name": "produce_red"
+        },
+        {
+            "name": "produce_yellow"
+        },
+        {
             "name": "seed"
         },
         {

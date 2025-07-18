@@ -1070,6 +1070,12 @@
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
+  - type: RandomSprite
+    available:
+      - 0:
+          produce: ""
+          produce_red: ""
+          produce_yellow: ""
   - type: Produce
     seedId: apple
   - type: Extractable
