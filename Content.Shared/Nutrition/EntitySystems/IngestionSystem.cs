@@ -70,7 +70,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
         // Interactions
         SubscribeLocalEvent<EdibleComponent, UseInHandEvent>(OnUseEdibleInHand, after: new[] { typeof(OpenableSystem), typeof(InventorySystem) });
-        SubscribeLocalEvent<EdibleComponent, AfterInteractEvent>(OnEdibleInteract, after: new[] { typeof(ItemSlotsSystem), typeof(ToolOpenableSystem) });
+        SubscribeLocalEvent<EdibleComponent, AfterInteractEvent>(OnEdibleInteract, after: new[] { typeof(ToolOpenableSystem) });
 
         // Generic Eating Handlers
         SubscribeLocalEvent<EdibleComponent, BeforeEatenEvent>(OnBeforeEaten);
