@@ -29,6 +29,7 @@ public partial class InventorySystem : EntitySystem
     {
         args.State = new InventoryComponentState(ent.Comp.TemplateId, ent.Comp.SpeciesId, ent.Comp.Displacements, ent.Comp.FemaleDisplacements, ent.Comp.MaleDisplacements);
 
+        // We update the template here to make sure the slot update is handled live, when the templateID or another field changes.
         UpdateInventoryTemplate(ent);
     }
 
@@ -65,7 +66,7 @@ public partial class InventorySystem : EntitySystem
 
     protected virtual void OnInit(EntityUid uid, InventoryComponent component, ComponentInit args)
     {
-        if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
+        if (!_prototypeManager.TryIndex(component.TemplateId, out var invTemplate))
             return;
 
         component.Slots = invTemplate.Slots;
@@ -87,6 +88,7 @@ public partial class InventorySystem : EntitySystem
         if (!_prototypeManager.TryIndex(ent.Comp.TemplateId, out var invTemplate))
             return;
 
+        // Remove any containers that aren't in the new template.
         foreach (var container in ent.Comp.Containers)
         {
             if (invTemplate.Slots.Any(s => s.Name == container.ID))
@@ -97,10 +99,13 @@ public partial class InventorySystem : EntitySystem
 
             TryRemoveSlotDef(ent, slotDef);
 
+            // Empty container before deletion so the contents dont get removed.
+            // For cases when we update the template while items are already worn.
             _containerSystem.EmptyContainer(deleteSlot, true);
             _containerSystem.ShutdownContainer(deleteSlot);
         }
 
+        // Add new slots from the new template.
         foreach (var slot in ent.Comp.Slots)
         {
             if (ent.Comp.Containers.Any(s => s.ID == slot.Name))
@@ -109,6 +114,8 @@ public partial class InventorySystem : EntitySystem
             TryAddSlotDef(ent, slot);
         }
 
+        // Recreate containers to ensure they are in the same order as the slots.
+        // This is done because the inventory enumerator expects them to be the same index.
         ent.Comp.Slots = invTemplate.Slots;
         ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
         for (var i = 0; i < ent.Comp.Containers.Length; i++)
@@ -136,11 +143,15 @@ public partial class InventorySystem : EntitySystem
 
     public virtual bool TryAddSlotDef(EntityUid owner, SlotDefinition newSlotDef)
     {
+        // Check client-side code.
+        // Needed so it can be ran from shared.
         return false;
     }
 
     public virtual bool TryRemoveSlotDef(EntityUid owner, SlotDefinition newSlotDef)
     {
+        // Check client-side code.
+        // Needed so it can be ran from shared.
         return false;
     }
 

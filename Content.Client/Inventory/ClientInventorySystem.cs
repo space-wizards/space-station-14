@@ -69,6 +69,7 @@ namespace Content.Client.Inventory
             ent.Comp.FemaleDisplacements = state.FemaleDisplacements;
             ent.Comp.MaleDisplacements = state.MaleDisplacements;
 
+            // Update the template clientside as well, to make sure all visuals and containers are refreshed.
             UpdateInventoryTemplate(ent);
         }
 
@@ -193,7 +194,7 @@ namespace Content.Client.Inventory
         public void UpdateSlot(EntityUid owner, InventorySlotsComponent component, string slotName,
             bool? blocked = null, bool? highlight = null)
         {
-            if (!HasSlot(owner, slotName)) // TODO: This somehow breaks sprite updating. But without it it crashes. God save me.
+            if (!HasSlot(owner, slotName))
                 return;
 
             var oldData = component.SlotData[slotName];
@@ -246,7 +247,7 @@ namespace Content.Client.Inventory
         /// Updates the containers in InventorySlotsComponent according to their slots.
         /// </summary>
         /// <param name="ent">Entity to update.</param>
-        public void UpdateContainerData(Entity<InventorySlotsComponent> ent)
+        private void UpdateContainerData(Entity<InventorySlotsComponent> ent)
         {
             if (!TryGetSlots(ent, out var definitions))
                 return;
