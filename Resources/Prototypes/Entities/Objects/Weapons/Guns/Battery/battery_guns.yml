@@ -141,7 +141,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    storedOffset: 0,-2
+    storedOffset: 0,-5
   - type: HitscanBatteryAmmoProvider
     proto: RedMediumLaser
     fireCost: 62.5
