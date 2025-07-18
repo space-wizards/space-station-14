@@ -67,3 +67,18 @@ public readonly struct AtmosDeviceUpdateEvent(float dt, Entity<GridAtmosphereCom
     /// </summary>
     public readonly Entity<MapAtmosphereComponent?>? Map = map;
 }
+
+/// <summary>
+/// Event directed on an atmos device when the monstermos volume its exposed to has undergone
+/// an explosive decompression.
+/// </summary>
+/// <param name="grid">The grid that the device is currently on.</param>
+/// <remarks>Be careful not to use this for time-sensitive events involving airtightness,
+/// as airtightness is not updated instantly unless forced to - it is cached.</remarks>
+[ByRefEvent]
+public record struct AtmosDeviceExplosiveDepressurizationEvent(Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? grid)
+{
+    public Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? Grid = grid == null
+        ? null
+        : (grid.Value, grid.Value, grid.Value);
+}

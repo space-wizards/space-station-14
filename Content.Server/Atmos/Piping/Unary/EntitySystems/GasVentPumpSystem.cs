@@ -62,6 +62,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentPumpComponent, WeldableChangedEvent>(OnWeldChanged);
             SubscribeLocalEvent<GasVentPumpComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
             SubscribeLocalEvent<GasVentPumpComponent, VentScrewedDoAfterEvent>(OnVentScrewed);
+            SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceExplosiveDepressurizationEvent>(OnExplosiveDepressurization);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, ref AtmosDeviceUpdateEvent args)
@@ -101,7 +102,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var timeDelta = args.dt;
             var pressureDelta = timeDelta * vent.TargetPressureChange;
 
-            var lockout = (environment.Pressure < vent.UnderPressureLockoutThreshold) && !vent.IsPressureLockoutManuallyDisabled;
+            var lockout = (environment.Pressure < vent.UnderPressureLockoutThreshold) || _timing.CurTime < vent.LockoutLockdownExpireAtTime;
+
+            if (vent.IsPressureLockoutManuallyDisabled)
+            {
+                lockout = false;
+            }
+
             if (vent.UnderPressureLockout != lockout) // update visuals only if this changes
             {
                 vent.UnderPressureLockout = lockout;
@@ -418,6 +425,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             component.ManualLockoutReenabledAt = _timing.CurTime + component.ManualLockoutDisabledDuration;
             component.IsPressureLockoutManuallyDisabled = true;
+        }
+
+        /// <summary>
+        /// Forces the vent into pressure lockout when we experience an explosive depressurization
+        /// and increments a timer.
+        /// </summary>
+        private void OnExplosiveDepressurization(Entity<GasVentPumpComponent> ent, ref AtmosDeviceExplosiveDepressurizationEvent args)
+        {
+            ent.Comp.LockoutLockdownExpireAtTime = _timing.CurTime + ent.Comp.LockoutLockdownTime;
         }
     }
 }
