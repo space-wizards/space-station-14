@@ -1189,6 +1189,8 @@
       sprite: _Starlight/Objects/Fun/Plushies/percy_plushie.rsi
       layers:
         - state: icon
+    - type: Insulated
+      coefficient: 0.2
     - type: ItemToggle
       onUse: false
       verbToggleOn: plushie-voicebox-activate
