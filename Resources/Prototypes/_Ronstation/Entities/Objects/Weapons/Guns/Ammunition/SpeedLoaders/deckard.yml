@@ -23,6 +23,7 @@
   id: SpeedLoaderDeckard
   name: "deckard speed loader (.45 magnum)"
   parent: BaseSpeedLoaderDeckard
+  description: "A speedloader made specifically for Deckard. It has a shiny silver handle."
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
