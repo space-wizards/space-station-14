@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 #When adding new hardsuits, please try to keep the organization consistent with hardsuit.yml (if possible.)
 
 #For now, since locational damage is not a thing, all "combat" hardsuits (with the exception of the deathsquad hardsuit) have the equvilent of a helmet in terms of armor.
@@ -145,7 +147,7 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitSalvage
   name: mining hardsuit helmet
-  description: A helmet for hard working miners. Comes with basic armor for explosions & wildlife encounters, and dual floodlights to light up your mineshaft.
+  description: A helmet for hard working miners. Comes with basic armor for explosions & wildlife encounters, and dual floodlights to light up your mineshaft. # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/salvage.rsi
@@ -157,7 +159,7 @@
   - type: PointLight
     radius: 7
     energy: 3
-    color: "#FFFF90"
+    color: "#FFFF90" # Ronstation
   - type: Tag
     tags:
     - CorgiWearable
@@ -297,7 +299,7 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitWarden
   name: warden's hardsuit helmet
-  description: A heavily modified riot helmet. Oddly comfortable for a wearable brick wall.
+  description: A heavily modified riot helmet. Oddly comfortable for a wearable brick wall. # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security-warden.rsi
@@ -442,7 +444,7 @@
   - type: PointLight
     radius: 10
     energy: 4
-    color: "#FFFF20"
+    color: "#FFFF20" # Ronstation
 
 #ANTAG HARDSUITS
 #Blood-red Hardsuit

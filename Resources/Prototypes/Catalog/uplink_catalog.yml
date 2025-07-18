@@ -1,4 +1,5 @@
 # Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 # TODO: make more categories
 # Guns
 
@@ -66,52 +67,6 @@
     Telecrystal: 8
   categories:
   - UplinkWeaponry
-
-- type: listing
-  id: UplinkHyperEutacticBlade
-  name: uplink-hypereutactic-blade-name
-  description: uplink-hypereutactic-blade-desc
-  icon: { sprite: /Textures/Objects/Weapons/Melee/hypereutactic_blade.rsi, state: icon }
-  discountCategory: veryRareDiscounts
-  discountDownTo:
-    Telecrystal: 15
-  productEntity: HyperEutacticBlade
-  cost:
-    Telecrystal: 18
-  categories:
-  - UplinkWeaponry
-  conditions:
-  - !type:BuyerWhitelistCondition
-    blacklist:
-      components:
-      - SurplusBundle
-  - !type:StoreWhitelistCondition
-    blacklist:
-      tags:
-      - NukeOpsUplink
-
-- type: listing
-  id: UplinkHyperEutaticBlade
-  name: uplink-hypereutatic-blade-name
-  description: uplink-hypereutatic-blade-desc
-  icon: { sprite: /Textures/Objects/Weapons/Melee/hypereutactic_blade.rsi, state: icon }
-  discountCategory: veryRareDiscounts
-  discountDownTo:
-    Telecrystal: 13
-  productEntity: HyperEutaticBlade
-  cost:
-    Telecrystal: 16
-  categories:
-  - UplinkWeaponry
-  conditions:
-  - !type:BuyerWhitelistCondition
-    blacklist:
-      components:
-      - SurplusBundle
-  - !type:StoreWhitelistCondition
-    whitelist:
-      tags:
-      - NukeOpsUplink
 
 - type: listing
   id: UplinkEnergyDagger
@@ -1709,7 +1664,7 @@
   name: uplink-eva-syndie-name
   description: uplink-eva-syndie-desc
   icon: { sprite: /Textures/Clothing/OuterClothing/Suits/eva_syndicate.rsi, state: icon }
-  productEntity: ClothingBackpackSyndicateEVABundle
+  productEntity: ClothingBackpackSyndicateEVABundle # Ronstation
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 1

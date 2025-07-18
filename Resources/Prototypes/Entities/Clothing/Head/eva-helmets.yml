@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 #EVA Helmet
 - type: entity
   parent: ClothingHeadEVAHelmetBase
@@ -63,7 +65,7 @@
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetAncient
   name: NTSRA void helmet
-  description: An antique design of helmet made by the Nanotrasen Space Research Association. You can't tell if this is one of the old ones, or just a reproduction.
+  description: An antique design of helmet made by the Nanotrasen Space Research Association. You can't tell if this is one of the old ones, or just a reproduction. # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi

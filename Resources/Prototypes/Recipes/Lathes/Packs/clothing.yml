@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 ## Static
 
 - type: latheRecipePack
@@ -33,7 +35,6 @@
   - ClothingUniformJumpskirtCapFormalDress
   # HoP
   - ClothingHeadHatHopcap
-  - ClothingHeadHatBeretHop
   - ClothingUniformJumpsuitHoP
   - ClothingUniformJumpskirtHoP
   # Generic
@@ -146,7 +147,9 @@
   - ClothingOuterWinterCMO
   - ClothingOuterWinterHoP
   - ClothingOuterWinterHoSUnarmored
+  - ClothingOuterWinterHoS # Ronstation
   - ClothingOuterWinterWardenUnarmored
+  - ClothingOuterWinterWarden # Ronstation
   - ClothingOuterWinterQM
   - ClothingOuterWinterRD
   - ClothingOuterWinterMusician

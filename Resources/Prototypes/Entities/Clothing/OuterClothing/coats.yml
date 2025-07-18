@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatBomber
@@ -19,9 +21,9 @@
     sprite: Clothing/OuterClothing/Coats/detective.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/detective.rsi
-  - type: Item
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    shape: # Ronstaiton
+    - 0,0,1,2 # Ronstation
   - type: StorageFill
     contents:
     - id: SmokingPipeFilledTobacco
@@ -76,9 +78,9 @@
         Caustic: 0.75 # not the full 90% from ss13 because of the head
   - type: ExplosionResistance
     damageCoefficient: 0.9
-  - type: Item
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,1,2 # Ronstation
 
 - type: entity
   abstract: true
@@ -95,9 +97,9 @@
         Caustic: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
-  - type: Item
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,1,2 # Ronstation
 
 - type: entity
   parent: [ClothingOuterArmorHoS, ClothingOuterStorageBase, BaseSecurityCommandContraband]

@@ -1,5 +1,5 @@
-using Content.Server.StatusEffectNew;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.StatusEffectNew;
 using Robust.Shared.Random;
 
 namespace Content.Server.Traits.Assorted;
@@ -53,7 +53,7 @@ public sealed class NarcolepsySystem : EntitySystem
             // Make sure the sleep time doesn't cut into the time to next incident.
             narcolepsy.NextIncidentTime += duration;
 
-            _statusEffects.TryAddStatusEffect(uid, SleepingSystem.StatusEffectForcedSleeping, TimeSpan.FromSeconds(duration));
+            _statusEffects.TryAddStatusEffectDuration(uid, SleepingSystem.StatusEffectForcedSleeping, TimeSpan.FromSeconds(duration));
         }
     }
 }

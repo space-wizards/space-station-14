@@ -24,9 +24,6 @@ uplink-esword-double-desc = A much more expensive counter part to the normal ene
 uplink-hypereutactic-blade-name = Hypereutactic Blade
 uplink-hypereutactic-blade-desc = A gigantic energy sword with power that matches its looks. Requires two hands. Slow and unwieldy, yet pretty adept at reflecting. Previously made infamous by an operative wearing a joy mask. You wouldn't want to see this coming at you down the hall!
 
-uplink-hypereutatic-blade-name = Hypereutatic Blade
-uplink-hypereutatic-blade-desc = A gigantic off-brand energy sword. Requires two hands. Slow and unwieldy, can reflect decently. Often mistaken for the Hypereutactic Blade.
-
 uplink-edagger-name = Energy Dagger
 uplink-edagger-desc = A small energy blade conveniently disguised in the form of a pen.
 
@@ -259,7 +256,7 @@ uplink-buldog-bundle-name = Bulldog Bundle
 uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g slug drum, and four 12g buckshot drums.
 
 uplink-grenade-launcher-bundle-name = China-Lake Bundle
-uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 9 explosive rounds of varying yield. # Ronstation - modification
+# uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 11 rounds of varying destructive capability. # Ronstation - modification
 
 uplink-l6-saw-bundle-name = L6 Saw Bundle
 uplink-l6-saw-bundle-desc = More dakka: The iconic L6 light machine gun, bundled with 2 box magazines.
