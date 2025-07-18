@@ -1191,6 +1191,8 @@
         - state: icon
     - type: Insulated
       coefficient: 0.2
+    - type: Clothing
+      slots: [gloves]
     - type: ItemToggle
       onUse: false
       verbToggleOn: plushie-voicebox-activate
