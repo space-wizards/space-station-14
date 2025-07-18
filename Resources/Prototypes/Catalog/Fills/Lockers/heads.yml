@@ -395,7 +395,7 @@
     access: [ [ "Command" ] ]
   - type: StorageFill
     contents:
-    - id: WeaponRevolverDeckard
+    - id: DeckardBoxFilled
     - id: JetpackBlue
     - id: SpaceCash1000
     - id: BeachBall
