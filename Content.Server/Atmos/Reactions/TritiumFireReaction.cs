@@ -15,20 +15,6 @@ namespace Content.Server.Atmos.Reactions
         private static readonly Color WeakestRadiationPulseColor = new Color(26, 77, 255);
         private static readonly Color StrongestRadiationPulseColor = new Color(179, 26, 255);
 
-        // Well we don't have a method for this, so..
-        private static Color LerpColor(Color current, Color goal, float fraction)
-        {
-            var aRGB = new Span<float>([current.R, current.G, current.B]);
-            var bRGB = new Span<float>([goal.R, goal.G, goal.B]);
-
-            NumericsHelpers.Sub(bRGB, aRGB);
-            NumericsHelpers.Multiply(bRGB, fraction);
-            NumericsHelpers.Add(bRGB, aRGB);
-
-            var c = aRGB.ToArray();
-            return new Color(c[0], c[1], c[2]);
-        }
-
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale, EntityUid? holderUid)
         {
             var energyReleased = 0f;
@@ -93,7 +79,7 @@ namespace Content.Server.Atmos.Reactions
                     // The light is to signal to people that "OH FUCK THERE'S ALOT OF RADS".
                     atmosphereSystem.AdjustRadiationPulse(radiationEntity,
                         radiation,
-                        LerpColor(WeakestRadiationPulseColor, StrongestRadiationPulseColor, radiation / Atmospherics.MaxTritiumRadiation),
+                        Color.InterpolateBetween(WeakestRadiationPulseColor, StrongestRadiationPulseColor, radiation / Atmospherics.MaxTritiumRadiation),
                         fullRadiation / Atmospherics.MaxTritiumRadiation);
                 }
             }
