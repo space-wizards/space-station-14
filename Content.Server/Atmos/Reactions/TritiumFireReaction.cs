@@ -88,7 +88,7 @@ namespace Content.Server.Atmos.Reactions
                     var fullRadiation = (energyReleased + Atmospherics.TritiumMinimumEnergyForRadiation) / Atmospherics.TritiumRadiationFactor;
                     var radiation = MathF.Min(Atmospherics.MaxTritiumRadiation, fullRadiation);
 
-                    // The light emitted from tritium-combustion is very, very loosely based off of cherenkov radiation (its because its blue)
+                    // The light emitted from tritium-combustion is very, very loosely based off of cherenkov radiation (which is only because the light is blue and there's literally no other realistic factor at all ever don't quote me)
                     // Although green would be more fitting for trit (as trit is green), it's harder to recognise when it's not as intense, compared to blue.
                     // The light is to signal to people that "OH FUCK THERE'S ALOT OF RADS".
                     atmosphereSystem.AdjustRadiationPulse(radiationEntity,
