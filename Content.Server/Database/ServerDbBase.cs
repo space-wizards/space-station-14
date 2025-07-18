@@ -10,6 +10,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.ParrotMemories;
+using Content.Shared.Administration.PlayerMessage;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
@@ -1832,7 +1833,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             // get count of records
             var count = db.DbContext.PlayerMessage
-                .Count(message => message.Type == PlayerMessageType.Parrot);
+                .Count(message => !message.Block && message.Type == PlayerMessageType.Parrot);
 
             if (count == 0)
                 yield break;
@@ -1842,7 +1843,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             for (var i = 0; i < limit && i < count; i++)
             {
                 var selectedMemory = db.DbContext.PlayerMessage
-                    .Where(message => message.Type == PlayerMessageType.Parrot)
+                    .Where(message => !message.Block && message.Type == PlayerMessageType.Parrot)
                     .ElementAt(random.Next(0, count));
 
                 yield return selectedMemory;

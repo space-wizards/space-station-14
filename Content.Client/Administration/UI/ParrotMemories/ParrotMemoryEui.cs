@@ -10,120 +10,90 @@ public sealed class ParrotMemoryEui : BaseEui
 {
     private ParrotMemoryWindow ParrotMemoryWindow { get; }
 
+    private int _currentRound;
+
     public ParrotMemoryEui()
     {
-        ParrotMemoryWindow = new ParrotMemoryWindow();
+        ParrotMemoryWindow = new ParrotMemoryWindow(_currentRound);
 
-        ParrotMemoryWindow.OnOpen += InitializeMemoryLists;
+        ParrotMemoryWindow.OnOpen += SendRefreshCurrentRound;
         ParrotMemoryWindow.OnClose += () => SendMessage(new CloseEuiMessage());
 
-        ParrotMemoryWindow.MemoryTabContainer.OnTabChanged += (_) => RefreshMemoryList();
-    }
-
-    /// <summary>
-    /// Function called when the parrot memory window is opened. This initializes
-    /// </summary>
-    private void InitializeMemoryLists()
-    {
-        // add event handlers for list controls if they were never initialized
-        foreach (var child in ParrotMemoryWindow.MemoryTabContainer.Children)
+        ParrotMemoryWindow.CurrentRoundButton.OnPressed += (_) =>
         {
-            if (child is not ParrotMemoryList { Initialized: false } parrotMemoryList)
+            if (ParrotMemoryWindow.RoundId == _currentRound)
                 return;
 
-            parrotMemoryList.RefreshButton.OnPressed += (_) => SendRefresh(parrotMemoryList);
-            parrotMemoryList.CurrentRoundOnly.OnToggled += (_) => SendRefresh(parrotMemoryList);
-            parrotMemoryList.ApplyFilterButton.OnPressed += (_) => SendRefresh(parrotMemoryList);
-            parrotMemoryList.ClearFilterButton.OnPressed += (_) => ClearFilter(parrotMemoryList);
-        }
+            // set all lists to dirty
+            ParrotMemoryWindow.SetListsDirty();
 
-        if (ParrotMemoryWindow.GetActiveList() is not { } activeList)
-            return;
+            // passing null requests the current round. This feels slightly more robust vs using _currentRound
+            // because it will for sure get the current round and not whatever _currentRound happens to be
+            SendRefresh(null);
+            ParrotMemoryWindow.SetRound(_currentRound);
+        };
 
-        SendRefresh(activeList);
-    }
-
-    /// <summary>
-    /// Send a refresh for the active memory list, re-loading the messages
-    /// </summary>
-    private void RefreshMemoryList()
-    {
-        // add event handlers for list controls if this was never initialized
-        if (ParrotMemoryWindow.GetActiveList() is not { Dirty: true } parrotMemoryList)
-            return;
-
-        SendRefresh(parrotMemoryList);
-    }
-
-    /// <summary>
-    /// Send a refresh message to the server to get a new state
-    /// </summary>
-    public void SendRefresh(ParrotMemoryList parrotMemoryList)
-    {
-        SendMessage(new ParrotMemoryRefreshMsg(
-            parrotMemoryList.ShowBlocked,
-            parrotMemoryList.CurrentRoundOnly.Pressed,
-            parrotMemoryList.FilterLineEdit.Text
-        ));
-    }
-
-    /// <summary>
-    /// Clear the text filter on a list and send a refresh
-    /// </summary>
-    public void ClearFilter(ParrotMemoryList parrotMemoryList)
-    {
-        parrotMemoryList.FilterLineEdit.Text = "";
-        SendRefresh(parrotMemoryList);
-    }
-
-    /// <summary>
-    /// Set a memory to blocked or unblocked and mark any inactive lists as dirty
-    /// </summary>
-    /// <param name="messageId">Player message ID of the memory</param>
-    /// <param name="block">True to block, false to unblock</param>
-    public void SetMemoryBlocked(int messageId, bool block)
-    {
-        SendMessage(new SetParrotMemoryBlockedMsg(messageId, block));
-        ParrotMemoryWindow.MarkInactiveListsDirty();
-    }
-
-    public override void HandleState(EuiStateBase state)
-    {
-        base.HandleState(state);
-
-        if (state is not ParrotMemoryEuiState { } memoryState)
-            return;
-
-        var activeList = ParrotMemoryWindow.GetActiveList();
-
-        if (activeList is null)
-            return;
-
-        UpdateMemoryList(activeList, memoryState);
-    }
-
-    // updates a memory list with new entries
-    private void UpdateMemoryList(ParrotMemoryList memoryList, ParrotMemoryEuiState memoryState)
-    {
-        memoryList.UpdateMemoryCountText(memoryState.Messages.Count);
-
-        // remove all entries from this list
-        memoryList.MemoryContainer.RemoveAllChildren();
-
-        foreach (var message in memoryState.Messages)
+        ParrotMemoryWindow.NextRoundButton.OnPressed += (_) =>
         {
-            var memoryLine = new ParrotMemoryLine(message, memoryState.RoundId);
+            // set all lists to dirty
+            ParrotMemoryWindow.SetListsDirty();
 
-            memoryList.MemoryContainer.AddChild(memoryLine);
+            SendRefresh(ParrotMemoryWindow.RoundId + 1);
+            ParrotMemoryWindow.SetRound(ParrotMemoryWindow.RoundId + 1);
+        };
 
-            // we have to dig into the control here to add blocking the memory and removing it from this list
-            memoryLine.ParrotBlockButton.OnPressed += (_) =>
+        ParrotMemoryWindow.PrevRoundButton.OnPressed += (_) =>
+        {
+            // set all lists to dirty
+            ParrotMemoryWindow.SetListsDirty();
+
+            SendRefresh(ParrotMemoryWindow.RoundId - 1);
+            ParrotMemoryWindow.SetRound(ParrotMemoryWindow.RoundId - 1);
+        };
+
+        ParrotMemoryWindow.MemoryTabContainer.OnTabChanged += (_) =>
+        {
+            if (ParrotMemoryWindow.GetActiveList() is not { } parrotMemoryList)
+                return;
+
+            // if the list is not dirty, use the number of memory lines to update the count text
+            // we won't get a new state in that case
+            if (!parrotMemoryList.Dirty)
+                ParrotMemoryWindow.UpdateMemoryCountText(parrotMemoryList.MemoryContainer.ChildCount);
+
+            SendRefresh(ParrotMemoryWindow.RoundId);
+        };
+
+        ParrotMemoryWindow.RoundLineEdit.OnTextTyped += (_) =>
+        {
+            // basic validation
+            if (!int.TryParse(ParrotMemoryWindow.RoundLineEdit.Text, out var roundId))
             {
-                SetMemoryBlocked(message.MessageId, !message.Blocked);
-                memoryList.MemoryContainer.RemoveChild(memoryLine);
-                memoryList.DecrementMemoryCount(1);
-            };
-        }
+                ParrotMemoryWindow.RoundLineEdit.Text = _currentRound.ToString();
+                return;
+            }
+
+            SendRefresh(roundId);
+        };
+
+        ParrotMemoryWindow.RefreshButton.OnPressed += (_) =>
+        {
+            ParrotMemoryWindow.SetActiveListDirty();
+            SendRefresh(ParrotMemoryWindow.RoundId);
+        };
+
+        ParrotMemoryWindow.ApplyFilterButton.OnPressed += (_) =>
+        {
+            ParrotMemoryWindow.SetListsDirty();
+            SendRefresh(ParrotMemoryWindow.RoundId);
+        };
+
+        ParrotMemoryWindow.ClearFilterButton.OnPressed += (_) =>
+        {
+            ParrotMemoryWindow.FilterLineEdit.Text = string.Empty;
+            ParrotMemoryWindow.SetListsDirty();
+            SendRefresh(ParrotMemoryWindow.RoundId);
+        };
     }
 
     public override void Opened()
@@ -135,5 +105,87 @@ public sealed class ParrotMemoryEui : BaseEui
     {
         base.Closed();
         ParrotMemoryWindow.Close();
+    }
+
+    public override void HandleState(EuiStateBase state)
+    {
+        base.HandleState(state);
+
+        if (state is not ParrotMemoryEuiState { } parrotMemoryEuiState)
+            return;
+
+        _currentRound = parrotMemoryEuiState.CurrentRoundId;
+
+        // in case an admin is going to the next/previous rounds too fast, this should discard state updates that
+        // don't match the expected round except for the first time we get a state (current round)
+        if (parrotMemoryEuiState.MessagesRoundId != parrotMemoryEuiState.CurrentRoundId && parrotMemoryEuiState.MessagesRoundId != ParrotMemoryWindow.RoundId)
+            return;
+
+        // update main ui elements
+        ParrotMemoryWindow.SetRound(parrotMemoryEuiState.MessagesRoundId);
+        ParrotMemoryWindow.UpdateMemoryCountText(parrotMemoryEuiState.Messages.Count);
+
+        if (ParrotMemoryWindow.GetActiveList() is not { } activeList)
+            return;
+
+        // add new ones
+        foreach (var message in parrotMemoryEuiState.Messages)
+        {
+            var memoryLine = new ParrotMemoryLine(message);
+
+            activeList.MemoryContainer.AddChild(memoryLine);
+
+            memoryLine.ParrotBlockButton.OnPressed += (_) =>
+            {
+                activeList.MemoryContainer.RemoveChild(memoryLine);
+
+                SetMemoryBlocked(message.MessageId, !message.Blocked);
+
+                ParrotMemoryWindow.DecrementMemoryCount(1);
+
+                // set inactive lists to dirty
+                ParrotMemoryWindow.SetListsDirty(true);
+            };
+        }
+
+        activeList.Dirty = false;
+    }
+
+    /// <summary>
+    /// Sends a refresh message for the active list. Used whenever a tab is switched, refresh is pressed or some other
+    /// reason to reload the messages
+    /// </summary>
+    /// <param name="roundId">ID of the round to request memories for. If set to null will request current round</param>
+    private void SendRefresh(int? roundId)
+    {
+        // never update on fresh lists
+        if (ParrotMemoryWindow.GetActiveList() is not { Dirty: true } activeList)
+            return;
+
+        // get rid of old messages here so that the UI appears more responsive. UI design is my passion
+        activeList.MemoryContainer.RemoveAllChildren();
+
+        SendMessage(new ParrotMemoryRefreshMsg(activeList.ShowBlocked, ParrotMemoryWindow.FilterLineEdit.Text, roundId));
+    }
+
+    /// <summary>
+    /// Send a refresh message with an undefined round id, returning a state for the current round
+    /// </summary>
+    private void SendRefreshCurrentRound()
+    {
+        if (ParrotMemoryWindow.GetActiveList() is not { } activeList)
+            return;
+
+        SendMessage(new ParrotMemoryRefreshMsg(activeList.ShowBlocked, ParrotMemoryWindow.FilterLineEdit.Text, null));
+    }
+
+    /// <summary>
+    /// Set a memory to blocked or unblocked and mark any inactive lists as dirty
+    /// </summary>
+    /// <param name="messageId">Player message ID of the memory</param>
+    /// <param name="block">True to block, false to unblock</param>
+    private void SetMemoryBlocked(int messageId, bool block)
+    {
+        SendMessage(new SetParrotMemoryBlockedMsg(messageId, block));
     }
 }

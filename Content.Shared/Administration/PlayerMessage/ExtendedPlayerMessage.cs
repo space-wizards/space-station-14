@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Administration.ParrotMemories;
+namespace Content.Shared.Administration.PlayerMessage;
 
 /// <summary>
 /// Player message record that includes additional player information for administration purposes

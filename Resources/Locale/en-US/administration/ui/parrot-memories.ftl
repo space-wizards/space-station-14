@@ -5,15 +5,16 @@ parrot-memory-title = Parrot memory
 parrot-memory-loading = Loading parrot memories...
 parrot-memory-num-memories = { $memoryCount ->
     [0] No parrot memories
-    [1] 1 parrot memories
+    [1] 1 parrot memory
     *[other] { $memoryCount } parrot memories
 }
 
+# general controls
 parrot-memory-refresh = Refresh
+parrot-memory-to-current-round = To current round
 
 # filter
 parrot-memory-text-filter = Text filter
-parrot-memory-current-round-filter = Current round only
 parrot-memory-apply-filter = Apply filter
 parrot-memory-clear-filter = Clear filter
 

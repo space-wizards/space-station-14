@@ -5,6 +5,7 @@ using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Administration.ParrotMemories;
+using Content.Shared.Administration.PlayerMessage;
 using Content.Shared.Eui;
 
 namespace Content.Server.Administration.UI;
@@ -16,8 +17,8 @@ public sealed class ParrotMemoryEui : BaseEui
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
     private readonly List<ExtendedPlayerMessage> _parrotMemories = [];
-    private readonly int _currentRoundId;
-    private bool _currentRoundOnly;
+    private readonly int _currentRound;
+    private int _selectedRound;
     private bool _showBlocked;
     private string _textFilter = string.Empty;
 
@@ -25,13 +26,13 @@ public sealed class ParrotMemoryEui : BaseEui
     {
         IoCManager.InjectDependencies(this);
 
-        _currentRoundId = _entityManager.System<GameTicker>().RoundId;
+        _currentRound = _entityManager.System<GameTicker>().RoundId;
     }
 
 
     public override EuiStateBase GetNewState()
     {
-        return new ParrotMemoryEuiState(_parrotMemories, _currentRoundId);
+        return new ParrotMemoryEuiState(_parrotMemories, _currentRound, _selectedRound);
     }
 
     public override async void HandleMessage(EuiMessageBase msg)
@@ -44,10 +45,12 @@ public sealed class ParrotMemoryEui : BaseEui
         switch (msg)
         {
             case ParrotMemoryRefreshMsg refreshMsg:
-                _currentRoundOnly = refreshMsg.CurrentRoundOnly;
                 _showBlocked = refreshMsg.ShowBlocked;
                 _textFilter = refreshMsg.FilterString;
-                RefreshParrotMemories();
+
+                _selectedRound = refreshMsg.RequestedRoundId ?? _currentRound;
+
+                RefreshParrotMemories(_selectedRound);
 
                 break;
             case SetParrotMemoryBlockedMsg blockChangeMsg:
@@ -61,19 +64,14 @@ public sealed class ParrotMemoryEui : BaseEui
         await Task.Run(async () => await _db.SetParrotMemoryBlock(messageId, block));
     }
 
-    private async void RefreshParrotMemories()
+    private async void RefreshParrotMemories(int roundId)
     {
-        int? round = null;
-
-        if (_currentRoundOnly)
-            round = _currentRoundId;
-
         string? textFilter = null;
 
         if (_textFilter != string.Empty)
             textFilter = _textFilter;
 
-        var memories = _db.GetParrotMemories(_showBlocked, round, textFilter);
+        var memories = _db.GetParrotMemories(_showBlocked, roundId, textFilter);
 
         _parrotMemories.Clear();
 

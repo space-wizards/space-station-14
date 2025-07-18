@@ -1,27 +1,6 @@
 <BoxContainer xmlns="https://spacestation14.io"
               xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
               Orientation="Vertical">
-    <!-- view checkboxes and refresh button -->
-    <BoxContainer Orientation="Horizontal" Margin="4">
-        <Label Name="MemoryCountLabel" Text="{Loc parrot-memory-loading}" HorizontalExpand="True"></Label>
-        <cc:HSeparator Margin="4 0" />
-        <CheckBox Access="Public" Name="CurrentRoundOnly" Text="{Loc parrot-memory-current-round-filter}"></CheckBox>
-        <cc:HSeparator Margin="4 0" />
-        <Button Access="Public" Name="RefreshButton" Text="{Loc parrot-memory-refresh}"></Button>
-    </BoxContainer>
-
-    <!-- filter editor -->
-    <BoxContainer Orientation="Horizontal" Margin="4">
-        <Label Text="{Loc parrot-memory-text-filter}"></Label>
-        <LineEdit Access="Public" Name="FilterLineEdit" HorizontalExpand="True"></LineEdit>
-        <cc:HSeparator Margin="4 0" />
-        <Button Access="Public" Name="ApplyFilterButton" Text="{Loc parrot-memory-apply-filter}"></Button>
-        <cc:HSeparator Margin="4 0" />
-        <Button Access="Public" Name="ClearFilterButton" Text="{Loc parrot-memory-clear-filter}"></Button>
-    </BoxContainer>
-
-    <cc:VSeparator Margin="0 4"></cc:VSeparator>
-
     <!-- actual list -->
     <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
         <BoxContainer Access="Public" Name="MemoryContainer" Orientation="Vertical" VerticalExpand="True">
