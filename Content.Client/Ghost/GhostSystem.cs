@@ -21,6 +21,29 @@ namespace Content.Client.Ghost
 
         private bool _ghostVisibility = true;
 
+        private bool _selfGhostVisibility = true;
+
+        private bool SelfGhostVisibility
+        {
+            get => _selfGhostVisibility;
+            set
+            {
+                if (_selfGhostVisibility == value)
+                {
+                    return;
+                }
+
+                _selfGhostVisibility = value;
+
+                var uid = _playerManager.LocalEntity ?? EntityUid.Invalid;
+
+                if (TryComp<SpriteComponent>(uid, out var component))
+                {
+                    _sprite.SetVisible((uid, component), value);
+                }
+            }
+        }
+
         private bool GhostVisibility
         {
             get => _ghostVisibility;
@@ -32,7 +55,6 @@ namespace Content.Client.Ghost
                 }
 
                 _ghostVisibility = value;
-
                 var query = AllEntityQuery<GhostComponent, SpriteComponent>();
                 while (query.MoveNext(out var uid, out _, out var sprite))
                 {
@@ -68,6 +90,7 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<EyeComponent, ToggleLightingActionEvent>(OnToggleLighting);
             SubscribeLocalEvent<EyeComponent, ToggleFoVActionEvent>(OnToggleFoV);
             SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
+            SubscribeLocalEvent<GhostComponent, ToggleSelfActionEvent>(OnToggleSelf);
         }
 
         private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
@@ -128,12 +151,27 @@ namespace Content.Client.Ghost
             args.Handled = true;
         }
 
+        private void OnToggleSelf(EntityUid uid, GhostComponent component, ToggleSelfActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            var locId = SelfGhostVisibility ? "ghost-gui-toggle-self-ghost-visibility-popup-off" : "ghost-gui-toggle-self-ghost-visibility-popup-on";
+            Popup.PopupEntity(Loc.GetString(locId), args.Performer);
+
+            if (uid == _playerManager.LocalEntity)
+                ToggleSelfGhostVisibility();
+
+            args.Handled = true;
+        }
+
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
             _actions.RemoveAction(uid, component.ToggleLightingActionEntity);
             _actions.RemoveAction(uid, component.ToggleFoVActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostHearingActionEntity);
+            _actions.RemoveAction(uid, component.ToggleSelfActionEntity);
 
             if (uid != _playerManager.LocalEntity)
                 return;
@@ -200,6 +238,11 @@ namespace Content.Client.Ghost
         public void ToggleGhostVisibility(bool? visibility = null)
         {
             GhostVisibility = visibility ?? !GhostVisibility;
+        }
+
+        public void ToggleSelfGhostVisibility(bool? visibility = null)
+        {
+            SelfGhostVisibility = visibility ?? !SelfGhostVisibility;
         }
     }
 }
