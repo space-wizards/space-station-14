@@ -10,7 +10,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.ParrotMemories;
-using Content.Shared.Administration.PlayerMessage;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
@@ -1827,13 +1826,17 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #region Parrots
 
-        public async IAsyncEnumerable<PlayerMessage> GetRandomParrotMemories(int limit)
+        /// <summary>
+        /// Gets a number of random memories from the parrot memory
+        /// This will limit the number of memories to limit or the number of memories in database, whichever is lower
+        /// </summary>
+        public async IAsyncEnumerable<ParrotMemory> GetRandomParrotMemories(int limit)
         {
             await using var db = await GetDb();
 
             // get count of records
-            var count = db.DbContext.PlayerMessage
-                .Count(message => !message.Block && message.Type == PlayerMessageType.Parrot);
+            var count = db.DbContext.ParrotMemory
+                .Count(memory => !memory.Block);
 
             if (count == 0)
                 yield break;
@@ -1842,42 +1845,48 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             for (var i = 0; i < limit && i < count; i++)
             {
-                var selectedMemory = db.DbContext.PlayerMessage
-                    .Where(message => !message.Block && message.Type == PlayerMessageType.Parrot)
+                var selectedMemory = db.DbContext.ParrotMemory
+                    .Where(message => !message.Block)
                     .ElementAt(random.Next(0, count));
 
                 yield return selectedMemory;
             }
         }
 
-        public async IAsyncEnumerable<ExtendedPlayerMessage> GetParrotMemories(bool blocked, int? round, string? textFilter)
+        /// <summary>
+        /// Get a list of parrot memories from the database. Used in the admin tooling for parrots
+        /// </summary>
+        /// <param name="blocked">Whether to include blocked memories</param>
+        /// <param name="round">The round from which to select. If null will return memories from all rounds</param>
+        /// <param name="textFilter">The text by which to filter. If null will not filter memory text</param>
+        /// <returns></returns>
+        public async IAsyncEnumerable<ExtendedParrotMemory> GetParrotMemories(bool blocked, int? round, string? textFilter)
         {
             await using var db = await GetDb();
 
             // general filtering by message type and whether the message is blocked
-            var messageQuery = db.DbContext.PlayerMessage
-                .Where(message => message.Type == PlayerMessageType.Parrot)
-                .Where(message => message.Block == blocked);
+            var memoryQuery = db.DbContext.ParrotMemory
+                .Where(memory => memory.Block == blocked);
 
             // filter by round ID if set
             if (round is not null)
             {
-                messageQuery = messageQuery.Where(message => message.Round == round);
+                memoryQuery = memoryQuery.Where(memory => memory.Round == round);
             }
 
             // filter by text if set. ignore case
             if (textFilter is not null)
             {
-                messageQuery = messageQuery.Where(
-                    message => message.Text.ToLower().Contains(textFilter.ToLower())
+                memoryQuery = memoryQuery.Where(
+                    memory => memory.Text.ToLower().Contains(textFilter.ToLower())
                 );
             }
 
             // descending CreatedAt so that newest come first
-            messageQuery = messageQuery.OrderByDescending(message => message.CreatedAt);
+            memoryQuery = memoryQuery.OrderByDescending(memory => memory.CreatedAt);
 
             // join the player table to get username info
-            var messagePlayers = messageQuery.Select(message => message.SourcePlayer);
+            var messagePlayers = memoryQuery.Select(memory => memory.SourcePlayer);
 
             var playerQuery = db.DbContext.Player
                 .Where(player => messagePlayers.Contains(player.UserId))
@@ -1887,74 +1896,88 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     UserName = player.LastSeenUserName,
                 });
 
-            var joined = messageQuery.Join(playerQuery,
-                message => message.SourcePlayer,
+            var joinedQuery = memoryQuery.Join(playerQuery,
+                memory => memory.SourcePlayer,
                 player => player.UserId,
-                resultSelector: (message, player) => new ExtendedPlayerMessage(
-                    message.Id,
-                    message.Text,
-                    message.Round,
+                resultSelector: (memory, player) => new ExtendedParrotMemory(
+                    memory.Id,
+                    memory.Text,
+                    memory.Round,
                     player.UserName,
-                    message.SourcePlayer,
-                    message.CreatedAt,
-                    message.Block
+                    memory.SourcePlayer,
+                    memory.CreatedAt,
+                    memory.Block
                 ));
 
-            await foreach (var result in joined.AsAsyncEnumerable())
+            await foreach (var result in joinedQuery.AsAsyncEnumerable())
             {
                 yield return result;
             }
         }
 
+        /// <summary>
+        /// Adds a new memory to the parrot memory database
+        /// </summary>
+        /// <param name="message">Text of the message</param>
+        /// <param name="sourcePlayer">Guid of the source player from which the message originated</param>
+        /// <param name="roundId">The round in which the message was said</param>
         public async Task AddParrotMemory(string message, Guid sourcePlayer, int roundId)
         {
             await using var db = await GetDb();
 
-            var newMessage = new PlayerMessage()
+            var newMemory = new ParrotMemory()
             {
                 Text = message,
-                Type = PlayerMessageType.Parrot,
                 SourcePlayer = sourcePlayer,
                 Round = roundId,
                 CreatedAt = DateTime.UtcNow,
             };
 
-            db.DbContext.PlayerMessage
-                .Add(newMessage);
+            db.DbContext.ParrotMemory
+                .Add(newMemory);
             await db.DbContext.SaveChangesAsync();
         }
 
-        public async Task SetParrotMemoryBlock(int messageId, bool blocked)
+        /// <summary>
+        /// Sets a parrot memory with a given ID to blocked or unblocked
+        /// </summary>
+        public async Task SetParrotMemoryBlock(int memoryId, bool blocked)
         {
             await using var db = await GetDb();
 
-            var message = await db.DbContext.PlayerMessage
-                .Where(message => message.Id == messageId && message.Type == PlayerMessageType.Parrot)
+            var memory = await db.DbContext.ParrotMemory
+                .Where(message => message.Id == memoryId)
                 .SingleAsync();
 
-            message.Block = blocked;
+            memory.Block = blocked;
 
             await db.DbContext.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Sets <b>ALL</b> parrot memories in the database originating from a certain player to blocked
+        /// </summary>
         public async Task SetParrotMemoryBlockPlayer(NetUserId playerId, bool blocked)
         {
             await using var db = await GetDb();
 
-            await db.DbContext.PlayerMessage
-                .Where(message => message.SourcePlayer == playerId && message.Type == PlayerMessageType.Parrot)
+            await db.DbContext.ParrotMemory
+                .Where(memory => memory.SourcePlayer == playerId)
                 .ExecuteUpdateAsync(calls => calls.SetProperty(message => message.Block, blocked));
         }
 
+        /// <summary>
+        /// Deletes all messages of a certain age or older from the parrot memory database
+        /// </summary>
+        /// <param name="maxMessageAge"></param>
         public async Task TruncateParrotMemory(TimeSpan maxMessageAge)
         {
             await using var db = await GetDb();
 
             var deleteBefore = DateTime.UtcNow - maxMessageAge;
 
-            await db.DbContext.PlayerMessage
-                .Where(message => message.Type == PlayerMessageType.Parrot)
-                .Where(message => message.CreatedAt < deleteBefore)
+            await db.DbContext.ParrotMemory
+                .Where(memory => memory.CreatedAt < deleteBefore)
                 .ExecuteDeleteAsync();
         }
 

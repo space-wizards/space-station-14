@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.ParrotMemories;
-using Content.Shared.Administration.PlayerMessage;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
@@ -368,9 +367,9 @@ namespace Content.Server.Database
 
         #region Parrots
 
-        IAsyncEnumerable<ExtendedPlayerMessage> GetParrotMemories(bool blocked, int? round = null, string? textFilter = null);
+        IAsyncEnumerable<ExtendedParrotMemory> GetParrotMemories(bool blocked, int? round = null, string? textFilter = null);
 
-        IAsyncEnumerable<PlayerMessage> GetRandomParrotMemories(int limit);
+        IAsyncEnumerable<ParrotMemory> GetRandomParrotMemories(int limit);
 
         Task AddParrotMemory(string message, Guid sourcePlayer, int roundId);
 
@@ -1091,12 +1090,12 @@ namespace Content.Server.Database
 
         #region Parrots
 
-        public IAsyncEnumerable<ExtendedPlayerMessage> GetParrotMemories(bool blocked, int? round = null, string? textFilter = null)
+        public IAsyncEnumerable<ExtendedParrotMemory> GetParrotMemories(bool blocked, int? round = null, string? textFilter = null)
         {
             return RunDbCommand(() => _db.GetParrotMemories(blocked, round, textFilter));
         }
 
-        public IAsyncEnumerable<PlayerMessage> GetRandomParrotMemories(int limit)
+        public IAsyncEnumerable<ParrotMemory> GetRandomParrotMemories(int limit)
         {
             return RunDbCommand(() => _db.GetRandomParrotMemories(limit));
         }

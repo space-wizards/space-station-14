@@ -9,7 +9,7 @@ public sealed partial class ParrotMemoryWindow : FancyWindow
 {
     public int RoundId { get; private set; }
 
-    private int _messageCount;
+    private int _memoryCount;
 
     public ParrotMemoryWindow(int roundId)
     {
@@ -18,12 +18,18 @@ public sealed partial class ParrotMemoryWindow : FancyWindow
         RoundId = roundId;
     }
 
+    /// <summary>
+    /// Helper function to set a new round on this window
+    /// </summary>
     public void SetRound(int newRoundId)
     {
         RoundId = newRoundId;
         RoundLineEdit.Text = RoundId.ToString();
     }
 
+    /// <summary>
+    /// Gets the currently active/shown list of memories
+    /// </summary>
     public ParrotMemoryList? GetActiveList()
     {
         var currentActiveTab = MemoryTabContainer.CurrentTab;
@@ -35,22 +41,29 @@ public sealed partial class ParrotMemoryWindow : FancyWindow
         return parrotMemoryList;
     }
 
-    public void UpdateMemoryCountText(int messageCount)
+    /// <summary>
+    /// Helper function to set the text of the memory count label
+    /// </summary>
+    public void UpdateMemoryCountText(int memoryCount)
     {
-        _messageCount = messageCount;
-        MemoryCountLabel.Text = Loc.GetString("parrot-memory-num-memories", ("memoryCount", _messageCount));
-    }
-
-    public void DecrementMemoryCount(int i)
-    {
-        _messageCount -= i;
-        UpdateMemoryCountText(_messageCount);
+        _memoryCount = memoryCount;
+        MemoryCountLabel.Text = Loc.GetString("parrot-memory-num-memories", ("memoryCount", _memoryCount));
     }
 
     /// <summary>
-    /// Sets lists to dirty so that they receive new messages
+    /// Decrements the memory count of the window by a given number. This is here specifically in the case a memory is
+    /// blocked
     /// </summary>
-    /// <param name="inactiveOnly">Only set inactive lists to dirty. Used when blocking/unblocking messages</param>
+    public void DecrementMemoryCount(int i)
+    {
+        _memoryCount -= i;
+        UpdateMemoryCountText(_memoryCount);
+    }
+
+    /// <summary>
+    /// Sets all or only active lists to dirty so that they receive new memories on refresh
+    /// </summary>
+    /// <param name="inactiveOnly">Only set inactive lists to dirty. Used when blocking/unblocking memories</param>
     public void SetListsDirty(bool inactiveOnly = false)
     {
         for (var i = 0; i < MemoryTabContainer.ChildCount; i++)
@@ -67,6 +80,9 @@ public sealed partial class ParrotMemoryWindow : FancyWindow
         }
     }
 
+    /// <summary>
+    /// Sets the currently active/show list to be dirty so that it receives new memories on refresh
+    /// </summary>
     public void SetActiveListDirty()
     {
         if (GetActiveList() is { } parrotMemoryList)

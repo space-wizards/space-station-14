@@ -5,7 +5,6 @@ using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Administration.ParrotMemories;
-using Content.Shared.Administration.PlayerMessage;
 using Content.Shared.Eui;
 
 namespace Content.Server.Administration.UI;
@@ -16,7 +15,7 @@ public sealed class ParrotMemoryEui : BaseEui
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    private readonly List<ExtendedPlayerMessage> _parrotMemories = [];
+    private readonly List<ExtendedParrotMemory> _parrotMemories = [];
     private readonly int _currentRound;
     private int _selectedRound;
     private bool _showBlocked;
@@ -54,14 +53,14 @@ public sealed class ParrotMemoryEui : BaseEui
 
                 break;
             case SetParrotMemoryBlockedMsg blockChangeMsg:
-                SetParrotMemoryBlock(blockChangeMsg.MessageId, blockChangeMsg.Block);
+                SetParrotMemoryBlock(blockChangeMsg.MemoryId, blockChangeMsg.Block);
                 break;
         }
     }
 
-    private async void SetParrotMemoryBlock(int messageId, bool block)
+    private async void SetParrotMemoryBlock(int memoryId, bool block)
     {
-        await Task.Run(async () => await _db.SetParrotMemoryBlock(messageId, block));
+        await Task.Run(async () => await _db.SetParrotMemoryBlock(memoryId, block));
     }
 
     private async void RefreshParrotMemories(int roundId)

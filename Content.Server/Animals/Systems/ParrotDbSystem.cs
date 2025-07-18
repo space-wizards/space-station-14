@@ -25,11 +25,11 @@ public sealed partial class ParrotDbSystem : EntitySystem
 {
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly ISharedPlaytimeManager _playtimeManager = default!;
-    [Dependency] private readonly IConfigurationManager _config = default!;
 
     public override void Initialize()
     {
@@ -63,23 +63,23 @@ public sealed partial class ParrotDbSystem : EntitySystem
     /// </summary>
     private async void OnRoundStarting(RoundStartingEvent args)
     {
-        await Task.Run(async () => _db.TruncateParrotMemory(_config.GetCVar(CCVars.ParrotMaximumMessageAge)));
+        await Task.Run(async () => _db.TruncateParrotMemory(_config.GetCVar(CCVars.ParrotMaximumMemoryAge)));
     }
 
     private void OnLearn(Entity<ParrotDbMemoryComponent> entity, ref LearnEvent args)
     {
-        TrySaveMessageDb(entity, args.Message, args.SourcePlayer);
+        TrySaveMemoryDb(entity, args.Message, args.SourcePlayer);
     }
 
     /// <summary>
-    /// Attempt to save a message to the database
+    /// Attempt to save a memory to the database
     ///
     /// This contains a few checks to prevent garbage from filling the database
     /// </summary>
-    private void TrySaveMessageDb(Entity<ParrotDbMemoryComponent> entity, string message, EntityUid sourcePlayer)
+    private void TrySaveMemoryDb(Entity<ParrotDbMemoryComponent> entity, string message, EntityUid sourcePlayer)
     {
-        // first get the playerId. We want to be able to control these messages and clean them when someone says something
-        // bad, so all messages must have an associated player with this implementation
+        // first get the playerId. We want to be able to control these memories and clean them when someone says something
+        // bad, so all memories must have an associated player with this implementation
         if (!TryComp<MindContainerComponent>(sourcePlayer, out var mindContainer))
             return;
 
@@ -92,7 +92,7 @@ public sealed partial class ParrotDbSystem : EntitySystem
         if (!_playerManager.TryGetSessionById(mindComponent.UserId, out var session))
             return;
 
-        // check player playtime before committing message
+        // check player playtime before committing memory
         var playtime = _playtimeManager.GetPlayTimes(session);
 
         if (!playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var overallPlaytime))
@@ -101,10 +101,10 @@ public sealed partial class ParrotDbSystem : EntitySystem
         if (overallPlaytime < _config.GetCVar(CCVars.ParrotMinimumPlaytimeFilter))
             return;
 
-        SaveMessageDb(entity, message, session.UserId);
+        SaveMemoryDb(entity, message, session.UserId);
     }
 
-    private async void SaveMessageDb(
+    private async void SaveMemoryDb(
         EntityUid entity,
         string message,
         Guid sourcePlayerGuid)

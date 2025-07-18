@@ -46,7 +46,7 @@ namespace Content.Server.Database
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
-        public DbSet<PlayerMessage> PlayerMessage { get; set; } = null!;
+        public DbSet<ParrotMemory> ParrotMemory { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1333,43 +1333,37 @@ namespace Content.Server.Database
     }
 
     /// <summary>
-    /// Player message storage
+    /// Parrot memory storage
     /// </summary>
     [PrimaryKey(nameof(Id))]
-    public class PlayerMessage
+    public class ParrotMemory
     {
         public int Id { get; set; }
 
         /// <summary>
-        /// Actual text of the message
+        /// Actual text of the memory
         /// </summary>
         public required string Text { get; set; }
 
         /// <summary>
-        /// Type of the message stored
-        /// </summary>
-        public PlayerMessageType Type { get; set; }
-
-        /// <summary>
-        /// Player from which this message originally came
+        /// Player from which this memory originally came
         /// </summary>
         [Required, ForeignKey("Player")]
         public Guid SourcePlayer { get; set; }
 
         /// <summary>
-        /// The round this message appeared
+        /// The round this entry appeared
         /// </summary>
         [ForeignKey("Round")]
         public int Round { get; set; }
 
         /// <summary>
-        /// Time at which this player message record was created
-        /// This may be different from when the message appeared
+        /// Time at which this memory was created
         /// </summary>
         public DateTime CreatedAt { get; set; }
 
         /// <summary>
-        /// Whether to block this entry from being
+        /// Whether to block this memory from being used by parrots
         /// </summary>
         public bool Block { get; set; }
     }

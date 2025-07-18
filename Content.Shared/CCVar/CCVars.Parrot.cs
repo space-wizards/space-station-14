@@ -8,7 +8,7 @@ public sealed partial class CCVars
         "parrot.db_refresh_interval",
         TimeSpan.FromMinutes(10),
         CVar.SERVER,
-        "Time interval dictating how often parrots that draw from the database refresh their message cache."
+        "Time interval dictating how often parrots that draw from the database refresh their memory cache."
     );
 
     public static readonly CVarDef<TimeSpan> ParrotMinimumPlaytimeFilter = CVarDef.Create(
@@ -18,10 +18,10 @@ public sealed partial class CCVars
         "Minimum overall playtime a player needs for their messages to be committed to the database by a parrot"
     );
 
-    public static readonly CVarDef<TimeSpan> ParrotMaximumMessageAge = CVarDef.Create(
-        "parrot.db_max_message_age",
+    public static readonly CVarDef<TimeSpan> ParrotMaximumMemoryAge = CVarDef.Create(
+        "parrot.db_max_memory_age",
         TimeSpan.FromDays(30),
         CVar.SERVER,
-        "Maximum age of parrot messages stored in the database.  Messages are cleaned up every round."
+        "Maximum age of parrot memories stored in the database.  Memories are cleaned up every round."
     );
 }

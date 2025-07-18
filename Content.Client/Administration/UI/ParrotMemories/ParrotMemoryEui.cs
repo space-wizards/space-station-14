@@ -118,20 +118,20 @@ public sealed class ParrotMemoryEui : BaseEui
 
         // in case an admin is going to the next/previous rounds too fast, this should discard state updates that
         // don't match the expected round except for the first time we get a state (current round)
-        if (parrotMemoryEuiState.MessagesRoundId != parrotMemoryEuiState.CurrentRoundId && parrotMemoryEuiState.MessagesRoundId != ParrotMemoryWindow.RoundId)
+        if (parrotMemoryEuiState.SelectedRoundId != parrotMemoryEuiState.CurrentRoundId && parrotMemoryEuiState.SelectedRoundId != ParrotMemoryWindow.RoundId)
             return;
 
         // update main ui elements
-        ParrotMemoryWindow.SetRound(parrotMemoryEuiState.MessagesRoundId);
-        ParrotMemoryWindow.UpdateMemoryCountText(parrotMemoryEuiState.Messages.Count);
+        ParrotMemoryWindow.SetRound(parrotMemoryEuiState.SelectedRoundId);
+        ParrotMemoryWindow.UpdateMemoryCountText(parrotMemoryEuiState.Memories.Count);
 
         if (ParrotMemoryWindow.GetActiveList() is not { } activeList)
             return;
 
         // add new ones
-        foreach (var message in parrotMemoryEuiState.Messages)
+        foreach (var memory in parrotMemoryEuiState.Memories)
         {
-            var memoryLine = new ParrotMemoryLine(message);
+            var memoryLine = new ParrotMemoryLine(memory);
 
             activeList.MemoryContainer.AddChild(memoryLine);
 
@@ -139,7 +139,7 @@ public sealed class ParrotMemoryEui : BaseEui
             {
                 activeList.MemoryContainer.RemoveChild(memoryLine);
 
-                SetMemoryBlocked(message.MessageId, !message.Blocked);
+                SetMemoryBlocked(memory.Id, !memory.Blocked);
 
                 ParrotMemoryWindow.DecrementMemoryCount(1);
 
@@ -153,7 +153,7 @@ public sealed class ParrotMemoryEui : BaseEui
 
     /// <summary>
     /// Sends a refresh message for the active list. Used whenever a tab is switched, refresh is pressed or some other
-    /// reason to reload the messages
+    /// reason to reload the memories
     /// </summary>
     /// <param name="roundId">ID of the round to request memories for. If set to null will request current round</param>
     private void SendRefresh(int? roundId)
@@ -162,7 +162,7 @@ public sealed class ParrotMemoryEui : BaseEui
         if (ParrotMemoryWindow.GetActiveList() is not { Dirty: true } activeList)
             return;
 
-        // get rid of old messages here so that the UI appears more responsive. UI design is my passion
+        // get rid of old memories here so that the UI appears more responsive. UI design is my passion
         activeList.MemoryContainer.RemoveAllChildren();
 
         SendMessage(new ParrotMemoryRefreshMsg(activeList.ShowBlocked, ParrotMemoryWindow.FilterLineEdit.Text, roundId));
@@ -182,10 +182,10 @@ public sealed class ParrotMemoryEui : BaseEui
     /// <summary>
     /// Set a memory to blocked or unblocked and mark any inactive lists as dirty
     /// </summary>
-    /// <param name="messageId">Player message ID of the memory</param>
+    /// <param name="memoryId">Player message ID of the memory</param>
     /// <param name="block">True to block, false to unblock</param>
-    private void SetMemoryBlocked(int messageId, bool block)
+    private void SetMemoryBlocked(int memoryId, bool block)
     {
-        SendMessage(new SetParrotMemoryBlockedMsg(messageId, block));
+        SendMessage(new SetParrotMemoryBlockedMsg(memoryId, block));
     }
 }
