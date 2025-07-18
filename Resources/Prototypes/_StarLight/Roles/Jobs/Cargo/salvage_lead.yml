@@ -23,8 +23,8 @@
 - type: startingGear
   id: SalvageLeadGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist #TODO: add custom clothing
-    id: SalvagePDA #TODO: add custom PDA
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist #DOTS: add custom clothing
+    id: SalvagePDA #DOTS: add custom PDA
     ears: ClothingHeadsetCargo
   #storage:
     #back:
