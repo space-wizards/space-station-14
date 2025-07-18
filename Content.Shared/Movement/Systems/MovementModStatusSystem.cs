@@ -2,7 +2,6 @@
 using Content.Shared.Movement.Events;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Systems;
 
@@ -13,37 +12,30 @@ public sealed class MovementModStatusSystem : EntitySystem
 {
     public static readonly EntProtoId StatusEffectFriciton = "StatusEffectFriction";
 
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly StatusEffectsSystem _status = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectAppliedEvent>(OnFrictionStatusEffectApplied);
         SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRemovedEvent>(OnFrictionStatusEffectRemoved);
-
-        SubscribeLocalEvent<FrictionStatusModifierComponent, ComponentShutdown>(OnFrictionRemove);
-        SubscribeLocalEvent<FrictionStatusModifierComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionStatus);
-        SubscribeLocalEvent<FrictionStatusModifierComponent, TileFrictionEvent>(OnRefreshTileFrictionStatus);
+        SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRelayedEvent<RefreshFrictionModifiersEvent>>(OnRefreshFrictionStatus);
+        SubscribeLocalEvent<FrictionStatusEffectComponent, StatusEffectRelayedEvent<TileFrictionEvent>>(OnRefreshTileFrictionStatus);
     }
 
-    private void OnFrictionRemove(Entity<FrictionStatusModifierComponent> ent, ref ComponentShutdown args)
+    private void OnRefreshFrictionStatus(Entity<FrictionStatusEffectComponent> ent, ref StatusEffectRelayedEvent<RefreshFrictionModifiersEvent> args)
     {
-        ent.Comp.FrictionModifier = 1f;
-        ent.Comp.AccelerationModifier = 1f;
-        _movementSpeedModifier.RefreshFrictionModifiers(ent);
+        var ev = args.Args;
+        ev.ModifyFriction(ent.Comp.FrictionModifier);
+        ev.ModifyAcceleration(ent.Comp.AccelerationModifier);
+        args.Args = ev;
     }
 
-    private void OnRefreshFrictionStatus(Entity<FrictionStatusModifierComponent> ent, ref RefreshFrictionModifiersEvent args)
+    private void OnRefreshTileFrictionStatus(Entity<FrictionStatusEffectComponent> ent, ref StatusEffectRelayedEvent<TileFrictionEvent> args)
     {
-        args.ModifyFriction(ent.Comp.FrictionModifier);
-        args.ModifyAcceleration(ent.Comp.AccelerationModifier);
-    }
-
-    private void OnRefreshTileFrictionStatus(Entity<FrictionStatusModifierComponent> ent, ref TileFrictionEvent args)
-    {
-        args.Modifier *= ent.Comp.FrictionModifier;
+        var ev = args.Args;
+        ev.Modifier *= ent.Comp.FrictionModifier;
+        args.Args = ev;
     }
 
     /// <summary>
@@ -75,6 +67,17 @@ public sealed class MovementModStatusSystem : EntitySystem
     /// </summary>
     /// <param name="status">The status effect entity we're modifying.</param>
     /// <param name="friction">The friction modifier we're applying.</param>
+    /// <param name="entity">The entity the status effect is attached to that we need to refresh.</param>
+    private bool TrySetFrictionStatus(Entity<FrictionStatusEffectComponent?> status, float friction, EntityUid entity)
+    {
+        return TrySetFrictionStatus(status, friction, friction, entity);
+    }
+
+    /// <summary>
+    /// Sets the friction status modifiers for a status effect.
+    /// </summary>
+    /// <param name="status">The status effect entity we're modifying.</param>
+    /// <param name="friction">The friction modifier we're applying.</param>
     /// <param name="acceleration">The acceleration modifier we're applying</param>
     /// <param name="entity">The entity the status effect is attached to that we need to refresh.</param>
     private bool TrySetFrictionStatus(Entity<FrictionStatusEffectComponent?> status, float friction, float acceleration, EntityUid entity)
@@ -86,54 +89,12 @@ public sealed class MovementModStatusSystem : EntitySystem
         status.Comp.AccelerationModifier = acceleration;
         Dirty(status);
 
-        return TryUpdateFrictionStatus(entity);
-    }
-
-    /// <summary>
-    ///     Tries to update the friction modifiers on the friction de-buff, returns true if it was able to apply modifiers.
-    /// </summary>
-    private bool TryUpdateFrictionStatus(Entity<FrictionStatusModifierComponent?> entity, EntityUid? ignore = null)
-    {
-        if (!Resolve(entity, ref entity.Comp, logMissing: false))
-            return false;
-
-        if (!_status.TryEffectsWithComp<FrictionStatusEffectComponent>(entity, out var frictionEffects))
-            return false;
-
-        var modified = false;
-
-        entity.Comp.FrictionModifier = 1f;
-        entity.Comp.AccelerationModifier = 1f;
-
-        foreach (var effect in frictionEffects)
-        {
-            if (effect.Owner == ignore)
-                continue;
-
-            modified = true;
-            entity.Comp.FrictionModifier *= effect.Comp1.FrictionModifier;
-            entity.Comp.AccelerationModifier *= effect.Comp1.AccelerationModifier;
-        }
-
-        Dirty(entity);
         _movementSpeedModifier.RefreshFrictionModifiers(entity);
-
-        return modified;
-    }
-
-    private void OnFrictionStatusEffectApplied(Entity<FrictionStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
-    {
-        if (_timing.ApplyingState)
-            return;
-
-        EnsureComp<FrictionStatusModifierComponent>(args.Target);
-        // This does not update Friction Modifiers since they may not have been initialized for the status effect yet. You'll need to do that yourself.
+        return true;
     }
 
     private void OnFrictionStatusEffectRemoved(Entity<FrictionStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
     {
-        // Set modifiers to 1 so that they don't mistakenly get applied when the component refreshes
-        if (!TryUpdateFrictionStatus(args.Target, entity))
-            RemComp<FrictionStatusModifierComponent>(args.Target);
+        TrySetFrictionStatus(entity!, 1f, args.Target);
     }
 }
