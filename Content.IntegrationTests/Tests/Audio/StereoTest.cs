@@ -178,7 +178,7 @@ public sealed class StereoTest
     {
         var audio = resCache.GetResource<AudioResource>(path);
         Assert.That(audio.AudioStream.ChannelCount, Is.EqualTo(1),
-            $"{path} has multiple channels, but {datafieldName} only allows mono audio.");
+            $"{path} has multiple channels, but {datafieldName} only allows mono audio. Stereo audio cannot be played positionally and should be converted to mono. If {datafieldName} is only played globally (without positional data, like music), add [AllowStereo] to the SoundSpecifer to remove this error.");
     }
 
     private static bool IsRelevantType(Type type)
