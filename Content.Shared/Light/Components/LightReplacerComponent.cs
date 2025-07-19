@@ -22,6 +22,9 @@ public sealed partial class LightReplacerComponent : Component
         }
     };
 
+    [DataField]
+    public SoundSpecifier CycleSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/smg_cock.ogg");
+
     /// <summary>
     /// Bulbs that were inserted inside light replacer
     /// </summary>
@@ -31,6 +34,12 @@ public sealed partial class LightReplacerComponent : Component
     /// <summary>
     /// The default starting bulbs
     /// </summary>
-    [DataField("contents")]
+    [DataField]
     public List<EntitySpawnEntry> Contents = new();
+
+    /// <summary>
+    /// The offset for any edjected bulbs
+    /// </summary>
+    [DataField]
+    public float EjectOffset = 0.4f;
 }
