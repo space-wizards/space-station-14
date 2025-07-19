@@ -11,7 +11,7 @@
   - type: RandomSpawner
     prototypes:
       - Soap
-      - SoapBlood
+      - SoapHomemade
       - SoapNT
       - SoapDeluxe
     chance: 0.95

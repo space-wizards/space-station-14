@@ -90,7 +90,7 @@
       amount: 5
   effects:
     - !type:CreateEntityReactionEffect
-      entity: SoapBlood
+      entity: SoapHomemade
 
 - type: reaction
   id: CreateOmegaSoap

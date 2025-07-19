@@ -246,7 +246,7 @@
         orGroup: GiftPool
       - id: Soap
         orGroup: GiftPool
-      - id: SoapBlood
+      - id: SoapHomemade
         orGroup: GiftPool
       - id: SoapNT
         orGroup: GiftPool
