@@ -6,7 +6,7 @@
   - type: AccessReader
     access: [["Ntrep"]]
     
-- type: entity # DOTS - add new door sprite for just mining (note: just search for "DoorElectronicsSalvage" for what needs doing
+- type: entity # DOTS - create yml for miner/reference the sprite path (note: just search for "DoorElectronicsSalvage" for what needs doing)
   parent: DoorElectronics
   id: DoorElectronicsMining
   suffix: Mining, Locked
@@ -14,7 +14,7 @@
     - type: AccessReader
       access: [["Mining"]]
       
-- type: entity # DOTS - add new door sprite for salvage + mining
+- type: entity # DOTS - create yml for combo door/reference the sprite path
   parent: DoorElectronics
   id: DoorElectronicsSalvageMining
   suffix: Salvage, Mining, Locked
