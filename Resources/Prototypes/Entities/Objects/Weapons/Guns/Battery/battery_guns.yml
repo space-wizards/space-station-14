@@ -1,6 +1,6 @@
 - type: entity
   id: BaseWeaponBattery
-  parent: BaseItem
+  parent: [BaseItem, BaseGunMeleeLarge]
   abstract: true
   components:
   - type: Sprite
@@ -28,7 +28,7 @@
 
 - type: entity
   id: BaseWeaponPowerCell
-  parent: BaseItem
+  parent: [BaseItem, BaseGunMeleeLarge]
   abstract: true
   components:
   - type: Sprite
@@ -67,7 +67,7 @@
 
 - type: entity
   id: BaseWeaponBatterySmall
-  parent: BaseWeaponBattery
+  parent: [BaseGunMeleeSmall, BaseWeaponBattery]
   abstract: true
   components:
   - type: Item
@@ -87,7 +87,7 @@
 
 - type: entity
   id: BaseWeaponPowerCellSmall
-  parent: BaseWeaponPowerCell
+  parent: [BaseGunMeleeSmall, BaseWeaponPowerCell]
   abstract: true
   components:
   - type: Item
@@ -281,7 +281,7 @@
 
 - type: entity
   name: pulse carbine
-  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+  parent: [BaseGunMeleeDisarm, BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
   id: WeaponPulseCarbine
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
@@ -317,7 +317,7 @@
 
 - type: entity
   name: pulse rifle
-  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+  parent: [BaseGunMeleeDisarm, BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
   id: WeaponPulseRifle
   description: A weapon that is almost as infamous as its users.
   components:
@@ -381,7 +381,7 @@
 
 - type: entity
   name: portable particle decelerator
-  parent: [BaseWeaponBattery, BaseEngineeringContraband]
+  parent: [BaseGunMeleeHeavy, BaseWeaponBattery, BaseEngineeringContraband]
   id: WeaponParticleDecelerator
   description: A portable particle decelerator capable of decomposing a tesla or singularity.
   components:
@@ -507,7 +507,7 @@
 
 - type: entity
   name: disabler SMG
-  parent: [BaseWeaponBattery, BaseSecurityContraband]
+  parent: [BaseGunMeleeMedium, BaseWeaponBattery, BaseSecurityContraband]
   id: WeaponDisablerSMG
   description: Advanced weapon that exhausts organic targets, weakening them until they collapse.
   components:
@@ -746,6 +746,9 @@
     autoRechargeRate: 40
   - type: StaticPrice
     price: 750
+  - type: MeleeWeapon
+    soundHit: #made of "meat" rather than metal, so gets a different sound
+      path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
 
 - type: entity
   name: energy shotgun
