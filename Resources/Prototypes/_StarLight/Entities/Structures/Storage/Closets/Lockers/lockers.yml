@@ -71,7 +71,7 @@
 # Salvage Lead
 - type: entity
   id: LockerSalvageLead
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: salvage lead's equipment
   components:
     - type: Appearance
@@ -87,7 +87,7 @@
 # Salvage Medic
 - type: entity
   id: LockerSalvageMedic
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: salvage medic's equipment
   components:
     - type: Appearance
@@ -114,4 +114,4 @@
     stateDoorOpen: miner_open
     stateDoorClosed: miner_door
   - type: AccessReader
-    access: [["Mining"]]
+    access: [["Mining"]] #DOTS - confirm this works
