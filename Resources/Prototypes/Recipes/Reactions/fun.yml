@@ -99,11 +99,15 @@
     SoapReagent:
       amount: 240
     TableSalt:
-      amount: 5
+      amount: 10
     SpaceLube:
-      amount: 5
+      amount: 10
     SpaceDrugs:
-      amount: 5
+      amount: 10
+    THC:
+      amount: 10
+    JuiceBanana:
+      amount: 20
   effects:
     - !type:CreateEntityReactionEffect
       entity: SoapOmega
