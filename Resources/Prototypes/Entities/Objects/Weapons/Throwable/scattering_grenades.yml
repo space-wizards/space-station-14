@@ -114,8 +114,9 @@
 - type: entity
   parent: [ScatteringGrenadeBase, BaseSyndicateContraband]
   id: ClusterBananaPeel
-  name: cluster banana peel
-  description: Splits into 6 explosive banana peels after throwing, guaranteed fun!
+  suffix: cluster explosive, unarmed
+  name: banana
+  description: Rich in potassium.
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
@@ -132,6 +133,21 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Items/bikehorn.ogg"
+
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxClusterBananaPeelExplosiveUnarmed
+  name: cluster explosive banana box
+  description: A box containing a cluster explosive banana. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: bananafake
+  - type: SpawnItemsOnUse
+    items:
+    - id: ClusterBananaPeel
+    sound:
+      path: /Audio/Effects/unwrap.ogg
 
 - type: entity
   parent: [SoapSyndie, ScatteringGrenadeBase, BaseSyndicateContraband]

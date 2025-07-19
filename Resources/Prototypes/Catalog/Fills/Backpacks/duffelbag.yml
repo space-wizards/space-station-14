@@ -228,6 +228,23 @@
         - id: ChameleonControllerImplanter
 
 - type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxBackpackChameleon
+  name: chameleon kit box
+  description: A box containing a chameleon kit. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxes.rsi
+    state: box_of_doom_big
+  - type: Item
+    size: Huge
+  - type: SpawnItemsOnUse
+    items:
+    - id: ClothingBackpackChameleonFill
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateEVABundle
   name: syndicate EVA bundle
