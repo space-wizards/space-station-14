@@ -92,14 +92,6 @@
   - type: Temperature
     heatDamageThreshold: 999 #Let the hellhound walk through a plasmafire
     coldDamageThreshold: 230 
-    currentTemperature: 310.15
-    coldDamage: 
-      types:
-        Cold : 0.1
-    specificHeat: 42
-    heatDamage:
-      types:
-        Heat : 1.5
   - type: PressureProtection
     highPressureMultiplier: 0.02
   - type: TemperatureProtection
