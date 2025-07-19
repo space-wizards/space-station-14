@@ -29,6 +29,8 @@ public sealed partial class RevolutionaryRuleComponent : Component
     public TimeSpan ShuttleCallTime = TimeSpan.FromMinutes(5);
 
     public RevolutionaryStage Stage = RevolutionaryStage.Initial;
+
+    public readonly float Ratio = 0.35f;
 }
 
 public enum RevolutionaryStage : byte

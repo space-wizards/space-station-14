@@ -1,6 +1,7 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.RoundEnd;
 using Content.Shared.DeadSpace.ShowRevolutionIcon;
 using Content.Shared.Ghost;
 using Robust.Shared.Player;
@@ -15,6 +16,16 @@ public sealed class ShowRevolutionIconSystem : EntitySystem
     private bool _isMassacre = false;
 
     /// <inheritdoc/>
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnRoundEnded);
+    }
+
+    private void OnRoundEnded(RoundEndSystemChangedEvent ev)
+    {
+        _isMassacre = false;
+    }
 
     public override void Update(float frameTime)
     {

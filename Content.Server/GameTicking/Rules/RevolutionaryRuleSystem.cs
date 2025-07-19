@@ -92,57 +92,53 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
 
-        // This mess ahead needs a fix
+        if (component.Check > _timing.CurTime)
+            return;
 
-        if (component.Check <= _timing.CurTime)
+        component.Check = _timing.CurTime + component.TimerWait;
+
+        if (component.Stage != RevolutionaryStage.Initial || !(GetRevsFraction() >= component.Ratio) && !CheckCommandLose())
         {
-            component.Check = _timing.CurTime + component.TimerWait;
+            if (!CheckRevsLose())
+                return;
 
-            if (component.Stage == RevolutionaryStage.Initial && (GetRevsFraction() >= 0.35f || CheckCommandLose()))
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("rev-alert-stage-massacre-end-with-rev-lost"),
+                colorOverride: Color.Green,
+                usePresetTTS: true);
+
+            _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime);
+            GameTicker.EndGameRule(uid, gameRule);
+        }
+        else
+        {
+            component.Stage = RevolutionaryStage.Massacre;
+
+            foreach (var station in _stationSystem.GetStationsSet())
             {
-                component.Stage = RevolutionaryStage.Massacre;
-
-                var stations = new HashSet<EntityUid>(); // strange
-
-                foreach (var station in _stationSystem.GetStationsSet())
-                {
-                    if (TryComp<StationDataComponent>(station, out _) && TryComp<NpcFactionMemberComponent>(station, out _)
-                    && _npcFaction.IsMember(station, "NanoTrasen"))
-                        stations.Add(station);
-                }
-
-                var stationUid = stations.First(); // why
-
-                if (_alertLevel.GetLevel(stationUid) == "green" || _alertLevel.GetLevel(stationUid) == "blue" || _alertLevel.GetLevel(stationUid) == "violet" || _alertLevel.GetLevel(stationUid) == "yellow")
-                    _alertLevel.SetLevel(stationUid, "red", false, true, false, false);
-
-                var sessionData = _antag.GetAntagIdentifiers(uid);
-                string headRevsNames = "";
-                foreach (var (mind, data, name) in sessionData) // cursed
-                {
-                    if (!_role.MindHasRole<RevolutionaryRoleComponent>(mind, out var role)) 
-                        continue;
-                    headRevsNames += name + ", ";
-
-                    if (!TryComp<MindComponent>(mind, out var mindComponent))
-                        continue;
-
-                    if (mindComponent.OwnedEntity == null)
-                        continue;
-
-                    RaiseLocalEvent(mindComponent.OwnedEntity.Value, new NewRevStageEvent());
-                }
-                if (headRevsNames.Length > 0) // fucked
-                    headRevsNames = headRevsNames[..^2];
-
-                _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("rev-alert-stage-massacre-start", ("headRevsNames", headRevsNames)), colorOverride: Color.Red, usePresetTTS: true);
+                //Maybe it's worth checking the codes "above"?
+                if (_npcFaction.IsMember(station, "NanoTrasen"))
+                    _alertLevel.SetLevel(station, "red", false, true, false, false);
             }
-            else if (component.Stage == RevolutionaryStage.Massacre && CheckRevsLose())
+
+            var headRevsNames = new List<string>();
+
+            var query = EntityQueryEnumerator<HeadRevolutionaryComponent>();
+            while (query.MoveNext(out var heads, out var _))
             {
-                _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("rev-alert-stage-massacre-end-with-rev-lost"), colorOverride: Color.Green, usePresetTTS: true);
-                _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime);
-                GameTicker.EndGameRule(uid, gameRule);
+                var name = EntityManager.GetComponent<MetaDataComponent>(heads).EntityName;
+                headRevsNames.Add(name);
+
+                RaiseLocalEvent(heads, new NewRevStageEvent());
             }
+
+            if (headRevsNames.Count == 0)
+                return;
+
+            var namesString = string.Join(", ", headRevsNames);
+            _chatSystem.DispatchGlobalAnnouncement(
+                Loc.GetString("rev-alert-stage-massacre-start", ("headRevsNames", namesString)),
+                colorOverride: Color.Red,
+                usePresetTTS: true);
         }
     }
 
