@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from ParadiseStation",
+  "copyright": "Taken from ParadiseStation | Salvage Lead/Medic PDAs by biteless-dot",
   "size": {
     "x": 32,
     "y": 32
@@ -49,6 +49,12 @@
     },
     {
       "name": "pda-commander"
+    },
+    {
+      "name": "pda-salvagelead"
+    },
+    {
+      "name": "pda-salvagemedic"
     }
   ]
 }
