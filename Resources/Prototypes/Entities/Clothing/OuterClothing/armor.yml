@@ -1,23 +1,25 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 # Numbers for armor here largely taken from /tg/.
 # armor.yml covers both armored vests (e.g. not just cosmetic) and armor that covers multiple bodyparts/limbs
 
 
 #Basic armor vest for inheritance
 - type: entity
+  abstract: true
   parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseSecurityContraband]
   id: ClothingOuterArmorBase
   name: armor vest
-  abstract: true
   description: A standard Type I armored vest that provides decent protection against most types of damage.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/security.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/security.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,1,2 # Ronstation
+              # licensing individual lines feels preposterous at best to me
   - type: Armor #Based on /tg/ but slightly compensated to fit the fact that armor stacks in SS14.
     modifiers:
       coefficients:
@@ -32,6 +34,11 @@
 - type: entity
   parent: [ BaseSecurityBartenderContraband, ClothingOuterArmorBase]
   id: ClothingOuterArmorBasic
+  components:
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Alternate / slim basic armor vest
 - type: entity
@@ -56,9 +63,9 @@
     sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
-  - type: Item
-    shape:
-    - 0,0,2,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,2,2 # Ronstation
   - type: Armor
     modifiers:
       coefficients:
@@ -79,10 +86,9 @@
     sprite: Clothing/OuterClothing/Armor/armor_reflec.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/armor_reflec.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,2,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,2,2 # Ronstation
   - type: Armor
     modifiers:
       coefficients:
@@ -139,6 +145,10 @@
     sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: [ClothingOuterArmorBaseCarapace, BaseCentcommContraband]
@@ -162,10 +172,9 @@
     sprite: Clothing/OuterClothing/Vests/webvest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/webvest.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,1,2 # Ronstation
   - type: Armor
     modifiers:
       coefficients:
@@ -189,10 +198,9 @@
     sprite: Clothing/OuterClothing/Vests/elitevest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/elitevest.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,1,2 # Ronstation
   - type: TemperatureProtection
     heatingCoefficient: 0.1
     coolingCoefficient: 0.1
@@ -223,10 +231,9 @@
     sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,1,2 # Ronstation
   - type: Armor
     modifiers:
       coefficients:
@@ -254,10 +261,10 @@
       shader: unshaded
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/syndie-raid.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,2,3
+  - type: Item # Ronstation
+    size: Large # Ronstation
+    shape: # Ronstation
+    - 0,0,2,3 # Ronstation
   - type: Armor
     modifiers:
       coefficients:
@@ -268,7 +275,7 @@
         Caustic: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.35
-  - type: StaminaResistance
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
     damageCoefficient: 0.45
   - type: ClothingSpeedModifier
     walkModifier: 0.9
@@ -331,10 +338,10 @@
     sprite: Clothing/OuterClothing/Armor/riot.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/riot.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,2,2
+  - type: Item # Ronstation
+    size: Large # Ronstation
+    shape: # Ronstation
+    - 0,0,2,2 # Ronstation
   - type: Armor
     modifiers:
       coefficients:
@@ -357,10 +364,10 @@
     sprite: Clothing/OuterClothing/Armor/cult_armour.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/cult_armour.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    size: Large # Ronstation
+    shape: # Ronstation
+    - 0,0,2,3 # Ronstation
   - type: Armor
     modifiers:
       coefficients:

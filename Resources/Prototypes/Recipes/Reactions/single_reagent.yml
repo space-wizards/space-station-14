@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 # Food
 
 - type: reaction
@@ -35,8 +37,9 @@
 
 # Holy - TODO: make it so only the chaplain can use the bible to start these reactions, not anyone with a bible
 
+# start of modifications
 - type: reaction
-  id: BloodToWine
+  id: BibleBlood
   impact: Low
   requiredMixerCategories:
   - Holy
@@ -47,7 +50,57 @@
     Wine: 1
 
 - type: reaction
-  id: WatertoHolyWater
+  id: BibleCopperBlood
+  requiredMixerCategories:
+  - Holy
+  reactants:
+    CopperBlood:
+      amount: 1
+  products:
+    BlueCuracao: 1
+
+- type: reaction
+  id: BibleInsectBlood
+  requiredMixerCategories:
+  - Holy
+  reactants:
+    InsectBlood:
+      amount: 1
+  products:
+    Vermouth: 1
+
+- type: reaction
+  id: BibleAmmoniaBlood
+  requiredMixerCategories:
+  - Holy
+  reactants:
+    AmmoniaBlood:
+      amount: 1
+  products:
+    Champagne: 1
+
+- type: reaction
+  id: BibleSlime
+  requiredMixerCategories:
+  - Holy
+  reactants:
+    Slime:
+      amount: 1
+  products:
+    Absinthe: 1
+
+- type: reaction
+  id: BibleSap
+  requiredMixerCategories:
+  - Holy
+  reactants:
+    Sap:
+      amount: 1
+  products:
+    Ale: 1
+
+- type: reaction
+  id: BibleWater
   impact: Low
   requiredMixerCategories:
   - Holy
@@ -56,3 +109,5 @@
       amount: 1
   products:
     Holywater: 1
+
+# end of modifications

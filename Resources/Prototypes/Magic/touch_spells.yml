@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Smite-like spell that you click on someone else to use
 - type: entity
   abstract: true
@@ -42,7 +43,8 @@
   - type: Magic
     requiresClothes: true
 
-# Non-Gibbing version of the Smite spell for wizards
+# start of modifications
+# Ronstation - Non-Gibbing version of the Smite spell for wizards
 - type: entity
   parent: BaseSmiteAction
   id: ActionCellularSmite
@@ -64,6 +66,7 @@
     sentence: action-speech-spell-smite
   - type: Magic
     requiresClothes: true
+# end of modifications
 
 # For the Snail
 - type: entity

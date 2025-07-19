@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: cargoProduct
   id: CargoOreBox
   icon:
@@ -8,6 +10,7 @@
   category: cargoproduct-category-name-cargo
   group: market
 
+# start of modifications
 - type: cargoProduct
   id: cargoJetpack
   icon:
@@ -47,13 +50,14 @@
   cost: 10000
   category: cargoproduct-category-name-cargo
   group: market
+# end of modifications
 
 - type: cargoProduct
   id: CargoLuxuryHardsuit
   icon:
     sprite: Clothing/Head/Hardsuits/luxury.rsi
     state: icon
-  product: SuitStorageLuxury
+  product: SuitStorageLuxury # Ronstation
   cost: 15000
   category: cargoproduct-category-name-cargo
   group: market

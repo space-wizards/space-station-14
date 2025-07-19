@@ -3,3 +3,5 @@ uplink-x4-desc = Blows up like most explosives. It can be attached to almost all
 
 uplink-x4-bundle-name = X-4 bundle
 uplink-x4-bundle-desc = Surprise. Contains 4 X-4 plastic explosives.
+
+uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 9 explosive rounds of varying yield.

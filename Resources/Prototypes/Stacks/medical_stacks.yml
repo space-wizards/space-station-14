@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: stack
   id: Ointment
   name: stack-ointment
@@ -19,12 +20,14 @@
   spawn: Gauze
   maxCount: 10
 
+# start of modifications
 - type: stack
   id: Tourniquet
   name: stack-tourniquet
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: tourniquet}
   spawn: Tourniquet
   maxCount: 5
+# end of modifications
 
 - type: stack
   id: Brutepack

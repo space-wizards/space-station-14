@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterWinterCoat
@@ -100,10 +102,10 @@
     clothingPrototype: ClothingHeadHatHoodWinterBartender
 
 - type: entity
-  parent: [AllowSuitStorageClothing, ClothingOuterWinterCoatToggleable, BaseCommandContraband]
+  parent: [AllowSuitStorageClothing, ClothingOuterWinterCoatToggleable, BaseCommandContraband] # Ronstation
   id: ClothingOuterWinterCap
-  name: captain's armored winter coat
-  description: A regal winter coat made of premium furs, concealing discrete armor plating. Not as robust against brute damage, but will keep you warm and has pockets to hold more unimportant things.
+  name: captain's armored winter coat # Ronstation
+  description: A regal winter coat made of premium furs, concealing discrete armor plating. Not as robust against brute damage, but will keep you warm and has pockets to hold more unimportant things. # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -115,8 +117,8 @@
       - state: CAP-inhand-left
       right:
       - state: CAP-inhand-right
-    shape:
-    - 0,0,1,2
+    shape: # Ronstation
+    - 0,0,1,2 # Ronstation
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
     clothingVisuals:
@@ -124,6 +126,7 @@
       - state: CAP-equipped-OUTERCLOTHING
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterCaptain
+# start of modifications
   - type: Armor
     modifiers:
       coefficients:
@@ -135,6 +138,7 @@
         Shock: 0.7
   - type: ExplosionResistance
     damageCoefficient: 0.9
+# end of modifications
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -681,10 +685,10 @@
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
 - type: entity
-  parent: [AllowSuitStorageClothing, ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
+  parent: [AllowSuitStorageClothing, ClothingOuterWinterCoatToggleable, BaseSecurityContraband] # Ronstation
   id: ClothingOuterWinterSec
-  name: security armored winter coat
-  description: While less armored than a standard armor vest, still keeps you protected. Also keeps you warm and has pockets!
+  name: security armored winter coat # Ronstation
+  description: While less armored than a standard armor vest, still keeps you protected. Also keeps you warm and has pockets! # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -696,8 +700,8 @@
       - state: SEC-inhand-left
       right:
       - state: SEC-inhand-right
-    shape:
-    - 0,0,1,2
+    shape: # Ronstation
+    - 0,0,1,2 # Ronstation
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
     clothingVisuals:
@@ -705,6 +709,7 @@
       - state: SEC-equipped-OUTERCLOTHING
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterSec
+# start of modifications
   - type: Armor
     modifiers:
       coefficients:
@@ -712,6 +717,7 @@
         Blunt: 0.75
         Piercing: 0.8
         Heat: 0.7
+# end of modifications
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable

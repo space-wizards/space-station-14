@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: HeadOfPersonnel
   name: job-name-hop
@@ -6,19 +7,19 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 27000 # 7.5 hours
+      time: 27000 # Ronstation - modification. 7.5 hours
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 27000 # 7.5 hours
+      time: 27000 # Ronstation - modification. 7.5 hours
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 27000 # 7.5 hours
+      time: 27000 # Ronstation - modification. 7.5 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 27000 # 7.5 hours
+      time: 27000 # Ronstation - modification. 7.5 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 27000 # 7.5 hours
+      time: 27000 # Ronstation - modification. 7.5 hours
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"

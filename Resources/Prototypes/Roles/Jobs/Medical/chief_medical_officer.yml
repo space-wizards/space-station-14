@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Best job.
 
 - type: job
@@ -14,7 +15,7 @@
       time: 18000 #5 hrs
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 54000 # 15 hours
+      time: 54000 # Ronstation - modification. 15 hours
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
   supervisors: job-supervisors-captain
@@ -27,7 +28,7 @@
   - ChiefMedicalOfficer
   - Brig
   - Cryogenics
-  - External
+  - External # Ronstation - modification.
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
