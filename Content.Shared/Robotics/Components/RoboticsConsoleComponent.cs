@@ -50,4 +50,10 @@ public sealed partial class RoboticsConsoleComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextDestroy = TimeSpan.Zero;
+
+    /// <summary>
+    /// Controls if the console can disable or destroy any borg.
+    /// </summary>
+    [DataField]
+    public bool AllowBorgControl = true;
 }
