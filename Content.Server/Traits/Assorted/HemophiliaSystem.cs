@@ -9,7 +9,7 @@ public sealed partial class HemophiliaSystem : EntitySystem
 
     private void OnBleedStackReduceEvent(Entity<HemophiliaComponent> ent, ref BleedStackReduceEvent args)
     {
-        args.BleedStackReductionAmount = ent.Comp.HemophiliacBleedReductionAmount;
+        args.BleedStackReductionAmount *= ent.Comp.HemophiliacBleedReductionAmount;
     }
 }
 

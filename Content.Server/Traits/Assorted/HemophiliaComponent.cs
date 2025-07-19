@@ -9,8 +9,8 @@ namespace Content.Server.Traits.Assorted;
 public sealed partial class HemophiliaComponent : Component
 {
     /// <summary>
-    ///     How much should bleeding be reduced every update interval for the hemophilia trait?
+    ///     What percentage should BleedReductionAmount be reduced by when an entity has the hemophilia trait?
     /// </summary>
     [DataField]
-    public float HemophiliacBleedReductionAmount = 0.10f;
+    public float HemophiliacBleedReductionAmount = 0.33f;
 }
