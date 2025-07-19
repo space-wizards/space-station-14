@@ -1197,6 +1197,9 @@
   id: RollingPin
 
 - type: Tag
+  id: Ruminant
+
+- type: Tag
   id: SaltShaker
 
 - type: Tag
