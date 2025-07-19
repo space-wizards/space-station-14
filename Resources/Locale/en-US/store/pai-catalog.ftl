@@ -6,3 +6,6 @@ pai-midi-player-desc = Enables you to play music to entertain your owner.
 
 pai-station-map-name = Station Map
 pai-station-map-desc = Enables you to view the station map to assist in navigation.
+
+pai-encryption-name = Encryption Chip
+pai-encryption-desc = Enables you to accept encryption keys to listen to other radio channels.
