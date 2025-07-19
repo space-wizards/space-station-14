@@ -5,8 +5,8 @@ namespace Content.Server.Effects;
 
 public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
 {
-    public override void RaiseEffect(Color color, List<EntityUid> entities, Filter filter)
+    protected override void RaiseEffect(string source, Color color, List<EntityUid> entities, Filter filter)
     {
-        RaiseNetworkEvent(new ColorFlashEffectEvent(color, GetNetEntityList(entities)), filter);
+        RaiseNetworkEvent(new ColorFlashEffectEvent(source, color, GetNetEntityList(entities)), filter);
     }
 }
