@@ -4,6 +4,7 @@ using Content.Shared.Damage.Events;
 using Content.Shared.FixedPoint;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -111,8 +112,11 @@ public sealed partial class GunSystem
 
         if (component is HitscanBatteryAmmoProviderComponent hitscan)
         {
-            var dmg = ProtoManager.Index<HitscanPrototype>(hitscan.Prototype).Damage;
-            return dmg == null ? dmg : dmg * Damageable.UniversalHitscanDamageModifier;
+            var dmg = ProtoManager.Index(hitscan.HitscanEntityProto);
+            if (!dmg.TryGetComponent<HitscanBasicDamageComponent>(out var basicDamageComp, EntityManager.ComponentFactory))
+                return null;
+
+            return basicDamageComp.Damage * Damageable.UniversalHitscanDamageModifier;
         }
 
         return null;
