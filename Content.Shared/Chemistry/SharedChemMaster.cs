@@ -165,9 +165,6 @@ namespace Content.Shared.Chemistry
         /// <summary>
         /// Returns the localized current versus max volume of the container (e.g., 50/100).
         /// </summary>
-        /// <remarks>
-        /// I kinda wish it was 50u/100u but out of convention I won't change it.
-        /// </remarks>
         public string LocalizedCapacity()
         {
             return Loc.GetString("reagent-container-available-capacity",

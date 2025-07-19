@@ -4,4 +4,4 @@
 reagent-dispenser-window-quantity-label-text = {$quantity}u
 
 # Describes a fraction of volume for use in e.g., the ChemMaster display.
-reagent-container-available-capacity = {$currentVolume}/{$maxVolume}
+reagent-container-available-capacity = {$currentVolume}u/{$maxVolume}u
