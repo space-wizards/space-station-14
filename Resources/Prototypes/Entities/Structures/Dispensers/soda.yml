@@ -15,7 +15,6 @@
     whitelist:
       tags:
       - DrinkBottle
-
   - type: Transform
     noRot: false
   - type: Machine
