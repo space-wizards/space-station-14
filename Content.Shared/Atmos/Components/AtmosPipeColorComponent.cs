@@ -1,19 +1,22 @@
-using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Shared.Atmos.EntitySystems;
+using Robust.Shared.GameStates;
 using JetBrains.Annotations;
 
-namespace Content.Server.Atmos.Piping.Components;
+namespace Content.Shared.Atmos.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
 public sealed partial class AtmosPipeColorComponent : Component
 {
     [DataField]
+    [AutoNetworkedField]
     public Color Color { get; set; } = Color.White;
 
     [ViewVariables(VVAccess.ReadWrite), UsedImplicitly]
     public Color ColorVV
     {
         get => Color;
-        set => IoCManager.Resolve<IEntityManager>().System<AtmosPipeColorSystem>().SetColor(Owner, this, value);
+        set => IoCManager.Resolve<IEntityManager>().System<AtmosPipeColorSystem>().SetColor((Owner, this), value);
     }
 }
 
