@@ -90,7 +90,7 @@
     Uranium:
       amount: 1
   products:
-    AtomicBomb: 11
+    AtomicBomb: 10
 
 - type: reaction
   id: B52
@@ -397,6 +397,20 @@
       amount: 1
   products:
     DriestMartini: 2
+
+- type: reaction
+  id: Eggnog
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Egg:
+      amount: 1
+    Milk:
+      amount: 4
+    Rum:
+      amount: 5
+  products:
+    Eggnog: 10
 
 - type: reaction
   id: ElectricShark

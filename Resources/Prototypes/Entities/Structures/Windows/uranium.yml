@@ -16,13 +16,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 75
+        damage: 100
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -53,7 +53,7 @@
 
 - type: entity
   id: UraniumWindowDirectional
-  parent: WindowDirectional
+  parent: WindowDirectionalRCDResistant
   name: directional uranium window
   description: Don't smudge up the glass down there.
   placement:
@@ -81,13 +81,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 75
+        damage: 100
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 37
+        damage: 50
       behaviors:
       - !type:PlaySoundBehavior
         sound:

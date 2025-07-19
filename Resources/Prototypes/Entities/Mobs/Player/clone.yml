@@ -16,12 +16,15 @@
   - NpcFactionMember
   # traits
   # - LegsParalyzed (you get healed)
+  - BlackAndWhiteOverlay
   - LightweightDrunk
+  - Muted
   - Narcolepsy
   - Pacified
   - PainNumbness
   - Paracusia
   - PermanentBlindness
+  - Snoring
   - Unrevivable
   # job specific
   - BibleUser
@@ -30,6 +33,7 @@
   - MindShield
   - MimePowers
   - SpaceNinja
+  - Thieving
   # accents
   - Accentless
   - BackwardsAccent
@@ -37,6 +41,7 @@
   - BleatingAccent
   - DamagedSiliconAccent
   - FrenchAccent
+  - FrontalLisp
   - GermanAccent
   - LizardAccent
   - MobsterAccent
