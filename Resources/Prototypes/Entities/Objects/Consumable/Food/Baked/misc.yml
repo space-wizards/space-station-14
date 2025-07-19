@@ -535,9 +535,9 @@
 # Misc
 
 - type: entity
-  name: knafeh
   parent: FoodBakedBase
   id: FoodKnafeh
+  name: knafeh
   description: A delicious desert of shredded pastry around a creamy cheese base, topped with pistachios and soaked in honey.
   components:
   - type: Sprite
@@ -558,9 +558,9 @@
           Quantity: 20
 
 - type: entity
-  name: moffeh
   parent: FoodBakedBase
   id: FoodMoffeh
+  name: moffeh
   description: A delicious desert of spun cotton pastry around a fibrous base, topped with decorative pistachio-like fibers.
   components:
   - type: Sprite
