@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -21,7 +22,15 @@ public partial class InventorySystem : EntitySystem
         _vvm.GetTypeHandler<InventoryComponent>()
             .AddHandler(HandleViewVariablesSlots, ListViewVariablesSlots);
 
-        SubscribeLocalEvent<InventoryComponent, AfterAutoHandleStateEvent>(AfterAutoState);
+        SubscribeLocalEvent<InventoryComponent, ComponentGetState>(OnGetState);
+    }
+
+    private void OnGetState(Entity<InventoryComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new InventoryComponentState(ent.Comp.TemplateId, ent.Comp.SpeciesId, ent.Comp.Displacements, ent.Comp.FemaleDisplacements, ent.Comp.MaleDisplacements);
+
+        // We update the template here to make sure the slot update is handled live, when the templateID or another field changes.
+        UpdateInventoryTemplate(ent);
     }
 
     private void ShutdownSlots()
@@ -57,7 +66,7 @@ public partial class InventorySystem : EntitySystem
 
     protected virtual void OnInit(EntityUid uid, InventoryComponent component, ComponentInit args)
     {
-        if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
+        if (!_prototypeManager.TryIndex(component.TemplateId, out var invTemplate))
             return;
 
         component.Slots = invTemplate.Slots;
@@ -71,22 +80,51 @@ public partial class InventorySystem : EntitySystem
         }
     }
 
-    private void AfterAutoState(Entity<InventoryComponent> ent, ref AfterAutoHandleStateEvent args)
-    {
-        UpdateInventoryTemplate(ent);
-    }
-
     protected virtual void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
     {
         if (ent.Comp.LifeStage < ComponentLifeStage.Initialized)
             return;
 
-        if (!_prototypeManager.TryIndex(ent.Comp.TemplateId, out InventoryTemplatePrototype? invTemplate))
+        if (!_prototypeManager.TryIndex(ent.Comp.TemplateId, out var invTemplate))
             return;
 
-        DebugTools.Assert(ent.Comp.Slots.Length == invTemplate.Slots.Length);
+        // Remove any containers that aren't in the new template.
+        foreach (var container in ent.Comp.Containers)
+        {
+            if (invTemplate.Slots.Any(s => s.Name == container.ID))
+                continue;
 
+            if (!TryGetSlotContainer(ent.Owner, container.ID, out var deleteSlot, out var slotDef))
+                continue;
+
+            TryRemoveSlotDef(ent, slotDef);
+
+            // Empty container before deletion so the contents dont get removed.
+            // For cases when we update the template while items are already worn.
+            _containerSystem.EmptyContainer(deleteSlot, true);
+            _containerSystem.ShutdownContainer(deleteSlot);
+        }
+
+        // Add new slots from the new template.
         ent.Comp.Slots = invTemplate.Slots;
+        foreach (var slot in ent.Comp.Slots)
+        {
+            if (ent.Comp.Containers.Any(s => s.ID == slot.Name))
+                continue;
+
+            TryAddSlotDef(ent, slot);
+        }
+
+        // Reassign containers to ensure they are in the same order as the slots.
+        // This is done because the inventory enumerator expects them to be the same index.
+        ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
+        for (var i = 0; i < ent.Comp.Containers.Length; i++)
+        {
+            var slot = ent.Comp.Slots[i];
+            var container = _containerSystem.EnsureContainer<ContainerSlot>(ent, slot.Name);
+            container.OccludesLight = false;
+            ent.Comp.Containers[i] = container;
+        }
 
         var ev = new InventoryTemplateUpdated();
         RaiseLocalEvent(ent, ref ev);
@@ -101,6 +139,20 @@ public partial class InventorySystem : EntitySystem
         {
             _storageSystem.OpenStorageUI(entityUid.Value, uid, storageComponent, false);
         }
+    }
+
+    public virtual bool TryAddSlotDef(EntityUid owner, SlotDefinition newSlotDef)
+    {
+        // Check client-side code.
+        // Needed so it can be ran from shared.
+        return false;
+    }
+
+    public virtual bool TryRemoveSlotDef(EntityUid owner, SlotDefinition newSlotDef)
+    {
+        // Check client-side code.
+        // Needed so it can be ran from shared.
+        return false;
     }
 
     public bool TryGetSlotContainer(EntityUid uid, string slot, [NotNullWhen(true)] out ContainerSlot? containerSlot, [NotNullWhen(true)] out SlotDefinition? slotDefinition,
@@ -195,26 +247,14 @@ public partial class InventorySystem : EntitySystem
     }
 
     /// <summary>
-    /// Change the inventory template ID an entity is using. The new template must be compatible.
+    /// Change the inventory template ID an entity is using.
     /// </summary>
     /// <remarks>
-    /// <para>
-    /// For an inventory template to be compatible with another, it must have exactly the same slot names.
-    /// All other changes are rejected.
-    /// </para>
     /// </remarks>
     /// <param name="ent">The entity to update.</param>
     /// <param name="newTemplate">The ID of the new inventory template prototype.</param>
-    /// <exception cref="ArgumentException">
-    /// Thrown if the new template is not compatible with the existing one.
-    /// </exception>
     public void SetTemplateId(Entity<InventoryComponent> ent, ProtoId<InventoryTemplatePrototype> newTemplate)
     {
-        var newPrototype = _prototypeManager.Index(newTemplate);
-
-        if (!newPrototype.Slots.Select(x => x.Name).SequenceEqual(ent.Comp.Slots.Select(x => x.Name)))
-            throw new ArgumentException("Incompatible inventory template!");
-
         ent.Comp.TemplateId = newTemplate;
         Dirty(ent);
     }
@@ -239,7 +279,6 @@ public partial class InventorySystem : EntitySystem
         public InventorySlotEnumerator(SlotDefinition[] slots, ContainerSlot[] containers,  SlotFlags flags = SlotFlags.All)
         {
             DebugTools.Assert(flags != SlotFlags.NONE);
-            DebugTools.AssertEqual(slots.Length, containers.Length);
             _flags = flags;
             _slots = slots;
             _containers = containers;

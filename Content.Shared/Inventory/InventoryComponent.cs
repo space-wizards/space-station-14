@@ -1,22 +1,25 @@
 ﻿using Content.Shared.DisplacementMap;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Inventory;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(InventorySystem))]
-[AutoGenerateComponentState(true)]
 public sealed partial class InventoryComponent : Component
 {
-    [DataField("templateId", customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
-    [AutoNetworkedField]
-    public string TemplateId { get; set; } = "human";
+    [DataField]
+    public ProtoId<InventoryTemplatePrototype> TemplateId { get; set; } = "human";
 
-    [DataField("speciesId")] public string? SpeciesId { get; set; }
+    [DataField]
+    public string? SpeciesId { get; set; }
 
+    [ViewVariables(VVAccess.ReadWrite)]
     public SlotDefinition[] Slots = Array.Empty<SlotDefinition>();
+
+    [ViewVariables(VVAccess.ReadWrite)]
     public ContainerSlot[] Containers = Array.Empty<ContainerSlot>();
 
     [DataField]
@@ -33,6 +36,25 @@ public sealed partial class InventoryComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<string, DisplacementData> MaleDisplacements = new();
+}
+
+[Serializable, NetSerializable]
+public sealed class InventoryComponentState : ComponentState
+{
+    public ProtoId<InventoryTemplatePrototype> TemplateId;
+    public string? SpeciesId;
+    public Dictionary<string, DisplacementData> Displacements;
+    public Dictionary<string, DisplacementData> FemaleDisplacements;
+    public Dictionary<string, DisplacementData> MaleDisplacements;
+
+    public InventoryComponentState(ProtoId<InventoryTemplatePrototype> template, string? species, Dictionary<string, DisplacementData> displacements, Dictionary<string, DisplacementData> femaleDisplacements, Dictionary<string, DisplacementData> maleDisplacements)
+    {
+        TemplateId = template;
+        SpeciesId = species;
+        Displacements = displacements;
+        FemaleDisplacements = femaleDisplacements;
+        MaleDisplacements = maleDisplacements;
+    }
 }
 
 /// <summary>
