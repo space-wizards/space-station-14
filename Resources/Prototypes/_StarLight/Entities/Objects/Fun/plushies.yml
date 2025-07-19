@@ -1279,7 +1279,7 @@
           minimumWait: 120
           maximumWait: 240
         - type: TextToSpeech
-          voice: circus baby
+          voice: circusbaby
 
 - type: entity
   parent: BaseBorgPlushie
@@ -1304,7 +1304,7 @@
           minimumWait: 120
           maximumWait: 240
         - type: TextToSpeech
-          voice: circus baby
+          voice: circusbaby
 
 ### this is bricking the whole PR, ill fix later
 - type: entity
