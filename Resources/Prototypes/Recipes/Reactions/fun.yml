@@ -55,7 +55,7 @@
   quantized: true
   reactants:
     SoapReagent:
-      amount: 45
+      amount: 50
     TableSalt:
       amount: 5
     JuiceBerry:
@@ -69,7 +69,7 @@
   quantized: true
   reactants:
     SoapReagent:
-      amount: 45
+      amount: 50
     TableSalt:
       amount: 5
     Stimulants:
@@ -83,7 +83,7 @@
   quantized: true
   reactants:
     SoapReagent:
-      amount: 45
+      amount: 50
     TableSalt:
       amount: 5
     Blood:
