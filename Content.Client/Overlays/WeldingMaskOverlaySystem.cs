@@ -32,13 +32,14 @@ public sealed partial class WeldingMaskOverlaySystem : EquipmentHudSystem<Weldin
 
         foreach (var comp in component.Components)
         {
-            var values = new RectangleShaderValues();
-
-            values.OuterRectangleHeight = comp.OuterRectangleHeight;
-            values.OuterRectangleWidth = comp.OuterRectangleWidth;
-            values.InnerRectangleThickness = comp.InnerRectangleThickness;
-            values.OuterAlpha = comp.OuterAlpha;
-            values.InnerAlpha = comp.InnerAlpha;
+            var values = new RectangleShaderValues
+            {
+                OuterRectangleHeight = comp.OuterRectangleHeight,
+                OuterRectangleWidth = comp.OuterRectangleWidth,
+                InnerRectangleThickness = comp.InnerRectangleThickness,
+                OuterAlpha = comp.OuterAlpha,
+                InnerAlpha = comp.InnerAlpha,
+            };
 
             _overlay.RectangleShaders.Add((_prototypeManager.Index(RectangleShader).InstanceUnique(), values));
         }

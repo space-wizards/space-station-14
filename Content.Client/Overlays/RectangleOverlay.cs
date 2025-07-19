@@ -50,16 +50,13 @@ public sealed partial class RectangleOverlay : Overlay
     }
 }
 
-public struct RectangleShaderValues
+public struct RectangleShaderValues()
 {
-    public Vector3 RectColor = new Vector3(0, 0, 0);
+    public Vector3 RectColor = new(0, 0, 0);
     public float OuterRectangleWidth = 1;
     public float OuterRectangleHeight = 1;
     public float InnerRectangleThickness = 0.05f;
     public float OuterAlpha = 1.0f;
     public float InnerAlpha = 0.0f;
 
-    public RectangleShaderValues()
-    {
-    }
 }

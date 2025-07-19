@@ -23,7 +23,6 @@ void fragment() {
     } else {
         highp float modifiedAspectRatio = defaultAspectRatio * (SCREEN_PIXEL_SIZE.x / SCREEN_PIXEL_SIZE.y);
         highp vec2 pixelCenter = 1.0/(SCREEN_PIXEL_SIZE*2.0);
-        // I also prefer a/(b * c) to a / b / c, but that's up to personal taste.
 
         // Calculate the rectangles width by the height divided by the aspect ratio to ensure viewport width doesn't matter
         highp vec2 outerRectBounds =
