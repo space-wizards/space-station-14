@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pgriha
-  changes:
-  - message: SWAT, ERT, Riot and some other helmets are now hiding head markings.
-    type: Fix
-  id: 8278
-  time: '2025-04-20T11:52:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36074
 - author: RedBookcase
   changes:
   - message: More items can be processed by the station's Recyclers.
@@ -3906,3 +3899,10 @@
   id: 8790
   time: '2025-07-18T15:33:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39041
+- author: Pyrovi
+  changes:
+  - message: Changed some outdated info in the guidebook
+    type: Tweak
+  id: 8791
+  time: '2025-07-19T01:41:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38987
