@@ -469,7 +469,7 @@
   id: VendorPlushiePercy
   productEntity: PlushiePercy
   cost:
-    NTCredit: 16
+    NTCredit: 20
   categories:
     - SLCrew
   conditions:
@@ -480,7 +480,7 @@
   id: VendorPlushieAsh
   productEntity: PlushieAsh
   cost:
-    NTCredit: 19
+    NTCredit: 20
   categories:
     - SLCrew
   conditions:
@@ -491,7 +491,7 @@
   id: VendorPlushieGlados
   productEntity: PlushieGlados
   cost:
-    NTCredit: 16
+    NTCredit: 20
   categories:
     - SLCrew
   conditions:
@@ -502,7 +502,7 @@
   id: VendorPlushieWEH
   productEntity: PlushieWEH
   cost:
-    NTCredit: 15
+    NTCredit: 20
   categories:
     - SLCrew
   conditions:
@@ -513,7 +513,7 @@
   id: VendorPlushieRufia
   productEntity: PlushieRufia
   cost:
-    NTCredit: 14
+    NTCredit: 20
   categories:
     - SLCrew
   conditions:
@@ -524,7 +524,7 @@
   #id: VendorPlushieRomero
   #productEntity: PlushieRromero
   #cost:
-    #NTCredit: 17
+    #NTCredit: 20
   #categories:
     #- SLCrew
   #conditions:
@@ -546,7 +546,7 @@
   id: VendorPlushiePoley
   productEntity: PlushiePoley
   cost:
-    NTCredit: 13
+    NTCredit: 20
   categories:
     - SLCrew
   conditions:
