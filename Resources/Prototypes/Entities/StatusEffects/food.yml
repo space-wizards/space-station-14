@@ -1,0 +1,26 @@
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectFoodMealBearsteak
+  components:
+  - type: Sprite
+    sprite: Effects/fire.rsi
+    state: fire
+    noRot: true
+    offset: 0, 0.5
+    color: "#ffffff55" #Some transparency
+  - type: StatusEffect
+    alert: StatusEffectFoodMealBearsteak
+  - type: EntityEffectApplyStatusEffect
+    effects:
+    - !type:FlammableReaction
+      multiplier: 2.5
+    - !type:AdjustTemperature
+      amount: 12000
+    - !type:Jitter
+    - !type:MovespeedModifier
+      walkSpeedModifier: 1.35
+      sprintSpeedModifier: 1.35
+      statusLifetime: 1.25
+    - !type:GenericStatusEffect
+      key: Stutter
+      component: StutteringAccent
