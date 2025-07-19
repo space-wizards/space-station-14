@@ -10,8 +10,9 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Localizations;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -61,14 +62,15 @@ public partial record struct SolutionAccessAttemptEvent(string SolutionName)
 [UsedImplicitly]
 public abstract partial class SharedSolutionContainerSystem : EntitySystem
 {
-    [Robust.Shared.IoC.Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly SharedHandsSystem Hands = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly INetManager NetManager = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ChemicalReactionSystem _chemicalReactionSystem = default!;
+    [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaDataSys = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -84,7 +86,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
         SubscribeLocalEvent<SolutionContainerManagerComponent, MapInitEvent>(OnMapInit);
 
-        if (NetManager.IsServer)
+        if (_netManager.IsServer)
         {
             SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentShutdown>(OnContainerManagerShutdown);
             SubscribeLocalEvent<ContainedSolutionComponent, ComponentShutdown>(OnContainedSolutionShutdown);
@@ -173,7 +175,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (name is null)
             uid = container;
         else if (
-            ContainerSystem.TryGetContainer(container, $"solution@{name}", out var solutionContainer) &&
+            _containerSystem.TryGetContainer(container, $"solution@{name}", out var solutionContainer) &&
             solutionContainer is ContainerSlot solutionSlot &&
             solutionSlot.ContainedEntity is { } containedSolution
         )
@@ -244,7 +246,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             if (attemptEv.Cancelled)
                 continue;
 
-            if (ContainerSystem.GetContainer(container, $"solution@{name}") is ContainerSlot slot && slot.ContainedEntity is { } solutionId)
+            if (_containerSystem.GetContainer(container, $"solution@{name}") is ContainerSlot slot && slot.ContainedEntity is { } solutionId)
                 yield return (name, (solutionId, Comp<SolutionComponent>(solutionId)));
         }
     }
@@ -270,12 +272,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var (_, comp, relation) = soln;
         var solution = comp.Solution;
 
-        AppearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
-        AppearanceSystem.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(PrototypeManager), appearanceComponent);
-        AppearanceSystem.SetData(uid, SolutionContainerVisuals.SolutionName, relation.ContainerName, appearanceComponent);
+        _appearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
+        _appearanceSystem.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(_prototypeManager), appearanceComponent);
+        _appearanceSystem.SetData(uid, SolutionContainerVisuals.SolutionName, relation.ContainerName, appearanceComponent);
 
         if (solution.GetPrimaryReagentId() is { } reagent)
-            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
+            _appearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
     }
 
 
@@ -315,7 +317,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         // Process reactions
         if (needsReactionsProcessing && solution.CanReact)
-            ChemicalReactionSystem.FullyReactSolution(soln, mixerComponent);
+            _chemicalReactionSystem.FullyReactSolution(soln, mixerComponent);
 
         var overflow = solution.Volume - solution.MaxVolume;
         if (overflow > FixedPoint2.Zero)
@@ -338,11 +340,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (!Exists(uid) || !Resolve(uid, ref appearanceComponent, false))
             return;
 
-        AppearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
-        AppearanceSystem.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(PrototypeManager), appearanceComponent);
+        _appearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
+        _appearanceSystem.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(_prototypeManager), appearanceComponent);
 
         if (solution.GetPrimaryReagentId() is { } reagent)
-            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
+            _appearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
     }
 
     /// <summary>
@@ -456,8 +458,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
         else
         {
-            var proto = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
-            solution.AddReagent(proto, acceptedQuantity, temperature.Value, PrototypeManager);
+            var proto = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+            solution.AddReagent(proto, acceptedQuantity, temperature.Value, _prototypeManager);
         }
 
         UpdateChemicals(soln);
@@ -574,7 +576,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         // TODO This should be made into a function that directly transfers reagents.
         // Currently this is quite inefficient.
-        solution.AddSolution(source.SplitSolution(quantity), PrototypeManager);
+        solution.AddSolution(source.SplitSolution(quantity), _prototypeManager);
 
         UpdateChemicals(soln);
         return true;
@@ -640,7 +642,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (toAdd.Volume == FixedPoint2.Zero)
             return false;
 
-        solution.AddSolution(toAdd, PrototypeManager);
+        solution.AddSolution(toAdd, _prototypeManager);
         UpdateChemicals(soln);
         return true;
     }
@@ -667,7 +669,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return false;
         }
 
-        solution.AddSolution(toAdd, PrototypeManager);
+        solution.AddSolution(toAdd, _prototypeManager);
         overflowingSolution = solution.SplitSolution(FixedPoint2.Max(FixedPoint2.Zero, solution.Volume - overflowThreshold));
         UpdateChemicals(soln);
         return true;
@@ -735,7 +737,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var (_, comp) = soln;
         var solution = comp.Solution;
 
-        var heatCap = solution.GetHeatCapacity(PrototypeManager);
+        var heatCap = solution.GetHeatCapacity(_prototypeManager);
         solution.Temperature = heatCap == 0 ? 0 : thermalEnergy / heatCap;
         UpdateChemicals(soln);
     }
@@ -754,7 +756,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (thermalEnergy == 0.0f)
             return;
 
-        var heatCap = solution.GetHeatCapacity(PrototypeManager);
+        var heatCap = solution.GetHeatCapacity(_prototypeManager);
         solution.Temperature += heatCap == 0 ? 0 : thermalEnergy / heatCap;
         UpdateChemicals(soln);
     }
@@ -787,16 +789,14 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         foreach (var name in containers)
         {
             // The actual solution entity should be directly held within the corresponding slot.
-            ContainerSystem.EnsureContainer<ContainerSlot>(entity.Owner, $"solution@{name}", containerManager);
+            _containerSystem.EnsureContainer<ContainerSlot>(entity.Owner, $"solution@{name}", containerManager);
         }
     }
 
     private void OnExamineSolution(Entity<ExaminableSolutionComponent> entity, ref ExaminedEvent args)
     {
         if (!TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
-        {
             return;
-        }
 
         if (!CanSeeHiddenSolution(entity, args.Examiner))
             return;
@@ -805,17 +805,35 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         if (string.IsNullOrEmpty(primaryReagent?.Prototype))
         {
-            args.PushText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
+            args.PushMarkup(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
             return;
         }
 
-        if (!PrototypeManager.TryIndex(primaryReagent.Value.Prototype, out ReagentPrototype? primary))
+        if (!_prototypeManager.TryIndex(primaryReagent.Value.Prototype, out ReagentPrototype? primary))
         {
             Log.Error($"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
             return;
         }
 
-        var colorHex = solution.GetColor(PrototypeManager)
+        if (!entity.Comp.Estimate)
+        {
+            //provide exact measurement for beakers
+            args.PushText(Loc.GetString("examinable-solution-on-examine-exact-volume", ("amount", solution.Volume)));
+        }
+        else
+        {
+            //general approximation
+            var remainingString = (int) PercentFull(entity) switch
+            {
+                100 => "examinable-solution-on-examine-is-full",
+                > 66 => "examinable-solution-on-examine-is-mostly-full",
+                > 33 => HalfEmptyOrHalfFull(args),
+                _ => "examinable-solution-on-examine-is-mostly-empty",
+            };
+            args.PushMarkup(Loc.GetString(remainingString));
+        }
+
+        var colorHex = solution.GetColor(_prototypeManager)
             .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
         var messageString = "shared-solution-container-component-on-examine-main-text";
 
@@ -828,7 +846,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
                 ("desc", primary.LocalizedPhysicalDescription)));
 
-            var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
+            var reagentPrototypes = solution.GetReagentPrototypes(_prototypeManager);
 
             // Sort the reagents by amount, descending then alphabetically
             var sortedReagentPrototypes = reagentPrototypes
@@ -836,44 +854,21 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 .ThenBy(pair => pair.Key.LocalizedName);
 
             // Add descriptions of immediately recognizable reagents, like water or beer
-            var recognized = new List<ReagentPrototype>();
+            var recognized = new List<string>();
             foreach (var keyValuePair in sortedReagentPrototypes)
             {
                 var proto = keyValuePair.Key;
                 if (!proto.Recognizable)
-                {
                     continue;
-                }
 
-                recognized.Add(proto);
+                recognized.Add(Loc.GetString("examinable-solution-recognized", ("color", proto.SubstanceColor.ToHexNoAlpha()), ("chemical", proto.LocalizedName)));
             }
 
             // Skip if there's nothing recognizable
             if (recognized.Count == 0)
                 return;
 
-            var msg = new StringBuilder();
-            foreach (var reagent in recognized)
-            {
-                string part;
-                if (reagent == recognized[0])
-                {
-                    part = "examinable-solution-recognized-first";
-                }
-                else if (reagent == recognized[^1])
-                {
-                    // this loc specifically  requires space to be appended, fluent doesnt support whitespace
-                    msg.Append(' ');
-                    part = "examinable-solution-recognized-last";
-                }
-                else
-                {
-                    part = "examinable-solution-recognized-next";
-                }
-
-                msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
-                    ("chemical", reagent.LocalizedName)));
-            }
+            var msg = ContentLocalizationManager.FormatList(recognized);
 
             args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals",
                 ("recognizedString", msg.ToString())));
@@ -907,7 +902,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             Act = () =>
             {
                 var markup = GetSolutionExamine(solutionHolder);
-                ExamineSystem.SendExamineTooltip(user, target, markup, false, false);
+                _examineSystem.SendExamineTooltip(user, target, markup, false, false);
             },
             Text = Loc.GetString("scannable-solution-verb-text"),
             Message = Loc.GetString("scannable-solution-verb-message"),
@@ -930,7 +925,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         msg.AddMarkupOrThrow(Loc.GetString("scannable-solution-main-text"));
 
-        var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
+        var reagentPrototypes = solution.GetReagentPrototypes(_prototypeManager);
 
         // Sort the reagents by amount, descending then alphabetically
         var sortedReagentPrototypes = reagentPrototypes
@@ -940,10 +935,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         foreach (var (proto, quantity) in sortedReagentPrototypes)
         {
             msg.PushNewline();
-            msg.AddMarkupOrThrow(Loc.GetString("scannable-solution-chemical"
-                , ("type", proto.LocalizedName)
-                , ("color", proto.SubstanceColor.ToHexNoAlpha())
-                , ("amount", quantity)));
+            msg.AddMarkupOrThrow(Loc.GetString(
+                "scannable-solution-chemical",
+                ("type", proto.LocalizedName),
+                ("color", proto.SubstanceColor.ToHexNoAlpha()),
+                ("amount", quantity)));
         }
 
         msg.PushNewline();
@@ -953,15 +949,18 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Check if examinable solution requires you to hold the item in hand.
+    /// Check if examinable solution has anything preventing you from examining it.
     /// </summary>
     private bool CanSeeHiddenSolution(Entity<ExaminableSolutionComponent> entity, EntityUid examiner)
     {
-        // If not held-only then it's always visible.
-        if (!entity.Comp.HeldOnly)
-            return true;
+        // If not held-only, and isn't opaque then it's always visible.
+        if (entity.Comp.HeldOnly && !_hands.IsHolding(examiner, entity))
+            return false;
 
-        return Hands.IsHolding(examiner, entity, out _);
+        if (entity.Comp.Opaque && !_openable.IsOpen(entity.Owner))
+            return false;
+
+        return true;
     }
 
     private void OnMapInit(Entity<SolutionContainerManagerComponent> entity, ref MapInitEvent args)
@@ -973,8 +972,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     {
         foreach (var name in entity.Comp.Containers)
         {
-            if (ContainerSystem.TryGetContainer(entity, $"solution@{name}", out var solutionContainer))
-                ContainerSystem.ShutdownContainer(solutionContainer);
+            if (_containerSystem.TryGetContainer(entity, $"solution@{name}", out var solutionContainer))
+                _containerSystem.ShutdownContainer(solutionContainer);
         }
         entity.Comp.Containers.Clear();
     }
@@ -987,8 +986,20 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             Dirty(entity.Comp.Container, container);
         }
 
-        if (ContainerSystem.TryGetContainer(entity, $"solution@{entity.Comp.ContainerName}", out var solutionContainer))
-            ContainerSystem.ShutdownContainer(solutionContainer);
+        if (_containerSystem.TryGetContainer(entity, $"solution@{entity.Comp.ContainerName}", out var solutionContainer))
+            _containerSystem.ShutdownContainer(solutionContainer);
+    }
+
+    // some see half empty, and others see half full
+    private string HalfEmptyOrHalfFull(ExaminedEvent args)
+    {
+        string remainingString = "examinable-solution-on-examine-is-half-full";
+
+        if (TryComp(args.Examiner, out MetaDataComponent? examiner) && examiner.EntityName.Length > 0
+                                                                    && string.Compare(examiner.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
+            remainingString = "examinable-solution-on-examine-is-half-empty";
+
+        return remainingString;
     }
 
     #endregion Event Handlers
@@ -1040,7 +1051,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     public void EnsureAllSolutions(Entity<SolutionContainerManagerComponent> entity)
     {
-        if (NetManager.IsClient)
+        if (_netManager.IsClient)
             return;
 
         if (entity.Comp.Solutions is not { } prototypes)
@@ -1076,13 +1087,13 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         var (uid, container) = entity;
 
-        var solutionSlot = ContainerSystem.EnsureContainer<ContainerSlot>(uid, $"solution@{name}", out existed);
+        var solutionSlot = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"solution@{name}", out existed);
         if (!Resolve(uid, ref container, logMissing: false))
         {
             existed = false;
             container = AddComp<SolutionContainerManagerComponent>(uid);
             container.Containers.Add(name);
-            if (NetManager.IsClient)
+            if (_netManager.IsClient)
                 return false;
         }
         else if (!existed)
@@ -1095,7 +1106,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SolutionComponent solutionComp;
         if (solutionSlot.ContainedEntity is not { } solutionId)
         {
-            if (NetManager.IsClient)
+            if (_netManager.IsClient)
                 return false;
             prototype ??= new() { MaxVolume = maxVol };
             prototype.Name = name;
@@ -1116,7 +1127,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             // Depending on MapInitEvent order some systems can ensure solution empty solutions and conflict with the prototype solutions.
             // We want the reagents from the prototype to exist even if something else already created the solution.
             if (prototype is { Volume.Value: > 0 })
-                solution.AddSolution(prototype, PrototypeManager);
+                solution.AddSolution(prototype, _prototypeManager);
 
             Dirty(solutionId, solutionComp);
         }
@@ -1165,8 +1176,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var relation = new ContainedSolutionComponent() { Container = container.Owner, ContainerName = name };
         AddComp(uid, relation);
 
-        MetaDataSys.SetEntityName(uid, $"solution - {name}");
-        ContainerSystem.Insert(uid, container, force: true);
+        _metaDataSys.SetEntityName(uid, $"solution - {name}");
+        _containerSystem.Insert(uid, container, force: true);
 
         return (uid, solution, relation);
     }

@@ -203,9 +203,9 @@
     delay: 3
     transferAmount: 1
     solution: puddle
-    examinable: false
   - type: ExaminableSolution
     solution: puddle
+    estimate: true
   - type: DrawableSolution
     solution: puddle
   - type: BadDrink
