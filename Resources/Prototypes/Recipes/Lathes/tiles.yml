@@ -125,6 +125,26 @@
   id: FloorTileItemSteelPavementVertical
   result: FloorTileItemSteelPavementVertical
 
+- type: latheRecipe
+  parent: BaseSteelTileRecipe
+  id: FloorTileItemSteelVerticalSlatsContinuous
+  result: FloorTileItemSteelVerticalSlatsContinuous
+
+- type: latheRecipe
+  parent: BaseSteelTileRecipe
+  id: FloorTileItemSteelVerticalSlatsBordered
+  result: FloorTileItemSteelVerticalSlatsBordered
+
+- type: latheRecipe
+  parent: BaseSteelTileRecipe
+  id: FloorTileItemSteelHorizontalSlatsContinuous
+  result: FloorTileItemSteelHorizontalSlatsContinuous
+
+- type: latheRecipe
+  parent: BaseSteelTileRecipe
+  id: FloorTileItemSteelHorizontalSlatsBordered
+  result: FloorTileItemSteelHorizontalSlatsBordered
+
 # Dark tiles
 - type: latheRecipe
   parent: BaseDarkTileRecipe
@@ -170,6 +190,26 @@
   parent: BaseDarkTileRecipe
   id: FloorTileItemDarkOffset
   result: FloorTileItemDarkOffset
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkVerticalSlatsContinuous
+  result: FloorTileItemDarkVerticalSlatsContinuous
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkVerticalSlatsBordered
+  result: FloorTileItemDarkVerticalSlatsBordered
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkHorizontalSlatsContinuous
+  result: FloorTileItemDarkHorizontalSlatsContinuous
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkHorizontalSlatsBordered
+  result: FloorTileItemDarkHorizontalSlatsBordered
 
 - type: latheRecipe
   parent: BaseDarkTileRecipe
@@ -221,6 +261,26 @@
   parent: BaseWhiteTileRecipe
   id: FloorTileItemWhitePavementVertical
   result: FloorTileItemWhitePavementVertical
+
+- type: latheRecipe
+  parent: BaseWhiteTileRecipe
+  id: FloorTileItemWhiteVerticalSlatsContinuous
+  result: FloorTileItemWhiteVerticalSlatsContinuous
+
+- type: latheRecipe
+  parent: BaseWhiteTileRecipe
+  id: FloorTileItemWhiteVerticalSlatsBordered
+  result: FloorTileItemWhiteVerticalSlatsBordered
+
+- type: latheRecipe
+  parent: BaseWhiteTileRecipe
+  id: FloorTileItemWhiteHorizontalSlatsContinuous
+  result: FloorTileItemWhiteHorizontalSlatsContinuous
+
+- type: latheRecipe
+  parent: BaseWhiteTileRecipe
+  id: FloorTileItemWhiteHorizontalSlatsBordered
+  result: FloorTileItemWhiteHorizontalSlatsBordered
 
 # Other steel
 - type: latheRecipe
