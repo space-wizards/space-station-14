@@ -1,161 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: The Go Go Hat now checks if your message matches either the name of the
-      item or the label of the item. This allows people with accents to name their
-      items according to how their character would say the item, or for a faster retrieval
-      without having to type out the full name.
-    type: Tweak
-  id: 8259
-  time: '2025-04-19T14:11:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35658
-- author: GrownSamoyedDog
-  changes:
-  - message: Pineapple Juice Cartons are new and added to Booze-O-Mat.
-    type: Add
-  id: 8260
-  time: '2025-04-19T14:25:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34769
-- author: claustro305
-  changes:
-  - message: Fixed a bug where dragged objects would collide with wall mounted lights
-      and cameras.
-    type: Fix
-  id: 8261
-  time: '2025-04-19T14:29:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35908
-- author: metalgearsloth
-  changes:
-  - message: Fix detailed examine buttons sometimes showing up incorrectly.
-    type: Fix
-  id: 8262
-  time: '2025-04-19T14:37:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33814
-- author: sowelipililimute
-  changes:
-  - message: Servers with the number of open inventories set to two have a new alignment
-      that doesn't shift as much when opening and closing multiple inventories
-    type: Tweak
-  id: 8263
-  time: '2025-04-19T14:40:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35041
-- author: ps3moira
-  changes:
-  - message: Removed interior shuttle walls
-    type: Remove
-  id: 8264
-  time: '2025-04-19T14:41:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34261
-- author: Minemoder
-  changes:
-  - message: Most roles on the station now require significantly less playtime playtime
-      to unlock.
-    type: Tweak
-  id: 8265
-  time: '2025-04-19T15:31:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36666
-- author: Fildrance
-  changes:
-  - message: fixed spessman getting stuck after unlocking portal node
-    type: Fix
-  id: 8266
-  time: '2025-04-19T17:07:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36719
-- author: VlaDOS1408
-  changes:
-  - message: Fixed Gravity gen menu resizing! Now it looks like it should.
-    type: Fix
-  id: 8267
-  time: '2025-04-19T20:20:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34036
-- author: coffeeware, MilenVolf
-  changes:
-  - message: Most common mobs without hands now can't dump containers wtih solution
-      by drag and dropping.
-    type: Tweak
-  id: 8268
-  time: '2025-04-19T20:32:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33350
-- author: ScarKy0
-  changes:
-  - message: Salvage borgs now start with a tool module
-    type: Add
-  id: 8269
-  time: '2025-04-19T20:33:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33336
-- author: Seam_Less
-  changes:
-  - message: Standardized the Sprites of most scarfs
-    type: Tweak
-  id: 8270
-  time: '2025-04-20T00:17:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35446
-- author: ArtisticRoomba
-  changes:
-  - message: Fixed backpack water tanks (spray nozzle) projectiles not properly cleaning
-      up puddles.
-    type: Fix
-  id: 8271
-  time: '2025-04-20T02:41:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35950
-- author: Blackern5000
-  changes:
-  - message: Reptilians can now have shark tails and a back fin.
-    type: Add
-  id: 8272
-  time: '2025-04-20T05:57:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33219
-- author: chromiumboy
-  changes:
-  - message: The countdown timer for emergency broadcast cooldowns are now consistent
-      across holopad UIs
-    type: Fix
-  id: 8273
-  time: '2025-04-20T05:58:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34115
-- author: ArtisticRoomba
-  changes:
-  - message: Filing cabinet drawers have the same internal storage size as tall filing
-      cabinets.
-    type: Tweak
-  id: 8274
-  time: '2025-04-20T06:01:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36757
-- author: CubixThree
-  changes:
-  - message: Added plural pride pin.
-    type: Add
-  id: 8275
-  time: '2025-04-20T07:00:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36744
-- author: Helm
-  changes:
-  - message: You can now add any reagents to soup!
-    type: Fix
-  id: 8276
-  time: '2025-04-20T09:32:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34633
-- author: Nox38, BurgerMoth, ArtisticRoomba
-  changes:
-  - message: Added descriptions to all .35 auto cartridges, magazines, and ammo boxes.
-    type: Add
-  id: 8277
-  time: '2025-04-20T11:51:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36085
-- author: Pgriha
-  changes:
-  - message: SWAT, ERT, Riot and some other helmets are now hiding head markings.
-    type: Fix
-  id: 8278
-  time: '2025-04-20T11:52:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36074
-- author: RedBookcase
-  changes:
-  - message: More items can be processed by the station's Recyclers.
-    type: Add
-  id: 8279
-  time: '2025-04-20T11:53:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35800
 - author: Alice4267
   changes:
   - message: Changed the amount of glass sheets needed to create beakers to 2 on normal
@@ -3895,3 +3738,173 @@
   id: 8771
   time: '2025-07-14T02:49:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38906
+- author: Trosling
+  changes:
+  - message: Moved Bible/Holy Book choice to loadout options for chaplain.
+    type: Tweak
+  - message: Implemented new holy book sprites, as well as one existing one (space
+      quran).
+    type: Add
+  id: 8772
+  time: '2025-07-15T00:49:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38986
+- author: RedBookcase
+  changes:
+  - message: The Kardashev-Mosin's bayonet can now be used while the weapon is wielded.
+      Tally ho!
+    type: Add
+  id: 8773
+  time: '2025-07-15T00:49:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38295
+- author: SlamBamActionman
+  changes:
+  - message: Throwable item hitboxes have been updated to better reflect their sprites.
+    type: Tweak
+  id: 8774
+  time: '2025-07-15T00:51:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38985
+- author: Velken
+  changes:
+  - message: Moproaches have been added to the game.
+    type: Add
+  - message: Moproaches can sometimes appear from the station's sewage system.
+    type: Add
+  id: 8775
+  time: '2025-07-15T02:47:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38700
+- author: nabegator
+  changes:
+  - message: You can now put remote signallers into utility belts.
+    type: Tweak
+  id: 8776
+  time: '2025-07-16T00:43:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35212
+- author: ArtisticRoomba
+  changes:
+  - message: Firelocks will now properly drop fast enough to prevent the spacing of
+      an entire atmos volume.
+    type: Fix
+  - message: Only the necessary firelocks required to stop a spacing will drop when
+      a spacing is triggered, instead of all firelocks in a spaced volume.
+    type: Fix
+  id: 8777
+  time: '2025-07-16T03:18:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38918
+- author: ScarKy0
+  changes:
+  - message: Wizard's Mjollnir can no longer stun when thrown off-cooldown.
+    type: Fix
+  id: 8778
+  time: '2025-07-16T20:27:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39018
+- author: SlamBamActionman
+  changes:
+  - message: Grilles under diagonal windows no longer electrocute you.
+    type: Fix
+  id: 8779
+  time: '2025-07-17T13:33:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39032
+- author: qwerltaz
+  changes:
+  - message: NPC spiders now spin webs sometimes!
+    type: Add
+  id: 8780
+  time: '2025-07-17T16:34:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38319
+- author: Quantum-cross
+  changes:
+  - message: Anomalies make anomalous noises if you let them go supercritical
+    type: Add
+  id: 8781
+  time: '2025-07-17T17:01:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36425
+- author: ScarKy0
+  changes:
+  - message: There have been major tweaks to the contraband and emag vendor tables.
+      Mainly emagged inventories now only contain syndie flavor items(clothing and
+      similiar), while the rest has either been moved to the contraband inventory
+      or removed.
+    type: Tweak
+  id: 8782
+  time: '2025-07-17T21:36:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36839
+- author: ScarKy0
+  changes:
+  - message: Added the acolyte armor to the chaplain's uplink.
+    type: Add
+  - message: Syndicate bundles are now correctly marked as syndicate contraband.
+    type: Fix
+  id: 8783
+  time: '2025-07-17T22:00:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36843
+- author: SeaWyrm
+  changes:
+  - message: Four varieties of marble tile can now be produced at Cutter lathes.
+    type: Add
+  id: 8784
+  time: '2025-07-17T23:44:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38007
+- author: august-sun
+  changes:
+  - message: Added Estoc magazines to the syndicate ammo bundle.
+    type: Add
+  id: 8785
+  time: '2025-07-18T10:35:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38413
+- author: Kowlin
+  changes:
+  - message: The access configurator can now set GenPop enter and leave accesses on
+      doors and turnstiles.
+    type: Tweak
+  id: 8786
+  time: '2025-07-18T10:53:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39043
+- author: Quantum-cross
+  changes:
+  - message: The bartender's mailing unit on plasma is properly configured.
+    type: Fix
+  id: 8787
+  time: '2025-07-18T10:54:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38098
+- author: Quantum-cross
+  changes:
+  - message: Unwarmed honk pockets no longer contain omnizine
+    type: Fix
+  - message: Honk pockets make you honk
+    type: Fix
+  id: 8788
+  time: '2025-07-18T11:03:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38152
+- author: TeenSarlacc
+  changes:
+  - message: Lowered Double Barrel shotgun spread to 60%.
+    type: Tweak
+  - message: Increased Sawn Off shotgun spread to 140%.
+    type: Tweak
+  id: 8789
+  time: '2025-07-18T11:41:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37731
+- author: notquitehadouken
+  changes:
+  - message: Mass scanner now shows any grid's distance from the current grid/entity
+      in tiles instead of from the top left corner of the UI in pixels
+    type: Fix
+  id: 8790
+  time: '2025-07-18T15:33:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39041
+- author: Pyrovi
+  changes:
+  - message: Changed some outdated info in the guidebook
+    type: Tweak
+  id: 8791
+  time: '2025-07-19T01:41:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38987
+- author: TiniestShark
+  changes:
+  - message: Adds a new slot for the Golden Plunger on the Janitor Trolley.
+    type: Add
+  - message: Holo and Magicarp plushies now show up in the mop bucket properly.
+    type: Tweak
+  id: 8792
+  time: '2025-07-19T15:33:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38494
