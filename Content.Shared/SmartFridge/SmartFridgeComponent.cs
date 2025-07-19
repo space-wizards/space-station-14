@@ -9,6 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.SmartFridge;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[Access(typeof(SmartFridgeSystem))]
 public sealed partial class SmartFridgeComponent : Component
 {
     /// <summary>
@@ -85,7 +86,7 @@ public record struct SmartFridgeEntry
 }
 
 [Serializable, NetSerializable]
-public enum SmartFridgeUiKey
+public enum SmartFridgeUiKey : byte
 {
     Key,
 }
