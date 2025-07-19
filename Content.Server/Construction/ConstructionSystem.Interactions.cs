@@ -362,6 +362,12 @@ namespace Content.Server.Construction
                             : HandleResult.False;
                     }
 
+                    var toolEvent = new ConstructionToolEvent(user.Value);
+                    RaiseLocalEvent(uid, toolEvent);
+
+                    if (toolEvent.Result is not null)
+                        return toolEvent.Result.Value;
+
                     // If we're handling an event after its DoAfter finished...
                     if (doAfterState == DoAfterState.Completed)
                         return  HandleResult.True;
@@ -632,6 +638,12 @@ namespace Content.Server.Construction
 
     public sealed class OnConstructionTemperatureEvent : HandledEntityEventArgs
     {
+        public HandleResult? Result;
+    }
+
+    public record ConstructionToolEvent(EntityUid User)
+    {
+        public readonly EntityUid User = User;
         public HandleResult? Result;
     }
 }
