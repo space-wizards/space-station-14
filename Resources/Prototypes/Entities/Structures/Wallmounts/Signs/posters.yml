@@ -1123,6 +1123,15 @@
   - type: Sprite
     state: poster54_legit
 
+- type: entity
+  parent: PosterBase
+  id: PosterLegitHelio
+  name: Helio Logistics ad
+  description: "A poster advertising Helio Logistics and their adorable mascot. The slogan reads 'Come rain or shine, we deliver on time.'"
+  components:
+  - type: Sprite
+    state: poster55_legit
+
 #maps
 
 - type: entity

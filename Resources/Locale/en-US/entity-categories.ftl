@@ -4,6 +4,7 @@ entity-category-name-objectives = Objectives
 entity-category-name-roles = Mind Roles
 entity-category-name-mapping = Mapping
 entity-category-name-donotmap = Do not map
+entity-category-name-status-effects = Status Effects
 
 entity-category-name-hide-allow-copy = Hidden, Copyable
 entity-category-desc-hide-allow-copy = Entity prototypes that should be hidden from entity spawn menus, but should still be copyable using Sandbox tools
