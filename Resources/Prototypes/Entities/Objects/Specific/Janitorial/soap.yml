@@ -75,7 +75,7 @@
   name: soap
   id: SoapNT
   parent: Soap
-  description: A Nanotrasen brand bar of soap. Smells of plasma.
+  description: A NanoTrasen brand bar of soap. Smells of plasma.
   components:
   - type: Sprite
     layers:
@@ -242,7 +242,7 @@
   name: soap
   id: SoapBorg # Intended for borg internals, not slippery or food, not a container for soap reagent
   parent: BaseItem
-  description: A Nanotrasen brand bar of soap. Smells of plasma and machines.
+  description: A NanoTrasen brand bar of soap. Smells of plasma and machines.
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/soap.rsi

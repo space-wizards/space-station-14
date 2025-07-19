@@ -135,7 +135,7 @@
   parent: PosterBase
   id: PosterContrabandMissingGloves
   name: "Missing Gloves"
-  description: "This poster references the uproar that followed Nanotrasen's financial cuts toward insulated-glove purchases."
+  description: "This poster references the uproar that followed NanoTrasen's financial cuts toward insulated-glove purchases."
   components:
   - type: Sprite
     state: poster9_contraband
@@ -144,7 +144,7 @@
   parent: PosterBase
   id: PosterContrabandHackingGuide
   name: "Hacking Guide"
-  description: "This poster details the internal workings of the common Nanotrasen airlock. Sadly, it appears out of date."
+  description: "This poster details the internal workings of the common NanoTrasen airlock. Sadly, it appears out of date."
   components:
   - type: Sprite
     state: poster10_contraband
@@ -153,7 +153,7 @@
   parent: PosterBase
   id: PosterContrabandRIPBadger
   name: "RIP Badger"
-  description: "This seditious poster references Nanotrasen's genocide of a space station full of badgers."
+  description: "This seditious poster references NanoTrasen's genocide of a space station full of badgers."
   components:
   - type: Sprite
     state: poster11_contraband
@@ -198,7 +198,7 @@
   parent: PosterBase
   id: PosterContrabandPower
   name: "Power"
-  description: "A poster that positions the seat of power outside Nanotrasen."
+  description: "A poster that positions the seat of power outside NanoTrasen."
   components:
   - type: Sprite
     state: poster16_contraband
@@ -261,7 +261,7 @@
   parent: PosterBase
   id: PosterContrabandRebelsUnite
   name: "Rebels Unite"
-  description: "A poster urging the viewer to rebel against Nanotrasen."
+  description: "A poster urging the viewer to rebel against NanoTrasen."
   components:
   - type: Sprite
     state: poster23_contraband
@@ -649,8 +649,8 @@
 - type: entity
   parent: PosterBase
   id: PosterLegitNanotrasenLogo
-  name: "Nanotrasen Logo"
-  description: "A poster depicting the Nanotrasen logo."
+  name: "NanoTrasen Logo"
+  description: "A poster depicting the NanoTrasen logo."
   components:
   - type: Sprite
     state: poster2_legit
@@ -866,7 +866,7 @@
   parent: PosterBase
   id: PosterLegit50thAnniversaryVintageReprint
   name: "50th Anniversary Vintage Reprint"
-  description: "A reprint of a poster from 2505, commemorating the 50th Anniversary of Nanoposters Manufacturing, a subsidiary of Nanotrasen."
+  description: "A reprint of a poster from 2505, commemorating the 50th Anniversary of Nanoposters Manufacturing, a subsidiary of NanoTrasen."
   components:
   - type: Sprite
     state: poster26_legit
@@ -884,7 +884,7 @@
   parent: PosterBase
   id: PosterLegitPDAAd
   name: "PDA Ad"
-  description: "A poster advertising the latest PDA from Nanotrasen suppliers."
+  description: "A poster advertising the latest PDA from NanoTrasen suppliers."
   components:
   - type: Sprite
     state: poster28_legit
@@ -893,7 +893,7 @@
   parent: PosterBase
   id: PosterLegitEnlist
   name: "Enlist"
-  description: "Enlist in the Nanotrasen Deathsquadron reserves today!"
+  description: "Enlist in the NanoTrasen Deathsquadron reserves today!"
   components:
   - type: Sprite
     state: poster29_legit
@@ -938,7 +938,7 @@
   parent: PosterBase
   id: PosterLegitNoERP
   name: "No ERP"
-  description: "This poster reminds the crew that Eroticism and Pornography are banned on Nanotrasen stations."
+  description: "This poster reminds the crew that Eroticism and Pornography are banned on NanoTrasen stations."
   components:
   - type: Sprite
     state: poster34_legit
@@ -965,7 +965,7 @@
   parent: PosterBase
   id: PosterLegitThereIsNoGasGiant
   name: "There Is No Gas Giant"
-  description: "Nanotrasen has issued posters, like this one, to all stations reminding them that rumours of a gas giant are false."
+  description: "NanoTrasen has issued posters, like this one, to all stations reminding them that rumours of a gas giant are false."
   components:
   - type: Sprite
     state: poster37_legit
@@ -1063,7 +1063,7 @@
 - type: entity
   parent: PosterBase
   id: PosterLegitVacation
-  name: "Nanotrasen Corporate Perks: Vacation"
+  name: "NanoTrasen Corporate Perks: Vacation"
   description: "This informational poster provides information on some of the prizes available via the NT Corporate Perks program, including a two-week vacation for two on the resort world Idyllus."
   components:
     - type: Sprite
@@ -1090,8 +1090,8 @@
 - type: entity
   parent: PosterBase
   id: PosterLegitNTTGC
-  name: "Nanotrasen Tactical Game Cards"
-  description: "An advertisement for Nanotrasen's TCG cards: BUY MORE CARDS."
+  name: "NanoTrasen Tactical Game Cards"
+  description: "An advertisement for NanoTrasen's TCG cards: BUY MORE CARDS."
   components:
     - type: Sprite
       state: poster51_legit

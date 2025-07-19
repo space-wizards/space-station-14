@@ -355,7 +355,7 @@
   parent: BaseSubdermalImplant
   id: MindShieldImplant
   name: mindshield implant
-  description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
+  description: This implant will ensure loyalty to NanoTrasen and prevent mind control devices.
   categories: [ HideSpawnMenu ]
   components:
    - type: SubdermalImplant
