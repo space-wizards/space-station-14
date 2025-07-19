@@ -1,0 +1,1 @@
+laws-owner-soviet = Soviet revolutionist

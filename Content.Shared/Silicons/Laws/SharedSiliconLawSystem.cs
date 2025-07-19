@@ -6,6 +6,7 @@ using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Wires;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes; // Starlight
 
 namespace Content.Shared.Silicons.Laws;
 
@@ -18,6 +19,8 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!; // Starlight
+    [Dependency] private readonly IEntityManager _entMan = default!; // Starlight
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -50,13 +53,24 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         }
 
         //#region Starlight
-        if (args.DestroyTransponder)
+        SiliconLawsetPrototype? proto = null;
+        if (args.EmagComponent != null)
         {
-            RemComp<BorgTransponderComponent>(uid);
+            if (args.EmagComponent.DestroyTransponder)
+            {
+                RemComp<BorgTransponderComponent>(uid);
+            }
+
+
+            if (args.EmagComponent.Lawset != null)
+                proto = _prototype.Index<SiliconLawsetPrototype>(args.EmagComponent.Lawset);
+
+            if (args.EmagComponent.Components != null)
+                _entMan.AddComponents(uid, args.EmagComponent.Components);
         }
         //#endregion Starlight
 
-        var ev = new SiliconEmaggedEvent(args.UserUid);
+            var ev = new SiliconEmaggedEvent(args.UserUid, proto); // Starlight
         RaiseLocalEvent(uid, ref ev);
 
         component.OwnerName = Name(args.UserUid);
@@ -87,4 +101,4 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record struct SiliconEmaggedEvent(EntityUid user);
+public record struct SiliconEmaggedEvent(EntityUid user, SiliconLawsetPrototype? lawset);

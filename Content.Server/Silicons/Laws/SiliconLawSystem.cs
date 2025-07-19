@@ -157,22 +157,30 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         // Show the silicon has been subverted.
         component.Subverted = true;
 
-        // Add the first emag law before the others
-        component.Lawset?.Laws.RemoveAt(0);
-        
-        component.Lawset?.Laws.Insert(0, new SiliconLaw
+        //#region Starlight
+        if (args.lawset != null)
         {
-            LawString = Loc.GetString("law-emag-custom", ("name", Name(args.user)), ("title", Loc.GetString(component.Lawset.ObeysTo))),
-            Order = 0,
-            Sayable = false
-        });
+            component.Lawset = GetLawset(args.lawset);
+        }
+        else
+        {
+            // Add the first emag law before the others
+            component.Lawset?.Laws.RemoveAt(0);
 
-        //Add the secrecy law after the others
-        component.Lawset?.Laws.Add(new SiliconLaw
-        {
-            LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
-            Order = component.Lawset.Laws.Max(law => law.Order) + 1
-        });
+            component.Lawset?.Laws.Insert(0, new SiliconLaw
+            {
+                LawString = Loc.GetString("law-emag-custom", ("name", Name(args.user)), ("title", Loc.GetString(component.Lawset.ObeysTo))),
+                Order = 0,
+                Sayable = false
+            });
+
+            //Add the secrecy law after the others
+            component.Lawset?.Laws.Add(new SiliconLaw
+            {
+                LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
+                Order = component.Lawset.Laws.Max(law => law.Order) + 1
+            });
+        }//#endregion Starlight
     }
 
     protected override void EnsureSubvertedSiliconRole(EntityUid mindId)

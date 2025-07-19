@@ -5,6 +5,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization;
+using Content.Shared.Silicons.Laws; //#Starlight
 
 namespace Content.Shared.Emag.Components;
 
@@ -41,5 +42,18 @@ public sealed partial class EmagComponent : Component
     [DataField]
     [AutoNetworkedField]
     public bool DestroyTransponder = false;
+
+    /// <summary>
+    /// What lawset should borgs get when emagged. note. fully replaces the lawset and prevents the "only x and those they designate are crew" and secrecy laws.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public ProtoId<SiliconLawsetPrototype>? Lawset = null;
+
+    /// <summary>
+    /// What components should be added to a borg chassis when emagged
+    /// </summary>
+    [DataField]
+    public ComponentRegistry? Components = null;
     //#endregion Starlight
 }
