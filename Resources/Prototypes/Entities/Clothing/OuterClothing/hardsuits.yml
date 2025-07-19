@@ -12,6 +12,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -53,6 +59,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/engineering.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/engineering.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.04
     lowPressureMultiplier: 1000
@@ -90,6 +102,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.7
     lowPressureMultiplier: 1000
@@ -125,6 +143,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -162,6 +186,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/goliath.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/goliath.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -202,6 +232,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/maxim.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/maxim.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -235,6 +271,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/security.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/security.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -271,6 +313,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -298,6 +346,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -329,6 +383,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -366,6 +426,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -405,6 +471,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -437,6 +509,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -483,6 +561,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 1000
@@ -516,6 +600,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/luxury.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/luxury.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -551,6 +641,12 @@
     size: Huge
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
@@ -594,6 +690,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndiemedic.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndiemedic.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieMedic
   - type: Tag
@@ -612,6 +714,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -658,6 +766,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndiecommander.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndiecommander.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
@@ -698,6 +812,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/cybersun.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/cybersun.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.2
     lowPressureMultiplier: 1000
@@ -737,6 +857,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
@@ -774,6 +900,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.225
     lowPressureMultiplier: 1000
@@ -808,6 +940,12 @@
     size: Huge
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: ExplosionResistance
     damageCoefficient: 0.7
   - type: Armor
@@ -840,6 +978,12 @@
     size: Huge
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -874,6 +1018,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
 
@@ -888,6 +1038,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi #if you change this, please update the humanoid.yml with a better markers sprite.
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTChaplain
 
@@ -902,6 +1058,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
   - type: FireProtection
@@ -918,6 +1080,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
 
@@ -932,6 +1100,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
   - type: Tag
@@ -950,6 +1124,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTJanitor
 
@@ -964,6 +1144,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -1003,6 +1189,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -1043,6 +1235,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/clown.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/clown.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -1076,6 +1274,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/mime.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/mime.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: Construction
     graph: MimeHardsuit
     node: mimeHardsuit
@@ -1093,6 +1297,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/santahardsuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/santahardsuit.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
