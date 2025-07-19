@@ -23,7 +23,9 @@
   name: entity-category-name-hide-allow-copy
   description: entity-category-desc-hide-allow-copy
   hideSpawnMenu: true
-  inheritable: false # Matching non-inheritability of NoHideSpawn
+  # Allows inheritance since this is intended for use with "alternate" versions
+  # of prototypes. (Namely, pipe layer prototypes.)
+  inheritable: true
 
 # markers, atmos fixing, etc
 - type: entityCategory
