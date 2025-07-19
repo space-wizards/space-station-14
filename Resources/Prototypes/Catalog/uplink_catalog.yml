@@ -2013,7 +2013,7 @@
   discountDownTo:
     Telecrystal: 4
   cost:
-    Telecrystal: 5
+    Telecrystal: 6
   categories:
   - UplinkJob
   conditions:
