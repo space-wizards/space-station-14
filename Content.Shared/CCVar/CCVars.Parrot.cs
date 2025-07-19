@@ -20,7 +20,7 @@ public sealed partial class CCVars
 
     public static readonly CVarDef<TimeSpan> ParrotMaximumMemoryAge = CVarDef.Create(
         "parrot.db_max_memory_age",
-        TimeSpan.FromDays(30),
+        TimeSpan.FromDays(7),
         CVar.SERVER,
         "Maximum age of parrot memories stored in the database.  Memories are cleaned up every round."
     );
