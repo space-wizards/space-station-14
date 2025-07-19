@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: More items can be processed by the station's Recyclers.
-    type: Add
-  id: 8279
-  time: '2025-04-20T11:53:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35800
 - author: Alice4267
   changes:
   - message: Changed the amount of glass sheets needed to create beakers to 2 on normal
@@ -3906,3 +3899,12 @@
   id: 8791
   time: '2025-07-19T01:41:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38987
+- author: TiniestShark
+  changes:
+  - message: Adds a new slot for the Golden Plunger on the Janitor Trolley.
+    type: Add
+  - message: Holo and Magicarp plushies now show up in the mop bucket properly.
+    type: Tweak
+  id: 8792
+  time: '2025-07-19T15:33:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38494
