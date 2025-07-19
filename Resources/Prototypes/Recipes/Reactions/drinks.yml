@@ -203,6 +203,16 @@
     BeepskySmash: 2
 
 - type: reaction
+  id: BlackJapan
+  reactants:
+    Ale:
+      amount: 1
+    MelonLiquor:
+      amount: 2
+  products:
+    BlackJapan: 3
+
+- type: reaction
   id: BlackRussian
   reactants:
     CoffeeLiqueur:
@@ -265,6 +275,20 @@
     Bronx: 3
 
 - type: reaction
+  id: BruisedMelon
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Sake:
+      amount: 2
+    MelonLiquor:
+      amount: 1
+    Vodka:
+      amount: 1
+  products:
+    BruisedMelon: 4
+
+- type: reaction
   id: CafeLatte
   reactants:
     Coffee:
@@ -283,6 +307,36 @@
       amount: 1
   products:
     CoconutRum: 3
+
+- type: reaction
+  id: CoconutSakeColada
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Sake:
+      amount: 2
+    CreamOfCoconut:
+      amount: 1
+    JuiceLime:
+      amount: 1
+    JuicePineapple:
+      amount: 1
+  products:
+    CoconutSakeColada: 5
+
+- type: reaction
+  id: CosmicAlaska
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Martini:
+      amount: 3
+    Vodka:
+      amount: 2
+    MelonLiquor:
+      amount: 1
+  products:
+    CosmicAlaska: 6
 
 - type: reaction
   id: Cosmopolitan
@@ -542,6 +596,18 @@
       amount: 1
   products:
     HippiesDelight: 2
+
+- type: reaction
+  id: HorsesNeck
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    SolDry:
+      amount: 2
+    Cognac:
+      amount: 1
+  products:
+    HorsesNeck: 3
 
 - type: reaction
   id: Hooch
@@ -979,6 +1045,22 @@
       amount: 1
   products:
     Radler: 2
+
+- type: reaction
+  id: RansomNote
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Gin:
+      amount: 2
+    Mead:
+      amount: 1
+    Sugar:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+  products:
+    RansomNote: 5
 
 - type: reaction
   id: RedMead
