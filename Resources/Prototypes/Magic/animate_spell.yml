@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   parent: BaseEntitySpellAction
   id: ActionAnimateSpell
@@ -24,7 +25,9 @@
       - TegGenerator
       - TegCirculator
       - XenoArtifact
-      - ResistLocker
+      # start of modifications
+      - ResistLocker # Ronstation edit - Lockers have very janky interactions with this spell. Never forget the Locker Tide
+      # end of modifications
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: Animate

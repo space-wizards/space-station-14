@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   parent: ClothingBackpackSyndicate
   id: ClothingBackpackSyndicateBundle
@@ -19,6 +21,7 @@
     - id: ClothingMaskGasSyndicate
     - id: ClothingHandsGlovesCombat
 
+# start of modifications
 - type: entity
   parent: ClothingBackpackSyndicateBundle
   id: ClothingBackpackSyndicateEVABundle
@@ -33,4 +36,4 @@
       - id: ClothingHandsGlovesColorYellowBudget
       - id: DoubleEmergencyOxygenTankFilled
       - id: DoubleEmergencyNitrogenTankFilled
-
+# end of modifications

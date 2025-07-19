@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   id: BaseSubdermalImplant
   name: implant
@@ -79,7 +80,9 @@
   parent: BaseSubdermalImplant
   id: TrackingImplant
   name: tracking implant
-  description: This implant has a tracking device attached to the suit sensor network, as well as a condition monitor for the Security radio channel.
+  # start of modifications
+  description: This implant has a tracking device attached to the suit sensor network, as well as a condition monitor for the Security radio channel. # Ronstation - modification
+  # end of modifications
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
@@ -97,11 +100,13 @@
     - type: StationLimitedNetwork
     - type: WirelessNetworkConnection
       range: 500
+    # start of modifications
     - type: TriggerOnMobstateChange
       mobState:
       - Critical
     - type: Rattle
       radioChannel: "Security"
+    # end of modifications
 
 #Traitor implants
 

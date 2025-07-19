@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 #When adding new hardsuits, please try to keep the organization consistent with hardsuit-helmets.yml (if possible.)
 
 #CREW HARDSUITS
@@ -36,6 +38,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmos
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Engineering Hardsuit
 - type: entity
@@ -68,13 +75,18 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Spationaut Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseCargoContraband]
   id: ClothingOuterHardsuitSpatio
   name: spationaut hardsuit
-  description: A lightweight hardsuit designed for industrial EVA applications, a salvage specialist's best friend.
+  description: A lightweight hardsuit designed for industrial EVA applications, a salvage specialist's best friend. # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
@@ -89,7 +101,7 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
-        Radiation: 0.7
+        Radiation: 0.7 # Ronstation
         Caustic: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 0.8
@@ -102,13 +114,14 @@
     - Hardsuit
     - WhitelistChameleon
     - HardsuitSpatio
+    - CorgiWearable
 
 #Salvage Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseCargoContraband]
   id: ClothingOuterHardsuitSalvage
   name: mining hardsuit
-  description: A hardsuit built for rock crushers and alien robusters. Comes with a brighter light so you can see better when mining, and robusting.
+  description: A hardsuit built for rock crushers and alien robusters. Comes with a brighter light so you can see better when mining, and robusting. # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
@@ -121,6 +134,7 @@
     damageCoefficient: 0.7
   - type: Armor
     modifiers:
+# start of modifications
       coefficients:
         Blunt: 0.7
         Slash: 0.6
@@ -128,12 +142,18 @@
         Heat: 0.7
         Radiation: 0.5
         Caustic: 0.8
+# end of modifications
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Goliath Hardsuit
 - type: entity
@@ -149,6 +169,7 @@
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
+# start of modifications
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: Armor
@@ -160,6 +181,7 @@
         Heat: 0.6
         Radiation: 0.65
         Caustic: 0.5
+# end of modifications
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
@@ -169,6 +191,11 @@
   - type: Construction
     graph: HardsuitGoliath
     node: hardsuitGoliath
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Maxim Hardsuit
 - type: entity
@@ -233,6 +260,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Brigmedic Hardsuit
 - type: entity
@@ -266,7 +298,7 @@
   parent: [ClothingOuterHardsuitBase, BaseSecurityContraband]
   id: ClothingOuterHardsuitWarden
   name: warden's hardsuit
-  description: Generations of designs originally tracing from "void cabable riot gear" have produced a frightening hardsuit that lets you REALLY put your foot down and hold your ground.
+  description: Generations of designs originally tracing from "void cabable riot gear" have produced a frightening hardsuit that lets you REALLY put your foot down and hold your ground. # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
@@ -275,6 +307,7 @@
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
+# start of modifications
   - type: ExplosionResistance
     damageCoefficient: 0.3
   - type: Armor
@@ -287,6 +320,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.6
     sprintModifier: 0.6
+# end of modifications
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden
@@ -322,6 +356,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCap
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -356,13 +395,18 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Chief Medical Officer's Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
   id: ClothingOuterHardsuitMedical
   name: chief medical officer's hardsuit
-  description: A lightweight void-capable suit issued to the CMO, Built with advanced fabrics with laceration and chemical protection, that feel soft and don't slow you down!
+  description: A lightweight void-capable suit issued to the CMO, Built with advanced fabrics with laceration and chemical protection, that feel soft and don't slow you down! # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
@@ -373,12 +417,14 @@
     lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
+# start of modifications
       coefficients:
         Blunt: 0.7
         Slash: 0.7
         Heat: 0.5
         Radiation: 0.45
         Caustic: 0.1
+# end of modifications
   - type: ZombificationResistance
     zombificationResistanceCoefficient: 0.4
   - type: ClothingSpeedModifier
@@ -387,6 +433,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedical
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Research Director's Hardsuit
 - type: entity
@@ -425,6 +476,8 @@
     tags:
     - WhitelistChameleon
     - HighRiskItem
+    - CorgiWearable
+    - Hardsuit
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitRd
   - type: StaticPrice
@@ -469,7 +522,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitLuxury #DO NOT MAP - https://github.com/space-wizards/space-station-14/pull/19738#issuecomment-1703486738
   name: luxury mining hardsuit
-  description: A refurbished mining hardsuit with a new coat of paint and added bling. Comes with improved armor plating more resistant to gibtonite explosions.
+  description: A refurbished mining hardsuit with a new coat of paint and added bling. Comes with improved armor plating more resistant to gibtonite explosions. # Ronstation
   categories: [ DoNotMap ]
   components:
   - type: Sprite
@@ -479,6 +532,7 @@
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
+# start of modifications
   - type: ExplosionResistance
     damageCoefficient: 0.35
   - type: Armor
@@ -493,6 +547,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
+# end of modifications
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLuxury
@@ -510,7 +565,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,4,4
+    - 0,0,4,4 # Ronstation
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: PressureProtection
@@ -518,7 +573,7 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
-  - type: StaminaResistance
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
     damageCoefficient: 0.75
   - type: Armor
     modifiers:
@@ -540,6 +595,8 @@
     - MonkeyWearable
     - Hardsuit
     - WhitelistChameleon
+    - CorgiWearable
+    - ScurretWearable
   - type: StaticPrice
     price: 5000
 
@@ -582,7 +639,7 @@
     damageCoefficient: 0.2
   - type: FireProtection
     reduction: 0.8
-  - type: StaminaResistance
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
     damageCoefficient: 0.6
   - type: Armor
     modifiers:
@@ -596,13 +653,18 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,4,4
+    - 0,0,4,4 # Ronstation
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Syndicate Commander Hardsuit
 - type: entity
@@ -620,7 +682,7 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
-  - type: StaminaResistance
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
     damageCoefficient: 0.6
   - type: Armor
     modifiers:
@@ -637,6 +699,12 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
+
 
 #Cybersun Juggernaut Hardsuit
 - type: entity
@@ -654,8 +722,7 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.3
-  - type: StaminaResistance # Should not have stamina resistance, this is purely so people know it was not forgotten.
-    damageCoefficient: 0.99
+  # - type: StaminaResistance # Should not have stamina resistance, this is purely so people know it was not forgotten.
   - type: Armor
     modifiers:
       coefficients:
@@ -674,6 +741,8 @@
   - type: Tag
     tags:
     - MonkeyWearable
+    - CorgiWearable
+    - Hardsuit
     - WhitelistChameleon
 
 #Wizard Hardsuit
@@ -707,6 +776,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Ling Space Suit
 - type: entity

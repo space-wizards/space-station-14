@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 stack-steel = steel
 stack-bananium = bananium
 stack-glass = glass
@@ -117,7 +118,9 @@ stack-inflatable-door = inflatable door
 stack-ointment = ointment
 stack-aloe-cream = aloe cream
 stack-gauze = gauze
+# start of modifications
 stack-tourniquet = tourniquet
+# end of modifications
 stack-brutepack = brutepack
 stack-bloodpack = bloodpack
 stack-medicated-suture = medicated-suture
@@ -181,7 +184,7 @@ stack-eighties-floor-tile = eighties floor tile
 stack-blue-arcade-tile = blue arcade tile
 stack-red-arcade-tile = red arcade tile
 stack-red-carpet-tile = red carpet tile
-stack-block-carpet-tile = block carpet tile
+stack-black-carpet-tile = black carpet tile
 stack-blue-carpet-tile = blue carpet tile
 stack-green-carpet-tile = green carpet tile
 stack-orange-carpet-tile = orange carpet tile
@@ -237,5 +240,3 @@ stack-xeno-steel = xeno steel tile
 stack-xeno-steel-corner = xeno steel corner tile
 stack-xeno-maint = xeno techmaint
 stack-dark-squiggly = dark steel squiggly tile
-
-stack-poker-chips = poker chips

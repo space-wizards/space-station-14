@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: reagent
   id: Coffee
   name: reagent-name-coffee
@@ -12,16 +14,16 @@
       effects:
       - !type:SatiateThirst
         factor: 2
-      - !type:GenericStatusEffect
-        key: Drowsiness
-        time: 2.0
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 2
         type: Remove
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
-      - !type:AdjustReagent
-        reagent: Caffeine
-        amount: 0.03
+      - !type:AdjustReagent # Ronstation
+        reagent: Caffeine # Ronstation
+        amount: 0.5 # Ronstation
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/coffeeglass.rsi
     state: icon_empty
@@ -108,13 +110,13 @@
       effects:
       - !type:SatiateThirst
         factor: 2
-      - !type:GenericStatusEffect
-        key: Drowsiness
-        time: 2.0
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 2
         type: Remove
-      - !type:AdjustReagent
-        reagent: Caffeine
-        amount: 0.02
+      - !type:AdjustReagent # Ronstation
+        reagent: Caffeine # Ronstation
+        amount: 0.2 # Ronstation
 
 - type: reagent
   id: GreenTea
@@ -167,13 +169,13 @@
       effects:
       - !type:SatiateThirst
         factor: 2
-      - !type:GenericStatusEffect
-        key: Drowsiness
-        time: 2.0
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 2
         type: Remove
-      - !type:AdjustReagent
-        reagent: Caffeine
-        amount: 0.02
+      - !type:AdjustReagent # Ronstation
+        reagent: Caffeine # Ronstation
+        amount: 0.2 # Ronstation
 
 - type: reagent
   id: IcedGreenTea
@@ -351,9 +353,9 @@
       effects:
       - !type:SatiateThirst
         factor: 6
-      - !type:GenericStatusEffect
-        key: Drowsiness
-        time: 3.0
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 3
         type: Remove
     Poison:
       effects:
@@ -392,9 +394,9 @@
       effects:
       - !type:SatiateThirst
         factor: 2
-      - !type:GenericStatusEffect
-        key: Drowsiness
-        time: 2.0
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 2
         type: Remove
 
 - type: reagent
