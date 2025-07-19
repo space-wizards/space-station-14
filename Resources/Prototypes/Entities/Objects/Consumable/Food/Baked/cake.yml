@@ -1048,8 +1048,6 @@
     - sweet
   - type: InjectableSolution
     solution: food
-  - type: RefillableSolution
-    solution: food
   - type: SolutionContainerManager
     solutions:
       food:
