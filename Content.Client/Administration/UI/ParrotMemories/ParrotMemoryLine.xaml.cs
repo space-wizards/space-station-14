@@ -17,9 +17,8 @@ public sealed partial class ParrotMemoryLine : BoxContainer
     {
         RobustXamlLoader.Load(this);
 
-        // uimanager is used to open an ahelp later
+        // IUserInterfaceManager is used to open an ahelp later
         IoCManager.Resolve(ref _uiManager);
-
 
         ParrotMemoryText.Text = memory.Text;
         ParrotMemoryPlayerButton.Text = memory.SourcePlayerUserName;

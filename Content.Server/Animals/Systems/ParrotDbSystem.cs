@@ -63,9 +63,12 @@ public sealed partial class ParrotDbSystem : EntitySystem
     /// </summary>
     private async void OnRoundStarting(RoundStartingEvent args)
     {
-        await Task.Run(async () => _db.TruncateParrotMemory(_config.GetCVar(CCVars.ParrotMaximumMemoryAge)));
+        await Task.Run(async () => await _db.TruncateParrotMemory(_config.GetCVar(CCVars.ParrotMaximumMemoryAge)));
     }
 
+    /// <summary>
+    /// Called when an entity with a ParrotMemoryComponent learns something
+    /// </summary>
     private void OnLearn(Entity<ParrotDbMemoryComponent> entity, ref LearnEvent args)
     {
         TrySaveMemoryDb(entity, args.Message, args.SourcePlayer);

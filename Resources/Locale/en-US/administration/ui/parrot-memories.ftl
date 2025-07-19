@@ -11,6 +11,7 @@ parrot-memory-num-memories = { $memoryCount ->
 
 # general controls
 parrot-memory-refresh = Refresh
+parrot-memory-go-to-round = Go
 parrot-memory-to-current-round = To current round
 
 # filter

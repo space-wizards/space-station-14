@@ -10,6 +10,9 @@ public sealed class ParrotMemoryEui : BaseEui
 {
     private ParrotMemoryWindow ParrotMemoryWindow { get; }
 
+    /// <summary>
+    /// The round currently in play
+    /// </summary>
     private int _currentRound;
 
     public ParrotMemoryEui()
@@ -19,38 +22,37 @@ public sealed class ParrotMemoryEui : BaseEui
         ParrotMemoryWindow.OnOpen += SendRefreshCurrentRound;
         ParrotMemoryWindow.OnClose += () => SendMessage(new CloseEuiMessage());
 
+        // Handler for the button that navigates to the current round in play
         ParrotMemoryWindow.CurrentRoundButton.OnPressed += (_) =>
         {
             if (ParrotMemoryWindow.RoundId == _currentRound)
                 return;
 
-            // set all lists to dirty
-            ParrotMemoryWindow.SetListsDirty();
-
             // passing null requests the current round. This feels slightly more robust vs using _currentRound
             // because it will for sure get the current round and not whatever _currentRound happens to be
-            SendRefresh(null);
-            ParrotMemoryWindow.SetRound(_currentRound);
+            ChangeRound(null, true);
         };
 
         ParrotMemoryWindow.NextRoundButton.OnPressed += (_) =>
         {
-            // set all lists to dirty
-            ParrotMemoryWindow.SetListsDirty();
-
-            SendRefresh(ParrotMemoryWindow.RoundId + 1);
-            ParrotMemoryWindow.SetRound(ParrotMemoryWindow.RoundId + 1);
+            ChangeRound(ParrotMemoryWindow.RoundId + 1, true);
         };
 
         ParrotMemoryWindow.PrevRoundButton.OnPressed += (_) =>
         {
-            // set all lists to dirty
-            ParrotMemoryWindow.SetListsDirty();
-
-            SendRefresh(ParrotMemoryWindow.RoundId - 1);
-            ParrotMemoryWindow.SetRound(ParrotMemoryWindow.RoundId - 1);
+            ChangeRound(ParrotMemoryWindow.RoundId - 1, true);
         };
 
+        // Handler for the button to choose a specific round
+        ParrotMemoryWindow.GoToRoundButton.OnPressed += (_) =>
+        {
+            if (!int.TryParse(ParrotMemoryWindow.RoundLineEdit.Text, out var roundId))
+                return;
+
+            ChangeRound(roundId, true);
+        };
+
+        // Handler for when a different list is selected
         ParrotMemoryWindow.MemoryTabContainer.OnTabChanged += (_) =>
         {
             if (ParrotMemoryWindow.GetActiveList() is not { } parrotMemoryList)
@@ -64,35 +66,20 @@ public sealed class ParrotMemoryEui : BaseEui
             SendRefresh(ParrotMemoryWindow.RoundId);
         };
 
-        ParrotMemoryWindow.RoundLineEdit.OnTextTyped += (_) =>
-        {
-            // basic validation
-            if (!int.TryParse(ParrotMemoryWindow.RoundLineEdit.Text, out var roundId))
-            {
-                ParrotMemoryWindow.RoundLineEdit.Text = _currentRound.ToString();
-                return;
-            }
-
-            SendRefresh(roundId);
-        };
-
         ParrotMemoryWindow.RefreshButton.OnPressed += (_) =>
         {
-            ParrotMemoryWindow.SetActiveListDirty();
-            SendRefresh(ParrotMemoryWindow.RoundId);
+            ChangeRound(ParrotMemoryWindow.RoundId, true);
         };
 
         ParrotMemoryWindow.ApplyFilterButton.OnPressed += (_) =>
         {
-            ParrotMemoryWindow.SetListsDirty();
-            SendRefresh(ParrotMemoryWindow.RoundId);
+            ChangeRound(ParrotMemoryWindow.RoundId, true);
         };
 
         ParrotMemoryWindow.ClearFilterButton.OnPressed += (_) =>
         {
             ParrotMemoryWindow.FilterLineEdit.Text = string.Empty;
-            ParrotMemoryWindow.SetListsDirty();
-            SendRefresh(ParrotMemoryWindow.RoundId);
+            ChangeRound(ParrotMemoryWindow.RoundId, true);
         };
     }
 
@@ -118,6 +105,7 @@ public sealed class ParrotMemoryEui : BaseEui
 
         // in case an admin is going to the next/previous rounds too fast, this should discard state updates that
         // don't match the expected round except for the first time we get a state (current round)
+        // Otherwise, the UI becomes clunky
         if (parrotMemoryEuiState.SelectedRoundId != parrotMemoryEuiState.CurrentRoundId && parrotMemoryEuiState.SelectedRoundId != ParrotMemoryWindow.RoundId)
             return;
 
@@ -128,7 +116,7 @@ public sealed class ParrotMemoryEui : BaseEui
         if (ParrotMemoryWindow.GetActiveList() is not { } activeList)
             return;
 
-        // add new ones
+        // add new memories
         foreach (var memory in parrotMemoryEuiState.Memories)
         {
             var memoryLine = new ParrotMemoryLine(memory);
@@ -149,6 +137,30 @@ public sealed class ParrotMemoryEui : BaseEui
         }
 
         activeList.Dirty = false;
+    }
+
+    /// <summary>
+    /// Helper method to send a refresh for a given round and set some UI element text to the relevant round number
+    /// </summary>
+    /// <param name="requestedRoundId">The round ID to change to. If set to null, will request the current round.</param>
+    /// <param name="allListsDirty">Whether to set all lists to dirty. If set to false, will only set the current
+    /// list to dirty.</param>
+    private void ChangeRound(int? requestedRoundId, bool allListsDirty)
+    {
+        if (allListsDirty)
+        {
+            ParrotMemoryWindow.SetListsDirty();
+        }
+        else
+        {
+            ParrotMemoryWindow.SetActiveListDirty();
+        }
+
+        SendRefresh(requestedRoundId);
+
+        var newRoundId = requestedRoundId ?? _currentRound;
+
+        ParrotMemoryWindow.SetRound(newRoundId);
     }
 
     /// <summary>
