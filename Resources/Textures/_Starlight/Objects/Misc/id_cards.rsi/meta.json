@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "taken from the game, Abductor ID by Walksanator",
+  "copyright": "taken from the game, Abductor ID by Walksanator | Salvage Lead/Medic/Specialist icons by biteless-dot",
   "size": {
     "x": 32,
     "y": 32
@@ -24,6 +24,15 @@
     },
     {
       "name": "idblueshield"
+    },
+    {
+      "name": "idsalvagelead"
+    },
+    {
+      "name": "idsalvagemedic"
+    },
+    {
+      "name": "idsalvagespecialist"
     },
     {
       "name": "idstationminer"
