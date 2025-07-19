@@ -187,7 +187,7 @@
   - type: AccessReader
     access: [["Salvage"]]
   - type: Sprite
-    sprite: _Starlight/Structures/Machines/VendingMachines/salvage.rsi #DOTS - add colored stripe to the vending machine
+    sprite: _Starlight/Structures/Machines/VendingMachines/salvage.rsi
   - type: Store
     name: vendor-salvage-ticket-machine
     categories:
@@ -204,16 +204,14 @@
   name: mining ticket machine
   components:
     - type: AccessReader
-      access: [["Mining"]] #DOTS - add new access type, and add it to the base SalvageDoor proto
+      access: [["Mining"]]
     - type: Sprite
-      sprite: _Starlight/Structures/Machines/VendingMachines/mining.rsi #DOTS - add colored stripe to the vending machine
+      sprite: _Starlight/Structures/Machines/VendingMachines/mining.rsi
     - type: Store
       name: vendor-mining-ticket-machine
       categories:
-        - SalvageEquipment #DOTS - update with Mining tagged group items
-        - SalvageWeapons #DOTS - mining probably doesnt get any weapons besides PKA?
-        - SalvageConsumeables
-        - SalvageMercenaryEquipment #DOTS - mining probably shouldnt get these. Maybe move mining hardsuit to mining vend?
+        - MiningEquipment
+        - MiningConsumeables
       currencyWhitelist:
         - SalvageTicket # Same currency as salvage vendor to promote sharing
 
