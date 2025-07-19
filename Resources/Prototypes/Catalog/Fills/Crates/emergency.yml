@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   id: CrateEmergencyExplosive
   parent: CrateSecgear
@@ -87,6 +89,7 @@
       - id: NitrogenTankFilled
         amount: 4
 
+# start of modifications
 - type: entity
   id: CrateEVASuitsBasic
   parent: CrateInternals
@@ -116,12 +119,13 @@
         amount: 3
       - id: OxygenTankFilled
         amount: 3
+# end of modifications
 
 - type: entity
   id: CrateEmergencyRadiation
   parent: CrateRadiation
   name: radiation protection crate
-  description: Survive the Nuclear Apocalypse and Singuloose alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this.
+  description: Survive the Nuclear Apocalypse and Singularity engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this. # Ronstation (one word changed)
   components:
   - type: StorageFill
     contents:

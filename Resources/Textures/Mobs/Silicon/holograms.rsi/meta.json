@@ -33,30 +33,6 @@
         },
         {
             "name": "ai_dog"
-        },
-        {
-            "name": "ai_clown"
-        },
-        {
-            "name": "ai_weh"
-        },
-        {
-            "name": "ai_mothroach"
-        },
-        {
-            "name": "ai_lizard"
-        },
-        {
-            "name": "ai_arach"
-        },
-        {
-            "name": "ai_vox"
-        },
-        {
-            "name": "ai_moth"
-        },
-        {
-            "name": "ai_dionanymph"
         }
     ]
 }

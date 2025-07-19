@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   id: LockerSyndicatePersonalFilled
   suffix: Filled
@@ -15,6 +17,7 @@
         - id: ClothingHeadsetAltSyndicate
         - id: ClothingEyesHudSyndicate
 
+# start of modifications
 - type: entityTable
   id: FillLockerEmergencyStandard
   table: !type:AllSelector
@@ -38,6 +41,7 @@
       prob: 0.1
     - id: BoxMRE
       prob: 0.1
+# end of modifications
 
 - type: entity
   id: ClosetEmergencyFilledRandom
@@ -59,6 +63,7 @@
       entity_storage: !type:NestedSelector
         tableId: FillLockerEmergencyStandard
 
+# start of modifications
 - type: entityTable
   id: FillLockerEmergencyN2Standard
   table: !type:AllSelector
@@ -78,6 +83,7 @@
       prob: 0.1
     - id: BoxMRE
       prob: 0.1
+# end of modifications
 
 - type: entity
   id: ClosetEmergencyN2FilledRandom

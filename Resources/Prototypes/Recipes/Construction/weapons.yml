@@ -87,14 +87,6 @@
   objectType: Item
 
 - type: construction
-  id: SpearMop
-  graph: SpearMop
-  startNode: start
-  targetNode: spear
-  category: construction-category-weapons
-  objectType: Item
-
-- type: construction
   id: Bola
   graph: Bola
   startNode: start

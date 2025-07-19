@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 ## Static
 
 - type: latheRecipePack
@@ -53,6 +54,7 @@
   recipes:
   - ShuttleGunKineticCircuitboard
 
+# start of modifications
 # - type: latheRecipePack
 #   id: SalvageSecurityWeapons
 #   recipes:
@@ -60,3 +62,4 @@
 #   - PKAUpgradeDamage
 #   - PKAUpgradeRange
 #   - PKAUpgradeFireRate
+# end of modifications

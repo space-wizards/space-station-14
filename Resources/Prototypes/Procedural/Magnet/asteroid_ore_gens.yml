@@ -1,10 +1,11 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: weightedRandom
   id: AsteroidOre
   weights:
     OreIron: 1.0
     OreQuartz: 1.0
     OreCoal: 0.33
-    OreSalt: 0.10
+    OreSalt: 0.10 # Ronstation - modification, salt sucks lmao
     OreGold: 0.25
     OreSilver: 0.25
     OrePlasma: 0.20

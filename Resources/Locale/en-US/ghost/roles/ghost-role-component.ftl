@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # also used in MakeGhostRuleWindow and MakeGhostRoleCommand
 ghost-role-component-default-rules = All normal rules apply unless an administrator tells you otherwise.
                                      You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
@@ -46,7 +47,7 @@ ghost-role-information-snoth-description = A little snoth who doesn't mind a bit
 
 ghost-role-information-giant-spider-name = Giant Spider
 ghost-role-information-giant-spider-description = This station's inhabitants look mighty tasty, and your sticky web is perfect to catch them!
-ghost-role-information-giant-spider-rules = You are a [color={role-type-team-antagonist-color}][bold]{role-type-team-antagonist-name}[/bold][/color] with all other giant spiders.
+# ghost-role-information-giant-spider-rules = You are a [color={role-type-team-antagonist-color}][bold]{role-type-team-antagonist-name}[/bold][/color] with all other giant spiders. # Ronstation - modification
 
 ghost-role-information-cognizine-description = Made conscious with the magic of cognizine.
 
@@ -320,3 +321,6 @@ ghost-role-information-gingerbread-description = A being of pure holiday spirit.
 
 ghost-role-information-wizard-name = Wizard
 ghost-role-information-wizard-desc = YER A WIZARD! Show the station what your magic is made of.
+
+ghost-role-information-emotional-support-scurret-name = Emotional Support Scurret
+ghost-role-information-emotional-support-scurret-description = Support the crew, be adorable, say "wa" a lot.

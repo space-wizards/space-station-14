@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   abstract: true
   parent: BaseStructureDynamic
@@ -118,8 +119,10 @@
   id: StorageCanister
   name: storage canister
   components:
+  # start of modifications
     - type: OverrideSell
       overrideAccount: Engineering
+  # end of modifications
     - type: Sprite
       layers:
         - state: yellow

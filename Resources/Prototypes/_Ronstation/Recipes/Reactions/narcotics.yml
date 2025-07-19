@@ -1,0 +1,25 @@
+- type: reaction
+  id: Kronkaine
+  reactants:
+    Ephedrine:
+      amount: 1
+    KronkusExtract:
+      amount: 1
+    Hydroxide:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Kronkaine: 3
+
+- type: reaction
+  id: Synaptizine
+  reactants:
+    AmmoniaBlood:
+      amount: 1
+    Ethanol:
+      amount: 1
+    Lithium:
+      amount: 1
+  products:
+    Synaptizine: 1

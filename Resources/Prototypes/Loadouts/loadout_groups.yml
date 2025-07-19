@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Miscellaneous
 - type: loadoutGroup
   id: Trinkets
@@ -52,7 +53,9 @@
   - TowelColorSilver
   - TowelColorWhite
   - TowelColorYellow
+  # start of modifications
   - CardBoxPokerFilled
+  # end of modifications
 
 - type: loadoutGroup
   id: Glasses
