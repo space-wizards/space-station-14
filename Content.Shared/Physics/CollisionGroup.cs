@@ -82,8 +82,8 @@ public enum CollisionGroup
 
     // Soap, spills
     SlipLayer = MidImpassable | LowImpassable,
-    ItemMask = Impassable | HighImpassable | BlobImpassable, // backmen: blob
-    ThrownItem = Impassable | HighImpassable | BulletImpassable | BlobImpassable, // backmen: blob
+    ItemMask = Impassable | HighImpassable,
+    ThrownItem = Impassable | HighImpassable | BulletImpassable,
     WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
     BlobTileLayer = Opaque | BlobImpassable | BulletImpassable, // backmen: blob
     GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
