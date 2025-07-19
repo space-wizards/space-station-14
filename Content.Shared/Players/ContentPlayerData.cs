@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration;
+using Content.Shared.Administration;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Robust.Shared.Network;
@@ -36,6 +36,11 @@ public sealed class ContentPlayerData
     /// If true, the admin will not show up in adminwho except to admins with the <see cref="AdminFlags.Stealth"/> flag.
     /// </summary>
     public bool Stealthed { get; set; }
+
+    /// <summary>
+    /// Rate limit values related to creating issues in github issue tracker.
+    /// </summary>
+    public RateLimitPlayerDataContainer GithubIssueRateLimit = new();
 
     public ContentPlayerData(NetUserId userId, string name)
     {
