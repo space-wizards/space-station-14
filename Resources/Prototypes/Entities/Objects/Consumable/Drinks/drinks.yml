@@ -1214,7 +1214,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkIrishSlammer
-  suffix: grenade penguin
+  suffix: Irish car bomb #Starlight Change
   components:
   - type: SolutionContainerManager
     solutions:
