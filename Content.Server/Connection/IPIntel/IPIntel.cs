@@ -38,10 +38,12 @@ public sealed class IPIntel
         _sawmill = logManager.GetSawmill("ipintel");
 
         cfg.OnValueChanged(CCVars.GameIPIntelEmail, b => _contactEmail = b, true);
+        cfg.OnValueChanged(CCVars.GameIPIntelRegions, b => _regions = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelEnabled, b => _enabled = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelRejectUnknown, b => _rejectUnknown = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelRejectBad, b => _rejectBad = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelRejectRateLimited, b => _rejectLimited = b, true);
+        cfg.OnValueChanged(CCVars.GameIPIntelRegionWhitelist, b => _regionWhitelist = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelMaxMinute, b => _minute.Limit = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelMaxDay, b => _day.Limit = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelBackOffSeconds, b => _backoffSeconds = b, true);
@@ -75,11 +77,13 @@ public sealed class IPIntel
 
     // CCVars
     private string? _contactEmail;
+    private string? _regions;
     private bool _enabled;
     private bool _rejectUnknown;
     private bool _rejectBad;
     private bool _rejectLimited;
     private bool _alertAdminReject;
+    private bool _regionWhitelist;
     private int _backoffSeconds;
     private int _cleanupMins;
     private TimeSpan _cacheDays;
@@ -100,7 +104,7 @@ public sealed class IPIntel
         // Helps with saving your limited request limit.
         if (_exemptPlaytime != TimeSpan.Zero)
         {
-            var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
+            var overallTime = (await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
             if (overallTime != null && overallTime.TimeSpent >= _exemptPlaytime)
             {
                 return (false, string.Empty);
@@ -125,10 +129,7 @@ public sealed class IPIntel
         {
             // Skip to score check if result is older than _cacheDays
             if (DateTime.UtcNow - query.Time <= _cacheDays)
-            {
-                var score = query.Score;
-                return ScoreCheck(score, username);
-            }
+                return BlockCheck(query, username);
         }
 
         // Ensure our contact email is good to use.
@@ -142,8 +143,8 @@ public sealed class IPIntel
         switch (apiResult.Code)
         {
             case IPIntelResultCode.Success:
-                await Task.Run(() => _db.UpsertIPIntelCache(DateTime.UtcNow, ip, apiResult.Score));
-                return ScoreCheck(apiResult.Score, username);
+                await Task.Run(() => _db.UpsertIPIntelCache(DateTime.UtcNow, ip, apiResult.Score, apiResult.CountryCode));
+                return BlockCheck(apiResult, username);
 
             case IPIntelResultCode.RateLimited:
                 return _rejectLimited ? (true, Loc.GetString("ipintel-server-ratelimited")) : (false, string.Empty);
@@ -162,7 +163,7 @@ public sealed class IPIntel
         IncrementAndTestRateLimit(ref _minute, TimeSpan.FromMinutes(1), "minute");
 
         if (_minute.RateLimited || _day.RateLimited || CheckSuddenRateLimit())
-            return new IPIntelResult(0, IPIntelResultCode.RateLimited);
+            return new IPIntelResult(0, null, IPIntelResultCode.RateLimited);
 
         // Info about flag B: https://getipintel.net/free-proxy-vpn-tor-detection-api/#flagsb
         // TLDR: We don't care about knowing if a connection is compromised.
@@ -173,29 +174,31 @@ public sealed class IPIntel
         {
             _sawmill.Warning($"We hit the IPIntel request limit at some point. (Current limit count: Minute: {_minute.CurrentRequests} Day: {_day.CurrentRequests})");
             CalculateSuddenRatelimit();
-            return new IPIntelResult(0, IPIntelResultCode.RateLimited);
+            return new IPIntelResult(0, null, IPIntelResultCode.RateLimited);
         }
 
         var response = await request.Content.ReadAsStringAsync();
-        var score = Parse.Float(response);
+
+        var parts = response.Split(',');
+
+        if (parts.Length < 2)
+            return new IPIntelResult(0, null, IPIntelResultCode.Errored);
+
+        var score = Parse.Float(parts[0]);
+        var countryCode = parts[1].Trim();
 
         if (request.StatusCode == HttpStatusCode.OK)
         {
             _failedRequests = 0;
-            return new IPIntelResult(score, IPIntelResultCode.Success);
+            return new IPIntelResult(score, countryCode, IPIntelResultCode.Success);
         }
 
-        if (ErrorMessages.TryGetValue(response, out var errorMessage))
-        {
-            _sawmill.Error($"IPIntel returned error {response}: {errorMessage}");
-        }
-        else
-        {
+        _sawmill.Error(ErrorMessages.TryGetValue(response, out var errorMessage)
+            ? $"IPIntel returned error {response}: {errorMessage}"
             // Oh boy, we don't know this error.
-            _sawmill.Error($"IPIntel returned {response} (Status code: {request.StatusCode})... we don't know what this error code is. Please make an issue in upstream!");
-        }
+            : $"IPIntel returned {response} (Status code: {request.StatusCode})... we don't know what this error code is. Please make an issue in upstream!");
 
-        return new IPIntelResult(0, IPIntelResultCode.Errored);
+        return new IPIntelResult(0, null, IPIntelResultCode.Errored);
     }
 
     private bool CheckSuddenRateLimit()
@@ -251,9 +254,55 @@ public sealed class IPIntel
         return ratelimits.RateLimited && _gameTiming.RealTime >= ratelimits.LastRatelimited + liftingTime;
     }
 
-    private (bool, string Empty) ScoreCheck(float score, string username)
+    /// <summary>
+    /// Checks whether a user meets the requirements to connect.
+    /// </summary>
+    /// <param name="data">The data used to determine if the connection should be blocked. Expected types: <see cref="IPIntelResult"/> or <see cref="IPIntelCache"/>.</param>
+    /// <param name="username">The player's username.</param>
+    /// <returns>Returns <c>true</c> if the user is blocked, along with the reason.</returns>
+    private (bool, string Empty) BlockCheck(object data, string username)
     {
+        var (score, countryCode) = data switch
+        {
+            IPIntelResult result => (result.Score, result.CountryCode ?? string.Empty),
+            IPIntelCache cache => (cache.Score, cache.CountryCode ?? string.Empty),
+            _ => (0, string.Empty),
+        };
+
         var decisionIsReject = score > _rating;
+
+        if (!string.IsNullOrEmpty(_regions) && !string.IsNullOrEmpty(countryCode))
+        {
+            var countryCheck = _regions.Contains(countryCode);
+
+            switch (_regionWhitelist)
+            {
+                case true when !countryCheck:
+                {
+                    if (_alertAdminReject)
+                    {
+                        _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
+                            ("player", username),
+                            ("region", countryCode)));
+                    }
+
+                    return (true, Loc.GetString("ipintel-region-whitelist",
+                        ("regions", _regions)));
+                }
+                case false when countryCheck:
+                {
+                    if (_alertAdminReject)
+                    {
+                        _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
+                            ("player", username),
+                            ("region", countryCode)));
+                    }
+
+                    return (true, Loc.GetString("ipintel-region-blacklist",
+                        ("regions", _regions)));
+                }
+            }
+        }
 
         if (_alertAdminWarn != 0f && _alertAdminWarn < score && !decisionIsReject)
         {
@@ -376,7 +425,7 @@ public sealed class IPIntel
         return false;
     }
 
-    public readonly record struct IPIntelResult(float Score, IPIntelResultCode Code);
+    public readonly record struct IPIntelResult(float Score, string? CountryCode, IPIntelResultCode Code);
 
     public enum IPIntelResultCode : byte
     {
