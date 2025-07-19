@@ -33,6 +33,7 @@ public abstract partial class SharedHandsSystem
         InitializeDrop();
         InitializePickup();
         InitializeRelay();
+        InitializeOffer(); // Starlight
     }
 
     public override void Shutdown()

@@ -1,3 +1,4 @@
+using Content.Shared.Alert; // Starlight
 using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Containers;
@@ -101,7 +102,23 @@ public sealed partial class HandsComponent : Component
     /// </summary>
     [DataField]
     public bool CanBeStripped = true;
+
+    // Starlight - OfferSystem - Start
+    [DataField]
+    public bool Offering;
+
+    [DataField]
+    public bool BeingOffered;
+
+    [DataField]
+    public EntityUid? OfferItem;
+
+    [DataField]
+    public EntityUid? OfferTarget;
+    // Starlight - OfferSystem - End
 }
+
+public sealed partial class OfferItemAlertEvent : BaseAlertEvent; // Starlight
 
 [Serializable, NetSerializable]
 public sealed class Hand //TODO: This should definitely be a struct - Jezi

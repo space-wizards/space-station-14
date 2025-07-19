@@ -29,6 +29,7 @@
     - alertType: Magboots
     - alertType: Rooted
     - alertType: Pacified
+    - alertType: Offer # Starlight
 
 - type: entity
   id: AlertSpriteView
