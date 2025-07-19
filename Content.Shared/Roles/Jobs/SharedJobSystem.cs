@@ -216,4 +216,12 @@ public abstract class SharedJobSystem : EntitySystem
 
         return prototype.CanBeAntag;
     }
+
+    /// <summary>
+    /// Returns true if the given job can be antag.
+    /// </summary>
+    public bool CanBeAntag(ProtoId<JobPrototype> jobId)
+    {
+        return _prototypes.TryIndex(jobId, out var prototype) && prototype.CanBeAntag;
+    }
 }

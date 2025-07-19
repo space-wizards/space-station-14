@@ -10,7 +10,7 @@ public static class JobRequirements
 {
     public static bool TryRequirementsMet(
         JobPrototype job,
-        IReadOnlyDictionary<string, TimeSpan> playTimes,
+        IReadOnlyDictionary<string, TimeSpan>? playTimes,
         [NotNullWhen(false)] out FormattedMessage? reason,
         IEntityManager entManager,
         IPrototypeManager protoManager,
@@ -30,6 +30,21 @@ public static class JobRequirements
 
         return true;
     }
+
+    public static bool TryRequirementsMet(
+        ProtoId<JobPrototype> job,
+        IReadOnlyDictionary<string, TimeSpan>? playTimes,
+        [NotNullWhen(false)] out FormattedMessage? reason,
+        IEntityManager entManager,
+        IPrototypeManager protoManager,
+        HumanoidCharacterProfile? profile)
+    {
+        if (protoManager.TryIndex(job, out var jobProto))
+            return TryRequirementsMet(jobProto, playTimes, out reason, entManager, protoManager, profile);
+
+        reason = FormattedMessage.FromUnformatted("Failed to get job prototype");
+        return false;
+    }
 }
 
 /// <summary>
@@ -46,6 +61,6 @@ public abstract partial class JobRequirement
         IEntityManager entManager,
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
-        IReadOnlyDictionary<string, TimeSpan> playTimes,
+        IReadOnlyDictionary<string, TimeSpan>? playTimes,
         [NotNullWhen(false)] out FormattedMessage? reason);
 }
