@@ -8,10 +8,6 @@
     sprite: _ADT/Clothing/Head/Hats/black_veil.rsi
   - type: Clothing
     sprite: _ADT/Clothing/Head/Hats/black_veil.rsi
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Piercing: 15
   - type: Item
     size: Small
 
@@ -25,9 +21,5 @@
     sprite: _ADT/Clothing/Head/Hats/white_veil.rsi
   - type: Clothing
     sprite: _ADT/Clothing/Head/Hats/white_veil.rsi
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Piercing: 15
   - type: Item
     size: Small
