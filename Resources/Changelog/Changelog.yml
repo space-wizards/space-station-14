@@ -1,55 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Reptilians can now have shark tails and a back fin.
-    type: Add
-  id: 8272
-  time: '2025-04-20T05:57:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33219
-- author: chromiumboy
-  changes:
-  - message: The countdown timer for emergency broadcast cooldowns are now consistent
-      across holopad UIs
-    type: Fix
-  id: 8273
-  time: '2025-04-20T05:58:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34115
-- author: ArtisticRoomba
-  changes:
-  - message: Filing cabinet drawers have the same internal storage size as tall filing
-      cabinets.
-    type: Tweak
-  id: 8274
-  time: '2025-04-20T06:01:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36757
-- author: CubixThree
-  changes:
-  - message: Added plural pride pin.
-    type: Add
-  id: 8275
-  time: '2025-04-20T07:00:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36744
-- author: Helm
-  changes:
-  - message: You can now add any reagents to soup!
-    type: Fix
-  id: 8276
-  time: '2025-04-20T09:32:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34633
-- author: Nox38, BurgerMoth, ArtisticRoomba
-  changes:
-  - message: Added descriptions to all .35 auto cartridges, magazines, and ammo boxes.
-    type: Add
-  id: 8277
-  time: '2025-04-20T11:51:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36085
-- author: Pgriha
-  changes:
-  - message: SWAT, ERT, Riot and some other helmets are now hiding head markings.
-    type: Fix
-  id: 8278
-  time: '2025-04-20T11:52:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36074
 - author: RedBookcase
   changes:
   - message: More items can be processed by the station's Recyclers.
@@ -3902,3 +3851,58 @@
   id: 8784
   time: '2025-07-17T23:44:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38007
+- author: august-sun
+  changes:
+  - message: Added Estoc magazines to the syndicate ammo bundle.
+    type: Add
+  id: 8785
+  time: '2025-07-18T10:35:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38413
+- author: Kowlin
+  changes:
+  - message: The access configurator can now set GenPop enter and leave accesses on
+      doors and turnstiles.
+    type: Tweak
+  id: 8786
+  time: '2025-07-18T10:53:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39043
+- author: Quantum-cross
+  changes:
+  - message: The bartender's mailing unit on plasma is properly configured.
+    type: Fix
+  id: 8787
+  time: '2025-07-18T10:54:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38098
+- author: Quantum-cross
+  changes:
+  - message: Unwarmed honk pockets no longer contain omnizine
+    type: Fix
+  - message: Honk pockets make you honk
+    type: Fix
+  id: 8788
+  time: '2025-07-18T11:03:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38152
+- author: TeenSarlacc
+  changes:
+  - message: Lowered Double Barrel shotgun spread to 60%.
+    type: Tweak
+  - message: Increased Sawn Off shotgun spread to 140%.
+    type: Tweak
+  id: 8789
+  time: '2025-07-18T11:41:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37731
+- author: notquitehadouken
+  changes:
+  - message: Mass scanner now shows any grid's distance from the current grid/entity
+      in tiles instead of from the top left corner of the UI in pixels
+    type: Fix
+  id: 8790
+  time: '2025-07-18T15:33:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39041
+- author: Pyrovi
+  changes:
+  - message: Changed some outdated info in the guidebook
+    type: Tweak
+  id: 8791
+  time: '2025-07-19T01:41:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38987
