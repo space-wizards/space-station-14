@@ -32,6 +32,7 @@
     - type: GasMiner
       maxExternalPressure: 300
       spawnAmount: 400
+      releaseAmount: 400
     - type: GuideHelp
       guides:
       - GasMiningAndStorage
