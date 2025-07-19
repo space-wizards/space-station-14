@@ -697,7 +697,11 @@
   name: food-sequence-content-apple
   sprites:
   - sprite: Objects/Specific/Hydroponics/apple.rsi
-    state: produce
+    state: produce_green
+  - sprite: Objects/Specific/Hydroponics/apple.rsi
+    state: produce_yellow
+  - sprite: Objects/Specific/Hydroponics/apple.rsi
+    state: produce_red
   tags:
   - Fruit
 
