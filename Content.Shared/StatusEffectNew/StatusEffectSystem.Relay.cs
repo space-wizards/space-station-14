@@ -1,3 +1,4 @@
+using Content.Shared.Speech;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Player;
 
@@ -9,6 +10,8 @@ public sealed partial class StatusEffectsSystem
     {
         SubscribeLocalEvent<StatusEffectContainerComponent, LocalPlayerAttachedEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, LocalPlayerDetachedEvent>(RelayStatusEffectEvent);
+
+        SubscribeLocalEvent<StatusEffectContainerComponent, AccentGetEvent>(RelayStatusEffectEvent);
     }
 
     private void RefRelayStatusEffectEvent<T>(EntityUid uid, StatusEffectContainerComponent component, ref T args) where T : struct
