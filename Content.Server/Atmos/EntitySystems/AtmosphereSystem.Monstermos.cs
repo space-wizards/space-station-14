@@ -595,11 +595,8 @@ namespace Content.Server.Atmos.EntitySystems
                 if (_firelockQuery.TryGetComponent(entity, out var firelock))
                     reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
 
-                if (EntityManager.HasComponent<AtmosDeviceComponent>(entity))
-                {
-                    var ev = new AtmosDeviceExplosiveDepressurizationEvent();
-                    RaiseLocalEvent(entity, ref ev);
-                }
+                var ev = new AtmosDeviceExplosiveDepressurizationEvent();
+                RaiseLocalEvent(entity, ref ev);
             }
 
             foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, other.GridIndices))
