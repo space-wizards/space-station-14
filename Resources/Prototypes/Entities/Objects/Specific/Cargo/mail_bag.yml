@@ -18,8 +18,6 @@
     maxItemSize: Normal
     grid:
     - 0,0,4,3
-    quickInsert: true
-    areaInsert: true
     whitelist:
       components:
       - Paper
@@ -28,3 +26,5 @@
       - Document
       - Paper
   - type: Dumpable
+  - type: QuickPickup
+  - type: AreaPickup
