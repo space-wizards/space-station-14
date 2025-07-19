@@ -195,4 +195,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> AdminAllowMultiServerPlay =
         CVarDef.Create("admin.allow_multi_server_play", true, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Whether admins should gain role playtime even when playing while not de-adminned.
+    /// </summary>
+    public static readonly CVarDef<bool> GameAdminJobTracking =
+        CVarDef.Create("game.admin_job_tracking", false, CVar.SERVERONLY);
 }
