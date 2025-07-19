@@ -844,6 +844,9 @@
   id: Lime
 
 - type: Tag
+  id: Log
+
+- type: Tag
   id: Machete
 
 - type: Tag
