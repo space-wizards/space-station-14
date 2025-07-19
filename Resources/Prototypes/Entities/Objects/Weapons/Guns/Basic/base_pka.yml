@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   id: WeaponProtoKineticAcceleratorBase
   abstract: true
@@ -7,7 +8,7 @@
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-    size: Normal
+    size: Normal # Ronstation - modification
   - type: GunWieldBonus
     minAngle: -43
     maxAngle: -43

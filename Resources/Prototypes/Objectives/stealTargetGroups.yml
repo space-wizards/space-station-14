@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 # Traitor single items
 
 - type: stealTargetGroup
@@ -179,12 +181,14 @@
     sprite: Objects/Misc/module.rsi
     state: security
 
+# start of modifications
 - type: stealTargetGroup
-  id: ClothingHeadHatWarden
-  name: steal-target-groups-clothing-head-hat-warden
+  id: WardenWhistle
+  name: steal-target-groups-warden-whistle
   sprite:
-    sprite: Clothing/Head/Hats/warden.rsi
-    state: icon
+    sprite: Objects/Fun/whistles.rsi
+    state: ward
+# end of modifications
 
 - type: stealTargetGroup
   id: ClothingOuterHardsuitVoidParamed

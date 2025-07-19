@@ -1,0 +1,6 @@
+- type: tool
+  id: Axing
+  name: tool-quality-axing-name
+  toolName: tool-quality-axing-tool-name
+  spawn: FireAxe
+  icon: { sprite: Objects/Weapons/Melee/fireaxe.rsi, state: icon }

@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   parent: BaseComputerAiAccess
   id: ComputerAlert
@@ -1208,7 +1209,7 @@
   parent: BaseComputerAiAccess
   id: ComputerSalvageJobBoard
   name: salvage job board
-  description: It seems like a particularly disgruntled scientist hacked the software used on this computer. None of the buttons work and there is writing in bold letters saying "NO TO ORE VOID". # Ronstation - Originally was "Console for accessing salvage jobs, if you're tough enough.".
+  description: It seems like a particularly disgruntled scientist hacked the software used on this computer. None of the buttons work and there is writing in bold letters saying "NO TO ORE VOID". # Ronstation - modification. Originally was "Console for accessing salvage jobs, if you're tough enough.".
   components:
   - type: Sprite
     layers:
@@ -1216,12 +1217,15 @@
       state: computer
     - map: ["computerLayerKeyboard"]
       state: generic_keyboard
+    # start of modifications
     - map: ["computerLayerScreen"]
       state: screen_broken # Ronstation - To indicate broken state. Original comment was "givin em a salvjob like hawk tuah".
+    # end of modifications
     - map: ["computerLayerKeys"]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
+  # start of modifications
   #- type: SalvageJobBoardConsole # Ronstation - Balance.
   #- type: ActivatableUI # Ronstation - Balance.
   #  key: enum.SalvageJobBoardUiKey.Key # Ronstation - Balance.
@@ -1233,12 +1237,13 @@
         type: WiresBoundUserInterface
   #- type: ActiveRadio # Ronstation - Balance.
   #  channels: [ Supply ] # Ronstation - Balance.
+  # end of modifications
   - type: Computer
     board: SalvageJobBoardComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    color: "#6666ff" # Ronstation, original was "#b89f25".
+    color: "#6666ff" # Ronstation - modification, original was "#b89f25".
 
 - type: entity
   id: ComputerSalvageExpedition

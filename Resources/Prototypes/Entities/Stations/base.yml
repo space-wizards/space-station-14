@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   id: BaseStation
   abstract: true
@@ -61,7 +62,7 @@
             - /Maps/Shuttles/trading_outpost.yml
         mining: !type:GridSpawnGroup
           paths:
-          - /Maps/_Ronstation/Shuttles/mining.yml
+          - /Maps/_Ronstation/Shuttles/mining.yml # Ronstation - modification. There are talks of removing this in the near future
         # Spawn last
         ruins: !type:GridSpawnGroup
           hide: true

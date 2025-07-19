@@ -1268,20 +1268,6 @@
     FoodPlateTin: 1
 
 - type: microwaveMealRecipe
-  id: RecipeRealGappleTart
-  name: golden apple streusel tart recipe
-  result: FoodTartGapple
-  time: 15
-  group: Pie
-  reagents:
-    Sugar: 5
-    Milk: 5
-  solids:
-    FoodDoughPie: 1
-    FoodGoldenApple: 3 #the real apple is no longer absent
-    FoodPlateTin: 1
-
-- type: microwaveMealRecipe
   id: RecipeGrapeTart
   name: grape tart recipe
   result: FoodTartGrape
@@ -1586,19 +1572,6 @@
     FoodCakePlain: 1
     FoodLemoon: 2
     FoodBerries: 1 #dark colouring
-
-- type: microwaveMealRecipe
-  id: RecipeSpacemanCake
-  name: spacemans cake recipe
-  result: FoodCakeSpaceman
-  time: 5
-  group: Cake
-  reagents:
-    Cream: 10
-    Sugar: 5 #used for the frosting
-  solids:
-    FoodCakePlain: 1
-    FoodSpacemansTrumpet: 3
 
 - type: microwaveMealRecipe
   id: RecipeOrangeCake

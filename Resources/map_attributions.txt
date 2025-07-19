@@ -1,3 +1,4 @@
+// Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - files: ["aspid.yml"]
   authors: Checkraze
 
@@ -6,7 +7,7 @@
 
 - files: ["barratry.yml"]
   authors: Emogarbage, Scribbles0
- 
+
 - files: ["box.yml"]
   authors: ACJM, Emisse
 
@@ -63,3 +64,14 @@
 
 - file: ["amber.yml"]
   authors: Southbridge, Flipsie27
+
+// Start of modifications.
+- files: ["saltern-2.yml"]
+  authors: deltanedas, Emisse, PJB, Merrokitsune, robinthedragon, imatsoup
+
+- files: ["cluster-2.yml"]
+  authors: Scribbles0, Merrokitsune, robinthedragon
+
+- files: ["atlas-2.yml"]
+  authors: Emisse, deltanedas, Merrokitsune
+// End of modiciations.

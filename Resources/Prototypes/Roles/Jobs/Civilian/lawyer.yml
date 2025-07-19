@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: Lawyer
   name: job-name-lawyer
@@ -6,9 +7,11 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 9000 # 2.5 hrs
+    # start of modifications
     - !type:DepartmentTimeRequirement
       department: Security
       time: 9000 # 2.5 hrs
+    # end of modifications
   startingGear: LawyerGear
   icon: "JobIconLawyer"
   supervisors: job-supervisors-hop

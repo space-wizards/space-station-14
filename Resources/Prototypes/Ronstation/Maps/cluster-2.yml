@@ -1,7 +1,8 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: gameMap
   id: Cluster2
   mapName: 'Cluster-II'
-  mapPath: /Maps/_Ronstation/cluster-2.yml
+  mapPath: /Maps/Ronstation/cluster-2.yml # Ronstation - modification.
   minPlayers: 3
   maxPlayers: 35
   stations:
@@ -39,7 +40,7 @@
             Chemist: [ 1, 1 ]
             MedicalDoctor: [ 2, 2 ]
             MedicalIntern: [ 2, 2 ]
-            Paramedic: [ 1, 1 ]
+            Paramedic: [ 1, 1 ] # Ronstation - modification.
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 3, 3 ]

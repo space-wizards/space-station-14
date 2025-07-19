@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: ResearchDirector
   name: job-name-rd
@@ -9,7 +10,9 @@
     time: 18000 #5 hrs
   - !type:DepartmentTimeRequirement
     department: Science
+    # start of modifications
     time: 54000 # 15 hours
+    # end of modifications
   weight: 10
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"

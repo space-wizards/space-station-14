@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 #EVA Helmet
 - type: entity
   parent: ClothingHeadEVAHelmetBase
@@ -13,6 +15,7 @@
     tags:
     - HelmetEVA
     - WhitelistChameleon
+    - CorgiWearable
 
 #Large EVA Helmet
 - type: entity
@@ -25,6 +28,11 @@
     sprite: Clothing/Head/Helmets/eva_large.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/eva_large.rsi
+  - type: Tag
+    tags:
+    - HelmetEVA
+    - WhitelistChameleon
+    - CorgiWearable
 
 #Syndicate EVA Helmet
 - type: entity
@@ -57,7 +65,7 @@
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetAncient
   name: NTSRA void helmet
-  description: An antique design of helmet made by the Nanotrasen Space Research Association. You can't tell if this is one of the old ones, or just a reproduction.
+  description: An antique design of helmet made by the Nanotrasen Space Research Association. You can't tell if this is one of the old ones, or just a reproduction. # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
@@ -83,12 +91,16 @@
       - state: equipped-head-light
       head-vox:
       - state: equipped-head-light-vox
+      head-dog:
+      - state: equipped-head-light-dog
   - type: Clothing
     clothingVisuals:
       head:
       - state: equipped-head
       head-vox:
       - state: equipped-head-vox
+      head-dog:
+      - state: equipped-head-dog
   - type: TemperatureProtection
     heatingCoefficient: 0.1
     coolingCoefficient: 0.1
@@ -101,3 +113,8 @@
     radius: 5
     energy: 2
     color: "#00ffff"
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - HelmetEVA
+    - WhitelistChameleon

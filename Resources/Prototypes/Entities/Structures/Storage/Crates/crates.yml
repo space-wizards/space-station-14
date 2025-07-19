@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   parent: CrateBaseWeldable
   id: CrateGenericSteel
@@ -197,8 +198,10 @@
     sprite: Structures/Storage/Crates/sec_gear.rsi
   - type: AccessReader
     access: [["Security"]]
+  # start of modifications
   - type: AntiTamper
     containers: [ entity_storage ]
+  # end of modifications
 
 - type: entity
   parent: CrateBaseSecure
@@ -303,8 +306,10 @@
     sprite: Structures/Storage/Crates/weapon.rsi
   - type: AccessReader
     access: [["Armory"]]
+  # start of modifications
   - type: AntiTamper
     containers: [ entity_storage ]
+  # end of modifications
 
 - type: entity
   parent: [ CrateBaseSecure, BaseSecurityContraband ]
