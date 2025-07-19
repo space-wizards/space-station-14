@@ -18,13 +18,13 @@ public sealed class ParrotMemoryEuiState(List<ExtendedParrotMemory> memories, in
 /// Used to request a refresh of the parrot memory ui state
 /// </summary>
 /// <param name="showBlocked">Whether to return memories that are blocked or not</param>
-/// <param name="filterString">String by which to filter. No filtering is done if this is empty</param>
+/// <param name="textFilter">String by which to filter. No filtering is done if this is empty</param>
 /// <param name="requestedRoundId">Round ID that is requested. If this is null, the current round is requested</param>
 [Serializable, NetSerializable]
-public sealed class ParrotMemoryRefreshMsg(bool showBlocked, string filterString, int? requestedRoundId) : EuiMessageBase
+public sealed class ParrotMemoryRefreshMsg(bool showBlocked, string textFilter, int? requestedRoundId) : EuiMessageBase
 {
     public bool ShowBlocked { get; } = showBlocked;
-    public string FilterString { get; } = filterString;
+    public string TextFilter { get; } = textFilter;
     public int? RequestedRoundId { get; } = requestedRoundId;
 }
 

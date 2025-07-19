@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.Animals.Components;
 
 /// <summary>
-/// Makes an entity have a persistent memory of messages for use with a ParrotSpeakerComponent
+/// Makes an entity have a persistent memory of messages for use with a ParrotMemoryComponent
 /// </summary>
 [RegisterComponent]
 [AutoGenerateComponentPause]

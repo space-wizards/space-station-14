@@ -12,12 +12,12 @@ namespace Content.Server.Administration.UI;
 public sealed class ParrotMemoryEui : BaseEui
 {
     [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IServerDbManager _db = default!;
 
     private readonly List<ExtendedParrotMemory> _parrotMemories = [];
     private readonly int _currentRound;
-    private int _selectedRound;
+    private int _requestedRound;
     private bool _showBlocked;
     private string _textFilter = string.Empty;
 
@@ -31,7 +31,7 @@ public sealed class ParrotMemoryEui : BaseEui
 
     public override EuiStateBase GetNewState()
     {
-        return new ParrotMemoryEuiState(_parrotMemories, _currentRound, _selectedRound);
+        return new ParrotMemoryEuiState(_parrotMemories, _currentRound, _requestedRound);
     }
 
     public override async void HandleMessage(EuiMessageBase msg)
@@ -45,11 +45,11 @@ public sealed class ParrotMemoryEui : BaseEui
         {
             case ParrotMemoryRefreshMsg refreshMsg:
                 _showBlocked = refreshMsg.ShowBlocked;
-                _textFilter = refreshMsg.FilterString;
+                _textFilter = refreshMsg.TextFilter;
 
-                _selectedRound = refreshMsg.RequestedRoundId ?? _currentRound;
+                _requestedRound = refreshMsg.RequestedRoundId ?? _currentRound;
 
-                RefreshParrotMemories(_selectedRound);
+                RefreshParrotMemories(_requestedRound);
 
                 break;
             case SetParrotMemoryBlockedMsg blockChangeMsg:
