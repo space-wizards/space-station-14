@@ -67,7 +67,11 @@ public sealed partial class AdminCameraEui : BaseEui
         _control.Orphan();
         _OSWindow.Root.AddChild(_control);
 
-        _OSWindow.RequestClosed += (_, _) => SendMessage(new CloseEuiMessage());
+        _OSWindow.Closed += () =>
+        {
+            if (_control.IsPoppedOut)
+                SendMessage(new CloseEuiMessage());
+        };
 
         _control.IsPoppedOut = true;
         _control.PopControl.Text = Loc.GetString("admin-camera-window-pop-in");
