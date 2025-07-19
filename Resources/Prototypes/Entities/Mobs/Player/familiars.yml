@@ -89,9 +89,6 @@
   - type: Flammable # Fireproof
     damage:
       types: {}
-  - type: Temperature
-    heatDamageThreshold: 999 #Let the hellhound walk through a plasmafire
-    coldDamageThreshold: 230 
   - type: PressureProtection
     highPressureMultiplier: 0.02
   - type: TemperatureProtection
