@@ -29,7 +29,7 @@ public sealed class AccessSystem : EntitySystem
         }
     }
 
-    private static void OnGetAccessTags(Entity<AccessComponent> ent, ref GetAccessTagsEvent args)
+    private void OnGetAccessTags(Entity<AccessComponent> ent, ref GetAccessTagsEvent args)
     {
         if (!ent.Comp.Enabled)
             return;
