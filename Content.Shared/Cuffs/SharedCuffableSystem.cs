@@ -56,9 +56,13 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
 
+        private EntityQuery<HandcuffComponent> _cuffQuery;
+
         public override void Initialize()
         {
             base.Initialize();
+
+            _cuffQuery = GetEntityQuery<HandcuffComponent>();
 
             SubscribeLocalEvent<CuffableComponent, HandCountChangedEvent>(OnHandCountChanged);
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
@@ -89,6 +93,8 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
             SubscribeLocalEvent<HandcuffComponent, AddCuffDoAfterEvent>(OnAddCuffDoAfter);
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
+            SubscribeLocalEvent<CuffableComponent, GetStandUpTimeEvent>(OnCuffableStandupArgs);
+            SubscribeLocalEvent<CuffableComponent, KnockedDownRefreshEvent>(OnCuffableKnockdownRefresh);
         }
 
         private void CheckInteract(Entity<CuffableComponent> ent, ref InteractionAttemptEvent args)
@@ -418,6 +424,69 @@ namespace Content.Shared.Cuffs
             {
                 UpdateCuffState(ent.Owner, ent.Comp);
             }
+        }
+
+        /// <summary>
+        ///     Takes longer to stand up when cuffed
+        /// </summary>
+        private void OnCuffableStandupArgs(Entity<CuffableComponent> ent, ref GetStandUpTimeEvent time)
+        {
+            if (!HasComp<KnockedDownComponent>(ent) || !IsCuffed(ent))
+                return;
+
+            var cuffs = GetAllCuffs(ent.Comp);
+            var mod = 1f;
+
+            if (cuffs.Count == 0)
+                return;
+
+            foreach (var cuff in cuffs)
+            {
+                if (!_cuffQuery.TryComp(cuff, out var comp))
+                    continue;
+
+                // Get the worst modifier
+                mod = Math.Max(mod, comp.StandupMod);
+            }
+
+            time.DoAfterTime *= mod;
+        }
+
+        private void OnCuffableKnockdownRefresh(Entity<CuffableComponent> ent, ref KnockedDownRefreshEvent args)
+        {
+            if (!IsCuffed(ent))
+                return;
+
+            var cuffs = GetAllCuffs(ent.Comp);
+            var mod = 1f;
+
+            if (cuffs.Count == 0)
+                return;
+
+            if (HasComp<KnockedDownComponent>(ent))
+            {
+                foreach (var cuff in cuffs)
+                {
+                    if (!_cuffQuery.TryComp(cuff, out var comp))
+                        continue;
+
+                    // Get the worst modifier
+                    mod = Math.Min(mod, comp.KnockedMovementMod);
+                }
+            }
+            else
+            {
+                foreach (var cuff in cuffs)
+                {
+                    if (!_cuffQuery.TryComp(cuff, out var comp))
+                        continue;
+
+                    // Get the worst modifier
+                    mod = Math.Min(mod, comp.MovementMod);
+                }
+            }
+
+            args.SpeedModifier *= mod;
         }
 
         /// <summary>
