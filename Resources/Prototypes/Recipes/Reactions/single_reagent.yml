@@ -37,6 +37,7 @@
 
 - type: reaction
   id: BloodToWine
+  preserveDNA: true
   impact: Low
   requiredMixerCategories:
   - Holy
