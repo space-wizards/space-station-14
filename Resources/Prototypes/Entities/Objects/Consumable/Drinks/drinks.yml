@@ -1213,7 +1213,7 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkIrishSlammer
+  id: DrinkIrishCarBomb #Starlight Change
   suffix: Irish car bomb #Starlight Change
   components:
   - type: SolutionContainerManager
@@ -1221,7 +1221,7 @@
       drink:
         maxVol: 30
         reagents:
-        - ReagentId: IrishSlammer
+        - ReagentId: IrishCarBomb #Starlight Change
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/irishslammer.rsi

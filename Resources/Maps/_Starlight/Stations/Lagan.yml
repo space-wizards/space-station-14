@@ -82687,7 +82687,7 @@ entities:
     - type: Transform
       pos: -5.661344,-11.244907
       parent: 2
-- proto: DrinkIrishSlammer
+- proto: DrinkIrishCarBomb #Starlight Change
   entities:
   - uid: 13916
     components:

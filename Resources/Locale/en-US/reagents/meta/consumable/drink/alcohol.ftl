@@ -175,8 +175,8 @@ reagent-desc-hooch = Either someone's failure at cocktail making or attempt in a
 reagent-name-iced-beer = iced beer
 reagent-desc-iced-beer = A beer which is so cold the air around it freezes.
 
-reagent-name-irish-slammer = Irish car bomb
-reagent-desc-irish-slammer = What's black and white and red all over?
+reagent-name-irish-car-bomb = Irish car bomb
+reagent-desc-irish-car-bomb = What's black and white and red all over?
 
 reagent-name-irish-cream = Irish cream
 reagent-desc-irish-cream = Whiskey-imbued cream. What else could you expect from the Irish.
