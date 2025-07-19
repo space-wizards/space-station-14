@@ -27,6 +27,12 @@ public sealed partial class HeldSpeedModifierComponent : Component
     public float SprintModifier = 1.0f;
 
     /// <summary>
+    /// A multiplier applied to weightless acceleration
+    /// </summary>
+    [DataField]
+    public float WeightlessAcceleration = 1.0f;
+
+    /// <summary>
     /// If true, values from <see cref="ClothingSpeedModifierComponent"/> will attempted to be used before the ones in this component.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
