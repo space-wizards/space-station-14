@@ -72,7 +72,7 @@ namespace Content.Client.Cargo.BUI
 
             _menu.OnItemSelected += (args) =>
             {
-                if (args.Button.Parent is not CargoProductRow row)
+                if (args.Button.Parent?.Parent is not CargoProductRow row)
                     return;
 
                 description.Clear();
@@ -177,7 +177,7 @@ namespace Content.Client.Cargo.BUI
 
         private void RemoveOrder(ButtonEventArgs args)
         {
-            if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
+            if (args.Button.Parent?.Parent?.Parent is not CargoOrderRow row || row.Order == null)
                 return;
 
             SendMessage(new CargoConsoleRemoveOrderMessage(row.Order.OrderId));
@@ -185,7 +185,7 @@ namespace Content.Client.Cargo.BUI
 
         private void ApproveOrder(ButtonEventArgs args)
         {
-            if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
+            if (args.Button.Parent?.Parent?.Parent is not CargoOrderRow row || row.Order == null)
                 return;
 
             if (OrderCount >= OrderCapacity)
