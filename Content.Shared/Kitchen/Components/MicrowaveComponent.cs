@@ -6,7 +6,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Kitchen.Components
+namespace Content.Shared.Kitchen.Components
 {
     [RegisterComponent]
     public sealed partial class MicrowaveComponent : Component
@@ -116,11 +116,13 @@ namespace Content.Server.Kitchen.Components
     {
         public EntityUid Microwave;
         public EntityUid? User;
+        public uint Time;
 
-        public BeingMicrowavedEvent(EntityUid microwave, EntityUid? user)
+        public BeingMicrowavedEvent(EntityUid microwave, EntityUid? user, uint time)
         {
             Microwave = microwave;
             User = user;
+            Time = time;
         }
     }
 }

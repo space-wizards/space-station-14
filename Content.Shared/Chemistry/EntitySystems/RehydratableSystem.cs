@@ -5,6 +5,8 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
+using Content.Shared.Examine;
+using Content.Shared.Kitchen.Components;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -22,6 +24,8 @@ public sealed class RehydratableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RehydratableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<RehydratableComponent, ExaminedEvent>(OnExamine);
+		SubscribeLocalEvent<RehydratableComponent, BeingMicrowavedEvent>(OnMicrowaved);
     }
 
     private void OnSolutionChange(Entity<RehydratableComponent> ent, ref SolutionContainerChangedEvent args)
@@ -31,6 +35,26 @@ public sealed class RehydratableSystem : EntitySystem
         if (quantity != FixedPoint2.Zero && quantity >= ent.Comp.CatalystMinimum)
         {
             Expand(ent);
+        }
+    }
+
+	private void OnMicrowaved(EntityUid uid, RehydratableComponent component, BeingMicrowavedEvent args)
+    {
+		if(args.Time <= 0)
+			return;
+		if (!_solutions.TryGetSolution(uid, component.SolutionName, out _, out var solution))
+            return;
+        solution.RemoveAllSolution();
+    }
+
+    private void OnExamine(EntityUid uid, RehydratableComponent component, ExaminedEvent args)
+    {
+        if (!_solutions.TryGetSolution(uid, component.SolutionName, out _, out var solution))
+            return;
+        // This will only be true if an incorrect reagent has been added to the cube
+        if (solution.Volume == solution.MaxVolume)
+        {
+            args.PushMarkup(Loc.GetString("rehydratable-component-soaked-message"));
         }
     }
 
