@@ -131,18 +131,6 @@
 
 - type: entity
   parent: BaseMentalAction
-  id: ActionToggleSelf
-  name: Toggle Self
-  description: Toggle the visibility of your ghost.
-  components:
-  - type: Action
-    icon: { sprite: Mobs/Ghosts/ghost_human.rsi, state: icon }
-    clientExclusive: true
-  - type: InstantAction
-    event: !type:ToggleSelfActionEvent
-
-- type: entity
-  parent: BaseMentalAction
   id: ActionToggleGhostHearing
   name: Toggle Ghost Hearing
   description: Toggle between hearing all messages and hearing only radio & nearby messages.
