@@ -25,13 +25,13 @@ public sealed partial class ProjectileComponent : Component
     ///     User that shot this projectile.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? Shooter;
+    public WeakEntityReference? Shooter;
 
     /// <summary>
     ///     Weapon used to shoot.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? Weapon;
+    public WeakEntityReference? Weapon;
 
     /// <summary>
     ///     The projectile spawns inside the shooter most of the time, this prevents entities from shooting themselves.
