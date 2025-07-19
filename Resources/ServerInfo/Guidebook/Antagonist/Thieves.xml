@@ -63,10 +63,10 @@
   Things that you may desire include but are not limited to:
 
   <Box>
-   <GuideEntityEmbed Entity="ToyFigurineGreytider" Caption="Figurines"/>
-   <GuideEntityEmbed Entity="PassengerIDCard" Caption="ID cards"/>
-   <GuideEntityEmbed Entity="ChemDispenser" Caption="Structures"/>
-   <GuideEntityEmbed Entity="MobCorgiIan" Caption="Animals/Pets"/>
+    <GuideEntityEmbed Entity="ToyFigurineGreytider" Caption="Figurines"/>
+    <GuideEntityEmbed Entity="PassengerIDCard" Caption="ID cards"/>
+    <GuideEntityEmbed Entity="ChemDispenser" Caption="Structures"/>
+    <GuideEntityEmbed Entity="MobCorgiIan" Caption="Animals/Pets"/>
   </Box>
 
 </Document>
