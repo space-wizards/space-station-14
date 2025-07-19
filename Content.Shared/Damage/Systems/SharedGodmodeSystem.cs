@@ -1,14 +1,18 @@
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Destructible;
+using Content.Shared.Prototypes;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Slippery;
 using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Damage.Systems;
 
 public abstract class SharedGodmodeSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
@@ -34,7 +38,12 @@ public abstract class SharedGodmodeSystem : EntitySystem
 
     private void OnBeforeStatusEffect(EntityUid uid, GodmodeComponent component, ref BeforeStatusEffectAddedEvent args)
     {
-        args.Cancelled = true;
+        // Don't apply the status effect if 1) we can't find an entity proto
+        // for it (probably from old status effect system) or 2) we found the
+        // proto and it has a RejuvenateRemovedStatusEffectComponent.
+        if (!_protoMan.TryIndex(args.Effect.Id, out var proto, logError: false)
+            || proto.HasComponent<RejuvenateRemovedStatusEffectComponent>(Factory))
+            args.Cancelled = true;
     }
 
     private void OnBeforeStaminaDamage(EntityUid uid, GodmodeComponent component, ref BeforeStaminaDamageEvent args)
