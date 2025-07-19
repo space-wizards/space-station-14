@@ -113,8 +113,8 @@
 - type: marking
   id: TattooEyeRight
   bodyPart: Eyes
-  markingCategory: Head
-  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
+  markingCategory: [Head]
+  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf, Vulpkanin]
   coloring:
     default:
       type:
@@ -128,7 +128,7 @@
   id: TattooEyeLeft
   bodyPart: Eyes
   markingCategory: Head
-  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
+  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf, Vulpkanin]
   coloring:
     default:
       type:
