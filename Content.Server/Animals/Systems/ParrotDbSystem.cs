@@ -52,17 +52,19 @@ public sealed partial class ParrotDbSystem : EntitySystem
 
         // this task should make sure the blocking of all parrot messages completes properly, then after that the parrot
         // memories are refreshed
-        Task.Run(async () =>
-        {
-            await _db.SetParrotMemoryBlockPlayer(sourcePlayerUserId, true);
+        BlockPlayerMemories(sourcePlayerUserId);
+    }
 
-            // refresh the memories of all parrots with a memorydb so that they can keep yapping undisturbed
-            var query = EntityQueryEnumerator<ParrotMemoryComponent, ParrotDbMemoryComponent>();
-            while (query.MoveNext(out var uid, out var memory, out var dbMemory))
-            {
-                await RefreshMemoryFromDb((uid, memory, dbMemory));
-            }
-        });
+    private async void BlockPlayerMemories(NetUserId sourcePlayerUserId)
+    {
+        await _db.SetParrotMemoryBlockPlayer(sourcePlayerUserId, true);
+
+        // refresh the memories of all parrots with a memorydb so that they can keep yapping undisturbed
+        var query = EntityQueryEnumerator<ParrotMemoryComponent, ParrotDbMemoryComponent>();
+        while (query.MoveNext(out var uid, out var memory, out var dbMemory))
+        {
+            RefreshMemoryFromDb((uid, memory, dbMemory));
+        }
     }
 
     /// <summary>
@@ -70,7 +72,7 @@ public sealed partial class ParrotDbSystem : EntitySystem
     /// </summary>
     private async void OnRoundStarting(RoundStartingEvent args)
     {
-        await Task.Run(async () => await _db.TruncateParrotMemory(_config.GetCVar(CCVars.ParrotMaximumMemoryAge)));
+        await _db.TruncateParrotMemory(_config.GetCVar(CCVars.ParrotMaximumMemoryAge));
     }
 
     /// <summary>
@@ -125,14 +127,14 @@ public sealed partial class ParrotDbSystem : EntitySystem
         var currentRoundId = _ticker.RoundId;
 
         // actually save the message to the database
-        await Task.Run(async () => await _db.AddParrotMemory(message, sourcePlayerGuid, currentRoundId));
+        await _db.AddParrotMemory(message, sourcePlayerGuid, currentRoundId);
     }
 
     /// <summary>
     /// Updates the messages stored in ParrotMemoryComponent by retrieving fresh ones from the database
     /// </summary>
     /// <param name="entity"></param>
-    public async Task RefreshMemoryFromDb(Entity<ParrotMemoryComponent, ParrotDbMemoryComponent> entity)
+    public async void RefreshMemoryFromDb(Entity<ParrotMemoryComponent, ParrotDbMemoryComponent> entity)
     {
         // get an enum for new messages
         var memories = _db.GetRandomParrotMemories(entity.Comp1.MaxSpeechMemory);
@@ -172,7 +174,7 @@ public sealed partial class ParrotDbSystem : EntitySystem
 
             dbMemory.NextRefresh += _config.GetCVar(CCVars.ParrotDbRefreshInterval);
 
-            Task.Run(async () => await RefreshMemoryFromDb((uid, memory, dbMemory)));
+            RefreshMemoryFromDb((uid, memory, dbMemory));
         }
     }
 }
