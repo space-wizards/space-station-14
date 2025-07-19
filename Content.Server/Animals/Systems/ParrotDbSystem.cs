@@ -48,14 +48,21 @@ public sealed partial class ParrotDbSystem : EntitySystem
     /// </summary>
     private void OnErase(ref EraseEvent args)
     {
-        _db.SetParrotMemoryBlockPlayer(args.PlayerNetUserId, true);
+        var sourcePlayerUserId = args.PlayerNetUserId;
 
-        // refresh the memories of all parrots with a memorydb so that they can keep yapping undisturbed
-        var query = EntityQueryEnumerator<ParrotMemoryComponent, ParrotDbMemoryComponent>();
-        while (query.MoveNext(out var uid, out var memory, out var dbMemory))
+        // this task should make sure the blocking of all parrot messages completes properly, then after that the parrot
+        // memories are refreshed
+        Task.Run(async () =>
         {
-            Task.Run(async () => await RefreshMemoryFromDb((uid, memory, dbMemory)));
-        }
+            await _db.SetParrotMemoryBlockPlayer(sourcePlayerUserId, true);
+
+            // refresh the memories of all parrots with a memorydb so that they can keep yapping undisturbed
+            var query = EntityQueryEnumerator<ParrotMemoryComponent, ParrotDbMemoryComponent>();
+            while (query.MoveNext(out var uid, out var memory, out var dbMemory))
+            {
+                await RefreshMemoryFromDb((uid, memory, dbMemory));
+            }
+        });
     }
 
     /// <summary>
