@@ -1,6 +1,5 @@
 using Content.Server.StationEvents.Events;
 using Robust.Shared.Audio;
-using Robust.Shared.Collections;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -8,23 +7,23 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class MassHallucinationsRuleComponent : Component
 {
     /// <summary>
-    /// The maximum time between incidents in seconds
+    /// The maximum time between incidents.
     /// </summary>
-    [DataField("maxTimeBetweenIncidents", required: true), ViewVariables(VVAccess.ReadWrite)]
-    public float MaxTimeBetweenIncidents;
+    [DataField]
+    public TimeSpan MaxTimeBetweenIncidents = TimeSpan.FromSeconds(60);
 
     /// <summary>
-    /// The minimum time between incidents in seconds
+    /// The minimum time between incidents.
     /// </summary>
-    [DataField("minTimeBetweenIncidents", required: true), ViewVariables(VVAccess.ReadWrite)]
-    public float MinTimeBetweenIncidents;
+    [DataField]
+    public TimeSpan MinTimeBetweenIncidents = TimeSpan.FromSeconds(30);
 
-    [DataField("maxSoundDistance", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float MaxSoundDistance;
 
-    [DataField("sounds", required: true)]
-    public SoundSpecifier Sounds = default!;
+    [DataField(required: true)]
+    public SoundSpecifier Sounds;
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public List<EntityUid> AffectedEntities = new();
+    [ViewVariables(VVAccess.ReadOnly)]
+    public List<EntityUid> AffectedEntities = [];
 }
