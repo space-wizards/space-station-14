@@ -1921,7 +1921,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         /// <param name="message">Text of the message</param>
         /// <param name="sourcePlayer">Guid of the source player from which the message originated</param>
         /// <param name="roundId">The round in which the message was said</param>
-        public async Task AddParrotMemory(string message, Guid sourcePlayer, int roundId)
+        public async Task AddParrotMemory(string message, NetUserId sourcePlayer, int roundId)
         {
             await using var db = await GetDb();
 

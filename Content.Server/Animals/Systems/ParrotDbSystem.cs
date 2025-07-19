@@ -117,7 +117,7 @@ public sealed partial class ParrotDbSystem : EntitySystem
     private async void SaveMemoryDb(
         EntityUid entity,
         string message,
-        Guid sourcePlayerGuid)
+        NetUserId sourcePlayerGuid)
     {
         // add a log line confirming that an entry was added to the database
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Parroting entity {ToPrettyString(entity):entity} is saving the phrase \"{message}\" to database.");

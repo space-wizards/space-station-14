@@ -371,7 +371,7 @@ namespace Content.Server.Database
 
         IAsyncEnumerable<ParrotMemory> GetRandomParrotMemories(int limit);
 
-        Task AddParrotMemory(string message, Guid sourcePlayer, int roundId);
+        Task AddParrotMemory(string message, NetUserId sourcePlayer, int roundId);
 
         Task SetParrotMemoryBlock(int messageId, bool blocked);
 
@@ -1100,7 +1100,7 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.GetRandomParrotMemories(limit));
         }
 
-        public Task AddParrotMemory(string message, Guid sourcePlayer, int roundId)
+        public Task AddParrotMemory(string message, NetUserId sourcePlayer, int roundId)
         {
             return RunDbCommand(() => _db.AddParrotMemory(message, sourcePlayer, roundId));
         }
