@@ -10,7 +10,7 @@ namespace Content.Shared.Movement.Systems;
 /// </summary>
 public sealed class MovementModStatusSystem : EntitySystem
 {
-    public static readonly EntProtoId StatusEffectFriciton = "StatusEffectFriction";
+    public static readonly EntProtoId StatusEffectFriction = "StatusEffectFriction";
 
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly StatusEffectsSystem _status = default!;
@@ -52,12 +52,12 @@ public sealed class MovementModStatusSystem : EntitySystem
 
         if (refresh)
         {
-            return _status.TryUpdateStatusEffectDuration(uid, StatusEffectFriciton, out var status, time)
+            return _status.TryUpdateStatusEffectDuration(uid, StatusEffectFriction, out var status, time)
                    && TrySetFrictionStatus(status.Value, friction, acceleration, uid);
         }
         else
         {
-            return _status.TryAddStatusEffectDuration(uid, StatusEffectFriciton, out var status, time)
+            return _status.TryAddStatusEffectDuration(uid, StatusEffectFriction, out var status, time)
                    && TrySetFrictionStatus(status.Value, friction, acceleration, uid);
         }
     }

@@ -18,5 +18,5 @@ public sealed partial class SlidingComponent : Component
     /// Hashset of contacting entities.
     /// </summary>
     [DataField]
-    public HashSet<EntityUid> Contacting;
+    public HashSet<EntityUid> Contacting = new();
 }

@@ -872,6 +872,7 @@
   - type: UseDelay
     delay: 0.8
   - type: Slippery
+    staminaDamage: 0
     slipData:
       stunTime: 0
       knockdownTime: 0

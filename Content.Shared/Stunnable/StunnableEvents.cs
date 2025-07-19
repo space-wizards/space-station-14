@@ -16,7 +16,8 @@ namespace Content.Shared.Stunnable;
 public record struct StunnedEvent;
 
 /// <summary>
-///     Raised directed on an entity when it is knocked down.
+///     Raised directed on an entity before it is knocked down to see if it should be cancelled, and to determines
+///     knocked down arguments.
 /// </summary>
 [ByRefEvent]
 public record struct KnockDownAttemptEvent(bool AutoStand, bool Drop)
