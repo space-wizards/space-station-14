@@ -408,6 +408,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         {
             _tilePool.Return(tiles);
         }
+
+        _activeChunks.Clear();
+        _markerChunks.Clear();
     }
 
     private void AddChunksInRange(BiomeComponent biome, Vector2 worldPos)
