@@ -351,7 +351,7 @@
   parent: RevolverCapGun
   id: RevolverCapGunFake
   name: cap gun
-  suffix: Fake
+  suffix: Fake, armor-piercing
   description: Looks almost like the real thing! Ages 8 and up.
   components:
   - type: RevolverAmmoProvider
@@ -362,6 +362,14 @@
       - CartridgeMagnum
       - SpeedLoaderMagnum
     proto: CartridgeMagnumAP
+
+- type: entity
+  id: RevolverCapGunFakeNonAP
+  parent: RevolverCapGunFake
+  suffix: Fake
+  components:
+  - type: RevolverAmmoProvider
+    proto: CartridgeMagnum
 
 - type: entity
   parent: BaseItem
