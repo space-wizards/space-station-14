@@ -1,34 +1,47 @@
-# TODO: Have a seperate lid state that can be popped on and off (not as a seperate item) that changes whether the vial can be spilled or not.
+## base entities
 
 - type: entity
-  name: vial
   parent: BaseItem
-  id: BaseChemistryEmptyVial
-  description: A small vial.
+  abstract: true
+  id: BaseChemistryVial
   components:
   - type: Tag
     tags:
     - Trash
-    - CentrifugeCompatible
+    - CentrifugeCompatible # unique feature of vials
+  - type: TrashOnSolutionEmpty
+    solution: beaker
   - type: PhysicalComposition
     materialComposition:
       Glass: 25
   - type: FitsInDispenser
     solution: beaker
-  - type: SpaceGarbage
   - type: Sprite
     sprite: Objects/Specific/Chemistry/vial.rsi
     layers:
-      - state: vial-1
-      - state: vial-1-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: vial-1-closed
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: vial-1-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: vial-1-
     inHandsMaxFillLevels: 4
     inHandsFillBaseName: -fill-
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "vial-1-open"}
+          False: {state: "vial-1-closed"}
+  - type: Openable
+    sound:
+      collection: bottleOpenSounds
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
   - type: Drink
     solution: beaker
   - type: SolutionContainerManager
@@ -57,28 +70,35 @@
   - type: Item
     size: Tiny
     sprite: Objects/Specific/Chemistry/vial.rsi
-    shape:
-    - 0,0,0,0
   - type: MeleeWeapon
     soundNoDamage:
       path: "/Audio/Effects/Fluids/splat.ogg"
     damage:
       types:
         Blunt: 0
-  - type: TrashOnSolutionEmpty
-    solution: beaker
   - type: StaticPrice
     price: 100
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 5
   - type: DamageOtherOnHit
     damage:
       types:
         Blunt: 2
+  - type: Spillable
+    solution: beaker
+  - type: DnaSubstanceTrace
+  - type: SpaceGarbage
+
+- type: entity
+  parent: BaseChemistryVial
+  abstract: true
+  id: BaseBreakableChemistryVial
+  components:
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
   - type: Damageable
     damageContainer: Inorganic
+    damageModifierSet: FlimsyGlass
   - type: Destructible
     thresholds:
     - trigger:
@@ -99,66 +119,74 @@
         transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Spillable
-    solution: beaker
-  - type: DnaSubstanceTrace
+
+## entities
 
 - type: entity
-  parent: BaseItem
-  id: BorgVial
-  name: integrated vial
-  description: An internal compartment installed into a cyborg. Rated for 30 units of any liquid.
+  name: vial
+  parent: BaseBreakableChemistryVial
+  id: BaseChemistryEmptyVial # TODO remove base from the id
+  description: A small vial.
+
+- type: entity
+  parent: BaseBreakableChemistryVial
+  id: ChemistryEmptyVialSmall
+  name: mini vial
+  description: A smaller vial.
   components:
-  # All this shit is here to avoid inheriting breakable, since borgs can't replace broken vials.
   - type: Sprite
     sprite: Objects/Specific/Chemistry/vial.rsi
     layers:
-      - state: vial-1
-      - state: vial-1-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: Appearance
+    - state: vial-2-closed
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: vial-2-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: SolutionContainerVisuals
-    maxFillLevels: 6
-    fillBaseName: vial-1-
+    maxFillLevels: 5
+    fillBaseName: vial-2-
     inHandsMaxFillLevels: 4
     inHandsFillBaseName: -fill-
-  - type: Drink
-    solution: beaker
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "vial-2-open"}
+          False: {state: "vial-2-closed"}
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 30
-  - type: MixableSolution
-    solution: beaker
-  - type: RefillableSolution
-    solution: beaker
-  - type: DrainableSolution
-    solution: beaker
-  - type: ExaminableSolution
-    solution: beaker
-  - type: DrawableSolution
-    solution: beaker
+        maxVol: 10
   - type: SolutionTransfer
-    maxTransferAmount: 30
+    maxTransferAmount: 10
     canChangeTransferAmount: true
-  - type: SolutionItemStatus
-    solution: beaker
-  - type: UserInterface
-    interfaces:
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
-  - type: Item
-    size: Tiny
-    sprite: Objects/Specific/Chemistry/vial.rsi
-    shape:
-    - 0,0,0,0
-  - type: MeleeWeapon
-    soundNoDamage:
-      path: "/Audio/Effects/Fluids/splat.ogg"
-    damage:
-      types:
-        Blunt: 0
+  - type: StaticPrice
+    price: 50
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 10
+  - type: Destructible # Remove glass spawn
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10 # smaller so weaker
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpillBehavior { }
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseChemistryVial # unbreakable vial
+  id: BorgVial
+  name: integrated vial
+  description: An internal compartment installed into a cyborg. Rated for 30 units of any liquid.
+
+## Reagent fills
 
 - type: entity
   id: VestineChemistryVial
@@ -174,12 +202,13 @@
         reagents:
         - ReagentId: Vestine
           Quantity: 30
-  - type: Tag
-    tags: []
+  - type: Tag # Remove trash tag
+    tags:
+    - CentrifugeCompatible
 
 - type: entity
   id: RadiumChemistryVial
-  parent: BaseChemistryEmptyVial
+  parent: ChemistryEmptyVialSmall
   suffix: radium
   components:
   - type: Label
@@ -187,14 +216,17 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 5
+        maxVol: 10
         reagents:
           - ReagentId: Radium
             Quantity: 5
+  - type: Tag # Remove trash tag
+    tags:
+    - CentrifugeCompatible
 
 - type: entity
   id: ChlorineChemistryVial
-  parent: BaseChemistryEmptyVial
+  parent: ChemistryEmptyVialSmall
   suffix: chlorine
   components:
   - type: Label
@@ -202,14 +234,17 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 5
+        maxVol: 10
         reagents:
           - ReagentId: Chlorine
             Quantity: 5
+  - type: Tag # Remove trash tag
+    tags:
+    - CentrifugeCompatible
 
 - type: entity
   id: PlasmaChemistryVial
-  parent: BaseChemistryEmptyVial
+  parent: ChemistryEmptyVialSmall
   suffix: plasma
   components:
   - type: Label
@@ -221,3 +256,6 @@
         reagents:
           - ReagentId: Plasma
             Quantity: 10
+  - type: Tag # Remove trash tag
+    tags:
+    - CentrifugeCompatible
