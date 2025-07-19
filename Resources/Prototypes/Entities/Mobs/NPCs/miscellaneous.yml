@@ -223,12 +223,13 @@
   - type: Produce
     seedId: killerTomato
   - type: PassiveDamage # Slight passive damage. 35 hp \ 5 min \ 60 sec = 0.08
-    allowedStates:
-    - Alive
-    - Dead
-    damageCap: 50
-    damage:
-      types:
-        Blunt: 0.11
+    passiveDamageList:
+    - allowedStates:
+      - Alive
+      - Dead
+      damageCap: 50
+      damage:
+        types:
+          Blunt: 0.11
   - type: StaticPrice
     price: 400
