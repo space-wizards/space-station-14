@@ -228,6 +228,7 @@
   components:
   - type: StationAiWhitelist
   - type: SpriteFade
+    ignoreClickableRestriction: true
   - type: Sprite
     sprite: Structures/Machines/Anomaly/anomaly_generator.rsi
     offset: 0,1
