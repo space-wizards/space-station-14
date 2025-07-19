@@ -245,6 +245,7 @@ public sealed partial class ParrotMemorySystem : EntitySystem
 
             // order isn't important in this list so we can use the faster means of removing
             memoryComponent.SpeechMemories.RemoveSwap(i);
+            i--;
         }
     }
 }

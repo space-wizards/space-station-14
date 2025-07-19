@@ -1928,7 +1928,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             var newMemory = new ParrotMemory()
             {
                 Text = message,
-                SourcePlayer = sourcePlayer,
+                SourcePlayer = sourcePlayer.UserId,
                 Round = roundId,
                 CreatedAt = DateTime.UtcNow,
             };
@@ -1962,7 +1962,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
 
             await db.DbContext.ParrotMemory
-                .Where(memory => memory.SourcePlayer == playerId)
+                .Where(memory => memory.SourcePlayer == playerId.UserId)
                 .ExecuteUpdateAsync(calls => calls.SetProperty(message => message.Block, blocked));
         }
 
