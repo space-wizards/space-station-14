@@ -332,6 +332,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         base.Update(frameTime);
         var biomes = AllEntityQuery<BiomeComponent>();
 
+        _activeChunks.Clear();
+        _markerChunks.Clear();
+
         while (biomes.MoveNext(out var biome))
         {
             if (biome.LifeStage < ComponentLifeStage.Running)
