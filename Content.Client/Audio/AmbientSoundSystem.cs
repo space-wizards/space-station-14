@@ -168,7 +168,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         _targetTime = _gameTiming.CurTime + TimeSpan.FromSeconds(_cooldown);
 
         var player = _playerManager.LocalEntity;
-        if (!EntityManager.TryGetComponent(player, out TransformComponent? xform))
+        if (!TryComp(player, out TransformComponent? xform))
         {
             ClearSounds();
             return;
@@ -306,6 +306,9 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                     .WithMaxDistance(comp.Range);
 
                 var stream = _audio.PlayEntity(comp.Sound, Filter.Local(), uid, false, audioParams);
+                if (stream == null)
+                    continue;
+
                 _playingSounds[sourceEntity] = (stream.Value.Entity, comp.Sound, key);
                 playingCount++;
 

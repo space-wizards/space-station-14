@@ -1,9 +1,7 @@
-using Content.Server.Power.Components;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.UserInterface;
-using Content.Shared.Wires;
 using ActivatableUISystem = Content.Shared.UserInterface.ActivatableUISystem;
 
 namespace Content.Server.Power.EntitySystems;
@@ -25,9 +23,6 @@ public sealed class ActivatableUIRequiresPowerSystem : SharedActivatableUIRequir
         {
             return;
         }
-
-        if (TryComp<WiresPanelComponent>(ent.Owner, out var panel) && panel.Open)
-            return;
 
         args.Cancel();
     }

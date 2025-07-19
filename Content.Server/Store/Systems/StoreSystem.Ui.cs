@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
-using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
@@ -9,6 +8,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind;
+using Content.Shared.PDA.Ringer;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.UserInterface;
@@ -30,7 +30,6 @@ public sealed partial class StoreSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private void InitializeUi()
     {
@@ -147,7 +146,7 @@ public sealed partial class StoreSystem
         //condition checking because why not
         if (listing.Conditions != null)
         {
-            var args = new ListingConditionArgs(component.AccountOwner ?? buyer, uid, listing, EntityManager);
+            var args = new ListingConditionArgs(component.AccountOwner ?? GetBuyerMind(buyer), uid, listing, EntityManager);
             var conditionsMet = listing.Conditions.All(condition => condition.Condition(args));
 
             if (!conditionsMet)
@@ -165,7 +164,7 @@ public sealed partial class StoreSystem
         }
 
         if (!IsOnStartingMap(uid, component))
-            component.RefundAllowed = false;
+            DisableRefund(uid, component);
 
         //subtract the cash
         foreach (var (currency, amount) in cost)
@@ -257,10 +256,15 @@ public sealed partial class StoreSystem
                 RaiseLocalEvent(buyer, listing.ProductEvent);
         }
 
+        if (listing.DisableRefund)
+        {
+            component.RefundAllowed = false;
+        }
+
         //log dat shit.
         _admin.Add(LogType.StorePurchase,
             LogImpact.Low,
-            $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager)}\" from {ToPrettyString(uid)}");
+            $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {ToPrettyString(uid)}");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
@@ -284,6 +288,9 @@ public sealed partial class StoreSystem
     /// </remarks>
     private void OnRequestWithdraw(EntityUid uid, StoreComponent component, StoreRequestWithdrawMessage msg)
     {
+        if (msg.Amount <= 0)
+            return;
+
         //make sure we have enough cash in the bank and we actually support this currency
         if (!component.Balance.TryGetValue(msg.Currency, out var currentAmount) || currentAmount < msg.Amount)
             return;
@@ -307,7 +314,8 @@ public sealed partial class StoreSystem
             var cashId = proto.Cash[value];
             var amountToSpawn = (int) MathF.Floor((float) (amountRemaining / value));
             var ents = _stack.SpawnMultiple(cashId, amountToSpawn, coordinates);
-            _hands.PickupOrDrop(buyer, ents.First());
+            if (ents.FirstOrDefault() is {} ent)
+                _hands.PickupOrDrop(buyer, ent);
             amountRemaining -= value * amountToSpawn;
         }
 
@@ -324,7 +332,7 @@ public sealed partial class StoreSystem
 
         if (!IsOnStartingMap(uid, component))
         {
-            component.RefundAllowed = false;
+            DisableRefund(uid, component);
             UpdateUserInterface(buyer, uid, component);
         }
 
@@ -342,12 +350,9 @@ public sealed partial class StoreSystem
 
             component.BoughtEntities.RemoveAt(i);
 
-            if (_actions.TryGetActionData(purchase, out var actionComponent, logError: false))
-            {
-                _actionContainer.RemoveAction(purchase, actionComponent);
-            }
+            _actionContainer.RemoveAction(purchase, logMissing: false);
 
-            EntityManager.DeleteEntity(purchase);
+            Del(purchase);
         }
 
         component.BoughtEntities.Clear();
@@ -368,6 +373,7 @@ public sealed partial class StoreSystem
         component.BoughtEntities.Add(purchase);
         var refundComp = EnsureComp<StoreRefundComponent>(purchase);
         refundComp.StoreEntity = uid;
+        refundComp.BoughtTime = _timing.CurTime;
     }
 
     private bool IsOnStartingMap(EntityUid store, StoreComponent component)

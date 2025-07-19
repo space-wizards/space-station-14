@@ -17,7 +17,10 @@
     sound: /Audio/Weapons/star_hit.ogg
   - type: LandAtCursor
   - type: DamageOtherOnHit
+    ignoreResistances: true
     damage:
       types:
         Slash: 5
         Piercing: 10
+  - type: ThrowingAngle
+    angularVelocity: true # spins

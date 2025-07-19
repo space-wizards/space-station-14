@@ -1,0 +1,1351 @@
+- type: entityTable
+  id: XenoArtifactEffectsDefaultTable
+  table: !type:GroupSelector
+    children:
+    # hijacks use key, prevents from using artifact, sadly
+    #- id: XenoArtifactEffectUniversalIntercom
+    #  weight: 10.0
+    - id: XenoArtifactSolutionStorage
+      weight: 10.0
+    - id: XenoArtifactPhasing
+      weight: 2.0
+    - id: XenoArtifactWandering
+      weight: 4.0
+    - id: XenoArtifactSpeedUp
+      weight: 4.0
+    - id: XenoArtifactGhost
+      weight: 2.0
+    - id: XenoArtifactEffectBadFeeling
+      weight: 10.0
+    - id: XenoArtifactEffectGoodFeeling
+      weight: 10.0
+    - id: XenoArtifactEffectJunkSpawn
+      weight: 10.0
+    - id: XenoArtifactEffectLightFlicker
+      weight: 10.0
+    - id: XenoArtifactPotassiumWave
+      weight: 7.0
+    - id: XenoArtifactFloraSpawn
+      weight: 10.0
+    - id: XenoArtifactChemicalPuddle
+      weight: 10.0
+    - id: XenoArtifactThrowThingsAround
+      weight: 10.0
+    - id: XenoArtifactColdWave
+      weight: 10.0
+    - id: XenoArtifactHeatWave
+      weight: 4.0
+    - id: XenoArtifactFoamMild
+      weight: 8.0
+    - id: XenoArtifactRandomInstrumentSpawn
+      weight: 10.0
+    - id: XenoArtifactMonkeySpawn
+      weight: 10.0
+    - id: XenoArtifactRadioactive
+      weight: 8.0
+    - id: XenoArtifactChargeBattery
+      weight: 10.0
+    - id: XenoArtifactKnock
+      weight: 4.0
+    - id: XenoArtifactMagnet
+      weight: 2.0
+    - id: XenoArtifactMagnetNegative
+      weight: 2.0
+    - id: XenoArtifactStealth
+      weight: 1.0
+    - id: XenoArtifactRareMaterialSpawnSilver
+      weight: 1.8 # amount is laughable
+    - id: XenoArtifactRareMaterialSpawnPlasma
+      weight: 2.0 # amount is laughable
+    - id: XenoArtifactRareMaterialSpawnGold
+      weight: 1.8 # amount is laughable
+    - id: XenoArtifactRareMaterialSpawnUranium
+      weight: 1.0 # amount is laughable
+    - id: XenoArtifactAngryCarpSpawn
+      weight: 4.0
+    - id: XenoArtifactFaunaSpawn
+      weight: 10.0
+    - id: XenoArtifactCashSpawn
+      weight: 10.0
+    - id: XenoArtifactShatterWindows
+      weight: 8.0
+    - id: XenoArtifactFoamGood
+      weight: 4.0
+    - id: XenoArtifactFoamDangerous
+      weight: 2.0
+    - id: XenoArtifactPuddleRare
+      weight: 2.0
+    - id: XenoArtifactAnomalySpawn
+      weight: 10.0
+    - id: XenoArtifactIgnite
+      weight: 2.0
+    - id: XenoArtifactTeleport
+      weight: 2.0
+    - id: XenoArtifactEmp
+      weight: 2.0
+    - id: XenoArtifactPolyMonkey
+      weight: 2.0
+    - id: XenoArtifactPolyLuminous
+      weight: 2.0
+    - id: XenoArtifactPolyLizard
+      weight: 2.0
+    - id: XenoArtifactRadioactiveStrong
+      weight: 3.0
+    - id: XenoArtifactMaterialSpawnGlass
+      weight: 3.3
+    - id: XenoArtifactMaterialSpawnSteel
+      weight: 3.3
+    - id: XenoArtifactMaterialSpawnPlastic
+      weight: 3.3
+    - id: XenoArtifactPortal
+      weight: 2.0
+    - id: XenoArtifactArtifactSpawn
+      weight: 0.5
+    - id: XenoArtifactShuffle
+      weight: 3.0
+    - id: XenoArtifactHealAll
+      weight: 1.0
+    #- id: XenoArtifactTesla
+    #  weight: 10.0
+    #- id: XenoArtifactSingularity
+    #  weight: 10.0
+    - id: XenoArtifactExplosionScary
+      weight: 1.0
+    - id: XenoArtifactBoom
+      weight: 5.0
+    - id: XenoArtifactEffectCreationGasPlasma
+      weight: 2.0
+    - id: XenoArtifactEffectCreationGasTritium
+      weight: 2.0
+    - id: XenoArtifactEffectCreationGasAmmonia
+      weight: 3.0
+    - id: XenoArtifactEffectCreationGasFrezon
+      weight: 1.0
+    - id: XenoArtifactEffectCreationGasNitrousOxide
+      weight: 4.0
+    - id: XenoArtifactEffectCreationGasCarbonDioxide
+      weight: 4.0
+
+- type: entityTable
+  id: XenoArtifactEffectsHandheldOnlyTable
+  table: !type:GroupSelector
+    children:
+    #- id: XenoArtifactBecomeRandomInstrument
+    #  weight 10.0 # removed until we have value-based system
+    #- id: XenoArtifactGun
+    #  weight 4.0 #it conflicts with default interaction - it should activate artifact nodes
+    - id: XenoArtifactOmnitool
+      weight: 10.0
+    - id: XenoArtifactDrill
+      weight: 10.0
+
+- type: entity
+  id: BaseXenoArtifactEffect
+  name: effect
+  description: Unknown
+  categories: [ HideSpawnMenu ]
+  abstract: true
+  components:
+  - type: XenoArtifactNode
+  - type: NameIdentifier
+    group: XenoArtifactNode
+
+- type: entity
+  id: BaseOneTimeXenoArtifactEffect
+  parent: BaseXenoArtifactEffect
+  name: one-time-effect
+  description: Unknown
+  categories: [ HideSpawnMenu ]
+  abstract: true
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 1
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 0
+  - type: NameIdentifier
+    group: XenoArtifactNode
+
+- type: entity
+  id: XenoArtifactEffectUniversalIntercom
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Obtains ability of long-distance communication device
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: RadioMicrophone
+      powerRequired: false
+      toggleOnInteract: false
+      listenRange: 3
+    - type: Speech
+    - type: RadioSpeaker
+      toggleOnInteract: false
+    - type: ActivatableUI
+      key: enum.IntercomUiKey.Key
+    - type: Intercom
+      requiresPower: false
+      supportedChannels:
+      - Common
+      - CentCom
+      - Command
+      - Engineering
+      - Medical
+      - Science
+      - Security
+      - Service
+      - Supply
+
+- type: entity
+  id: XenoArtifactBecomeRandomInstrument
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Obtains ability of musical instrument
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: Instrument
+    - type: ActivatableUI
+      singleUser: true
+      verbText: verb-instrument-openui
+      key: enum.InstrumentUiKey.Key
+
+- type: entity
+  id: XenoArtifactStorage
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Obtains ability of hidden storage
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: Item
+      size: Huge
+    - type: Storage
+      maxItemSize: Huge
+      grid:
+      - 0,0,10,5
+
+- type: entity
+  id: XenoArtifactPhasing
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Becomes phased
+  components:
+  - type: XAERemoveCollision
+
+- type: entity
+  id: XenoArtifactWandering
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Starts to move sporadically
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: RandomWalk
+      minSpeed: 12
+      maxSpeed: 20
+      minStepCooldown: 1
+      maxStepCooldown: 3
+
+- type: entity
+  id: XenoArtifactSolutionStorage
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Obtains ability of container for chemical solutions
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 150
+    - type: FitsInDispenser
+      solution: beaker
+    - type: RefillableSolution
+      solution: beaker
+    - type: DrainableSolution
+      solution: beaker
+    - type: ExaminableSolution
+      solution: beaker
+    - type: DrawableSolution
+      solution: beaker
+    - type: InjectableSolution
+      solution: beaker
+    - type: SolutionTransfer
+      canChangeTransferAmount: true
+    - type: Drink
+      solution: beaker
+
+- type: entity
+  id: XenoArtifactSpeedUp
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Improves holder movement speed
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: HeldSpeedModifier
+      walkModifier: 1.2
+      sprintModifier: 1.3
+
+- type: entity
+  id: XenoArtifactDrill
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Obtains ability of drill
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: MeleeWeapon
+      damage:
+        types:
+          Piercing: 18
+          Blunt: 4
+      soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+    - type: Sharp
+
+- type: entity
+  id: XenoArtifactGenerateEnergy
+  parent: BaseOneTimeXenoArtifactEffect # todo - increment power, but only once per node
+  description: Produces power
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: PowerSupplier
+      supplyRate: 20000
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        output_hv:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+
+- type: entity
+  id: XenoArtifactGun
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Obtains ability of firearm
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: RevolverAmmoProvider
+      whitelist:
+        tags:
+        - CartridgeMagnum
+        - SpeedLoaderMagnum
+      proto: CartridgeMagnum
+      capacity: 7
+      chambers: [ True, True, True, True, True, True, True ]
+      ammoSlots: [ null, null, null, null, null, null, null ]
+      soundEject:
+        path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+      soundInsert:
+        path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    - type: Gun
+      selectedMode: SemiAuto
+      fireRate: 2
+      availableModes:
+      - SemiAuto
+      - FullAuto # no alien revolver in buildings
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+
+- type: entity
+  id: XenoArtifactGhost
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Becomes sentient
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: ghost-role-information-artifact-name
+      description: ghost-role-information-artifact-description
+      rules: ghost-role-information-freeagent-rules
+      raffle:
+        settings: default
+      mindRoles:
+      - MindRoleGhostRoleFreeAgent
+    - type: GhostTakeoverAvailable
+
+- type: entity
+  id: XenoArtifactOmnitool
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Obtains ability of omnitool
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: UserInterface
+      interfaces:
+          enum.SignalLinkerUiKey.Key:
+            type: SignalPortSelectorBoundUserInterface
+    - type: ToolTileCompatible
+    - type: Tool
+      qualities:
+      - Screwing
+      speedModifier: 2 # Very powerful multitool to balance out the desire to sell or scrap for points
+      useSound: /Audio/Items/drill_use.ogg
+    - type: Tag
+      tags:
+        - Multitool
+    - type: MultipleTool
+      statusShowBehavior: true
+      entries:
+      - behavior: Screwing
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Prying
+        useSound:
+          path: /Audio/Items/jaws_pry.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        useSound:
+          path: /Audio/Items/ratchet.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Cutting
+        useSound:
+          path: /Audio/Items/jaws_cut.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Pulsing
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+
+- type: entity
+  id: XenoArtifactEffectBadFeeling
+  parent: BaseXenoArtifactEffect
+  description: Broadcasts sublime message
+  components:
+  - type: XAETelepathic
+    messages:
+    - badfeeling-artifact-1
+    - badfeeling-artifact-2
+    - badfeeling-artifact-3
+    - badfeeling-artifact-4
+    - badfeeling-artifact-5
+    - badfeeling-artifact-6
+    - badfeeling-artifact-7
+    - badfeeling-artifact-8
+    - badfeeling-artifact-9
+    - badfeeling-artifact-10
+    - badfeeling-artifact-11
+    - badfeeling-artifact-12
+    - badfeeling-artifact-13
+    - badfeeling-artifact-14
+    - badfeeling-artifact-15
+    drastic:
+    - badfeeling-artifact-drastic-1
+    - badfeeling-artifact-drastic-2
+    - badfeeling-artifact-drastic-3
+    - badfeeling-artifact-drastic-4
+    - badfeeling-artifact-drastic-5
+    - badfeeling-artifact-drastic-6
+
+- type: entity
+  id: XenoArtifactEffectGoodFeeling
+  parent: BaseXenoArtifactEffect
+  description: Broadcasts sublime message
+  components:
+  - type: XAETelepathic
+    messages:
+    - goodfeeling-artifact-1
+    - goodfeeling-artifact-2
+    - goodfeeling-artifact-3
+    - goodfeeling-artifact-4
+    - goodfeeling-artifact-5
+    - goodfeeling-artifact-6
+    - goodfeeling-artifact-7
+    - goodfeeling-artifact-8
+    - goodfeeling-artifact-9
+    - goodfeeling-artifact-10
+    - goodfeeling-artifact-11
+    - goodfeeling-artifact-12
+    - goodfeeling-artifact-13
+    - goodfeeling-artifact-14
+    drastic:
+    - goodfeeling-artifact-drastic-1
+    - goodfeeling-artifact-drastic-2
+    - goodfeeling-artifact-drastic-3
+    - goodfeeling-artifact-drastic-4
+    - goodfeeling-artifact-drastic-5
+    - goodfeeling-artifact-drastic-6
+
+- type: entity
+  id: XenoArtifactEffectJunkSpawn
+  parent: BaseXenoArtifactEffect
+  description: Create recyclable junk
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:GroupSelector
+        rolls: !type:RangeNumberSelector
+          range: 1, 4
+        children:
+        - !type:NestedSelector
+          tableId: GenericTrashItems
+          weight: 35
+        - !type:AllSelector
+          weight: 1
+          children:
+          - id: ToySpawner
+
+- type: entity
+  id: XenoArtifactEffectLightFlicker
+  parent: BaseXenoArtifactEffect
+  description: Minor electromagnetic interference
+  components:
+  - type: XAELightFlicker
+
+- type: entity
+  id: XenoArtifactPotassiumWave
+  parent: BaseXenoArtifactEffect
+  description: Produces potassium
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: FoodBanana
+          rolls: !type:ConstantNumberSelector
+            value: 6
+          prob: 0.5
+  - type: XAECreatePuddle
+    chemAmount:
+      min: 1
+      max: 1
+    chemicalSolution:
+      maxVol: 100
+      canReact: false
+    possibleChemicals:
+    - Potassium
+
+- type: entity
+  id: XenoArtifactFloraSpawn
+  parent: BaseXenoArtifactEffect
+  description: Produces flora
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: RandomFloraTree
+
+- type: entity
+  id: XenoArtifactChemicalPuddle
+  parent: BaseXenoArtifactEffect
+  description: Produces puddle of chemical mixture # todo: make description say what exact chemical is produced, maybe add mixes into possible chemicals
+  components:
+  - type: XAECreatePuddle
+    chemAmount:
+      min: 1
+      max: 3
+    replaceDescription: true
+    chemicalSolution:
+      maxVol: 500
+      canReact: false
+    possibleChemicals:
+    - Aluminium
+    - Carbon
+    - Chlorine
+    - Copper
+    - Ethanol
+    - Fluorine
+    - Sugar
+    - Hydrogen
+    - Iodine
+    - Iron
+    - Lithium
+    - Mercury
+    - Nitrogen
+    - Oxygen
+    - Phosphorus
+    - Potassium
+    - Radium
+    - Silicon
+    - Sodium
+    - Water
+    - Sulfur
+
+- type: entity
+  id: XenoArtifactThrowThingsAround
+  parent: BaseXenoArtifactEffect
+  description: Minor implosion
+  components:
+  - type: XAEThrowThingsAround
+
+- type: entity
+  id: XenoArtifactColdWave
+  parent: BaseXenoArtifactEffect
+  description: Cools down surrounding gas
+  components:
+  - type: XAETemperature
+    targetTemp: 50
+
+- type: entity
+  id: XenoArtifactHeatWave
+  parent: BaseXenoArtifactEffect
+  description: Heats up surrounding gas greatly
+  components:
+  - type: XAETemperature
+    targetTemp: 500
+
+- type: entity
+  id: XenoArtifactFoamMild
+  parent: BaseXenoArtifactEffect
+  description: Produces chemical foam # todo: separate in 1 for each chemical for description? actually sounds like a very good idea
+  components:
+  - type: XAEFoam
+    replaceDescription: true
+    reagents:
+    - Oxygen
+    - Plasma
+    - Blood
+    - SpaceCleaner
+    - Nutriment
+    - SpaceLube
+    - Ethanol
+    - Mercury
+    - VentCrud
+    - WeldingFuel
+    - JuiceThatMakesYouWeh
+
+- type: entity
+  id: XenoArtifactRandomInstrumentSpawn
+  parent: BaseXenoArtifactEffect
+  description: Creates musical instrument
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 2
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 1
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: RandomInstruments
+
+- type: entity
+  id: XenoArtifactMonkeySpawn
+  parent: BaseXenoArtifactEffect
+  description: Creates primate
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 3
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 2
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:GroupSelector
+        children:
+        - id: MobMonkey
+          weight: 95.0
+        - id: MobGorilla
+          weight: 5.0
+
+- type: entity
+  id: XenoArtifactRadioactive
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Becomes mildly radioactive
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: RadiationSource
+      intensity: 1
+      slope: 0.3
+
+- type: entity
+  id: XenoArtifactChargeBattery
+  parent: BaseXenoArtifactEffect
+  description: Charges up batteries
+  components:
+  - type: XAEChargeBattery
+  - type: XAETelepathic
+    messages:
+    - charge-artifact-popup
+
+- type: entity
+  id: XenoArtifactKnock
+  parent: BaseXenoArtifactEffect
+  description: Mild electromagnetic interference
+  components:
+  - type: XAEKnock
+  - type: XAELightFlicker
+
+- type: entity
+  id: XenoArtifactMagnet
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Create small gravity well
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: GravityWell
+      maxRange: 3
+      baseRadialAcceleration: 1
+      baseTangentialAcceleration: 3
+
+- type: entity
+  id: XenoArtifactMagnetNegative
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Create small gravity well
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: GravityWell
+      maxRange: 3
+      baseRadialAcceleration: -1
+      baseTangentialAcceleration: -3
+
+- type: entity
+  id: XenoArtifactStealth
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Create light interference
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: Stealth
+      hadOutline: true
+    - type: StealthOnMove
+      passiveVisibilityRate: -0.10
+      movementVisibilityRate: 0.10
+
+- type: entity
+  id: XenoArtifactRareMaterialSpawn
+  parent: BaseXenoArtifactEffect # todo: splice into different well-named effects, amounts should reflect how rare material is
+  description: Create rare materials
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: SilverOre1
+          rolls: !type:ConstantNumberSelector
+            value: 6
+          prob: 0.3
+        - id: PlasmaOre1
+          rolls: !type:ConstantNumberSelector
+            value: 6
+          prob: 0.3
+        - id: GoldOre1
+          rolls: !type:ConstantNumberSelector
+            value: 6
+          prob: 0.3
+        - id: UraniumOre1
+          rolls: !type:ConstantNumberSelector
+            value: 6
+          prob: 0.3
+
+- type: entity
+  id: XenoArtifactRareMaterialSpawnSilver
+  parent: BaseXenoArtifactEffect
+  description: Create rare materials
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 4
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 2
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: SilverOre1
+          rolls: !type:ConstantNumberSelector
+            value: 6
+          prob: 0.3
+
+- type: entity
+  id: XenoArtifactRareMaterialSpawnPlasma
+  parent: BaseXenoArtifactEffect
+  description: Create plasma
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 4
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 2
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: PlasmaOre1
+          rolls: !type:ConstantNumberSelector
+            value: 6
+          prob: 0.3
+
+- type: entity
+  id: XenoArtifactRareMaterialSpawnGold
+  parent: BaseXenoArtifactEffect
+  description: Create gold
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 3
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 1
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: GoldOre1
+          rolls: !type:ConstantNumberSelector
+            value: 6
+          prob: 0.3
+
+- type: entity
+  id: XenoArtifactRareMaterialSpawnUranium
+  parent: BaseXenoArtifactEffect
+  description: Create uranium
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 4
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 2
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: UraniumOre1
+          rolls: !type:ConstantNumberSelector
+            value: 3
+          prob: 0.3
+
+- type: entity
+  id: XenoArtifactAngryCarpSpawn
+  parent: BaseXenoArtifactEffect
+  description: Create hostile fish
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 3
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 2
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:GroupSelector
+        children:
+        - id: MobCarpMagic
+          weight: 1.0
+        - id: MobCarpHolo
+          weight: 1.0
+
+- type: entity
+  id: XenoArtifactFaunaSpawn
+  parent: BaseXenoArtifactEffect
+  description: Create friendly fauna
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 4
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 3
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:GroupSelector
+        children:
+        - id: MobAdultSlimesYellowAngry
+        - id: MobAngryBee
+        - id: MobBearSpace
+        - id: MobXenoRavager
+        - id: MobTick
+        - id: MobSpiderSpace
+        - id: MobPurpleSnake
+        - id: MobMouse
+        - id: MobKangarooSpace
+        - id: MobPig
+        - id: MobParrot
+        - id: MobKangaroo
+        - id: MobFox
+        - id: MobPenguin
+          amount: !type:RangeNumberSelector
+            range: 1, 2
+        - id: MobMothroach
+          amount: !type:RangeNumberSelector
+            range: 1, 2
+        - id: MobCorgiPuppy
+          amount: !type:RangeNumberSelector
+            range: 1, 2
+        - id: MobCatKitten
+          amount: !type:RangeNumberSelector
+            range: 1, 2
+        - id: MobCat
+          amount: !type:RangeNumberSelector
+            range: 1, 2
+        - id: MobBee
+          amount: !type:RangeNumberSelector
+            range: 2, 5
+        - id: MobGoat
+          amount: !type:RangeNumberSelector
+            range: 1, 3
+        - id: MobMonkeySyndicateAgent #so lucky
+          prob: 0.03
+
+- type: entity
+  id: XenoArtifactCashSpawn
+  parent: BaseXenoArtifactEffect
+  description: Create money
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 2
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 1
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:GroupSelector
+        rolls: !type:RangeNumberSelector
+          range: 2, 4
+        children:
+        - id: SpaceCash10
+          weight: 0.75
+        - id: SpaceCash100
+          weight: 0.5
+        - id: SpaceCash500
+          weight: 0.25
+        - id: SpaceCash1000
+          weight: 0.1
+
+- type: entity
+  id: XenoArtifactShatterWindows
+  parent: BaseXenoArtifactEffect
+  description: Break windows
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 3
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 2
+  - type: XAEDamageInArea
+    damageChance: 0.75
+    whitelist:
+      tags:
+      - Window
+    damage:
+      types:
+        Structural: 200
+
+- type: entity
+  id: XenoArtifactFoamGood
+  parent: BaseXenoArtifactEffect
+  description: Creates wave of helpful foam
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 7
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 5
+  - type: XAEFoam
+    replaceDescription: true
+    reagents:
+    - Dermaline
+    - Arithrazine
+    - Bicaridine
+    - Inaprovaline
+    - Kelotane
+    - Dexalin
+    - Omnizine
+
+- type: entity
+  id: XenoArtifactFoamDangerous
+  parent: BaseXenoArtifactEffect
+  description: Creates wave of harmful foam
+  components:
+  - type: XAEFoam
+    minFoamAmount: 20
+    maxFoamAmount: 30
+    replaceDescription: true
+    reagents:
+    - Tritium
+    - Plasma
+    - SulfuricAcid
+    - SpaceDrugs
+    - Nocturine
+    - MuteToxin
+    - Napalm
+    - CarpoToxin
+    - ChloralHydrate
+    - Mold
+    - Amatoxin
+
+- type: entity
+  id: XenoArtifactPuddleRare
+  parent: BaseXenoArtifactEffect
+  description: Creates puddle of helpful chemicals
+  components:
+  - type: XAECreatePuddle
+    chemAmount:
+      min: 1
+      max: 3
+    replaceDescription: true
+    chemicalSolution:
+      maxVol: 500
+      canReact: false
+    possibleChemicals:
+    - Dermaline
+    - Arithrazine
+    - Bicaridine
+    - Inaprovaline
+    - Kelotane
+    - Dexalin
+    - Omnizine
+    - Napalm
+    - Toxin
+    - Epinephrine
+    - Cognizine
+    - Ultravasculine
+    - Desoxyephedrine
+    - Pax
+    - Siderlac
+
+- type: entity
+  id: XenoArtifactAnomalySpawn
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Creates anomaly
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: RandomAnomalySpawner
+
+- type: entity
+  id: XenoArtifactIgnite
+  parent: BaseXenoArtifactEffect
+  description: Pyrokinesis
+  components:
+  - type: XAEIgnite
+    range: 7
+    fireStack:
+      min: 3
+      max: 6
+
+- type: entity
+  id: XenoArtifactTeleport
+  parent: BaseXenoArtifactEffect
+  description: Teleportation
+  components:
+  - type: XAERandomTeleportInvoker
+
+- type: entity
+  id: XenoArtifactEmp
+  parent: BaseXenoArtifactEffect
+  description: Dangerous electromagnetic interference
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 5
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 3
+  - type: XAEEmpInArea
+
+- type: entity
+  id: XenoArtifactPolyMonkey
+  parent: BaseXenoArtifactEffect
+  description: Temporarily reshape flesh to fur
+  components:
+  - type: XAEPolymorph
+
+- type: entity
+  id: XenoArtifactPolyLizard
+  parent: BaseXenoArtifactEffect
+  description: Temporarily reshape flesh to scale
+  components:
+  - type: XAEPolymorph
+    polymorphPrototypeName: ArtifactLizard
+
+- type: entity
+  id: XenoArtifactPolyLuminous
+  parent: BaseXenoArtifactEffect
+  description: Temporarily reshape flesh to light
+  components:
+  - type: XAEPolymorph
+    polymorphPrototypeName: ArtifactLuminous
+
+- type: entity
+  id: XenoArtifactRadioactiveStrong
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Becomes highly radioactive
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: RadiationSource
+      intensity: 2
+      slope: 0.3
+
+- type: entity
+  id: XenoArtifactMaterialSpawnGlass
+  parent: BaseXenoArtifactEffect
+  description: Create glass
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:GroupSelector
+        children:
+        - id: SheetGlass
+
+- type: entity
+  id: XenoArtifactMaterialSpawnSteel
+  parent: BaseXenoArtifactEffect
+  description: Create steel
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:GroupSelector
+        children:
+        - id: SheetSteel
+
+- type: entity
+  id: XenoArtifactMaterialSpawnPlastic
+  parent: BaseXenoArtifactEffect
+  description: Create plastic
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:GroupSelector
+        children:
+        - id: SheetPlastic
+
+- type: entity
+  id: XenoArtifactPortal
+  parent: BaseXenoArtifactEffect
+  description: Create short-living bluespace portal
+  components:
+  - type: XAEPortal
+
+- type: entity
+  id: XenoArtifactArtifactSpawn
+  parent: BaseXenoArtifactEffect
+  description: Create artifact
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 2
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 1
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: RandomArtifactSpawner
+
+- type: entity
+  id: XenoArtifactShuffle
+  parent: BaseXenoArtifactEffect
+  description: Switch places of sentient beings #not ALL beings, but oh well...
+  components:
+  - type: XAEShuffle
+  - type: XAETelepathic
+    range: 7.5
+    messages:
+    - shuffle-artifact-popup
+
+- type: entity
+  id: XenoArtifactHealAll
+  parent: BaseXenoArtifactEffect
+  description: Miraclous healing
+  components:
+  - type: XAEDamageInArea
+    damageChance: 1
+    radius: 8
+    whitelist:
+      components:
+      - MobState
+    damage:
+      groups:
+        Brute: -300
+        Burn: -300
+
+- type: entity
+  id: XenoArtifactTesla
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Mass destruction
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: Singularity
+
+- type: entity
+  id: XenoArtifactSingularity
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Imminent doom
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: TeslaEnergyBall
+
+- type: entity
+  id: XenoArtifactExplosionScary
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Small scale high-speed nuclear reaction
+  components:
+  - type: XAETriggerExplosives
+  - type: Explosive
+    deleteAfterExplosion: false
+    explosionType: Radioactive
+    totalIntensity: 300
+    intensitySlope: 2
+    maxIntensity: 1.5
+    canCreateVacuum: false
+    repeatable: true
+
+- type: entity
+  id: XenoArtifactBoom
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Explosion
+  components:
+  - type: XAETriggerExplosives
+  - type: Explosive
+    deleteAfterExplosion: false
+    explosionType: Default
+    totalIntensity: 500
+    intensitySlope: 2.5
+    maxIntensity: 50
+    repeatable: true
+
+- type: entity
+  id: XenoArtifactEffectCreationGasPlasma
+  parent: BaseXenoArtifactEffect
+  description: Expels plasma
+  components:
+  - type: XAECreateGas
+    gases:
+      Plasma: 300
+
+- type: entity
+  id: XenoArtifactEffectCreationGasTritium
+  parent: BaseXenoArtifactEffect
+  description: Expels tritium
+  components:
+  - type: XAECreateGas
+    gases:
+      Tritium: 300
+
+- type: entity
+  id: XenoArtifactEffectCreationGasAmmonia
+  parent: BaseXenoArtifactEffect
+  description: Expels ammonia
+  components:
+  - type: XAECreateGas
+    gases:
+      Ammonia: 300
+
+- type: entity
+  id: XenoArtifactEffectCreationGasFrezon
+  parent: BaseXenoArtifactEffect
+  description: Expels frezon
+  components:
+  - type: XAECreateGas
+    gases:
+      Frezon: 300
+
+- type: entity
+  id: XenoArtifactEffectCreationGasNitrousOxide
+  parent: BaseXenoArtifactEffect
+  description: Expels nitrous oxide
+  components:
+  - type: XAECreateGas
+    gases:
+      NitrousOxide: 300
+
+- type: entity
+  id: XenoArtifactEffectCreationGasCarbonDioxide
+  parent: BaseXenoArtifactEffect
+  description: Expels carbon dioxide
+  components:
+  - type: XAECreateGas
+    gases:
+      CarbonDioxide: 300

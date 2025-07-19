@@ -39,7 +39,7 @@ public sealed class ComputerConstruction : InteractionTest
         await StartDeconstruction(ComputerId);
 
         // Initial interaction turns id computer into generic computer
-        await InteractUsing(Screw);
+        await InteractUsing(Pry);
         AssertPrototype(ComputerFrame);
 
         // Perform deconstruction steps
@@ -69,7 +69,7 @@ public sealed class ComputerConstruction : InteractionTest
         await SpawnTarget(ComputerId);
 
         // Initial interaction turns id computer into generic computer
-        await InteractUsing(Screw);
+        await InteractUsing(Pry);
         AssertPrototype(ComputerFrame);
 
         // Perform partial deconstruction steps

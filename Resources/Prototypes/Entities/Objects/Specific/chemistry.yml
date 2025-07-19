@@ -96,6 +96,64 @@
 
 - type: entity
   parent: BaseItem
+  id: BorgBeaker
+  name: integrated beaker
+  description: An internal compartment installed into a cyborg. Rated for 50 units of any liquid.
+  components:
+  # 3 morbillion components are to avoid inheriting breakable since borgs can't replace beakers.
+  - type: Tag
+    tags:
+    - GlassBeaker
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+    layers:
+      - state: beaker
+      - state: beaker1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+  - type: MixableSolution
+    solution: beaker
+  - type: FitsInDispenser
+    solution: beaker
+  - type: RefillableSolution
+    solution: beaker
+  - type: DrainableSolution
+    solution: beaker
+  - type: ExaminableSolution
+    solution: beaker
+  - type: DrawableSolution
+    solution: beaker
+  - type: InjectableSolution
+    solution: beaker
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: beaker
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: Drink
+    solution: beaker
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beaker
+
+- type: entity
+  parent: BaseItem
   id: BaseBeakerMetallic
   abstract: true
   components:
@@ -283,6 +341,7 @@
   - type: Injector
     injectOnly: false
     ignoreMobs: true
+    ignoreClosed: false
     minTransferAmount: 1
     maxTransferAmount: 5
     transferAmount: 1
@@ -310,12 +369,13 @@
   - type: Tag
     tags:
     - Dropper
+  - type: PhysicalComposition
 
 - type: entity
-  name: borgdropper
   parent: Dropper
-  description: Used to transfer small amounts of chemical solution between containers. Extended for use by medical borgs.
   id: BorgDropper
+  name: hydraulic pipette
+  description: State-of-the-art hydraulic dropper built for cyborgs. It features a higher capacity than hand-powered droppers, able to hold 15 units of liquid.
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/dropper.rsi
@@ -327,7 +387,7 @@
   - type: SolutionContainerManager
     solutions:
       injector:
-        maxVol: 10
+        maxVol: 15
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
 
@@ -385,6 +445,74 @@
     tags:
     - Syringe
     - Trash
+
+- type: entity
+  name: mini syringe
+  parent: Syringe
+  description: A regular syringe, reshaped to fit inside of a gun.
+  id: MiniSyringe
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    layers:
+      - state: minisyringe1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+      - state: syringeproj
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 5
+  - type: Injector
+    minTransferAmount: 1
+    maxTransferAmount: 5
+    transferAmount: 5
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: minisyringe
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
+  - type: EmbeddableProjectile
+    offset: "0,-0.1"
+    minimumSpeed: 3
+    removalTime: 0.25
+    embedOnThrow: false
+  - type: SolutionInjectWhileEmbedded
+    transferAmount: 1
+    solution: injector
+    updateInterval: 2
+  - type: SolutionInjectOnEmbed
+    transferAmount: 1
+    solution: injector
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.3,0.1,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Piercing: 5
+  - type: Tag
+    tags:
+    - Syringe
+    - Trash
+    - SyringeGunAmmo
 
 - type: entity
   parent: BaseSyringe
@@ -470,7 +598,8 @@
     sprite: Objects/Specific/Chemistry/pills.rsi
   - type: Pill
   - type: Food
-    forceFeedDelay: 1
+    delay: 0.6
+    forceFeedDelay: 2
     transferAmount: null
     eatMessage: food-swallow
     useSound: /Audio/Items/pill.ogg
@@ -481,12 +610,8 @@
     solutions:
       food:
         maxVol: 20
-  - type: SolutionSpiker
-    sourceSolution: food
-  - type: Extractable
-    grindableSolutionName: food
-  - type: StaticPrice
-    price: 0
+  - type: ExplosionResistance
+    damageCoefficient: 0.025 # survives conventional explosives but not minibombs and nukes
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -499,6 +624,12 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionSpiker
+    sourceSolution: food
+  - type: Extractable
+    grindableSolutionName: food
+  - type: StaticPrice
+    price: 0
   - type: Tag
     tags:
     - Pill
@@ -526,4 +657,7 @@
     areaInsertRadius: 1
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
+    whitelist:
+      tags:
+      - Pill
   - type: Dumpable

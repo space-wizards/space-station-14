@@ -20,11 +20,14 @@
     BoxCandle: 2
     BoxCandleSmall: 2
     Urn: 5
+    Bible: 1
+  contrabandInventory:
+    FoodBakedBunHotX: 2
+    DrinkWineBottleFull: 1
+    ToyFigurineChaplain: 1
+    ClothingNeckScarfStripedBlack: 3
   emaggedInventory:
-    ClothingOuterArmorCult: 1
-    ClothingHeadHelmetCult: 1
     ClothingOuterRobesCult: 3
     ClothingHeadHatHoodCulthood: 3
     ClothingShoesCult: 4
     BedsheetCult: 4
-    ClothingNeckScarfStripedBlack: 3

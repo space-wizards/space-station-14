@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC0-1.0",
-  "copyright": "Created for SS14 by deltanedas (github), festive by Alekshhh (Github)",
+  "copyright": "Created for SS14 by deltanedas (github), festive by Alekshhh (Github), Inhands by TiniestShark (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -11,7 +11,23 @@
       "name": "icon"
     },
     {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
       "name": "festive"
+    },
+    {
+      "name": "inhand-left-festive",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-festive",
+      "directions": 4
     }
   ]
 }

@@ -24,13 +24,10 @@ public abstract class SharedChatSystem : EntitySystem
     public const char WhisperPrefix = ',';
     public const char DefaultChannelKey = 'h';
 
-    [ValidatePrototypeId<RadioChannelPrototype>]
-    public const string CommonChannel = "Common";
+    public static readonly ProtoId<RadioChannelPrototype> CommonChannel = "Common";
 
-    public static string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
-
-    [ValidatePrototypeId<SpeechVerbPrototype>]
-    public const string DefaultSpeechVerb = "Default";
+    public static readonly string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
+    public static readonly ProtoId<SpeechVerbPrototype> DefaultSpeechVerb = "Default";
 
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -43,7 +40,7 @@ public abstract class SharedChatSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        DebugTools.Assert(_prototypeManager.HasIndex<RadioChannelPrototype>(CommonChannel));
+        DebugTools.Assert(_prototypeManager.HasIndex(CommonChannel));
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
         CacheRadios();
     }
@@ -67,13 +64,13 @@ public abstract class SharedChatSystem : EntitySystem
     public SpeechVerbPrototype GetSpeechVerb(EntityUid source, string message, SpeechComponent? speech = null)
     {
         if (!Resolve(source, ref speech, false))
-            return _prototypeManager.Index<SpeechVerbPrototype>(DefaultSpeechVerb);
+            return _prototypeManager.Index(DefaultSpeechVerb);
 
         // check for a suffix-applicable speech verb
         SpeechVerbPrototype? current = null;
         foreach (var (str, id) in speech.SuffixSpeechVerbs)
         {
-            var proto = _prototypeManager.Index<SpeechVerbPrototype>(id);
+            var proto = _prototypeManager.Index(id);
             if (message.EndsWith(Loc.GetString(str)) && proto.Priority >= (current?.Priority ?? 0))
             {
                 current = proto;
@@ -81,7 +78,36 @@ public abstract class SharedChatSystem : EntitySystem
         }
 
         // if no applicable suffix verb return the normal one used by the entity
-        return current ?? _prototypeManager.Index<SpeechVerbPrototype>(speech.SpeechVerb);
+        return current ?? _prototypeManager.Index(speech.SpeechVerb);
+    }
+
+    /// <summary>
+    /// Splits the input message into a radio prefix part and the rest to preserve it during sanitization.
+    /// </summary>
+    /// <remarks>
+    /// This is primarily for the chat emote sanitizer, which can match against ":b" as an emote, which is a valid radio keycode.
+    /// </remarks>
+    public void GetRadioKeycodePrefix(EntityUid source,
+        string input,
+        out string output,
+        out string prefix)
+    {
+        prefix = string.Empty;
+        output = input;
+
+        // If the string is less than 2, then it's probably supposed to be an emote.
+        // No one is sending empty radio messages!
+        if (input.Length <= 2)
+            return;
+
+        if (!(input.StartsWith(RadioChannelPrefix) || input.StartsWith(RadioChannelAltPrefix)))
+            return;
+
+        if (!_keyCodes.TryGetValue(char.ToLower(input[1]), out _))
+            return;
+
+        prefix = input[..2];
+        output = input[2..];
     }
 
     /// <summary>

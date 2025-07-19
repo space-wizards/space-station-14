@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from and modified https://github.com/discordia-space/CEV-Eris/raw/aed9cbddbf9039dae1e4f02bab592248b0539431/icons/obj/ammo_speed.dmi",
+    "copyright": "Taken from and modified https://github.com/discordia-space/CEV-Eris/raw/aed9cbddbf9039dae1e4f02bab592248b0539431/icons/obj/ammo_speed.dmi, inhands by TiniestShark",
     "states": [
         {
             "name": "base"
@@ -47,22 +47,12 @@
             "name": "practice-6"
         },
         {
-            "name": "rubber-1"
+            "name": "inhand-left",
+            "directions": 4
         },
         {
-            "name": "rubber-2"
-        },
-        {
-            "name": "rubber-3"
-        },
-        {
-            "name": "rubber-4"
-        },
-        {
-            "name": "rubber-5"
-        },
-        {
-            "name": "rubber-6"
+            "name": "inhand-right",
+            "directions": 4
         }
     ]
 }

@@ -231,7 +231,7 @@ namespace Content.Server.Atmos.EntitySystems
             tile.MapAtmosphere = false;
             atmos.MapTiles.Remove(tile);
             tile.Air = null;
-            Array.Clear(tile.MolesArchived);
+            tile.AirArchived = null;
             tile.ArchivedCycle = 0;
             tile.LastShare = 0f;
             tile.Space = false;
@@ -261,7 +261,7 @@ namespace Content.Server.Atmos.EntitySystems
                     return;
 
                 tile.Air = null;
-                Array.Clear(tile.MolesArchived);
+                tile.AirArchived = null;
                 tile.ArchivedCycle = 0;
                 tile.LastShare = 0f;
                 tile.Hotspot = new Hotspot();
@@ -390,10 +390,10 @@ namespace Content.Server.Atmos.EntitySystems
             // Note: This is still processed even if space wind is turned off since this handles playing the sounds.
 
             var number = 0;
-            var bodies = EntityManager.GetEntityQuery<PhysicsComponent>();
-            var xforms = EntityManager.GetEntityQuery<TransformComponent>();
-            var metas = EntityManager.GetEntityQuery<MetaDataComponent>();
-            var pressureQuery = EntityManager.GetEntityQuery<MovedByPressureComponent>();
+            var bodies = GetEntityQuery<PhysicsComponent>();
+            var xforms = GetEntityQuery<TransformComponent>();
+            var metas = GetEntityQuery<MetaDataComponent>();
+            var pressureQuery = GetEntityQuery<MovedByPressureComponent>();
 
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
