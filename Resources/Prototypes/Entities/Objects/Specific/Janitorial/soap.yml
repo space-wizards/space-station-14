@@ -72,7 +72,7 @@
     residueColor: residue-green
 
 - type: entity
-  name: soap
+  name: nt soap
   id: SoapNT
   parent: Soap
   description: A Nanotrasen brand bar of soap. Smells of plasma.
@@ -97,7 +97,7 @@
     residueColor: residue-grey
 
 - type: entity
-  name: soap
+  name: waffle co. deluxe soap
   id: SoapDeluxe
   parent: Soap
   description: A deluxe Waffle Co. brand bar of soap. Smells of strawberries.
@@ -115,7 +115,7 @@
     residueColor: residue-brown
 
 - type: entity
-  name: soap
+  name: evil soap
   id: SoapSyndie
   parent: [Soap, BaseSyndicateContraband]
   description: An untrustworthy bar of soap. Smells of fear.
@@ -145,7 +145,7 @@
     price: 500
 
 - type: entity
-  name: soaplet
+  name: evil soaplet
   id: SoapletSyndie
   categories: [ HideSpawnMenu ]
   parent: Soap
@@ -186,7 +186,7 @@
         volume: -20
 
 - type: entity
-  name: soap
+  name: blood soap
   id: SoapHomemade
   parent: Soap
   description: A homemade bar of soap. Smells of... well....
