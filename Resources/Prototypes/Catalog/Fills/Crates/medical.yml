@@ -2,7 +2,7 @@
   id: CrateMedicalSupplies
   parent: CrateMedical
   name: medical supplies crate
-  description: Basic medical supplies.
+  description: Basic medical supplies. Includes two first aid med kits.
   components:
   - type: StorageFill
     contents:
@@ -87,10 +87,20 @@
         amount: 3
 
 - type: entity
+  id: CrateEmergencyFirstAidKit
+  parent: CrateMedical
+  name: first aid med kit
+  description: Crate filled with a first aid med kit.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MedkitFilled
+
+- type: entity
   id: CrateEmergencyBurnKit
   parent: CrateMedical
-  name: emergency burn kit
-  description: Crate filled with a burn treatment kit.
+  name: burn med kit
+  description: Crate filled with a burn med kit.
   components:
   - type: StorageFill
     contents:
@@ -99,8 +109,8 @@
 - type: entity
   id: CrateEmergencyToxinKit
   parent: CrateMedical
-  name: emergency toxin kit
-  description: Crate filled with a toxin treatment kit.
+  name: toxin med kit
+  description: Crate filled with a toxin med kit.
   components:
   - type: StorageFill
     contents:
@@ -109,8 +119,8 @@
 - type: entity
   id: CrateEmergencyO2Kit
   parent: CrateMedical
-  name: emergency O2 kit
-  description: Crate filled with an O2 treatment kit.
+  name: airloss med kit
+  description: Crate filled with an airloss med kit.
   components:
   - type: StorageFill
     contents:
@@ -119,8 +129,8 @@
 - type: entity
   id: CrateEmergencyBruteKit
   parent: CrateMedical
-  name: emergency brute kit
-  description: Crate filled with a brute treatment kit.
+  name: brute med kit
+  description: Crate filled with a brute med kit.
   components:
   - type: StorageFill
     contents:
@@ -129,8 +139,8 @@
 - type: entity
   id: CrateEmergencyAdvancedKit
   parent: CrateMedical
-  name: emergency advanced kit
-  description: Crate filled with an advanced treatment kit.
+  name: advanced first aid med kit
+  description: Crate filled with an advanced med kit.
   components:
   - type: StorageFill
     contents:
@@ -139,8 +149,8 @@
 - type: entity
   id: CrateEmergencyRadiationKit
   parent: CrateMedical
-  name: emergency radiation kit
-  description: Crate filled with a radiation treatment kit.
+  name: radiation med kit
+  description: Crate filled with a radiation med kit.
   components:
   - type: StorageFill
     contents:
