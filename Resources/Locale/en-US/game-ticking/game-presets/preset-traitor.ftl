@@ -27,7 +27,7 @@ traitor-role-greeting =
     You are an agent sent by {$corporation} on behalf of [color = darkred]The Syndicate.[/color]
     Your objectives and codewords are listed in the character menu.
     Use your uplink to buy the tools you'll need for this mission.
-    Death to Nanotrasen!
+    Death to NanoTrasen!
 traitor-role-codewords =
     The codewords are: [color = lightgray]
     {$codewords}.[/color]

@@ -212,7 +212,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckCloakAce
   name: pilot's cloak
-  description: Cloak awarded to Nanotrasen's finest space aces.
+  description: Cloak awarded to NanoTrasen's finest space aces.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ace.rsi
@@ -230,7 +230,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckCloakAroace
   name: aeropilot's cloak # thank you happyman442 this was the best name idea ever
-  description: Cloak awarded to Nanotrasen's finest pilots on planets with inhabitable atmospheres.
+  description: Cloak awarded to NanoTrasen's finest pilots on planets with inhabitable atmospheres.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/aroace.rsi
@@ -266,7 +266,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckCloakGay
   name: multi-level marketing cloak
-  description: This cloak is highly sought after in the Nanotrasen Marketing Offices.
+  description: This cloak is highly sought after in the NanoTrasen Marketing Offices.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/gay.rsi

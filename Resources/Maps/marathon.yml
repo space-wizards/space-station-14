@@ -100121,7 +100121,7 @@ entities:
   - uid: 21165
     components:
     - type: MetaData
-      desc: A standard-issue Nanotrasen storage unit, containing 3 Lecter submachine guns.
+      desc: A standard-issue NanoTrasen storage unit, containing 3 Lecter submachine guns.
     - type: Transform
       anchored: True
       pos: -42.5,53.5
@@ -100146,7 +100146,7 @@ entities:
   - uid: 16251
     components:
     - type: MetaData
-      desc: A standard-issue Nanotrasen storage unit, containing 3 Kammerer shotguns.
+      desc: A standard-issue NanoTrasen storage unit, containing 3 Kammerer shotguns.
     - type: Transform
       anchored: True
       pos: -42.5,55.5
@@ -100170,7 +100170,7 @@ entities:
   - uid: 18838
     components:
     - type: MetaData
-      desc: A standard-issue Nanotrasen storage unit, containing 3 Drozd submachine guns.
+      desc: A standard-issue NanoTrasen storage unit, containing 3 Drozd submachine guns.
     - type: Transform
       anchored: True
       pos: -42.5,54.5

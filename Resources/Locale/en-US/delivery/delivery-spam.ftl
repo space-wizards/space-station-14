@@ -51,8 +51,8 @@ delivery-spam-1 =   Robust Toolbox - Special Offer!
                     -CHEAP! ONLY ONE ORGAN! THAT'S LESS THAN TWO ORGANS!
                     -DOESN'T HAVE TO BE YOUR ORGAN! WE DON'T JUDGE!
 
-delivery-spam-2 =   Reasons to choose Nanotrasen!
-    .desc =         An advertisement for Nanotrasen.
+delivery-spam-2 =   Reasons to choose NanoTrasen!
+    .desc =         An advertisement for NanoTrasen.
     .content =      {-delivery-header-nanotrasen}
 
                     {"[head=2]TOP THREE REASONS WHY THE SYNDICATE IS INCOMPETENT[/head]"}
@@ -130,7 +130,7 @@ delivery-spam-6 =   NOTICE FROM NANOTRASN!!
 delivery-spam-7 =   Send reinforcements!
     .desc =         An official notice from... an alternate timeline?
     .content =      {-delivery-header-nanotrasen-alternate-timeline}
-                    {"[head=2]This is an official notice from the [color=red]Chief Security Officer[/color] at a Nanotrasen's Space Station 15.[/head]"}
+                    {"[head=2]This is an official notice from the [color=red]Chief Security Officer[/color] at a NanoTrasen's Space Station 15.[/head]"}
 
                     To whoever receives this letter. I am Sergeant Rigel. My occupation is the CSO. We need immediate assistance.
 
@@ -138,7 +138,7 @@ delivery-spam-7 =   Send reinforcements!
 
                     I am currently bolted in the Bridge, if you receive this message, please send aid immediately. I don't know how much longer we can last.
 
-                    Glory to Nanotrasen.
+                    Glory to NanoTrasen.
 
 delivery-spam-8 =   The Children of Nar'Sie
     .desc =         A local cult is looking for recruits.
@@ -174,7 +174,7 @@ delivery-spam-9 =   Do you want to fight?!
 
 
 
-                    Hidden in the depths of your local Nanotrasen station is the patented [color=#FF0000][bold]RAGE CAGE[/bold][/color]. An electrified fighting arena designed for only the strongest of fighters, the [color=#FF0000][bold]RAGE CAGE[/bold][/color] seperates the Wimps from the Warriors, the Scrubs from the Soldiers, and the Losers from the Winners.
+                    Hidden in the depths of your local NanoTrasen station is the patented [color=#FF0000][bold]RAGE CAGE[/bold][/color]. An electrified fighting arena designed for only the strongest of fighters, the [color=#FF0000][bold]RAGE CAGE[/bold][/color] seperates the Wimps from the Warriors, the Scrubs from the Soldiers, and the Losers from the Winners.
                     ──────────────────────────────────────────
                     In the [color=#FF0000][bold]RAGE CAGE[/bold][/color] there is only one rule: [italic]Two fighters enter. One fighter leaves. [/italic]
                     ──────────────────────────────────────────
@@ -254,7 +254,7 @@ delivery-spam-12 =  Join us on the maiden voyage!
 
                     {"[head=3]Gaze in awe at the Eye of the Cosmos** while enjoying meals from our Five Star Galaxy class chefs![/head]"}
 
-                    {"[head=3]Explore the ruins of Agathar***, now open to the public with the assistance of Nanotrasen's top Scientists. All the mysteries of the old Agatharian civilization are excavated and displayed for your viewing pleasure![/head]"}
+                    {"[head=3]Explore the ruins of Agathar***, now open to the public with the assistance of NanoTrasen's top Scientists. All the mysteries of the old Agatharian civilization are excavated and displayed for your viewing pleasure![/head]"}
 
                     For the low, low cost of $5,000 spesos a night, the six month luxury cruise could be yours for the vacation of your dreams! Call us today at [color=#00FF00]RELAX-NOW[/color] to book your cruise. Don't wait! Act now!
 

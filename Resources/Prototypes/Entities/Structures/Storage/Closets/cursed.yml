@@ -3,7 +3,7 @@
   parent: ClosetSteelBase
   name: closet
   suffix: cursed
-  description: A standard-issue Nanotrasen storage unit.
+  description: A standard-issue NanoTrasen storage unit.
   components:
   - type: CursedEntityStorage
   - type: EntityStorage

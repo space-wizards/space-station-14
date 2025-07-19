@@ -83595,7 +83595,7 @@ entities:
   - uid: 21476
     components:
     - type: MetaData
-      desc: A plasma gas miner - gutted of components and mothballed by Nanotrasen. It's not mining plasma any time soon.
+      desc: A plasma gas miner - gutted of components and mothballed by NanoTrasen. It's not mining plasma any time soon.
     - type: Transform
       pos: -93.5,-5.5
       parent: 2
@@ -83604,7 +83604,7 @@ entities:
   - uid: 21477
     components:
     - type: MetaData
-      desc: A plasma gas miner - gutted of components and mothballed by Nanotrasen. It's not mining plasma any time soon.
+      desc: A plasma gas miner - gutted of components and mothballed by NanoTrasen. It's not mining plasma any time soon.
     - type: Transform
       pos: -89.5,-65.5
       parent: 2
