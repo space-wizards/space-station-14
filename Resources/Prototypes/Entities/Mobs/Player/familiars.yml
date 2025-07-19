@@ -104,6 +104,8 @@
     highPressureMultiplier: 0.02
   - type: TemperatureProtection
     heatingCoefficient: 0.001
+  - type: Puller # FETCH ME THEIR SOULS
+    needsHands: false
   - type: Grammar
     attributes:
       gender: male
