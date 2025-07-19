@@ -580,6 +580,20 @@
     {
       "name": "asteroid-inhand-left",
       "directions": 4
+    },
+    {
+      "name": "ironsand"
+    },
+    {
+      "name": "astro-ironsand"
+    },
+    {
+      "name": "ironsand-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "ironsand-inhand-left",
+      "directions": 4
     }
   ]
 }

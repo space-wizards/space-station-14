@@ -648,6 +648,18 @@
   maxCount: 30
 
 - type: stack
+  id: FloorTileAstroIronsand
+  name: stack-astro-ironsand-floor
+  spawn: FloorTileItemAstroIronsand
+  maxCount: 30
+
+- type: stack
+  id: FloorTileAstroIronsandBorderless
+  name: stack-astro-ironsand-floor-borderless
+  spawn: FloorTileItemAstroIronsandBorderless
+  maxCount: 30
+
+- type: stack
   id: FloorTileWoodLarge
   name: stack-large-wood-floor
   spawn: FloorTileItemWoodLarge

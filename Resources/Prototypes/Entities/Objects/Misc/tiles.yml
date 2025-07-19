@@ -1630,6 +1630,40 @@
     stackType: FloorTileAstroAsteroidSand
 
 - type: entity
+  id: FloorTileItemAstroIronsand
+  parent: FloorTileItemBase
+  name: astro-ironsand
+  description: Fake red sand. Imported from fake Mars.
+  components:
+  - type: Sprite
+    state: astro-ironsand
+  - type: Item
+    heldPrefix: ironsand
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroIronsand
+  - type: Stack
+    stackType: FloorTileAstroIronsand
+
+- type: entity
+  id: FloorTileItemAstroIronsandBorderless
+  parent: FloorTileItemBase
+  name: borderless astro-ironsand
+  description: Fake red sand. Imported from fake Mars.
+  components:
+  - type: Sprite
+    state: ironsand
+  - type: Item
+    heldPrefix: ironsand
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroIronsandBorderless
+  - type: Stack
+    stackType: FloorTileAstroIronsandBorderless
+
+- type: entity
   name: large wood floor
   parent: FloorTileItemBase
   id: FloorTileItemWoodLarge
