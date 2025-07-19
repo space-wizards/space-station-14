@@ -76,14 +76,14 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// monstermos depressurization.
         /// </summary>
         [DataField]
-        public TimeSpan LockoutLockdownTime = TimeSpan.FromSeconds(5);
+        public TimeSpan ForcedPressureLockoutTime = TimeSpan.FromSeconds(5);
 
         /// <summary>
-        /// The time when the lockout lockdown will expire, and the vent will operate normally.
+        /// The time when the forced pressure lockdown will expire, and the vent will operate normally.
         /// </summary>
         [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
         [AutoPausedField]
-        public TimeSpan LockoutLockdownExpireAtTime = TimeSpan.Zero;
+        public TimeSpan ForcedPressureLockoutExpireAtTime = TimeSpan.Zero;
 
         /// <summary>
         /// How long the lockout should remain manually disabled after being interacted with.
