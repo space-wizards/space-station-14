@@ -7,6 +7,7 @@
   components:
     - type: InputMover
     - type: MobMover
+    - type: NPCProximitySleep
     - type: HTN
       rootTask:
         task: SimpleHostileCompound
@@ -178,6 +179,7 @@
       mindRoles:
       - MindRoleGhostRoleTeamAntagonistFlock
     - type: GhostTakeoverAvailable
+    - type: NPCProximitySleep
     - type: HTN
       rootTask:
         task: DragonCarpCompound
