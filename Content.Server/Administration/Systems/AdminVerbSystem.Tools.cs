@@ -2,8 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Components;
-using Content.Server.Atmos;
-using Content.Server.Atmos.Components;
 using Content.Server.Cargo.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Hands.Systems;
@@ -46,7 +44,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly DoorSystem _door = default!;
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
-    [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
+    [Dependency] private readonly AccessSystem _accessSystem = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
     [Dependency] private readonly AdminTestArenaSystem _adminTestArenaSystem = default!;
