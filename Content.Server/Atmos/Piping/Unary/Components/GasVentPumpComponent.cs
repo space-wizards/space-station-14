@@ -89,7 +89,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             }
         }
 
-        private float _externalPressureBound = Atmospherics.OneAtmosphere;
+        private float _externalPressureBound = Atmospherics.OneAtmosphereTarget;
 
         [DataField]
         public float InternalPressureBound
@@ -145,7 +145,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public string DepressurizePort = "Depressurize";
 
         [DataField]
-        public float PressurizePressure = Atmospherics.OneAtmosphere;
+        public float PressurizePressure = Atmospherics.OneAtmosphereTarget;
 
         [DataField]
         public float DepressurizePressure = 0;
