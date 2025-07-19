@@ -24,6 +24,7 @@
   recipes:
   - AnomalyScanner
   - NodeScanner
+  - ArtifactNuker
   - AnomalyLocator
   - AnomalyLocatorWide
   - HoloprojectorField
