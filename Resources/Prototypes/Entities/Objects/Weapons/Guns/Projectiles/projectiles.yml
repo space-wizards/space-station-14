@@ -372,6 +372,8 @@
         hard: false
         mask:
         - Opaque
+        - Impassable
+        - BulletImpassable
       fly-by: *flybyfixture
   - type: Projectile
     #   soundHit:  Waiting on serv3
@@ -390,6 +392,9 @@
   parent: WatcherBolt
   categories: [ HideSpawnMenu ]
   components:
+  - type: Reflective
+    reflective:
+    - Energy
   - type: Projectile
     #   soundHit:  Waiting on serv3
     impactEffect: BulletImpactEffectDisabler
@@ -404,7 +409,7 @@
 - type: entity
   name: magmawing watcher bolt
   id: WatcherBoltMagmawing
-  parent: BaseBullet
+  parent: WatcherBolt
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -428,6 +433,9 @@
   parent: WatcherBoltMagmawing
   categories: [ HideSpawnMenu ]
   components:
+  - type: Reflective
+    reflective:
+    - Energy
   - type: Projectile
     #   soundHit:  Waiting on serv3
     impactEffect: BulletImpactEffectOrangeDisabler
