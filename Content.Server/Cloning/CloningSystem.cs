@@ -128,7 +128,8 @@ public sealed partial class CloningSystem : EntitySystem
             }
 
             // If the original does not have the component, then the clone shouldn't have it either.
-            RemComp(clone, componentRegistration.Type);
+            if(!HasComp(original, componentRegistration.Type))
+                RemComp(clone, componentRegistration.Type);
         }
 
         var cloningEv = new CloningEvent(settings, clone);
