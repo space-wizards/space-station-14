@@ -37,7 +37,7 @@
               doAfter: 2
 
     # once a camera is constructed, it will
-    # instead just require wire cutting + welding
+    # instead just require wire cutting + anchoring
     # to immediately deconstruct
     - node: camera
       entity: SurveillanceCameraConstructed
@@ -52,6 +52,6 @@
               amount: 2
             - !type:DeleteEntity {}
           steps:
-            - tool: Welding
-              doAfter: 2
+            - tool: Anchoring
+              doAfter: 1
 

@@ -49,7 +49,6 @@
     anchored: true
   - type: WiresPanel
   - type: Wires
-    alwaysRandomize: true
     layoutId: SurveillanceCamera
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -85,7 +84,7 @@
             acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
-          damage: 100
+          damage: 14
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
@@ -105,6 +104,8 @@
   name: camera
   suffix: Constructed
   components:
+    - type: Wires
+      layoutId: SurveillanceCameraConstructed
     - type: DeviceNetwork
       deviceNetId: Wired
       transmitFrequencyId: SurveillanceCamera
@@ -125,6 +126,8 @@
   name: camera
   suffix: Engineering
   components:
+  - type: Wires
+    layoutId: SurveillanceCameraEngineering
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraEngineering
@@ -138,6 +141,8 @@
   name: camera
   suffix: Security
   components:
+  - type: Wires
+    layoutId: SurveillanceCameraSecurity
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraSecurity
@@ -151,6 +156,8 @@
   name: camera
   suffix: Science
   components:
+  - type: Wires
+    layoutId: SurveillanceCameraScience
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraScience
@@ -164,6 +171,8 @@
   name: camera
   suffix: Supply
   components:
+  - type: Wires
+    layoutId: SurveillanceCameraSupply
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraSupply
@@ -177,6 +186,8 @@
   name: camera
   suffix: Command
   components:
+  - type: Wires
+    layoutId: SurveillanceCameraCommand
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraCommand
@@ -190,6 +201,8 @@
   name: camera
   suffix: Service
   components:
+  - type: Wires
+    layoutId: SurveillanceCameraService
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraService
@@ -203,6 +216,8 @@
   name: camera
   suffix: Medical
   components:
+  - type: Wires
+    layoutId: SurveillanceCameraMedical
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraMedical
@@ -216,6 +231,8 @@
   name: camera
   suffix: General
   components:
+  - type: Wires
+    layoutId: SurveillanceCameraGeneral
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraGeneral
