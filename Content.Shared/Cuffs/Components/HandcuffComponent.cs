@@ -34,6 +34,24 @@ public sealed partial class HandcuffComponent : Component
     public float StunBonus = 2f;
 
     /// <summary>
+    ///     Modifier for the amount of time it takes an entity to stand up if cuffed.
+    /// </summary>
+    [DataField]
+    public float StandupMod = 5f;
+
+    /// <summary>
+    ///     Modifier to the speed of an entity who is cuffed, does not stack with KnockedMovementMod
+    /// </summary>
+    [DataField]
+    public float MovementMod = 1f;
+
+    /// <summary>
+    ///     Modifier to the knocked down speed of an entity who is cuffed
+    /// </summary>
+    [DataField]
+    public float KnockedMovementMod = 0.4f;
+
+    /// <summary>
     ///     Will the cuffs break when removed?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
