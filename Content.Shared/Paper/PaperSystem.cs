@@ -12,6 +12,8 @@ using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.PaperComponent;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.IdentityManagement;
+using Content.Shared.IdentityManagement.Components;
 
 namespace Content.Shared.Paper;
 
@@ -27,6 +29,7 @@ public sealed class PaperSystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedIdentitySystem _identitySystem = default!;
 
     private static readonly ProtoId<TagPrototype> WriteIgnoreStampsTag = "WriteIgnoreStamps";
     private static readonly ProtoId<TagPrototype> WriteTag = "Write";
@@ -47,6 +50,7 @@ public sealed class PaperSystem : EntitySystem
         SubscribeLocalEvent<RandomPaperContentComponent, MapInitEvent>(OnRandomPaperContentMapInit);
 
         SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnPaperWrite);
+        SubscribeLocalEvent<PaperComponent, PaperSignatureRequestMessage>(OnSignatureRequest);
 
         _paperQuery = GetEntityQuery<PaperComponent>();
     }
@@ -307,6 +311,58 @@ public sealed class PaperSystem : EntitySystem
     private void UpdateUserInterface(Entity<PaperComponent> entity)
     {
         _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy, entity.Comp.Mode));
+    }
+
+    private void OnSignatureRequest(Entity<PaperComponent> entity, ref PaperSignatureRequestMessage args)
+    {
+        var signature = GetPlayerSignature(args.Actor);
+        var newText = ReplaceNthSignatureTag(entity.Comp.Content, args.SignatureIndex, signature);
+        SetContent(entity, newText);
+        
+        _adminLogger.Add(LogType.Chat, LogImpact.Low,
+            $"{ToPrettyString(args.Actor):player} signed {ToPrettyString(entity):entity} with signature: {signature}");
+    }
+
+    /// <summary>
+    /// Gets the player's signature using the identity system.
+    /// </summary>
+    private string GetPlayerSignature(EntityUid player)
+    {
+        // Use identity system to get the proper displayed name
+        if (TryComp<IdentityComponent>(player, out var identity) &&
+            identity.IdentityEntitySlot.ContainedEntity is { } identityEntity)
+        {
+            return MetaData(identityEntity).EntityName;
+        }
+
+        // Fallback to entity name if no identity component
+        return MetaData(player).EntityName;
+    }
+
+    /// <summary>
+    /// Replaces the nth occurrence of [signature] tag with replacement text.
+    /// </summary>
+    private static string ReplaceNthSignatureTag(string text, int index, string replacement)
+    {
+        const string signatureTag = "[signature]";
+        var currentIndex = 0;
+        var pos = 0;
+
+        while (pos < text.Length)
+        {
+            var foundPos = text.IndexOf(signatureTag, pos);
+            if (foundPos == -1) break;
+
+            if (currentIndex == index)
+            {
+                return text.Substring(0, foundPos) + replacement + text.Substring(foundPos + signatureTag.Length);
+            }
+
+            currentIndex++;
+            pos = foundPos + signatureTag.Length;
+        }
+
+        return text;
     }
 }
 
