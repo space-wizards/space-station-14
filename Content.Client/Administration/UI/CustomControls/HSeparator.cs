@@ -1,25 +1,36 @@
 ﻿using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Administration.UI.CustomControls;
 
 public sealed class HSeparator : Control
 {
-    private static readonly Color SeparatorColor = Color.FromHex("#3D4059");
+    public Color SeparatorColor { get; set; }
+
+    private static readonly Color DefaultSeparatorColor = Color.FromHex("#3D4059");
+
+    public const string StylePropertyColor = "color";
 
     public HSeparator(Color color)
     {
-        AddChild(new PanelContainer
+        SeparatorColor = color;
+        if (TryGetStyleProperty<Color>(StylePropertyColor, out var bgColor))
         {
-            PanelOverride = new StyleBoxFlat
+            color = bgColor;
+        }
+
+        AddChild(new PanelContainer
             {
-                BackgroundColor = color,
-                ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
+                PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = color,
+                    ContentMarginBottomOverride = 2,
+                    ContentMarginLeftOverride = 2,
+                },
             }
-        });
+        );
     }
 
-    public HSeparator() : this(SeparatorColor) { }
+    public HSeparator() : this(DefaultSeparatorColor) { }
 }
