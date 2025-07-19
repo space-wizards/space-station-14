@@ -46,7 +46,7 @@ public sealed partial class ParrotDbSystem : EntitySystem
     /// Called when a player is erased. This ensures the memories from that player are blocked and the parrot memory is
     /// refreshed
     /// </summary>
-    private void OnErase(EraseEvent args)
+    private void OnErase(ref EraseEvent args)
     {
         _db.SetParrotMemoryBlockPlayer(args.PlayerNetUserId, true);
 
