@@ -322,6 +322,16 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
     }
 
+    private void UpdateActiveChunks(BiomeComponent biome)
+    {
+        if (!_activeChunks.TryGetValue(biome, out _))
+        {
+            _activeChunks.Add(biome, _tilePool.Get());
+        }
+        else
+            _activeChunks[biome] = _tilePool.Get();
+    }
+
     private bool CanLoad(EntityUid uid)
     {
         return !_ghostQuery.HasComp(uid) || _tags.HasTag(uid, AllowBiomeLoadingTag);
@@ -337,7 +347,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             if (biome.LifeStage < ComponentLifeStage.Running)
                 continue;
 
-            _activeChunks[biome] = _tilePool.Get();
+            UpdateActiveChunks(biome);
             _markerChunks.GetOrNew(biome);
         }
 
