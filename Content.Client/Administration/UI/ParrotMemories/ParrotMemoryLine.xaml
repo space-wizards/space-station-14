@@ -9,7 +9,7 @@
         <cc:HSeparator Margin="4 0" />
         <Label Name="ParrotMemoryDate"></Label>
         <cc:HSeparator Margin="4 0" />
-        <Button Name="ParrotBlockButton" Text="Block" Access="Public" ToolTip="{Loc 'parrot-memory-line-block-tooltip'}" MinWidth="100"></Button>
+        <Button Name="ParrotBlockButton" Access="Public" MinWidth="100"></Button>
     </BoxContainer>
     <RichTextLabel Name="ParrotMemoryText"></RichTextLabel>
     <cc:VSeparator Margin="0 2"></cc:VSeparator>

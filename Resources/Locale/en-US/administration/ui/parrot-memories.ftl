@@ -24,7 +24,11 @@ parrot-memory-line-current-round = Learnt this round
 
 parrot-memory-line-ahelp-tooltip = Ahelp this user.
 
-parrot-memory-line-block = Block
-parrot-memory-line-block-tooltip = Block this memory, preventing it from being picked by entities using the parrot memory database and preventing it from being learnt.
-parrot-memory-line-unblock = Unblock
-parrot-memory-line-unblock-tooltip = Unblock this memory. If there is a Cvar set to discard old memories, this memory may be discarded. Otherwise, this memory can again be picked by entities using the parrot memory database.
+parrot-memory-line-block = { $blocked ->
+ *[false] Block
+ [true] Unblock
+}
+parrot-memory-line-block-tooltip = { $blocked ->
+ *[false] Block this memory, preventing it from being picked by entities using the parrot memory database.
+ [true] Unblock this memory, returning it to the pool of potential memories for parrots. If this entry is old, it may be truncated at the start of the next round.
+}

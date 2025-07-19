@@ -1977,7 +1977,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             var deleteBefore = DateTime.UtcNow - maxMessageAge;
 
             await db.DbContext.ParrotMemory
-                .Where(memory => memory.CreatedAt < deleteBefore)
+                .Where(memory => !memory.Block && memory.CreatedAt < deleteBefore)
                 .ExecuteDeleteAsync();
         }
 
