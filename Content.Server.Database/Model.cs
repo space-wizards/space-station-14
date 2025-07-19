@@ -46,6 +46,7 @@ namespace Content.Server.Database
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
+        public DbSet<BasicGameplayMetrics> BasicGameplayMetrics { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1074,6 +1075,22 @@ namespace Content.Server.Database
         public string Path { get; set; } = string.Empty;
 
         public byte[] Data { get; set; } = default!;
+    }
+
+    [Table("gameplay_metrics")]
+    public class BasicGameplayMetrics
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required]
+        public DateTime CreatedAt { get; set; }
+
+        [Required]
+        public string ServerName { get; set; } = default!;
+
+        [Required, Column(TypeName = "jsonb")]
+        public JsonDocument MetricData { get; set; } = default!;
     }
 
     // Note: this interface isn't used by the game, but it *is* used by SS14.Admin.

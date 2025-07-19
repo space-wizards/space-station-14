@@ -343,6 +343,12 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region Basic Gameplay Metrics
+
+        Task<int> RecordGameplayMetric(string serverName, JsonDocument metricData);
+
+        #endregion
+
         #region DB Notifications
 
         void SubscribeToNotifications(Action<DatabaseNotification> handler);
@@ -1050,6 +1056,12 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.CleanIPIntelCache(range));
+        }
+
+        public Task<int> RecordGameplayMetric(string serverName, JsonDocument metricData)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RecordGameplayMetric(serverName, metricData));
         }
 
         public void SubscribeToNotifications(Action<DatabaseNotification> handler)
