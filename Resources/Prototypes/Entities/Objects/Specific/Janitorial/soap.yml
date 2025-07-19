@@ -1,5 +1,5 @@
 - type: entity
-  name: Soap
+  name: soap
   id: Soap
   parent: BaseItem
   description: A cheap bar of soap. Doesn't smell.
@@ -72,7 +72,7 @@
     residueColor: residue-green
 
 - type: entity
-  name: NT Soap
+  name: nt soap
   id: SoapNT
   parent: Soap
   description: A Nanotrasen brand bar of soap. Smells of plasma.
@@ -97,7 +97,7 @@
     residueColor: residue-grey
 
 - type: entity
-  name: Waffle Co. Deluxe Soap
+  name: waffle co. deluxe soap
   id: SoapDeluxe
   parent: Soap
   description: A deluxe Waffle Co. brand bar of soap. Smells of strawberries.
@@ -115,7 +115,7 @@
     residueColor: residue-brown
 
 - type: entity
-  name: Evil Soap
+  name: evil soap
   id: SoapSyndie
   parent: [Soap, BaseSyndicateContraband]
   description: An untrustworthy bar of soap. Smells of fear.
@@ -145,7 +145,7 @@
     price: 500
 
 - type: entity
-  name: Evil Soaplet
+  name: evil soaplet
   id: SoapletSyndie
   categories: [ HideSpawnMenu ]
   parent: Soap
@@ -186,7 +186,7 @@
         volume: -20
 
 - type: entity
-  name: Blood Soap
+  name: blood soap
   id: SoapHomemade
   parent: Soap
   description: A homemade bar of soap. Smells of... well....
@@ -210,7 +210,7 @@
     residueColor: residue-red
 
 - type: entity
-  name: Omega Soap
+  name: omega soap
   id: SoapOmega
   parent: Soap
   description: The most advanced soap known to mankind. Smells of bluespace.
