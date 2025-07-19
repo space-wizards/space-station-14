@@ -55,8 +55,8 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
         var mapId = Transform(grid).MapID;
         var playableArea = _physics.GetWorldAABB(grid);
 
-        var minimumDistance = (playableArea.TopRight - playableArea.Center).Length() + 50f;
-        var maximumDistance = minimumDistance + 100f;
+        var minimumDistance = (playableArea.TopRight - playableArea.Center).Length() + 500f; // gotta be far enough for players to react
+        var maximumDistance = minimumDistance + 500f;
 
         var center = playableArea.Center;
 

@@ -19,3 +19,10 @@
     damage:
       types:
         Blunt: 2
+
+- type: entity
+  id: BulletCaselessRifleRadar
+  parent: BulletCaselessRifle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RadarTrackedFriendly
