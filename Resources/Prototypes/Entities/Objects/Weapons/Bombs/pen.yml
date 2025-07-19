@@ -5,7 +5,7 @@
   description: A dark ink pen.
   id: PenExploding
   components:
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 4
     examinable: false
   - type: Explosive
@@ -16,8 +16,11 @@
     canCreateVacuum: false
   - type: ActivateOnPaperOpened
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
+  - type: TriggerOnUse
   - type: TriggerOnSignal
-  - type: DeviceLinkSink # This should be changed into separate behavior where triggering via signal makes beep, while triggering manually is quiet, when that functionality is supported.
+  - type: DeviceLinkSink # This should be changed into separate behavior where triggering via signal makes beep, while triggering manually is quiet.
     ports:
     - Trigger
   - type: EmitSoundOnUse

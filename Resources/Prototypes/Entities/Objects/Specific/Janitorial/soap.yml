@@ -180,6 +180,7 @@
         - ItemMask
   - type: DeleteOnTrigger
   - type: EmitSoundOnTrigger
+    predicted: true
     sound:
       path: "/Audio/Effects/Fluids/splat.ogg"
       params:

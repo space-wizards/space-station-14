@@ -231,9 +231,17 @@ public sealed class ItemToggleSystem : EntitySystem
         var (uid, comp) = ent;
         var soundToPlay = comp.SoundActivate;
         if (predicted)
+        {
             _audio.PlayPredicted(soundToPlay, uid, user);
+            if (ent.Comp.PopupActivate != null && user != null)
+                _popup.PopupClient(Loc.GetString(ent.Comp.PopupActivate), user.Value, user.Value);
+        }
         else
+        {
             _audio.PlayPvs(soundToPlay, uid);
+            if (ent.Comp.PopupActivate != null && user != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.PopupActivate), user.Value, user.Value);
+        }
 
         comp.Activated = true;
         UpdateVisuals((uid, comp));
@@ -251,9 +259,17 @@ public sealed class ItemToggleSystem : EntitySystem
         var (uid, comp) = ent;
         var soundToPlay = comp.SoundDeactivate;
         if (predicted)
+        {
             _audio.PlayPredicted(soundToPlay, uid, user);
+            if (ent.Comp.PopupDeactivate != null && user != null)
+                _popup.PopupClient(Loc.GetString(ent.Comp.PopupDeactivate), user.Value, user.Value);
+        }
         else
+        {
             _audio.PlayPvs(soundToPlay, uid);
+            if (ent.Comp.PopupDeactivate != null && user != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.PopupDeactivate), user.Value, user.Value);
+        }
 
         comp.Activated = false;
         UpdateVisuals((uid, comp));
