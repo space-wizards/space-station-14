@@ -1,5 +1,4 @@
-using Content.Server.Popups;
-using Content.Shared.Abilities.Mime;
+using Content.Shared.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Events;
 using Content.Shared.Alert;
@@ -12,11 +11,11 @@ using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Content.Shared.Speech.Muting;
 
-namespace Content.Server.Abilities.Mime
+namespace Content.Shared.Abilities.Mime
 {
     public sealed class MimePowersSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly TurfSystem _turf = default!;
@@ -49,7 +48,8 @@ namespace Content.Server.Abilities.Mime
                     continue;
 
                 mime.ReadyToRepent = true;
-                _popupSystem.PopupEntity(Loc.GetString("mime-ready-to-repent"), uid, uid);
+                Dirty(uid, mime);
+                _popupSystem.PopupClient(Loc.GetString("mime-ready-to-repent"), uid, uid);
             }
         }
 
@@ -89,13 +89,13 @@ namespace Content.Server.Abilities.Mime
             // Check if the tile is blocked by a wall or mob, and don't create the wall if so
             if (_turf.IsTileBlocked(tile.Value, CollisionGroup.Impassable | CollisionGroup.Opaque))
             {
-                _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-failed"), uid, uid);
+                _popupSystem.PopupClient(Loc.GetString("mime-invisible-wall-failed"), uid, uid);
                 return;
             }
 
-            _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-popup", ("mime", uid)), uid);
+            _popupSystem.PopupPredicted(Loc.GetString("mime-invisible-wall-popup", ("mime", uid)), uid, uid);
             // Make sure we set the invisible wall to despawn properly
-            Spawn(component.WallPrototype, _turf.GetTileCenter(tile.Value));
+            PredictedSpawnAttachedTo(component.WallPrototype, _turf.GetTileCenter(tile.Value));
             // Handle args so cooldown works
             args.Handled = true;
         }
@@ -130,6 +130,7 @@ namespace Content.Server.Abilities.Mime
             mimePowers.Enabled = false;
             mimePowers.VowBroken = true;
             mimePowers.VowRepentTime = _timing.CurTime + mimePowers.VowCooldown;
+            Dirty(uid, mimePowers);
             RemComp<MutedComponent>(uid);
             if (mimePowers.PreventWriting)
                 RemComp<BlockWritingComponent>(uid);
@@ -148,13 +149,14 @@ namespace Content.Server.Abilities.Mime
 
             if (!mimePowers.ReadyToRepent)
             {
-                _popupSystem.PopupEntity(Loc.GetString("mime-not-ready-repent"), uid, uid);
+                _popupSystem.PopupClient(Loc.GetString("mime-not-ready-repent"), uid, uid);
                 return;
             }
 
             mimePowers.Enabled = true;
             mimePowers.ReadyToRepent = false;
             mimePowers.VowBroken = false;
+            Dirty(uid, mimePowers);
             AddComp<MutedComponent>(uid);
             if (mimePowers.PreventWriting)
             {
