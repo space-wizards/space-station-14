@@ -51,7 +51,7 @@ public sealed class SmartFridgeSystem : EntitySystem
         bool anyInserted = false;
         foreach (var used in usedItems)
         {
-            if (_whitelist.IsWhitelistFail(ent.Comp.Whitelist, used) || _whitelist.IsBlacklistPass(ent.Comp.Blacklist, used))
+            if (!_whitelist.CheckBoth(used, ent.Comp.Blacklist, ent.Comp.Whitelist))
                 continue;
             anyInserted = true;
 

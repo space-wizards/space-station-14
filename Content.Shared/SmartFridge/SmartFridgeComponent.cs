@@ -46,6 +46,7 @@ public sealed partial class SmartFridgeComponent : Component
     /// A mapping of smart fridge entries to the actual contained contents
     /// </summary>
     [DataField, AutoNetworkedField]
+    [Access(typeof(SmartFridgeSystem), Other = AccessPermissions.ReadExecute)]
     public Dictionary<SmartFridgeEntry, List<NetEntity>> ContainedEntries = new();
 
     /// <summary>
