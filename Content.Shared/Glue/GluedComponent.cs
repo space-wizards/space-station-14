@@ -2,14 +2,15 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Glue;
 
-[RegisterComponent]
-[Access(typeof(SharedGlueSystem))]
+[RegisterComponent, AutoGenerateComponentPause]
+[Access(typeof(GlueSystem))]
 public sealed partial class GluedComponent : Component
 {
 
-    [DataField("until", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan Until;
 
-    [DataField("duration", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan Duration;
 }

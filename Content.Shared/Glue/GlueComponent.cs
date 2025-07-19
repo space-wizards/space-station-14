@@ -7,36 +7,36 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Glue;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedGlueSystem))]
+[Access(typeof(GlueSystem))]
 public sealed partial class GlueComponent : Component
 {
     /// <summary>
     /// Noise made when glue applied.
     /// </summary>
-    [DataField("squeeze")]
+    [DataField]
     public SoundSpecifier Squeeze = new SoundPathSpecifier("/Audio/Items/squeezebottle.ogg");
 
     /// <summary>
     /// Solution on the entity that contains the glue.
     /// </summary>
-    [DataField("solution")]
+    [DataField]
     public string Solution = "drink";
 
     /// <summary>
     /// Reagent that will be used as glue.
     /// </summary>
-    [DataField("reagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
     public string Reagent = "SpaceGlue";
 
     /// <summary>
     /// Reagent consumption per use.
     /// </summary>
-    [DataField("consumptionUnit"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public FixedPoint2 ConsumptionUnit = FixedPoint2.New(5);
 
     /// <summary>
     /// Duration per unit
     /// </summary>
-    [DataField("durationPerUnit"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan DurationPerUnit = TimeSpan.FromSeconds(6);
 }
