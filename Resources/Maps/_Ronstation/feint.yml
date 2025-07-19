@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 262.0.0
+  engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/10/2025 16:10:07
-  entityCount: 18856
+  time: 07/19/2025 16:43:04
+  entityCount: 18862
 maps:
 - 1
 grids:
@@ -8432,7 +8432,7 @@ entities:
       pos: 2.5,-6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -302683.16
+      secondsUntilStateChange: -302757.66
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8866,7 +8866,7 @@ entities:
       pos: -22.5,8.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -262110.2
+      secondsUntilStateChange: -262184.7
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8945,7 +8945,7 @@ entities:
       pos: 36.5,-61.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -147325.73
+      secondsUntilStateChange: -147400.23
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -82801,7 +82801,7 @@ entities:
       pos: 7.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -282389.56
+      secondsUntilStateChange: -282464.06
       state: Opening
   - uid: 1237
     components:
@@ -82809,7 +82809,7 @@ entities:
       pos: 7.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -282389.06
+      secondsUntilStateChange: -282463.56
       state: Opening
 - proto: HospitalCurtainsOpen
   entities:
@@ -82819,7 +82819,7 @@ entities:
       pos: -6.5,-4.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -295653.9
+      secondsUntilStateChange: -295728.4
       state: Closing
   - uid: 54
     components:
@@ -97946,6 +97946,33 @@ entities:
     - type: Transform
       pos: -21.5,-7.5
       parent: 2
+- proto: SpawnPointPassenger
+  entities:
+  - uid: 18858
+    components:
+    - type: Transform
+      pos: 10.5,-7.5
+      parent: 2
+  - uid: 18859
+    components:
+    - type: Transform
+      pos: 12.5,-7.5
+      parent: 2
+  - uid: 18860
+    components:
+    - type: Transform
+      pos: 11.5,-4.5
+      parent: 2
+  - uid: 18861
+    components:
+    - type: Transform
+      pos: -3.5,-1.5
+      parent: 2
+  - uid: 18862
+    components:
+    - type: Transform
+      pos: -11.5,-38.5
+      parent: 2
 - proto: SpawnPointQuartermaster
   entities:
   - uid: 15350
@@ -97971,6 +97998,13 @@ entities:
     components:
     - type: Transform
       pos: 17.5,-21.5
+      parent: 2
+- proto: SpawnPointResearchDirector
+  entities:
+  - uid: 18857
+    components:
+    - type: Transform
+      pos: 19.5,-43.5
       parent: 2
 - proto: SpawnPointSalvageSpecialist
   entities:
