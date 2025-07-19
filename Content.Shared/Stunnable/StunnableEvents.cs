@@ -16,7 +16,7 @@ namespace Content.Shared.Stunnable;
 public record struct StunnedEvent;
 
 /// <summary>
-///     Raised directed on an entity before it is knocked down to see if it should be cancelled, and to determines
+///     Raised directed on an entity before it is knocked down to see if it should be cancelled, and to determine
 ///     knocked down arguments.
 /// </summary>
 [ByRefEvent]
