@@ -388,9 +388,21 @@ public enum AtmosMonitorLimitType //<todo.eoin Very similar to the above...
 // fields you can find this prototype in
 public enum AtmosMonitorThresholdType
 {
-    Temperature,
-    Pressure,
-    Gas
+    Temperature = 0,
+    Pressure = 1,
+    Gas = 2
+}
+
+/// <summary>
+/// Bitflags version of <see cref="AtmosMonitorThresholdType"/>
+/// </summary>
+[Flags]
+public enum AtmosMonitorThresholdTypeFlags
+{
+    None = 0,
+    Temperature = 1 << 0,
+    Pressure = 1 << 1,
+    Gas = 1 << 2,
 }
 
 [Serializable, NetSerializable]
