@@ -29,8 +29,8 @@
   id: SalvageMedicGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist #DOTS: add custom clothing
-    id: SalvagePDA #DOTS: add custom PDA
-    ears: ClothingHeadsetCargo
+    id: SalvageMedicPDA
+    ears: ClothingHeadsetMining
     #storage:
     #back:
     #- Stuff
