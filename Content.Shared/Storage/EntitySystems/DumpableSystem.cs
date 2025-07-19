@@ -39,16 +39,16 @@ public sealed class DumpableSystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, DumpableComponent component, AfterInteractEvent args)
     {
-        if (!args.CanReach || args.Handled)
-            return;
-
-        if (!HasComp<DisposalUnitComponent>(args.Target) && !HasComp<PlaceableSurfaceComponent>(args.Target))
+        if (!args.CanReach || args.Handled || args.Target == null)
             return;
 
         if (!TryComp<StorageComponent>(uid, out var storage))
             return;
 
         if (!storage.Container.ContainedEntities.Any())
+            return;
+
+        if (!(component.DumpsBins && HasComp<DisposalUnitComponent>(args.Target) || component.DumpsTables  && HasComp<PlaceableSurfaceComponent>(args.Target)))
             return;
 
         StartDoAfter(uid, args.Target.Value, args.User, component);
