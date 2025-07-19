@@ -1,9 +1,5 @@
 ﻿using Content.Shared.Beeper.Components;
-using Content.Shared.Item.ItemToggle;
-using Content.Shared.Pinpointer;
 using Content.Shared.ProximityDetection;
-using Content.Shared.ProximityDetection.Components;
-using Content.Shared.ProximityDetection.Systems;
 
 namespace Content.Shared.Beeper.Systems;
 
@@ -21,16 +17,13 @@ public sealed class ProximityBeeperSystem : EntitySystem
         SubscribeLocalEvent<ProximityBeeperComponent, ProximityTargetUpdatedEvent>(OnProximityTargetUpdate);
     }
 
-    private void OnProximityTargetUpdate(EntityUid owner, ProximityBeeperComponent proxBeeper, ref ProximityTargetUpdatedEvent args)
+    private void OnProximityTargetUpdate(Entity<ProximityBeeperComponent> ent, ref ProximityTargetUpdatedEvent args)
     {
-        if (!TryComp<BeeperComponent>(owner, out var beeper))
-            return;
-
-        _beeper.SetIntervalScaling(owner, args.Distance / args.Detector.Comp.Range, beeper);
+        _beeper.SetIntervalScaling(ent.Owner, args.Distance / args.Detector.Comp.Range);
     }
 
-    private void OnNewProximityTarget(EntityUid owner, ProximityBeeperComponent proxBeeper, ref NewProximityTargetEvent args)
+    private void OnNewProximityTarget(Entity<ProximityBeeperComponent> ent, ref NewProximityTargetEvent args)
     {
-        _beeper.SetMute(owner, args.Target == null);
+        _beeper.SetMute(ent.Owner, args.Target == null);
     }
 }
