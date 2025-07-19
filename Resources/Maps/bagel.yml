@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/10/2025 16:46:10
-  entityCount: 25502
+  time: 07/13/2025 00:19:59
+  entityCount: 25504
 maps:
 - 943
 grids:
@@ -11884,17 +11884,25 @@ entities:
       parent: 60
     - type: DeviceLinkSource
       linkedPorts:
-        12706:
+        15897:
         - - DoorStatus
-          - DoorBolt
+          - InputB
   - uid: 12706
     components:
     - type: Transform
       pos: 55.5,0.5
       parent: 60
+    - type: DeviceLinkSink
+      invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
         8358:
+        - - DoorStatus
+          - DoorBolt
+        19007:
+        - - DoorStatus
+          - DoorBolt
+        19006:
         - - DoorStatus
           - DoorBolt
   - uid: 13183
@@ -113722,6 +113730,39 @@ entities:
         - 0
 - proto: LogicGateOr
   entities:
+  - uid: 15846
+    components:
+    - type: Transform
+      anchored: True
+      rot: -1.5707963267948966 rad
+      pos: 54.5,2.5
+      parent: 60
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        15897:
+        - - Output
+          - InputA
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 15897
+    components:
+    - type: Transform
+      anchored: True
+      pos: 54.5,0.5
+      parent: 60
+    - type: DeviceLinkSource
+      linkedPorts:
+        12706:
+        - - Output
+          - DoorBolt
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: Physics
+      canCollide: False
+      bodyType: Static
   - uid: 25536
     components:
     - type: Transform
@@ -157181,11 +157222,25 @@ entities:
     - type: Transform
       pos: 53.5,3.5
       parent: 60
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        15846:
+        - - DoorStatus
+          - InputA
   - uid: 19007
     components:
     - type: Transform
       pos: 54.5,3.5
       parent: 60
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        15846:
+        - - DoorStatus
+          - InputB
   - uid: 19023
     components:
     - type: Transform
