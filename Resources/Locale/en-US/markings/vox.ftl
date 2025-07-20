@@ -10,6 +10,9 @@ marking-TattooVoxHiveChest = Vox Chest Tattoo (hive)
 marking-TattooVoxNightlingChest-nightling_s = Vox Chest Tattoo (nightling)
 marking-TattooVoxNightlingChest = Vox Chest Tattoo (nightling)
 
+marking-VoxTailTalisman-tail_talisman = Tail Talisman
+marking-VoxTailTalisman = Tail Talisman
+
 marking-VoxScarEyeRight-vox_scar_eye_right = Right Eye Scar
 marking-VoxScarEyeRight = Eye Scar (Right)
 
