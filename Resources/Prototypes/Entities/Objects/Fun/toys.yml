@@ -571,9 +571,9 @@
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
-    shader: unshaded
     layers:
     - state: tesla_projectile
+      shader: unshaded
   - type: Item
     inhandVisuals:
       left:
@@ -605,8 +605,9 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/pondering_orb.rsi
-    state: icon
-    shader: unshaded
+    layers:
+    - state: icon
+      shader: unshaded
   - type: PointLight
     radius: 2
     color: "#00CCFF"
@@ -674,7 +675,7 @@
     color: white
     netsync: false
   - type: Appearance
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: blade
     inhandVisuals:
       left:
@@ -845,7 +846,6 @@
   - type: Sprite
     sprite: Objects/Fun/whoopie.rsi
     state: icon
-    quickEquip: false
   - type: Tag
     tags:
     - Payload
@@ -872,8 +872,10 @@
   - type: UseDelay
     delay: 0.8
   - type: Slippery
+    staminaDamage: 0
     slipData:
-      paralyzeTime: 0
+      stunTime: 0
+      knockdownTime: 0
       launchForwardsMultiplier: 0
     slipSound:
       collection: Parp

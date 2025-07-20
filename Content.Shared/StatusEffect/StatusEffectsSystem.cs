@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.StatusEffect
 {
-    [Obsolete("Migration to Content.Shared.StatusEffectNew.SharedStatusEffectsSystem is required")]
+    [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
     public sealed class StatusEffectsSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -106,7 +106,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="status">The status effects component to change, if you already have it.</param>
         /// <returns>False if the effect could not be added or the component already exists, true otherwise.</returns>
         /// <typeparam name="T">The component type to add and remove from the entity.</typeparam>
-        [Obsolete("Migration to Content.Shared.StatusEffectNew.SharedStatusEffectsSystem is required")]
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryAddStatusEffect<T>(EntityUid uid, string key, TimeSpan time, bool refresh,
             StatusEffectsComponent? status = null)
             where T : IComponent, new()
@@ -126,7 +126,7 @@ namespace Content.Shared.StatusEffect
 
         }
 
-        [Obsolete("Migration to Content.Shared.StatusEffectNew.SharedStatusEffectsSystem is required")]
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh, string component,
             StatusEffectsComponent? status = null)
         {
@@ -166,7 +166,7 @@ namespace Content.Shared.StatusEffect
         ///     If the effect already exists, it will simply replace the cooldown with the new one given.
         ///     If you want special 'effect merging' behavior, do it your own damn self!
         /// </remarks>
-        [Obsolete("Migration to Content.Shared.StatusEffectNew.SharedStatusEffectsSystem is required")]
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryAddStatusEffect(EntityUid uid,
             string key,
             TimeSpan time,
@@ -260,7 +260,7 @@ namespace Content.Shared.StatusEffect
         ///     Obviously this doesn't automatically clear any effects a status effect might have.
         ///     That's up to the removed component to handle itself when it's removed.
         /// </remarks>
-        [Obsolete("Migration to Content.Shared.StatusEffectNew.SharedStatusEffectsSystem is required")]
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryRemoveStatusEffect(EntityUid uid, string key,
             StatusEffectsComponent? status = null, bool remComp = true)
         {
@@ -304,7 +304,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="uid">The entity to remove effects from.</param>
         /// <param name="status">The status effects component to change, if you already have it.</param>
         /// <returns>False if any status effects failed to be removed, true if they all did.</returns>
-        [Obsolete("Migration to Content.Shared.StatusEffectNew.SharedStatusEffectsSystem is required")]
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryRemoveAllStatusEffects(EntityUid uid,
             StatusEffectsComponent? status = null)
         {
@@ -328,7 +328,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="uid">The entity to check on.</param>
         /// <param name="key">The status effect ID to check for</param>
         /// <param name="status">The status effect component, should you already have it.</param>
-        [Obsolete("Migration to Content.Shared.StatusEffectNew.SharedStatusEffectsSystem is required")]
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool HasStatusEffect(EntityUid uid, string key,
             StatusEffectsComponent? status = null)
         {
@@ -346,7 +346,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="uid">The entity to check on.</param>
         /// <param name="key">The status effect ID to check for</param>
         /// <param name="status">The status effect component, should you already have it.</param>
-        [Obsolete("Migration to Content.Shared.StatusEffectNew.SharedStatusEffectsSystem is required")]
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool CanApplyEffect(EntityUid uid, string key, StatusEffectsComponent? status = null)
         {
             // don't log since stuff calling this prolly doesn't care if we don't actually have it
@@ -373,7 +373,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="key">The status effect to add time to.</param>
         /// <param name="time">The amount of time to add.</param>
         /// <param name="status">The status effect component, should you already have it.</param>
-        [Obsolete("Migration to Content.Shared.StatusEffectNew.SharedStatusEffectsSystem is required")]
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryAddTime(EntityUid uid, string key, TimeSpan time,
             StatusEffectsComponent? status = null)
         {
@@ -405,7 +405,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="key">The status effect to remove time from.</param>
         /// <param name="time">The amount of time to add.</param>
         /// <param name="status">The status effect component, should you already have it.</param>
-        [Obsolete("Migration to Content.Shared.StatusEffectNew.SharedStatusEffectsSystem is required")]
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryRemoveTime(EntityUid uid, string key, TimeSpan time,
             StatusEffectsComponent? status = null)
         {
@@ -441,7 +441,7 @@ namespace Content.Shared.StatusEffect
         /// <remarks>
         ///     Not used internally; just sets it itself.
         /// </remarks>
-        [Obsolete("Migration to Content.Shared.StatusEffectNew.SharedStatusEffectsSystem is required")]
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TrySetTime(EntityUid uid, string key, TimeSpan time,
             StatusEffectsComponent? status = null)
         {
@@ -465,7 +465,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="time">Out var for the time, if it exists.</param>
         /// <param name="status">The status effects component to use, if any.</param>
         /// <returns>False if the status effect was not active, true otherwise.</returns>
-        [Obsolete("Migration to Content.Shared.StatusEffectNew.SharedStatusEffectsSystem is required")]
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryGetTime(EntityUid uid, string key,
             [NotNullWhen(true)] out (TimeSpan, TimeSpan)? time,
             StatusEffectsComponent? status = null)

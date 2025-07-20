@@ -120,7 +120,7 @@
   - type: StatusEffects
     allowed:
     - Stun
-    - KnockedDown
+    - Friction
     - SlowedDown
     - Stutter
     - Electrocution
@@ -278,6 +278,7 @@
         Asphyxiation: -1.0
   - type: FireVisuals
     alternateState: Standing
+  - type: StunVisuals
 
 - type: entity
   save: false
