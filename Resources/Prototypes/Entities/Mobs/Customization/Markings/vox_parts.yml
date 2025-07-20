@@ -196,3 +196,13 @@
   - sprite: Mobs/Customization/vox_parts.rsi
     state: tail_talisman_base
     forcedColoring: true
+
+- type: marking
+  id: VoxTailSplit
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Vox]
+  forcedColoring: true
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: tail_split

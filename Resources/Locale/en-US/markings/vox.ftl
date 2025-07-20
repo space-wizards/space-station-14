@@ -63,3 +63,6 @@ marking-VoxTailDocked = Vox Tail (Amputated)
 
 marking-VoxTailTalisman-vox_tail_talisman = Vox Tail (Talisman)
 marking-VoxTailTalisman = Vox Tail (Talisman)
+
+marking-VoxTailSplit-vox_tail_split = Vox Tail (Split)
+marking-VoxTailSplit = Vox Tail (Split)
