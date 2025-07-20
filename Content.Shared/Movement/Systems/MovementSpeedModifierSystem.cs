@@ -46,13 +46,13 @@ namespace Content.Shared.Movement.Systems
 
         private void OnDowned(Entity<MovementSpeedModifierComponent> entity, ref DownedEvent args)
         {
-            RefreshFrictionModifiers(entity);
+            RefreshFrictionModifiers(entity!);
             RefreshMovementSpeedModifiers(entity);
         }
 
         private void OnStand(Entity<MovementSpeedModifierComponent> entity, ref StoodEvent args)
         {
-            RefreshFrictionModifiers(entity);
+            RefreshFrictionModifiers(entity!);
             RefreshMovementSpeedModifiers(entity);
         }
 
