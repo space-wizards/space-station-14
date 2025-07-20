@@ -26,12 +26,6 @@
         maxDistance: 2
   - type: UseDelay
     delay: 1.5
-
-- type: entity
-  parent: Pen
-  id: PenEmbeddable
-  abstract: true
-  components:
   - type: EmbeddableProjectile
     offset: 0.3,0.0
     removalTime: 0.0
@@ -41,7 +35,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 3
+        Piercing: 0.1
   - type: Fixtures
     fixtures:
       fix1:
@@ -56,6 +50,16 @@
         - ItemMask
         restitution: 0.3
         friction: 0.2
+
+- type: entity
+  parent: Pen
+  id: PenEmbeddable
+  abstract: true
+  components:
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 3
 
 #TODO: I want the luxury pen to write a cool font like Merriweather in the future.
 
