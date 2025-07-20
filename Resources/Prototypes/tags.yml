@@ -1347,6 +1347,12 @@
   id: SurveillanceCameraMonitorCircuitboard
 
 - type: Tag
+  id: Swab
+
+- type: Tag
+  id: SwabApplicator
+
+- type: Tag
   id: Syndicate
 
 - type: Tag
