@@ -19,6 +19,7 @@ public sealed partial class SpentAmmoVisualsComponent : Component
     public string? State = "base";
 
     /// <summary>
+    /// Starlight
     /// Is there a hidden layer that should be revealed when spent?
     /// </summary>
     [DataField("revealSpent")] public bool revealSpent = false;

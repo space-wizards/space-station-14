@@ -29,7 +29,7 @@ public sealed partial class GunSystem
         else
             state = component.State;
 
-        if (spent && component.revealSpent)
+        if (spent && component.revealSpent) /// Starlight
         {
             _sprite.LayerSetVisible((uid, sprite), AmmoVisualLayers.Spent, true);
             return;
