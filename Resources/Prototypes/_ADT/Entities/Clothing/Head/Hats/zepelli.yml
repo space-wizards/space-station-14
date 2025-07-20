@@ -8,9 +8,5 @@
     sprite: _ADT/Clothing/Head/Hats/zepelli.rsi
   - type: Clothing
     sprite: _ADT/Clothing/Head/Hats/zepelli.rsi
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Piercing: 15
   - type: Item
     size: Normal

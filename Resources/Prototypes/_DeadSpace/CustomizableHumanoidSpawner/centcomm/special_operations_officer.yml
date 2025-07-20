@@ -1,0 +1,22 @@
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerCentralCommandSpecialOperationsOfficer
+  name: Офицер Специальных Операций
+  suffix: ОСО, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: Markers/jobs.rsi
+      state: centcom
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: CentralCommandSpecialOperationsOfficer
+    allowedSpecies:
+    - Human
+
+- type: roleLoadout
+  id: JobCentralCommandSpecialOperationsOfficer
+  groups:
+  - GroupTankHarness
+  - Survival
+  - GroupSpeciesBreathTool

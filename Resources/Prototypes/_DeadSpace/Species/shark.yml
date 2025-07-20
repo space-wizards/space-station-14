@@ -18,6 +18,7 @@
     Head: MobSharkHead
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
+    Tail: MobSharkTail
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
     Chest: MobSharkTorso
@@ -30,7 +31,6 @@
     RLeg: MobSharkRLeg
     LFoot: MobSharkLFoot
     RFoot: MobSharkRFoot
-    Tail: MobSharkTail
 
 - type: markingPoints
   id: MobSharkMarkingLimits
@@ -72,91 +72,91 @@
 - type: humanoidBaseSprite
   id: MobSharkTail
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: tail_m
 
 - type: humanoidBaseSprite
   id: MobSharkHead
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: head_m
 
 - type: humanoidBaseSprite
   id: MobSharkHeadMale
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: head_m
 
 - type: humanoidBaseSprite
   id: MobSharkHeadFemale
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: head_f
 
 - type: humanoidBaseSprite
   id: MobSharkTorso
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: torso_m
 
 - type: humanoidBaseSprite
   id: MobSharkTorsoMale
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: torso_m
 
 - type: humanoidBaseSprite
   id: MobSharkTorsoFemale
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: torso_f
 
 - type: humanoidBaseSprite
   id: MobSharkLLeg
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: l_leg
 
 - type: humanoidBaseSprite
   id: MobSharkLArm
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: l_arm
 
 - type: humanoidBaseSprite
   id: MobSharkLHand
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: l_hand
 
 - type: humanoidBaseSprite
   id: MobSharkLFoot
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: l_foot
 
 - type: humanoidBaseSprite
   id: MobSharkRLeg
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: r_leg
 
 - type: humanoidBaseSprite
   id: MobSharkRArm
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: r_arm
 
 - type: humanoidBaseSprite
   id: MobSharkRHand
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: r_hand
 
 - type: humanoidBaseSprite
   id: MobSharkRFoot
   baseSprite:
-    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    sprite: _ADT/Mobs/Species/Shark/parts.rsi
     state: r_foot
 
 #

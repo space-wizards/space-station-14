@@ -14,7 +14,7 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, TrackingImplant ]
+    implants: [ MindShieldImplant, TrackingImplant, MacroBombImplant ]
 
 - type: startingGear
   id: CentcomSpecialOperationsOfficerGear
@@ -35,7 +35,7 @@
   # innerClothingSkirt: ClothingUniformJumpskirtPencilSpecialOperationsOfficer
   # storage:
   #   back:
-  #   - 
+  #   -
 
 - type: entity
   parent: ClothingBackpackERTLeader

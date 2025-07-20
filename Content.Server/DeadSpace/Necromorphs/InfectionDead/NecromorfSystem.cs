@@ -16,6 +16,20 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.DeadSpace.Abilities.ReleaseGasPerSecond.Components;
+using Content.Shared.Slippery;
+using Content.Shared.DeadSpace.Abilities.ExplosionAbility.Components;
+using Content.Shared.DeadSpace.Abilities.Invisibility.Components;
+using Content.Shared.DeadSpace.Demons.Abilities.Components;
+using Content.Shared.Charges.Components;
+using Content.Shared.Electrocution;
+using Content.Shared.DeadSpace.NightVision;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Damage.Components;
+using Content.Shared.Humanoid;
+using Robust.Shared.Random;
 
 namespace Content.Server.DeadSpace.Necromorphs.InfectionDead;
 
@@ -28,6 +42,7 @@ public sealed partial class NecromorfSystem : SharedInfectionDeadSystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -41,11 +56,30 @@ public sealed partial class NecromorfSystem : SharedInfectionDeadSystem
         SubscribeLocalEvent<NecromorfComponent, GetCharactedDeadIcEvent>(OnGetCharacterDeadIC);
         SubscribeLocalEvent<NecromorfComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
         SubscribeLocalEvent<NecromorfComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
+        SubscribeLocalEvent<NecromorfComponent, MeleeHitEvent>(OnMeleeHit);
     }
 
     private void OnRefreshSpeed(EntityUid uid, NecromorfComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        args.ModifySpeed(component.MovementSpeedMultiply, component.MovementSpeedMultiply);
+        args.ModifySpeed(component.MovementSpeedMultiply * component.StrainData.SpeedMulty, component.MovementSpeedMultiply * component.StrainData.SpeedMulty);
+    }
+
+    private void OnMeleeHit(EntityUid uid, NecromorfComponent component, MeleeHitEvent args)
+    {
+        args.BonusDamage = args.BaseDamage * component.StrainData.DamageMulty;
+
+        foreach (var entity in args.HitEntities)
+        {
+            if (args.User == entity)
+                continue;
+
+            if (!TryComp<MobStateComponent>(entity, out var mobState))
+                continue;
+
+            if (!_mobState.IsDead(entity, mobState) && !HasComp<NecromorfComponent>(entity) && VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.Vampirism))
+                _damageable.TryChangeDamage(uid, VirusEffectsConditions.HealingOnBite, true, false);
+        }
+
     }
 
     public override void Update(float frameTime)
@@ -109,4 +143,168 @@ public sealed partial class NecromorfSystem : SharedInfectionDeadSystem
 
         args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
     }
+
+    public void ApplyVirusStrain(EntityUid uid, NecromorfComponent component)
+    {
+        if (!HasComp<PullerComponent>(uid) && VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.Pulling))
+        {
+            var puller = new PullerComponent(false);
+            AddComp(uid, puller);
+        }
+
+        if (!HasComp<StunAttackComponent>(uid) && VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.StunAttack))
+            AddComp<StunAttackComponent>(uid);
+
+        if (!HasComp<DemonDashComponent>(uid) && VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.Dash))
+        {
+            AddComp<DemonDashComponent>(uid);
+            var lcc = new LimitedChargesComponent(1, 1);
+
+            if (HasComp<LimitedChargesComponent>(uid))
+                RemComp<LimitedChargesComponent>(uid);
+
+            AddComp(uid, lcc);
+        }
+
+        if (!HasComp<InsulatedComponent>(uid) && VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.Insulated))
+            AddComp<InsulatedComponent>(uid);
+
+        if (!HasComp<NightVisionComponent>(uid) && VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.NightVision))
+            AddComp<NightVisionComponent>(uid);
+
+        if (!HasComp<ReleaseGasPerSecondComponent>(uid) && VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.EmitGas))
+        {
+            ReleaseGasPerSecondComponent rgpsc = new ReleaseGasPerSecondComponent();
+            rgpsc.GasID = 9;
+            AddComp(uid, rgpsc);
+        }
+
+        if (!HasComp<NoSlipComponent>(uid) && VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.NoSlip))
+            AddComp<NoSlipComponent>(uid);
+
+        if (!HasComp<ExplosionAbilityComponent>(uid) && VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.Explosion))
+            AddComp<ExplosionAbilityComponent>(uid);
+
+        if (!HasComp<InvisibilityComponent>(uid) && VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.Invisability))
+            AddComp<InvisibilityComponent>(uid);
+
+        if (_mobThreshold.TryGetThresholdForState(uid, MobState.Dead, out var deadThreshold))
+            _mobThreshold.SetMobStateThreshold(uid, deadThreshold.Value * component.StrainData.HpMulty, MobState.Dead);
+
+        if (_mobThreshold.TryGetThresholdForState(uid, MobState.Critical, out var critThreshold))
+            _mobThreshold.SetMobStateThreshold(uid, critThreshold.Value * component.StrainData.HpMulty, MobState.Critical);
+
+        if (TryComp<StaminaComponent>(uid, out var stamina))
+            stamina.CritThreshold *= component.StrainData.StaminaMulty;
+
+        float totalScore = 0f;
+        totalScore += Normalize(component.StrainData.DamageMulty, VirusEffectsConditions.MinDamageMulty, VirusEffectsConditions.MaxDamageMulty);
+        totalScore += Normalize(component.StrainData.StaminaMulty, VirusEffectsConditions.MinStaminaMulty, VirusEffectsConditions.MaxStaminaMulty);
+        totalScore += Normalize(component.StrainData.HpMulty, VirusEffectsConditions.MinHpMulty, VirusEffectsConditions.MaxHpMulty);
+        totalScore += Normalize(component.StrainData.SpeedMulty, VirusEffectsConditions.MinSpeedMulty, VirusEffectsConditions.MaxSpeedMulty);
+
+        float intensity = Math.Clamp(totalScore / 4f, 0f, 1f);
+
+        // Интерполяция от белого (1,1,1) до красного (1,0,0)
+        float r = 1f;
+        float g = 1f - intensity;
+        float b = 1f - intensity;
+
+        Color skinColor = new Color(r, g, b);
+        component.StrainData.SkinColor = skinColor;
+
+        if (TryComp<HumanoidAppearanceComponent>(uid, out var huApComp))
+            _humanoidAppearance.SetSkinColor(uid, component.StrainData.SkinColor, verify: false, humanoid: huApComp);
+
+        _movement.RefreshMovementSpeedModifiers(uid);
+    }
+
+
+    /// <summary>
+    /// mutationStrength = 0.1 - слабая, = 2 - сильная
+    /// </summary>
+    public void MutateVirus(EntityUid uid, float mutationStrength, bool isStableMutation, NecromorfComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.IsMutated)
+            return;
+
+        var randDamageMulty = 0f;
+        var randStaminaMulty = 0f;
+        var randHpMulty = 0f;
+        var randSpeedMulty = 0f;
+
+        if (!isStableMutation)
+        {
+            randDamageMulty = _random.NextFloat(-mutationStrength, mutationStrength);
+            randStaminaMulty = _random.NextFloat(-mutationStrength, mutationStrength);
+            randHpMulty = _random.NextFloat(-mutationStrength, mutationStrength);
+            randSpeedMulty = _random.NextFloat(-mutationStrength, mutationStrength);
+        }
+        else
+        {
+            randDamageMulty = _random.NextFloat(0f, mutationStrength);
+            randStaminaMulty = _random.NextFloat(0f, mutationStrength);
+            randHpMulty = _random.NextFloat(0f, mutationStrength);
+            randSpeedMulty = _random.NextFloat(0f, mutationStrength);
+        }
+
+
+        component.StrainData.DamageMulty = Math.Clamp(component.StrainData.DamageMulty + randDamageMulty, VirusEffectsConditions.MinDamageMulty, VirusEffectsConditions.MaxDamageMulty);
+        component.StrainData.StaminaMulty = Math.Clamp(component.StrainData.StaminaMulty + randStaminaMulty, VirusEffectsConditions.MinStaminaMulty, VirusEffectsConditions.MaxStaminaMulty);
+        component.StrainData.HpMulty = Math.Clamp(component.StrainData.HpMulty + randHpMulty, VirusEffectsConditions.MinHpMulty, VirusEffectsConditions.MaxHpMulty);
+        component.StrainData.SpeedMulty = Math.Clamp(component.StrainData.SpeedMulty + randSpeedMulty, VirusEffectsConditions.MinSpeedMulty, VirusEffectsConditions.MaxSpeedMulty);
+
+        // Кол-во попыток добавления эффектов
+        int attempts = (int)MathF.Ceiling(mutationStrength * 4f);
+
+        for (int i = 0; i < attempts; i++)
+        {
+            var effect = GetRandomEffectExcludingCurrent(component.StrainData.Effects);
+
+            var weight = VirusEffectsConditions.Weights[effect];
+
+            float chance = weight * mutationStrength;
+
+            if (_random.Prob(chance))
+            {
+                component.StrainData.Effects = VirusEffectsConditions.AddEffect(component.StrainData.Effects, effect);
+                break; // Ограничиваем одним успешным эффектом за попытку
+            }
+        }
+
+        ApplyVirusStrain(uid, component);
+
+        component.IsMutated = true;
+    }
+
+    private float Normalize(float value, float min, float max)
+    {
+        return Math.Clamp((value - min) / (max - min), 0f, 1f);
+    }
+
+    public VirusEffects GetRandomEffectExcludingCurrent(VirusEffects currentEffects)
+    {
+        var allEffects = Enum.GetValues<VirusEffects>();
+
+        var availableEffects = new List<VirusEffects>();
+
+        foreach (var effect in allEffects)
+        {
+            if (effect == VirusEffects.None)
+                continue;
+
+            if (!currentEffects.HasFlag(effect))
+                availableEffects.Add(effect);
+        }
+
+        if (availableEffects.Count == 0)
+            return VirusEffects.None;
+
+        int index = _random.Next(availableEffects.Count);
+        return availableEffects[index];
+    }
+
 }

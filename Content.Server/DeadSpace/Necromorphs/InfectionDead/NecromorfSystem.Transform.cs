@@ -40,16 +40,15 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Systems;
 using Content.Server.Zombies;
-using Content.Shared.Movement.Components;
 using Content.Shared.DeadSpace.Necromorphs.Sanity;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
-using Content.Shared.DeadSpace.NightVision;
 using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.DeadSpace.Necromorphs.Necroobelisk;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Damage.Components;
 using Content.Shared.Rotation;
+using Content.Shared.Interaction.Components;
 
 namespace Content.Server.DeadSpace.Necromorphs.InfectionDead;
 
@@ -70,7 +69,7 @@ public sealed partial class NecromorfSystem
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly SharedRotationVisualsSystem _sharedRotationVisuals = default!;
 
-    public void Necrofication(EntityUid target, string prototypeId, MobStateComponent? mobState = null)
+    public void Necrofication(EntityUid target, string prototypeId, InfectionDeadStrainData strainData, MobStateComponent? mobState = null)
     {
         if (!_prototypeManager.TryIndex<NecromorfPrototype>(prototypeId, out var necromorf))
             return;
@@ -78,7 +77,9 @@ public sealed partial class NecromorfSystem
         if (!Resolve(target, ref mobState, logMissing: false))
             return;
 
-        var necromorfComp = EnsureComp<NecromorfComponent>(target);
+        var necromorfComp = new NecromorfComponent(strainData);
+
+        AddComp(target, necromorfComp);
 
         NecromorfLayerComponent necromorfLayercomp = new NecromorfLayerComponent(necromorf.Sprite, necromorf.State, necromorf.IsAnimal);
 
@@ -111,18 +112,13 @@ public sealed partial class NecromorfSystem
         RemComp<ReproductiveComponent>(target);
         RemComp<ReproductivePartnerComponent>(target);
         RemComp<LegsParalyzedComponent>(target);
-
-        if (!HasComp<NightVisionComponent>(target))
-            AddComp<NightVisionComponent>(target);
+        RemComp<ComplexInteractionComponent>(target);
 
         if (!HasComp<ImmunNecroobeliskComponent>(target))
             AddComp<ImmunNecroobeliskComponent>(target);
 
         if (!HasComp<ZombieImmuneComponent>(target))
             AddComp<ZombieImmuneComponent>(target);
-
-        if (!HasComp<IgnoreKudzuComponent>(target))
-            AddComp<IgnoreKudzuComponent>(target);
 
         if (HasComp<SlowOnDamageComponent>(target) && !necromorf.IsSlowOnDamage)
             RemComp<SlowOnDamageComponent>(target);
@@ -173,7 +169,7 @@ public sealed partial class NecromorfSystem
             if (TryComp<BloodstreamComponent>(target, out var stream))
                 necromorfComp.BeforeNecroficationBloodReagent = stream.BloodReagent;
 
-            _humanoidAppearance.SetSkinColor(target, necromorfComp.SkinColor, verify: false, humanoid: huApComp);
+            _humanoidAppearance.SetSkinColor(target, necromorfComp.StrainData.SkinColor, verify: false, humanoid: huApComp);
 
             // Messing with the eye layer made it vanish upon cloning, and also it didn't even appear right
             huApComp.EyeColor = necromorfComp.EyeColor;
@@ -299,8 +295,6 @@ public sealed partial class NecromorfSystem
         }
 
         RemComp<PullerComponent>(target);
-        var puller = new PullerComponent(false);
-        AddComp(target, puller);
 
         var pryComp = EnsureComp<PryingComponent>(target);
         pryComp.SpeedModifier = 1f;
@@ -320,6 +314,7 @@ public sealed partial class NecromorfSystem
         if (necromorf != null && necromorf.Components != null)
             EntityManager.AddComponents(target, necromorf.Components);
 
+        ApplyVirusStrain(target, necromorfComp);
     }
     private void SetScale(EntityUid uid, float scale)
     {

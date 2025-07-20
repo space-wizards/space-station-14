@@ -4,6 +4,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
 using Content.Shared.DeadSpace.Necromorphs.InfectionDead;
 using Content.Shared.Rotation;
+using System.Linq;
 
 namespace Content.Client.Necromorphs.InfectionDead;
 
@@ -48,7 +49,11 @@ public sealed class NecromorfSystem : EntitySystem
             // Если объект является "животным", применяем особую логику
             if (isAnimal)
             {
-                sprite.LayerSetColor(0, new Color(255, 255, 255, 0));
+
+                for (var i = 0; i < sprite.AllLayers.Count(); i++)
+                {
+                    sprite.LayerSetColor(i, new Color(255, 255, 255, 0));
+                }
 
                 if (TryComp<RotationVisualsComponent>(uid, out var rotationVisualsComp))
                 {

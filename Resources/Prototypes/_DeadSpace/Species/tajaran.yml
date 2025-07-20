@@ -16,9 +16,12 @@
   id: MobTajaranSprites
   sprites:
     Head: MobTajaranHead
+    Snout: MobHumanoidAnyMarking
+    Chest: MobTajaranTorso
+    HeadTop: MobHumanoidAnyMarking
+    Tail: MobTajaranTail
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
-    Chest: MobTajaranTorso
     Eyes: MobTajaranEyes
     LArm: MobTajaranLArm
     RArm: MobTajaranRArm
@@ -28,9 +31,6 @@
     RLeg: MobTajaranRLeg
     LFoot: MobTajaranLFoot
     RFoot: MobTajaranRFoot
-    Tail: MobTajaranTail
-    HeadTop: MobHumanoidAnyMarking
-    Snout: MobHumanoidAnyMarking
 
 - type: markingPoints
   id: MobTajaranMarkingLimits
@@ -61,91 +61,91 @@
 - type: humanoidBaseSprite
   id: MobTajaranTail
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: tail_m
 
 - type: humanoidBaseSprite
   id: MobTajaranHead
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: head_m
 
 - type: humanoidBaseSprite
   id: MobTajaranHeadMale
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: head_m
 
 - type: humanoidBaseSprite
   id: MobTajaranHeadFemale
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: head_f
 
 - type: humanoidBaseSprite
   id: MobTajaranTorso
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: torso_m
 
 - type: humanoidBaseSprite
   id: MobTajaranTorsoMale
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: torso_m
 
 - type: humanoidBaseSprite
   id: MobTajaranTorsoFemale
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: torso_f
 
 - type: humanoidBaseSprite
   id: MobTajaranLLeg
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: l_leg
 
 - type: humanoidBaseSprite
   id: MobTajaranLArm
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: l_arm
 
 - type: humanoidBaseSprite
   id: MobTajaranLHand
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: l_hand
 
 - type: humanoidBaseSprite
   id: MobTajaranLFoot
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: l_foot
 
 - type: humanoidBaseSprite
   id: MobTajaranRLeg
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: r_leg
 
 - type: humanoidBaseSprite
   id: MobTajaranRArm
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: r_arm
 
 - type: humanoidBaseSprite
   id: MobTajaranRHand
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: r_hand
 
 - type: humanoidBaseSprite
   id: MobTajaranRFoot
   baseSprite:
-    sprite: Mobs/Species/CatSkin/parts.rsi
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
     state: r_foot
 
 #

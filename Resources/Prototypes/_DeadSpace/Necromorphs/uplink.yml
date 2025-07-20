@@ -1,7 +1,7 @@
 ﻿- type: listing
   id: UnitologyCrateObeliskSplinterList
   name: Осколок обелиска
-  description: Ящик с осколком обелиска. Без него обелиск не активировать.
+  description: Ящик с осколком обелиска.
   icon: { sprite: Structures/Storage/Crates/generic.rsi, state: icon }
   productEntity: CrateObeliskSplinter
   cost:
@@ -21,15 +21,48 @@
     - UplinkUnitologyInfection
 
 - type: listing
-  id: UnitologySerumList
-  name: Сыворотка порабощения
-  description: Шприц с сывороткой порабощения, 15 едениц.
-  icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: syringe1 }
-  productEntity: SyringeSerumEnslaved
+  id: UnitologyLighthouseList
+  name: Маяк
+  description: Маяк, притягивающий обелиск.
+  icon: { sprite: Objects/Tools/fulton.rsi, state: extraction_point }
+  productEntity: UnitologyLighthouse
   cost:
-    Telecrystal: 10
+    Telecrystal: 5
   categories:
     - UplinkUnitologyInfection
+
+- type: listing
+  id: UnitologyInfectionDeadMutationAnalyzerList
+  name: анализатор мутаций
+  description: Прибор, обнаруживающий и сообщающий о наличии мутаций в биологических образцах.
+  icon: { sprite: Objects/Specific/Atmos/gasanalyzer.rsi, state: icon }
+  productEntity: InfectionDeadMutationAnalyzer
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkUnitologyInfection
+
+- type: listing
+  id: UnitologyChemistryBottleNotStableMutagenInfectorDeadList
+  name: бутылочка нестабильного мутагена
+  description: Содержит мутаген некроинфекции.
+  icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: syringe1 }
+  productEntity: ChemistryBottleNotStableMutagenInfectorDead
+  cost:
+    Telecrystal: 5
+  categories:
+    - UplinkUnitologyInfection
+
+# - type: listing
+#   id: UnitologySerumList
+#   name: Сыворотка порабощения
+#   description: Шприц с сывороткой порабощения, 15 едениц.
+#   icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: syringe1 }
+#   productEntity: SyringeSerumEnslaved
+#   cost:
+#     Telecrystal: 10
+#   categories:
+#     - UplinkUnitologyInfection
 
 - type: listing
   id: SyringeNecromorphMutagenBruteList
@@ -50,17 +83,6 @@
   productEntity: PukerNecro
   cost:
     Telecrystal: 10
-  categories:
-    - UplinkUnitologyInfection
-
-- type: listing
-  id: UnitologyPinpointerNecroobeliskList
-  name: Пинпоинтер
-  description: Указывает на обелиск.
-  icon: { sprite: Objects/Devices/pinpointer.rsi, state: pinpointer-way }
-  productEntity: PinpointerNecroobelisk
-  cost:
-    Telecrystal: 5
   categories:
     - UplinkUnitologyInfection
 

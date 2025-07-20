@@ -40,7 +40,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 2250
+        damage: 1500
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -57,6 +57,8 @@
     damageOverlay:
       sprite: _DeadSpace/Structures/obelisk_cracks.rsi
   - type: Necroobelisk
+  - type: WarpPoint
+    follow: true
 
 - type: entity
   parent: StructureObelisk
@@ -71,10 +73,25 @@
   - type: Necroobelisk
     sound: /Audio/_DeadSpace/Necromorfs/marker_black.ogg
     stoper: false
+    rangeSanity: 30
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 3000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ObeliskSplinter:
+            min: 3
+            max: 3
 
 - type: entity
   parent: StructureObelisk
   id: StructureBlackObelisk2
+  suffix: без предупреждения
   components:
   - type: Sprite
     noRot: true
@@ -90,6 +107,7 @@
 - type: entity
   parent: StructureObelisk
   id: StructureObelisk2
+  suffix: без предупреждения
   components:
   - type: Sprite
     noRot: true
@@ -170,6 +188,33 @@
   - type: NecroobeliskArtifact
 
 - type: entity
+  id: UnitologyLighthouse
+  parent: BaseStructureDynamic
+  name: маяк
+  description: Маяк для приема чего-то ?
+  components:
+  - type: UnitologyLighthouse
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 100
+        mask:
+        - Impassable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Objects/Tools/fulton.rsi
+    drawdepth: SmallObjects
+    noRot: true
+    layers:
+      - state: extraction_point
+
+- type: entity
   id: CrateArtifactContainerNecroobelisk
   parent: CrateArtifactContainer
   name: контейнер c артефактом обелиск
@@ -186,7 +231,7 @@
     sprite: Structures/Storage/Crates/artifact.rsi
     state: artifact_container_icon
   product: CrateArtifactContainerNecroobelisk
-  cost: 300000
+  cost: 3000000
   category: cargoproduct-category-name-science
   group: market
 

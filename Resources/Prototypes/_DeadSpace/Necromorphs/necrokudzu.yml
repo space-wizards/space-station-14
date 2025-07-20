@@ -13,7 +13,7 @@
   - type: Sprite
     sprite: _DeadSpace/Necromorfs/necrokudzu.rsi
     state: kudzu_11
-    drawdepth: FloorTiles
+    drawdepth: BlobTiles
   - type: Appearance
   - type: KudzuVisuals
   - type: Clickable
@@ -40,7 +40,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Kudzu
-    growthTickChance: 0.1
+    growthTickChance: 0.3
     spreadChance: 0.4
     damageRecovery:
       types:
@@ -64,9 +64,17 @@
     id: Kudzu
   - type: LeviathanTerritory
   - type: NecroKudzu
+  - type: DamageContacts
+    damage:
+      types:
+        Slash: 1
+        Piercing: 1
+    ignoreWhitelist:
+      components:
+      - Necromorf
   - type: SpeedModifierContacts
     walkSpeedModifier: 0.2
     sprintSpeedModifier: 0.2
     ignoreWhitelist:
       components:
-      - IgnoreKudzu
+      - Necromorf

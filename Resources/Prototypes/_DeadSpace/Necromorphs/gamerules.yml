@@ -8,7 +8,7 @@
   id: UnitologLeaderGear
   storage:
     back:
-    - UplinkRadioHeadLeaderUnitology
+    - UplinkRadioLeaderUnitology
     - Candle
     - Candle
     - Candle
@@ -44,7 +44,22 @@
   components:
   - type: GameRule
     minPlayers: 40
+  - type: AntagLoadProfileRule
+    speciesOverride: Human
+    speciesOverrideBlacklist:
+    #Species that do not work with nukies should be included in this list.
+    #Once the issues are fixed the species should be removed from this list to be enabled.
+    #Balance concerns are not a valid reason to disable a species, except for high-impact Nukie-specific exploits.
+    - IPS
+    - IPC
+    - Diona
+    - Xenomorph
   - type: UnitologyRule
+  - type: AntagObjectives
+    objectives:
+    - UniSubmissionObjective
+    - UniInfectObjective
+    - UniInvitationObjective
   - type: AntagSelection
     definitions:
     - prefRoles: [ UniHead ]
@@ -66,7 +81,6 @@
         - Unitolog
       - type: IntrinsicRadioReceiver
       - type: Unitology
-      - type: UnitologyObeliskActivateAbility
       - type: UnitologyHead
       - type: AutoImplant
         implants:
@@ -78,6 +92,11 @@
         - Necromorfs
       mindRoles:
       - MindRoleHeadUnitology
+      blacklist:
+        components:
+          - ImmunitetInfectionDead
+          - ImmunNecroobelisk
+        requireAll: false
     - prefRoles: [ Uni ]
       fallbackRoles: [ UniHead, UniEnslaved ]
       max: 0
@@ -101,6 +120,11 @@
         - Necromorfs
       mindRoles:
       - MindRoleUnitology
+      blacklist:
+        components:
+          - ImmunitetInfectionDead
+          - ImmunNecroobelisk
+        requireAll: false
     - prefRoles: [ UniEnslaved ]
       fallbackRoles: [ UniHead, Uni ]
       max: 0
@@ -120,6 +144,11 @@
       - type: Unitology
       mindRoles:
       - MindRoleEnslavedUnitology
+      blacklist:
+        components:
+          - ImmunitetInfectionDead
+          - ImmunNecroobelisk
+        requireAll: false
 
 - type: entity
   id: GiftsNecroobeliskArtefact

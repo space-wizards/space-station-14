@@ -1,0 +1,25 @@
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerCentralCommandOfficial
+  name: Представитель ЦК
+  suffix: ПЦК, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: Markers/jobs.rsi
+      state: centcom
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: CentralCommandOfficial
+    allowedSpecies:
+    - Human
+    - Shark
+    - Demon
+    - Vulpkanin
+
+- type: roleLoadout
+  id: JobCentralCommandOfficial
+  groups:
+  - GroupTankHarness
+  - Survival
+  - GroupSpeciesBreathTool

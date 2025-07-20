@@ -9,9 +9,5 @@
     state: icon
   - type: Clothing
     sprite: _ADT/Clothing/Eyes/Glasses/supreme-commander-glasses.rsi
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 10
   - type: PointLight
     color: cyan

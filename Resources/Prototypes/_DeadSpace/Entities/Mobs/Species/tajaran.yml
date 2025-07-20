@@ -4,8 +4,8 @@
   abstract: true
   components:
   - type: Icon
-    sprite: Mobs/Species/CatSkin/parts.rsi
-    state: tajaran_m
+    sprite: _ADT/Mobs/Species/Tajaran/parts.rsi
+    state: full
   - type: HumanoidAppearance
     species: Tajaran
     hideLayersOnEquip:

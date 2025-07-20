@@ -1,0 +1,47 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseUnitologyObjective
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-uni
+  - type: RoleRequirement
+    roles:
+      - UnitologyRole
+
+- type: entity
+  parent: BaseUnitologyObjective
+  id: UniSubmissionObjective
+  components:
+  - type: Objective
+    icon: _DeadSpace/Sith/actions/submission.png
+  - type: NumberObjective
+    min: 1
+    max: 6
+    title: objective-condition-submission-title
+  - type: UnitologySubmissionConditions
+
+- type: entity
+  parent: BaseUnitologyObjective
+  id: UniInfectObjective
+  components:
+  - type: Objective
+    icon: _DeadSpace/Interface/Actions/infector.png
+  - type: NumberObjective
+    min: 10
+    max: 25
+    title: objective-condition-infect-title
+  - type: UnitologyInfectConditions
+
+- type: entity
+  parent: BaseUnitologyObjective
+  id: UniInvitationObjective
+  components:
+  - type: Objective
+    icon: _DeadSpace/Interface/Actions/obelisk.png
+  - type: NumberObjective
+    min: 2
+    max: 6
+    title: objective-condition-invitation-title
+  - type: UnitologyInvitationConditions

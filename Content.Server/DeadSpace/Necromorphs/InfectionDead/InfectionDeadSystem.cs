@@ -19,11 +19,11 @@ public sealed class InfectionDeadSystem : SharedInfectionDeadSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<InfectionDeadComponent, InfectionDeadDamageEvent>(GetDamage);
+        SubscribeLocalEvent<InfectionDeadComponent, InfectionDeadSymptomsEvent>(GetDamage);
         SubscribeLocalEvent<InfectionDeadComponent, InfectionNecroficationEvent>(OnState);
     }
 
-    private void GetDamage(EntityUid uid, InfectionDeadComponent component, ref InfectionDeadDamageEvent args)
+    private void GetDamage(EntityUid uid, InfectionDeadComponent component, ref InfectionDeadSymptomsEvent args)
     {
         DamageSpecifier dspec = new();
         dspec.DamageDict.Add("Cellular", 15f);
@@ -51,8 +51,9 @@ public sealed class InfectionDeadSystem : SharedInfectionDeadSystem
             necromorf = necroComponent.NecroPrototype;
 
         if (necromorf != null)
-            _necromorfSystem.Necrofication(uid, necromorf, mobStateComponent);
+            _necromorfSystem.Necrofication(uid, necromorf, component.StrainData, mobStateComponent);
 
         RemComp<InfectionDeadComponent>(uid);
     }
+
 }

@@ -60,7 +60,7 @@ public sealed partial class InitialNecroficationSystem : SharedInfectionDeadSyst
 
         if (!string.IsNullOrEmpty(component.NecroPrototype) && component.NecroPrototype != "Random")
         {
-            _necromorfSystem.Necrofication(uid, component.NecroPrototype, mobStateComponent);
+            _necromorfSystem.Necrofication(uid, component.NecroPrototype, component.StrainData, mobStateComponent);
         }
         else
         {
@@ -73,7 +73,7 @@ public sealed partial class InitialNecroficationSystem : SharedInfectionDeadSyst
 
             var necromorf = GetRandomNecromorfPrototypeId(isAnimal);
 
-            _necromorfSystem.Necrofication(uid, necromorf, mobStateComponent);
+            _necromorfSystem.Necrofication(uid, necromorf, component.StrainData, mobStateComponent);
         }
 
         RemComp<InitialNecroficationComponent>(uid);

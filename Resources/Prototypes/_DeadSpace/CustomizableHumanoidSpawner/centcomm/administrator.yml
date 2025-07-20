@@ -1,0 +1,18 @@
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerCentralCommandAdministrator
+  name: Администратор ЦК
+  suffix: АЦК, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: Markers/jobs.rsi
+      state: centcom
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: CentralCommandAdministrator
+    allowedSpecies:
+    - Human
+    - Shark
+    - Demon
+    - Vulpkanin
