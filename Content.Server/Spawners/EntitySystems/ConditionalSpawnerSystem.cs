@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Server.Spawners.Components;
+using Content.Server.Stack;
 using Content.Shared.EntityTable;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Stacks;
@@ -19,6 +20,7 @@ public sealed class ConditionalSpawnerSystem : EntitySystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly StackSystem _stack = default!;
 
     public override void Initialize()
     {
@@ -150,7 +152,7 @@ public sealed class ConditionalSpawnerSystem : EntitySystem
         float offset
     )
     {
-        Dictionary<ProtoId<StackPrototype>, (EntProtoId Proto, int Count, int? StackMaxCount)> prototypeStacks = new();
+        Dictionary<ProtoId<StackPrototype>, (EntProtoId Proto, int Count)> prototypeStacks = new();
         ValueList<EntProtoId> nonStackable = [];
         foreach (var protoId in spawns)
         {
@@ -161,50 +163,17 @@ public sealed class ConditionalSpawnerSystem : EntitySystem
                 continue;
             }
 
-            if (prototypeStacks.TryGetValue(stack.StackTypeId, out var found))
-            {
-                prototypeStacks[stack.StackTypeId] = (protoId, found.Count + 1, found.StackMaxCount);
-            }
-            else
-            {
-                var stackPrototype = _prototypeManager.Index(stack.StackTypeId);
-                prototypeStacks[stack.StackTypeId] = (protoId, 1, stackPrototype.MaxCount);
-            }
+            prototypeStacks[stack.StackTypeId] = prototypeStacks.TryGetValue(stack.StackTypeId, out var found)
+                ? (protoId, found.Count + 1)
+                : (protoId, 1);
         }
 
         SpawnAtRandomOffset(nonStackable, coords, offset);
-
-        foreach (var (protoId, count, maxSize) in prototypeStacks.Values)
+        
+        foreach (var (protoId, count) in prototypeStacks.Values)
         {
-            if (!maxSize.HasValue)
-            {
-                var spawnAllInOne = SpawnAtRandomOffset(protoId, coords, offset);
-                if (!TryComp<StackComponent>(spawnAllInOne, out var allInOneStackComp))
-                    continue;
-
-                allInOneStackComp.Count = count;
-                Dirty(spawnAllInOne, allInOneStackComp);
-                continue;
-            }
-
-            var repeatCount = count / maxSize.Value;
-            var leftOver = count % maxSize.Value;
-            for (int i = 0; i < repeatCount; i++)
-            {
-                var spawned = SpawnAtRandomOffset(protoId, coords, offset);
-                if (!TryComp<StackComponent>(spawned, out var stackComp))
-                    continue;
-
-                stackComp.Count = maxSize.Value;
-                Dirty(spawned, stackComp);
-            }
-
-            var spawnedForLeftOver = SpawnAtRandomOffset(protoId, coords, offset);
-            if (!TryComp<StackComponent>(spawnedForLeftOver, out var stackCompOfLeftOver))
-                continue;
-
-            stackCompOfLeftOver.Count = leftOver;
-            Dirty(spawnedForLeftOver, stackCompOfLeftOver);
+            var trueCoords = GetRandomOffset(coords, offset);
+            _stack.SpawnMultiple(protoId, count, trueCoords);
         }
     }
 
@@ -218,10 +187,16 @@ public sealed class ConditionalSpawnerSystem : EntitySystem
 
     private EntityUid SpawnAtRandomOffset(EntProtoId proto, EntityCoordinates coords, float offset)
     {
+        var trueCoords = GetRandomOffset(coords, offset);
+
+        return SpawnAtPosition(proto, trueCoords);
+    }
+
+    private EntityCoordinates GetRandomOffset(EntityCoordinates coords, float offset)
+    {
         var xOffset = _robustRandom.NextFloat(-offset, offset);
         var yOffset = _robustRandom.NextFloat(-offset, offset);
         var trueCoords = coords.Offset(new Vector2(xOffset, yOffset));
-
-        return SpawnAtPosition(proto, trueCoords);
+        return trueCoords;
     }
 }
