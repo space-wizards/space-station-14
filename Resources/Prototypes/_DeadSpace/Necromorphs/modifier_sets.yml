@@ -1,12 +1,12 @@
 - type: damageModifierSet
   id: Necromorf
   coefficients:
-    Blunt: 0.75
+    Blunt: 0.9
     Slash: 1.25
     Piercing: 0.9
     Shock: 0.8
     Cold: 0
-    Heat: 1
+    Heat: 1.5
     Poison: 0.25
     Radiation: 0.0
 

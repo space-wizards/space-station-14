@@ -103,7 +103,7 @@
 
 - type: necromorf
   id: NecroTwitcher
-  movementSpeedMultiply: 1
+  movementSpeedMultiply: 0.9
   damage:
     groups:
       Brute: 15
@@ -152,6 +152,7 @@
 
 - type: necromorf
   id: NecroInfector
+  movementSpeedMultiply: 0.85
   isAnimal: true
   damage:
     groups:
@@ -220,7 +221,7 @@
   # hardsuit: ClothingCorpseCollectorLvl1 #Верхняя одежда некроморфа
   sprite: _DeadSpace/Necromorfs/corpsecollector.rsi
   state: lvl1
-  movementSpeedMultiply: 1 # Модификатор скорости
+  movementSpeedMultiply: 0.8 # Модификатор скорости
   components: # Доп. компоненты
   - type: StunAttack
     paralyzeTime: 1
