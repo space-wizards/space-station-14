@@ -6,15 +6,14 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Mapping;
 
-[AdminCommand(AdminFlags.Debug)]
-public sealed class NudgeCommand : IConsoleCommand
+public sealed class NudgeCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
-    public string Command => "nudge";
-    public string Description => "Moves an entity locally.";
-    public string Help => "nudge <entity id> <change in x> <change in y>";
+    public override string Command => "nudge";
+    public override string Description => "Moves an entity locally.";
+    public override string Help => "nudge <entity id> <change in x> <change in y>";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 3)
         {
