@@ -34,8 +34,8 @@
 
 - type: latheRecipe
   parent: BaseRoboticsRecipe
-  id: AIInterfaceCube
-  result: AIInterfaceCube
+  id: AiInterfaceCube
+  result: AiInterfaceCube
   completetime: 6
   materials:
     Steel: 250
