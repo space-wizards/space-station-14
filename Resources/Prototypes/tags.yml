@@ -225,7 +225,6 @@
 - type: Tag
   id: CanPilot
 
-
 - type: Tag
   id: CaptainSabre
 
@@ -644,6 +643,9 @@
   id: Goat
 
 - type: Tag
+  id: GoldenPlunger
+
+- type: Tag
   id: Goliath
 
 - type: Tag
@@ -892,9 +894,6 @@
   id: MagazineShotgun
 
 - type: Tag
-  id: MagazineMagnumSubMachineGun
-
-- type: Tag
   id: MagazinePistolSubMachineGun
 
 - type: Tag
@@ -1095,6 +1094,12 @@
   id: PlushieCarp
 
 - type: Tag
+  id: PlushieCarpHolo
+
+- type: Tag
+  id: PlushieCarpMagi
+
+- type: Tag
   id: PlushieGhost
 
 - type: Tag
@@ -1153,6 +1158,9 @@
   id: ReinforcedGlassShard
 
 - type: Tag
+  id: RemoteSignaller
+
+- type: Tag
   id: ReptilianFood
 
 - type: Tag
@@ -1202,6 +1210,9 @@
 
 - type: Tag
   id: Screwdriver
+
+- type: Tag # Flags items that scurrets can wear in their back and outerwear slots.
+  id: ScurretWearable
 
 - type: Tag
   id: SecBeltEquip
@@ -1474,6 +1485,9 @@
   id: Wine
 
 - type: Tag
+  id: WireBrush
+
+- type: Tag
   id: Wirecutter
 
 - type: Tag
@@ -1514,5 +1528,4 @@
 
 - type: Tag
   id: XenoborgModuleStealth
-
 # ALPHABETICAL
