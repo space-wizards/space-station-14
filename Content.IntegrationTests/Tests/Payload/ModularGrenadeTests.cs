@@ -56,13 +56,14 @@ public sealed class ModularGrenadeTests : InteractionTest
         await Pickup();
         AssertComp<ActiveTimerTriggerComponent>(false);
         await UseInHand();
+        AssertComp<ActiveTimerTriggerComponent>(true);
 
         // So uhhh grenades in hands don't destroy themselves when exploding. Maybe that will be fixed eventually.
         await Drop();
 
         // Wait until grenade explodes
         var triggerSys = SEntMan.System<TriggerSystem>();
-        while (triggerSys.GetRemainingTime(ent)?.TotalSeconds >= 0.0)
+        while (Target != null && triggerSys.GetRemainingTime(SEntMan.GetEntity(Target.Value))?.TotalSeconds >= 0.0)
         {
             await RunTicks(10);
         }
