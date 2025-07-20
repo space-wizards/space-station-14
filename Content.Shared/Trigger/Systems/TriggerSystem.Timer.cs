@@ -45,7 +45,7 @@ public sealed partial class TriggerSystem
     private void OnTimerExamined(Entity<TimerTriggerComponent> ent, ref ExaminedEvent args)
     {
         if (args.IsInDetailsRange && ent.Comp.Examinable)
-            args.PushText(Loc.GetString("timer-trigger-examine", ("time", ent.Comp.Delay)));
+            args.PushText(Loc.GetString("timer-trigger-examine", ("time", ent.Comp.Delay.TotalSeconds)));
     }
 
     private void OnTimerTriggered(Entity<TimerTriggerComponent> ent, ref TriggerEvent args)
@@ -84,7 +84,7 @@ public sealed partial class TriggerSystem
                 args.Verbs.Add(new AlternativeVerb
                 {
                     Category = TimerOptions,
-                    Text = Loc.GetString("timer-trigger-verb-set-current", ("time", option)),
+                    Text = Loc.GetString("timer-trigger-verb-set-current", ("time", option.TotalSeconds)),
                     Disabled = true,
                     Priority = -100 * (int)option.TotalSeconds
                 });
@@ -94,13 +94,13 @@ public sealed partial class TriggerSystem
                 args.Verbs.Add(new AlternativeVerb
                 {
                     Category = TimerOptions,
-                    Text = Loc.GetString("timer-trigger-verb-set", ("time", option)),
+                    Text = Loc.GetString("timer-trigger-verb-set", ("time", option.TotalSeconds)),
                     Priority = -100 * (int)option.TotalSeconds,
                     Act = () =>
                     {
                         ent.Comp.Delay = option;
                         Dirty(ent);
-                        _popup.PopupClient(Loc.GetString("timer-trigger-popup-set", ("time", option)), user, user);
+                        _popup.PopupClient(Loc.GetString("timer-trigger-popup-set", ("time", option.TotalSeconds)), user, user);
                     }
                 });
             }
@@ -120,11 +120,12 @@ public sealed partial class TriggerSystem
         // This is somewhat inefficient, but its good enough. This is run rarely, and the lists should be short.
 
         ent.Comp.DelayOptions.Sort();
+        Dirty(ent);
 
         if (ent.Comp.DelayOptions[^1] <= ent.Comp.Delay)
         {
             ent.Comp.Delay = ent.Comp.DelayOptions[0];
-            _popup.PopupClient(Loc.GetString("popup-trigger-timer-set", ("time", ent.Comp.Delay)), ent.Owner, user);
+            _popup.PopupClient(Loc.GetString("timer-trigger-popup-set", ("time", ent.Comp.Delay)), ent.Owner, user);
             return;
         }
 
@@ -133,7 +134,7 @@ public sealed partial class TriggerSystem
             if (option > ent.Comp.Delay)
             {
                 ent.Comp.Delay = option;
-                _popup.PopupClient(Loc.GetString("popup-trigger-timer-set", ("time", option)), ent.Owner, user);
+                _popup.PopupClient(Loc.GetString("timer-trigger-popup-set", ("time", option)), ent.Owner, user);
                 return;
             }
         }

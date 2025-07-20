@@ -45,7 +45,7 @@ public sealed partial class TimerTriggerComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
-    public TimeSpan NextTrigger = TimeSpan.FromSeconds(1);
+    public TimeSpan NextTrigger = TimeSpan.Zero;
 
     /// <summary>
     /// Time of the next beeping sound.
@@ -61,7 +61,7 @@ public sealed partial class TimerTriggerComponent : Component
     /// The time between beeps.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan BeepInterval;
+    public TimeSpan BeepInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// The entity that activated this trigger.
