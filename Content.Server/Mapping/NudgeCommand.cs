@@ -3,27 +3,33 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Server.GameObjects;
 using Robust.Shared.Console;
+using Robust.Shared.Physics;
 
 namespace Content.Server.Mapping;
 
-public sealed class NudgeCommand : LocalizedCommands
+public sealed class NudgeCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
     public override string Command => "nudge";
-    public override string Description => "Moves an entity locally.";
-    public override string Help => "nudge <entity id> <change in x> <change in y>";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 3)
         {
-            shell.WriteLine("Wrong number of arguments.");
+            shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
             return;
         }
 
-        if (!float.TryParse(args[1], out var DeltaX) || !float.TryParse(args[2], out var DeltaY))
+        if (!float.TryParse(args[1], out var DeltaX))
         {
-            shell.WriteLine("Invalid X or Y");
+            shell.WriteLine(Loc.GetString("shell-argument-number-invalid", ("index", 2)));
+            return;
+        }
+
+        if (!float.TryParse(args[2], out var DeltaY))
+        {
+            shell.WriteLine(Loc.GetString("shell-argument-number-invalid", ("index", 3)));
             return;
         }
 
@@ -31,17 +37,17 @@ public sealed class NudgeCommand : LocalizedCommands
             || !_entMan.TryGetEntity(netEntity, out var uid)
             || !_entMan.EntityExists(uid))
         {
-            shell.WriteLine($"Invalid entity: {_entMan.ToPrettyString(netEntity)}");
+            shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
             return;
         }
 
         if (!_entMan.TryGetComponent(uid, out TransformComponent? xform))
-            return; // ...
-
-        if (!_entMan.TrySystem<TransformSystem>(out var XFormSys))
-            return; // ...
+        {
+            shell.WriteLine(Loc.GetString("shell-entity-target-lacks-component", ("componentName", nameof(TransformComponent))));
+            return;
+        }
 
         var newPosition = xform.LocalPosition + new Vector2(DeltaX, DeltaY);
-        XFormSys.SetLocalPosition(uid.Value, newPosition, xform);
+        _transform.SetLocalPosition(uid.Value, newPosition, xform);
     }
 }
