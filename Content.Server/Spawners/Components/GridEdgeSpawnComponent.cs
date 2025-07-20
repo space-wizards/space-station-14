@@ -2,6 +2,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Spawners.Components;
 
+/// <summary>
+/// Spawns entities if the tile they're about to spawn on borders a pure space tile
+/// (not a scaffold or lattice tile).
+/// </summary>
 [RegisterComponent]
 public sealed partial class GridEdgeSpawnComponent : Component
 {
