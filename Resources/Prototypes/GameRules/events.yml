@@ -292,7 +292,7 @@
     duration: 1
     earliestStart: 30
     reoccurrenceDelay: 60
-    minimumPlayers: 10
+    minimumPlayers: 25 # Ronstation - modification. Wizard on lowpop is rough
   - type: AntagSelection
     agentName: wizard-round-end-name
     definitions:
