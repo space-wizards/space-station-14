@@ -37,11 +37,8 @@ public abstract partial class SharedStunSystem : EntitySystem
     [Dependency] protected readonly SharedStaminaSystem Stamina = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
 
-    private EntityQuery<StandingStateComponent> _standingQuery;
-
     public override void Initialize()
     {
-        _standingQuery = GetEntityQuery<StandingStateComponent>();
 
         SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
         SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
@@ -168,12 +165,12 @@ public abstract partial class SharedStunSystem : EntitySystem
     /// <summary>
     ///     Knocks down the entity, making it fall to the ground.
     /// </summary>
-    /// <param name="entity"></param>
-    /// <param name="time"></param>
-    /// <param name="refresh"></param>
-    /// <param name="autoStand"></param>
-    /// <param name="drop"></param>
-    /// <param name="force"></param>
+    /// <param name="entity">The entity we're trying to knock down</param>
+    /// <param name="time">The time of the knockdown</param>
+    /// <param name="refresh">Whether we should refresh a running timer or add to it, if one exists.</param>
+    /// <param name="autoStand">Whether we want to automatically stand when knockdown ends.</param>
+    /// <param name="drop">Whether we should drop items.</param>
+    /// <param name="force">Are we being forced to be knocked down?</param>
     public bool TryKnockdown(Entity<StandingStateComponent?> entity, TimeSpan time, bool refresh, bool autoStand = true, bool drop = true, bool force = false)
     {
         if (time <= TimeSpan.Zero)
@@ -238,7 +235,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (!Resolve(uid, ref status, false))
             return false;
 
-        return TryKnockdown(uid, time, refresh, force: true) || TryStun(uid, time, refresh, status);
+        return TryKnockdown(uid, time, refresh, force: true) && TryStun(uid, time, refresh, status);
     }
 
     /// <summary>
