@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Systems;
 using Content.Server.Animals.Components;
@@ -7,12 +6,10 @@ using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Server.GameTicking.Events;
 using Content.Shared.Database;
-using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Players.PlayTimeTracking;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Animals.Systems;
@@ -24,10 +21,10 @@ namespace Content.Server.Animals.Systems;
 public sealed partial class ParrotDbSystem : EntitySystem
 {
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly ActorSystem _actor = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly ISharedPlaytimeManager _playtimeManager = default!;
 
@@ -92,16 +89,10 @@ public sealed partial class ParrotDbSystem : EntitySystem
     {
         // first get the playerId. We want to be able to control these memories and clean them when someone says something
         // bad, so all memories must have an associated player with this implementation
-        if (!TryComp<MindContainerComponent>(sourcePlayer, out var mindContainer))
+        if (!_actor.TryGetSession(sourcePlayer, out var session))
             return;
 
-        if (!mindContainer.HasMind)
-            return;
-
-        if (!TryComp<MindComponent>(mindContainer.Mind, out var mindComponent))
-            return;
-
-        if (!_playerManager.TryGetSessionById(mindComponent.UserId, out var session))
+        if (session is null)
             return;
 
         // check player playtime before committing memory
