@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: HyperB1
-  changes:
-  - message: Departmental shelves can now contain a wider variety of items.
-    type: Tweak
-  id: 8283
-  time: '2025-04-20T12:19:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34292
 - author: ScarKy0
   changes:
   - message: Cargo will receive slightly less mail, but will earn more spesos from
@@ -3905,3 +3898,10 @@
   id: 8795
   time: '2025-07-19T23:54:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36881
+- author: Princess-Cheeseballs
+  changes:
+  - message: Turrets and NPCs can now shoot downed targets.
+    type: Tweak
+  id: 8796
+  time: '2025-07-20T21:23:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39085
