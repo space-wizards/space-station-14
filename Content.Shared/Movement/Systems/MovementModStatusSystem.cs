@@ -8,9 +8,15 @@ namespace Content.Shared.Movement.Systems;
 /// <summary>
 /// This handles the slowed status effect and other movement status effects.
 /// <see cref="MovementModStatusEffectComponent"/> holds a modifier for a status effect which is relayed to a mob's
-/// TODO: REWRITE THIS
-/// All modifiers are multiplicative.
+/// All effects of this kinda are multiplicative.
+/// Each 'source' of speed modification usually should have separate effect prototype.
 /// </summary>
+/// <remarks>
+/// Movement modifying status effects should by default be separate effect prototypes, and their effects
+/// should stack with each other (multiply). In case multiplicative effect is undesirable - such effects
+/// could occupy same prototype, but be aware that this will make controlling duration of effect
+/// extra 'challenging', as it will be shared too.
+/// </remarks>
 public sealed class MovementModStatusSystem : EntitySystem
 {
     public static readonly EntProtoId VomitingSlowdown = "VomitingSlowdownStatusEffect";
@@ -64,61 +70,82 @@ public sealed class MovementModStatusSystem : EntitySystem
     }
 
     /// <summary>
-    /// Modifies mob's walking/running speed temporarily.
+    /// Apply mob's walking/running speed modifier with provided duration, or increment duration of existing.
     /// </summary>
     /// <param name="uid">Target entity, for which speed should be modified.</param>
+    /// <param name="effectProtoId">Slowdown effect to be used.</param>
     /// <param name="duration">Duration of speed modifying effect.</param>
-    /// <param name="speedModifier">
-    /// Multiplier by which speed should be modified.
-    /// Will be applied to both walking and running speed.
-    /// </param>
-    /// <param name="refresh">
-    /// Should duration be always set to <see cref="duration"/>,
-    /// or should be set to longest duration between current effect duration and desired.
-    /// </param>
-    /// <returns>True if entity have slowdown effect (applied now or previously and duration was modified).</returns>
+    /// <param name="speedModifier">Multiplier by which walking/sprinting speed should be modified.</param>
+    /// <returns>True if entity have slowdown effect applied now or previously and duration was modified.</returns>
     public bool TryAddMovementSpeedModDuration(
         EntityUid uid,
-        EntProtoId movSpeedSlot,
+        EntProtoId effectProtoId,
         TimeSpan duration,
         float speedModifier
     )
     {
-        return TryAddMovementSpeedModDuration(uid, movSpeedSlot, duration, speedModifier, speedModifier);
+        return TryAddMovementSpeedModDuration(uid, effectProtoId, duration, speedModifier, speedModifier);
     }
 
-    public bool TryUpdateMovementSpeedModDuration(
-        EntityUid uid,
-        EntProtoId movSpeedSlot,
-        TimeSpan duration,
-        float speedModifier
-    )
-    {
-        return TryUpdateMovementSpeedModDuration(uid, movSpeedSlot, duration, speedModifier, speedModifier);
-    }
-
-
+    /// <summary>
+    /// Apply mob's walking/running speed modifier with provided duration, or increment duration of existing.
+    /// </summary>
+    /// <param name="uid">Target entity, for which speed should be modified.</param>
+    /// <param name="effectProtoId">Slowdown effect to be used.</param>
+    /// <param name="duration">Duration of speed modifying effect.</param>
+    /// <param name="walkSpeedModifier">Multiplier by which walking speed should be modified.</param>
+    /// <param name="sprintSpeedModifier">Multiplier by which sprinting speed should be modified.</param>
+    /// <returns>True if entity have slowdown effect applied now or previously and duration was modified.</returns>
     public bool TryAddMovementSpeedModDuration(
         EntityUid uid,
-        EntProtoId movSpeedSlot,
+        EntProtoId effectProtoId,
         TimeSpan duration,
         float walkSpeedModifier,
         float sprintSpeedModifier
     )
     {
-        return _status.TryAddStatusEffectDuration(uid, movSpeedSlot, out var status, duration)
+        return _status.TryAddStatusEffectDuration(uid, effectProtoId, out var status, duration)
                && TryUpdateMovementStatus(uid, status!.Value, walkSpeedModifier, sprintSpeedModifier);
     }
 
+    /// <summary>
+    /// Apply mob's walking/running speed modifier with provided duration,
+    /// or update duration of existing if it is lesser than provided duration.
+    /// </summary>
+    /// <param name="uid">Target entity, for which speed should be modified.</param>
+    /// <param name="effectProtoId">Slowdown effect to be used.</param>
+    /// <param name="duration">Duration of speed modifying effect.</param>
+    /// <param name="speedModifier">Multiplier by which walking/sprinting speed should be modified.</param>
+    /// <returns>True if entity have slowdown effect applied now or previously and duration was modified.</returns>
     public bool TryUpdateMovementSpeedModDuration(
         EntityUid uid,
-        EntProtoId movSpeedSlot,
+        EntProtoId effectProtoId,
+        TimeSpan duration,
+        float speedModifier
+    )
+    {
+        return TryUpdateMovementSpeedModDuration(uid, effectProtoId, duration, speedModifier, speedModifier);
+    }
+
+    /// <summary>
+    /// Apply mob's walking/running speed modifier with provided duration,
+    /// or update duration of existing if it is lesser than provided duration.
+    /// </summary>
+    /// <param name="uid">Target entity, for which speed should be modified.</param>
+    /// <param name="effectProtoId">Slowdown effect to be used.</param>
+    /// <param name="duration">Duration of speed modifying effect.</param>
+    /// <param name="walkSpeedModifier">Multiplier by which walking speed should be modified.</param>
+    /// <param name="sprintSpeedModifier">Multiplier by which sprinting speed should be modified.</param>
+    /// <returns>True if entity have slowdown effect applied now or previously and duration was modified.</returns>
+    public bool TryUpdateMovementSpeedModDuration(
+        EntityUid uid,
+        EntProtoId effectProtoId,
         TimeSpan? duration,
         float walkSpeedModifier,
         float sprintSpeedModifier
     )
     {
-        return _status.TryUpdateStatusEffectDuration(uid, movSpeedSlot, out var status, duration)
+        return _status.TryUpdateStatusEffectDuration(uid, effectProtoId, out var status, duration)
                && TryUpdateMovementStatus(uid, status!.Value, walkSpeedModifier, sprintSpeedModifier);
     }
 
@@ -168,27 +195,43 @@ public sealed class MovementModStatusSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Applies a friction de-buff to the player.
+    /// Apply friction modifier with provided duration,
+    /// or incrementing duration of existing.
     /// </summary>
-    public bool TryFriction(EntityUid uid,
-        TimeSpan time,
-        bool refresh,
+    /// <param name="uid">Target entity, for which friction modifier should be applied.</param>
+    /// <param name="duration">Duration of speed modifying effect.</param>
+    /// <param name="friction">Multiplier by which walking speed should be modified.</param>
+    /// <param name="acceleration">Multiplier by which sprinting speed should be modified.</param>
+    /// <returns>True if entity have slowdown effect applied now or previously and duration was modified.</returns>
+    public bool TryAddFrictionModDuration(
+        EntityUid uid,
+        TimeSpan duration,
         float friction,
-        float acceleration)
+        float acceleration
+    )
     {
-        if (time <= TimeSpan.Zero)
-            return false;
+            return _status.TryAddStatusEffectDuration(uid, StatusEffectFriction, out var status, duration)
+                   && TrySetFrictionStatus(status.Value, friction, acceleration, uid);
+    }
 
-        if (refresh)
-        {
-            return _status.TryUpdateStatusEffectDuration(uid, StatusEffectFriction, out var status, time)
-                   && TrySetFrictionStatus(status.Value, friction, acceleration, uid);
-        }
-        else
-        {
-            return _status.TryAddStatusEffectDuration(uid, StatusEffectFriction, out var status, time)
-                   && TrySetFrictionStatus(status.Value, friction, acceleration, uid);
-        }
+    /// <summary>
+    /// Apply friction modifier with provided duration,
+    /// or update duration of existing if it is lesser than provided duration.
+    /// </summary>
+    /// <param name="uid">Target entity, for which friction modifier should be applied.</param>
+    /// <param name="duration">Duration of speed modifying effect.</param>
+    /// <param name="friction">Multiplier by which walking speed should be modified.</param>
+    /// <param name="acceleration">Multiplier by which sprinting speed should be modified.</param>
+    /// <returns>True if entity have slowdown effect applied now or previously and duration was modified.</returns>
+    public bool TryUpdateFrictionModDuration(
+        EntityUid uid,
+        TimeSpan duration,
+        float friction,
+        float acceleration
+    )
+    {
+        return _status.TryUpdateStatusEffectDuration(uid, StatusEffectFriction, out var status, duration)
+               && TrySetFrictionStatus(status.Value, friction, acceleration, uid);
     }
 
     /// <summary>
