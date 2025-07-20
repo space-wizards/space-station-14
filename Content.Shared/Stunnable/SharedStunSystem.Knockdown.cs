@@ -301,7 +301,7 @@ public abstract partial class SharedStunSystem
         RaiseLocalEvent(entity, ref ev);
 
         if (ev.Autostand != entity.Comp.AutoStand)
-            SetAutoStand(entity!, ev.Autostand);
+            SetAutoStand((entity.Owner, entity.Comp), ev.Autostand);
 
         if (ev.Message != null)
         {
@@ -365,7 +365,7 @@ public abstract partial class SharedStunSystem
 
         // If we're already trying to stand, or we fail to stand try forcing it
         if (!TryStanding(entity.Owner))
-            ForceStandUp(entity!);
+            ForceStandUp((entity.Owner, entity.Comp));
 
         args.Handled = true;
     }
