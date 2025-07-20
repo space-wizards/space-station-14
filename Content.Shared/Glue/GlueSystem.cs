@@ -71,7 +71,7 @@ public sealed class GlueSystem : EntitySystem
     {
         // if item is glued then don't apply glue again so it can be removed for reasonable time
         // If glue is applied to an unremoveable item, the component will disappear after the duration.
-        // This effecitvely means any unremoveable item could be removed with a bottle of glue.
+        // This effecitvely means any unremoveable item could be removed with a bottle of glue.'
         if (HasComp<GluedComponent>(target) || !HasComp<ItemComponent>(target) || HasComp<UnremoveableComponent>(target))
         {
             _popup.PopupClient(Loc.GetString("glue-failure", ("target", target)), actor, actor, PopupType.Medium);
@@ -84,8 +84,9 @@ public sealed class GlueSystem : EntitySystem
             if (quantity > 0)
             {
                 EnsureComp<GluedComponent>(target).Duration = quantity.Double() * entity.Comp.DurationPerUnit;
+
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
-                _audio.PlayPredicted(entity.Comp.Squeeze, entity.Owner, entity.Owner);
+                _audio.PlayPredicted(entity.Comp.Squeeze, actor, entity.Owner);
                 _popup.PopupClient(Loc.GetString("glue-success", ("target", target)), actor, actor, PopupType.Medium);
                 return true;
             }
