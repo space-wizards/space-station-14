@@ -2,7 +2,8 @@
 - type: roleLoadout
   id: JobBlueShieldOfficer
   groups:
-  - GroupTankHarness
+  # - GroupTankHarness # outerClothing occupied by startingGear
+  - BlueShieldOfficerBackpack
   - BlueShieldOfficerJumpsuit
   - Survival
   - Trinkets

@@ -58,7 +58,7 @@
   id: BlueShieldOfficerGear
   equipment:
     head: ClothingHeadHatBeretBlueShield
-    back: ClothingBackpackBlueShield
+    # back: ClothingBackpackBlueShield
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCommand
     shoes: ClothingShoesBootsJackFilled
@@ -125,7 +125,6 @@
         ents: []
   - type: StorageFill
     contents:
-      - id: BoxSurvivalSecurity
       - id: Zipties
         amount: 3
       - id: ADTtelescopicBaton # ADT

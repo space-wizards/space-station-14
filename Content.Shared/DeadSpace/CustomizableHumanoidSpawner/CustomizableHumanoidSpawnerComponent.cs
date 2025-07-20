@@ -32,7 +32,7 @@ public sealed partial class CustomizableHumanoidSpawnerComponent : Component
     /// Разрешённые расы.
     /// </summary>
     [DataField(serverOnly: true)]
-    public List<ProtoId<SpeciesPrototype>> AllowedSpecies = [];
+    public HashSet<ProtoId<SpeciesPrototype>> AllowedSpecies = [];
 
     /// <summary>
     /// Датасет со списком имен для первой части имени.
@@ -90,11 +90,13 @@ public sealed class CustomizableHumanoidSpawnerCharacterInfo(
 public sealed class CustomizableHumanoidSpawnerBuiState(
     List<CustomizableHumanoidSpawnerCharacterInfo> characters,
     bool canChangeNameAndDescription,
-    string? randomizedName) : BoundUserInterfaceState
+    string? randomizedName,
+    HashSet<ProtoId<SpeciesPrototype>> allowedSpecies) : BoundUserInterfaceState
 {
     public readonly List<CustomizableHumanoidSpawnerCharacterInfo> Characters = characters;
     public readonly bool CanChangeNameAndDescription = canChangeNameAndDescription;
     public readonly string? RandomizedName = randomizedName;
+    public readonly HashSet<ProtoId<SpeciesPrototype>> AllowedSpecies = allowedSpecies;
 }
 
 [Serializable, NetSerializable]

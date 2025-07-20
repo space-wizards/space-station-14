@@ -16,3 +16,4 @@ customizable-humanoid-spawner-button-selected = Играть за выбранн
 customizable-humanoid-spawner-button-random = Играть за случайного персонажа ({$timer})
 customizable-humanoid-spawner-name-forbidden = | Изменение имени запрещено |
 customizable-humanoid-spawner-description-forbidden = | Изменение описание запрещено |
+customizable-humanoid-spawner-species-list = Разрешенные расы:

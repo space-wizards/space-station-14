@@ -3,7 +3,7 @@
   name: job-name-magistrat
   description: job-description-magistrat
   playTimeTracker: JobMagistrat
-  setPreference: false # Removed from station
+  setPreference: false
   requirements:
     - !type:RoleTimeRequirement
       role: JobHeadOfSecurity
@@ -21,13 +21,10 @@
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
   canBeAntag: false
+  accessGroups:
+  - AllAccess
   access:
-    - Command
-    - Security
-    - Service
-    - Lawyer
-    - Brig
-    - Maintenance
+  - CentralCommand
   #start-backmen: currency
   minBankBalance: 800
   maxBankBalance: 1200
@@ -39,7 +36,8 @@
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
     components:
-      - type: CommandStaff
+    - type: AntagImmune
+    - type: ZombieImmune
 
 - type: startingGear
   id: MagistratGear

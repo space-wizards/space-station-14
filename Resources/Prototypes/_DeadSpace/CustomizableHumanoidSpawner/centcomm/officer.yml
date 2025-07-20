@@ -30,6 +30,19 @@
 - type: roleLoadout
   id: JobCentralCommandOfficer
   groups:
-  - GroupTankHarness
+  # - GroupTankHarness # outerClothing slot occupied by startingGear
+  - CentralCommandOfficerLoadout
   - Survival
   - GroupSpeciesBreathTool
+
+- type: loadoutGroup
+  id: CentralCommandOfficerLoadout
+  name: spawner-loadout-centcomm-officer
+  hidden: true
+  loadouts:
+  - CentralCommandOfficerLoadout
+
+- type: loadout
+  id: CentralCommandOfficerLoadout
+  equipment:
+    back: ClothingBackpackMilitarySatchel

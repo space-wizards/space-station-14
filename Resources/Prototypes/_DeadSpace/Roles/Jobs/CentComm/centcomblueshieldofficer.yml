@@ -15,13 +15,17 @@
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, TrackingImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
 
 - type: startingGear
   id: CentcomBlueShieldGear
   equipment:
     head: ClothingHeadHatBeretBlueShield
     jumpsuit: ClothingUniformJumpsuitBlueShield
-    back: ClothingBackpackBlueShield
+    # back: ClothingBackpackBlueShield
     mask: ClothingMaskGasSecurity
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetCentCom
