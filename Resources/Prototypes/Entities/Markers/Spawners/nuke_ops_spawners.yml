@@ -6,7 +6,7 @@
     children:
     - !type:NestedSelector
       tableId: NukeOpsUplinkLootTable
-      weight: 5
+      weight: 6.25
     - !type:NestedSelector
       tableId: NukeOpsWeaponsTable
       weight: 0.25
