@@ -7,4 +7,3 @@ species-name-tajaran = Таяр
 species-name-vulpkanin = Вульпканин
 species-name-shark = Плафеим
 species-name-xeno = Ксеноморф
-species-name-xenomorph = Ксеноморф
