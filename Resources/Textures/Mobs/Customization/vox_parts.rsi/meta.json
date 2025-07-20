@@ -58,6 +58,14 @@
     {
       "name": "tail_big",
       "directions": 4
+    },
+    {
+      "name": "tail_spikes",
+      "directions": 4
+    },
+    {
+      "name": "tail_docked",
+      "directions": 4
     }
   ]
 }

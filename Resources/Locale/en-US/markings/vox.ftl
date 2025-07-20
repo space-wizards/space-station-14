@@ -54,3 +54,9 @@ marking-VoxTail = Vox Tail (Medium)
 
 marking-VoxTailBig-vox_tail_big = Vox Tail (Big)
 marking-VoxTailBig = Vox Tail (Big)
+
+marking-VoxTailSpikes-vox_tail_spikes = Vox Tail (Spiked)
+marking-VoxTailSpikes = Vox Tail (Spiked)
+
+marking-VoxTailDocked-vox_tail_docked = Vox Tail (Docked)
+marking-VoxTailDocked = Vox Tail (Docked)
