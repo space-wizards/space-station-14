@@ -23,7 +23,7 @@ public abstract class SharedReleaseGasOnTriggerSystem : EntitySystem
     /// <summary>
     /// Shrimply sets the component to active when triggered, allowing it to release over time.
     /// </summary>
-    protected virtual void OnTrigger(Entity<ReleaseGasOnTriggerComponent> ent, ref TriggerEvent args)
+    private void OnTrigger(Entity<ReleaseGasOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;

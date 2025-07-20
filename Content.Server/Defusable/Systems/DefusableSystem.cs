@@ -239,7 +239,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
         if (comp is not { Activated: true, DelayWireUsed: false })
             return;
 
-        _trigger.TryDelay(wire.Owner, 30f);
+        _trigger.TryDelay(wire.Owner, TimeSpan.FromSeconds(30));
         _popup.PopupEntity(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner);
         comp.DelayWireUsed = true;
     }
@@ -261,7 +261,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
         if (comp is { Activated: true, ProceedWireUsed: false })
         {
             comp.ProceedWireUsed = true;
-            _trigger.TryDelay(wire.Owner, -15f);
+            _trigger.TryDelay(wire.Owner, TimeSpan.FromSeconds(-15));
         }
 
         _popup.PopupEntity(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", wire.Owner)), wire.Owner);
@@ -291,7 +291,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
         {
             if (!comp.ActivatedWireUsed)
             {
-                _trigger.TryDelay(wire.Owner, 30f);
+                _trigger.TryDelay(wire.Owner, TimeSpan.FromSeconds(30));
                 _popup.PopupEntity(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner);
                 comp.ActivatedWireUsed = true;
             }

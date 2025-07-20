@@ -5,7 +5,7 @@ using Content.Shared.Verbs;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class TriggerSystem : EntitySystem
+public sealed partial class TriggerSystem
 {
 
     private void InitializeTimer()
@@ -69,7 +69,7 @@ public sealed partial class TriggerSystem : EntitySystem
 
         var user = args.User;
 
-        args.Verbs.Add(new AlternativeVerb()
+        args.Verbs.Add(new AlternativeVerb
         {
             Category = TimerOptions,
             Text = Loc.GetString("timer-trigger-verb-cycle"),
@@ -81,7 +81,7 @@ public sealed partial class TriggerSystem : EntitySystem
         {
             if (MathHelper.CloseTo(option.TotalSeconds, ent.Comp.Delay.TotalSeconds))
             {
-                args.Verbs.Add(new AlternativeVerb()
+                args.Verbs.Add(new AlternativeVerb
                 {
                     Category = TimerOptions,
                     Text = Loc.GetString("timer-trigger-verb-set-current", ("time", option)),
@@ -91,7 +91,7 @@ public sealed partial class TriggerSystem : EntitySystem
             }
             else
             {
-                args.Verbs.Add(new AlternativeVerb()
+                args.Verbs.Add(new AlternativeVerb
                 {
                     Category = TimerOptions,
                     Text = Loc.GetString("timer-trigger-verb-set", ("time", option)),
@@ -107,7 +107,7 @@ public sealed partial class TriggerSystem : EntitySystem
         }
     }
 
-    public static VerbCategory TimerOptions = new("verb-categories-timer", "/Textures/Interface/VerbIcons/clock.svg.192dpi.png");
+    public static readonly VerbCategory TimerOptions = new("verb-categories-timer", "/Textures/Interface/VerbIcons/clock.svg.192dpi.png");
 
     /// <summary>
     /// Select the next entry from the DelayOptions.

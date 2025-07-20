@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
@@ -36,6 +37,7 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
+    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
 
     public const string DefaultTriggerKey = "trigger";
 
@@ -47,6 +49,7 @@ public sealed partial class TriggerSystem : EntitySystem
         InitializeCondition();
         InitializeInteraction();
         InitializeProximity();
+        InitializeSignal();
         InitializeTimer();
         InitializeSpawn();
         InitializeVoice();
@@ -61,13 +64,13 @@ public sealed partial class TriggerSystem : EntitySystem
     /// <returns>Whether or not the trigger has sucessfully activated an effect.</returns>
     public bool Trigger(EntityUid trigger, EntityUid? user = null, string? key = null)
     {
-        var attemptTriggerEvent = new AttemptTriggerEvent(trigger, user, key);
+        var attemptTriggerEvent = new AttemptTriggerEvent(user, key);
         RaiseLocalEvent(trigger, ref attemptTriggerEvent);
         if (attemptTriggerEvent.Cancelled)
             return false;
 
-        var triggerEvent = new TriggerEvent(trigger, user, key);
-        EntityManager.EventBus.RaiseLocalEvent(trigger, ref triggerEvent, true);
+        var triggerEvent = new TriggerEvent(user, key);
+        RaiseLocalEvent(trigger, ref triggerEvent, true);
         return triggerEvent.Handled;
     }
 
@@ -103,7 +106,7 @@ public sealed partial class TriggerSystem : EntitySystem
         ent.Comp.NextBeep = curTime + ent.Comp.BeepInterval;
         Dirty(ent);
 
-        var ev = new ActiveTimerTriggerEvent(ent.Owner, user);
+        var ev = new ActiveTimerTriggerEvent(user);
         RaiseLocalEvent(ent.Owner, ref ev);
 
         if (TryComp<AppearanceComponent>(ent, out var appearance))
@@ -137,12 +140,12 @@ public sealed partial class TriggerSystem : EntitySystem
     /// Returns false if not active.
     /// </summary>
     /// <param name="amount">The time to add in seconds.</param>
-    public bool TryDelay(Entity<TimerTriggerComponent?> ent, float amount)
+    public bool TryDelay(Entity<TimerTriggerComponent?> ent, TimeSpan amount)
     {
         if (!Resolve(ent, ref ent.Comp, false) || !HasComp<ActiveTimerTriggerComponent>(ent))
             return false;
 
-        ent.Comp.NextTrigger += TimeSpan.FromSeconds(amount);
+        ent.Comp.NextTrigger += amount;
         Dirty(ent);
         return true;
     }
@@ -179,6 +182,4 @@ public sealed partial class TriggerSystem : EntitySystem
         UpdateProximity();
         UpdateTimedCollide();
     }
-
-
 }

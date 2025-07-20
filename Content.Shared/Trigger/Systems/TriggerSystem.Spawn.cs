@@ -3,7 +3,7 @@ using Content.Shared.Trigger.Components.Triggers;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class TriggerSystem : EntitySystem
+public sealed partial class TriggerSystem
 {
 
     private void InitializeSpawn()

@@ -34,7 +34,7 @@ public sealed class GibOnTriggerSystem : EntitySystem
                 PredictedQueueDel(item);
             }
         }
-        _body.GibBody(ent.Owner, true);
+        _body.GibBody(target.Value, true);
         args.Handled = true;
     }
 }

@@ -61,7 +61,7 @@ public sealed partial class TriggerSystem : EntitySystem
         {
             foreach (var (collidingEntity, collidingTime) in triggerOnTimedCollide.Colliding)
             {
-                if (collidingTime > curTime)
+                if (curTime > collidingTime)
                 {
                     Trigger(uid, collidingEntity, triggerOnTimedCollide.KeyOut);
                     triggerOnTimedCollide.Colliding[collidingEntity] += triggerOnTimedCollide.Threshold;

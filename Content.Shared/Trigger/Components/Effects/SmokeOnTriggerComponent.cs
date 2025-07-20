@@ -16,7 +16,7 @@ public sealed partial class SmokeOnTriggerComponent : BaseXOnTriggerComponent
     /// How long the smoke stays for, after it has spread (in seconds).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Duration = 10f;
+    public TimeSpan Duration = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// How much the smoke will spread.

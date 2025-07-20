@@ -24,16 +24,11 @@ public sealed class DamageOnTriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        args.Handled |= TryDamage(ent, target.Value);
-    }
+        var damage = new DamageSpecifier(ent.Comp.Damage);
+        var ev = new BeforeDamageOnTriggerEvent(damage, target.Value);
+        RaiseLocalEvent(target.Value, ref ev);
 
-    private bool TryDamage(Entity<DamageOnTriggerComponent> source, EntityUid target)
-    {
-        var damage = new DamageSpecifier(source.Comp.Damage);
-        var ev = new BeforeDamageOnTriggerEvent(damage, target);
-        RaiseLocalEvent(source, ref ev);
-
-        return _damageableSystem.TryChangeDamage(target, ev.Damage, source.Comp.IgnoreResistances, origin: source) is not null;
+        args.Handled |= _damageableSystem.TryChangeDamage(target, ev.Damage, ent.Comp.IgnoreResistances, origin: ent.Owner) is not null;
     }
 }
 

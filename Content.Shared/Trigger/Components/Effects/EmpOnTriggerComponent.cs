@@ -22,8 +22,8 @@ public sealed partial class EmpOnTriggerComponent : BaseXOnTriggerComponent
     public float EnergyConsumption;
 
     /// <summary>
-    /// How long it disables targets in seconds.
+    /// How long it disables targets.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float DisableDuration = 60f;
+    public TimeSpan DisableDuration = TimeSpan.FromSeconds(60);
 }

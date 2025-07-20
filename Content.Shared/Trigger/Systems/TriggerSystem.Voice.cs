@@ -75,7 +75,7 @@ public sealed partial class TriggerSystem
             return;
 
         var user = args.User;
-        args.Verbs.Add(new AlternativeVerb()
+        args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString(ent.Comp.IsRecording ? "trigger-on-voice-stop" : "trigger-on-voice-record"),
             Act = () =>
@@ -91,7 +91,7 @@ public sealed partial class TriggerSystem
         if (string.IsNullOrWhiteSpace(ent.Comp.KeyPhrase))
             return;
 
-        args.Verbs.Add(new AlternativeVerb()
+        args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString("trigger-on-voice-clear"),
             Act = () =>
@@ -102,7 +102,7 @@ public sealed partial class TriggerSystem
     }
 
     /// <summary>
-    /// Start recorfing a new keyphrase.
+    /// Start recording a new keyphrase.
     /// </summary>
     public void StartRecording(Entity<TriggerOnVoiceComponent> ent, EntityUid? user)
     {
@@ -144,7 +144,7 @@ public sealed partial class TriggerSystem
         _adminLogger.Add(LogType.Trigger, LogImpact.Low,
                 $"A voice-trigger on {ToPrettyString(ent):entity} has recorded a new keyphrase: '{ent.Comp.KeyPhrase}'. Recorded from {ToPrettyString(source):speaker}");
 
-        _popup.PopupEntity(Loc.GetString("trigger-on-voice-recorded", ("keyphrase", ent.Comp.KeyPhrase!)), ent);
+        _popup.PopupEntity(Loc.GetString("trigger-on-voice-recorded", ("keyphrase", ent.Comp.KeyPhrase)), ent);
     }
 
     /// <summary>

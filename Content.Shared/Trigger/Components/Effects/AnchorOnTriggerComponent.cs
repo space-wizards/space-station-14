@@ -19,7 +19,7 @@ public sealed partial class AnchorOnTriggerComponent : BaseXOnTriggerComponent
     /// If both this and CanAnchor are true then the trigger will toggle between states.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool CanUnAnchor = false;
+    public bool CanUnanchor = false;
 
     /// <summary>
     /// Removes this component when triggered so it can only be activated once.

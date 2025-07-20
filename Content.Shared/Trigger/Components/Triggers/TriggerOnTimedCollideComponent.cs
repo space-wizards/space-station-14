@@ -7,7 +7,7 @@ namespace Content.Shared.Trigger.Components.Triggers;
 /// The user is the entity that passes the time threshold while colliding.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState, AutoGenerateComponentPause]
+[AutoGenerateComponentState]
 public sealed partial class TriggerOnTimedCollideComponent : BaseTriggerOnXComponent
 {
     /// <summary>

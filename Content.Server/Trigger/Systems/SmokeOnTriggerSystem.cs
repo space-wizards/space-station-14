@@ -61,7 +61,7 @@ public sealed class SmokeOnTriggerSystem : EntitySystem
             return;
         }
 
-        _smoke.StartSmoke(smoke, ent.Comp.Solution, ent.Comp.Duration, ent.Comp.SpreadAmount, smokeComp);
+        _smoke.StartSmoke(smoke, ent.Comp.Solution, (float)ent.Comp.Duration.TotalSeconds, ent.Comp.SpreadAmount, smokeComp);
 
         args.Handled = true;
     }

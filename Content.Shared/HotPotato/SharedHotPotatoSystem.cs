@@ -6,6 +6,7 @@ using Content.Shared.Popups;
 using Content.Shared.Trigger;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.HotPotato;
 
@@ -15,6 +16,8 @@ public abstract class SharedHotPotatoSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly DamageOnHoldingSystem _damageOnHolding = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
 
     public override void Initialize()
     {
@@ -27,7 +30,7 @@ public abstract class SharedHotPotatoSystem : EntitySystem
 
     private void OnRemoveAttempt(Entity<HotPotatoComponent> ent, ref ContainerGettingRemovedAttemptEvent args)
     {
-        if (!ent.Comp.CanTransfer)
+        if (!_timing.ApplyingState && !ent.Comp.CanTransfer)
             args.Cancel();
     }
 

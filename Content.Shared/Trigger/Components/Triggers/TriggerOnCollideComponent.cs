@@ -4,7 +4,7 @@ namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
 /// Triggers when colliding with another entity.
-/// The user is the entitity collided with.
+/// The user is the entity collided with.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnCollideComponent : BaseTriggerOnXComponent

@@ -31,13 +31,13 @@ public sealed partial class TimerTriggerComponent : Component
     /// <summary>
     /// The time after which this timer will trigger after it is activated.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan Delay = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// If not empty, a user can use verbs to configure the delay to one of these options.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public List<TimeSpan> DelayOptions = new();
 
     /// <summary>
@@ -45,7 +45,7 @@ public sealed partial class TimerTriggerComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
-    public TimeSpan NextTrigger = TimeSpan.Zero;
+    public TimeSpan NextTrigger = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// Time of the next beeping sound.

@@ -21,16 +21,11 @@ public sealed partial class TriggerOnVerbSystem : EntitySystem
 
         var user = args.User;
 
-        args.Verbs.Add(new AlternativeVerb()
+        args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString(ent.Comp.Text),
-            Act = () => DoTrigger(ent, user),
+            Act = () => _trigger.Trigger(ent.Owner, user, ent.Comp.KeyOut),
             Priority = 2 // should be above any timer settings
         });
-    }
-
-    private void DoTrigger(Entity<TriggerOnVerbComponent> ent, EntityUid user)
-    {
-        _trigger.Trigger(ent.Owner, user, ent.Comp.KeyOut);
     }
 }

@@ -6,7 +6,7 @@ using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class TriggerSystem : EntitySystem
+public sealed partial class TriggerSystem
 {
     private void InitializeInteraction()
     {
@@ -20,7 +20,10 @@ public sealed partial class TriggerSystem : EntitySystem
 
     private void OnActivate(Entity<TriggerOnActivateComponent> ent, ref ActivateInWorldEvent args)
     {
-        if (args.Handled || !args.Complex)
+        if (args.Handled)
+            return;
+
+        if (ent.Comp.RequireComplex && !args.Complex)
             return;
 
         Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
@@ -67,7 +70,7 @@ public sealed partial class TriggerSystem : EntitySystem
 
         var xform = Transform(target.Value);
 
-        if (xform.Anchored && ent.Comp.CanUnAnchor)
+        if (xform.Anchored && ent.Comp.CanUnanchor)
             _transform.Unanchor(target.Value, xform);
         else if (ent.Comp.CanAnchor)
             _transform.AnchorEntity(target.Value, xform);

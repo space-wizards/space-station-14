@@ -1,16 +1,12 @@
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.DeviceLinking;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class TriggerOnSignalSystem : EntitySystem
+public sealed partial class TriggerSystem
 {
-    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
-    [Dependency] private readonly TriggerSystem _trigger = default!;
-
-    public override void Initialize()
+    private void InitializeSignal()
     {
         SubscribeLocalEvent<SignalOnTriggerComponent, ComponentInit>(SignalOnTriggerInit);
         SubscribeLocalEvent<TriggerOnSignalComponent, ComponentInit>(TriggerOnSignalInit);
@@ -43,6 +39,6 @@ public sealed class TriggerOnSignalSystem : EntitySystem
         if (args.Port != ent.Comp.Port)
             return;
 
-        _trigger.Trigger(ent.Owner, args.Trigger, ent.Comp.KeyOut);
+        Trigger(ent.Owner, args.Trigger, ent.Comp.KeyOut);
     }
 }

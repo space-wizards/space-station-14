@@ -42,7 +42,6 @@ public sealed class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTriggerSystem
             {
                 _appearance.SetData(uid, ReleaseGasOnTriggerVisuals.Key, false);
                 RemCompDeferred<ReleaseGasOnTriggerComponent>(uid);
-                continue;
             }
         }
     }
