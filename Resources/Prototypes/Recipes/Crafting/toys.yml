@@ -13,3 +13,11 @@
   targetNode: suit
   category: construction-category-misc
   objectType: Item
+
+- type: construction
+  id: MoproachShoes
+  graph: MoproachShoes
+  startNode: start
+  targetNode: shoes
+  category: construction-category-misc
+  objectType: Item

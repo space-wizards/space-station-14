@@ -30,6 +30,7 @@ lathe-category-maints = Maints
 lathe-category-steel = Steel
 lathe-category-white = White
 lathe-category-wood = Wood
+lathe-category-marble = Marble
 
 # Science
 lathe-category-mechs = Mechs

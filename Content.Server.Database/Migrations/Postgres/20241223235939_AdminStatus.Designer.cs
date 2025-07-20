@@ -18,7 +18,6 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20241223235939_AdminStatus")]
     partial class AdminStatus
     {
-#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -2081,6 +2080,5 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
-#endif
     }
 }

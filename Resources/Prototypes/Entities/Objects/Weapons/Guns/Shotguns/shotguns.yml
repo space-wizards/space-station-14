@@ -117,6 +117,8 @@
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 3
+  - type: GunSpreadModifier
+    spread: 0.6
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
@@ -196,6 +198,8 @@
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
   - type: Gun
     fireRate: 3
+  - type: GunSpreadModifier
+    spread: 1.4
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction

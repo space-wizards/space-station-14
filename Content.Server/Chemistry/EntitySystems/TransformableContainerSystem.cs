@@ -45,8 +45,8 @@ public sealed class TransformableContainerSystem : EntitySystem
         //the biggest reagent in the solution decides the appearance
         var reagentId = solution.GetPrimaryReagentId();
 
-        //If biggest reagent didn't changed - don't change anything at all
-        if (entity.Comp.CurrentReagent != null && entity.Comp.CurrentReagent.ID == reagentId?.Prototype)
+        //If biggest reagent didn't change - don't change anything at all
+        if (entity.Comp.CurrentReagent != null && entity.Comp.CurrentReagent == reagentId?.Prototype)
         {
             return;
         }
@@ -66,7 +66,7 @@ public sealed class TransformableContainerSystem : EntitySystem
 
     private void OnRefreshNameModifiers(Entity<TransformableContainerComponent> entity, ref RefreshNameModifiersEvent args)
     {
-        if (entity.Comp.CurrentReagent is { } currentReagent)
+        if (_prototypeManager.TryIndex(entity.Comp.CurrentReagent, out var currentReagent))
         {
             args.AddModifier("transformable-container-component-glass", priority: -1, ("reagent", currentReagent.LocalizedName));
         }

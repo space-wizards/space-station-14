@@ -14,7 +14,6 @@ namespace Content.Server.Database.Migrations.Sqlite
     [Migration("20240531011549_RoleWhitelist")]
     partial class RoleWhitelist
     {
-#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1835,6 +1834,5 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
 #pragma warning restore 612, 618
         }
-#endif
     }
 }

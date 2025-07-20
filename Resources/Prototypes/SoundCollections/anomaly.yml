@@ -1,0 +1,59 @@
+﻿- type: soundCollection
+  id: AnomalyFleshSupercritical
+  files:
+  - /Audio/Items/Anomaly/flesh_crit.ogg
+
+- type: soundCollection
+  id: AnomalyShadowSupercritical
+  files:
+  - /Audio/Items/Anomaly/shadow_crit.ogg
+
+- type: soundCollection
+  id: AnomalyTechSupercritical
+  files:
+  - /Audio/Items/Anomaly/tech_crit.ogg
+
+- type: soundCollection
+  id: AnomalyPresentSupercritical
+  files:
+  - /Audio/Items/Anomaly/present_crit.ogg
+
+- type: soundCollection
+  id: AnomalyPyroSupercritical
+  files:
+  - /Audio/Items/Anomaly/pyro_crit.ogg
+
+- type: soundCollection
+  id: AnomalyGravitySupercritical
+  files:
+  - /Audio/Items/Anomaly/grav_crit.ogg
+
+- type: soundCollection
+  id: AnomalyElectricitySupercritical
+  files:
+  - /Audio/Items/Anomaly/electricity_crit.ogg
+
+- type: soundCollection
+  id: AnomalyBluespaceSupercritical
+  files:
+  - /Audio/Items/Anomaly/bluespace_crit.ogg
+
+- type: soundCollection
+  id: AnomalyIceSupercritical
+  files:
+  - /Audio/Items/Anomaly/ice_crit.ogg
+
+- type: soundCollection
+  id: AnomalyFluidSupercritical
+  files:
+  - /Audio/Items/Anomaly/fluid_crit.ogg
+
+- type: soundCollection
+  id: AnomalyFloraSupercritical
+  files:
+  - /Audio/Items/Anomaly/flora_crit.ogg
+
+- type: soundCollection
+  id: AnomalyRockSupercritical
+  files:
+  - /Audio/Items/Anomaly/rock_crit.ogg

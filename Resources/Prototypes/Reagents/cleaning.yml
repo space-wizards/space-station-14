@@ -83,7 +83,7 @@
   meltingPoint: 18.2
   tileReactions:
   - !type:SpillTileReaction
-  friction: 0.0
+  friction: 0.05
 
 - type: reagent
   id: SpaceGlue

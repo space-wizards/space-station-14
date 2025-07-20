@@ -1269,5 +1269,13 @@ Entries:
   id: 154
   time: '2025-07-14T15:45:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38155
+- author: slarticodefast
+  changes:
+  - message: The aghost's satchel of holding is now explosion resistant. Same for
+      the aghost themselves, so held explosives no longer chain react.
+    type: Tweak
+  id: 155
+  time: '2025-07-16T22:35:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38384
 Name: Admin
 Order: 2

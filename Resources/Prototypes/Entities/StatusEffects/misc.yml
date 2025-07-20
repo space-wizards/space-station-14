@@ -43,6 +43,14 @@
   components:
   - type: DrowsinessStatusEffect
 
+# Makes you more slippery, or perhaps less slippery.
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectFriction
+  name: friction
+  components:
+  - type: FrictionStatusEffect
+
 # Adds drugs overlay
 - type: entity
   parent: MobStatusEffectBase
