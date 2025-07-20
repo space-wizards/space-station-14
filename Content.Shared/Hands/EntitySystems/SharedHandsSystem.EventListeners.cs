@@ -8,6 +8,7 @@ namespace Content.Shared.Hands.EntitySystems;
 /// </summary>
 public abstract partial class SharedHandsSystem
 {
+    // TODO: Both of these values should be based on an entity's size or something.
     // Mininum weight for modifiers
     private static readonly int MinWeight = 2;
     // Maximum adjusted weight (so weight minus minweight) for maximum penalty
@@ -43,7 +44,6 @@ public abstract partial class SharedHandsSystem
 
         var weight = CountHeldItemsWeight((ent, ent.Comp));
 
-        // TODO: Unhardcode this number
         // If we're below the weight where we start taking speed penalties, just fuggetabout it!
         if (weight <= MinWeight)
             return;
@@ -54,7 +54,6 @@ public abstract partial class SharedHandsSystem
         // And the other is our hand count minus free hands.
         // We multiply these values together to get an encumbrance, if you have more hands free you can better manage the weight you're carrying.
         // Then we divide by the max adjusted weight and clamp to get our modifier.
-        // TODO: Unhardcode the magic numbers
         var modifier =  Math.Max(0f, 1f - (weight - MinWeight) * (ent.Comp.Count - free) / MaxAdjustedWeight);
         Log.Debug($"Appliyng a speed modifier of {modifier} to {ToPrettyString(ent)} from an item weight total of {weight} and empty hand count of {free}");
 
