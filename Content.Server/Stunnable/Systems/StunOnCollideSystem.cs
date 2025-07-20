@@ -21,16 +21,16 @@ namespace Content.Server.Stunnable
 
         private void TryDoCollideStun(EntityUid uid, StunOnCollideComponent component, EntityUid target)
         {
-            _stunSystem.TryUpdateStunDuration(target, TimeSpan.FromSeconds(component.StunAmount));
+            _stunSystem.TryUpdateStunDuration(target, component.StunAmount);
 
             _stunSystem.TryKnockdown(target, component.KnockdownAmount, component.Refresh, component.AutoStand);
 
             _movementMod.TryUpdateMovementSpeedModDuration(
                 target,
                 MovementModStatusSystem.TaserSlowdown,
-                TimeSpan.FromSeconds(component.SlowdownAmount),
-                component.WalkSpeedMultiplier,
-                component.RunSpeedMultiplier
+                component.SlowdownAmount,
+                component.WalkSpeedModifier,
+                component.SprintSpeedModifier
             );
         }
 

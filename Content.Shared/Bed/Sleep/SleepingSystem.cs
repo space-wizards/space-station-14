@@ -67,7 +67,7 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<SleepingComponent, GetVerbsEvent<AlternativeVerb>>(AddWakeVerb);
         SubscribeLocalEvent<SleepingComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<SleepingComponent, StunEndAttemptEvent>(OnStunEndAttempt);
-        SubscribeLocalEvent<SleepingComponent, KnockdownEndAttemptEvent>(OnKnockdownEndAttempt);
+        SubscribeLocalEvent<SleepingComponent, StandUpAttemptEvent>(OnStandUpAttempt);
 
         SubscribeLocalEvent<ForcedSleepingStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusEffectApplied);
         SubscribeLocalEvent<SleepingComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
@@ -128,7 +128,7 @@ public sealed partial class SleepingSystem : EntitySystem
         }
 
         _stun.TryUnstun(ent.Owner);
-        _stun.TryStanding(ent.Owner);
+        _stun.TryStanding(ent.Owner, out _);
 
         RemComp<SpamEmitSoundComponent>(ent);
     }
@@ -179,8 +179,9 @@ public sealed partial class SleepingSystem : EntitySystem
         args.Cancelled = true;
     }
 
-    private void OnKnockdownEndAttempt(Entity<SleepingComponent> ent, ref KnockdownEndAttemptEvent args)
+    private void OnStandUpAttempt(Entity<SleepingComponent> ent, ref StandUpAttemptEvent args)
     {
+        // Shh the Urist McHands is sleeping...
         args.Cancelled = true;
     }
 
@@ -197,7 +198,6 @@ public sealed partial class SleepingSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        var target = args.Target;
         var user = args.User;
         AlternativeVerb verb = new()
         {
