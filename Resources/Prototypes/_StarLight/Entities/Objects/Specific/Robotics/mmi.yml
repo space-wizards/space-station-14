@@ -7,7 +7,7 @@
     - type: Sprite
       sprite: Objects/Specific/Robotics/mmi.rsi
       layers:
-      - state: posibrain
+      - state: posibrain-occupied
         map: ["base"]
     - type: Input
       context: human

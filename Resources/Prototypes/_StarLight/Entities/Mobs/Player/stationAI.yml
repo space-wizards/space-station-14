@@ -5,8 +5,8 @@
   description: Shunt into a borg chassis with a AI interface installed.
   components:
   - type: Action
-    icon: { sprite : Interface/Actions/devour.rsi, state: icon }
-    iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
+    icon: { sprite : _Starlight/Interface/Actions/actions_shunt.rsi, state: icon }
+    iconOn: { sprite : _Starlight/Interface/Actions/actions_shunt.rsi, state: icon-on }
     itemIconStyle: BigAction
     priority: 1
   - type: TargetAction
@@ -25,6 +25,6 @@
   components:
   - type: Action
     useDelay: 1
-    icon: Interface/Actions/scream.png
+    icon: { sprite : _Starlight/Interface/Actions/actions_shunt.rsi, state: icon-unshunt }
   - type: InstantAction
     event: !type:AIUnShuntActionEvent

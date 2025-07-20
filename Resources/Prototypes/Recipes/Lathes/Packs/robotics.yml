@@ -10,6 +10,7 @@
   # Starlight-start
   - MechAirTank 
   - MechThruster
+  - AIInterfaceCube
   # Starlight-end
 
 - type: latheRecipePack
