@@ -396,6 +396,20 @@
   - type: Sprite
     sprite: Objects/Fun/Balls/basketball.rsi
     state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.8 # bouncy
+        friction: 0.2
+  - type: Catchable
+    catchChance: 0.8
+    catchSuccessSound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Effects/Footsteps/bounce.ogg
@@ -414,6 +428,23 @@
   - type: Sprite
     sprite: Objects/Fun/Balls/football.rsi
     state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.5 # a little bouncy
+        friction: 0.2
+  - type: Catchable
+    catchChance: 0.8
+    catchSuccessSound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
     size: Small
     sprite: Objects/Fun/Balls/football.rsi
@@ -427,6 +458,21 @@
   - type: Sprite
     sprite: Objects/Fun/Balls/beach_ball.rsi
     state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.3
+          position: "0,-0.2"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.1 # not bouncy
+        friction: 0.2
+  - type: Catchable
+    catchChance: 0.8
+    catchSuccessSound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Effects/Footsteps/bounce.ogg
@@ -525,9 +571,9 @@
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
-    shader: unshaded
     layers:
     - state: tesla_projectile
+      shader: unshaded
   - type: Item
     inhandVisuals:
       left:
@@ -559,8 +605,9 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/pondering_orb.rsi
-    state: icon
-    shader: unshaded
+    layers:
+    - state: icon
+      shader: unshaded
   - type: PointLight
     radius: 2
     color: "#00CCFF"
@@ -628,7 +675,7 @@
     color: white
     netsync: false
   - type: Appearance
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: blade
     inhandVisuals:
       left:
@@ -799,7 +846,6 @@
   - type: Sprite
     sprite: Objects/Fun/whoopie.rsi
     state: icon
-    quickEquip: false
   - type: Tag
     tags:
     - Payload
@@ -826,8 +872,10 @@
   - type: UseDelay
     delay: 0.8
   - type: Slippery
+    staminaDamage: 0
     slipData:
-      paralyzeTime: 0
+      stunTime: 0
+      knockdownTime: 0
       launchForwardsMultiplier: 0
     slipSound:
       collection: Parp

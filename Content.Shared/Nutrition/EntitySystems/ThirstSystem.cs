@@ -23,14 +23,9 @@ public sealed class ThirstSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
-    [ValidatePrototypeId<SatiationIconPrototype>]
-    private const string ThirstIconOverhydratedId = "ThirstIconOverhydrated";
-
-    [ValidatePrototypeId<SatiationIconPrototype>]
-    private const string ThirstIconThirstyId = "ThirstIconThirsty";
-
-    [ValidatePrototypeId<SatiationIconPrototype>]
-    private const string ThirstIconParchedId = "ThirstIconParched";
+    private static readonly ProtoId<SatiationIconPrototype> ThirstIconOverhydratedId = "ThirstIconOverhydrated";
+    private static readonly ProtoId<SatiationIconPrototype> ThirstIconThirstyId = "ThirstIconThirsty";
+    private static readonly ProtoId<SatiationIconPrototype> ThirstIconParchedId = "ThirstIconParched";
 
     public override void Initialize()
     {

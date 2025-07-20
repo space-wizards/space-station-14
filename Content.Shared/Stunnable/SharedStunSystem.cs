@@ -1,12 +1,13 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Interaction;
+using Content.Shared.Alert;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -17,47 +18,35 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable;
 
-public abstract class SharedStunSystem : EntitySystem
+public abstract partial class SharedStunSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] protected readonly ActionBlockerSystem Blocker = default!;
+    [Dependency] protected readonly AlertsSystem Alerts = default!;
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
-    [Dependency] private readonly StandingStateSystem _standingState = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
+    [Dependency] protected readonly SharedStaminaSystem Stamina = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
-
-    /// <summary>
-    /// Friction modifier for knocked down players.
-    /// Doesn't make them faster but makes them slow down... slower.
-    /// </summary>
-    public const float KnockDownModifier = 0.2f;
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<KnockedDownComponent, ComponentInit>(OnKnockInit);
-        SubscribeLocalEvent<KnockedDownComponent, ComponentShutdown>(OnKnockShutdown);
-        SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandAttempt);
-
         SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
         SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
-
-        SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
-        SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(UpdateCanMove);
-
-        SubscribeLocalEvent<StunOnContactComponent, StartCollideEvent>(OnStunOnContactCollide);
-
-        // helping people up if they're knocked down
-        SubscribeLocalEvent<KnockedDownComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
-        SubscribeLocalEvent<KnockedDownComponent, TileFrictionEvent>(OnKnockedTileFriction);
+        SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
+        SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(OnStunShutdown);
+
+        SubscribeLocalEvent<StunOnContactComponent, StartCollideEvent>(OnStunOnContactCollide);
 
         // Attempt event subscriptions.
         SubscribeLocalEvent<StunnedComponent, ChangeDirectionAttemptEvent>(OnAttempt);
@@ -71,6 +60,9 @@ public abstract class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<StunnedComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
         SubscribeLocalEvent<StunnedComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
         SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
+
+        InitializeKnockdown();
+        InitializeAppearance();
     }
 
     private void OnAttemptInteract(Entity<StunnedComponent> ent, ref InteractionAttemptEvent args)
@@ -107,9 +99,16 @@ public abstract class SharedStunSystem : EntitySystem
 
     }
 
+    private void OnStunShutdown(Entity<StunnedComponent> ent, ref ComponentShutdown args)
+    {
+        // This exists so the client can end their funny animation if they're playing one.
+        UpdateCanMove(ent, ent.Comp, args);
+        Appearance.RemoveData(ent, StunVisuals.SeeingStars);
+    }
+
     private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
     {
-        _blocker.UpdateCanMove(uid);
+        Blocker.UpdateCanMove(uid);
     }
 
     private void OnStunOnContactCollide(Entity<StunOnContactComponent> ent, ref StartCollideEvent args)
@@ -124,23 +123,7 @@ public abstract class SharedStunSystem : EntitySystem
             return;
 
         TryStun(args.OtherEntity, ent.Comp.Duration, true, status);
-        TryKnockdown(args.OtherEntity, ent.Comp.Duration, true, status);
-    }
-
-    private void OnKnockInit(EntityUid uid, KnockedDownComponent component, ComponentInit args)
-    {
-        _standingState.Down(uid);
-    }
-
-    private void OnKnockShutdown(EntityUid uid, KnockedDownComponent component, ComponentShutdown args)
-    {
-        _standingState.Stand(uid);
-    }
-
-    private void OnStandAttempt(EntityUid uid, KnockedDownComponent component, StandAttemptEvent args)
-    {
-        if (component.LifeStage <= ComponentLifeStage.Running)
-            args.Cancel();
+        TryKnockdown(args.OtherEntity, ent.Comp.Duration, ent.Comp.Refresh, ent.Comp.AutoStand);
     }
 
     private void OnSlowInit(EntityUid uid, SlowedDownComponent component, ComponentInit args)
@@ -155,18 +138,12 @@ public abstract class SharedStunSystem : EntitySystem
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 
-    private void OnRefreshMovespeed(EntityUid uid, SlowedDownComponent component, RefreshMovementSpeedModifiersEvent args)
-    {
-        args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
-    }
-
     // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
 
     /// <summary>
     ///     Stuns the entity, disallowing it from doing many interactions temporarily.
     /// </summary>
-    public bool TryStun(EntityUid uid, TimeSpan time, bool refresh,
-        StatusEffectsComponent? status = null)
+    public bool TryStun(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null)
     {
         if (time <= TimeSpan.Zero)
             return false;
@@ -187,20 +164,48 @@ public abstract class SharedStunSystem : EntitySystem
     /// <summary>
     ///     Knocks down the entity, making it fall to the ground.
     /// </summary>
-    public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh,
-        StatusEffectsComponent? status = null)
+    public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh, bool autoStand = true, bool drop = true)
     {
         if (time <= TimeSpan.Zero)
             return false;
 
-        if (!Resolve(uid, ref status, false))
+        // Can't fall down if you can't actually be downed.
+        if (!HasComp<StandingStateComponent>(uid))
             return false;
 
-        if (!_statusEffect.TryAddStatusEffect<KnockedDownComponent>(uid, "KnockedDown", time, refresh))
+        var evAttempt = new KnockDownAttemptEvent(autoStand, drop);
+        RaiseLocalEvent(uid, ref evAttempt);
+
+        if (evAttempt.Cancelled)
             return false;
 
-        var ev = new KnockedDownEvent();
-        RaiseLocalEvent(uid, ref ev);
+        // Initialize our component with the relevant data we need if we don't have it
+        if (EnsureComp<KnockedDownComponent>(uid, out var component))
+        {
+            RefreshKnockedMovement((uid, component));
+            CancelKnockdownDoAfter((uid, component));
+        }
+        else
+        {
+            // Only drop items the first time we want to fall...
+            if (drop)
+            {
+                var ev = new DropHandItemsEvent();
+                RaiseLocalEvent(uid, ref ev);
+            }
+
+            // Only update Autostand value if it's our first time being knocked down...
+            SetAutoStand((uid, component), evAttempt.AutoStand);
+        }
+
+        var knockedEv = new KnockedDownEvent(time);
+        RaiseLocalEvent(uid, ref knockedEv);
+
+        UpdateKnockdownTime((uid, component), knockedEv.Time, refresh);
+
+        Alerts.ShowAlert(uid, KnockdownAlert, null, (GameTiming.CurTime, component.NextUpdate));
+
+        _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} knocked down for {time.Seconds} seconds");
 
         return true;
     }
@@ -214,14 +219,14 @@ public abstract class SharedStunSystem : EntitySystem
         if (!Resolve(uid, ref status, false))
             return false;
 
-        return TryKnockdown(uid, time, refresh, status) && TryStun(uid, time, refresh, status);
+        return TryKnockdown(uid, time, refresh) && TryStun(uid, time, refresh, status);
     }
 
     /// <summary>
     ///     Slows down the mob's walking/running speed temporarily
     /// </summary>
     public bool TrySlowdown(EntityUid uid, TimeSpan time, bool refresh,
-        float walkSpeedMultiplier = 1f, float runSpeedMultiplier = 1f,
+        float walkSpeedMod = 1f, float sprintSpeedMod = 1f,
         StatusEffectsComponent? status = null)
     {
         if (!Resolve(uid, ref status, false))
@@ -234,11 +239,11 @@ public abstract class SharedStunSystem : EntitySystem
         {
             var slowed = Comp<SlowedDownComponent>(uid);
             // Doesn't make much sense to have the "TrySlowdown" method speed up entities now does it?
-            walkSpeedMultiplier = Math.Clamp(walkSpeedMultiplier, 0f, 1f);
-            runSpeedMultiplier = Math.Clamp(runSpeedMultiplier, 0f, 1f);
+            walkSpeedMod = Math.Clamp(walkSpeedMod, 0f, 1f);
+            sprintSpeedMod = Math.Clamp(sprintSpeedMod, 0f, 1f);
 
-            slowed.WalkSpeedModifier *= walkSpeedMultiplier;
-            slowed.SprintSpeedModifier *= runSpeedMultiplier;
+            slowed.WalkSpeedModifier *= walkSpeedMod;
+            slowed.SprintSpeedModifier *= sprintSpeedMod;
 
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
             return true;
@@ -298,29 +303,14 @@ public abstract class SharedStunSystem : EntitySystem
         UpdateStunModifiers(ent, speedModifier, speedModifier);
     }
 
-    private void OnInteractHand(EntityUid uid, KnockedDownComponent knocked, InteractHandEvent args)
+    #region friction and movement listeners
+
+    private void OnRefreshMovespeed(EntityUid ent, SlowedDownComponent comp, RefreshMovementSpeedModifiersEvent args)
     {
-        if (args.Handled || knocked.HelpTimer > 0f)
-            return;
-
-        // TODO: This should be an event.
-        if (HasComp<SleepingComponent>(uid))
-            return;
-
-        // Set it to half the help interval so helping is actually useful...
-        knocked.HelpTimer = knocked.HelpInterval / 2f;
-
-        _statusEffect.TryRemoveTime(uid, "KnockedDown", TimeSpan.FromSeconds(knocked.HelpInterval));
-        _audio.PlayPredicted(knocked.StunAttemptSound, uid, args.User);
-        Dirty(uid, knocked);
-
-        args.Handled = true;
+        args.ModifySpeed(comp.WalkSpeedModifier, comp.SprintSpeedModifier);
     }
 
-    private void OnKnockedTileFriction(EntityUid uid, KnockedDownComponent component, ref TileFrictionEvent args)
-    {
-        args.Modifier *= KnockDownModifier;
-    }
+    #endregion
 
     #region Attempt Event Handling
 
@@ -353,15 +343,3 @@ public abstract class SharedStunSystem : EntitySystem
 
     #endregion
 }
-
-/// <summary>
-///     Raised directed on an entity when it is stunned.
-/// </summary>
-[ByRefEvent]
-public record struct StunnedEvent;
-
-/// <summary>
-///     Raised directed on an entity when it is knocked down.
-/// </summary>
-[ByRefEvent]
-public record struct KnockedDownEvent;

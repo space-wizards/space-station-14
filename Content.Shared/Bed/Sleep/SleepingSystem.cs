@@ -38,8 +38,8 @@ public sealed partial class SleepingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedEmitSoundSystem _emitSound = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffectOld = default!;
-    [Dependency] private readonly SharedStatusEffectsSystem _statusEffectNew = default!;
+    [Dependency] private readonly StatusEffect.StatusEffectsSystem _statusEffectOld = default!;
+    [Dependency] private readonly StatusEffectNew.StatusEffectsSystem _statusEffectNew = default!;
 
     public static readonly EntProtoId SleepActionId = "ActionSleep";
     public static readonly EntProtoId WakeActionId = "ActionWake";
@@ -108,7 +108,6 @@ public sealed partial class SleepingSystem : EntitySystem
         {
             // Expiring status effects would remove the components needed for sleeping
             _statusEffectOld.TryRemoveStatusEffect(ent.Owner, "Stun");
-            _statusEffectOld.TryRemoveStatusEffect(ent.Owner, "KnockedDown");
 
             EnsureComp<StunnedComponent>(ent);
             EnsureComp<KnockedDownComponent>(ent);
