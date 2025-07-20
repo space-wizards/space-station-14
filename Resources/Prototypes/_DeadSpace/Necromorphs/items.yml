@@ -98,15 +98,15 @@
   id: ZetaOneMedipen
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: _DeadSpace/Necromorfs/medipen.rsi
     layers:
-    - state: hypovolemic
+    - state: Zeta-One
       map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
-    emptySpriteName: hypovolemic_empty
+    emptySpriteName: Zeta-One-Empty
   - type: Hypospray
     solutionName: pen
     transferAmount: 30
@@ -127,14 +127,14 @@
   id: ZetaTwoMedipen
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: _DeadSpace/Necromorfs/medipen.rsi
     layers:
-    - state: medipen
+    - state: Zeta-Two
       map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
-    emptySpriteName: medipen_empty
+    emptySpriteName: Zeta-Two-Empty
   - type: Hypospray
     solutionName: pen
     transferAmount: 25
@@ -216,3 +216,80 @@
   - type: Pinpointer
     component: Necroobelisk
     targetName: обелиск
+
+- type: entity
+  id: ChemistryBottleStableMutagenInfectorDead
+  suffix: с. мутаген некро
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: опасно
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: StableMutagenInfectorDead
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleNotStableMutagenInfectorDead
+  suffix: н. мутаген некро
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: опасно
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: NotStableMutagenInfectorDead
+          Quantity: 30
+
+- type: entity
+  name: анализатор мутаций
+  parent: BaseItem
+  id: InfectionDeadMutationAnalyzer
+  description: Прибор, обнаруживающий и сообщающий о наличии мутаций в биологических образцах.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/mutagenanalyzer.rsi
+    layers:
+      - state: icon
+        map: ["analyzer"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+        enum.GasAnalyzerVisuals.Enabled:
+          enabled:
+            True: { state: working }
+            False: { state: icon }
+  - type: StaticPrice
+    price: 80
+  - type: InfectionDeadMutationAnalyzer
+
+- type: entity
+  name: отчёт диагноста некроморфных мутаций
+  parent: Paper
+  id: MutationAnalyzerReportPaper
+  description: «Леденящий душу медицинский отчёт».
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper_receipt
+    - state: paper_receipt_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_virus.svg.96dpi.png"
+    headerMargin: 0.0, 0.0, 0.0, 6.0
+    backgroundImageTile: true
+    backgroundPatchMargin: 0.0, 6.0, 0.0, 6.0
+    contentMargin: 30.0, 0.0, 30.0, 0.0
+    maxWritableArea: 300.0, 0.0

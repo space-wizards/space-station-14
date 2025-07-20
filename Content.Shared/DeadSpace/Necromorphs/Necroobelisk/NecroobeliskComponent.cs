@@ -11,9 +11,9 @@ public sealed partial class NecroobeliskComponent : Component
 {
     #region Sanity
 
-    [DataField("rangesanity")]
+    [DataField("rangeSanity")]
     [ViewVariables(VVAccess.ReadOnly)]
-    public float RangeSanity = 30f;
+    public float RangeSanity = 15f;
 
     [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan CheckDurationSanity = TimeSpan.FromSeconds(2);

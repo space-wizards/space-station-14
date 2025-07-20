@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT",
+  "copyright": "Created by ravanesus (dicrord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "OPPY-OPNY-Medipen"
+    },
+    {
+      "name": "OPPY-OPNY-Medipen-Empty"
+    },
+    {
+      "name": "Zeta-One"
+    },
+    {
+      "name": "Zeta-One-Empty"
+    },
+    {
+      "name": "Zeta-Two"
+    },
+    {
+      "name": "Zeta-Two-Empty"
+    }
+  ]
+}

@@ -44,8 +44,7 @@
     - NECROMedipen
     - NECROMedipen
     - NECROMedipen
-    - NECROMedipen
-    - NECROMedipen
+    - PinpointerNecroobelisk
     - ZetaTwoMedipen
     - ZetaTwoMedipen
     - Crowbar
@@ -83,7 +82,7 @@
     - ZetaTwoMedipen
     - ZetaTwoMedipen
     - Crowbar
-    
+
 - type: entity
   id: RandomHumanoidSpawnerCBURNLeaderNECRO
   name: лидер отряда ОПНУ

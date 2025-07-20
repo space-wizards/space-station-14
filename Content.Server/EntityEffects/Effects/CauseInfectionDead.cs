@@ -2,13 +2,16 @@
 
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
-using Content.Shared.Mobs.Components;
 using Content.Shared.DeadSpace.Necromorphs.InfectionDead.Components;
+using System.Linq;
+using Content.Server.DeadSpace.Necromorphs.InfectionDead;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class CauseInfectionDead : EntityEffect
 {
+    [DataField]
+    public InfectionDeadStrainData StrainData = new InfectionDeadStrainData();
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         return Loc.GetString("reagent-effect-guidebook-cause-infection-dead", ("chance", Probability));
@@ -18,17 +21,42 @@ public sealed partial class CauseInfectionDead : EntityEffect
     {
         var entityManager = args.EntityManager;
 
-        if (entityManager.HasComponent<NecromorfComponent>(args.TargetEntity))
+        if (!args.EntityManager.System<InfectionDeadSystem>().IsInfectionPossible(args.TargetEntity))
             return;
 
-        if (entityManager.HasComponent<ImmunitetInfectionDeadComponent>(args.TargetEntity))
-            return;
+        InfectionDeadStrainData? infectionData = null;
 
-        if (entityManager.HasComponent<MobStateComponent>(args.TargetEntity)
-            && entityManager.HasComponent<NecromorfAfterInfectionComponent>(args.TargetEntity))
-            entityManager.EnsureComponent<InfectionDeadComponent>(args.TargetEntity);
+        if (args is EntityEffectReagentArgs reagentArgs)
+        {
+            Console.WriteLine("ok2 ");
+            var solution = reagentArgs.Source;
 
-        entityManager.EnsureComponent<InfectionDeadComponent>(args.TargetEntity);
+            if (solution == null)
+                return;
+
+            var contents = solution.Contents;
+
+            foreach (var reagent in contents)
+            {
+                var dataList = reagent.Reagent.Data;
+                if (dataList == null)
+                    continue;
+
+                infectionData = dataList.OfType<InfectionDeadStrainData>().FirstOrDefault();
+                Console.WriteLine("ok3 ");
+                Console.WriteLine(reagent.Reagent.Prototype);
+            }
+        }
+
+        InfectionDeadComponent component = new InfectionDeadComponent(StrainData);
+
+        if (infectionData != null)
+        {
+            component.StrainData = infectionData;
+            Console.WriteLine("ok4");
+        }
+
+        entityManager.AddComponent(args.TargetEntity, component);
     }
 }
 

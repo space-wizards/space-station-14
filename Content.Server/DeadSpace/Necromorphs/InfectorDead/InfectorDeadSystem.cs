@@ -16,6 +16,10 @@ using Content.Shared.Storage;
 using System.Linq;
 using Content.Shared.Database;
 using Content.Server.Kitchen.Components;
+using Content.Shared.Kitchen.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.DeadSpace.InfectorDead;
 
@@ -28,6 +32,7 @@ public sealed partial class InfectorDeadSystem : EntitySystem
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     public override void Initialize()
     {
@@ -76,8 +81,48 @@ public sealed partial class InfectorDeadSystem : EntitySystem
         if (!component.HasGland)
             return;
 
+        if (!TryComp<NecromorfComponent>(uid, out var necro))
+            return;
+
         var spawns = EntitySpawnCollection.GetSpawns(component.SpawnedEntities).Cast<string?>().ToList();
-        EntityManager.SpawnEntities(_transform.GetMapCoordinates(uid), spawns);
+
+        var ents = EntityManager.SpawnEntities(_transform.GetMapCoordinates(uid), spawns);
+
+        foreach (var ent in ents)
+        {
+            if (!TryComp<ExtractableComponent>(ent, out var extractableComp))
+                continue;
+
+            var juice = extractableComp.JuiceSolution;
+            if (juice == null)
+                continue;
+
+            foreach (var reagent in juice.Contents)
+            {
+                if (reagent.Reagent.Prototype != "ExtractInfectorDead")
+                    continue;
+
+                List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
+                reagentData.RemoveAll(x => x is InfectionDeadStrainData);
+                reagentData.Add(necro.StrainData);
+            }
+
+            if (!TryComp<SolutionContainerManagerComponent>(ent, out var container))
+                continue;
+
+            if (!_solutionContainer.TryGetSolution(ent, "food", out var entity, out var solution))
+                continue;
+
+            foreach (var reagent in solution.Contents)
+            {
+                if (reagent.Reagent.Prototype != "ExtractInfectorDead")
+                    continue;
+
+                List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
+                reagentData.RemoveAll(x => x is InfectionDeadStrainData);
+                reagentData.Add(necro.StrainData);
+            }
+        }
 
         component.HasGland = false;
     }
@@ -145,14 +190,16 @@ public sealed partial class InfectorDeadSystem : EntitySystem
             return;
 
         if (HasComp<NecromorfComponent>(args.Args.Target.Value))
-        {
             _rejuvenate.PerformRejuvenate(args.Args.Target.Value);
-        }
 
         if (!_mobState.IsDead(args.Args.Target.Value))
             return;
 
-        AddComp<InfectionDeadComponent>(args.Args.Target.Value);
+        if (!TryComp<NecromorfComponent>(uid, out var necro))
+            return;
+
+        InfectionDeadComponent infection = new InfectionDeadComponent(necro.StrainData);
+        AddComp(args.Args.Target.Value, infection);
 
         args.Handled = true;
     }

@@ -42,7 +42,7 @@ public sealed class SpiderTerrorRuleSystem : GameRuleSystem<SpiderTerrorRuleComp
     private const float ProgressNukeCode = 0.7f;
     private const float ProgressCaptureStation = 0.98f;
 
-    private bool voteSend = false;
+    private bool _voteSend = false;
 
     public override void Initialize()
     {
@@ -56,7 +56,7 @@ public sealed class SpiderTerrorRuleSystem : GameRuleSystem<SpiderTerrorRuleComp
     {
         base.Started(uid, component, gameRule, args);
 
-        voteSend = true;
+        _voteSend = true;
         component.UpdateUtil = _timing.CurTime + component.UpdateDuration;
         component.TimeUtilStartRule = _timing.CurTime + component.DurationStartRule;
     }
@@ -260,11 +260,11 @@ public sealed class SpiderTerrorRuleSystem : GameRuleSystem<SpiderTerrorRuleComp
                 Capture(uid, station);
         }
 
-        if (GetSpiderKings() <= 0 && !voteSend)
+        if (GetSpiderKings() <= 0 && !_voteSend)
         {
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("spider-terror-centcomm-announcement-spider-kings"), playSound: true, colorOverride: Color.Green);
             _voteManager.CreateStandardVote(null, StandardVoteType.Restart);
-            voteSend = true;
+            _voteSend = true;
         }
 
         if (component.IsBreedingActive(station))

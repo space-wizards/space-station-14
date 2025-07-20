@@ -5,14 +5,14 @@
   description: Разработка Нанотресен. Содержит вещества для лечения повреждений наносимых некроморфами.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: _DeadSpace/Necromorfs/medipen.rsi
     layers:
-    - state: microstimpen
+    - state: OPPY-OPNY-Medipen
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
-    emptySpriteName: microstimpen_empty
+    emptySpriteName: OPPY-OPNY-Medipen-Empty
   - type: Hypospray
     solutionName: pen
     transferAmount: 30

@@ -2,3 +2,6 @@ infectionDeadSpace-smell = Пахнет гнилью, вы чувствуете 
 reagent-name-infectionDeadSpace = Некроинфекция
 reagent-desc-infectionDeadSpace = Дурно пахнет.
 gases-infectionDeadSpace = Некроинфекция
+
+mutagen-anz-window-title = Анализ штамма вируса
+mutagen-anz-window-accept-button = Ок

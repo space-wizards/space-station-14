@@ -18,7 +18,7 @@
   id: ExtractInfectorDead
   name: entity-name-extract-infector
   group: Toxins
-  desc: reagent-desc-extract-infector
+  desc: reagent-desc-mutagen-infection-dead
   physicalDesc: reagent-physical-desc-thick
   flavor: sweet
   color: "#e0a5b9"
@@ -27,6 +27,44 @@
     Medicine:
       effects:
         - !type:CauseInfectionDead
+          conditions:
+            - !type:ReagentThreshold
+              min: 3
+
+- type: reagent
+  id: StableMutagenInfectorDead
+  name: entity-name-stable-mutagen-infection-dead
+  group: Toxins
+  desc: reagent-desc-not-mutagen-infection-dead
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: tingly
+  color: "#7a4c5b"
+  worksOnTheDead: false
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:InfectiodDeadMutation
+          mutationStrength: 0.2
+          isStableMutation: true
+          conditions:
+            - !type:ReagentThreshold
+              min: 3
+
+- type: reagent
+  id: NotStableMutagenInfectorDead
+  name: entity-name-stable-not-mutagen-infection-dead
+  group: Toxins
+  desc: reagent-desc-extract-infector
+  physicalDesc: reagent-physical-desc-nondescript
+  flavor: tingly
+  color: "#5f3643"
+  worksOnTheDead: false
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:InfectiodDeadMutation
+          mutationStrength: 0.6
+          isStableMutation: false
           conditions:
             - !type:ReagentThreshold
               min: 3
@@ -103,3 +141,23 @@
       amount: 1
   products:
     SerumEnslaved: 3
+
+- type: reaction
+  id: StableMutagenInfectorDead
+  reactants:
+    ExtractInfectorDead:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+  products:
+    StableMutagenInfectorDead: 2
+
+- type: reaction
+  id: NotStableMutagenInfectorDead
+  reactants:
+    ExtractInfectorDead:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+  products:
+    NotStableMutagenInfectorDead: 2

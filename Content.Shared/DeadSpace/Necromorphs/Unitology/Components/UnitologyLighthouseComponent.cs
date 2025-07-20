@@ -2,15 +2,8 @@
 
 namespace Content.Shared.DeadSpace.Necromorphs.Unitology.Components;
 
-/// <summary>
-/// Used for marking regular unitologs as well as storing icon prototypes so you can see fellow unitologs.
-/// </summary>
 [RegisterComponent]
-public sealed partial class StunSlaveComponent : Component
+public sealed partial class UnitologyLighthouseComponent : Component
 {
-    [DataField]
-    public float Duration = 300f;
 
-    [DataField]
-    public TimeSpan TimeUtil;
 }

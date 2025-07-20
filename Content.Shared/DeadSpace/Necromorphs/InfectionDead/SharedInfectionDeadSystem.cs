@@ -26,14 +26,10 @@ public abstract class SharedInfectionDeadSystem : EntitySystem
     public bool IsInfectionPossible(EntityUid target)
     {
         if (!HasComp<MobStateComponent>(target) || HasComp<InfectorDeadComponent>(target) || HasComp<ImmunitetInfectionDeadComponent>(target))
-        {
             return false;
-        }
 
         if (HasComp<InfectionDeadComponent>(target) || HasComp<NecromorfComponent>(target))
-        {
             return false;
-        }
 
         if (HasComp<ZombieComponent>(target) || HasComp<PendingZombieComponent>(target))
             return false;
@@ -52,6 +48,19 @@ public abstract class SharedInfectionDeadSystem : EntitySystem
         component.NextDamageTime = _timing.CurTime + component.DamageDuration;
     }
 
+    public bool TryCure(EntityUid uid, InfectionDeadComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.Incurability))
+            return false;
+
+        RemComp<InfectionDeadComponent>(uid);
+
+        return true;
+    }
+
     public bool TryHandleInfectionState(EntityUid uid, InfectionDeadComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -59,7 +68,7 @@ public abstract class SharedInfectionDeadSystem : EntitySystem
 
         if (!_mobState.IsDead(uid))
         {
-            var damageEvent = new InfectionDeadDamageEvent();
+            var damageEvent = new InfectionDeadSymptomsEvent();
             RaiseLocalEvent(uid, ref damageEvent);
             return true;
         }

@@ -15,20 +15,22 @@ namespace Content.Shared.DeadSpace.Necromorphs.InfectionDead.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NecromorfComponent : Component
 {
-    public NecromorfComponent()
-    { }
+    public NecromorfComponent(InfectionDeadStrainData sd)
+    {
+        StrainData = sd;
+    }
+
+    [DataField]
+    public InfectionDeadStrainData StrainData = new InfectionDeadStrainData();
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float MovementSpeedMultiply = 1f;
-
-    [DataField("skinColor")]
-    public Color SkinColor = new(0.64f, 0.60f, 0.72f);
 
     /// <summary>
     /// The eye color of the Necromorf
     /// </summary>
     [DataField("eyeColor")]
-    public Color EyeColor = new(1f, 0f, 0f);
+    public Color EyeColor = new(1f, 1f, 1f);
 
     /// <summary>
     /// The base layer to apply to any 'external' humanoid layers upon zombification.
@@ -115,4 +117,7 @@ public sealed partial class NecromorfComponent : Component
 
     [DataField("useInventory")]
     public bool IsCanUseInventory = true;
+
+    [DataField]
+    public bool IsMutated = false;
 }

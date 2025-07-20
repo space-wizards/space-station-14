@@ -14,6 +14,14 @@ public sealed partial class InitialNecroficationComponent : Component
 
     [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan StartTick;
+
+    public InitialNecroficationComponent(InfectionDeadStrainData sd)
+    {
+        StrainData = sd;
+    }
+
+    [DataField]
+    public InfectionDeadStrainData StrainData = new InfectionDeadStrainData();
 }
 
 [ByRefEvent]
