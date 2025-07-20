@@ -48,7 +48,6 @@
     heldPrefix: swab_applicator
     size: Small
   - type: ItemSlots
-    ejectOnUse: true
     slots:
       swab:
         name: Swab
@@ -59,6 +58,7 @@
           tags:
           - Swab
         whitelistFailPopup: swab-applicator-whitelist-fail
+        ejectOnUse: true
   - type: ContainerContainer
     containers:
       swab: !type:ContainerSlot
