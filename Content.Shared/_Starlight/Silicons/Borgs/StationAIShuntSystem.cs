@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Mind;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
@@ -9,44 +10,75 @@ namespace Content.Shared._Starlight.Silicons.Borgs;
 
 public sealed class StationAIShuntSystem : EntitySystem
 {
-    
+
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    
+    [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<StationAIShuntableComponent, AIShuntActionEvent>(OnAttemptShunt);
+        SubscribeLocalEvent<StationAIShuntComponent, AIUnShuntActionEvent>(OnAttemptUnshunt);
     }
 
-    [SuppressMessage("Usage", "RA0030:Consider using the non-generic variant of this method")]
-    private void OnAttemptShunt(EntityUid uid, StationAIShuntableComponent _, AIShuntActionEvent ev)
+    private void OnAttemptShunt(EntityUid uid, StationAIShuntableComponent shuntable, AIShuntActionEvent ev)
     {
         if (ev.Handled)
             return;
-        
         var target = ev.Target;
-        EntityUid? chassis = null;
-        if (TryComp<BorgChassisComponent>(target, out var chassisComp))
-        {
-            var brainContainer = chassisComp.BrainContainer;
-            var contained = brainContainer.ContainedEntity;
-            if (!contained.HasValue)
-                return; // a chassis without a brain? obviously we cant shunt into it.
-            chassis = target; // so we can transfer the mind into this chassis
-            target = contained.Value; // At this point we know it is not null so we safely set target
-        }
+
         if (!TryComp<StationAIShuntComponent>(target, out var shunt))
             return;
-        if (!_mindSystem.TryGetMind(uid, out var mindId, out var mindComp))
+        if (!_mindSystem.TryGetMind(uid, out var mindId, out var _))
             return;
-        _mindSystem.Visit(mindId, target, mindComp);
-        if (chassis != null)
+
+        if (TryComp<BorgChassisComponent>(target, out var chassisComp))
         {
-            _mindSystem.TransferTo(mindId, chassis, mind: mindComp); // what if we just... yoinked the logic that is done internally when a borg brain is inserted.
+            var brain = chassisComp.BrainContainer.ContainedEntity;
+            if (!brain.HasValue)
+                return; //Chassis has no posibrian so cant shunt into it.
+            if (!TryComp<StationAIShuntComponent>(brain, out var brainShunt))
+                return; //Chassis brain is not able to be shunted into so obvs cant.
+            brainShunt.Return = uid;
+            brainShunt.ReturnAction = _actionSystem.AddAction(brain.Value, shuntable.UnshuntAction.Id);
         }
+
+        shunt.Return = uid;
+        _mindSystem.TransferTo(mindId, target);
+        shunt.ReturnAction = _actionSystem.AddAction(target, shuntable.UnshuntAction.Id);
         ev.Handled = true;
+    }
+
+    private void OnAttemptUnshunt(EntityUid uid, StationAIShuntComponent shunt, AIUnShuntActionEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        if (!_mindSystem.TryGetMind(uid, out var mindId, out var _))
+            return;
+
+        if (!TryComp<ActionComponent>(shunt.ReturnAction, out var act))
+            return; //Somehow the action does not have action component? invalid perhaps?
+
+        if (TryComp<BorgChassisComponent>(uid, out var chassisComp))
+        {
+            var brain = chassisComp.BrainContainer.ContainedEntity;
+            if (!brain.HasValue)
+                return; //Chassis has no brain... how is the AI controlling it???
+            if (!TryComp<StationAIShuntComponent>(brain, out var brainShunt))
+                return; //Chassis brain is not able to be shunted into so how is AI controlling it???
+            if (!TryComp<ActionComponent>(brainShunt.ReturnAction, out var brainAct))
+                return; //Somehow the action does not have action component? invalid perhaps?
+            _actionSystem.RemoveAction(new Entity<ActionComponent?>(brainShunt.ReturnAction.Value, brainAct));
+            brainShunt.Return = null; //cause we are returning now
+            brainShunt.ReturnAction = null;
+        }
+
+        _actionSystem.RemoveAction(new Entity<ActionComponent?>(shunt.ReturnAction.Value, act));
+        _mindSystem.TransferTo(mindId, shunt.Return);
+        shunt.ReturnAction = null;
+        shunt.Return = null;
     }
 }
 

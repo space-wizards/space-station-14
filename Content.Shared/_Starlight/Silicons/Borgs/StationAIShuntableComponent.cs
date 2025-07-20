@@ -1,4 +1,6 @@
+using Content.Shared.Actions.Components;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Starlight.Silicons.Borgs;
 
@@ -8,4 +10,9 @@ namespace Content.Shared._Starlight.Silicons.Borgs;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class StationAIShuntableComponent : Component
 {
+    /// <summary>
+    /// what action is granted to the ai to allow them to return to their body.
+    /// </summary>
+    [DataField]
+    public EntProtoId<ActionComponent> UnshuntAction = "ActionAIUnShunt";
 }

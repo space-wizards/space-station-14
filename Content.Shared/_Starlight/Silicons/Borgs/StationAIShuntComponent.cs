@@ -1,5 +1,6 @@
 using Robust.Shared.GameStates;
 
+
 namespace Content.Shared._Starlight.Silicons.Borgs;
 
 /// <summary>
@@ -8,4 +9,15 @@ namespace Content.Shared._Starlight.Silicons.Borgs;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class StationAIShuntComponent : Component
 {
+    /// <summary>
+    /// What Station-AI will we be returning to after un-shunting
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? Return = null;
+
+    /// <summary>
+    /// Holds the euid of the action so we can delete it when shunting out.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? ReturnAction = null;
 }

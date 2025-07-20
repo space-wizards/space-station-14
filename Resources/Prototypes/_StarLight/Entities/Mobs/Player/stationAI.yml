@@ -12,6 +12,9 @@
   - type: TargetAction
   - type: EntityTargetAction
     canTargetSelf: false # no whitelist cause the posibrain has the shunt comp. not the chassis.
+    whitelist: 
+      components:
+        - StationAIShunt
     event: !type:AIShuntActionEvent
 
 - type: entity
