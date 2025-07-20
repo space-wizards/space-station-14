@@ -47,6 +47,21 @@
     guides:
     - Chef
     - FoodRecipes
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          radius: 0.01
+          vertices:
+          - -0.475,-0.225
+          - -0.225,-0.475
+          - 0.525,0.275
+          - 0.275,0.525
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
 - type: entity
   name: butcher's cleaver
@@ -74,6 +89,21 @@
     guides:
     - Chef
     - FoodRecipes
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          radius: 0.01
+          vertices:
+          - -0.58,-0.12
+          - -0.34,-0.55
+          - 0.6,-0.075
+          - 0.375,0.375
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
 - type: entity
   name: combat knife
