@@ -23,15 +23,11 @@ public sealed class TileSystem : EntitySystem
     [Dependency] private readonly SharedDecalSystem _decal = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-
-    private int _tileStackingHistorySize;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<GridInitializeEvent>(OnGridStartup);
-        _cfg.OnValueChanged(CCVars.TileStackingHistorySize, value => _tileStackingHistorySize = value, true);
     }
 
     /// <summary>
@@ -160,14 +156,6 @@ public sealed class TileSystem : EntitySystem
         {
             var currentTileDef = (ContentTileDefinition)_tileDefinitionManager[tileref.Tile.TypeId];
             stack.Push(currentTileDef.ID);
-
-            //Enforce stack limit (0 = infinite)
-            if (_tileStackingHistorySize > 0 && stack.Count > _tileStackingHistorySize)
-            {
-                //Trim the bottom-most (oldest) entry
-                var newStack = new Stack<ProtoId<ContentTileDefinition>>((IEnumerable<ProtoId<ContentTileDefinition>>)stack.Reverse().Take(_tileStackingHistorySize));
-                history.TileHistory[key] = newStack;
-            }
         }
 
         var variant = PickVariant(replacementTile);
@@ -224,11 +212,11 @@ public sealed class TileSystem : EntitySystem
             previousTileId = tileDef.BaseTurf;
         }
 
-        //Actually spawn the relevant tile item at the right position and give it some random offset.  
+        //Actually spawn the relevant tile item at the right position and give it some random offset.
         var tileItem = Spawn(tileDef.ItemDropPrototypeName, coordinates);
         Transform(tileItem).LocalRotation = _robustRandom.NextDouble() * Math.Tau;
 
-        //Destroy any decals on the tile  
+        //Destroy any decals on the tile
         var decals = _decal.GetDecalsInRange(gridUid, coordinates.SnapToGrid(EntityManager, _mapManager).Position, 0.5f);
         foreach (var (id, _) in decals)
         {
