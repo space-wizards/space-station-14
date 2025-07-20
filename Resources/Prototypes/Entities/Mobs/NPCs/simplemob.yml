@@ -93,7 +93,6 @@
   - type: StatusEffects
     allowed:
     - Stun
-    - KnockedDown
     - SlowedDown
     - Electrocution
     - TemporaryBlindness
