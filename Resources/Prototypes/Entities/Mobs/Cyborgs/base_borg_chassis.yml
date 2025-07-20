@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   parent: [BaseMob, StripableInventoryBase]
   id: BaseBorgChassisNotIonStormable
@@ -189,6 +191,14 @@
         !type:DamageTrigger
         damage: 300
       behaviors:
+      - !type:SpawnEntitiesBehavior # Ronstation. Start of modifications.
+        spawn:
+          SheetSteel1:
+            min: 10
+            max: 16
+          ShardGlass:
+            min: 1
+            max: 2  # Ronstation. End of modifications.
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak

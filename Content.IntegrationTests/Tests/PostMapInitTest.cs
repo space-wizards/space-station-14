@@ -77,7 +77,9 @@ namespace Content.IntegrationTests.Tests
             "Exo",
             "Saltern2",
             "Cluster2",
-            "Atlas2"
+            "Atlas2",
+      	    "Atlas3",
+	          "Feint"
         };
 
         private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";
