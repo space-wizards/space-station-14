@@ -2,7 +2,7 @@
   id: DeckardBox
   parent: [ BaseStorageItem, BaseBagOpenClose ]
   name: deckard box
-  description: A heavy wooden box, specially designed to hold a collectible revolver and its speedloaders.
+  description: An artisanal wooden box made to house the Deckard and two speed loaders. It has a good weight to it.
   components:
   - type: Sprite
     sprite: _Ronstation/Objects/Storage/deckardbox.rsi
@@ -46,7 +46,7 @@
       storagebase: !type:Container
   - type: PhysicalComposition
     materialComposition:
-      Cardboard: 100
+      Wood: 200
   - type: StaticPrice
     price: 250
   - type: Appearance
