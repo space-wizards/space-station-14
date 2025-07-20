@@ -1,4 +1,37 @@
 - type: loadoutGroup
+  id: AssistantGlasses
+  name: loadout-group-assistant-glasses
+  minLimit: 0
+  loadouts:
+  - Glasses
+  - GlassesJamjar
+  - GlassesJensen
+  - CheapSunnies
+
+- type: loadoutGroup
+  id: AssistantHead
+  name: loadout-group-assistant-head
+  minLimit: 0
+  loadouts:
+  - GreyCowboy
+  - GreyBandana
+  - GreyFlatcap
+  - GreyCap
+  - CorpoCap
+  - SyndieCap
+  - GreyFedoraA
+  - SolidHeadband
+  - GreytideBizarreAdventures
+
+- type: loadoutGroup
+  id: AssistantBackpack
+  name: loadout-group-assistant-backpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+
+- type: loadoutGroup
   id: RoboticistJumpsuit
   name: loadout-group-roboticist-jumpsuit
   loadouts:
@@ -78,7 +111,22 @@
   - BlueShieldJumpskirt
   - EliteBlueShieldJumpsuit
   - EliteBlueShieldJumpskirt
+  - BlueShieldShirt
 
+- type: loadoutGroup
+  id: BlueShieldOuterclothing
+  name: Loadout-group-blueshield-outerclothing
+  loadouts:
+  - BlueShieldVest
+  - BlueShieldCoat
+  
+- type: loadoutGroup
+  id: BlueShieldNeck
+  name: Loadout-group-blueshield-neck
+  loadouts:
+  - BlueShieldFormalCloak
+  - BlueShieldEliteCloak
+  
 - type: loadoutGroup
   id: BlueShieldEyewear
   name: loadout-group-blueshield-eyewear
@@ -161,6 +209,8 @@
   - CowboyBootsBrown
   - CowboyBootsBlack
   - CowboyBootsWhite
+  - Heels
+  - HighHeelBoots
 
 - type: loadoutGroup
   id: CivilianShoes

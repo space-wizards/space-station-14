@@ -64,7 +64,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
-    [Dependency] private readonly CollectiveMindUpdateSystem _collectiveMind = default!;
+    [Dependency] private readonly SharedCollectiveMindSystem _collectiveMind = default!;
     [Dependency] private readonly SpeechSystem _speechSystem = default!; //Starlight
 
     public const int VoiceRange = 10; // how far voice goes in world units
@@ -507,6 +507,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (_mobStateSystem.IsDead(source) || collectiveMind == null || message == "" || !TryComp<CollectiveMindComponent>(source, out var sourceCollectiveMindComp) || !sourceCollectiveMindComp.Minds.ContainsKey(collectiveMind))
             return;
 
+        //raise the message event for modifications
+        var evMsg = new CollectiveMindMessageAttemptEvent(source, message);
+        RaiseLocalEvent(source, evMsg, false);
+        if (evMsg.Cancelled)
+            return;
+        message = evMsg.Message;
+
         var clients = Filter.Empty();
         var receivers = new List<EntityUid>();
         var mindQuery = EntityQueryEnumerator<CollectiveMindComponent, ActorComponent>();
@@ -522,12 +529,21 @@ public sealed partial class ChatSystem : SharedChatSystem
             }
         }
 
+        //add ghosts that have ghost hearing on
+        var ghostQuery = EntityQueryEnumerator<GhostHearingComponent, ActorComponent>();
+        while (ghostQuery.MoveNext(out var uid, out var ghostComp, out var actorComp))
+        {
+            clients.AddPlayer(actorComp.PlayerSession);
+            receivers.Add(uid);
+        }
+
         var Number = $"{sourceCollectiveMindComp.Minds[collectiveMind].MindId}";
 
         var admins = _adminManager.ActiveAdmins
             .Select(p => p.Channel);
         string messageWrap;
         string adminMessageWrap;
+
 
         messageWrap = Loc.GetString("collective-mind-chat-wrap-message",
             ("message", FormattedMessage.EscapeText(message)),

@@ -907,6 +907,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("sex");
 
+                    b.Property<string>("SiliconVoice")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("silicon_voice");
+
                     b.Property<string>("SkinColor")
                         .IsRequired()
                         .HasColumnType("TEXT")

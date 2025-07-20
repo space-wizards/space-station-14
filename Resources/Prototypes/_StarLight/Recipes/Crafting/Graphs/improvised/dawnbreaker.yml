@@ -1,0 +1,32 @@
+- type: constructionGraph
+  id: SwordFlamingGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: sword
+      steps:
+      - tag: SwordForged
+        icon:
+          sprite: _Starlight/Objects/Weapons/Melee/forged_sword.rsi
+          state: icon
+        name: crafting-menu-name-FSW
+      - material: Plastic
+        amount: 4
+        doAfter: 5
+      - material: Cable
+        amount: 2
+        doAfter: 5
+      - material: Glass
+        amount: 6
+        doAfter: 5
+      - material: MetalRod
+        amount: 2
+      - tag: Igniter
+        icon:
+          sprite: Objects/Devices/igniter.rsi
+          state: icon
+        name: construction-graph-tag-igniter
+        doAfter: 10
+  - node: sword
+    entity: SwordFlaming

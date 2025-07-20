@@ -20,11 +20,16 @@
   - type: Sprite
   - type: Item
     size: Small
-  - type: Tool
-    qualities:
-      - Slicing
-    useSound:
-      path: /Audio/Items/Culinary/chop.ogg
+  - type: Tool # Starlight start
+    qualities: Screwing
+    speedModifier: 0.05
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Slicing
+        useSound: /Audio/Items/Culinary/chop.ogg
+      - behavior: Screwing
+        useSound: /Audio/Items/screwdriver.ogg
   - type: Scalpel
   - type: SurgeryTool
     successRate: 0.9
@@ -32,6 +37,7 @@
       path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+# Starlight end
 
 - type: entity
   name: kitchen knife
@@ -119,7 +125,7 @@
 
 - type: entity
   name: survival knife
-  parent: [BaseSecurityCargoContraband, CombatKnife]
+  parent: [ BaseSecurityMiningSalvageContraband, CombatKnife ] #Starlight salvContra
   id: SurvivalKnife
   description: Weapon of first and last resort for combatting space carp.
   components:

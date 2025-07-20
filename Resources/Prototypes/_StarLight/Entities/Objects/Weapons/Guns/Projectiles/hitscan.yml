@@ -104,6 +104,23 @@
       state: sp
 
 - type: hitscan
+  id: BulletMagnumTraceImprovised
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 15
+      Blunt: 15
+  armorPenetration: -0.35
+  pierceChance: 0.25
+  derivation: 0.05
+  ricochetChance: 0.30
+  staminaDamage: 5
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: sp
+
+- type: hitscan
   id: BulletMagnumTraceHP
   parent: BulletTrace
   damage:
@@ -206,6 +223,23 @@
   derivation: 0.2
   ricochetChance: 0.30
   staminaDamage: 2
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: sp
+
+- type: hitscan
+  id: BulletPistolTraceImprovised
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 7
+      Blunt: 7
+  armorPenetration: -0.30
+  pierceChance: 0.25
+  derivation: 0.2
+  ricochetChance: 0.10
+  staminaDamage: 3
   bullet:
     sprite:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -411,6 +445,24 @@
   armorPenetration: -0.25
   staminaDamage: 2
   pierceChance: 0.40
+  derivation: 0.05
+  ricochetChance: 0.30
+  pierceLevel: Metal
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: sp
+
+- type: hitscan
+  id: BulletLightRifleTraceImprovised
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 7
+      Blunt: 7
+  armorPenetration: -0.35
+  staminaDamage: 3
+  pierceChance: 0.20
   derivation: 0.05
   ricochetChance: 0.30
   pierceLevel: Metal
@@ -736,35 +788,67 @@
       state: heavylaser
   collisionMask: 64 #BulletImpassable
   reflective: Energy
-  
+
 - type: hitscan
-  id: LaserBolt
-  name: laser bolt
-  parent: EnergyTrace
+  id: LaserTrace
+  abstract: true
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_laser
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_laser
+  reflective: Energy
+
+- type: hitscan
+  id: RedLaserBeam
+  name: laser beam
+  parent: LaserTrace
   damage:
     types:
       Heat: 20
 
 - type: hitscan
-  id: DestroyBolt
-  name: destroying bolt
-  parent: EnergyTrace
+  id: DestroyBeam
+  name: destroying beam
+  parent: LaserTrace
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_blue
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_blue
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_blue
   damage:
     types:
       Heat: 50
       
 - type: hitscan
-  id: DisablerBolt
-  name: disabler bolt
+  id: DisablerBoltPractice
+  name: disabler bolt practice
   parent: EnergyTrace
+  collisionMask: 64 #BulletImpassable
   bullet:
     sprite:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
       state: omnilaser
+
+- type: hitscan
+  id: DisablerBolt
+  name: disabler bolt
+  parent: DisablerBoltPractice
   staminaDamage: 25
-  damage:
-    types:
-      Heat: 5
+
+- type: hitscan
+  id: DisablerBoltSmg
+  name: disabler bolt smg
+  parent: DisablerBolt
+  staminaDamage: 15
       
 - type: hitscan
   id: TaserBolt
@@ -780,7 +864,7 @@
   maxLength: 5
   damage:
     types:
-      Heat: 5
+      Heat: 0
       
 - type: hitscan
   id: AdvancedTaserBolt

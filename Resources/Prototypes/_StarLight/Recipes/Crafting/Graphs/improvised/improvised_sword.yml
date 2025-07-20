@@ -1,0 +1,26 @@
+- type: constructionGraph
+  id: SwordImprovisedGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: sword
+      steps:
+      - tag: BladeSteel
+        icon:
+          sprite: _Starlight/Objects/Misc/steel_blade.rsi
+          state: icon
+        name: crafting-menu-name-SB
+      - material: Steel
+        amount: 2
+        doAfter: 15
+      - material: Cloth
+        amount: 3
+        doAfter: 5
+      - tag: HiltWood
+        icon:
+          sprite: _Starlight/Objects/Misc/wooden_hilt.rsi
+          state: icon
+        name: crafting-menu-name-WH
+  - node: sword
+    entity: SwordImprovised
