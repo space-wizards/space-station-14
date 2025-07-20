@@ -1,5 +1,7 @@
 using Content.Shared.Alert;
 using Content.Shared.Inventory;
+using Content.Shared.Throwing;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -39,6 +41,10 @@ namespace Content.Shared.Gravity
             SubscribeLocalEvent<AlertSyncEvent>(OnAlertsSync);
             SubscribeLocalEvent<AlertsComponent, WeightlessnessChangedEvent>(OnWeightlessnessChanged);
             SubscribeLocalEvent<AlertsComponent, EntParentChangedMessage>(OnAlertsParentChange);
+
+            // Impulse
+            SubscribeLocalEvent<WeightlessnessComponent, ShooterImpulseEvent>(OnShooterImpulse);
+            SubscribeLocalEvent<WeightlessnessComponent, ThrowerImpulseEvent>(OnThrowerImpulse);
 
             _gravityQuery = GetEntityQuery<GravityComponent>();
         }
@@ -118,7 +124,7 @@ namespace Content.Shared.Gravity
 
         private void ChangeWeightless(Entity<WeightlessnessComponent> entity)
         {
-            var newWeightless = TryWeightless(entity!);
+            var newWeightless = TryWeightless(entity);
 
             if (newWeightless == entity.Comp.Weightless)
                 return;
@@ -247,6 +253,16 @@ namespace Content.Shared.Gravity
             {
                 Enabled = enabled;
             }
+        }
+
+        private void OnThrowerImpulse(Entity<WeightlessnessComponent> entity, ref ThrowerImpulseEvent args)
+        {
+            args.Push = true;
+        }
+
+        private void OnShooterImpulse(Entity<WeightlessnessComponent> entity, ref ShooterImpulseEvent args)
+        {
+            args.Push = true;
         }
     }
 
