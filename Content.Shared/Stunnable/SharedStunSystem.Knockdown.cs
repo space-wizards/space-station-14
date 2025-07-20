@@ -263,6 +263,14 @@ public abstract partial class SharedStunSystem
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
             return true;
 
+        if (!entity.Comp2.AllowCrawling && CanStand((entity.Owner, entity.Comp1)))
+        {
+            // If we can't crawl then just have us sit back up...
+            RemComp<KnockedDownComponent>(entity);
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} has stood up from knockdown.");
+            return true;
+        }
+
         id = entity.Comp1.DoAfterId;
 
         if (!TryStand((entity.Owner, entity.Comp1)))

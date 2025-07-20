@@ -37,8 +37,12 @@ public abstract partial class SharedStunSystem : EntitySystem
     [Dependency] protected readonly SharedStaminaSystem Stamina = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
 
+    private EntityQuery<StandingStateComponent> _standingQuery;
+
     public override void Initialize()
     {
+        _standingQuery = GetEntityQuery<StandingStateComponent>();
+
         SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
         SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
         SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
@@ -123,7 +127,7 @@ public abstract partial class SharedStunSystem : EntitySystem
             return;
 
         TryStun(args.OtherEntity, ent.Comp.Duration, true, status);
-        TryKnockdown(args.OtherEntity, ent.Comp.Duration, ent.Comp.Refresh, ent.Comp.AutoStand);
+        TryKnockdown(args.OtherEntity, ent.Comp.Duration, ent.Comp.Refresh, ent.Comp.AutoStand, force: true);
     }
 
     private void OnSlowInit(EntityUid uid, SlowedDownComponent component, ComponentInit args)
@@ -164,26 +168,41 @@ public abstract partial class SharedStunSystem : EntitySystem
     /// <summary>
     ///     Knocks down the entity, making it fall to the ground.
     /// </summary>
-    public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh, bool autoStand = true, bool drop = true)
+    /// <param name="entity"></param>
+    /// <param name="time"></param>
+    /// <param name="refresh"></param>
+    /// <param name="autoStand"></param>
+    /// <param name="drop"></param>
+    /// <param name="force"></param>
+    public bool TryKnockdown(Entity<StandingStateComponent?> entity, TimeSpan time, bool refresh, bool autoStand = true, bool drop = true, bool force = false)
     {
         if (time <= TimeSpan.Zero)
             return false;
 
         // Can't fall down if you can't actually be downed.
-        if (!HasComp<StandingStateComponent>(uid))
+        if (!Resolve(entity, ref entity.Comp, false))
             return false;
 
-        var evAttempt = new KnockDownAttemptEvent(autoStand, drop);
-        RaiseLocalEvent(uid, ref evAttempt);
+        if (!force)
+        {
+            if (!entity.Comp.AllowCrawling)
+                return false;
 
-        if (evAttempt.Cancelled)
-            return false;
+            var evAttempt = new KnockDownAttemptEvent(autoStand, drop);
+            RaiseLocalEvent(entity, ref evAttempt);
+
+            if (evAttempt.Cancelled)
+                return false;
+
+            autoStand = evAttempt.AutoStand;
+            drop = evAttempt.Drop;
+        }
 
         // Initialize our component with the relevant data we need if we don't have it
-        if (EnsureComp<KnockedDownComponent>(uid, out var component))
+        if (EnsureComp<KnockedDownComponent>(entity, out var component))
         {
-            RefreshKnockedMovement((uid, component));
-            CancelKnockdownDoAfter((uid, component));
+            RefreshKnockedMovement((entity, component));
+            CancelKnockdownDoAfter((entity, component));
         }
         else
         {
@@ -191,21 +210,21 @@ public abstract partial class SharedStunSystem : EntitySystem
             if (drop)
             {
                 var ev = new DropHandItemsEvent();
-                RaiseLocalEvent(uid, ref ev);
+                RaiseLocalEvent(entity, ref ev);
             }
 
             // Only update Autostand value if it's our first time being knocked down...
-            SetAutoStand((uid, component), evAttempt.AutoStand);
+            SetAutoStand((entity, component), autoStand);
         }
 
         var knockedEv = new KnockedDownEvent(time);
-        RaiseLocalEvent(uid, ref knockedEv);
+        RaiseLocalEvent(entity, ref knockedEv);
 
-        UpdateKnockdownTime((uid, component), knockedEv.Time, refresh);
+        UpdateKnockdownTime((entity, component), knockedEv.Time, refresh);
 
-        Alerts.ShowAlert(uid, KnockdownAlert, null, (GameTiming.CurTime, component.NextUpdate));
+        Alerts.ShowAlert(entity, KnockdownAlert, null, (GameTiming.CurTime, component.NextUpdate));
 
-        _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} knocked down for {time.Seconds} seconds");
+        _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} knocked down for {time.Seconds} seconds");
 
         return true;
     }
@@ -219,7 +238,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (!Resolve(uid, ref status, false))
             return false;
 
-        return TryKnockdown(uid, time, refresh) && TryStun(uid, time, refresh, status);
+        return TryKnockdown(uid, time, refresh, force: true) || TryStun(uid, time, refresh, status);
     }
 
     /// <summary>

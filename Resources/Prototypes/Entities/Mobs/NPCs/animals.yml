@@ -1432,6 +1432,8 @@
       methods: [ Touch ]
       effects:
       - !type:WashCreamPieReaction
+  - type: StandingState
+    allowCrawling: true
 
 
 
@@ -3143,7 +3145,7 @@
     factions:
     - Syndicate
   - type: Access
-    tags: 
+    tags:
     - NuclearOperative
     - SyndicateAgent
   - type: MeleeWeapon

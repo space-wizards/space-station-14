@@ -15,6 +15,12 @@ namespace Content.Shared.Standing
         public bool Standing { get; set; } = true;
 
         /// <summary>
+        /// Allows this mob to voluntarily enter a down state rather than it being reserved to sleep, crit, ect.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool AllowCrawling;
+
+        /// <summary>
         /// Time it takes us to stand up
         /// </summary>
         [DataField, AutoNetworkedField]
