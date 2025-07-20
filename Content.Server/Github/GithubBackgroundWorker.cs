@@ -7,8 +7,9 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.Github;
 
-public sealed class GithubBackgroundWorker(GithubClient client)
+public sealed class GithubBackgroundWorker
 {
+    [Dependency] private readonly GithubClient _client = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ILogManager _log = default!;
 
@@ -63,7 +64,7 @@ public sealed class GithubBackgroundWorker(GithubClient client)
 
         try
         {
-            await client.TryMakeRequestSafe(request, ct);
+            await _client.TryMakeRequestSafe(request, ct);
         }
         catch (Exception e)
         {

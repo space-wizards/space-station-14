@@ -82,6 +82,8 @@ namespace Content.Server.IoC
             IoCManager.Register<DiscordLink>();
             IoCManager.Register<DiscordChatLink>();
             IoCManager.Register<GithubApiManager>();
+            IoCManager.Register<GithubBackgroundWorker>();
+            IoCManager.Register<GithubClient>();
         }
     }
 }

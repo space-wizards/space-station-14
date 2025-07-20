@@ -23,6 +23,7 @@ namespace Content.Server.Github;
 /// <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28">Rate limit information</see>
 /// <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/troubleshooting-the-rest-api?apiVersion=2022-11-28">Troubleshooting</see>
 /// </summary>
+/// <remarks>As it uses async, it should be called from background worker when possible, like <see cref="GithubBackgroundWorker"/>.</remarks>
 public sealed class GithubClient
 {
     [Dependency] private readonly ILogManager _log = default!;

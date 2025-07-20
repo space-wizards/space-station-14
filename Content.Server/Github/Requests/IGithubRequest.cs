@@ -10,7 +10,7 @@ namespace Content.Server.Github.Requests;
 /// WARNING: You must add this JsonDerivedType for all requests that have json otherwise they will not parse properly!
 /// </remarks>
 [JsonPolymorphic(UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization)]
-[JsonDerivedType(typeof(CreateIssue))]
+[JsonDerivedType(typeof(CreateIssueRequest))]
 public interface IGithubRequest
 {
     /// <summary>

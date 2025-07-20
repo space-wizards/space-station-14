@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
+using Content.Server.Github;
 using Content.Server.Maps;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Shared.BugReport;
@@ -23,6 +24,7 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IAdminLogManager _admin = default!;
     [Dependency] private readonly IGameMapManager _map = default!;
+    [Dependency] private readonly GithubApiManager _githubApiManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ILogManager _log = default!;
 
@@ -78,7 +80,7 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
         _admin.Add(LogType.BugReport, LogImpact.High, $"{message.MsgChannel.UserName}, {netId}: submitted a bug report. Title: {title}, Description: {description}");
 
         var bugReport = CreateBugReport(message);
-        // todo: call api client for issue creation
+        _githubApiManager.TryCreateIssue(bugReport);
     }
 
     /// <summary>

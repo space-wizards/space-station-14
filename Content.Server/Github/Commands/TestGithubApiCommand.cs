@@ -50,13 +50,13 @@ public sealed class TestGithubApiCommand : LocalizedEntityCommands
         }
 
         // Create two issues and send them to the api.
-        var request1 = new CreateIssue
+        var request1 = new CreateIssueRequest
         {
             Title = Loc.GetString("github-command-issue-title-one"),
             Body = Loc.GetString("github-command-issue-description-one"),
         };
 
-        var request2 = new CreateIssue
+        var request2 = new CreateIssueRequest
         {
             Title = Loc.GetString("github-command-issue-title-two"),
             Body = Loc.GetString("github-command-issue-description-two"),
