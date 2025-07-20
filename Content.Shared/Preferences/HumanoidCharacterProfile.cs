@@ -590,7 +590,7 @@ namespace Content.Shared.Preferences
             }
 
             var antags = AntagPreferences
-                .Where(id => prototypeManager.TryIndex(id, out var antag) && antag.SetPreference)
+                .Where(id => prototypeManager.TryIndex(id, out var antag, logError: false) && antag.SetPreference)
                 .ToList();
 
             var traits = TraitPreferences
