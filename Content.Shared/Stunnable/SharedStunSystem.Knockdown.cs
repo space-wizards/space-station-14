@@ -505,7 +505,7 @@ public abstract partial class SharedStunSystem
         ent.Comp.FrictionModifier = ev.FrictionModifier;
 
         _movementSpeedModifier.RefreshMovementSpeedModifiers(ent);
-        _movementSpeedModifier.RefreshFrictionModifiers(ent);
+        _movementSpeedModifier.RefreshFrictionModifiers(ent.Owner);
     }
 
     private void OnRefreshKnockedSpeed(Entity<KnockedDownComponent> entity, ref RefreshMovementSpeedModifiersEvent args)
