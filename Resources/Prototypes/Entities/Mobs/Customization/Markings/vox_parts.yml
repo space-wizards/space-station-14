@@ -182,3 +182,17 @@
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
     state: tail_docked
+
+- type: marking
+  id: VoxTailTalisman
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: tail_talisman
+    fallbackColor: "#FFFFFF"
+    # this is apparently something you can do
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: tail_talisman_base
+    forcedColoring: true

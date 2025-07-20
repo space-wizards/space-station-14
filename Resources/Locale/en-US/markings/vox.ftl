@@ -10,9 +10,6 @@ marking-TattooVoxHiveChest = Vox Chest Tattoo (hive)
 marking-TattooVoxNightlingChest-nightling_s = Vox Chest Tattoo (nightling)
 marking-TattooVoxNightlingChest = Vox Chest Tattoo (nightling)
 
-marking-VoxTailTalisman-tail_talisman = Tail Talisman
-marking-VoxTailTalisman = Tail Talisman
-
 marking-VoxScarEyeRight-vox_scar_eye_right = Right Eye Scar
 marking-VoxScarEyeRight = Eye Scar (Right)
 
@@ -61,5 +58,8 @@ marking-VoxTailBig = Vox Tail (Big)
 marking-VoxTailSpikes-vox_tail_spikes = Vox Tail (Spiked)
 marking-VoxTailSpikes = Vox Tail (Spiked)
 
-marking-VoxTailDocked-vox_tail_docked = Vox Tail (Docked)
-marking-VoxTailDocked = Vox Tail (Docked)
+marking-VoxTailDocked-vox_tail_docked = Vox Tail (Amputated)
+marking-VoxTailDocked = Vox Tail (Amputated)
+
+marking-VoxTailTalisman-vox_tail_talisman = Vox Tail (Talisman)
+marking-VoxTailTalisman = Vox Tail (Talisman)

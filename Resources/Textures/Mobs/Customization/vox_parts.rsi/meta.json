@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at 02ff588d59b3c560c685d9ca75e882d32a72d8cb, modified by Bhijn, Errant and Flareguy. tail_big and tail_short modified from tail by Flareguy",
+  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at 02ff588d59b3c560c685d9ca75e882d32a72d8cb, modified by Bhijn, Errant and Flareguy. tail_big tail_short and tail_docked modified from tail by Flareguy, tail_spiked modified from tail by TrixxedHeart",
   "size": {
     "x": 32,
     "y": 32
@@ -65,6 +65,10 @@
     },
     {
       "name": "tail_docked",
+      "directions": 4
+    },
+    {
+      "name": "tail_talisman_base",
       "directions": 4
     }
   ]

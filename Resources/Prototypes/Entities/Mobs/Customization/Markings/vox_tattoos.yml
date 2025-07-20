@@ -55,22 +55,6 @@
     state: nightling_s
 
 - type: marking
-  id: TattooVoxTailTalisman
-  # Currently looks weird on any non-standard tail, do we have a way to restrict or change the sprite used depending on certain factors?
-  bodyPart: Tail
-  markingCategory: Overlay
-  speciesRestriction: [Vox]
-  coloring:
-    default:
-      type:
-        !type:TattooColoring
-          negative: true
-      fallbackColor: "#FF0000"
-  sprites:
-  - sprite: Mobs/Customization/vox_tattoos.rsi
-    state: tail_talisman
-
-- type: marking
   id: TattooVoxTailRing
   bodyPart: Tail
   markingCategory: Overlay
