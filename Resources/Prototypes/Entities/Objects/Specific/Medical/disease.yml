@@ -69,7 +69,6 @@
           tags:
             - Swab
     sprite: Objects/Specific/Hydroponics/swab_applicator.rsi
-    zeroVisible: true
   - type: Appearance
   - type: BotanySwab
     swabDelay: 0.75
