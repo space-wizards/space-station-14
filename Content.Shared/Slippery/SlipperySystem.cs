@@ -124,7 +124,12 @@ public sealed class SlipperySystem : EntitySystem
         {
             _stun.TryUpdateStunDuration(other, component.SlipData.StunTime);
             _stamina.TakeStaminaDamage(other, component.StaminaDamage); // Note that this can stamCrit
-            _movementMod.TryFriction(other, component.FrictionStatusTime, true, component.SlipData.SlipFriction, component.SlipData.SlipFriction);
+            _movementMod.TryUpdateFrictionModDuration(
+                other,
+                component.FrictionStatusTime,
+                component.SlipData.SlipFriction,
+                component.SlipData.SlipFriction
+            );
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
 
