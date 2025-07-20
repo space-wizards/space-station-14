@@ -23,6 +23,7 @@ public sealed class DumpableSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDisposalUnitSystem _disposalUnitSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
@@ -121,13 +122,10 @@ public sealed class DumpableSystem : EntitySystem
 
         foreach (var entity in storage.Container.ContainedEntities)
         {
-            if (!_itemQuery.TryGetComponent(entity, out var itemComp) ||
-                !_prototypeManager.TryIndex(itemComp.Size, out var itemSize))
-            {
+            if (!_itemQuery.TryGetComponent(entity, out var itemComp))
                 continue;
-            }
 
-            delay += itemSize.Weight;
+            delay += _item.GetItemSizeWeight(itemComp);
         }
 
         delay *= (float) dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;

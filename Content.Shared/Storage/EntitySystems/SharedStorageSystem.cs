@@ -533,8 +533,7 @@ public abstract class SharedStorageSystem : EntitySystem
             foreach (var entity in _entSet)
             {
                 if (entity == args.User
-                    || !_itemQuery.TryGetComponent(entity, out var itemComp) // Need comp to get item size to get weight
-                    || !_prototype.TryIndex(itemComp.Size, out var itemSize)
+                    || !_itemQuery.TryGetComponent(entity, out var itemComp)
                     || !CanInsert(uid, entity, out _, storageComp, item: itemComp)
                     || !_interactionSystem.InRangeUnobstructed(args.User, entity))
                 {
@@ -542,16 +541,17 @@ public abstract class SharedStorageSystem : EntitySystem
                 }
 
                 _entList.Add(entity);
-                delay += itemSize.Weight * AreaInsertDelayPerItem;
+                delay += ItemSystem.GetItemSizeWeight(itemComp);
 
                 if (_entList.Count >= StorageComponent.AreaPickupLimit)
+
                     break;
             }
 
             //If there's only one then let's be generous
             if (_entList.Count >= 1)
             {
-                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay, new AreaPickupDoAfterEvent(GetNetEntityList(_entList)), uid, target: uid)
+                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay * AreaInsertDelayPerItem, new AreaPickupDoAfterEvent(GetNetEntityList(_entList)), uid, target: uid)
                 {
                     BreakOnDamage = true,
                     BreakOnMove = true,
@@ -1028,7 +1028,8 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         var maxSize = GetMaxItemSize((uid, storageComp));
-        if (ItemSystem.GetSizePrototype(item.Size) > maxSize)
+        var size = ItemSystem.GetItemSizeWeight(item);
+        if (size > maxSize.Weight)
         {
             reason = "comp-storage-too-big";
             return false;

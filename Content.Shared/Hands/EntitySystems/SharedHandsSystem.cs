@@ -6,6 +6,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Item;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
@@ -15,11 +16,14 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem
 {
+    private EntityQuery<ItemComponent> _itemQuery;
+
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualSystem = default!;
@@ -31,6 +35,8 @@ public abstract partial class SharedHandsSystem
     public override void Initialize()
     {
         base.Initialize();
+
+        _itemQuery = GetEntityQuery<ItemComponent>();
 
         InitializeInteractions();
         InitializeDrop();
@@ -165,26 +171,6 @@ public abstract partial class SharedHandsSystem
         }
 
         return false;
-    }
-
-    /// <summary>
-    ///     Does this entity have any empty hands, and how many?
-    /// </summary>
-    public int GetEmptyHandCount(Entity<HandsComponent?> entity)
-    {
-        if (!Resolve(entity, ref entity.Comp, false) || entity.Comp.Count == 0)
-            return 0;
-
-        var hands = 0;
-
-        foreach (var hand in EnumerateHands(entity))
-        {
-            if (!HandIsEmpty(entity, hand))
-                continue;
-            hands++;
-        }
-
-        return hands;
     }
 
     /// <summary>
@@ -449,5 +435,22 @@ public abstract partial class SharedHandsSystem
         }
 
         return freeable;
+    }
+
+    public int CountHeldItemsWeight(Entity<HandsComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false) || ent.Comp.Hands.Count == 0)
+            return 0;
+
+        var weight = 0;
+        foreach (var hand in ent.Comp.Hands.Keys)
+        {
+            if (!_itemQuery.TryComp(GetHeldItem(ent, hand), out var item))
+                continue;
+
+            weight += _item.GetItemSizeWeight(item);
+        }
+
+        return weight;
     }
 }
