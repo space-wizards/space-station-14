@@ -269,6 +269,9 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     private void OnStunEffectApplied(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
+        if (GameTiming.ApplyingState)
+            return;
+
         EnsureComp<StunnedComponent>(args.Target);
     }
 
@@ -290,6 +293,9 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     private void OnKnockdownEffectApplied(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
+        if (GameTiming.ApplyingState)
+            return;
+
         EnsureComp<KnockedDownComponent>(args.Target);
     }
 
