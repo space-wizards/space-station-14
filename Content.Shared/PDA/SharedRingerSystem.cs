@@ -18,7 +18,7 @@ namespace Content.Shared.PDA;
 /// </summary>
 public abstract class SharedRingerSystem : EntitySystem
 {
-    public const int RingtoneLength = 7;
+    public const int RingtoneLength = 6;
     public const int NoteTempo = 300;
     public const float NoteDelay = 60f / NoteTempo;
 

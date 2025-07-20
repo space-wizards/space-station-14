@@ -1,10 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Store.Systems;
+using Content.Shared.GameTicking;
+using Content.Shared.Mobs;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
 using Content.Shared.Store.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.PDA.Ringer;
 
@@ -15,7 +18,22 @@ public sealed class RingerSystem : SharedRingerSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    public const int UplinkCodeGenerationAttempts = 10000;
+    public static Note[] AllowedNotes =
+    {
+        Note.C,
+        Note.D,
+        Note.E,
+        Note.F,
+        Note.G,
+        Note.A,
+        Note.B
+    };
+
+    /// <summary>
+    /// Stores the serialized version of any ringtone that can be excluded from new ringtone generations.
+    /// </summary>
+    [ViewVariables]
+    public readonly HashSet<int> ReservedSerializedRingtones = new();
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -25,6 +43,10 @@ public sealed class RingerSystem : SharedRingerSystem
         SubscribeLocalEvent<RingerComponent, CurrencyInsertAttemptEvent>(OnCurrencyInsert);
 
         SubscribeLocalEvent<RingerAccessUplinkComponent, GenerateUplinkCodeEvent>(OnGenerateUplinkCode);
+
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(CleanupReserved);
+
+        InitialSetup();
     }
 
     /// <summary>
@@ -32,7 +54,11 @@ public sealed class RingerSystem : SharedRingerSystem
     /// </summary>
     private void OnMapInit(Entity<RingerComponent> ent, ref MapInitEvent args)
     {
-        UpdateRingerRingtone(ent, GenerateRingtone());
+        var ringtone = GenerateRingtone();
+
+        ringtone ??= new Note[RingtoneLength] { Note.A, Note.A, Note.A, Note.A, Note.A, Note.A }; // Fallback
+
+        UpdateRingerRingtone(ent, ringtone);
     }
 
     /// <summary>
@@ -57,22 +83,17 @@ public sealed class RingerSystem : SharedRingerSystem
     /// </summary>
     private void OnGenerateUplinkCode(Entity<RingerAccessUplinkComponent> ent, ref GenerateUplinkCodeEvent ev)
     {
-        ev.Code = null;
-        ent.Comp.Code = null;
+        var code = GenerateRingtone(true, true);
 
-        // This will realistically only take one attempt... But you never know...
-        for (var i = 0; i < UplinkCodeGenerationAttempts; i++)
-        {
-            var code = GenerateRingtone();
-            if (!TryMatchRingtoneToStore(code, out _))
-            {
-                // Set the code on the component
-                ent.Comp.Code = code;
-                // Return the code via the event
-                ev.Code = code;
-                break;
-            }
-        }
+        // Set the code on the component
+        ent.Comp.Code = code;
+        // Return the code via the event
+        ev.Code = code;
+    }
+
+    private void InitialSetup()
+    {
+        ReservedSerializedRingtones.Clear();
     }
 
     /// <inheritdoc/>
@@ -91,41 +112,114 @@ public sealed class RingerSystem : SharedRingerSystem
     }
 
     /// <summary>
-    /// Generates a random ringtone using the C pentatonic scale.
+    /// Generates a random ringtone using the C major scale.
     /// </summary>
+    /// <param name="excludeReserved">Exclude any ringtone registered to ReservedSerializedRingtones.</param>
+    /// <param name="reserveRingtone">Add the generated ringtone to ReservedSerializedRingtones. Requires ExcludeReserved to be true.</param>
     /// <returns>An array of Notes representing the ringtone.</returns>
     /// <remarks>The logic for this is on the Server so that we don't get a different result on the Client every time.</remarks>
-    private Note[] GenerateRingtone()
+    private Note[]? GenerateRingtone(bool excludeReserved = false, bool reserveRingtone = false)
     {
-        // Default to using C pentatonic so it at least sounds not terrible.
-        return GenerateRingtone(new[]
-        {
-            Note.C,
-            Note.D,
-            Note.E,
-            Note.F,
-            Note.G,
-            Note.A,
-            Note.B
-        });
+        // Default to using C major so it at least sounds not terrible.
+        return GenerateRingtone(AllowedNotes, excludeReserved, reserveRingtone);
     }
 
     /// <summary>
     /// Generates a random ringtone using the specified notes.
     /// </summary>
     /// <param name="notes">The notes to choose from when generating the ringtone.</param>
+    /// <param name="excludeReserved">Exclude any ringtone registered to ReservedSerializedRingtones.</param>
+    /// <param name="reserveRingtone">Add the generated ringtone to ReservedSerializedRingtones. Requires ExcludeReserved to be true.</param>
     /// <returns>An array of Notes representing the ringtone.</returns>
     /// <remarks>The logic for this is on the Server so that we don't get a different result on the Client every time.</remarks>
-    private Note[] GenerateRingtone(Note[] notes)
+    private Note[]? GenerateRingtone(Note[] notes, bool excludeReserved = false, bool reserveRingtone = false)
     {
-        var ringtone = new Note[RingtoneLength];
+        var excludedRingtones = excludeReserved ? ReservedSerializedRingtones.ToArray() : new int[0];
+        var generatedRingtone = NextIntInRangeButExclude(0, Convert.ToInt32(Math.Pow(notes.Length, RingtoneLength - 1)), excludedRingtones);
+
+        if (!TryDeserializeRingtone(notes, generatedRingtone, out var ringtone))
+            return null;
+
+        if (excludeReserved && reserveRingtone)
+            ReservedSerializedRingtones.Add(generatedRingtone);
+
+        return ringtone;
+    }
+
+    /// <summary>
+    /// Serialize a ringtone, representing it as an Int32.
+    /// </summary>
+    /// <param name="allowedNotes">The array of notes used to generate the ringtone.</param>
+    /// <param name="ringtone">The ringtone which needs to be serialized.</param>
+    /// <param name="serializedRingtone">The ringtone in a serialized format.</param>
+    /// <returns>Whether the ringtone could be serialized or not.</returns>
+    private bool TrySerializeRingtone(Note[] allowedNotes, Note[] ringtone, [NotNullWhen(true)] out int? serializedRingtone)
+    {
+        var noteLength = allowedNotes.Length;
+
+        // The serialization stores as an Int32, and therefore using Pow risks overshooting the max value, so we check for if that's a risk.
+        // If using 12 possible notes, you can have a ringtone of 8 notes safely without overshooting.
+        var pow = Math.Pow(noteLength, ringtone.Length);
+        if (pow > int.MaxValue)
+        {
+            serializedRingtone = null;
+            return false;
+        }
+
+        var serializationValue = 0;
+
+        for (var i = 0; i < ringtone.Length; i++)
+        {
+            var index = Array.IndexOf(allowedNotes, ringtone[i]);
+            if (index == -1)
+            {
+                serializedRingtone = null;
+                return false;
+            }
+
+            serializationValue += Convert.ToInt32(pow) * index;
+        }
+
+        serializedRingtone = serializationValue;
+        return true;
+    }
+
+    /// <summary>
+    /// Deserialize a serialized ringtone into a Note array.
+    /// </summary>
+    /// <param name="allowedNotes">The array of notes used to generate the ringtone.</param>
+    /// <param name="serializedRingtone">The ringtone in a serialized format.</param>
+    /// <param name="ringtone">The ringtone resulting from the deserialization.</param>
+    /// <returns>Whether the ringtone could be deserialized or not.</returns>
+    private bool TryDeserializeRingtone(Note[] allowedNotes, int serializedRingtone, [NotNullWhen(true)] out Note[]? ringtone)
+    {
+        var noteLength = allowedNotes.Length;
+        ringtone = new Note[RingtoneLength];
+
+        // The serialization stores as an Int32, and therefore using Pow risks overshooting the max value, so we check for if that's a risk.
+        // If using 12 possible notes, you can have a ringtone of 8 notes safely without overshooting.
+        var pow = Math.Pow(noteLength, RingtoneLength - 1);
+        if (pow > int.MaxValue)
+        {
+            ringtone = null;
+            return false;
+        }
 
         for (var i = 0; i < RingtoneLength; i++)
         {
-            ringtone[i] = _random.Pick(notes);
+            var powInt = Convert.ToInt32(pow);
+            var val = serializedRingtone / powInt;
+            if (!AllowedNotes.TryGetValue(val, out var note))
+            {
+                ringtone = null;
+                return false;
+            }
+
+            ringtone[RingtoneLength - 1 - i] = note;
+            serializedRingtone -= val * powInt;
         }
 
-        return ringtone;
+        return true;
     }
 
     /// <summary>
@@ -151,6 +245,30 @@ public sealed class RingerSystem : SharedRingerSystem
 
         store = null;
         return false;
+    }
+
+    private void CleanupReserved(RoundRestartCleanupEvent ev)
+    {
+        ReservedSerializedRingtones.Clear();
+    }
+
+    private int NextIntInRangeButExclude(int start, int end, int[] excludes)
+    {
+        Array.Sort(excludes);
+        var rangeLength = end - start - excludes.Length;
+        var randomInt = _random.Next(rangeLength) + start;
+
+        for (var i = 0; i < excludes.Length; i++)
+        {
+            if (excludes[i] > randomInt)
+            {
+                return randomInt;
+            }
+
+            randomInt++;
+        }
+
+        return randomInt;
     }
 }
 

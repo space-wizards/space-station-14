@@ -11,7 +11,7 @@ namespace Content.Client.PDA.Ringer
     [GenerateTypedNameReferences]
     public sealed partial class RingtoneMenu : FancyWindow
     {
-        public string[] PreviousNoteInputs = new[] { "A", "A", "A", "A", "A", "A", "A" };
+        public string[] PreviousNoteInputs = new[] { "A", "A", "A", "A", "A", "A" };
         public LineEdit[] RingerNoteInputs;
 
         public event Action? SetRingtoneButtonPressed;
@@ -24,7 +24,7 @@ namespace Content.Client.PDA.Ringer
             SetRingerButton.OnPressed += _ => SetRingtoneButtonPressed?.Invoke();
             TestRingerButton.OnPressed += _ => TestRingtoneButtonPressed?.Invoke();
 
-            RingerNoteInputs = new[] { RingerNoteOneInput, RingerNoteTwoInput, RingerNoteThreeInput, RingerNoteFourInput, RingerNoteFiveInput, RingerNoteSixInput, RingerNoteSevenInput };
+            RingerNoteInputs = new[] { RingerNoteOneInput, RingerNoteTwoInput, RingerNoteThreeInput, RingerNoteFourInput, RingerNoteFiveInput, RingerNoteSixInput };
 
             for (var i = 0; i < RingerNoteInputs.Length; ++i)
             {
