@@ -72,7 +72,7 @@
   - type: Appearance
   - type: BotanySwab
     swabDelay: 0.75
-    useableIfClean: false
+    usableIfClean: false
     contaminate: false
   - type: Tag
     tags:
