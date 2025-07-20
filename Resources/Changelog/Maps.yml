@@ -412,4 +412,11 @@
   id: 50
   time: '2025-07-10T18:16:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38829
+- author: WarPigeon
+  changes:
+  - message: The salvage airlock on Bagel should no longer space the cargo bay.
+    type: Fix
+  id: 51
+  time: '2025-07-19T19:40:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38956
 Order: 1

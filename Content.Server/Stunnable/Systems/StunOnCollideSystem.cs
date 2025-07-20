@@ -23,7 +23,7 @@ namespace Content.Server.Stunnable
         {
             _stunSystem.TryUpdateStunDuration(target, TimeSpan.FromSeconds(component.StunAmount));
 
-            _stunSystem.TryUpdateKnockdownDuration(target, TimeSpan.FromSeconds(component.KnockdownAmount));
+            _stunSystem.TryKnockdown(target, component.KnockdownAmount, component.Refresh, component.AutoStand);
 
             _movementMod.TryUpdateMovementSpeedModDuration(
                 target,

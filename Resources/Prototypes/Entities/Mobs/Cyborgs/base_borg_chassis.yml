@@ -143,7 +143,6 @@
   - type: Body
   - type: StatusEffects
     allowed:
-    - KnockedDown
     - Flashed
   - type: TypingIndicator
     proto: robot

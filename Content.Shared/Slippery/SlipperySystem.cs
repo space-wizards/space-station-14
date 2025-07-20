@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
@@ -21,9 +22,12 @@ namespace Content.Shared.Slippery;
 public sealed class SlipperySystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly StatusEffectsSystem _status = default!;
+    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SpeedModifierContactsSystem _speedModifier = default!;
@@ -113,24 +117,23 @@ public sealed class SlipperySystem : EntitySystem
         {
             _physics.SetLinearVelocity(other, physics.LinearVelocity * component.SlipData.LaunchForwardsMultiplier, body: physics);
 
-            if (component.SlipData.SuperSlippery && requiresContact)
-            {
-                var sliding = EnsureComp<SlidingComponent>(other);
-                sliding.CollidingEntities.Add(uid);
-                // Why the fuck does this assertion stack overflow every once in a while
-                DebugTools.Assert(_physics.GetContactingEntities(other, physics).Contains(uid));
-            }
+            if (component.AffectsSliding && requiresContact)
+                EnsureComp<SlidingComponent>(other);
         }
 
+        // Preventing from playing the slip sound and stunning when you are already knocked down.
+        if (!HasComp<KnockedDownComponent>(other))
         var playSound = !_status.CanAddStatusEffect(other, SharedStunSystem.Knockdown);
-
-        _stun.TryUpdateParalyzeDuration(other, component.SlipData.ParalyzeTime);
 
         // Preventing from playing the slip sound when you are already knocked down.
         if (playSound)
         {
+            _stun.TryStun(other, component.SlipData.StunTime, true);
+            _stamina.TakeStaminaDamage(other, component.StaminaDamage); // Note that this can stamCrit
+            _movementMod.TryFriction(other, component.FrictionStatusTime, true, component.SlipData.SlipFriction, component.SlipData.SlipFriction);
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
+        _stun.TryKnockdown(other, component.SlipData.KnockdownTime, true, true);
 
         _adminLogger.Add(LogType.Slip, LogImpact.Low, $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
     }

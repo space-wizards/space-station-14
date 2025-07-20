@@ -15,7 +15,6 @@
     bodyType: KinematicController # Same for all inheritors
   - type: StatusEffects
     allowed:
-    - KnockedDown
     - Stutter
     - Electrocution
   - type: Repairable

@@ -119,7 +119,6 @@
       - !type:WashCreamPieReaction
   - type: StatusEffects
     allowed:
-    - KnockedDown
     - Stutter
     - Electrocution
     - Drunk

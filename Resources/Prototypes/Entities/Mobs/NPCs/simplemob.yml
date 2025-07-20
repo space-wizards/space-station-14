@@ -93,7 +93,6 @@
     baseDecayRate: 0.04
   - type: StatusEffects
     allowed:
-    - KnockedDown
     - Stutter
     - Electrocution
     - TemporaryBlindness
