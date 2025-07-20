@@ -1,0 +1,48 @@
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerCentralCommandBlueShieldOfficer
+  name: Офицер "Синий Щит" ЦК
+  suffix: ОСЩ, Призрачная роль, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: Markers/jobs.rsi
+      state: blueshield-low
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: CentralCommandBlueShieldOfficer
+    allowedSpecies:
+    - Human
+    - Shark
+    - Demon
+    - Vulpkanin
+    randomNameFirstDataset: CustomizableSpawnerCentralCommandBlueShieldOfficerFirstName
+    randomNameSecondLocalized: NamesLastERT
+  - type: GhostRole
+    name: ghost-role-information-blueshieldofficer-name
+    description: ghost-role-information-blueshieldofficer-description
+    rules: ghost-role-information-centcom-personal-rules
+    requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 252000 # 70 hours
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 108000 # 30 hours
+      - !type:DepartmentTimeRequirement
+        department: Medical
+        time: 36000 # 10 hours
+    raffle:
+      settings: short
+
+- type: dataset
+  id: CustomizableSpawnerCentralCommandBlueShieldOfficerFirstName
+  values:
+  - Офицер
+
+- type: roleLoadout
+  id: JobCentralCommandBlueShieldOfficer
+  groups:
+  - GroupTankHarness
+  - Survival
+  - GroupSpeciesBreathTool
+  - BlueShieldOfficerUnderwear

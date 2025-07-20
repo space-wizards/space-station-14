@@ -1,0 +1,58 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc 'customizable-humanoid-spawner-header'}"
+    SetSize="800 450"
+    Resizable="False">
+    <BoxContainer Orientation="Horizontal" SeparationOverride="4">
+        <ScrollContainer
+            Name="DescriptionScroll" HorizontalExpand="True" VerticalExpand="True"
+            SetWidth="250" HScrollEnabled="False" SizeFlagsStretchRatio="1" Margin="10">
+            <RichTextLabel
+                Name="RoleDescription"
+                HorizontalExpand="True"
+                VerticalExpand="True"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Text="{Loc 'customizable-humanoid-spawner-description'}" />
+        </ScrollContainer>
+
+        <cc:VSeparator Margin="4 0" StyleClasses="LowDivider" SizeFlagsStretchRatio="1" />
+
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True"
+                      SeparationOverride="8" SizeFlagsStretchRatio="8" Margin="10">
+
+            <Label Text="{Loc 'customizable-humanoid-spawner-header'}" StyleClasses="LabelHeading" />
+            <BoxContainer Orientation="Horizontal">
+                <Label Text="{Loc 'customizable-humanoid-spawner-available-characters'}" />
+                <Control HorizontalExpand="True" />
+                <OptionButton Name="CharacterSelector" />
+            </BoxContainer>
+
+            <cc:HSeparator Margin="0 4" StyleClasses="LowDivider" />
+
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <CheckBox Name="CustomNameCheck" Text="{Loc 'customizable-humanoid-spawner-change-name'}" HorizontalAlignment="Left" />
+                <Control HorizontalExpand="True" />
+                <Button
+                    Name="CustomNameRandom"
+                    Text="{Loc 'customizable-humanoid-spawner-change-name-generate'}"
+                    Disabled="True"
+                    HorizontalAlignment="Right" />
+            </BoxContainer>
+            <LineEdit Name="CustomNameInput" Editable="False" />
+
+            <CheckBox Name="CustomDescriptionCheck" Text="{Loc 'customizable-humanoid-spawner-change-description'}" />
+            <TextEdit Name="CustomDescriptionInput" VerticalExpand="True" Editable="False" />
+
+            <cc:HSeparator Margin="0 4" StyleClasses="HighDivider" />
+
+            <BoxContainer Orientation="Vertical">
+                <Button Name="UseSelectedCharacter" Text="{Loc 'customizable-humanoid-spawner-button-selected'}" />
+                <Button Name="UseRandomCharacter" Text="{Loc 'customizable-humanoid-spawner-button-random'}" />
+            </BoxContainer>
+
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

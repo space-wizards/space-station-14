@@ -1,0 +1,18 @@
+- type: entity
+  abstract: true
+  parent: MarkerBase
+  id: CustomizableSpawnerBase
+  name: customizable spawn point
+  categories: [ Spawner ]
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: Markers/jobs.rsi
+      state: passenger
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: Assistant
+  - type: UserInterface
+    interfaces:
+      enum.CustomizableHumanoidSpawnerUiKey.Key:
+        type: CustomizableHumanoidSpawnerBUI
