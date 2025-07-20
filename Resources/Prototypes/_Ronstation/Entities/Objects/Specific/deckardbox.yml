@@ -21,7 +21,7 @@
       map: ["deckard"]
       visible: false
   - type: Item
-    sprite: _Ronstation\Objects\Storage\deckardbox.rsi
+    sprite: _Ronstation/Objects/Storage/deckardbox.rsi
     size: Normal
     shape:
     - 0,0,2,1
