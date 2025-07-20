@@ -47,6 +47,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
         SubscribeLocalEvent<WeightlessnessComponent, ShooterImpulseEvent>(OnShooterImpulse);
         SubscribeLocalEvent<WeightlessnessComponent, ThrowerImpulseEvent>(OnThrowerImpulse);
         SubscribeLocalEvent<WeightlessnessComponent, KnockDownAttemptEvent>(OnKnockdownAttempt);
+        SubscribeLocalEvent<WeightlessnessComponent, GetStandUpTimeEvent>(OnGetStandUpTime);
 
         _gravityQuery = GetEntityQuery<GravityComponent>();
     }
@@ -272,6 +273,12 @@ public abstract partial class SharedGravitySystem : EntitySystem
         // Directed, targeted moth attack.
         if (entity.Comp.Weightless)
             args.Cancelled = true;
+    }
+
+    private void OnGetStandUpTime(Entity<WeightlessnessComponent> entity, ref GetStandUpTimeEvent args)
+    {
+        // Get up instantly
+        args.DoAfterTime = TimeSpan.Zero;
     }
 }
 
