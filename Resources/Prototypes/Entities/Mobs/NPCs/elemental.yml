@@ -36,7 +36,6 @@
   - type: StatusEffects
     allowed:
     - Stun
-    - KnockedDown
     - SlowedDown
     - Stutter
     - Electrocution
@@ -399,7 +398,6 @@
     solution: bloodstream
     transferAmount: 5
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: alive

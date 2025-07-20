@@ -1,6 +1,6 @@
 - type: tile
   id: FloorPlanetDirt
-  name: tiles-dirt-floor
+  name: tiles-dirt-planet-floor
   sprite: /Textures/Tiles/Planet/dirt.rsi/dirt.png
   variants: 4
   placementVariants:

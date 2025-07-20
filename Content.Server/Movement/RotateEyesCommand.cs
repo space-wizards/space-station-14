@@ -6,14 +6,12 @@ using Robust.Shared.Console;
 namespace Content.Server.Movement;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class RotateEyesCommand : IConsoleCommand
+public sealed class RotateEyesCommand : LocalizedEntityCommands
 {
-    public string Command => "rotateeyes";
-    public string Description => Loc.GetString("rotateeyes-command-description");
-    public string Help => Loc.GetString("rotateeyes-command-help");
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "rotateeyes";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var entManager = IoCManager.Resolve<IEntityManager>();
         var rotation = Angle.Zero;
 
         if (args.Length == 1)
@@ -28,7 +26,7 @@ public sealed class RotateEyesCommand : IConsoleCommand
         }
 
         var count = 0;
-        var query = entManager.EntityQueryEnumerator<InputMoverComponent>();
+        var query = EntityManager.EntityQueryEnumerator<InputMoverComponent>();
         while (query.MoveNext(out var uid, out var mover))
         {
             if (mover.TargetRelativeRotation.Equals(rotation))
@@ -36,10 +34,10 @@ public sealed class RotateEyesCommand : IConsoleCommand
 
             mover.TargetRelativeRotation = rotation;
 
-            entManager.Dirty(uid, mover);
+            EntityManager.Dirty(uid, mover);
             count++;
         }
 
-        shell.WriteLine(Loc.GetString("rotateeyes-command-count", ("count", count)));
+        shell.WriteLine(Loc.GetString("cmd-rotateeyes-command-count", ("count", count)));
     }
 }
