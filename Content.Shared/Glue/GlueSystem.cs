@@ -71,22 +71,20 @@ public sealed class GlueSystem : EntitySystem
     {
         // if item is glued then don't apply glue again so it can be removed for reasonable time
         // If glue is applied to an unremoveable item, the component will disappear after the duration.
-        // This effecitvely means any unremoveable item could be removed with a bottle of glue.'
+        // This effectively means any unremoveable item could be removed with a bottle of glue.
         if (HasComp<GluedComponent>(target) || !HasComp<ItemComponent>(target) || HasComp<UnremoveableComponent>(target))
         {
             _popup.PopupClient(Loc.GetString("glue-failure", ("target", target)), actor, actor, PopupType.Medium);
             return false;
         }
 
-        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solutionEntity, out var solution))
+        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solutionEntity, out _))
         {
-            var quantity = solution.RemoveReagent(entity.Comp.Reagent, entity.Comp.ConsumptionUnit);
-            if (quantity > 0)
+            if (_solutionContainer.RemoveReagent(solutionEntity.Value, entity.Comp.Reagent, entity.Comp.ConsumptionUnit))
             {
                 EnsureComp<GluedComponent>(target, out var comp);
-                comp.Duration = quantity.Double() * entity.Comp.DurationPerUnit;
+                comp.Duration = entity.Comp.ConsumptionUnit.Double() * entity.Comp.DurationPerUnit;
                 Dirty(target, comp);
-                Dirty(solutionEntity.Value);
 
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
                 _audio.PlayPredicted(entity.Comp.Squeeze, entity.Owner, actor);
@@ -94,6 +92,7 @@ public sealed class GlueSystem : EntitySystem
                 return true;
             }
         }
+
         _popup.PopupClient(Loc.GetString("glue-failure", ("target", target)), actor, actor, PopupType.Medium);
         return false;
     }
