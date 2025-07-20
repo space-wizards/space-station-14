@@ -19,8 +19,16 @@
       components:
       - MobState
 
+# Things that should be removed by rejuvenation should parent to this
 - type: entity
-  parent: StatusEffectBase
+  parent: MobStatusEffectBase
+  id: MobStatusEffectDebuff
+  abstract: true
+  components:
+  - type: CurableStatusEffect
+
+- type: entity
+  parent: MobStatusEffectDebuff
   id: MobStandStatusEffectBase
   abstract: true
   components:
@@ -46,7 +54,7 @@
 
 # This creature is asleep because it's disconnected from the game.
 - type: entity
-  parent: MobStatusEffectBase
+  parent: MobStatusEffectBase # Not even rejuvenate can cure SSD...
   id: StatusEffectSSDSleeping
   name: forced sleep
   components:
@@ -56,7 +64,7 @@
 
 # Blurs your vision and makes you randomly fall asleep
 - type: entity
-  parent: MobStatusEffectBase
+  parent: MobStatusEffectDebuff
   id: StatusEffectDrowsiness
   name: drowsiness
   components:
@@ -64,7 +72,7 @@
 
 # Adds drugs overlay
 - type: entity
-  parent: MobStatusEffectBase
+  parent: MobStatusEffectDebuff
   id: StatusEffectSeeingRainbow
   name: hallucinations
   components:
