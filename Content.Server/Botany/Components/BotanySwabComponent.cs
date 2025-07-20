@@ -26,10 +26,10 @@ namespace Content.Server.Botany
 
         /// <summary>
         /// Whether the swab can be used if it has no seed data, default true
-        /// If false, a seperate may to provide seed data is required or the swab will be unusable
+        /// If false, a seperate way to provide seed data is required or the swab will be unusable
         /// </summary>
         [DataField]
-        public bool Usable = true;
+        public bool UsableIfClean = true;
 
         /// <summary>
         /// Sound played on swabbing

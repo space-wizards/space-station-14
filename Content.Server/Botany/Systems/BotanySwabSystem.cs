@@ -40,7 +40,7 @@ public sealed class BotanySwabSystem : EntitySystem
         {
             if (swab.SeedData != null)
                 args.PushMarkup(Loc.GetString("swab-used"));
-            else if (swab.Usable == true)
+            else if (swab.UsableIfClean == true)
                 args.PushMarkup(Loc.GetString("swab-unused"));
         }
     }
@@ -53,7 +53,7 @@ public sealed class BotanySwabSystem : EntitySystem
         if (args.Target == null || !args.CanReach || !HasComp<PlantHolderComponent>(args.Target))
             return;
 
-        if (swab.Usable == false && swab.SeedData == null)
+        if (swab.UsableIfClean == false && swab.SeedData == null)
         {
             _popupSystem.PopupEntity(Loc.GetString("botany-swab-unusable"), uid, args.User);
             return;
@@ -115,13 +115,15 @@ public sealed class BotanySwabSystem : EntitySystem
 
     private void OnInsertAttempt(EntityUid uid, BotanySwabComponent swab, ref ContainerGettingInsertedAttemptEvent args)
     {
-        //does the container have the botanySwab component
+        //does the container have the botanySwab component (should always be the case)
         if (!HasComp<BotanySwabComponent>(args.Container.Owner))
             return;
 
+        //does the swab have seeddata (aka, is not null)
         if (swab.SeedData != null)
             return;
 
+        //if these are not true, cancel, clean swabs aren't allowed.
         _popupSystem.PopupEntity(Loc.GetString("swab-applicator-needs-pollen"), uid);
         args.Cancel();
         return;
