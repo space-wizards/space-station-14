@@ -87,8 +87,8 @@ public abstract partial class SharedStunSystem
             if (!knockedDown.AutoStand || knockedDown.DoAfterId.HasValue || knockedDown.NextUpdate > GameTiming.CurTime)
                 continue;
 
-            TryStanding(uid, out knockedDown.DoAfterId);
-            DirtyField(uid, knockedDown, nameof(KnockedDownComponent.DoAfterId));
+            if (TryStanding(uid, out knockedDown.DoAfterId))
+                DirtyField(uid, knockedDown, nameof(KnockedDownComponent.DoAfterId));
         }
     }
 
@@ -135,7 +135,7 @@ public abstract partial class SharedStunSystem
             return;
 
         entity.Comp.AutoStand = autoStand;
-        DirtyField(entity, entity.Comp, nameof(entity.Comp.AutoStand));
+        DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.AutoStand));
     }
 
     /// <summary>
