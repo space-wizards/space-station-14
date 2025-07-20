@@ -135,6 +135,14 @@ public sealed partial class AnomalyComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? SupercriticalSoundAtAnimationStart;
+
+    /// <summary>
+    /// The length of the animation before it goes supercritical in seconds.
+    /// </summary>
+    ///
+    [DataField, AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan SupercriticalDuration = TimeSpan.FromSeconds(10f);
     #endregion
 
     /// <summary>
