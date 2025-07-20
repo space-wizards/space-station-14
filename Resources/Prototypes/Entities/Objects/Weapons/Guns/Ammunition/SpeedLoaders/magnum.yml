@@ -1,3 +1,5 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
+
 - type: entity
   id: BaseSpeedLoaderMagnum
   name: "speed loader (.45 magnum)"
@@ -28,7 +30,7 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi # Ronstation - modification
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
@@ -50,7 +52,7 @@
   - type: BallisticAmmoProvider
     proto: null
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi # Ronstation - modification
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
@@ -78,7 +80,7 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi # Ronstation - modification
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
@@ -100,7 +102,7 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi # Ronstation - modification
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
@@ -122,7 +124,7 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumUranium
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi # Ronstation - modification
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
