@@ -65,7 +65,6 @@ public abstract partial class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<StunnedStatusEffectComponent, StatusEffectRemovedEvent>(OnStunStatusRemoved);
         SubscribeLocalEvent<StunnedStatusEffectComponent, StatusEffectRelayedEvent<StunEndAttemptEvent>>(OnStunEndAttempt);
 
-        SubscribeLocalEvent<KnockdownStatusEffectComponent, StatusEffectAppliedEvent>(OnKnockdownEffectApplied);
         SubscribeLocalEvent<KnockdownStatusEffectComponent, StatusEffectRelayedEvent<StandUpAttemptEvent>>(OnStandUpAttempt);
 
         // Stun Appearance Data
@@ -124,7 +123,7 @@ public abstract partial class SharedStunSystem : EntitySystem
             return;
 
         TryUpdateStunDuration(args.OtherEntity, ent.Comp.Duration);
-        TryKnockdown(args.OtherEntity, ent.Comp.Duration, true);
+        TryKnockdown(args.OtherEntity, ent.Comp.Duration, true, force: true);
     }
 
     // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
@@ -277,8 +276,7 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     private void OnStunStatusRemoved(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
     {
-        if(entity.Comp.Remove)
-            TryUnstun(args.Target);
+        TryUnstun(args.Target);
     }
 
     private void OnStunEndAttempt(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectRelayedEvent<StunEndAttemptEvent> args)
@@ -289,14 +287,6 @@ public abstract partial class SharedStunSystem : EntitySystem
         var ev = args.Args;
         ev.Cancelled = true;
         args.Args = ev;
-    }
-
-    private void OnKnockdownEffectApplied(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
-    {
-        if (GameTiming.ApplyingState)
-            return;
-
-        EnsureComp<KnockedDownComponent>(args.Target);
     }
 
     private void OnStandUpAttempt(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectRelayedEvent<StandUpAttemptEvent> args)
