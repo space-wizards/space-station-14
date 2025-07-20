@@ -1,11 +1,14 @@
 using Content.Server.Bible.Components;
 using Content.Server.Ghost.Roles.Events;
+using Content.Server.Hands.Systems; //Starlight
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Bible;
+using Content.Shared.Cluwne; //Starlight
 using Content.Shared.Damage;
 using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.Hands.Components; //Starlight
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -38,6 +41,8 @@ namespace Content.Server.Bible
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedStunSystem _stun = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!; //Starlight
+        [Dependency] private readonly HandsSystem _hands = default!; //Starlight
 
         public override void Initialize()
         {
@@ -145,7 +150,7 @@ namespace Content.Server.Bible
 
                 var selfMessage = Loc.GetString(component.LocPrefix + "-damage-unholy-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
                 _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.LargeCaution);
-                
+
                 _delay.TryResetDelay((uid, useDelay));
 
                 return;
@@ -168,6 +173,37 @@ namespace Content.Server.Bible
                     return;
                 }
             }
+
+            //#region Starlight
+            if (TryComp<CluwneComponent>(args.Target, out var cluwne))
+            {
+                if ((!cluwne.Unremovable) && _random.Prob(component.CluwneCureChance))
+                {
+                    var target = args.Target.Value;
+                    RemComp<CluwneComponent>(target);
+                    if (TryComp<InventoryComponent>(target, out var inv))
+                    {
+                        var slots = _inventory.GetSlotEnumerator((target, inv));
+                        while (slots.NextItem(out _, out var slot))
+                        {
+                            _inventory.TryUnequip(target, target, slot.Name, true, true, inventory: inv);
+                        }
+
+                    }
+                    if (EntityManager.TryGetComponent<HandsComponent>(target, out var hands))
+                    {
+                        foreach (var hand in _hands.EnumerateHands(target, hands))
+                        {
+                            _hands.TryDrop(target,
+                                hand,
+                                checkActionBlocker: false,
+                                doDropInteraction: false,
+                                handsComp: hands);
+                        }
+                    }
+                }
+            }
+            //#endregion
 
             var damage = _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true, origin: uid);
 
