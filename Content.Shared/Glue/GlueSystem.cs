@@ -78,15 +78,18 @@ public sealed class GlueSystem : EntitySystem
             return false;
         }
 
-        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
+        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solutionEntity, out var solution))
         {
             var quantity = solution.RemoveReagent(entity.Comp.Reagent, entity.Comp.ConsumptionUnit);
             if (quantity > 0)
             {
-                EnsureComp<GluedComponent>(target).Duration = quantity.Double() * entity.Comp.DurationPerUnit;
+                EnsureComp<GluedComponent>(target, out var comp);
+                comp.Duration = quantity.Double() * entity.Comp.DurationPerUnit;
+                Dirty(target, comp);
+                Dirty(solutionEntity.Value);
 
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
-                _audio.PlayPredicted(entity.Comp.Squeeze, actor, entity.Owner);
+                _audio.PlayPredicted(entity.Comp.Squeeze, entity.Owner, actor);
                 _popup.PopupClient(Loc.GetString("glue-success", ("target", target)), actor, actor, PopupType.Medium);
                 return true;
             }
@@ -122,6 +125,8 @@ public sealed class GlueSystem : EntitySystem
         var comp = EnsureComp<UnremoveableComponent>(entity);
         comp.DeleteOnDrop = false;
         entity.Comp.Until = _timing.CurTime + entity.Comp.Duration;
+        Dirty(entity.Owner, comp);
+        Dirty(entity);
     }
 
     private void OnRefreshNameModifiers(Entity<GluedComponent> entity, ref RefreshNameModifiersEvent args)
