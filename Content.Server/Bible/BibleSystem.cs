@@ -1,10 +1,12 @@
 using Content.Server.Bible.Components;
+using Content.Server.Chat; //Starlight
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Hands.Systems; //Starlight
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Bible;
+using Content.Shared.Clumsy; //Starlight
 using Content.Shared.Cluwne; //Starlight
 using Content.Shared.Damage;
 using Content.Shared.Ghost.Roles.Components;
@@ -41,7 +43,6 @@ namespace Content.Server.Bible
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedStunSystem _stun = default!;
-        [Dependency] private readonly InventorySystem _inventory = default!; //Starlight
         [Dependency] private readonly HandsSystem _hands = default!; //Starlight
 
         public override void Initialize()
@@ -181,12 +182,14 @@ namespace Content.Server.Bible
                 {
                     var target = args.Target.Value;
                     RemComp<CluwneComponent>(target);
+                    RemComp<ClumsyComponent>(uid);
+                    RemComp<AutoEmoteComponent>(uid);
                     if (TryComp<InventoryComponent>(target, out var inv))
                     {
-                        var slots = _inventory.GetSlotEnumerator((target, inv));
+                        var slots = _invSystem.GetSlotEnumerator((target, inv));
                         while (slots.NextItem(out _, out var slot))
                         {
-                            _inventory.TryUnequip(target, target, slot.Name, true, true, inventory: inv);
+                            _invSystem.TryUnequip(target, target, slot.Name, true, true, inventory: inv);
                         }
 
                     }
