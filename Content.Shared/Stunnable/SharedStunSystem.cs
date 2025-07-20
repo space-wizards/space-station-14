@@ -39,7 +39,6 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     public override void Initialize()
     {
-
         SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
         SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
         SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
