@@ -270,28 +270,28 @@ public sealed class CharacterSelectionTest
     // use a function for test data so we can use classes & also test different permutations of the same characters
     public static IEnumerable<TestCaseData> SelectionTestCases()
     {
-        foreach (var testCaseData in SelectionTestCaseData)
+        foreach (var testCase in SelectionTestCaseData)
         {
-            yield return testCaseData.ToTestCaseData();
+            yield return testCase.ToTestCaseData();
 
             // test different orders of characters with the same rng seed to minimize effects of rng on tests
             // (the rng seed is set in SelectionTest())
-            if (testCaseData.Characters.Count > 1)
+            if (testCase.Characters.Count > 1)
             {
-                var reversedCharacters = testCaseData.Characters.ShallowClone();
+                var reversedCharacters = testCase.Characters.ShallowClone();
                 reversedCharacters.Reverse();
-                yield return testCaseData.WithCharacters(reversedCharacters).ToTestCaseData();
+                yield return testCase.WithCharacters(reversedCharacters).ToTestCaseData();
             }
 
-            if (testCaseData.Characters.Count > 2)
+            if (testCase.Characters.Count > 2)
             {
-                var rotatedCharacters = testCaseData.Characters.ShallowClone();
-                for (var i = 1; i < testCaseData.Characters.Count; i++)
+                var rotatedCharacters = testCase.Characters.ShallowClone();
+                for (var i = 1; i < testCase.Characters.Count; i++)
                 {
                     var movingCharacter = rotatedCharacters[0];
                     rotatedCharacters.RemoveAt(0);
                     rotatedCharacters.Add(movingCharacter);
-                    yield return testCaseData.WithCharacters(rotatedCharacters).ToTestCaseData();
+                    yield return testCase.WithCharacters(rotatedCharacters).ToTestCaseData();
                 }
             }
         }
