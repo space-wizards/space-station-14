@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
@@ -107,7 +108,7 @@ public sealed class GasTileHeatOverlay : Overlay
                             var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
                             if (!localBounds.Contains(tilePosition))
                                 continue;
-                            var strength = MathHelper.Clamp01((tileGas.Temperature - 320.0f)/1000.0f);
+                            var strength = SharedGasTileOverlaySystem.GetHeatDistortionStrength(tileGas.Temperature);
                             worldHandle.DrawRect(
                                 Box2.CenteredAround(tilePosition + new Vector2(0.5f, 0.5f), grid.Comp.TileSizeVector),
                                 Color.White.WithAlpha(strength));
