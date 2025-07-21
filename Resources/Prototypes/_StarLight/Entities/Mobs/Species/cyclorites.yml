@@ -57,7 +57,7 @@
     attackRate: 0.5
     damage:
       types:
-        Blunt: 15
+        Blunt: 13
         Structural: 10
   - type: Sprite
     scale: 1.08, 1.08
