@@ -1,3 +1,5 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
+
 - type: entityTable
   id: LockerFillQuarterMaster
   table: !type:AllSelector
@@ -395,7 +397,7 @@
     access: [ [ "Command" ] ]
   - type: StorageFill
     contents:
-    - id: WeaponRevolverDeckard
+    - id: DeckardBoxFilled # Ronstation - modification
     - id: JetpackBlue
     - id: SpaceCash1000
     - id: BeachBall
