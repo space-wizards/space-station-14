@@ -272,6 +272,15 @@
   parent: CigPackBlue
   name: Rollie Packet
   description: An old acme co packet full of things to make rollies with.
-LeavesTobaccoDried
-GroundCannabis
+  components:
+  - type: StorageFill
+    contents:
+    - id: CigaretteFilter
+      amount: 1
+    - id: PaperRolling
+      amount: 1
+    - id: LeavesTobaccoDried
+      amount: 1
+    - id: CigaretteSyndicate
+      amount: 1
 ### end SL
