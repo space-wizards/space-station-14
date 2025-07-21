@@ -883,7 +883,6 @@
     timeRemaining: 0.3
   - type: DeleteOnTrigger
 
-# This is supposed to spawn shrapnel and stuff so uhh... TODO?
 - type: entity
   id: BulletGrenadeFrag
   name: frag grenade
