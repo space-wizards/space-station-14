@@ -1,4 +1,5 @@
 ﻿using Content.Shared.CCVar;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC;
@@ -18,6 +19,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {
@@ -32,6 +34,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
             _cfg.GetCVar(CCVars.ICShowSSDIndicator) &&
             !_mobState.IsDead(uid) &&
             !HasComp<ActiveNPCComponent>(uid) &&
+            !(_mind.TryGetMind(uid, out var _, out var mind) && !mind.IsVisitingEntity) && // If the entity has a mind and is vising another entity, hide the icon
             TryComp<MindContainerComponent>(uid, out var mindContainer) &&
             mindContainer.ShowExamineInfo)
         {

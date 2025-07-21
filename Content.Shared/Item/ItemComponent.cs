@@ -15,9 +15,16 @@ namespace Content.Shared.Item;
 [Access(typeof(SharedItemSystem)), AutoGenerateComponentState(true)]
 public sealed partial class ItemComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     [Access(typeof(SharedItemSystem))]
     public ProtoId<ItemSizePrototype> Size = "Small";
+
+    /// <summary>
+    /// Used for when you want to cover up the original item size in the examine for whatever reason.
+    /// If set, it will display whatever it's set to. Otherwise, the original size.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ProtoId<ItemSizePrototype>? ExamineSize;
 
     [Access(typeof(SharedItemSystem))]
     [DataField]
@@ -53,7 +60,7 @@ public sealed partial class ItemComponent : Component
     /// An additional angle offset, in degrees, applied to the visual depiction of the item when displayed in the storage UI.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float StoredRotation = 0;
+    public float StoredRotation;
 
     /// <summary>
     /// An additional offset, in pixels, applied to the visual depiction of the item when displayed in the storage UI.
