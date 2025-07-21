@@ -267,6 +267,11 @@
       weight: 7
 
 ### begin SL
+- type: entity
+  id: CigPackRollie
+  parent: CigPackBlue
+  name: Rollie Packet
+  description: An old acme co packet full of things to make rollies with.
 LeavesTobaccoDried
-
+GroundCannabis
 ### end SL
