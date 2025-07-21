@@ -25,8 +25,6 @@ namespace Content.Shared.Stunnable;
 
 public abstract partial class SharedStunSystem : EntitySystem
 {
-    private EntityQuery<CrawlerComponent> _crawlerQuery;
-
     public static readonly EntProtoId StunId = "StatusEffectStunned";
     public static readonly EntProtoId KnockdownId = "StatusEffectKnockdown";
     public static readonly EntProtoId ParalysisId = "StatusEffectParalysis";
@@ -45,8 +43,6 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     public override void Initialize()
     {
-        _crawlerQuery = GetEntityQuery<CrawlerComponent>();
-
         SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
         SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(OnStunShutdown);
 
@@ -128,7 +124,7 @@ public abstract partial class SharedStunSystem : EntitySystem
             return;
 
         TryUpdateStunDuration(args.OtherEntity, ent.Comp.Duration);
-        TryKnockdown(args.OtherEntity, ent.Comp.Duration, true, force: true);
+        TryKnockdown(args.OtherEntity, ent.Comp.Duration, force: true);
     }
 
     // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
@@ -174,19 +170,18 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (!_status.TryUpdateStatusEffectDuration(uid, KnockdownId, duration))
             return false;
 
-        return TryKnockdown(uid, duration, true, force: true);
+        return TryKnockdown(uid, duration, force: true);
     }
 
     /// <summary>
-    ///     Knocks down the entity, making it fall to the ground.
+    ///     Checks if we can knock down an entity to the ground...
     /// </summary>
     /// <param name="entity">The entity we're trying to knock down</param>
     /// <param name="time">The time of the knockdown</param>
-    /// <param name="refresh">Whether we should refresh a running timer or add to it, if one exists.</param>
     /// <param name="autoStand">Whether we want to automatically stand when knockdown ends.</param>
     /// <param name="drop">Whether we should drop items.</param>
     /// <param name="force">Should we force the status effect?</param>
-    public bool TryKnockdown(Entity<StandingStateComponent?> entity, TimeSpan? time, bool refresh, bool autoStand = true, bool drop = true, bool force = false)
+    public bool CanKnockdown(Entity<StandingStateComponent?> entity, ref TimeSpan? time, ref bool autoStand, ref bool drop, bool force = false)
     {
         if (time <= TimeSpan.Zero)
             return false;
@@ -195,23 +190,39 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp, false))
             return false;
 
-        if (!force)
-        {
-            var evAttempt = new KnockDownAttemptEvent(autoStand, drop, time);
-            RaiseLocalEvent(entity, ref evAttempt);
+        if (force)
+            return true;
 
-            if (evAttempt.Cancelled)
-                return false;
 
-            autoStand = evAttempt.AutoStand;
-            drop = evAttempt.Drop;
-        }
+        var evAttempt = new KnockDownAttemptEvent(autoStand, drop, time);
+        RaiseLocalEvent(entity, ref evAttempt);
+
+        autoStand = evAttempt.AutoStand;
+        drop = evAttempt.Drop;
+
+        return !evAttempt.Cancelled;
+    }
+
+    /// <summary>
+    ///     Knocks down the entity, making it fall to the ground.
+    /// </summary>
+    /// <param name="uid">The entity we're trying to knock down</param>
+    /// <param name="time">The time of the knockdown</param>
+    /// <param name="refresh">Whether we should refresh a running timer or add to it, if one exists.</param>
+    /// <param name="autoStand">Whether we want to automatically stand when knockdown ends.</param>
+    /// <param name="drop">Whether we should drop items.</param>
+    /// <param name="force">Should we force the status effect?</param>
+    public bool TryKnockdown(EntityUid uid, TimeSpan? time, bool refresh = true, bool autoStand = true, bool drop = true, bool force = false)
+    {
+        if (!CanKnockdown(uid, ref time, ref autoStand, ref drop, force))
+            return false;
 
         // If the entity can't crawl they also need to be stunned, and therefore we should be using paralysis status effect.
-        if (!_crawlerQuery.HasComp(entity))
-            return TryUpdateParalyzeDuration(entity, time);
+        // Also time shouldn't be null if we're and trying to add time but, we check just in case anyways.
+        if (!_crawlerQuery.HasComp(uid))
+            return refresh || time == null ? TryUpdateParalyzeDuration(uid, time) : TryAddParalyzeDuration(uid, time.Value);
 
-        Knockdown(entity, time, autoStand, drop);
+        Knockdown(uid, time, autoStand, drop);
 
         return true;
     }

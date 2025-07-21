@@ -1432,8 +1432,7 @@
       methods: [ Touch ]
       effects:
       - !type:WashCreamPieReaction
-  - type: StandingState
-    allowCrawling: true
+  - type: Crawler
 
 
 

@@ -15,29 +15,10 @@ namespace Content.Shared.Standing
         public bool Standing { get; set; } = true;
 
         /// <summary>
-        /// Allows this mob to voluntarily enter a down state rather than it being reserved to sleep, crit, ect.
+        /// Friction modifier applied to an entity in the downed state.
         /// </summary>
         [DataField, AutoNetworkedField]
-        public bool AllowCrawling;
-
-        /// <summary>
-        /// Time it takes us to stand up
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public TimeSpan StandTime = TimeSpan.FromSeconds(2);
-
-        /// <summary>
-        /// Default Friction modifier for knocked down players.
-        /// Makes them accelerate and deccelerate slower.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public float FrictionModifier = 0.4f;
-
-        /// <summary>
-        /// Base modifier to the maximum movement speed of a knocked down mover.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public float SpeedModifier = 0.3f;
+        public float DownFrictionMod = 0.4f;
 
         /// <summary>
         ///     List of fixtures that had their collision mask changed when the entity was downed.

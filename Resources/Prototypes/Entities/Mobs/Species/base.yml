@@ -162,7 +162,7 @@
   - type: SleepEmitSound
   - type: SSDIndicator
   - type: StandingState
-    allowCrawling: true
+  - type: Crawler
   - type: Dna
   - type: MindContainer
     showExamineInfo: true

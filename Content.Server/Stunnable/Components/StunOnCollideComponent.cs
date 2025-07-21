@@ -39,18 +39,6 @@ namespace Content.Server.Stunnable.Components
         public float SprintSpeedModifier = 1f;
 
         /// <summary>
-        /// Refresh Stun or Slowdown on hit
-        /// </summary>
-        [DataField]
-        public bool Refresh = true;
-
-        /// <summary>
-        /// Should the entity try and stand automatically after being knocked down?
-        /// </summary>
-        [DataField]
-        public bool AutoStand = true;
-
-        /// <summary>
         /// Fixture we track for the collision.
         /// </summary>
         [DataField("fixture")] public string FixtureID = "projectile";
