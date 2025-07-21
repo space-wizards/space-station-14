@@ -9595,5 +9595,12 @@ Entries:
   id: 1321
   time: '2025-07-21T21:26:13.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1052
+- author: STARLIGHT TEAM
+  changes:
+  - message: Railroading system added (a term from tabletop role-playing games).
+    type: Add
+  id: 1322
+  time: '2025-07-21T23:22:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1072
 Order: -1
 
