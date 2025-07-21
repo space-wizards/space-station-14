@@ -50,13 +50,13 @@ public sealed partial class SpittableContainerComponent : Component
     /// Time it takes to swallow an item into the container.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float SwallowTime = 4f;
+    public TimeSpan SwallowTime = TimeSpan.FromSeconds(4);
 
     /// <summary>
     /// Time it takes to spit items out of the container.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float SpitTime = 1f;
+    public TimeSpan SpitTime = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// Where the entities go when it devours them, empties when it is butchered.
