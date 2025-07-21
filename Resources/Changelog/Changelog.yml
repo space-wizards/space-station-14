@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Cargo will receive slightly less mail, but will earn more spesos from
-      it. Overall earnings are still on average the same.
-    type: Tweak
-  id: 8284
-  time: '2025-04-20T13:55:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36767
 - author: HyperB1
   changes:
   - message: ERT engineering hardsuit now features proper fire protection.
@@ -3905,3 +3897,11 @@
   id: 8796
   time: '2025-07-20T21:23:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39085
+- author: sowelipililimute
+  changes:
+  - message: SmartFridges are now implemented. You can store large amounts of chemicals
+      and plants within them for people to take.
+    type: Add
+  id: 8797
+  time: '2025-07-21T03:21:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38648
