@@ -205,6 +205,23 @@ public sealed class CharacterSelectionTest
             ],
             ExpectedJob = Mime
         },
+        // High priority job should be chosen over medium priority job with same weight, then the character
+        // with that job should spawn
+        new()
+        {
+            Description = "Many chars, one with high prio job",
+            HighPrioJob = Mime,
+            MediumPrioJobs = [ Passenger ],
+            Characters =
+            [
+                new() { Jobs = [ Mime ], ExpectToSpawn = true },
+                new() { Jobs = [ Passenger ] },
+                new() { Jobs = [ Passenger ] },
+                new() { Jobs = [ Captain ] },
+                new() { Jobs = [ Clown ] }
+            ],
+            ExpectedJob = Mime
+        },
         // adapted from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-2926983119
         new()
         {
