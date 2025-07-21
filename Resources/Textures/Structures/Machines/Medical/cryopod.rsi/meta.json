@@ -1,41 +1,44 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commit/033d025f53051dc53ece230f486578be6f05f88f",
-  "size": {
-    "x": 32,
-    "y": 64
-  },
-  "states": [
-    {
-      "name": "pod-panel"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/tgstation/tgstation/commit/033d025f53051dc53ece230f486578be6f05f88f, pod-cracked edited by SlamBamActionman at https://github.com/space-wizards/space-station-14/pull/33144",
+    "size": {
+        "x": 32,
+        "y": 64
     },
-    {
-      "name": "cover-off"
-    },
-    {
-      "name": "cover-on",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "pod-open"
-    },
-    {
-      "name": "pod-on"
-    },
-    {
-      "name": "pod-off"
-    }
-  ]
+    "states": [
+        {
+            "name": "pod-panel"
+        },
+        {
+            "name": "cover-off"
+        },
+        {
+            "name": "cover-on",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "pod-open"
+        },
+        {
+            "name": "pod-on"
+        },
+        {
+            "name": "pod-off"
+        },
+        {
+            "name": "pod-cracked"
+        }
+    ]
 }

@@ -363,4 +363,12 @@
   id: 44
   time: '2025-06-11T22:25:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38269
+- author: Deerstop
+  changes:
+  - message: On Elkridge, several areas have received major overhauls, including the
+      Vault, HoP, EVA, Genpop, and the Armoury.
+    type: Tweak
+  id: 45
+  time: '2025-06-13T19:17:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38259
 Order: 1

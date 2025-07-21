@@ -376,7 +376,7 @@
   desc: reagent-desc-tear-gas
   physicalDesc: reagent-physical-desc-milky
   flavor: salty
-  color: "#96a8b5"
+  color: "#ffffff4d"
   boilingPoint: 255.0
   meltingPoint: 36.0
   metabolisms:
@@ -402,18 +402,28 @@
         - norepinephricacid-effect-eye-pain
         - norepinephricacid-effect-darkness
         - norepinephricacid-effect-blindness
-        conditions:
-        - !type:ReagentThreshold
-          min: 15
       - !type:Emote
         emote: Scream
+        probability: 0.08
+        conditions:
+        - !type:ReagentThreshold
+          min: 4
+      - !type:Emote
+        emote: Cough
         probability: 0.08
       - !type:GenericStatusEffect
         key: TemporaryBlindness
         component: TemporaryBlindness
         conditions:
         - !type:ReagentThreshold
-          min: 20
+          min: 4
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+        statusLifetime: 1.5
+        conditions: # because of the remainding after effect, threshold is given so the effects ends simultaniously
+        - !type:ReagentThreshold
+          min: 4
 
 - type: reagent
   id: Happiness
