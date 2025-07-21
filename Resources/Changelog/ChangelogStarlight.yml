@@ -9559,5 +9559,12 @@ Entries:
   id: 1316
   time: '2025-07-21T21:10:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1061
+- author: Trosling
+  changes:
+  - message: Spent shotgun casings are now visually spent and eject as normal
+    type: Fix
+  id: 1317
+  time: '2025-07-21T21:13:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1062
 Order: -1
 
