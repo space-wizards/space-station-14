@@ -9573,5 +9573,12 @@ Entries:
   id: 1318
   time: '2025-07-21T21:23:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1056
+- author: CommanderAlex365
+  changes:
+  - message: Made Atmospheric Technicians more important than Technical Assistants
+    type: Tweak
+  id: 1319
+  time: '2025-07-21T21:24:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1059
 Order: -1
 
