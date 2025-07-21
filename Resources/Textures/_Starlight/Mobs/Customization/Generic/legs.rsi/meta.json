@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sha-Seng (Github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "l_leg_doll",
+      "directions": 4
+    },
+    {
+      "name": "r_leg_doll",
+      "directions": 4
+    },
+    {
+      "name": "l_foot_doll",
+      "directions": 4
+    },
+    {
+      "name": "r_foot_doll",
+      "directions": 4
+    },
+    {
+      "name": "l_leg_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "l_leg_heavy2",
+      "directions": 4
+    },
+    {
+      "name": "r_leg_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "r_leg_heavy2",
+      "directions": 4
+    },
+    {
+      "name": "l_foot_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "l_foot_heavy2",
+      "directions": 4
+    },
+    {
+      "name": "r_foot_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "r_foot_heavy2",
+      "directions": 4
+    }
+  ]
+}
