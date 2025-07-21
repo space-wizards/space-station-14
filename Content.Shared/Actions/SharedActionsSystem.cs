@@ -423,7 +423,8 @@ public abstract class SharedActionsSystem : EntitySystem
 
         // if not just checking pure range, let stored entities be targeted by actions
         // if it's out of range it probably isn't stored anyway...
-        return _interaction.CanAccessViaStorage(user, target);
+        // Checking for just unobstructed range, since we don't care if the target is accessible. We had a check for that above.
+        return _interaction.CanAccessViaStorage(user, target) || _interaction.InRangeUnobstructed(user, target, range: targetAction.Range);
     }
 
     public bool ValidateWorldTarget(EntityUid user, EntityCoordinates target, Entity<WorldTargetActionComponent> ent)
