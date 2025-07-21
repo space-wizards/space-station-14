@@ -42,3 +42,17 @@
   - type: Tag
     tags:
     - FakeNukeDisk
+
+### begin SL
+- type: entity
+  name: nuke disk replica
+  parent: BaseItem
+  id: NukeDiskReplica
+  description: A replica of a nuclear auth disk, incapable of arming a nuke if used along with a code. Note from Honk! co. reads "THIS IS YOUR MOST IMPORTANT TOY, SECURE DAT FUKKEN DISK!"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/nukedisk.rsi
+    state: icon
+  - type: StaticPrice
+    price: 1 # it's worth even less than normal items. Perfection.
+### end SL
