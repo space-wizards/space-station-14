@@ -177,6 +177,7 @@
     - 0,0,1,2
     clickInsert: false
     maxItemSize: Small
+    openOnActivate: false
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

@@ -39,6 +39,9 @@ public sealed partial class RCRemoteComponent : Component
     [DataField, AutoNetworkedField]
     public LocId RemoteWipeVerb = "rc-remote-wipe-verb";
 
+    /// <summary>
+    /// The remote control configuration to use during remote control.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public RemoteControlConfiguration Config = new();
 

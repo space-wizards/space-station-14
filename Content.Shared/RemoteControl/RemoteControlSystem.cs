@@ -57,7 +57,6 @@ public sealed partial class RemoteControlSystem : EntitySystem
     private void OnControllableInit(Entity<RemotelyControllableComponent> ent, ref MapInitEvent args)
     {
         _actions.AddAction(ent.Owner, ref ent.Comp.ReturnActionEntity, ent.Comp.ReturnActionPrototype);
-        ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
     }
 
     private void OnControllableShutdown(Entity<RemotelyControllableComponent> ent, ref ComponentShutdown args)

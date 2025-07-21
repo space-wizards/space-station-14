@@ -60,6 +60,4 @@ public sealed partial class RemoteControlSystem
 
         TryStopRemoteControl(ent.Comp.BoundTo.Value);
     }
-
-
 }
