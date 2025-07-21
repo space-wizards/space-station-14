@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseMob
+  parent: [ BaseMob, MobFlammable ]
   id: MouseRC
   name: mouse
   description: Squeak!
@@ -29,7 +29,6 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
-  - type: StandingState
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
     baseSprintSpeed : 5
