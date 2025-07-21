@@ -9,7 +9,7 @@
           steps:
             - material: Steel
               amount: 2
-              doAfter: 3
+              doAfter: 1
 
     # Inline Filter
     - node: inline_filter

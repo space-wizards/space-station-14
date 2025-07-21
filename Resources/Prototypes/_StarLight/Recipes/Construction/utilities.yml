@@ -13,4 +13,3 @@
     state: gasFilter
   conditions:
     - !type:NoUnstackableInTile
-
