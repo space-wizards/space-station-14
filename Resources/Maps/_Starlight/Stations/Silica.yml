@@ -11874,7 +11874,7 @@ entities:
       pos: 55.5,3.5
       parent: 2
     - type: GridFill
-      path: /Maps/Shuttles/sec_patrol_one.yml
+      path: /Maps/_Starlight/Shuttles/sec_patrol_one.yml
 - proto: AirlockExternalGlassShuttleEscape
   entities:
   - uid: 236
@@ -11883,7 +11883,7 @@ entities:
       pos: 55.5,0.5
       parent: 2
     - type: GridFill
-      path: /Maps/Shuttles/sec_patrol_two.yml
+      path: /Maps/_Starlight/Shuttles/sec_patrol_two.yml
 - proto: AirlockExternalGlassShuttleEscape
   entities:
   - uid: 239

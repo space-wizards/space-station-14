@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_elkridge.yml
         - type: StationCargoShuttle
-          path: /Maps/Shuttles/cargo_silica.yml
+          path: /Maps/_Starlight/Shuttles/cargo_silica.yml
         - type: StationJobs
           availableJobs:
             # 92 jobs, 82 not counting training jobs
