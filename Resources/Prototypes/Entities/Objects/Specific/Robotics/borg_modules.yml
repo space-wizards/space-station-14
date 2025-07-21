@@ -49,13 +49,15 @@
       provided_container: !type:Container { }
 
 - type: entity
+  parent: BaseAction
   id: ActionBorgSwapModule
   name: Swap Module
   description: Select this module, enabling you to use the tools it provides.
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     useDelay: 0.5
+  - type: InstantAction
     event: !type:BorgModuleActionSelectedEvent
 
 - type: entity
@@ -504,6 +506,7 @@
     - Shovel
     - MineralScannerUnpowered
     - BorgOreBag
+    - RadioHandheldExpedition # Starlight
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
 
@@ -523,6 +526,7 @@
     - Shovel
     - AdvancedMineralScannerUnpowered
     - OreBagOfHolding
+    - RadioHandheldExpedition # Starlight
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-mining-module }
 
@@ -901,6 +905,7 @@
   id: BorgModuleSyndicateWeapon
   parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
   name: weapon cyborg module
+  description: a simple weapon module that comes with an Echis and energy dagger. # starlight
   components:
   - type: Sprite
     layers:
@@ -969,7 +974,7 @@
 
 - type: entity
   id: BorgModuleL6C
-  parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule, BaseSyndicateContraband ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ] # starlight
   name: L6C ROW cyborg module
   description: A module that comes with a L6C.
   components:
@@ -988,7 +993,7 @@
   id: BorgModuleMartyr
   parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
   name: martyr cyborg module
-  description: "A module that comes with an explosive you probably don't want to handle yourself."
+  description: A module that comes with an explosive you probably don't want to handle yourself.
   components:
     - type: Sprite
       layers:

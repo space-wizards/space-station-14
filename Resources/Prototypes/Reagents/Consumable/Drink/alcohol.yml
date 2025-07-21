@@ -12,17 +12,39 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/absintheglass.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 5
+  metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:
-      - !type:SatiateThirst
-        factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.3
+    Narcotic: # The green fairy
+      metabolismRate : 0.01
+      effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.05
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - absinthe-effect-hear-voice
+        - absinthe-effect-feel-tulips
+        probability: 0.02
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
 
 - type: reagent
   id: Ale
@@ -897,6 +919,17 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   fizziness: 0.3
+  metabolisms: # SL vampires
+    Drink:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Brute: -3
+            Burn: -1.25
 
 - type: reagent
   id: DevilsKiss
@@ -912,6 +945,17 @@
   metamorphicMaxFillLevels: 3
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
+  metabolisms: # SL vampires
+    Drink:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Brute: -3
+            Burn: -1.25
 
 - type: reagent
   id: DoctorsDelight
@@ -1551,6 +1595,14 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.2
+      - !type:HealthChange # SL vampires
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Brute: -3
+            Burn: -1.25
 
 - type: reagent
   id: PinaColada

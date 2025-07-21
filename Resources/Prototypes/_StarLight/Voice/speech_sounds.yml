@@ -1,0 +1,36 @@
+- type: speechSounds
+  id: Vulpkanin
+  saySound:
+    path: /Audio/_Starlight/Voice/Vulpkanin/vulp.ogg
+  askSound:
+    path: /Audio/_Starlight/Voice/Vulpkanin/vulp_ask.ogg
+  exclaimSound:
+    path: /Audio/_Starlight/Voice/Vulpkanin/vulp_exclaim.ogg
+
+- type: speechSounds
+  id: MaleAvali
+  saySound:
+    path: /Audio/_Starlight/Voice/Avali/avali_1.ogg
+  askSound:
+    path: /Audio/_Starlight/Voice/Avali/avali_1_ask.ogg
+  exclaimSound:
+    path: /Audio/_Starlight/Voice/Avali/avali_1_exclaim.ogg
+
+- type: speechSounds
+  id: FemaleAvali
+  saySound:
+    path: /Audio/_Starlight/Voice/Avali/avali_2.ogg
+  askSound:
+    path: /Audio/_Starlight/Voice/Avali/avali_2_ask.ogg
+  exclaimSound:
+    path: /Audio/_Starlight/Voice/Avali/avali_2_exclaim.ogg
+
+- type: speechSounds
+  id: Gorilla
+  saySound:
+    path: /Audio/_Starlight/Voice/gorilla.ogg
+  askSound:
+    path: /Audio/_Starlight/Voice/gorilla.ogg
+  exclaimSound:
+    path: /Audio/_Starlight/Voice/gorilla.ogg
+

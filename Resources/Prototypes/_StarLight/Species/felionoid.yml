@@ -11,6 +11,7 @@
   maleFirstNames: names_felionoid
   femaleFirstNames: names_felionoid
   naming: First
+  customName: true
 
 - type: speciesBaseSprites
   id: MobFelionoidSprites

@@ -1,0 +1,21 @@
+- type: constructionGraph
+  id: ClothingOuterArmorForgedGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: vest
+      steps:
+      - material: Steel
+        amount: 10
+        doAfter: 10
+      - material: Plasteel
+        amount: 5
+        doAfter: 15
+      - material: Plastic
+        amount: 5
+      - material: Cloth
+        amount: 10
+        doAfter: 10
+  - node: vest
+    entity: UnfinishedClothingOuterArmorForged

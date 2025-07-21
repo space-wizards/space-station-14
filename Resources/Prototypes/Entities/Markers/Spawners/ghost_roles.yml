@@ -93,7 +93,10 @@
       settings: default
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 18000 # 5h
+      time: 43200 # 12h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 21600 # 6h STARLIGHT
   - type: GhostRoleMobSpawner
     prototype: MobHumanNukeOp
   - type: Sprite
@@ -135,7 +138,10 @@
     - MindRoleGhostRoleSoloAntagonist
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 18000 # 5h
+      time: 43200 # 12h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 21600 # 6h STARLIGHT
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -156,10 +162,13 @@
     - MindRoleGhostRoleTeamAntagonist
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 36000 # 10h
+      time: 86400 # 24h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 43200 # 12h STARLIGHT
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 18000 # 5h
+      time: 14400 # 4h STARLIGHT
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -174,10 +183,16 @@
     - MindRoleGhostRoleTeamAntagonist
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 18000 # 5h
+      time: 43200 # 12h STARLIGHT
     - !type:RoleTimeRequirement
       role: JobChemist
-      time: 18000 # 5h
+      time: 21600 # 6h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 28800 # 8h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 21600 # 6h STARLIGHT
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]

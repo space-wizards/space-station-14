@@ -5,7 +5,7 @@
   playTimeTracker: JobConsortiumBlueShield
   setPreference: false
   startingGear: NTCCBlueShieldGear
-  icon: JobIconBlueShield
+  icon: JobIconNTCCBlueShield
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
@@ -19,12 +19,12 @@
 - type: startingGear
   id: NTCCBlueShieldGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitFormalBlueShield
+    jumpsuit: ClothingUniformNTCCFatigues
     back: ClothingBackpackERTLeader
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatBeretBlueShield
-    outerClothing: ClothingOuterArmorBlueShield
-    id: NTCCBlueShieldPDA
+    outerClothing: ClothingOuterVestNTCC
+    id: NTCCCSPDA
     eyes: ClothingEyesGlassesBlueShield
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltBlueShieldWebbingFilled

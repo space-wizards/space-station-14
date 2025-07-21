@@ -4,3 +4,22 @@
   keycode: "l"
   frequency: 1780
   color: "#ff178b"
+
+- type: radioChannel
+  id: Soviet
+  name: chat-radio-soviet
+  keycode: "w"
+  frequency: 1922
+  color: "#ed7300"
+  longRange: true
+
+- type: radioChannel
+  id: Expedition
+  name: chat-radio-expedition
+  # Not actually functional as a keybind, but 'handheldRadio' uses
+  # the blank/unset keycode so something has to be set
+  keycode: 'p' 
+  frequency: 1550
+  color: "#963dca"
+  # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
+  longRange: true

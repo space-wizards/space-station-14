@@ -1,0 +1,18 @@
+- type: constructionGraph
+  id: ClothingOuterArmorImprovisedGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: vest
+      steps:
+      - material: Steel
+        amount: 12
+        doAfter: 10
+      - material: Cloth
+        amount: 5
+        doAfter: 5
+      - material: Cable
+        amount: 7
+  - node: vest
+    entity: UnfinishedClothingOuterArmorImprovised

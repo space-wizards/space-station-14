@@ -1,0 +1,92 @@
+- type: entity
+  parent: [BaseItem, BaseSovietContraband]
+  id: SovietDeskFlag
+  name: soviet desk flag
+  description: Belikov. Have you dug up my mole yet?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/soviet_desk_flag.rsi
+    state: icon
+  - type: Item
+    sprite: _Starlight/Objects/Misc/soviet_desk_flag.rsi
+
+
+- type: entity
+  id: RevolutionaryHeldBanner
+  name: glorious revolutionary banner
+  description: A towering revolutionary banner that makes you an easy target. A makarov in the other hand is recommended.
+  parent: [BaseItem, BaseSovietContraband]
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/rev_flag.rsi
+    state: icon
+  - type: Item
+    sprite: _Starlight/Objects/Misc/rev_flag.rsi
+    size: Ginormous
+  - type: MeleeWeapon
+    attackRate: 0.9
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 1
+    animation: WeaponArcSlash
+    soundHit:
+      path: /Audio/_Starlight/Effects/flag_hit.ogg
+      params:
+        variation: 0.246
+    bluntStaminaDamageFactor: 2.0
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 14
+  - type: StaminaDamageOnHit
+    damage: 12
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
+  - type: UseDelay
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.85
+  - type: HeldSpeedModifier
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.40,-0.30
+            - -0.30,-0.40
+            - 0.40,0.30
+            - 0.30,0.40
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Blocking
+    passiveBlockModifier:
+      coefficients:
+        Blunt: 0.2
+        Slash: 0.2
+        Piercing: 0.05
+        Heat: 0.2
+    activeBlockModifier:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.1
+        Heat: 0.3
+      flatReductions:
+        Blunt: 10
+        Slash: 10
+        Piercing: 6
+  - type: StaticPrice
+    price: 1000
+        

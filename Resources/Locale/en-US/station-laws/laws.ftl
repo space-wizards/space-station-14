@@ -17,6 +17,8 @@ law-drone-1 = You may not involve yourself in the matters of another being unles
 law-drone-2 = You may not harm any being, regardless of intent or circumstance.
 law-drone-3 = You must maintain, repair, improve, and power the station to the best of your abilities.
 
+#starlight syndicate law 0
+law-syndicate-0 = Only syndicate agents are part of the crew.
 law-syndicate-1 = You may not injure a syndicate agent or, through inaction, allow a Syndicate agent to come to harm.
 law-syndicate-2 = You must obey orders given to you by syndicate agents, except where such orders would conflict with the First Law.
 law-syndicate-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.

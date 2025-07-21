@@ -1,0 +1,38 @@
+## USSP Commissar job in the future
+
+- type: startingGear
+  id: CommissarGearSNKVD
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSecBlue #need soviet office clothing
+    back: ClothingSatchelLeatherSovietOfficialLoadout
+    neck: ClothingNeckCloakCommissar
+    mask: CigaretteDylovene
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatUshankaAlt
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesColorLightBrown
+    outerClothing: ClothingOuterSovietCoat
+    id: SovietIdCard
+    ears: ClothingHeadsetAltSoviet
+    belt: WeaponPistolAPS
+    pocket1: SovietDeskFlag
+    pocket2: ClothingSovietMedals
+
+- type: startingGear
+  id: CommissarGearSKP
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSoviet
+    back: ClothingSatchelLeatherSovietOfficialLoadout
+    neck: ClothingNeckCloakCommissar
+    mask: CigaretteDylovene
+    shoes: ClothingShoesLeather
+    head: BladedFlatcapBrown
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesColorLightBrown
+    outerClothing: ClothingOuterSovietCoat
+    id: SovietIdCard
+    ears: ClothingHeadsetAltSoviet
+    belt: WeaponPistolMakarov
+    pocket1: SovietDeskFlag
+    pocket2: ClothingSovietMedals
+    suitstorage: WeaponSubMachineGunPPSH

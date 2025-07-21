@@ -12,6 +12,7 @@
   femaleFirstNames: NamesDionaFirst
   lastNames: NamesDionaLast
   naming: TheFirstofLast
+  customName: true # Starlight
 
 - type: speciesBaseSprites
   id: MobDionaSprites

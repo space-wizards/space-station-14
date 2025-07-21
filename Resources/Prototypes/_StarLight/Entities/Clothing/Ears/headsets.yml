@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingHeadset
+  parent: [ ClothingHeadset, BaseLawContraband ]
   id: ClothingHeadsetIAA
   name: Internal Affairs Agent Headset
   description: A headset for internal affairs agent to hear the captain's last words.
@@ -14,7 +14,7 @@
       sprite: Clothing/Ears/Headsets/servicesecurity.rsi
       
 - type: entity
-  parent: ClothingHeadset
+  parent: [ ClothingHeadset, BaseLawContraband ]
   id: ClothingHeadsetMagistrate
   name: Magistrate headset
   description: A headset for internal affairs agent to hear the captain's last words.
@@ -30,7 +30,7 @@
       sprite: Clothing/Ears/Headsets/servicesecurity.rsi
 
 - type: entity
-  parent: ClothingHeadset
+  parent: [ ClothingHeadset, BaseMajorContraband ]
   id: ClothingHeadsetAssistantNinja
   name: stolen headset
   components:
@@ -41,7 +41,7 @@
       path: /Audio/_Starlight/Effects/Radio/ninja.ogg
 
 - type: entity
-  parent: [ClothingHeadset, BaseSecurityLawyerContraband]
+  parent: [ ClothingHeadset, BaseSecurityContraband ]
   id: ClothingHeadsetSecurityWarden
   name: warden's headset
   description: This is used by your elite warden.
@@ -58,3 +58,22 @@
   - type: RadioChime
     sound:
       path: /Audio/_Starlight/Effects/Radio/warden.ogg
+
+- type: entity
+  parent: [ ClothingHeadsetAlt, BaseSovietContraband ]
+  id: ClothingHeadsetAltSoviet
+  name: SSF marine over-ear headset
+  description: Priyom.
+  components:
+  - type: Headset
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySoviet
+  - type: Sprite
+    sprite: _Starlight/Clothing/Ears/Headsets/soviet_headset.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Ears/Headsets/soviet_headset.rsi
+  - type: RadioChime
+    sound:
+      path: /Audio/_Starlight/Effects/Radio/soviet.ogg

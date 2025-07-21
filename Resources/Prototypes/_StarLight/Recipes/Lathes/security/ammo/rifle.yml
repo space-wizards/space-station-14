@@ -62,7 +62,6 @@
   materials:
     Steel: 50
     Plastic: 100
-    Plasma: 250
 
 - type: latheRecipe
   parent: BaseAmmoRecipe

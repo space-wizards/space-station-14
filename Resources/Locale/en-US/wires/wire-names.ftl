@@ -45,6 +45,7 @@ wires-board-name-holopad = Holopad
 wires-board-name-barsign = Bar Sign
 wires-board-name-weapon-energy-turret = Sentry turret
 wires-board-name-turret-controls = Sentry turret control panel
+wires-board-name-medibot = Medibot
 
 # names that get displayed in the wire hacking hud & admin logs.
 

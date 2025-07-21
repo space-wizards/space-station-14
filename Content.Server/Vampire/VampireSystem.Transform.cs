@@ -13,6 +13,7 @@ using Content.Shared.Vampire;
 using Content.Shared.Vampire.Components;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
+using Content.Shared.Actions.Components;
 
 namespace Content.Server.Vampire;
 

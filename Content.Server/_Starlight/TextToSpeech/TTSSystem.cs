@@ -1,9 +1,12 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Content.Server._Starlight.Radio.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Starlight.TextToSpeech;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Radio.Components;
 using Content.Shared.Starlight;
 using Content.Shared.Starlight.CCVar;
@@ -19,6 +22,7 @@ namespace Content.Server.Starlight.TTS;
 public sealed partial class TTSSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
+    [Dependency] private readonly RadioChimeSystem _chime = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ITTSManager _ttsManager = default!;
@@ -67,7 +71,7 @@ public sealed partial class TTSSystem : EntitySystem
         if (soundData is null)
             return;
 
-        RaiseNetworkEvent(new PlayTTSEvent { Data = soundData }, Robust.Shared.Player.Filter.SinglePlayer(args.SenderSession));
+        RaiseNetworkEvent(new PlayTTSEvent { Data = soundData }, Robust.Shared.Player.Filter.SinglePlayer(args.SenderSession), false);
     }
 
     private async void OnClientOptionTTS(ClientOptionTTSEvent ev, EntitySessionEventArgs args)
@@ -84,9 +88,7 @@ public sealed partial class TTSSystem : EntitySystem
             || args.Message.Length > MaxChars)
             return;
 
-        var chime = TryComp<RadioChimeComponent>(args.Source, out var chimeComponent)
-            ? chimeComponent.Sound
-            : default;
+        _chime.TryGetSenderHeadsetChime(args.Source, out var chime);
 
         if (!TryComp(args.Source, out TextToSpeechComponent? senderComponent)
             || senderComponent.VoicePrototypeId is not string voiceId)
@@ -134,7 +136,7 @@ public sealed partial class TTSSystem : EntitySystem
         {
             Data = soundData,
             AnnouncementSound = args.AnnouncementSound
-        }, args.Source.RemovePlayers(_ignoredRecipients));
+        }, args.Source.RemovePlayers(_ignoredRecipients), false);
     }
 
     private async void OnEntitySpoke(EntityUid uid, TextToSpeechComponent component, EntitySpokeEvent args)
@@ -152,6 +154,18 @@ public sealed partial class TTSSystem : EntitySystem
                 if (voicePrototypes.Length != 0)
                 {
                     var index = Random.Shared.Next(voicePrototypes.Length);
+                    if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind 
+                    && TryComp<MindComponent>(mindContainer.Mind, out var mind))
+                    {
+                        for(int i = 0; i < voicePrototypes.Length; i++)
+                        {
+                            if(voicePrototypes[i].Value.Name == mind.Voice)
+                            {
+                                index = i;
+                                break;
+                            }
+                        }
+                    }
                     var prototype = voicePrototypes[index];
                     voice = prototype.Value.Voice;
                     component.VoicePrototypeId = prototype.Value.ID;
@@ -163,6 +177,18 @@ public sealed partial class TTSSystem : EntitySystem
                 if (voicePrototypes.Length != 0)
                 {
                     var index = Random.Shared.Next(voicePrototypes.Length);
+                    if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind 
+                    && TryComp<MindComponent>(mindContainer.Mind, out var mind))
+                    {
+                        for(int i = 0; i < voicePrototypes.Length; i++)
+                        {
+                            if(voicePrototypes[i].Value.Name == mind.SiliconVoice)
+                            {
+                                index = i;
+                                break;
+                            }
+                        }
+                    }
                     var prototype = voicePrototypes[index];
                     voice = prototype.Value.Voice;
                     component.VoicePrototypeId = prototype.Value.ID;
@@ -203,14 +229,14 @@ public sealed partial class TTSSystem : EntitySystem
             {
                 Data = soundData,
                 SourceUid = GetNetEntity(eye.Target)
-            }, Filter.Empty().FromEntities(uid));
+            }, Filter.Empty().FromEntities(uid), false);
         }
 
         RaiseNetworkEvent(new PlayTTSEvent
         {
             Data = soundData,
             SourceUid = netEntity
-        }, recipients);
+        }, recipients, false);
     }
 
     private async void HandleWhisper(EntityUid uid, string message, int voice)
@@ -240,7 +266,7 @@ public sealed partial class TTSSystem : EntitySystem
                 {
                     Data = soundData,
                     SourceUid = GetNetEntity(eye.Target)
-                }, Filter.Empty().FromEntities(uid));
+                }, Filter.Empty().FromEntities(uid), false);
             }
             else
             {
@@ -260,7 +286,7 @@ public sealed partial class TTSSystem : EntitySystem
         if (soundData is null)
             return;
 
-        RaiseNetworkEvent(new PlayTTSEvent { IsRadio = true, Chime = chime, Data = soundData }, Filter.Entities(uIds).RemovePlayers(_ignoredRecipients));
+        RaiseNetworkEvent(new PlayTTSEvent { IsRadio = true, Chime = chime, Data = soundData }, Filter.Entities(uIds).RemovePlayers(_ignoredRecipients), false);
     }
 
     private async void HandleCollectiveMind(EntityUid[] uIds, string message, int voice)
@@ -269,7 +295,7 @@ public sealed partial class TTSSystem : EntitySystem
         if (soundData is null)
             return;
 
-        RaiseNetworkEvent(new PlayTTSEvent { IsRadio = true, Data = soundData }, Filter.Entities(uIds).RemovePlayers(_ignoredRecipients));
+        RaiseNetworkEvent(new PlayTTSEvent { IsRadio = true, Data = soundData }, Filter.Entities(uIds).RemovePlayers(_ignoredRecipients), false);
     }
 
     private async Task<byte[]?> GenerateTTS(string text, int voice, bool isRadio = false, bool isAnnounce = false)

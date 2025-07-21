@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
@@ -160,6 +160,7 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.MoveDown);
             AddButton(EngineKeyFunctions.MoveRight);
             AddButton(EngineKeyFunctions.Walk);
+            AddButton(ContentKeyFunctions.Jump); //🌟Starlight🌟
             AddCheckBox("ui-options-hotkey-toggle-walk", _cfg.GetCVar(CCVars.ToggleWalk), HandleToggleWalk);
             InitToggleWalk();
 

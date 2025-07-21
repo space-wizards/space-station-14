@@ -1,0 +1,692 @@
+# Ears
+
+- type: marking
+  id: EarsShadekin
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+
+- type: marking
+  id: EarsShadekinStriped
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+    layers:
+      shadekin_stripes:
+        type:
+          !type:SimpleColoring
+            color: "#FFFFFF"
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin_stripes
+
+- type: marking
+  id: EarsShadekinMotley
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+    layers:
+      motley_secondary:
+        type:
+          !type:SimpleColoring
+            color: "#FFFFFF"
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: motley_secondary
+
+- type: marking
+  id: EarsShadekinShady
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shady
+
+- type: marking
+  id: EarsShadekinPiercingAll
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+    layers:
+      piercing_all:
+        type:
+          !type:SimpleColoring
+            color: "#FFFFFF"
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: piercing_all
+
+- type: marking
+  id: EarsShadekinPiercingLeft
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+    layers:
+      piercing_left:
+        type:
+          !type:SimpleColoring
+            color: "#FFFFFF"
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: piercing_left
+
+- type: marking
+  id: EarsShadekinPiercingRight
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+    layers:
+      piercing_right:
+        type:
+          !type:SimpleColoring
+            color: "#FFFFFF"
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: piercing_right
+
+- type: marking
+  id: EarsShadekinRingedAll
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+    layers:
+      ringed_all_secondary:
+        type:
+          !type:SimpleColoring
+            color: "#FFFFFF"
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: ringed_all_secondary
+
+- type: marking
+  id: EarsShadekinRingedLeft
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+    layers:
+      ringed_left_secondary:
+        type:
+          !type:SimpleColoring
+            color: "#FFFFFF"
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: ringed_left_secondary
+
+- type: marking
+  id: EarsShadekinRingedRight
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+    layers:
+      ringed_right_secondary:
+        type:
+          !type:SimpleColoring
+            color: "#FFFFFF"
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: ringed_right_secondary
+
+- type: marking
+  id: EarsShadekinGauzedAll
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: gauze_ear_all_default
+
+- type: marking
+  id: EarsShadekinGauzedLeft
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: gauze_ear_l_default
+
+- type: marking
+  id: EarsShadekinGauzedRight
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: gauze_ear_r_default
+
+- type: marking
+  id: EarsShadekinFluffy
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_default
+
+- type: marking
+  id: EarsShadekinFluffyButterfly
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_butterfly
+
+- type: marking
+  id: EarsShadekinFluffyCowling
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_cowling
+
+- type: marking
+  id: EarsShadekinFluffyCrow
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_crow
+
+- type: marking
+  id: EarsShadekinFluffyMotley
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_motley
+
+- type: marking
+  id: EarsShadekinFluffySpidy
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_spidy
+
+- type: marking
+  id: EarsShadekinFluffyRingedAll
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_ringed_all
+
+- type: marking
+  id: EarsShadekinFluffyRingedLeft
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_ringed_left
+
+- type: marking
+  id: EarsShadekinFluffyRingedRight
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: fluffy_ringed_right
+
+- type: marking
+  id: EarsShadekinSaggy
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_default
+
+- type: marking
+  id: EarsShadekinSaggyBrawly
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_brawly
+
+- type: marking
+  id: EarsShadekinSaggyZebra
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_zebra
+
+- type: marking
+  id: EarsShadekinSaggyGradient
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_gradient
+
+- type: marking
+  id: EarsShadekinSaggyGauzedAll
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_gauze_all
+
+- type: marking
+  id: EarsShadekinSaggyGauzedLeft
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_gauze_l
+
+- type: marking
+  id: EarsShadekinSaggyGauzedRight
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: saggy_gauze_r
+
+- type: marking
+  id: EarsShadekinShort
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: short_default
+
+- type: marking
+  id: EarsShadekinShortButterfly
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: short_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: short_butterfly
+
+- type: marking
+  id: EarsShadekinShortRingedAll
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: short_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: short_ringed_all
+
+- type: marking
+  id: EarsShadekinShortRingedLeft
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: short_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: short_ringed_left
+
+- type: marking
+  id: EarsShadekinShortRingedRight
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: short_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: short_ringed_right
+
+- type: marking
+  id: EarsShadekinBull
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: bull_default
+
+- type: marking
+  id: EarsShadekinBullSmooth
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: bull_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: bull_smooth
+
+- type: marking
+  id: EarsShadekinAqua
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: aqua_default
+
+- type: marking
+  id: EarsShadekinAquaIncolor
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: aqua_default
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: aqua_incolor
+
+# Tails
+
+- type: marking
+  id: TailShadekin
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails64x32.rsi
+      state: shadekin
+
+- type: marking
+  id: TailShadekinBig
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails64x32.rsi
+      state: shadekin_big
+
+# - type: marking
+#   id: TailShadekinBigFluff
+#   bodyPart: Tail
+#   markingCategory: Tail
+#   speciesRestriction: [Shadekin]
+#   sprites:
+#     - sprite: _Starlight/Mobs/Customization/shadekin/tails64x32.rsi
+#       state: shadekin_big_fluff
+
+- type: marking
+  id: TailShadekinShorter
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails32x32.rsi
+      state: shadekin_shorter
+
+- type: marking
+  id: TailShadekinShorterBrush
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails32x32.rsi
+      state: shadekin_shorter
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails32x32.rsi
+      state: shorter_brush
+
+- type: marking
+  id: TailShadekinMedium
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails32x32.rsi
+      state: shadekin_medium
+
+- type: marking
+  id: TailShadekinMediumTwoColored
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails32x32.rsi
+      state: shadekin_medium
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails32x32.rsi
+      state: medium_twocolored
+
+# Overlays
+
+- type: marking
+  id: BodyShadekinArrow
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_arrow
+
+- type: marking
+  id: BodyShadekinBlackHole
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_blackhole
+
+- type: marking
+  id: BodyShadekinBrace
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_brace
+
+- type: marking
+  id: BodyShadekinBrawly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_brawly
+
+- type: marking
+  id: BodyShadekinHeart
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_heart
+
+- type: marking
+  id: BodyShadekinInk
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ShaShadekindowkin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_ink
+
+- type: marking
+  id: BodyShadekinInk2
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_ink2
+
+- type: marking
+  id: BodyShadekinInk3
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_ink3
+
+- type: marking
+  id: BodyShadekinInk4
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_ink4
+
+- type: marking
+  id: BodyShadekinInk5
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_ink5
+
+- type: marking
+  id: BodyShadekinInk6
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_ink6
+
+- type: marking
+  id: BodyShadekinInkAnim
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_ink_anim
+
+- type: marking
+  id: BodyShadekinLines
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_lines
+
+- type: marking
+  id: BodyShadekinNeck
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_neck
+
+- type: marking
+  id: BodyShadekinShield
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_shield
+
+- type: marking
+  id: BodyShadekinVacuum
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Shadekin]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/overlay.rsi
+      state: body_vacuum

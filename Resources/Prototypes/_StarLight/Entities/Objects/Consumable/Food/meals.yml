@@ -1,6 +1,6 @@
 ﻿- type: entity
   name: Volcanic explosion
-  parent: FoodMealBase
+  parent: [ FoodMealBase, BaseMajorContraband ]
   id: FoodCookedLizardPlate
   description: An art piece showing the demise of a forest
   components:
@@ -34,7 +34,7 @@
         
 - type: entity
   name: Kentucky fried felionoid
-  parent: FoodMealBase
+  parent: [ FoodMealBase, BaseMajorContraband ]
   id: FoodFriedfelionoid
   description: An old dish modernized to fit new trends
   components:

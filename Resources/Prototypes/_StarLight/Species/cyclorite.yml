@@ -11,6 +11,7 @@
   maleFirstNames: names_cyclorite
   femaleFirstNames: names_cyclorite
   naming: First
+  customName: true
 
 - type: speciesBaseSprites
   id: MobCycloriteSprites

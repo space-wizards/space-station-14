@@ -1,0 +1,6 @@
+plushie-trystan-1 = Yeeps!
+plushie-trystan-2 = I'm small... and?
+plushie-trystan-3 = Carefull I bite...
+plushie-trystan-4 = Security at its finest...
+plushie-trystan-5 = Ehh... are you sure this is legal?
+plushie-trystan-6 = Science has done it again, they turned the room into CHEESE.

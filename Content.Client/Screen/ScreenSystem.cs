@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Shared.Screen;
 using Content.Shared.Screen.Components;
+using Content.Shared.TextScreen;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -148,6 +149,7 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             }
         }
         
+        // Starlight
         if (args.AppearanceData.TryGetValue(TextScreenVisuals.AlertLevel, out var alertLevel))
         {
             if (TryComp<ScreenComponent>(uid, out var screenComp) && TryComp<SpriteComponent>(uid, out var sprite))

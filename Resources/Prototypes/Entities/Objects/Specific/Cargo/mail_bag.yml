@@ -28,4 +28,10 @@
       #- Document
       #- Paper
   - type: Dumpable
-  - type: MagnetPickup
+  - type: ItemToggle  #starlight edit, added toggle
+    onUse: false
+    verbToggleOn: "Activate Magnet"
+    verbToggleOff: "Deactivate Magnet"
+  - type: ComponentToggler
+    components: 
+    - type: MagnetPickup
