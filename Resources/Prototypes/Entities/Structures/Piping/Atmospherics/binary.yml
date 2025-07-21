@@ -545,6 +545,9 @@
     board: GasRecyclerMachineCircuitboard
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
+  - type: GuideHelp
+    guides:
+    - GasRecycling
 
 - type: entity
   parent: GasBinaryBase
