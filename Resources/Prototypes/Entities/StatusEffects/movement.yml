@@ -65,3 +65,19 @@
   name: knocked down
   components:
   - type: KnockdownStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectParalysis
+  name: paralyzed
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+    blacklist:
+      tags:
+      - StunImmune
+  - type: StatusEffectAlert
+    alert: Stun
+  - type: StunnedStatusEffect

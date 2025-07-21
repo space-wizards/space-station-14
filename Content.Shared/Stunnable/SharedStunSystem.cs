@@ -29,6 +29,7 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     public static readonly EntProtoId StunId = "StatusEffectStunned";
     public static readonly EntProtoId KnockdownId = "StatusEffectKnockdown";
+    public static readonly EntProtoId ParalysisId = "StatusEffectParalysis";
 
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -45,10 +46,6 @@ public abstract partial class SharedStunSystem : EntitySystem
     public override void Initialize()
     {
         _crawlerQuery = GetEntityQuery<CrawlerComponent>();
-
-        SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
-        SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
-        SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
         SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
         SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(OnStunShutdown);
@@ -169,10 +166,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (!_status.TryAddStatusEffectDuration(uid, KnockdownId, duration))
             return false;
 
-        TryKnockdown(uid, duration, true, force: true);
-
-        return true;
-
+        return TryKnockdown(uid, duration, false, force: true);
     }
 
     public bool TryUpdateKnockdownDuration(EntityUid uid, TimeSpan? duration)
@@ -191,7 +185,8 @@ public abstract partial class SharedStunSystem : EntitySystem
     /// <param name="refresh">Whether we should refresh a running timer or add to it, if one exists.</param>
     /// <param name="autoStand">Whether we want to automatically stand when knockdown ends.</param>
     /// <param name="drop">Whether we should drop items.</param>
-    public bool TryKnockdown(Entity<StandingStateComponent?> entity, TimeSpan time, bool refresh, bool autoStand = true, bool drop = true)
+    /// <param name="force">Should we force the status effect?</param>
+    public bool TryKnockdown(Entity<StandingStateComponent?> entity, TimeSpan? time, bool refresh, bool autoStand = true, bool drop = true, bool force = false)
     {
         if (time <= TimeSpan.Zero)
             return false;
@@ -202,7 +197,7 @@ public abstract partial class SharedStunSystem : EntitySystem
 
         if (!force)
         {
-            var evAttempt = new KnockDownAttemptEvent(autoStand, drop);
+            var evAttempt = new KnockDownAttemptEvent(autoStand, drop, time);
             RaiseLocalEvent(entity, ref evAttempt);
 
             if (evAttempt.Cancelled)
@@ -212,12 +207,16 @@ public abstract partial class SharedStunSystem : EntitySystem
             drop = evAttempt.Drop;
         }
 
-        Knockdown(entity!, time, autoStand, drop);
+        // If the entity can't crawl they also need to be stunned, and therefore we should be using paralysis status effect.
+        if (!_crawlerQuery.HasComp(entity))
+            return TryUpdateParalyzeDuration(entity, time);
+
+        Knockdown(entity, time, autoStand, drop);
 
         return true;
     }
 
-    private void Knockdown(Entity<StandingStateComponent> entity, TimeSpan? time, bool refresh, bool autoStand = true, bool drop = true)
+    private void Knockdown(EntityUid uid, TimeSpan? time, bool refresh, bool autoStand = true, bool drop = true)
     {
         // Initialize our component with the relevant data we need if we don't have it
         if (EnsureComp<KnockedDownComponent>(uid, out var component))
@@ -231,41 +230,47 @@ public abstract partial class SharedStunSystem : EntitySystem
             if (drop)
             {
                 var ev = new DropHandItemsEvent();
-                RaiseLocalEvent(entity, ref ev);
+                RaiseLocalEvent(uid, ref ev);
             }
 
             // Only update Autostand value if it's our first time being knocked down...
-            SetAutoStand((entity, component), autoStand);
+            SetAutoStand((uid, component), autoStand);
         }
 
-        var knockedEv = new KnockedDownEvent(time);
-        RaiseLocalEvent(entity, ref knockedEv);
+        var knockedEv = new KnockedDownEvent();
+        RaiseLocalEvent(uid, ref knockedEv);
 
         if (time != null)
         {
-            UpdateKnockdownTime((entity, component), time.Value, refresh);
-            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} knocked down for {time.Value.Seconds} seconds");
+            UpdateKnockdownTime((uid, component), time.Value, refresh);
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} knocked down for {time.Value.Seconds} seconds");
         }
         else
-            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} knocked down for an indefinite amount of time");
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} knocked down for an indefinite amount of time");
 
-        Alerts.ShowAlert(entity, KnockdownAlert, null, (GameTiming.CurTime, component.NextUpdate));
+        Alerts.ShowAlert(uid, KnockdownAlert, null, (GameTiming.CurTime, component.NextUpdate));
     }
 
     public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan duration)
     {
-        var knockdown = TryAddKnockdownDuration(uid, duration);
-        var stunned = TryAddStunDuration(uid, duration);
+        if (!_status.TryAddStatusEffectDuration(uid, ParalysisId, duration))
+            return false;
 
-        return knockdown || stunned;
+        Knockdown(uid, duration, false);
+        OnStunnedSuccessfully(uid, duration);
+
+        return true;
     }
 
     public bool TryUpdateParalyzeDuration(EntityUid uid, TimeSpan? duration)
     {
-        var knockdown = TryUpdateKnockdownDuration(uid, duration);
-        var stunned = TryUpdateStunDuration(uid, duration);
+        if (!_status.TryUpdateStatusEffectDuration(uid, ParalysisId, duration))
+            return false;
 
-        return knockdown || stunned;
+        Knockdown(uid, duration, true);
+        OnStunnedSuccessfully(uid, duration);
+
+        return true;
     }
 
     public bool TryUnstun(Entity<StunnedComponent?> entity)
