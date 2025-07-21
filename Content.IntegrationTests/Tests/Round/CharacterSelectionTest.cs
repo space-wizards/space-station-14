@@ -179,6 +179,21 @@ public sealed class CharacterSelectionTest
                 new() { Jobs = [ Clown ], Traitor = true }
             ]
         },
+        // disabled characters should be ignored
+        new()
+        {
+            MediumPrioJobs = [Passenger, Mime],
+            Characters =
+            [
+                new() { Jobs = [ Mime ], ExpectToSpawn = true },
+                new() { Jobs = [ Passenger ], Enabled = false },
+                new() { Jobs = [ Mime ], Enabled = false },
+                new() { Jobs = [ Captain ], Enabled = false },
+                new() { Jobs = [ Passenger, Mime, Captain ], Enabled = false },
+                new() { Jobs = [ Passenger, Mime, Captain ], Enabled = false }
+            ],
+            ExpectedJob = Mime
+        },
         // adapted from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-2926983119
         new()
         {
