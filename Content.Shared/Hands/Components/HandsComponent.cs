@@ -104,16 +104,19 @@ public sealed partial class HandsComponent : Component
     public bool CanBeStripped = true;
 
     // Starlight - OfferSystem - Start
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public bool Offering;
 
-    [DataField]
-    public bool BeingOffered;
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public bool ReceivingOffer;
 
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public string? OfferHand;
+
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? OfferItem;
 
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? OfferTarget;
     // Starlight - OfferSystem - End
 }
