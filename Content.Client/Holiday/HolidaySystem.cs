@@ -38,15 +38,27 @@ public sealed class HolidaySystem : SharedHolidaySystem
     {
         // Get the holiday enum
         if (!_appearance.TryGetData<string>(ent, HolidayVisuals.Holiday, out var data, args.Component))
+        {
+            // No holiday, so set to default
+            SetRsi((ent.Owner, args.Sprite), ent.Comp.Default);
             return;
+        }
 
         // Get the new rsi
-        if (args.Sprite == null || !ent.Comp.Sprite.TryGetValue(data, out var rsiString))
+        if (!ent.Comp.Sprite.TryGetValue(data, out var rsiString))
             return;
-        var path = SpriteSpecifierSerializer.TextureRoot / rsiString;
 
-        // Set the new rsi
+        SetRsi((ent.Owner, args.Sprite), rsiString);
+    }
+
+    /// <summary>
+    ///     Helper method for <see cref="OnAppearanceChange"/>. Does the actual setting of the rsi.
+    /// </summary>
+    private void SetRsi(Entity<SpriteComponent?> ent, string newRsi)
+    {
+        var path = SpriteSpecifierSerializer.TextureRoot / newRsi;
+
         if (_resCache.TryGetResource(path, out RSIResource? rsi))
-            _sprite.SetBaseRsi((ent.Owner, args.Sprite), rsi.RSI);
+            _sprite.SetBaseRsi(ent, rsi.RSI);
     }
 }
