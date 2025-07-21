@@ -51,7 +51,7 @@ public abstract partial class SharedStunSystem
 
         // Action blockers
         SubscribeLocalEvent<KnockedDownComponent, BuckleAttemptEvent>(OnBuckleAttempt);
-        SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandUpAttempt);
+        SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandAttempt);
 
         // Updating movement a friction
         SubscribeLocalEvent<KnockedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshKnockedSpeed);
@@ -452,7 +452,7 @@ public abstract partial class SharedStunSystem
 
     #region Action Blockers
 
-    private void OnStandUpAttempt(Entity<KnockedDownComponent> entity, ref StandAttemptEvent args)
+    private void OnStandAttempt(Entity<KnockedDownComponent> entity, ref StandAttemptEvent args)
     {
         if (entity.Comp.LifeStage <= ComponentLifeStage.Running)
             args.Cancel();
