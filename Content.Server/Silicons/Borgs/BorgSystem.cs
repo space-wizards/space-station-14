@@ -170,15 +170,14 @@ public sealed partial class BorgSystem : SharedBorgSystem
         {
             //#region Starlight
             //re-target the station-AI's shunt target to the chassis insteaf of the brain
-            if (TryComp<StationAIShuntComponent>(args.Entity, out var shunt))
-                if (TryComp<StationAIShuntableComponent>(shunt.Return, out var shuntable))
+            if (TryComp<StationAIShuntComponent>(args.Entity, out var shunt) &&
+                TryComp<StationAIShuntableComponent>(shunt.Return, out var shuntable) &&
+                EnsureComp<StationAIShuntComponent>(uid, out var borgShunt)
+                )
                 {
                     shuntable.Inhabited = uid;
-                    if (EnsureComp<StationAIShuntComponent>(uid, out var borgShunt)) //cause I really dont want this to fail it is a ensure
-                    {
-                        borgShunt.Return = shunt.Return;
-                        borgShunt.ReturnAction = _actions.AddAction(uid, shuntable.UnshuntAction);
-                    }
+                    borgShunt.Return = shunt.Return;
+                    borgShunt.ReturnAction = _actions.AddAction(uid, shuntable.UnshuntAction);
                 }
             //#endregion Starlight
             _mind.TransferTo(mindId, uid, mind: mind);
@@ -193,17 +192,15 @@ public sealed partial class BorgSystem : SharedBorgSystem
         {
             //#region Starlight
             //re-target the station-AI's shunt target to the brain instead of the borg. so it doesn't get lost.
-            if (TryComp<StationAIShuntComponent>(args.Entity, out var shunt))
-                if (TryComp<StationAIShuntableComponent>(shunt.Return, out var shuntable))
+            if (TryComp<StationAIShuntComponent>(args.Entity, out var shunt) &&
+                TryComp<StationAIShuntableComponent>(shunt.Return, out var shuntable) &&
+                TryComp<StationAIShuntComponent>(uid, out var borgShunt))
                 {
                     shuntable.Inhabited = args.Entity;
-                    if (TryComp<StationAIShuntComponent>(uid, out var borgShunt))
-                    {
-                        if (TryComp<ActionComponent>(borgShunt.ReturnAction, out var action))
-                            _actions.RemoveAction((borgShunt.ReturnAction.Value, action)); //delete the action as we leave the body
-                        borgShunt.Return = null;
-                        borgShunt.ReturnAction = null;
-                    }
+                    if (TryComp<ActionComponent>(borgShunt.ReturnAction, out var action))
+                        _actions.RemoveAction((borgShunt.ReturnAction.Value, action)); //delete the action as we leave the body
+                    borgShunt.Return = null;
+                    borgShunt.ReturnAction = null;
                 }
             //#endregion
             _mind.TransferTo(mindId, args.Entity, mind: mind);
