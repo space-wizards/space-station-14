@@ -1,5 +1,4 @@
 using Content.Shared.Actions;
-using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -17,7 +16,7 @@ namespace Content.Shared.RemoteControl;
 /// <summary>
 /// System used for managing remote control: Granting temporary control of entities to other entities.
 /// </summary>
-public sealed class RemoteControlSystem : EntitySystem
+public sealed partial class RemoteControlSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -26,6 +25,7 @@ public sealed class RemoteControlSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        InitializeConfig();
 
         SubscribeLocalEvent<RemotelyControllableComponent, MapInitEvent>(OnControllableInit);
         SubscribeLocalEvent<RemotelyControllableComponent, ComponentShutdown>(OnControllableShutdown);
@@ -34,13 +34,11 @@ public sealed class RemoteControlSystem : EntitySystem
         SubscribeLocalEvent<RemotelyControllableComponent, RemoteControlReturnToBodyEvent>(OnReturnToBody);
         SubscribeLocalEvent<RemotelyControllableComponent, MobStateChangedEvent>(OnMobStateChanged);
 
-        SubscribeLocalEvent<RemoteControllerComponent, DamageChangedEvent>(OnTookDamage);
-        SubscribeLocalEvent<RemoteControllerComponent, InteractionSuccessEvent>(OnSuccessfulInteract);
-
         SubscribeLocalEvent<RCRemoteComponent, GetVerbsEvent<ActivationVerb>>(OnRCRemoteVerbs);
         SubscribeLocalEvent<RCRemoteComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<RCRemoteComponent, ComponentShutdown>(OnRemoteShutdown);
-        SubscribeLocalEvent<RCRemoteComponent, DroppedEvent>(OnRemoteDropped);
+
+        SubscribeLocalEvent<RemoteControllerComponent, MindRemovedMessage>(OnMindGotRemoved);
     }
 
     private void OnExamine(Entity<RemotelyControllableComponent> ent, ref ExaminedEvent args)
@@ -90,27 +88,6 @@ public sealed class RemoteControlSystem : EntitySystem
     private void OnReturnToBody(Entity<RemotelyControllableComponent> ent, ref RemoteControlReturnToBodyEvent args)
     {
         TryStopRemoteControl(ent);
-    }
-
-    private void OnTookDamage(Entity<RemoteControllerComponent> ent, ref DamageChangedEvent args)
-    {
-        if (!args.DamageIncreased
-            || !args.InterruptsDoAfters
-            || ent.Comp.Controlled == null)
-            return;
-
-        TryStopRemoteControl(ent.Comp.Controlled.Value);
-    }
-
-    private void OnSuccessfulInteract(Entity<RemoteControllerComponent> ent, ref InteractionSuccessEvent args)
-    {
-        if (ent.Comp.Controlled == null)
-            return;
-
-        _popup.PopupEntity(Loc.GetString("rc-controller-shake"),
-            ent.Comp.Controlled.Value,
-            ent.Comp.Controlled.Value,
-            PopupType.MediumCaution);
     }
 
     private void OnRCRemoteVerbs(Entity<RCRemoteComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
@@ -171,15 +148,19 @@ public sealed class RemoteControlSystem : EntitySystem
         TryStopRemoteControl(ent.Comp.BoundTo.Value);
 
         remoteComp.BoundRemote = null;
+        Dirty(ent.Comp.BoundTo.Value, remoteComp);
     }
 
-    private void OnRemoteDropped(Entity<RCRemoteComponent> ent, ref DroppedEvent args)
+    private void OnMindGotRemoved(Entity<RemoteControllerComponent> ent, ref MindRemovedMessage args)
     {
-        if (ent.Comp.BoundTo is null
-            || !HasComp<RemotelyControllableComponent>(ent.Comp.BoundTo))
+        if (!TryComp<RemotelyControllableComponent>(ent.Comp.Controlled, out var remoteComp))
             return;
 
-        TryStopRemoteControl(ent.Comp.BoundTo.Value);
+        remoteComp.Controller = null;
+        remoteComp.IsControlled = false;
+        RemCompDeferred<RemoteControllerComponent>(ent);
+
+        Dirty(ent.Comp.Controlled.Value, remoteComp);
     }
 
     /// <summary>
