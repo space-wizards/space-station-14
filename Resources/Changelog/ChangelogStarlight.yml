@@ -9551,5 +9551,13 @@ Entries:
   id: 1315
   time: '2025-07-21T21:07:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1063
+- author: Trosling
+  changes:
+  - message: Fixed knives chopping at the same rate as they screw (very slowly), they
+      now chop as before
+    type: Fix
+  id: 1316
+  time: '2025-07-21T21:10:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1061
 Order: -1
 
