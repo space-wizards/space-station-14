@@ -13,6 +13,7 @@
       - CigFilter
       - Smokable #SL
       - Cigarette #SL
+      - Lighters #SL
   - type: StorageFill
     contents:
       - id: PaperRolling

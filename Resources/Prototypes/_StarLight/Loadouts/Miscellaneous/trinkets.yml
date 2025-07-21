@@ -53,11 +53,6 @@
 
 - type: loadout
   id: RolliePack
-  effects:
-    - !type:JobRequirementLoadoutEffect
-      requirement:
-        !type:OverallPlaytimeRequirement
-        time: 36000 # 10hr
   storage:
     back:
       - CigPackRollie
@@ -99,7 +94,8 @@
         role: JobLibrarian
         time: 3600 # 1 hour of reading books (a fate worse than death)
   storage:
-    back: LuxuryPen
+    back: 
+      - LuxuryPen
     
 - type: loadout
   id: HonkImplant
@@ -192,9 +188,9 @@
   effects:
     - !type:JobRequirementLoadoutEffect
       requirement:
-      !type:DepartmentTimeRequirement
-      department: Medical
-      time: 72000 # 20hrs of treating patients as Dr. House
+        !type:DepartmentTimeRequirement
+        department: Medical
+        time: 72000 # 20hrs of treating patients as Dr. House
   storage:
     back:
       - HandheldHealthAnalyzer
