@@ -20,7 +20,6 @@ public sealed class GasTileHeatOverlay : Overlay
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     private readonly SharedTransformSystem _xformSys;
-    private readonly SharedMapSystem _mapSystem;
 
     private IRenderTexture? _heatTarget;
 
@@ -32,7 +31,6 @@ public sealed class GasTileHeatOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
         _xformSys = _entManager.System<SharedTransformSystem>();
-        _mapSystem = _entManager.System<SharedMapSystem>();
 
         _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
     }
