@@ -115,3 +115,14 @@
   id: Hologram
   kind: source
   path: "/Textures/Shaders/hologram.swsl"
+
+- type: shader
+  id: Heat
+  kind: source
+  path: "/Textures/Shaders/heat.swsl"
+  params:
+    N: 32
+    scale: 22.0
+    strength: 0.0005
+    speed_scale: 1.0
+    grid_ent_from_viewport_local: 1,0,0,1,0,1
