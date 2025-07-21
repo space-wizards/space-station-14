@@ -5,7 +5,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.RemoteControl.Components;
@@ -34,6 +33,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
         SubscribeLocalEvent<RemotelyControllableComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RemotelyControllableComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<RemotelyControllableComponent, RemoteControlReturnToBodyEvent>(OnReturnToBody);
+        SubscribeLocalEvent<RemotelyControllableComponent, MindUnvisitedMessage>(OnMindUnvisited);
 
         SubscribeLocalEvent<RCRemoteComponent, GetVerbsEvent<ActivationVerb>>(OnRCRemoteVerbs);
         SubscribeLocalEvent<RCRemoteComponent, UseInHandEvent>(OnUseInHand);
@@ -67,6 +67,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
             controller.Controlled = null;
             Dirty(ent.Comp.Controller.Value, controller);
         }
+
         if (TryComp<RCRemoteComponent>(ent.Comp.BoundRemote, out var remote))
         {
             remote.BoundTo = null;
@@ -74,22 +75,38 @@ public sealed partial class RemoteControlSystem : EntitySystem
         }
     }
 
+    private void OnMindUnvisited(Entity<RemotelyControllableComponent> ent, ref MindUnvisitedMessage args)
+    {
+        if (ent.Comp.Controller != null)
+            RemCompDeferred<RemoteControllerComponent>(ent.Comp.Controller.Value);
+
+        ent.Comp.Controller = null;
+        ent.Comp.IsControlled = false;
+        ent.Comp.CurrentRcConfig = null;
+
+        Dirty(ent);
+    }
+
     private void OnAfterInteractUsing(Entity<RemotelyControllableComponent> ent, ref AfterInteractUsingEvent args)
     {
         if (args.Handled
             || !args.CanReach
+            || ent.Comp.BoundRemote != null
             || !TryComp<RCRemoteComponent>(args.Used, out var remoteComp)
-            || !HasComp<RemotelyControllableComponent>(args.Target)
-            || ent.Comp.BoundRemote != null)
+            || !HasComp<RemotelyControllableComponent>(args.Target))
             return;
 
         remoteComp.BoundTo = args.Target;
         ent.Comp.BoundRemote = args.Used;
 
-        _popup.PopupClient(Loc.GetString(remoteComp.RemoteBoundToPopup, ("entityName", Identity.Name(ent, EntityManager))), args.User, args.User, PopupType.Medium);
+        _popup.PopupClient(Loc.GetString(remoteComp.RemoteBoundToPopup,
+            ("entityName", Identity.Name(ent, EntityManager))),
+            args.User,
+            args.User,
+            PopupType.Medium);
 
         Dirty(args.Used, remoteComp);
-        Dirty(ent, ent.Comp);
+        Dirty(ent);
 
         args.Handled = true;
     }
@@ -120,7 +137,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
                 ent.Comp.BoundTo = null;
                 _popup.PopupClient(Loc.GetString(ent.Comp.RemoteWipePopup), user, user, PopupType.Medium);
 
-                Dirty(ent, ent.Comp);
+                Dirty(ent);
             }
         });
     }
@@ -133,19 +150,13 @@ public sealed partial class RemoteControlSystem : EntitySystem
             return;
         }
 
-        if (!TryComp<RemotelyControllableComponent>(ent.Comp.BoundTo, out var controllable))
+        if (!TryComp<RemotelyControllableComponent>(ent.Comp.BoundTo, out var controllable) || !_mob.IsAlive(ent.Comp.BoundTo.Value))
         {
             _popup.PopupClient(Loc.GetString(ent.Comp.RemoteFailPopup), args.User, args.User, PopupType.Medium);
             return;
         }
 
-        if (!HasComp<MobStateComponent>(ent.Comp.BoundTo) || !_mob.IsAlive(ent.Comp.BoundTo.Value))
-        {
-            _popup.PopupClient(Loc.GetString(ent.Comp.RemoteFailPopup), args.User, args.User, PopupType.Medium);
-            return;
-        }
-
-        Dirty(ent, ent.Comp);
+        Dirty(ent);
 
         TryRemoteControl((ent.Comp.BoundTo.Value, controllable), args.User, ent.Comp.Config);
 
@@ -185,8 +196,8 @@ public sealed partial class RemoteControlSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The entity that will be remotely controlled.</param>
     /// <param name="controller">UID of the entity that is to take control of the other.</param>
-    /// /// <param name="config">RemoteControlConfiguration to use. If null, default will be used.</param>
-    /// <returns>True If control was given to the controller, otherwise False.</returns>
+    /// <param name="config">RemoteControlConfiguration to use. If null, default will be used.</param>
+    /// <returns>True if control was given to the controller, otherwise False.</returns>
     [PublicAPI]
     public bool TryRemoteControl(Entity<RemotelyControllableComponent> ent, EntityUid controller, RemoteControlConfiguration? config = null)
     {
@@ -195,7 +206,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
 
         // If the target already has a mind it cannot be controlled.
         // Should probably be possible in the future but I can't see a use case outside of admeme or some mind control ability.
-        if (_mind.TryGetMind(ent, out var _, out var _))
+        if (_mind.TryGetMind(ent, out _, out _))
             return false;
 
         EnsureComp<RemoteControllerComponent>(controller, out var remoteController);
@@ -214,7 +225,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
         if (_mind.TryGetMind(controller, out var mindId, out var mind))
             _mind.Visit(mindId, ent.Owner, mind);
 
-        Dirty(ent, ent.Comp);
+        Dirty(ent);
 
         return true;
     }
@@ -227,22 +238,13 @@ public sealed partial class RemoteControlSystem : EntitySystem
     [PublicAPI]
     public bool TryStopRemoteControl(EntityUid uid)
     {
-        if (!TryComp<RemotelyControllableComponent>(uid, out var remoteControl)
-            || !HasComp<VisitingMindComponent>(uid)
-            || !_mind.TryGetMind(uid, out var mindId, out var mind)
-            || remoteControl.IsControlled == false)
+        if (!TryComp<RemotelyControllableComponent>(uid, out var remoteControl) || remoteControl.IsControlled == false)
             return false;
 
-        if (remoteControl.Controller != null)
-            RemCompDeferred<RemoteControllerComponent>(remoteControl.Controller.Value);
-
-        remoteControl.Controller = null;
-        remoteControl.IsControlled = false;
-        remoteControl.CurrentRcConfig = null;
+        if (!TryComp<VisitingMindComponent>(uid, out var visitingMind) || !_mind.TryGetMind(uid, out var mindId, out var mind, visitingmind: visitingMind))
+            return false;
 
         _mind.UnVisit(mindId, mind);
-
-        Dirty(uid, remoteControl);
 
         return true;
     }

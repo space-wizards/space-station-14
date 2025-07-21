@@ -11,7 +11,7 @@ namespace Content.Shared.RemoteControl;
 /// </summary>
 public sealed partial class RemoteControlSystem
 {
-    public void InitializeConfig()
+    private void InitializeConfig()
     {
         SubscribeLocalEvent<RemotelyControllableComponent, MobStateChangedEvent>(OnMobStateChanged);
 
@@ -28,7 +28,7 @@ public sealed partial class RemoteControlSystem
 
     private void OnTookDamage(Entity<RemoteControllerComponent> ent, ref DamageChangedEvent args)
     {
-        if (!args.DamageIncreased || ent.Comp.Controlled == null || args.DamageDelta == null)
+        if (!args.DamageIncreased || ent.Comp.Controlled == null || args.DamageDelta == null || args.Origin == ent.Comp.Controlled)
             return;
 
         if (ent.Comp.Config == null)
@@ -37,7 +37,10 @@ public sealed partial class RemoteControlSystem
         var total = args.DamageDelta.GetTotal();
 
         if (ent.Comp.Config.NotifyOnDamaged && total >= ent.Comp.Config.NotifyDamageThreshold)
-            _popup.PopupEntity(Loc.GetString("rc-controller-damaged"), ent.Comp.Controlled.Value, ent.Comp.Controlled.Value, PopupType.MediumCaution);
+            _popup.PopupEntity(Loc.GetString("rc-controller-damaged"),
+                ent.Comp.Controlled.Value,
+                ent.Comp.Controlled.Value,
+                PopupType.MediumCaution);
 
         if (ent.Comp.Config.BreakOnDamaged && total >= ent.Comp.Config.BreakDamageThreshold)
             TryStopRemoteControl(ent.Comp.Controlled.Value);
@@ -45,7 +48,7 @@ public sealed partial class RemoteControlSystem
 
     private void OnSuccessfulInteract(Entity<RemoteControllerComponent> ent, ref InteractionSuccessEvent args)
     {
-        if (ent.Comp.Controlled == null)
+        if (ent.Comp.Controlled == null || args.User == ent.Comp.Controlled)
             return;
 
         if (ent.Comp.Config != null && !ent.Comp.Config.NotifyOnInteract)

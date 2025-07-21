@@ -56,7 +56,8 @@ public sealed class SpittableContainerSystem : EntitySystem
 
     private void OnGibbed(Entity<SpittableContainerComponent> ent, ref BeingGibbedEvent args)
     {
-        _containerSystem.EmptyContainer(ent.Comp.Container);
+        if (ent.Comp.Container != null)
+            _containerSystem.EmptyContainer(ent.Comp.Container);
     }
 
     private void OnSwallowToContainerAction(Entity<SpittableContainerComponent> ent, ref SwallowToContainerActionEvent args)
@@ -65,13 +66,22 @@ public sealed class SpittableContainerSystem : EntitySystem
             || !HasComp<ItemComponent>(args.Target))
             return;
 
+        if (ent.Comp.Container == null)
+            return;
+
         if (!_containerSystem.CanInsert(args.Target, ent.Comp.Container))
         {
             _popupSystem.PopupClient(Loc.GetString(ent.Comp.SwallowFailPopup), ent, ent);
             return;
         }
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.SwallowTime, new SwallowDoAfterEvent(), ent, target: args.Target, used: ent.Owner)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
+            ent,
+            ent.Comp.SwallowTime,
+            new SwallowDoAfterEvent(),
+            ent,
+            target: args.Target,
+            used: ent.Owner)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -85,6 +95,7 @@ public sealed class SpittableContainerSystem : EntitySystem
         if (args.Handled
             || args.Target == null
             || args.Cancelled
+            || ent.Comp.Container == null
             || !_containerSystem.CanInsert(args.Target.Value, ent.Comp.Container))
             return;
 
@@ -101,9 +112,14 @@ public sealed class SpittableContainerSystem : EntitySystem
         if (args.Handled)
             return;
 
+        if (ent.Comp.Container == null)
+            return;
+
         if (ent.Comp.Container.Count == 0)
         {
-            _popupSystem.PopupClient(Loc.GetString("spittable-container-spit-empty"), ent, ent);
+            _popupSystem.PopupClient(Loc.GetString("spittable-container-spit-empty"),
+                ent,
+                ent);
             return;
         }
 
@@ -114,14 +130,14 @@ public sealed class SpittableContainerSystem : EntitySystem
 
     private void OnSpitDoAfter(Entity<SpittableContainerComponent> ent, ref SpitFromContainerDoAfterEvent args)
     {
-        if (args.Handled || ent.Comp.Container.Count == 0 || args.Cancelled)
+        if (args.Handled || ent.Comp.Container == null || ent.Comp.Container.Count == 0 || args.Cancelled)
             return;
 
         if (ent.Comp.SpitPopup != null)
             _popupSystem.PopupPredicted(Loc.GetString(ent.Comp.SpitPopup, ("person", Identity.Entity(ent.Owner, EntityManager))), ent, ent);
 
         if (ent.Comp.SoundSpit != null)
-            _audioSystem.PlayPredicted(ent.Comp.SoundSpit, ent.Owner, ent.Owner, ent.Comp.SoundSpit.Params);
+            _audioSystem.PlayPredicted(ent.Comp.SoundSpit, ent.Owner, ent.Owner);
 
         _containerSystem.EmptyContainer(ent.Comp.Container);
 
