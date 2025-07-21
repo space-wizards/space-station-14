@@ -4,7 +4,6 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Movement.Events;
@@ -58,8 +57,6 @@ public abstract partial class SharedStunSystem
         SubscribeLocalEvent<KnockedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshKnockedSpeed);
         SubscribeLocalEvent<KnockedDownComponent, RefreshFrictionModifiersEvent>(OnRefreshFriction);
         SubscribeLocalEvent<KnockedDownComponent, TileFrictionEvent>(OnKnockedTileFriction);
-        SubscribeLocalEvent<KnockedDownComponent, DidEquipHandEvent>(OnHandEquipped);
-        SubscribeLocalEvent<KnockedDownComponent, DidUnequipHandEvent>(OnHandUnequipped);
 
         // DoAfter event subscriptions
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
@@ -516,16 +513,6 @@ public abstract partial class SharedStunSystem
     {
         args.ModifyFriction(entity.Comp.FrictionModifier);
         args.ModifyAcceleration(entity.Comp.FrictionModifier);
-    }
-
-    private void OnHandEquipped(Entity<KnockedDownComponent> entity, ref DidEquipHandEvent args)
-    {
-        RefreshKnockedMovement(entity);
-    }
-
-    private void OnHandUnequipped(Entity<KnockedDownComponent> entity, ref DidUnequipHandEvent args)
-    {
-        RefreshKnockedMovement(entity);
     }
 
     #endregion
