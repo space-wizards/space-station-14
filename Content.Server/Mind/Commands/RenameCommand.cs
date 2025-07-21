@@ -5,6 +5,8 @@ using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Content.Server.Administration.Logs;
+using Content.Shared.Database;
 
 namespace Content.Server.Mind.Commands;
 
@@ -15,6 +17,7 @@ public sealed class RenameCommand : LocalizedEntityCommands
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     public override string Command => "rename";
 
@@ -27,20 +30,42 @@ public sealed class RenameCommand : LocalizedEntityCommands
         }
 
         var name = args[1];
-        if (name.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
+        var adminUid = shell.Player?.UserId.ToString() ?? "CONSOLE";
+        var adminName = shell.Player?.Name ?? "CONSOLE";
+
+        if (string.IsNullOrWhiteSpace(name))
         {
-            shell.WriteLine(Loc.GetString("cmd-rename-too-long"));
+            shell.WriteLine("You cannot set an empty name.");
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"Admin {adminName} (UID: {adminUid}) attempted to rename an entity to an empty name. Command rejected.");
             return;
         }
 
-        if (!TryParseUid(args[0], shell, _entManager, out var entityUid))
+        if (name.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
+        {
+            shell.WriteLine(Loc.GetString("cmd-rename-too-long"));
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"Admin {adminName} (UID: {adminUid}) attempted to rename an entity to a name that is too long. Command rejected.");
             return;
+        }
+
+        if (!TryParseUid(args[0], shell, _entManager, out var entityUid, adminName, adminUid))
+            return;
+            
+        var oldName = _entManager.GetComponent<MetaDataComponent>(entityUid.Value).EntityName ?? "unnamed";
 
         _metaSystem.SetEntityName(entityUid.Value, name);
+
+        var entityId = entityUid.Value.ToString();
+        var newName = string.IsNullOrEmpty(name) ? "unnamed" : name;
+
+        _adminLogger.Add(LogType.Action, LogImpact.Medium,
+            $"Admin {adminName} (UID: {adminUid}) renamed entity {entityId} from \"{oldName}\" to \"{newName}\"");
     }
 
     private bool TryParseUid(string str, IConsoleShell shell,
-        IEntityManager entMan, [NotNullWhen(true)] out EntityUid? entityUid)
+        IEntityManager entMan, [NotNullWhen(true)] out EntityUid? entityUid,
+        string? adminName = null, string? adminUid = null)
     {
         if (NetEntity.TryParse(str, out var entityUidNet) && _entManager.TryGetEntity(entityUidNet, out entityUid) && entMan.EntityExists(entityUid))
             return true;
@@ -55,6 +80,12 @@ public sealed class RenameCommand : LocalizedEntityCommands
             shell.WriteError(Loc.GetString("cmd-rename-not-found", ("target", str)));
         else
             shell.WriteError(Loc.GetString("cmd-rename-no-entity", ("target", str)));
+
+        // Log tentativa falhada de rename por entidade não encontrada
+        adminName ??= "UNKNOWN";
+        adminUid ??= "UNKNOWN";
+        _adminLogger.Add(LogType.Action, LogImpact.Low,
+            $"Admin {adminName} (UID: {adminUid}) attempted to rename a non-existent entity or player (input: \"{str}\"). Command rejected.");
 
         entityUid = EntityUid.Invalid;
         return false;
