@@ -1,6 +1,10 @@
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.Holiday;
+using JetBrains.Annotations;
+using Robust.Server.Player;
+using Robust.Shared.Enums;
+using Robust.Shared.Player;
 
 namespace Content.Server.Holiday;
 
@@ -9,8 +13,6 @@ public sealed class HolidaySystem : SharedHolidaySystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-
-    private DateTime CurrentDate;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -22,12 +24,17 @@ public sealed class HolidaySystem : SharedHolidaySystem
         _player.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
+    #region Event Handlers
+
+    /// <summary>
+    ///     Reset holidays when going to lobby, and run holiday specific code at round start.
+    /// </summary>
     private void OnRunLevelChanged(GameRunLevelChangedEvent eventArgs)
     {
         switch (eventArgs.New)
         {
             case GameRunLevel.PreRoundLobby:
-                RefreshCurrentHolidays();
+                RefreshCurrentHolidays(announce: false);
                 break;
             case GameRunLevel.InRound:
                 DoGreet();
@@ -38,7 +45,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
                 break;
         }
     }
-    
+
     /// <summary>
     ///     Send new client sessions the active holidays.
     /// </summary>
@@ -46,23 +53,44 @@ public sealed class HolidaySystem : SharedHolidaySystem
     {
         if (e.NewStatus == SessionStatus.Connected)
         {
-            RaiseNetworkEvent(new UpdateHolidaysEvent(CurrentDate), e.Session);
+            RaiseNetworkEvent(new DoRefreshHolidaysEvent(CurrentDate), e.Session);
         }
     }
 
-    /// <summary>
-    ///     Sets the active holidays and networks to clients to do the same.
-    /// </summary>
-    private void RefreshCurrentHolidays()
-    {
-        CurrentDate = DateTime.Now;
+    #endregion
+    #region Public API
 
-        SetActiveHolidays(CurrentDate);
-        RaiseNetworkEvent(new UpdateHolidaysEvent(CurrentDate));
+    /// <inheritdoc />
+    [PublicAPI]
+    public override void RefreshCurrentHolidays(bool announce = true)
+    {
+        base.RefreshCurrentHolidays(announce);
+
+        var now = DateTime.Now;
+
+        SetActiveHolidays(now);
+        RaiseNetworkEvent(new DoRefreshHolidaysEvent(now));
+
+        if (announce)
+            DoGreet();
     }
 
+    /// <inheritdoc />
+    [PublicAPI]
+    public override void RefreshCurrentHolidays(DateTime date, bool announce = true)
+    {
+        base.RefreshCurrentHolidays(date, announce);
+
+        RaiseNetworkEvent(new DoRefreshHolidaysEvent(date));
+
+        if (announce)
+            DoGreet();
+    }
+
+    #endregion
+
     /// <summary>
-    ///     Send a chat message to the server announcing the holiday at round start.
+    ///     Send a chat message to the server announcing the holidays.
     /// </summary>
     private void DoGreet()
     {
