@@ -25,7 +25,6 @@
   - MopItem
   - Holoprojector
   - WetFloorSign
-  - WireBrush
 
 - type: latheRecipePack
   id: ServiceBoardsStatic

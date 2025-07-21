@@ -12,6 +12,7 @@ namespace Content.Server.Actions.Commands;
 [AdminCommand(AdminFlags.Debug)]
 public sealed class AddActionCommand : LocalizedEntityCommands
 {
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -37,7 +38,7 @@ public sealed class AddActionCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!_prototypeManager.TryIndex<EntityPrototype>(args[1], out var proto) ||
+        if (!_prototypes.TryIndex<EntityPrototype>(args[1], out var proto) ||
             !proto.HasComponent<ActionComponent>())
         {
             shell.WriteError(Loc.GetString("cmd-addaction-action-not-found", ("action", args[1])));

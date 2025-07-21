@@ -239,9 +239,6 @@
           Piercing: 4
         groups:
           Burn: 3
-      catchingFailDamage:
-        types:
-          Blunt: 1
     - type: MeleeWeapon
       angle: 30
       animation: WeaponArcFist

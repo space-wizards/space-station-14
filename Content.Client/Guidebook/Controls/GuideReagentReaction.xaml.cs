@@ -21,7 +21,8 @@ namespace Content.Client.Guidebook.Controls;
 [UsedImplicitly, GenerateTypedNameReferences]
 public sealed partial class GuideReagentReaction : BoxContainer, ISearchableControl
 {
-    private static readonly ProtoId<MixingCategoryPrototype> DefaultMixingCategory = "DummyMix";
+    [ValidatePrototypeId<MixingCategoryPrototype>]
+    private const string DefaultMixingCategory = "DummyMix";
 
     private readonly IPrototypeManager _protoMan;
 
@@ -54,7 +55,7 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
         }
         else
         {
-            mixingCategories.Add(protoMan.Index(DefaultMixingCategory));
+            mixingCategories.Add(protoMan.Index<MixingCategoryPrototype>(DefaultMixingCategory));
         }
         SetMixingCategory(mixingCategories, prototype, sysMan);
     }

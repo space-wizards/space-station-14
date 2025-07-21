@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Damage.Prototypes
 {
@@ -11,6 +12,7 @@ namespace Content.Shared.Damage.Prototypes
     ///     to change/get/set damage in a <see cref="DamageableComponent"/>.
     /// </remarks>
     [Prototype(2)]
+    [Serializable, NetSerializable]
     public sealed partial class DamageGroupPrototype : IPrototype
     {
         [IdDataField] public string ID { get; private set; } = default!;
@@ -21,7 +23,7 @@ namespace Content.Shared.Damage.Prototypes
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedName => Loc.GetString(Name);
 
-        [DataField(required: true)]
-        public List<ProtoId<DamageTypePrototype>> DamageTypes { get; private set; } = default!;
+        [DataField("damageTypes", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
+        public List<string> DamageTypes { get; private set; } = default!;
     }
 }

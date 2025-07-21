@@ -29,10 +29,6 @@ namespace Content.Client.Interaction;
 /// </summary>
 public sealed class DragDropSystem : SharedDragDropSystem
 {
-    private static readonly ProtoId<ShaderPrototype> ShaderDropTargetInRange = "SelectionOutlineInrange";
-
-    private static readonly ProtoId<ShaderPrototype> ShaderDropTargetOutOfRange = "SelectionOutline";
-
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -57,6 +53,12 @@ public sealed class DragDropSystem : SharedDragDropSystem
     // amount of time since the mousedown, we will "replay" the original
     // mousedown event so it can be treated like a regular click
     private const float MaxMouseDownTimeForReplayingClick = 0.85f;
+
+    [ValidatePrototypeId<ShaderPrototype>]
+    private const string ShaderDropTargetInRange = "SelectionOutlineInrange";
+
+    [ValidatePrototypeId<ShaderPrototype>]
+    private const string ShaderDropTargetOutOfRange = "SelectionOutline";
 
     /// <summary>
     /// Current entity being dragged around.
@@ -111,8 +113,8 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
         Subs.CVar(_cfgMan, CCVars.DragDropDeadZone, SetDeadZone, true);
 
-        _dropTargetInRangeShader = _prototypeManager.Index(ShaderDropTargetInRange).Instance();
-        _dropTargetOutOfRangeShader = _prototypeManager.Index(ShaderDropTargetOutOfRange).Instance();
+        _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
+        _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
         // needs to fire on mouseup and mousedown so we can detect a drag / drop
         CommandBinds.Builder
             .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false, true), new[] { typeof(SharedInteractionSystem) })

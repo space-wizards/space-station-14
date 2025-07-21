@@ -6,17 +6,17 @@ namespace Content.Shared.Hands.EntitySystems;
 // These functions are mostly unused except for some AI operator stuff
 // Nothing stops them from being used in general. If they ever get used elsewhere, then this file probably needs to be renamed.
 
-public abstract partial class SharedHandsSystem
+public abstract partial class SharedHandsSystem : EntitySystem
 {
     public bool TrySelect(EntityUid uid, EntityUid? entity, HandsComponent? handsComp = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
 
-        if (!IsHolding((uid, handsComp), entity, out var hand))
+        if (!IsHolding(uid, entity, out var hand, handsComp))
             return false;
 
-        SetActiveHand((uid, handsComp), hand);
+        SetActiveHand(uid, hand, handsComp);
         return true;
     }
 
@@ -26,12 +26,9 @@ public abstract partial class SharedHandsSystem
         if (!Resolve(uid, ref handsComp, false))
             return false;
 
-        foreach (var hand in handsComp.Hands.Keys)
+        foreach (var hand in handsComp.Hands.Values)
         {
-            if (!TryGetHeldItem((uid, handsComp), hand, out var held))
-                continue;
-
-            if (TryComp(held, out component))
+            if (TryComp(hand.HeldEntity, out component))
                 return true;
         }
 

@@ -6,7 +6,6 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction.Commands;
 
@@ -21,9 +20,12 @@ public sealed class TileWallsCommand : IConsoleCommand
     public string Description => "Puts an underplating tile below every wall on a grid.";
     public string Help => $"Usage: {Command} <gridId> | {Command}";
 
-    public static readonly ProtoId<ContentTileDefinition> TilePrototypeId = "Plating";
-    public static readonly ProtoId<TagPrototype> WallTag = "Wall";
-    public static readonly ProtoId<TagPrototype> DiagonalTag = "Diagonal";
+    [ValidatePrototypeId<ContentTileDefinition>]
+    public const string TilePrototypeId = "Plating";
+
+    [ValidatePrototypeId<TagPrototype>]
+    public const string WallTag = "Wall";
+    public const string DiagonalTag = "Diagonal";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {

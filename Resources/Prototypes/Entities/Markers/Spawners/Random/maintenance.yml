@@ -56,7 +56,7 @@
       - id: ClothingHeadHatPaper
       - id: ClothingHeadHatPirate
       - id: ClothingMaskSterile
-      - id: ClothingMultipleHeadphones
+      - id: ClothingNeckHeadphones
       - id: ClothingNeckTieRed
       - id: ClothingOuterCoatGentle
       - !type:AllSelector
@@ -172,8 +172,6 @@
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
       - id: RubberStampGreytide
-      - id: MysteryLighterBox
-      - id: GoldenPersonalAI
 
 - type: entity
   name: Maint Loot Spawner

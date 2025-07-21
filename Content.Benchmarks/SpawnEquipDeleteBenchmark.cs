@@ -8,7 +8,6 @@ using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Benchmarks;
 
@@ -19,11 +18,9 @@ namespace Content.Benchmarks;
 [Virtual, MemoryDiagnoser]
 public class SpawnEquipDeleteBenchmark
 {
-    private static readonly EntProtoId Mob = "MobHuman";
-    private static readonly ProtoId<StartingGearPrototype> CaptainStartingGear = "CaptainGear";
-
     private TestPair _pair = default!;
     private StationSpawningSystem _spawnSys = default!;
+    private const string Mob = "MobHuman";
     private StartingGearPrototype _gear = default!;
     private EntityUid _entity;
     private EntityCoordinates _coords;
@@ -42,7 +39,7 @@ public class SpawnEquipDeleteBenchmark
         var mapData = await _pair.CreateTestMap();
         _coords = mapData.GridCoords;
         _spawnSys = server.System<StationSpawningSystem>();
-        _gear = server.ProtoMan.Index(CaptainStartingGear);
+        _gear = server.ProtoMan.Index<StartingGearPrototype>("CaptainGear");
     }
 
     [GlobalCleanup]

@@ -1,13 +1,14 @@
 using Content.Shared.Humanoid.Markings;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Humanoid
 {
     public static class HairStyles
     {
-        public static readonly ProtoId<MarkingPrototype> DefaultHairStyle = "HairBald";
+        [ValidatePrototypeId<MarkingPrototype>]
+        public const string DefaultHairStyle = "HairBald";
 
-        public static readonly ProtoId<MarkingPrototype> DefaultFacialHairStyle = "FacialHairShaved";
+        [ValidatePrototypeId<MarkingPrototype>]
+        public const string DefaultFacialHairStyle = "FacialHairShaved";
 
         public static readonly IReadOnlyList<Color> RealisticHairColors = new List<Color>
         {

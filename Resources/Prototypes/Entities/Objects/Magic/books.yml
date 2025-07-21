@@ -69,7 +69,7 @@
   components:
     - type: Spellbook
       spellActions:
-        ActionSpawnMagicarpSpell: null
+        ActionSpawnMagicarpSpell: -1
 
 - type: entity
   id: ForceWallSpellbook
@@ -92,7 +92,7 @@
         color: gold
     - type: Spellbook
       spellActions:
-        ActionForceWall: null
+        ActionForceWall: -1
 
 - type: entity
   id: BlinkBook
@@ -113,7 +113,7 @@
         color: gold
     - type: Spellbook
       spellActions:
-        ActionBlink: null
+        ActionBlink: -1
 
 - type: entity
   id: SmiteBook
@@ -136,7 +136,7 @@
       - state: overlay_blood
     - type: Spellbook
       spellActions:
-        ActionSmiteNoReq: null
+        ActionSmiteNoReq: -1
 
 - type: entity
   id: KnockSpellbook
@@ -158,7 +158,7 @@
         color: "#98c495"
     - type: Spellbook
       spellActions:
-        ActionKnock: null
+        ActionKnock: -1
 
 - type: entity
   id: FireballSpellbook
@@ -182,7 +182,7 @@
         shader: unshaded
     - type: Spellbook
       spellActions:
-        ActionFireball: null
+        ActionFireball: -1
 
 - type: entity
   id: ScrollRunes
@@ -197,7 +197,7 @@
     - state: spell_default
   - type: Spellbook
     spellActions:
-      ActionFlashRune: null
-      ActionExplosionRune: null
-      ActionIgniteRune: null
-      ActionStunRune: null
+      ActionFlashRune: -1
+      ActionExplosionRune: -1
+      ActionIgniteRune: -1
+      ActionStunRune: -1

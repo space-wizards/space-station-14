@@ -10,8 +10,6 @@ namespace Content.Client.Stealth;
 
 public sealed class StealthSystem : SharedStealthSystem
 {
-    private static readonly ProtoId<ShaderPrototype> Shader = "Stealth";
-
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
@@ -22,7 +20,7 @@ public sealed class StealthSystem : SharedStealthSystem
     {
         base.Initialize();
 
-        _shader = _protoMan.Index(Shader).InstanceUnique();
+        _shader = _protoMan.Index<ShaderPrototype>("Stealth").InstanceUnique();
 
         SubscribeLocalEvent<StealthComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StealthComponent, ComponentStartup>(OnStartup);

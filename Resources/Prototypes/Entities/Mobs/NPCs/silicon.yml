@@ -15,6 +15,9 @@
     bodyType: KinematicController # Same for all inheritors
   - type: StatusEffects
     allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
     - Stutter
     - Electrocution
   - type: Repairable
@@ -156,9 +159,8 @@
     interactFailureString: petting-failure-firebot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: Vocalizer
-  - type: DatasetVocalizer
-    dataset: FirebotAd
+  - type: Advertise
+    pack: FirebotAd
 
 - type: entity
   parent: MobSiliconBase
@@ -353,9 +355,8 @@
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: Vocalizer
-  - type: DatasetVocalizer
-    dataset: MedibotAds
+  - type: Advertise
+    pack: MedibotAds
   - type: Inventory
     templateId: medibot
   - type: DoAfter

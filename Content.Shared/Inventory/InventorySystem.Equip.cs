@@ -15,7 +15,6 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -36,7 +35,8 @@ public abstract partial class InventorySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedStrippableSystem _strippable = default!;
 
-    private static readonly ProtoId<ItemSizePrototype> PocketableItemSize = "Small";
+    [ValidatePrototypeId<ItemSizePrototype>]
+    private const string PocketableItemSize = "Small";
 
     private void InitializeEquip()
     {
@@ -83,7 +83,7 @@ public abstract partial class InventorySystem
         if (!TryComp(actor, out InventoryComponent? inventory) || !TryComp<HandsComponent>(actor, out var hands))
             return;
 
-        var held = _handsSystem.GetActiveItem((actor, hands));
+        var held = hands.ActiveHandEntity;
         TryGetSlotEntity(actor, ev.Slot, out var itemUid, inventory);
 
         // attempt to perform some interaction
@@ -115,7 +115,7 @@ public abstract partial class InventorySystem
             return;
         }
 
-        if (!_handsSystem.CanDropHeld(actor, hands.ActiveHandId!, checkActionBlocker: false))
+        if (!_handsSystem.CanDropHeld(actor, hands.ActiveHand!, checkActionBlocker: false))
             return;
 
         RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor));

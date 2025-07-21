@@ -8,8 +8,6 @@ namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
 public sealed class WindowRepair : InteractionTest
 {
-    private static readonly ProtoId<DamageTypePrototype> BluntDamageType = "Blunt";
-
     [Test]
     public async Task RepairReinforcedWindow()
     {
@@ -18,7 +16,7 @@ public sealed class WindowRepair : InteractionTest
         // Damage the entity.
         var sys = SEntMan.System<DamageableSystem>();
         var comp = Comp<DamageableComponent>();
-        var damageType = Server.ProtoMan.Index(BluntDamageType);
+        var damageType = Server.ResolveDependency<IPrototypeManager>().Index<DamageTypePrototype>("Blunt");
         var damage = new DamageSpecifier(damageType, FixedPoint2.New(10));
         Assert.That(comp.Damage.GetTotal(), Is.EqualTo(FixedPoint2.Zero));
         await Server.WaitPost(() => sys.TryChangeDamage(SEntMan.GetEntity(Target), damage, ignoreResistances: true));

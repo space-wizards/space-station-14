@@ -36,9 +36,8 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     [Dependency] private readonly SharedSalvageSystem _salvage = default!;
     [Dependency] private readonly TileSystem _tile = default!;
 
-    private static readonly ProtoId<LocalizedDatasetPrototype> PlanetNames = "NamesBorer";
-    private static readonly ProtoId<BiomeTemplatePrototype> BiomeTemplate = "Continental";
-    private static readonly ProtoId<DungeonConfigPrototype> DungeonConfig = "Experiment";
+    [ValidatePrototypeId<LocalizedDatasetPrototype>]
+    private const string PlanetNames = "NamesBorer";
 
     // TODO:
     // Fix shader some more
@@ -102,7 +101,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         var random = new Random(seed);
         var mapUid = _maps.CreateMap();
 
-        var gatewayName = _salvage.GetFTLName(_protoManager.Index(PlanetNames), seed);
+        var gatewayName = _salvage.GetFTLName(_protoManager.Index<LocalizedDatasetPrototype>(PlanetNames), seed);
         _metadata.SetEntityName(mapUid, gatewayName);
 
         var origin = new Vector2i(random.Next(-MaxOffset, MaxOffset), random.Next(-MaxOffset, MaxOffset));
@@ -112,7 +111,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         };
         AddComp(mapUid, restricted);
 
-        _biome.EnsurePlanet(mapUid, _protoManager.Index(BiomeTemplate), seed);
+        _biome.EnsurePlanet(mapUid, _protoManager.Index<BiomeTemplatePrototype>("Continental"), seed);
 
         var grid = Comp<MapGridComponent>(mapUid);
 
@@ -184,7 +183,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         var dungeonRotation = _dungeon.GetDungeonRotation(seed);
         var dungeonPosition = (origin + dungeonRotation.RotateVec(new Vector2i(0, dungeonDistance))).Floored();
 
-        _dungeon.GenerateDungeon(_protoManager.Index(DungeonConfig), args.MapUid, grid, dungeonPosition, seed);
+        _dungeon.GenerateDungeon(_protoManager.Index<DungeonConfigPrototype>("Experiment"), args.MapUid, grid, dungeonPosition, seed);
 
         // TODO: Dungeon mobs + loot.
 

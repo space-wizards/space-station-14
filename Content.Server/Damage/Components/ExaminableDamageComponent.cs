@@ -1,18 +1,16 @@
-﻿using Content.Shared.Dataset;
-using Robust.Shared.Prototypes;
+﻿using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Damage.Components;
 
 /// <summary>
-/// This component shows entity damage severity when it is examined by player.
+///     This component shows entity damage severity when it is examined by player.
 /// </summary>
 [RegisterComponent]
 public sealed partial class ExaminableDamageComponent : Component
 {
-    /// <summary>
-    /// ID of the <see cref="LocalizedDatasetPrototype"/> containing messages to display a different damage levels.
-    /// The first message will be used at 0 damage with the others equally distributed across the range from undamaged to fully damaged.
-    /// </summary>
-    [DataField]
-    public ProtoId<LocalizedDatasetPrototype>? Messages;
+    [DataField("messages", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<ExaminableDamagePrototype>))]
+    public string? MessagesProtoId;
+
+    public ExaminableDamagePrototype? MessagesProto;
 }

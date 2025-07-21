@@ -102,7 +102,7 @@ namespace Content.Server.Disposal.Tube
         /// <param name="msg">A user interface message from the client.</param>
         private void OnUiAction(EntityUid uid, DisposalRouterComponent router, SharedDisposalRouterComponent.UiActionMessage msg)
         {
-            if (!Exists(msg.Actor))
+            if (!EntityManager.EntityExists(msg.Actor))
                 return;
 
             if (TryComp<PhysicsComponent>(uid, out var physBody) && physBody.BodyType != BodyType.Static)
@@ -428,7 +428,7 @@ namespace Content.Server.Disposal.Tube
 
             foreach (var entity in from.Container.ContainedEntities.ToArray())
             {
-                _containerSystem.Insert(entity, holderComponent.Container);
+                _disposableSystem.TryInsert(holder, entity, holderComponent);
             }
 
             _atmosSystem.Merge(holderComponent.Air, from.Air);

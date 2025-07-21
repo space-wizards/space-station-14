@@ -14,7 +14,8 @@ public sealed class ParallaxSystem : SharedParallaxSystem
     [Dependency] private readonly IParallaxManager _parallax = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
 
-    private static readonly ProtoId<ParallaxPrototype> Fallback = "Default";
+    [ValidatePrototypeId<ParallaxPrototype>]
+    private const string Fallback = "Default";
 
     public const int ParallaxZIndex = 0;
 

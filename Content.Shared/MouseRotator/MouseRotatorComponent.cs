@@ -48,5 +48,4 @@ public sealed partial class MouseRotatorComponent : Component
 public sealed class RequestMouseRotatorRotationEvent : EntityEventArgs
 {
     public Angle Rotation;
-    public NetEntity? User;
 }

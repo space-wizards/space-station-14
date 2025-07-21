@@ -135,10 +135,10 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (_net.IsServer)
             Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(ent.Owner)}");
 
-        Audio.PlayPvs(ent.Comp.SupercriticalSoundAtAnimationStart, ent);
+        Audio.PlayPvs(ent.Comp.SupercriticalSoundAtAnimationStart, Transform(ent).Coordinates);
 
         var super = AddComp<AnomalySupercriticalComponent>(ent);
-        super.EndTime = Timing.CurTime + ent.Comp.SupercriticalDuration;
+        super.EndTime = Timing.CurTime + super.SupercriticalDuration;
         Appearance.SetData(ent, AnomalyVisuals.Supercritical, true);
         Dirty(ent, super);
     }

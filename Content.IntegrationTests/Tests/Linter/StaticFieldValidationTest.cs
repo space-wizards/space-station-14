@@ -4,6 +4,7 @@ using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.IntegrationTests.Tests.Linter;
 
@@ -65,25 +66,25 @@ public sealed class StaticFieldValidationTest
     [Reflect(false)]
     private sealed class StringValid
     {
-        public static readonly ProtoId<TagPrototype> Tag = "StaticFieldTestTag";
+        [ValidatePrototypeId<TagPrototype>] public static string Tag = "StaticFieldTestTag";
     }
 
     [Reflect(false)]
     private sealed class StringInvalid
     {
-        public static readonly ProtoId<TagPrototype> Tag = string.Empty;
+        [ValidatePrototypeId<TagPrototype>] public static string Tag = string.Empty;
     }
 
     [Reflect(false)]
     private sealed class StringArrayValid
     {
-        public static readonly ProtoId<TagPrototype>[] Tag = ["StaticFieldTestTag", "StaticFieldTestTag"];
+        [ValidatePrototypeId<TagPrototype>] public static string[] Tag = ["StaticFieldTestTag", "StaticFieldTestTag"];
     }
 
     [Reflect(false)]
     private sealed class StringArrayInvalid
     {
-        public static readonly ProtoId<TagPrototype>[] Tag = [string.Empty, "StaticFieldTestTag", string.Empty];
+        [ValidatePrototypeId<TagPrototype>] public static string[] Tag = [string.Empty, "StaticFieldTestTag", string.Empty];
     }
 
     [Reflect(false)]

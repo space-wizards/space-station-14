@@ -1,5 +1,6 @@
 using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -12,50 +13,50 @@ public sealed partial class HandsComponent : Component
     /// <summary>
     ///     The currently active hand.
     /// </summary>
-    [DataField]
-    public string? ActiveHandId;
+    [ViewVariables]
+    public Hand? ActiveHand;
 
     /// <summary>
-    /// Dictionary relating a unique hand ID corresponding to a container slot on the attached entity to a class containing information about the Hand itself.
-    /// </summary>
-    [DataField]
-    public Dictionary<string, Hand> Hands = new();
-
-    /// <summary>
-    /// The number of hands
+    ///     The item currently held in the active hand.
     /// </summary>
     [ViewVariables]
+    public EntityUid? ActiveHandEntity => ActiveHand?.HeldEntity;
+
+    [ViewVariables]
+    public Dictionary<string, Hand> Hands = new();
+
     public int Count => Hands.Count;
 
     /// <summary>
     ///     List of hand-names. These are keys for <see cref="Hands"/>. The order of this list determines the order in which hands are iterated over.
     /// </summary>
-    [DataField]
     public List<string> SortedHands = new();
 
     /// <summary>
     ///     If true, the items in the hands won't be affected by explosions.
     /// </summary>
     [DataField]
-    public bool DisableExplosionRecursion;
+    public bool DisableExplosionRecursion = false;
 
     /// <summary>
     ///     Modifies the speed at which items are thrown.
     /// </summary>
     [DataField]
-    public float BaseThrowspeed = 11f;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float BaseThrowspeed { get; set; } = 11f;
 
     /// <summary>
     ///     Distance after which longer throw targets stop increasing throw impulse.
     /// </summary>
-    [DataField]
-    public float ThrowRange = 8f;
+    [DataField("throwRange")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float ThrowRange { get; set; } = 8f;
 
     /// <summary>
     ///     Whether or not to add in-hand sprites for held items. Some entities (e.g., drones) don't want these.
     ///     Used by the client.
     /// </summary>
-    [DataField]
+    [DataField("showInHands")]
     public bool ShowInHands = true;
 
     /// <summary>
@@ -67,13 +68,14 @@ public sealed partial class HandsComponent : Component
     /// <summary>
     ///     The time at which throws will be allowed again.
     /// </summary>
-    [DataField, AutoPausedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoPausedField]
     public TimeSpan NextThrowTime;
 
     /// <summary>
     ///     The minimum time inbetween throws.
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan ThrowCooldown = TimeSpan.FromSeconds(0.5f);
 
     /// <summary>
@@ -101,37 +103,48 @@ public sealed partial class HandsComponent : Component
     public bool CanBeStripped = true;
 }
 
-[DataDefinition]
 [Serializable, NetSerializable]
-public partial record struct Hand
+public sealed class Hand //TODO: This should definitely be a struct - Jezi
 {
-    [DataField]
-    public HandLocation Location = HandLocation.Right;
+    [ViewVariables]
+    public string Name { get; }
 
-    public Hand()
+    [ViewVariables]
+    public HandLocation Location { get; }
+
+    /// <summary>
+    ///     The container used to hold the contents of this hand. Nullable because the client must get the containers via <see cref="ContainerManagerComponent"/>,
+    ///     which may not be synced with the server when the client hands are created.
+    /// </summary>
+    [ViewVariables, NonSerialized]
+    public ContainerSlot? Container;
+
+    [ViewVariables]
+    public EntityUid? HeldEntity => Container?.ContainedEntity;
+
+    public bool IsEmpty => HeldEntity == null;
+
+    public Hand(string name, HandLocation location, ContainerSlot? container = null)
     {
-
-    }
-
-    public Hand(HandLocation location)
-    {
+        Name = name;
         Location = location;
+        Container = container;
     }
 }
 
 [Serializable, NetSerializable]
 public sealed class HandsComponentState : ComponentState
 {
-    public readonly Dictionary<string, Hand> Hands;
-    public readonly List<string> SortedHands;
-    public readonly string? ActiveHandId;
+    public readonly List<Hand> Hands;
+    public readonly List<string> HandNames;
+    public readonly string? ActiveHand;
 
     public HandsComponentState(HandsComponent handComp)
     {
         // cloning lists because of test networking.
-        Hands = new(handComp.Hands);
-        SortedHands = new(handComp.SortedHands);
-        ActiveHandId = handComp.ActiveHandId;
+        Hands = new(handComp.Hands.Values);
+        HandNames = new(handComp.SortedHands);
+        ActiveHand = handComp.ActiveHand?.Name;
     }
 }
 

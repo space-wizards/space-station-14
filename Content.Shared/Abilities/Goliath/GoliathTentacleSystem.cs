@@ -34,7 +34,7 @@ public sealed class GoliathTentacleSystem : EntitySystem
         // TODO: animation
 
         _popup.PopupPredicted(Loc.GetString("tentacle-ability-use-popup", ("entity", args.Performer)), args.Performer, args.Performer, type: PopupType.SmallCaution);
-        _stun.TryAddStunDuration(args.Performer, TimeSpan.FromSeconds(0.8f));
+        _stun.TryStun(args.Performer, TimeSpan.FromSeconds(0.8f), false);
 
         var coords = args.Target;
         List<EntityCoordinates> spawnPos = new();
@@ -55,7 +55,7 @@ public sealed class GoliathTentacleSystem : EntitySystem
         foreach (var pos in spawnPos)
         {
             if (!_map.TryGetTileRef(grid, gridComp, pos, out var tileRef) ||
-                _turf.IsSpace(tileRef) ||
+                tileRef.IsSpace() ||
                 _turf.IsTileBlocked(tileRef, CollisionGroup.Impassable))
             {
                 continue;

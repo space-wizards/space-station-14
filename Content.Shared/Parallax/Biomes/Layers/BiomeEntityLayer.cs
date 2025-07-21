@@ -2,6 +2,7 @@ using Content.Shared.Maps;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Parallax.Biomes.Layers;
 
@@ -9,8 +10,8 @@ namespace Content.Shared.Parallax.Biomes.Layers;
 public sealed partial class BiomeEntityLayer : IBiomeWorldLayer
 {
     /// <inheritdoc/>
-    [DataField]
-    public List<ProtoId<ContentTileDefinition>> AllowedTiles { get; private set; } = new();
+    [DataField("allowedTiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
+    public List<string> AllowedTiles { get; private set; } = new();
 
     [DataField("noise")] public FastNoiseLite Noise { get; private set; } = new(0);
 
@@ -21,6 +22,6 @@ public sealed partial class BiomeEntityLayer : IBiomeWorldLayer
     /// <inheritdoc/>
     [DataField("invert")] public bool Invert { get; private set; } = false;
 
-    [DataField(required: true)]
-    public List<EntProtoId> Entities = new();
+    [DataField("entities", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public List<string> Entities = new();
 }

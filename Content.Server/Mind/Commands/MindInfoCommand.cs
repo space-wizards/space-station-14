@@ -9,38 +9,41 @@ using Robust.Shared.Console;
 namespace Content.Server.Mind.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class MindInfoCommand : LocalizedEntityCommands
+    public sealed class MindInfoCommand : IConsoleCommand
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly SharedRoleSystem _roles = default!;
-        [Dependency] private readonly SharedMindSystem _minds = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
-        public override string Command => "mindinfo";
+        public string Command => "mindinfo";
+        public string Description => "Lists info for the mind of a specific player.";
+        public string Help => "mindinfo <session ID>";
 
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
-                shell.WriteLine(Loc.GetString($"shell-need-exactly-one-argument"));
+                shell.WriteLine("Expected exactly 1 argument.");
                 return;
             }
 
-            if (!_playerManager.TryGetSessionByUsername(args[0], out var session))
+            var mgr = IoCManager.Resolve<IPlayerManager>();
+            if (!mgr.TryGetSessionByUsername(args[0], out var session))
             {
-                shell.WriteLine(Loc.GetString($"cmd-mindinfo-mind-not-found"));
+                shell.WriteLine("Can't find that mind");
                 return;
             }
 
-            if (!_minds.TryGetMind(session, out var mindId, out var mind))
+            var minds = _entities.System<SharedMindSystem>();
+            if (!minds.TryGetMind(session, out var mindId, out var mind))
             {
-                shell.WriteLine(Loc.GetString($"cmd-mindinfo-mind-not-found"));
+                shell.WriteLine("Can't find that mind");
                 return;
             }
 
             var builder = new StringBuilder();
             builder.AppendFormat("player: {0}, mob: {1}\nroles: ", mind.UserId, mind.OwnedEntity);
 
-            foreach (var role in _roles.MindGetAllRoleInfo(mindId))
+            var roles = _entities.System<SharedRoleSystem>();
+            foreach (var role in roles.MindGetAllRoleInfo(mindId))
             {
                 builder.AppendFormat("{0} ", role.Name);
             }

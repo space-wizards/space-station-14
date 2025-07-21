@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server.Body.Components;
 using Content.Server.Ghost;
 using Content.Server.Humanoid;
 using Content.Shared.Body.Components;

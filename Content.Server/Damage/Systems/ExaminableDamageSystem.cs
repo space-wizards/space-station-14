@@ -1,6 +1,9 @@
-﻿using Content.Server.Damage.Components;
+﻿using System.Linq;
+using Content.Server.Damage.Components;
 using Content.Server.Destructible;
+using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Rounding;
 using Robust.Shared.Prototypes;
@@ -9,42 +12,59 @@ namespace Content.Server.Damage.Systems;
 
 public sealed class ExaminableDamageSystem : EntitySystem
 {
-    [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<ExaminableDamageComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ExaminableDamageComponent, ExaminedEvent>(OnExamine);
     }
 
-    private void OnExamine(Entity<ExaminableDamageComponent> ent, ref ExaminedEvent args)
+    private void OnInit(EntityUid uid, ExaminableDamageComponent component, ComponentInit args)
     {
-        if (!_prototype.TryIndex(ent.Comp.Messages, out var proto) || proto.Values.Count == 0)
+        if (component.MessagesProtoId == null)
             return;
-
-        var percent = GetDamagePercent(ent);
-        var level = ContentHelpers.RoundToNearestLevels(percent, 1, proto.Values.Count - 1);
-        var msg = Loc.GetString(proto.Values[level]);
-        args.PushMarkup(msg, -99);
+        component.MessagesProto = _prototype.Index<ExaminableDamagePrototype>(component.MessagesProtoId);
     }
 
-    /// <summary>
-    /// Returns a value between 0 and 1 representing how damaged the entity is,
-    /// where 0 is undamaged and 1 is fully damaged.
-    /// </summary>
-    /// <returns>How damaged the entity is from 0 to 1</returns>
-    private float GetDamagePercent(Entity<ExaminableDamageComponent> ent)
+    private void OnExamine(EntityUid uid, ExaminableDamageComponent component, ExaminedEvent args)
     {
-        if (!TryComp<DamageableComponent>(ent, out var damageable))
+        if (component.MessagesProto == null)
+            return;
+
+        var messages = component.MessagesProto.Messages;
+        if (messages.Length == 0)
+            return;
+
+        var level = GetDamageLevel(uid, component);
+        var msg = Loc.GetString(messages[level]);
+        args.PushMarkup(msg,-99);
+    }
+
+    private int GetDamageLevel(EntityUid uid, ExaminableDamageComponent? component = null,
+        DamageableComponent? damageable = null, DestructibleComponent? destructible = null)
+    {
+        if (!Resolve(uid, ref component, ref damageable, ref destructible))
+            return 0;
+
+        if (component.MessagesProto == null)
+            return 0;
+
+        var maxLevels = component.MessagesProto.Messages.Length - 1;
+        if (maxLevels <= 0)
+            return 0;
+
+        var trigger = (DamageTrigger?) destructible.Thresholds
+            .LastOrDefault(threshold => threshold.Trigger is DamageTrigger)?.Trigger;
+        if (trigger == null)
             return 0;
 
         var damage = damageable.TotalDamage;
-        var damageThreshold = _destructible.DestroyedAt(ent);
+        var damageThreshold = trigger.Damage;
+        var fraction = damageThreshold == 0 ? 0f : (float) damage / damageThreshold;
 
-        if (damageThreshold == 0)
-            return 0;
-
-        return (damage / damageThreshold).Float();
+        var level = ContentHelpers.RoundToNearestLevels(fraction, 1, maxLevels);
+        return level;
     }
 }

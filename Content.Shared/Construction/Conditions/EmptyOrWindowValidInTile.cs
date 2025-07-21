@@ -21,7 +21,7 @@ namespace Content.Shared.Construction.Conditions
 
             foreach (var entity in lookupSys.GetEntitiesIntersecting(location, LookupFlags.Approximate | LookupFlags.Static))
             {
-                if (entManager.HasComponent<SharedCanBuildWindowOnTopComponent>(entity))
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedCanBuildWindowOnTopComponent>(entity))
                     result = true;
             }
 

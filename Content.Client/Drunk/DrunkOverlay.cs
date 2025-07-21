@@ -10,8 +10,6 @@ namespace Content.Client.Drunk;
 
 public sealed class DrunkOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> Shader = "Drunk";
-
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -32,7 +30,7 @@ public sealed class DrunkOverlay : Overlay
     public DrunkOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _drunkShader = _prototypeManager.Index(Shader).InstanceUnique();
+        _drunkShader = _prototypeManager.Index<ShaderPrototype>("Drunk").InstanceUnique();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

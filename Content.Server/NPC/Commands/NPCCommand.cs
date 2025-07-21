@@ -7,13 +7,12 @@ using Robust.Shared.Console;
 namespace Content.Server.NPC.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NpcCommand : LocalizedEntityCommands
+public sealed class NPCCommand : IConsoleCommand
 {
-    [Dependency] private readonly EuiManager _euiManager = default!;
-
-    public override string Command => "npc";
-
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    public string Command => "npc";
+    public string Description => "Opens the debug window for NPCs";
+    public string Help => $"{Command}";
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } playerSession)
         {
@@ -21,6 +20,7 @@ public sealed class NpcCommand : LocalizedEntityCommands
             return;
         }
 
-        _euiManager.OpenEui(new NPCEui(), playerSession);
+        var euiManager = IoCManager.Resolve<EuiManager>();
+        euiManager.OpenEui(new NPCEui(), playerSession);
     }
 }

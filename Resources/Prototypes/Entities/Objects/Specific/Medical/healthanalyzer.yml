@@ -40,7 +40,7 @@
           False: { visible: false }
   - type: GuideHelp
     guides:
-    - MedicalDoctor
+    - Medical Doctor
 
 - type: entity
   id: HandheldHealthAnalyzer

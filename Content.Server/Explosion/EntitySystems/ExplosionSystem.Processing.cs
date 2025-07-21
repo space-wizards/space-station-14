@@ -913,10 +913,10 @@ sealed class Explosion
 /// <summary>
 /// Data needed to spawn an explosion with <see cref="ExplosionSystem.SpawnExplosion"/>.
 /// </summary>
-public sealed class QueuedExplosion(ExplosionPrototype proto)
+public sealed class QueuedExplosion
 {
     public MapCoordinates Epicenter;
-    public ExplosionPrototype Proto = proto;
+    public ExplosionPrototype Proto = new();
     public float TotalIntensity, Slope, MaxTileIntensity, TileBreakScale;
     public int MaxTileBreak;
     public bool CanCreateVacuum;

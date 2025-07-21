@@ -37,6 +37,12 @@
   - type: Destructible
     thresholds:
     - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 25
+      behaviors:
+      - !type:ExplodeBehavior
+    - trigger:
         !type:DamageTrigger
         damage: 50
       behaviors:

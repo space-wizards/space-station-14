@@ -22,29 +22,6 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
     {
         SubscribeLocalEvent<MeleeThrowOnHitComponent, MeleeHitEvent>(OnMeleeHit);
         SubscribeLocalEvent<MeleeThrowOnHitComponent, ThrowDoHitEvent>(OnThrowHit);
-        SubscribeLocalEvent<MeleeThrowOnHitComponent, ThrownEvent>(OnThrow);
-        SubscribeLocalEvent<MeleeThrowOnHitComponent, LandEvent>(OnLand);
-    }
-
-    private void OnThrow(Entity<MeleeThrowOnHitComponent> ent, ref ThrownEvent args)
-    {
-        if (_delay.IsDelayed(ent.Owner))
-            return;
-
-        ent.Comp.HitWhileThrown = false;
-        ent.Comp.ThrowOnCooldown = false;
-
-        DirtyField(ent, ent.Comp, nameof(MeleeThrowOnHitComponent.HitWhileThrown));
-        DirtyField(ent, ent.Comp, nameof(MeleeThrowOnHitComponent.ThrowOnCooldown));
-    }
-
-    private void OnLand(Entity<MeleeThrowOnHitComponent> ent, ref LandEvent args)
-    {
-        if (ent.Comp.HitWhileThrown && !_delay.IsDelayed(ent.Owner))
-            _delay.TryResetDelay(ent.Owner);
-
-        ent.Comp.ThrowOnCooldown = true;
-        DirtyField(ent, ent.Comp, nameof(MeleeThrowOnHitComponent.ThrowOnCooldown));
     }
 
     private void OnMeleeHit(Entity<MeleeThrowOnHitComponent> weapon, ref MeleeHitEvent args)
@@ -73,14 +50,8 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
         if (!weapon.Comp.ActivateOnThrown)
             return;
 
-        if (weapon.Comp.ThrowOnCooldown)
-            return;
-
         if (!TryComp<PhysicsComponent>(args.Thrown, out var weaponPhysics))
             return;
-
-        weapon.Comp.HitWhileThrown = true;
-        DirtyField(weapon, weapon.Comp, nameof(MeleeThrowOnHitComponent.HitWhileThrown));
 
         ThrowOnHitHelper(weapon, args.Component.Thrower, args.Target, weaponPhysics.LinearVelocity);
     }
@@ -97,7 +68,7 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
         RaiseLocalEvent(target, ref startEvent);
 
         if (ent.Comp.StunTime != null)
-            _stun.TryAddParalyzeDuration(target, ent.Comp.StunTime.Value);
+            _stun.TryParalyze(target, ent.Comp.StunTime.Value, false);
 
         if (direction == Vector2.Zero)
             return;

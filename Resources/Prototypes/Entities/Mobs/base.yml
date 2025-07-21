@@ -44,7 +44,6 @@
   - type: MovementSpeedModifier
   - type: RequireProjectileTarget
     active: False
-  - type: StunVisuals
 
 - type: entity
   save: false

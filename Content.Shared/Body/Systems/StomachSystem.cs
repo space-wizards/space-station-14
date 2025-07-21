@@ -27,7 +27,7 @@ namespace Content.Shared.Body.Systems
 
         private void OnMapInit(Entity<StomachComponent> ent, ref MapInitEvent args)
         {
-            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
+            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
         }
 
         private void OnUnpaused(Entity<StomachComponent> ent, ref EntityUnpausedEvent args)
@@ -53,7 +53,7 @@ namespace Content.Shared.Body.Systems
                 if (_gameTiming.CurTime < stomach.NextUpdate)
                     continue;
 
-                stomach.NextUpdate += stomach.AdjustedUpdateInterval;
+                stomach.NextUpdate += stomach.UpdateInterval;
 
                 // Get our solutions
                 if (!_solutionContainerSystem.ResolveSolution((uid, sol), DefaultSolutionName, ref stomach.Solution, out var stomachSolution))
@@ -67,7 +67,7 @@ namespace Content.Shared.Body.Systems
                 var queue = new RemQueue<StomachComponent.ReagentDelta>();
                 foreach (var delta in stomach.ReagentDeltas)
                 {
-                    delta.Increment(stomach.AdjustedUpdateInterval);
+                    delta.Increment(stomach.UpdateInterval);
                     if (delta.Lifetime > stomach.DigestionDelay)
                     {
                         if (stomachSolution.TryGetReagent(delta.ReagentQuantity.Reagent, out var reagent))
@@ -95,9 +95,18 @@ namespace Content.Shared.Body.Systems
             }
         }
 
-        private void OnApplyMetabolicMultiplier(Entity<StomachComponent> ent, ref ApplyMetabolicMultiplierEvent args)
+        private void OnApplyMetabolicMultiplier(
+            Entity<StomachComponent> ent,
+            ref ApplyMetabolicMultiplierEvent args)
         {
-            ent.Comp.UpdateIntervalMultiplier = args.Multiplier;
+            if (args.Apply)
+            {
+                ent.Comp.UpdateInterval *= args.Multiplier;
+                return;
+            }
+
+            // This way we don't have to worry about it breaking if the stasis bed component is destroyed
+            ent.Comp.UpdateInterval /= args.Multiplier;
         }
 
         public bool CanTransferSolution(

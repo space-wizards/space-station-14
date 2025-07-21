@@ -14,7 +14,8 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
 public sealed class XenoArtifactCommand : ToolshedCommand
 {
-    public static readonly EntProtoId ArtifactPrototype = "BaseXenoArtifact";
+    [ValidatePrototypeId<EntityPrototype>]
+    public const string ArtifactPrototype = "BaseXenoArtifact";
 
     /// <summary> List existing artifacts. </summary>
     [CommandImplementation("list")]

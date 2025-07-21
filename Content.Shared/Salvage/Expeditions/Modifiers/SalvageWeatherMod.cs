@@ -1,6 +1,7 @@
 using Content.Shared.Weather;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
@@ -16,8 +17,8 @@ public sealed partial class SalvageWeatherMod : IPrototype, IBiomeSpecificMod
     public float Cost { get; private set; } = 0f;
 
     /// <inheritdoc/>
-    [DataField]
-    public List<ProtoId<SalvageBiomeModPrototype>>? Biomes { get; private set; } = null;
+    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeModPrototype>))]
+    public List<string>? Biomes { get; private set; } = null;
 
     /// <summary>
     /// Weather prototype to use on the planet.

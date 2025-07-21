@@ -9,14 +9,12 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
-using Content.Shared.Mind;
 using Content.Shared.Players.PlayTimeTracking;
 using Prometheus;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
 
@@ -35,7 +33,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly ISharedPlaytimeManager _playtime = default!;
     [Dependency] private readonly ISharedChatManager _chat = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public const string SawmillId = "admin.logs";
 
@@ -302,13 +299,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             return;
         }
 
-        // PostgreSQL does not support storing null chars in text values.
-        if (message.Contains('\0'))
-        {
-            _sawmill.Error($"Null character detected in admin log message '{message}'! LogType: {type}, LogImpact: {impact}");
-            message = message.Replace("\0", "");
-        }
-
         var log = new AdminLog
         {
             Id = NextLogId,
@@ -340,8 +330,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 var cachedInfo = adminSys.GetCachedPlayerInfo(new NetUserId(id));
                 if (cachedInfo != null && cachedInfo.Antag)
                 {
-                    var proto = cachedInfo.RoleProto == null ? null : _proto.Index(cachedInfo.RoleProto.Value);
-                    var subtype = Loc.GetString(cachedInfo.Subtype ?? proto?.Name ?? RoleTypePrototype.FallbackName);
+                    var subtype = Loc.GetString(cachedInfo.Subtype ?? cachedInfo.RoleProto.Name);
                     logMessage = Loc.GetString(
                         "admin-alert-antag-label",
                         ("message", logMessage),

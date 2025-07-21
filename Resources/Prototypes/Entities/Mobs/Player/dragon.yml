@@ -100,11 +100,14 @@
       types: {}
   - type: StatusEffects # Overwriting basesimplemob to remove flash, getting flashed as dragon just feelsbad
     allowed:
+    - SlowedDown
     - Stutter
     - Electrocution
+    - ForcedSleep
     - TemporaryBlindness
     - Pacified
     - RadiationProtection
+    - Drowsiness
     - Adrenaline
   - type: Temperature
     heatDamageThreshold: 800
@@ -135,12 +138,8 @@
         Piercing: 15
         Slash: 15
   - type: Devourer
-    foodPreferenceWhitelist:
-      components:
-      - HumanoidAppearance
-    stomachStorageWhitelist:
-      components:
-      - MobState
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
     chemical: Ichor
     healRate: 7.5
     whitelist:
@@ -153,7 +152,6 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
-    - StunImmune
   - type: Puller
     needsHands: false
   - type: RandomMetadata

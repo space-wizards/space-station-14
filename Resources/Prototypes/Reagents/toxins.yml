@@ -63,8 +63,9 @@
       - !type:MovespeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        component: Drowsiness
         time: 4
         type: Add
         refresh: false
@@ -339,8 +340,9 @@
   metabolisms:
     Poison:
       effects:
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectSeeingRainbow
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
         type: Add
         time: 10
         refresh: false

@@ -1,13 +1,16 @@
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
-using Content.Server.EntityEffects;
 using Content.Shared.Atmos;
 using Content.Shared.Database;
+using Content.Shared.EntityEffects;
 using Content.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
+
+using Content.Server.EntityEffects;
 
 namespace Content.Server.Botany;
 
@@ -130,8 +133,8 @@ public partial class SeedData
     /// <summary>
     ///     The entity prototype this seed spawns when it gets harvested.
     /// </summary>
-    [DataField]
-    public List<EntProtoId> ProductPrototypes = new();
+    [DataField("productPrototypes", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public List<string> ProductPrototypes = new();
 
     [DataField] public Dictionary<string, SeedChemQuantity> Chemicals = new();
 
@@ -240,8 +243,8 @@ public partial class SeedData
     /// <summary>
     ///     The seed prototypes this seed may mutate into when prompted to.
     /// </summary>
-    [DataField]
-    public List<ProtoId<SeedPrototype>> MutationPrototypes = new();
+    [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<SeedPrototype>))]
+    public List<string> MutationPrototypes = new();
 
     /// <summary>
     ///  Log impact for when the seed is planted.
@@ -267,8 +270,8 @@ public partial class SeedData
             Mysterious = Mysterious,
 
             PacketPrototype = PacketPrototype,
-            ProductPrototypes = new List<EntProtoId>(ProductPrototypes),
-            MutationPrototypes = new List<ProtoId<SeedPrototype>>(MutationPrototypes),
+            ProductPrototypes = new List<string>(ProductPrototypes),
+            MutationPrototypes = new List<string>(MutationPrototypes),
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
             ConsumeGasses = new Dictionary<Gas, float>(ConsumeGasses),
             ExudeGasses = new Dictionary<Gas, float>(ExudeGasses),
@@ -327,8 +330,8 @@ public partial class SeedData
             Mysterious = other.Mysterious,
 
             PacketPrototype = other.PacketPrototype,
-            ProductPrototypes = new List<EntProtoId>(other.ProductPrototypes),
-            MutationPrototypes = new List<ProtoId<SeedPrototype>>(other.MutationPrototypes),
+            ProductPrototypes = new List<string>(other.ProductPrototypes),
+            MutationPrototypes = new List<string>(other.MutationPrototypes),
 
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
             ConsumeGasses = new Dictionary<Gas, float>(ConsumeGasses),

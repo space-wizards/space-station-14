@@ -20,7 +20,6 @@ public sealed class SmokeOnTriggerSystem : SharedSmokeOnTriggerSystem
     [Dependency] private readonly SmokeSystem _smoke = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SpreaderSystem _spreader = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
 
     public override void Initialize()
     {
@@ -40,7 +39,7 @@ public sealed class SmokeOnTriggerSystem : SharedSmokeOnTriggerSystem
             return;
         }
 
-        if (_spreader.RequiresFloorToSpread(comp.SmokePrototype.ToString()) && _turf.IsSpace(tileRef))
+        if (_spreader.RequiresFloorToSpread(comp.SmokePrototype.ToString()) && tileRef.Tile.IsSpace())
             return;
 
         var coords = _map.MapToGrid(gridUid, mapCoords);

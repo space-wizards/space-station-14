@@ -141,24 +141,5 @@
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
-    state: tail
-
-- type: marking
-  id: VoxTailShort
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Vox]
-  forcedColoring: true
-  sprites:
-  - sprite: Mobs/Customization/vox_parts.rsi
-    state: tail_short
-
-- type: marking
-  id: VoxTailBig
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Vox]
-  forcedColoring: true
-  sprites:
-  - sprite: Mobs/Customization/vox_parts.rsi
-    state: tail_big
+    # Ideally this should use the normal tail sprite and apply an actual mask over it, not just use a butchered sprite
+    state: tail_stenciled

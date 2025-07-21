@@ -127,7 +127,6 @@
     noRot: true
   - type: Item
     size: Normal
-  - type: MultiHandedItem
   - type: Construction
     graph: PlushieGhostRevenant
     node: plushie
@@ -203,15 +202,6 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/mousesqueek.ogg
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/hampter.rsi
-    slots:
-    - HEAD
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        offset: "0, 0.04"
   - type: FoodSequenceElement
     entries:
       CottonBurger: HamptrPlushie
@@ -250,15 +240,6 @@
   - type: Sprite
     sprite: Objects/Fun/Plushies/nukie.rsi
     state: icon
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/nukie.rsi
-    slots:
-    - HEAD
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        offset: "0, 0.03"
   - type: FoodSequenceElement
     entries:
       CottonBurger: NukiePlushie
@@ -273,15 +254,6 @@
     sprite: Objects/Fun/Plushies/rouny.rsi
     state: icon
   - type: Rotatable
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/rouny.rsi
-    slots:
-    - HEAD
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        offset: "0, 0.03"
   - type: FoodSequenceElement
     entries:
       CottonBurger: RounyPlushie
@@ -335,11 +307,6 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/arachnid.rsi
-    slots:
-    - HEAD
   - type: FoodSequenceElement
     entries:
       CottonBurger: ArachnidPlushie
@@ -683,15 +650,6 @@
         - LowImpassable
   - type: CollisionWake
     enabled: false
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/diona.rsi
-    slots:
-    - HEAD
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        offset: "0, 0.09"
   - type: FoodSequenceElement
     entries:
       CottonBurger: DionaPlushie
@@ -781,7 +739,7 @@
   parent: BasePlushie
   id: PlushieRatvar
   name: ratvar plushie
-  description: A large stuffed doll of the elder god Ratvar.
+  description: A small stuffed doll of the elder god Ratvar.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/ratvar.rsi
@@ -789,12 +747,6 @@
   - type: Item
     size: Normal
     sprite: Objects/Fun/Plushies/ratvar.rsi
-  - type: MultiHandedItem
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/ratvar.rsi
-    slots:
-    - neck
   - type: FoodSequenceElement
     entries:
       CottonBurger: RatvarPlushie
@@ -803,7 +755,7 @@
   parent: BasePlushie
   id: PlushieNar
   name: nar'sie plushie
-  description: A large stuffed doll of the elder goddess Nar'Sie.
+  description: A small stuffed doll of the elder goddess Nar'Sie.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/narsie.rsi
@@ -811,12 +763,6 @@
   - type: Item
     size: Normal
     sprite: Objects/Fun/Plushies/narsie.rsi
-  - type: MultiHandedItem
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/narsie.rsi
-    slots:
-    - neck
   - type: FoodSequenceElement
     entries:
       CottonBurger: NarPlushie
@@ -876,20 +822,9 @@
   components:
   - type: Sprite
     state: magicplush
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: magicarpplush-inhand-left
-      right:
-      - state: magicarpplush-inhand-right
   - type: FoodSequenceElement
     entries:
       CottonBurger: MagicarpPlushie
-  - type: Tag
-    tags:
-    - Payload
-    - ClothMade
-    - PlushieCarpMagi
 
 - type: entity
   parent: PlushieCarp
@@ -921,20 +856,9 @@
   components:
   - type: Sprite
     state: holoplush
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: holocarpplush-inhand-left
-      right:
-      - state: holocarpplush-inhand-right
   - type: FoodSequenceElement
     entries:
       CottonBurger: HolocarpPlushie
-  - type: Tag
-    tags:
-    - Payload
-    - ClothMade
-    - PlushieCarpHolo
 
 - type: entity
   parent: BasePlushie
@@ -961,11 +885,6 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Voice/Slime/slime_squish.ogg
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/slime.rsi
-    slots:
-    - HEAD
   - type: FoodSequenceElement
     entries:
       CottonBurger: SlimePlushie
@@ -1088,15 +1007,6 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Voice/Vox/shriek1.ogg
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/vox.rsi
-    slots:
-    - HEAD
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        offset: "0, 0.09"
   - type: FoodSequenceElement
     entries:
       CottonBurger: VoxPlushie
@@ -1110,15 +1020,6 @@
   - type: Sprite
     sprite: Objects/Fun/Plushies/atmosian.rsi
     state: icon
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/atmosian.rsi
-    slots:
-    - HEAD
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        offset: "0, 0.04"
   - type: FoodSequenceElement
     entries:
       CottonBurger: AtmosianPlushie
@@ -1157,15 +1058,6 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/xeno.rsi
-    slots:
-    - HEAD
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        offset: "0, 0.03"
   - type: FoodSequenceElement
     entries:
       CottonBurger: XenoPlushie
@@ -1179,11 +1071,6 @@
   - type: Sprite
     sprite: Objects/Fun/Plushies/penguin.rsi
     state: icon
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/penguin.rsi
-    slots:
-    - HEAD
   - type: FoodSequenceElement
     entries:
       CottonBurger: PenguinPlushie
@@ -1219,11 +1106,6 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Human/malescream_5.ogg
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/human.rsi
-    slots:
-    - HEAD
   - type: FoodSequenceElement
     entries:
       CottonBurger: HumanPlushie
@@ -1259,11 +1141,6 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/Plushies/moth.rsi
-    slots:
-    - HEAD
   - type: FoodSequenceElement
     entries:
       CottonBurger: MothPlushie

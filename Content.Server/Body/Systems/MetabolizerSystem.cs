@@ -2,7 +2,6 @@ using Content.Server.Body.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
-using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -19,8 +18,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems
 {
-    /// <inheritdoc/>
-    public sealed class MetabolizerSystem : SharedMetabolizerSystem
+    public sealed class MetabolizerSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -47,7 +45,7 @@ namespace Content.Server.Body.Systems
 
         private void OnMapInit(Entity<MetabolizerComponent> ent, ref MapInitEvent args)
         {
-            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
+            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
         }
 
         private void OnUnpaused(Entity<MetabolizerComponent> ent, ref EntityUnpausedEvent args)
@@ -67,9 +65,20 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        private void OnApplyMetabolicMultiplier(Entity<MetabolizerComponent> ent, ref ApplyMetabolicMultiplierEvent args)
+        private void OnApplyMetabolicMultiplier(
+            Entity<MetabolizerComponent> ent,
+            ref ApplyMetabolicMultiplierEvent args)
         {
-            ent.Comp.UpdateIntervalMultiplier = args.Multiplier;
+            // TODO REFACTOR THIS
+            // This will slowly drift over time due to floating point errors.
+            // Instead, raise an event with the base rates and allow modifiers to get applied to it.
+            if (args.Apply)
+            {
+                ent.Comp.UpdateInterval *= args.Multiplier;
+                return;
+            }
+
+            ent.Comp.UpdateInterval /= args.Multiplier;
         }
 
         public override void Update(float frameTime)
@@ -90,7 +99,7 @@ namespace Content.Server.Body.Systems
                 if (_gameTiming.CurTime < metab.NextUpdate)
                     continue;
 
-                metab.NextUpdate += metab.AdjustedUpdateInterval;
+                metab.NextUpdate += metab.UpdateInterval;
                 TryMetabolize((uid, metab));
             }
         }

@@ -48,6 +48,7 @@
         BaseUnshaded: dead_glow
   - type: StatusEffects
     allowed:
+    - Stun
     - Corporeal
     - Electrocution
     - StaminaModifier
@@ -90,7 +91,6 @@
   - type: Tag
     tags:
       - FootstepSound
-      - SlowImmune
   - type: Destructible
     thresholds:
       - trigger:

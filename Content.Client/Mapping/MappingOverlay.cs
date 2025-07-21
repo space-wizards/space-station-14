@@ -11,8 +11,6 @@ namespace Content.Client.Mapping;
 
 public sealed class MappingOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
-
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
@@ -37,7 +35,7 @@ public sealed class MappingOverlay : Overlay
         _sprite = _entities.System<SpriteSystem>();
 
         _state = state;
-        _shader = _prototypes.Index(UnshadedShader).Instance();
+        _shader = _prototypes.Index<ShaderPrototype>("unshaded").Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)

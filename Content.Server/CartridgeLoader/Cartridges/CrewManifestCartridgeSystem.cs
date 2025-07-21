@@ -16,7 +16,8 @@ public sealed class CrewManifestCartridgeSystem : EntitySystem
     [Dependency] private readonly CrewManifestSystem _crewManifest = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
-    private static readonly EntProtoId CartridgePrototypeName = "CrewManifestCartridge";
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string CartridgePrototypeName = "CrewManifestCartridge";
 
     /// <summary>
     /// Flag that shows that if crew manifest is allowed to be viewed from 'unsecure' entities,

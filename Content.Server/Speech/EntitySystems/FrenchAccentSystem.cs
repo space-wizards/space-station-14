@@ -1,6 +1,5 @@
-using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
-using Content.Shared.Speech;
+using System.Text.RegularExpressions;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -33,7 +32,7 @@ public sealed class FrenchAccentSystem : EntitySystem
 
         // spaces out ! ? : and ;.
         msg = RegexSpacePunctuation.Replace(msg, " $&");
-
+        
         // replaces th with 'z or 's depending on the case
         foreach (Match match in RegexTh.Matches(msg))
         {

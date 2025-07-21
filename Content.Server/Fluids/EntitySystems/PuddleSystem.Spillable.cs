@@ -69,8 +69,7 @@ public sealed partial class PuddleSystem
         if (totalSplit == 0)
             return;
 
-        // Optionally allow further melee handling occur
-        args.Handled = entity.Comp.PreventMelee;
+        args.Handled = true;
 
         // First update the hit count so anything that is not reactive wont count towards the total!
         foreach (var hit in args.HitEntities)

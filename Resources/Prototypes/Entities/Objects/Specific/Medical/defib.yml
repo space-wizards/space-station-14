@@ -39,7 +39,7 @@
       price: 30
     - type: GuideHelp
       guides:
-      - MedicalDoctor
+      - Medical Doctor
 
 - type: entity
   id: Defibrillator

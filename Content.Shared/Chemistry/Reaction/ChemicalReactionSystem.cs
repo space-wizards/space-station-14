@@ -1,5 +1,3 @@
-using System.Collections.Frozen;
-using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -7,9 +5,10 @@ using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Collections.Frozen;
+using System.Linq;
 
 
 namespace Content.Shared.Chemistry.Reaction
@@ -26,10 +25,9 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private const int MaxReactionIterations = 20;
 
-        [Dependency] private readonly INetManager _netMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         /// <summary>
@@ -227,11 +225,7 @@ namespace Content.Shared.Chemistry.Reaction
                 effect.Effect(args);
             }
 
-            // Someday, some brave soul will thread through an optional actor
-            // argument in from every call of OnReaction up, all just to pass
-            // it to PlayPredicted. I am not that brave soul.
-            if (_netMan.IsServer)
-                _audio.PlayPvs(reaction.Sound, soln);
+            _audio.PlayPvs(reaction.Sound, soln);
         }
 
         /// <summary>
@@ -241,6 +235,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private bool ProcessReactions(Entity<SolutionComponent> soln, SortedSet<ReactionPrototype> reactions, ReactionMixerComponent? mixerComponent)
         {
+            HashSet<ReactionPrototype> toRemove = new();
             List<string>? products = null;
 
             // attempt to perform any applicable reaction
@@ -248,6 +243,7 @@ namespace Content.Shared.Chemistry.Reaction
             {
                 if (!CanReact(soln, reaction, mixerComponent, out var unitReactions))
                 {
+                    toRemove.Add(reaction);
                     continue;
                 }
 

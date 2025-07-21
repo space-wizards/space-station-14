@@ -1,9 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Content.Shared.CCVar;
-using NetCord;
-using NetCord.Gateway;
-using NetCord.Rest;
+using Discord;
+using Discord.WebSocket;
 using Robust.Shared.Configuration;
+using Robust.Shared.Reflection;
+using Robust.Shared.Utility;
+using LogMessage = Discord.LogMessage;
 
 namespace Content.Server.Discord.DiscordLink;
 
@@ -25,7 +28,7 @@ public sealed class CommandReceivedEventArgs
     /// Information about the message that the command was received from. This includes the message content, author, etc.
     /// Use this to reply to the message, delete it, etc.
     /// </summary>
-    public Message Message { get; init; } = default!;
+    public SocketMessage Message { get; init; } = default!;
 }
 
 /// <summary>
@@ -42,7 +45,7 @@ public sealed class DiscordLink : IPostInjectInit
     /// <remarks>
     ///     This should not be used directly outside of DiscordLink. So please do not make it public. Use the methods in this class instead.
     /// </remarks>
-    private GatewayClient? _client;
+    private DiscordSocketClient? _client;
     private ISawmill _sawmill = default!;
     private ISawmill _sawmillLog = default!;
 
@@ -64,7 +67,7 @@ public sealed class DiscordLink : IPostInjectInit
     /// <summary>
     ///     Event that is raised when a message is received from Discord. This is raised for every message, including commands.
     /// </summary>
-    public event Action<Message>? OnMessageReceived;
+    public event Action<SocketMessage>? OnMessageReceived;
 
     public void RegisterCommandCallback(Action<CommandReceivedEventArgs> callback, string command)
     {
@@ -98,34 +101,33 @@ public sealed class DiscordLink : IPostInjectInit
             return;
         }
 
-        _client = new GatewayClient(new BotToken(token), new GatewayClientConfiguration()
+        _client = new DiscordSocketClient(new DiscordSocketConfig()
         {
-            Intents = GatewayIntents.Guilds
-                             | GatewayIntents.GuildUsers
+            GatewayIntents = GatewayIntents.Guilds
+                             | GatewayIntents.GuildMembers
                              | GatewayIntents.GuildMessages
                              | GatewayIntents.MessageContent
                              | GatewayIntents.DirectMessages,
-            Logger = new DiscordSawmillLogger(_sawmillLog),
         });
-        _client.MessageCreate += OnCommandReceivedInternal;
-        _client.MessageCreate += OnMessageReceivedInternal;
+        _client.Log += Log;
+        _client.MessageReceived += OnCommandReceivedInternal;
+        _client.MessageReceived += OnMessageReceivedInternal;
 
         _botToken = token;
         // Since you cannot change the token while the server is running / the DiscordLink is initialized,
         // we can just set the token without updating it every time the cvar changes.
 
-        _client.Ready += _ =>
+        _client.Ready += () =>
         {
             _sawmill.Info("Discord client ready.");
-            return default;
+            return Task.CompletedTask;
         };
 
         Task.Run(async () =>
         {
             try
             {
-                await _client.StartAsync();
-                _sawmill.Info("Connected to Discord.");
+                await LoginAsync(token);
             }
             catch (Exception e)
             {
@@ -141,11 +143,12 @@ public sealed class DiscordLink : IPostInjectInit
             _sawmill.Info("Disconnecting from Discord.");
 
             // Unsubscribe from the events.
-            _client.MessageCreate -= OnCommandReceivedInternal;
-            _client.MessageCreate -= OnMessageReceivedInternal;
+            _client.MessageReceived -= OnCommandReceivedInternal;
+            _client.MessageReceived -= OnMessageReceivedInternal;
 
-            await _client.CloseAsync();
-            _client.Dispose();
+            await _client.LogoutAsync();
+            await _client.StopAsync();
+            await _client.DisposeAsync();
             _client = null;
         }
 
@@ -169,12 +172,45 @@ public sealed class DiscordLink : IPostInjectInit
         BotPrefix = prefix;
     }
 
-    private ValueTask OnCommandReceivedInternal(Message message)
+    private async Task LoginAsync(string token)
+    {
+        DebugTools.Assert(_client != null);
+        DebugTools.Assert(_client.LoginState == LoginState.LoggedOut);
+
+        await _client.LoginAsync(TokenType.Bot, token);
+        await _client.StartAsync();
+
+
+        _sawmill.Info("Connected to Discord.");
+    }
+
+    private string FormatLog(LogMessage msg)
+    {
+        return msg.Exception is null
+            ? $"{msg.Source}: {msg.Message}"
+            : $"{msg.Source}: {msg.Message}\n{msg.Exception}";
+    }
+
+    private Task Log(LogMessage msg)
+    {
+        var logLevel = msg.Severity switch
+        {
+            LogSeverity.Critical => LogLevel.Fatal,
+            LogSeverity.Error => LogLevel.Error,
+            LogSeverity.Warning => LogLevel.Warning,
+            _ => LogLevel.Debug
+        };
+
+        _sawmillLog.Log(logLevel, FormatLog(msg));
+        return Task.CompletedTask;
+    }
+
+    private Task OnCommandReceivedInternal(SocketMessage message)
     {
         var content = message.Content;
         // If the message doesn't start with the bot prefix, ignore it.
         if (!content.StartsWith(BotPrefix))
-            return ValueTask.CompletedTask;
+            return Task.CompletedTask;
 
         // Split the message into the command and the arguments.
         var trimmedInput = content[BotPrefix.Length..].Trim();
@@ -200,13 +236,13 @@ public sealed class DiscordLink : IPostInjectInit
             Arguments = arguments,
             Message = message,
         });
-        return ValueTask.CompletedTask;
+        return Task.CompletedTask;
     }
 
-    private ValueTask OnMessageReceivedInternal(Message message)
+    private Task OnMessageReceivedInternal(SocketMessage message)
     {
         OnMessageReceived?.Invoke(message);
-        return ValueTask.CompletedTask;
+        return Task.CompletedTask;
     }
 
     #region Proxy methods
@@ -221,18 +257,14 @@ public sealed class DiscordLink : IPostInjectInit
             return;
         }
 
-        var channel = await _client.Rest.GetChannelAsync(channelId) as TextChannel;
+        var channel = _client.GetChannel(channelId) as IMessageChannel;
         if (channel == null)
         {
             _sawmill.Error("Tried to send a message to Discord but the channel {Channel} was not found.", channel);
             return;
         }
 
-        await channel.SendMessageAsync(new MessageProperties()
-        {
-            AllowedMentions = AllowedMentionsProperties.None,
-            Content = message,
-        });
+        await channel.SendMessageAsync(message, allowedMentions: AllowedMentions.None);
     }
 
     #endregion

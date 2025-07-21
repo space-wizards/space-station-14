@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
-using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
@@ -25,7 +24,6 @@ public sealed class WiresSystem : SharedWiresSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -395,7 +393,7 @@ public sealed class WiresSystem : SharedWiresSystem
     {
         var player = args.Actor;
 
-        if (!TryComp(player, out HandsComponent? handsComponent))
+        if (!EntityManager.TryGetComponent(player, out HandsComponent? handsComponent))
         {
             _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), uid, player);
             return;
@@ -407,13 +405,19 @@ public sealed class WiresSystem : SharedWiresSystem
             return;
         }
 
-        if (!_hands.TryGetActiveItem((player, handsComponent), out var heldEntity))
+        var activeHand = handsComponent.ActiveHand;
+
+        if (activeHand == null)
             return;
 
-        if (!TryComp(heldEntity, out ToolComponent? tool))
+        if (activeHand.HeldEntity == null)
             return;
 
-        TryDoWireAction(uid, player, heldEntity.Value, args.Id, args.Action, component, tool);
+        var activeHandEntity = activeHand.HeldEntity.Value;
+        if (!EntityManager.TryGetComponent(activeHandEntity, out ToolComponent? tool))
+            return;
+
+        TryDoWireAction(uid, player, activeHandEntity, args.Id, args.Action, component, tool);
     }
 
     private void OnDoAfter(EntityUid uid, WiresComponent component, WireDoAfterEvent args)

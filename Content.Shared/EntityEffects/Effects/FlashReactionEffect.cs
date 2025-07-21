@@ -25,11 +25,11 @@ public sealed partial class FlashReactionEffect : EventEntityEffect<FlashReactio
     public float SlowTo = 0.5f;
 
     /// <summary>
-    ///     The time entities will be flashed.
+    ///     The time entities will be flashed in seconds.
     ///     The default is chosen to be better than the hand flash so it is worth using it for grenades etc.
     /// </summary>
     [DataField]
-    public TimeSpan Duration = TimeSpan.FromSeconds(4);
+    public float Duration = 4f;
 
     /// <summary>
     ///     The prototype ID used for the visual effect.

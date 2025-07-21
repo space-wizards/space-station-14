@@ -2,7 +2,6 @@ using Content.Shared.Audio;
 using Content.Shared.Construction.Components;
 using Content.Shared.Explosion;
 using Content.Shared.Eye;
-using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
@@ -84,10 +83,6 @@ namespace Content.Shared.SubFloor
 
         private void OnInteractionAttempt(EntityUid uid, SubFloorHideComponent component, ref GettingInteractedWithAttemptEvent args)
         {
-            // Allow admins (e.g., mappers/aghosts) to twiddle with stuff under subfloors
-            if (HasComp<BypassInteractionChecksComponent>(args.Uid))
-                return;
-
             // No interactions with entities hidden under floor tiles.
             if (component.BlockInteractions && component.IsUnderCover)
                 args.Cancelled = true;
@@ -97,13 +92,13 @@ namespace Content.Shared.SubFloor
         {
             UpdateFloorCover(uid, component);
             UpdateAppearance(uid, component);
-            EnsureComp<CollideOnAnchorComponent>(uid);
+            EntityManager.EnsureComponent<CollideOnAnchorComponent>(uid);
         }
 
         private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, ComponentShutdown _)
         {
             // If component is being deleted don't need to worry about updating any component stuff because it won't matter very shortly.
-            if (Comp<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+            if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
                 return;
 
             // Regardless of whether we're on a subfloor or not, unhide.

@@ -139,9 +139,9 @@
       sprite: Objects/Weapons/Melee/flash.rsi
       layers:
       - state: flash
-        map: [ "enum.FlashVisualLayers.BaseLayer" ]
+        map: [ "enum.FlashVisuals.BaseLayer" ]
       - state: flashing
-        map: [ "enum.FlashVisualLayers.LightLayer" ]
+        map: [ "enum.FlashVisuals.LightLayer" ]
         visible: false
         shader: unshaded
     - type: Flash
@@ -157,18 +157,16 @@
       size: Small
       sprite: Objects/Weapons/Melee/flash.rsi
     - type: UseDelay
-      delay: 4 # has to be the same as the FlashingTime datafield in FlashComponent
-    - type: UseDelayOnMeleeHit
     - type: StaticPrice
       price: 40
     - type: Appearance
     - type: GenericVisualizer
       visuals:
         enum.FlashVisuals.Burnt:
-          enum.FlashVisualLayers.BaseLayer:
+          enum.FlashVisuals.BaseLayer:
             True: {state: burnt}
         enum.FlashVisuals.Flashing:
-          enum.FlashVisualLayers.LightLayer:
+          enum.FlashVisuals.LightLayer:
             True: {visible: true}
             False: {visible: false}
     - type: GuideHelp

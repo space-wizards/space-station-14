@@ -156,15 +156,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             return;
         }
 
-
-        foreach (var t in msg.Tracks)
-        {
-            // Remove any control characters that may be part of the midi file so they don't end up in the admin logs.
-            t?.SanitizeFields();
-            // Truncate any track names too long.
-            t?.TruncateFields(_cfg.GetCVar(CCVars.MidiMaxChannelNameLength));
-        }
-
         var tracksString = string.Join("\n",
             msg.Tracks
             .Where(t => t != null)
@@ -174,6 +165,12 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             LogType.Instrument,
             LogImpact.Low,
             $"{ToPrettyString(args.SenderSession.AttachedEntity)} set the midi channels for {ToPrettyString(uid)} to {tracksString}");
+
+        // Truncate any track names too long.
+        foreach (var t in msg.Tracks)
+        {
+            t?.TruncateFields(_cfg.GetCVar(CCVars.MidiMaxChannelNameLength));
+        }
 
         activeInstrument.Tracks = msg.Tracks;
 
@@ -271,20 +268,20 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
     public (NetEntity, string)[] GetBands(EntityUid uid)
     {
-        var metadataQuery = GetEntityQuery<MetaDataComponent>();
+        var metadataQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
 
         if (Deleted(uid))
             return Array.Empty<(NetEntity, string)>();
 
         var list = new ValueList<(NetEntity, string)>();
-        var instrumentQuery = GetEntityQuery<InstrumentComponent>();
+        var instrumentQuery = EntityManager.GetEntityQuery<InstrumentComponent>();
 
         if (!TryComp(uid, out InstrumentComponent? originInstrument)
             || originInstrument.InstrumentPlayer is not {} originPlayer)
             return Array.Empty<(NetEntity, string)>();
 
         // It's probably faster to get all possible active instruments than all entities in range
-        var activeEnumerator = EntityQueryEnumerator<ActiveInstrumentComponent>();
+        var activeEnumerator = EntityManager.EntityQueryEnumerator<ActiveInstrumentComponent>();
         while (activeEnumerator.MoveNext(out var entity, out _))
         {
             if (entity == uid)
@@ -427,8 +424,8 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             _bandRequestQueue.Clear();
         }
 
-        var activeQuery = GetEntityQuery<ActiveInstrumentComponent>();
-        var transformQuery = GetEntityQuery<TransformComponent>();
+        var activeQuery = EntityManager.GetEntityQuery<ActiveInstrumentComponent>();
+        var transformQuery = EntityManager.GetEntityQuery<TransformComponent>();
 
         var query = AllEntityQuery<ActiveInstrumentComponent, InstrumentComponent>();
         while (query.MoveNext(out var uid, out _, out var instrument))
@@ -461,7 +458,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             {
                 if (instrument.InstrumentPlayer is {Valid: true} mob)
                 {
-                    _stuns.TryUpdateParalyzeDuration(mob, TimeSpan.FromSeconds(1));
+                    _stuns.TryParalyze(mob, TimeSpan.FromSeconds(1), true);
 
                     _popup.PopupEntity(Loc.GetString("instrument-component-finger-cramps-max-message"),
                         uid, mob, PopupType.LargeCaution);

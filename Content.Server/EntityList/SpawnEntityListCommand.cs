@@ -7,17 +7,17 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.EntityList
 {
     [AdminCommand(AdminFlags.Spawn)]
-    public sealed class SpawnEntityListCommand : LocalizedEntityCommands
+    public sealed class SpawnEntityListCommand : IConsoleCommand
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        public string Command => "spawnentitylist";
+        public string Description => "Spawns a list of entities around you";
+        public string Help => $"Usage: {Command} <entityListPrototypeId>";
 
-        public override string Command => "spawnentitylist";
-
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
-                shell.WriteError(Loc.GetString($"shell-need-exactly-one-argument"));
+                shell.WriteError($"Invalid arguments.\n{Help}");
                 return;
             }
 
@@ -33,23 +33,24 @@ namespace Content.Server.EntityList
                 return;
             }
 
-            if (!_prototypeManager.TryIndex(args[0], out EntityListPrototype? prototype))
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            if (!prototypeManager.TryIndex(args[0], out EntityListPrototype? prototype))
             {
-                shell.WriteError(Loc.GetString($"cmd-spawnentitylist-failed",
-                    ("prototype", nameof(EntityListPrototype)),
-                    ("id", args[0])));
+                shell.WriteError($"No {nameof(EntityListPrototype)} found with id {args[0]}");
                 return;
             }
 
+            var entityManager = IoCManager.Resolve<IEntityManager>();
             var i = 0;
 
-            foreach (var entity in prototype.GetEntities(_prototypeManager))
+            foreach (var entity in prototype.Entities(prototypeManager))
             {
-                EntityManager.SpawnEntity(entity.ID, EntityManager.GetComponent<TransformComponent>(attached).Coordinates);
+                entityManager.SpawnEntity(entity.ID, entityManager.GetComponent<TransformComponent>(attached).Coordinates);
                 i++;
             }
 
-            shell.WriteLine(Loc.GetString($"cmd-spawnentitylist-success", ("count", i)));
+            shell.WriteLine($"Spawned {i} entities.");
         }
     }
 }

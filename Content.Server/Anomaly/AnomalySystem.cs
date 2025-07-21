@@ -44,7 +44,8 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     public const float MinParticleVariation = 0.8f;
     public const float MaxParticleVariation = 1.2f;
 
-    private static readonly ProtoId<WeightedRandomPrototype> WeightListProto = "AnomalyBehaviorList";
+    [ValidatePrototypeId<WeightedRandomPrototype>]
+    const string WeightListProto = "AnomalyBehaviorList";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -188,7 +189,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     #region Behavior
     private string GetRandomBehavior()
     {
-        var weightList = _prototype.Index(WeightListProto);
+        var weightList = _prototype.Index<WeightedRandomPrototype>(WeightListProto);
         return weightList.Pick(_random);
     }
 

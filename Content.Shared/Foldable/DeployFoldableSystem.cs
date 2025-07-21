@@ -59,10 +59,6 @@ public sealed class DeployFoldableSystem : EntitySystem
         if (args.Handled || !args.CanReach)
             return;
 
-        // Don't do anything unless you clicked on the floor.
-        if (args.Target.HasValue)
-            return;
-
         if (!TryComp<FoldableComponent>(ent, out var foldable))
             return;
 
@@ -74,7 +70,7 @@ public sealed class DeployFoldableSystem : EntitySystem
         }
 
         if (!TryComp(args.User, out HandsComponent? hands)
-            || !_hands.TryDrop((args.User, hands), args.Used, targetDropLocation: args.ClickLocation))
+            || !_hands.TryDrop(args.User, args.Used, targetDropLocation: args.ClickLocation, handsComp: hands))
             return;
 
         if (!_foldable.TrySetFolded(ent, foldable, false))

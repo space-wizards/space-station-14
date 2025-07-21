@@ -1,13 +1,12 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Body.Systems;
-using Content.Server.Hands.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Content.Shared.Hands.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Body.Commands
 {
@@ -16,9 +15,10 @@ namespace Content.Server.Body.Commands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
-        private static readonly EntProtoId DefaultHandPrototype = "LeftHandHuman";
-        private static int _handIdAccumulator;
+        [ValidatePrototypeId<EntityPrototype>]
+        public const string DefaultHandPrototype = "LeftHandHuman";
 
         public string Command => "addhand";
         public string Description => "Adds a hand to your entity.";
@@ -115,17 +115,9 @@ namespace Content.Server.Body.Commands
 
             if (!_entManager.TryGetComponent(entity, out BodyComponent? body) || body.RootContainer.ContainedEntity == null)
             {
-                var location = _entManager.GetComponentOrNull<BodyPartComponent>(hand)?.Symmetry switch
-                {
-                    BodyPartSymmetry.None => HandLocation.Middle,
-                    BodyPartSymmetry.Left => HandLocation.Left,
-                    BodyPartSymmetry.Right => HandLocation.Right,
-                    _ => HandLocation.Right
-                };
-                _entManager.DeleteEntity(hand);
+                var text = $"You have no body{(_random.Prob(0.2f) ? " and you must scream." : ".")}";
 
-                // You have no body and you must scream.
-                _entManager.System<HandsSystem>().AddHand(entity, $"{hand}-cmd-{_handIdAccumulator++}", location);
+                shell.WriteLine(text);
                 return;
             }
 

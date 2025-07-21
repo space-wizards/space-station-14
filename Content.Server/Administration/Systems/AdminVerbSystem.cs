@@ -88,7 +88,7 @@ namespace Content.Server.Administration.Systems
 
         private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
-            if (!TryComp(args.User, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             var player = actor.PlayerSession;
@@ -395,7 +395,7 @@ namespace Content.Server.Administration.Systems
 
         private void AddDebugVerbs(GetVerbsEvent<Verb> args)
         {
-            if (!TryComp(args.User, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             var player = actor.PlayerSession;
@@ -408,7 +408,7 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("delete-verb-get-data-text"),
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
-                    Act = () => Del(args.Target),
+                    Act = () => EntityManager.DeleteEntity(args.Target),
                     Impact = LogImpact.Medium,
                     ConfirmationPopup = true
                 };
@@ -451,7 +451,7 @@ namespace Content.Server.Administration.Systems
             // Make Sentient verb
             if (_groupController.CanCommand(player, "makesentient") &&
                 args.User != args.Target &&
-                !HasComp<MindContainerComponent>(args.Target))
+                !EntityManager.HasComponent<MindContainerComponent>(args.Target))
             {
                 Verb verb = new()
                 {
@@ -517,7 +517,7 @@ namespace Content.Server.Administration.Systems
 
             // Get Disposal tube direction verb
             if (_groupController.CanCommand(player, "tubeconnections") &&
-                TryComp(args.Target, out DisposalTubeComponent? tube))
+                EntityManager.TryGetComponent(args.Target, out DisposalTubeComponent? tube))
             {
                 Verb verb = new()
                 {
@@ -544,7 +544,7 @@ namespace Content.Server.Administration.Systems
             }
 
             if (_groupController.CanAdminMenu(player) &&
-                TryComp(args.Target, out ConfigurationComponent? config))
+                EntityManager.TryGetComponent(args.Target, out ConfigurationComponent? config))
             {
                 Verb verb = new()
                 {
@@ -558,7 +558,7 @@ namespace Content.Server.Administration.Systems
 
             // Add verb to open Solution Editor
             if (_groupController.CanCommand(player, "addreagent") &&
-                HasComp<SolutionContainerManagerComponent>(args.Target))
+                EntityManager.HasComponent<SolutionContainerManagerComponent>(args.Target))
             {
                 Verb verb = new()
                 {

@@ -5,13 +5,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class RoleUnbanCommand : LocalizedCommands
+public sealed class RoleUnbanCommand : IConsoleCommand
 {
-    [Dependency] private readonly IBanManager _banManager = default!;
+    public string Command => "roleunban";
+    public string Description => Loc.GetString("cmd-roleunban-desc");
+    public string Help => Loc.GetString("cmd-roleunban-help");
 
-    public override string Command => "roleunban";
-
-    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
@@ -21,15 +21,16 @@ public sealed class RoleUnbanCommand : LocalizedCommands
 
         if (!int.TryParse(args[0], out var banId))
         {
-            shell.WriteLine(Loc.GetString($"cmd-roleunban-unable-to-parse-id", ("id", args[0]), ("help", Help)));
+            shell.WriteLine($"Unable to parse {args[0]} as a ban id integer.\n{Help}");
             return;
         }
 
-        var response = await _banManager.PardonRoleBan(banId, shell.Player?.UserId, DateTimeOffset.Now);
+        var banManager = IoCManager.Resolve<IBanManager>();
+        var response = await banManager.PardonRoleBan(banId, shell.Player?.UserId, DateTimeOffset.Now);
         shell.WriteLine(response);
     }
 
-    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         // Can't think of good way to do hint options for this
         return args.Length switch

@@ -195,6 +195,7 @@ public sealed class GeneratedParallaxCache : IPostInjectInit
         public required ResPath ConfigPath;
         public required Task<Texture> LoadTask;
         public required CancellationTokenSource CancellationSource;
+        public ValueList<CancellationTokenRegistration> CancelRegistrations;
 
         public int RefCount;
     }

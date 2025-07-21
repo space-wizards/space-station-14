@@ -35,7 +35,6 @@ namespace Content.Server.Revenant.EntitySystems;
 
 public sealed partial class RevenantSystem
 {
-    [Dependency] private readonly EmagSystem _emagSystem = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -346,7 +345,8 @@ public sealed partial class RevenantSystem
                 _whitelistSystem.IsBlacklistPass(component.MalfunctionBlacklist, ent))
                 continue;
 
-            _emagSystem.TryEmagEffect(uid, uid, ent);
+            var ev = new GotEmaggedEvent(uid, EmagType.Interaction | EmagType.Access);
+            RaiseLocalEvent(ent, ref ev);
         }
     }
 }

@@ -1,23 +1,44 @@
 using System.Text.RegularExpressions;
+using Content.Server.Chat;
 using Content.Server.Chat.Systems;
-using Content.Shared.Speech;
 
-namespace Content.Server.Speech;
-
-public sealed class AccentSystem : EntitySystem
+namespace Content.Server.Speech
 {
-    public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?‽])(?![\.!\?‽])", RegexOptions.Compiled);
-
-    public override void Initialize()
+    public sealed class AccentSystem : EntitySystem
     {
-        SubscribeLocalEvent<TransformSpeechEvent>(AccentHandler);
+        public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?‽])(?![\.!\?‽])", RegexOptions.Compiled);
+
+        public override void Initialize()
+        {
+            SubscribeLocalEvent<TransformSpeechEvent>(AccentHandler);
+        }
+
+        private void AccentHandler(TransformSpeechEvent args)
+        {
+            var accentEvent = new AccentGetEvent(args.Sender, args.Message);
+
+            RaiseLocalEvent(args.Sender, accentEvent, true);
+            args.Message = accentEvent.Message;
+        }
     }
 
-    private void AccentHandler(TransformSpeechEvent args)
+    public sealed class AccentGetEvent : EntityEventArgs
     {
-        var accentEvent = new AccentGetEvent(args.Sender, args.Message);
+        /// <summary>
+        ///     The entity to apply the accent to.
+        /// </summary>
+        public EntityUid Entity { get; }
 
-        RaiseLocalEvent(args.Sender, accentEvent, true);
-        args.Message = accentEvent.Message;
+        /// <summary>
+        ///     The message to apply the accent transformation to.
+        ///     Modify this to apply the accent.
+        /// </summary>
+        public string Message { get; set; }
+
+        public AccentGetEvent(EntityUid entity, string message)
+        {
+            Entity = entity;
+            Message = message;
+        }
     }
 }
