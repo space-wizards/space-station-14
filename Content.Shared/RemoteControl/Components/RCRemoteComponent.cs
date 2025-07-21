@@ -39,10 +39,13 @@ public sealed partial class RCRemoteComponent : Component
     [DataField, AutoNetworkedField]
     public LocId RemoteWipeVerb = "rc-remote-wipe-verb";
 
+    [DataField, AutoNetworkedField]
+    public RemoteControlConfiguration Config = new();
+
     /// <summary>
     /// Entity this device will start controlling.
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? BoundTo;
 }
 

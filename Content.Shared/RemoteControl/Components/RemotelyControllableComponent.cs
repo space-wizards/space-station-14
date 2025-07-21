@@ -26,24 +26,24 @@ public sealed partial class RemotelyControllableComponent : Component
     /// <summary>
     /// The ability used to return to the original body.
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ReturnActionEntity;
 
     /// <summary>
     /// Whether this entity is currently being controlled.
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool IsControlled;
 
     /// <summary>
     /// Which RCRemote this is currently bound to.
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? BoundRemote;
 
     /// <summary>
     /// Which entity is currently remotely controlling this entity.
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? Controller;
 }
