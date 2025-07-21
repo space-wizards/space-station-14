@@ -216,3 +216,103 @@
   storage:
     back: 
       - HandheldStationMap
+
+- type: loadout
+  id: YaharJar
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobCaptain
+        time: 72000 # 20 hours of being chased by nukies
+  storage:
+    back:
+      - BottleShip
+
+- type: loadout
+  id: PaperFolder1
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderRed
+
+- type: loadout
+  id: PaperFolder2
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderBlue
+
+- type: loadout
+  id: PaperFolder3
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderYellow
+
+- type: loadout
+  id: PaperFolder4
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderWhite
+
+- type: loadout
+  id: PaperFolder5
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderGrey
+
+- type: loadout
+  id: PaperFolder6
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderBlack
+
+- type: loadout
+  id: PaperFolder7
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderGreen
+
+- type: loadout
+  id: PaperClipboard
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderClipboard

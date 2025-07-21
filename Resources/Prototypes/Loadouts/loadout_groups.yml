@@ -74,7 +74,15 @@
   - MedChecker #SL
   - ChanceSack #SL
   - StationMap #SL
-  - 
+  - YaharJar #SL
+  - PaperFolder1 #SL
+  - PaperFolder2 #SL
+  - PaperFolder3 #SL
+  - PaperFolder4 #SL
+  - PaperFolder5 #SL
+  - PaperFolder6 #SL
+  - PaperFolder7 #SL
+  - PaperClipboard #SL
 
 - type: loadoutGroup
   id: Glasses
