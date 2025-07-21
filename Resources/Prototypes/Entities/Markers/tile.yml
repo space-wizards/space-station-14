@@ -6,6 +6,7 @@
   components:
   - type: SetRoof
     value: true
+    blockWeather: true
   - type: Sprite
     layers:
     - state: green
@@ -19,7 +20,36 @@
   components:
   - type: SetRoof
     value: false
+    blockWeather: false
   - type: Sprite
     layers:
     - state: red
+      shader: unshaded
+
+- type: entity
+  id: NoRoofMarkerBlockWeather
+  name: Roof
+  suffix: Disabled, Blocks weather
+  parent: MarkerBase
+  components:
+  - type: SetRoof
+    value: false
+    blockWeather: true
+  - type: Sprite
+    layers:
+    - state: red
+      shader: unshaded
+
+- type: entity
+  id: RoofMarkerIgnoreWeather
+  name: Roof
+  suffix: Enabled, Ignores weather
+  parent: MarkerBase
+  components:
+  - type: SetRoof
+    value: true
+    blockWeather: false
+  - type: Sprite
+    layers:
+    - state: green
       shader: unshaded
