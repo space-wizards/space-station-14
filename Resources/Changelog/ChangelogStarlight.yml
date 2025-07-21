@@ -9631,5 +9631,12 @@ Entries:
   id: 1326
   time: '2025-07-21T23:24:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/778
+- author: Grapegifter
+  changes:
+  - message: Metashield entry to guidebook
+    type: Add
+  id: 1327
+  time: '2025-07-21T23:51:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/889
 Order: -1
 
