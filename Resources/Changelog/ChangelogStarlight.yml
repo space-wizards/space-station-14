@@ -9580,5 +9580,20 @@ Entries:
   id: 1319
   time: '2025-07-21T21:24:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1059
+- author: Dimyell
+  changes:
+  - message: Blueshield no longer spawns an additional armour vest when arriving to
+      the station.
+    type: Add
+  id: 1320
+  time: '2025-07-21T21:26:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1052
+- author: Dimyell
+  changes:
+  - message: Voxes Blueshield Overcoat is now sprited correctly. Sorry Jack.
+    type: Add
+  id: 1321
+  time: '2025-07-21T21:26:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1052
 Order: -1
 
