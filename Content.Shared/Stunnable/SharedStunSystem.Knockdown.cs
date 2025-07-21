@@ -4,7 +4,6 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Movement.Events;
@@ -52,14 +51,12 @@ public abstract partial class SharedStunSystem
 
         // Action blockers
         SubscribeLocalEvent<KnockedDownComponent, BuckleAttemptEvent>(OnBuckleAttempt);
-        SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandUpAttempt);
+        SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandAttempt);
 
         // Updating movement a friction
         SubscribeLocalEvent<KnockedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshKnockedSpeed);
         SubscribeLocalEvent<KnockedDownComponent, RefreshFrictionModifiersEvent>(OnRefreshFriction);
         SubscribeLocalEvent<KnockedDownComponent, TileFrictionEvent>(OnKnockedTileFriction);
-        SubscribeLocalEvent<KnockedDownComponent, DidEquipHandEvent>(OnHandEquipped);
-        SubscribeLocalEvent<KnockedDownComponent, DidUnequipHandEvent>(OnHandUnequipped);
 
         // DoAfter event subscriptions
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
@@ -463,7 +460,7 @@ public abstract partial class SharedStunSystem
 
     #region Action Blockers
 
-    private void OnStandUpAttempt(Entity<KnockedDownComponent> entity, ref StandAttemptEvent args)
+    private void OnStandAttempt(Entity<KnockedDownComponent> entity, ref StandAttemptEvent args)
     {
         if (entity.Comp.LifeStage <= ComponentLifeStage.Running)
             args.Cancel();
@@ -524,16 +521,6 @@ public abstract partial class SharedStunSystem
     {
         args.ModifyFriction(entity.Comp.FrictionModifier);
         args.ModifyAcceleration(entity.Comp.FrictionModifier);
-    }
-
-    private void OnHandEquipped(Entity<KnockedDownComponent> entity, ref DidEquipHandEvent args)
-    {
-        RefreshKnockedMovement(entity);
-    }
-
-    private void OnHandUnequipped(Entity<KnockedDownComponent> entity, ref DidUnequipHandEvent args)
-    {
-        RefreshKnockedMovement(entity);
     }
 
     #endregion
