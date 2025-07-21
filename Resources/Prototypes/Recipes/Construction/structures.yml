@@ -576,9 +576,8 @@
   canRotate: false
 
 - type: construction
-  name: diagonal uranium window
-  id: UraniumWindowDiagonal
   name: construction-recipe-uranium-window-diagonal
+  id: UraniumWindowDiagonal
   graph: WindowDiagonal
   startNode: start
   targetNode: uraniumWindowDiagonal
