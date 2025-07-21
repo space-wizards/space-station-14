@@ -3,7 +3,7 @@
   id: Trinkets
   name: loadout-group-trinkets
   minLimit: 0
-  maxLimit: 3
+  maxLimit: 4
   loadouts:
   - FlowerWreath
   - Hairflower
@@ -64,6 +64,17 @@
   - FancyPen #SL
   - HonkImplant #SL
   - TromboneImplant #SL
+  - NewtonsCradle #SL
+  - POrb #SL
+  - BBall #SL
+  - RubberQuack #SL
+  - GatchaBox #SL
+  - WristWatch #SL
+  - ZippoLighter #SL
+  - MedChecker #SL
+  - ChanceSack #SL
+  - StationMap #SL
+  - 
 
 - type: loadoutGroup
   id: Glasses

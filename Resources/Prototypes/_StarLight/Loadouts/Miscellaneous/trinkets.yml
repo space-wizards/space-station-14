@@ -86,11 +86,6 @@
 
 - type: loadout
   id: Matchbox
-  effects:
-    - !type:JobRequirementLoadoutEffect
-      requirement:
-        !type:OverallPlaytimeRequirement
-        time: 36000 # 10hr
   storage:
     back:
       - Matchbox
@@ -98,8 +93,11 @@
 - type: loadout
   id: FancyPen
   effects:
-    - !type:GroupLoadoutEffect
-      proto: JamjarTimer
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobLibrarian
+        time: 3600 # 1 hour of reading books (a fate worse than death)
   storage:
     back: LuxuryPen
     
@@ -127,3 +125,94 @@
     back:
       - SadTromboneImplanter
 
+- type: loadout
+  id: NewtonsCradle
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobHeadOfPersonnel
+        time: 36000 # 10 hours of papers please
+  equipment:
+    back: NewtonCradle
+  
+- type: loadout
+  id: POrb
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - PonderingOrb
+
+- type: loadout
+  id: BBall
+  storage:
+    back:
+      - Basketball
+
+- type: loadout
+  id: RubberQuack
+  storage:
+    back:
+      - ToyRubberDuck
+  
+- type: loadout
+  id: GatchaBox
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - MysteryFigureBox
+
+- type: loadout
+  id: WristWatch
+  storage:
+    back:
+      - Wristwatch
+
+- type: loadout
+  id: ZippoLighter
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
+  storage:
+    back:
+      - FlippoLighter
+
+- type: loadout
+  id: MedChecker
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+      !type:DepartmentTimeRequirement
+      department: Medical
+      time: 72000 # 20hrs of treating patients as Dr. House
+  storage:
+    back:
+      - HandheldHealthAnalyzer
+
+- type: loadout
+  id: ChanceSack
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobLibrarian
+        time: 3600 # 1 hour of reading books (a fate worse than death)
+  storage:
+    back: 
+      - DiceBag
+
+- type: loadout
+  id: StationMap
+  storage:
+    back: 
+      - HandheldStationMap
