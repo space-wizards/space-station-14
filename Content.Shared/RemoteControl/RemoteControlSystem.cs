@@ -65,7 +65,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
         if (TryComp<RemoteControllerComponent>(ent.Comp.Controller, out var controller))
         {
             controller.Controlled = null;
-            DirtyField(ent.Comp.Controller.Value, controller, nameof(RemoteControllerComponent.Controlled));
+            Dirty(ent.Comp.Controller.Value, controller);
         }
         if (TryComp<RCRemoteComponent>(ent.Comp.BoundRemote, out var remote))
         {
