@@ -25,6 +25,8 @@ namespace Content.Shared.Stunnable;
 
 public abstract partial class SharedStunSystem : EntitySystem
 {
+    private EntityQuery<CrawlerComponent> _crawlerQuery;
+
     [Dependency] protected readonly ActionBlockerSystem Blocker = default!;
     [Dependency] protected readonly AlertsSystem Alerts = default!;
     [Dependency] protected readonly IGameTiming GameTiming = default!;
@@ -39,6 +41,7 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     public override void Initialize()
     {
+        _crawlerQuery = GetEntityQuery<CrawlerComponent>();
 
         SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
         SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
@@ -124,7 +127,7 @@ public abstract partial class SharedStunSystem : EntitySystem
             return;
 
         TryStun(args.OtherEntity, ent.Comp.Duration, true, status);
-        TryKnockdown(args.OtherEntity, ent.Comp.Duration, ent.Comp.Refresh, ent.Comp.AutoStand, force: true);
+        TryKnockdown(args.OtherEntity, ent.Comp.Duration, ent.Comp.Refresh, ent.Comp.AutoStand);
     }
 
     private void OnSlowInit(EntityUid uid, SlowedDownComponent component, ComponentInit args)
@@ -170,8 +173,7 @@ public abstract partial class SharedStunSystem : EntitySystem
     /// <param name="refresh">Whether we should refresh a running timer or add to it, if one exists.</param>
     /// <param name="autoStand">Whether we want to automatically stand when knockdown ends.</param>
     /// <param name="drop">Whether we should drop items.</param>
-    /// <param name="force">Are we being forced to be knocked down?</param>
-    public bool TryKnockdown(Entity<StandingStateComponent?> entity, TimeSpan time, bool refresh, bool autoStand = true, bool drop = true, bool force = false)
+    public bool TryKnockdown(Entity<StandingStateComponent?> entity, TimeSpan time, bool refresh, bool autoStand = true, bool drop = true)
     {
         if (time <= TimeSpan.Zero)
             return false;
@@ -180,20 +182,16 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp, false))
             return false;
 
-        if (!force)
-        {
-            if (!entity.Comp.AllowCrawling)
-                return false;
+        var evAttempt = new KnockDownAttemptEvent(autoStand, drop);
+        RaiseLocalEvent(entity, ref evAttempt);
 
-            var evAttempt = new KnockDownAttemptEvent(autoStand, drop);
-            RaiseLocalEvent(entity, ref evAttempt);
+        if (evAttempt.Cancelled)
+            return false;
 
-            if (evAttempt.Cancelled)
-                return false;
-
-            autoStand = evAttempt.AutoStand;
-            drop = evAttempt.Drop;
-        }
+        // If they can't crawl, and they can't be stunned then we can't knock them down so just don't bother.
+        // Otherwise bad things can happen...
+        if (!_crawlerQuery.TryGetComponent(entity, out var crawler))
+            return TryParalyze(entity, time, refresh);
 
         // Initialize our component with the relevant data we need if we don't have it
         if (EnsureComp<KnockedDownComponent>(entity, out var component))
@@ -203,15 +201,15 @@ public abstract partial class SharedStunSystem : EntitySystem
         }
         else
         {
-            // Only drop items the first time we want to fall...
-            if (drop)
-            {
-                var ev = new DropHandItemsEvent();
-                RaiseLocalEvent(entity, ref ev);
-            }
-
             // Only update Autostand value if it's our first time being knocked down...
-            SetAutoStand((entity, component), autoStand);
+            SetAutoStand((entity, component), evAttempt.AutoStand);
+        }
+
+        // Only drop items the first time we want to fall...
+        if (evAttempt.Drop)
+        {
+            var ev = new DropHandItemsEvent();
+            RaiseLocalEvent(entity, ref ev);
         }
 
         var knockedEv = new KnockedDownEvent(time);
@@ -226,16 +224,25 @@ public abstract partial class SharedStunSystem : EntitySystem
         return true;
     }
 
+    private void Knockdown(EntityUid entity, TimeSpan time, bool refresh)
+    {
+
+    }
+
     /// <summary>
     ///     Applies knockdown and stun to the entity temporarily.
     /// </summary>
-    public bool TryParalyze(EntityUid uid, TimeSpan time, bool refresh,
-        StatusEffectsComponent? status = null)
+    [Obsolete]
+    public bool TryParalyze(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null)
     {
         if (!Resolve(uid, ref status, false))
             return false;
 
-        return TryKnockdown(uid, time, refresh, force: true) && TryStun(uid, time, refresh, status);
+        if (!TryStun(uid, time, refresh, status))
+            return false;
+
+
+        return true;
     }
 
     /// <summary>
