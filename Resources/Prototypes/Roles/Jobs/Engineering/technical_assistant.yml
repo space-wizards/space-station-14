@@ -10,6 +10,7 @@
       department: Engineering
       time: 18000 #5 hrs
       inverted: true # stop playing intern if you're good at engineering!
+  weight: -1 #Starlight
   startingGear: TechnicalAssistantGear
   icon: "JobIconTechnicalAssistant"
   supervisors: job-supervisors-engineering
