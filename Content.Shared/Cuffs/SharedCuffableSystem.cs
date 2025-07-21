@@ -368,9 +368,6 @@ namespace Content.Shared.Cuffs
                     _adminLog.Add(LogType.Action, LogImpact.High,
                         $"{ToPrettyString(user):player} has cuffed {ToPrettyString(target):player}");
                 }
-
-                if (!MathHelper.CloseTo(component.MovementMod, 1f))
-                    _move.RefreshMovementSpeedModifiers(target);
             }
             else
             {
@@ -740,9 +737,6 @@ namespace Content.Shared.Cuffs
                 RaiseLocalEvent(target, ref eventArgs);
                 shoved = true;
             }
-
-            if (!MathHelper.CloseTo(cuff.MovementMod, 1f))
-                _move.RefreshMovementSpeedModifiers(target);
 
             if (cuffable.CuffedHandCount == 0)
             {
