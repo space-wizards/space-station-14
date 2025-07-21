@@ -1,6 +1,6 @@
 - type: entity
   parent: [ BaseMob, MobFlammable ]
-  id: MouseRC
+  id: MobRemoteMouse
   name: mouse
   description: Squeak!
   suffix: RC
@@ -192,8 +192,8 @@
 
 
 - type: entity
-  parent: MouseRC
-  id: MouseRCUplinkFilled
+  parent: MobRemoteMouse
+  id: MobRemoteMouseUplinkFilled
   suffix: RC, Filled
   components:
   - type: StorageFill

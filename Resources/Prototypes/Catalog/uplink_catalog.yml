@@ -2237,7 +2237,7 @@
   id: UplinkRCMouse
   name: uplink-rcmouse-name
   description: uplink-rcmouse-desc
-  productEntity: MouseRCUplinkFilled
+  productEntity: MobRemoteMouseUplinkFilled
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 3
@@ -2255,7 +2255,7 @@
   id: UplinkNukieRCMouse
   name: uplink-rcmouse-name
   description: uplink-rcmouse-desc
-  productEntity: MouseRCUplinkFilled
+  productEntity: MobRemoteMouseUplinkFilled
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 4
