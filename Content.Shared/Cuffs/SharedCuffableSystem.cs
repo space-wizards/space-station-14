@@ -437,7 +437,7 @@ namespace Content.Shared.Cuffs
         /// </summary>
         private void OnCuffableStandupArgs(Entity<CuffableComponent> ent, ref GetStandUpTimeEvent time)
         {
-            if (!HasComp<KnockedDownComponent>(ent) || !IsCuffed(ent))
+            if (ent.Comp.Container.ContainedEntities.Count == 0)
                 return;
 
             var cuffs = GetAllCuffs(ent.Comp);
@@ -460,6 +460,9 @@ namespace Content.Shared.Cuffs
 
         private void OnCuffableKnockdownRefresh(Entity<CuffableComponent> ent, ref KnockedDownRefreshEvent args)
         {
+            if (ent.Comp.Container.ContainedEntities.Count == 0)
+                return;
+
             var cuffs = GetAllCuffs(ent.Comp);
             var mod = 1f;
 
@@ -480,6 +483,9 @@ namespace Content.Shared.Cuffs
 
         private void OnRefreshMovementSpeedModifiers(Entity<CuffableComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
         {
+            if (ent.Comp.Container.ContainedEntities.Count == 0)
+                return;
+
             var cuffs = GetAllCuffs(ent.Comp);
             var mod = 1f;
 
