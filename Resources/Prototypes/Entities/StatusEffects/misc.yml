@@ -45,7 +45,7 @@
 
 # The creature sleeps so heavily that nothing can wake him up. Not even its own death.
 - type: entity
-  parent: MobStatusEffectBase
+  parent: MobStatusEffectDebuff
   id: StatusEffectForcedSleeping
   name: forced sleep
   components:
