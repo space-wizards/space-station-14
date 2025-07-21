@@ -12,6 +12,12 @@ public sealed partial class RemoteControllerComponent : Component
     /// <summary>
     /// Which entity is currently being remotely controlled.
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public EntityUid? Controlled = null;
+    [DataField, AutoNetworkedField]
+    public EntityUid? Controlled;
+
+    /// <summary>
+    /// The remote control configuration to use during remote control.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public RemoteControlConfiguration? Config;
 }

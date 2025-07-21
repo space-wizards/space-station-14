@@ -21,13 +21,6 @@ public sealed partial class RemoteControlConfiguration
     public bool BreakOnDropController = true;
 
     /// <summary>
-    /// The range limit of remote control.
-    /// After this range is left, the user will be notified and given a short amount of time to enter back in range.
-    /// </summary>
-    [DataField]
-    public int RangeLimit = 30;
-
-    /// <summary>
     /// Whether the user will get notified when their body takes damage.
     /// </summary>
     [DataField]

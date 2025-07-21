@@ -7,9 +7,11 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.RemoteControl.Components;
 using Content.Shared.Verbs;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.RemoteControl;
 
@@ -18,9 +20,11 @@ namespace Content.Shared.RemoteControl;
 /// </summary>
 public sealed partial class RemoteControlSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly MobStateSystem _mob = default!;
 
     public override void Initialize()
     {
@@ -53,6 +57,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
     private void OnControllableInit(Entity<RemotelyControllableComponent> ent, ref MapInitEvent args)
     {
         _actions.AddAction(ent.Owner, ref ent.Comp.ReturnActionEntity, ent.Comp.ReturnActionPrototype);
+        ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
     }
 
     private void OnControllableShutdown(Entity<RemotelyControllableComponent> ent, ref ComponentShutdown args)
@@ -125,9 +130,12 @@ public sealed partial class RemoteControlSystem : EntitySystem
         }
 
         if (!TryComp<RemotelyControllableComponent>(ent.Comp.BoundTo, out var controllable))
+        {
+            _popup.PopupClient(Loc.GetString(ent.Comp.RemoteFailPopup), args.User, args.User, PopupType.Medium);
             return;
+        }
 
-        if (!TryComp<MobStateComponent>(ent.Comp.BoundTo, out var mobState) || mobState.CurrentState != MobState.Alive)
+        if (!HasComp<MobStateComponent>(ent.Comp.BoundTo) || !_mob.IsAlive(ent.Comp.BoundTo.Value))
         {
             _popup.PopupClient(Loc.GetString(ent.Comp.RemoteFailPopup), args.User, args.User, PopupType.Medium);
             return;
@@ -135,7 +143,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
 
         Dirty(ent, ent.Comp);
 
-        TryRemoteControl((ent.Comp.BoundTo.Value, controllable), args.User);
+        TryRemoteControl((ent.Comp.BoundTo.Value, controllable), args.User, ent.Comp.Config);
 
         args.Handled = true;
     }
@@ -158,6 +166,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
 
         remoteComp.Controller = null;
         remoteComp.IsControlled = false;
+        remoteComp.CurrentRcConfig = null;
         RemCompDeferred<RemoteControllerComponent>(ent);
 
         Dirty(ent.Comp.Controlled.Value, remoteComp);
@@ -168,8 +177,9 @@ public sealed partial class RemoteControlSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The entity that will be remotely controlled.</param>
     /// <param name="controller">UID of the entity that is to take control of the other.</param>
+    /// /// <param name="config">RemoteControlConfiguration to use. If null, default will be used.</param>
     /// <returns>True If control was given to the controller, otherwise False.</returns>
-    public bool TryRemoteControl(Entity<RemotelyControllableComponent> ent, EntityUid controller)
+    public bool TryRemoteControl(Entity<RemotelyControllableComponent> ent, EntityUid controller, RemoteControlConfiguration? config = null)
     {
         if (ent.Comp.IsControlled)
             return false;
@@ -185,6 +195,12 @@ public sealed partial class RemoteControlSystem : EntitySystem
 
         ent.Comp.Controller = controller;
         ent.Comp.IsControlled = true;
+
+        // If a config is given, use that
+        // Otherwise, use the default
+        var providedConfig = config ?? new RemoteControlConfiguration();
+        ent.Comp.CurrentRcConfig = providedConfig;
+        remoteController.Config = providedConfig;
 
         if (_mind.TryGetMind(controller, out var mindId, out var mind))
             _mind.Visit(mindId, ent.Owner, mind);
@@ -212,6 +228,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
 
         remoteControl.Controller = null;
         remoteControl.IsControlled = false;
+        remoteControl.CurrentRcConfig = null;
 
         _mind.UnVisit(mindId, mind);
 
@@ -224,6 +241,4 @@ public sealed partial class RemoteControlSystem : EntitySystem
 /// <summary>
 /// Raised on the entity when using the Return To Body action granted by RemotelyControllableComponent.
 /// </summary>
-public sealed partial class RemoteControlReturnToBodyEvent : InstantActionEvent
-{
-}
+public sealed partial class RemoteControlReturnToBodyEvent : InstantActionEvent;
