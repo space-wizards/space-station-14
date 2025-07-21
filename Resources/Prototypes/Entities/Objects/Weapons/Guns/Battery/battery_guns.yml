@@ -10,7 +10,7 @@
     - abductor-gun-restricted-1
   - type: Sprite
   - type: Item
-    size: Huge
+    size: Large # Starlight
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     quickEquip: false
@@ -259,8 +259,8 @@
     - SemiAuto
     - FullAuto #Just allows people to hold down left click
   - type: Battery 
-    maxCharge: 3000 # ~2:30 minutes for recharge
-    startingCharge: 3000
+    maxCharge: 1500 # ~1:30 minutes for recharge
+    startingCharge: 1500
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
     fireCost: 30 #Starlight - End

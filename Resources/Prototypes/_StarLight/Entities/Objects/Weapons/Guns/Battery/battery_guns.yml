@@ -360,8 +360,8 @@
     - SemiAuto
     - FullAuto #Just allows people to hold down left click
   - type: Battery 
-    maxCharge: 3000 # ~2:30 minutes for recharge
-    startingCharge: 3000
+    maxCharge: 1500 # ~2:30 minutes for recharge
+    startingCharge: 1500
   - type: HitscanBatteryAmmoProvider
     proto: IgnitionRedLaser
     fireCost: 30
@@ -577,7 +577,7 @@
     slots:
     - Back
   - type: Gun
-    fireRate: 0.1
+    fireRate: 0.5
   - type: HitscanBatteryAmmoProvider
     proto: SniperBolt
     fireCost: 100
