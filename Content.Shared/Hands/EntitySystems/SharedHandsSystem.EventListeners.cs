@@ -10,9 +10,9 @@ public abstract partial class SharedHandsSystem
 {
     // TODO: Both of these values should be based on an entity's size or something.
     // Mininum weight for modifiers
-    private static readonly int MinWeight = 2;
+    private static readonly int MinWeight = 0;
     // Maximum adjusted weight (so weight minus minweight) for maximum penalty
-    private static readonly float MaxAdjustedWeight = 16f;
+    private static readonly float MaxAdjustedWeight = 64f;
     private void InitializeEventListeners()
     {
         SubscribeLocalEvent<HandsComponent, GetStandUpTimeEvent>(OnGetStandUpTime);
