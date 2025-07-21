@@ -9537,5 +9537,19 @@ Entries:
   id: 1313
   time: '2025-07-21T22:23:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1067
+- author: RoadTrain
+  changes:
+  - message: 2 new lines for Vanilla's plushie
+    type: Add
+  id: 1314
+  time: '2025-07-21T21:07:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1063
+- author: RoadTrain
+  changes:
+  - message: Amali's plushie now uses feminine sounds for interactions etc.
+    type: Fix
+  id: 1315
+  time: '2025-07-21T21:07:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1063
 Order: -1
 
