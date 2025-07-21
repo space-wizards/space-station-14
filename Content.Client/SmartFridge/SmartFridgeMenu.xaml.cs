@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.SmartFridge;
@@ -65,7 +66,7 @@ public sealed partial class SmartFridgeMenu : FancyWindow
             }
             else
             {
-                var representative = _entityManager.GetEntity(items[0]);
+                var representative = _entityManager.GetEntity(items.First());
                 listData.Add(new SmartFridgeListData(representative, item, items.Count));
             }
         }
