@@ -75,6 +75,10 @@
         weight: 0.79
       - id: MobMothroach
         weight: 0.21
+      - id: MobMothroach
+        weight: 0.008
+      - id: MobMoproach
+        weight: 0.004
 
 - type: entity
   id: SnailMigrationLowPop

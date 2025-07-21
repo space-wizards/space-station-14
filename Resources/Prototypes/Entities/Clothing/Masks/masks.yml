@@ -325,6 +325,9 @@
   - type: IngestionBlocker
   - type: AddAccentClothing
     accent: MumbleAccent
+  - type: EmoteBlocker
+    blocksCategories:
+    - Vocal
   - type: Construction
     graph: Muzzle
     node: muzzle
