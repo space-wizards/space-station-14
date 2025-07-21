@@ -15,4 +15,10 @@ public sealed partial class StationAIShuntableComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId<ActionComponent> UnshuntAction = "ActionAIUnShunt";
+
+    /// <summary>
+    /// What body is this AI currently inhabiting, null if the AI is in it's core.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? Inhabited = null;
 }

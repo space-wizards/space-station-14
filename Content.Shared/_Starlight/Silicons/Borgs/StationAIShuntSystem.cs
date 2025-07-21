@@ -39,7 +39,7 @@ public sealed class StationAIShuntSystem : EntitySystem
             if (!brain.HasValue)
                 return; //Chassis has no posibrian so cant shunt into it.
             if (!TryComp<StationAIShuntComponent>(brain, out var brainShunt))
-                return; //Chassis brain is not able to be shunted into so obvs cant.
+                return; //Chassis brain is not able to be shunted into so obviously we cant.
             brainShunt.Return = uid;
             brainShunt.ReturnAction = _actionSystem.AddAction(brain.Value, shuntable.UnshuntAction.Id);
         }
@@ -47,6 +47,8 @@ public sealed class StationAIShuntSystem : EntitySystem
         shunt.Return = uid;
         _mindSystem.TransferTo(mindId, target);
         shunt.ReturnAction = _actionSystem.AddAction(target, shuntable.UnshuntAction.Id);
+        shuntable.Inhabited = target;
+        
         ev.Handled = true;
     }
 
@@ -61,6 +63,9 @@ public sealed class StationAIShuntSystem : EntitySystem
         if (!TryComp<ActionComponent>(shunt.ReturnAction, out var act))
             return; //Somehow the action does not have action component? invalid perhaps?
 
+        if (!TryComp<StationAIShuntableComponent>(shunt.Return, out var shuntable))
+            return; //trying to return to a body you cant leave from? weird...
+        
         if (TryComp<BorgChassisComponent>(uid, out var chassisComp))
         {
             var brain = chassisComp.BrainContainer.ContainedEntity;
@@ -74,11 +79,12 @@ public sealed class StationAIShuntSystem : EntitySystem
             brainShunt.Return = null; //cause we are returning now
             brainShunt.ReturnAction = null;
         }
-
+        
         _actionSystem.RemoveAction(new Entity<ActionComponent?>(shunt.ReturnAction.Value, act));
         _mindSystem.TransferTo(mindId, shunt.Return);
         shunt.ReturnAction = null;
         shunt.Return = null;
+        shuntable.Inhabited = null;
     }
 }
 

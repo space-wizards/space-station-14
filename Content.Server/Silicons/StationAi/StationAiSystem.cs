@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
+using Content.Shared._Starlight.Silicons.Borgs; //Starlight
 using Content.Shared.Chat;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
@@ -89,6 +90,13 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
     public override void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null)
     {
+        //#region Starlight
+        // basically if the AI is AWOL off in a borg body. it should send it out to their active body
+        if (TryComp<StationAIShuntableComponent>(uid, out var shuntable))
+            if (shuntable.Inhabited.HasValue)
+                uid = shuntable.Inhabited.Value;
+        //#endregion
+        
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 

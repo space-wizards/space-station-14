@@ -6,6 +6,8 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
+using Content.Shared._Starlight.Silicons.Borgs;
+using Content.Shared.Actions.Components;
 using Content.Shared.Alert;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
@@ -165,7 +167,20 @@ public sealed partial class BorgSystem : SharedBorgSystem
         base.OnInserted(uid, component, args);
 
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind) && args.Container == component.BrainContainer)
-        {            
+        {
+            //#region Starlight
+            //re-target the station-AI's shunt target to the chassis insteaf of the brain
+            if (TryComp<StationAIShuntComponent>(args.Entity, out var shunt))
+                if (TryComp<StationAIShuntableComponent>(shunt.Return, out var shuntable))
+                {
+                    shuntable.Inhabited = uid;
+                    if (EnsureComp<StationAIShuntComponent>(uid, out var borgShunt)) //cause I really dont want this to fail it is a ensure
+                    {
+                        borgShunt.Return = shunt.Return;
+                        borgShunt.ReturnAction = _actions.AddAction(uid, shuntable.UnshuntAction);
+                    }
+                }
+            //#endregion Starlight
             _mind.TransferTo(mindId, uid, mind: mind);
         }
     }
@@ -176,6 +191,21 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(uid, out var mindId, out var mind) && args.Container == component.BrainContainer)
         {
+            //#region Starlight
+            //re-target the station-AI's shunt target to the brain instead of the borg. so it doesn't get lost.
+            if (TryComp<StationAIShuntComponent>(args.Entity, out var shunt))
+                if (TryComp<StationAIShuntableComponent>(shunt.Return, out var shuntable))
+                {
+                    shuntable.Inhabited = args.Entity;
+                    if (TryComp<StationAIShuntComponent>(uid, out var borgShunt))
+                    {
+                        if (TryComp<ActionComponent>(borgShunt.ReturnAction, out var action))
+                            _actions.RemoveAction((borgShunt.ReturnAction.Value, action)); //delete the action as we leave the body
+                        borgShunt.Return = null;
+                        borgShunt.ReturnAction = null;
+                    }
+                }
+            //#endregion
             _mind.TransferTo(mindId, args.Entity, mind: mind);
         }
     }
