@@ -7,7 +7,7 @@
     - !type:DepartmentTimeRequirement
       department: Engineering
       time: 54000 # 15 hrs
-  weight: -1
+  weight: 0 # Starlight
   startingGear: AtmosphericTechnicianGear
   icon: "JobIconAtmosphericTechnician"
   supervisors: job-supervisors-ce
