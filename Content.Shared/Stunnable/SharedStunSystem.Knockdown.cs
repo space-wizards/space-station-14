@@ -4,6 +4,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Movement.Events;
@@ -60,6 +61,7 @@ public abstract partial class SharedStunSystem
         // Crawling
         SubscribeLocalEvent<CrawlerComponent, KnockedDownRefreshEvent>(OnKnockdownRefresh);
         SubscribeLocalEvent<CrawlerComponent, DamageChangedEvent>(OnDamaged);
+        SubscribeLocalEvent<HandsComponent, GetStandUpTimeEvent>(OnHandsStandUpTime);
 
         // Handling Alternative Inputs
         SubscribeAllEvent<ForceStandUpEvent>(OnForceStandup);
@@ -395,23 +397,23 @@ public abstract partial class SharedStunSystem
         args.Handled = true;
     }
 
-    private bool TryForceStand(Entity<StaminaComponent?> entity)
+    private bool TryForceStand(Entity<CrawlerComponent?, StaminaComponent?> entity)
     {
-        // Can't force stand if no Stamina.
-        if (!Resolve(entity, ref entity.Comp, false))
+        // Can't force stand if no Stamina, and can't force stand if not a crawler.
+        if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
             return false;
 
-        var ev = new TryForceStandEvent(entity.Comp.ForceStandStamina);
+        var ev = new TryForceStandEvent(entity.Comp1.ForceStandStamina);
         RaiseLocalEvent(entity, ref ev);
 
-        if (!Stamina.TryTakeStamina(entity, ev.Stamina, entity.Comp, visual: true))
+        if (!Stamina.TryTakeStamina(entity, ev.Stamina, entity.Comp2, visual: true))
         {
             _popup.PopupClient(Loc.GetString("knockdown-component-pushup-failure"), entity, entity, PopupType.MediumCaution);
             return false;
         }
 
         _popup.PopupClient(Loc.GetString("knockdown-component-pushup-success"), entity, entity);
-        _audio.PlayPredicted(entity.Comp.ForceStandSuccessSound, entity.Owner, entity.Owner, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
+        _audio.PlayPredicted(entity.Comp1.ForceStandSuccessSound, entity.Owner, entity.Owner, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
 
         return true;
     }
@@ -480,6 +482,22 @@ public abstract partial class SharedStunSystem
     {
         args.FrictionModifier *= entity.Comp.FrictionModifier;
         args.SpeedModifier *= entity.Comp.SpeedModifier;
+    }
+
+    /// <summary>
+    /// Reduces the time it takes to stand up based on the number of hands we have available.
+    /// </summary>
+    private void OnHandsStandUpTime(Entity<HandsComponent> ent, ref GetStandUpTimeEvent time)
+    {
+        if (!HasComp<KnockedDownComponent>(ent))
+            return;
+
+        var hands = _hands.GetEmptyHandCount(ent.Owner);
+
+        if (hands == 0)
+            return;
+
+        time.DoAfterTime *= (float)ent.Comp.Count / (hands + ent.Comp.Count);
     }
 
     #endregion
