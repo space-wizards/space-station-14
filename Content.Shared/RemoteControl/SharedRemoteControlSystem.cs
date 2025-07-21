@@ -10,7 +10,6 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.RemoteControl.Components;
-using Content.Shared.SSDIndicator;
 using Content.Shared.Verbs;
 
 namespace Content.Shared.RemoteControl;
@@ -18,7 +17,7 @@ namespace Content.Shared.RemoteControl;
 /// <summary>
 /// System used for managing remote control: Granting temporary control of entities to other entities.
 /// </summary>
-public abstract class SharedRemoteControlSystem : EntitySystem
+public sealed class RemoteControlSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;

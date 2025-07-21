@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Body.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Item;
@@ -14,7 +15,7 @@ namespace Content.Shared.SpittableContainer;
 /// Manages SpittableContainerComponent.
 /// Allows entities to swallow and spit items using a provided container with a granted action.
 /// </summary>
-public abstract class SharedSpittableContainerSystem : EntitySystem
+public sealed class SharedSpittableContainerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -33,6 +34,7 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
         SubscribeLocalEvent<SpittableContainerComponent, SwallowDoAfterEvent>(OnSwallowDoAfter);
         SubscribeLocalEvent<SpittableContainerComponent, SpitFromContainerActionEvent>(OnSpitFromContainerAction);
         SubscribeLocalEvent<SpittableContainerComponent, SpitFromContainerDoAfterEvent>(OnSpitDoAfter);
+        SubscribeLocalEvent<SpittableContainerComponent, BeingGibbedEvent>(OnGibbed);
     }
 
     private void OnCompInit(Entity<SpittableContainerComponent> ent, ref ComponentInit args)
@@ -50,6 +52,11 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
     {
         _actionsSystem.RemoveAction(ent.Owner, ent.Comp.SwallowActionEntity);
         _actionsSystem.RemoveAction(ent.Owner, ent.Comp.SpitContainerActionEntity);
+    }
+
+    private void OnGibbed(Entity<SpittableContainerComponent> ent, ref BeingGibbedEvent args)
+    {
+        _containerSystem.EmptyContainer(ent.Comp.Container);
     }
 
     private void OnSwallowToContainerAction(Entity<SpittableContainerComponent> ent, ref SwallowToContainerActionEvent args)
