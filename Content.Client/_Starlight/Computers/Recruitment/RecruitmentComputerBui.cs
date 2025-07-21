@@ -72,7 +72,7 @@ public sealed class RecruitmentComputerBui(EntityUid owner, Enum uiKey) : BoundU
                     .Bind(x => SelectStation(x.Key))
                 .SetItems(_gameTicker.StationNames.ToList()))
             .Grid(5, x => x
-                .HorizontalExp()
+                .WithHorizontalExp()
                 .AddChildren(Table(jobsDict, departments)))));
 
         _window.OnClose += Close;
