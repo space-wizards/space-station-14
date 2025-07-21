@@ -11,6 +11,8 @@
       tags:
       - RollingPaper
       - CigFilter
+      - Smokable #SL
+      - Cigarette #SL
   - type: StorageFill
     contents:
       - id: PaperRolling

@@ -269,18 +269,18 @@
 ### begin SL
 - type: entity
   id: CigPackRollie
-  parent: CigPackBlue
+  parent: PackPaperRolling
   name: Rollie Packet
-  description: An old acme co packet full of things to make rollies with.
+  description: An old rolling paper packet full of things to make rollies with.
   components:
   - type: StorageFill
     contents:
     - id: CigaretteFilter
-      amount: 1
+      amount: 2
     - id: PaperRolling
-      amount: 1
-    - id: LeavesTobaccoDried
-      amount: 1
+      amount: 2
+    - id: GroundTobacco
+      amount: 10
     - id: CigaretteSyndicate
-      amount: 1
+      amount: 2
 ### end SL
