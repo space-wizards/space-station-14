@@ -28,7 +28,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
     /// <param name="args">Sent by Server.HolidaySystem when changing holidays.</param>
     private void UpdateHolidays(DoRefreshHolidaysEvent args)
     {
-        SetActiveHolidays(args.Now);
+        SetActiveHolidays(args.Date);
     }
 
     /// <summary>

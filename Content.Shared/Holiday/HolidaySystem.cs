@@ -47,6 +47,7 @@ public abstract class SharedHolidaySystem : EntitySystem
     /// </summary>
     private void OnVisualsRefresh(ref HolidaysGotRefreshedEvent args)
     {
+        // This doesn't feel right...
         var query = AllEntityQuery<HolidayVisualsComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
@@ -99,7 +100,7 @@ public abstract class SharedHolidaySystem : EntitySystem
         return !_enabled ? Enumerable.Empty<HolidayPrototype>() : CurrentHolidays;
     }
 
-    /// <returns> True if argument is currently celebrated. Always false if cvar is false. </returns>
+    /// <returns> True if <paramref name="holiday"/> is currently celebrated. Always false if cvar is false. </returns>
     [PublicAPI]
     public bool IsCurrentlyHoliday([ForbidLiteral] ProtoId<HolidayPrototype> holiday)
     {
@@ -111,18 +112,18 @@ public abstract class SharedHolidaySystem : EntitySystem
     }
 
     /// <summary>
-    ///     Unpredicted. Sets the date used for checking holidays to the server clock.
+    ///     Unpredicted. Sets the time used for checking holidays to the server clock.
     /// </summary>
     /// <param name="announce">If true, announce the holiday greeting.</param>
     [PublicAPI]
     public virtual void RefreshCurrentHolidays(bool announce = true) { }
 
     /// <summary>
-    ///     Predicted. Sets the date used for checking holidays to <paramref name="date"/>.
+    ///     Predicted. Sets the time used for checking holidays to provided <paramref name="date"/>.
     /// </summary>
     /// <remarks>
     ///     Note that DateTime.Now can be different between client and server.
-    ///     Only call this method with a specific date.
+    ///     Only call this method with a specific time.
     /// </remarks>
     /// <param name="announce">If true, announce the holiday greeting.</param>
     [PublicAPI]
@@ -144,7 +145,7 @@ public record struct HolidaysGotRefreshedEvent;
 ///     Network event telling client to update its holidays.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class DoRefreshHolidaysEvent(DateTime now) : EntityEventArgs
+public sealed class DoRefreshHolidaysEvent(DateTime date) : EntityEventArgs
 {
-    public readonly DateTime Now = now;
+    public readonly DateTime Date = date;
 }
