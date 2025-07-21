@@ -13,8 +13,7 @@ public sealed class NudgeCommand : ToolshedCommand
 {
     private TransformSystem? _transform;
 
-    [CommandImplementation]
-    private void Nudge(EntityUid uid, [PipedArgument] Vector2 delta)
+    private void Nudge(EntityUid uid, Vector2 delta)
     {
         _transform ??= GetSys<TransformSystem>();
 
