@@ -9566,5 +9566,12 @@ Entries:
   id: 1317
   time: '2025-07-21T21:13:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1062
+- author: Fasuh
+  changes:
+  - message: Add new colors to atmos pipes.
+    type: Add
+  id: 1318
+  time: '2025-07-21T21:23:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1056
 Order: -1
 
