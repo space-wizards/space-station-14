@@ -9,8 +9,8 @@
     icon:
       sprite: Interface/Actions/remote_control.rsi
       state: return
-  - type: InstantAction
     priority: -10
+  - type: InstantAction
     event: !type:RemoteControlReturnToBodyEvent
 
 - type: entity
