@@ -418,26 +418,6 @@ namespace Content.Shared.Cuffs
         }
 
         /// <summary>
-        ///     Takes longer to stand up when cuffed
-        /// </summary>
-        private void OnCuffableStandupArgs(Entity<CuffableComponent> ent, ref StandUpArgsEvent args)
-        {
-            if (!HasComp<KnockedDownComponent>(ent) || !IsCuffed(ent) || !TryComp<HandcuffComponent>(ent.Comp.LastAddedCuffs, out var handcuff))
-                return;
-
-            args.DoAfterTime *= handcuff.StandupMod;
-        }
-
-        private void OnCuffableKnockdownRefresh(Entity<CuffableComponent> ent, ref KnockedDownRefreshEvent args)
-        {
-            if (!IsCuffed(ent) || !TryComp<HandcuffComponent>(ent.Comp.LastAddedCuffs, out var handcuff))
-                return;
-
-            // TODO: Iterate through equipped cuffs you have in case the entity has more than one pair of hands or something
-            args.SpeedModifier *= HasComp<KnockedDownComponent>(ent) ? handcuff.KnockedMovementMod : handcuff.MovementMod;
-        }
-
-        /// <summary>
         ///     Adds virtual cuff items to the user's hands.
         /// </summary>
         private void UpdateHeldItems(EntityUid uid, EntityUid handcuff, CuffableComponent? component = null)
