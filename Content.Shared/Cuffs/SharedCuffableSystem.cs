@@ -806,11 +806,6 @@ namespace Content.Shared.Cuffs
 
         #endregion
 
-        public IReadOnlyList<EntityUid> GetAllCuffs(CuffableComponent component)
-        {
-            return component.Container.ContainedEntities;
-        }
-
         /// <summary>
         /// Tries to get a list of all the handcuffs stored in a entity's <see cref="CuffableComponent"/>.
         /// </summary>
