@@ -25,10 +25,8 @@ public sealed class GasTileHeatOverlay : Overlay
     private IRenderTexture? _heatTarget;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
-    // public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
     private readonly ShaderInstance _shader;
 
-    // public const int GasHeatOverlayZIndex = GasTileOverlay.GasOverlayZIndex + 1;
 
     public GasTileHeatOverlay()
     {
@@ -37,8 +35,6 @@ public sealed class GasTileHeatOverlay : Overlay
         _mapSystem = _entManager.System<SharedMapSystem>();
 
         _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
-        // ZIndex = GasHeatOverlayZIndex;
-
     }
 
     protected override void Draw(in OverlayDrawArgs args)
