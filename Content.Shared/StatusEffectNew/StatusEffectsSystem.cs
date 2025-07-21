@@ -156,7 +156,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         Dirty(effect, effectComp);
     }
 
-    private bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
+    public bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
     {
         if (!_proto.TryIndex(effectProto, out var effectProtoData))
             return false;
