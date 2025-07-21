@@ -9602,5 +9602,34 @@ Entries:
   id: 1322
   time: '2025-07-21T23:22:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1072
+- author: Cyanogen
+  changes:
+  - message: Cyclorites now do 13 blunt damage with their first
+    type: Tweak
+  id: 1323
+  time: '2025-07-21T23:24:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/778
+- author: Cyanogen
+  changes:
+  - message: Cyclorites now do 10 structural damage on punches
+    type: Add
+  id: 1324
+  time: '2025-07-21T23:24:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/778
+- author: Cyanogen
+  changes:
+  - message: Cyclorites now take 15% less blunt damage. Have you ever tried punching
+      a rock?
+    type: Tweak
+  id: 1325
+  time: '2025-07-21T23:24:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/778
+- author: Cyanogen
+  changes:
+  - message: Cyclorites take 25% less slash damage
+    type: Tweak
+  id: 1326
+  time: '2025-07-21T23:24:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/778
 Order: -1
 
