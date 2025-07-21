@@ -6,7 +6,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    layers:
+    - state: buckshot
+      shader: unshaded
   - type: Projectile
     deleteOnCollide: false
     damage:
@@ -25,7 +27,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    layers:
+    - state: buckshot
+      shader: unshaded
   - type: Projectile
     deleteOnCollide: false
     damage:
@@ -42,7 +46,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot-flare
+    layers:
+    - state: buckshot-flare
+      shader: unshaded
   - type: Projectile
     deleteOnCollide: false
     damage:
