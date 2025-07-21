@@ -4,50 +4,49 @@ using Content.Shared.Administration;
 using Robust.Server.GameObjects;
 using Robust.Shared.Console;
 using Robust.Shared.Physics;
+using Robust.Shared.Toolshed;
 
 namespace Content.Server.Mapping;
 
-public sealed class NudgeCommand : LocalizedEntityCommands
+[ToolshedCommand, AdminCommand(AdminFlags.Debug)]
+public sealed class NudgeCommand : ToolshedCommand
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    public override string Command => "nudge";
+    private TransformSystem? _transform;
 
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    [CommandImplementation]
+    private void Nudge(EntityUid uid, [PipedArgument] Vector2 delta)
     {
-        if (args.Length != 3)
+        _transform ??= GetSys<TransformSystem>();
+
+        var xform = Transform(uid);
+
+        var newPosition = xform.LocalPosition + delta;
+        _transform.SetLocalPosition(uid, newPosition, xform);
+    }
+
+    [CommandImplementation]
+    public void Nudge([PipedArgument] EntityUid uid, float deltaX, float deltaY)
+        => Nudge(uid, new Vector2(deltaX, deltaY));
+
+    [CommandImplementation]
+    public void Nudge([PipedArgument] IEnumerable<EntityUid> input, float deltaX, float deltaY)
+    {
+        foreach (var entityUid in input)
         {
-            shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
+            Nudge(entityUid, deltaX, deltaY);
+        }
+    }
+
+    [CommandImplementation]
+    public void Nudge(int entity_id, float deltaX, float deltaY)
+    {
+        if (!NetEntity.TryParse(entity_id.ToString(), out var netEntity)
+            || !EntityManager.TryGetEntity(netEntity, out var uid)
+            || !EntityManager.EntityExists(uid))
+        {
             return;
         }
 
-        if (!float.TryParse(args[1], out var DeltaX))
-        {
-            shell.WriteLine(Loc.GetString("shell-argument-number-invalid", ("index", 2)));
-            return;
-        }
-
-        if (!float.TryParse(args[2], out var DeltaY))
-        {
-            shell.WriteLine(Loc.GetString("shell-argument-number-invalid", ("index", 3)));
-            return;
-        }
-
-        if (!NetEntity.TryParse(args[0], out var netEntity)
-            || !_entMan.TryGetEntity(netEntity, out var uid)
-            || !_entMan.EntityExists(uid))
-        {
-            shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
-            return;
-        }
-
-        if (!_entMan.TryGetComponent(uid, out TransformComponent? xform))
-        {
-            shell.WriteLine(Loc.GetString("shell-entity-target-lacks-component", ("componentName", nameof(TransformComponent))));
-            return;
-        }
-
-        var newPosition = xform.LocalPosition + new Vector2(DeltaX, DeltaY);
-        _transform.SetLocalPosition(uid.Value, newPosition, xform);
+        Nudge(uid.Value, deltaX, deltaY);
     }
 }
