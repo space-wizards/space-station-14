@@ -40,6 +40,7 @@ public sealed class TileStacksTest
             }
         }
         Bfs(nodes, edges);
+        await pair.CleanReturnAsync();
     }
 
     private void Bfs(List<(string, int)> nodes, List<(string, string)> edges)
