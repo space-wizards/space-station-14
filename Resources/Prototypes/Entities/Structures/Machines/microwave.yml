@@ -16,10 +16,6 @@
         bloodyunshaded:
           True: { visible: true }
           False: { visible: false }
-      enum.MicrowaveVisualState.Off:
-        off:
-          True: { visible: true }
-          False: { visible: false }
       enum.PowerDeviceVisuals.VisualState:
         enum.MicrowaveVisualizerLayers.Base:
           Idle: { state: "mw" }
@@ -71,9 +67,6 @@
     drawdepth: SmallObjects
     snapCardinals: true
     layers:
-    - state: mw0
-      map: [ "off" ]
-      visible: true
     - state: mw0
       map: ["enum.MicrowaveVisualizerLayers.Base"]
     - state: mw0
