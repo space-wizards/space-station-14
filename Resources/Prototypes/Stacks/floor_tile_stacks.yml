@@ -336,7 +336,7 @@
 
 - type: stack
   id: FloorCarpetBlack
-  name: stack-block-carpet-tile
+  name: stack-black-carpet-tile
   spawn: FloorCarpetItemBlack
   maxCount: 30
 
@@ -669,4 +669,28 @@
   id: FloorTileDarkSquiggly
   name: stack-dark-squiggly
   spawn: FloorTileItemDarkSquiggly
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhiteMarble
+  name: stack-white-marble-floor
+  spawn: FloorTileItemWhiteMarble
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkMarble
+  name: stack-dark-marble-floor
+  spawn: FloorTileItemDarkMarble
+  maxCount: 30
+
+- type: stack
+  id: FloorTilePlasmaMarble
+  name: stack-plasma-marble-floor
+  spawn: FloorTileItemPlasmaMarble
+  maxCount: 30
+
+- type: stack
+  id: FloorTileUraniumMarble
+  name: stack-uranium-marble-floor
+  spawn: FloorTileItemUraniumMarble
   maxCount: 30
