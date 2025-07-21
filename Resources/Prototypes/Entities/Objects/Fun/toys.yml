@@ -2027,7 +2027,7 @@
 - type: entity
   parent: BaseItem
   id: NewtonCradle
-  name: newton cradle
+  name: newton's cradle
   description: A device bored paper pushers use to remind themselves that time did not stop yet. Contains gravity.
   components:
   - type: Sprite
