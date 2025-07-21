@@ -342,8 +342,8 @@
     stock: 1
 
 - type: listing
-  id: VendorShadekinPlush
-  productEntity: ShadekinPlush
+  id: VendorPlushieShadekin
+  productEntity: PlushieShadekin
   cost:
     NTCredit: 10
   categories:
@@ -453,3 +453,25 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: VendorPlushieOog
+  productEntity: PlushieOog
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: VendorPlushieVanilla
+  productEntity: PlushieVanilla
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1  

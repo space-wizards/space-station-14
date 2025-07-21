@@ -1,0 +1,117 @@
+# TODO: Add descriptions (many)
+# TODO BODY: Part damage
+- type: entity
+  abstract: true
+  parent: BasePart
+  id: PartAvali
+  name: avali body part
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 1.5
+      - ReagentId: AmmoniaBlood
+        Quantity: 5
+
+- type: entity
+  parent: [ PartAvali, BaseTorso ]
+  id: TorsoAvali
+  name: avali torso
+  components:
+  - type: Sprite
+    state: "torso_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: AmmoniaBlood
+        Quantity: 10
+
+- type: entity
+  parent: [ PartAvali, BaseHead ]
+  id: HeadAvali
+  name: avali head
+  components:
+  - type: Sprite
+    state: "head_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: AmmoniaBlood
+        Quantity: 10
+
+- type: entity
+  parent: [ PartAvali, BaseLeftArm ]
+  id: LeftArmAvali
+  name: left avali arm
+  components:
+  - type: Sprite
+    state: "l_arm"
+
+- type: entity
+  parent: [ PartAvali, BaseRightArm ]
+  id: RightArmAvali
+  name: right avali arm
+  components:
+  - type: Sprite
+    state: "r_arm"
+
+- type: entity
+  parent: [ PartAvali, BaseLeftHand ]
+  id: LeftHandAvali
+  name: left avali hand
+  components:
+  - type: Sprite
+    state: "l_hand"
+
+- type: entity
+  parent: [ PartAvali, BaseRightHand ]
+  id: RightHandAvali
+  name: right avali hand
+  components:
+  - type: Sprite
+    state: "r_hand"
+
+- type: entity
+  parent: [ PartAvali, BaseLeftLeg ]
+  id: LeftLegAvali
+  name: left avali leg
+  components:
+  - type: Sprite
+    state: "l_leg"
+  - type: MovementBodyPart
+    sprintSpeed : 4.77
+    maxDensity: 100
+
+- type: entity
+  parent: [ PartAvali, BaseRightLeg ]
+  id: RightLegAvali
+  name: right avali leg
+  components:
+  - type: Sprite
+    state: "r_leg"
+  - type: MovementBodyPart
+    sprintSpeed : 4.77
+    maxDensity: 100
+
+- type: entity
+  parent: [ PartAvali, BaseLeftFoot ]
+  id: LeftFootAvali
+  name: left avali foot
+  components:
+  - type: Sprite
+    state: "l_foot"
+
+- type: entity
+  parent: [ PartAvali, BaseRightFoot ]
+  id: RightFootAvali
+  name: right avali foot
+  components:
+  - type: Sprite
+    state: "r_foot"

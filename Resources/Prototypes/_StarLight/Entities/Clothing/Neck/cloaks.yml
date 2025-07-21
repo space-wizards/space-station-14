@@ -155,6 +155,18 @@
     price: 2000
 
 - type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakBsoCape
+  name: Blueshield Officer's Formal Cloak
+  description: An incredibly large coat, owned only by the most experienced blueshields. It's said the sleeves have never been worn.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/bso_formal.rsi
+  - type: Clothing
+    slots:
+      - neck
+
+- type: entity
   parent: ClothingNeckBase
   id: ClothingNeckOldMantle
   name: old wrap
@@ -208,3 +220,40 @@
     sprite: _Starlight/Clothing/Neck/Ties/disco.rsi
 
 # Fashion-O-Mat-END
+
+
+# ## USSP
+
+- type: entity
+  parent: [BaseItem, ClothingNeckBase, ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSovietContraband]
+  id: ClothingNeckCloakCommissar
+  name: Commissar overcoat
+  description: Rumor has it entire regiments of aides exist solely to press seams, polish buttons, and remind the Commissar which coat goes over which.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/commissar.rsi
+  - type: Clothing
+    slots:
+    - outerClothing
+    - neck
+    sprite: _Starlight/Clothing/Neck/Cloaks/commissar.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: HeldSpeedModifier
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+  - type: GroupExamine
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.7
+        Caustic: 0.9
+        Radiation: 0.85
+  - type: Item
+    size: Huge
+  - type: StaticPrice
+    price: 5000

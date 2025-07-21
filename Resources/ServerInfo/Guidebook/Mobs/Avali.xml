@@ -1,0 +1,26 @@
+<Document>
+  # Avali
+
+  <Box>
+    <GuideEntityEmbed Entity="MobAvali" Caption=""/>
+  </Box>
+ 
+  [color=#ffa500]Warning! This species is not recommended for new players due to major gameplay changes![/color]
+
+  Avali are a species of ammonia-based intelligent bird/raptor people and due to this odd combination many refer to them as "Space Raptors" and, as you might expect, are carnivores. Their unique biology allows them to deal exceedingly well with the cold, and is capable of basic flight in no to low gravity environments. 
+
+  ## Racial Features
+
+  - Receive [color=#ffa500]40% more fire damage[/color] and [color=#1e90ff]40% less cold damage[/color].
+  - Can stand in tempatures of up to [color=#1e90ff]-50c before taking cold damage[/color].
+  - Deal [color=red]6.25[/color] slashing damage with claws.
+  - Can fly in Zero-G.
+  - Slightly faster.
+  - [color=#ffbc48]Nanite Technology![/color] Can encase themselves in a [color=#ffbc48]Nanite Shell[/color] to heal most common types of damage.
+  - Can talk over [color=#ffbc48]The Nexus with +N.[/color]
+  - 2x Hunger rate, stay fed!
+  - Can only eat meat-related food items (including organs) and pills.
+  - Heal airloss from Ammonia and Amoxla but..
+  - ..Saline, Dex and Dex+ is lethal to you. Remember to remind doctors about it!
+  - Fall into crit at 90 and dead at 180.
+</Document>

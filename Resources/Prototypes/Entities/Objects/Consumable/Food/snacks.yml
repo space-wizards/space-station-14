@@ -445,6 +445,7 @@
   - type: Tag
     tags:
       - ReptilianFood
+      - AvianFood # Starlight
   - type: Sprite
     state: nutribrick-open
   - type: Food

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sha-Seng (Github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "head_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "head_heavy2",
+      "directions": 4
+    }
+  ]
+}

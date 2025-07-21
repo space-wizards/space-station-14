@@ -1,0 +1,52 @@
+- type: body
+  id: Avali
+  name: avali
+  root: torso
+  slots:
+    head:
+      part: HeadAvali
+      connections:
+      - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+        tongue: OrganHumanTongue
+        eye_implant: null
+    torso:
+      part: TorsoAvali
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
+      organs:
+        heart: OrganAvaliHeart
+        lungs: OrganAvaliLungs
+        stomach: OrganAvaliStomach
+        liver: OrganAvaliLiver
+        kidneys: OrganAvaliKidneys
+        cavity: null
+    right arm:
+      part: RightArmAvali
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmAvali
+      connections:
+      - left hand
+    right hand:
+      part: RightHandAvali
+    left hand:
+      part: LeftHandAvali
+    right leg:
+      part: RightLegAvali
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegAvali
+      connections:
+      - left foot
+    right foot:
+      part: RightFootAvali
+    left foot:
+      part: LeftFootAvali

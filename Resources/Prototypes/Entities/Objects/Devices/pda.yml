@@ -968,6 +968,11 @@
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
+  - type: Instrument
+    allowPercussion: true
+    allowProgramChange: true
+    respectMidiLimits: false
+    handheld: true
 
 - type: entity
   parent: CentcomPDA

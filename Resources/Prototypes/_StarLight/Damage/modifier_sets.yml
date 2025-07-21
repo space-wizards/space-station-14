@@ -5,12 +5,24 @@
     Heat: 1.5
 
 - type: damageModifierSet
+  id: Avali # Not as good as thick fur like the vulps, but still rather insulating.
+  coefficients:
+    Cold: 0.6
+    Heat: 1.4
+
+- type: damageModifierSet
   id: TerrorSpider
   coefficients:
     Blunt: 0.4
     Slash: 1.1
     Piercing: 0.9
     Heat: 1.6
+
+- type: damageModifierSet
+  id: Cyclorite
+  coefficients:
+    Blunt: 0.85 # Have you ever tried to punch a rock?
+    Slash: 0.75
 
 - type: damageModifierSet
   id: Shadekin
