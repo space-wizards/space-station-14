@@ -9530,5 +9530,12 @@ Entries:
   id: 1312
   time: '2025-07-17T22:23:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1051
+- author: stickycheZ101
+  changes:
+  - message: added a bunch of new trinkets to the loadout menu
+    type: Add
+  id: 1313
+  time: '2025-07-21T22:23:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1067
 Order: -1
 
