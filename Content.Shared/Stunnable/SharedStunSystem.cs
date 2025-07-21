@@ -193,7 +193,6 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (force)
             return true;
 
-
         var evAttempt = new KnockDownAttemptEvent(autoStand, drop, time);
         RaiseLocalEvent(entity, ref evAttempt);
 
