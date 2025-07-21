@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: [BaseStructure, ConstructibleMachine] # Not a BaseMachinePowered since we don't want the anchorable component
   id: CryoPod
   name: cryo pod
@@ -115,3 +115,47 @@
   - type: GuideHelp
     guides:
     - Cryogenics
+
+- type: entity
+  parent: BaseStructure
+  id: CryoPodDestroyed
+  name: destroyed cryo pod
+  description: A cryo pod that has seen better days. It's entirely inoperable; not good for anything but scrap.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/Medical/cryopod.rsi
+    drawdepth: Mobs
+    noRot: true
+    offset: 0, 0.5
+    state: pod-cracked
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.90"
+        density: 200
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 2000 # 20 sheets
+      Glass: 1000 # 10 sheets

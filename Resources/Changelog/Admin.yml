@@ -1171,5 +1171,13 @@ Entries:
   id: 141
   time: '2025-06-08T03:47:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38134
+- author: ScarKy0
+  changes:
+  - message: 'addaction/rmaction commands. NOTE: Addaction will not work correctly
+      if the action requires the entity to have a component (such as Dragon''s Devour).'
+    type: Add
+  id: 142
+  time: '2025-06-16T10:25:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38317
 Name: Admin
 Order: 2
