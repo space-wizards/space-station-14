@@ -11,15 +11,14 @@
     back:
     - SuperSynthesizerInstrument
 
-# Meow mrrp
+# Meow mrrp ## shut up
 - type: loadout
   id: ClothingUnderSocksCoder
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:AnyFlagsRequirement
-      flags:
-      - Staff
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
   storage:
     back:
     - ClothingUnderSocksCoder
@@ -33,11 +32,10 @@
 - type: loadout
   id: ClothingUniformJumpskirtElegantMaid
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:AnyFlagsRequirement
-      flags:
-      - Staff
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
   storage:
     back:
     - ClothingUniformJumpskirtElegantMaid
@@ -45,11 +43,87 @@
 - type: loadout
   id: ClothingHeadHatCatEars
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:AnyFlagsRequirement
-      flags:
-      - Staff
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
   storage:
     back:
     - ClothingHeadHatCatEars
+
+- type: loadout
+  id: RolliePack
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - CigPackRollie
+
+- type: loadout
+  id: GoldRing
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - GoldRing
+
+- type: loadout
+  id: SilverRing
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - SilverRing
+
+- type: loadout
+  id: Matchbox
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - Matchbox
+        
+- type: loadout
+  id: FancyPen
+  effects:
+    - !type:GroupLoadoutEffect
+      proto: JamjarTimer
+  storage:
+    back: LuxuryPen
+    
+- type: loadout
+  id: HonkImplant
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobClown
+        time: 72000 # 20 hours of honk
+  storage:
+    back:
+      - BikeHornImplanter
+
+- type: loadout
+  id: TromboneImplant
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobClown
+        time: 72000 # 20 hours of honk
+  storage:
+    back:
+      - SadTromboneImplanter
+
