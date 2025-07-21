@@ -1,4 +1,4 @@
-namespace Content.Shared.Database;
+﻿namespace Content.Shared.Database;
 
 // DO NOT CHANGE THE NUMERIC VALUES OF THESE
 public enum LogType
@@ -474,5 +474,7 @@ public enum LogType
     /// </summary>
     ShuttleImpact = 102,
 
+    // 🌟Starlight🌟 start
     Railroading = 1000,
+    // 🌟Starlight🌟 end
 }

@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Inventory;
@@ -357,11 +357,13 @@ public sealed class FoodSystem : EntitySystem
         if (attemptEv.Cancelled)
             return;
 
-        if(Prototype(food).TryGetEntProtoId(out var proto))
+        // 🌟Starlight🌟 start
+        if (Prototype(food).TryGetEntProtoId(out var proto))
         {
             var fullyEatenEvent = new FullyEatenEvent(proto);
             RaiseLocalEvent(user, ref fullyEatenEvent);
         }
+        // 🌟Starlight🌟 end
 
         var afterEvent = new AfterFullyEatenEvent(user);
         RaiseLocalEvent(food, ref afterEvent);

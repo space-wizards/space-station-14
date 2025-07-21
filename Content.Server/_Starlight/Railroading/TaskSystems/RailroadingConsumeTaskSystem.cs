@@ -14,7 +14,6 @@ using Content.Shared.Examine;
 using Content.Shared.Nutrition;
 using Content.Shared.Objectives;
 using Discord;
-using JetBrains.FormatRipper.Elf;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -35,7 +34,7 @@ public sealed partial class RailroadingConsumeTaskSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<RailroadConsumeTaskComponent, RailroadingCardChosenEvent>(OnConsumeTaskPicked);
-        SubscribeLocalEvent<RailroadConsumeTaskComponent, RailroadingCardCompletionQueryEvent>(OnConsumeTaskIsComplited);
+        SubscribeLocalEvent<RailroadConsumeTaskComponent, RailroadingCardCompletionQueryEvent>(OnConsumeTaskCompletionQuery);
         SubscribeLocalEvent<RailroadConsumeTaskComponent, CollectObjectiveInfoEvent>(OnCollectObjectiveInfo);
 
         SubscribeLocalEvent<RailroadConsumeWatcherComponent, FullyEatenEvent>(OnFullyEaten);
@@ -70,7 +69,7 @@ public sealed partial class RailroadingConsumeTaskSystem : EntitySystem
         });
     }
 
-    private void OnConsumeTaskIsComplited(Entity<RailroadConsumeTaskComponent> ent, ref RailroadingCardCompletionQueryEvent args)
+    private void OnConsumeTaskCompletionQuery(Entity<RailroadConsumeTaskComponent> ent, ref RailroadingCardCompletionQueryEvent args)
     {
         if (args.IsCompleted == false) return;
 

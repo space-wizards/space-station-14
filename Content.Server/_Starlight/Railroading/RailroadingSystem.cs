@@ -13,7 +13,6 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
 using Content.Shared.Objectives;
 using Discord;
-using JetBrains.FormatRipper.Elf;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;

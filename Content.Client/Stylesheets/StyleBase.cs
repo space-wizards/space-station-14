@@ -121,11 +121,13 @@ namespace Content.Client.Stylesheets
             };
             BaseAngleRect.SetPatchMargin(StyleBox.Margin.All, 10);
 
+            // 🌟Starlight🌟 start
             BaseHeaderRect = new StyleBoxTexture
             {
                 Texture = resCache.GetTexture("/Textures/_Starlight/Interface/Nano/card_header.png"),
             };
             BaseHeaderRect.SetPatchMargin(StyleBox.Margin.All, 10);
+            // 🌟Starlight🌟 end
 
             AngleBorderRect = new StyleBoxTexture
             {

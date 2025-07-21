@@ -9,8 +9,8 @@
   id: BaseMobSpecies
   abstract: true
   components:
-  - type: Railroadable
-  - type: SurgeryTarget
+  - type: Railroadable # 🌟Starlight🌟
+  - type: SurgeryTarget # 🌟Starlight🌟
   - type: Sprite
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]

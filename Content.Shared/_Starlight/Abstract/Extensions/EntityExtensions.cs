@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Starlight.Abstract.Extensions;
-public static class Extensions
+public static class EntityExtensions
 {
     public static bool TryGetEntProtoId(this EntityPrototype? entityPrototype, out EntProtoId protoId)
     {
