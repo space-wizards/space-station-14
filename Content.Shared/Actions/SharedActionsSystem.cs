@@ -420,7 +420,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         // not using the ValidateBaseTarget logic since its raycast fails if the target is e.g. a wall
         if (targetAction.CheckCanAccess)
-            return _interaction.InRangeAndAccessible(user, target, range: targetAction.Range);
+            return _interaction.InRangeAndAccessible(user, target, targetAction.Range, targetAction.AccessMask);
 
         // Just check normal in range, allowing <= 0 range to mean infinite range.
         if (targetAction.Range > 0
