@@ -43,7 +43,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         if (tileRef.Tile.IsEmpty)
             return true;
 
-        if (Resolve(uid, ref roofComp, false) && _roof.IsWeatherOccluding((uid, grid, roofComp), tileRef.GridIndices))
+        if (Resolve(uid, ref roofComp, false) && _roof.IsRooved((uid, grid, roofComp), tileRef.GridIndices))
             return false;
 
         if (HasComp<ImplicitRoofComponent>(uid))
