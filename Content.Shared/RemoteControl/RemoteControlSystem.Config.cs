@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.RemoteControl.Components;
 
@@ -12,10 +13,17 @@ public sealed partial class RemoteControlSystem
 {
     public void InitializeConfig()
     {
+        SubscribeLocalEvent<RemotelyControllableComponent, MobStateChangedEvent>(OnMobStateChanged);
+
         SubscribeLocalEvent<RemoteControllerComponent, DamageChangedEvent>(OnTookDamage);
         SubscribeLocalEvent<RemoteControllerComponent, InteractionSuccessEvent>(OnSuccessfulInteract);
 
         SubscribeLocalEvent<RCRemoteComponent, DroppedEvent>(OnRemoteDropped);
+    }
+
+    private void OnMobStateChanged(Entity<RemotelyControllableComponent> ent, ref MobStateChangedEvent args)
+    {
+        TryStopRemoteControl(ent);
     }
 
     private void OnTookDamage(Entity<RemoteControllerComponent> ent, ref DamageChangedEvent args)

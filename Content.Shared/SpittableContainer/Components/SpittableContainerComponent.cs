@@ -9,7 +9,7 @@ namespace Content.Shared.SpittableContainer.Components;
 /// Grants the entity actions to swallow and spit items out of a provided container).
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedSpittableContainerSystem))]
+[Access(typeof(SpittableContainerSystem))]
 public sealed partial class SpittableContainerComponent : Component
 {
     [DataField, AutoNetworkedField]

@@ -15,13 +15,13 @@ namespace Content.Shared.SpittableContainer;
 /// Manages SpittableContainerComponent.
 /// Allows entities to swallow and spit items using a provided container with a granted action.
 /// </summary>
-public sealed class SharedSpittableContainerSystem : EntitySystem
+public sealed class SpittableContainerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] protected readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {

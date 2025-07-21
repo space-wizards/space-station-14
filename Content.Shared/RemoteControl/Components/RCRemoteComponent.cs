@@ -5,7 +5,7 @@ namespace Content.Shared.RemoteControl.Components;
 /// <summary>
 /// Indicates this item can be used to start Remote Control.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class RCRemoteComponent : Component
 {
     /// <summary>

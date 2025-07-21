@@ -6,7 +6,7 @@ namespace Content.Shared.RemoteControl.Components;
 /// <summary>
 /// Indicates this entity is able to be remotely controlled by another entity.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class RemotelyControllableComponent : Component
 {
     /// <summary>

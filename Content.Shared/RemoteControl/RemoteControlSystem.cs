@@ -5,13 +5,12 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
-using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.RemoteControl.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Timing;
+using JetBrains.Annotations;
 
 namespace Content.Shared.RemoteControl;
 
@@ -20,7 +19,6 @@ namespace Content.Shared.RemoteControl;
 /// </summary>
 public sealed partial class RemoteControlSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
@@ -36,13 +34,13 @@ public sealed partial class RemoteControlSystem : EntitySystem
         SubscribeLocalEvent<RemotelyControllableComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RemotelyControllableComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<RemotelyControllableComponent, RemoteControlReturnToBodyEvent>(OnReturnToBody);
-        SubscribeLocalEvent<RemotelyControllableComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeLocalEvent<RCRemoteComponent, GetVerbsEvent<ActivationVerb>>(OnRCRemoteVerbs);
         SubscribeLocalEvent<RCRemoteComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<RCRemoteComponent, ComponentShutdown>(OnRemoteShutdown);
 
         SubscribeLocalEvent<RemoteControllerComponent, MindRemovedMessage>(OnMindGotRemoved);
+        SubscribeLocalEvent<RemoteControllerComponent, ComponentShutdown>(OnControllerShutdown);
     }
 
     private void OnExamine(Entity<RemotelyControllableComponent> ent, ref ExaminedEvent args)
@@ -62,11 +60,18 @@ public sealed partial class RemoteControlSystem : EntitySystem
     private void OnControllableShutdown(Entity<RemotelyControllableComponent> ent, ref ComponentShutdown args)
     {
         _actions.RemoveAction(ent.Owner, ent.Comp.ReturnActionEntity);
-    }
 
-    private void OnMobStateChanged(Entity<RemotelyControllableComponent> ent, ref MobStateChangedEvent args)
-    {
-        TryStopRemoteControl(ent);
+        // Ensure other linked components get cleared correctly to prevent PVS errors.
+        if (TryComp<RemoteControllerComponent>(ent.Comp.Controller, out var controller))
+        {
+            controller.Controlled = null;
+            DirtyField(ent.Comp.Controller.Value, controller, nameof(RemoteControllerComponent.Controlled));
+        }
+        if (TryComp<RCRemoteComponent>(ent.Comp.BoundRemote, out var remote))
+        {
+            remote.BoundTo = null;
+            DirtyField(ent.Comp.BoundRemote.Value, remote, nameof(RCRemoteComponent.BoundTo));
+        }
     }
 
     private void OnAfterInteractUsing(Entity<RemotelyControllableComponent> ent, ref AfterInteractUsingEvent args)
@@ -155,10 +160,15 @@ public sealed partial class RemoteControlSystem : EntitySystem
         TryStopRemoteControl(ent.Comp.BoundTo.Value);
 
         remoteComp.BoundRemote = null;
-        Dirty(ent.Comp.BoundTo.Value, remoteComp);
+        DirtyField(ent.Comp.BoundTo.Value, remoteComp, nameof(RCRemoteComponent.BoundTo));
     }
 
     private void OnMindGotRemoved(Entity<RemoteControllerComponent> ent, ref MindRemovedMessage args)
+    {
+        RemCompDeferred<RemoteControllerComponent>(ent);
+    }
+
+    private void OnControllerShutdown(Entity<RemoteControllerComponent> ent, ref ComponentShutdown args)
     {
         if (!TryComp<RemotelyControllableComponent>(ent.Comp.Controlled, out var remoteComp))
             return;
@@ -166,7 +176,6 @@ public sealed partial class RemoteControlSystem : EntitySystem
         remoteComp.Controller = null;
         remoteComp.IsControlled = false;
         remoteComp.CurrentRcConfig = null;
-        RemCompDeferred<RemoteControllerComponent>(ent);
 
         Dirty(ent.Comp.Controlled.Value, remoteComp);
     }
@@ -178,6 +187,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
     /// <param name="controller">UID of the entity that is to take control of the other.</param>
     /// /// <param name="config">RemoteControlConfiguration to use. If null, default will be used.</param>
     /// <returns>True If control was given to the controller, otherwise False.</returns>
+    [PublicAPI]
     public bool TryRemoteControl(Entity<RemotelyControllableComponent> ent, EntityUid controller, RemoteControlConfiguration? config = null)
     {
         if (ent.Comp.IsControlled)
@@ -214,6 +224,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
     /// </summary>
     /// <param name="uid">The entity uid of the remote control target.</param>
     /// <returns>True If remote control is stopped, otherwise False.</returns>
+    [PublicAPI]
     public bool TryStopRemoteControl(EntityUid uid)
     {
         if (!TryComp<RemotelyControllableComponent>(uid, out var remoteControl)
