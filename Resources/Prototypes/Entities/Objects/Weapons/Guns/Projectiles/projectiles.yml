@@ -901,6 +901,9 @@
     intensitySlope: 1
     maxIntensity: 5
     canCreateVacuum: false
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
   - type: ProjectileGrenade
     fillPrototype: PelletClusterLessLethal
     capacity: 30
