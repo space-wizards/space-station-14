@@ -194,7 +194,7 @@
     neck: ClothingNeckCloakQm
     id: VisitorPDA
     back: ClothingBackpackCargo
-    ears: ClothingHeadsetRD
+    ears: ClothingHeadsetQM
     outerClothing: ClothingOuterWinterQM
     pocket1: WeaponDisabler
     pocket2: AppraisalTool
@@ -282,7 +282,7 @@
     outerClothing: ClothingOuterArmorBasicSlim
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
-  inhand: 
+  inhand:
   - FlashlightSeclite
 
 - type: startingGear
@@ -859,7 +859,7 @@
     eyes: ClothingEyesHudMedical
     pocket1: RegenerativeMesh
     pocket2: PillCanisterBicaridine
-  inhand: 
+  inhand:
   - ScalpelAdvanced
   - MedicatedSuture
 

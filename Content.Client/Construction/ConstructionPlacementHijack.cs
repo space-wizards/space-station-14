@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Construction.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Placement;
@@ -12,6 +12,9 @@ namespace Content.Client.Construction
     {
         private readonly ConstructionSystem _constructionSystem;
         private readonly ConstructionPrototype? _prototype;
+
+        public ConstructionSystem? CurrentConstructionSystem { get { return _constructionSystem; } }
+        public ConstructionPrototype? CurrentPrototype { get { return _prototype; } }
 
         public override bool CanRotate { get; }
 
