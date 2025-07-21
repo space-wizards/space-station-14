@@ -25,6 +25,7 @@
                 <CheckBox Name="IntegerScalingCheckBox"
                           Text="{Loc 'ui-options-vp-integer-scaling'}"
                           ToolTip="{Loc 'ui-options-vp-integer-scaling-tooltip'}" />
+                <ui:OptionDropDown Name="DropDownFilterMode" Title="{Loc 'ui-options-filter-label'}" />
                 <CheckBox Name="ViewportVerticalFitCheckBox"
                           Text="{Loc 'ui-options-vp-vertical-fit'}"
                           ToolTip="{Loc 'ui-options-vp-vertical-fit-tooltip'}" />
