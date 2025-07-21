@@ -317,7 +317,7 @@ public sealed partial class BanPanel : DefaultWindow
 
         // This is adding the icon before the role name
         // Yeah, this is sus, but having to split the functions up and stuff is worse imo.
-        if (_protoMan.TryIndex<JobPrototype>(role, out var jobPrototype) && _protoMan.TryIndex(jobPrototype.Icon, out var iconProto))
+        if (_protoMan.Resolve<JobPrototype>(role, out var jobPrototype) && _protoMan.Resolve(jobPrototype.Icon, out var iconProto))
         {
             var jobIconTexture = new TextureRect
             {

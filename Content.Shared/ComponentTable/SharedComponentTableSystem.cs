@@ -24,7 +24,7 @@ public sealed class SharedComponentTableSystem : EntitySystem
 
         foreach (var entity in spawns)
         {
-            if (_proto.TryIndex(entity, out var entProto))
+            if (_proto.Resolve(entity, out var entProto))
             {
                 EntityManager.AddComponents(ent, entProto.Components);
             }

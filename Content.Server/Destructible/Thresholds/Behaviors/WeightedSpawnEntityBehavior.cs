@@ -66,7 +66,7 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
         if (SpawnAfter != 0)
         {
             // if it fails to get the spawner, this won't ever work so just return
-            if (!system.PrototypeManager.TryIndex(TempEntityProtoId, out var tempSpawnerProto))
+            if (!system.PrototypeManager.Resolve(TempEntityProtoId, out var tempSpawnerProto))
                 return;
 
             // spawn the spawner, assign it a lifetime, and assign the entity that it will spawn when despawned

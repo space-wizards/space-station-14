@@ -26,7 +26,7 @@ public sealed class TraitSystem : EntitySystem
     {
         // Check if player's job allows to apply traits
         if (args.JobId == null ||
-            !_prototypeManager.TryIndex<JobPrototype>(args.JobId ?? string.Empty, out var protoJob) ||
+            !_prototypeManager.Resolve<JobPrototype>(args.JobId, out var protoJob) ||
             !protoJob.ApplyTraits)
         {
             return;
@@ -36,7 +36,7 @@ public sealed class TraitSystem : EntitySystem
         {
             if (!_prototypeManager.TryIndex<TraitPrototype>(traitId, out var traitPrototype))
             {
-                Log.Warning($"No trait found with ID {traitId}!");
+                Log.Error($"No trait found with ID {traitId}!");
                 return;
             }
 

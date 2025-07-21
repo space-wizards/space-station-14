@@ -20,7 +20,7 @@ public sealed class ExaminableDamageSystem : EntitySystem
 
     private void OnExamine(Entity<ExaminableDamageComponent> ent, ref ExaminedEvent args)
     {
-        if (!_prototype.TryIndex(ent.Comp.Messages, out var proto) || proto.Values.Count == 0)
+        if (!_prototype.Resolve(ent.Comp.Messages, out var proto) || proto.Values.Count == 0)
             return;
 
         var percent = GetDamagePercent(ent);

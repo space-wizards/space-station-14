@@ -24,7 +24,7 @@ public sealed class ContainerCompSystem : EntitySystem
         if (args.Container.ID != ent.Comp.Container || _timing.ApplyingState)
             return;
 
-        if (_proto.TryIndex(ent.Comp.Proto, out var entProto))
+        if (_proto.Resolve(ent.Comp.Proto, out var entProto))
         {
             EntityManager.RemoveComponents(args.Entity, entProto.Components);
         }
@@ -35,7 +35,7 @@ public sealed class ContainerCompSystem : EntitySystem
         if (args.Container.ID != ent.Comp.Container || _timing.ApplyingState)
             return;
 
-        if (_proto.TryIndex(ent.Comp.Proto, out var entProto))
+        if (_proto.Resolve(ent.Comp.Proto, out var entProto))
         {
             EntityManager.AddComponents(args.Entity, entProto.Components);
         }

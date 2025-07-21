@@ -68,7 +68,7 @@ public sealed partial class LoadoutWindow : FancyWindow
         {
             foreach (var group in proto.Groups)
             {
-                if (!protoManager.TryIndex(group, out var groupProto))
+                if (!protoManager.Resolve(group, out var groupProto))
                     continue;
 
                 if (groupProto.Hidden)

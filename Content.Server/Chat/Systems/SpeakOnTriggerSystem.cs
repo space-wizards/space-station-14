@@ -30,7 +30,7 @@ public sealed class SpeakOnTriggerSystem : EntitySystem
         if (TryComp<UseDelayComponent>(ent.Owner, out var useDelay) && _useDelay.IsDelayed((ent.Owner, useDelay)))
             return;
 
-        if (!_prototypeManager.TryIndex(ent.Comp.Pack, out var messagePack))
+        if (!_prototypeManager.Resolve(ent.Comp.Pack, out var messagePack))
             return;
 
         var message = Loc.GetString(_random.Pick(messagePack.Values));

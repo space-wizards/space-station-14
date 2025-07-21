@@ -118,7 +118,7 @@ public sealed class ExplosionCommand : LocalizedEntityCommands
                 return;
             }
         }
-        else if (!_prototypeManager.TryIndex(ExplosionSystem.DefaultExplosionPrototypeId, out type))
+        else if (!_prototypeManager.Resolve(ExplosionSystem.DefaultExplosionPrototypeId, out type))
         {
             // no prototype was specified, so lets default to whichever one was defined first
             type = _prototypeManager.EnumeratePrototypes<ExplosionPrototype>().FirstOrDefault();

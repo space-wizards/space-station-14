@@ -53,7 +53,7 @@ public sealed partial class DocumentParsingManager
 
     public bool TryAddMarkup(Control control, ProtoId<GuideEntryPrototype> entryId, bool log = true)
     {
-        if (!_prototype.TryIndex(entryId, out var entry))
+        if (!_prototype.Resolve(entryId, out var entry))
             return false;
 
         using var file = _resourceManager.ContentFileReadText(entry.Text);
