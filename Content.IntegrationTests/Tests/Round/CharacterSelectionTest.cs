@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
 using Castle.Components.DictionaryAdapter.Xml;
 using Content.Client.Lobby;
 using Content.Server.Antag;
@@ -115,6 +116,7 @@ public sealed class CharacterSelectionTest
 
     public sealed class SelectionTestData
     {
+        public string Description;
         public ProtoId<JobPrototype>? HighPrioJob;
         public List<ProtoId<JobPrototype>> MediumPrioJobs = [];
         public List<ProtoId<JobPrototype>> LowPrioJobs = [];
@@ -126,6 +128,7 @@ public sealed class CharacterSelectionTest
         {
             return new SelectionTestData()
             {
+                Description = Description,
                 HighPrioJob = HighPrioJob,
                 MediumPrioJobs = MediumPrioJobs,
                 LowPrioJobs = LowPrioJobs,
@@ -133,6 +136,11 @@ public sealed class CharacterSelectionTest
                 ExpectedJob = ExpectedJob,
                 ExpectTraitor = ExpectTraitor
             };
+        }
+
+        public TestCaseData ToTestCaseData()
+        {
+            return new TestCaseData(this).SetArgDisplayNames(Description);
         }
 
         public Dictionary<ProtoId<JobPrototype>, JobPriority> MakeJobPrioDict()
@@ -161,6 +169,7 @@ public sealed class CharacterSelectionTest
         // (note that the game mode used for these tests attempts to make every player a traitor)
         new()
         {
+            Description = "Single char, antag",
             HighPrioJob = Passenger,
             Characters =
             [
@@ -173,6 +182,7 @@ public sealed class CharacterSelectionTest
         // selected as a traitor
         new()
         {
+            Description = "Single char, unavailable job",
             HighPrioJob = Clown,
             Characters =
             [
@@ -182,6 +192,7 @@ public sealed class CharacterSelectionTest
         // disabled characters should be ignored
         new()
         {
+            Description = "Many chars, one enabled",
             MediumPrioJobs = [Passenger, Mime],
             Characters =
             [
@@ -197,6 +208,7 @@ public sealed class CharacterSelectionTest
         // adapted from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-2926983119
         new()
         {
+            Description = "Antag chars, one command",
             MediumPrioJobs = [ Captain, Passenger ],
             Characters =
             [
@@ -212,6 +224,7 @@ public sealed class CharacterSelectionTest
         // so this tests the updated behaviour
         new()
         {
+            Description = "Only antag captain enabled",
             MediumPrioJobs = [ Captain, Passenger ],
             Characters =
             [
@@ -223,6 +236,7 @@ public sealed class CharacterSelectionTest
         // Case 1 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
         // if a player has no antag-compatible jobs enabled they should not be selected as an antag
         new() {
+            Description = "Only antag captain",
             HighPrioJob = Captain,
             Characters =
             [
@@ -236,6 +250,7 @@ public sealed class CharacterSelectionTest
         // antag selection
         new()
         {
+            Description = "Many chars, one antag",
             MediumPrioJobs = [ Mime, Passenger ],
             Characters =
             [
@@ -253,11 +268,11 @@ public sealed class CharacterSelectionTest
     ];
 
     // use a function for test data so we can use classes & also test different permutations of the same characters
-    public static IEnumerable<SelectionTestData> SelectionTestCases()
+    public static IEnumerable<TestCaseData> SelectionTestCases()
     {
         foreach (var testCaseData in SelectionTestCaseData)
         {
-            yield return testCaseData;
+            yield return testCaseData.ToTestCaseData();
 
             // test different orders of characters with the same rng seed to minimize effects of rng on tests
             // (the rng seed is set in SelectionTest())
@@ -265,7 +280,7 @@ public sealed class CharacterSelectionTest
             {
                 var reversedCharacters = testCaseData.Characters.ShallowClone();
                 reversedCharacters.Reverse();
-                yield return testCaseData.WithCharacters(reversedCharacters);
+                yield return testCaseData.WithCharacters(reversedCharacters).ToTestCaseData();
             }
 
             if (testCaseData.Characters.Count > 2)
@@ -276,7 +291,7 @@ public sealed class CharacterSelectionTest
                     var movingCharacter = rotatedCharacters[0];
                     rotatedCharacters.RemoveAt(0);
                     rotatedCharacters.Add(movingCharacter);
-                    yield return testCaseData.WithCharacters(rotatedCharacters);
+                    yield return testCaseData.WithCharacters(rotatedCharacters).ToTestCaseData();
                 }
             }
         }
