@@ -1,4 +1,4 @@
-﻿# Non-fungible apes, anyone?
+# Non-fungible apes, anyone?
 - type: nameIdentifierGroup
   id: Monkey
   prefix: MK
@@ -31,7 +31,7 @@
 
 - type: nameIdentifierGroup
   id: Xenoborg
-  prefix: Xi
+  format: name-identifier-format-xenoborg
   minValue: 1000
   maxValue: 9999
 
