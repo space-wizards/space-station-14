@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/21/2025 01:56:43
-  entityCount: 27619
+  time: 07/21/2025 02:22:35
+  entityCount: 27623
 maps:
 - 1
 grids:
@@ -10884,7 +10884,7 @@ entities:
       pos: -80.5,-10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -246242.55
+      secondsUntilStateChange: -246282.06
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11899,7 +11899,7 @@ entities:
       pos: 2.5,22.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -119676.84
+      secondsUntilStateChange: -119716.37
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12036,7 +12036,7 @@ entities:
       pos: 11.5,-29.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -102890.055
+      secondsUntilStateChange: -102929.58
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -145398,6 +145398,28 @@ entities:
     components:
     - type: Transform
       pos: 1.5,33.5
+      parent: 2
+- proto: SpawnPointCargoTechnician
+  entities:
+  - uid: 27620
+    components:
+    - type: Transform
+      pos: 53.5,-19.5
+      parent: 2
+  - uid: 27621
+    components:
+    - type: Transform
+      pos: 55.5,-19.5
+      parent: 2
+  - uid: 27622
+    components:
+    - type: Transform
+      pos: 48.5,-15.5
+      parent: 2
+  - uid: 27623
+    components:
+    - type: Transform
+      pos: 47.5,-13.5
       parent: 2
 - proto: SpawnPointChaplain
   entities:
