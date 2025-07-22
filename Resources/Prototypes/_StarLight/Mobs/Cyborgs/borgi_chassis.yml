@@ -299,7 +299,14 @@
       ionStormAmount: 3
     - type: IonStormTarget
       chance: 1.0 # just like derelicts. it catches EVERY ionstorm.
-      
+
+- type: entity
+  parent: BaseStationBorgiChassis
+  id: StationBorgiChassis
+  components:
+    - type: ReplacementAccent
+      accent: dog
+
 - type: entity
   parent: BaseStationBorgiChassis
   id: SmartSubwooferBorgiChassis
