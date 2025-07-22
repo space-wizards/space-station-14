@@ -48,6 +48,8 @@ public sealed partial class AdminLogsControl : Control
 
         SetImpacts(Enum.GetValues<LogImpact>().OrderBy(impact => impact).ToArray());
         SetTypes(Enum.GetValues<LogType>());
+
+        HighlightsColorSlider.Slider.Color = Color.Red;
     }
 
     private int CurrentRound { get; set; }
@@ -107,7 +109,7 @@ public sealed partial class AdminLogsControl : Control
 
     private void LogSearchChanged(LineEditEventArgs args)
     {
-        LogSearchRegex = new Regex(Regex.Escape(LogSearch.Text), RegexOptions.IgnoreCase);
+        LogSearchRegex = new Regex("(" + Regex.Escape(LogSearch.Text) + ")", RegexOptions.IgnoreCase);
         UpdateLogs();
     }
 
@@ -247,7 +249,7 @@ public sealed partial class AdminLogsControl : Control
 
         foreach (var child in LogsContainer.Children)
         {
-            if (child is not Entries.AdminLogEntry log)
+            if (child is not AdminLogEntry log)
             {
                 continue;
             }
@@ -255,6 +257,7 @@ public sealed partial class AdminLogsControl : Control
             child.Visible = ShouldShowLog(log);
             if (child.Visible)
             {
+                log.HighlightResults(LogSearchRegex, HighlightsColorSlider.Slider.Color);
                 ShownLogs++;
             }
         }
@@ -473,7 +476,7 @@ public sealed partial class AdminLogsControl : Control
         for (var i = 0; i < span.Length; i++)
         {
             ref var log = ref span[i];
-            var entry = new Entries.AdminLogEntry(ref log);
+            var entry = new AdminLogEntry(ref log);
             entry.Visible = ShouldShowLog(entry);
 
             TotalLogs++;
@@ -529,6 +532,7 @@ public sealed partial class AdminLogsControl : Control
         SelectAllTypesButton.OnPressed -= SelectAllTypes;
         SelectNoTypesButton.OnPressed -= SelectNoTypes;
 
+        IncludeNonPlayersButton.OnPressed -= IncludeNonPlayers;
         IncludeNonPlayersButton.OnPressed -= IncludeNonPlayers;
         SelectAllPlayersButton.OnPressed -= SelectAllPlayers;
         SelectNoPlayersButton.OnPressed -= SelectNoPlayers;

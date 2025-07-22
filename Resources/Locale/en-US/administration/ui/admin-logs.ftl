@@ -2,6 +2,7 @@
 admin-logs-count = Showing {$showing}/{$total} of {$round}
 admin-logs-export = Export
 admin-logs-pop-out = Pop Out
+admin-logs-highlight = Highlight Color
 
 # Round
 admin-logs-round = Round{" "}

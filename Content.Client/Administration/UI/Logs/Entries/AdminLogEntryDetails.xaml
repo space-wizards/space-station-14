@@ -5,7 +5,7 @@
           Orientation="Horizontal"
           HorizontalExpand="True"
           StyleClasses="BackgroundDark">
-     <BoxContainer Orientation="Vertical" Margin="4">
+     <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="4">
         <BoxContainer Orientation="Vertical">
             <Label Text="{Loc admin-logs-field-type}"/>
             <Label Name="Type" Text="None" Access="Public"/>
