@@ -31,32 +31,12 @@ public abstract class SharedHolidaySystem : EntitySystem
         Subs.CVar(_configManager, CCVars.HolidaysEnabled, value => _enabled = value, true);
 
         SubscribeLocalEvent<HolidayVisualsComponent, ComponentInit>(OnVisualsInit);
-        SubscribeLocalEvent<HolidaysGotRefreshedEvent>(OnVisualsRefresh);
     }
 
     /// <summary>
-    ///     Sets an enum for what holiday(s) it is.
+    ///     Sets an enum key for the first list of holidays found.
     /// </summary>
     private void OnVisualsInit(Entity<HolidayVisualsComponent> ent, ref ComponentInit args)
-    {
-        SetVisualData(ent);
-    }
-
-    /// <summary>
-    ///     Resets an enum for what holiday(s) it is on all entities with <see cref="HolidayVisualsComponent"/>.
-    /// </summary>
-    private void OnVisualsRefresh(ref HolidaysGotRefreshedEvent args)
-    {
-        // This doesn't feel right...
-        var query = AllEntityQuery<HolidayVisualsComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            _appearance.RemoveData(uid, HolidayVisuals.Holiday);
-            SetVisualData((uid, comp));
-        }
-    }
-
-    private void SetVisualData(Entity<HolidayVisualsComponent> ent)
     {
         foreach (var (key, holidays) in ent.Comp.Holidays)
         {
