@@ -17,6 +17,14 @@
     allowRepeatedMorphs: true
 
 - type: polymorph
+  id: AdminScurretSmite
+  configuration:
+    entity: MobScurret
+    forced: true
+    inventory: Drop
+    allowRepeatedMorphs: true
+
+- type: polymorph
   id: AdminBreadSmite
   configuration:
     entity: FoodBreadPlain
