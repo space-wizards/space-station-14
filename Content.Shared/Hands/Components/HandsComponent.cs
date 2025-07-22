@@ -111,9 +111,6 @@ public sealed partial class HandsComponent : Component
     public bool ReceivingOffer;
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public string? OfferHand;
-
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? OfferItem;
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]

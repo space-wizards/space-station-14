@@ -1,13 +1,11 @@
 using Content.Shared.Alert;
 using Content.Shared.Hands.Components;
-using Content.Shared.Input;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Hands.EntitySystems;
@@ -16,18 +14,26 @@ public abstract partial class SharedHandsSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly INetManager _net = default!;
     private ProtoId<AlertPrototype> OfferAlert = "Offer";
 
     private void InitializeOffer()
     {
         SubscribeLocalEvent<HandsComponent, MoveEvent>(OnMove);
-        SubscribeLocalEvent<HandsComponent, GetVerbsEvent<InnateVerb>>(OfferItemVerb);
+
+        SubscribeLocalEvent<ItemComponent, GotUnequippedHandEvent>(OnUnequipHand);
+
+        if (_net.IsServer) // Wow! This is bullshit but im not making a script to ServerSide.
+            SubscribeLocalEvent<ItemComponent, DroppedEvent>(OnDropped);
+
         SubscribeLocalEvent<HandsComponent, OfferItemAlertEvent>(OnOfferItemAlertEvent);
+
+        SubscribeLocalEvent<HandsComponent, GetVerbsEvent<Verb>>(OfferItemVerb);
     }
 
     private void OnOfferItemAlertEvent(Entity<HandsComponent> ent, ref OfferItemAlertEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || _net.IsClient)
             return;
 
         AcceptOffer(ent.Owner, ent.Comp);
@@ -40,152 +46,108 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!Resolve(uid, ref handsComp, false))
             return;
 
+        if (TryComp<HandsComponent>(handsComp.OfferTarget, out var targetHands))
+            targetHands.ReceivingOffer = true;
+
         if (handsComp.OfferItem is not null)
         {
             if (!TryPickupAnyHand(uid, handsComp.OfferItem.Value))
             {
-                _popupSystem.PopupEntity(Loc.GetString("hands-full"), uid);
+                _popupSystem.PopupEntity(Loc.GetString("hands-full"), uid, uid);
                 return;
             }
 
-            _popupSystem.PopupEntity(Loc.GetString("offered", ("item", handsComp.OfferItem)), uid);
-
             if (handsComp.OfferTarget is not null)
-                _popupSystem.PopupEntity(Loc.GetString("offered-target", ("item", handsComp.OfferItem), ("user", uid)), handsComp.OfferTarget.Value);
+            {
+                _popupSystem.PopupEntity(Loc.GetString("offered-target", ("item", handsComp.OfferItem), ("user", handsComp.OfferTarget.Value)), handsComp.OfferTarget.Value, uid);
+                _popupSystem.PopupEntity(Loc.GetString("offered", ("item", handsComp.OfferItem)), handsComp.OfferTarget.Value, handsComp.OfferTarget.Value);
+                EndOffer(handsComp.OfferTarget.Value, targetHands ?? null, false);
+            }
         }
 
-        UnOfferItem(uid, handsComp);
+        EndOffer(uid, handsComp, false);
     }
 
-    private void OfferItemVerb(EntityUid uid, HandsComponent component, GetVerbsEvent<InnateVerb> args)
+    private void OfferItemVerb(EntityUid uid, HandsComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!args.CanInteract
-            || !args.CanAccess
-            || args.User == args.Target
-            || HasComp<HandsComponent>(args.Target))
+        if (!args.CanAccess || !args.CanInteract || args.User == args.Target
+            || args.Using is null || HasComp<UnremoveableComponent>(args.Using)
+            || component.Offering || component.ReceivingOffer
+            || !TryComp<HandsComponent>(args.User, out var targetHands)
+            || targetHands.Offering || targetHands.ReceivingOffer)
             return;
 
-        InnateVerb verbOfferItem = new()
+        args.Verbs.Add(new Verb()
         {
-            Act = () => OfferItem(args.User, args.Target, component),
-            Text = Loc.GetString("alerts-offer-name")
-        };
-        args.Verbs.Add(verbOfferItem);
+            Act = () => OfferItem(args.User, uid, targetHands, component),
+            DoContactInteraction = true,
+            Text = Loc.GetString("offer", ("item", args.Using)),
+            IconEntity = GetNetEntity(args.Using)
+        });
     }
-    // public void TryOfferingItem(EntityUid uid, HandsComponent? handsComp = null)
-    // {
-    //     if (!Resolve(uid, ref handsComp))
-    //         return;
 
-    //     if (!_actionBlocker.CanInteract(uid, null)
-    //         || handsComp.ActiveHand is null)
-    //         return;
-
-    //     handsComp.OfferItem = handsComp.ActiveHandEntity;
-
-    //     if (!handsComp.Offering)
-    //     {
-    //         if (handsComp.OfferItem is null)
-    //             return;
-    //         if (HasComp<UnremoveableComponent>(handsComp.OfferItem))
-    //             return;
-
-    //         if (handsComp.OfferHand is null || handsComp.OfferTarget is null)
-    //         {
-    //             handsComp.Offering = true;
-    //             handsComp.OfferHand = handsComp.ActiveHand.Name;
-    //             return;
-    //         }
-    //     }
-
-    //     if (handsComp.OfferTarget is not null)
-    //         UnOfferItem(handsComp.OfferTarget.Value);
-    // }
-
-    private bool OfferItem(EntityUid uid, EntityUid target, HandsComponent? handsComp = null, HandsComponent? targetHands = null)
+    /// <summary>
+    /// Offer the ActiveHandEntity to the target (if they have a HandsComponent)
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="target"></param>
+    /// <param name="handsComp"></param>
+    /// <param name="targetHands"></param>
+    public void OfferItem(EntityUid uid, EntityUid target, HandsComponent? handsComp = null, HandsComponent? targetHands = null)
     {
         if (!Resolve(uid, ref handsComp, false)
-            || !Resolve(target, ref targetHands, false))
-            return false;
+            || !Resolve(target, ref targetHands, false)
+            || handsComp.ActiveHandEntity is null)
+            return;
 
-        if (target == uid
-            || targetHands.ReceivingOffer
-            || !handsComp.Offering
-            || (handsComp.ReceivingOffer && handsComp.OfferTarget != uid))
-            return false;
+        handsComp.OfferItem = handsComp.ActiveHandEntity;
+        targetHands.OfferItem = handsComp.ActiveHandEntity;
+
+        handsComp.Offering = true;
+        handsComp.OfferTarget = target;
 
         targetHands.ReceivingOffer = true;
-        targetHands.OfferTarget = target;
-        targetHands.OfferItem = handsComp.OfferItem;
+        targetHands.OfferTarget = uid;
 
-        handsComp.OfferTarget = uid;
-        handsComp.Offering = false;
+        _alertsSystem.ShowAlert(target, OfferAlert);
 
-        if (handsComp.OfferItem is not null)
+        if (_net.IsServer)
         {
-            _popupSystem.PopupEntity(Loc.GetString("offering", ("item", handsComp.OfferItem), ("target", handsComp.OfferTarget)), uid);
-            _popupSystem.PopupEntity(Loc.GetString("offering-target", ("item", handsComp.OfferItem), ("user", uid)), target);
+            _popupSystem.PopupEntity(Loc.GetString("offering", ("item", handsComp.ActiveHandEntity), ("target", target)), uid, uid);
+            _popupSystem.PopupEntity(Loc.GetString("offering-target", ("item", handsComp.ActiveHandEntity), ("user", uid)), uid, target);
         }
-
-        return true;
     }
 
-    public void UnOfferItem(EntityUid uid, HandsComponent? handsComp = null)
+    /// <summary>
+    /// End the Offer, this can be used to cancel or end the process.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="handsComp"></param>
+    public void EndOffer(EntityUid uid, HandsComponent? handsComp = null, bool? popups = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return;
 
-        if (handsComp.OfferTarget is not null && TryComp<HandsComponent>(handsComp.OfferTarget, out var targetHands))
+        if (popups ?? true)
         {
             if (handsComp.OfferItem is not null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("unoffer", ("item", handsComp.OfferItem)), uid);
-                _popupSystem.PopupEntity(Loc.GetString("unoffer-target", ("item", handsComp.OfferItem), ("user", uid)), handsComp.OfferTarget.Value);
+                if (handsComp.ReceivingOffer)
+                {
+                    if (handsComp.OfferTarget is not null)
+                        _popupSystem.PopupEntity(Loc.GetString("unoffer-target", ("item", handsComp.OfferItem), ("user", handsComp.OfferTarget)), handsComp.OfferTarget.Value, uid);
+                }
+                else
+                    _popupSystem.PopupEntity(Loc.GetString("unoffer", ("item", handsComp.OfferItem)), uid, uid);
             }
-            else if (targetHands.OfferItem is not null)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("unoffer", ("item", targetHands.OfferItem)), uid);
-                _popupSystem.PopupEntity(Loc.GetString("unoffer-target", ("item", targetHands.OfferItem), ("user", uid)), handsComp.OfferTarget.Value);
-            }
-
-            targetHands.Offering = false;
-            targetHands.ReceivingOffer = false;
-            targetHands.OfferHand = null;
-            targetHands.OfferItem = null;
-            targetHands.OfferTarget = null;
         }
+
+        _alertsSystem.ClearAlert(uid, OfferAlert);
 
         handsComp.Offering = false;
         handsComp.ReceivingOffer = false;
-        handsComp.OfferHand = null;
         handsComp.OfferItem = null;
         handsComp.OfferTarget = null;
-    }
-
-    public void UnReviceItem(EntityUid uid, EntityUid target, HandsComponent? handsComp = null, HandsComponent? targetHands = null)
-    {
-        if (!Resolve(uid, ref handsComp, false)
-            || !Resolve(target, ref targetHands, false))
-            return;
-
-        if (handsComp.ActiveHand is null || handsComp.OfferTarget is null)
-            return;
-
-        if (handsComp.OfferItem is not null)
-        {
-            _popupSystem.PopupEntity(Loc.GetString("unoffer", ("item", handsComp.OfferItem)), uid);
-            _popupSystem.PopupEntity(Loc.GetString("unoffer-target", ("item", handsComp.OfferItem), ("user", uid)), handsComp.OfferTarget.Value);
-        }
-
-        if (!handsComp.ReceivingOffer)
-        {
-            handsComp.OfferTarget = null;
-            targetHands.OfferTarget = null;
-        }
-
-        handsComp.OfferItem = null;
-        targetHands.OfferItem = null;
-        handsComp.ReceivingOffer = false;
     }
 
     private void OnMove(EntityUid uid, HandsComponent handsComp, MoveEvent args)
@@ -193,34 +155,32 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (handsComp.OfferTarget is null || TransformSystem.InRange(args.NewPosition, Transform(handsComp.OfferTarget.Value).Coordinates, 2f))
             return;
 
-        UnOfferItem(uid, handsComp);
+        EndOffer(handsComp.OfferTarget.Value);
+        EndOffer(uid, handsComp);
     }
 
-    public override void Update(float frameTime)
+    private void OnDropped(EntityUid uid, ItemComponent item, DroppedEvent args)
     {
-        base.Update(frameTime);
+        if (!TryComp<HandsComponent>(args.User, out var handComp) || !handComp.Offering || handComp.OfferItem != uid)
+            return;
 
-        var query = EntityQueryEnumerator<HandsComponent>();
-        while (query.MoveNext(out var uid, out var handsComp))
-        {
-            if (handsComp.ReceivingOffer)
-                _alertsSystem.ShowAlert(uid, OfferAlert);
-            else
-                _alertsSystem.ClearAlert(uid, OfferAlert);
+        if (handComp.OfferTarget is not null)
+            EndOffer(handComp.OfferTarget.Value);
 
-            if (handsComp.ActiveHand is null)
-                continue;
+        EndOffer(args.User, handComp);
+    }
 
-            if (handsComp.OfferHand is not null && handsComp.Hands[handsComp.OfferHand].HeldEntity is null)
-            {
-                if (handsComp.OfferTarget is not null)
-                {
-                    UnReviceItem(handsComp.OfferTarget.Value, uid, handsComp);
-                    handsComp.Offering = false;
-                }
-                else
-                    UnOfferItem(uid, handsComp);
-            }
-        }
+    private void OnUnequipHand(EntityUid uid, ItemComponent item, GotUnequippedHandEvent args)
+    {
+        if (_net.IsClient || !TryComp<HandsComponent>(args.User, out var handComp) || !handComp.Offering || handComp.OfferItem != uid)
+            return;
+
+        if (handComp.Offering && handComp.ReceivingOffer) // This check is to make sure OnUnequipHand when AcceptOffer, Silly but works!
+            return;
+
+        if (handComp.OfferTarget is not null)
+            EndOffer(handComp.OfferTarget.Value);
+
+        EndOffer(args.User, handComp);
     }
 }
