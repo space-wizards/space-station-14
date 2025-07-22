@@ -6,7 +6,6 @@
   recipes:
   - MMI
   - PositronicBrain
-  - AiRemoteBrain # Corvax-Next-AiRemoteControl
   - SciFlash
   - CyborgEndoskeleton
 
@@ -33,6 +32,7 @@
   id: Robotics
   recipes:
   - ProximitySensor
+  - AiRemoteBrain # Corvax-Next-AiRemoteControl
 
 - type: latheRecipePack
   id: BorgModules
