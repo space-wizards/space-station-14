@@ -1,3 +1,4 @@
+// Modifications ported by Ronstation from CorvaxNext, therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
@@ -7,6 +8,7 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Emag.Systems;
 using Robust.Shared.Utility;
+using Content.Shared._CorvaxNext.Silicons.Borgs.Components;
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -47,7 +49,8 @@ public sealed partial class BorgSystem
                 charge,
                 chassis.ModuleCount,
                 hasBrain,
-                canDisable);
+                canDisable,
+                HasComp<AiRemoteControllerComponent>(uid)); // Corvax-Next-AiRemoteControl
 
             var payload = new NetworkPayload()
             {

@@ -1,3 +1,4 @@
+# Modifications ported by Ronstation from CorvaxNext, therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Tier 1
 
 - type: technology
@@ -11,6 +12,7 @@
   cost: 5000
   recipeUnlocks:
   - ProximitySensor
+  - AiRemoteBrain # Corvax-Next-AiRemoteControl
 
 - type: technology
   id: BasicAnomalousResearch

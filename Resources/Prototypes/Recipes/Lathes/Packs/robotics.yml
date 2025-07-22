@@ -1,3 +1,4 @@
+# Modifications ported by Ronstation from CorvaxNext, therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 ## Static
 
 - type: latheRecipePack
@@ -5,6 +6,7 @@
   recipes:
   - MMI
   - PositronicBrain
+  - AiRemoteBrain # Corvax-Next-AiRemoteControl
   - SciFlash
   - CyborgEndoskeleton
 

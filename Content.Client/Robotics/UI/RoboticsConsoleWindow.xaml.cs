@@ -1,3 +1,4 @@
+// Modifications ported by Ronstation from CorvaxNext, therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Lock;
@@ -76,6 +77,16 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         // clear invalid selection
         if (_selected is {} selected && !_cyborgs.ContainsKey(selected))
             _selected = null;
+
+        // Corvax-Next-AiRemoteControl-Start
+        var isAiControllable = false;
+
+        if (_selected != null)
+        {
+            _cyborgs.TryGetValue(_selected, out var data);
+            isAiControllable = data.IsAiControllable;
+        }
+        // Corvax-Next-AiRemoteControl-End
 
         var hasCyborgs = _cyborgs.Count > 0;
         NoCyborgs.Visible = !hasCyborgs;

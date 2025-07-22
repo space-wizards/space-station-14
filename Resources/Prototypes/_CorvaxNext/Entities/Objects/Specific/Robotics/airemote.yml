@@ -1,0 +1,15 @@
+- type: entity
+  parent: BaseItem
+  id: AiRemoteBrain
+  name: "B.O.R.I.S. AI-Cyborg Remote Control"
+  description: Artificial Intelligence cyborg control board.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: boris
+    - type: Examiner
+    - type: AiRemoteBrain
+    - type: Actions
+    - type: Tag
+      tags:
+      - CannotSuicide
