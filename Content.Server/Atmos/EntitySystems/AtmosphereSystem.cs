@@ -3,17 +3,27 @@ using Content.Server.Atmos.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer.Nodes;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Decals;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
+using Content.Shared.NodeContainer;
+using Content.Shared.Radiation.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Server.Spawners;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Spawners;
+using Serilog;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -37,6 +47,9 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] public readonly PuddleSystem Puddle = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly TritiumRadiationSourceSystem _tritiumRadSystem = default!;
+    [Dependency] private readonly TimedDespawnSystem _timedDespawnSystem = default!;
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
@@ -123,5 +136,149 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     private void CacheDecals()
     {
         _burntDecals = _protoMan.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("burnt")).Select(x => x.ID).ToArray();
+    }
+    public void ActivateTritiumFire(IGasMixtureHolder? holder, float burnedFuel)
+    {
+        if (holder == null || burnedFuel <= 0)
+            return;
+
+        if (holder is PipeNet pipeNet) // Catches PipeNode, PortablePipeNode, etc.
+        {
+            if (burnedFuel > 0)
+            {
+                foreach (var node in pipeNet.Nodes)
+                {
+                    var radSource = EnsureComp<RadiationSourceComponent>(node.Owner);
+                    var timer = EnsureComp<TritiumRadiationSourceComponent>(node.Owner);
+
+                    radSource.Intensity = burnedFuel * Atmospherics.TritiumRadiationFactor / pipeNet.NodeCount;
+                    radSource.Slope = 1.0f;
+                    timer.Lifetime = 2.0f;
+                }
+            }
+            return;
+        }
+
+        if (holder is IComponent component)
+        {
+            var radSource = EnsureComp<RadiationSourceComponent>(component.Owner);
+            var timer = EnsureComp<TritiumRadiationSourceComponent>(component.Owner);
+
+            radSource.Intensity = burnedFuel * Atmospherics.TritiumRadiationFactor;
+            radSource.Slope = 1.0f;
+            timer.Lifetime = 2.0f;
+            return;
+        }
+
+        if (holder is TileAtmosphere tile)
+        {
+            if (!_entityManager.EntityExists(tile.RadiationSource))
+            {
+                var coords = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
+                tile.RadiationSource = _entityManager.SpawnEntity(null, coords);
+            }
+
+            var radSource = EnsureComp<RadiationSourceComponent>(tile.RadiationSource.Value);
+            radSource.Intensity = burnedFuel * Atmospherics.TritiumRadiationFactor;
+            radSource.Slope = 1.0f;
+
+            var timedDespawn = EnsureComp<TimedDespawnComponent>(tile.RadiationSource.Value);
+            timedDespawn.Lifetime = 2f;
+        }
+    }
+
+    /// <summary>
+    /// Handles radiation emission for tritium combustion.
+    /// This will either add/remove a RadiationSourceComponent on the holder entity,
+    /// or spawn/despawn a temporary entity for tile-based fires.
+    /// This is now universal and handles components, nodes (pipes), and tiles.
+    /// </summary>
+    /// <param name="holder">The object holding the gas mixture.</param>
+    /// <param name="burnedFuel">The amount of tritium burned this tick.</param>
+    public void HandleTritiumFire(IGasMixtureHolder? holder, float burnedFuel)
+    {
+        if (holder == null)
+            return;
+        EntityUid? ownerEntity = null;
+
+        Logger.Info(holder.ToString() + " placeholder");
+
+        // Determine the responsible entity based on the holder type
+        if (holder is PipeNet pipeNet) // Catches PipeNode, PortablePipeNode, etc.
+        {
+            Logger.Info("if (holder is IComponent node) " + pipeNet.Nodes[0].Owner.ToString() + " " + ownerEntity.HasValue);
+
+            if (burnedFuel > 0)
+            {
+                foreach (var node in pipeNet.Nodes)
+                {   // Ensure the component exists and update its intensity.
+                    var radSource = EnsureComp<RadiationSourceComponent>(node.Owner);
+                    radSource.Intensity = burnedFuel * Atmospherics.TritiumRadiationFactor / pipeNet.NodeCount;
+                    radSource.Slope = 1.0f; // Keep radiation localized
+                }
+            }
+            else
+            {
+                foreach (var node in pipeNet.Nodes)
+                {   // Fire is out, remove the radiation source component.
+                    RemComp<RadiationSourceComponent>(node.Owner);
+                }
+            }
+            return;
+        }
+
+        // Case 1: The holder is owned by an entity (pipes, tanks, portables).
+        if (holder is IComponent component)
+        {
+            if (burnedFuel > 0)
+            {
+                // Ensure the component exists and update its intensity.
+                var radSource = EnsureComp<RadiationSourceComponent>(component.Owner);
+                radSource.Intensity = burnedFuel * Atmospherics.TritiumRadiationFactor;
+                radSource.Slope = 1.0f; // Keep radiation localized
+            }
+            else
+            {
+                // Fire is out, remove the radiation source component.
+                RemComp<RadiationSourceComponent>(component.Owner);
+            }
+            return;
+        }
+
+        // Case 2: The holder is a TileAtmosphere. Tiles are not entities.
+        // We must use a temporary entity as a radiation source.
+        if (holder is TileAtmosphere tile)
+        {
+            if (burnedFuel > 0)
+            {
+                // Ensure a temporary entity exists.
+                if (!_entityManager.EntityExists(tile.RadiationSource))
+                {
+                    var coords = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
+                    tile.RadiationSource = _entityManager.SpawnEntity(null, coords);
+                }
+
+                // Add or update the RadiationSourceComponent on the temporary entity.
+                var radSource = EnsureComp<RadiationSourceComponent>(tile.RadiationSource.Value);
+                radSource.Intensity = burnedFuel * Atmospherics.TritiumRadiationFactor;
+                radSource.Slope = 1.0f;
+            }
+            else
+            {
+                // Fire is out, delete the temporary entity.
+                if (_entityManager.EntityExists(tile.RadiationSource))
+                {
+                    _entityManager.QueueDeleteEntity(tile.RadiationSource.Value);
+                }
+                tile.RadiationSource = null;
+            }
+            return;
+        }
+
+        // Fallback for any unhandled IGasMixtureHolder types.
+        if (burnedFuel <= 0)
+            return;
+
+        Log.Warning($"Unhandled IGasMixtureHolder type in HandleTritiumFire: {holder.GetType().Name}");
     }
 }
