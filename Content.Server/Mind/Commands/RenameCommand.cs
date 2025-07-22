@@ -6,6 +6,7 @@ using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Mind.Commands;
 
@@ -51,11 +52,14 @@ public sealed class RenameCommand : LocalizedEntityCommands
         if (!TryParseUid(args[0], shell, _entManager, out var entityUid, adminName, adminUid))
             return;
 
-        var oldName = _entManager.GetComponent<MetaDataComponent>(entityUid.Value).EntityName ?? "unnamed";
-
-        _metaSystem.SetEntityName(entityUid.Value, name);
-
-        var entityId = entityUid.Value.ToString();
+        if (entityUid == null)
+        {
+            throw new InvalidOperationException("entityUid should never be null here.");
+        }
+        var uid = entityUid.Value;
+        var oldName = _entManager.GetComponent<MetaDataComponent>(uid).EntityName ?? "unnamed";
+        _metaSystem.SetEntityName(uid, name);
+        var entityId = uid.ToString();
         var newName = string.IsNullOrEmpty(name) ? "unnamed" : name;
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
@@ -63,7 +67,7 @@ public sealed class RenameCommand : LocalizedEntityCommands
     }
 
     private bool TryParseUid(string str, IConsoleShell shell,
-        IEntityManager entMan, [NotNullWhen(true)] out EntityUid? entityUid,
+        IEntityManager entMan, out EntityUid? entityUid,
         string? adminName = null, string? adminUid = null)
     {
         if (NetEntity.TryParse(str, out var entityUidNet) && _entManager.TryGetEntity(entityUidNet, out entityUid) && entMan.EntityExists(entityUid))
