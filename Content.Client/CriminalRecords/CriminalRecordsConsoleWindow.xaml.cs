@@ -33,8 +33,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     public readonly EntityUid Console;
 
-    [ValidatePrototypeId<LocalizedDatasetPrototype>]
-    private const string ReasonPlaceholders = "CriminalRecordsWantedReasonPlaceholders";
+    private static readonly ProtoId<LocalizedDatasetPrototype> ReasonPlaceholders = "CriminalRecordsWantedReasonPlaceholders";
 
     public Action<uint?>? OnKeySelected;
     public Action<StationRecordFilterType, string>? OnFiltersChanged;
@@ -296,7 +295,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
         var field = "reason";
         var title = Loc.GetString("criminal-records-status-" + status.ToString().ToLower());
-        var placeholders = _proto.Index<LocalizedDatasetPrototype>(ReasonPlaceholders);
+        var placeholders = _proto.Index(ReasonPlaceholders);
         var placeholder = Loc.GetString("criminal-records-console-reason-placeholder", ("placeholder", _random.Pick(placeholders))); // just funny it doesn't actually get used
         var prompt = Loc.GetString("criminal-records-console-reason");
         var entry = new QuickDialogEntry(field, QuickDialogEntryType.LongText, prompt, placeholder);

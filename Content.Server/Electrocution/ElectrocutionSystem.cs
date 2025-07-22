@@ -58,12 +58,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
 
-    [ValidatePrototypeId<StatusEffectPrototype>]
-    private const string StatusEffectKey = "Electrocution";
-
-    [ValidatePrototypeId<DamageTypePrototype>]
-    private const string DamageType = "Shock";
-
+    private static readonly ProtoId<StatusEffectPrototype> StatusEffectKey = "Electrocution";
+    private static readonly ProtoId<DamageTypePrototype> DamageType = "Shock";
     private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 
     // Multiply and shift the log scale for shock damage.
@@ -401,14 +397,19 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         var shouldStun = siemensCoefficient > 0.5f;
 
         if (shouldStun)
-            _stun.TryParalyze(uid, time * ParalyzeTimeMultiplier, refresh, statusEffects);
+        {
+            _ = refresh
+                ? _stun.TryUpdateParalyzeDuration(uid, time * ParalyzeTimeMultiplier)
+                : _stun.TryAddParalyzeDuration(uid, time * ParalyzeTimeMultiplier);
+        }
+            
 
         // TODO: Sparks here.
 
         if (shockDamage is { } dmg)
         {
             var actual = _damageable.TryChangeDamage(uid,
-                new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), dmg), origin: sourceUid);
+                new DamageSpecifier(_prototypeManager.Index(DamageType), dmg), origin: sourceUid);
 
             if (actual != null)
             {
