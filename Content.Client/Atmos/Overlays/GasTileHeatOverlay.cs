@@ -62,7 +62,6 @@ public sealed class GasTileHeatOverlay : Overlay
                 name: $"{nameof(GasTileHeatOverlay)}-blur");
         }
 
-        var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
         var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
 
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
@@ -82,9 +81,6 @@ public sealed class GasTileHeatOverlay : Overlay
                 foreach (var grid in grids)
                 {
                     if (!overlayQuery.TryGetComponent(grid.Owner, out var comp))
-                        return;
-
-                    if (!xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         return;
 
                     var gridEntToWorld = _xformSys.GetWorldMatrix(grid.Owner);
