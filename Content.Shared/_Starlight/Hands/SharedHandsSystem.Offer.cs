@@ -16,19 +16,13 @@ public abstract partial class SharedHandsSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly INetManager _net = default!;
     private ProtoId<AlertPrototype> OfferAlert = "Offer";
 
     private void InitializeOffer()
     {
-        SubscribeLocalEvent<HandsComponent, InteractUsingEvent>(OnInteractUsingEvent);
         SubscribeLocalEvent<HandsComponent, MoveEvent>(OnMove);
         SubscribeLocalEvent<HandsComponent, GetVerbsEvent<InnateVerb>>(OfferItemVerb);
         SubscribeLocalEvent<HandsComponent, OfferItemAlertEvent>(OnOfferItemAlertEvent);
-
-        CommandBinds.Builder
-            .Bind(ContentKeyFunctions.OfferItemInHand, InputCmdHandler.FromDelegate(OfferItemInHand, handle: false, outsidePrediction: false))
-            .Register<SharedHandsSystem>();
     }
 
     private void OnOfferItemAlertEvent(Entity<HandsComponent> ent, ref OfferItemAlertEvent args)
@@ -43,9 +37,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
     private void AcceptOffer(EntityUid uid, HandsComponent? handsComp = null)
     {
-        if (!_net.IsServer)
-            return;
-
         if (!Resolve(uid, ref handsComp, false))
             return;
 
@@ -81,50 +72,35 @@ public abstract partial class SharedHandsSystem : EntitySystem
         };
         args.Verbs.Add(verbOfferItem);
     }
+    // public void TryOfferingItem(EntityUid uid, HandsComponent? handsComp = null)
+    // {
+    //     if (!Resolve(uid, ref handsComp))
+    //         return;
 
-    private void OfferItemInHand(ICommonSession? session)
-    {
-        if (session?.AttachedEntity != null)
-            TryOfferingItem(session.AttachedEntity.Value);
-    }
+    //     if (!_actionBlocker.CanInteract(uid, null)
+    //         || handsComp.ActiveHand is null)
+    //         return;
 
-    public void TryOfferingItem(EntityUid uid, HandsComponent? handsComp = null)
-    {
-        if (!Resolve(uid, ref handsComp))
-            return;
+    //     handsComp.OfferItem = handsComp.ActiveHandEntity;
 
-        if (!_actionBlocker.CanInteract(uid, null)
-            || handsComp.ActiveHand is null)
-            return;
+    //     if (!handsComp.Offering)
+    //     {
+    //         if (handsComp.OfferItem is null)
+    //             return;
+    //         if (HasComp<UnremoveableComponent>(handsComp.OfferItem))
+    //             return;
 
-        handsComp.OfferItem = handsComp.ActiveHandEntity;
+    //         if (handsComp.OfferHand is null || handsComp.OfferTarget is null)
+    //         {
+    //             handsComp.Offering = true;
+    //             handsComp.OfferHand = handsComp.ActiveHand.Name;
+    //             return;
+    //         }
+    //     }
 
-        if (!handsComp.Offering)
-        {
-            if (handsComp.OfferItem is null)
-                return;
-            if (HasComp<UnremoveableComponent>(handsComp.OfferItem))
-                return;
-
-            if (handsComp.OfferHand is null || handsComp.OfferTarget is null)
-            {
-                handsComp.Offering = true;
-                handsComp.OfferHand = handsComp.ActiveHand.Name;
-                return;
-            }
-        }
-
-        if (handsComp.OfferTarget is not null)
-            UnOfferItem(handsComp.OfferTarget.Value);
-    }
-
-    private void OnInteractUsingEvent(EntityUid uid, HandsComponent component, InteractUsingEvent args)
-    {
-        if (!OfferItem(args.User, uid, null, component))
-            return;
-
-        args.Handled = true;
-    }
+    //     if (handsComp.OfferTarget is not null)
+    //         UnOfferItem(handsComp.OfferTarget.Value);
+    // }
 
     private bool OfferItem(EntityUid uid, EntityUid target, HandsComponent? handsComp = null, HandsComponent? targetHands = null)
     {
@@ -223,9 +199,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
-        if (!_net.IsServer)
-            return;
 
         var query = EntityQueryEnumerator<HandsComponent>();
         while (query.MoveNext(out var uid, out var handsComp))
