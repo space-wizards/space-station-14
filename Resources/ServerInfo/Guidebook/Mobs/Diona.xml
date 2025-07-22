@@ -1,38 +1,43 @@
 <Document>
-  # Diona
-
+  # Дионы
   <Box>
     <GuideEntityEmbed Entity="MobDiona" Caption=""/>
   </Box>
 
-  They can't wear shoes, but are not slowed by Kudzu.
-  They get hungry and thirsty slower.
-  Their "blood" is tree sap and can't be metabolised from Iron.
-  Being plants, Weed Killer poisons them, while Robust Harvest heals them (but not without risk when overused!)
+  Диона - это сплетение разумных нимфоподобных существ (далее - нимф) образующих собой единоличное существо с общими потребностями и разумом. Дионы адаптивные существа основная цель которых - познать мир вокруг себя. По своей сути это разумные, добрые и социальные растения.
 
-  They take [color=#1e90ff]30% less Blunt damage and 20% less Slash damage[/color];
-  but [color=#ffa500]50% more Heat damage, 20% more Shock damage, and they can easily
-  catch on fire when receiving enough Heat damage from *any* source.[/color]
-
-  ## Make Like A Tree And Leave
+  ## Превратись в Дерево
   <Box>
     <GuideEntityEmbed Entity="FloraTree" Caption=""/>
   </Box>
-  Being exposed to too much Robust Harvest will cause a Diona to grow out of control, turning into an immobile tree (dropping all their equipment).
-  Cutting down the tree will "restore" the Diona to their mobile state.
+  Под воздействием слишком большого количества Робаст харвеста Диона начинает неуправляемо расти, превращаясь в неподвижное дерево (сбрасывая всё своё снаряжение).
+  После вырубки дерева Диона "восстанавливается" в своё подвижное состояние.
 
-  ## Diona Nymphs
+  ## Нимфы
   <Box>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
   </Box>
-  After death, a Diona can voluntarily destroy their own body, releasing their "internal organs" as three Nymphs,
-  with the player taking control of the Brain Nymph.
-  It can talk but has no hands or inventory, and can't do much.
+  После смерти, Диона может добровольно уничтожить собственное тело, превращая свои внутренние органы в трех нимф.
+  Игрок получает управление над нимфой-мозгом. Она может говорить, но у неё нет рук или инвентаря.
 
-  After 10 minutes, a Nymph can reform into a whole Diona. This will be a new randomised body with a random name,
-  and there will be little to no evidence beyond their word about who they were before.
+  Посла 10 минут, нимфа может реформироваться в новую диону. Это будет случайное тело со случайным именем. 
+  Не останется практически и следа от того, чем нимфа была раньше.
 
+  ## Расовые особенности
+
+  - Получают [color=#ffa500]на 50% больше урона огнём и 20% электричеством[/color], но [color=#1e90ff]на 30% меньше тупого и на 20% меньше режущего урона[/color].
+  - Cкорость метаболизма - 0.05 единиц за тик. Это означает, что они усваивают всё намного медленнее, чем другие расы. (Самый медленный метаболизм из всех)
+  - Органы работают иначе: Мозг выполняет свои функции и работает, как легкие, сердце и печень у них отсутствуют, поэтому их функции выполняет желудок. Максимальное количество веществ в желудке - 6. Желудок объединяет максимальные вещества: от сердца человека (2), от желудка человека (3) и от печени (1). Их желудок переваривает еду, напитки, лекарства, яды, наркотики, алкоголь, всё опять же из-за объединения органов
+  - Получают урон от голода кровотечением по [color=red]0.5[/color] единице в секунду.
+  - Голодают и испытывают жажду [color=#1e90ff]на ~50% медленней.[/color]
+  - Не может бить врукопашную, но может стрелять.
+  - Могут дышать углекислым газом.
+  - Дышат реже в 2 раза, следовательно без воздуха/углекислого газа получают по [color=red]0.5[/color] урона удушьем.
+  - Вместо крови у них древесный сок, при кровотечении истекают им же.
+  - Так как дионы растения, они могут употреблять удобрения в качестве лекарств и гербициды в качестве отравы.
+  - Не могут носить обувь.
+  - Можно разделать на крюке и получить 5 мяса растения.
 
 </Document>

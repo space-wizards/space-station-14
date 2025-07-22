@@ -1,0 +1,17 @@
+ent-AtmosFixBlockerMarker = Атмос Маркер Вакуум
+    .desc = Вакуум, T20C
+ent-AtmosFixOxygenMarker = Атмос Маркер Кислород
+    .desc = Кислород @ давление газодобытчика, T20C
+ent-AtmosFixNitrogenMarker = Атмос Маркер Нитроген
+    .desc = Нитроген @ давление газодобытчика, T20C
+ent-AtmosFixPlasmaMarker = Атмос Маркер Плазма
+    .desc = Плазма @ давление газодобытчика, T20C
+ent-AtmosFixInstantPlasmaFireMarker = Атмос Маркер Мгновенный Плазменный-огонь
+    .desc = МГНОВЕННАЯ ГОРЯЩАЯ ПЛАЗМА
+ent-AtmosFixFreezerMarker = Атмос Маркер Холодильник
+    .desc = Меняет температуру на 235K, для морозильной камеры с небольшим пространством для маневрирования.
+ent-AtmosFixVoxMarker = { ent-AtmosFixNitrogenMarker }
+    .desc = Нитроген @ 101 kPa, 20C
+    .suffix = Атмосфера Воксов
+ent-AtmosFixAirMarker = Атмос Маркер Воздух
+    .desc = Кислород (21%) и нитроген (79%) @ давление газодобытчика, T20C

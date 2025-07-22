@@ -1,29 +1,47 @@
 <Document>
-  # Salvage
+# Утилизация обломков
 
-  [color=cyan]Salvage[/color] is one of Cargo's key, but also most dangerous, sources of income. Salvage extracts money from [color=cyan]Space Debris[/color] and the enigmatic [color=cyan]Mining Asteroid[/color].
+Утилизация пролетающих мимо станции обломков является одним из основных источников дохода отдела снабжения... пока крайней мере до того момента, когда атмосферные техники притащат канистру фризона, стоимостью в дофиглион кредитов. Однако до тех пор вашей основной задачей будет заработок кредитов, а не постройка шаттла.
 
-  While the void of space is full of terrors, with proper preparation and coordination any Salvage Team can make a lot of money for Cargo.
+## Подготовка к утилизации
 
-  ## Preparations
+Прежде чем приступить к утилизации обломков, вам понадобится несколько вещей.
 
-  Before leaving the station, ensure you are prepared with all the required equipment. Otherwise, you will likely die before seeing any profits!
+<Box>
+<GuideEntityEmbed Entity="ClothingOuterHardsuitSpatio"/>
+<GuideEntityEmbed Entity="ClothingShoesBootsMag"/>
+</Box>
+Без скафандра вам не обойтись, поскольку именно он защищает от космоса. С ним отсутствие давления и сверхнизкие температуры космического пространства вам не страшны. Кроме того, он обеспечивает вас дополнительной защитой от любых представителей космической фауны, с которыми вы можете столкнуться. Магнитные ботинки, будучи включёнными, дадут вам возможность спокойно ходить по обломку и передвигать предметы, и защитят вас от подскальзывания!
 
-  <Box>
-    <GuideEntityEmbed Entity="SuitStorageSalv"/>
-    <GuideEntityEmbed Entity="LockerSalvageSpecialist"/>
-    <GuideEntityEmbed Entity="VendingMachineSalvage"/>
-  </Box>
+<Box>
+<GuideEntityEmbed Entity="JetpackBlue"/>
+<GuideEntityEmbed Entity="JetpackMini"/>
+</Box>
+Для перемещения по космосу в отсутствии пола и гравитации вам потребуются джетпаки. Топливом джетпакам служат газы вроде кислорода, азота, водяного пара, или любые другие, которые можно найти в канистрах.
 
-  Everything needed before leaving the station is provided inside Salvage's starting room. While Science can research better weapons and equipment, it is best to be equipped with your starting gear rather than nothing.
+<Box>
+<GuideEntityEmbed Entity="ClothingMaskGasExplorer"/>
+<GuideEntityEmbed Entity="OxygenTankFilled"/>
+<GuideEntityEmbed Entity="NitrogenTankFilled"/>
+</Box>
+В космосе газов нет, всем расам необходимо чем-то дышать, следовательно, не обойтись без дыхательной экипировки. Дыхательная маска используется для подключения газового баллона к вашему дыхательному отверстию, рту; в газовом баллоне хранится потребляемый газ, и его запас можно пополнить, поместив баллон в канистру с газом. Все расы дышат кислородом (по умолчанию содержится в синих и жёлтых баллонах), кроме слаймолюдов, которым нужен азот (красные баллоны).
 
-  <Box>
-    <GuideEntityEmbed Entity="ClothingOuterHardsuitSpatio"/>
-    <GuideEntityEmbed Entity="ClothingShoesBootsMag"/>
-    <GuideEntityEmbed Entity="VendingMachineTankDispenserEVA"/>
-  </Box>
+<Box>
+<GuideEntityEmbed Entity="WeaponCrusher"/>
+<GuideEntityEmbed Entity="WeaponCrusherDagger"/>
+<GuideEntityEmbed Entity="WeaponProtoKineticAccelerator"/>
+</Box>
+Крушители это ваша первая и последняя линия обороны от космической фауны и всего остального, желающего вам навредить. Кинжал представляет собой обычный нож, а вот крашер обладает особым свойством: если вы выстрелите из неё во что-то, а затем нанесёте удар в ближнем бою, то цель получит двойной урон. Протокинетический ускоритель - это оружие дальнего боя, обладающее автоматической перезарядкой, которым можно копать руду, и которое может придать вам ускорение в случае, если ваш джетпак закончится в космосе.
 
-  The most basic equipment you need is the EVA setup.
+<Box>
+<GuideEntityEmbed Entity="Pickaxe"/>
+<GuideEntityEmbed Entity="MiningDrill"/>
+<GuideEntityEmbed Entity="OreBag"/>
+<GuideEntityEmbed Entity="ClothingBeltUtilityFilled"/>
+</Box>
+Кирка и горный бур полезны для быстрой добычи камней или разрушения конструкций.
+Мешок с рудой автоматически подбирает ближайшую руду, если он находится на поясе.
+Пояс для инструментов может быть полезен для хранения различных предметов, если уже не занято сумкой с рудой.
 
   - [color=cyan]Spationaut Hardsuit[/color]: This keeps you alive in space. [italic]Remember to activate the helmet so you can breathe and turn on its built-in flashlight[/italic].
   - [color=cyan]Magboots[/color]: These provide you with gravity when exploring space debris while also making you slip-proof.
@@ -44,7 +62,7 @@
 
   While you can technically mine and gather ore with just a PKA and a Backpack, Salvagers start with more specialized gear for the task.
 
-  - [color=cyan]Pickaxe[/color]: This is required for mining at any reasonable speed when wielded. It also works as a handy melee weapon!
+  - [color=cyan]Pickaxe[/color]: This is required for mining at any reasonable speed when wielded. Also, it works as a melee weapon!
   - [color=cyan]Ore Bag[/color]: When equipped in your belt slot, this magnetizes nearby ore and automatically picks it up for you.
 
   <Box>
@@ -109,7 +127,7 @@
     <GuideEntityEmbed Entity="Recycler"/>
   </Box>
 
-  [color=cyan]Space Debris[/color] is a versatile option, providing vital basic materials (such as steel, glass, etc.) in short supply at the start of the shift. Items and scrap are scattered across the debris, and must be collected. Consider dragging along one of the lockers or crates aboard the debris for easier storage.
+  [color=cyan]Space Debris[/color] is a versatile option, providing vital basic materials (such as steel, glass, etc) in short supply at the start of the shift. Items and scrap are scattered across the debris, and must be collected. Consider dragging along one of the lockers or crates aboard the debris for easier storage.
 
   Debris is sprinkled with numerous threats. Bloodthirsty [color=red]Space Carp[/color] and [color=red]Sharkminnows[/color] infest them, eager to rush any Salvagers that come nearby. [color=red]Landmines[/color] are also rarely found aboard debris, capable of incapacitating the unwary explorer.
 
@@ -160,7 +178,7 @@
 
   The [color=purple]Science Department[/color] is a crucial partner for Salvage. Science depends on Salvage for both basic materials (steel, plastic, glass) and advanced materials (silver, gold, plasma, and uranium), and Salvage relies on Science for the upgraded equipment that makes their work easier.
 
-  Whenever possible, communicate with Science and try to prioritize their requests. While Science will need large quantities of basic materials, they rely entirely on you for their supply of [color=yellow]Gold, Silver and Uranium,[/color] all of which are required for your advanced gear. If you want Science to help you, you have to help them - and vice versa.
+  Whenever possible, communicate with Science and try to prioritize their requests. While Science will need large quantities of basic materials, they rely entirely on you for their supply of [color=yellow]Gold, Silver and Uranium,[/color] all of which are required for your advanced gear. If you want Science to help you, you have to help them - and vice-versa.
 
   <Box>
     <GuideEntityEmbed Entity="MiningDrill"/>

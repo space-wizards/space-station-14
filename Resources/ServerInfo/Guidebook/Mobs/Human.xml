@@ -1,11 +1,9 @@
 <Document>
-  # Humans
-
+  # Люди
   <Box>
     <GuideEntityEmbed Entity="MobHumanDummy" Caption=""/>
   </Box>
 
-  Depending on who you ask, humans are either unremarkable or the universal standard to which everything else is compared.
-  They have no special mechanics or notable attributes.
+  Человек разумный (Homo sapiens) – сильно распространённая раса в Галактике. Их родной дом - планета Земля, но они распространились на сотни световых лет от своего дома. Не имеют уникальных особенностей.
 
 </Document>

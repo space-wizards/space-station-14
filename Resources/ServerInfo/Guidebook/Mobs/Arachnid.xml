@@ -1,25 +1,35 @@
 <Document>
-  # Arachnids
-
+  # Арахниды
   <Box>
     <GuideEntityEmbed Entity="MobArachnid" Caption=""/>
   </Box>
 
-  They have two additional Pocket slots in their inventory. They can eat raw meat without any ill effects, but some foods like chocolate and onion poisons them.
-  They suffocate 50% faster, and their Blue Blood can't be metabolised from Iron, being based on Copper instead.
+  Арахниды — это паукообразные гуманоидные разумные существа с планеты Расгар. Большинство из представителей вида ведет ночной и в основном подземный образ жизни.
 
-  Their unarmed attacks deal Piercing damage instead of Blunt.
-
-  ## Sericulture
-
+  ## Производство шёлка
   <Box>
     <GuideEntityEmbed Entity="MaterialWebSilk" Caption=""/>
     <GuideEntityEmbed Entity="ClothingUniformJumpskirtWeb" Caption=""/>
     <GuideEntityEmbed Entity="WebShield" Caption=""/>
     <GuideEntityEmbed Entity="WallWeb" Caption=""/>
   </Box>
+  Арахниды могут производить шёлк, расходуя голод. Они (и только они) могут изготавливать из шёлка различные предметы, от одежды и щитов до целых стен.
 
-  Arachnids can create Websilk at the cost of getting more hungry. They (and only they) can craft bundles of websilk into various items from clothing and shields to entire walls.
+  ## Расовые особенности
 
+  - Получают [color=#ffa500]на 50% больше тупого урона и урона огнём[/color].
+  - Метаболизм происходит быстрее, чем у других рас (0.75 за тик).
+  - Животный желудок, вмещает 50 единиц веществ, получает урон ядами от шоколада.
+  - Получают урон от голода кровотечением и холодом по 0.5 единице в секунду.
+  - Голодают и испытывают жажду [color=#1e90ff]на ~27% медленней, чем человек[/color].
+  - Безоружная атака отличается от остальных рас - арахниды наносят 5 режущего урона, атакуют быстрее в 1.5 раза.
+  - Урон удушьем в два раза больше. Восстановление происходит в два раза медленней - по 0.5 единиц.
+  - При разделке можно получить 5 мяса паука.
+  - Кровь у них паучья, синего цвета.
+  - При речи, они издают паучье шипение.
+  - Порог температур аналогичен ящерам.
+  - При низкой температуре получают [color=red]0.2[/color] холода в секунду; При высокой температуре получают 0.1 ожога в секунду (Урон может быть больше, зависит от других констант).
+  - Получают меньше урона от давления ([color=red]0.2[/color] механических в секунду).
+  - Если урон персонажа 65 единиц, то арахниды замедляются в 0.7 раз (0.7 умноженное на начальную скорость), если 80 единиц, замедляются в 0.4 раз (0.4 умноженное на начальную скорость).
 
 </Document>
