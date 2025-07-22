@@ -2,7 +2,9 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.CCVar;
 using Robust.Client.Graphics;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -20,6 +22,7 @@ public sealed class GasTileHeatOverlay : Overlay
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IClyde _clyde = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
     private readonly SharedTransformSystem _xformSys;
 
     private IRenderTexture? _heatTarget;
@@ -34,6 +37,15 @@ public sealed class GasTileHeatOverlay : Overlay
         _xformSys = _entManager.System<SharedTransformSystem>();
 
         _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
+
+        _configManager.OnValueChanged(CCVars.ReducedMotion, SetReducedMotion, invokeImmediately: true);
+
+    }
+
+    private void SetReducedMotion(bool reducedMotion)
+    {
+        _shader.SetParameter("strength_scale", reducedMotion ? 0.5f : 1f);
+        _shader.SetParameter("speed_scale", reducedMotion ? 0.25f : 1f);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
