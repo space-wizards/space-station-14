@@ -136,3 +136,34 @@
     requiresSpecialDigestion: true
     useSound:
       collection: FelionoidScreams
+
+- type: entity
+  parent: BasePlushie
+  id: BaseBorgPlushie
+  abstract: true
+  components:
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Effects/chime.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Machines/warning_buzzer.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Effects/Cargo/ping.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Effects/Cargo/buzz_sigh.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Effects/Cargo/buzz_two.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Machines/warning_buzzer.ogg
+  - type: Tool
+    qualities:
+      - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
