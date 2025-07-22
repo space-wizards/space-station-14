@@ -25,10 +25,13 @@ using NAudio.CoreAudioApi;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Content.Shared.Starlight.Economy;
 public sealed partial class SalarySystem : SharedSalarySystem
@@ -36,6 +39,7 @@ public sealed partial class SalarySystem : SharedSalarySystem
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _time = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IChatManager _chat = default!;
@@ -125,5 +129,20 @@ public sealed partial class SalarySystem : SharedSalarySystem
             bonusMultiplier += 0.30;
 
         return (int)Math.Ceiling(baseSalary * bonusMultiplier);
+    }
+
+    internal void Donate(ICommonSession session, int amount)
+    {
+        var playerData = _playerRolesManager.GetPlayerData(session);
+        if (playerData == null)
+            return;
+
+        playerData.Balance += amount;
+
+        // We need to make a prototype
+        var i = _random.Next(0, 20);
+        var message = Loc.GetString($"economy-chat-donate-{i}-message", ("amount", amount));
+        var wrappedMessage = Loc.GetString($"economy-chat-donate-{i}-wrapped-message", ("amount", amount));
+        _chat.ChatMessageToOne(ChatChannel.Notifications, message, wrappedMessage, default, false, session.Channel, Color.FromHex("#57A3F7"));
     }
 }
