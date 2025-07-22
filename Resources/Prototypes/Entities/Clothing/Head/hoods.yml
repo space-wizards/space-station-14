@@ -15,7 +15,7 @@
   - type: Armor
     modifiers: { }
   - type: ZombificationResistance
-    zombificationResistanceCoefficient: 0.9
+    zombificationResistanceCoefficient: 0.8 # Starlight Edit, also removed the specific coefficients from the security and virology hoods
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -38,8 +38,6 @@
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
-  - type: ZombificationResistance
-    zombificationResistanceCoefficient: 0.8
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
@@ -92,8 +90,6 @@
     sprite: Clothing/Head/Hoods/Bio/virology.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/virology.rsi
-  - type: ZombificationResistance
-    zombificationResistanceCoefficient: 0.8
 
 - type: entity
   parent: ClothingHeadBase

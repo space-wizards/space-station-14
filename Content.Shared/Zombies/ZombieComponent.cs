@@ -27,7 +27,7 @@ public sealed partial class ZombieComponent : Component
     /// being overly protected by bundling up.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float MinZombieInfectionChance = 0.05f;
+    public float MinZombieInfectionChance = 0.00f; // Starlight, since Biosuits now provide zombie immunity
 
     /// <summary>
     /// How effective each resistance type on a piece of armor is. Using a damage specifier for this seems illegal.
@@ -148,11 +148,16 @@ public sealed partial class ZombieComponent : Component
     {
         DamageDict = new()
         {
-            { "Slash", 13 },
-            { "Piercing", 7 },
+            { "Slash", 20 }, // Removed piercing damage because how in the fuck is the best counter to a zombie bite a bullet proof vest
             { "Structural", 10 }
         }
     };
+
+    /// <summary>
+    ///     Trying to make zombies have a max attack speed :3
+    /// </summary>
+    [DataField("BiteSpeed")]
+    public float BiteSpeed = 1.0f;
 
     /// <summary>
     ///     Path to antagonist alert sound.
