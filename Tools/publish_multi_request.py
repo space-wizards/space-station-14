@@ -17,7 +17,7 @@ RELEASE_DIR = "release"
 # Forks should change these to publish to their own infrastructure.
 #
 ROBUST_CDN_URL = "https://ss14-starlight-alfa.online/"
-FORK_ID = "starlight"
+FORK_ID = os.environ.get("FORK_ID", "starlight")
 
 def main():
     parser = argparse.ArgumentParser()
