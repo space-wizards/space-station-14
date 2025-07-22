@@ -37,3 +37,8 @@
   license: "CC0-1.0"
   copyright: "Ramblinger on Discord/Instagram."
   source: "https://www.instagram.com/ramblinger/"
+
+- files: ["operation.webp"]
+  license: "CC0-1.0"
+  copyright: "Made by JustAdler https://github.com/ss14Starlight/space-station-14"
+  source: "https://github.com/ss14Starlight/space-station-14/pull/923"

@@ -121,12 +121,18 @@
   equipment:
     back: ClothingBackpackSatchelHolding
     id: AdminPDA
+    belt: ClothingBeltChiefEngineerFilled #starlight start 
   storage:
     back:
-    - GasAnalyzer
-    - trayScanner
     - AccessConfiguratorUniversal
-    - Multitool
+    - AnomalyScanner
+    - RubberStampCAD
+    - RubberStampCED
+    - RubberStampCMD
+    - RubberStampCRD
+    - RubberStampCCD
+    - RubberStampCSD
+    - RubberStampCDD #starlight end
 
 #Gladiator with spear
 - type: startingGear

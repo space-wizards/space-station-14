@@ -1,0 +1,40 @@
+- type: entity
+  parent: BaseItem
+  id: BaseMagazineBoxImprovised
+  name: improvised ammunition box (.any)
+  description: This looks suspiciously like a .20 magazine box with a crude bullet drawing ontop. Mixing ammo is not advised.
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgePistol
+        - CartridgePistolImprovised
+        - CartridgeMagnum
+        - CartridgeMagnumImprovised
+        - CartridgeLightRifle
+        - CartridgeLightRifleImprovised
+        - ShellShotgun
+        - ShellShotgunImprovised
+    proto: null
+    capacity: 40
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Boxes/improvised.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 3
+    zeroVisible: false
+  - type: Appearance
+  - type: Construction
+    graph: ImprovisedMagazineBoxGraph
+    node: shell

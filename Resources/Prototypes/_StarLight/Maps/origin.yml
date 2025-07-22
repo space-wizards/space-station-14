@@ -58,7 +58,7 @@
             MiningSpecialist: [ 2, 2]
             MailTech: [ 2, 3 ]
             #civillian
-            Passenger: [ -1, -1 ]
+            Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 2, 2 ]

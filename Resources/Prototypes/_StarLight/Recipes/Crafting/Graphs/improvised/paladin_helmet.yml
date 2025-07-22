@@ -1,0 +1,21 @@
+- type: constructionGraph
+  id: ClothingHeadHelmetPaladinGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: helmet
+      steps:
+      - material: Steel
+        amount: 7
+        doAfter: 9
+      - material: Plasteel
+        amount: 6
+        doAfter: 9
+      - material: Plastic
+        amount: 2
+      - material: Cloth
+        amount: 6
+        doAfter: 7
+  - node: helmet
+    entity: UnfinishedClothingHeadHelmetPaladin
