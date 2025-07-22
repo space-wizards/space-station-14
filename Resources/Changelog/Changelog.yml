@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Nonlethal throwables crate can be ordered from cargo (2500 spesos) and
-      contains 4x bolas, 4x flashbang grenades, 4x tear gas grenades, 4x stinger grenades.
-    type: Add
-  id: 8286
-  time: '2025-04-20T14:08:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35808
 - author: RedBookcase
   changes:
   - message: Updated Pirate weapons & hardsuits to be more inline with similar items.
@@ -3908,3 +3900,10 @@
   id: 8798
   time: '2025-07-22T15:05:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39106
+- author: perryprog
+  changes:
+  - message: Void applause should now function as expected again.
+    type: Fix
+  id: 8799
+  time: '2025-07-22T19:34:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38731
