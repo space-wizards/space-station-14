@@ -134752,7 +134752,7 @@ entities:
     - type: Transform
       pos: 10.5,28.5
       parent: 2
-- proto: LockerCaptainFilled
+- proto: LockerCaptainFilledNoLaser
   entities:
   - uid: 12479
     components:
