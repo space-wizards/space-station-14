@@ -31,6 +31,7 @@ public abstract class SharedHolidaySystem : EntitySystem
         Subs.CVar(_configManager, CCVars.HolidaysEnabled, value => _enabled = value, true);
 
         SubscribeLocalEvent<HolidayVisualsComponent, ComponentInit>(OnVisualsInit);
+        // TODO use HolidaysGotRefreshedEvent to update HolidayVisualsComponent and HolidayRsiSwapComponent
     }
 
     /// <summary>
