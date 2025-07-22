@@ -6,17 +6,21 @@ namespace Content.Shared.Holiday;
 /// <summary>
 /// This is used for an entity that enables unique visuals on specified holidays.
 /// </summary>
+/// <remarks> Only one holiday can be celebrated at a time. Conflicting holidays race. </remarks>
 [RegisterComponent]
 public sealed partial class HolidayVisualsComponent : Component
 {
     /// <summary>
     /// A dictionary relating a generic key to a list of holidays.
-    /// If any of the holidays are being celebrated, that key will be set for holiday visuals.
+    /// The key of the first holiday found being celebrated will be set for <see cref="HolidayVisuals"/>.
     /// </summary>
     [DataField]
     public Dictionary<string, List<ProtoId<HolidayPrototype>>> Holidays = new();
 }
 
+/// <summary>
+/// Stores the key for the current holiday group being celebrated.
+/// </summary>
 [Serializable, NetSerializable]
 public enum HolidayVisuals : byte
 {

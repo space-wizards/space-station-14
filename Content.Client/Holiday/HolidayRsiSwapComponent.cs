@@ -16,8 +16,8 @@ public sealed partial class HolidayRsiSwapComponent : Component
     public Dictionary<string, string> Sprite = new();
 
     /// <summary>
-    /// Rsi to swap to for when the holiday ends.
+    /// Rsi to swap to when the holiday ends.
     /// </summary>
-    [DataField]
-    public string? Default;
+    [DataField(required:true)]
+    public string Default;
 }
