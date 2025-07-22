@@ -2,6 +2,10 @@
 - changed-files:
   - any-glob-to-any-file: '**/*.rsi/*.png'
 
+"Изменения: Локализация":
+- changed-files:
+  - any-glob-to-any-file: '**/*.ftl'
+
 "Changes: Map":
 - changed-files:
   - any-glob-to-any-file:
