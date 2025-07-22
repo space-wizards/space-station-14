@@ -428,7 +428,41 @@ namespace Content.IntegrationTests.Tests
             await pair.CleanReturnAsync();
         }
 
+        [Test, TestCaseSource(nameof(GameMaps))]
+        public async Task CheckUnlocalizedMetadata(string mapProtoId)
+        {
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
+            {
+                Dirty = true,
+            });
+            var server = pair.Server;
 
+            var entMan = server.EntMan;
+            var protoMan = server.ProtoMan;
+            var ticker = entMan.System<GameTicker>();
+
+            // Load the map
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(protoMan.TryIndex<GameMapPrototype>(mapProtoId, out var mapProto));
+                var opts = DeserializationOptions.Default with { InitializeMaps = true };
+                ticker.LoadGameMap(mapProto, out var mapId, opts);
+            });
+
+            // Gets all entities...
+            var metaQuery = entMan.EntityQueryEnumerator<MetaDataComponent>();
+            while (metaQuery.MoveNext(out var uid, out var meta))
+            {
+                var protoId = meta.EntityPrototype;
+                Assert.Multiple(() =>
+                {
+                    Assert.That(protoId.Name, Is.EqualTo(meta.EntityName), $"Name of the {entMan.ToPrettyString(uid)} and its prototype are different!");
+                    Assert.That(protoId.Description, Is.EqualTo(meta.EntityDescription), $"Description of the {entMan.ToPrettyString(uid)} and its prototype are different!");
+                });
+            }
+
+            await pair.CleanReturnAsync();
+        }
 
         private static int GetCountLateSpawn<T>(List<EntityUid> gridUids, IEntityManager entManager)
             where T : ISpawnPoint, IComponent
@@ -438,7 +472,7 @@ namespace Content.IntegrationTests.Tests
 #nullable enable
             while (queryPoint.MoveNext(out T? comp, out var xform))
             {
-                var spawner = (ISpawnPoint) comp;
+                var spawner = (ISpawnPoint)comp;
 
                 if (spawner.SpawnType is not SpawnPointType.LateJoin
                 || xform.GridUid == null
