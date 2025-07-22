@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 ## Static recipes
 
 - type: latheRecipePack
@@ -48,6 +49,7 @@
   - MagazinePistolSubMachineGunEmpty
   - MagazinePistolSubMachineGunTopMounted
   - MagazinePistolSubMachineGunTopMountedEmpty
+  - MagazineNegotiatorEmpty # Ronstation
   - MagazineRifle
   - MagazineRifleEmpty
   - MagazineShotgun
