@@ -133,6 +133,5 @@ namespace Content.Shared.Input
 
         // 🌟Starlight🌟
         public static readonly BoundKeyFunction Jump = "Jump";
-        public static readonly BoundKeyFunction OfferItemInHand = "OfferItemInHand";
     }
 }
