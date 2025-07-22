@@ -12,11 +12,11 @@
    inkscape:export-filename="toggleswitch_on.svg.96dpi.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
+   xml:space="preserve"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
      id="namedview1"
      pagecolor="#7f7f7f"
      bordercolor="#000000"
@@ -27,37 +27,30 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showguides="true"
-     inkscape:zoom="12.618721"
-     inkscape:cx="21.000543"
-     inkscape:cy="4.8340873"
+     inkscape:zoom="6.3093605"
+     inkscape:cx="15.45323"
+     inkscape:cy="13.630541"
      inkscape:window-width="1600"
      inkscape:window-height="828"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
-  <defs
-     id="defs1" />
-  <g
+     inkscape:current-layer="layer1" /><defs
+     id="defs1" /><g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
-    <path
+     id="layer1"><path
        style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#494949;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
        d="M 0,0 V 13.999988 L 6.0000192,20 H 40 V 6.0000116 L 33.999981,0 Z M 2.000493,1.9930962 H 33.165988 L 37.999507,6.826784 V 17.999496 H 6.8335792 L 2.000493,13.167132 Z"
        id="rect1684-3-3"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccccccccc" />
-    <path
+       sodipodi:nodetypes="cccccccccccccc" /><path
        style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#1e1e22;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
        d="M 2.000493,1.9930962 H 33.165988 L 37.999507,6.826784 V 17.999496 H 6.833579 L 2.000493,13.167132 Z"
        id="rect1684-3-3-0"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccc" />
-    <path
-       style="baseline-shift:baseline;display:inline;overflow:visible;fill:#3e6c45;fill-opacity:1;stroke:#494949;stroke-width:2;stroke-dasharray:none;stroke-opacity:1;enable-background:accumulate;stop-color:#000000"
-       d="m 26,5.9921875 h 5.509766 L 34,8.484375 V 14 H 28.490234 L 26,11.509766 Z"
+       sodipodi:nodetypes="ccccccc" /><path
+       style="baseline-shift:baseline;display:inline;overflow:visible;fill:#82ff4c;fill-opacity:1;stroke:#494949;stroke-width:2;stroke-dasharray:none;stroke-opacity:1;enable-background:accumulate;stop-color:#000000"
+       d="m 24,5.9921875 h 7.509766 L 34,8.484375 V 14 H 26.490234 L 24,11.509766 Z"
        id="rect1684-3-3-0-8"
-       sodipodi:nodetypes="ccccccc" />
-  </g>
-</svg>
+       sodipodi:nodetypes="ccccccc" /></g></svg>
