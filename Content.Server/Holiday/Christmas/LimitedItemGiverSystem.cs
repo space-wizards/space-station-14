@@ -1,8 +1,8 @@
-﻿using Content.Shared.Hands.EntitySystems;
+﻿using Content.Shared.EntityTable;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Holiday;
 using Content.Shared.Popups;
 using Content.Shared.Interaction;
-using Content.Shared.Storage;
 using Robust.Shared.Player;
 
 namespace Content.Server.Holiday.Christmas;
@@ -12,6 +12,7 @@ namespace Content.Server.Holiday.Christmas;
 /// </summary>
 public sealed class LimitedItemGiverSystem : EntitySystem
 {
+    [Dependency] private readonly EntityTableSystem _entityTable = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedHolidaySystem _holiday = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -45,7 +46,7 @@ public sealed class LimitedItemGiverSystem : EntitySystem
             return;
         }
 
-        var toGive = EntitySpawnCollection.GetSpawns(comp.SpawnEntries); // TODO move to shared once this is predicted
+        var toGive = _entityTable.GetSpawns(comp.Table); // TODO move to shared once this is predicted
         var coords = Transform(args.User).Coordinates;
 
         // Get your gifts here

@@ -1,5 +1,5 @@
-﻿using Content.Shared.Holiday;
-using Content.Shared.Storage;
+﻿using Content.Shared.EntityTable.EntitySelectors;
+using Content.Shared.Holiday;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -20,7 +20,7 @@ public sealed partial class LimitedItemGiverComponent : Component
     /// Selects what entities can be given out by the giver.
     /// </summary>
     [DataField(required: true)]
-    public List<EntitySpawnEntry> SpawnEntries = default!;
+    public EntityTableSelector Table = default!;
 
     /// <summary>
     /// The (localized) message shown upon receiving something.
