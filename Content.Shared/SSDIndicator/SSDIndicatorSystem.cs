@@ -18,8 +18,6 @@ public sealed class SSDIndicatorSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
-    private static readonly TimeSpan SSDIndicatorUpdateRate = TimeSpan.FromSeconds(1);
-
     private bool _icSsdSleep;
     private float _icSsdSleepTime;
 
@@ -67,7 +65,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
             return;
 
         component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
-        component.NextUpdate = _timing.CurTime + SSDIndicatorUpdateRate;
+        component.NextUpdate = _timing.CurTime + component.UpdateInterval;
         Dirty(uid, component);
     }
 
@@ -91,7 +89,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
                 continue;
 
             _statusEffects.TryUpdateStatusEffectDuration(uid, StatusEffectSSDSleeping);
-            ssd.NextUpdate += SSDIndicatorUpdateRate;
+            ssd.NextUpdate += ssd.UpdateInterval;
             Dirty(uid, ssd);
         }
     }

@@ -40,4 +40,10 @@ public sealed partial class SSDIndicatorComponent : Component
     [AutoNetworkedField, AutoPausedField]
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextUpdate = TimeSpan.Zero;
+
+    /// <summary>
+    /// The time between updates checking if the entity should be force slept.
+    /// </summary>
+    [DataField]
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 }
