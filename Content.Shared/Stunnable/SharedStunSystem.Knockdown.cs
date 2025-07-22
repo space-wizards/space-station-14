@@ -474,7 +474,7 @@ public abstract partial class SharedStunSystem
             return;
 
         if (args.DamageDelta.GetTotal() >= entity.Comp.KnockdownDamageThreshold)
-            RefreshKnockdownTime(entity.Owner, GameTiming.CurTime + entity.Comp.DefaultKnockedDuration);
+            RefreshKnockdownTime(entity.Owner, entity.Comp.DefaultKnockedDuration);
     }
 
     private void OnKnockdownRefresh(Entity<CrawlerComponent> entity, ref KnockedDownRefreshEvent args)
