@@ -9,6 +9,9 @@
   "states": [
     {
       "name": "pillar_of_weh"
+    },
+    {
+      "name": "inverse_pillar"
     }
   ]
 }
