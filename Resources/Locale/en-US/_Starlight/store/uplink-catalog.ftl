@@ -25,3 +25,13 @@ uplink-uzi-bundle-desc = Contains the Type U3 Uzi, with two additional magazines
 
 uplink-uzi-magazine-name = Uzi Magazine (.35 auto)
 uplink-uzi-magazine-desc = Submachine gun magazine with 32 cartridges. Compatible with the Type U3 Uzi
+
+uplink-syndicate-borgi-name = Syndicate Borgi
+uplink-syndicate-borgi-desc = A basic syndicate borgi
+
+uplink-syndicate-borgi-kitted-name = Kitted Syndicate Borgi
+uplink-syndicate-borgi-kitted-desc = A syndicate borgi, with assault modules
+
+uplink-syndicate-borgi-speed-name = Speed Syndicate Borgi
+uplink-syndicate-borgi-speed-desc = A syndicate borgi, with dagger modules and additional speed
+

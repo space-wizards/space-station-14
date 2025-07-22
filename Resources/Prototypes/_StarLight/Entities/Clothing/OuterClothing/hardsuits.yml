@@ -219,7 +219,7 @@
     staminaModifier: 0.3
     ingoreKnockdown: true
   - type: ExplosionResistance
-    damageCoefficient: 0.1
+    damageCoefficient: 0.5
   - type: ToggleClothing
     action: ActionTogglePhaseCloak
     disableOnUnequip: true
@@ -322,3 +322,35 @@
   - type: Item
     size: Huge
 
+#QM's Luxury Maxim Hardsuit
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseCommandContraband ]
+  id: ClothingOuterHardsuitLuxmax
+  name: QM's luxury maxim hardsuit
+  description: This luxury maxim hardsuit has been retrofitted with solid gold fittings and furnishings, making it more cumbersome, and less protective than a standard maxim hardsuit.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/luxmax.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/luxmax.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.7
+        Piercing: 0.8
+        Heat: 0.8
+        Radiation: 0.3
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitLuxmax

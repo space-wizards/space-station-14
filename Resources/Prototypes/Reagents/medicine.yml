@@ -1338,8 +1338,8 @@
             max: 213.0
           damage:
             groups:
-              Brute: -4
-              Burn: -5
+              Brute: -3 # Starlight, reduced by 1 due to different cost requirements
+              Burn: -4 # Starlight, reduced by 1 due to different cost requirements
             types:
               Poison: -2
 

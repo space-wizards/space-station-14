@@ -46,6 +46,11 @@
     head: ClothingHeadHatHoshat
 
 - type: loadout
+  id: HeadofSecuritySheriff #Starlight
+  equipment:
+    head: ClothingHeadHatSheriffHat
+
+- type: loadout
   id: HeadofSecurityBeret
   equipment:
     head: ClothingHeadHatBeretHoS

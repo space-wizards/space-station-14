@@ -52,7 +52,6 @@
   equipment:
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatBeretBlueShield
-    outerClothing: ClothingOuterArmorBlueShield
     id: BlueShieldPDA
     ears: ClothingHeadsetAltBSO # Starlight
     belt: ClothingBeltBlueShieldWebbingFilled
