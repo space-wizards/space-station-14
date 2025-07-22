@@ -53,7 +53,7 @@
       sprite: "Effects/creampie.rsi"
       state: "creampie_human"
       visible: false
-    rotationDirection: true
+    rotationDirection: 1
   - type: DamageVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     targetLayers:
