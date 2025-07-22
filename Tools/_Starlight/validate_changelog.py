@@ -30,14 +30,22 @@ if not changelog_match or not changelog_match.group(1).strip():
 
 changelog_content = changelog_match.group(1).strip()
 
+# Remove comments from changelog body
+changelog_without_comments = re.sub(r'<!--.*?-->', '', changelog_content, flags=re.DOTALL).strip()
+
+# Check if there any content left after removing comments
+if not changelog_without_comments:
+    print("::error::Changelog section contains only comments. Please add changelog entries or remove the section.")
+    sys.exit(1)
+
 # Check for :cl: command
-if ":cl:" not in changelog_content:
+if ":cl:" not in changelog_without_comments:
     print("::error::Changelog is missing the :cl: command")
     sys.exit(1)
 
 # Check that after :cl: there is a non-empty author
 cl_line = None
-for line in changelog_content.splitlines():
+for line in changelog_without_comments.splitlines():
     if line.strip().startswith(':cl:'):
         cl_line = line
         break
@@ -49,7 +57,7 @@ if cl_line is None or not cl_line.strip()[4:].strip():
 # Check for valid tags 
 valid_tags = ["add", "remove", "tweak", "fix"]
 entry_pattern = re.compile(r'^[ \t]*[^a-zA-Z0-9]?[ \t]*(add|remove|tweak|fix):', re.MULTILINE)
-entries = entry_pattern.findall(changelog_content)
+entries = entry_pattern.findall(changelog_without_comments)
 
 if not entries:
     print("::error::No changelog entries found. You must add at least one entry with a valid tag (add, remove, tweak, fix)")
@@ -61,7 +69,6 @@ if invalid_entries:
     sys.exit(1)
 
 # Check for proper formatting (tag: description)
-if not re.search(r'^[ \t]*[^a-zA-Z0-9]?[ \t]*(add|remove|tweak|fix): .+', changelog_content, re.MULTILINE):
+if not re.search(r'^[ \t]*[^a-zA-Z0-9]?[ \t]*(add|remove|tweak|fix): .+', changelog_without_comments, re.MULTILINE):
     print("::error::Changelog entries must follow the format: 'tag: description'")
     sys.exit(1)
-
