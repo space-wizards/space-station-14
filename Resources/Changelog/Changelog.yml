@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: HyperB1
-  changes:
-  - message: ERT engineering hardsuit now features proper fire protection.
-    type: Fix
-  id: 8285
-  time: '2025-04-20T14:06:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34949
 - author: K-Dynamic
   changes:
   - message: Nonlethal throwables crate can be ordered from cargo (2500 spesos) and
@@ -3905,3 +3898,13 @@
   id: 8797
   time: '2025-07-21T03:21:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38648
+- author: ArtisticRoomba
+  changes:
+  - message: China-lake fragmentation grenades now spew fragmentation in all directions
+      upon impact. They now do reduced explosion damage.
+    type: Tweak
+  - message: China-lake blast grenades no longer cause spacing.
+    type: Tweak
+  id: 8798
+  time: '2025-07-22T15:05:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39106
