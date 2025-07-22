@@ -154,7 +154,7 @@ public sealed partial class ZombieComponent : Component
     };
 
     /// <summary>
-    ///     Trying to make zombies have a max attack speed :3
+    ///     Starlight, this just makes zombies always attack at the same speed as a base human (and also the first C# code I did eheee :3)
     /// </summary>
     [DataField("BiteSpeed")]
     public float BiteSpeed = 1.0f;

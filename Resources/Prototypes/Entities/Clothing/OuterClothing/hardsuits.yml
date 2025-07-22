@@ -320,7 +320,7 @@
         Caustic: 0.7
     staminaModifier: 0.7
   - type: ZombificationResistance
-    zombificationResistanceCoefficient: 0.7 # Starlight Edit
+    zombificationResistanceCoefficient: 0.7 # Starlight
   - type: ClothingSpeedModifier
     walkModifier: 0.80
     sprintModifier: 0.80
