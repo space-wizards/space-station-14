@@ -69,12 +69,19 @@ void fragment() {
     // The texture should have been blurred using a previous operation
     // We use the alpha channel to cut off the blur that bleeds outside the tile, then we rescale
     // the mask back up to 0.0 to 1.0
-    highp float mask = clamp((zTexture(UV).a - 0.25)*4.0, 0.00, 1.0);
+    highp float mask = clamp((zTexture(UV).a - 0.5)*2.0, 0.00, 1.0);
 
     // Calculate warped UV using the turbulence gradient
     // The strength of the turbulence is encoded into the red channel of TEXTURE
-    highp vec2 uvDist = UV + (strength_scale * strength_factor * zTexture(UV).r * mask) * grad;
+    // Give it a little polynomial boost: https://www.wolframalpha.com/input?i=-x%5E2+%2B2x+from+0+to+1
+    highp float heatStrength = zTexture(UV).r*1.0;
+    heatStrength = clamp(-heatStrength*heatStrength + 2.0*heatStrength, 0.0, 1.0);
+    highp vec2 uvDist = UV + (strength_scale * strength_factor * heatStrength * mask) * grad;
 
     // Apply to the texture
     COLOR = texture2D(SCREEN_TEXTURE, uvDist);
+
+    // Uncomment the following two lines to view the strength buffer directly
+    // COLOR.rgb = vec3(heatStrength * mask);
+    // COLOR.a = mask;
 }

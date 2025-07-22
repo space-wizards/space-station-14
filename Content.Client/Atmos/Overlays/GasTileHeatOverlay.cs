@@ -130,14 +130,14 @@ public sealed class GasTileHeatOverlay : Overlay
                             if (strength <= 0f)
                                 continue;
                             anyDistortion = true;
-                            // Encode the strength in the red channel, then 0.5 alpha if it's an active tile.
+                            // Encode the strength in the red channel, then 1.0 alpha if it's an active tile.
                             // BlurRenderTarget will then apply a blur around the edge, but we don't want it to bleed
                             // past the tile.
                             // So we use this alpha channel to chop the lower alpha values off in the shader to fit a
                             // fit mask back into the tile.
                             worldHandle.DrawRect(
                                 Box2.CenteredAround(tilePosition + new Vector2(0.5f, 0.5f), grid.Comp.TileSizeVector),
-                                new Color(strength,0f, 0f, strength > 0f ? 0.5f : 0f));
+                                new Color(strength,0f, 0f, strength > 0f ? 1.0f : 0f));
                         }
                     }
                 }
