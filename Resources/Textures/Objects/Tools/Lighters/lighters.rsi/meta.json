@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/a28b24f149702527f3eb22f5c686f06c836f2f99; sprite has been edited. Engraved zippo drawn by Darkenson.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon_map"
+    },
+    {
+      "name": "cheap_icon_base"
+    },
+    {
+      "name": "lighter_flame",
+      "delays": [
+        [
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "basic_icon_base-1"
+    },
+    {
+      "name": "basic_icon_base-2"
+    },
+    {
+      "name": "basic_icon_base-3"
+    },
+    {
+      "name": "basic_icon_base-4"
+    },
+    {
+      "name": "basic_icon_base-5"
+    },
+    {
+      "name": "basic_icon_base-6"
+    },
+    {
+      "name": "basic_icon_base-7"
+    },
+    {
+      "name": "basic_icon_base-8"
+    },
+    {
+      "name": "basic_icon_base-9"
+    },
+    {
+      "name": "basic_icon_base-10"
+    },
+    {
+      "name": "basic_icon_base-11"
+    },
+    {
+      "name": "discount_icon_base"
+    },
+    {
+      "name": "basic_icon_top"
+    },
+    {
+      "name": "cheap_icon_top"
+    },
+    {
+      "name": "zippo_icon_base"
+    },
+    {
+      "name": "zippo_engraved_icon_base"
+    },
+    {
+      "name": "zippo_open"
+    },
+    {
+      "name": "zippo_engraved_open"
+    },
+    {
+      "name": "zippo_top"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-flame",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-flame",
+      "directions": 4
+    },
+    {
+      "name": "zippo-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "zippo-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "zippo-inhand-left-flame",
+      "directions": 4
+    },
+    {
+      "name": "zippo-inhand-right-flame",
+      "directions": 4
+    }
+  ]
+}
