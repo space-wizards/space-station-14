@@ -477,6 +477,10 @@ namespace Content.Client.Stylesheets
             var monotoneCheckBoxTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/Monotone/monotone_checkbox_checked.svg.96dpi.png");
             var monotoneCheckBoxTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/Monotone/monotone_checkbox_unchecked.svg.96dpi.png");
 
+            // Toggle switch
+            var toggleSwitchTextureOff = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_off.svg.96dpi.png");
+            var toggleSwitchTextureOn = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_on.svg.96dpi.png");
+
             // Tooltip box
             var tooltipTexture = resCache.GetTexture("/Textures/Interface/Nano/tooltip.png");
             var tooltipBox = new StyleBoxTexture
@@ -1014,6 +1018,22 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(TextureRect), new [] { MonotoneCheckBox.StyleClassMonotoneCheckBox, CheckBox.StyleClassCheckBoxChecked }, null, null), new[]
                 {
                     new StyleProperty(TextureRect.StylePropertyTexture, monotoneCheckBoxTextureChecked),
+                }),
+
+                // ToggleSwitch
+                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { ToggleSwitch.StyleClassToggleSwitch }, null, null), new[]
+                {
+                    new StyleProperty(TextureRect.StylePropertyTexture, toggleSwitchTextureOff),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { ToggleSwitch.StyleClassToggleSwitch, ToggleSwitch.StyleClassToggleSwitchOn }, null, null), new[]
+                {
+                    new StyleProperty(TextureRect.StylePropertyTexture, toggleSwitchTextureOn),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(BoxContainer), new [] { ToggleSwitch.StyleClassToggleSwitch }, null, null), new[]
+                {
+                    new StyleProperty(BoxContainer.StylePropertySeparation, 10),
                 }),
 
                 // Tooltip
