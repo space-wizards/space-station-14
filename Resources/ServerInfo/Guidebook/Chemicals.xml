@@ -1,37 +1,34 @@
 ﻿<Document>
-# Chemicals
+# Химические вещества
 
-Chemicals are a powerful tool that can cause a variety of effects when consumed. Some can be found in plants, purchased from cargo, or be synthesized through combination with other chemicals.
+Химические вещества это сильные средства, вызывающие при употреблении различные эффекты. Некоторые из них можно встретить в растениях, приобрести в отделе снабжения, или синтезировать путём смешивания других химических веществ.
 
-Knowing different types of chemicals and their effects is important for being able to manage injury and danger.
+Чтобы умело справляться с различными травмами и угрозами, важно знать свойства и действие различных химических веществ.
 
-## Elements
+## Элементы
 <GuideReagentGroupEmbed Group="Elements"/>
 
-## Medicine
+## Лекарственные средства
 <GuideReagentGroupEmbed Group="Medicine"/>
 
-## Narcotics
+## Наркотические вещества
 <GuideReagentGroupEmbed Group="Narcotics"/>
 
-## Pyrotechnics
+## Пиротехника
 <GuideReagentGroupEmbed Group="Pyrotechnic"/>
 
-## Toxins
+## Токсины
 <GuideReagentGroupEmbed Group="Toxins"/>
 
-## Foods
+## Пищевые химикаты
 <GuideReagentGroupEmbed Group="Foods"/>
 
-## Botanical
+## Ботанические средства
 <GuideReagentGroupEmbed Group="Botanical"/>
 
-## Biological
+## Биологические вещества
 <GuideReagentGroupEmbed Group="Biological"/>
 
-## Special
-<GuideReagentGroupEmbed Group="Special"/>
-
-## Other
+## Разное
 <GuideReagentGroupEmbed Group="Unknown"/>
 </Document>

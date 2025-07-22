@@ -1,5 +1,5 @@
 <Document>
-  # Revolutionaries
+  # Революционеры
 
   <Box>
     [color=#999999][italic]"Viva la revolución!!"[/italic][/color]
@@ -8,25 +8,25 @@
     <GuideEntityEmbed Entity="PosterContrabandRevolt" Caption=""/>
   </Box>
 
-  Revolutionaries are conversion antagonists sponsored by the [color=#ff0000]Syndicate[/color] who are tasked with taking control of the station. They have no fancy gimmicks or cheap tricks, they only have a cause and strength in numbers.
+    Революционеры — это антагонисты, спонсируемые [color=#ff0000]Синдикатом[/color], задача которых — захватить контроль над станцией. У них нет никаких хитростей или дешевых трюков, у них есть только цель и сила в количестве.
 
-  ## Objectives
-  You must convert, cuff or kill all of the [textlink="Command staff" link="Command"] on station in no particular order.
+  ## Цели
+  Вы должны обратить, связать или убить весь [textlink="Командный состав" link="Command"] на станции в любом порядке.
 
-  Your objective is [bold]not to destroy the station[/bold], but [italic]to take it over[/italic], so try to minimize damage where possible.
+  Ваша цель — [bold]не уничтожить станцию[/bold], а [italic]захватить её[/italic], поэтому старайтесь минимизировать ущерб, где это возможно.
 
-  [bold]The revolution will fail[/bold] if all of the [bold][color=#5e9cff]Head Revolutionaries[/color][/bold] die, and all [color=red]Revolutionaries[/color] will de-convert if this happens.
+  [bold]Революция потерпит поражение[/bold], если все [bold][color=#5e9cff]Главы революции[/color][/bold] погибнут, все [color=red]Революционеры[/color] будут де-конвертированы, если это произойдет.
 
-  ## Headrevs & Conversion
-  [bold][color=#5e9cff]Head Revolutionaries[/color][/bold] are chosen at the start of the shift and begin with a [color=cyan]flash[/color] and a pair of [color=cyan]sunglasses[/color].
+  ## Главы революции и обращение
+  [bold][color=#5e9cff]Главы революции[/color][/bold] выбираются в начале смены и начинают с [color=cyan]вспышкой[/color] и парой [color=cyan]солнцезащитных очков[/color].
 
   <Box>
     <GuideEntityEmbed Entity="Flash"/>
     <GuideEntityEmbed Entity="ClothingEyesGlassesSunglasses"/>
   </Box>
 
-  You can convert crew members to your side by taking any [bold]flash[/bold] and attacking someone with it using [color=#ff0000]harm mode[/color].
-  However, [bold]you can't convert your target if they're wearing [color=cyan]flash protection[/color][/bold] such as sunglasses or a welding mask.
+  Вы можете обратить членов экипажа на свою сторону, взяв любую [bold]вспышку[/bold] и атаковав кого-то с её помощью в [color=#ff0000]боевом режиме[/color].
+  Однако, [bold]вы не сможете обратить свою цель, если на ней надета [color=cyan]защита от вспышек[/color][/bold], такая как солнцезащитные очки или сварочная маска.
 
   <Box>
     <GuideEntityEmbed Entity="ClothingEyesGlassesSunglasses"/>
@@ -34,20 +34,20 @@
     <GuideEntityEmbed Entity="ClothingHeadHatWelding"/>
   </Box>
 
-  Another obstacle in your way are those pesky [color=cyan]mindshield implanters[/color]. These will:
-  - Prevent the implanted person from being converted into a [color=red]Revolutionary[/color]
-  - De-convert Revolutionaries, and will make them no longer loyal to your cause
-  - [bold]Visibly be destroyed upon being implanted into a [color=#5e9cff]Head Revolutionary[/color][/bold], giving you away
-  - NOT protect against flash disorientation
+  Еще одним препятствием на вашем пути являются эти надоедливые [color=cyan]импланты защиты разума[/color]. Они:
+  - Предотвращают обращение человека в [color=red]Революционера[/color]
+  - Де-конвертируют Революционеров, делая их больше не лояльными вашей цели
+  - [bold]Видимо уничтожаются при имплантации в [color=#5e9cff]Главы революции[/color][/bold], выдавая вас
+  - НЕ защищают от дезориентации вспышкой
 
-  Assume all of [color=#cb0000]Security[/color] and [color=#1b67a5]Command[/color] are implanted with mindshields already, [bold]however they can be removed using an empty implanter, obtainable from the Medical department's MedFab.[/bold]
+    Предполагается, что вся [color=#cb0000]Служба Безопасности[/color] и [color=#1b67a5]Командный состав[/color] уже имеют импланты защиты разума, [bold]однако их можно удалить с помощью пустого имплантера, который можно получить в медицинском отделении в МедФабе.[/bold]
 
   <Box>
     <GuideEntityEmbed Entity="MindShieldImplanter"/>
   </Box>
 
-  ## Revolutionary
-  A [color=red]Revolutionary[/color] is a crew member that has been converted by a [bold][color=#5e9cff]Head Revolutionary[/color][/bold].
+  ## Революционер
+  [color=red]Революционер[/color] это член экипажа, который был обращен [bold][color=#5e9cff]Главой революции[/color][/bold].
 
-  [bold][color=red]Revolutionaries[/color] can't convert people themselves,[/bold] but they're more than capable of doing dirty work and carrying out orders.
+  [bold][color=red]Революционеры[/color] не могут сами обращать людей,[/bold] но они более чем способны выполнять грязную работу и выполнять приказы.
 </Document>

@@ -1,51 +1,14 @@
-﻿<Document>
-# Station and Shifts
+<Document>
+# Космическая Станция 14
 
-Every round of SS14 is a [bold]self-contained shift[/bold] that takes place on one of many different stations.
+Добро пожаловать в пре-альфа версию Космической Станции 14! Мы надеемся что игра вам понравится, и эта запись послужит вам руководством к тому, как научиться играть. Читать придётся довольно много, но КС14 сама по себе очень большая и глубокая игра, и мы надеемся что эти руководства помогут вам насладиться ею в полном объёме.
 
-Rounds typically last from [color=cyan]45 to 90 minutes[/color], but players are free to leave and join at any point during a round.
+## Что это такое
+Космическая Станция 14 — бесплатный (навсегда) ремейк с открытым исходным кодом небезызвестной Космической Станции 13, призванный обеспечить улучшенный опыт как для новичков, так и для старых игроков. Космическая Станция 14 разрабатывается как полностью модифицируемый продукт, который вы можете изменять по своему вкусу с помощью пользовательских серверов, добавляя целые кучи нового контента.
 
-## Shuttle Terminal
-If you join in the middle of a shift, you will likely spawn on the [color=lime]shuttle terminal[/color].
-Here you can grab drinks, converse with other players, and wait for the shuttle to take you to the station.
+Если вы здесь для того чтобы просто поиграть — класс! Раздел [color=#a4885c]С чего начать[/color] этой записи вам поможет. Если вы хотите сделать что-то для игры — вы можете найти кнопки, ведущие на наши Discord и Github в лобби.
 
-Screens on the walls will give you an ETA for the shuttle.
-When it arrives, simply walk on to be transported to the station.
-
-Make sure to stay inside the terminal and to not stand in the shuttle landing zone. [color=#EB2D3A][bold]You can be crushed by shuttles flying in[/bold][/color]
-
-## Navigation
-Every station has a wide variety of locations to visit.
-These range from specific departments where work happens to common areas where you can relax and chat with others.
-
-<Box>
-  <GuideEntityEmbed Entity="StationMap"/>
-  <GuideEntityEmbed Entity="SignDirectionalDorms" Caption="Directional Signs"/>
-  <GuideEntityEmbed Entity="SignBridge" Caption="Marker Signs"/>
-</Box>
-
-[color=cyan]Station maps[/color] give you an overview of the entire station with colored markers denoting locations of different things.
-Regular [color=cyan]signs[/color] on walls can point you to different departments.
-
-## Leaving the Station
-At the end of the shift [color=gray](barring a [color=red][bold]nuclear disaster[/bold][/color])[/color], you will leave the station via the [color=lime]evac shuttle[/color].
-When it's called, an announcement will play on the station alerting the crew and signaling its [color=cyan]arrival in 10 minutes.[/color]
-Once it arrives, you'll need to make your way over to it, board it, and then survive the trip to [bold]Central Command[/bold].
-
-The round doesn't officially end until you reach [bold]Central Command[/bold]
-
-<Box>
-  <GuideEntityEmbed Entity="CryogenicSleepUnit"/>
-</Box>
-
-If you need to leave a round early, you can do so through a [color=lime]cryogenic sleep unit[/color].
-Simply going inside and leaving the game will store your belongings and ensure that they are not stolen or misused.
-
-## More Info
-Learning the controls? [textlink="Click here to read about the different controls" link="Controls"]
-
-Don't know how to perform a job? [textlink="Click here to jump to a list of departments" link="Jobs"]
-
-Keep dying? [textlink="Click here to see a survival guide" link="Survival"]
+## С чего начать
+Рекомендуется начать с руководства [color=#a4885c]Управление[/color], а затем прочитать [color=#a4885c]Создание персонажа[/color], [color=#a4885c]Ролевой отыгрыш[/color] и [color=#a4885c]Должности[/color]. Не для всех должностей или концептов будут руководства, и если вы опытный игрок — очень просим помочь нам написать или перевести их!
 
 </Document>

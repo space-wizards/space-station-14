@@ -1,16 +1,16 @@
 ﻿<Document>
-  # Large Bomb Defusal
-  So, you found a large bomb and it's beeping. These bombs take a long time to detonate and punch a big hole into the hull. Just keep reading, and nobody will explode.
+  # Обезвреживание крупной бомбы
+  Итак, вы нашли крупную бомбу, и она пикает. Такие бомбы обладают долгим таймером, но, взорвавшись, они способны пробить в корпусе станции огромную дыру. Продолжайте читать это руководство, и никто не взорвется.
 
-  ## Gear
-  You require two essential tools to perform defusal, however, a multitool is extremely helpful in terms of identifying wires.
+  ## Снаряжение
+  Для обезвреживания требуются два основных инструмента, однако для идентификации проводов очень полезен мультитул.
   <Box>
     <GuideEntityEmbed Entity="Wirecutter"/>
     <GuideEntityEmbed Entity="Screwdriver"/>
     <GuideEntityEmbed Entity="Multitool"/>
   </Box>
 
-  For protective equipment, a [color=yellow]bomb suit[/color] or any other protective equipment can assist you in not blowing into gibs.
+  Что касается защитного снаряжения, то [color=yellow]сапёрный костюм[/color] или любое другое защитное снаряжение поможет вам не превратиться в кровавое облачко если что-то пойдёт не так.
   <Box>
     <GuideEntityEmbed Entity="ClothingHeadHelmetBombSuit"/>
     <GuideEntityEmbed Entity="ClothingOuterSuitBomb"/>
@@ -18,56 +18,56 @@
     <GuideEntityEmbed Entity="ClothingOuterHardsuitAtmos"/>
   </Box>
 
-  ## Hardbombs
-  Listed below are the two common types of bombs you will encounter while defusing. A training bomb will only provide minor hull damage and generally not kill you. A syndicate bomb however will punch a big hole into the hull, and gib you if you are not wearing protective gear.
+  ## Бомбы
+  Ниже перечислены два распространенных типа бомб, с которыми вы столкнетесь при обезвреживании. Учебная бомба не нанесёт значительные повреждения корпусу и, как правило, не убьёт вас. Бомба Синдиката, однако, проделает большое отверстие в станции, не оставив от вас мокрого места, если вы предварительно не защититесь.
   <Box>
     <GuideEntityEmbed Entity="SyndicateBomb"/>
     <GuideEntityEmbed Entity="TrainingBomb"/>
   </Box>
 
-  ## Arming
-  To arm a bomb, you can either [color=yellow]right click[/color] and click [color=yellow]Begin countdown[/click], or [color=yellow]alt-click[/color] the bomb. It will begin beeping.
+  ## Взведение
+  Чтобы взвести бомбу, вы можете либо кликнуть [color=yellow]ПКМ[/color] и выбрать [color=yellow]Начать обратный отсчёт[/color], либо [color=yellow]Alt-кликнуть[/color] по бомбе. После этого она запикает.
 
-  ## Time
-  A bomb has a limited time, at a minimum of [protodata="SyndicateBomb" comp="OnUseTimerTrigger" member="ShortestDelayOption"/] seconds and a maximum of [protodata="SyndicateBomb" comp="OnUseTimerTrigger" member="LongestDelayOption"/] seconds. You can view the timer by examining it, unless the Proceed wire is cut. Once the timer hits zero, the bomb will detonate.
+  ## Обратный отсчёт
+  Бомба имеет ограниченное время действия, минимум 90 и максимум 300. Таймер можно увидеть, осмотрев бомбу, если только провод не перерезан. Как только таймер достигнет нуля, бомба взорвётся.
 
-  ## Bolts
-  By default, once armed, a bomb will bolt itself to the ground. You must find the BOLT wire and cut it to disable the bolts, after which you can unwrench it and throw it into space.
+  ## Болты
+  По умолчанию, как только бомба будет взведена, она болтируется к земле. Вы должны найти провод БОЛТ и перерезать его, чтобы отключить болты, после чего вы можете открутить её и выбросить в космос.
 
-  ## Wires
-  You must access the wiring in order to defuse a bomb. You can use a [color=yellow]screwdriver[/color] to open the access panel. Inside, you will find many types of wires. In a standard syndicate bomb, there are around [color=yellow]10 wires[/color], 3 are dummy wires, [color=red]3 will cause a detonation[/color], and the rest that weren't mentioned can be found below (alongside BOOM wires). With each wire, you can do 3 actions. You can:
-  - [color=yellow]Pulse the wire[/color] with a multitool, this can help you safely identify most wires.
-  - [color=red]Cut the wire[/color] with a wirecutter, this can trigger various effects, be cautious of cutting without reason!
-  - [color=green]Mend the wire[/color] with a wirecutter, this can restore some functionality of the bomb if it isn't disposable.
+  ## Провода
+  Чтобы обезвредить бомбу, необходимо иметь доступ к её проводам. Открыть панель доступа можно с помощью [color=yellow]отвёртки[/color]. Внутри вы найдете множество типов проводов. В стандартной бомбе Синдиката около [color=yellow]10 проводов[/color], 3 из которых являются пустышками, [color=red]3 вызывают детонацию[/color] бомбы, а остальные мы рассмотрим ниже (рядом с проводами БУМ). С каждым проводом можно выполнить 3 действия. Вы можете:
+  - [color=yellow]Прощупать провод[/color] с помощью мультитула, это поможет безопасно определить назначение большинства проводов.
+  - [color=red]Перерезать провод[/color] кусачками, что может вызвать срабатываение различных эффектов. Будьте осторожны и не режьте провода без причины!
+  - [color=green]Починить провод[/color] кусачками, скрепив обратно перерезанные провода, и восстановив работоспособность бомбы.
 
-  Onward for the types of wires.
+  Рассмотрим существующие типы проводов.
 
-  ## Wire Types
-  [color=#a4885c]Activation Wire (LIVE)[/color]
-  - [color=yellow]Pulse the wire[/color]: Pulsing the wire will make the wire chirp and delay the bomb by 30 seconds.
-  - [color=red]Cut the wire[/color]: Cutting the wire will defuse the bomb if active, otherwise, will begin the timer.
-  - [color=green]Mend the wire[/color]: Nothing.
+  ## Типы проводов
+  [color=#a4885c]Провод Активация (АКТВ)[/color]
+  - [color=yellow]Прощупать провод[/color]: Пульсация провода заставит бомбу затрещать и замедлит таймер на 30 секунд.
+  - [color=red]Перерезать провод[/color]: Перерезание провода обезвредит бомбу, если она взведена, в противном случае запустится таймер.
+  - [color=green]Восстановить провод[/color] Ничего.
 
-  [color=#a4885c]Proceed Wire (PRCD)[/color]
-  - [color=yellow]Pulse the wire[/color]: Pulsing the wire will forward the time by 15 seconds.
-  - [color=red]Cut the wire[/color]: Cutting the wire will disable the timer display on examine.
-  - [color=green]Mend the wire[/color]: Nothing.
+  [color=#a4885c]Провод Продолжение (ПРДЛ)[/color]
+  - [color=yellow]Прощупать провод[/color]: Пульсация провода ускорит таймер на 15 секунд.
+  - [color=red]Перерезать провод[/color]: Перерезание провода отключит индикацию таймера.
+  - [color=green]Восстановить провод[/color]: Ничего.
 
-  [color=#a4885c]Delay Wire (DLAY)[/color]
-  - [color=yellow]Pulse the wire[/color]: Pulsing the delay wire will delay the bomb by 30 seconds.
-  - [color=red]Cut the wire[/color]: Nothing.
-  - [color=green]Mend the wire[/color]: Nothing.
+  [color=#a4885c]Провод Задержка (ЗДРЖ)[/color]
+  - [color=yellow]Прощупать провод[/color]: Пульсация провода замедлит таймер на 30 секунд.
+  - [color=red]Перерезать провод[/color]: Ничего.
+  - [color=green]Восстановить провод[/color]: Ничего.
 
-  [color=#a4885c]Boom Wire (BOOM)[/color]
-  - [color=yellow]Pulse the wire[/color]: [color=red]The bomb will explode if armed![/color]
-  - [color=red]Cut the wire[/color]: [color=red]The bomb will explode if armed![/color] Otherwise, will disable the bomb.
-  - [color=green]Mend the wire[/color]: Re-enables the bomb if disabled previously.
+  [color=#a4885c]Провод Подрыв (БУУМ)[/color]
+  - [color=yellow]Прощупать провод[/color]: [color=red]Бомба взорвётся, если она уже активирована![/color]
+  - [color=red]Перерезать провод[/color]: [color=red]Бомба взорвётся, если она уже активирована![/color] В противном случае, бомба будет отключена.
+  - [color=green]Починить провод[/color]: Вновь включает бомбу, если ранее она была отключена.
 
-  [color=#a4885c]Bolt Wire (BOLT)[/color]
-  - [color=yellow]Pulse the wire[/color]: Pulsing the wire will make the bolts spin.
-  - [color=red]Cut the wire[/color]: Cutting the wire will disable the bolts, throw it into space!
-  - [color=green]Mend the wire[/color]: Mending the wire will re-enable the bolts.
+  [color=#a4885c]Провод Болты (БОЛТ)[/color]
+  - [color=yellow]Прощупать провод[/color]: Пульсация провода прокрутит болты.
+  - [color=red]Перерезать провод[/color]: Перерезание провода выведет болты из строя, скорее выбросьте бомбу в космос!
+  - [color=green]Починить провод[/color]: Починка провода приведет к повторному включению болтов.
 
-  [color=#a4885c]Dummy Wire[/color]
-  - Dummy wires don't do anything. You can pulse, cut, and mend them freely without affecting the bomb at all.
+  [color=#a4885c]Провод Пустышка[/color]
+  - Пустышки ничего не делают. Их можно свободно прощупывать, перерезать, и чинить, и они никак не повлияют на бомбу.
 </Document>

@@ -1,0 +1,16 @@
+descriptions-atv-dataset-1 = Вездеход для любых покрытий.
+descriptions-atv-dataset-2 = Транспорт против муравьев.
+descriptions-atv-dataset-3 = Овощ на любой случай.
+descriptions-atv-dataset-4 = На самом деле два транспортных средства.
+descriptions-atv-dataset-5 = Переменная любого типа.
+descriptions-atv-dataset-6 = Транспорт для помощи при травмах.
+descriptions-atv-dataset-7 = Вирус, передаваемый алгоритмами.
+descriptions-atv-dataset-8 = Вакансия для пьющего малыша.
+descriptions-atv-dataset-9 = Вулкан, разрывающий задницы.
+descriptions-atv-dataset-10 = Телевидение без телевизора.
+descriptions-atv-dataset-11 = Неуклюжий бродяга с твиками.
+descriptions-atv-dataset-12 = Волонтер в мире искусства и трагедий.
+descriptions-atv-dataset-13 = Автоматическая вакансия на тако.
+descriptions-atv-dataset-14 = Еще один потрясающий вид.
+descriptions-atv-dataset-15 = Все девственницы.
+descriptions-atv-dataset-16 = Ужасное транспортное средство.

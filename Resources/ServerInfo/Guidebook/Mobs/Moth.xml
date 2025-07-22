@@ -1,15 +1,17 @@
 <Document>
-  # Moth People
+  # Нианы
 
   <Box>
     <GuideEntityEmbed Entity="MobMoth" Caption=""/>
   </Box>
 
-  They can eat cotton, fabrics and clothing, but virtually none of the food that others would consider "edible". They prefer a somewhat lower temperature range than humans.
-  Their Insect Blood can't be metabolised from Iron like normal blood.
+  Нианы (моли) – это раса инсектоидно-подобных существ с планеты СНН, отдалённо напоминающих земную моль. Обладают достаточно необычной и от того приятной человеческому глазу внешностью, хотя кого-то она может ввергать в шок. Они могут есть хлопок, ткани и одежду, но практически никакую другую пищу, которую остальные расы считают "съедобной". 
+  Их крылья обеспечивают лучшее ускорение, если на станции нет гравитации, но они все равно не могут свободно перемещаться в открытом космосе.
 
-  Their wings give them better acceleration if there is no gravity on the station, but they still can't move without equipment when floating out in space.
-
-  They take [color=#1e90ff]30% less Cold damage[/color] but [color=#ffa500]30% more Heat damage, and catch on fire more easily[/color].
-
+  ## Расовые особенности
+  - Получают [color=#ffa500]на 30% больше урона огнём[/color], но [color=#1e90ff]на 30% меньше урона холодом[/color].
+  - Имеют отличимый от других рас порог температуры. При низкой температуре получают [color=red]0.05[/color] холода в секунду; При высокой температуре получают [color=red]0.2[/color] ожогов в секунду.
+  - Могут издавать звуки, похожие на чириканье (эмоция: чирикает).
+  - Конечности при перемолке выдадут жир и кровь.
+  - При разделке на крюке вы получите обычное мясо.
 </Document>
