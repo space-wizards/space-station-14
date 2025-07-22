@@ -1,6 +1,7 @@
 ﻿<BoxContainer xmlns="https://spacestation14.io"
           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
           xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
           Orientation="Horizontal"
           HorizontalExpand="True"
           StyleClasses="BackgroundDark">
@@ -40,8 +41,11 @@
         </BoxContainer>
     </BoxContainer>
     <cc:VSeparator/>
-    <BoxContainer Orientation="Vertical" Margin="4">
-        <Label Text="Players"/>
-        <BoxContainer Name="PlayerList" Orientation="Vertical" Access="Public"/>
+    <BoxContainer Orientation="Vertical" Margin="4" HorizontalExpand="True">
+        <Label Text="{Loc admin-logs-field-players-header}"/>
+        <cc:HSeparator/>
+        <BoxContainer Orientation="Horizontal" Margin="4" VerticalExpand="True">
+            <controls:ListContainer Name="PlayerListContainer" Access="Public" HorizontalExpand="True"/>
+        </BoxContainer>
     </BoxContainer>
 </BoxContainer>
