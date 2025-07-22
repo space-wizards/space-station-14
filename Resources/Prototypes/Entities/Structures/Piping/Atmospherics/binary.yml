@@ -486,10 +486,13 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/gasrecycler.rsi
+    snapCardinals: true
+    granularLayersRendering: true
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
       state: pipeBinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
+      renderingStrategy: Default
     - state: running
     - state: unlit
       shader: unshaded
