@@ -281,9 +281,18 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
+        /// <summary>
+        /// This function determines whether the change in temperature is significant enough to warrant dirtying the tile data.
+        /// </summary>
         private static bool CheckTemperatureTolerance(float tempA, float tempB, float tolerance)
         {
-            return Math.Abs(GetHeatDistortionStrength(tempA) - GetHeatDistortionStrength(tempB)) > tolerance;
+            var (strengthA, strengthB) = (GetHeatDistortionStrength(tempA), GetHeatDistortionStrength(tempB));
+
+            return (strengthA <= 0f && strengthB > 0f) || // change to or from 0
+                   (strengthB <= 0f && strengthA > 0f) ||
+                   (strengthA >= 1f && strengthB < 1f) || // change to or from 1
+                   (strengthB >= 1f && strengthA < 1f) ||
+                   Math.Abs(strengthA - strengthB) > tolerance; // other change within tolerance
         }
 
         private void UpdateOverlayData()
