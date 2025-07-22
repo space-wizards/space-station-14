@@ -50,6 +50,15 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     [Dependency] private readonly LimbSystem _limbSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
 
+    private List<CyberneticImplant> _allCybernetics = default!; // Starlight
+
+    // Starlight
+    public override void Initialize()
+    {
+        base.Initialize();
+        _allCybernetics = CyberneticImplant.GetAllCybernetics(_prototypeManager);
+    }
+
     /// <summary>
     /// Attempts to spawn a player character onto the given station.
     /// </summary>
@@ -198,8 +207,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             }
         Entity<TransformComponent, HumanoidAppearanceComponent, BodyComponent> body = (entity, transform, appearance, bodyComp);
 
-        var allCybernetics = CyberneticImplant.GetAllCybernetics(_prototypeManager);
-        var installedCyberlimbs = allCybernetics.Where(p => cybernetics.Contains(p.ID) && p.Type == CyberneticImplantType.Limb).ToList();
+        var installedCyberlimbs = _allCybernetics.Where(p => cybernetics.Contains(p.ID) && p.Type == CyberneticImplantType.Limb).ToList();
         // We don't need to manually attach limbs that are already attached by other limbs
         var filteredCyberlimbs = installedCyberlimbs.Where(p => !installedCyberlimbs.Where(v => v.AttachedParts.Contains(p.ID)).Any())
                                                     .Select(p => p.ID).ToList();
