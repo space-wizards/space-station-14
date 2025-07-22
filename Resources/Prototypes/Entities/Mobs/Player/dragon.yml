@@ -182,6 +182,10 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
+  #region Starlight
+  - type: Damageable
+    damageModifierSet: DragonResistances 
+  #endregion Starlight
 
 - type: entity
   categories: [ HideSpawnMenu ]
