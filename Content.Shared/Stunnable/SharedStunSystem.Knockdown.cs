@@ -230,6 +230,7 @@ public abstract partial class SharedStunSystem
     /// <param name="entity">Entity who is trying to fall down</param>
     private void ToggleKnockdown(Entity<CrawlerComponent?, KnockedDownComponent?> entity)
     {
+        // We resolve here instead of using TryCrawling to be extra sure someone without crawler can't stand up early.
         if (!Resolve(entity, ref entity.Comp1))
             return;
 
