@@ -142,7 +142,8 @@ public sealed class GasTileHeatOverlay : Overlay
                     }
                 }
             },
-            Color.Transparent);
+            // This clears the buffer to all zero first...
+            new Color(0, 0, 0, 0));
         if (!anyDistortion)
             return;
         // Blur to soften the edges of the distortion. the lower parts of the alpha channel need to get cut off in the
