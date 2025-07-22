@@ -9,6 +9,7 @@
   - vvwrite
   - vvinvoke
   - scale
+  - setscale
   - spin
 
 - Flags: DEBUG
@@ -40,6 +41,9 @@
   - hwid
   - showaudio
   - showpos
+  - showrot
+  - showvel
+  - showangvel
   - showray
   - showchunkbb
   - showgridnodes
@@ -60,7 +64,7 @@
   - watch
   - sendgarbage
   - setinputcontext
-  - showvelocities
+  - showplayervelocity
   - tilelookup
   - net_entityreport
   - scene
