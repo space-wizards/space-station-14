@@ -40,7 +40,9 @@ public sealed class HolidaySystem : SharedHolidaySystem
         if (!_appearance.TryGetData<string>(ent, HolidayVisuals.Holiday, out var data, args.Component))
         {
             // No holiday, so set to default
-            SetRsi((ent.Owner, args.Sprite), ent.Comp.Default);
+            if (ent.Comp.Default != null)
+                SetRsi((ent.Owner, args.Sprite), ent.Comp.Default);
+
             return;
         }
 
