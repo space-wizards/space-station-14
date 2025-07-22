@@ -1,23 +1,22 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration;
+using Content.Server.Administration.Logs;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Content.Server.Administration.Logs;
-using Content.Shared.Database;
 
 namespace Content.Server.Mind.Commands;
 
 [AdminCommand(AdminFlags.VarEdit)]
 public sealed class RenameCommand : LocalizedEntityCommands
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     public override string Command => "rename";
 
@@ -51,7 +50,7 @@ public sealed class RenameCommand : LocalizedEntityCommands
 
         if (!TryParseUid(args[0], shell, _entManager, out var entityUid, adminName, adminUid))
             return;
-            
+
         var oldName = _entManager.GetComponent<MetaDataComponent>(entityUid.Value).EntityName ?? "unnamed";
 
         _metaSystem.SetEntityName(entityUid.Value, name);
