@@ -171,7 +171,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
         TryStopRemoteControl(ent.Comp.BoundTo.Value);
 
         remoteComp.BoundRemote = null;
-        DirtyField(ent.Comp.BoundTo.Value, remoteComp, nameof(RCRemoteComponent.BoundTo));
+        DirtyField(ent.Comp.BoundTo.Value, remoteComp, nameof(RemotelyControllableComponent.BoundRemote));
     }
 
     private void OnMindGotRemoved(Entity<RemoteControllerComponent> ent, ref MindRemovedMessage args)
@@ -223,7 +223,7 @@ public sealed partial class RemoteControlSystem : EntitySystem
         remoteController.Config = providedConfig;
 
         if (_mind.TryGetMind(controller, out var mindId, out var mind))
-            _mind.Visit(mindId, ent.Owner, mind);
+            _mind.Visit(mindId, ent.Owner, mind, false);
 
         Dirty(ent);
 
