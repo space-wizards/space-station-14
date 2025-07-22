@@ -28,8 +28,10 @@
     entries:
       - behavior: Slicing
         useSound: /Audio/Items/Culinary/chop.ogg
+        SpeedModifier: 1
       - behavior: Screwing
         useSound: /Audio/Items/screwdriver.ogg
+        SpeedModifier: 0.05
   - type: Scalpel
   - type: SurgeryTool
     successRate: 0.9
