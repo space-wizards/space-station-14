@@ -9,6 +9,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
+using Content.Shared.Explosion.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -137,8 +138,12 @@ public sealed class FoodSystem : EntitySystem
         {
             if (itemSlots.Slots.Any(slot => slot.Value.HasItem))
             {
-                _popup.PopupClient(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
-                return (false, true);
+                // Skip items with timer trigger
+                if (!itemSlots.Slots.All(slot => HasComp<OnUseTimerTriggerComponent>(slot.Value.Item)))
+                {
+                    _popup.PopupClient(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
+                    return (false, true);
+                }
             }
         }
 
