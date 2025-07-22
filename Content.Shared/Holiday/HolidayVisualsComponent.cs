@@ -18,11 +18,12 @@ public sealed partial class HolidayVisualsComponent : Component
     public Dictionary<string, List<ProtoId<HolidayPrototype>>> Holidays = new();
 }
 
-/// <summary>
-/// Stores the key for the current holiday group being celebrated.
-/// </summary>
 [Serializable, NetSerializable]
 public enum HolidayVisuals : byte
 {
+    /// <summary>
+    /// Stores the key for the current holiday group being celebrated.
+    /// If no holiday is celebrated, gets set to <see cref="SharedHolidaySystem.NoHolidayKey"/>
+    /// </summary>
     Holiday,
 }

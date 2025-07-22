@@ -40,28 +40,13 @@ public sealed class HolidaySystem : SharedHolidaySystem
         if (!_appearance.TryGetData<string>(ent, HolidayVisuals.Holiday, out var data, args.Component))
             return;
 
-        if (data == NoHolidayKey)
-        {
-            // No holiday, so set to default
-            SetRsi((ent.Owner, args.Sprite), ent.Comp.Default);
-            return;
-        }
-
         // Get the new rsi
-        if (!ent.Comp.Sprite.TryGetValue(data, out var rsiString))
+        if (args.Sprite == null || !ent.Comp.Sprite.TryGetValue(data, out var rsiString))
             return;
 
-        SetRsi((ent.Owner, args.Sprite), rsiString);
-    }
-
-    /// <summary>
-    ///     Helper method for <see cref="OnAppearanceChange"/>. Does the actual setting of the rsi.
-    /// </summary>
-    private void SetRsi(Entity<SpriteComponent?> ent, string newRsi)
-    {
-        var path = SpriteSpecifierSerializer.TextureRoot / newRsi;
-
+        // Set the new rsi
+        var path = SpriteSpecifierSerializer.TextureRoot / rsiString;
         if (_resCache.TryGetResource(path, out RSIResource? rsi))
-            _sprite.SetBaseRsi(ent, rsi.RSI);
+            _sprite.SetBaseRsi((ent.Owner, args.Sprite), rsi.RSI);
     }
 }

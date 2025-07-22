@@ -37,17 +37,11 @@ public abstract class SharedHolidaySystem : EntitySystem
         SubscribeLocalEvent<HolidaysGotRefreshedEvent>(OnVisualsRefresh);
     }
 
-    /// <summary>
-    ///     Sets an enum for what holiday(s) it is.
-    /// </summary>
     private void OnVisualsInit(Entity<HolidayVisualsComponent> ent, ref ComponentInit args)
     {
         SetVisualData(ent);
     }
 
-    /// <summary>
-    ///     Resets an enum for what holiday(s) it is on all entities with <see cref="HolidayVisualsComponent"/>.
-    /// </summary>
     private void OnVisualsRefresh(ref HolidaysGotRefreshedEvent args)
     {
         // This doesn't feel right...

@@ -10,14 +10,8 @@ namespace Content.Client.Holiday;
 public sealed partial class HolidayRsiSwapComponent : Component
 {
     /// <summary>
-    /// A dictionary of keys on <see cref="HolidayVisuals.Holiday"/> to an rsi.
+    /// A dictionary of keys on <see cref="HolidayVisuals.Holiday"/> associated to an rsi.
     /// </summary>
     [DataField(required:true)]
     public Dictionary<string, string> Sprite = new();
-
-    /// <summary>
-    /// Rsi to swap to when the holiday ends.
-    /// </summary>
-    [DataField(required:true)]
-    public string Default;
 }
