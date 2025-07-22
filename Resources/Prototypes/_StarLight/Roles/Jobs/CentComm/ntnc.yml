@@ -49,7 +49,7 @@
   id: NTNCMedicGear
   equipment:
     jumpsuit: ClothingUniformNTCCFatigues
-    back: ClothingBackpackBlueShield
+    back: ClothingBackpackDuffelBlueShield
     shoes: ClothingShoesBootsJackFilled
     outerClothing: ClothingOuterHardsuitNTCCConsortiumMedic
     id: NTCCCSPDA
