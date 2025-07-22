@@ -2,6 +2,11 @@
   id: Heels
   equipment:
     shoes: ClothingShoesHighheelShoes
+  
+- type: loadout
+  id: HighHeelBoots
+  equipment:
+    shoes: ClothingShoesHighheelBoots
 
 - type: loadout
   id: LaceupShoes

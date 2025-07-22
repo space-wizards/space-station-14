@@ -72,17 +72,26 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 750
+        damage: 75
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: gib
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:EmptyContainersBehaviour
         containers:
         - borg_brain
         - borg_module
         - cell_slot
-      - !type:GibBehavior
+      - !type:DoActsBehavior
   - type: HealthExaminable
     examinableTypes:
     - Blunt
@@ -214,9 +223,10 @@
   - type: ActiveRadio
     channels:
     - Binary
+  - type: CyborgSparkEffect
 
 - type: entity
-  parent: BaseBorgiChassis
+  parent: [ BaseBorgiChassis, BaseBorgTransponder ]
   id: BaseStationBorgiChassis
   name: Smart Borgi
   description: A unusually smart dog, loves stating it's laws.
@@ -250,7 +260,10 @@
         params:
           volume: 12
     - type: IonStormTarget
-    - type: CyborgSparkEffect
+    - type: Access
+      enabled: false
+      tags:
+      - Borg
 
 - type: entity
   parent: BaseBorgiChassis
@@ -286,16 +299,7 @@
       ionStormAmount: 3
     - type: IonStormTarget
       chance: 1.0 # just like derelicts. it catches EVERY ionstorm.
-
-- type: entity
-  parent: BaseStationBorgiChassis
-  id: StationBorgiChassis
-  name: Borgi
-  description: A unusually smart dog, loves stating it's laws.
-  components:
-  - type: ReplacementAccent
-    accent: dog
-
+      
 - type: entity
   parent: BaseStationBorgiChassis
   id: SmartSubwooferBorgiChassis

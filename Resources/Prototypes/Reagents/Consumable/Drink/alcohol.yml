@@ -919,6 +919,17 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   fizziness: 0.3
+  metabolisms: # SL vampires
+    Drink:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Brute: -3
+            Burn: -1.25
 
 - type: reagent
   id: DevilsKiss
@@ -934,6 +945,17 @@
   metamorphicMaxFillLevels: 3
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
+  metabolisms: # SL vampires
+    Drink:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Brute: -3
+            Burn: -1.25
 
 - type: reagent
   id: DoctorsDelight
@@ -1573,6 +1595,14 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.2
+      - !type:HealthChange # SL vampires
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Brute: -3
+            Burn: -1.25
 
 - type: reagent
   id: PinaColada
