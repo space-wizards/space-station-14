@@ -11,7 +11,8 @@
   description: A delicious meal, cooked with love.
   components:
   - type: Item
-    storedRotation: -90
+    shape:
+    - 0,0,1,0
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
@@ -31,6 +32,8 @@
   id: FoodMealPotatoLoaded
   description: Totally baked.
   components:
+  - type: Item
+    storedOffset: 0,-2
   - type: FlavorProfile
     flavors:
       - cheesy
@@ -45,6 +48,8 @@
   id: FoodMealFries
   description: AKA, French Fries, Freedom Fries, etc.
   components:
+  - type: Item
+    storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
       - potatoes
@@ -59,6 +64,8 @@
   id: FoodMealFriesCheesy
   description: Fries. Covered in cheese. Duh.
   components:
+  - type: Item
+    storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
       - potatoes
@@ -74,6 +81,8 @@
   id: FoodMealFriesCarrot
   description: Tasty fries from fresh carrots.
   components:
+  - type: Item
+    storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
       - carrots
@@ -98,6 +107,8 @@
   id: FoodMealNachos
   description: Chips from Space Mexico.
   components:
+  - type: Item
+    storedOffset: 0,-2
   - type: Food
     trash:
     - FoodPlateSmall
@@ -123,6 +134,8 @@
   id: FoodMealNachosCheesy
   description: The delicious combination of nachos and melting cheese.
   components:
+  - type: Item
+    storedOffset: 0,-2
   - type: Food
     trash:
     - FoodPlateSmall
@@ -149,6 +162,8 @@
   id: FoodMealNachosCuban
   description: That's some dangerously spicy nachos.
   components:
+  - type: Item
+    storedOffset: 0,-2
   - type: Food
     trash:
     - FoodPlateSmall
@@ -178,6 +193,8 @@
   id: FoodMealMint
   description: It's wafer thin.
   components:
+  - type: Item
+    storedOffset: 0,-1
   - type: FlavorProfile
     flavors:
       - minty
@@ -199,6 +216,8 @@
   id: FoodMealEggplantParm
   description: The only good recipe for eggplant.
   components:
+  - type: Item
+    storedOffset: 0,-2
   - type: FlavorProfile
     flavors:
       - eggplant
@@ -225,6 +244,8 @@
   id: FoodMealPotatoYaki
   description: Made with roasted sweet potatoes!
   components:
+  - type: Item
+    storedOffset: 0,-2
   - type: FlavorProfile
     flavors:
       - sweet
@@ -239,6 +260,8 @@
   id: FoodMealCubancarp
   description: A grifftastic sandwich that burns your tongue and then leaves it numb!
   components:
+  - type: Item
+    storedOffset: 3,-7
   - type: FlavorProfile
     flavors:
       - fishy
@@ -271,6 +294,8 @@
   id: FoodMealCornedbeef
   description: Now you can feel like a real tourist vacationing in Ireland.
   components:
+  - type: Item
+    storedOffset: 0,-1
   - type: FlavorProfile
     flavors:
       - meaty
@@ -297,6 +322,11 @@
   id: FoodMealBearsteak
   description: Because eating bear wasn't manly enough.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: -1,4
   - type: FlavorProfile
     flavors:
       - meaty
@@ -323,6 +353,10 @@
   id: FoodMealPigblanket
   description: A tiny sausage wrapped in a flakey, buttery roll. Free this pig from its blanket prison by eating it.
   components:
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
   - type: FlavorProfile
     flavors:
       - meaty
@@ -349,6 +383,8 @@
   id: FoodMealRibs
   description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
   components:
+  - type: Item
+    storedOffset: 0,-4
   - type: Food
     trash:
     - FoodKebabSkewer
@@ -407,6 +443,8 @@
   id: FoodMealOmelette
   description: Cheesy.
   components:
+  - type: Item
+    storedOffset: 0,-1
   - type: FlavorProfile
     flavors:
       - egg
@@ -431,6 +469,8 @@
   id: FoodMealFriedegg
   description: A fried egg, with a touch of salt and pepper.
   components:
+  - type: Item
+    storedOffset: 0,-1
   - type: FlavorProfile
     flavors:
       - egg
@@ -460,6 +500,10 @@
   id: FoodMealMilkape
   description: The king of Jungle Thick.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
   - type: FlavorProfile
     flavors:
       - milk
@@ -474,6 +518,9 @@
   id: FoodMealMemoryleek
   description: This should refresh your memory.
   components:
+  - type: Item
+    shape:
+    - 0,0,0,1
   - type: FlavorProfile
     flavors:
       - memoryleek
@@ -496,6 +543,11 @@
   id: DisgustingSweptSoup
   description: Jesus christ.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: 0,-2
   - type: Sprite
     state: saltysweet
   - type: SolutionContainerManager
@@ -517,6 +569,8 @@
   id: FoodMealQueso
   description: A classic dipping sauce that you can't go wrong with.
   components:
+    - type: Item
+      storedOffset: 0,-6
     - type: FlavorProfile
       flavors:
         - cheesy
@@ -555,6 +609,8 @@
   id: FoodMealEnchiladas
   description: Viva La Mexico!
   components:
+    - type: Item
+      storedOffset: -1,0
     - type: FlavorProfile
       flavors:
         - meaty
@@ -584,6 +640,8 @@
   id: FoodSaladWatermelonFruitBowl
   description: The only salad where you can eat the bowl.
   components:
+  - type: Item
+    storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
       - fruity
@@ -615,6 +673,8 @@
   id: FoodMealCornInButter
   description: Buttery.
   components:
+  - type: Item
+    storedOffset: 0,-5
   - type: Food
     trash:
     - FoodPlate
