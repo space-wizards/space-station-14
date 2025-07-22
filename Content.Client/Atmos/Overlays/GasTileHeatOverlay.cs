@@ -73,6 +73,8 @@ public sealed class GasTileHeatOverlay : Overlay
         var worldHandle = args.WorldHandle;
         var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
 
+        var anyDistortion = false;
+
         args.WorldHandle.RenderInRenderTarget(_heatTarget,
             () =>
             {
@@ -113,6 +115,9 @@ public sealed class GasTileHeatOverlay : Overlay
                             if (!localBounds.Contains(tilePosition))
                                 continue;
                             var strength = SharedGasTileOverlaySystem.GetHeatDistortionStrength(tileGas.Temperature);
+                            if (strength <= 0f)
+                                continue;
+                            anyDistortion = true;
                             // Encode the strength in the red channel, then 0.5 alpha if it's an active tile.
                             // BlurRenderTarget will then apply a blur around the edge, but we don't want it to bleed
                             // past the tile.
@@ -126,7 +131,8 @@ public sealed class GasTileHeatOverlay : Overlay
                 }
             },
             Color.Transparent);
-
+        if (!anyDistortion)
+            return;
         // Blur to soften the edges of the distortion. the lower parts of the alpha channel need to get cut off in the
         // distortion shader to keep them in tile bounds.
         _clyde.BlurRenderTarget(args.Viewport, _heatTarget, _heatBlurTarget, args.Viewport.Eye!, 14f);
