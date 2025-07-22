@@ -24,7 +24,7 @@ public sealed class GasTileHeatOverlay : Overlay
 
     private IRenderTexture? _heatTarget;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
+    public override OverlaySpace Space => OverlaySpace.WorldSpace;
     private readonly ShaderInstance _shader;
 
 
