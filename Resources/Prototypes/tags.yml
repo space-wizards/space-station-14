@@ -832,6 +832,9 @@
   id: Knife
 
 - type: Tag
+  id: KnockdownImmune
+
+- type: Tag
   id: LavaBrig
 
 - type: Tag
@@ -1269,6 +1272,9 @@
   id: Slice # sliced fruit, vegetables, pizza etc.
 
 - type: Tag
+  id: SlowImmune
+
+- type: Tag
   id: SmallAIChip
 
 - type: Tag
@@ -1330,6 +1336,9 @@
 
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: StunImmune
 
 - type: Tag
   id: SubdermalImplant
