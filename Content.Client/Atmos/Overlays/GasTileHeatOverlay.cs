@@ -23,10 +23,10 @@ public sealed class GasTileHeatOverlay : Overlay
     private readonly SharedTransformSystem _xformSys;
 
     private IRenderTexture? _heatTarget;
+    private IRenderTexture? _heatBlurTarget;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     private readonly ShaderInstance _shader;
-
 
     public GasTileHeatOverlay()
     {
@@ -52,6 +52,14 @@ public sealed class GasTileHeatOverlay : Overlay
                 target.Size,
                 new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
                 name: nameof(GasTileHeatOverlay));
+        }
+        if (_heatBlurTarget?.Texture.Size != target.Size)
+        {
+            _heatBlurTarget?.Dispose();
+            _heatBlurTarget = _clyde.CreateRenderTarget(
+                target.Size,
+                new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
+                name: $"{nameof(GasTileHeatOverlay)}-blur");
         }
 
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
@@ -109,14 +117,23 @@ public sealed class GasTileHeatOverlay : Overlay
                             if (!localBounds.Contains(tilePosition))
                                 continue;
                             var strength = SharedGasTileOverlaySystem.GetHeatDistortionStrength(tileGas.Temperature);
+                            // Encode the strength in the red channel, then 0.5 alpha if it's an active tile.
+                            // BlurRenderTarget will then apply a blur around the edge, but we don't want it to bleed
+                            // past the tile.
+                            // So we use this alpha channel to chop the lower alpha values off in the shader to fit a
+                            // fit mask back into the tile.
                             worldHandle.DrawRect(
                                 Box2.CenteredAround(tilePosition + new Vector2(0.5f, 0.5f), grid.Comp.TileSizeVector),
-                                Color.White.WithAlpha(strength));
+                                new Color(strength,0f, 0f, strength > 0f ? 0.5f : 0f));
                         }
                     }
                 }
             },
             Color.Transparent);
+
+        // Blur to soften the edges of the distortion. the lower parts of the alpha channel need to get cut off in the
+        // distortion shader to keep them in tile bounds.
+        _clyde.BlurRenderTarget(args.Viewport, _heatTarget, _heatBlurTarget, args.Viewport.Eye!, 14f);
 
         args.WorldHandle.UseShader(_shader);
         args.WorldHandle.DrawTextureRect(_heatTarget.Texture, args.WorldBounds);

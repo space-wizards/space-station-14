@@ -62,9 +62,15 @@ void fragment() {
     // Spatial scaling (coarse or fine turbulence)
     grad *= s_scale;
 
+    // The texture should have been blurred using a previous operation
+    // We use the alpha channel to cut off the blur that bleeds outside the tile, then we rescale
+    // the mask back up to 0.0 to 1.0
+    highp float mask = zTexture(UV).a;
+    mask = mask <= 0.25 ? 0.0 : (mask - 0.25)*4.0;
+
     // Calculate warped UV using the turbulence gradient
-    // The strength of the turbulence is encoded into the alpha channel of TEXTURE
-    highp vec2 uvDist = UV + (strength * zTexture(UV).a) * grad;
+    // The strength of the turbulence is encoded into the red channel of TEXTURE
+    highp vec2 uvDist = UV + (strength * zTexture(UV).r * mask) * grad;
 
     // Apply to the texture
     COLOR = texture2D(SCREEN_TEXTURE, uvDist);
