@@ -73,6 +73,7 @@
       map: ["enum.MicrowaveVisualizerLayers.BaseOff"]
     - state: mw_unlit
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+      shader: unshaded
     - state: mwbloody0
       map: ["bloody"]
       visible: false
