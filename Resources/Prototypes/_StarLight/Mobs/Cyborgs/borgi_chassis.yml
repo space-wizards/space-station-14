@@ -224,6 +224,7 @@
     channels:
     - Binary
   - type: CyborgSparkEffect
+  - type: StationAIShunt
 
 - type: entity
   parent: [ BaseBorgiChassis, BaseBorgTransponder ]
