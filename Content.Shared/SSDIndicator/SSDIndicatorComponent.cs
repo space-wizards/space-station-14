@@ -30,7 +30,7 @@ public sealed partial class SSDIndicatorComponent : Component
     /// The time at which the entity will fall asleep, if <see cref="CCVars.ICSSDSleep"/> is true.
     /// </summary>
     [AutoNetworkedField, AutoPausedField]
-    [Access(typeof(SSDIndicatorSystem))]
+    [Access(typeof(SharedSSDIndicatorSystem))]
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan FallAsleepTime = TimeSpan.Zero;
 
