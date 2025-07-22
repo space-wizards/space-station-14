@@ -23,27 +23,12 @@ public sealed class SSDIndicatorSystem : SharedSSDIndicatorSystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<SSDIndicatorComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
         SubscribeLocalEvent<VisitingMindComponent, PlayerDetachedEvent>(OnVisitingDetached);
 
         _cfg.OnValueChanged(CCVars.ICSSDSleep, obj => _icSsdSleep = obj, true);
         _cfg.OnValueChanged(CCVars.ICSSDSleepTime, obj => _icSsdSleepTime = obj, true);
-    }
-
-    private void OnPlayerAttached(EntityUid uid, SSDIndicatorComponent component, PlayerAttachedEvent args)
-    {
-        component.IsSSD = false;
-
-        // Removes force sleep and resets the time to zero
-        if (_icSsdSleep)
-        {
-            component.FallAsleepTime = TimeSpan.Zero;
-            _statusEffects.TryRemoveStatusEffect(uid, StatusEffectSSDSleeping);
-        }
-
-        Dirty(uid, component);
     }
 
     private void OnPlayerDetached(EntityUid uid, SSDIndicatorComponent component, PlayerDetachedEvent args)

@@ -1,6 +1,7 @@
 using Content.Shared.CCVar;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Configuration;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -22,12 +23,27 @@ public abstract class SharedSSDIndicatorSystem : EntitySystem
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<SSDIndicatorComponent, PlayerAttachedEvent>(OnPlayerAttached);
+
         SubscribeLocalEvent<SSDIndicatorComponent, MapInitEvent>(OnMapInit);
 
         _cfg.OnValueChanged(CCVars.ICSSDSleep, obj => _icSsdSleep = obj, true);
         _cfg.OnValueChanged(CCVars.ICSSDSleepTime, obj => _icSsdSleepTime = obj, true);
     }
 
+    private void OnPlayerAttached(EntityUid uid, SSDIndicatorComponent component, PlayerAttachedEvent args)
+    {
+        component.IsSSD = false;
+
+        // Removes force sleep and resets the time to zero
+        if (_icSsdSleep)
+        {
+            component.FallAsleepTime = TimeSpan.Zero;
+            _statusEffects.TryRemoveStatusEffect(uid, StatusEffectSSDSleeping);
+        }
+
+        Dirty(uid, component);
+    }
 
     // Prevents mapped mobs to go to sleep immediately
     private void OnMapInit(EntityUid uid, SSDIndicatorComponent component, MapInitEvent args)
