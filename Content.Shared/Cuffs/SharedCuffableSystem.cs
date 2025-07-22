@@ -579,35 +579,31 @@ namespace Content.Shared.Cuffs
             return true;
         }
 
+        /// <inheritdoc cref="TryUncuff(Entity{CuffableComponent?},EntityUid,Entity{HandcuffComponent?})"/>
+        public void TryUncuff(Entity<CuffableComponent?> target, EntityUid user)
+        {
+            if (!TryGetLastCuff(target, out var cuff))
+                return;
+
+            TryUncuff(target, user, cuff.Value);
+        }
+
         /// <summary>
         /// Attempt to uncuff a cuffed entity. Can be called by the cuffed entity, or another entity trying to help uncuff them.
         /// If the uncuffing succeeds, the cuffs will drop on the floor.
         /// </summary>
         /// <param name="target">The entity we're trying to remove cuffs from.</param>
         /// <param name="user">The entity doing the cuffing.</param>
-        /// <param name="cuffsToRemove">Optional param for the handcuff entity to remove from the cuffed entity. If null, uses the most recently added handcuff entity.</param>
-        public void TryUncuff(Entity<CuffableComponent?> target, EntityUid user, Entity<HandcuffComponent?>? cuffsToRemove = null)
+        /// <param name="cuff">The handcuff entity we're attempting to remove.</param>
+        public void TryUncuff(Entity<CuffableComponent?> target, EntityUid user, Entity<HandcuffComponent?> cuff)
         {
-            if (!Resolve(target, ref target.Comp))
+            if (!Resolve(target, ref target.Comp) || !Resolve(cuff, ref cuff.Comp))
                 return;
 
             var isOwner = user == target.Owner;
 
-            if (cuffsToRemove == null)
-                cuffsToRemove = GetLastCuffOrNull(target);
-            else
-            {
-                if (!target.Comp.Container.ContainedEntities.Contains(cuffsToRemove.Value))
-                    Log.Warning("A user is trying to remove handcuffs that aren't in the owner's container. This should never happen!");
-            }
-
-            if (cuffsToRemove == null)
-                return;
-
-            var cuff = cuffsToRemove.Value;
-
-            if (!Resolve(cuff, ref cuff.Comp))
-                return;
+            if (!target.Comp.Container.ContainedEntities.Contains(cuff))
+                Log.Warning("A user is trying to remove handcuffs that aren't in the owner's container. This should never happen!");
 
             var attempt = new UncuffAttemptEvent(user, target);
             RaiseLocalEvent(user, ref attempt, true);
@@ -623,23 +619,22 @@ namespace Content.Shared.Cuffs
                 return;
             }
 
-
             var ev = new ModifyUncuffDurationEvent(user, target, isOwner ? cuff.Comp.BreakoutTime : cuff.Comp.UncuffTime);
             RaiseLocalEvent(user, ref ev);
             var uncuffTime = ev.Duration;
 
             if (isOwner)
             {
-                if (!TryComp(cuffsToRemove.Value, out UseDelayComponent? useDelay))
+                if (!TryComp(cuff, out UseDelayComponent? useDelay))
                     return;
 
-                if (!_delay.TryResetDelay((cuffsToRemove.Value, useDelay), true))
+                if (!_delay.TryResetDelay((cuff, useDelay), true))
                 {
                     return;
                 }
             }
 
-            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, uncuffTime, new UnCuffDoAfterEvent(), target, target, cuffsToRemove)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, uncuffTime, new UnCuffDoAfterEvent(), target, target, cuff)
             {
                 BreakOnMove = true,
                 BreakOnWeightlessMove = false,
@@ -807,16 +802,16 @@ namespace Content.Shared.Cuffs
         #endregion
 
         /// <summary>
-        /// Tries to get a list of all the handcuffs stored in a entity's <see cref="CuffableComponent"/>.
+        /// Tries to get a list of all the handcuffs stored in an entity's <see cref="CuffableComponent"/>.
         /// </summary>
         /// <param name="entity">The cuffable entity in question.</param>
         /// <param name="cuffs">A list of cuffs if it exists.</param>
-        /// <returns>True if a list of cuffs with cuffs exists.</returns>
-        public bool TryGetAllCuffs(Entity<CuffableComponent?> entity, [NotNullWhen(true)] out IReadOnlyList<EntityUid>? cuffs)
+        /// <returns>True if a list of cuffs with cuffs exists. False if no list exists or if it is empty.</returns>
+        public bool TryGetAllCuffs(Entity<CuffableComponent?> entity, out IReadOnlyList<EntityUid> cuffs)
         {
-            cuffs = GetAllCuffsOrNull(entity);
+            cuffs = GetAllCuffs(entity);
 
-            return cuffs != null;
+            return cuffs.Count > 0;
         }
 
         /// <summary>
@@ -824,12 +819,12 @@ namespace Content.Shared.Cuffs
         /// </summary>
         /// <param name="entity">The cuffable entity in question.</param>
         /// <returns>A list of cuffs if it exists, or null if there are no cuffs.</returns>
-        public IReadOnlyList<EntityUid>? GetAllCuffsOrNull(Entity<CuffableComponent?> entity)
+        public IReadOnlyList<EntityUid> GetAllCuffs(Entity<CuffableComponent?> entity)
         {
             if (!Resolve(entity, ref entity.Comp))
-                return null;
+                return Array.Empty<EntityUid>();
 
-            return entity.Comp.Container.ContainedEntities.Count == 0 ? null : entity.Comp.Container.ContainedEntities;
+            return entity.Comp.Container.ContainedEntities.Count == 0 ? Array.Empty<EntityUid>() : entity.Comp.Container.ContainedEntities;
         }
 
         /// <summary>
