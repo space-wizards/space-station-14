@@ -157,7 +157,7 @@ public sealed class ConditionalSpawnerSystem : EntitySystem
         foreach (var protoId in spawns)
         {
             var prototype = _prototypeManager.Index(protoId);
-            if (!Factory.TryGetComponent<StackComponent>(prototype.Components, out var stack))
+            if (!prototype.Components.TryGetComponent<StackComponent>(Factory, out var stack))
             {
                 nonStackable.Add(protoId);
                 continue;
