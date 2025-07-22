@@ -38,6 +38,9 @@ public sealed class HolidaySystem : SharedHolidaySystem
     {
         // Get the holiday enum
         if (!_appearance.TryGetData<string>(ent, HolidayVisuals.Holiday, out var data, args.Component))
+            return;
+
+        if (data == NoHolidayKey)
         {
             // No holiday, so set to default
             SetRsi((ent.Owner, args.Sprite), ent.Comp.Default);

@@ -20,6 +20,9 @@ public abstract class SharedHolidaySystem : EntitySystem
     protected DateTime CurrentDate;
     protected readonly List<HolidayPrototype> CurrentHolidays = new(); // Should this be a HashSet?
 
+    /// Key used by <see cref="HolidayVisuals.Holiday"/> when there's no celebrations.
+    protected const string NoHolidayKey = "none";
+
     // CCvar.
     protected bool _enabled;
 
@@ -51,11 +54,14 @@ public abstract class SharedHolidaySystem : EntitySystem
         var query = AllEntityQuery<HolidayVisualsComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            _appearance.RemoveData(uid, HolidayVisuals.Holiday);
             SetVisualData((uid, comp));
         }
     }
 
+    /// <summary>
+    ///     Sets <see cref="HolidayVisuals.Holiday"/> to the key associated with the first found celebrated holiday,
+    ///     or to <see cref="NoHolidayKey"/> if no holidays are celebrated.
+    /// </summary>
     private void SetVisualData(Entity<HolidayVisualsComponent> ent)
     {
         foreach (var (key, holidays) in ent.Comp.Holidays)
@@ -63,8 +69,11 @@ public abstract class SharedHolidaySystem : EntitySystem
             if (!holidays.Any(h => IsCurrentlyHoliday(h)))
                 continue;
             _appearance.SetData(ent, HolidayVisuals.Holiday, key);
-            break;
+            return;
         }
+
+        // No holiday was found.
+        _appearance.SetData(ent, HolidayVisuals.Holiday, NoHolidayKey);
     }
 
     /// <summary>
