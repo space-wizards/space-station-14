@@ -19,8 +19,7 @@
     group: GenericNumber
   - type: StatusEffects
     allowed:
-    - SlowedDown
-    - Stun
+    - Stutter
     - Electrocution
     - TemporaryBlindness
     - RadiationProtection
