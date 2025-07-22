@@ -29,3 +29,6 @@
             - CartridgeMagnum
   - type: StealTarget
     stealGroup: WeaponPistolNegotiator
+  - type: Contraband
+    allowedDepartments:
+    - Security
