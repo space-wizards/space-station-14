@@ -211,6 +211,16 @@
   result: FloorTileItemAstroAsteroidSandBorderless
 
 - type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroIronsand
+  result: FloorTileItemAstroIronsand
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroIronsandBorderless
+  result: FloorTileItemAstroIronsandBorderless
+
+- type: latheRecipe
   id: FloorGreenCircuit
   result: FloorTileItemGCircuit4
   completetime: 2
