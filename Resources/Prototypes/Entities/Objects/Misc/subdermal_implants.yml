@@ -27,7 +27,6 @@
       mobState:
       - Dead
     - type: EmitSoundOnTrigger
-      predicted: true
       sound:
         collection: SadTrombone
         params:
