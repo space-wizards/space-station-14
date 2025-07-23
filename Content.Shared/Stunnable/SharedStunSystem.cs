@@ -204,7 +204,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         return true;
     }
 
-    private void Knockdown(Entity<StandingStateComponent> entity, TimeSpan? time, bool refresh, bool autoStand = true, bool drop = true)
+    private void Knockdown(Entity<StandingStateComponent> entity, TimeSpan? time, bool refresh, bool autoStand, bool drop)
     {
         // Initialize our component with the relevant data we need if we don't have it
         if (EnsureComp<KnockedDownComponent>(entity, out var component))
