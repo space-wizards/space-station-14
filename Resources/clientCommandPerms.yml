@@ -73,12 +73,14 @@
     - localdelete
     - fullstatereset
     - dumpentities
+    - showwallmounts
 
 - Flags: MAPPING
   Commands:
     - mapping
     - toggleautosave
     - toggledecals
+    - showwallmounts
 
 - Flags: QUERY
   Commands:
