@@ -30,7 +30,7 @@ namespace Content.Client.RoundEnd
         private readonly List<SortButton> _sortButtons = [];
         private string _searchText = string.Empty;
 
-        private static readonly ProtoId<JobIconPrototype> ObserverIcon = "JobIconObserver";
+        private static readonly ProtoId<JobIconPrototype> ObserverIcon = "JobIconUnknown";
         private static readonly ProtoId<JobIconPrototype> UnknownIcon = "JobIconUnknown";
 
         private enum SortField
