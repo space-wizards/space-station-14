@@ -876,9 +876,20 @@
   components:
   - type: Sprite
     state: magicplush
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: magicarpplush-inhand-left
+      right:
+      - state: magicarpplush-inhand-right
   - type: FoodSequenceElement
     entries:
       CottonBurger: MagicarpPlushie
+  - type: Tag
+    tags:
+    - Payload
+    - ClothMade
+    - PlushieCarpMagi
 
 - type: entity
   parent: PlushieCarp
@@ -910,9 +921,20 @@
   components:
   - type: Sprite
     state: holoplush
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: holocarpplush-inhand-left
+      right:
+      - state: holocarpplush-inhand-right
   - type: FoodSequenceElement
     entries:
       CottonBurger: HolocarpPlushie
+  - type: Tag
+    tags:
+    - Payload
+    - ClothMade
+    - PlushieCarpHolo
 
 - type: entity
   parent: BasePlushie
