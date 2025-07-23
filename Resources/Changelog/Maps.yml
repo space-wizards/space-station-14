@@ -468,4 +468,11 @@
   id: 58
   time: '2025-07-23T00:44:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39140
+- author: CroilBird
+  changes:
+  - message: Added Polly to Amber station
+    type: Add
+  id: 59
+  time: '2025-07-23T00:52:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39139
 Order: 1
