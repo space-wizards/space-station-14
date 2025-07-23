@@ -11,7 +11,7 @@ public sealed partial class KnockedDownComponent : Component
     /// Game time that we can stand up.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
-    public TimeSpan? NextUpdate;
+    public TimeSpan NextUpdate;
 
     /// <summary>
     /// Should we try to stand up?
