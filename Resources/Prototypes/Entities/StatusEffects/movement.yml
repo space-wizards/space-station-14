@@ -60,13 +60,6 @@
   - type: StunnedStatusEffect
 
 - type: entity
-  parent: MobStandStatusEffectBase
-  id: StatusEffectKnockdown
-  name: knocked down
-  components:
-  - type: KnockdownStatusEffect
-
-- type: entity
   parent: MobStatusEffectBase
   id: StatusEffectParalysis
   name: paralyzed
@@ -81,3 +74,4 @@
   - type: StatusEffectAlert
     alert: Stun
   - type: StunnedStatusEffect
+  - type: KnockdownStatusEffect
