@@ -6,7 +6,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
 /// Creates a smoke cloud when triggered, with an optional solution to include in it.
-/// No sound is played incase a grenade is stealthy, use <see cref="SoundOnTriggerComponent"/> if you want a sound.
+/// No sound is played incase a grenade is stealthy, use <see cref="EmitSoundOnTriggerComponent"/> if you want a sound.
 /// If TargetUser is true the smoke is spawned at their location.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

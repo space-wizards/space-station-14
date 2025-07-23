@@ -6,5 +6,5 @@ namespace Content.Shared.Trigger.Components.Triggers;
 /// Triggers when the entity is initialized.
 /// The user is null.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnSpawnComponent : BaseTriggerOnXComponent;

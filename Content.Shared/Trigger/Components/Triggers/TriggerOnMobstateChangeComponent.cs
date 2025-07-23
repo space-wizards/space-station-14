@@ -5,6 +5,8 @@ namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
 /// Triggers when this entity's mob state changes.
+/// The user is the entity that caused the state change.
+/// If added to an implant it will trigger when the implanted entity's mob state changes.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnMobstateChangeComponent : BaseTriggerOnXComponent

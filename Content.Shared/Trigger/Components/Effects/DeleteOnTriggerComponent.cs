@@ -6,5 +6,5 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// Will delete the entity when triggered.
 /// If TargetUser is true it will delete them instead.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DeleteOnTriggerComponent : BaseXOnTriggerComponent;

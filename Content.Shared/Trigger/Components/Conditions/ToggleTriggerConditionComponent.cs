@@ -17,18 +17,18 @@ public sealed partial class ToggleTriggerConditionComponent : BaseTriggerConditi
     /// <summary>
     /// The text of the toggle verb.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId ToggleVerb = "toggle-trigger-condition-default-verb";
 
     /// <summary>
     /// The popup to show when toggled on.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId ToggleOn = "toggle-trigger-condition-default-on";
 
     /// <summary>
     /// The popup to show when toggled off.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId ToggleOff = "toggle-trigger-condition-default-off";
 }

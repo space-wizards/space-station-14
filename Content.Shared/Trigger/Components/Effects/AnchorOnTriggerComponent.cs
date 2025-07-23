@@ -4,6 +4,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
 /// Will (un)anchor the entity when triggered.
+/// If TargetUser is true they will be (un)anchored instead.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class AnchorOnTriggerComponent : BaseXOnTriggerComponent
@@ -24,6 +25,10 @@ public sealed partial class AnchorOnTriggerComponent : BaseXOnTriggerComponent
     /// <summary>
     /// Removes this component when triggered so it can only be activated once.
     /// </summary>
+    /// <remarks>
+    /// TODO: Make this a generic thing for all triggers.
+    /// Or just add a RemoveComponentsOnTriggerComponent.
+    /// </remarks>
     [DataField, AutoNetworkedField]
     public bool RemoveOnTrigger = true;
 }

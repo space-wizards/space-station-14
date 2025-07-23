@@ -1,4 +1,5 @@
 using Content.Shared.Dataset;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Trigger.Components.Effects;
@@ -7,7 +8,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// Makes the entity speak a message when triggered.
 /// If TargetUser is true then they will be forced to speak instead.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SpeakOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>

@@ -7,8 +7,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// Adds the specified components when triggered.
 /// If TargetUser is true they will be added to the user.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class AddComponentsOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>

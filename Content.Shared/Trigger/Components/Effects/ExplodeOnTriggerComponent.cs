@@ -7,5 +7,8 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// TargetUser will only work of the user has ExplosiveComponent as well.
 /// The User will be logged in the admin logs.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+/// <summary>
+/// TODO: Allow this to work without an ExplosiveComponent on the user via QueueExplosion.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ExplodeOnTriggerComponent : BaseXOnTriggerComponent;

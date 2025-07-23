@@ -1,6 +1,7 @@
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Trigger.Components.Effects;
+
 /// <summary>
 /// Changes the alert level of the station when triggered.
 /// </summary>

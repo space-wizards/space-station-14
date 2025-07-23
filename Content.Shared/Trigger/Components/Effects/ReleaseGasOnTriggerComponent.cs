@@ -9,7 +9,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// Contains a GasMixture that will release its contents to the atmosphere when triggered.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentPause]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class ReleaseGasOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>

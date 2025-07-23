@@ -11,7 +11,7 @@ public abstract partial class BaseXOnTriggerComponent : Component
     /// The keys that will activate the effect.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<string> KeysIn = new() { TriggerSystem.DefaultTriggerKey };
+    public HashSet<string> KeysIn = new() { TriggerSystem.DefaultTriggerKey };
 
     /// <summary>
     /// Set to true to make the user of the trigger the effect target.

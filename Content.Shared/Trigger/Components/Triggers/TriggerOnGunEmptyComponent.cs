@@ -6,5 +6,5 @@ namespace Content.Shared.Trigger.Components.Triggers;
 /// Triggers when attempting to shoot a gun while it's empty.
 /// The user is the player holding the gun.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnGunEmptyComponent : BaseTriggerOnXComponent;

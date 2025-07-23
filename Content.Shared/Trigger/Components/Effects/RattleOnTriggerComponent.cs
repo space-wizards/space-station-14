@@ -9,7 +9,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// Sends an emergency message over coms when triggered giving information about the entity's mob status.
 /// If TargetUser is true then the user's mob state will be used instead.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RattleOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>

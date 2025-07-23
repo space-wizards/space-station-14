@@ -6,5 +6,5 @@ namespace Content.Shared.Trigger.Components.Triggers;
 /// Triggers on use in hand.
 /// The user is the player holding the item.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnUseComponent : BaseTriggerOnXComponent;
