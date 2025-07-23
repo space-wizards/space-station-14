@@ -305,14 +305,14 @@ namespace Content.Client.RoundEnd
                 {
                     OverrideDirection = Direction.South,
                     VerticalAlignment = VAlignment.Center,
-                    SetSize = new Vector2(24, 24),
+                    SetSize = new Vector2(32, 32),
                 });
             }
             else
             {
                 _playerGrid.AddChild(new Control
                 {
-                    SetSize = new Vector2(24, 24),
+                    SetSize = new Vector2(32, 32),
                 });
             }
 
