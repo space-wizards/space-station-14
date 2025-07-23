@@ -6,8 +6,8 @@
     <OutputPanel Name="TextOutput" VerticalExpand="true" />
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
         <Button Visible="False" Name="CloseTicket" Access="Public" Text="{Loc 'mentor-close-ticket'}" StyleClasses="OpenBoth" HorizontalAlignment="Left" />
-        <RichTextLabel Name="TypingIndicator" Access="Public" />
         <Button Visible="False" Name="TptoTicket" Access="Public" Text="{Loc 'mentor-tpto'}" StyleClasses="OpenBoth" HorizontalAlignment="Right" />
+        <RichTextLabel Name="TypingIndicator" Access="Public" />
     </BoxContainer>
     <HistoryLineEdit Name="SenderLineEdit" />
 </BoxContainer>

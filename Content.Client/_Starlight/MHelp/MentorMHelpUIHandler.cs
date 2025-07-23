@@ -142,6 +142,7 @@ public sealed class MentorMHelpUIHandler(NetUserId owner) : IMHelpUIHandler
         existingPanel.OnInputTextChanged += text => OnInputTextChanged?.Invoke(ticketId, text);
         existingPanel.OnTicketClosed += () => OnTicketClosed.Invoke(ticketId);
         existingPanel.OnTptoPressed += () => OnTptoPressed.Invoke(ticketId);
+        existingPanel.ShowTpto = IsMentor;
         existingPanel.Visible = false;
         if (!Control!.MhelpArea.Children.Contains(existingPanel))
             Control.MhelpArea.AddChild(existingPanel);

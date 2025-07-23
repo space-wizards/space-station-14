@@ -15,6 +15,7 @@ public sealed partial class MhelpPanel : BoxContainer
     public int Unread { get; private set; } = 0;
     public DateTime LastMessage { get; private set; } = DateTime.MinValue;
     private List<string> PeopleTyping { get; set; } = [];
+    public bool ShowTpto = false;
     public event Action<string> OnInputTextChanged = delegate { };
     public event Action<string> OnMessageSend = delegate { };
     public event Action OnTicketClosed = delegate { };
@@ -55,7 +56,7 @@ public sealed partial class MhelpPanel : BoxContainer
         if (!Visible)
             Unread++;
         CloseTicket.Visible = message.Ticket is not null && !message.TicketClosed;
-        TptoTicket.Visible = CloseTicket.Visible;
+        TptoTicket.Visible = CloseTicket.Visible && ShowTpto;
         var formatted = new FormattedMessage(1);
         formatted.AddMarkupOrThrow(message.Text);
         LastMessage = message.CreateAt;

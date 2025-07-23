@@ -43,7 +43,8 @@ public abstract class SharedMentorSystem : EntitySystem
         public Guid? Ticket { get; init; }
     }
     
-        public sealed class MhelpTptoTicket() : EntityEventArgs
+    [Serializable, NetSerializable]
+    public sealed class MhelpTptoTicket() : EntityEventArgs
     {
         public Guid? Ticket { get; init; }
     }

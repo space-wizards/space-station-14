@@ -9,6 +9,7 @@ mentor-system-typing-indicator = {$players} {$count ->
 
 mentor-play-sound = sound?
 mentor-close-ticket = close ticket
+mentor-tpto = "Tpto"
 
 mentor-title-none-selected = None selected
 
