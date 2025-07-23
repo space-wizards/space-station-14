@@ -426,4 +426,11 @@
   id: 52
   time: '2025-07-23T00:09:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39147
+- author: CroilBird
+  changes:
+  - message: Added Polly to Oasis station
+    type: Add
+  id: 53
+  time: '2025-07-23T00:11:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39146
 Order: 1
