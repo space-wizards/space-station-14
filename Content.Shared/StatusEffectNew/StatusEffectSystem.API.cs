@@ -31,7 +31,7 @@ public sealed partial class StatusEffectsSystem
     }
 
 
-    ///<inheritdoc cref="TryAddStatusEffectDuration(Robust.Shared.GameObjects.EntityUid,Robust.Shared.Prototypes.EntProtoId,out Robust.Shared.GameObjects.EntityUid?,System.TimeSpan)"/>
+    ///<inheritdoc cref="TryAddStatusEffectDuration(EntityUid,EntProtoId,out EntityUid?,TimeSpan)"/>
     public bool TryAddStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan duration)
     {
         return TryAddStatusEffectDuration(target, effectProto, out _, duration);
@@ -61,7 +61,7 @@ public sealed partial class StatusEffectsSystem
         return true;
     }
 
-    /// <inheritdoc cref="TrySetStatusEffectDuration(Robust.Shared.GameObjects.EntityUid,Robust.Shared.Prototypes.EntProtoId,out Robust.Shared.GameObjects.EntityUid?,System.TimeSpan?)"/>
+    /// <inheritdoc cref="TrySetStatusEffectDuration(EntityUid,EntProtoId,out EntityUid?,TimeSpan?)"/>
     public bool TrySetStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan? duration = null)
     {
         return TrySetStatusEffectDuration(target, effectProto, out _, duration);
@@ -91,7 +91,7 @@ public sealed partial class StatusEffectsSystem
         return true;
     }
 
-    /// <inheritdoc cref="TryUpdateStatusEffectDuration(Robust.Shared.GameObjects.EntityUid,Robust.Shared.Prototypes.EntProtoId,out Robust.Shared.GameObjects.EntityUid?,System.TimeSpan?)"/>
+    /// <inheritdoc cref="TryUpdateStatusEffectDuration(EntityUid,EntProtoId,out EntityUid?,TimeSpan?)"/>
     public bool TryUpdateStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan? duration = null)
     {
         return TryUpdateStatusEffectDuration(target, effectProto, out _, duration);
