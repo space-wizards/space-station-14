@@ -249,7 +249,7 @@ public sealed partial class ShuttleSystem
 
             if (direction.LengthSquared() > minsq)
             {
-                _stuns.TryKnockdown(uid, knockdownTime, true);
+                _stuns.TryUpdateKnockdownDuration(uid, knockdownTime);
                 _throwing.TryThrow(uid, direction, physics, Transform(uid), _projQuery, direction.Length(), playSound: false);
             }
             else
