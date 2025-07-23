@@ -22,7 +22,7 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// Weighted list of lawsets, superseeds Laws 
     /// </summary>
     [DataField]
-    public ProtoId<WeightedRandomPrototype> WeightedLaws = string.Empty;
+    public ProtoId<WeightedRandomPrototype> WeightedLaws = "DefaultLawsets";
     // Ronstation - end of modifications.
 
     /// <summary>

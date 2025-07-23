@@ -272,9 +272,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
         if (provider.Laws == string.Empty)
         {
-            if (provider.WeightedLaws == string.Empty)
-                provider.WeightedLaws = "DefaultLawsets";
-
             var weightList = _prototype.Index(provider.WeightedLaws);
             provider.Laws = weightList.Pick(_random);
         }
