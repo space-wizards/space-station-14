@@ -487,4 +487,11 @@
   id: 60
   time: '2025-07-23T00:53:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39138
+- author: CroilBird
+  changes:
+  - message: Added Polly to Elkridge station
+    type: Add
+  id: 61
+  time: '2025-07-23T00:55:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39150
 Order: 1
