@@ -15,7 +15,7 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// The id of the lawset that is being provided.
     /// </summary>
     [DataField] // Ronstation - modification.
-    public ProtoId<SiliconLawsetPrototype> Laws = string.Empty;
+    public ProtoId<SiliconLawsetPrototype>? Laws;
 
     // Ronstation - start of modifications.
     /// <summary>
