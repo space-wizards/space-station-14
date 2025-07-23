@@ -79,7 +79,7 @@ public abstract partial class SharedStunSystem
         while (query.MoveNext(out var uid, out var knockedDown))
         {
             // If it's null then we don't want to stand up
-            if (knockedDown.NextUpdate == null || !knockedDown.AutoStand || knockedDown.DoAfterId.HasValue || knockedDown.NextUpdate > GameTiming.CurTime)
+            if (!knockedDown.AutoStand || knockedDown.DoAfterId.HasValue || knockedDown.NextUpdate > GameTiming.CurTime)
                 continue;
 
             TryStanding(uid);
@@ -260,6 +260,8 @@ public abstract partial class SharedStunSystem
         if (!_crawlerQuery.TryComp(entity, out var crawler))
         {
             // If we can't crawl then just have us sit back up...
+            // In case you're wondering, the KnockdownOverCheck, returns if we're able to move, so if next update is null.
+            // An entity that can't crawl will stand up the next time they can move, which should prevent moving while knocked down.
             RemComp<KnockedDownComponent>(entity);
             _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} has stood up from knockdown.");
             return true;

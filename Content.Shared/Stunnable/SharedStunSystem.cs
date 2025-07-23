@@ -273,12 +273,12 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (time != null)
         {
             UpdateKnockdownTime((uid, component), time.Value, refresh);
-            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} knocked down for {time.Value.Seconds} seconds");
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} was knocked down for {time.Value.Seconds} seconds");
         }
         else
         {
             SetKnockdownTime((uid, component), null);
-            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} knocked down for an indefinite amount of time");
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} was knocked down");
         }
 
         if (component.NextUpdate != null)
