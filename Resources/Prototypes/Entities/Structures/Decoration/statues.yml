@@ -78,3 +78,16 @@
     state: pillar_of_weh
     drawdepth: Mobs
     offset: "0.0,0.5"
+
+- type: entity
+  id: StatueIronsandTall2
+  parent: BaseStructure
+  name: ironsand tall statue
+  description: A mysterious statue found in a desert of iron sand
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Decoration/ironsand_statue_tall.rsi
+    state: inverse_pillar
+    drawdepth: Mobs
+    offset: "0.0,0.5"
