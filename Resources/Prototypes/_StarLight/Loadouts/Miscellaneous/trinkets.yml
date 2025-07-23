@@ -43,7 +43,7 @@
         time: 144000 # 40hr
   storage:
     back:
-    - ClothingShoesHighheelShoes
+    - ClothingShoesHighheelShoesAesthetic
 
 - type: loadout
   id: ClothWrap
