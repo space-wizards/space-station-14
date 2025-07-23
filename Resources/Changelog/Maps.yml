@@ -461,4 +461,11 @@
   id: 57
   time: '2025-07-23T00:41:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39141
+- author: CroilBird
+  changes:
+  - message: Added Polly to Box station
+    type: Add
+  id: 58
+  time: '2025-07-23T00:44:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39140
 Order: 1
