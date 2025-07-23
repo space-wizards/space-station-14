@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: Updated Pirate weapons & hardsuits to be more inline with similar items.
-    type: Tweak
-  id: 8287
-  time: '2025-04-20T20:55:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35986
 - author: Booblesnoot42
   changes:
   - message: The sprites for the main chapel altars have been adjusted.
@@ -3907,3 +3900,10 @@
   id: 8799
   time: '2025-07-22T19:34:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38731
+- author: treytipton
+  changes:
+  - message: Made NukeOps elimination announcement less wordy.
+    type: Tweak
+  id: 8800
+  time: '2025-07-23T02:58:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39158
