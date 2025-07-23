@@ -8,6 +8,7 @@
                 <BoxContainer Access="Public" Name="MhelpArea" VerticalExpand="True" />
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                     <CheckBox Visible="True" Name="PlaySound" Access="Public" Text="{Loc 'mentor-play-sound'}" Pressed="True" />
+                    <CheckBox Visible="True" Name="PingSound" Access="Public" Text="{Loc 'mentor-send-ping'}" Pressed="False" />
                     <Control HorizontalExpand="True" MinWidth="5" />
                 </BoxContainer>
             </BoxContainer>

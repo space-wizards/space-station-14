@@ -129,7 +129,7 @@ public sealed class MHelpUIController : UIController, IOnSystemChanged<MentorSys
         var localPlayer = _playerManager.LocalSession;
         if (localPlayer == null)
             return;
-        if (message.PlaySound && localPlayer.UserId != message.Sender)
+        if (message.PlaySound && localPlayer.UserId != message.Sender && _config.GetCVar(StarlightCCVars.MHelpPing))
         {
             if (_mHelpSound != null)
                 _audio.PlayGlobal(_mHelpSound, Filter.Local(), false);
