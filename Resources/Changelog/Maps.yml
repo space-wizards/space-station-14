@@ -475,4 +475,16 @@
   id: 59
   time: '2025-07-23T00:52:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39139
+- author: CroilBird
+  changes:
+  - message: On Plasma, added Polly to the CE's office.
+    type: Add
+  - message: On Plasma, removed a pipe router that to mail routing problems.
+    type: Fix
+  - message: On Plasma, removed a leftover waste pipe from underneath the science
+      circuit imprinter.
+    type: Fix
+  id: 60
+  time: '2025-07-23T00:53:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39138
 Order: 1
