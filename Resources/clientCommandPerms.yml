@@ -74,6 +74,7 @@
     - fullstatereset
     - dumpentities
     - showwallmounts
+    - showaccessreaders
 
 - Flags: MAPPING
   Commands:
@@ -81,6 +82,7 @@
     - toggleautosave
     - toggledecals
     - showwallmounts
+    - showaccessreaders
 
 - Flags: QUERY
   Commands:
