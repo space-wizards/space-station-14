@@ -65,6 +65,8 @@ public abstract partial class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<StunnedStatusEffectComponent, StatusEffectRemovedEvent>(OnStunStatusRemoved);
         SubscribeLocalEvent<StunnedStatusEffectComponent, StatusEffectRelayedEvent<StunEndAttemptEvent>>(OnStunEndAttempt);
 
+        //SubscribeLocalEvent<KnockdownStatusEffectComponent, StatusEffectAppliedEvent>(OnKnockdownStatusEffectApplied);
+        SubscribeLocalEvent<KnockdownStatusEffectComponent, StatusEffectRemovedEvent>(OnKnockdownStatusEffectRemoved);
         SubscribeLocalEvent<KnockdownStatusEffectComponent, StatusEffectRelayedEvent<StandUpAttemptEvent>>(OnStandUpAttempt);
 
         // Stun Appearance Data
@@ -123,7 +125,7 @@ public abstract partial class SharedStunSystem : EntitySystem
             return;
 
         TryUpdateStunDuration(args.OtherEntity, ent.Comp.Duration);
-        TryKnockdown(args.OtherEntity, ent.Comp.Duration, true, force: true);
+        TryUpdateKnockdownDuration(args.OtherEntity, ent.Comp.Duration);
     }
 
     // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
@@ -156,33 +158,27 @@ public abstract partial class SharedStunSystem : EntitySystem
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} stunned for {timeForLogs} seconds");
     }
 
-    public bool TryAddKnockdownDuration(EntityUid uid, TimeSpan duration)
+    public bool TryAddKnockdownDuration(EntityUid uid, TimeSpan duration, bool autostand = true, bool drop = true)
     {
         if (!_status.TryAddStatusEffectDuration(uid, KnockdownId, duration))
             return false;
 
-        TryKnockdown(uid, duration, true, force: true);
-
-        return true;
-
+        return TryKnockdown(uid, true, force: true);
     }
 
-    public bool TryUpdateKnockdownDuration(EntityUid uid, TimeSpan? duration)
+    public bool TryUpdateKnockdownDuration(EntityUid uid, TimeSpan? duration, bool autostand = true, bool drop = true)
     {
         if (!_status.TryUpdateStatusEffectDuration(uid, KnockdownId, duration))
             return false;
 
-        return TryKnockdown(uid, duration, true, force: true);
+        return TryKnockdown(uid, true, force: true);
     }
 
     /// <summary>
     ///     Knocks down the entity, making it fall to the ground.
     /// </summary>
-    public bool TryKnockdown(Entity<StandingStateComponent?> entity, TimeSpan? time, bool refresh, bool autoStand = true, bool drop = true, bool force = false)
+    public bool TryKnockdown(Entity<StandingStateComponent?> entity, bool autoStand = true, bool drop = true, bool force = false)
     {
-        if (time <= TimeSpan.Zero)
-            return false;
-
         // Can't fall down if you can't actually be downed.
         if (!Resolve(entity, ref entity.Comp, false))
             return false;
@@ -199,12 +195,12 @@ public abstract partial class SharedStunSystem : EntitySystem
             drop = evAttempt.Drop;
         }
 
-        Knockdown(entity!, time, autoStand, drop);
+        Knockdown(entity!, autoStand, drop);
 
         return true;
     }
 
-    private void Knockdown(Entity<StandingStateComponent> entity, TimeSpan? time, bool refresh, bool autoStand = true, bool drop = true)
+    private void Knockdown(Entity<StandingStateComponent> entity, bool autoStand = true, bool drop = true)
     {
         // Initialize our component with the relevant data we need if we don't have it
         if (EnsureComp<KnockedDownComponent>(entity, out var component))
@@ -225,18 +221,8 @@ public abstract partial class SharedStunSystem : EntitySystem
             SetAutoStand((entity, component), autoStand);
         }
 
-        var knockedEv = new KnockedDownEvent(time);
+        var knockedEv = new KnockedDownEvent();
         RaiseLocalEvent(entity, ref knockedEv);
-
-        if (time != null)
-        {
-            UpdateKnockdownTime((entity, component), time.Value, refresh);
-            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} knocked down for {time.Value.Seconds} seconds");
-        }
-        else
-            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} knocked down for an indefinite amount of time");
-
-        Alerts.ShowAlert(entity, KnockdownAlert, null, (GameTiming.CurTime, component.NextUpdate));
     }
 
     public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan duration)
@@ -287,6 +273,15 @@ public abstract partial class SharedStunSystem : EntitySystem
         var ev = args.Args;
         ev.Cancelled = true;
         args.Args = ev;
+    }
+
+    private void OnKnockdownStatusEffectRemoved(Entity<KnockdownStatusEffectComponent> entity,
+        ref StatusEffectRemovedEvent args)
+    {
+        if (GameTiming.ApplyingState)
+            return;
+
+        TryStanding(args.Target);
     }
 
     private void OnStandUpAttempt(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectRelayedEvent<StandUpAttemptEvent> args)

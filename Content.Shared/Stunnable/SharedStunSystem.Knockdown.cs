@@ -73,7 +73,7 @@ public abstract partial class SharedStunSystem
             .Register<SharedStunSystem>();
     }
 
-    public override void Update(float frameTime)
+    /*public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
@@ -86,7 +86,7 @@ public abstract partial class SharedStunSystem
 
             TryStanding(uid);
         }
-    }
+    }*/
 
     private void OnRejuvenate(Entity<KnockedDownComponent> entity, ref RejuvenateEvent args)
     {
@@ -239,7 +239,7 @@ public abstract partial class SharedStunSystem
 
         if (!TryComp<KnockedDownComponent>(playerEnt, out var component))
         {
-            TryKnockdown(playerEnt, DefaultKnockedDuration, true, false, false); // TODO: Unhardcode these numbers
+            TryUpdateKnockdownDuration(playerEnt, DefaultKnockedDuration, false, false); // TODO: Unhardcode these numbers
             return;
         }
 

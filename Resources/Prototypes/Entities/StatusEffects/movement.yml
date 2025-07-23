@@ -65,3 +65,5 @@
   name: knocked down
   components:
   - type: KnockdownStatusEffect
+  - type: StatusEffectAlert
+    alert: Knockdown

@@ -133,7 +133,7 @@ public sealed class SlipperySystem : EntitySystem
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
 
-        _stun.TryKnockdown(other, component.SlipData.KnockdownTime, true, force: true);
+        _stun.TryUpdateKnockdownDuration(other, component.SlipData.KnockdownTime);
 
         _adminLogger.Add(LogType.Slip, LogImpact.Low, $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
     }

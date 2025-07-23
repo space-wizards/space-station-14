@@ -34,7 +34,6 @@
           min: 10
         type: Add
         time: 5
-        refresh: false
       - !type:PopupMessage
         type: Local
         messages:
