@@ -21,6 +21,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -28,7 +29,6 @@ public sealed partial class StorageSystem : SharedStorageSystem
         SubscribeLocalEvent<StorageComponent, CloningEvent>(OnClone);
 
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
-
     }
 
     private void OnClone(Entity<StorageComponent> ent, ref CloningEvent args)

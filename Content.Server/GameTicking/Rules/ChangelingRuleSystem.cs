@@ -20,5 +20,4 @@ public sealed class ChangelingRuleSystem : GameRuleSystem<ChangelingRuleComponen
     {
         args.Append(Loc.GetString("changeling-briefing"));
     }
-
 }

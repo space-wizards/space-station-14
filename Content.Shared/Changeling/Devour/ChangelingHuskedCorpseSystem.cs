@@ -45,7 +45,6 @@ public sealed class ChangelingHuskedCorpseSystem : EntitySystem
         unrevivable.Analyzable = false;
         unrevivable.ReasonMessage = "changeling-defibrillator-failure";
 
-
         if(!TryComp<BodyComponent>(ent.Owner, out var body))
             return;
 

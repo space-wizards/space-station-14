@@ -7,7 +7,7 @@ admin-verb-make-pirate = Make the target into a pirate. Note this doesn't config
 admin-verb-make-head-rev = Make the target into a Head Revolutionary.
 admin-verb-make-thief = Make the target into a thief.
 admin-verb-make-paradox-clone = Create a Paradox Clone ghost role of the target.
-admin-verb-make-changeling = Make the target into a Changeling
+admin-verb-make-changeling = Make the target into a Changeling.
 
 
 admin-verb-text-make-traitor = Make Traitor

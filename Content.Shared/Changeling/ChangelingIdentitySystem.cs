@@ -41,6 +41,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     {
         CloneToNullspace(ent, ent.Owner);
     }
+
     private void OnShutdown(Entity<ChangelingIdentityComponent> ent, ref ComponentShutdown args)
     {
         CleanupPvsOverride(ent, ent.Owner);
@@ -58,6 +59,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
             QueueDel(consumedIdentity.Value);
         }
     }
+
     /// <summary>
     /// Clone a target humanoid into nullspace and add it to the Changelings list of identities.
     ///
@@ -96,13 +98,12 @@ public sealed class ChangelingIdentitySystem : EntitySystem
         HandlePvsOverride(ent, mob);
     }
 
-
     /// <summary>
     /// Simple helper to add a PVS override to a Nullspace Identity
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="target"></param>
-    protected void HandlePvsOverride(EntityUid uid, EntityUid target)
+    private void HandlePvsOverride(EntityUid uid, EntityUid target)
     {
         if(!TryComp<ActorComponent>(uid, out var actor))
             return;
@@ -115,7 +116,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     /// </summary>
     /// <param name="ent">the Changeling itself</param>
     /// <param name="entityUid">Who specifically to cleanup from, usually just the same owner, but in the case of a mindswap we want to clean up the victim</param>
-    protected void CleanupPvsOverride(Entity<ChangelingIdentityComponent> ent, EntityUid entityUid)
+    private void CleanupPvsOverride(Entity<ChangelingIdentityComponent> ent, EntityUid entityUid)
     {
         if(!TryComp<ActorComponent>(entityUid, out var actor))
             return;
@@ -125,7 +126,6 @@ public sealed class ChangelingIdentitySystem : EntitySystem
             _pvsOverrideSystem.RemoveSessionOverride(identity.Value, actor.PlayerSession);
         }
     }
-
 
     /// <summary>
     /// Inform another Session of the entities stored for Transformation
@@ -139,6 +139,4 @@ public sealed class ChangelingIdentitySystem : EntitySystem
             _pvsOverrideSystem.AddSessionOverride(entity.Value, session);
         }
     }
-
 }
-

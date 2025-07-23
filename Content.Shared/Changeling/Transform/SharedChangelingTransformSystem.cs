@@ -10,7 +10,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
-
 namespace Content.Shared.Changeling.Transform;
 
 public abstract partial class SharedChangelingTransformSystem : EntitySystem
@@ -83,7 +82,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             ent,
             PopupType.MediumCaution);
 
-        if(_net.IsServer) // Gotta do this on the server and with PlayPvs cause PlayPredicted doesn't return the Entity
+        if (_net.IsServer) // Gotta do this on the server and with PlayPvs cause PlayPredicted doesn't return the Entity
             ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent, new AudioParams())!.Value.Entity;
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
@@ -112,7 +111,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             ent,
             PopupType.MediumCaution);
 
-        if(_net.IsServer)
+        if (_net.IsServer)
            ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent, new AudioParams())!.Value.Entity;
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(GetEntity(selectedIdentity))}\"");
@@ -130,7 +129,6 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         });
     }
 
-
     private void OnSuccessfulTransform(Entity<ChangelingTransformComponent> ent,
        ref ChangelingTransformWindupDoAfterEvent args)
     {
@@ -147,7 +145,6 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         _humanoidAppearanceSystem.CloneAppearance(targetIdentity, args.User);
         ApplyComponentChanges(targetIdentity, ent, ent.Comp.TransformCloningSettings);
 
-
         //TODO: While it would be splendid to be able to provide the original owning player who was playing the targetIdentity, it's not exactly feasible to do
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player}  successfully transformed into \"{Name(targetIdentity)}\"");
         _metaSystem.SetEntityName(ent, Name(targetIdentity), raiseEvents: false);
@@ -158,5 +155,3 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
     protected virtual void ApplyComponentChanges(EntityUid ent, EntityUid target, ProtoId<CloningSettingsPrototype> settingsId) { }
 }
-
-

@@ -17,7 +17,6 @@ namespace Content.Shared.Changeling.Devour;
 [Access(typeof(ChangelingDevourSystem))]
 public sealed partial class ChangelingDevourComponent : Component
 {
-    public override bool SendOnlyToOwner => true;
     /// <summary>
     /// The Action for devouring
     /// </summary>
@@ -58,6 +57,7 @@ public sealed partial class ChangelingDevourComponent : Component
     /// <summary>
     /// The time between damage ticks
     /// </summary>
+    [DataField, AutoNetworkedField]
     public TimeSpan DamageTimeBetweenTicks = TimeSpan.FromSeconds(1);
 
     /// <summary>
@@ -81,7 +81,7 @@ public sealed partial class ChangelingDevourComponent : Component
     /// <summary>
     /// The Currently active devour sound in the world
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? CurrentDevourSound;
 
     /// <summary>
@@ -112,8 +112,8 @@ public sealed partial class ChangelingDevourComponent : Component
     /// <summary>
     /// Should a successful devour Husk a target (Remove their visible identity, their Gender becomes They and they are made unrevivable)
     /// </summary>
-    [DataField]
-    public bool Husking = false;
+    [DataField, AutoNetworkedField]
+    public bool Husking;
 
     /// <summary>
     /// The next Tick to deal damage on (utilized during the consumption "do-during" (a do after with an attempt event))
@@ -127,4 +127,5 @@ public sealed partial class ChangelingDevourComponent : Component
     [DataField, AutoNetworkedField]
     public float DevourPreventionPercentageThreshold = 0.1f;
 
+    public override bool SendOnlyToOwner => true;
 }

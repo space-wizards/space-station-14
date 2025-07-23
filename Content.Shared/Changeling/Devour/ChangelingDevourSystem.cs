@@ -84,7 +84,6 @@ public sealed class ChangelingDevourSystem : EntitySystem
                 return;
         }
         _damageable.TryChangeDamage(target, comp.DamagePerTick, true, true, damage, user);
-
     }
 
     private bool TargetIsProtected(EntityUid target, Entity<ChangelingDevourComponent> ent)
@@ -106,7 +105,6 @@ public sealed class ChangelingDevourSystem : EntitySystem
 
     private void OnDevourAction(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourActionEvent args)
     {
-
         if (args.Handled || _whitelistSystem.IsWhitelistFailOrNull(ent.Comp.Whitelist, args.Target)
                          || !HasComp<ChangelingIdentityComponent>(ent))
             return;
@@ -114,7 +112,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
         args.Handled = true;
         var target = args.Target;
 
-        if(target == ent.Owner)
+        if (target == ent.Owner)
             return; // don't eat yourself
 
         if (HasComp<RottingComponent>(target))
@@ -152,7 +150,6 @@ public sealed class ChangelingDevourSystem : EntitySystem
             args.Performer,
             args.Performer,
             PopupType.MediumCaution);
-
     }
 
     private void OnDevourWindup(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourWindupDoAfterEvent args)
@@ -160,7 +157,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
         var curTime = _timing.CurTime;
         args.Handled = true;
 
-        if(!EntityManager.EntityExists(ent.Comp.CurrentDevourSound))
+        if (!EntityManager.EntityExists(ent.Comp.CurrentDevourSound))
             _audio.Stop(ent.Comp.CurrentDevourSound!);
 
         if (args.Cancelled)
@@ -202,7 +199,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
         if (target == null)
             return;
 
-        if(EntityManager.EntityExists(ent.Comp.CurrentDevourSound))
+        if (EntityManager.EntityExists(ent.Comp.CurrentDevourSound))
             _audio.Stop(ent.Comp.CurrentDevourSound!);
 
         if (args.Cancelled)
@@ -238,8 +235,10 @@ public sealed class ChangelingDevourSystem : EntitySystem
                 && TryComp<ButcherableComponent>(item, out var butcherable))
                 RipClothing(target.Value, (item.Value, butcherable));
         }
+
         Dirty(ent);
     }
+
     private void RipClothing(EntityUid victim, Entity<ButcherableComponent> item)
     {
         var spawnEntities = EntitySpawnCollection.GetSpawns(item.Comp.SpawnedEntities, _robustRandom);
