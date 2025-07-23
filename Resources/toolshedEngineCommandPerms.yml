@@ -19,6 +19,10 @@
     - rep
     - to
 
+- Flags: VAREDIT
+  Commands:
+    - scale
+
 - Flags: DEBUG
   Commands:
     - comp

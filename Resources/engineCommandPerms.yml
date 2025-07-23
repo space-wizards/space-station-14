@@ -9,7 +9,6 @@
   - vvwrite
   - vvinvoke
   - scale
-  - setscale
   - spin
 
 - Flags: DEBUG
