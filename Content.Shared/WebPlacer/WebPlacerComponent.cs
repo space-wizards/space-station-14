@@ -10,7 +10,7 @@ namespace Content.Shared.WebPlacer;
 ///     Gives the entity (probably a spider) an action to spawn entities (probably webs) around itself.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(WebPlacerSystem))]
+[Access(typeof(SharedWebPlacerSystem))]
 public sealed partial class WebPlacerComponent : Component
 {
     /// <summary>
@@ -65,6 +65,24 @@ public sealed partial class WebPlacerComponent : Component
         Vector2i.Left,
         Vector2i.Right,
     };
+
+    /// <summary>
+    /// Whether the spider will spawn webs when not controlled by a player.
+    /// </summary>
+    [DataField]
+    public bool SpawnsWebsAsNonPlayer = true;
+
+    /// <summary>
+    /// The cooldown in seconds between web spawns when not controlled by a player.
+    /// </summary>
+    [DataField]
+    public TimeSpan WebSpawnCooldown = TimeSpan.FromSeconds(45f);
+
+    /// <summary>
+    /// The next time the spider can spawn a web when not controlled by a player.
+    /// </summary>
+    [DataField]
+    public TimeSpan? NextWebSpawn;
 
     /// <summary>
     ///     Webs cannot be placed because the component owner is not on a valid grid (e.g. in space).

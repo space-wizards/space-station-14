@@ -1,6 +1,6 @@
-using Content.Shared.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Maps;
+using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -11,7 +11,7 @@ namespace Content.Shared.WebPlacer;
 /// <summary>
 ///     System for giving the component owner (probably a spider) an action to spawn entities around itself.
 /// </summary>
-public sealed class WebPlacerSystem : EntitySystem
+public abstract class SharedWebPlacerSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
@@ -25,6 +25,7 @@ public sealed class WebPlacerSystem : EntitySystem
     /// </summary>
     private readonly HashSet<EntityUid> _webs = [];
 
+    /// <inheritdoc />
     public override void Initialize()
     {
         base.Initialize();
@@ -33,12 +34,19 @@ public sealed class WebPlacerSystem : EntitySystem
         SubscribeLocalEvent<WebPlacerComponent, SpiderWebActionEvent>(OnSpawnWeb);
     }
 
-    private void OnInit(Entity<WebPlacerComponent> webPlacer, ref MapInitEvent args)
+    /// <summary>
+    ///     Give the entity its spawning action.
+    /// </summary>
+    private void OnInit(Entity<WebPlacerComponent> ent, ref MapInitEvent args)
     {
-        _action.AddAction(webPlacer.Owner, ref webPlacer.Comp.ActionEntity, webPlacer.Comp.SpawnWebAction, webPlacer.Owner);
+        _action.AddAction(ent.Owner, ref ent.Comp.ActionEntity, ent.Comp.SpawnWebAction, ent.Owner);
     }
 
-    private void OnSpawnWeb(Entity<WebPlacerComponent> webPlacer, ref SpiderWebActionEvent args)
+    /// <summary>
+    ///     Spawn webs when using an action.
+    /// </summary>
+    /// <param name="args">Raised when a spider uses their action.</param>
+    private void OnSpawnWeb(Entity<WebPlacerComponent> ent, ref SpiderWebActionEvent args)
     {
         if (args.Handled)
             return;
@@ -49,38 +57,53 @@ public sealed class WebPlacerSystem : EntitySystem
         // Instantly fail in space.
         if (!HasComp<MapGridComponent>(grid))
         {
-            _popup.PopupClient(Loc.GetString(webPlacer.Comp.MessageOffGrid), args.Performer, args.Performer);
+            _popup.PopupClient(Loc.GetString(ent.Comp.MessageOffGrid), args.Performer, args.Performer);
             return;
         }
 
-        // Get coordinates and spawn webs if the coordinates are valid.
-        var success = false;
-        foreach (var vector in webPlacer.Comp.OffsetVectors)
-        {
-            var pos = xform.Coordinates.Offset(vector);
-            if (!IsValidTile(pos, webPlacer.Comp))
-                continue;
-
-            PredictedSpawnAtPosition(webPlacer.Comp.SpawnId, pos);
-            success = true;
-        }
+        var result = TrySpawnWebs(ent, xform.Coordinates);
 
         // Return unhandled if nothing was spawned so that the action doesn't go on cooldown.
-        if (!success)
+        if (!result)
         {
-            _popup.PopupClient(Loc.GetString(webPlacer.Comp.MessageNoSpawn), args.Performer, args.Performer);
+            _popup.PopupClient(Loc.GetString(ent.Comp.MessageNoSpawn), args.Performer, args.Performer);
             return;
         }
 
         args.Handled = true;
-        _popup.PopupClient(Loc.GetString(webPlacer.Comp.MessageSuccess), args.Performer, args.Performer);
+        _popup.PopupClient(Loc.GetString(ent.Comp.MessageSuccess), args.Performer, args.Performer);
+    }
 
-        if (webPlacer.Comp.WebSound != null)
-            _audio.PlayPredicted(webPlacer.Comp.WebSound, webPlacer.Owner, webPlacer.Owner);
+    /// <summary>
+    ///     Spawns webs around a location.
+    /// </summary>
+    /// <param name="ent">The spider.</param>
+    /// <param name="coords">Location webs spawn around.</param>
+    /// <returns>True if any webs spawned.</returns>
+    protected bool TrySpawnWebs(Entity<WebPlacerComponent> ent, EntityCoordinates coords)
+    {
+        var (uid, comp) = ent;
+
+        // Get coordinates and spawn webs if the coordinates are valid.
+        var success = false;
+        foreach (var vector in comp.OffsetVectors)
+        {
+            var pos = coords.Offset(vector);
+            if (!IsValidTile(comp, pos))
+                continue;
+
+            PredictedSpawnAtPosition(comp.SpawnId, pos);
+            success = true;
+        }
+
+        if (success && comp.WebSound != null)
+            _audio.PlayPredicted(comp.WebSound, uid, uid);
+
+        return success;
     }
 
     /// <returns>False if coords are in space. False if whitelisting fails. True otherwise.</returns>
-    private bool IsValidTile(EntityCoordinates coords, WebPlacerComponent comp)
+    private bool IsValidTile(WebPlacerComponent comp, EntityCoordinates coords)
     {
         // Invalid in space or non-existent tile
         if (!_turf.TryGetTileRef(coords, out var tileRef) || _turf.IsSpace(tileRef.Value))
