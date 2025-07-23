@@ -276,9 +276,15 @@ public abstract partial class SharedStunSystem : EntitySystem
             _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} knocked down for {time.Value.Seconds} seconds");
         }
         else
+        {
+            SetKnockdownTime((uid, component), null);
             _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} knocked down for an indefinite amount of time");
+        }
 
-        Alerts.ShowAlert(uid, KnockdownAlert, null, (GameTiming.CurTime, component.NextUpdate));
+        if (component.NextUpdate != null)
+            Alerts.ShowAlert(uid, KnockdownAlert, null, (GameTiming.CurTime, component.NextUpdate.Value));
+        else
+            Alerts.ShowAlert(uid, KnockdownAlert);
     }
 
     public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan duration)
