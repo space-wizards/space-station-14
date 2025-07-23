@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseWeaponTurret
+  parent: [BaseWeaponTurret, ConstructibleMachine]
   id: WeaponTurretPointDefense
   description: A Kuiper pattern anti-meteor battery. Capable of destroying most threats in a single salvo.
   name: point defense battery
@@ -35,6 +35,28 @@
     startingCharge: 0
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Repairable
     doAfterDelay: 10
     allowSelfRepair: false
@@ -53,6 +75,8 @@
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: ExtensionCableReceiver
+  - type: Machine
+    board: WeaponTurretPointDefenseMachineCircuitboard
   - type: NPCPointDefense
   - type: HTN
     rootTask:
