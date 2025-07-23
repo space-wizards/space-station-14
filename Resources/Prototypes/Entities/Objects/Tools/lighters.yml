@@ -96,6 +96,9 @@
     color: orange
   - type: ItemTogglePointLight
   - type: PhysicalComposition
+  - type: Tag
+    tags:
+      - Lighters
 
 - type: entity
   name: cheap lighter
