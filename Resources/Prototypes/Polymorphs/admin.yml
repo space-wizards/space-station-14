@@ -21,7 +21,7 @@
   configuration:
     entity: MobScurret
     forced: true
-    inventory: Drop
+    inventory: Transfer
     allowRepeatedMorphs: true
 
 - type: polymorph

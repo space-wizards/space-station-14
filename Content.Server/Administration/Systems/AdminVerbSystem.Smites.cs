@@ -955,5 +955,6 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", scurretName, Loc.GetString("admin-smite-scurret-species-swap-description"))
         };
         args.Verbs.Add(scurret);
+
     }
 }
