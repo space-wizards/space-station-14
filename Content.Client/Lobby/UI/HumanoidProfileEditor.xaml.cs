@@ -33,8 +33,6 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.Globalization;
-using System;
 
 namespace Content.Client.Lobby.UI
 {
