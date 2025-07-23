@@ -42,6 +42,10 @@
         {
             "name": "state_7",
             "directions": 4
+        },
+        {
+            "name": "assembly",
+            "directions": 1
         }
     ]
 }

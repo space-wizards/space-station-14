@@ -127,12 +127,16 @@
   id: BarbedWire
   parent: BaseStructure
   name: barbed wire
+  description: It would be a bad idea to try and move through this.
   components:
   - type: InteractionOutline
-  - type: Sprite #TODO: Give this a proper sprite...
+  - type: Sprite
     sprite: Structures/barbed_wire.rsi
     drawdepth: BlastDoors
     noRot: true
+  - type: Icon
+    sprite: Structures/barbed_wire.rsi
+    state: full
   - type: IconSmooth
     key: state
     base: state_
@@ -154,7 +158,7 @@
         layer:
         - HalfWallLayer
   - type: Damageable
-    damageModifierSet: Metallic
+    damageModifierSet: PerforatedMetallic
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
@@ -172,3 +176,33 @@
       types:
         Slash: 2
         Piercing: 2
+  - type: Construction
+    graph: BarbedWire
+    node: barbedwire
+    deconstructionTarget: prebarbedwire
+
+- type: entity
+  id: PreBarbedWire
+  parent: BaseStructure
+  name: wired posts
+  components:
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/barbed_wire.rsi
+    state: assembly
+    noRot: true
+  - type: Damageable
+    damageModifierSet: PerforatedMetallic
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: BarbedWire
+    node: prebarbedwire
+    deconstructionTarget: start
