@@ -84,7 +84,6 @@ public sealed class RenameCommand : LocalizedEntityCommands
         else
             shell.WriteError(Loc.GetString("cmd-rename-no-entity", ("target", str)));
 
-        // Log tentativa falhada de rename por entidade não encontrada
         adminName ??= "UNKNOWN";
         adminUid ??= "UNKNOWN";
         _adminLogger.Add(LogType.Action, LogImpact.Low,
