@@ -1,3 +1,4 @@
+// Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
@@ -432,6 +433,10 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     protected void OnEmagged(EntityUid uid, DisposalUnitComponent component, ref GotEmaggedEvent args)
     {
+        // Ronstation - start of modifications.
+        component.Blacklist = null;
+        component.Whitelist = null;
+        // Ronstation - end of modifications.
         component.DisablePressure = true;
         args.Handled = true;
     }
