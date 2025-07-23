@@ -67,6 +67,15 @@
           0.006250002
         ]
       ]
+    },
+    {
+      "name": "pd_impact"
+    },
+    {
+      "name": "pd_trace"
+    },
+    {
+      "name": "pd_muzzle"
     }
   ]
 }

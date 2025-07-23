@@ -45,6 +45,10 @@
     tileBreakScale: 2
   - type: TileFrictionModifier
     modifier: 0
+  - type: MobState # Needed to be a target // Starlight
+  - type: NpcFactionMember # Starlight
+    factions:
+    - PointDefenseTarget
 
 
 - type: entity
