@@ -381,6 +381,23 @@ namespace Content.IntegrationTests.Tests
 
                 mapSystem.DeleteMap(shuttleMap);
 
+                // Test that map has no entities with changed metadata, e.g. name, desc.
+                // Also done here because map loading takes a lot time.
+                var metaQuery = entManager.EntityQueryEnumerator<MetaDataComponent>();
+                while (metaQuery.MoveNext(out var uid, out var meta))
+                {
+                    var protoId = meta.EntityPrototype;
+
+                    if (protoId is null)
+                        continue;
+
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(protoId.Name, Is.EqualTo(meta.EntityName), $"Name of the {entManager.ToPrettyString(uid)} and its prototype are different!");
+                        Assert.That(protoId.Description, Is.EqualTo(meta.EntityDescription), $"Description of the {entManager.ToPrettyString(uid)} and its prototype are different!");
+                    });
+                }
+
                 if (entManager.HasComponent<StationJobsComponent>(station))
                 {
                     // Test that the map has valid latejoin spawn points or container spawn points
@@ -424,42 +441,6 @@ namespace Content.IntegrationTests.Tests
                 }
             });
             await server.WaitRunTicks(1);
-
-            await pair.CleanReturnAsync();
-        }
-
-        [Test, TestCaseSource(nameof(GameMaps))]
-        public async Task CheckUnlocalizedMetadata(string mapProtoId)
-        {
-            await using var pair = await PoolManager.GetServerClient(new PoolSettings
-            {
-                Dirty = true,
-            });
-            var server = pair.Server;
-
-            var entMan = server.EntMan;
-            var protoMan = server.ProtoMan;
-            var ticker = entMan.System<GameTicker>();
-
-            // Load the map
-            await server.WaitAssertion(() =>
-            {
-                Assert.That(protoMan.TryIndex<GameMapPrototype>(mapProtoId, out var mapProto));
-                var opts = DeserializationOptions.Default with { InitializeMaps = true };
-                ticker.LoadGameMap(mapProto, out var mapId, opts);
-            });
-
-            // Gets all entities...
-            var metaQuery = entMan.EntityQueryEnumerator<MetaDataComponent>();
-            while (metaQuery.MoveNext(out var uid, out var meta))
-            {
-                var protoId = meta.EntityPrototype;
-                Assert.Multiple(() =>
-                {
-                    Assert.That(protoId.Name, Is.EqualTo(meta.EntityName), $"Name of the {entMan.ToPrettyString(uid)} and its prototype are different!");
-                    Assert.That(protoId.Description, Is.EqualTo(meta.EntityDescription), $"Description of the {entMan.ToPrettyString(uid)} and its prototype are different!");
-                });
-            }
 
             await pair.CleanReturnAsync();
         }
