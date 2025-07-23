@@ -12,7 +12,7 @@
     defaultKillDelay: 40
     damage:
       types:
-        Brute: 200
+        Blunt: 200
   - type: Paper
     content: killtome-rules
   - type: ActivatableUI

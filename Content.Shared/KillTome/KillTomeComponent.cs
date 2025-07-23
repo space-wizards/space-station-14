@@ -23,14 +23,15 @@ public sealed partial class KillTomeComponent : Component
     [DataField]
     public DamageSpecifier Damage = new()
     {
-        DamageDict =
+        DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Brute", 200 }
+            { "Blunt", 200 }
         }
     };
 
     /// <summary>
     /// to keep a track of already killed people so they won't be killed again
     /// </summary>
+    [DataField]
     public HashSet<EntityUid> KilledEntities = [];
 }

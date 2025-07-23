@@ -48,9 +48,7 @@ public sealed class KillTomeSystem : EntitySystem
             if (_gameTiming.CurTime < targetComp.KillTime)
                 continue;
 
-            var comp = Comp<KillTomeComponent>(uid);
-
-            Kill(uid, comp);
+            Kill(uid, targetComp);
 
             RemCompDeferred<KillTomeTargetComponent>(uid);
         }
@@ -96,6 +94,7 @@ public sealed class KillTomeSystem : EntitySystem
             EnsureComp<KillTomeTargetComponent>(realUid, out var targetComp);
 
             targetComp.KillTime = _gameTiming.CurTime + TimeSpan.FromSeconds(delay);
+            targetComp.Damage = ent.Comp.Damage;
 
             ent.Comp.KilledEntities.Add(realUid);
 
@@ -164,8 +163,8 @@ public sealed class KillTomeSystem : EntitySystem
         return false;
     }
 
-    private void Kill(EntityUid uid, KillTomeComponent killTomeComp)
+    private void Kill(EntityUid uid, KillTomeTargetComponent comp)
     {
-        _damageSystem.TryChangeDamage(uid, killTomeComp.Damage);
+        _damageSystem.TryChangeDamage(uid, comp.Damage, true);
     }
 }
