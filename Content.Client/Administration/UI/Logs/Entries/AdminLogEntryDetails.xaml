@@ -2,10 +2,8 @@
           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
           xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
           xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-          Orientation="Horizontal"
-          HorizontalExpand="True"
           StyleClasses="BackgroundDark">
-     <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="4">
+     <BoxContainer Orientation="Vertical" Margin="4">
         <BoxContainer Orientation="Vertical">
             <Label Text="{Loc admin-logs-field-type}"/>
             <Label Name="Type" Text="None" Access="Public"/>
@@ -20,7 +18,7 @@
     <BoxContainer Orientation="Vertical" Margin="4">
         <Label Text="{Loc admin-logs-field-time-header}"/>
         <cc:HSeparator/>
-        <BoxContainer Orientation="Horizontal">
+        <BoxContainer>
             <Label Text="{Loc admin-logs-field-time-local}" Margin="0 0 4 0" HorizontalExpand="True"/>
             <Label Name="LocalTime" Text="None" Access="Public" HorizontalExpand="True"/>
         </BoxContainer>
@@ -28,11 +26,6 @@
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc admin-logs-field-time-utc}" Margin="0 0 4 0" HorizontalExpand="True"/>
             <Label Name="UTCTime" Text="None" Access="Public" HorizontalExpand="True"/>
-        </BoxContainer>
-        <cc:HSeparator/>
-        <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc admin-logs-field-time-real}" Margin="0 0 4 0" HorizontalExpand="True"/>
-            <Label Name="RealTime" Text="None" Access="Public" HorizontalExpand="True"/>
         </BoxContainer>
         <cc:HSeparator/>
         <BoxContainer Orientation="Horizontal">

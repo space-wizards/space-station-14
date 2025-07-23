@@ -317,7 +317,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             Impact = impact,
             Date = DateTime.UtcNow,
             CurTime = _timing.CurTime.Ticks,
-            RealTime = _timing.RealTime.Ticks,
             Message = message,
             Json = json,
             Players = new List<AdminLogPlayer>(players.Count)

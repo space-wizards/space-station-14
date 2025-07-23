@@ -45,7 +45,7 @@
                 </BoxContainer>
             </BoxContainer>
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                <BoxContainer Name="TopRightContainer" HorizontalExpand="True">
+                <BoxContainer Name="TopRightContainer">
                     <BoxContainer Name="LogImpactContainer" Orientation="Horizontal"/>
                     <Control HorizontalExpand="True"/>
                     <Label Name="Count" Access="Public"/>
@@ -53,19 +53,12 @@
                     <Button Name="ExportLogs" Access="Public" Text="{Loc admin-logs-export}"/>
                     <Button Name="PopOutButton" Access="Public" Text="{Loc admin-logs-pop-out}"/>
                 </BoxContainer>
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                    <Collapsible>
-                        <CollapsibleHeading Access="Public">
-                            <RichTextLabel Margin="20 0 0 0" Text="{Loc admin-logs-highlight}" Access="Public"/>
-                        </CollapsibleHeading>
-                        <CollapsibleBody HorizontalExpand="True" Access="Public">
-                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                            <ui:OptionColorSlider
-                                Name="HighlightsColorSlider"
-                                HorizontalExpand="True"/>
-                            </BoxContainer>
-                        </CollapsibleBody>
-                    </Collapsible>
+                <BoxContainer HorizontalExpand="True">
+                    <Button Name="RenderRichTextButton" Access="Public" Text="{Loc admin-logs-render-rich-text}"
+                            StyleClasses="OpenRight" ToggleMode="True"/>
+                    <Button Name="RemoveMarkupButton" Access="Public" Text="{Loc admin-logs-remove-markup}"
+                            StyleClasses="OpenLeft" ToggleMode="True"/>
+                    <Control HorizontalExpand="True"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal">
                     <LineEdit Name="LogSearch" Access="Public" StyleClasses="actionSearchBox"

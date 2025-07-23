@@ -33,8 +33,7 @@ public sealed partial class AdminLogEntryDetails : BoxContainer
         LocalTime.Text = $"{log.Date.ToLocalTime():HH:mm:ss}";
         UTCTime.Text = $"{log.Date:HH:mm:ss}";
         // TimeSpan and DateTime use different formatting string conventions for some completely logical reason
-        // that mere mortals such as myself will never be able to understand.
-        RealTime.Text = new TimeSpan(log.RealTime).ToString(@"hh\:mm\:ss");
+        // that mere mortals such as myself will never be able to understand.);
         CurTime.Text = new TimeSpan(log.CurTime).ToString(@"hh\:mm\:ss");
 
         PlayerListContainer.ItemKeyBindDown += PlayerListItemKeyBindDown;
@@ -86,7 +85,11 @@ public sealed partial class AdminLogEntryDetails : BoxContainer
         if (data is not PlayerListData { Info: var info })
             return;
 
-        var entry = new LogPlayerListEntry(info);
+        var entryLabel = new Label();
+        entryLabel.Text = $"{info.CharacterName} ({info.Username})";
+        var entry = new BoxContainer();
+        entry.AddChild(entryLabel);
+
         button.AddChild(entry);
         button.AddStyleClass(ListContainer.StyleClassListContainerButton);
     }

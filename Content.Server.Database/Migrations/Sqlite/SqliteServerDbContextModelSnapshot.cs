@@ -113,10 +113,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("message");
 
-                    b.Property<long>("RealTime")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("real_time");
-
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER")
                         .HasColumnName("type");

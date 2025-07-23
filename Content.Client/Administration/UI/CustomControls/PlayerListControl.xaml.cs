@@ -95,7 +95,18 @@ public sealed partial class PlayerListControl : BoxContainer
     private void FilterList()
     {
         _sortedPlayerList.Clear();
-        var filterRegex = new Regex(Regex.Escape(FilterLineEdit.Text), RegexOptions.IgnoreCase);
+
+        Regex filterRegex;
+        // There is no neat way to handle invalid regex being submitted other than
+        // catching and ignoring the exception which gets thrown when it's invalid.
+        try
+        {
+            filterRegex = new Regex(FilterLineEdit.Text, RegexOptions.IgnoreCase);
+        }
+        catch (ArgumentException)
+        {
+            return;
+        }
 
         foreach (var info in _playerList)
         {
@@ -103,7 +114,7 @@ public sealed partial class PlayerListControl : BoxContainer
             if (info.IdentityName != info.CharacterName)
                 displayName += $" [{info.IdentityName}]";
             if (!string.IsNullOrEmpty(FilterLineEdit.Text)
-                && !filterRegex.IsMatch(displayName.ToLowerInvariant()))
+                && !filterRegex.IsMatch(displayName))
                 continue;
             _sortedPlayerList.Add(info);
         }

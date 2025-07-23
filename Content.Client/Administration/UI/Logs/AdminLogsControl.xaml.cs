@@ -40,6 +40,9 @@ public sealed partial class AdminLogsControl : Control
         SelectAllPlayersButton.OnPressed += SelectAllPlayers;
         SelectNoPlayersButton.OnPressed += SelectNoPlayers;
 
+        RenderRichTextButton.OnPressed += RenderRichTextChanged;
+        RemoveMarkupButton.OnPressed += RemoveMarkupChanged;
+
         RoundSpinBox.IsValid = i => i > 0 && i <= CurrentRound;
         RoundSpinBox.ValueChanged += RoundSpinBoxChanged;
         RoundSpinBox.InitDefaultButtons();
@@ -48,13 +51,11 @@ public sealed partial class AdminLogsControl : Control
 
         SetImpacts(Enum.GetValues<LogImpact>().OrderBy(impact => impact).ToArray());
         SetTypes(Enum.GetValues<LogType>());
-
-        HighlightsColorSlider.Slider.Color = Color.Red;
     }
 
     private int CurrentRound { get; set; }
 
-    private Regex LogSearchRegex { get; set; } = new(".");
+    private Regex LogSearchRegex { get; set; } = new("");
 
     public int SelectedRoundId => RoundSpinBox.Value;
     public string Search => LogSearch.Text;
@@ -62,7 +63,8 @@ public sealed partial class AdminLogsControl : Control
     private int TotalLogs { get; set; }
     private int RoundLogs { get; set; }
     public bool IncludeNonPlayerLogs { get; set; }
-
+    private bool RenderRichText { get; set; }
+    private bool RemoveMarkup { get; set; }
     public HashSet<LogType> SelectedTypes { get; } = new();
 
     public HashSet<Guid> SelectedPlayers { get; } = new();
@@ -109,7 +111,16 @@ public sealed partial class AdminLogsControl : Control
 
     private void LogSearchChanged(LineEditEventArgs args)
     {
-        LogSearchRegex = new Regex("(" + Regex.Escape(LogSearch.Text) + ")", RegexOptions.IgnoreCase);
+        // This exception is thrown if the regex is invalid, which happens often, so we ignore it.
+        try
+        {
+            LogSearchRegex = new Regex("(" + LogSearch.Text + ")", RegexOptions.IgnoreCase);
+        }
+        catch (ArgumentException)
+        {
+            return;
+        }
+
         UpdateLogs();
     }
 
@@ -191,6 +202,26 @@ public sealed partial class AdminLogsControl : Control
         UpdateLogs();
     }
 
+    private void RenderRichTextChanged(ButtonEventArgs args)
+    {
+        RenderRichText = args.Button.Pressed;
+
+        RemoveMarkup = RemoveMarkup && !RenderRichText;
+        RemoveMarkupButton.Pressed = RemoveMarkup;
+
+        UpdateLogs();
+    }
+
+    private void RemoveMarkupChanged(ButtonEventArgs args)
+    {
+        RemoveMarkup = args.Button.Pressed;
+
+        RenderRichText = !RemoveMarkup && RenderRichText;
+        RenderRichTextButton.Pressed = RenderRichText;
+
+        UpdateLogs();
+    }
+
     public void SetTypesSelection(HashSet<LogType> selectedTypes, bool invert = false)
     {
         SelectedTypes.Clear();
@@ -250,16 +281,14 @@ public sealed partial class AdminLogsControl : Control
         foreach (var child in LogsContainer.Children)
         {
             if (child is not AdminLogEntry log)
-            {
                 continue;
-            }
 
             child.Visible = ShouldShowLog(log);
-            if (child.Visible)
-            {
-                log.HighlightResults(LogSearchRegex, HighlightsColorSlider.Slider.Color);
-                ShownLogs++;
-            }
+            if (!child.Visible)
+                continue;
+
+            log.RenderResults(LogSearchRegex, RenderRichText, RemoveMarkup);
+            ShownLogs++;
         }
 
         UpdateCount();
@@ -277,7 +306,7 @@ public sealed partial class AdminLogsControl : Control
                button.Text.Contains(PlayerSearch.Text, StringComparison.OrdinalIgnoreCase);
     }
 
-    private bool LogMatchesPlayerFilter(Entries.AdminLogEntry entry)
+    private bool LogMatchesPlayerFilter(AdminLogEntry entry)
     {
         if (entry.Log.Players.Length == 0)
             return SelectedPlayers.Count == 0 || IncludeNonPlayerLogs;
@@ -285,7 +314,7 @@ public sealed partial class AdminLogsControl : Control
         return SelectedPlayers.Overlaps(entry.Log.Players);
     }
 
-    private bool ShouldShowLog(Entries.AdminLogEntry entry)
+    private bool ShouldShowLog(AdminLogEntry entry)
     {
         // Check log type
         if (!SelectedTypes.Contains(entry.Log.Type))
@@ -477,18 +506,10 @@ public sealed partial class AdminLogsControl : Control
         {
             ref var log = ref span[i];
             var entry = new AdminLogEntry(ref log);
-            entry.Visible = ShouldShowLog(entry);
-
             TotalLogs++;
-            if (entry.Visible)
-            {
-                ShownLogs++;
-            }
-
             LogsContainer.AddChild(entry);
         }
-
-        UpdateCount();
+        UpdateLogs();
     }
 
     public void SetLogs(List<SharedAdminLog> logs)

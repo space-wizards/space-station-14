@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace Content.Server.Database.Migrations.Sqlite
+namespace Content.Server.Database.Migrations.Postgres
 {
     /// <inheritdoc />
-    public partial class AdminLogsRealCurTime : Migration
+    public partial class AdminLogsCurtime : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -13,14 +13,7 @@ namespace Content.Server.Database.Migrations.Sqlite
             migrationBuilder.AddColumn<long>(
                 name: "cur_time",
                 table: "admin_log",
-                type: "INTEGER",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddColumn<long>(
-                name: "real_time",
-                table: "admin_log",
-                type: "INTEGER",
+                type: "bigint",
                 nullable: false,
                 defaultValue: 0L);
         }
@@ -30,10 +23,6 @@ namespace Content.Server.Database.Migrations.Sqlite
         {
             migrationBuilder.DropColumn(
                 name: "cur_time",
-                table: "admin_log");
-
-            migrationBuilder.DropColumn(
-                name: "real_time",
                 table: "admin_log");
         }
     }

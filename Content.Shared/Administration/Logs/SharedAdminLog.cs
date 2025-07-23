@@ -10,6 +10,5 @@ public readonly record struct SharedAdminLog(
     LogImpact Impact,
     DateTime Date,
     long CurTime,
-    long RealTime,
     string Message,
     Guid[] Players);

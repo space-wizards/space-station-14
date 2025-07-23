@@ -124,10 +124,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("message");
 
-                    b.Property<long>("RealTime")
-                        .HasColumnType("bigint")
-                        .HasColumnName("real_time");
-
                     b.Property<int>("Type")
                         .HasColumnType("integer")
                         .HasColumnName("type");
