@@ -80,6 +80,7 @@ public abstract partial class SharedStunSystem
 
         while (query.MoveNext(out var uid, out var knockedDown))
         {
+            // If it's null then we don't want to stand up
             if (!knockedDown.AutoStand || knockedDown.DoAfterId.HasValue || knockedDown.NextUpdate > GameTiming.CurTime)
                 continue;
 
@@ -169,7 +170,7 @@ public abstract partial class SharedStunSystem
     /// </summary>
     /// <param name="entity">Entity whose timer we're updating</param>
     /// <param name="time">The exact time we're setting the next update to.</param>
-    public void SetKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan time)
+    public void SetKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan? time)
     {
         entity.Comp.NextUpdate = time;
         DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.NextUpdate));
@@ -232,6 +233,7 @@ public abstract partial class SharedStunSystem
     /// <param name="entity">Entity who is trying to fall down</param>
     private void ToggleKnockdown(Entity<CrawlerComponent?, KnockedDownComponent?> entity)
     {
+        // We resolve here instead of using TryCrawling to be extra sure someone without crawler can't stand up early.
         if (!Resolve(entity, ref entity.Comp1))
             return;
 
@@ -260,6 +262,8 @@ public abstract partial class SharedStunSystem
         if (!_crawlerQuery.TryComp(entity, out var crawler))
         {
             // If we can't crawl then just have us sit back up...
+            // In case you're wondering, the KnockdownOverCheck, returns if we're able to move, so if next update is null.
+            // An entity that can't crawl will stand up the next time they can move, which should prevent moving while knocked down.
             RemComp<KnockedDownComponent>(entity);
             _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} has stood up from knockdown.");
             return true;
@@ -475,7 +479,7 @@ public abstract partial class SharedStunSystem
             return;
 
         if (args.DamageDelta.GetTotal() >= entity.Comp.KnockdownDamageThreshold)
-            RefreshKnockdownTime(entity.Owner, GameTiming.CurTime + entity.Comp.DefaultKnockedDuration);
+            RefreshKnockdownTime(entity.Owner, entity.Comp.DefaultKnockedDuration);
     }
 
     private void OnKnockdownRefresh(Entity<CrawlerComponent> entity, ref KnockedDownRefreshEvent args)
