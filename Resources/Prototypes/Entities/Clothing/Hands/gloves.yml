@@ -285,7 +285,6 @@
     sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
-  - type: Insulated
   - type: Fiber
     fiberColor: fibers-black
 
