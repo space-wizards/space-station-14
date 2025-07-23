@@ -22,7 +22,7 @@ public sealed class AdminLogsEui : BaseEui
 
     private const char CsvSeparator = ',';
     private const string CsvQuote = "\"";
-    private const string CsvHeader = "Date,ID,PlayerID,Severity,Type,Message,CurTime,RealTime";
+    private const string CsvHeader = "Date,ID,PlayerID,Severity,Type,Message,CurTime";
 
     private ISawmill _sawmill;
 
