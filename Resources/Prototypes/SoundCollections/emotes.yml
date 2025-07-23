@@ -104,6 +104,24 @@
   - /Audio/Items/Toys/hew.ogg
 
 - type: soundCollection
+  id: MaleClearsThroat
+  files:
+  - /Audio/Voice/Human/male_clearsthroat_1.ogg
+  - /Audio/Voice/Human/male_clearsthroat_2.ogg
+
+- type: soundCollection
+  id: FemaleClearsThroat
+  files:
+  - /Audio/Voice/Human/female_clearsthroat_1.ogg
+  - /Audio/Voice/Human/female_clearsthroat_2.ogg
+
+- type: soundCollection
+  id: VoxWhistles
+  files:
+  - /Audio/Voice/Vox/vox_whistle_1.ogg
+  - /Audio/Voice/Vox/vox_whistle_2.ogg
+
+- type: soundCollection
   id: XenoborgLaugh
   files:
   - /Audio/Voice/Xenoborg/xenoborg_laugh_1.ogg
