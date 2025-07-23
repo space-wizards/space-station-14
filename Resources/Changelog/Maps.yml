@@ -419,4 +419,11 @@
   id: 51
   time: '2025-07-19T19:40:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38956
+- author: CroilBird
+  changes:
+  - message: Added Polly to Bagel station
+    type: Add
+  id: 52
+  time: '2025-07-23T00:09:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39147
 Order: 1
