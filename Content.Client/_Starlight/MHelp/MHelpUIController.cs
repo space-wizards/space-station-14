@@ -166,6 +166,7 @@ public sealed class MHelpUIController : UIController, IOnSystemChanged<MentorSys
         UIHelper.OnMessageSend += (ticket, textMessage, playSound) => _mentorSystem?.Send(ticket,  textMessage, playSound);
         UIHelper.OnInputTextChanged += (ticket, text) => _mentorSystem?.SendInputTextUpdated(ticket,  text.Length > 0);
         UIHelper.OnTicketClosed += ticket => _mentorSystem?.SendCloseTicket(ticket);
+        UIHelper.OnTptoPressed += ticket => _mentorSystem?.AttemptTpto(ticket);
         UIHelper.OnClose += () => SetMHelpPressed(false);
         UIHelper.OnOpen += () => SetMHelpPressed(true);
         SetMHelpPressed(UIHelper.IsOpen);

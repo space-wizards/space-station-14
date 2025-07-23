@@ -18,6 +18,7 @@ public sealed partial class MhelpPanel : BoxContainer
     public event Action<string> OnInputTextChanged = delegate { };
     public event Action<string> OnMessageSend = delegate { };
     public event Action OnTicketClosed = delegate { };
+    public event Action OnTptoPressed = delegate { };
 
     public MhelpPanel()
     {
@@ -31,6 +32,7 @@ public sealed partial class MhelpPanel : BoxContainer
         SenderLineEdit.OnTextEntered += Input_OnTextEntered;
         SenderLineEdit.OnTextChanged += Input_OnTextChanged;
         CloseTicket.OnPressed += _ => OnTicketClosed.Invoke();
+        TptoTicket.OnPressed += _ => OnTptoPressed.Invoke();
         UpdateTypingIndicator();
     }
 
@@ -53,6 +55,7 @@ public sealed partial class MhelpPanel : BoxContainer
         if (!Visible)
             Unread++;
         CloseTicket.Visible = message.Ticket is not null && !message.TicketClosed;
+        TptoTicket.Visible = CloseTicket.Visible;
         var formatted = new FormattedMessage(1);
         formatted.AddMarkupOrThrow(message.Text);
         LastMessage = message.CreateAt;
