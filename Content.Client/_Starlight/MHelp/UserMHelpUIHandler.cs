@@ -44,6 +44,7 @@ public sealed class UserMHelpUIHandler(NetUserId owner) : IMHelpUIHandler
     public event Action<Guid?, string, bool> OnMessageSend = delegate { };
     public event Action<Guid?, string> OnInputTextChanged = delegate { };
     public event Action<Guid> OnTicketClosed = delegate { };
+    public event Action<Guid> OnTptoPressed = delegate { };
 
     public void Open(NetUserId channelId)
     {
