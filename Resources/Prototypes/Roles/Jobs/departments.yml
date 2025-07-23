@@ -1,0 +1,140 @@
+- type: department
+  id: Cargo
+  name: department-Cargo
+  description: department-Cargo-description
+  color: "#b48b57"
+  roles:
+  - CargoTechnician
+  - MailTech
+  - Quartermaster
+  - SalvageSpecialist
+  - MiningSpecialist
+
+- type: department
+  id: Civilian
+  name: department-Civilian
+  description: department-Civilian-description
+  color: "#2cdb2c"
+  weight: -10
+  roles:
+  - Bartender
+  - Botanist
+  - Boxer
+  - Chaplain
+  - Chef
+  - Clown
+  - HeadOfPersonnel
+  - Janitor
+  - Librarian
+  - Mime
+  - Musician
+  - Assistant
+  - Reporter
+  - Visitor
+  - Zookeeper
+  - ServiceWorker
+
+- type: department
+  id: CentralCommand
+  name: department-CentralCommand
+  description: department-CentralCommand-description
+  color: "#2681a5"
+  roles:
+  - CentralCommandOfficial
+  - CBURN
+  - ERTLeader
+  - ERTChaplain
+  - ERTJanitor
+  - ERTMedical
+  - ERTSecurity
+  - ERTEngineer
+  - DeathSquad
+  - NTNCBlueshield ## Starlight Addition
+  editorHidden: true
+  weight: 120
+
+- type: department
+  id: Command
+  name: department-Command
+  description: department-Command-description
+  color: "#fcdf03"
+  roles:
+  - Captain
+  - ChiefEngineer
+  - ChiefMedicalOfficer
+  - HeadOfPersonnel
+  - HeadOfSecurity
+  - ResearchDirector
+  - Quartermaster
+  - CentralCommandOfficial
+  - CBURN
+  - ERTLeader
+  - ERTChaplain
+  - ERTJanitor
+  - ERTMedical
+  - ERTSecurity
+  - ERTEngineer
+  - DeathSquad
+  - Magistrate
+  - NanoTrasenRepresentative
+  primary: false
+  weight: 100
+
+- type: department
+  id: Engineering
+  name: department-Engineering
+  description: department-Engineering-description
+  color: "#ff733c"
+  roles:
+  - AtmosphericTechnician
+  - ChiefEngineer
+  - StationEngineer
+  - TechnicalAssistant
+
+- type: department
+  id: Medical
+  name: department-Medical
+  description: department-Medical-description
+  color: "#57b8f0"
+  roles:
+  - Chemist
+  - ChiefMedicalOfficer
+  - MedicalDoctor
+  - MedicalIntern
+  - Psychologist
+  - Paramedic
+  - Surgeon # Starlight-edit
+
+- type: department
+  id: Security
+  name: department-Security
+  description: department-Security-description
+  color: "#ff4242"
+  weight: 20
+  roles:
+  - HeadOfSecurity
+  - SecurityCadet
+  - SecurityOfficer
+  - Brigmedic
+  - Detective
+  - Warden
+
+- type: department
+  id: Science
+  name: department-Science
+  description: department-Science-description
+  color: "#cd7ccd"
+  roles:
+  - ResearchDirector
+  - Scientist
+  - ResearchAssistant
+  - Roboticist
+
+- type: department
+  id: Silicon
+  name: department-Silicon
+  description: department-Silicon-description
+  color: "#00a2ff"
+  roles:
+  - Borg
+  - StationAi
