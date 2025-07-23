@@ -40,6 +40,9 @@
   - hwid
   - showaudio
   - showpos
+  - showvel
+  - showrot
+  - showangvel
   - showray
   - showchunkbb
   - showgridnodes
@@ -60,7 +63,7 @@
   - watch
   - sendgarbage
   - setinputcontext
-  - showvelocities
+  - showplayervelocity
   - tilelookup
   - net_entityreport
   - scene
