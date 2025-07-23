@@ -13,3 +13,10 @@
   sprite:
     sprite: _Starlight/Objects/Specific/legalpapers/cmo-license.rsi
     state: cmo-license
+
+- type: stealTargetGroup
+  id: SalvageShuttleConsoleCircuitboard
+  name: steal-target-groups-salvage-shuttle-console-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpuboard
