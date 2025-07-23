@@ -31,6 +31,8 @@ namespace Content.Server.Nutrition.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<CreamPieComponent, FoodSystem.AllowSlotConsumptionEvent>(
+                (uid, comp, ev) => ev.Allowed = true);
 
             // activate BEFORE entity is deleted and trash is spawned
             SubscribeLocalEvent<CreamPieComponent, ConsumeDoAfterEvent>(OnConsume, before: [typeof(FoodSystem)]);

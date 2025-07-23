@@ -95,6 +95,14 @@ public sealed class FoodSystem : EntitySystem
     }
 
     /// <summary>
+    /// Event raised to allow eating food with occupied item slots.
+    /// </summary>
+    public sealed class AllowSlotConsumptionEvent : EntityEventArgs
+    {
+        public bool Allowed;
+    }
+
+    /// <summary>
     /// Tries to feed the food item to the target entity
     /// </summary>
     public (bool Success, bool Handled) TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
@@ -136,14 +144,13 @@ public sealed class FoodSystem : EntitySystem
         // Checks for used item slots
         if (TryComp<ItemSlotsComponent>(food, out var itemSlots))
         {
-            if (itemSlots.Slots.Any(slot => slot.Value.HasItem))
+            var allowEv = new AllowSlotConsumptionEvent();
+            RaiseLocalEvent(food, allowEv);
+
+            if (itemSlots.Slots.Any(slot => slot.Value.HasItem) && !allowEv.Allowed)
             {
-                // Skip items with timer trigger
-                if (!itemSlots.Slots.All(slot => HasComp<OnUseTimerTriggerComponent>(slot.Value.Item)))
-                {
-                    _popup.PopupClient(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
-                    return (false, true);
-                }
+                _popup.PopupClient(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
+                return (false, true);
             }
         }
 
@@ -239,7 +246,7 @@ public sealed class FoodSystem : EntitySystem
         var forceFeed = args.User != args.Target;
 
         args.Handled = true;
-        var transferAmount = entity.Comp.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) entity.Comp.TransferAmount, solution.Volume) : solution.Volume;
+        var transferAmount = entity.Comp.TransferAmount != null ? FixedPoint2.Min((FixedPoint2)entity.Comp.TransferAmount, solution.Volume) : solution.Volume;
 
         var split = _solutionContainer.SplitSolution(soln.Value, transferAmount);
 
@@ -553,6 +560,6 @@ public sealed class FoodSystem : EntitySystem
         if (comp.TransferAmount == null)
             return 1;
 
-        return Math.Max(1, (int) Math.Ceiling((solution.Volume / (FixedPoint2) comp.TransferAmount).Float()));
+        return Math.Max(1, (int)Math.Ceiling((solution.Volume / (FixedPoint2)comp.TransferAmount).Float()));
     }
 }
