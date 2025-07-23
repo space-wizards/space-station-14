@@ -142,6 +142,14 @@
         shape:
           !type:PhysShapeAabb { }
         mask:
+        - TableMask
+        layer:
+        - TableLayer
+      sensor:
+        hard: false
+        shape:
+          !type:PhysShapeAabb { }
+        mask:
         - MachineMask
         layer:
         - HalfWallLayer
@@ -156,13 +164,11 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: SoftFixtureMask
-    mask: 16
   - type: SpeedModifierContacts
     walkSpeedModifier: 0.5
     sprintSpeedModifier: 0.5
   - type: DamageContacts
     damage:
       types:
-        Slash: 5
-        Piercing: 5
+        Slash: 2
+        Piercing: 2
