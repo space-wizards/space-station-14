@@ -1,0 +1,157 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86, tail-wag-icon and corgi and dalmation created by PursuitInAshes based off of 'vulp'. Fluffy created by Skarletto (Github).",
+    "size": {"x": 32, "y": 32},
+    "states": [
+        {
+            "name": "vulp",
+            "directions": 4
+        },
+        {
+            "name": "vulp-tip",
+            "directions": 4
+        },
+        {
+            "name": "vulp-fade",
+            "directions": 4
+        },
+        {
+            "name": "vulp_alt",
+            "directions": 4
+        },
+        {
+            "name": "vulp_alt-fade",
+            "directions": 4
+        },
+        {
+            "name": "vulp_alt-tip",
+            "directions": 4
+        },
+        {
+            "name": "vulp_wag",
+            "directions": 4,
+            "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "vulp_wag-fade",
+            "directions": 4,
+            "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "vulp_wag-tip",
+            "directions": 4,
+            "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "long",
+            "directions": 4
+        },
+        {
+            "name": "long-tip",
+            "directions": 4
+        },
+        {
+            "name": "fox",
+            "directions": 4
+        },
+        {
+            "name": "fox-tip",
+            "directions": 4
+        },
+        {
+            "name": "fox-fade",
+            "directions": 4
+        },
+        {
+            "name": "fox_wag",
+            "directions": 4,
+            "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "fox_wag-fade",
+            "directions": 4,
+            "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "fox_wag-tip",
+            "directions": 4,
+            "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "bushfluff",
+            "directions": 4
+        },
+        {
+            "name": "bushfluff_wag",
+            "directions": 4,
+            "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "coyote",
+            "directions": 4
+        },
+        {
+            "name": "coyote_wag",
+            "directions": 4,
+            "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "corgi_wag",
+            "directions": 4,
+            "delays": [[0.1, 0.1, 0.1, 0.1], [0.1, 0.1, 0.1, 0.1], [0.1, 0.1, 0.1, 0.1], [0.1, 0.1, 0.1, 0.1]]
+        },
+        {
+            "name": "husky",
+            "directions": 4
+        },
+        {
+            "name": "husky-inner",
+            "directions": 4
+        },
+        {
+            "name": "husky-outer",
+            "directions": 4
+        },
+        {
+            "name": "fox2",
+            "directions": 4
+        },
+        {
+            "name": "fox3",
+            "directions": 4
+        },
+        {
+            "name": "fox3-tip",
+            "directions": 4
+        },
+        {
+            "name": "fennec",
+            "directions": 4
+        },
+        {
+            "name": "otie",
+            "directions": 4
+        },
+        {
+            "name": "fluffy",
+            "directions": 4
+        },
+        {
+            "name": "dalmatian_wag",
+            "directions": 4,
+            "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]    },
+        {
+            "name": "tail-wag-icon",
+            "directions": 1
+        },
+        {
+            "name": "corgi",
+            "directions": 4
+        },
+        {
+            "name": "dalmatian",
+            "directions": 4
+        }
+    ]
+}
