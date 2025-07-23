@@ -2139,10 +2139,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 100
+        maxVol: 120
         reagents:
         - ReagentId: Tea
-          Quantity: 100
+          Quantity: 120
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teapot.rsi
 
