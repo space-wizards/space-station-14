@@ -1,3 +1,4 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 # TODO: Find remaining cans and move to drinks_cans
 # TODO: Find empty containers (e.g. mug, pitcher) and move to their own yml
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_glass.yml
@@ -2139,10 +2140,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 100
+        maxVol: 120 # Ronstation - modification.
         reagents:
         - ReagentId: Tea
-          Quantity: 100
+          Quantity: 120 # Ronstation - modification.
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teapot.rsi
 

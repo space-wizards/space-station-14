@@ -1,3 +1,4 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: entity
   parent: BaseItem
   id: DrinkShaker
@@ -7,7 +8,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 100
+        maxVol: 120 # Ronstation - modification.
   - type: MixableSolution
     solution: drink
   - type: Drink
