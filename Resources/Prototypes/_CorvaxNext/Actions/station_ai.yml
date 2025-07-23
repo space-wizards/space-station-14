@@ -23,7 +23,7 @@
     priority: -9
     itemIconStyle: BigAction
     icon:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: robot
+      sprite: Interface/Actions/actions_ai.rsi
+      state: borg_control
   - type: InstantAction
     event: !type:ToggleRemoteDevicesScreenEvent
