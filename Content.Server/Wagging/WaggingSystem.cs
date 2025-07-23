@@ -1,8 +1,12 @@
-﻿using Content.Server.Actions;
+﻿using System.Linq;
+using Content.Server.Actions;
 using Content.Server.Humanoid;
+using Content.Shared.Actions.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
+using Content.Shared.Roles;
 using Content.Shared.Toggleable;
 using Content.Shared.Wagging;
 using Robust.Shared.Prototypes;
@@ -18,20 +22,58 @@ public sealed class WaggingSystem : EntitySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
+    private Entity<ActionComponent> uid;
+
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WaggingComponent, MapInitEvent>(OnWaggingMapInit);
+        SubscribeLocalEvent<WaggingComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<WaggingComponent, MarkingsUpdateEvent>(OnMarkingsUpdate);
         SubscribeLocalEvent<WaggingComponent, ComponentShutdown>(OnWaggingShutdown);
         SubscribeLocalEvent<WaggingComponent, ToggleActionEvent>(OnWaggingToggle);
         SubscribeLocalEvent<WaggingComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
-    private void OnWaggingMapInit(EntityUid uid, WaggingComponent component, MapInitEvent args)
+    private void OnComponentInit(EntityUid uid, WaggingComponent component, ComponentInit args)
     {
-        _actions.AddAction(uid, ref component.ActionEntity, component.Action, uid);
+         _actions.AddAction(uid, ref component.ActionEntity, component.Action, uid);
     }
+
+    private void OnMarkingsUpdate(EntityUid uid, WaggingComponent component, MarkingsUpdateEvent args)
+    {
+        Log.Warning("Event raised");
+        if (TryComp<HumanoidAppearanceComponent>(uid, out var humanoid))
+        {
+            if (humanoid.MarkingSet.Markings.TryGetValue(MarkingCategories.Tail, out var markings))
+            {
+                Log.Warning("Has marking");
+                if (!_actions.GetAction(component.ActionEntity).HasValue)
+                {
+                    Log.Warning("Adding");
+                    _actions.AddAction(uid, ref component.ActionEntity, component.Action, uid);
+                }
+                else
+                {
+                    Log.Warning("Already there");
+                }
+            }
+            else
+            {
+                Log.Warning("Checking");
+                if (_actions.GetAction(component.ActionEntity).HasValue)
+                {
+                    Log.Warning("Removing");
+                    _actions.RemoveAction(uid, component.ActionEntity);
+                }
+                else
+                {
+                    Log.Warning("Not present");
+                }
+            }
+        }
+    }
+
 
     private void OnWaggingShutdown(EntityUid uid, WaggingComponent component, ComponentShutdown args)
     {

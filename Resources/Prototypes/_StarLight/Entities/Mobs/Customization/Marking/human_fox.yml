@@ -43,9 +43,8 @@
     - emotePrototype: Whine
     - emotePrototype: Bark
 
-# Animated
 - type: marking
-  id: FopsTailAnimated
+  id: FopsTailWag
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: []
@@ -60,7 +59,7 @@
     - emotePrototype: Bark
 
 - type: marking
-  id: PuppyTailAnimated
+  id: PuppyTailWag
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: []

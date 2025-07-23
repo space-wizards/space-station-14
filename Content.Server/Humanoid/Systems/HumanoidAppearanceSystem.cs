@@ -54,6 +54,9 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         if (sourceHumanoid.Voice != null)
             SetTTSVoice(target, sourceHumanoid.Voice, targetHumanoid);
         Dirty(target, targetHumanoid);
+        
+        var ev = new MarkingsUpdateEvent(); //starlight
+        RaiseLocalEvent(target, ref ev); //starlight
     }
 
     /// <summary>
@@ -75,6 +78,9 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
 
         if (sync)
             Dirty(uid, humanoid);
+        
+        var ev = new MarkingsUpdateEvent(); //starlight
+        RaiseLocalEvent(uid, ref ev); //starlight
     }
 
     /// <summary>
@@ -95,7 +101,10 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         }
 
         humanoid.MarkingSet.Remove(category, index);
-        Dirty(uid, humanoid);
+        Dirty(uid, humanoid);        
+
+        var ev = new MarkingsUpdateEvent(); //starlight
+        RaiseLocalEvent(uid, ref ev); //starlight
     }
 
     /// <summary>
@@ -126,7 +135,10 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         marking.IsGlowing = markings[index].IsGlowing; //starlight
 
         humanoid.MarkingSet.Replace(category, index, marking);
-        Dirty(uid, humanoid);
+        Dirty(uid, humanoid);        
+
+        var ev = new MarkingsUpdateEvent(); //starlight
+        RaiseLocalEvent(uid, ref ev); //starlight
     }
 
     /// <summary>
@@ -153,7 +165,10 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
             markings[index].SetColor(i, colors[i]);
         }
 
-        Dirty(uid, humanoid);
+        Dirty(uid, humanoid);        
+
+        var ev = new MarkingsUpdateEvent(); //starlight
+        RaiseLocalEvent(uid, ref ev); //starlight
     }
 
     //starlight start
@@ -170,6 +185,9 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
 
         markings[index].IsGlowing = glowing;
         Dirty(uid, humanoid);
+                
+        var ev = new MarkingsUpdateEvent();
+        RaiseLocalEvent(uid, ref ev);
     }
     //starlight end
 }
