@@ -765,6 +765,7 @@
       Burger: CheeseBurger
   - type: Item
     size: Tiny
+    storedOffset: 0,-3
     inhandVisuals:
       left:
       - state: cheesewedge-inhand-left
