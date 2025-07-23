@@ -3,7 +3,7 @@
 
   There are a lot of tools to help you gather and examine the evidence at your disposal
 
-  # Log probe
+  # LogProbe
 
   This little add-on to your PDA is incredibly useful, just install the cartridge and your PDA will acquire the ability to scan anything with access (like airlocks) and see who has used them recently.
 
@@ -26,11 +26,11 @@
   </Box>
   So be careful before fighting with someone.
 
-  Same scanner can also get fingerprint information about who touched pretty much any object. If the possible perpetrator was using gloves, then your scanner will print out which fibers were left on the crimescene.
+   That same forensic scanner can also get fingerprint information about who touched pretty much any object. If the possible perpetrator was using gloves, then your scanner will print out which fibers were left on the crime scene.
 
   ## I got DNA. How do I recognize whose it is?
 
-  You can print the forensic information of the object you scanned so you never miss it. Now with the paper containing DNA you can simply find a [color=#a4885c]Station Records Computer[/color] and look for a person whose DNA matches. Same applies to finding whose fingerprint is is.
+  You can print the forensic information of the object you scanned so you never miss it. Now with the paper containing DNA you can simply find a [color=#a4885c]Station Records Computer[/color] and look for a person whose DNA matches. Same applies to finding whose fingerprint it is.
 
   ## Taking Fingerprints
   It is also possible to take someone's fingerprints while on scene if you make them take off their gloves and apply a forensic pad to their fingers. No need to run back to [color=#a4885c]Station Records Computer[/color] to check if the butler did it!
@@ -38,7 +38,7 @@
   <GuideEntityEmbed Entity="ForensicPad"/>
 
   ## Fibers
-  Whenenever people wearing gloves touch anything on the station, they are bound to leave behind some fibers. This complicates things, but nothing is unsolvable for a real detective.
+  Whenever people wearing gloves touch anything on the station, they are bound to leave behind some fibers. This complicates things, but nothing is unsolvable for a real detective.
 
   There are up to [color=red]26[/color] different types of fibers possible. Can that stop you from solving the case?
 

@@ -44,3 +44,32 @@
       drawdepth: Mobs
       noRot: true
       offset: "0.0,0.5"
+
+- type: entity
+  parent: Memorial
+  id: Monolith
+  name: monolith
+  description: |
+    Holy shit modern art.
+    I bet it's worth a fortune.
+  components:
+  - type: Sprite
+    color: "#1a1a22" #yes, I bothered to get the actual color from 2001 a space odyssey
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.20"
+        density: 1500 # good luck.
+        mask:
+        - MachineMask # had to change em because youre intended to drag this back for mulah.
+        layer:
+        - MachineLayer
+  - type: Anchorable
+  - type: StaticPrice
+    price: 25000
+  - type: Prayable
+    sentMessage: prayer-popup-notify-monolith-sent
+    notificationPrefix: prayer-chat-notify-monolith
+    verb: prayer-verbs-worship
