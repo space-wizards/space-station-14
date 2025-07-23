@@ -57,6 +57,7 @@ public sealed class GasTileHeatOverlay : Overlay
 
         var target = args.Viewport.RenderTarget;
 
+        // Probably the resolution of the game window changed, remake the textures.
         if (_heatTarget?.Texture.Size != target.Size)
         {
             _heatTarget?.Dispose();
@@ -85,8 +86,11 @@ public sealed class GasTileHeatOverlay : Overlay
         var worldHandle = args.WorldHandle;
         var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
 
+        // If there is no distortion after checking all visible tiles, we can bail early
         var anyDistortion = false;
 
+        // We're rendering in the context of the heat target texture, which will encode data as to where and how strong
+        // the heat distortion will be
         args.WorldHandle.RenderInRenderTarget(_heatTarget,
             () =>
             {
@@ -106,10 +110,17 @@ public sealed class GasTileHeatOverlay : Overlay
                     var uvToUi = Matrix3Helpers.CreateScale(_heatTarget.Size.X, -_heatTarget.Size.Y);
                     var uvToGridEnt = uvToUi * viewportLocalToGridEnt;
 
+                    // Because we want the actual distortion to be calculated based on the grid coordinates*, we need
+                    // to pass a matrix transformation to go from the viewport coordinates to grid coordinates.
+                    //   * (why? because otherwise the effect would shimmer like crazy as you moved around, think
+                    //      moving a piece of warped glass above a picture instead of placing the warped glass on the
+                    //      paper and moving them together)
                     _shader.SetParameter("grid_ent_from_viewport_local", uvToGridEnt);
 
+                    // Draw commands (like DrawRect) will be using grid coordinates from here
                     worldHandle.SetTransform(gridEntToViewportLocal);
 
+                    // We only care about tiles that fit in these bounds
                     var floatBounds = worldToViewportLocal.TransformBox(worldBounds).Enlarged(grid.Comp.TileSize);
                     var localBounds = new Box2i(
                         (int) MathF.Floor(floatBounds.Left),
@@ -117,18 +128,24 @@ public sealed class GasTileHeatOverlay : Overlay
                         (int) MathF.Ceiling(floatBounds.Right),
                         (int) MathF.Ceiling(floatBounds.Top));
 
+                    // for each tile and its gas --->
                     foreach (var chunk in comp.Chunks.Values)
                     {
                         var enumerator = new GasChunkEnumerator(chunk);
 
                         while (enumerator.MoveNext(out var tileGas))
                         {
+                            // --->
+                            // Check and make sure the tile is within the viewport/screen
                             var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
                             if (!localBounds.Contains(tilePosition))
                                 continue;
+
+                            // Get the distortion strength from the temperature and bail if it's not hot enough
                             var strength = SharedGasTileOverlaySystem.GetHeatDistortionStrength(tileGas.Temperature);
                             if (strength <= 0f)
                                 continue;
+
                             anyDistortion = true;
                             // Encode the strength in the red channel, then 1.0 alpha if it's an active tile.
                             // BlurRenderTarget will then apply a blur around the edge, but we don't want it to bleed
@@ -153,9 +170,11 @@ public sealed class GasTileHeatOverlay : Overlay
         // distortion shader to keep them in tile bounds.
         _clyde.BlurRenderTarget(args.Viewport, _heatTarget, _heatBlurTarget, args.Viewport.Eye!, 14f);
 
+        // Set up and render the distortion
         args.WorldHandle.UseShader(_shader);
         args.WorldHandle.DrawTextureRect(_heatTarget.Texture, args.WorldBounds);
 
+        // Return the draw handle to normal settings
         args.WorldHandle.UseShader(null);
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
