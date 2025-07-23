@@ -440,4 +440,11 @@
   id: 54
   time: '2025-07-23T00:35:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39145
+- author: CroilBird
+  changes:
+  - message: Added Polly to Fland station
+    type: Add
+  id: 55
+  time: '2025-07-23T00:36:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39144
 Order: 1
