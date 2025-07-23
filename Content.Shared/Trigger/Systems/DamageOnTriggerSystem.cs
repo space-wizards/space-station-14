@@ -26,14 +26,14 @@ public sealed class DamageOnTriggerSystem : EntitySystem
 
         var damage = new DamageSpecifier(ent.Comp.Damage);
         var ev = new BeforeDamageOnTriggerEvent(damage, target.Value);
-        RaiseLocalEvent(target.Value, ref ev);
+        RaiseLocalEvent(ent.Owner, ref ev);
 
         args.Handled |= _damageableSystem.TryChangeDamage(target, ev.Damage, ent.Comp.IgnoreResistances, origin: ent.Owner) is not null;
     }
 }
 
 /// <summary>
-/// Raised on an entity before it takes damage from DamageOnTriggerComponent.
+/// Raised on an entity before it deals damage using DamageOnTriggerComponent.
 /// Used to modify the damage that will be dealt.
 /// </summary>
 [ByRefEvent]
