@@ -454,4 +454,11 @@
   id: 56
   time: '2025-07-23T00:38:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39143
+- author: CroilBird
+  changes:
+  - message: Added Polly to Marathon station
+    type: Add
+  id: 57
+  time: '2025-07-23T00:41:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39141
 Order: 1
