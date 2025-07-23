@@ -169,6 +169,7 @@
 
 - type: construction
   id: DiagonalShuttleWall
+  name: construction-recipe-diagonal-shuttle-wall
   graph: Girder
   startNode: start
   targetNode: diagonalshuttleWall
@@ -285,6 +286,7 @@
 
 - type: construction
   id: WindowDiagonal
+  name: construction-window-diagonal
   graph: WindowDiagonal
   startNode: start
   targetNode: windowDiagonal
@@ -312,6 +314,7 @@
 
 - type: construction
   id: ReinforcedWindowDiagonal
+  name: construction-recipe-reinforced-window-diagonal
   graph: WindowDiagonal
   startNode: start
   targetNode: reinforcedWindowDiagonal
@@ -353,6 +356,7 @@
 
 - type: construction
   id: ClockworkWindowDiagonal
+  name: construction-recipe-clockwork-window-diagonal
   graph: WindowDiagonal
   startNode: start
   targetNode: clockworkWindowDiagonal
@@ -408,6 +412,7 @@
 
 - type: construction
   id: PlasmaWindowDiagonal
+  name: construction-recipe-plasma-window-diagonal
   graph: WindowDiagonal
   startNode: start
   targetNode: plasmaWindowDiagonal
@@ -421,6 +426,7 @@
 
 - type: construction
   id: ReinforcedPlasmaWindowDiagonal
+  name: construction-recipe-reinforced-plasma-window-diagonal
   graph: WindowDiagonal
   startNode: start
   targetNode: reinforcedPlasmaWindowDiagonal
@@ -527,6 +533,7 @@
 
 - type: construction
   id: UraniumWindowDiagonal
+  name: construction-recipe-uranium-window-diagonal
   graph: WindowDiagonal
   startNode: start
   targetNode: uraniumWindowDiagonal
@@ -540,6 +547,7 @@
 
 - type: construction
   id: ReinforcedUraniumWindowDiagonal
+  name: construction-recipe-reinforced-uranium-window-diagonal
   graph: WindowDiagonal
   startNode: start
   targetNode: reinforcedUraniumWindowDiagonal
@@ -579,6 +587,7 @@
 
 - type: construction
   id: FirelockEdge
+  name: construction-recipe-firelock-edge
   graph: Firelock
   startNode: start
   targetNode: FirelockEdge
@@ -688,6 +697,7 @@
 
 - type: construction
   id: BarricadeDirectional
+  name: construction-recipe-barricade-directional
   graph: BarricadeDirectional
   startNode: start
   targetNode: barricadefull
@@ -712,6 +722,7 @@
 
 - type: construction
   id: RailingCorner
+  name: construction-recipe-railing-corner
   graph: Railing
   startNode: start
   targetNode: railingCorner
@@ -724,6 +735,7 @@
 
 - type: construction
   id: RailingCornerSmall
+  name: construction-recipe-railing-corner-small
   graph: Railing
   startNode: start
   targetNode: railingCornerSmall
@@ -736,6 +748,7 @@
 
 - type: construction
   id: RailingRound
+  name: construction-recipe-railing-round
   graph: Railing
   startNode: start
   targetNode: railingRound
@@ -761,6 +774,7 @@
 
 - type: construction
   id: FenceMetalCorner
+  name: construction-recipe-fence-metal-corner
   graph: FenceMetal
   startNode: start
   targetNode: corner
@@ -773,6 +787,7 @@
 
 - type: construction
   id: FenceMetalEnd
+  name: construction-recipe-fence-metal-end
   graph: FenceMetal
   startNode: start
   targetNode: end
@@ -810,6 +825,7 @@
 
 - type: construction
   id: FenceWoodEnd
+  name: construction-recipe-fence-wood-end
   graph: FenceWood
   startNode: start
   targetNode: end
@@ -822,6 +838,7 @@
 
 - type: construction
   id: FenceWoodCorner
+  name: construction-recipe-fence-wood-corner
   graph: FenceWood
   startNode: start
   targetNode: corner
@@ -834,6 +851,7 @@
 
 - type: construction
   id: FenceWoodTJunction
+  name: construction-recipe-fence-wood-t-junction
   graph: FenceWood
   startNode: start
   targetNode: tjunction
@@ -871,6 +889,7 @@
 
 - type: construction
   id: FenceWoodEndSmall
+  name: construction-recipe-fence-wood-end-small
   graph: FenceWood
   startNode: start
   targetNode: end_small
@@ -883,6 +902,7 @@
 
 - type: construction
   id: FenceWoodCornerSmall
+  name: construction-recipe-fence-wood-corner-small
   graph: FenceWood
   startNode: start
   targetNode: corner_small
@@ -895,6 +915,7 @@
 
 - type: construction
   id: FenceWoodTJunctionSmall
+  name: construction-recipe-fence-wood-t-junction-small
   graph: FenceWood
   startNode: start
   targetNode: tjunction_small
@@ -907,6 +928,7 @@
 
 - type: construction
   id: FenceWoodGateSmall
+  name: construction-recipe-fence-wood-gate-small
   graph: FenceWood
   startNode: start
   targetNode: gate_small
@@ -944,6 +966,7 @@
 
 - type: construction
   id: PinionAirlock
+  name: construction-recipe-pinion-airlock
   graph: PinionAirlock
   startNode: start
   targetNode: airlock
@@ -956,6 +979,7 @@
 
 - type: construction
   id: PinionAirlockGlass
+  name: construction-recipe-pinion-airlock-glass
   graph: PinionAirlock
   startNode: start
   targetNode: glassAirlock
@@ -981,6 +1005,7 @@
 
 - type: construction
   id: AirlockGlassShuttle
+  name: construction-recipe-airlock-glass-shuttle
   graph: AirlockShuttle
   startNode: start
   targetNode: airlockGlass
@@ -1192,6 +1217,7 @@
 
 - type: construction
   id: PlasticFlapsClear
+  name: construction-recipe-plastic-flaps-clear
   graph: PlasticFlapsGraph
   startNode: start
   targetNode: plasticFlaps
@@ -1204,6 +1230,7 @@
 
 - type: construction
   id: PlasticFlapsOpaque
+  name: construction-recipe-plastic-flaps-opaque
   graph: PlasticFlapsGraph
   startNode: start
   targetNode: opaqueFlaps
@@ -1270,6 +1297,18 @@
   graph: SecretDoor
   startNode: start
   targetNode: solidSecretDoor
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: FungalSoil
+  graph: Soil
+  startNode: start
+  targetNode: fungalSoil
   category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter
