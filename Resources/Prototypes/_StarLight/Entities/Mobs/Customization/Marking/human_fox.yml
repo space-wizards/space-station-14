@@ -1,0 +1,478 @@
+# Eventually layering will allow to have markings on the body not layering above jumpsuits
+#- type: marking
+#  id: PawSocks
+#  markingCategory: Overlay
+#  bodyPart: RFoot #highest possible layer
+#  speciesRestriction: [Human]
+#  sprites:
+#    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+#      state: pawsocks
+- type: marking
+  id: PawSocksFeet
+  bodyPart: RFoot
+  markingCategory: Overlay
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: pawsocks_feet
+
+- type: marking
+  id: PawSocksLegs
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: pawsocks_legs
+
+- type: marking
+  id: PawSocksHands
+  bodyPart: RHand
+  markingCategory: Overlay
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: pawsocks_hands
+
+- type: marking
+  id: PawSocksArms
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: pawsocks_arms
+
+- type: marking
+  id: FoxTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: vulp_tail
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: vulp_tail_inner
+
+- type: marking
+  id: FoxEar
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: vulp_ear
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: vulp_ear_inner
+
+- type: marking
+  id: WolfTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: wolf_tail
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: wolf_tail_inner
+
+# Animated
+- type: marking
+  id: FoxTailAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: tail_fox_waggin
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: tail_fox_inner_waggin
+
+- type: marking
+  id: WolfTailAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: tail_wolf_waggin
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
+      state: tail_wolf_inner_waggin
+
+- type: marking
+  id: FoxlikeEar
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: vulp
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: vulp-inner
+
+- type: marking
+  id: FoxlikeEarFade
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: vulp
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: vulp-fade
+
+- type: marking
+  id: FoxlikeEarSharp
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: vulp
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: vulp-sharp
+
+- type: marking
+  id: FoxlikeEarJackal
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: jackal
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: jackal-inner
+
+- type: marking
+  id: FoxlikeEarTerrier
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: terrier
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: terrier-inner
+
+- type: marking
+  id: FoxlikeEarWolf
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: wolf
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: wolf-inner
+
+- type: marking
+  id: FoxlikeEarFennec
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: fennec
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: fennec-inner
+
+- type: marking
+  id: FoxlikeEarFox
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: fox
+
+- type: marking
+  id: FoxlikeEarOtie
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: otie
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: otie-inner
+
+- type: marking
+  id: FoxlikeEarTajaran
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: msai
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: msai-inner
+
+- type: marking
+  id: FoxlikeEarShock
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: shock
+
+- type: marking
+  id: FoxlikeEarCoyote
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: coyote
+
+- type: marking
+  id: FoxlikeEarDalmatian
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
+      state: dalmatian
+
+# Tail Markings
+- type: marking
+  id: FoxlikeTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: vulp
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: vulp-fade
+
+- type: marking
+  id: FoxlikeTailTip
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: vulp
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: vulp-tip
+
+- type: marking
+  id: FoxlikeTailWag
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: vulp_wag
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: vulp_wag-tip #fade
+
+- type: marking
+  id: FoxlikeTailTipWag
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: vulp_wag
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: vulp_wag-tip
+
+- type: marking
+  id: FoxlikeTailAlt
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: vulp_alt
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: vulp_alt-fade
+
+- type: marking
+  id: FoxlikeTailAltTip
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: vulp_alt
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: vulp_alt-tip
+
+- type: marking
+  id: FoxlikeTailLong
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: long
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: long-tip
+
+- type: marking
+  id: FoxlikeTailFox
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fox
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fox-fade
+
+- type: marking
+  id: FoxlikeTailFoxTip
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fox
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fox-tip
+
+- type: marking
+  id: FoxlikeTailFoxWag
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fox_wag
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fox_wag-fade
+
+- type: marking
+  id: FoxlikeTailFoxTipWag
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fox_wag
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fox_wag-tip
+
+- type: marking
+  id: FoxlikeTailBushy
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: bushfluff
+
+- type: marking
+  id: FoxlikeTailBushyWag
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: bushfluff_wag
+
+- type: marking
+  id: FoxlikeTailCoyote
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: coyote
+
+- type: marking
+  id: FoxlikeTailCoyoteWag
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: coyote_wag
+
+- type: marking
+  id: FoxlikeTailCorgiWag
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: corgi_wag
+
+- type: marking
+  id: FoxlikeTailHusky
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: husky-inner
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: husky-outer
+
+- type: marking
+  id: FoxlikeTailHuskyAlt
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: husky
+
+- type: marking
+  id: FoxlikeTailFox2
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fox2
+
+- type: marking
+  id: FoxlikeTailFox3
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fox3
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fox3-tip
+
+- type: marking
+  id: FoxlikeTailFennec
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fennec
+
+- type: marking
+  id: FoxlikeTailOtie
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: otie
+
+- type: marking
+  id: FoxlikeTailFluffy
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: fluffy
+
+- type: marking
+  id: FoxlikeTailDalmatianWag
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
+      state: dalmatian_wag
