@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: UBlueberry
-  changes:
-  - message: Beanies can now be found in WinterDrobes, don'tchaknow.
-    type: Add
-  id: 8290
-  time: '2025-04-20T21:15:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32946
 - author: Lanedon
   changes:
   - message: Santa hats can now be folded to remove the beard.
@@ -3907,3 +3900,12 @@
   id: 8801
   time: '2025-07-23T14:15:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39137
+- author: FairlySadPanda
+  changes:
+  - message: Almost every instrument has been updated to a new soundfont (GeneralUser-GS),
+      unifying all operating systems and massively improving the sound of certain
+      instruments.
+    type: Add
+  id: 8802
+  time: '2025-07-23T15:51:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39142
