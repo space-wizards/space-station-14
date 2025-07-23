@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "icon by RiceMar1244 based on icon taken from tg station at commit https://github.com/tgstation/tgstation/commit/8b7f8ba6a3327c7381967c550f185dffafd11a57, edited by GaussiArson",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/484fcb08e8e2058b81059424fb5aa77034a3fcf1",
   "size": {
     "x": 32,
     "y": 32
@@ -14,7 +14,15 @@
 			"name": "base"
 		},
 		{
-			"name": "mag-unshaded-0"
+			"name": "mag-unshaded-0",
+            "delays": [
+              [
+                0.1,
+                0.1,
+                0.1,
+                0.1
+              ]
+            ]
 		},
 		{
 			"name": "mag-unshaded-1"
@@ -30,11 +38,47 @@
 		},
 		{
 			"name": "inhand-left-0",
-			"directions": 4
+            "directions": 4,
+            "delays": [
+              [
+                0.3,
+                0.3
+              ],
+              [
+                0.3,
+                0.3
+              ],
+              [
+                0.3,
+                0.3
+              ],
+              [
+                0.3,
+                0.3
+              ]
+            ]
 		},
 		{
 			"name": "inhand-right-0",
-			"directions": 4
+            "directions": 4,
+            "delays": [
+              [
+                0.3,
+                0.3
+              ],
+              [
+                0.3,
+                0.3
+              ],
+              [
+                0.3,
+                0.3
+              ],
+              [
+                0.3,
+                0.3
+              ]
+            ]
 		},
 		{
 			"name": "inhand-left-1",

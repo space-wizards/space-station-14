@@ -1,0 +1,23 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/dead-space-server/space-station-14-fobos/pull/1/commits/72cb90770a9b78f286c7ac6577bd3b18681192a0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        { "name": "inears", "directions": 4 },
+        { "name": "muzzle", "directions": 4 },
+        { "name": "muzzleinears", "directions": 4 },
+        { "name": "nose", "directions": 4 },
+        { "name": "outears", "directions": 4 },
+        { "name": "patch_2", "directions": 4 },
+        { "name": "tiger_face", "directions": 4 },
+        { "name": "tiger_head", "directions": 4 },
+        { "name": "eye_stripes_head", "directions": 4 },
+        { "name": "star_head", "directions": 4 },
+        { "name": "mane_head", "directions": 4 },
+        { "name": "raccoon-head", "directions": 4 }
+    ]
+}

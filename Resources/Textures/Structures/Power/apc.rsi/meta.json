@@ -1,106 +1,46 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/9c7d509354ee030300f63c701da63c17928c3b3b and heavily modified by EmoGarbage404 (github)",
+  "copyright": "Taken from TauCetiClassic at commit https://github.com/TauCetiStation/TauCetiClassic/commit/fca7f2a0f9154c0c6c4efc2f8f58441fb9b34759",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "base",
-      "directions": 4
+      "name": "base"
     },
 	{
       "name": "static"
     },
     {
-      "name": "broken",
-      "directions": 4
+      "name": "broken"
     },
     {
-      "name": "frame",
-      "directions": 4
+      "name": "frame"
     },
     {
-      "name": "panel",
-      "directions": 4
+      "name": "panel"
     },
     {
-      "name": "lock0-locked",
-      "directions": 4
+      "name": "lock0-locked"
     },
     {
-      "name": "lock1-locked",
-      "directions": 4
+      "name": "lock1-locked"
     },
     {
       "name": "display-lack",
-      "directions": 4,
       "delays": [
         [
-          0.25,
-          0.25,
           1,
-          3
-        ],
-        [
-          0.25,
-          0.25,
-          1,
-          3
-        ],
-        [
-          0.25,
-          0.25,
-          1,
-          3
-        ],
-        [
-          0.25,
-          0.25,
-          1,
-          3
+          2
         ]
       ]
     },
     {
       "name": "display-charging",
-      "directions": 4,
       "delays": [
         [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
           0.1,
           0.1,
           0.1,
@@ -112,20 +52,7 @@
     },
     {
       "name": "display-full",
-      "directions": 4,
       "delays": [
-        [
-          1,
-          1
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          1,
-          1
-        ],
         [
           1,
           1
@@ -134,29 +61,7 @@
     },
     {
       "name": "display-remote",
-      "directions": 4,
       "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ],
         [
           0.1,
           0.1,
@@ -168,20 +73,7 @@
     },
     {
       "name": "emag-unlit",
-      "directions": 4,
       "delays": [
-        [
-          0.5,
-          0.5
-        ],
-        [
-          0.5,
-          0.5
-        ],
-        [
-          0.5,
-          0.5
-        ],
         [
           0.5,
           0.5

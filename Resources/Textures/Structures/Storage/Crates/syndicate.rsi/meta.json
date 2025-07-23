@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-4.0",
-  "copyright": "Hyenh#6078 (313846233099927552)",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/7687a28e7ceecea6b9e0aacdb58a2271b063f9d3 and lock display removed by github:Morb0 & custom welded sprite",
   "size": {
     "x": 32,
     "y": 32

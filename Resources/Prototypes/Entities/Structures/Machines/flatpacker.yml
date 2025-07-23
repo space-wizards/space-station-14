@@ -9,7 +9,7 @@
     snapCardinals: true
     layers:
     - state: base
-    - state: screen
+    - state: unlit
       map: ["enum.PowerDeviceVisualLayers.Powered"]
       shader: unshaded
     - state: panel

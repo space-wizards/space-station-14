@@ -1,7 +1,8 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from paradisestation at commit https://github.com/ParadiseSS13/Paradise/commit/12c21ced8432015485484b17e311dcceb7c458f6. Vox sprite made by Flareguy",
+  "copyright": "Created by discord:SOL(Артур)#8162, reptilian made by hqlle(444118014024220672). Vox sprite made by Flareguy",
+  "copyright": "inhand resprited by inventor05(gh: inventor055, discord: qwerty05555)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +13,10 @@
     },
     {
       "name": "equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-reptilian",
       "directions": 4
     },
     {

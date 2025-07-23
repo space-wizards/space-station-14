@@ -1,0 +1,29 @@
+{
+    "version": 1,
+	"license": "CC-BY-3.0",
+	"copyright": "Created by Kuro & kxv",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "cargo"
+		},
+		{
+			"name": "comms_console"
+		},
+		{
+			"name": "crew_monitor"
+		},
+		{
+			"name": "mass_scanner"
+		},
+		{
+			"name": "solar"
+		},
+		{
+			"name": "station_records"
+		}
+	]
+}

@@ -1,6 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/commit/30892aa892a2be846592b068ab71c606e2f0c5b7, monkey derivative made by brainfood1183 (github) for ss14, resprite created by svarshiksatanist on discord & updated by sonicdc",
   "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/commit/30892aa892a2be846592b068ab71c606e2f0c5b7, edited by emisse for ss14, monkey derivative made by brainfood1183 (github) for ss14 and edited by Ghagliiarghii (github)",
   "size": {
     "x": 32,
@@ -12,6 +13,10 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-reptilian",
       "directions": 4
     },
     {

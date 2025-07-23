@@ -787,7 +787,7 @@
     size: Large
     shape:
     - 0,0,3,1
-    sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun_inhands.rsi # Europa-Edit: EShotgun
     heldPrefix: energy
   - type: Tag
     tags:

@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by Ko4erga (disocrd), 'overlay_husk' https://github.com/ParadiseSS13/Paradise/commit/924e8cc949a40ea64a978656dbbc0b43b4a8f33a",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "tajaran_m"
+        },
+        {
+            "name": "full"
+        },
+        {
+            "name": "head_m",
+            "directions": 4
+        },
+        {
+            "name": "head_f",
+            "directions": 4
+        },
+        {
+            "name": "l_arm",
+            "directions": 4
+        },
+        {
+            "name": "l_foot",
+            "directions": 4
+        },
+        {
+            "name": "l_hand",
+            "directions": 4
+        },
+        {
+            "name": "l_leg",
+            "directions": 4
+        },
+        {
+            "name": "overlay_husk",
+            "directions": 4
+        },
+        {
+            "name": "r_arm",
+            "directions": 4
+        },
+        {
+            "name": "r_foot",
+            "directions": 4
+        },
+        {
+            "name": "r_hand",
+            "directions": 4
+        },
+        {
+            "name": "r_leg",
+            "directions": 4
+        },
+        {
+            "name": "torso_m",
+            "directions": 4
+        },
+        {
+            "name": "torso_f",
+            "directions": 4
+        }
+    ]
+}

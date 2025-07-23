@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from ParadiseSS13 at commit https://github.com/ParadiseSS13/Paradise/commit/de795c4e312980d6f239375a9fa589cd57151599",
+  "copyright": "Taken from ParadiseSS13 at commit https://github.com/ParadiseSS13/Paradise/commit/de795c4e312980d6f239375a9fa589cd57151599, reptilian made by kuro(388673708753027083)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-FEET",
+      "directions": 4
+    },
+    {
+      "name": "equipped-FEET-reptilian",
       "directions": 4
     },
     {

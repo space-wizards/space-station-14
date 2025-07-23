@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Original by Emisse, modified by EmoGarbage404. Vox state made by Flareguy for SS14. equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by Sparlight (GitHub).",
+    "copyright": "Original by Emisse, modified by EmoGarbage404. equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by Sparlight (GitHub). inhand resprited by inventor05(gh: inventor055, discord: qwerty05555). icon made by github:Morb0, reptilian made by kuro(388673708753027083). Vox state made by Flareguy for SS14",
 
     "size": {
         "x": 32,
@@ -13,6 +13,10 @@
         },
         {
             "name": "equipped-OUTERCLOTHING",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-reptilian",
             "directions": 4
         },
         {

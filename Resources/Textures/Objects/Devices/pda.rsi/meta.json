@@ -1,21 +1,14 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d, pda-cluwne made by brainfood1183 (github) ss14 | pda-brigmedic and pda-centcom made by PuroSlavKing (Github) | pda-brigemdic resprited by Hülle#2562 (Discord), pda-pirate made by brainfood1183 (Github), pda-syndi-agent drawn by Ubaser, pda-wizard recolour by Velken",
+  "copyright": "Taken from tgstation, pda-cluwne, pda-centcom and pda-brigmedic made by CatBackGround (GitHub) | pda-pirate made by brainfood1183 (Github), pda-syndi-agent drawn by Ubaser, pda-wizard recolour by Velken",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "id_overlay"
-    },
-    {
       "name": "id_overlay_wide"
-    },
-    {
-      "name": "equipped-BELT",
-      "directions": 4
     },
     {
       "name": "inhand-left",
@@ -47,6 +40,9 @@
       "name": "pda-boxer"
     },
     {
+      "name": "pda-brigmedic"
+    },
+    {
       "name": "pda-captain"
     },
     {
@@ -54,6 +50,9 @@
     },
     {
       "name": "pda-ce"
+    },
+    {
+      "name": "pda-centcom"
     },
     {
       "name": "pda-chaplain"
@@ -68,6 +67,9 @@
       "name": "pda-clown"
     },
     {
+      "name": "pda-cluwne"
+    },
+    {
       "name": "pda-cmo"
     },
     {
@@ -80,6 +82,9 @@
       "name": "pda-engineer"
     },
     {
+      "name": "pda-ert"
+    },
+    {
       "name": "pda-genetics"
     },
     {
@@ -90,111 +95,6 @@
     },
     {
       "name": "pda-hydro"
-    },
-    {
-      "name": "pda-janitor"
-    },
-    {
-      "name": "pda-lawyer"
-    },
-    {
-      "name": "pda-library",
-      "delays": [
-        [
-          0.3,
-          0.3,
-          0.3,
-          0.3
-        ]
-      ]
-    },
-    {
-      "name": "pda-medical"
-    },
-    {
-      "name": "pda-paramedic"
-    },
-    {
-      "name": "pda-mime"
-    },
-    {
-      "name": "pda-miner"
-    },
-    {
-      "name": "pda-pirate"
-    },
-    {
-      "name": "pda-qm"
-    },
-    {
-      "name": "pda-r",
-      "delays": [
-        [
-          0.8,
-          0.8
-        ]
-      ]
-    },
-    {
-      "name": "pda-r-library",
-      "delays": [
-        [
-          0.8,
-          0.8
-        ]
-      ]
-    },
-    {
-      "name": "pda-rd"
-    },
-    {
-      "name": "pda-roboticist"
-    },
-    {
-      "name": "pda-science"
-    },
-    {
-      "name": "pda-security"
-    },
-    {
-      "name": "pda-brigmedic",
-      "delays": [
-        [
-          0.3,
-          0.3,
-          0.3,
-          0.3
-        ]
-      ]
-    },
-    {
-      "name": "pda-syndi"
-    },
-    {
-      "name": "pda-syndi-agent"
-    },
-    {
-      "name": "pda-centcom",
-      "delays": [
-        [
-          1.2,
-          1.2,
-          1.2,
-          1.2
-        ]
-      ]
-    },
-    {
-      "name": "pda-virology"
-    },
-    {
-      "name": "pda-warden"
-    },
-    {
-      "name": "pda-musician"
-    },
-    {
-      "name": "pda-reporter"
     },
     {
       "name": "pda-interncadet"
@@ -212,40 +112,96 @@
       "name": "pda-interntech"
     },
     {
-      "name": "pda-zookeeper"
+      "name": "pda-janitor"
     },
     {
-      "name": "pda-ert"
+      "name": "pda-lawyer"
     },
     {
-      "name": "pda-cluwne"
+      "name": "pda-library"
+    },
+    {
+      "name": "pda-medical"
+    },
+    {
+      "name": "pda-mime"
+    },
+    {
+      "name": "pda-miner"
+    },
+    {
+      "name": "pda-musician"
+    },
+    {
+      "name": "pda-paramedic"
+    },
+    {
+      "name": "pda-pirate"
+    },
+    {
+      "name": "pda-qm"
+    },
+    {
+      "name": "pda-r"
+    },
+    {
+      "name": "pda-rd"
+    },
+    {
+      "name": "pda-reporter"
+    },
+    {
+      "name": "pda-r-library"
+    },
+    {
+      "name": "pda-roboticist"
+    },
+    {
+      "name": "pda-science"
+    },
+    {
+      "name": "pda-security"
     },
     {
       "name": "pda-seniorengineer"
     },
     {
-      "name": "pda-seniorresearcher"
+      "name": "pda-seniorofficer"
     },
     {
       "name": "pda-seniorphysician"
     },
     {
-      "name": "pda-seniorofficer"
+      "name": "pda-seniorresearcher"
     },
-	{
-      "name": "pda-wizard",
-      "delays": [
-        [
-          0.3,
-          0.3,
-          0.3,
-          0.3
-        ]
-      ]
+    {
+      "name": "pda-syndi"
+    },
+    {
+      "name": "pda-syndi-agent"
+    },
+    {
+      "name": "pda-virology"
+    },
+    {
+      "name": "pda-warden"
+    },
+    {
+      "name": "pda-wizard"
+    },
+    {
+      "name": "pda-zookeeper"
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
     },
     {
       "name": "equipped-IDCARD",
       "directions": 4
+    },
+    {
+      "name": "id_overlay"
     }
   ]
 }

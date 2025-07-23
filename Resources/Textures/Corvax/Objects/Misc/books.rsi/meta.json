@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "book_stationsagents taken from goonstation at commit https://github.com/goonstation/goonstation/commit/666034ca1da626e832c66980d7c28c5b8de72640 and edited by github:lapatison; book_busido is taken from tgstation at commit https://github.com/tgstation/tgstation/commit/856e0a784abd19d20618aa36b26b73d471adf613 and respited by github:lapatison; other books sprited by Crazzy_pingvin for Corvax",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "book_stationsagents"
+    },
+    {
+      "name": "book_busido"
+    },
+    {
+      "name": "book_expensive_crystal"
+    },
+    {
+      "name": "book_clones"
+    },
+    {
+      "name": "book_DAM"
+    },
+    {
+      "name": "book_faks"
+    },
+    {
+      "name": "book_famalis"
+    },
+    {
+      "name": "book_grav"
+    },
+    {
+      "name": "book_halifat"
+    },
+    {
+      "name": "book_redspace"
+    },
+    {
+      "name": "book_ships"
+    },
+    {
+      "name": "book_zp"
+    },
+    {
+      "name": "book_polit_USSP"
+    },
+    {
+      "name": "book_cult_mirt"
+    },
+    {
+      "name": "book_gior"
+    },
+    {
+      "name": "book_snk"
+    },
+    {
+      "name": "book_umpor"
+    },
+    {
+      "name": "book_nooc"
+    },
+    {
+      "name": "book_nakamura"
+    },
+    {
+      "name": "book_vitz"
+    },
+    {
+      "name": "book_gefest"
+    },
+    {
+      "name": "book_conarex"
+    },
+    {
+      "name": "book_petr"
+    },
+    {
+      "name": "book_saibasan"
+    },
+    {
+      "name": "book_unath_1"
+    },
+    {
+      "name": "book_unath_2"
+    },
+    {
+      "name": "book_dione"
+    },
+    {
+      "name": "book_BSS"
+    },
+    {
+      "name": "book_scaf"
+    },
+    {
+      "name": "book_MBS1"
+    },
+    {
+      "name": "book_MBS2"
+    },
+    {
+      "name": "book_implant"
+    },
+    {
+      "name": "book_icon"
+    }
+  ]
+}

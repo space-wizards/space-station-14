@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by brainfood1183 (github)",
+  "copyright": "Made by brainfood1183 (github), reptilian made by kuro(388673708753027083)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-FEET",
+      "directions": 4
+    },
+    {
+      "name": "equipped-FEET-reptilian",
       "directions": 4
     },
     {

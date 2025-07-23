@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Borrowed from QM turtleneck at https://github.com/space-wizards/space-station-14/tree/master/Resources/Textures/Clothing/Uniforms/Jumpskirt/qmturtleskirt.rsi and modified by Hanzdegloekr (github) for space station 14",
+  "copyright": "Borrowed from QM turtleneck at https://github.com/space-wizards/space-station-14/tree/master/Resources/Textures/Clothing/Uniforms/Jumpskirt/qmturtleskirt.rsi and modified by Hanzdegloekr (github) for space station 14, resprited from https://github.com/space-syndicate/space-station-14/commit/ea49d33ef6875a9cac4a328dc24d39771d61debd by Deenkaide (github)",
   "size": {
     "x": 32,
     "y": 32

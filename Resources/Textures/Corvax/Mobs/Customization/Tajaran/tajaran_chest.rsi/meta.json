@@ -1,0 +1,15 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/dead-space-server/space-station-14-fobos/pull/1/commits/72cb90770a9b78f286c7ac6577bd3b18681192a0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        { "name": "belly1", "directions": 4 },
+        { "name": "belly2", "directions": 4 },
+        { "name": "belly3", "directions": 4 },
+        { "name": "chest", "directions": 4 }
+    ]
+}

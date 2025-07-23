@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/blob/061f78db763863e1a3db13cbf2fd9be4cce75939/icons/mob/suit.dmi. inhands by Flareguy, modified from bio_suit in vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/30f9caeb59b0dd9da1dbcd4c69307ae182033a74",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/2fea0a59470c476cf3f927833d3918d89cbe6af8 & inhand by github:Morb0, reptilian made by kuro(388673708753027083). equipped-OUTERCLOTHING-vox state taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/31d6576ba8102135d058ef49c3cb6ecbe8db8a79. inhands by Flareguy, modified from bio_suit in vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/30f9caeb59b0dd9da1dbcd4c69307ae182033a74",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-reptilian",
       "directions": 4
     },
     {

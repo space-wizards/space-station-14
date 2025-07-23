@@ -32,7 +32,7 @@
   id: EngineSingularityEmitter
   icon:
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
-    state: emitter2
+    state: emitter
   product: CrateEngineeringSingularityEmitter
   cost: 1500
   category: cargoproduct-category-name-engineering

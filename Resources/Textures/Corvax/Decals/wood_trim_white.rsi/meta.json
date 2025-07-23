@@ -1,0 +1,62 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Made by github user @moonheart08, white ver by Ko4erga (discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "thin_box"
+        },
+        {
+            "name": "thin_corner_ne"
+        },
+        {
+            "name": "thin_corner_se"
+        },
+        {
+            "name": "thin_corner_nw"
+        },
+        {
+            "name": "thin_corner_sw"
+        },
+        {
+            "name": "thin_end_n"
+        },
+        {
+            "name": "thin_end_e"
+        },
+        {
+            "name": "thin_end_s"
+        },
+        {
+            "name": "thin_end_w"
+        },
+        {
+            "name": "thin_line_n"
+        },
+        {
+            "name": "thin_line_e"
+        },
+        {
+            "name": "thin_line_s"
+        },
+        {
+            "name": "thin_line_w"
+        },
+        {
+            "name": "thin_inner_ne"
+        },
+        {
+            "name": "thin_inner_se"
+        },
+        {
+            "name": "thin_inner_nw"
+        },
+        {
+            "name": "thin_inner_sw"
+        }
+    ]
+}

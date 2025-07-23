@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from vg at commit https://github.com/vgstation-coders/vgstation13/commit/a16e41020a93479e9a7e2af343b1b74f7f2a61bd. Vox state made by Flareguy for SS14. equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by Scrubdelub (GitHub) for SS14.",
+    "copyright": "Taken from vg at commit https://github.com/vgstation-coders/vgstation13/commit/a16e41020a93479e9a7e2af343b1b74f7f2a61bd. equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by Scrubdelub (GitHub) for SS14. Created by discord:IAmRasputin#5242, reptilian made by kuro(388673708753027083). inhand resprited by inventor05(gh: inventor055, discord: qwerty05555)",
     "size": {
         "x": 32,
         "y": 32
@@ -12,6 +12,10 @@
         },
         {
             "name": "equipped-OUTERCLOTHING",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-reptilian",
             "directions": 4
         },
         {

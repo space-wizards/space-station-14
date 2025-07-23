@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By Ko4erga (discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "ribbon"
+        },
+        {
+            "name": "mask_null"
+        },
+        {
+            "name": "decor_0"
+        },
+        {
+            "name": "decor_1"
+        },
+        {
+            "name": "decor_2"
+        }
+    ]
+}

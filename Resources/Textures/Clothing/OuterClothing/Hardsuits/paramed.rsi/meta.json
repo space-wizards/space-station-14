@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from paradise station git at commit https://github.com/ParadiseSS13/Paradise/commit/e5e584804b4b0b373a6a69d23afb73fd3c094365, redrawn by Ubaser. Vox state made by Flareguy for SS14. Siren Icon made by Velen based of the helmet's colours. equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by Sparlight (GitHub).",
+    "copyright": "Taken from paradise station git at commit https://github.com/ParadiseSS13/Paradise/commit/e5e584804b4b0b373a6a69d23afb73fd3c094365, redrawn by Ubaser. Siren Icon made by Velen based of the helmet's colours. equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by Sparlight (GitHub). icon made by github:Morb0, reptilian made by kuro(388673708753027083). inhand resprited by inventor05(gh: inventor055, discord: qwerty05555)",
     "size": {
         "x": 32,
         "y": 32
@@ -15,6 +15,10 @@
         },
         {
             "name": "equipped-OUTERCLOTHING",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-reptilian",
             "directions": 4
         },
         {

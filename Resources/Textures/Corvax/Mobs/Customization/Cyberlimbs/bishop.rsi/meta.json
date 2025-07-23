@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/Baystation12/Baystation12/blob/9cba57e71fd7cea40d0c10fe14fefc4810380f48/icons/mob/human_races/cyberlimbs/bishop/bishop_rook.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "r_arm",
+      "directions": 4
+    },
+    {
+      "name": "r_hand",
+      "directions": 4
+    },
+    {
+      "name": "l_hand",
+      "directions": 4
+    },
+    {
+      "name": "l_arm",
+      "directions": 4
+    },
+    {
+      "name": "l_leg",
+      "directions": 4
+    },
+    {
+      "name": "l_foot",
+      "directions": 4
+    },
+    {
+      "name": "r_leg",
+      "directions": 4
+    },
+    {
+      "name": "r_foot",
+      "directions": 4
+    },
+    {
+      "name": "torso",
+      "directions": 4,
+      "delays": [
+        [
+          0.4,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.4,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.4,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.4,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

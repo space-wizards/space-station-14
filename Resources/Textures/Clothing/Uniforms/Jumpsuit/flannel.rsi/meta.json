@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by MrGreen06#0618 (discord)",
+  "copyright": "Sprited by MrGreen06#0618 (discord), resprited by DreamlyJack(624946166152298517)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-monkey",
       "directions": 4
     },
     {

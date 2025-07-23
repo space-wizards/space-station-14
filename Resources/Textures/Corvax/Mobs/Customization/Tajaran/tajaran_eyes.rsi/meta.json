@@ -1,0 +1,12 @@
+{"version": 1,
+"license": "CC-BY-SA-3.0",
+"copyright": "human_eyes taken from https://github.com/tgstation/tgstation/blob/8024397cc81c5f47f74cf4279e35728487d0a1a7/icons/mob/human_parts_greyscale.dmi and modified by Krosus",
+    "size": {"x": 32, "y": 32},
+    "states":
+        [
+
+        {"name": "eyes",
+         "directions": 4},
+         {"name":"no_eyes"}
+         ]
+}

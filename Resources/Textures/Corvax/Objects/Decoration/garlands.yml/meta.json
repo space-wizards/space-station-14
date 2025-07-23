@@ -1,0 +1,37 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By Ko4erga (discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base",
+            "directions": 4
+        },
+        {
+            "name": "lights",
+            "directions": 4,
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ],
+                [
+                    0.5,
+                    0.5
+                ],
+                [
+                    0.5,
+                    0.5
+                ],
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        }
+    ]
+}

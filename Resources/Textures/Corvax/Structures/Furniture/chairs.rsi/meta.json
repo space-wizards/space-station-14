@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/blob/e9d1248bc9548ab18f3fcf967e0d9dfb303fe4ad/icons/obj/chairs.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "carp",
+      "directions": 4
+    },
+    {
+      "name": "carp-overlay",
+      "directions": 4
+    }
+  ]
+}

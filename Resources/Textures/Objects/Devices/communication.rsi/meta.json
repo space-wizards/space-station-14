@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris and modified by Swept at https://github.com/discordia-space/CEV-Eris/commit/efce5b6c3be75458ce238dcc01510e8f8a653ca6. Uplink radio sprites by Vermidia, derivative of other lisenced sprites in the repo",
+  "copyright": "Taken from cev-eris and modified by Swept at https://github.com/discordia-space/CEV-Eris/commit/efce5b6c3be75458ce238dcc01510e8f8a653ca6. Uplink radio sprites by Vermidia, derivative of other lisenced sprites in the repo, urist's icon resprite by @mishutka09",
   "size": {
     "x": 32,
     "y": 32

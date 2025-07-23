@@ -1,7 +1,8 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, modified by brainfood1183 (github), sprited(resprited) by Fazansen(https://github.com/Fazansen)",
+    "copyright": "Sprited by Roudenn(https://github.com/Roudenn)",
+    "copyright": "inhand resprited by inventor05(gh: inventor055, discord: qwerty05555)",
     "size": {
         "x": 32,
         "y": 32
@@ -12,6 +13,10 @@
         },
         {
             "name": "equipped-OUTERCLOTHING",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-reptilian",
             "directions": 4
         },
         {

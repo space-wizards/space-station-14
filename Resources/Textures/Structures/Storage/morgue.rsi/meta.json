@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/31d88c7454e429a64fbae4a9f7b4aecaf838e9a1",
+  "copyright": "Taken from https://github.com/BlueMoon-Labs/MOLOT-BlueMoon-Station/commit/ee7daac2a2fd407bbed1915145da73454c6bdc59 | Edited by PuroSlavKing (Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -9,7 +9,25 @@
   "states": [
     {
       "name": "crema_active_light",
-      "directions": 4
+      "directions": 4,
+      "delays": [
+        [
+          0.15,
+          0.1
+        ],
+        [
+          0.15,
+          0.1
+        ],
+        [
+          0.15,
+          0.1
+        ],
+        [
+          0.15,
+          0.1
+        ]
+      ]
     },
     {
       "name": "crema_closed",

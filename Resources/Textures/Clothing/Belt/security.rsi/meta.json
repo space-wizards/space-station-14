@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/2fea0a59470c476cf3f927833d3918d89cbe6af8 & equipped taken at commit https://github.com/tgstation/tgstation/commit/d1582bf1b41a0e24fd7a18124c6ff46b86b393f9, tweak by @mureixlol",
   "size": {
     "x": 32,
     "y": 32

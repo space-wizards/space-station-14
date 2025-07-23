@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, sprited by Fazansen(https://github.com/Fazansen)",
+  "copyright": "Sprited by Roudenn(https://github.com/Roudenn)",
   "size": {
     "x": 32,
     "y": 32
@@ -19,6 +19,14 @@
     },
     {
       "name": "on-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-reptilian",
       "directions": 4
     }
   ]

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 clockwork glass sprited by MACMAN2003",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 and skyrat-tg at https://github.com/Skyrat-SS13/Skyrat-tg/commit/72ef384db938dfef549413970258cda93d42dafb clockwork glass sprited by MACMAN2003",
   "size": {
     "x": 32,
     "y": 32

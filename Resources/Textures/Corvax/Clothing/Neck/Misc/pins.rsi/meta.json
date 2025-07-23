@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Lore's pixels made by @no_mad#0260, servers pins made by @mishutka09",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ath"
+    },
+    {
+      "name": "ath-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "comm"
+    },
+    {
+      "name": "comm-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "cor"
+    },
+    {
+      "name": "cor-equipped-NECK",
+      "directions": 4
+    },
+	{
+      "name": "donk"
+    },
+    {
+      "name": "donk-equipped-NECK",
+      "directions": 4
+    },
+	{
+      "name": "earth"
+    },
+    {
+      "name": "earth-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "echo"
+    },
+    {
+      "name": "echo-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "ely"
+    },
+    {
+      "name": "ely-equipped-NECK",
+      "directions": 4
+    },
+	{
+      "name": "logistika"
+    },
+    {
+      "name": "logistika-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "main"
+    },
+    {
+      "name": "main-equipped-NECK",
+      "directions": 4
+    },
+	{
+      "name": "med"
+    },
+    {
+      "name": "med-equipped-NECK",
+      "directions": 4
+    },
+	{
+      "name": "nakamura"
+    },
+    {
+      "name": "nakamura-equipped-NECK",
+      "directions": 4
+    },
+	{
+      "name": "nano"
+    },
+    {
+      "name": "nano-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "neb"
+    },
+    {
+      "name": "neb-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "nova"
+    },
+    {
+      "name": "nova-equipped-NECK",
+      "directions": 4
+    },
+	{
+      "name": "sind"
+    },
+    {
+      "name": "sind-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "sol"
+    },
+    {
+      "name": "sol-equipped-NECK",
+      "directions": 4
+    },
+	{
+      "name": "vit"
+    },
+    {
+      "name": "vit-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "wl"
+    },
+    {
+      "name": "wl-equipped-NECK",
+      "directions": 4
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "By Gotimanga for SS14",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/commit/46a92082e4dd599e233ebf280050fb5be0107da9",
     "size": {
         "x": 32,
         "y": 32

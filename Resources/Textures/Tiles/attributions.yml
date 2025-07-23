@@ -13,27 +13,42 @@
 
 - files: ["plating_damaged.png", "plating_burnt.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified by github user @Flareguy from plating.png, using damaged plating sprites from /tg/station at commit https://github.com/tgstation/tgstation/blob/6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae/icons/turf/floors.dmi"
+  copyright: "Modified by github user @Flareguy from plating.png, resprited by @mishutka09 (discord:1152277579206774854)"
   source: "https://github.com/space-wizards/space-station-14/pull/21711"
 
-- files: [ "asteroid_red.png", "asteroid_tile.png", "elevator_shaft.png", "freezer.png", "foammetal.png", "green_circuit.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
+- files: [ "asteroid_red.png", "asteroid_tile.png", "freezer.png", "foammetal.png", "red_circuit.png",  "green_circuit.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "vgstation13 at roughly commit e4d3ea7f69d21c3667be12b114fa935c4640cb05, asteroid_red and asteroid_tile taken from commit /vg/station at commit 02b9f6894af4419c9f7e699a22c402b086d8067e."
+  copyright: "vgstation13 at roughly commit e4d3ea7f69d21c3667be12b114fa935c4640cb05, asteroid_red and asteroid_tile taken from commit /vg/station at commit 02b9f6894af4419c9f7e699a22c402b086d8067, mono and freezer resprited by @mishutka09 (discord:1152277579206774854)"
   source: "https://github.com/vgstation-coders/vgstation13"
+
+- files: [ "elevator_shaft.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from vgstation13 at roughly commit e4d3ea7f69d21c3667be12b114fa935c4640cb05. Modified by Ko4erga (discord)"
+  source: "https://github.com/vgstation-coders/vgstation13/"
 
 - files: [ "asteroid.png", "asteroid_dug.png", "asteroid0.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae."
   source: "https://github.com/tgstation/tgstation/"
 
-- files: ["blue_circuit.png", "cropped_parallax.png", "eighties.png", "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "junglegrass.png", "lattice.png", "red_circuit.png", "reinforced.png", "silver.png", "snow.png", "wood.png"]
+- files: ["steel.png", "dark.png", "hydro.png", "plating.png", "reinforced.png", "steel_dirty.png", "white.png", "bar.png", "laundry.png", "mime.png", "clown.png", "kitchen.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, cropped_parallax modified from parallax."
+  copyright: "TauCetiStation commit 4cd533cf0a4243050364023af9a4fcaca209dce7"
+  source: "https://github.com/TauCetiStation/TauCetiClassic/"
+
+- files: ["blue_circuit.png", "cropped_parallax.png", "eighties.png", "gold.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "lattice.png", "plating.png", "reinforced.png", "silver.png", "snow.png", "wood.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, cropped_parallax modified from parallax, reinforced modified by Ko4erga (discord), wood resprited by Meowstushka and modified by Ko4erga (discord)"
   source: "https://github.com/tgstation/tgstation/"
+
+- files: ["grass.png", "junglegrass.png", "grassdark.png", "grassjungle.png", "grasslight.png"] #Corvax
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Ko4erga (discord)"
+  source: "https://github.com/space-wizards/space-station-14/pull/29134"
 
 - files: ["super_reinforced.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from reinforced.png by github user @Flareguy"
+  copyright: "Modified from reinforced.png by github user @Flareguy, modified by Ko4erga (discord)"
   source: "https://github.com/space-wizards/space-station-14/pull/18676"
 
 - files: ["asteroid_plating.png, snow_plating.png"]
@@ -43,7 +58,7 @@
 
 - files: ["rglass.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, rglass modified by github user @notquitehadouken."
+  copyright: "resprited by @mishutka09 (discord:1152277579206774854), rglass modified by github user @notquitehadouken."
   source: "https://github.com/space-wizards/space-station-14/pull/17948"
 
 - files: ["glass.png"]
@@ -51,14 +66,19 @@
   copyright: "Created by github user @notquitehadouken."
   source: "https://github.com/space-wizards/space-station-14/pull/17948"
 
-- files: [ "bar.png", "lime.png", "blue.png", "kitchen.png", "laundry.png", "mime.png", "steel.png", "steel_diagonal.png", "steel_mini.png", "steel_offset.png", "steel_pavement.png", "white.png", "white_diagonal.png", "white_mini.png", "white_offset.png", "white_pavement.png", "dark.png", "dark_diagonal.png", "dark_mini.png", "dark_offset.png", "dark_pavement.png", "hydro.png", "plastic.png", "dark_plastic.png", "white_plastic.png", "cafeteria.png", "checker_dark.png", "clown.png" ]
+- files: [ "steel_diagonal.png", "steel_mini.png", "steel_offset.png", "steel_pavement.png", "white_diagonal.png", "white_mini.png", "white_offset.png", "white_pavement.png", "white_plastic.png", "dark_diagonal.png", "dark_mini.png", "dark_offset.png", "dark_pavement.png", "dark_plastic.png" ]
+  license: "CC0-1.0"
+  copyright: "Created by github user @morb0"
+  source: "https://github.com/space-syndicate/space-station-14/pull/489"
+
+- files: [ "cafeteria.png", "checker_dark.png" ]
   license: "CC-BY-SA-3.0"
   copyright: "Created by github user @Flareguy, original, unedited base tiles modified from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae and github user @moonheart08"
   source: "https://github.com/space-wizards/space-station-14/"
 
-- files: [ "steel_dirty.png" ]
+- files: [ "bar.png", "lime.png", "blue.png", "kitchen.png", "laundry.png", "mime.png", "steel.png", "steel_dirty.png", "steel_diagonal.png", "steel_mini.png", "steel_offset.png", "steel_pavement.png", "white.png", "white_diagonal.png", "white_mini.png", "white_offset.png", "white_pavement.png", "dark.png", "dark_diagonal.png", "dark_mini.png", "dark_offset.png", "dark_pavement.png", "hydro.png", "plastic.png", "dark_plastic.png", "white_plastic.png", "cafeteria.png", "checker_dark.png", "clown.png" ]
   license: "CC-BY-SA-3.0"
-  copyright: "Originally created by github user @moonheart08, then modified by @Flareguy, then modified again by github user @moomoobeef."
+  copyright: "Created by github user @Flareguy, original, unedited base tiles modified from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae and github user @moonheart08"
   source: "https://github.com/space-wizards/space-station-14/"
 
 - files: ["arcadeblue.png", "arcadered.png"]
@@ -66,14 +86,14 @@
   copyright: "arcadered renamed from eightiesred, arcadeblue by Peptide90 modified from arcadered.png, tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49"
   source: "https://github.com/tgstation/tgstation/"
 
-- files: ["hull", "hull_reinforced.png", "steel_damaged.png", "steel_burnt.png"]
+- files: ["hull", "hull_reinforced.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae"
-  source: "https://github.com/tgstation/tgstation/"
+  source: "https://github.com/space-wizards/space-station-14/pull/18676"
 
 - files: ["shuttleblue.png", "shuttleorange.png", "shuttlepurple.png", "shuttlered.png", "shuttlewhite.png", "shuttlegrey.png", "shuttleblack.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified by Flareguy for Space Station 14. Unmodified sprite from paradisestation commit 69c831afcd9aef25a2889b507e4f36a3a5fc6def, originally from /VG/ eris"
+  copyright: "Modified by Flareguy for Space Station 14, resprited by @mishutka09 (discord:1152277579206774854)"
   source: "https://github.com/ParadiseSS13/Paradise"
 
 - files: ["deprecated.png"]
@@ -91,14 +111,14 @@
   copyright: "Mojave-Sun, taken at commit 0587dd16e28108bdf0b0a28e2caae4319845e861"
   source: "https://github.com/Mojave-Sun/mojave-sun-13"
 
-- files: ["grassdark.png", "grasslight.png", "dirt.png"]
+- files: ["dirt.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Fortuna commit 2a9408a47e2f83d945335e4feeeeafb552173e6f, grasslight and dirt by Peptide based on grassdark.png and dirt."
+  copyright: "Fortuna commit 2a9408a47e2f83d945335e4feeeeafb552173e6f, dirt by Peptide based on grassdark.png and dirt."
   source: "https://github.com/FortunaSS13/Fortuna"
 
 - files: ["steel_maint.png", "grating_maint.png", "wood_tile.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "by brainfood for space-station-14, ."
+  copyright: "by brainfood for space-station-14; wood tile resprited by Dezzzix and modified by Ko4erga (discord)"
   source: "https://github.com/space-wizards/space-station-14/pull/12193"
 
 - files: ["meat.png"]
@@ -108,7 +128,7 @@
 
 - files: ["wood_broken.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "taken at https://github.com/ParadiseSS13/Paradise/blob/8b7f4c8b69c74c6de5a755272eb8d3520f3d87c7/icons/turf/floors.dmi"
+  copyright: "taken at https://github.com/ParadiseSS13/Paradise/blob/8b7f4c8b69c74c6de5a755272eb8d3520f3d87c7/icons/turf/floors.dmi; resprited by Meowstushka and modified by Ko4erga (discord)"
   source: "https://github.com/ParadiseSS13/Paradise"
 
 - files: ["chromite.png"]
@@ -118,7 +138,7 @@
 
 - files: ["mining_floor.png", "mining_floor_dark.png", "mining_floor_light.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "taken at https://github.com/ParadiseSS13/Paradise/commit/43889a89d5a9378fd120d627f74613edb1841a66"
+  copyright: "Taken at https://github.com/ParadiseSS13/Paradise/commit/43889a89d5a9378fd120d627f74613edb1841a66. Modified by Ko4erga (discord)"
   source: "https://github.com/ParadiseSS13/Paradise"
 
 - files: ["latticeTrain.png"]
@@ -128,30 +148,5 @@
 
 - files: ["wood_large.png"]
   license: "CC0-1.0"
-  copyright: "Created by ps3moira (github) for space-station-14."
+  copyright: "Created by ps3moira (github) for space-station-14; resprited by Meowstushka and modified by Ko4erga (discord)"
   source: "https://github.com/space-wizards/space-station-14/"
-
-- files: ["xeno_flooring.png"]
-  license: "CC-BY-SA-3.0"
-  copyright: "Created by SlamBamActionman (github) for space-station-14."
-  source: "https://github.com/space-wizards/space-station-14/"
-
-- files: ["dark_squiggly.png"]
-  license: "CC-BY-SA-3.0"
-  copyright: "Created by SlamBamActionman (github) for space-station-14."
-  source: "https://github.com/space-wizards/space-station-14/"
-
-- files: [ "xeno_steel.png", "xeno_steel_corner.png" ]
-  license: "CC-BY-SA-3.0"
-  copyright: "Created by Kezu for space-station-14, edited by SlamBamActionman (github)."
-  source: "https://github.com/space-wizards/space-station-14/"
-
-- files: [ "xeno_maint.png" ]
-  license: "CC-BY-SA-3.0"
-  copyright: "Created by obscenelytinyshark for space-station-14."
-  source: "https://github.com/space-wizards/space-station-14/"
-
-- files: ["dark_marble.png", "white_marble.png", "plasmarble.png", "uranium_marble.png"]
-  license: "CC0-1.0"
-  copyright: "Created by SeaWyrm"
-  source: "https://github.com/space-wizards/space-station-14/pull/38007"

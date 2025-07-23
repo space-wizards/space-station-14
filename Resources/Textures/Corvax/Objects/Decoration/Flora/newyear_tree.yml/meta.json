@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By Ko4erga (discord)",
+    "size": {
+        "x": 96,
+        "y": 128
+    },
+    "states": [
+        {
+            "name": "before"
+        },
+        {
+            "name": "after"
+        },
+        {
+            "name": "lights",
+            "delays": [
+                [
+                    1.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        }
+    ]
+}

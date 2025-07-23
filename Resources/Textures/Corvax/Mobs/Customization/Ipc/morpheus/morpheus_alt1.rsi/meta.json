@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "copyright": "Sprites from Paradise Station (https://github.com/ParadiseSS13/Paradise)",
+  "license": "CC-BY-SA-3.0",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "head",
+      "directions": 4
+    }
+  ]
+}

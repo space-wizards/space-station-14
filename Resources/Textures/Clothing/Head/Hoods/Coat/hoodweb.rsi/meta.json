@@ -1,16 +1,18 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Made by PixelTheKermit (github) for SS14",
-  "size": {"x": 32, "y": 32},
-  "states":
-  [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Resprited by @mishutka09 (discord:1152277579206774854)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "equipped-HELMET",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-HELMET",
+            "directions": 4
+        }
+    ]
 }

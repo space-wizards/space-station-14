@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC0-1.0",
-  "copyright": "Created by EmoGarbage404 (github)",
+  "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/b63634bc17efe2f09cf06ef0e9a90d24d37f6203 and remade by SonicHDC (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -14,36 +14,18 @@
 	  "name": "substation_static"
 	},
     {
-      "name": "substation_wall",
-      "directions": 4
+      "name": "substation_wall"
     },
     {
       "name": "screen_wall",
-      "directions": 4,
       "delays": [
         [
-          5.0,
-          0.5,
-          0.5,
-          0.5
-        ],
-        [
-          5.0,
-          0.5,
-          0.5,
-          0.5
-        ],
-        [
-          5.0,
-          0.5,
-          0.5,
-          0.5
-        ],
-        [
-          5.0,
-          0.5,
-          0.5,
-          0.5
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
         ]
       ]
     },
@@ -57,8 +39,8 @@
       "name": "charging",
       "delays": [
         [
-          0.1,
-          0.1
+          0.5,
+          0.5
         ]
       ]
     },
@@ -66,8 +48,8 @@
       "name": "dead",
       "delays": [
         [
-          0.3,
-          0.1
+          0.2,
+          0.2
         ]
       ]
     },
@@ -75,10 +57,12 @@
       "name": "screen",
       "delays": [
         [
-          5.0,
-          0.5,
-          0.5,
-          0.5
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
         ]
       ]
     }
