@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
+    <TargetFramework>$(TargetFramework)</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <IsPackable>false</IsPackable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>..\bin\Content.Client\</OutputPath>
+    <OutputType Condition="'$(FullRelease)' != 'True'">Exe</OutputType>
+    <WarningsAsErrors>nullable</WarningsAsErrors>
+    <Nullable>enable</Nullable>
+    <Configurations>Debug;Release;Tools;DebugOpt</Configurations>
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Nett" />
+    <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" />
+  </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Content.Client\Content.Client.csproj" />
+      <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
+      <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
+
+      <ProjectReference Include="..\Content.Europa.AGPL.Shared\Content.Europa.AGPL.Shared.csproj" />
+      <ProjectReference Include="..\Content.Europa.MIT.Shared\Content.Europa.MIT.Shared.csproj" />
+    </ItemGroup>
+
+    <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
+    <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
+</Project>
