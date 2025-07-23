@@ -9,6 +9,8 @@ id-card-access-level-security = Security
 id-card-access-level-armory = Armory
 id-card-access-level-brig = Brig
 id-card-access-level-detective = Detective
+id-card-access-level-genpop-enter = Enter Genpop
+id-card-access-level-genpop-leave = Leave Genpop
 
 id-card-access-level-chief-engineer = Chief Engineer
 id-card-access-level-engineering = Engineering

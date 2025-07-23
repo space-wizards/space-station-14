@@ -77,3 +77,13 @@
   cost: 2500
   category: cargoproduct-category-name-security
   group: market
+
+- type: cargoProduct
+  id: SecurityGenPopCloset
+  icon:
+    sprite: Structures/Storage/closet.rsi
+    state: genpop
+  product: LockerPrisoner
+  cost: 250
+  category: cargoproduct-category-name-security
+  group: market

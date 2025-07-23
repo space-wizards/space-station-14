@@ -53,6 +53,6 @@ public sealed class HelpProgressConditionSystem : EntitySystem
 
         // require 50% completion for this one to be complete
         var completion = total / max;
-        return completion >= 0.5f ? 1f : completion / 0.5f;
+        return completion;
     }
 }

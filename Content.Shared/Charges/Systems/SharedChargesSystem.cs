@@ -41,10 +41,9 @@ public abstract class SharedChargesSystem : EntitySystem
         }
 
         // only show the recharging info if it's not full
-        if (charges == comp.MaxCharges || !TryComp<AutoRechargeComponent>(uid, out var recharge))
+        if (charges == comp.MaxCharges || !Resolve(uid, ref rechargeEnt.Comp2, false))
             return;
 
-        rechargeEnt.Comp2 = recharge;
         var timeRemaining = GetNextRechargeTime(rechargeEnt);
         args.PushMarkup(Loc.GetString("limited-charges-recharging", ("seconds", timeRemaining.TotalSeconds.ToString("F1"))));
     }
@@ -95,17 +94,12 @@ public abstract class SharedChargesSystem : EntitySystem
     /// <summary>
     /// Adds the specified charges. Does not reset the accumulator.
     /// </summary>
-    public void AddCharges(Entity<LimitedChargesComponent?> action, int addCharges)
+    public void AddCharges(Entity<LimitedChargesComponent?, AutoRechargeComponent?> action, int addCharges)
     {
         if (addCharges == 0)
             return;
 
-        action.Comp ??= EnsureComp<LimitedChargesComponent>(action.Owner);
-
-        // 1. If we're going FROM max then set lastupdate to now (so it doesn't instantly recharge).
-        // 2. If we're going TO max then also set lastupdate to now.
-        // 3. Otherwise don't modify it.
-        // No idea if we go to 0 but future problem.
+        action.Comp1 ??= EnsureComp<LimitedChargesComponent>(action.Owner);
 
         var lastCharges = GetCurrentCharges(action);
         var charges = lastCharges + addCharges;
@@ -113,13 +107,25 @@ public abstract class SharedChargesSystem : EntitySystem
         if (lastCharges == charges)
             return;
 
-        if (charges == action.Comp.MaxCharges || lastCharges == action.Comp.MaxCharges)
+        // If we were at max then need to reset the timer.
+        if (charges == action.Comp1.MaxCharges || lastCharges == action.Comp1.MaxCharges)
         {
-            action.Comp.LastUpdate = _timing.CurTime;
+            action.Comp1.LastUpdate = _timing.CurTime;
+            action.Comp1.LastCharges = action.Comp1.MaxCharges;
+        }
+        // If it has auto-recharge then make up the difference.
+        else if (Resolve(action.Owner, ref action.Comp2, false))
+        {
+            var duration = action.Comp2.RechargeDuration;
+            var diff = (_timing.CurTime - action.Comp1.LastUpdate);
+            var remainder = (int) (diff / duration);
+
+            action.Comp1.LastCharges += remainder;
+            action.Comp1.LastUpdate += (remainder * duration);
         }
 
-        action.Comp.LastCharges = Math.Clamp(charges, 0, action.Comp.MaxCharges);
-        Dirty(action);
+        action.Comp1.LastCharges = Math.Clamp(action.Comp1.LastCharges + addCharges, 0, action.Comp1.MaxCharges);
+        Dirty(action.Owner, action.Comp1);
     }
 
     public bool TryUseCharge(Entity<LimitedChargesComponent?> entity)
