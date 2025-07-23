@@ -433,4 +433,11 @@
   id: 53
   time: '2025-07-23T00:11:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39146
+- author: CroilBird
+  changes:
+  - message: Added Polly to Exo station
+    type: Add
+  id: 54
+  time: '2025-07-23T00:35:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39145
 Order: 1
