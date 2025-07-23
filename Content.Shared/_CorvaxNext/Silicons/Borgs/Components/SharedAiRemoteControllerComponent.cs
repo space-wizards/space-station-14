@@ -1,9 +1,10 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._CorvaxNext.Silicons.Borgs.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class AiRemoteControllerComponent : Component
 {
     [DataField] public EntityUid? AiHolder;
