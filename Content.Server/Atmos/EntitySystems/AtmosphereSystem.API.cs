@@ -283,8 +283,8 @@ public partial class AtmosphereSystem
         // actually have grid atmospheres.
         if (pipeNet.Grid is not null)
         {
-            var ev = new PipeNodeGroupRemovedEvent(pipeNet.NetId);
-            RaiseLocalEvent(pipeNet.Grid.Value, ref ev);
+            var ev = new PipeNodeGroupRemovedEvent(grid, pipeNet.NetId);
+            RaiseLocalEvent(ref ev);
         }
 
         return _atmosQuery.Resolve(grid, ref grid.Comp, false) && grid.Comp.PipeNets.Remove(pipeNet);
@@ -340,8 +340,9 @@ public partial class AtmosphereSystem
 
 
 /// <summary>
-/// Raised against a grid when a pipe node group it contains has been removed.
+/// Raised broadcasted when a pipe node group within a grid has been removed.
 /// </summary>
+/// <param name="Grid">The grid with the removed node group.</param>
 /// <param name="NetId">The net id of the removed node group.</param>
 [ByRefEvent]
-public record struct PipeNodeGroupRemovedEvent(int NetId);
+public record struct PipeNodeGroupRemovedEvent(EntityUid Grid, int NetId);
