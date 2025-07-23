@@ -1,50 +1,5 @@
-# Eventually layering will allow to have markings on the body not layering above jumpsuits
-#- type: marking
-#  id: PawSocks
-#  markingCategory: Overlay
-#  bodyPart: RFoot #highest possible layer
-#  speciesRestriction: [Human]
-#  sprites:
-#    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
-#      state: pawsocks
 - type: marking
-  id: PawSocksFeet
-  bodyPart: RFoot
-  markingCategory: Overlay
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
-      state: pawsocks_feet
-
-- type: marking
-  id: PawSocksLegs
-  bodyPart: LLeg
-  markingCategory: Legs
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
-      state: pawsocks_legs
-
-- type: marking
-  id: PawSocksHands
-  bodyPart: RHand
-  markingCategory: Overlay
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
-      state: pawsocks_hands
-
-- type: marking
-  id: PawSocksArms
-  bodyPart: LArm
-  markingCategory: Arms
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
-      state: pawsocks_arms
-
-- type: marking
-  id: FoxTail
+  id: FopsTail
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Human]
@@ -53,9 +8,13 @@
       state: vulp_tail
     - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
       state: vulp_tail_inner
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
-  id: FoxEar
+  id: FopsEar
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Human]
@@ -64,9 +23,13 @@
       state: vulp_ear
     - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
       state: vulp_ear_inner
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
-  id: WolfTail
+  id: PuppyTail
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Human]
@@ -75,10 +38,14 @@
       state: wolf_tail
     - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
       state: wolf_tail_inner
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 # Animated
 - type: marking
-  id: FoxTailAnimated
+  id: FopsTailAnimated
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: []
@@ -87,9 +54,13 @@
       state: tail_fox_waggin
     - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
       state: tail_fox_inner_waggin
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
-  id: WolfTailAnimated
+  id: PuppyTailAnimated
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: []
@@ -98,6 +69,10 @@
       state: tail_wolf_waggin
     - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
       state: tail_wolf_inner_waggin
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeEar
@@ -109,6 +84,10 @@
       state: vulp
     - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
       state: vulp-inner
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeEarFade
@@ -131,28 +110,10 @@
       state: vulp
     - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
       state: vulp-sharp
-
-- type: marking
-  id: FoxlikeEarJackal
-  bodyPart: HeadTop
-  markingCategory: HeadTop
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
-      state: jackal
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
-      state: jackal-inner
-
-- type: marking
-  id: FoxlikeEarTerrier
-  bodyPart: HeadTop
-  markingCategory: HeadTop
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
-      state: terrier
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
-      state: terrier-inner
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeEarWolf
@@ -164,6 +125,10 @@
       state: wolf
     - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
       state: wolf-inner
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeEarFennec
@@ -175,6 +140,10 @@
       state: fennec
     - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
       state: fennec-inner
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeEarFox
@@ -184,28 +153,11 @@
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
       state: fox
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
-- type: marking
-  id: FoxlikeEarOtie
-  bodyPart: HeadTop
-  markingCategory: HeadTop
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
-      state: otie
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
-      state: otie-inner
-
-- type: marking
-  id: FoxlikeEarTajaran
-  bodyPart: HeadTop
-  markingCategory: HeadTop
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
-      state: msai
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
-      state: msai-inner
 
 - type: marking
   id: FoxlikeEarShock
@@ -215,24 +167,6 @@
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
       state: shock
-
-- type: marking
-  id: FoxlikeEarCoyote
-  bodyPart: HeadTop
-  markingCategory: HeadTop
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
-      state: coyote
-
-- type: marking
-  id: FoxlikeEarDalmatian
-  bodyPart: HeadTop
-  markingCategory: HeadTop
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
-      state: dalmatian
 
 # Tail Markings
 - type: marking
@@ -245,6 +179,10 @@
       state: vulp
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: vulp-fade
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailTip
@@ -256,6 +194,10 @@
       state: vulp
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: vulp-tip
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailWag
@@ -267,6 +209,10 @@
       state: vulp_wag
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: vulp_wag-tip #fade
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailTipWag
@@ -278,6 +224,10 @@
       state: vulp_wag
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: vulp_wag-tip
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailAlt
@@ -289,6 +239,10 @@
       state: vulp_alt
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: vulp_alt-fade
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailAltTip
@@ -300,6 +254,10 @@
       state: vulp_alt
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: vulp_alt-tip
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailLong
@@ -311,6 +269,10 @@
       state: long
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: long-tip
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailFox
@@ -322,6 +284,10 @@
       state: fox
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: fox-fade
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailFoxTip
@@ -333,6 +299,10 @@
       state: fox
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: fox-tip
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailFoxWag
@@ -344,6 +314,10 @@
       state: fox_wag
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: fox_wag-fade
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailFoxTipWag
@@ -355,6 +329,10 @@
       state: fox_wag
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: fox_wag-tip
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailBushy
@@ -364,6 +342,10 @@
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: bushfluff
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailBushyWag
@@ -373,53 +355,10 @@
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: bushfluff_wag
-
-- type: marking
-  id: FoxlikeTailCoyote
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
-      state: coyote
-
-- type: marking
-  id: FoxlikeTailCoyoteWag
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
-      state: coyote_wag
-
-- type: marking
-  id: FoxlikeTailCorgiWag
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
-      state: corgi_wag
-
-- type: marking
-  id: FoxlikeTailHusky
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
-      state: husky-inner
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
-      state: husky-outer
-
-- type: marking
-  id: FoxlikeTailHuskyAlt
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
-      state: husky
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailFox2
@@ -429,6 +368,10 @@
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: fox2
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailFox3
@@ -440,6 +383,10 @@
       state: fox3
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: fox3-tip
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailFennec
@@ -449,15 +396,10 @@
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: fennec
-
-- type: marking
-  id: FoxlikeTailOtie
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
-      state: otie
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeTailFluffy
@@ -467,12 +409,7 @@
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: fluffy
-
-- type: marking
-  id: FoxlikeTailDalmatianWag
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Human]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
-      state: dalmatian_wag
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
