@@ -23,6 +23,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using Robust.Shared.Map.Events;
+using Content.Shared.Labels.Components;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -384,19 +385,27 @@ namespace Content.IntegrationTests.Tests
                 // Test that map has no entities with changed metadata, e.g. name, desc.
                 // Also done here because map loading takes a lot time.
                 var metaQuery = entManager.EntityQueryEnumerator<MetaDataComponent>();
-                while (metaQuery.MoveNext(out var uid, out var meta))
+                Assert.Multiple(() =>
                 {
-                    var protoId = meta.EntityPrototype;
-
-                    if (protoId is null)
-                        continue;
-
-                    Assert.Multiple(() =>
+                    while (metaQuery.MoveNext(out var uid, out var meta))
                     {
+                        // Actually mapgrid check can be deleted because MapGrid entities has no prototypes...
+                        // But I'm just wanna be sure.
+                        if (entManager.HasComponent<LabelComponent>(uid) ||
+                            entManager.HasComponent<MapGridComponent>(uid))
+                        {
+                            continue;
+                        }
+
+                        var protoId = meta.EntityPrototype;
+
+                        if (protoId is null)
+                            continue;
+
                         Assert.That(protoId.Name, Is.EqualTo(meta.EntityName), $"Name of the {entManager.ToPrettyString(uid)} and its prototype are different!");
                         Assert.That(protoId.Description, Is.EqualTo(meta.EntityDescription), $"Description of the {entManager.ToPrettyString(uid)} and its prototype are different!");
-                    });
-                }
+                    }
+                });
 
                 if (entManager.HasComponent<StationJobsComponent>(station))
                 {
