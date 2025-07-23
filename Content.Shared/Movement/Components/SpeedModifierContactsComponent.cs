@@ -29,8 +29,14 @@ public sealed partial class SpeedModifierContactsComponent : Component
     public bool AffectAirborne;
 
     /// <summary>
+    /// A whitelist of entities that should be affected by this component's speed modifiers.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
     /// A whitelist of entities that should be ignored by this component's speed modifiers.
     /// </summary>
     [DataField]
-    public EntityWhitelist? IgnoreWhitelist;
+    public EntityWhitelist? Blacklist;
 }

@@ -121,3 +121,48 @@
   - type: FireVisuals
     sprite: Effects/fire.rsi
     normalState: 1
+
+# Barbed wire
+- type: entity
+  id: BarbedWire
+  parent: BaseStructure
+  name: barbed wire
+  components:
+  - type: InteractionOutline
+  - type: Sprite #TODO: Give this a proper sprite...
+    sprite: Structures/barbed_wire.rsi
+    drawdepth: BlastDoors
+    noRot: true
+  - type: IconSmooth
+    key: state
+    base: state_
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb { }
+        mask:
+        - MachineMask
+        layer:
+        - HalfWallLayer
+  - type: Damageable
+    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: SoftFixtureMask
+    mask: 16
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
+  - type: DamageContacts
+    damage:
+      types:
+        Slash: 5
+        Piercing: 5
