@@ -59,11 +59,12 @@ public sealed class StunSystem : SharedStunSystem
         {
             rotationVisuals.HorizontalRotation = Angle.FromDegrees(270);
             _sprites.SetRotation(uid, Angle.FromDegrees(270));
-            return;
         }
-
-        rotationVisuals.HorizontalRotation = Angle.FromDegrees(90);
-        _sprites.SetRotation(uid, Angle.FromDegrees(90));
+        else
+        {
+            rotationVisuals.HorizontalRotation = Angle.FromDegrees(90);
+            _sprites.SetRotation(uid, Angle.FromDegrees(90));
+        }
     }
 }
 
