@@ -10,6 +10,8 @@ using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Content.Shared.Body.Part;
+using Content.Shared.Starlight;
 
 namespace Content.Client.Lobby.UI.ProfileEditorControls;
 
@@ -26,6 +28,10 @@ public sealed partial class ProfilePreviewSpriteView
             return;
 
         EntMan.System<HumanoidAppearanceSystem>().LoadProfile(PreviewDummy, humanoid);
+
+        // Starlight
+        var layers = GetCyberneticsLayers(humanoid);
+        EntMan.System<HumanoidAppearanceSystem>().AddCustomBaseLayers(PreviewDummy, layers);
     }
 
     /// <summary>
@@ -281,4 +287,19 @@ public sealed partial class ProfilePreviewSpriteView
             }
         }
     }
+
+    /// Starlight
+    /// <summary>
+    /// Extracts cybernetics IDs from humanoid profile, returns all their visual layers
+    /// </summary>
+    private Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> GetCyberneticsLayers(HumanoidCharacterProfile humanoid)
+    {
+        return humanoid.Cybernetics.Select(p => {
+            var _cyberneticEnt = _prototypeManager.Index<EntityPrototype>(p);
+            if(_cyberneticEnt.TryGetComponent<BodyPartComponent>(out var part, EntMan.ComponentFactory) && 
+               _cyberneticEnt.TryGetComponent<BaseLayerIdComponent>(out var layer, EntMan.ComponentFactory)){
+                return (CyberneticImplant.LayerFromBodypart(part), new(layer.Layer));
+            } else { return (HumanoidVisualLayers.Special, new CustomBaseLayerInfo()); }
+        }).Where(p => p.Item1 != HumanoidVisualLayers.Special).ToDictionary();
+    }  
 }
