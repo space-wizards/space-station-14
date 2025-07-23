@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/13/2025 01:14:31
-  entityCount: 25081
+  time: 07/23/2025 21:37:40
+  entityCount: 25094
 maps:
 - 1
 grids:
@@ -3637,6 +3637,11 @@ entities:
             2742: -19,-5
             2765: -43,-1
         - node:
+            color: '#FFFFFFFF'
+            id: a
+          decals:
+            2926: -47.007492,-62.9925
+        - node:
             cleanable: True
             color: '#FFFFFFFF'
             id: bottle
@@ -3716,6 +3721,11 @@ entities:
             id: grasssnowc3
           decals:
             2081: 14.231013,-64.95896
+        - node:
+            color: '#FFFFFFFF'
+            id: h
+          decals:
+            2927: -45.017906,-62.950806
         - node:
             cleanable: True
             color: '#A914097F'
@@ -11939,6 +11949,11 @@ entities:
     - type: Transform
       pos: -65.771385,-5.4337344
       parent: 15
+  - uid: 25093
+    components:
+    - type: Transform
+      pos: -37.984634,-22.374495
+      parent: 17588
 - proto: BananaPhoneInstrument
   entities:
   - uid: 14464
@@ -12893,6 +12908,13 @@ entities:
     components:
     - type: Transform
       pos: -61.47919,10.511524
+      parent: 15
+- proto: BooksBag
+  entities:
+  - uid: 25090
+    components:
+    - type: Transform
+      pos: -7.6097364,-11.566601
       parent: 15
 - proto: BookSecurity
   entities:
@@ -53972,6 +53994,13 @@ entities:
     - type: Transform
       pos: 61.46845,-29.559553
       parent: 15
+- proto: ClothingHeadHatBluesoft
+  entities:
+  - uid: 25092
+    components:
+    - type: Transform
+      pos: -37.453384,-22.103474
+      parent: 17588
 - proto: ClothingHeadHatGreensoft
   entities:
   - uid: 22821
@@ -56084,7 +56113,7 @@ entities:
       pos: -78.5,-6.5
       parent: 15
     - type: Door
-      secondsUntilStateChange: -388407.62
+      secondsUntilStateChange: -389124.3
       state: Opening
 - proto: CurtainsPurpleOpen
   entities:
@@ -56406,11 +56435,6 @@ entities:
     components:
     - type: Transform
       pos: 14.5,24.5
-      parent: 15
-  - uid: 24767
-    components:
-    - type: Transform
-      pos: 14.5,23.5
       parent: 15
   - uid: 24768
     components:
@@ -107173,7 +107197,7 @@ entities:
       pos: -32.5,-0.5
       parent: 15
     - type: Door
-      secondsUntilStateChange: -603812.56
+      secondsUntilStateChange: -604529.2
       state: Closing
   - uid: 3318
     components:
@@ -109173,6 +109197,11 @@ entities:
     - type: Transform
       pos: -12.5,-30.5
       parent: 15
+  - uid: 25088
+    components:
+    - type: Transform
+      pos: 10.5,25.5
+      parent: 15
 - proto: MaintenanceInsulsSpawner
   entities:
   - uid: 23262
@@ -109438,6 +109467,11 @@ entities:
     components:
     - type: Transform
       pos: 2.5,22.5
+      parent: 15
+  - uid: 25089
+    components:
+    - type: Transform
+      pos: 14.5,23.5
       parent: 15
 - proto: MaintenanceWeaponSpawner
   entities:
@@ -110483,6 +110517,16 @@ entities:
     - type: Transform
       pos: -50.335552,-2.4119916
       parent: 15
+  - uid: 25091
+    components:
+    - type: Transform
+      pos: -67.45086,-23.351406
+      parent: 15
+  - uid: 25094
+    components:
+    - type: Transform
+      pos: -38.082043,-23.591156
+      parent: 17588
 - proto: PetCarrier
   entities:
   - uid: 22319
@@ -117128,6 +117172,11 @@ entities:
     - type: Transform
       pos: -2.5,-5.5
       parent: 15
+  - uid: 24767
+    components:
+    - type: Transform
+      pos: 6.5,24.5
+      parent: 15
   - uid: 24795
     components:
     - type: Transform
@@ -117187,6 +117236,16 @@ entities:
     components:
     - type: Transform
       pos: -30.5,-12.5
+      parent: 15
+  - uid: 25086
+    components:
+    - type: Transform
+      pos: 12.5,16.5
+      parent: 15
+  - uid: 25087
+    components:
+    - type: Transform
+      pos: 6.5,16.5
       parent: 15
 - proto: RandomSpawner100
   entities:
@@ -149880,6 +149939,28 @@ entities:
       rot: 3.141592653589793 rad
       pos: -39.5,-68.5
       parent: 15
+- proto: WarpPointBombing
+  entities:
+  - uid: 25082
+    components:
+    - type: Transform
+      pos: -68.5,-31.5
+      parent: 15
+  - uid: 25083
+    components:
+    - type: Transform
+      pos: 19.5,-45.5
+      parent: 15
+  - uid: 25084
+    components:
+    - type: Transform
+      pos: 66.5,-8.5
+      parent: 15
+  - uid: 25085
+    components:
+    - type: Transform
+      pos: 83.5,-14.5
+      parent: 15
 - proto: WaterCooler
   entities:
   - uid: 3410
@@ -150034,7 +150115,6 @@ entities:
       pos: 36.5,32.5
       parent: 15
     - type: DeviceNetwork
-
       deviceLists:
       - 15397
   - uid: 12377
@@ -150044,7 +150124,6 @@ entities:
       pos: 30.5,28.5
       parent: 15
     - type: DeviceNetwork
- 
       deviceLists:
       - 15397
   - uid: 12737
@@ -150054,7 +150133,6 @@ entities:
       pos: 36.5,28.5
       parent: 15
     - type: DeviceNetwork
-
       deviceLists:
       - 15397
   - uid: 13405
@@ -150064,7 +150142,6 @@ entities:
       pos: 30.5,32.5
       parent: 15
     - type: DeviceNetwork
-
       deviceLists:
       - 15397
   - uid: 15404
@@ -150089,29 +150166,17 @@ entities:
       - 12377
       - 12737
       - 11945
-- proto: WeaponEnergyTurretCommand
-  entities:
-  - uid: 21191
-    components:
-    - type: Transform
-      pos: -46.5,-31.5
-      parent: 15
-    - type: DeviceNetwork
-      deviceLists:
-      - 21190
-- proto: WeaponEnergyTurretCommandControlPanel
+- proto: WeaponEnergyTurretSecurity
   entities:
   - uid: 21190
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: -47.5,-32.5
+      pos: -46.5,-31.5
       parent: 15
-    - type: DeviceList
-      devices:
+    - type: DeviceNetwork
+      deviceLists:
       - 21191
-- proto: WeaponEnergyTurretSecurity
-  entities:
   - uid: 22061
     components:
     - type: Transform
@@ -150141,6 +150206,15 @@ entities:
       - 11944
       - 15404
       - 11942
+  - uid: 21191
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -47.5,-32.5
+      parent: 15
+    - type: DeviceList
+      devices:
+      - 21190
   - uid: 24414
     components:
     - type: Transform
