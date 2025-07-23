@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Booblesnoot42
-  changes:
-  - message: The sprites for the main chapel altars have been adjusted.
-    type: Tweak
-  id: 8289
-  time: '2025-04-20T21:09:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35685
 - author: UBlueberry
   changes:
   - message: Beanies can now be found in WinterDrobes, don'tchaknow.
@@ -3907,3 +3900,10 @@
   id: 8800
   time: '2025-07-23T02:58:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39158
+- author: lzk228
+  changes:
+  - message: The customvote command results now show the title the command had.
+    type: Tweak
+  id: 8801
+  time: '2025-07-23T14:15:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39137
