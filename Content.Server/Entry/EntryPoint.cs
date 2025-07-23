@@ -15,8 +15,6 @@ using Content.Server.Info;
 using Content.Server.IoC;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.Objectives;
-using Content.Server.Players;
 using Content.Server.Players.JobWhitelist;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Players.RateLimiting;
@@ -190,7 +188,8 @@ namespace Content.Server.Entry
             _dbManager?.Shutdown();
             IoCManager.Resolve<ServerApi>().Shutdown();
 
-            IoCManager.Resolve<DiscordLink>().Shutdown();
+            // Use GetAwaiter().GetResult() to synchronously wait for async shutdown and avoid CS4014 warning.
+            IoCManager.Resolve<DiscordLink>().Shutdown().GetAwaiter().GetResult();
             IoCManager.Resolve<DiscordChatLink>().Shutdown();
         }
 
