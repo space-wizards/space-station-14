@@ -199,7 +199,7 @@ public abstract partial class SharedStunSystem : EntitySystem
             drop = evAttempt.Drop;
         }
 
-        Knockdown(entity!, time, autoStand, drop);
+        Knockdown(entity!, time, refresh, autoStand, drop);
 
         return true;
     }
