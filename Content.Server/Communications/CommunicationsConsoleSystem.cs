@@ -19,6 +19,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Content.Server.Speech;
 
 namespace Content.Server.Communications
 {
@@ -230,6 +231,10 @@ namespace Content.Server.Communications
         {
             var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
             var msg = SharedChatSystem.SanitizeAnnouncement(message.Message, maxLength);
+            msg = _chatSystem.SanitizeMessageReplaceWords(msg);
+            var accentEv = new AccentGetEvent(uid, msg);
+            RaiseLocalEvent(uid,accentEv);
+            msg = accentEv.Message;
             var author = Loc.GetString("comms-console-announcement-unknown-sender");
             if (message.Actor is { Valid: true } mob)
             {
