@@ -193,6 +193,15 @@ public sealed partial class SpeciesPrototype : IPrototype
     [DataField]
     public int StandardDensity = 110;
     //starlight end
+
+    /// Starlight
+    /// <summary>
+    ///     How many points species get for installing cybernetics at roundstart
+    ///     Can be used to disable roundstart cybernetics
+    /// </summary>
+    [DataField]
+    public int RoundstartCyberwareCapacity = 3;
+
 }
 
 public enum SpeciesNaming : byte

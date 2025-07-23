@@ -486,6 +486,12 @@ namespace Content.Client.Lobby.UI
             Markings.OnMarkingRankChange += OnMarkingChange;
 
             #endregion Markings
+            
+            // Starlight
+            #region Cybernetics
+            TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-cybernetics-tab"));
+            Cybernetics.OnCyberneticsUpdated += OnCyberneticsUpdated;
+            #endregion Cybernetics
 
             RefreshFlavorText();
 
@@ -903,6 +909,7 @@ namespace Content.Client.Lobby.UI
             UpdateCMarkingsFacialHair();
             UpdateVoicesControls();
             UpdateSiliconVoicesControls(); // 🌟Starlight🌟
+            UpdateCybernetics(); // Starlight
 
             RefreshAntags();
             RefreshJobs();
@@ -1270,6 +1277,12 @@ namespace Content.Client.Lobby.UI
             }
 
             ReloadProfilePreview();
+        }
+
+        // Starlight
+        private void OnCyberneticsUpdated(List<CyberneticImplant> cybernetics) {
+            Profile = Profile?.WithCybernetics(cybernetics.Select(p => p.ID).ToList());
+            ReloadPreview();
         }
 
         protected override void Dispose(bool disposing)
@@ -1708,6 +1721,15 @@ namespace Content.Client.Lobby.UI
 
             Markings.CurrentEyeColor = Profile.Appearance.EyeColor;
             EyeColorPicker.SetData(Profile.Appearance.EyeColor, Profile.Appearance.EyeGlowing); //starlight glowing
+        }
+
+        // Starlight
+        private void UpdateCybernetics(){
+            if (Profile is null)
+            {
+                return;
+            }
+            Cybernetics.SetData(Profile.Cybernetics, (_species.Find(x => x.ID == Profile?.Species) ?? _species.First()).RoundstartCyberwareCapacity);
         }
 
         private void UpdateSaveButton()
