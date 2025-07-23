@@ -11,18 +11,19 @@ namespace Content.Shared.Silicons.Laws.Components;
 [RegisterComponent, Access(typeof(SharedSiliconLawSystem))]
 public sealed partial class SiliconLawProviderComponent : Component
 {
+    // Ronstation - start of modifications.
+
     /// <summary>
     /// The id of the lawset that is being provided.
     /// </summary>
-    [DataField] // Ronstation - modification.
-    public ProtoId<SiliconLawsetPrototype> Laws = string.Empty;
+    [DataField]
+    public ProtoId<SiliconLawsetPrototype>? Laws;
 
-    // Ronstation - start of modifications.
     /// <summary>
     /// Weighted list of lawsets, superseeds Laws 
     /// </summary>
     [DataField]
-    public ProtoId<WeightedRandomPrototype> WeightedLaws = "DefaultLawsets";
+    public ProtoId<WeightedRandomPrototype>? WeightedLaws = "DefaultLawsets";
     // Ronstation - end of modifications.
 
     /// <summary>
