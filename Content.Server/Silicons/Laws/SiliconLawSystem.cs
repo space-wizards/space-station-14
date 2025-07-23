@@ -270,7 +270,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     /// </summary>
     private ProtoId<SiliconLawsetPrototype> InitOrGetLaws(SiliconLawProviderComponent provider)
     {
-        if (provider.Laws == null || provider.Laws == string.Empty)
+        if (provider.Laws == string.Empty)
         {
             var weightList = _prototype.Index(provider.WeightedLaws);
             provider.Laws = weightList.Pick(_random);
