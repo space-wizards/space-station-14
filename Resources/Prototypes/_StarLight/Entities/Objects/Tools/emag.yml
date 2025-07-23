@@ -1,5 +1,5 @@
 - type: entity
-  parent: [EmagUnlimited, BaseSovietContraband]
+  parent: [BaseItem, BaseSovietContraband]
   id: EmagCommie
   suffix: ""
   name: wooden cryptographic sequencer
