@@ -142,5 +142,5 @@
           doAfter: 10
         completed:
         - !type:SpawnPrototype #Only get the cables back...
-          prototype: Cable
+          prototype: CableApcStack1
           amount: 30
