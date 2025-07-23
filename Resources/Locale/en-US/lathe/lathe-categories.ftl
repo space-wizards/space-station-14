@@ -29,6 +29,7 @@ lathe-category-concrete-tile = Concrete
 lathe-category-dark-tile = Dark
 lathe-category-faux-tile = Faux
 lathe-category-maints-tile = Maints
+lathe-category-marble = Marble
 lathe-category-steel-tile = Steel
 lathe-category-white-tile = White
 lathe-category-wood-tile = Wood

@@ -692,6 +692,7 @@
     - FloorWoodTilesStatic
     - FloorConcreteTilesStatic
     - CircuitFloorsStatic
+    - MarbleFloorsStatic
     dynamicPacks:
     - FauxTiles
   - type: MaterialStorage
