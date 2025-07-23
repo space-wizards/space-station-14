@@ -71,6 +71,7 @@ construction-graph-tag-corgi-hide = corgi hide
 construction-graph-tag-apron = an apron
 construction-graph-tag-utility-belt = a utility belt
 soil-construction-graph-any-mushroom = any mushroom
+construction-graph-tag-mop-basic = mop
 
 # toys
 construction-graph-tag-rubber-ducky = a rubber ducky
@@ -145,3 +146,6 @@ construction-graph-tag-fire-helmet = fire helmet
 
 # salvage
 construction-graph-tag-spationaut-hardsuit = spationaut hardsuit
+
+# clothing
+construction-graph-tag-backpack = backpack
