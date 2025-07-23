@@ -95,13 +95,13 @@ public sealed class GasTileHeatOverlay : Overlay
                 foreach (var grid in grids)
                 {
                     if (!overlayQuery.TryGetComponent(grid.Owner, out var comp))
-                        return;
+                        continue;
 
                     var gridEntToWorld = _xformSys.GetWorldMatrix(grid.Owner);
                     var gridEntToViewportLocal = gridEntToWorld * worldToViewportLocal;
 
                     if (!Matrix3x2.Invert(gridEntToViewportLocal, out var viewportLocalToGridEnt))
-                        return;
+                        continue;
 
                     var uvToUi = Matrix3Helpers.CreateScale(_heatTarget.Size.X, -_heatTarget.Size.Y);
                     var uvToGridEnt = uvToUi * viewportLocalToGridEnt;
@@ -144,8 +144,11 @@ public sealed class GasTileHeatOverlay : Overlay
             },
             // This clears the buffer to all zero first...
             new Color(0, 0, 0, 0));
+
+        // no distortion, no need to render
         if (!anyDistortion)
             return;
+
         // Blur to soften the edges of the distortion. the lower parts of the alpha channel need to get cut off in the
         // distortion shader to keep them in tile bounds.
         _clyde.BlurRenderTarget(args.Viewport, _heatTarget, _heatBlurTarget, args.Viewport.Eye!, 14f);
