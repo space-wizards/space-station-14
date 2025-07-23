@@ -1,3 +1,5 @@
+using Robust.Shared.Audio;
+
 namespace Content.Server.Shuttles.Components;
 
 [RegisterComponent]
@@ -13,4 +15,10 @@ public sealed partial class EmergencyShuttleConsoleComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("authorizationsRequired")]
     public int AuthorizationsRequired = 3;
+
+    /// <summary>
+    /// Sound to be played when Emergency is authorized
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), DataField]
+    public SoundSpecifier EmergencyAuthorizeSound  { get;  private set; }
 }

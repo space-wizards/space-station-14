@@ -306,7 +306,7 @@ public sealed partial class EmergencyShuttleSystem
                 playSound: false, colorOverride: DangerColor);
 
         if (!CheckForLaunch(component))
-            _audio.PlayGlobal(new ResolvedPathSpecifier("/Audio/Misc/notice1.ogg"), Filter.Broadcast(), recordReplay: true);
+            _audio.PlayGlobal(component.EmergencyAuthorizeSound, Filter.Broadcast(), recordReplay: true);
 
         UpdateAllEmergencyConsoles();
     }

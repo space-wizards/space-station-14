@@ -7,6 +7,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/PA/control_box.rsi
   - type: ParticleAcceleratorControlBox
+    adminAlertSound: /Audio/Misc/adminlarm.ogg
   - type: ApcPowerReceiver
     powerLoad: 250
   - type: ExtensionCableReceiver

@@ -1,4 +1,5 @@
 using Content.Shared.Dragon;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -37,4 +38,11 @@ public sealed partial class DragonRiftComponent : SharedDragonRiftComponent
 
     [ViewVariables(VVAccess.ReadWrite), DataField("spawn", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnPrototype = "MobCarpDragon";
+
+    /// <summary>
+    /// Sound played when the dragon rift reaches its warning state.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), DataField]
+    public ResolvedSoundSpecifier? NoticeSound { get; private set; }
+
 }

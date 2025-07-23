@@ -50,7 +50,7 @@ public sealed class NukeSystem : EntitySystem
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
     /// </summary>
     private float _nukeSongLength;
-    private ResolvedSoundSpecifier _selectedNukeSong = new ResolvedPathSpecifier(String.Empty);
+    private ResolvedSoundSpecifier? _selectedNukeSong;
 
     /// <summary>
     ///     Time to leave between the nuke song and the nuke alarm playing.
@@ -321,7 +321,8 @@ public sealed class NukeSystem : EntitySystem
         // should play
         if (nuke.RemainingTime <= _nukeSongLength + nuke.AlertSoundTime + NukeSongBuffer && !nuke.PlayedNukeSong && !ResolvedSoundSpecifier.IsNullOrEmpty(_selectedNukeSong))
         {
-            _sound.DispatchStationEventMusic(uid, _selectedNukeSong, StationEventMusicType.Nuke);
+            // Using '!' because null check just happened, but the compiler doesn't recognize it.
+            _sound.DispatchStationEventMusic(uid, _selectedNukeSong!, StationEventMusicType.Nuke);
             nuke.PlayedNukeSong = true;
         }
 

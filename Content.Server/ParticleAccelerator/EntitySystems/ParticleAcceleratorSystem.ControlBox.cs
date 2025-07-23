@@ -187,7 +187,7 @@ public sealed partial class ParticleAcceleratorSystem
                         ("machine", ToPrettyString(uid)),
                         ("powerState", GetPANumericalLevel(strength)),
                         ("coordinates", pos.Coordinates)));
-                    _audio.PlayGlobal(new ResolvedPathSpecifier("/Audio/Misc/adminlarm.ogg"),
+                    _audio.PlayGlobal(comp.AdminAlertSound,
                         Filter.Empty().AddPlayers(_adminManager.ActiveAdmins),
                         false,
                         AudioParams.Default.WithVolume(-8f));

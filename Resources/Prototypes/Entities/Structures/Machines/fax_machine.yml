@@ -51,6 +51,10 @@
       blacklist:
         components:
           - CargoSlip
+    sounds:
+      notifyAdminSound: /Audio/Machines/high_tech_confirm.ogg
+      sendSound: /Audio/Machines/high_tech_confirm.ogg
+      printSound: /Audio/Machines/printer.ogg
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:

@@ -11,6 +11,7 @@
     state: icon
     snapCardinals: true
   - type: BiomassReclaimer
+    startupSound: /Audio/Machines/reclaimer_startup.ogg
   - type: Climbable
     delay: 7
   - type: AmbientSound

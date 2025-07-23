@@ -1,4 +1,5 @@
 using Content.Shared.Storage;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {
@@ -73,5 +74,11 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField]
         public bool SafetyEnabled = true;
+
+        /// <summary>
+        /// Sound to be played when biomass reclaimer is started.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly), DataField]
+        public SoundSpecifier StartupSound { get; private set; }
     }
 }

@@ -6,6 +6,8 @@
     mode: SnapgridCenter
   components:
   - type: DragonRift
+    sound:
+      noticeSound: /Audio/Misc/notice1.ogg
   - type: Transform
     anchored: true
   - type: Physics

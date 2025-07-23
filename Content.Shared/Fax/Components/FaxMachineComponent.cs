@@ -62,14 +62,20 @@ public sealed partial class FaxMachineComponent : Component
     /// <summary>
     /// Sound to play when fax printing new message
     /// </summary>
-    [DataField]
-    public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
+    [ViewVariables(VVAccess.ReadOnly), DataField]
+    public SoundSpecifier PrintSound { get; private set; }
 
     /// <summary>
-    /// Sound to play when fax successfully send message
+    /// Sound to play when a fax successfully sends a message
     /// </summary>
-    [DataField]
-    public SoundSpecifier SendSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg");
+    [ViewVariables(VVAccess.ReadOnly), DataField]
+    public SoundSpecifier SendSound { get; private set; }
+
+    /// <summary>
+    /// Sound to play when notifying admins of a fax.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), DataField("notifyAdminSound")]
+    public SoundSpecifier AdminNoticeSound { get; private set; }
 
     /// <summary>
     /// Known faxes in network by address with fax names
