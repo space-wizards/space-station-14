@@ -447,4 +447,11 @@
   id: 55
   time: '2025-07-23T00:36:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39144
+- author: CroilBird
+  changes:
+  - message: Added Polly to Packed station
+    type: Add
+  id: 56
+  time: '2025-07-23T00:38:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39143
 Order: 1
