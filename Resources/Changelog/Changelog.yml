@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lanedon
-  changes:
-  - message: Santa hats can now be folded to remove the beard.
-    type: Tweak
-  id: 8291
-  time: '2025-04-20T21:17:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36510
 - author: Princess Cheeseballs
   changes:
   - message: Items now slip on slippery surfaces
@@ -3909,3 +3902,13 @@
   id: 8802
   time: '2025-07-23T15:51:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39142
+- author: slarticodefast
+  changes:
+  - message: Enabled the "showrot", "showvel" and "showangvel" commands for debug
+      permissions.
+    type: Tweak
+  - message: Fixed the "showplayervelocity" command permissions.
+    type: Tweak
+  id: 8803
+  time: '2025-07-23T18:06:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39167
