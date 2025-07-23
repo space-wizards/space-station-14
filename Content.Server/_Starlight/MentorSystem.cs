@@ -36,6 +36,7 @@ using Robust.Shared.Utility;
 using Content.Shared.Ghost;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Server.Administration.Logs;
 
 namespace Content.Server.Administration.Systems;
 
@@ -50,7 +51,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PlayerRateLimitManager _rateLimit = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly SharedAdminLogSystem _alog = default!;
+    [Dependency] private readonly AdminLogManager _alog = default!;
 
     private readonly Dictionary<Guid, MentorTicket> _tickets = [];
     private ISawmill _sawmill = default!;
