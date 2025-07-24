@@ -19,8 +19,10 @@
       soundDeactivate: "/Audio/Items/snap.ogg"
       popupActivate: mousetrap-on-activate
       popupDeactivate: mousetrap-on-deactivate
+    - type: UseDelay
     - type: ItemToggleOnTrigger
       canActivate: false
+      showPopup: false # only show the popup when arming/disarming the trap in your hand
     - type: TriggerOnStepTrigger
     - type: PreventableStepTrigger
     - type: DamageOnTrigger

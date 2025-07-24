@@ -28,4 +28,10 @@ public sealed partial class ItemToggleOnTriggerComponent : BaseXOnTriggerCompone
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Predicted = true;
+
+    /// <summary>
+    /// Show a popup to the user when toggling the item?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ShowPopup = true;
 }
