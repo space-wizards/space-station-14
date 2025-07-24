@@ -21,7 +21,7 @@
     layoutId: AirlockEngineering
   - type: Tag
     tags:
-      - EngineeringEquipment
+      - EngineeringEquipment # This is used exclusively for determining where engineering ambience should play
 
 - type: entity
   parent: AirlockEngineering
@@ -194,6 +194,9 @@
     department: Engineering
   - type: Wires
     layoutId: AirlockEngineering
+  - type: Tag
+    tags:
+      - EngineeringEquipment
 
 - type: entity
   parent: AirlockGlass
@@ -210,6 +213,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/atmospherics.rsi
+    tags:
+      - EngineeringEquipment
 
 - type: entity
   parent: AirlockGlass
