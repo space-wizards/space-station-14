@@ -7,3 +7,13 @@
     access: [[ "NuclearOperative" ]]
   - type: AccessClothingBlocker
     access: NuclearOperative
+
+- type: entity
+  parent: [ ClothingOuterHardsuitSecurityExperimental, BaseSecurityContraband ]
+  id: ClothingOuterHardsuitSecurityExperimentalLocked
+  suffix: Locked
+  components:
+  - type: AccessReader
+    access: [[ "Security" ]]
+  - type: AccessClothingBlocker
+    access: Security
