@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: notquitehadouken
-  changes:
-  - message: Kill objectives will now always require you to maroon your target.
-    type: Tweak
-  id: 8294
-  time: '2025-04-20T21:34:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35825
 - author: Entvari
   changes:
   - message: Added a new Wizard headset.
@@ -3911,3 +3904,10 @@
   id: 8805
   time: '2025-07-24T09:44:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36316
+- author: B-Kirill
+  changes:
+  - message: The AI eye now has a postscript with the name of AI itself.
+    type: Add
+  id: 8806
+  time: '2025-07-24T11:24:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39177
