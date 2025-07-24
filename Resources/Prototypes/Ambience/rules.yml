@@ -1,0 +1,122 @@
+# Rules
+- type: rules
+  id: AlwaysTrue
+  rules:
+    - !type:AlwaysTrueRule
+
+- type: rules
+  id: InSpace
+  rules:
+    - !type:InSpaceRule
+    - !type:GridInRangeRule
+      inverted: true
+      range: 3
+
+# Engineering
+- type: rules
+  id: NearEngineering
+# This is a bit of a bandaid fix. Currently, NearbyAccessRule reads engineering access from *everything,* including firelocks and APCs. This causes it to play engineering ambience in places it really shouldn't.
+# It should ideally only really be detecting the access of airlocks and lockers. So those have been manually tagged with the EngineeringEquipment tag.
+  rules:
+    - !type:NearbyEntitiesRule
+      count: 2
+      whitelist:
+        tags:
+          - EngineeringEquipment
+      range: 3
+
+- type: rules
+  id: NearAI
+  rules:
+    - !type:NearbyEntitiesRule
+      count: 1
+      whitelist:
+        tags:
+          - AiEquipment
+      range: 4
+
+- type: rules
+  id: NearSecurity
+  rules:
+    - !type:NearbyAccessRule
+      access:
+        - Security
+      range: 2.5
+
+- type: rules
+  id: NearCommand
+  rules:
+    - !type:NearbyEntitiesRule # Check to see if entities commonly used in head rooms / bridge are around
+      count: 2
+      whitelist:
+        tags:
+          - CommandEquipment
+      range: 3
+    - !type:NearbyAccessRule # Ensure the area around us is actually a command area
+      access:
+        - Command
+      range: 3
+
+- type: rules
+  id: NearMaintenance
+  rules:
+    - !type:NearbyTilesPercentRule
+      ignoreAnchored: true
+      percent: 0.25
+      tiles:
+        - Plating
+      range: 2
+
+- type: rules
+  id: NearTrain
+  rules:
+    - !type:NearbyTilesPercentRule
+      ignoreAnchored: true
+      percent: 0.05
+      tiles:
+        - TrainLattice
+      range: 4
+
+- type: rules
+  id: NearMedical
+  rules:
+    - !type:NearbyTilesPercentRule
+      ignoreAnchored: true
+      percent: 0.5
+      tiles:
+      - FloorWhite
+      range: 3
+
+- type: rules
+  id: NearPrayable
+  rules:
+    - !type:NearbyComponentsRule
+      anchored: true
+      components:
+        - type: Prayable
+      range: 5
+
+- type: rules
+  id: NearMorgue
+  rules:
+    - !type:NearbyComponentsRule
+      anchored: true
+      count: 2
+      components:
+        - type: Morgue
+      range: 3
+
+- type: rules
+  id: NearSpookyFog
+  rules:
+    - !type:NearbyEntitiesRule
+      count: 5
+      whitelist:
+        tags:
+          - SpookyFog
+      range: 4
+
+- type: rules
+  id: OnMapGrid
+  rules:
+    - !type:OnMapGridRule

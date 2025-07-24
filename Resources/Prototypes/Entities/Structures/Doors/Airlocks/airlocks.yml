@@ -19,6 +19,9 @@
     department: Engineering
   - type: Wires
     layoutId: AirlockEngineering
+  - type: Tag
+    tags:
+      - EngineeringEquipment
 
 - type: entity
   parent: AirlockEngineering
@@ -27,6 +30,9 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/atmospherics.rsi
+  - type: Tag
+    tags:
+      - EngineeringEquipment
 
 - type: entity
   parent: Airlock

@@ -105,6 +105,9 @@
     price: 80
   - type: Construction
     graph: FilingCabinet
+  - type: Tag
+    tags:
+      - CommandEquipment
 
 - type: entity
   name: filing cabinet

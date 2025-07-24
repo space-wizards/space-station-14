@@ -1,0 +1,124 @@
+# Departments
+- type: ambientMusic
+  id: Medical
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceMedical
+  rules: NearMedical
+  priority: 3
+
+- type: ambientMusic
+  id: Engineering
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceEngineering
+  rules: NearEngineering
+  priority: 3
+
+- type: ambientMusic
+  id: Command
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceCommand
+  rules: NearCommand
+  priority: 3
+
+- type: ambientMusic
+  id: Security
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceDanger
+  rules: NearSecurity
+  priority: 3
+
+- type: ambientMusic
+  id: StationAI
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceAI
+  rules: NearAI
+  priority: 4
+
+# General areas
+- type: ambientMusic
+  id: Maintenance
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceMaintenance
+  rules: NearMaintenance
+  priority: 2
+
+- type: ambientMusic
+  id: Holy
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceHoly
+  rules: NearPrayable
+  priority: 4
+
+- type: ambientMusic
+  id: Morgue
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceSpooky
+  rules: NearMorgue
+  priority: 4
+
+- type: ambientMusic
+  id: Space
+  sound:
+    params:
+      volume: -10
+    collection: AmbienceSpace
+  fadeIn: true
+  interruptable: true
+  rules: InSpace
+  priority: 1
+
+- type: ambientMusic
+  id: Mining
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceMining
+  rules: OnMapGrid
+  fadeIn: true
+  interruptable: true
+  priority: 1
+
+# Misc.
+- type: ambientMusic
+  id: SpookyFog
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceSpookyFog
+  rules: NearSpookyFog
+  priority: 5
+
+
+- type: ambientMusic
+  id: Train
+  sound:
+    params:
+      volume: -8
+    collection: AmbienceTrain
+  rules: NearTrain
+  priority: 4
+
+## Fallback if nothing else found
+- type: ambientMusic
+  id: General
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceGeneral
+  rules: AlwaysTrue

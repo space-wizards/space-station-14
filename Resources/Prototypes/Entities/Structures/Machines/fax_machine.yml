@@ -71,6 +71,9 @@
     receiveFrequencyId: Fax
     transmitFrequencyId: Fax
   - type: RequireProjectileTarget
+  - type: Tag
+    tags:
+      - CommandEquipment
 
 # Special
 - type: entity

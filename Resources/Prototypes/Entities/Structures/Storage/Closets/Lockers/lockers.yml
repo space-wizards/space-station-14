@@ -98,6 +98,9 @@
     stateDoorClosed: ce_door
   - type: AccessReader
     access: [ [ "ChiefEngineer" ] ]
+  - type: Tag
+    tags:
+      - EngineeringEquipment
 
 # Electrical supplies
 - type: entity
@@ -140,6 +143,9 @@
     stateDoorClosed: atmos_door
   - type: AccessReader
     access: [ [ "Atmospherics" ] ]
+  - type: Tag
+    tags:
+      - EngineeringEquipment
 
 # Engineer
 - type: entity
@@ -154,6 +160,9 @@
     stateDoorClosed: eng_secure_door
   - type: AccessReader
     access: [ [ "Engineering" ] ]
+  - type: Tag
+    tags:
+      - EngineeringEquipment
 
 # Evac Repair
 - type: entity
