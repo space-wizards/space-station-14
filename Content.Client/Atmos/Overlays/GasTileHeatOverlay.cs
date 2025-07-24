@@ -48,12 +48,10 @@ public sealed class GasTileHeatOverlay : Overlay
         _shader.SetParameter("speed_scale", reducedMotion ? 0.25f : 1f);
     }
 
-    protected override void Draw(in OverlayDrawArgs args)
+    protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
         if (args.MapId == MapId.Nullspace)
-            return;
-        if (ScreenTexture is null)
-            return;
+            return false;
 
         var target = args.Viewport.RenderTarget;
 
@@ -77,7 +75,6 @@ public sealed class GasTileHeatOverlay : Overlay
 
         var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
 
-        _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         args.WorldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
 
         var mapId = args.MapId;
@@ -164,6 +161,20 @@ public sealed class GasTileHeatOverlay : Overlay
 
         // no distortion, no need to render
         if (!anyDistortion)
+        {
+            // Return the draw handle to normal settings
+            args.WorldHandle.UseShader(null);
+            args.WorldHandle.SetTransform(Matrix3x2.Identity);
+            return false;
+        }
+
+        // Clear to draw
+        return true;
+    }
+
+    protected override void Draw(in OverlayDrawArgs args)
+    {
+        if (ScreenTexture is null || _heatTarget is null || _heatBlurTarget is null)
             return;
 
         // Blur to soften the edges of the distortion. the lower parts of the alpha channel need to get cut off in the
@@ -171,6 +182,7 @@ public sealed class GasTileHeatOverlay : Overlay
         _clyde.BlurRenderTarget(args.Viewport, _heatTarget, _heatBlurTarget, args.Viewport.Eye!, 14f);
 
         // Set up and render the distortion
+        _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         args.WorldHandle.UseShader(_shader);
         args.WorldHandle.DrawTextureRect(_heatTarget.Texture, args.WorldBounds);
 
