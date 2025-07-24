@@ -378,6 +378,10 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.3
+  - type: AccessReader
+    access: [[ "Security" ]]
+  - type: AccessClothingBlocker
+    access: Security
   - type: Pierceable
     level: Metal
   - type: Armor
