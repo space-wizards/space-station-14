@@ -53,6 +53,7 @@ public static class ServerPackaging
         "Orleans", // Starlight
         "Starlight", // Starlight
         "StackExchange.Redis", // Starlight
+        "System.IO.Hashing", // Starlight
         "Discord",
     };
 
