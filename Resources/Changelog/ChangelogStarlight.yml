@@ -9688,5 +9688,12 @@ Entries:
   id: 1334
   time: '2025-07-22T02:09:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: FoxxoTrystan
+  changes:
+  - message: Crawling now face your direction.
+    type: Tweak
+  id: 1335
+  time: '2025-07-23T04:39:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1090
 Order: -1
 
