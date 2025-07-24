@@ -32,27 +32,10 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {
-    // Starlight - Start
-    private static readonly Gauge OpsMajorCount = Metrics.CreateGauge(
-       "nukies_opsMajor",
-       "Number of all nukies OpsMajor.");
-
-    private static readonly Gauge OpsMinorCount = Metrics.CreateGauge(
-       "nukie_opsMinor",
-       "Number of all nukies OpsMinor.");
-
-    private static readonly Gauge NeutralCount = Metrics.CreateGauge(
-       "nukies_neutral",
-       "Number of all nukies Neutral.");
-
-    private static readonly Gauge CrewMinorCount = Metrics.CreateGauge(
-       "nukie_crewMinor",
-       "Number of all nukies CrewMinor.");
-
-    private static readonly Gauge CrewMajorCount = Metrics.CreateGauge(
-       "nukie_crewMajor",
-       "Number of all nukies CrewMajor.");
-    // Starlight - End
+    private static readonly Gauge NukeopsCount = Metrics.CreateGauge( // Startlight
+        "nukie_count",
+        "Number of all nukies Win/Loses Count.",
+        Enum.GetNames<WinType>());
 
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
@@ -441,19 +424,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     {
         ent.Comp.WinType = type;
 
-        // Starlight - Start
-        var gauge = type switch
-        {
-            WinType.CrewMajor => CrewMajorCount,
-            WinType.OpsMajor => OpsMajorCount,
-            WinType.Neutral => NeutralCount,
-            WinType.CrewMinor => CrewMinorCount,
-            WinType.OpsMinor => OpsMinorCount,
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-        };
-
-        gauge.Inc();
-        // Starlight - End
+        NukeopsCount.WithLabels(type.ToString()).Inc();
 
         if (endRound && (type == WinType.CrewMajor || type == WinType.OpsMajor))
             _roundEndSystem.EndRound();
