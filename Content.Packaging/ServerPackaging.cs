@@ -49,10 +49,9 @@ public static class ServerPackaging
         "Microsoft",
         "NAudio",
         "OggVorbisEncoder",
-        "Microsoft.Orleans.Client", // Starlight
-        "Microsoft.Orleans.Clustering.Redis", // Starlight
-        "Microsoft.Orleans.Sdk", // Starlight
-        "SS14.Starlight.NullLink", // Starlight
+        "Microsoft.Orleans", // Starlight
+        "Orleans", // Starlight
+        "Starlight", // Starlight
         "Discord",
     };
 
