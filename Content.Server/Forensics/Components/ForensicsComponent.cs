@@ -8,6 +8,7 @@ namespace Content.Server.Forensics
 
         [DataField("fibers")]
         public HashSet<string> Fibers = new();
+
         /// <summary>
         /// Evidence left behind by bags and coats
         /// </summary>
