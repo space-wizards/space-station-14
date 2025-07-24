@@ -53,7 +53,9 @@ public static class ServerPackaging
         "Orleans", // Starlight
         "Starlight", // Starlight
         "StackExchange.Redis", // Starlight
-        "System.IO.Hashing", // Starlight
+        "System", // Starlight
+        "Newtonsoft", // Starlight
+        "Pipelines", // Starlight
         "Discord",
     };
 
