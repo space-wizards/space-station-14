@@ -16,12 +16,6 @@ public sealed partial class StoreComponent : Component
     public LocId Name = "store-ui-default-title";
 
     /// <summary>
-    /// The name of the stylesheet to use for this UI
-    /// </summary>
-    [DataField]
-    public string? Stylesheet = null;
-
-    /// <summary>
     /// All the listing categories that are available on this store.
     /// The available listings are partially based on the categories.
     /// </summary>
