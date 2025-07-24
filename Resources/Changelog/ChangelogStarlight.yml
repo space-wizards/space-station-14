@@ -9695,5 +9695,12 @@ Entries:
   id: 1335
   time: '2025-07-23T04:39:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1090
+- author: princess_gurchi
+  changes:
+  - message: You can now give your character basic cyberlimbs in profile editor
+    type: Add
+  id: 1336
+  time: '2025-07-23T04:49:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/912
 Order: -1
 
