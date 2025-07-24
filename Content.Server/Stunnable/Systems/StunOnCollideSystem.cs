@@ -44,8 +44,6 @@ internal sealed class StunOnCollideSystem : EntitySystem
                 ent.Comp.SprintSpeedModifier
             );
         }
-
-
     }
 
     private void HandleCollide(Entity<StunOnCollideComponent> ent, ref StartCollideEvent args)

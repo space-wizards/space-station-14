@@ -26,8 +26,6 @@ namespace Content.Shared.Stunnable;
 public abstract partial class SharedStunSystem : EntitySystem
 {
     public static readonly EntProtoId StunId = "StatusEffectStunned";
-    public static readonly EntProtoId KnockdownId = "StatusEffectKnockdown";
-    public static readonly EntProtoId ParalysisId = "StatusEffectParalysis";
 
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -62,10 +60,11 @@ public abstract partial class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         // New Status Effect subscriptions
-        SubscribeLocalEvent<StunnedStatusEffectComponent, StatusEffectAppliedEvent>(OnStunEffectApplied);
+        SubscribeLocalEvent<StunnedStatusEffectComponent, StatusEffectAppliedEvent>(OnStunStatusApplied);
         SubscribeLocalEvent<StunnedStatusEffectComponent, StatusEffectRemovedEvent>(OnStunStatusRemoved);
         SubscribeLocalEvent<StunnedStatusEffectComponent, StatusEffectRelayedEvent<StunEndAttemptEvent>>(OnStunEndAttempt);
 
+        SubscribeLocalEvent<KnockdownStatusEffectComponent, StatusEffectAppliedEvent>(OnKnockdownStatusApplied);
         SubscribeLocalEvent<KnockdownStatusEffectComponent, StatusEffectRelayedEvent<StandUpAttemptEvent>>(OnStandUpAttempt);
 
         // Stun Appearance Data
@@ -246,7 +245,15 @@ public abstract partial class SharedStunSystem : EntitySystem
         return true;
     }
 
-    private void Knockdown(EntityUid uid, TimeSpan? time, bool refresh, bool autoStand = true, bool drop = true)
+    private void Crawl(Entity<CrawlerComponent?> entity, TimeSpan? time, bool refresh, bool autoStand, bool drop)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
+        Knockdown(entity, time, refresh, autoStand, drop);
+    }
+
+    private void Knockdown(EntityUid uid, TimeSpan? time, bool refresh, bool autoStand, bool drop)
     {
         // Initialize our component with the relevant data we need if we don't have it
         if (EnsureComp<KnockedDownComponent>(uid, out var component))
@@ -277,22 +284,18 @@ public abstract partial class SharedStunSystem : EntitySystem
         }
         else
         {
-            SetKnockdownTime((uid, component), null);
+            Alerts.ShowAlert(uid, KnockdownAlert);
             _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} was knocked down");
         }
-
-        if (component.NextUpdate != null)
-            Alerts.ShowAlert(uid, KnockdownAlert, null, (GameTiming.CurTime, component.NextUpdate.Value));
-        else
-            Alerts.ShowAlert(uid, KnockdownAlert);
     }
 
     public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan duration)
     {
-        if (!_status.TryAddStatusEffectDuration(uid, ParalysisId, duration))
+        if (!_status.TryAddStatusEffectDuration(uid, StunId, duration))
             return false;
 
-        Knockdown(uid, duration, false);
+        // We can't exit knockdown when we're stunned, so this prevents knockdown lasting longer than the stun.
+        Knockdown(uid, null, false, true, true);
         OnStunnedSuccessfully(uid, duration);
 
         return true;
@@ -300,10 +303,11 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     public bool TryUpdateParalyzeDuration(EntityUid uid, TimeSpan? duration)
     {
-        if (!_status.TryUpdateStatusEffectDuration(uid, ParalysisId, duration))
+        if (!_status.TryUpdateStatusEffectDuration(uid, StunId, duration))
             return false;
 
-        Knockdown(uid, duration, true);
+        // We can't exit knockdown when we're stunned, so this prevents knockdown lasting longer than the stun.
+        Knockdown(uid, null, false, true, true);
         OnStunnedSuccessfully(uid, duration);
 
         return true;
@@ -320,7 +324,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         return !ev.Cancelled && RemComp<StunnedComponent>(entity);
     }
 
-    private void OnStunEffectApplied(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
+    private void OnStunStatusApplied(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
         if (GameTiming.ApplyingState)
             return;
@@ -341,6 +345,18 @@ public abstract partial class SharedStunSystem : EntitySystem
         var ev = args.Args;
         ev.Cancelled = true;
         args.Args = ev;
+    }
+
+    private void OnKnockdownStatusApplied(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
+    {
+        if (GameTiming.ApplyingState)
+            return;
+
+        // If you make something that shouldn't crawl, crawl, that's your own fault.
+        if (entity.Comp.Crawl)
+            Crawl(args.Target, null, true, true, drop: entity.Comp.Drop);
+        else
+            Knockdown(args.Target, null, true, true, drop: entity.Comp.Drop);
     }
 
     private void OnStandUpAttempt(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectRelayedEvent<StandUpAttemptEvent> args)
