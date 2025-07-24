@@ -19,8 +19,7 @@ public sealed class NudgeCommand : ToolshedCommand
 
         var xform = Transform(uid);
 
-        var newPosition = xform.LocalPosition + delta;
-        _transform.SetLocalPosition(uid, newPosition, xform);
+        _transform.SetLocalPosition(uid, xform.LocalPosition + delta, xform);
     }
 
     [CommandImplementation]
