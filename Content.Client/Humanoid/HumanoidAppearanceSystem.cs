@@ -236,6 +236,19 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         UpdateSprite((uid, humanoid, Comp<SpriteComponent>(uid)));
     }
 
+    // Starlight
+    // Maybe this function isn't needed
+    // But I didn't find a way to draw custom base layers without calling UpdateSprite() which is private to this class
+    public void AddCustomBaseLayers(EntityUid uid, Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> layers, HumanoidAppearanceComponent? humanoid = null){
+        if (!Resolve(uid, ref humanoid))
+        {
+            return;
+        }
+        
+        humanoid.CustomBaseLayers = layers;
+        UpdateSprite((uid, humanoid, Comp<SpriteComponent>(uid)));
+    }
+
     private void ApplyMarkingSet(Entity<HumanoidAppearanceComponent, SpriteComponent> entity)
     {
         var humanoid = entity.Comp1;

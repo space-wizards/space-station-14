@@ -19,3 +19,12 @@ uplink-thermalvision-eyes = Thermal Vision Cyber Eyes
 uplink-thermalvision-eyes-desc = Allows you to see in the dark and detect creatures through walls but makes you more vulnerable to flashes. (Warning: You will need a surgical assistant for the procedure.)
 uplink-mantis-blade-arms-name = Mantis Blade Arms Bundle
 uplink-mantis-blade-arms-desc = Originally used as a simple construction tool, now turned into hidden blades that can extend from your arm while still keeping its destructive prying skill. Truly a sight to behold. (Warning: You will need a surgical assistant for the procedure.)
+
+uplink-syndicate-borgi-name = Syndicate Borgi
+uplink-syndicate-borgi-desc = A basic syndicate borgi
+
+uplink-syndicate-borgi-kitted-name = Kitted Syndicate Borgi
+uplink-syndicate-borgi-kitted-desc = A syndicate borgi, with assault modules
+
+uplink-syndicate-borgi-speed-name = Speed Syndicate Borgi
+uplink-syndicate-borgi-speed-desc = A syndicate borgi, with dagger modules and additional speed

@@ -9638,5 +9638,55 @@ Entries:
   id: 1327
   time: '2025-07-21T23:51:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/889
+- author: walksanatora
+  changes:
+  - message: Station borgis can now be ionstormed
+    type: Fix
+  id: 1328
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: walksanatora
+  changes:
+  - message: Station borgis appear in the robotics console
+    type: Fix
+  id: 1329
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: walksanatora
+  changes:
+  - message: Station borgis can now be exploded.
+    type: Fix
+  id: 1330
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: walksanatora
+  changes:
+  - message: Station borgis are no longer targeted by AI core turrets.
+    type: Fix
+  id: 1331
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: walksanatora
+  changes:
+  - message: Borgis now have dammaged silicon accent component and become harder to
+      understand as they are harmed.
+    type: Fix
+  id: 1332
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: walksanatora
+  changes:
+  - message: Station borgis no longer come with a hyper-capacity cell.
+    type: Tweak
+  id: 1333
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: walksanatora
+  changes:
+  - message: All borgi health nerfed from 750 -> 300 to match borgs
+    type: Tweak
+  id: 1334
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
 Order: -1
 
