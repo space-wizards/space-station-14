@@ -184,9 +184,9 @@ namespace Content.Server.Kitchen.EntitySystems
                 }
 
                 // Entity did NOT pass the whitelist for grind/juice.
-                    // Wouldn't want the clown grinding up the Captain's ID card now would you?
-                    // Why am I asking you? You're biased.
-                    return;
+                // Wouldn't want the clown grinding up the Captain's ID card now would you?
+                // Why am I asking you? You're biased.
+                return;
             }
 
             if (args.Handled)
