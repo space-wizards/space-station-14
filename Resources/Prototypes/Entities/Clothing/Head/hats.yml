@@ -189,7 +189,7 @@
     sprite: Clothing/Head/Hats/beret_brigmedic.rsi
 
 - type: entity
-  parent: [ ClothingHeadBase ]
+  parent: [ ClothingHeadBase , BaseSalvageContraband ] #Starlight salvContra
   id: ClothingHeadHatBeretMerc
   name: mercenary beret
   description: Olive beret, the badge depicts a jackal on a rock.
@@ -360,12 +360,12 @@
   parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatHoshat
   name: head of security cap
-  description: The robust hat of the Head of Security. For showing the officers who's the real sheriff 
+  description: The robust hat of the Head of Security. For showing the officers who's the real boss.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/Head/Hats/hoshat.rsi
+    sprite: Clothing/Head/Hats/hoshat.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Head/Hats/hoshat.rsi
+    sprite: Clothing/Head/Hats/hoshat.rsi
   - type: Tag
     tags:
     - ClothMade

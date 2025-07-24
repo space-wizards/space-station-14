@@ -41,6 +41,7 @@
             MedicalDoctor: [ 4, 5 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 2, 2 ]
+            Surgeon: [ 1, 1 ]
             Psychologist: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]

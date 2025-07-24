@@ -38,3 +38,101 @@
   components:
   - type: StealCondition
     stealGroup: CMOLicenseSteal
+    
+  # Story Objectives
+- type: entity
+  parent: BaseStoryObjective
+  id: RetrieveContrabandObjective
+  name: Retrieve any contraband confiscated by SEC this shift
+  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Clothing/Back/Satchels/smuggler.rsi
+        state: icon
+
+
+- type: entity
+  parent: BaseStoryObjective
+  id: AccessForAllObjective
+  name: Hack as many doors as you can
+  description: But don't get caught. Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Tools/access_breaker.rsi
+        state: icon
+
+- type: entity
+  parent: BaseStoryObjective
+  id: ArmsDealerObjective
+  name: Open an underground arms trading ring
+  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+        state: icon   
+
+
+- type: entity
+  parent: BaseStoryObjective
+  id: FrameObjective
+  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Misc/bureaucracy.rsi
+        state: syndicate_card
+    - type: DepartmentObjective
+      title: objective-framing
+    - type: PickRandomDepartment
+
+- type: entity
+  parent: BaseStoryObjective
+  id: FalseUprisingObjective
+  description:  Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Weapons/Melee/flash.rsi
+        state: flash
+    - type: DepartmentObjective
+      title: objective-false-uprising
+    - type: PickRandomDepartment
+
+- type: entity
+  parent: BaseStoryObjective
+  id: DuelistObjective
+  name: Challenge others to duels and win
+  description: You don't need to kill them, unless you want to.  Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Weapons/Melee/captain_sabre.rsi
+        state: icon
+
+- type: entity
+  parent: BaseStoryObjective
+  id: EspionageObjective
+  name: Interrogate the NT rep and department heads for corporate secrets.
+  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Misc/Lights/lampint.rsi
+        state: lamp-int
