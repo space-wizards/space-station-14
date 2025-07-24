@@ -3,7 +3,7 @@
 namespace Content.Shared.Stunnable;
 
 /// <summary>
-/// Crawling as a status effect
+/// Knockdown as a status effect.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedStunSystem))]
 public sealed partial class KnockdownStatusEffectComponent : Component
