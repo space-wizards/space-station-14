@@ -52,6 +52,6 @@ public sealed class StatusPalette
         var to = StatusColors[fromIdx + 1];
         var f = (factor - (float) fromIdx / intervals) * intervals;
 
-        return (Color) OklabColor.Blend(new OklabColor(from), new OklabColor(to), f);
+        return from.OkBlend(to, f);
     }
 }

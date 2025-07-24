@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Numerics;
+using JetBrains.Annotations;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets.Colorspace;
@@ -13,12 +14,10 @@ public static class ColorExtensions
     {
         DebugTools.Assert(lightness is >= 0.0f and <= 1.0f);
 
-        var o = new OklabColor(c)
-        {
-            L = lightness,
-        };
+        var oklab = Color.ToLab(c);
+        oklab.X = lightness;
 
-        return (Color) o;
+        return Color.FromLab(oklab);
     }
 
     /// <summary>
@@ -26,10 +25,10 @@ public static class ColorExtensions
     /// </summary>
     public static Color NudgeLightness(this Color c, float lightnessShift)
     {
-        var o = new OklabColor(c);
-        o.L = Math.Clamp(o.L + lightnessShift, 0, 1);
+        var oklab = Color.ToLab(c);
+        oklab.X = Math.Clamp(oklab.X + lightnessShift, 0, 1);
 
-        return (Color) o;
+        return Color.FromLab(oklab);
     }
 
     /// <summary>
@@ -40,15 +39,25 @@ public static class ColorExtensions
     /// </remarks>
     public static Color NudgeChroma(this Color c, float chromaShift)
     {
-        var o = new OklabColor(c);
+        var oklab = Color.ToLab(c);
+        var oklch = Color.ToLch(oklab);
 
-        var chroma = float.Sqrt(o.A * o.A + o.B * o.B);
-        var hue = float.Atan2(o.B, o.A);
-        chroma = Math.Clamp(chroma + chromaShift, 0, 1);
+        oklch.Y = Math.Clamp(oklch.Y + chromaShift, 0, 1);
 
-        o.A = chroma * float.Cos(hue);
-        o.B = chroma * float.Sin(hue);
+        return Color.FromLab(Color.FromLch(oklch));
+    }
 
-        return (Color) o;
+    /// <summary>
+    ///     Blends two colors in the Oklab color space.
+    /// </summary>
+    public static Color OkBlend(this Color from, Color to, float factor)
+    {
+        DebugTools.Assert(factor is >= 0.0f and <= 1.0f);
+
+        var okFrom = Color.ToLab(from);
+        var okTo = Color.ToLab(to);
+
+        var blended = Vector4.Lerp(okFrom, okTo, factor);
+        return Color.FromLab(blended);
     }
 }
