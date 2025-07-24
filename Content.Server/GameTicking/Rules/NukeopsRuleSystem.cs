@@ -442,16 +442,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         ent.Comp.WinType = type;
 
         // Starlight - Start
-        if (type == WinType.CrewMajor)
-            OpsMajorCount.Inc();
-        else if (type == WinType.OpsMinor)
-            OpsMinorCount.Inc();
-        else if (type == WinType.Neutral)
-            NeutralCount.Inc();
-        else if (type == WinType.CrewMinor)
-            CrewMinorCount.Inc();
-        else if (type == WinType.CrewMajor)
-            CrewMajorCount.Inc();
+        var gauge = type switch
+        {
+            WinType.CrewMajor => CrewMajorCount,
+            WinType.OpsMajor => OpsMajorCount,
+            WinType.Neutral => NeutralCount,
+            WinType.CrewMinor => CrewMinorCount,
+            WinType.OpsMinor => OpsMinorCount,
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
+
+        gauge.Inc();
         // Starlight - End
 
         if (endRound && (type == WinType.CrewMajor || type == WinType.OpsMajor))
