@@ -9723,5 +9723,21 @@ Entries:
   id: 1339
   time: '2025-07-23T05:19:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/869
+- author: Conflee
+  changes:
+  - message: Added 24 new Markings for Cyclorites, a mix of overlays and spikes for
+      shoulders, arms, head, etc.
+    type: Add
+  id: 1340
+  time: '2025-07-23T22:26:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1098
+- author: Conflee
+  changes:
+  - message: Changed base Cyclorite sprites to be 50% desaturated, so custom coloration
+      shows more clearly.
+    type: Tweak
+  id: 1341
+  time: '2025-07-23T22:26:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1098
 Order: -1
 
