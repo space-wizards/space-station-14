@@ -1481,14 +1481,14 @@
       - !type:SatiateThirst
         factor: 1
       - !type:ModifyBloodLevel
-        amount: 3
+        amount: 2
       - !type:HealthChange
         conditions:
         - !type:TotalDamage
           max: 50
         damage:
           types:
-            Bloodloss: -1
+            Bloodloss: -0.4
 
 # Mirth of the Honkmother Holy Water
 - type: reagent
