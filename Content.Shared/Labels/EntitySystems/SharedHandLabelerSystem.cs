@@ -14,7 +14,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
 {
     [Dependency] protected readonly SharedUserInterfaceSystem UserInterfaceSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedLabelSystem _labelSystem = default!;
+    [Dependency] private readonly LabelSystem _labelSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;

@@ -32,6 +32,9 @@
     - type: GasMiner
       maxExternalPressure: 300
       spawnAmount: 400
+    - type: GuideHelp
+      guides:
+      - GasMiningAndStorage
 
 - type: entity
   name: O2 gas miner

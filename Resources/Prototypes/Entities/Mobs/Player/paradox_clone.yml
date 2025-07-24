@@ -1,0 +1,37 @@
+# Mob
+- type: entity
+  parent: BaseMob
+  id: MobParadox
+  name: space-time paradox
+  description: A big ball of wibbly wobbly, timey wimey stuff.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - sprite: Mobs/Aliens/paradox_clone.rsi
+      state: paradox
+      shader: unshaded
+  - type: RotationVisuals
+    horizontalRotation: 90
+  - type: Pullable
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+
+- type: entity
+  parent: MobParadox
+  id: MobParadoxTimed # visual effect when gibbing on round end
+  components:
+  - type: TimedDespawn
+    lifetime: 10
+
+# guidebook dummy
+
+- type: entity
+  id: ParadoxCloneDummy
+  categories: [ HideSpawnMenu ]
+  name: Paradox Clone
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/paradox_clone.rsi
+    state: preview

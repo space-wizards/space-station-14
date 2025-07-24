@@ -12,12 +12,24 @@
       "directions": 4
     },
     {
+        "name": "coal_crab",
+        "directions": 4
+    },
+    {
       "name": "uranium_crab",
       "directions": 4
     },
     {
       "name": "silver_crab",
       "directions": 4
+    },
+    {
+        "name": "gold_crab",
+        "directions": 4
+    },
+    {
+        "name": "bananium_crab",
+        "directions": 4
     },
     {
       "name": "quartz_crab",

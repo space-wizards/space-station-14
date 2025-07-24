@@ -43,6 +43,13 @@
     state: qm_clipboard
 
 - type: stealTargetGroup
+  id: ClothingHandsKnuckleDustersQM
+  name: steal-target-groups-clothing-hands-knuckledusters-qm
+  sprite:
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/goldenknuckleduster.rsi
+    state: goldenknuckleduster
+
+- type: stealTargetGroup
   id: FoodMeatCorgi
   name: steal-target-groups-food-meat-corgi
   sprite:
@@ -129,6 +136,13 @@
     state: datadisk_base
 
 - type: stealTargetGroup
+  id: Mail
+  name: steal-target-groups-mail
+  sprite:
+    sprite: Objects/Specific/Cargo/mail.rsi
+    state: icon
+
+- type: stealTargetGroup
   id: IDCard
   name: steal-target-groups-id-cards
   sprite:
@@ -149,13 +163,13 @@
   name: steal-target-groups-forensic-scanner
   sprite:
     sprite: Objects/Devices/forensic_scanner.rsi
-    state: forensicnew
+    state: icon
 
 - type: stealTargetGroup
   id: FlippoEngravedLighter
   name: steal-target-groups-flippo-engraved-lighter
   sprite:
-    sprite: Objects/Tools/lighters.rsi
+    sprite: Objects/Tools/Lighters/lighters.rsi
     state: zippo_engraved_icon_base
 
 - type: stealTargetGroup

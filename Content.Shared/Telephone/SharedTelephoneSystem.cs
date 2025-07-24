@@ -36,4 +36,21 @@ public abstract class SharedTelephoneSystem : EntitySystem
 
         return callerId;
     }
+
+    public string GetFormattedDeviceIdForEntity(string? deviceName, Color fontColor, string fontType = "Default", int fontSize = 12)
+    {
+        if (deviceName == null)
+        {
+            return Loc.GetString("chat-telephone-unknown-device",
+                ("color", fontColor),
+                ("fontType", fontType),
+                ("fontSize", fontSize));
+        }
+
+        return Loc.GetString("chat-telephone-device-id",
+            ("deviceName", deviceName),
+            ("color", fontColor),
+            ("fontType", fontType),
+            ("fontSize", fontSize));
+    }
 }
