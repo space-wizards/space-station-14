@@ -1,0 +1,34 @@
+- type: entity
+  name: negotiator
+  parent: BaseWeaponPistol
+  id: WeaponPistolNegotiator
+  description: A custom, gold plated handgun, entrusted to the big boss of the security force. Loads 7 + 1 rounds of .45 magnum. Those alien bastards are gonna pay.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Objects/Weapons/Guns/Pistols/negotiator.rsi
+  - type: Gun
+    fireRate: 1.7
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+      params:
+        pitch: 0.7
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        startingItem: MagazineNegotiator
+        whitelist:
+          tags:
+            - MagazineNegotiator
+      gun_chamber:
+        startingItem: CartridgeMagnum
+        whitelist:
+          tags:
+            - CartridgeMagnum
+  - type: StealTarget
+    stealGroup: WeaponPistolNegotiator
+  - type: Contraband
+    allowedDepartments:
+    - Security

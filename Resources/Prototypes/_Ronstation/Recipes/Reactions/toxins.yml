@@ -1,0 +1,51 @@
+- type: reaction
+  id: Mechanotoxin
+  reactants:
+    CopperBlood:
+      amount: 2
+    Impedrezene:
+      amount: 2
+    Phenol:
+      amount: 1
+  products:
+    Mechanotoxin: 1
+
+- type: reaction
+  id: BarozineBicaridine
+  reactants:
+    Barozine:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BarozineBruizine
+  reactants:
+    Barozine:
+      amount: 1
+    Bruizine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BarozinePuncturase
+  reactants:
+    Barozine:
+      amount: 1
+    Puncturase:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BarozineLacerinol
+  reactants:
+    Barozine:
+      amount: 1
+    Lacerinol:
+      amount: 1
+  products:
+    Razorium: 1

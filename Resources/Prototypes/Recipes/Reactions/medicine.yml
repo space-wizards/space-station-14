@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: reaction
   id: Dylovene
   reactants:
@@ -227,18 +229,6 @@
       amount: 5
   products:
     AmbuzolPlus: 10
-
-- type: reaction
-  id: Synaptizine
-  reactants:
-    Lithium:
-      amount: 1
-    Sugar:
-      amount: 1
-    Water:
-      amount: 1
-  products:
-    Synaptizine: 3
 
 - type: reaction
   id: Tricordrazine
@@ -532,7 +522,7 @@
 - type: reaction
   id: Pyrazine
   impact: Medium
-  minTemp: 540
+  minTemp: 400 # Ronstation
   reactants:
     Leporazine:
       amount: 1
@@ -546,7 +536,7 @@
 - type: reaction
   id: Insuzine
   impact: Medium
-  minTemp: 433
+  minTemp: 400 # Ronstation
   reactants:
     Leporazine:
       amount: 1
@@ -663,6 +653,8 @@
   products:
     Haloperidol: 5
 
+# start of modifications
+# Ronstation - new cryonics is Good, actually
 - type: reaction
   id: Traumoxadone
   impact: Medium
@@ -692,3 +684,4 @@
     Stelloxadone: 5
     Water: 3
     Fiber: 2
+# end of modifications

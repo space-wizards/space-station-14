@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   name: BaseWeaponLauncher
   parent: BaseItem
@@ -24,7 +25,7 @@
   name: china lake
   parent: [BaseWeaponLauncher, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponLauncherChinaLake
-  description: Hand operated explosive ordnance propulsion system; codename CHINA-LAKE. While dated, a reliable design for a weapon of mass destruction. Be careful where you point it, or don't.
+  description: Hand operated explosive ordnance propulsion system; codename CHINA-LAKE. While dated, a reliable design for a weapon of mass destruction. Be careful where you point it, or don't. # Ronstation - modification
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -36,6 +37,7 @@
     slots:
     - Back
     - suitStorage
+  # start of modifications
   - type: ItemSlots
     slots:
       gun_chamber:
@@ -48,13 +50,15 @@
   - type: ContainerContainer
     containers:
       gun_chamber: !type:ContainerSlot
+    #end of modifications
   - type: Gun
-    fireRate: 0.5
+    fireRate: 0.5 # Ronstation - modification
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  # start of modifications
   - type: GunRequiresWield
   - type: ChamberMagazineAmmoProvider
     autoCycle: false
@@ -64,6 +68,7 @@
     soundBoltOpened: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
     soundRack: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: Appearance
+  # end of modifications
   - type: StaticPrice
     price: 10000
 

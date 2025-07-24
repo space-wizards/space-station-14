@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: reagent
   id: Toxin
   name: reagent-name-toxin
@@ -63,9 +65,8 @@
       - !type:MovespeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
-      - !type:GenericStatusEffect
-        key: Drowsiness
-        component: Drowsiness
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
         time: 4
         type: Add
         refresh: false
@@ -121,7 +122,7 @@
   name: reagent-name-polytrinic-acid
   group: Toxins
   desc: reagent-desc-polytrinic-acid
-  physicalDesc: reagent-physical-desc-strong-smelling
+  physicalDesc: reagent-physical-desc-overpowering # Ronstation
   flavor: acid
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
@@ -161,7 +162,9 @@
         probability: 0.33
       - !type:Emote
         emote: Scream
-        probability: 0.3
+        probability: 0.5
+      - !type:ChemVomit # Ronstation
+        probability: 0.3 # Ronstation
 
 - type: reagent
   id: FerrochromicAcid
@@ -340,9 +343,8 @@
   metabolisms:
     Poison:
       effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 10
         refresh: false

@@ -29,7 +29,6 @@ steal-target-groups-lamps = LAMP
 steal-target-groups-forensic-scanner = forensic scanner
 steal-target-groups-flippo-engraved-lighter = detective's Flippo engraved lighter
 steal-target-groups-ammo-tech-fab-circuitboard = ammo techfab circuit board
-steal-target-groups-clothing-head-hat-warden = warden's cap
 steal-target-groups-clothing-outer-hardsuit-void-paramed = paramedic void suit
 steal-target-groups-medical-tech-fab-circuitboard = medical techfab machine board
 steal-target-groups-clothing-headset-alt-medical = chief medical officer's over-ear headset

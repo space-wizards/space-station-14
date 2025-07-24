@@ -77,8 +77,12 @@ namespace Content.IntegrationTests.Tests
             "Exo",
             "Saltern2",
             "Cluster2",
-            "Atlas2"
+            "Atlas2",
+      	    "Atlas3",
+	          "Feint"
         };
+
+        private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";
 
         /// <summary>
         /// Asserts that specific files have been saved as grids and not maps.
@@ -257,7 +261,7 @@ namespace Content.IntegrationTests.Tests
                 return;
 
             var yamlEntities = node["entities"];
-            if (!protoManager.TryIndex<EntityCategoryPrototype>("DoNotMap", out var dnmCategory))
+            if (!protoManager.TryIndex(DoNotMapCategory, out var dnmCategory))
                 return;
 
             Assert.Multiple(() =>

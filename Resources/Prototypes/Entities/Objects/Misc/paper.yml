@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   parent: BaseItem
   id: BasePaper
@@ -55,7 +56,7 @@
           Quantity: 1
   - type: Item
     size: Tiny
-  - type: PhysicalComposition # Ronstation - Needs to be recyclable.
+  - type: PhysicalComposition # Ronstation - modification. Needs to be recyclable.
     materialComposition:
       Paper: 25
 

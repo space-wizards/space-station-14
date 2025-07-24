@@ -1,3 +1,4 @@
+// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using System.Linq;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -35,11 +36,12 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
         {
             var chosenJob = RobustRandom.PickAndTake(jobList);
             _stationJobs.MakeJobUnlimited(chosenStation.Value, chosenJob); // INFINITE chaos.
+            // Ronstation - Removed the ability for this event to lock out job slots
         }
         else
         {
-            var lower = (int) (jobList.Count * 0.20);
-            var upper = (int) (jobList.Count * 0.30);
+            var lower = (int)(jobList.Count * 0.20);
+            var upper = (int)(jobList.Count * 0.30);
             // Changing every role is maybe a bit too chaotic so instead change 20-30% of them.
             var num = RobustRandom.Next(lower, upper);
             for (var i = 0; i < num; i++)
@@ -47,8 +49,7 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
                 var chosenJob = RobustRandom.PickAndTake(jobList);
                 if (_stationJobs.IsJobUnlimited(chosenStation.Value, chosenJob))
                     continue;
-
-                _stationJobs.TryAdjustJobSlot(chosenStation.Value, chosenJob, RobustRandom.Next(1, 6), clamp: true);
+                _stationJobs.TryAdjustJobSlot(chosenStation.Value, chosenJob, RobustRandom.Next(1, 6), clamp: true); // Ronstation - modification
             }
         }
     }

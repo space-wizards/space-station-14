@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: reagent
   id: Desoxyephedrine
   name: reagent-name-desoxyephedrine
@@ -40,12 +41,12 @@
         key: KnockedDown
         time: 3
         type: Remove
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Haloperidol
           max: 0.01
-        key: Drowsiness
+        effectProto: StatusEffectDrowsiness
         time: 10
         type: Remove
     Medicine:
@@ -88,12 +89,12 @@
         key: KnockedDown
         time: 1
         type: Remove
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Haloperidol
           max: 0.01
-        key: Drowsiness
+        effectProto: StatusEffectDrowsiness
         time: 10
         type: Remove
       - !type:PopupMessage
@@ -107,6 +108,35 @@
         conditions:
         - !type:ReagentThreshold
           min: 30
+
+- type: reagent
+  id: Synaptizine
+  name: reagent-name-synaptizine
+  group: Narcotics
+  desc: reagent-desc-synaptizine
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: sharp
+  color: "#d49a2f"
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.4
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 2.0
+        type: remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 2.0
+        type: Remove
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        time: 15.0
+        type: Add
 
 - type: reagent
   id: Stimulants
@@ -152,16 +182,16 @@
         component: StaminaModifier
         time: 3
         type: Add
-      - !type:GenericStatusEffect
-        key: ForcedSleep
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectForcedSleeping
         time: 3
         type: Remove
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Haloperidol
           max: 0.01
-        key: Drowsiness
+        effectProto: StatusEffectDrowsiness
         time: 10
         type: Remove
     Medicine:
@@ -198,11 +228,10 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         time: 16
+        type: Add
         refresh: false
 
 - type: reagent
@@ -213,6 +242,7 @@
   flavor: bitter
   color: "#C0C0C0"
   physicalDesc: reagent-physical-desc-strong-smelling
+  # start of modifications
   metabolisms:
     Narcotic:
       effects:
@@ -224,6 +254,7 @@
 #        conditions:
 #        - !type:ReagentThreshold
 #          min: 3
+# end of modifications
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5
@@ -247,11 +278,10 @@
         damage:
           types:
             Poison: 2
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         time: 10
+        type: Add
         refresh: false
       - !type:ChemVomit # Vomiting is a symptom of brain damage
         probability: 0.05
@@ -269,9 +299,8 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
         refresh: false
@@ -287,9 +316,8 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
         refresh: false
@@ -307,14 +335,13 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Nocturine
           min: 8
-        key: ForcedSleep
-        component: ForcedSleeping
-        refresh: false
+        effectProto: StatusEffectForcedSleeping
+        time: 3
         type: Add
 
 - type: reagent
@@ -479,9 +506,8 @@
         conditions:
         - !type:ReagentThreshold
           max: 20
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
         refresh: false

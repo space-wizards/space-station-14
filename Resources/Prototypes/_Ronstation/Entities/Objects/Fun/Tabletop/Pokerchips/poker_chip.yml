@@ -1,0 +1,364 @@
+- type: entity
+  parent: BaseItem
+  id: PokerChipBaseRed
+  name: red pokerchip
+  description: Raise or fold?
+  components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-2
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      ChipRed: 1
+  - type: StaticPrice
+    price: 0
+  - type: Stack
+    stackType: PokerChipStackRed
+    count: 1
+    baseLayer: base
+    layerStates:
+    - chip
+    - chip_2
+    - chip_3
+    - chip_4
+    - chip_10
+    - chip_20
+    - chip_60
+    layerFunction: Threshold
+  - type: StackLayerThreshold
+    thresholds: [1, 2, 3, 4, 10, 20, 60]
+  - type: Sprite
+    sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_red.rsi
+    state: chip
+    layers:
+    - state: chip
+      map: ["base"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        density: 30
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.2,0.25,0.1"
+        mask:
+        - ItemMask
+  - type: Appearance
+
+- type: entity
+  parent: BaseItem
+  id: PokerChipBaseBlue
+  name: blue pokerchip
+  description: Raise or fold?
+  components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-2
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      ChipRed: 1
+  - type: StaticPrice
+    price: 0
+  - type: Stack
+    stackType: PokerChipStackBlue
+    count: 1
+    baseLayer: base
+    layerStates:
+    - chip
+    - chip_2
+    - chip_3
+    - chip_4
+    - chip_10
+    - chip_20
+    - chip_60
+    layerFunction: Threshold
+  - type: StackLayerThreshold
+    thresholds: [1, 2, 3, 4, 10, 20, 60]
+  - type: Sprite
+    sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_blue.rsi
+    state: chip
+    layers:
+    - state: chip
+      map: ["base"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        density: 30
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.2,0.25,0.1"
+        mask:
+        - ItemMask
+  - type: Appearance
+
+- type: entity
+  parent: BaseItem
+  id: PokerChipBaseWhite
+  name: white pokerchip
+  description: Raise or fold?
+  components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-2
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      ChipRed: 1
+  - type: StaticPrice
+    price: 0
+  - type: Stack
+    stackType: PokerChipStackWhite
+    count: 1
+    baseLayer: base
+    layerStates:
+    - chip
+    - chip_2
+    - chip_3
+    - chip_4
+    - chip_10
+    - chip_20
+    - chip_60
+    layerFunction: Threshold
+  - type: StackLayerThreshold
+    thresholds: [1, 2, 3, 4, 10, 20, 60]
+  - type: Sprite
+    sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_white.rsi
+    state: chip
+    layers:
+    - state: chip
+      map: ["base"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        density: 30
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.2,0.25,0.1"
+        mask:
+        - ItemMask
+  - type: Appearance
+
+- type: entity
+  parent: BaseItem
+  id: PokerChipBaseGreen
+  name: green pokerchip
+  description: Raise or fold?
+  components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-2
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      ChipRed: 1
+  - type: StaticPrice
+    price: 0
+  - type: Stack
+    stackType: PokerChipStackGreen
+    count: 1
+    baseLayer: base
+    layerStates:
+    - chip
+    - chip_2
+    - chip_3
+    - chip_4
+    - chip_10
+    - chip_20
+    - chip_60
+    layerFunction: Threshold
+  - type: StackLayerThreshold
+    thresholds: [1, 2, 3, 4, 10, 20, 60]
+  - type: Sprite
+    sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_green.rsi
+    state: chip
+    layers:
+    - state: chip
+      map: ["base"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        density: 30
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.2,0.25,0.1"
+        mask:
+        - ItemMask
+  - type: Appearance
+
+- type: entity
+  parent: BaseItem
+  id: PokerChipBaseBlack
+  name: black pokerchip
+  description: Raise or fold?
+  components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-2
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      ChipRed: 1
+  - type: StaticPrice
+    price: 0
+  - type: Stack
+    stackType: PokerChipStackBlack
+    count: 1
+    baseLayer: base
+    layerStates:
+    - chip
+    - chip_2
+    - chip_3
+    - chip_4
+    - chip_10
+    - chip_20
+    - chip_60
+    layerFunction: Threshold
+  - type: StackLayerThreshold
+    thresholds: [1, 2, 3, 4, 10, 20, 60]
+  - type: Sprite
+    sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_black.rsi
+    state: chip
+    layers:
+    - state: chip
+      map: ["base"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        density: 30
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.2,0.25,0.1"
+        mask:
+        - ItemMask
+  - type: Appearance
+
+- type: material
+  id: ChipRed
+  name: chip
+  unit: materials-unit-bill
+  stackEntity: PokerChipBaseRed
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_red.rsi, state: chip }
+  price: 0
+
+- type: material
+  id: ChipBlue
+  name: chip
+  unit: materials-unit-bill
+  stackEntity: PokerChipBaseBlue
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_blue.rsi, state: chip }
+  price: 0
+
+- type: material
+  id: ChipWhite
+  name: chip
+  unit: materials-unit-bill
+  stackEntity: PokerChipBaseWhite
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_white.rsi, state: chip }
+  price: 0
+
+- type: material
+  id: ChipGreen
+  name: chip
+  unit: materials-unit-bill
+  stackEntity: PokerChipBaseGreen
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_green.rsi, state: chip }
+  price: 0
+
+- type: material
+  id: ChipBlack
+  name: chip
+  unit: materials-unit-bill
+  stackEntity: PokerChipBaseBlack
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_black.rsi, state: chip }
+  price: 0
+
+- type: stack
+  id: PokerChipStackRed
+  name: stack-poker-chips
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_red.rsi, state: chip}
+  spawn: PokerChipBaseRed
+  maxCount: 100
+
+- type: stack
+  id: PokerChipStackBlue
+  name: stack-poker-chips
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_blue.rsi, state: chip}
+  spawn: PokerChipBaseBlue
+  maxCount: 100
+
+- type: stack
+  id: PokerChipStackWhite
+  name: stack-poker-chips
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_white.rsi, state: chip}
+  spawn: PokerChipBaseWhite
+  maxCount: 100
+
+- type: stack
+  id: PokerChipStackGreen
+  name: stack-poker-chips
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_green.rsi, state: chip}
+  spawn: PokerChipBaseGreen
+  maxCount: 100
+
+- type: stack
+  id: PokerChipStackBlack
+  name: stack-poker-chips
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_black.rsi, state: chip}
+  spawn: PokerChipBaseBlack
+  maxCount: 100
+
+- type: entity
+  parent: PokerChipBaseRed
+  id: PokerChipRed
+  name: red pokerchip
+  components:
+    - type: Stack
+      count: 40
+
+- type: entity
+  parent: PokerChipBaseBlue
+  id: PokerChipBlue
+  name: blue pokerchip
+  components:
+    - type: Stack
+      count: 40
+
+- type: entity
+  parent: PokerChipBaseWhite
+  id: PokerChipWhite
+  name: white pokerchip
+  components:
+    - type: Stack
+      count: 40
+
+- type: entity
+  parent: PokerChipBaseGreen
+  id: PokerChipGreen
+  name: green pokerchip
+  components:
+    - type: Stack
+      count: 40
+
+- type: entity
+  parent: PokerChipBaseBlack
+  id: PokerChipBlack
+  name: black pokerchip
+  components:
+    - type: Stack
+      count: 40

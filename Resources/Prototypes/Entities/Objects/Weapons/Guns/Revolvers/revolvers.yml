@@ -1,3 +1,5 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
+
 - type: entity
   name: BaseWeaponRevolver
   parent: BaseItem
@@ -57,7 +59,7 @@
   description: A beautifully machined, custom-built revolver. Used when there is no time for the Voight-Kampff test. Loads 5 rounds of .45 magnum.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    sprite: _Ronstation/Objects/Weapons/Guns/Revolvers/deckard.rsi # Ronstation - modification
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -72,7 +74,7 @@
     ammoSlots: [ null, null, null, null, null ]
   - type: MagazineVisuals
     magState: mag
-    steps: 4
+    steps: 5 # Ronstation - modification
     zeroVisible: true
   - type: Appearance
   - type: StaticPrice

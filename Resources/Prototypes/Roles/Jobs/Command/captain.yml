@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: Captain
   name: job-name-captain
@@ -6,19 +7,19 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 54000 # 15 hours
+      time: 54000 # Ronstation - modification. 15 hours
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 54000 # 15 hours
+      time: 54000 # Ronstation - modification. 15 hours
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 54000 # 15 hours
+      time: 54000 # Ronstation - modification. 15 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 54000 # 15 hours
+      time: 54000 # Ronstation - modification. 15 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 54000 # 15 hours
+      time: 54000 # Ronstation - modification. 15 hours
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"

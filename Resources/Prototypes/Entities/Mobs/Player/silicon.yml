@@ -1,3 +1,4 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 # Be careful with these as they get removed on shutdown too!
 - type: entity
   id: AiHeld
@@ -190,6 +191,7 @@
         acts: [ "Destruction" ]
   - type: ApcPowerReceiver
     powerLoad: 1000
+    needsPower: false
   - type: StationAiCore
   - type: StationAiVision
   - type: InteractionOutline
@@ -218,7 +220,6 @@
     listeningRange: 0
     speakerVolume: Speak
     unlistedNumber: true
-    requiresPower: false
   - type: Holopad
   - type: StationAiWhitelist
   - type: UserInterface
@@ -293,6 +294,10 @@
       state: ai_female
   - type: NameIdentifier
     group: StationAi
+  # Start of modifications.
+  - type: IonStormTarget
+    chance: 0.25 # 25% as often as borgs
+  # End of modifications.
 
 # Hologram projection that the AI's eye tracks.
 - type: entity

@@ -1,0 +1,41 @@
+- type: entity
+  id: BaseSpeedLoaderDeckard
+  name: "deckard speed loader (.45 magnum)"
+  parent: [ BaseItem, BaseSecurityCommandContraband ]
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - SpeedLoaderMagnum
+  - type: SpeedLoader
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
+    capacity: 5
+  - type: Sprite
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+
+- type: entity
+  id: SpeedLoaderDeckard
+  name: "deckard speed loader (.45 magnum)"
+  parent: BaseSpeedLoaderDeckard
+  description: "A speedloader made specifically for Deckard. It has a shiny silver handle."
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnum
+  - type: Sprite
+    sprite: _Ronstation/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Deckard/deckard_speed_loader.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: base-5
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: base
+    steps: 6
+    zeroVisible: false
+  - type: Appearance

@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   parent: BaseItem
   id: BaseBeaker
@@ -24,7 +25,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 60
+        maxVol: 60 # Ronstation - modification
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -98,7 +99,7 @@
   parent: BaseItem
   id: BorgBeaker
   name: integrated beaker
-  description: An internal compartment installed into a cyborg. Rated for 60 units of any liquid.
+  description: An internal compartment installed into a cyborg. Rated for 60 units of any liquid. # Ronstation - modification
   components:
   # 3 morbillion components are to avoid inheriting breakable since borgs can't replace beakers.
   - type: Tag
@@ -122,7 +123,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 60
+        maxVol: 60 # Ronstation - modification
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -178,7 +179,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 50
+        maxVol: 60 # Ronstation - modification
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -243,10 +244,9 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 50
         reagents:
         - ReagentId: Cryoxadone
-          Quantity: 50
+          Quantity: 60 # Ronstation
 
 - type: entity
   name: large beaker
@@ -269,7 +269,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 120
+        maxVol: 120 # Ronstation - modification
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -473,7 +473,7 @@
     inHandsMaxFillLevels: 3
     inHandsFillBaseName: -fill-
   - type: EmbeddableProjectile
-    offset: "-0.1,0"
+    offset: "0,-0.1"
     minimumSpeed: 3
     removalTime: 0.25
     embedOnThrow: false
@@ -544,7 +544,9 @@
   - type: Injector
     delay: 2.5
     injectOnly: false
-    maxTransferAmount: 25
+    # start of modifications
+    maxTransferAmount: 25 # Ronstation edit - Bluespace syringes are still pretty whatever, but its something
+    # end of modifications
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: syringe

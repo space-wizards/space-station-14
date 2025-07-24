@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 #Basic EVA
 - type: entity
   parent: ClothingOuterEVASuitBase
@@ -9,16 +11,17 @@
     sprite: Clothing/OuterClothing/Suits/eva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,2,3
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,2,3 # Ronstation
   - type: Tag
     tags:
     - SuitEVA
     - MonkeyWearable
+    - CorgiWearable
     - WhitelistChameleon
 
+# start of modifications
 - type: entity
   parent: BaseItem
   id: SuitEVAPackage
@@ -37,6 +40,7 @@
     - id: ClothingOuterHardsuitEVA
     sound:
       path: /Audio/Effects/unwrap.ogg
+# end of modifications
 
 #Syndicate EVA
 - type: entity
@@ -49,9 +53,9 @@
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
-  - type: Item
-    shape:
-    - 0,0,2,3
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,2,3 # Ronstation
   - type: Tag
     tags:
     - SuitEVA
@@ -60,6 +64,7 @@
   - type: StaticPrice
     price: 1000 # Helmet is 500
 
+# start of modifications
 - type: entity
   parent: SuitEVAPackage
   id: SuitEVAPackageSyndicate
@@ -70,7 +75,7 @@
   - type: SpawnItemsOnUse
     items:
     - id: ClothingOuterEVASuitSyndicate
-
+# end of modifications
 
 #Emergency EVA
 - type: entity
@@ -98,9 +103,12 @@
       toggleable-clothing: !type:ContainerSlot {}
   - type: Tag
     tags:
+    - CorgiWearable
+    - ScurretWearable
     - MonkeyWearable
     - WhitelistChameleon
 
+# start of modifications
 - type: entity
   parent: SuitEVAPackage
   id: SuitEmergencyPackage
@@ -115,6 +123,7 @@
   - type: SpawnItemsOnUse
     items:
     - id: ClothingOuterSuitEmergency
+# end of modifications
 
 #Prisoner EVA
 - type: entity
@@ -127,16 +136,13 @@
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,2,3
   - type: Tag
     tags:
     - SuitEVA
     - MonkeyWearable
     - WhitelistChameleon
 
+# start of modifications
 - type: entity
   parent: SuitEmergencyPackage
   id: SuitPrisonerPackage
@@ -147,14 +153,14 @@
   - type: SpawnItemsOnUse
     items:
     - id: ClothingOuterHardsuitEVAPrisoner
-
+# end of modifications
 
 #NTSRA Voidsuit / Ancient Voidsuit
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitAncientEVA
   name: NTSRA voidsuit #Nanotrasen Space Research Association
-  description: An ancient space suit design, made by the Nanotrasen Space Research Association. They were so finely crafted way back when you can't tell how old this one is.
+  description: An ancient space suit design, made by the Nanotrasen Space Research Association. They were so finely crafted way back when you can't tell how old this one is. # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
@@ -173,16 +179,16 @@
   parent: [ClothingOuterEVASuitBase, BaseMedicalContraband] #Despite "Voidsuits are light hardsuits", since it parents of EVA Suits, it goes with the other softsuits
   id: ClothingOuterHardsuitVoidParamed
   name: paramedic voidsuit
-  description: A lightweight voidfairing suit made for paramedics, providing the minimum protection you need to get in, get a body, and get out in a hazardous environment. Comes with a siren!
+  description: A lightweight voidfairing suit made for paramedics, providing the minimum protection you need to get in, get a body, and get out in a hazardous environment. Comes with a siren! # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
     layers:
     - state: icon
   - type: Appearance
-  - type: Item
-    shape:
-    -  0,0,1,4
+  - type: Item # Ronstation
+    shape: # Ronstation
+    -  0,0,1,4 # Ronstation
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
   - type: PressureProtection
@@ -233,3 +239,7 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon

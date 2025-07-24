@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Belts that need/have visualizers
 
 - type: entity
@@ -12,7 +13,9 @@
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
     maxItemSize: Normal
-    # TODO: Fill this out more.
+    # Don't add more than absolutely needed to this whitelist!
+    # Utility belts shouldn't just be free extra storage.
+    # This is only intended for basic engineering equipment.
     whitelist:
       tags:
         - Powerdrill
@@ -32,9 +35,11 @@
         - JawsOfLife
         - GPS
         - WeldingMask
+        - RemoteSignaller
       components:
         - StationMap
         - SprayPainter
+        - SprayPainterAmmo
         - NetworkConfigurator
         - RCD
         - RCDAmmo
@@ -119,6 +124,7 @@
       components:
         - StationMap
         - SprayPainter
+        - SprayPainterAmmo
         - NetworkConfigurator
         - RCD
         - RCDAmmo
@@ -229,6 +235,7 @@
         - WetFloorSign
         - HolosignProjector
         - Plunger
+        - WireBrush
       components:
         - LightReplacer
         - SmokeOnTrigger
@@ -281,7 +288,7 @@
         - Injector
         - Pill
         - HandLabeler
-        - Defibrillator
+        - Defibrillator # Ronstation - modification
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -302,10 +309,12 @@
         whitelist:
           tags:
           - Spray
+      # start of modifications
       defib:
         whitelist:
           components:
           - Defibrillator
+      # end of modifications
       wrench:
         whitelist:
           tags:

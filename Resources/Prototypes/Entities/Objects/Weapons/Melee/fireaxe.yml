@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   name: fireaxe
   parent: [BaseItem, BaseEngineeringContraband]
@@ -41,7 +42,7 @@
   - type: Tool
     qualities:
       - Prying
-      - Axing
+      - Axing # Ronstation - modification
   - type: ToolTileCompatible
   - type: Prying
   - type: UseDelay
@@ -54,7 +55,7 @@
 - type: entity
   id: FireAxeFlaming
   name: fire axe
-  parent: [ BaseSyndicateContraband, FireAxe ]
+  parent: [BaseSyndicateContraband, FireAxe]
   description: Why fight fire with an axe when you can fight with fire and axe? Now featuring rugged rubberized handle!
   components:
   - type: MeleeWeapon
@@ -69,6 +70,8 @@
     quickEquip: false
     slots:
     - back
+  # start of modifications
   - type: Tool
     qualities:
       - Prying
+  # end of modifications

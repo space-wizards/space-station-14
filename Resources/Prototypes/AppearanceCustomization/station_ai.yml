@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Groups
 - type: stationAiCustomizationGroup
   id: StationAiCoreIconography
@@ -18,18 +19,22 @@
   category: Hologram
   protoIds:
   - StationAiHologramFemale
+  # start of modifications
   - StationAiHologramMale
   - StationAiHologramMoth
   - StationAiHologramLizard
   - StationAiHologramArachnid
   - StationAiHologramVox
   - StationAiHologramNymph
+  # end of modifications
   - StationAiHologramFace
   - StationAiHologramCat
   - StationAiHologramDog
+  # start of modifications
   - StationAiHologramClown
   - StationAiHologramMothroach
   - StationAiHologramWeh
+  # end of modifications
 
 # Iconography
 - type: stationAiCustomization
@@ -170,13 +175,14 @@
       sprite: Mobs/Silicon/holograms.rsi
       state: ai_dog
 
+# start of modifications
 - type: stationAiCustomization
   id: StationAiHologramClown
   name: station-ai-hologram-clown
   previewKey: Hologram
   layerData:
     Hologram:
-      sprite: Mobs/Silicon/holograms.rsi
+      sprite: _Ronstation/Mobs/Silicon/holograms.rsi
       state: ai_clown
 
 - type: stationAiCustomization
@@ -185,7 +191,7 @@
   previewKey: Hologram
   layerData:
     Hologram:
-      sprite: Mobs/Silicon/holograms.rsi
+      sprite: _Ronstation/Mobs/Silicon/holograms.rsi
       state: ai_weh
 
 - type: stationAiCustomization
@@ -194,7 +200,7 @@
   previewKey: Hologram
   layerData:
     Hologram:
-      sprite: Mobs/Silicon/holograms.rsi
+      sprite: _Ronstation/Mobs/Silicon/holograms.rsi
       state: ai_mothroach
 
 - type: stationAiCustomization
@@ -203,7 +209,7 @@
   previewKey: Hologram
   layerData:
     Hologram:
-      sprite: Mobs/Silicon/holograms.rsi
+      sprite: _Ronstation/Mobs/Silicon/holograms.rsi
       state: ai_moth
 
 - type: stationAiCustomization
@@ -212,7 +218,7 @@
   previewKey: Hologram
   layerData:
     Hologram:
-      sprite: Mobs/Silicon/holograms.rsi
+      sprite: _Ronstation/Mobs/Silicon/holograms.rsi
       state: ai_lizard
 
 - type: stationAiCustomization
@@ -221,7 +227,7 @@
   previewKey: Hologram
   layerData:
     Hologram:
-      sprite: Mobs/Silicon/holograms.rsi
+      sprite: _Ronstation/Mobs/Silicon/holograms.rsi
       state: ai_arach
 
 - type: stationAiCustomization
@@ -230,7 +236,7 @@
   previewKey: Hologram
   layerData:
     Hologram:
-      sprite: Mobs/Silicon/holograms.rsi
+      sprite: _Ronstation/Mobs/Silicon/holograms.rsi
       state: ai_vox
 
 - type: stationAiCustomization
@@ -239,5 +245,6 @@
   previewKey: Hologram
   layerData:
     Hologram:
-      sprite: Mobs/Silicon/holograms.rsi
+      sprite: _Ronstation/Mobs/Silicon/holograms.rsi
       state: ai_dionanymph
+# end of modifications

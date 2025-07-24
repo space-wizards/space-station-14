@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Tier 1
 
 - type: technology
@@ -155,6 +156,7 @@
   recipeUnlocks:
   - WeaponXrayCannon
 
+# start of modifications
 # - type: technology
 #   id: KineticModifications
 #   name: research-technology-kinetic-modifications
@@ -168,6 +170,7 @@
 #   - PKAUpgradeDamage
 #   - PKAUpgradeRange
 #   - PKAUpgradeFireRate
+# end of modifications
 
 - type: technology
   id: BasicShuttleArmament
@@ -190,6 +193,18 @@
   - ShuttleGunFriendshipCircuitboard
   technologyPrerequisites:
   - SalvageWeapons
+
+- type: technology
+  id: DualWieldingTechnology
+  name: research-technology-dual-wielding-technology
+  icon:
+    sprite: Clothing/Back/Specific/harmpack.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - ClothingBackpackHarmpack
 
 # Tier 3
 
