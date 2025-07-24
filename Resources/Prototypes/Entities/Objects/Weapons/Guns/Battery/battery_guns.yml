@@ -800,7 +800,7 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletLaserSpread
-      fireCost: 60
+      fireCost: 65
     - proto: BulletLaserSpreadNarrow
       fireCost: 100
     - proto: BulletDisablerSmgSpread
