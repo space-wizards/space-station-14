@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using Content.Server.Administration;
 using Content.Shared.Administration;
+using NetCord;
 using Robust.Server.GameObjects;
 using Robust.Shared.Console;
 using Robust.Shared.Physics;
@@ -13,18 +14,23 @@ public sealed class NudgeCommand : ToolshedCommand
 {
     private TransformSystem? _transform;
 
-    private void Nudge(EntityUid uid, Vector2 delta)
+    private void Nudge(EntityUid uid, float deltaX, float deltaY)
     {
         _transform ??= GetSys<TransformSystem>();
 
         var xform = Transform(uid);
 
-        _transform.SetLocalPosition(uid, xform.LocalPosition + delta, xform);
+        _transform.SetLocalPosition(uid, xform.LocalPosition + new Vector2(deltaX, deltaY), xform);
     }
 
-    [CommandImplementation]
-    public void Nudge([PipedArgument] EntityUid uid, float deltaX, float deltaY)
-        => Nudge(uid, new Vector2(deltaX, deltaY));
+    [CommandImplementation("up")]
+    void NudgeUp(IEnumerable<EntityUid> input, float deltaY) => Nudge(input, 0, deltaY);
+    [CommandImplementation("up")]
+    void NudgeUpPiped([PipedArgument] IEnumerable<EntityUid> input, float deltaY) => Nudge(input, 0, deltaY);
+    [CommandImplementation("right")]
+    void NudgeRight(IEnumerable<EntityUid> input, float deltaX) => Nudge(input, deltaX, 0);
+    [CommandImplementation("right")]
+    void NudgeRightPiped([PipedArgument] IEnumerable<EntityUid> input, float deltaX) => Nudge(input, deltaX, 0);
 
     [CommandImplementation]
     public void Nudge([PipedArgument] IEnumerable<EntityUid> input, float deltaX, float deltaY)
@@ -36,13 +42,13 @@ public sealed class NudgeCommand : ToolshedCommand
     }
 
     [CommandImplementation]
-    public void Nudge(int entity_id, float deltaX, float deltaY)
+    public void Nudge(int entity, float deltaX, float deltaY)
     {
-        if (!NetEntity.TryParse(entity_id.ToString(), out var netEntity)
+        if (!NetEntity.TryParse(entity.ToString(), out var netEntity)
             || !EntityManager.TryGetEntity(netEntity, out var uid)
             || !EntityManager.EntityExists(uid))
         {
-            return;
+            throw new EntityNotFoundException();
         }
 
         Nudge(uid.Value, deltaX, deltaY);
