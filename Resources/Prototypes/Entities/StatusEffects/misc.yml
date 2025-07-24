@@ -81,7 +81,7 @@
 
 # Causes your vision to become blurry and gives me a headache.
 - type: entity
-  parent: MobStatusEffectBase
+  parent: MobStatusEffectDebuff
   id: StatusEffectWoozy
   name: woozy
   components:
