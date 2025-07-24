@@ -26,7 +26,6 @@ namespace Content.Shared.Stunnable;
 public abstract partial class SharedStunSystem : EntitySystem
 {
     public static readonly EntProtoId StunId = "StatusEffectStunned";
-    public static readonly EntProtoId ParalysisId = "StatusEffectParalysis";
 
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -284,10 +283,11 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan duration)
     {
-        if (!_status.TryAddStatusEffectDuration(uid, ParalysisId, duration))
+        if (!_status.TryAddStatusEffectDuration(uid, StunId, duration))
             return false;
 
-        Knockdown(uid, duration, false, true, true);
+        // We can't exit knockdown when we're stunned, so this prevents knockdown lasting longer than the stun.
+        Knockdown(uid, null, false, true, true);
         OnStunnedSuccessfully(uid, duration);
 
         return true;
@@ -295,10 +295,11 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     public bool TryUpdateParalyzeDuration(EntityUid uid, TimeSpan? duration)
     {
-        if (!_status.TryUpdateStatusEffectDuration(uid, ParalysisId, duration))
+        if (!_status.TryUpdateStatusEffectDuration(uid, StunId, duration))
             return false;
 
-        // Knockdown Component should handle the whole getting knocked down thing...
+        // We can't exit knockdown when we're stunned, so this prevents knockdown lasting longer than the stun.
+        Knockdown(uid, null, false, true, true);
         OnStunnedSuccessfully(uid, duration);
 
         return true;
@@ -343,7 +344,8 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (GameTiming.ApplyingState)
             return;
 
-        Knockdown(args.Target, null, true, true, entity.Comp.Drop);
+        // If you make something that shouldn't crawl, crawl, that's your own fault. Add Crawling to component whitelist or pair this with stunned...
+        Knockdown(args.Target, null, true, true, drop: entity.Comp.Drop);
     }
 
     private void OnStandUpAttempt(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectRelayedEvent<StandUpAttemptEvent> args)

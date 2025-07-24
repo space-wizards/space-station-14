@@ -20,6 +20,8 @@ internal sealed class StunOnCollideSystem : EntitySystem
 
     private void TryDoCollideStun(Entity<StunOnCollideComponent> ent, EntityUid target)
     {
+        _stunSystem.TryKnockdown(target, ent.Comp.KnockdownAmount, ent.Comp.Refresh, ent.Comp.AutoStand, ent.Comp.Drop);
+
         if (ent.Comp.Refresh)
         {
             _stunSystem.TryUpdateStunDuration(target, ent.Comp.StunAmount);
@@ -42,8 +44,6 @@ internal sealed class StunOnCollideSystem : EntitySystem
                 ent.Comp.SprintSpeedModifier
             );
         }
-
-        _stunSystem.TryKnockdown(target, ent.Comp.KnockdownAmount, ent.Comp.Refresh, ent.Comp.AutoStand, ent.Comp.Drop);
     }
 
     private void HandleCollide(Entity<StunOnCollideComponent> ent, ref StartCollideEvent args)
