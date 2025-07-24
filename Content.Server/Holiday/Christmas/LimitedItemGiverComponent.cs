@@ -35,8 +35,8 @@ public sealed partial class LimitedItemGiverComponent : Component
     public LocId? DeniedPopup;
 
     /// <summary>
-    /// The holiday required for this giver to work, if any.
+    /// The (localized) message shown when trying to get a second item.
     /// </summary>
     [DataField]
-    public ProtoId<HolidayPrototype>? RequiredHoliday;
+    public LocId? GreedPopup;
 }

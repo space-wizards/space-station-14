@@ -319,6 +319,9 @@
         - WallLayer
   - type: LimitedItemGiver
     table: !type:GroupSelector
+      conditions:
+      - !type:IsHolidayCondition
+        holiday: FestiveSeason
       children:
       - id: PresentRandom
       - id: PresentRandomCash # buy your own.
@@ -327,7 +330,7 @@
         prob: 0.05
     receivedPopup: christmas-tree-got-gift
     deniedPopup: christmas-tree-no-gift
-    #requiredHoliday: FestiveSeason
+    greedPopup: christmas-tree-already-gifted
 
 - type: entity
   parent: FloraTreeChristmas02
@@ -337,6 +340,9 @@
   components:
   - type: LimitedItemGiver
     table: !type:GroupSelector
+      conditions:
+      - !type:IsHolidayCondition
+        holiday: FestiveSeason
       children:
       - id: PresentRandom
       - id: PresentRandomUnsafe

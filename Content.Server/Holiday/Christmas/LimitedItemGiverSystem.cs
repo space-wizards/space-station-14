@@ -1,4 +1,5 @@
-﻿using Content.Shared.EntityTable;
+﻿using System.Linq;
+using Content.Shared.EntityTable;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Holiday;
 using Content.Shared.Popups;
@@ -36,12 +37,11 @@ public sealed class LimitedItemGiverSystem : EntitySystem
         if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
-        // No present if you've received one, or it's not the required holiday (if any)
-        if (comp.GrantedPlayers.Contains(actor.PlayerSession.UserId) ||
-            comp.RequiredHoliday is { } holiday && !_holiday.IsCurrentlyHoliday(holiday))
+        // No present if you've received one
+        if (comp.GrantedPlayers.Contains(actor.PlayerSession.UserId))
         {
-            if (comp.DeniedPopup is { } deniedLoc)
-                _popup.PopupEntity(Loc.GetString(deniedLoc), giver, args.User);
+            if (comp.GreedPopup is { } greedLoc)
+                _popup.PopupEntity(Loc.GetString(greedLoc), giver, args.User);
 
             return;
         }
@@ -50,10 +50,21 @@ public sealed class LimitedItemGiverSystem : EntitySystem
         var coords = Transform(args.User).Coordinates;
 
         // Get your gifts here
+        var success = false;
         foreach (var item in toGive)
         {
             var spawned = SpawnAtPosition(item, coords);
             _hands.PickupOrDrop(args.User, spawned);
+            success = true;
+        }
+
+        // Nothing spawned, so don't add the player to the list
+        if (!success)
+        {
+            if (comp.DeniedPopup is { } deniedLoc)
+                _popup.PopupEntity(Loc.GetString(deniedLoc), giver, args.User);
+
+            return;
         }
 
         comp.GrantedPlayers.Add(actor.PlayerSession.UserId);
