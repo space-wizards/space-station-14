@@ -9702,5 +9702,26 @@ Entries:
   id: 1336
   time: '2025-07-23T04:49:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/912
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Added the Proto-5x Energy Gun, added it the HoS's locker
+    type: Add
+  id: 1337
+  time: '2025-07-23T05:19:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/869
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Moved the Energy Shotgun from HoS's Locker to Warden's locker
+    type: Tweak
+  id: 1338
+  time: '2025-07-23T05:19:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/869
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Removed wide spread from the Energy Shotgun
+    type: Remove
+  id: 1339
+  time: '2025-07-23T05:19:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/869
 Order: -1
 
