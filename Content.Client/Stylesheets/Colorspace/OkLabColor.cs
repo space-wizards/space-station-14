@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Robust.Shared.Utility;
-using Vector4 = Robust.Shared.Maths.Vector4;
+using SysVector4 = System.Numerics.Vector4;
 
 namespace Content.Client.Stylesheets.Colorspace;
 
@@ -13,7 +13,7 @@ namespace Content.Client.Stylesheets.Colorspace;
 [PublicAPI]
 public struct OklabColor
 {
-    private Vector4 _color;
+    private SysVector4 _color;
 
     /// <summary>
     ///     Lightness/saturation of the value.
@@ -100,7 +100,7 @@ public struct OklabColor
         DebugTools.Assert(factor >= 0.0 && factor <= 1.0, "Expected factor >= 0.0 && factor <= 1.0");
         return new OklabColor
         {
-            _color = Vector4.Lerp(a._color, b._color, factor),
+            _color = SysVector4.Lerp(a._color, b._color, factor),
         };
     }
 }

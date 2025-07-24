@@ -256,7 +256,7 @@ public sealed partial class CreditsWindow : DefaultWindow
         foreach (var entry in CreditsManager.GetLicenses(_resourceManager).OrderBy(p => p.Name))
         {
             licensesContainer.AddChild(new Label
-                { StyleClasses = { StyleClass.StyleClassLabelHeading }, Text = entry.Name });
+                { StyleClasses = { StyleClass.LabelHeading }, Text = entry.Name });
 
             // We split these line by line because otherwise
             // the LGPL causes Clyde to go out of bounds in the rendering code.

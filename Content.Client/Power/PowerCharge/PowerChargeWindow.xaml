@@ -9,8 +9,7 @@
         SeparationOverride="12">
         <BoxContainer
             Orientation="Vertical"
-
-                    <Button Name="OffButton" Text="{Loc 'power-charge-window-power-off'}" StyleClasses=        HorizontalExpand="True">
+            HorizontalExpand="True">
             <GridContainer
                 Columns="2"
                 VerticalAlignment="Center">
