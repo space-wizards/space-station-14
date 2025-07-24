@@ -57,6 +57,9 @@
       - id: MobMouse1
       - id: MobMouse2
       - id: MobMouseCancer
+    specialEntries:
+    - id: SpawnPointGhostRatKing
+      prob: 0.001
 
 - type: entity
   id: CockroachMigration
