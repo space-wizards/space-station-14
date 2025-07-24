@@ -38,7 +38,8 @@ public sealed class VocalSystem : EntitySystem
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
-        RemComp<VocalComponent>(args.CloneUid);
+        if (HasComp<VocalComponent>(args.CloneUid))
+            RemComp<VocalComponent>(args.CloneUid);
 
         var v = EnsureComp<VocalComponent>(args.CloneUid);
         v.EmoteSounds = ent.Comp.EmoteSounds;
