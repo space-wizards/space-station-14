@@ -557,7 +557,7 @@ WeaponSubMachineGunVectorRubber: null
 WallShuttleInterior: WallShuttle
 
 # 2025-02-18
-PosterContrabandLustyExomorph: PosterContrabandRealExomorph
+# PosterContrabandLustyExomorph: PosterContrabandRealExomorph
 PosterContrabandBustyBackdoorExoBabes6: PosterContrabandRouny
 
 # 2025-02-20
@@ -681,3 +681,10 @@ BarSignEmprahAlignTile: BarSignEmprah
 BarSignSpacebucksAlignTile: BarSignSpacebucks
 BarSignMaltroachAlignTile: BarSignMaltroach
 BarSignWhiskeyEchoesAlignTile: BarSignWhiskeyEchoes
+
+# 2025-07-24
+PosterContrabandLustyExomorph: PosterContrabandRealXeno
+PosterContrabandRealExomorph: PosterContrabandRealXeno
+PosterContrabandExoAcid: PosterContrabandXenoAcid
+PosterContrabandExoRun: PosterContrabandXenoRun
+PosterContrabandExoChomp: PosterContrabandXenoChomp
