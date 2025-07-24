@@ -262,6 +262,8 @@ public sealed partial class SleepingSystem : EntitySystem
 
     private void OnStatusEffectApplied(Entity<ForcedSleepingStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
+        // This prevents applying a component while the server is resetting predicted entities on client.
+        // Any time you might be adding a component using StatusEffectAppliedEvent you should have this check.
         if (_gameTiming.ApplyingState)
             return;
 
