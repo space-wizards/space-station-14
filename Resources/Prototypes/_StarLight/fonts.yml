@@ -1,3 +1,7 @@
 - type: font
   id: SignatureFont
   path: /Fonts/_Starlight/Signature.ttf
+
+- type: font
+  id: Icon
+  path: /Fonts/_Starlight/GameIcons/game-icons.ttf

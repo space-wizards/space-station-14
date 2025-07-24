@@ -71,6 +71,10 @@ namespace Content.Shared.Preferences
         [DataField]
         public string SiliconVoice { get; set; } = ""; // 🌟Starlight🌟
 
+        // Starlight
+        [DataField]
+        public List<string> Cybernetics = [];
+
         /// <summary>
         /// Detailed text that can appear for the character if <see cref="CCVars.FlavorText"/> is enabled.
         /// </summary>
@@ -143,6 +147,7 @@ namespace Content.Shared.Preferences
             HashSet<ProtoId<AntagPrototype>> antagPreferences,
             HashSet<ProtoId<TraitPrototype>> traitPreferences,
             Dictionary<string, RoleLoadout> loadouts,
+            List<string> cybernetics, // Starlight
             bool enabled)
         {
             Name = name;
@@ -160,6 +165,7 @@ namespace Content.Shared.Preferences
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
             _loadouts = loadouts;
+            Cybernetics = cybernetics; // Starlight
             Enabled = enabled;
         }
 
@@ -180,6 +186,7 @@ namespace Content.Shared.Preferences
                 new HashSet<ProtoId<AntagPrototype>>(other.AntagPreferences),
                 new HashSet<ProtoId<TraitPrototype>>(other.TraitPreferences),
                 new Dictionary<string, RoleLoadout>(other.Loadouts),
+                other.Cybernetics, // Starlight
                 other.Enabled)
         {
         }
@@ -375,6 +382,13 @@ namespace Content.Shared.Preferences
             };
         }
 
+        // Starlight
+        public HumanoidCharacterProfile WithCybernetics(List<string> cybernetics) {
+            return new (this){
+                Cybernetics = cybernetics,
+            };
+        }
+
         public HumanoidCharacterProfile WithTraitPreference(ProtoId<TraitPrototype> traitId, IPrototypeManager protoManager)
         {
             // null category is assumed to be default.
@@ -456,6 +470,7 @@ namespace Content.Shared.Preferences
             if (Gender != other.Gender) return false;
             if (Species != other.Species) return false;
             if (CustomSpecieName != other.CustomSpecieName) return false; // Starlight
+            if (Cybernetics != other.Cybernetics) return false; // Starlight
             if (SpawnPriority != other.SpawnPriority) return false;
             if (!_jobPreferences.SequenceEqual(other._jobPreferences)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
@@ -555,6 +570,16 @@ namespace Content.Shared.Preferences
                         break;
                     }
                 }
+            }
+
+            var allCybernetics = CyberneticImplant.GetAllCybernetics(prototypeManager);
+            var installedCybernetics = allCybernetics.Where(p => Cybernetics.Contains(p.ID))
+                                       .Where(p => p.Type == CyberneticImplantType.Limb)
+                                       .ToList();
+            if (installedCybernetics.Select(p => p.Cost).Sum() <= speciesPrototype.RoundstartCyberwareCapacity){
+                Cybernetics = installedCybernetics.Select(p => p.ID).ToList();
+            } else {
+                Cybernetics = [];
             }
             // Starlight - End
 
@@ -704,6 +729,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(Appearance);
             hashCode.Add((int)SpawnPriority);
             hashCode.Add(Enabled);
+            hashCode.Add(Cybernetics); // Starlight
             return hashCode.ToHashCode();
         }
 

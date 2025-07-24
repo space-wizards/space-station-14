@@ -33,6 +33,8 @@ using Content.Shared.Chat;
 using Content.Shared.Kitchen;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
+using Content.Server._NullLink;
+using Content.Server._NullLink.Core;
 
 namespace Content.Server.IoC
 {
@@ -91,6 +93,7 @@ namespace Content.Server.IoC
             IoCManager.Register<ISharedPlayersRoleManager, PlayerRolesManager>(); 
             IoCManager.Register<IPlayerRolesManager, PlayerRolesManager>();     
             IoCManager.Register<ITTSManager, TTSManager>();
+            IoCManager.Register<IActorRouter, ActorRouter>(); // nulllink
         }
     }
 }

@@ -86,7 +86,7 @@
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
-      ignoreWhitelist:
+      blacklist:
         components:
         - IgnoreKudzu
     - type: Food
@@ -127,7 +127,7 @@
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.8
       sprintSpeedModifier: 0.8
-      ignoreWhitelist:
+      blacklist:
         components:
         - IgnoreKudzu
     - type: RandomSpawner
@@ -240,7 +240,7 @@
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.3
       sprintSpeedModifier: 0.3
-      ignoreWhitelist:
+      blacklist:
         tags:
         - Flesh
     - type: Food # delightfully devilish !
