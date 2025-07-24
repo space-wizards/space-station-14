@@ -266,3 +266,21 @@
     - id: CigaretteSaline
       weight: 7
 
+### begin SL
+- type: entity
+  id: CigPackRollie
+  parent: PackPaperRolling
+  name: Rollie Packet
+  description: An old rolling paper packet full of things to make rollies with.
+  components:
+  - type: StorageFill
+    contents:
+    - id: CigaretteFilter
+      amount: 2
+    - id: PaperRolling
+      amount: 2
+    - id: GroundTobacco
+      amount: 10
+    - id: CigaretteSyndicate
+      amount: 2
+### end SL
