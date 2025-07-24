@@ -12,13 +12,12 @@ public sealed partial class KnockdownStatusEffectComponent : Component
     /// Should this knockdown only affect crawlers?
     /// </summary>
     /// <remarks>
-    /// This is here in case you make a status effect that affects non-crawlers, doesn't stun, and that
-    /// you want to knockdown crawlers.
-    /// If you set this to false, make sure you're also applying stun or whitelisting to CrawlingComponent only.
-    /// If you get non-crawlers running around that's your own fault!
+    /// If your status effect doesn't come paired with <see cref="StunnedStatusEffectComponent"/>
+    /// Or if your status effect doesn't whitelist itself to only those with <see cref="CrawlerComponent"/>
+    /// Then you need to set this to true.
     /// </remarks>
     [ViewVariables]
-    public bool Crawl = true;
+    public bool Crawl;
 
     /// <summary>
     /// Should we drop items when we fall?
