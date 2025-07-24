@@ -17,9 +17,9 @@ public sealed partial class HubSystem : EntitySystem
     {
         _sawmill = _logManager.GetSawmill("Hub");
 
-        _cfg.OnValueChanged(CCVars.GameDesc, OnGameDescChanged, true);
+        _cfg.OnValueChanged(NullLinkCCVars.Description, OnGameDescChanged, true);
         _cfg.OnValueChanged(NullLinkCCVars.Type, OnServerTypeChanged, true);
-        _cfg.OnValueChanged(CCVars.GameHostName, OnGameHostNameChanged, true);
+        _cfg.OnValueChanged(NullLinkCCVars.Title, OnGameHostNameChanged, true);
         _cfg.OnValueChanged(CCVars.HubServerUrl, OnConnectionStringChanged, true);
     }
 

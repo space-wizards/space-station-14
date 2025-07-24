@@ -46,6 +46,7 @@ internal sealed class Hub : PanelContainer, IDisposable
         VerticalAlignment = VAlignment.Bottom;
         HorizontalExpand = true;
         VerticalExpand = true;
+        Margin = new Thickness(1);
         StyleClasses.Add("AngleRect");
 
         _gridContainer = new GridContainer
@@ -144,6 +145,8 @@ internal sealed class Hub : PanelContainer, IDisposable
             {
                 Text = "Connected",
                 Disabled = true,
+                TooltipDelay = 1f,
+                ToolTip = server.Description
             };
         }
         else
@@ -151,6 +154,8 @@ internal sealed class Hub : PanelContainer, IDisposable
             connectButton = new Button
             {
                 Text = "Connect",
+                TooltipDelay = 1f,
+                ToolTip = server.Description
             };
             connectButton.OnPressed += _ => _game.Redial(server.ConnectionString);
         }
@@ -162,6 +167,7 @@ internal sealed class Hub : PanelContainer, IDisposable
                 Text = $"[font size=10]{server.Title}[/font]",
                 HorizontalExpand = true,
                 ToolTip = server.Description,
+                TooltipDelay = 1f,
                 HorizontalAlignment = HAlignment.Center,
             },
             Status = new RichTextLabel

@@ -1,6 +1,7 @@
 using Content.Client.Lobby;
 using Content.Shared._NullLink;
 using Content.Shared.CCVar;
+using Content.Shared.NullLink.CCVar;
 using Robust.Client.State;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
@@ -22,7 +23,7 @@ public sealed class HubSystem : EntitySystem
     public Dictionary<string, NullLink.Server>? Servers { get; private set; }
     public Dictionary<string, NullLink.ServerInfo>? ServerInfo { get; private set; }
     public bool HubInitialized { get; private set; } = false;
-    public string CurrentGameHostName => _cfg.GetCVar(CCVars.GameHostName);
+    public string CurrentGameHostName => _cfg.GetCVar(NullLinkCCVars.Title);
 
     public event Action OnInitialized = delegate { };
     public event Action<string, NullLink.Server> OnServerUpdated = delegate { };
