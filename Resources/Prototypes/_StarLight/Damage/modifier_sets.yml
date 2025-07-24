@@ -19,6 +19,12 @@
     Heat: 1.6
 
 - type: damageModifierSet
+  id: Cyclorite
+  coefficients:
+    Blunt: 0.85 # Have you ever tried to punch a rock?
+    Slash: 0.75
+
+- type: damageModifierSet
   id: Shadekin
   coefficients:
     Asphyxiation: 0
