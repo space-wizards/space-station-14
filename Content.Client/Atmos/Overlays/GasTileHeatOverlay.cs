@@ -178,4 +178,12 @@ public sealed class GasTileHeatOverlay : Overlay
         args.WorldHandle.UseShader(null);
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
+
+    protected override void DisposeBehavior()
+    {
+        _heatTarget = null;
+        _heatBlurTarget = null;
+        _configManager.UnsubValueChanged(CCVars.ReducedMotion, SetReducedMotion);
+        base.DisposeBehavior();
+    }
 }
