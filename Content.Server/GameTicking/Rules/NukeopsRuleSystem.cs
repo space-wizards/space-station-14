@@ -424,7 +424,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     {
         ent.Comp.WinType = type;
 
-        NukeopsCount.WithLabels(type.ToString()).Inc();
+        NukeopsCount.WithLabels(type.ToString()).Inc(); // Starlight
 
         if (endRound && (type == WinType.CrewMajor || type == WinType.OpsMajor))
             _roundEndSystem.EndRound();
