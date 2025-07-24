@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/clockwork_windoor.rsi
+  - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
@@ -23,8 +24,8 @@
             min: 1
             max: 2
           SheetBrass1:
-            min: 2
-            max: 4
+            min: 0
+            max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction

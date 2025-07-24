@@ -29,7 +29,6 @@ namespace Content.Server.Decals
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
         [Dependency] private readonly IParallelManager _parMan = default!;
         [Dependency] private readonly ChunkingSystem _chunking = default!;
         [Dependency] private readonly IConfigurationManager _conf = default!;
@@ -37,6 +36,7 @@ namespace Content.Server.Decals
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly TurfSystem _turf = default!;
 
         private readonly Dictionary<NetEntity, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> _previousSentChunks = new();
@@ -160,18 +160,22 @@ namespace Content.Server.Decals
 
         private void OnTileChanged(ref TileChangedEvent args)
         {
+            if (!TryComp(args.Entity, out DecalGridComponent? grid))
+                return;
+
+            var toDelete = new HashSet<uint>();
+
             foreach (var change in args.Changes)
             {
-                if (!change.NewTile.IsSpace(_tileDefMan))
-                    return;
-
-                if (!TryComp(args.Entity, out DecalGridComponent? grid))
-                    return;
+                if (!_turf.IsSpace(change.NewTile))
+                    continue;
 
                 var indices = GetChunkIndices(change.GridIndices);
-                var toDelete = new HashSet<uint>();
+
                 if (!grid.ChunkCollection.ChunkCollection.TryGetValue(indices, out var chunk))
-                    return;
+                    continue;
+
+                toDelete.Clear();
 
                 foreach (var (uid, decal) in chunk.Decals)
                 {
@@ -183,7 +187,7 @@ namespace Content.Server.Decals
                 }
 
                 if (toDelete.Count == 0)
-                    return;
+                    continue;
 
                 foreach (var decalId in toDelete)
                 {
@@ -304,7 +308,7 @@ namespace Content.Server.Decals
             if (!TryComp(gridId, out MapGridComponent? grid))
                 return false;
 
-            if (_mapSystem.GetTileRef(gridId.Value, grid, coordinates).IsSpace(_tileDefMan))
+            if (_turf.IsSpace(_mapSystem.GetTileRef(gridId.Value, grid, coordinates)))
                 return false;
 
             if (!TryComp(gridId, out DecalGridComponent? comp))

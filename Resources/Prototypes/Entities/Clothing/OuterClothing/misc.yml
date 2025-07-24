@@ -11,6 +11,10 @@
   - type: MicroFiber
     microFiberMaterial: micro-fibers-flax
     microFiberColor: micro-fibers-yellow
+  - type: Tag
+    tags:
+    - Apron
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -26,6 +30,10 @@
   - type: MicroFiber
     microFiberMaterial: micro-fibers-flax
     microFiberColor: micro-fibers-black
+  - type: Tag
+    tags:
+    - Apron
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -41,6 +49,10 @@
   - type: MicroFiber
     microFiberMaterial: micro-fibers-flax
     microFiberColor: micro-fibers-blue
+  - type: Tag
+    tags:
+    - Apron
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -56,6 +68,10 @@
   - type: MicroFiber
     microFiberMaterial: micro-fibers-flax
     microFiberColor: micro-fibers-white
+  - type: Tag
+    tags:
+    - Apron
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -199,6 +215,10 @@
     sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterWizardBase
@@ -210,6 +230,10 @@
     sprite: Clothing/OuterClothing/Misc/wizard.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/wizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterWizardBase
@@ -221,6 +245,10 @@
     sprite: Clothing/OuterClothing/Misc/redwizard.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/redwizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterBase

@@ -185,7 +185,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         if (!force)
             _popup.PopupPredicted(Loc.GetString("delivery-unlocked-self", ("delivery", deliveryName)),
-                Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
+                Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Entity(user, EntityManager)), ("possadj", user)), user, user);
 
         return true;
     }
@@ -213,7 +213,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         if (!force)
             _popup.PopupPredicted(Loc.GetString("delivery-opened-self", ("delivery", deliveryName)),
-                Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
+                Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Entity(user, EntityManager)), ("possadj", user)), user, user);
 
         if (!_container.TryGetContainer(ent, ent.Comp.Container, out var container))
             return;
@@ -257,6 +257,13 @@ public abstract class SharedDeliverySystem : EntitySystem
     {
         _appearance.SetData(ent, DeliveryVisuals.IsBroken, ent.Comp.Broken);
         _appearance.SetData(ent, DeliveryVisuals.IsFragile, isFragile);
+    }
+
+    public void UpdateBombVisuals(Entity<DeliveryBombComponent> ent)
+    {
+        var isPrimed = HasComp<PrimedDeliveryBombComponent>(ent);
+
+        _appearance.SetData(ent, DeliveryVisuals.IsBomb, isPrimed ? DeliveryBombState.Primed : DeliveryBombState.Inactive);
     }
 
     protected void UpdateDeliverySpawnerVisuals(EntityUid uid, int contents)
