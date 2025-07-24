@@ -186,24 +186,10 @@
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
-        toggleAction: ActionMothershipShowRadar
+        toggleAction: ActionAGhostShowRadar
   - type: ShowElectrocutionHUD
   - type: PowerMonitoringCableNetworks
   - type: RadarConsole
 
 # TODO: add xenoborg control interface action (part 5)
 # TODO: add xenoborg camera monitor interface action (part 5)
-
-- type: entity
-  id: ActionMothershipShowRadar
-  name: Radar Monitor
-  description: View the radar monitor.
-  components:
-  - type: Action
-    icon:
-      sprite: Structures/Machines/computers.rsi # TODO: custom sprite here (part 5)
-      state: solar_screen
-    keywords: [ "AI", "console", "interface" ]
-    priority: -6
-  - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
