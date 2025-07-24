@@ -62,6 +62,9 @@ namespace Content.Server.Atmos.Components
         public int HighPressureDeltaCount => HighPressureDelta.Count;
 
         [ViewVariables]
+        public readonly HashSet<Entity<DeltaPressureComponent>> DeltaPressureEntity = new();
+
+        [ViewVariables]
         public readonly HashSet<IPipeNet> PipeNets = new();
 
         [ViewVariables]
@@ -72,6 +75,9 @@ namespace Content.Server.Atmos.Components
 
         [ViewVariables]
         public readonly Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
+
+        [ViewVariables]
+        public readonly Queue<Entity<DeltaPressureComponent>> CurrentRunDeltaPressureEntities = new();
 
         [ViewVariables]
         public readonly Queue<IPipeNet> CurrentRunPipeNet = new();

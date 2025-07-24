@@ -467,6 +467,17 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
+        /// <summary>
+        /// Processes all entities with a <see cref="DeltaPressureComponent"/>, doing damage to them
+        /// depending on certain pressure differential conditions.
+        /// </summary>
+        /// <returns>True if we've finished processing all entities that required processing this run,
+        /// otherwise, false.</returns>
+        private bool ProcessDeltaPressure(GridAtmosphereComponent atmosphere)
+        {
+            throw new NotImplementedException("wawa");
+        }
+
         private bool ProcessPipeNets(GridAtmosphereComponent atmosphere)
         {
             if (!atmosphere.ProcessingPaused)
@@ -679,6 +690,16 @@ namespace Content.Server.Atmos.EntitySystems
                         }
 
                         atmosphere.ProcessingPaused = false;
+                        atmosphere.State = AtmosphereProcessingState.DeltaPressure;
+                        continue;
+                    case AtmosphereProcessingState.DeltaPressure:
+                        if (!ProcessDeltaPressure(atmosphere))
+                        {
+                            atmosphere.ProcessingPaused = true;
+                            return;
+                        }
+
+                        atmosphere.ProcessingPaused = false;
                         atmosphere.State = AtmosphereProcessingState.PipeNet;
                         continue;
                     case AtmosphereProcessingState.PipeNet:
@@ -723,6 +744,7 @@ namespace Content.Server.Atmos.EntitySystems
         HighPressureDelta,
         Hotspots,
         Superconductivity,
+        DeltaPressure,
         PipeNet,
         AtmosDevices,
         NumStates
