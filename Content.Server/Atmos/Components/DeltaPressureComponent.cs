@@ -1,3 +1,4 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 
@@ -7,11 +8,32 @@ namespace Content.Server.Atmos.Components;
 /// Entities that have this component will have damage done to them depending on the local pressure
 /// environment that they reside in.
 /// </summary>
-/// <remarks>If the entity does not have an <see cref="AirtightComponent"/>,
-/// simple damage depending on the current pressure will be done instead.</remarks>
+/// <remarks><para>If the entity does not have an <see cref="AirtightComponent"/>,
+/// simple damage depending on the current pressure will be done instead.</para>
+///
+/// <para>Systems wanting to change these values should go through the <see cref="DeltaPressureSystem"/> API.</para></remarks>
 [RegisterComponent]
+[Access(typeof(DeltaPressureSystem), typeof(AtmosphereSystem))]
 public sealed partial class DeltaPressureComponent : Component
 {
+    /// <summary>
+    /// Whether the entity is allowed to take pressure damage or not.
+    /// </summary>
+    [DataField(readOnly: true)]
+    public bool Enabled;
+
+    /// <summary>
+    /// Whether this entity is currently taking damage.
+    /// </summary>
+    [DataField(readOnly:true)]
+    public bool IsTakingDamage;
+
+    /// <summary>
+    /// Whether the entity should automatically join the list to be processed by atmospherics on init.
+    /// </summary>
+    [DataField]
+    public bool AutoJoin = true;
+
     /// <summary>
     /// The base damage applied to the entity per atmos tick when it is above the damage threshold.
     /// This damage will be scaled as defined by the <see cref="DeltaPressureDamageScalingType"/> enum
@@ -25,6 +47,11 @@ public sealed partial class DeltaPressureComponent : Component
             { "Structural", 20 },
         },
     };
+
+    /// <summary>
+    /// If the entity is fulfilling both minimum pressure requirements, then this entity will stack damage.
+    /// </summary>
+    public bool StackDamage = true;
 
     /// <summary>
     /// The minimum pressure at which the entity will start taking damage.

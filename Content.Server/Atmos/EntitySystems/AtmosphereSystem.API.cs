@@ -5,6 +5,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Reactions;
+using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
@@ -317,6 +318,61 @@ public partial class AtmosphereSystem
 
         device.Comp.JoinedGrid = null;
         return true;
+    }
+
+    /// <summary>
+    /// Adds an entity with a DeltaPressureComponent to the DeltaPressure processing list.
+    /// </summary>
+    /// <param name="grid">The grid to add the entity to.</param>
+    /// <param name="ent">The entity to add.</param>
+    /// <returns>True if the entity was added to the list, false if it could not be added or
+    /// if the entity was already present in the list.</returns>
+    [PublicAPI]
+    public bool TryAddDeltaPressureEntity(Entity<GridAtmosphereComponent?> grid, Entity<DeltaPressureComponent> ent)
+    {
+        // The entity needs to be part of a grid, and it should be the right one :)
+        DebugTools.Assert(Transform(ent).GridUid == grid);
+
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
+            return false;
+
+        if (!grid.Comp.DeltaPressureEntity.Add(ent))
+            return false;
+
+        ent.Comp.Enabled = true;
+        return true;
+    }
+
+    /// <summary>
+    /// Removes an entity with a DeltaPressureComponent from the DeltaPressure processing list.
+    /// </summary>
+    /// <param name="grid">The grid to remove the entity from.</param>
+    /// <param name="ent">The entity to remove.</param>
+    /// <returns>True if the entity was removed from the list, false if it could not be removed or
+    /// if the entity was not present in the list.</returns>
+    [PublicAPI]
+    public bool TryRemoveDeltaPressureEntity(Entity<GridAtmosphereComponent?> grid, Entity<DeltaPressureComponent> ent)
+    {
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
+            return false;
+
+        if (!grid.Comp.DeltaPressureEntity.Remove(ent))
+            return false;
+
+        ent.Comp.Enabled = false;
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if a DeltaPressureComponent is currently considered for processing on a grid.
+    /// </summary>
+    /// <param name="grid">The grid that the entity may belong to.</param>
+    /// <param name="ent">The entity to check.</param>
+    /// <returns>True if the entity is part of the processing list, false otherwise.</returns>
+    [PublicAPI]
+    public bool IsDeltaPressureEntityInList(Entity<GridAtmosphereComponent?> grid, Entity<DeltaPressureComponent> ent)
+    {
+        return _atmosQuery.Resolve(grid, ref grid.Comp, false) && grid.Comp.DeltaPressureEntity.Contains(ent);
     }
 
     [ByRefEvent] private record struct SetSimulatedGridMethodEvent
