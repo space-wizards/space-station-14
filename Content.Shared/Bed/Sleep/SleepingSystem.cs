@@ -262,6 +262,9 @@ public sealed partial class SleepingSystem : EntitySystem
 
     private void OnStatusEffectApplied(Entity<ForcedSleepingStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
+        if (_gameTiming.ApplyingState)
+            return;
+
         TrySleeping(args.Target);
     }
 
