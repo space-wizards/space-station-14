@@ -17,6 +17,9 @@ namespace Content.Client.UserInterface.Controls
     {
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         [Dependency] private readonly IStylesheetManager _styleMan = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
+        private ISawmill _logger = default!;
         private GuidebookSystem? _guidebookSystem;
         private const int DRAG_MARGIN_SIZE = 7;
 
@@ -27,6 +30,8 @@ namespace Content.Client.UserInterface.Controls
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+
+            _logger = Logger.GetSawmill("ui.fancywindow");
 
             CloseButton.OnPressed += _ => Close();
             HelpButton.OnPressed += _ => Help();
@@ -47,8 +52,16 @@ namespace Content.Client.UserInterface.Controls
             set
             {
                 _stylesheet = value;
-                if (value is not null && _styleMan.TryGetStylesheet(value, out var stylesheet))
+                if (value is null)
+                    return;
+
+                if (_styleMan.TryGetStylesheet(value, out var stylesheet))
                     base.Stylesheet = stylesheet;
+                else
+                {
+                    _logger.Error(
+                        $"Failed to apply stylesheet '{value}' to {GetType().Name}. Stylesheet not found.");
+                }
             }
         }
 
