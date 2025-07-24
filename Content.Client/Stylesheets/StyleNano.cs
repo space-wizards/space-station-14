@@ -86,6 +86,8 @@ namespace Content.Client.Stylesheets
 
         public const string StyleClassButtonHelp = "HelpButton";
 
+        public const string StyleClassPowerSwitchButton = "PowerSwitchButton";
+
         public const string StyleClassPopupMessageSmall = "PopupMessageSmall";
         public const string StyleClassPopupMessageSmallCaution = "PopupMessageSmallCaution";
         public const string StyleClassPopupMessageMedium = "PopupMessageMedium";
@@ -480,6 +482,8 @@ namespace Content.Client.Stylesheets
             // SwitchButton
             var switchButtonTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_off.svg.96dpi.png");
             var switchButtonTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_on.svg.96dpi.png");
+            var switchButtonTexturePowerUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_power_off.svg.96dpi.png");
+            var switchButtonTexturePowerChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_power_on.svg.96dpi.png");
 
             // Tooltip box
             var tooltipTexture = resCache.GetTexture("/Textures/Interface/Nano/tooltip.png");
@@ -1021,14 +1025,17 @@ namespace Content.Client.Stylesheets
                 }),
 
                 // SwitchButton
-                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { SwitchButton.StyleClassSwitchButton }, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, null), new[]
                 {
-                    new StyleProperty(TextureRect.StylePropertyTexture,  switchButtonTextureUnchecked),
+                    new StyleProperty(SwitchButton.StylePropertyTextureUnchecked,  switchButtonTextureUnchecked),
+                    new StyleProperty(SwitchButton.StylePropertyTextureChecked,  switchButtonTextureChecked),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { SwitchButton.StyleClassSwitchButton, SwitchButton.StyleClassSwitchButtonChecked }, null, null), new[]
+                // Power-style SwitchButton
+                new StyleRule(new SelectorElement(typeof(SwitchButton), new [] { StyleClassPowerSwitchButton }, null, null), new[]
                 {
-                    new StyleProperty(TextureRect.StylePropertyTexture, switchButtonTextureChecked),
+                    new StyleProperty(SwitchButton.StylePropertyTextureUnchecked,  switchButtonTexturePowerUnchecked),
+                    new StyleProperty(SwitchButton.StylePropertyTextureChecked,  switchButtonTexturePowerChecked),
                 }),
 
                 new StyleRule(new SelectorElement(typeof(BoxContainer), new [] { SwitchButton.StyleClassSwitchButton }, null, null), new[]
