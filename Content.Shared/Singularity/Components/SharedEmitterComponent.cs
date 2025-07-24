@@ -4,7 +4,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Singularity.Components;
@@ -31,8 +30,8 @@ public sealed partial class EmitterComponent : Component
     [DataField("boltType", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string BoltType = "EmitterBolt";
 
-    [DataField("selectableTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> SelectableTypes = new();
+    [DataField]
+    public List<EntProtoId> SelectableTypes = new();
 
     /// <summary>
     /// The current amount of power being used.
