@@ -1,16 +1,19 @@
 <Document>
  # Rule 9 - Interacting with SSD/AFK players.
- SSD (Space Sleep Disorder) players are players who have disconnected from the game and can return to their body still. They can be identified with the yellow text upon inspection, and Zs next to their character model. AFK players are those who are unresponsive to questions or actions being taken around them.
+ SSD (Space Sleep Disorder) players are those who have disconnected from the game but can still return to their character. They are identified by yellow text upon inspection and Zs next to their character model. AFK players are those who remain in-game but are unresponsive to interactions around them. Killing or robbing an SSD player does not contribute to interesting gameplay—it disrupts both the killer's and the victim's experience. If your target is SSD, use Ahelp to determine the appropriate course of action.
+Players who have been AFK for a significant amount of time will be automatically transported to a cryo tube. 
 
- Being killed or robbed due to inactivity does not assist with interesting gameplay. Killing or robbing an SSD player is not interesting for either the killer or the victim. If your target is SSD, you may use ahelp to determine the best path forward.
+## General Rules for SSD/AFK Interactions
+- You may not interact with SSD players unless doing so falls into one of the following cases:
+\n - [color=000000] Moving them to a cryo-pod
+\n - [color=000000] Providing medical assistance
+\n - [color=000000] Rescuing them from immediate danger (e.g., carrying them out of a fire)
+- If a player with SSD has a Wanted status, they may not be detained without administrator permission.
+\n - [color=000000] However, if the player went SSD during or immediately after detention, the arrest may proceed.
+- Antagonists may continue their interactions with a target if the player enters SSD after an attack has begun.
+- If interacting with an SSD player is necessary for roleplay or progression (e.g., retrieving critical equipment from a Captain), if in doubt, use ahelp first to confirm.
 
- The basic rules for dealing with SSD/AFK players are as follows:
-
-  - It is forbidden to touch or interact with SSD players except in the following cases: taking them to a cryo-pod, providing medical assistance, or rescuing them from immediate danger (such as carrying them out of a fire).
-  - Likewise, if a player with SSD has a “Wanted” status, they may not be detained without the permission of an administrator.
-  - If the player went SSD during or immediately after the detention, it is allowed to continue the detention and arrest.
-  - Likewise, if you are an antagonist, and if your target has entered SSD immediately after you attacked them, you may continue.
-  - If you feel compelled by the situation to interact with a player in the SSD (for example, to retrieve an important piece of equipment from a captain), use Ahelp first.
-  - It is forbidden to steal a player's SSD items, except in the following cases: a mission to steal cloaks, medals, figurines and other items that are unique.
-
+## Restrictions on SSD Item Theft
+- Stealing items from SSD players is prohibited, except when fulfilling specific objectives such as missions to acquire cloaks, medals, figurines, IDs or other unique items.
+- Items that directly aid you in completing your objectives (Such as the RD's ID if they do not have their experimental hardsuit on them, or the Captain's ID if they do not have their laser pistol on them) are allowed to be stolen.
 </Document>
