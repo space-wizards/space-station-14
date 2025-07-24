@@ -140,7 +140,6 @@ public sealed class SlipperySystem : EntitySystem
                 _movementMod.TryUpdateFrictionModDuration(
                     other,
                     component.FrictionStatusTime,
-                    component.SlipData.SlipFriction,
                     component.SlipData.SlipFriction
                 );
             }
