@@ -452,7 +452,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         _mover.SetRelay(user, ent.Comp.RemoteEntity.Value);
 
-        var eyeName = Loc.GetString("station-ai-eye-name", ("name", MetaData(user).EntityName));
+        var eyeName = Loc.GetString("station-ai-eye-name", ("name", Name(user)));
         _metadata.SetEntityName(ent.Comp.RemoteEntity.Value, eyeName);
     }
 
