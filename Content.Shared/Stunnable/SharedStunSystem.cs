@@ -245,6 +245,14 @@ public abstract partial class SharedStunSystem : EntitySystem
         return true;
     }
 
+    private void Crawl(Entity<CrawlerComponent?> entity, TimeSpan? time, bool refresh, bool autoStand, bool drop)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
+        Knockdown(entity, time, refresh, autoStand, drop);
+    }
+
     private void Knockdown(EntityUid uid, TimeSpan? time, bool refresh, bool autoStand, bool drop)
     {
         // Initialize our component with the relevant data we need if we don't have it
@@ -344,8 +352,11 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (GameTiming.ApplyingState)
             return;
 
-        // If you make something that shouldn't crawl, crawl, that's your own fault. Add Crawling to component whitelist or pair this with stunned...
-        Knockdown(args.Target, null, true, true, drop: entity.Comp.Drop);
+        // If you make something that shouldn't crawl, crawl, that's your own fault.
+        if (entity.Comp.Crawl)
+            Crawl(args.Target, null, true, true, drop: entity.Comp.Drop);
+        else
+            Knockdown(args.Target, null, true, true, drop: entity.Comp.Drop);
     }
 
     private void OnStandUpAttempt(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectRelayedEvent<StandUpAttemptEvent> args)
