@@ -1,0 +1,220 @@
+## arms
+- type: marking
+  id: CyForearmSpikes
+  bodyPart: Chest
+  markingCategory: Arms
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/arms.rsi
+      state: forearm_spikes
+
+- type: marking
+  id: CyShoulderSpikes
+  bodyPart: Chest
+  markingCategory: Arms
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/arms.rsi
+      state: shoulder_spikes
+
+- type: marking
+  id: CyArmStarsLeft
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/arms.rsi
+      state: stars_left
+
+- type: marking
+  id: CyArmStarsRight
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/arms.rsi
+      state: stars_right
+
+- type: marking
+  id: CyArmStripeLeft
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/arms.rsi
+      state: stripe_left
+
+- type: marking
+  id: CyArmStripeRight
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/arms.rsi
+      state: stripe_right
+
+- type: marking
+  id: CyWristStripeLeft
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/arms.rsi
+      state: wrist_stripe_left
+
+- type: marking
+  id: CyWristStripeRight
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/arms.rsi
+      state: wrist_stripe_right
+
+## head
+
+- type: marking
+  id: CyHeadBands
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/head.rsi
+      state: bands
+
+- type: marking
+  id: CyHeadCrest
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/head.rsi
+      state: crest
+
+- type: marking
+  id: CyHeadCrown
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/head.rsi
+      state: crown
+
+- type: marking
+  id: CyHeadSerious
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/head.rsi
+      state: serious
+
+- type: marking
+  id: CyHeadSideSpikes
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/head.rsi
+      state: side_spikes
+
+- type: marking
+  id: CyHeadStars
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/head.rsi
+      state: stars
+
+- type: marking
+  id: CyLegsAnkleStripes
+  bodyPart: Chest
+  markingCategory: Legs
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/legs.rsi
+      state: ankle_stripes
+
+- type: marking
+  id: CyLegsChevron
+  bodyPart: Chest
+  markingCategory: Legs
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/legs.rsi
+      state: chevron
+
+- type: marking
+  id: CyLegsFeetGradient
+  bodyPart: Chest
+  markingCategory: Legs
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/legs.rsi
+      state: feet_gradient
+
+- type: marking
+  id: CyLegsHeelSpikes
+  bodyPart: Chest
+  markingCategory: Legs
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/legs.rsi
+      state: heel_spikes
+
+- type: marking
+  id: CyLegsHipRound
+  bodyPart: Chest
+  markingCategory: Legs
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/legs.rsi
+      state: hip_round
+
+## torso
+
+- type: marking
+  id: CyTorsoBackSensor
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/torso.rsi
+      state: backsensor
+
+- type: marking
+  id: CyTorsoCross
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/torso.rsi
+      state: cross
+
+- type: marking
+  id: CyTorsoRibs
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/torso.rsi
+      state: ribs
+
+- type: marking
+  id: CyTorsoScratchLeft
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/torso.rsi
+      state: scratchleft
+
+- type: marking
+  id: CyTorsoScratchRight
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Cyclorite]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Cyclorite/torso.rsi
+      state: scratchright

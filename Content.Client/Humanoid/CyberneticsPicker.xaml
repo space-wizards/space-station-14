@@ -1,0 +1,26 @@
+<!-- Starlight -->
+<Control xmlns="https://spacestation14.io">
+    <!-- Primary container -->
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+        <!-- Cybernetics points container -->
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Name="CyberneticsPoints" Text="{Loc 'cybernetics-points-remaining'}" />
+        </BoxContainer>
+        <!-- Main cybernetics container -->
+        <BoxContainer Orientation="Horizontal" SeparationOverride="5" HorizontalExpand="True">
+            <!-- Available cybernetics -->
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <Label Text="{Loc 'cybernetics-available'}" />
+                <ItemList Name="AvailableCybernetics" VerticalExpand="True" MinSize="300 250" />
+                <Button Name="Install" Text="{Loc 'cybernetics-add'}" StyleClasses="OpenRight" />
+            </BoxContainer>
+
+            <!-- Installed cybernetics -->
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <Label Text="{Loc 'cybernetics-installed'}" />
+                <ItemList Name="InstalledCybernetics" VerticalExpand="True" MinSize="300 250" />
+                <Button Name="Remove" Text="{Loc 'cybernetics-remove'}" StyleClasses="OpenRight" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</Control>
