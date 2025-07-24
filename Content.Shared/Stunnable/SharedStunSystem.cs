@@ -241,7 +241,6 @@ public abstract partial class SharedStunSystem : EntitySystem
             return refresh || time == null ? TryUpdateParalyzeDuration(entity, time) : TryAddParalyzeDuration(entity, time.Value);
 
         Knockdown(entity, time, refresh, autoStand, drop);
-
         return true;
     }
 
