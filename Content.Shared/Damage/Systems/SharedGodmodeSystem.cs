@@ -4,6 +4,7 @@ using Content.Shared.Destructible;
 using Content.Shared.Prototypes;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Slippery;
+using Content.Shared.StatusEffect;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Prototypes;
@@ -21,6 +22,7 @@ public abstract class SharedGodmodeSystem : EntitySystem
 
         SubscribeLocalEvent<GodmodeComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
         SubscribeLocalEvent<GodmodeComponent, BeforeStatusEffectAddedEvent>(OnBeforeStatusEffect);
+        SubscribeLocalEvent<GodmodeComponent, BeforeOldStatusEffectAddedEvent>(OnBeforeOldStatusEffect);
         SubscribeLocalEvent<GodmodeComponent, BeforeStaminaDamageEvent>(OnBeforeStaminaDamage);
         SubscribeLocalEvent<GodmodeComponent, SlipAttemptEvent>(OnSlipAttempt);
         SubscribeLocalEvent<GodmodeComponent, DestructionAttemptEvent>(OnDestruction);
@@ -38,12 +40,14 @@ public abstract class SharedGodmodeSystem : EntitySystem
 
     private void OnBeforeStatusEffect(EntityUid uid, GodmodeComponent component, ref BeforeStatusEffectAddedEvent args)
     {
-        // Don't apply the status effect if 1) we can't find an entity proto
-        // for it (probably from old status effect system) or 2) we found the
-        // proto and it has a RejuvenateRemovedStatusEffectComponent.
-        if (!_protoMan.TryIndex(args.Effect.Id, out var proto, logError: false)
-            || proto.HasComponent<RejuvenateRemovedStatusEffectComponent>(Factory))
+        if (_protoMan.Index(args.Effect).HasComponent<RejuvenateRemovedStatusEffectComponent>(Factory))
             args.Cancelled = true;
+    }
+
+    private void OnBeforeOldStatusEffect(Entity<GodmodeComponent> ent, ref BeforeOldStatusEffectAddedEvent args)
+    {
+        // Old status effect system doesn't distinguish between good and bad status effects
+        args.Cancelled = true;
     }
 
     private void OnBeforeStaminaDamage(EntityUid uid, GodmodeComponent component, ref BeforeStaminaDamageEvent args)
