@@ -17,8 +17,8 @@ namespace Content.Client.Stylesheets.Sheetlets.Hud;
 public sealed class ContextMenuSheetlet<T> : Sheetlet<T>
     where T : PalettedStylesheet, IWindowConfig, IButtonConfig, IIconConfig
 {
-    // TODO: make this note hardcoded (I am too scared to change the context menu colors)
-    private static readonly ColorPalette ContextButtonPalette = new()
+    // TODO: make this not hardcoded (I am too scared to change the context menu colors)
+    private static readonly ColorPalette ContextButtonPalette = new("#000000")
     {
         HoveredElement = Color.DarkSlateGray,
         Element = Color.FromHex("#1119"),
