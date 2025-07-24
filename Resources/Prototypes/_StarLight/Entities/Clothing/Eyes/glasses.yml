@@ -9,6 +9,7 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/brigmedicglasses.rsi
   - type: FlashImmunity
+  - type: SolutionScanner
   - type: EyeProtection
     protectionTime: 5
   - type: ShowHealthBars
@@ -21,7 +22,7 @@
     - WhitelistChameleon
   - type: IdentityBlocker
     coverage: EYES
-    
+
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesSunGlassesHudSkill
@@ -38,7 +39,7 @@
   - type: ShowCriminalRecordIcons
   - type: EyeProtection
     protectionTime: 5
-    
+
 - type: entity
   parent: [ClothingEyesBase, BaseCommandContraband]
   id: ClothingEyesGlassesBlueShield
