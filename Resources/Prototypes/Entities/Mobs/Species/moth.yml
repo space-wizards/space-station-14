@@ -69,6 +69,7 @@
   - type: TemperatureSpeed
     thresholds:
       289: 0.9
+      275: 0.8
       250: 0.7
   - type: Sprite # sprite again because we want different layer ordering
     noRot: true

@@ -66,6 +66,7 @@
   - type: TemperatureSpeed
     thresholds:
       301: 0.9
+      295: 0.8
       285: 0.7
   - type: Wagging
   - type: Inventory

@@ -256,6 +256,7 @@
   - type: TemperatureSpeed
     thresholds:
       293: 0.9
+      280: 0.8
       260: 0.7
   - type: ThermalRegulator
     metabolismHeat: 800
