@@ -17,5 +17,5 @@ public sealed partial class StarlightCCVars
         CVarDef.Create("audio.mhelp_sound", "/Audio/_Starlight/Effects/hello_mentor.ogg", CVar.ARCHIVE | CVar.CLIENTONLY);
 
     public static readonly CVarDef<bool> MHelpPing =
-        CVarDef.Create("mhelp.ping_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+        CVarDef.Create("mhelp.ping_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY | CVar.ARCHIVE);
 }
