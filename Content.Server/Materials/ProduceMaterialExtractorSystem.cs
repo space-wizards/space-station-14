@@ -33,13 +33,13 @@ public sealed class ProduceMaterialExtractorSystem : EntitySystem
             return;
 
         // If we've managed to extract something from whatever we're using on the biogenerator, play audio
-        if (TryExtractFromProduce(ent, args.Used) || TryInsertFromStorage(ent, args.Used))
+        if (TryExtractFromProduce(ent, args.Used, args.User) || TryInsertFromStorage(ent, args.Used, args.User))
             _audio.PlayPvs(ent.Comp.ExtractSound, ent);
             args.Handled = true;
     }
 
     // The old function, crammed into a boolean function to register whether we should play the audio/set the handled args
-    private bool TryExtractFromProduce(Entity<ProduceMaterialExtractorComponent> ent, EntityUid used)
+    private bool TryExtractFromProduce(Entity<ProduceMaterialExtractorComponent> ent, EntityUid used, EntityUid user)
     {
         if (!TryComp<ProduceComponent>(used, out var produce))
             return false;
@@ -57,8 +57,8 @@ public sealed class ProduceMaterialExtractorSystem : EntitySystem
 
         if (changed == 0)
         {
-            _popup.PopupEntity(Loc.GetString("material-extractor-comp-wrongreagent", ("used", args.Used)), args.User, args.User);
-            return;
+            _popup.PopupEntity(Loc.GetString("material-extractor-comp-wrongreagent", ("used", used)), user, user);
+            return false;
         }
 
         _materialStorage.TryChangeMaterialAmount(ent, ent.Comp.ExtractedMaterial, changed);
@@ -68,7 +68,7 @@ public sealed class ProduceMaterialExtractorSystem : EntitySystem
         return true;
     }
 
-    private bool TryInsertFromStorage(Entity<ProduceMaterialExtractorComponent> ent, EntityUid used)
+    private bool TryInsertFromStorage(Entity<ProduceMaterialExtractorComponent> ent, EntityUid used, EntityUid user)
     {
         // If there's no storage component, ollie out of this function
         if (!TryComp<StorageComponent>(used, out var storage))
@@ -81,7 +81,7 @@ public sealed class ProduceMaterialExtractorSystem : EntitySystem
         // Run TryExtractFromProduce on every item in storage
         foreach (var (item, _location) in storage.StoredItems)
         {
-            if (TryExtractFromProduce(ent, item))
+            if (TryExtractFromProduce(ent, item, user))
                 hasInserted = true;
         }
 
