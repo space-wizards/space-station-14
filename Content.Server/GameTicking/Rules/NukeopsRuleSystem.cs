@@ -26,11 +26,34 @@ using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.Store.Components;
 using Content.Server.Starlight.Antags.Abductor;
+using Prometheus; // Starlight
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {
+    // Starlight - Start
+    private static readonly Gauge OpsMajorCount = Metrics.CreateGauge(
+       "nukies_opsMajor",
+       "Number of all nukies OpsMajor.");
+
+    private static readonly Gauge OpsMinorCount = Metrics.CreateGauge(
+       "nukie_opsMinor",
+       "Number of all nukies OpsMinor.");
+
+    private static readonly Gauge NeutralCount = Metrics.CreateGauge(
+       "nukies_neutral",
+       "Number of all nukies Neutral.");
+
+    private static readonly Gauge CrewMinorCount = Metrics.CreateGauge(
+       "nukie_crewMinor",
+       "Number of all nukies CrewMinor.");
+
+    private static readonly Gauge CrewMajorCount = Metrics.CreateGauge(
+       "nukie_crewMajor",
+       "Number of all nukies CrewMajor.");
+    // Starlight - End
+
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
@@ -417,6 +440,19 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     private void SetWinType(Entity<NukeopsRuleComponent> ent, WinType type, bool endRound = true)
     {
         ent.Comp.WinType = type;
+
+        // Starlight - Start
+        if (type == WinType.CrewMajor)
+            OpsMajorCount.Inc();
+        else if (type == WinType.OpsMinor)
+            OpsMinorCount.Inc();
+        else if (type == WinType.Neutral)
+            NeutralCount.Inc();
+        else if (type == WinType.CrewMinor)
+            CrewMinorCount.Inc();
+        else if (type == WinType.CrewMajor)
+            CrewMajorCount.Inc();
+        // Starlight - End
 
         if (endRound && (type == WinType.CrewMajor || type == WinType.OpsMajor))
             _roundEndSystem.EndRound();
