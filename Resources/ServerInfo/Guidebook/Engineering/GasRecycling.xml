@@ -8,11 +8,9 @@
   Specificaly it can recycle Carbon Dioxide and Nitrous Oxide into Oxygen and Nitrogen.
 
   The machine has a two [textlink="pipenet" link="PipeNetworks"] connections, for gas input and output.
-  Please note that it can only be constructed with the pipenet connections in north-south direction, with input on top (north), and output at the bottom (south).
 
-  For the machine to work, tha gas needs to be pressurized to [color=orange]3000 kPa[/color], and heated to [color=orange]573,15K[/color].
-  If these conditions are not met, the gas will just flow through the machine without getting recycled.
-  Gasses other than carbon dioxide and nitrous oxide will also just pass through.
+  For recycler to work, tha gas needs to be pressurized to [color=#a4885c]3000 kPa[/color] heated to [color=#a4885c]573,15K[/color], and the pressure at the outlet side needs to be lower than inlet.
+  If these conditions are not met, the gases will just pass through the machine without getting recycled (as will unrecyclable gases).
 
   <Box>
     <GuideEntityEmbed Entity="GasRecyclerMachineCircuitboard" Caption="Gas recycler circuit board"/>
@@ -22,7 +20,6 @@
   It first needs to be researched by [textlink="science" link="Science"] though.
 
   Gas recycling can be used as an alternative to gas miners, or as a backup to build a redundancy in the atmospheric system.
-
   [color=#a4885c]Just don't forget to cool the gas before releasing it into the station![/color]
 
 </Document>
