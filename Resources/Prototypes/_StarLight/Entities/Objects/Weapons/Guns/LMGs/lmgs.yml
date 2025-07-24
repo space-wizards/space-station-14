@@ -31,12 +31,6 @@
   - type: Appearance
   - type: ItemSlots
     slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: LightRifleHeavyMagazineSP
-        whitelist:
-          tags:
-            - LightRifleHeavy
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifleSP
@@ -44,6 +38,12 @@
         whitelist:
           tags:
             - CartridgeLightRifle
+      gun_magazine:
+        name: Magazine
+        startingItem: LightRifleHeavyMagazineSP
+        whitelist:
+          tags:
+            - LightRifleHeavy
 
 - type: entity
   name: DP-28 LMG
