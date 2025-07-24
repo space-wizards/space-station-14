@@ -50,7 +50,6 @@
 - type: startingGear
   id: BlueShieldGear
   equipment:
-    shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatBeretBlueShield
     id: BlueShieldPDA
     ears: ClothingHeadsetAltBSO # Starlight

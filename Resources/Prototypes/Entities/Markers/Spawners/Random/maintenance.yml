@@ -56,7 +56,7 @@
       - id: ClothingHeadHatPaper
       - id: ClothingHeadHatPirate
       - id: ClothingMaskSterile
-      - id: ClothingNeckHeadphones
+      - id: ClothingMultipleHeadphones
       - id: ClothingNeckTieRed
       - id: ClothingOuterCoatGentle
       - !type:AllSelector
@@ -89,6 +89,10 @@
       - id: ClothingUniformJumpsuitLoungewear
       - id: ClothingHeadHatCowboyRed
       - id: ClothingNeckOldMantle # Starlight
+      - id: TatteredClothesUniformSuit #SL
+      - id: CamoUniformSuit #SL
+      - id: ClothingOuterBurnedRobes #SL
+      - id: ClothingNeckTatteredHood #SL
     # Uncommon Group
     - !type:GroupSelector
       weight: 23
@@ -175,6 +179,8 @@
       - id: CigarGold
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
+      - id: MysteryLighterBox
+      - id: GoldenPersonalAI
 
 - type: entity
   name: Maint Loot Spawner

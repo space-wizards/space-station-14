@@ -36,41 +36,12 @@
 
 - type: entity
   id: OrganCycloriteBrain
-  parent: [BaseCycloriteOrganUnGibbable, BaseOrganBrain]
+  parent: [BaseOrganBrain, BaseCycloriteOrganUnGibbable]
   name: brain
   description: "The source of incredible, unending intelligence. Honk."
   components:
   - type: Sprite
     state: brain
-  - type: Organ
-  - type: Input
-    context: "ghost"
-  - type: Brain
-  - type: InputMover
-  - type: Examiner
-  - type: BlockMovement
-  - type: BadFood
-  - type: Tag
-    tags:
-      - Meat
-  - type: SolutionContainerManager
-    solutions:
-      organ:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: GreyMatter
-          Quantity: 5
-  - type: FlavorProfile
-    flavors:
-      - people
-  - type: FoodSequenceElement
-    entries:
-      Burger: Brain
-      Taco: Brain
   
 - type: entity
   id: OrganCycloriteEye

@@ -27,7 +27,7 @@ public sealed partial class ZombieComponent : Component
     /// being overly protected by bundling up.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float MinZombieInfectionChance = 0.05f;
+    public float MinZombieInfectionChance = 0.00f; // Starlight, since Biosuits now provide zombie immunity
 
     /// <summary>
     /// How effective each resistance type on a piece of armor is. Using a damage specifier for this seems illegal.
@@ -93,10 +93,8 @@ public sealed partial class ZombieComponent : Component
     [DataField("beforeZombifiedEyeColor")]
     public Color BeforeZombifiedEyeColor;
 
-    [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
-    public string? EmoteSoundsId = "Zombie";
-
-    public EmoteSoundsPrototype? EmoteSounds;
+    [DataField("emoteId")]
+    public ProtoId<EmoteSoundsPrototype>? EmoteSoundsId = "Zombie";
 
     [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick;
@@ -148,11 +146,16 @@ public sealed partial class ZombieComponent : Component
     {
         DamageDict = new()
         {
-            { "Slash", 13 },
-            { "Piercing", 7 },
+            { "Slash", 20 }, // Removed piercing damage because how in the fuck is the best counter to a zombie bite a bullet proof vest
             { "Structural", 10 }
         }
     };
+
+    /// <summary>
+    ///     Starlight, this just makes zombies always attack at the same speed as a base human (and also the first C# code I did eheee :3)
+    /// </summary>
+    [DataField("BiteSpeed")]
+    public float BiteSpeed = 1.0f;
 
     /// <summary>
     ///     Path to antagonist alert sound.
