@@ -32,6 +32,9 @@ Knowing different types of chemicals and their effects is important for being ab
 ## Special
 <GuideReagentGroupEmbed Group="Special"/>
 
+## Sacred
+<GuideReagentGroupEmbed Group="Sacred"/>
+
 ## Other
 <GuideReagentGroupEmbed Group="Unknown"/>
 </Document>
