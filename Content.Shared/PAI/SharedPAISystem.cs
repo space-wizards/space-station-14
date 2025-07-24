@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.PAI;
 
@@ -31,8 +32,15 @@ public abstract class SharedPAISystem : EntitySystem
     private void OnShutdown(Entity<PAIComponent> ent, ref ComponentShutdown args)
     {
         _actions.RemoveAction(ent.Owner, ent.Comp.ShopAction);
+        _actions.RemoveAction(ent.Owner, ent.Comp.RadialCustomizationAction);
     }
 }
-public sealed partial class PAIShopActionEvent : InstantActionEvent
+
+public sealed partial class PAIShopActionEvent : InstantActionEvent;
+
+[Serializable, NetSerializable, ByRefEvent]
+public sealed partial class PAICustomizationEvent;
+
+public sealed partial class PAIRadialCustomizationActionEvent : InstantActionEvent
 {
 }

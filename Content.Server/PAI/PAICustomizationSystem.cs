@@ -12,11 +12,12 @@ public sealed partial class PAICustomizationSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PAICustomizationComponent, ComponentInit>(Customization);
+        SubscribeLocalEvent<PAICustomizationComponent, ComponentInit>(OnCustomizationInit);
         SubscribeLocalEvent<PAIComponent, PAIEmotionMessage>(OnEmotionMessage);
+        SubscribeLocalEvent<PAIComponent, PAIRadialCustomizationActionEvent>(OnRadialCustomizationAction);
     }
 
-    private void Customization(Entity<PAICustomizationComponent> ent, ref ComponentInit args)
+    private void OnCustomizationInit(Entity<PAICustomizationComponent> ent, ref ComponentInit args)
     {
         _appearance.SetData(ent.Owner, PAIEmotionVisuals.Emotion, ent.Comp.CurrentEmotion);
     }
@@ -35,5 +36,14 @@ public sealed partial class PAICustomizationSystem : EntitySystem
         _appearance.SetData(ent.Owner, PAIEmotionVisuals.Emotion, args.Emotion);
 
         _ui.ServerSendUiMessage(ent.Owner, PAICustomizationUiKey.Key, new PAIEmotionStateMessage(args.Emotion));
+        _ui.ServerSendUiMessage(ent.Owner, PAIRadialCustomizationUiKey.Key, new PAIEmotionStateMessage(args.Emotion));
+    }
+
+    private void OnRadialCustomizationAction(Entity<PAIComponent> ent, ref PAIRadialCustomizationActionEvent args)
+    {
+        if (!HasComp<PAICustomizationComponent>(ent.Owner))
+            return;
+
+        _ui.OpenUi(ent.Owner, PAIRadialCustomizationUiKey.Key, args.Performer);
     }
 }

@@ -46,7 +46,11 @@
   id: PAICustomizationControl
   name: pai-customization-control-name
   description: pai-customization-control-desc
-  productAction: ActionPAICustomization
+  icon:
+    sprite: Interface/Actions/actions_pai.rsi
+    state: pai-emotions
+  raiseProductEventOnUser: true
+  productEvent: !type:PAICustomizationEvent
   cost:
     SiliconMemory: 5
   categories:

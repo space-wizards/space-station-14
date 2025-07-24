@@ -30,6 +30,9 @@
       enum.PAICustomizationUiKey.Key:
         type: PAICustomizationBoundUserInterface
         requireInputValidation: false
+      enum.PAIRadialCustomizationUiKey.Key:
+        type: PAIRadialCustomizationBoundUserInterface
+        requireInputValidation: false
   - type: Sprite
   - type: Input
     context: "human"
@@ -295,8 +298,21 @@
   description: Open your customization display to change your appearance.
   components:
   - type: Action
-    icon: Interface/Actions/pai-emotions.png
+    icon: { sprite: Interface/Actions/actions_pai.rsi, state: pai-emotions }
     itemIconStyle: NoItem
   - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.PAICustomizationUiKey.Key
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIRadialCustomization
+  name: pai-action-radial-customization-name
+  description: pai-action-radial-customization-description
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_pai.rsi, state: radial }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.PAIRadialCustomizationUiKey.Key

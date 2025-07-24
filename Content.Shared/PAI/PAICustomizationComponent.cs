@@ -49,6 +49,12 @@ public enum PAICustomizationUiKey : byte
 }
 
 [Serializable, NetSerializable]
+public enum PAIRadialCustomizationUiKey : byte
+{
+    Key,
+}
+
+[Serializable, NetSerializable]
 public sealed class PAIEmotionStateMessage : BoundUserInterfaceMessage
 {
     public readonly PAIEmotion Emotion;
