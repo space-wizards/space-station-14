@@ -62,6 +62,7 @@ public static class ServerPackaging
     private static readonly List<string> ServerNotExtraAssemblies = new()
     {
         "Microsoft.CodeAnalysis",
+        "System.Diagnostics.EventLog.Messages",   // Starlight
     };
 
     private static readonly HashSet<string> BinSkipFolders = new()
