@@ -80,8 +80,12 @@ command-description-mind-get =
     Grabs the mind from the entity, if any.
 command-description-mind-control =
     Assumes control of an entity with the given player.
-command-description-nudge =
+command-description-nudge-xy =
     Moves an entity locally.
+command-description-nudge-up =
+    Moves an entity locally upward.
+command-description-nudge-right =
+    Moves an entity locally to the right.
 command-description-addaccesslog =
     Adds an access log to this entity. Do note that this bypasses the log's default limit and pause check.
 command-description-stationevent-simulate =
