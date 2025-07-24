@@ -19,6 +19,7 @@ public sealed partial class CrawlerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float KnockdownDamageThreshold = 5f;
+
     /// <summary>
     /// Time it takes us to stand up
     /// </summary>

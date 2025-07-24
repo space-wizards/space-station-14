@@ -53,7 +53,7 @@ public sealed partial class StunOnCollideComponent : Component
     public bool AutoStand = true;
 
     /// <summary>
-    /// Should the entity try and stand automatically after being knocked down?
+    /// Should the entity drop their items upon first being knocked down?
     /// </summary>
     [DataField]
     public bool Drop = true;
