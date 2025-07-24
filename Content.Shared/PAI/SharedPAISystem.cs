@@ -38,7 +38,7 @@ public abstract class SharedPAISystem : EntitySystem
 
 public sealed partial class PAIShopActionEvent : InstantActionEvent;
 
-[Serializable, NetSerializable, ByRefEvent]
+[Serializable, NetSerializable, ByRefEvent, DataDefinition]
 public sealed partial class PAICustomizationEvent
 {
 }
