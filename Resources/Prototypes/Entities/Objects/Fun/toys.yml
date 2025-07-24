@@ -876,6 +876,7 @@
     slipData:
       stunTime: 0
       knockdownTime: 0
+      frictionStatusTime: 0
       launchForwardsMultiplier: 0
     slipSound:
       collection: Parp

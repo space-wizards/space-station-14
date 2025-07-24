@@ -201,6 +201,11 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     )
     {
         statusEffect = null;
+
+        // So help me god I will not let you spawn and delete an entity in the same tick.
+        if (duration <= TimeSpan.Zero)
+            return false;
+
         if (!CanAddStatusEffect(target, effectProto))
             return false;
 
