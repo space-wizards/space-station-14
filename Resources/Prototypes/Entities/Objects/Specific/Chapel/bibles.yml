@@ -1,7 +1,8 @@
 - type: entity
-  id: BibleBase
+  name: bible
+  description: New Interstellar Version 2340.
   parent: BaseStorageItem
-  abstract: true
+  id: Bible
   components:
   - type: UseDelay
     delay: 10.0
@@ -28,6 +29,10 @@
     bibleUserOnly: true
   - type: Summonable
     specialItem: SpawnPointGhostRemilia
+  - type: ReactionMixer
+    mixMessage: "bible-mixing-success"
+    reactionTypes:
+    - Holy
   - type: Sprite
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon
@@ -49,17 +54,6 @@
     - Book
   - type: StealTarget
     stealGroup: Bible
-
-- type: entity
-  id: Bible
-  name: bible
-  parent: BibleBase
-  description: New Interstellar Version 2340.
-  components:
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success"
-    reactionTypes:
-    - Holy
 
 - type: entity
   parent: [Bible, BaseSyndicateContraband]
@@ -102,136 +96,56 @@
     event: !type:SummonActionEvent
 
 - type: entity
-  id: BibleDruid
+  parent: Bible
+  name: tanakh
+  description: "For God's chosen crewmembers"
+  id: BibleTanakh
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/tanakh.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/tanakh.rsi
+
+- type: entity
+  parent: Bible
   name: druidic tablet
-  parent: BibleBase
   description: "It's the mystery of the druids!"
+  id: BibleDruid
   components:
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success"
-    reactionTypes:
-    - Druidic
   - type: Sprite
-    sprite: Objects/Specific/Chapel/druidictablet.rsi
+    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
   - type: Item
-    sprite: Objects/Specific/Chapel/druidictablet.rsi
+    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
 
 - type: entity
-  id: BibleCommunistManifesto
+  parent: Bible
   name: communist manifesto
-  parent: BibleBase
   description: "Remove the mask of humanity from Capital."
+  id: BibleCommunistManifesto
   components:
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success"
-    reactionTypes:
-    - Communist
   - type: Sprite
     sprite: Objects/Specific/Chapel/communistmanifesto.rsi
   - type: Item
     sprite: Objects/Specific/Chapel/communistmanifesto.rsi
 
 - type: entity
-  id: BibleNarsie
-  name: tome of nar'sie
-  parent: BibleBase
-  description: "What could possibly go wrong with a book covered in blood?"
+  parent: Bible
+  name: satanic bible
+  description: "What could possibly go wrong?"
+  id: BibleSatanic
   components:
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success-curse"
-    reactionTypes:
-    - Narsie
   - type: Sprite
-    sprite: Objects/Specific/Chapel/tomeofnarsie.rsi
+    sprite: Objects/Specific/Chapel/satanicbible.rsi
   - type: Item
-    sprite: Objects/Specific/Chapel/tomeofnarsie.rsi
+    sprite: Objects/Specific/Chapel/satanicbible.rsi
 
 - type: entity
-  id: BibleNanoTrasen
+  parent: Bible
   name: codex nanotrasimus
-  parent: BibleBase
   description: "A familiar book containing the Sacred Operating Procedures."
+  id: BibleNanoTrasen
   components:
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success"
-    reactionTypes:
-    - NanoTrasen
   - type: Sprite
     sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi
   - type: Item
     sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi
-
-- type: entity
-  id: BibleHonk
-  name: mirth of the honkmother
-  parent: BibleBase
-  description: "Oh great and glorious Mother, Mistress of Mirth, Matron of Mask and Merriments, Blessed is she amongst us jesters."
-  components:
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success"
-    reactionTypes:
-    - Clown
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/honk.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/honk.rsi
-
-- type: entity
-  id: BibleLamp
-  name: compendium of the lamp
-  parent: BibleBase
-  description: "May the light and warmth of the glorious lamp purify your soul and mind."
-  components:
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success"
-    reactionTypes:
-    - Lamp
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/lamp.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/lamp.rsi
-
-- type: entity
-  id: BibleRatvar
-  name: tablet of ratvar
-  parent: BibleBase
-  description: "A holy relic of the Clockwork Cult, blessed by the Clockwork Justice, Ratvar."
-  components:
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success-curse"
-    reactionTypes:
-    - Ratvar
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/ratvartablet.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/ratvartablet.rsi
-
-- type: entity
-  id: BibleItalian
-  name: italian restaurant menu
-  parent: BibleBase
-  description: "Stolen from the holy grounds of the nearest Olive Garden."
-  components:
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success"
-    reactionTypes:
-    - Italian
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/italianrestaurantmenu.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/italianrestaurantmenu.rsi
-
-- type: entity
-  id: BibleCarpsCrypts
-  name: carps & crypts manual
-  parent: BibleBase
-  description: "A holy relic to some, contains the sacred rules for the famous TTRPG... Carps & Crypts."
-  components:
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success"
-    reactionTypes:
-    - Nerd
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/carpscrypts.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/carpscrypts.rsi

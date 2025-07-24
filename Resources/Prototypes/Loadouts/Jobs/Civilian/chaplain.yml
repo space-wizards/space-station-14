@@ -86,12 +86,6 @@
     - Bible
 
 - type: loadout
-  id: BibleCommunistManifesto
-  storage:
-    back:
-    - BibleCommunistManifesto
-
-- type: loadout
   id: BibleDruid
   storage:
     back:
@@ -104,37 +98,13 @@
     - BibleNanoTrasen
 
 - type: loadout
-  id: BibleNarsie
+  id: BibleSatanic
   storage:
     back:
-    - BibleNarsie
+    - BibleSatanic
 
 - type: loadout
-  id: BibleCarpsCrypts
+  id: BibleTanakh
   storage:
     back:
-    - BibleCarpsCrypts
-
-- type: loadout
-  id: BibleHonk
-  storage:
-    back:
-    - BibleHonk
-
-- type: loadout
-  id: BibleItalian
-  storage:
-    back:
-    - BibleItalian
-
-- type: loadout
-  id: BibleRatvar
-  storage:
-    back:
-    - BibleRatvar
-
-- type: loadout
-  id: BibleLamp
-  storage:
-    back:
-    - BibleLamp
+    - BibleTanakh
