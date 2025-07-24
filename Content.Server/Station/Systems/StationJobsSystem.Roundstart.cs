@@ -104,10 +104,10 @@ public sealed partial class StationJobsSystem
 
         // Ok so the general algorithm:
         // We start with the highest weight jobs and work our way down. We filter jobs by weight when selecting as well.
-        // Weight > Priority > Station.
-        foreach (var weight in _orderedWeights)
+        // Priority > Weight > Station. 🌟Starlight🌟
+        for (var selectedPriority = JobPriority.High; selectedPriority > JobPriority.Never; selectedPriority--)
         {
-            for (var selectedPriority = JobPriority.High; selectedPriority > JobPriority.Never; selectedPriority--)
+            foreach (var weight in _orderedWeights)
             {
                 if (userIds.Count == 0)
                     goto endFunc;
