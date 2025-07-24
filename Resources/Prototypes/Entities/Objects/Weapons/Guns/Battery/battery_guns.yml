@@ -786,12 +786,12 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: ProjectileBatteryAmmoProvider
-    proto: BulletLaserSpread
+    proto: BulletLaserSpreadNarrow
     fireCost: 150
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletLaserSpread
-      fireCost: 150
+    #- proto: BulletLaserSpread
+      #fireCost: 150
     - proto: BulletLaserSpreadNarrow
       fireCost: 200
     - proto: BulletDisablerSmgSpread
