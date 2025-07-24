@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Princess Cheeseballs
-  changes:
-  - message: Items now slip on slippery surfaces
-    type: Add
-  - message: Puddle slipperiness has been tweaked to be more intuitive
-    type: Tweak
-  id: 8292
-  time: '2025-04-20T21:27:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35845
 - author: uhbg
   changes:
   - message: The Bartender can now make Eggnog by shaking an egg, milk, and rum.
@@ -3912,3 +3903,11 @@
   id: 8803
   time: '2025-07-23T18:06:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39167
+- author: Lokachop
+  changes:
+  - message: The engineering & chief engineer's hardsuit now properly glow in the
+      dark
+    type: Fix
+  id: 8804
+  time: '2025-07-24T03:04:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39153
