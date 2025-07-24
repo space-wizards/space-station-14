@@ -20,7 +20,7 @@ public sealed partial class ParrotMemoryComponent : Component
     /// The % chance an entity with this component learns a phrase when learning is off cooldown
     /// </summary>
     [DataField]
-    public float LearnChance = 0.4f;
+    public float LearnChance = 0.6f;
 
     /// <summary>
     /// Time after which another attempt can be made at learning a phrase
