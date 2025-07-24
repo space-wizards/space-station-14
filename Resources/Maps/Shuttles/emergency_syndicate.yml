@@ -4,7 +4,7 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/14/2025 17:10:53
+  time: 07/24/2025 06:06:05
   entityCount: 637
 maps: []
 grids:
@@ -1294,12 +1294,6 @@ entities:
     components:
     - type: Transform
       pos: -3.5,-0.5
-      parent: 1
-  - uid: 444
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 4.5,-19.5
       parent: 1
   - uid: 546
     components:
@@ -2616,6 +2610,13 @@ entities:
     components:
     - type: Transform
       pos: -3.5,-3.5
+      parent: 1
+- proto: LockerEvacRepairFilled
+  entities:
+  - uid: 444
+    components:
+    - type: Transform
+      pos: 4.5,-19.5
       parent: 1
 - proto: LockerEvidence
   entities:

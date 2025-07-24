@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/23/2025 05:40:38
-  entityCount: 27810
+  time: 07/24/2025 06:03:49
+  entityCount: 27813
 maps:
 - 1
 grids:
@@ -9321,6 +9321,7 @@ entities:
       - 20230
       - 20231
       - 20227
+      - 27140
   - uid: 20579
     components:
     - type: Transform
@@ -12215,7 +12216,7 @@ entities:
       pos: 11.5,-29.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -118193.22
+      secondsUntilStateChange: -118335.99
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -84759,6 +84760,12 @@ entities:
     - type: Transform
       pos: -38.5,40.5
       parent: 2
+  - uid: 27138
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 50.5,5.5
+      parent: 2
   - uid: 27353
     components:
     - type: Transform
@@ -85239,6 +85246,11 @@ entities:
     components:
     - type: Transform
       pos: -2.5,71.5
+      parent: 2
+  - uid: 23852
+    components:
+    - type: Transform
+      pos: 50.5,4.5
       parent: 2
 - proto: GasPipeFourwayAlt1
   entities:
@@ -105393,11 +105405,6 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#FF1212FF'
-  - uid: 23852
-    components:
-    - type: Transform
-      pos: 50.5,4.5
-      parent: 2
   - uid: 25828
     components:
     - type: Transform
@@ -109358,6 +109365,15 @@ entities:
       - 26900
     - type: AtmosPipeColor
       color: '#FF1212FF'
+  - uid: 27140
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 51.5,5.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 20578
   - uid: 27520
     components:
     - type: Transform
@@ -127191,6 +127207,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: 45.5,19.5
       parent: 2
+  - uid: 27137
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 52.5,5.5
+      parent: 2
 - proto: PlasmaWindoorSecureArmoryLocked
   entities:
   - uid: 4830
@@ -133499,6 +133521,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 43.5,35.5
       parent: 2
+  - uid: 23883
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 52.5,5.5
+      parent: 2
   - uid: 25161
     components:
     - type: Transform
@@ -133649,12 +133677,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 44.5,21.5
-      parent: 2
-  - uid: 23883
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 52.5,5.5
       parent: 2
   - uid: 25904
     components:
