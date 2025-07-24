@@ -1425,3 +1425,346 @@
       - !type:AdjustReagent
         reagent: MindbreakerToxin
         amount: -3.0
+
+# Italian Restaurant Menu Holy Water
+- type: reagent
+  id: BlessedBolognese
+  name: reagent-name-blessedbolognese
+  group: Medicine
+  desc: reagent-desc-blessedbolognese
+  physicalDesc: reagent-physical-desc-bolognese
+  flavor: meaty
+  color: "#912711"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+      - !type:SatiateHunger
+        factor: 2
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+
+# Book of Narsie Holy Water
+- type: reagent
+  id: NarsieBlood
+  name: reagent-name-narsieblood
+  group: Medicine
+  desc: reagent-desc-narsieblood
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-unholy
+  flavor: unholy
+  color: "#4a0707"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+
+# Mirth of the Honkmother Holy Water
+- type: reagent
+  id: PureJoy
+  name: reagent-name-purejoy
+  group: Medicine
+  desc: reagent-desc-purejoy
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-holy
+  flavor: joyful
+  color: "#fc1cba"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+
+# Communist Manifesto Holy Water
+- type: reagent
+  id: PureVodka
+  name: reagent-name-purevodka
+  group: Medicine
+  desc: reagent-desc-purevodka
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-holy
+  flavor: holy
+  color: "#d5dee0"
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  tileReactions:
+  - !type:ExtinguishTileReaction { }
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+
+# Carps & Crypts Holy Water
+- type: reagent
+  id: ManaPotion
+  name: reagent-name-manapotion
+  group: Medicine
+  desc: reagent-desc-manapotion
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-holy
+  flavor: magical
+  color: "#0f3df7"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 1
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+
+# Ratvar Holy Water
+- type: reagent
+  id: TemporalLubricant
+  name: reagent-name-temporallubricant
+  group: Medicine
+  desc: reagent-desc-temporallubricant
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-unholy
+  flavor: unholy
+  color: "#D4AF37"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+
+# Lamp Holy Water
+- type: reagent
+  id: RadiantNectar
+  name: reagent-name-radiantnectar
+  group: Medicine
+  desc: reagent-desc-radiantnectar
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-holy
+  flavor: magical
+  color: "#FFF4CC"
+  reactiveEffects:
+    Extinguish:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+
+# NanoTrasen Holy Water
+- type: reagent
+  id: HydrationSolution
+  name: reagent-name-hydrationsolution
+  group: Medicine
+  desc: reagent-desc-hydrationsolution
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-holy
+  flavor: flavorless
+  color: "#96d7eb"
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 1
+  tileReactions:
+  - !type:ExtinguishTileReaction { }
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+
+# Druidic Holy Water
+- type: reagent
+  id: LifebloomSap
+  name: reagent-name-lifebloomsap
+  group: Medicine
+  desc: reagent-desc-lifebloomsap
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-holy
+  flavor: magical
+  color: "#4CAF50"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
