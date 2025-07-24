@@ -1,0 +1,83 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sha-Seng (Github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "l_hand_bracelet",
+            "directions": 4
+        },
+        {
+            "name": "r_hand_bracelet",
+            "directions": 4
+        },
+        {
+            "name": "l_hand_rings1",
+            "directions": 4
+        },
+        {
+            "name": "l_hand_rings2",
+            "directions": 4
+        },
+        {
+            "name": "r_hand_rings1",
+            "directions": 4
+        },
+        {
+            "name": "r_hand_rings2",
+            "directions": 4
+        },
+        {
+            "name": "l_arm_doll",
+            "directions": 4
+        },
+        {
+            "name": "r_arm_doll",
+            "directions": 4
+        },
+        {
+            "name": "l_hand_doll",
+            "directions": 4
+        },
+        {
+            "name": "r_hand_doll",
+            "directions": 4
+        },
+        {
+            "name": "l_arm_heavy1",
+            "directions": 4
+        },
+        {
+            "name": "l_arm_heavy2",
+            "directions": 4
+        },
+        {
+            "name": "r_arm_heavy1",
+            "directions": 4
+        },
+        {
+            "name": "r_arm_heavy2",
+            "directions": 4
+        },
+        {
+            "name": "l_hand_heavy1",
+            "directions": 4
+        },
+        {
+            "name": "l_hand_heavy2",
+            "directions": 4
+        },
+        {
+            "name": "r_hand_heavy1",
+            "directions": 4
+        },
+        {
+            "name": "r_hand_heavy2",
+            "directions": 4
+        }
+    ]
+}
