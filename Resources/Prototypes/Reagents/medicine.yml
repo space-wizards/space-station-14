@@ -1432,7 +1432,7 @@
   name: reagent-name-blessedbolognese
   group: Medicine
   desc: reagent-desc-blessedbolognese
-  physicalDesc: reagent-physical-desc-bolognese
+  physicalDesc: reagent-physical-desc-holy
   flavor: meaty
   color: "#912711"
   metabolisms:
