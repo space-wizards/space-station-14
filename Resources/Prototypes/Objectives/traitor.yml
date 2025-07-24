@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   abstract: true
   parent: BaseObjective
@@ -201,13 +203,13 @@
   id: EnergyShotgunStealObjective
   components:
   - type: Objective
-    # HoS will have this on them a lot of the time so..
+    # Ronstation - you'll have to pry it out of the warden's iron fist. in enemy territory. gulp
     difficulty: 3
   - type: NotJobRequirement
-    job: HeadOfSecurity
+    job: Warden # Ronstation
   - type: StealCondition
     stealGroup: WeaponEnergyShotgun
-    owner: job-name-hos
+    owner: job-name-warden # Ronstation - eshotgun has been moved to warden's
 
 ## ce
 

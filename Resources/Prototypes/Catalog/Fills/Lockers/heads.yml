@@ -1,5 +1,4 @@
-# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
-
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entityTable
   id: LockerFillQuarterMaster
   table: !type:AllSelector
@@ -330,7 +329,8 @@
   id: LockerFillHeadOfSecurityNoHardsuit
   table: !type:AllSelector
     children:
-    - id: WeaponEnergyShotgun
+    - id: WeaponPistolNegotiator # Ronstation
+    - id: MagazineNegotiator # Ronstation
     - id: BookSpaceLaw
     - id: BoxEncryptionKeySecurity
     - id: CigarGoldCase

@@ -1,0 +1,23 @@
+- type: entity
+  id: MagazineNegotiator
+  name: negotiator magazine (.45 magnum)
+  description: A decorated 7 round .45 caliber single stack magazine for the negotiator handgun. Doles out justice in a ball of fire.
+  parent: BaseMagazineMagnum
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Objects/Weapons/Guns/Ammunition/Magazine/Magnum/negotiator.rsi
+  - type: Tag
+    tags:
+      - MagazineNegotiator
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnum
+    unspawnedCount: 7
+
+- type: entity
+  id: MagazineNegotiatorEmpty
+  suffix: Empty
+  parent: MagazineNegotiator
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+    unspawnedCount: 0

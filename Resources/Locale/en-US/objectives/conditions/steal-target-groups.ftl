@@ -1,5 +1,3 @@
-# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
-
 # Traitor single items
 steal-target-groups-hypospray = hypospray
 steal-target-groups-handheld-crew-monitor = handheld crew monitor
@@ -44,9 +42,6 @@ steal-target-groups-bible = bible
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal
 steal-target-groups-wanted-list-cartridge = wanted list cartridge
-# start of modifications
-steal-target-groups-warden-whistle = warden's whistle
-# end of modifications
 
 # Thief structures
 steal-target-groups-teg = teg generator part

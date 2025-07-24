@@ -1,0 +1,7 @@
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazineNegotiatorEmpty
+  result: MagazineNegotiatorEmpty
+  materials:
+    Steel: 25
+    Gold: 10
