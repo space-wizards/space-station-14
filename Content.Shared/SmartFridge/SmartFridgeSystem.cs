@@ -39,6 +39,7 @@ public sealed class SmartFridgeSystem : EntitySystem
             sub =>
             {
                 sub.Event<SmartFridgeDispenseItemMessage>(OnDispenseItem);
+                sub.Event<SmartFridgeRemoveEntryMessage>(OnRemoveEntry);
             });
     }
 
@@ -154,6 +155,20 @@ public sealed class SmartFridgeSystem : EntitySystem
             Text = Loc.GetString("verb-categories-insert"),
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/insert.svg.192dpi.png")),
         });
+    }
+    
+    private void OnRemoveEntry(Entity<SmartFridgeComponent> ent, ref SmartFridgeRemoveEntryMessage args)
+    {
+        if (!_timing.IsFirstTimePredicted || !Allowed(ent, args.Actor))
+            return;
+
+        if (ent.Comp.ContainedEntries.TryGetValue(args.Entry, out var contained)
+            && contained.Count > 0
+            || !ent.Comp.Entries.Contains(args.Entry))
+            return;
+
+        ent.Comp.Entries.Remove(args.Entry);
+        Dirty(ent);
     }
 
     private void OnGetDumpableVerb(Entity<SmartFridgeComponent> ent, ref GetDumpableVerbEvent args)
