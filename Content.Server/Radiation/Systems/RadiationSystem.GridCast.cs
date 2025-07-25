@@ -6,8 +6,8 @@ using Content.Server.Radiation.Events;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using JetBrains.Annotations;
-using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Threading;
 using Robust.Shared.Utility;
 
@@ -35,66 +35,43 @@ namespace Content.Server.Radiation.Systems
             var stopwatch = new Robust.Shared.Timing.Stopwatch();
             stopwatch.Start();
 
-            _sources.Clear();
-            _sources.EnsureCapacity(Count<RadiationSourceComponent>());
-            var sourcesQuery = EntityQueryEnumerator<RadiationSourceComponent, TransformComponent>();
-            while (sourcesQuery.MoveNext(out var uid, out var source, out var xform))
+            var sourcesCount = _sourceDataMap.Count;
+            if (_activeReceivers.Count == 0 || sourcesCount == 0)
             {
-                if (!source.Enabled)
-                    continue;
-
-                var worldPos = _transform.GetWorldPosition(xform);
-                // Intensity is scaled by stack size.
-                var intensity = source.Intensity * _stack.GetCount(uid);
-                intensity = GetAdjustedRadiationIntensity(uid, intensity);
-
-                var maxRange = source.Slope > 1e-6f ? intensity / source.Slope : float.MaxValue;
-                _sources.Add(new SourceData(intensity, source.Slope, maxRange, (uid, source, xform), worldPos));
-            }
-
-            var destinationsQuery = EntityQueryEnumerator<RadiationReceiverComponent, TransformComponent>();
-            var destinations = new ValueList<(EntityUid Uid, TransformComponent Xform)>();
-            while (destinationsQuery.MoveNext(out var uid, out _, out var xform))
-            {
-                destinations.Add((uid, xform));
-            }
-
-            if (destinations.Count == 0 || _sources.Count == 0)
-            {
-                UpdateGridcastDebugOverlay(stopwatch.Elapsed.TotalMilliseconds, _sources.Count, destinations.Count, null);
                 RaiseLocalEvent(new RadiationSystemUpdatedEvent());
                 return;
             }
 
-            var results = new float[destinations.Count];
+            var results = new float[_activeReceivers.Count];
             var debugRays = debug ? new ConcurrentBag<DebugRadiationRay>() : null;
 
             var job = new RadiationJob
             {
                 System = this,
-                Sources = _sources,
-                Destinations = destinations,
+                SourceTree = _sourceTree,
+                SourceDataMap = _sourceDataMap,
+                Destinations = _activeReceivers,
                 Results = results,
                 DebugRays = debugRays,
                 Debug = debug
             };
 
-            _parallel.ProcessNow(job, destinations.Count);
+            _parallel.ProcessNow(job, _activeReceivers.Count);
 
-            for (var i = 0; i < destinations.Count; i++)
+            for (var i = 0; i < _activeReceivers.Count; i++)
             {
-                var (uid, _) = destinations[i];
+                var uid = _activeReceivers[i];
                 var rads = results[i];
 
-                if (Deleted(uid) || !TryComp<RadiationReceiverComponent>(uid, out var receiver))
-                    continue;
-
-                receiver.CurrentRadiation = rads;
-                if (rads > 0)
-                    IrradiateEntity(uid, rads, GridcastUpdateRate);
+                if (TryComp<RadiationReceiverComponent>(uid, out var receiver))
+                {
+                    receiver.CurrentRadiation = rads;
+                    if (rads > 0)
+                        IrradiateEntity(uid, rads, GridcastUpdateRate);
+                }
             }
 
-            UpdateGridcastDebugOverlay(stopwatch.Elapsed.TotalMilliseconds, _sources.Count, destinations.Count, debugRays?.ToList());
+            UpdateGridcastDebugOverlay(stopwatch.Elapsed.TotalMilliseconds, sourcesCount, _activeReceivers.Count, debugRays!.ToList());
 
             RaiseLocalEvent(new RadiationSystemUpdatedEvent());
         }
@@ -108,12 +85,7 @@ namespace Content.Server.Radiation.Systems
         {
             var mapId = destTrs.MapID;
             var dist = (destWorld - source.WorldPosition).Length();
-
-            if (dist > source.MaxRange)
-                return null;
-
             var rads = source.Intensity - source.Slope * dist;
-
             if (rads < MinIntensity)
                 return null;
 
@@ -155,13 +127,8 @@ namespace Content.Server.Radiation.Systems
                 ? destTrs.LocalPosition
                 : Vector2.Transform(ray.Destination, grid.Comp2.InvLocalMatrix);
 
-        Vector2i sourceGrid = new(
-            (int)Math.Floor(srcLocal.X / grid.Comp1.TileSize),
-            (int)Math.Floor(srcLocal.Y / grid.Comp1.TileSize));
-
-        Vector2i destGrid = new(
-            (int)Math.Floor(dstLocal.X / grid.Comp1.TileSize),
-            (int)Math.Floor(dstLocal.Y / grid.Comp1.TileSize));
+            Vector2i sourceGrid = new((int)Math.Floor(srcLocal.X / grid.Comp1.TileSize), (int)Math.Floor(srcLocal.Y / grid.Comp1.TileSize));
+            Vector2i destGrid = new((int)Math.Floor(dstLocal.X / grid.Comp1.TileSize), (int)Math.Floor(dstLocal.Y / grid.Comp1.TileSize));
 
             var line = new GridLineEnumerator(sourceGrid, destGrid);
             while (line.MoveNext())
@@ -186,7 +153,6 @@ namespace Content.Server.Radiation.Systems
 
             ray.Blockers ??= new();
             ray.Blockers.Add(GetNetEntity(gridUid), blockers);
-
             return ray;
         }
 
@@ -226,33 +192,45 @@ namespace Content.Server.Radiation.Systems
         private readonly record struct RadiationJob : IParallelRobustJob
         {
             public int BatchSize => 5;
-
             public required RadiationSystem System { get; init; }
-            public required List<SourceData> Sources { get; init; }
-            public required ValueList<(EntityUid Uid, TransformComponent Xform)> Destinations { get; init; }
+            public required DynamicTree<EntityUid> SourceTree { get; init; }
+            public required Dictionary<EntityUid, SourceData> SourceDataMap { get; init; }
+            public required List<EntityUid> Destinations { get; init; }
             public required float[] Results { get; init; }
             public required ConcurrentBag<DebugRadiationRay>? DebugRays { get; init; }
             public required bool Debug { get; init; }
 
             public void Execute(int index)
             {
-                var (destUid, destTrs) = Destinations[index];
+                var destUid = Destinations[index];
+                if (System.Deleted(destUid) || !System.TryComp(destUid, out TransformComponent? destTrs))
+                {
+                    Results[index] = 0;
+                    return;
+                }
+
                 var gridList = new List<Entity<MapGridComponent>>();
+                var nearbySources = new List<EntityUid>();
                 var destWorld = System._transform.GetWorldPosition(destTrs);
                 var rads = 0f;
                 var destMapId = destTrs.MapID;
+                var queryAabb = new Box2(destWorld, destWorld);
 
-                foreach (var source in Sources)
+                SourceTree.QueryAabb(
+                    (in EntityUid value) => { nearbySources.Add(value); return true; },
+                    queryAabb,
+                    true);
+
+                foreach (var sourceUid in nearbySources)
                 {
-                    if (source.Transform.MapID != destMapId)
-                        continue;
-
+                    if (!SourceDataMap.TryGetValue(sourceUid, out var source)) continue;
+                    if (source.Transform.MapID != destMapId) continue;
                     var delta = source.WorldPosition - destWorld;
-                    if (delta.LengthSquared() > source.MaxRange * source.MaxRange)
-                        continue;
-
-                    if (System.Irradiate(source, destUid, destTrs, destWorld, Debug, gridList) is not { } ray)
-                        continue;
+                    if (delta.LengthSquared() > source.MaxRange * source.MaxRange) continue;
+                    var dist = delta.Length();
+                    var radsAfterDist = source.Intensity - source.Slope * dist;
+                    if (radsAfterDist < System.MinIntensity) continue;
+                    if (System.Irradiate(source, destUid, destTrs, destWorld, Debug, gridList) is not { } ray) continue;
 
                     if (ray.ReachedDestination)
                         rads += ray.Rads;
