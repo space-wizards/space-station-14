@@ -63,7 +63,7 @@
       state: icon
   - type: TransformableContainer
 
-## Reagent filled
+## Filled
 
 - type: entity
   parent: DrinkGlass

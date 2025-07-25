@@ -1,7 +1,7 @@
 - type: entity
-  parent: DrinkBase
-  id: DrinkCartonBaseFull
   abstract: true
+  parent: [ DrinkBase, BaseDrinkOpenable ]
+  id: DrinkCartonBaseFull
   suffix: Full
   components:
   - type: Openable
@@ -10,14 +10,10 @@
     closeable: true
     closeSound:
       collection: bottleCloseSounds
-  - type: Sealable
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 50
-  - type: PressurizedSolution
-    solution: drink
-  - type: Shakeable
   - type: Sprite
     state: icon
   - type: Item
@@ -42,12 +38,14 @@
         #In future maybe add generic plastic scrap trash/debris
   - type: TrashOnSolutionEmpty
     solution: drink
-  - type: DnaSubstanceTrace
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 20
 
 - type: entity
+  abstract: true
   parent: DrinkCartonBaseFull
   id: DrinkCartonBaseLargeFull
-  abstract: true
   components:
   - type: SolutionContainerManager
     solutions:
@@ -57,8 +55,8 @@
     size: Normal
 
 - type: entity
-  id: DrinkCartonVisualsOpenable
   abstract: true
+  id: DrinkCartonVisualsOpenable
   components:
   - type: Appearance
   - type: GenericVisualizer
@@ -71,6 +69,8 @@
     layers:
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]
+
+##
 
 - type: entity
   parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
@@ -194,7 +194,7 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/oatmilk.rsi
-    
+
 - type: entity
   parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
   id: DrinkJuiceLemonCarton
@@ -209,7 +209,7 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonjuice.rsi
-    
+
 - type: entity
   parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
   id: DrinkJuicePineappleCarton

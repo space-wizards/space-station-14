@@ -1,12 +1,9 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_soda.yml
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [ DrinkBase, BaseDrinkOpenable ]
   id: DrinkCanBaseFull
   components:
-  - type: Drink
-  - type: Openable
-  - type: Shakeable
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -20,31 +17,17 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: MixableSolution
-    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 15
   - type: Extractable
     grindableSolutionName: grindable
-  - type: UserInterface
-    interfaces:
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
     layers:
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]
   - type: FitsInDispenser
-    solution: drink
-  - type: DrawableSolution
-    solution: drink
-  - type: RefillableSolution
-    solution: drink
-  - type: DrainableSolution
-    solution: drink
-  - type: PressurizedSolution
     solution: drink
   - type: Appearance
   - type: GenericVisualizer
@@ -53,14 +36,6 @@
         enum.OpenableVisuals.Layer:
           True: {state: "icon_open"}
           False: {state: "icon"}
-  - type: Spillable
-    solution: drink
-  - type: MeleeWeapon
-    soundNoDamage:
-      path: "/Audio/Effects/Fluids/splat.ogg"
-    damage:
-      types:
-        Blunt: 0
   - type: Tool
     qualities:
     - Rolling
@@ -74,7 +49,6 @@
   - type: Tag
     tags:
     - DrinkCan
-  - type: DnaSubstanceTrace
 
 ##
 

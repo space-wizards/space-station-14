@@ -62,27 +62,7 @@
     sprite: Objects/Consumable/Drinks/jar_what.rsi
 
 - type: entity
-  id: BartenderMixer
-  abstract: true
-  components:
-  - type: DrainableSolution
-    solution: drink
-  - type: Drink
-  - type: DrawableSolution
-    solution: drink
-  - type: RefillableSolution
-    solution: drink
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
-  - type: Spillable
-    solution: drink
-  - type: UserInterface
-    interfaces:
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
-
-- type: entity
-  parent: BaseDrink
+  parent: DrinkBase
   id: DrinkJigger
   name: jigger
   description: Like a shaker, but smaller. Used to control the amount of ingredients.
@@ -105,7 +85,7 @@
       Steel: 20
 
 - type: entity
-  parent: BaseDrink
+  parent: DrinkBase
   id: DrinkIceBucket
   name: ice bucket
   description: A special bucket of refreshy ice. Prohibited use for challenge with the same name!

@@ -1,8 +1,8 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_bottles.yml
 - type: entity
-  parent: DrinkBase
-  id: DrinkBottlePlasticBaseFull
   abstract: true
+  parent: [ DrinkBase, BaseDrinkOpenable ]
+  id: DrinkBottlePlasticBaseFull
   suffix: Full
   components:
   - type: Tag
@@ -39,15 +39,11 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
-  - type: DnaSubstanceTrace
-  - type: PressurizedSolution
-    solution: drink
-  - type: Shakeable
 
 - type: entity
-  parent: DrinkBase
-  id: DrinkBottlePlasticSmallBaseFull
   abstract: true
+  parent: [ DrinkBase, BaseDrinkOpenable ]
+  id: DrinkBottlePlasticSmallBaseFull
   suffix: Full
   components:
   - type: Item
@@ -81,20 +77,16 @@
        - !type:DoActsBehavior
         acts: [ "Destruction" ]
        - !type:SpillBehavior { }
-  - type: DnaSubstanceTrace
-  - type: PressurizedSolution
-    solution: drink
   - type: TrashOnSolutionEmpty
     solution: drink
-  - type: Shakeable
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
 
 - type: entity
+  abstract: true
   parent: DrinkBottlePlasticSmallBaseFull
   id: DrinkBottleGlassSmallBaseFull
-  abstract: true
   components:
   - type: SolutionContainerManager
     solutions:
@@ -136,9 +128,9 @@
       Glass: 100
 
 - type: entity
+  abstract: true
   parent: DrinkBottlePlasticBaseFull
   id: DrinkBottleGlassBaseFull
-  abstract: true
   components:
   - type: Sprite
     state: icon
@@ -178,8 +170,8 @@
       Glass: 100
 
 - type: entity
-  id: DrinkBottleVisualsOpenable
   abstract: true
+  id: DrinkBottleVisualsOpenable
   components:
   - type: Appearance
   - type: GenericVisualizer
@@ -194,8 +186,8 @@
         map: ["enum.OpenableVisuals.Layer"]
 
 - type: entity
-  id: DrinkBottleVisualsAll
   abstract: true
+  id: DrinkBottleVisualsAll
   components:
   - type: Appearance
   - type: GenericVisualizer

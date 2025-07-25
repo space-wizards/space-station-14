@@ -3,6 +3,7 @@ drink-component-on-examine-is-empty = [color=gray]Empty[/color]
 drink-component-on-examine-is-opened = [color=yellow]Opened[/color]
 drink-component-on-examine-is-sealed = The seal is intact.
 drink-component-on-examine-is-unsealed = The seal is broken.
+drink-component-on-examine-is-unsealed-lost-lid = The seal is broken, and there's no way to close it.
 drink-component-on-examine-is-full = Full
 drink-component-on-examine-is-mostly-full = Mostly Full
 drink-component-on-examine-is-half-full = Halfway Full

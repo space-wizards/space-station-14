@@ -85,6 +85,29 @@
     tags:
     - DrinkGlass
 
+# Cans and bottles
+- type: entity
+  abstract: true
+  id: BaseDrinkOpenable
+  components:
+  - type: Openable
+  - type: PressurizedSolution
+    solution: drink
+  - type: Shakeable
+  - type: Sealable
+
+# Cans and bottles (opened)
+- type: entity
+  abstract: true
+  parent: BaseDrinkOpenable
+  id: BaseDrinkOpenableOpen
+  components:
+  - type: Openable
+    opened: true
+    closeable: false # the lid disappeared somewhere
+  - type: Sealable
+    sealed: false
+    examineTextUnsealed: drink-component-on-examine-is-unsealed-lost-lid # inform the player the lid is gone
 
 
 ###
