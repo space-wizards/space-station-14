@@ -1,8 +1,8 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_soda.yml
 - type: entity
+  abstract: true
   parent: BaseItem
   id: DrinkCanBaseFull
-  abstract: true
   components:
   - type: Drink
   - type: Openable
@@ -76,6 +76,8 @@
     - DrinkCan
   - type: DnaSubstanceTrace
 
+##
+
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkColaCan
@@ -99,42 +101,10 @@
     tags:
     - Cola
     - DrinkCan
-    - Recyclable
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/cola.rsi
-
-# created when taking apart an ied
-- type: entity
-  parent: DrinkColaCan
-  id: DrinkColaCanEmpty
-  suffix: empty
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-      grindable:
-        reagents:
-        - ReagentId: Aluminium
-          Quantity: 4
-        - ReagentId: Iron
-          Quantity: 1
-  - type: Openable
-    opened: true
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/cola.rsi
-    layers:
-    - state: icon_open
-  - type: Item
-    sprite: Objects/Consumable/Drinks/cola.rsi
-  - type: Tag
-    tags:
-    - Cola
-    - DrinkCan
-    - Recyclable
-    - Trash
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -291,6 +261,7 @@
   - type: Tag
     tags:
     - Beer
+    - DrinkCan
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -311,8 +282,9 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
+    sprite: Objects/Consumable/Drinks/sodawater.rsi
+  - type: Item
     sprite: Objects/Consumable/Drinks/sodawater.rsi
 
 - type: entity
@@ -430,8 +402,9 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
+    sprite: Objects/Consumable/Drinks/tonic.rsi
+  - type: Item
     sprite: Objects/Consumable/Drinks/tonic.rsi
 
 - type: entity
@@ -477,7 +450,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/changelingsting.rsi
   - type: Item
@@ -502,7 +474,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
   - type: Item
@@ -531,10 +502,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Tag
-    tags:
-    - DrinkCan
-    - Recyclable
   - type: Sprite
     sprite: Objects/Consumable/Drinks/robustnukie.rsi
   - type: Item
@@ -559,7 +526,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
   - type: Item
@@ -637,7 +603,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shamblersjuice.rsi
   - type: Item
@@ -662,7 +627,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwrgame.rsi
   - type: Item
@@ -687,7 +651,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer_can.rsi
   - type: Item
@@ -715,7 +678,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/wine_can.rsi
   - type: Item
