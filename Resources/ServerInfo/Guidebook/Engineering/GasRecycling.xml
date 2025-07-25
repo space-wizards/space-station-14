@@ -9,8 +9,8 @@
 
   The machine has a two [textlink="pipenet" link="PipeNetworks"] connections, for gas input and output.
 
-  For recycler to work, tha gas needs to be pressurized to [color=#a4885c]3000 kPa[/color] heated to [color=#a4885c]573,15K[/color], and the pressure at the outlet side needs to be lower than inlet.
-  If these conditions are not met, the gases will just pass through the machine without getting recycled (as will unrecyclable gases).
+  For recycler to work, tha gas needs to be pressurized to [color=#a4885c]3000 kPa[/color] heated to [color=#a4885c]573,15K[/color], and the pressure at the inlet needs to be higher than outlet.
+  If these conditions are not met, the gases will just pass through without getting recycled (as will unrecyclable gases).
 
   <Box>
     <GuideEntityEmbed Entity="GasRecyclerMachineCircuitboard" Caption="Gas recycler circuit board"/>
