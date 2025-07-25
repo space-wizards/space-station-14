@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Filter categories added to the circuit imprinter.
-    type: Add
-  id: 8296
-  time: '2025-04-20T22:27:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35713
 - author: ScarKy0
   changes:
   - message: Mail spawning has been reworked. The mail teleporter now has to be manually
@@ -3910,3 +3903,13 @@
   id: 8807
   time: '2025-07-25T16:04:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37924
+- author: SlamBamActionman
+  changes:
+  - message: Chemistry foam and smoke reactions now trigger after regular mix reactions.
+    type: Tweak
+  - message: Foam, smoke and explosion reactions no longer transfer the reagents'
+      energies to the container.
+    type: Tweak
+  id: 8808
+  time: '2025-07-25T16:33:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37915
