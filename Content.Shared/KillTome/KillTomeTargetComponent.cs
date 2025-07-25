@@ -35,4 +35,7 @@ public sealed partial class KillTomeTargetComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Dead;
+
+    // Disallows cheat clients from seeing who is about to die to the killtome.
+    public override bool SendOnlyToOwner => true;
 }
