@@ -1,8 +1,8 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_bottles.yml
 - type: entity
   abstract: true
-  parent: [ DrinkBase, BaseDrinkOpenable ]
-  id: DrinkBottlePlasticBaseFull
+  parent: [ DrinkPlasticBase, BaseDrinkOpenable ]
+  id: DrinkBottlePlasticBaseFull # Large plastic
   suffix: Full
   components:
   - type: Tag
@@ -23,28 +23,11 @@
     sprite: Objects/Consumable/Drinks/generic_jug.rsi # fallback to generic plastic jug
   - type: Item
     size: Normal
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:SpillBehavior { }
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: TrashOnSolutionEmpty
-    solution: drink
-  - type: PhysicalComposition
-    materialComposition:
-      Plastic: 100
 
 - type: entity
   abstract: true
-  parent: [ DrinkBase, BaseDrinkOpenable ]
-  id: DrinkBottlePlasticSmallBaseFull
-  suffix: Full
+  parent: DrinkBottlePlasticBaseFull
+  id: DrinkBottlePlasticSmallBaseFull # small plastic
   components:
   - type: Item
     size: Small
@@ -57,117 +40,53 @@
         maxVol: 30
   - type: FitsInDispenser
     solution: drink
+  - type: Sprite
+    state: icon
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi # fallback
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
+  abstract: true
+  parent: [ DrinkGlassBase, BaseDrinkOpenable ]
+  id: DrinkBottleGlassSmallBaseFull # small glass
+  suffix: Full
+  components:
   - type: Openable
     sound:
       collection: bottleOpenSounds
     closeable: true
     closeSound:
       collection: bottleCloseSounds
-  - type: Sprite
-    state: icon
-    sprite: Objects/Consumable/Drinks/waterbottle.rsi
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-       - !type:SpillBehavior { }
-  - type: TrashOnSolutionEmpty
-    solution: drink
-  - type: PhysicalComposition
-    materialComposition:
-      Plastic: 100
-
-- type: entity
-  abstract: true
-  parent: DrinkBottlePlasticSmallBaseFull
-  id: DrinkBottleGlassSmallBaseFull
-  components:
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 50
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/beer.rsi
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 5
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 4
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:SpillBehavior { }
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          BrokenBottle:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Tool
-    qualities:
-    - Rolling
-    speedModifier: 0.75
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 100
-
-- type: entity
-  abstract: true
-  parent: DrinkBottlePlasticBaseFull
-  id: DrinkBottleGlassBaseFull
-  components:
-  - type: Sprite
-    state: icon
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 5
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 4
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:SpillBehavior { }
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          BrokenBottle:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+    sprite: Objects/Consumable/Drinks/beer.rsi # fallback
   - type: Tool
     qualities:
     - Rolling
     speedModifier: 0.75 # not as good as a rolling pin but does the job
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 100
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: Tag
+    tags:
+    - DrinkBottle
+
+- type: entity
+  abstract: true
+  parent: DrinkBottleGlassSmallBaseFull
+  id: DrinkBottleGlassBaseFull # large glass
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/alco-bottle.rsi # fallback
+  - type: Item
+    size: Normal
 
 - type: entity
   abstract: true
@@ -228,7 +147,6 @@
     currentLabel: reagent-name-absinthe
   - type: Sprite
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
-  - type: Sealable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -272,7 +190,6 @@
     currentLabel: reagent-name-nothing
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
-  - type: Sealable
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
@@ -292,6 +209,8 @@
     sprite: Objects/Consumable/Drinks/champagnebottle.rsi
   - type: Openable
     closeable: false # Champagne corks are fat. Not worth the effort.
+  - type: Sealable
+    examineTextUnsealed: drink-component-on-examine-is-unsealed-no-cork # tell the player why it can't close
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -309,7 +228,6 @@
     currentLabel: reagent-name-cognac
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
-  - type: Sealable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -346,7 +264,6 @@
     currentLabel: reagent-name-gin
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
-  - type: Sealable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -364,7 +281,6 @@
     currentLabel: reagent-name-gildlager
   - type: Sprite
     sprite: Objects/Consumable/Drinks/gildlagerbottle.rsi
-  - type: Sealable
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
@@ -382,7 +298,6 @@
     currentLabel: reagent-name-coffeeliqueur
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffeeliqueurbottle.rsi
-  - type: Sealable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -441,7 +356,6 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwinebottle.rsi
-  - type: Sealable
   - type: Tag
     tags:
     - Wine
@@ -463,7 +377,6 @@
     currentLabel: reagent-name-rum
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
-  - type: Sealable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]

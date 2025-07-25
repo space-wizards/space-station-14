@@ -1,7 +1,7 @@
 # TODO: Find remaining cans and move to drinks_cans
 # TODO: Find empty containers (e.g. mug, pitcher) and move to their own yml
 
-# For cups, beakers, and other fully accessible solutions
+# For cups, bottles, beakers, and other freely accessible solutions
 - type: entity
   abstract: true
   parent: BaseItem
@@ -85,6 +85,27 @@
     tags:
     - DrinkGlass
 
+# A destructible, opaque plastic bottle
+- type: entity
+  abstract: true
+  parent: DrinkBase
+  id: DrinkPlasticBase
+  components:
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:SpillBehavior { }
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+
 # Cans and bottles
 - type: entity
   abstract: true
@@ -102,13 +123,26 @@
   parent: BaseDrinkOpenable
   id: BaseDrinkOpenableOpen
   components:
+  - type: Sprite
+    layers:
+    - state: icon_open
   - type: Openable
     opened: true
-    closeable: false # the lid disappeared somewhere
   - type: Sealable
     sealed: false
-    examineTextUnsealed: drink-component-on-examine-is-unsealed-lost-lid # inform the player the lid is gone
 
+# An empty drink, often paired with BaseDrinkOpenableOpen
+- type: entity
+  abstract: true
+  id: BaseDrinkEmptyTrash
+  suffix: Empty
+  components:
+  - type: SpaceGarbage
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: Tag
+    tags:
+    - Trash
 
 ###
 # TODO: MOVE
