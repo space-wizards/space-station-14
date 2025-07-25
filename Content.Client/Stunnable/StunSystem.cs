@@ -104,7 +104,7 @@ public sealed class StunSystem : SharedStunSystem
         Vector2 maxJitter,
         float breathing,
         Vector2 startOffset,
-        ref Vector2 lastJitter)
+        ref Vector2? lastJitter)
     {
         // avoid animations with negative length or infinite length
         if (frequency <= 0)
@@ -125,8 +125,8 @@ public sealed class StunSystem : SharedStunSystem
             offset.X *= _random.Pick(_sign);
             offset.Y *= _random.Pick(_sign);
 
-            if (i == 1 && Math.Sign(offset.X) == Math.Sign(lastJitter.X)
-                       && Math.Sign(offset.Y) == Math.Sign(lastJitter.Y))
+            if (lastJitter != null && i == 1 && Math.Sign(offset.X) == Math.Sign(lastJitter.Value.X)
+                       && Math.Sign(offset.Y) == Math.Sign(lastJitter.Value.Y))
             {
                 // If the sign is the same as last time on both axis we flip one randomly
                 // to avoid jitter staying in one quadrant too much.
