@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Used Mobs/Species/Human/organs.rsi as base, edits by princess_gurchi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "eyeball-l"
+        },
+        {
+            "name": "eyeball-r"
+        },
+        {
+            "name": "kidney-l"
+        },
+        {
+            "name": "kidney-r"
+        },
+        {
+            "name": "liver"
+        },
+        {
+            "name": "stomach"
+        },
+        {
+            "name": "tongue"
+        }
+    ]
+}
