@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: DrinkBase
   id: DrinkShaker
   name: shaker
   description: The trusty mixing buddy of the bartender.
@@ -8,35 +8,17 @@
     solutions:
       drink:
         maxVol: 100
-  - type: MixableSolution
-    solution: drink
-  - type: Drink
-  - type: Shakeable
   - type: FitsInDispenser
-    solution: drink
-  - type: DrawableSolution
-    solution: drink
-  - type: RefillableSolution
-    solution: drink
-  - type: DrainableSolution
-    solution: drink
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
-  - type: Spillable
     solution: drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker.rsi
     state: icon
   - type: Item
     sprite: Objects/Consumable/Drinks/shaker.rsi
-  - type: UserInterface
-    interfaces:
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
-  - type: DnaSubstanceTrace
+  - type: Shakeable
   - type: ReactionMixer
     mixOnInteract: false
     reactionTypes:
@@ -52,10 +34,6 @@
     solutions:
       drink:
         maxVol: 5
-  - type: SolutionTransfer
-    transferAmount: 10
-    minTransferAmount: 10
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shotglass.rsi
     layers:
@@ -72,37 +50,6 @@
     fillBaseName: fill
     inHandsMaxFillLevels: 1
     inHandsFillBaseName: -fill-
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkJar
-  name: jar
-  description: The hipster's cup.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/jar.rsi
-    layers:
-      - state: icon
-        map: [ "enum.SolutionContainerLayers.Base" ]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-        visible: false
-      - state: icon-front
-        map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: Appearance
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-  - type: SolutionContainerVisuals
-    maxFillLevels: 9
-    fillBaseName: fill
-    metamorphic: true
-    metamorphicDefaultSprite:
-      sprite: Objects/Consumable/Drinks/jar.rsi
-      state: icon
-  - type: TransformableContainer
 
 - type: entity
   parent: DrinkGlassBase
@@ -135,7 +82,7 @@
         type: TransferAmountBoundUserInterface
 
 - type: entity
-  parent: [BaseItem, BartenderMixer]
+  parent: BaseDrink
   id: DrinkJigger
   name: jigger
   description: Like a shaker, but smaller. Used to control the amount of ingredients.
@@ -148,8 +95,6 @@
     canChangeTransferAmount: true
     minTransferAmount: 1
     maxTransferAmount: 20
-  - type: MixableSolution
-    solution: drink
   - type: FitsInDispenser
     solution: drink
   - type: Sprite
@@ -160,7 +105,7 @@
       Steel: 20
 
 - type: entity
-  parent: [BaseItem, BartenderMixer]
+  parent: BaseDrink
   id: DrinkIceBucket
   name: ice bucket
   description: A special bucket of refreshy ice. Prohibited use for challenge with the same name!

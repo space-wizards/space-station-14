@@ -1,4 +1,4 @@
-# File for the metamorphic glass and pre-filled metamorph glass
+# File for the metamorphic glass and pre-filled drinks
 # TODO Autogenerate prototypes so this file isn't 1000s of lines
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_glass.yml
 
@@ -33,7 +33,37 @@
       state: icon
   - type: TransformableContainer
 
-# Reagent fills
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkJar
+  name: jar
+  description: The hipster's cup.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/jar.rsi
+    layers:
+    - state: icon
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: fill1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: icon-front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+  - type: SolutionContainerVisuals
+    maxFillLevels: 9
+    fillBaseName: fill
+    metamorphic: true
+    metamorphicDefaultSprite:
+      sprite: Objects/Consumable/Drinks/jar.rsi
+      state: icon
+  - type: TransformableContainer
+
+## Reagent filled
 
 - type: entity
   parent: DrinkGlass
