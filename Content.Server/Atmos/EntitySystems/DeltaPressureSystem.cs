@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Components;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -23,6 +24,7 @@ public sealed class DeltaPressureSystem : EntitySystem
 
         SubscribeLocalEvent<DeltaPressureComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DeltaPressureComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<DeltaPressureComponent, ExaminedEvent>(OnExamined);
 
         SubscribeLocalEvent<DeltaPressureComponent, GridUidChangedEvent>(OnGridChanged);
     }
@@ -38,6 +40,12 @@ public sealed class DeltaPressureSystem : EntitySystem
     private void OnComponentShutdown(Entity<DeltaPressureComponent> ent, ref ComponentShutdown args)
     {
         TryRemoveFromList(ent);
+    }
+
+    private void OnExamined(Entity<DeltaPressureComponent> ent, ref ExaminedEvent args)
+    {
+        if (ent.Comp.IsTakingDamage)
+            args.PushMarkup("The object is buckling inwards!");
     }
 
     private void OnGridChanged(Entity<DeltaPressureComponent> ent, ref GridUidChangedEvent args)

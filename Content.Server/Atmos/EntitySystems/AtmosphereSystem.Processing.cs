@@ -475,7 +475,33 @@ namespace Content.Server.Atmos.EntitySystems
         /// otherwise, false.</returns>
         private bool ProcessDeltaPressure(GridAtmosphereComponent atmosphere)
         {
-            throw new NotImplementedException("wawa");
+            if (!atmosphere.ProcessingPaused)
+            {
+                atmosphere.CurrentRunDeltaPressureEntities.Clear();
+                atmosphere.CurrentRunDeltaPressureEntities.EnsureCapacity(atmosphere.DeltaPressureEntity.Count);
+                foreach (var ent in atmosphere.DeltaPressureEntity)
+                {
+                    atmosphere.CurrentRunDeltaPressureEntities.Enqueue(ent);
+                }
+            }
+
+            var number = 0;
+            while (atmosphere.CurrentRunDeltaPressureEntities.TryDequeue(out var ent))
+            {
+                ProcessDeltaPressureEntity(ent, atmosphere);
+
+                if (number++ < LagCheckIterations)
+                    continue;
+
+                number = 0;
+                // Process the rest next time.
+                if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private bool ProcessPipeNets(GridAtmosphereComponent atmosphere)
@@ -665,6 +691,16 @@ namespace Content.Server.Atmos.EntitySystems
                         }
 
                         atmosphere.ProcessingPaused = false;
+                        atmosphere.State = AtmosphereProcessingState.DeltaPressure;
+                        continue;
+                    case AtmosphereProcessingState.DeltaPressure:
+                        if (!ProcessDeltaPressure(atmosphere))
+                        {
+                            atmosphere.ProcessingPaused = true;
+                            return;
+                        }
+
+                        atmosphere.ProcessingPaused = false;
                         atmosphere.State = AtmosphereProcessingState.Hotspots;
                         continue;
                     case AtmosphereProcessingState.Hotspots:
@@ -691,16 +727,6 @@ namespace Content.Server.Atmos.EntitySystems
 
                         atmosphere.ProcessingPaused = false;
                         atmosphere.State = AtmosphereProcessingState.DeltaPressure;
-                        continue;
-                    case AtmosphereProcessingState.DeltaPressure:
-                        if (!ProcessDeltaPressure(atmosphere))
-                        {
-                            atmosphere.ProcessingPaused = true;
-                            return;
-                        }
-
-                        atmosphere.ProcessingPaused = false;
-                        atmosphere.State = AtmosphereProcessingState.PipeNet;
                         continue;
                     case AtmosphereProcessingState.PipeNet:
                         if (!ProcessPipeNets(atmosphere))
@@ -742,9 +768,9 @@ namespace Content.Server.Atmos.EntitySystems
         ActiveTiles,
         ExcitedGroups,
         HighPressureDelta,
+        DeltaPressure,
         Hotspots,
         Superconductivity,
-        DeltaPressure,
         PipeNet,
         AtmosDevices,
         NumStates

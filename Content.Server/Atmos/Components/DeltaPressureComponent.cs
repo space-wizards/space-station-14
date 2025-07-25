@@ -51,13 +51,16 @@ public sealed partial class DeltaPressureComponent : Component
     /// <summary>
     /// If the entity is fulfilling both minimum pressure requirements, then this entity will stack damage.
     /// </summary>
-    public bool StackDamage = true;
+    [DataField]
+    public bool StackDamage;
 
     /// <summary>
     /// The minimum pressure at which the entity will start taking damage.
     /// This doesn't depend on the difference in pressure.
     /// The entity will start to take damage if it is exposed to this pressure.
     /// </summary>
+    /// <remarks>If the entity is not airtight, it will take pressure damage
+    /// based on this field, and <see cref="MinPressureDelta"/> will be ignored.</remarks>
     [DataField]
     public float MinPressure = 5000;
 
@@ -80,6 +83,12 @@ public sealed partial class DeltaPressureComponent : Component
     /// </summary>
     [DataField]
     public float ScalingPower = 1;
+
+    /// <summary>
+    /// Defines the scaling behavior for the damage.
+    /// </summary>
+    [DataField]
+    public DeltaPressureDamageScalingType ScalingType = DeltaPressureDamageScalingType.Threshold;
 }
 
 [Serializable]
@@ -87,6 +96,7 @@ public enum DeltaPressureDamageScalingType : byte
 {
     /// <summary>
     /// Damage dealt will be constant as long as the minimum values are met.
+    /// Scaling power is ignored.
     /// </summary>
     Threshold,
 
