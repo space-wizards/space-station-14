@@ -258,9 +258,9 @@
   source: "https://freesound.org/people/CheChoDj/sounds/609353/"
 
 - files: [card_drag.ogg]
-  copyright: 'created by OxidVideos on Pixabay and modified by Tao7891'
-  license: Custom - https://pixabay.com/service/license-summary/
-  source: https://pixabay.com/sound-effects/cardboard-box-open-182560/
+  copyright: 'created by Tao7891'
+  license: CC0-1.0
+  source: https://github.com/space-wizards/space-station-14/pull/37363
 
 - files: [card_tube_bonk.ogg]
   copyright: 'created by Crinkem on Freesound'
