@@ -70,7 +70,7 @@
 
 - type: wireLayout
   parent: Turnstile
-  id: TUrnstileGenpop
+  id: TurnstileGenpop
 
 - type: wireLayout
   id: Vending
