@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -12,22 +12,9 @@ namespace Content.Shared.Medical;
 /// person back into the world of the living.
 /// Uses <c>ItemToggleComponent</c>
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedDefibrillatorSystem)), AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedDefibrillatorSystem))]
 public sealed partial class DefibrillatorComponent : Component
 {
-    /// <summary>
-    /// The time at which the zap cooldown will be completed.
-    /// Auto-networked field to sync zap time, and fix that player doing zap before it actually cooldowned
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
-    public TimeSpan? NextZapTime;
-
-    /// <summary>
-    /// The minimum time between zaps
-    /// </summary>
-    [DataField]
-    public TimeSpan ZapDelay = TimeSpan.FromSeconds(5);
-
     /// <summary>
     /// How much damage is healed from getting zapped.
     /// </summary>
@@ -53,7 +40,7 @@ public sealed partial class DefibrillatorComponent : Component
     public string DelayId = "defib-delay";
 
     /// <summary>
-    ///     Cooldown after using the defibrillator.
+    /// The minimum time between zaps
     /// </summary>
     [DataField]
     public TimeSpan ZapDelay = TimeSpan.FromSeconds(5);

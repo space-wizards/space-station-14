@@ -1,19 +1,16 @@
+using Content.Server.Atmos.Rotting;
 using Content.Server.Chat.Systems;
-using Content.Server.Electrocution;
 using Content.Server.EUI;
 using Content.Server.Ghost;
 using Content.Server.PowerCell;
-using Content.Shared.Traits.Assorted;
-using Content.Shared.Atmos.Rotting;
 using Content.Shared.Damage;
-using Content.Shared.Item.ItemToggle;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Traits.Assorted;
 using Robust.Server.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Medical;
@@ -25,27 +22,28 @@ public sealed class DefibrillatorSystem : SharedDefibrillatorSystem
 {
     [Dependency] private readonly ChatSystem _chatManager = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
-    [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly RottingSystem _rotting = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
 
-    public override void Zap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent component, MobStateComponent? mob = null)
+    public override void Zap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent? component)
     {
-        base.Zap(uid, target, user, component, mob);
+        base.Zap(uid, target, user, component);
 
-        _electrocution.TryDoElectrocution(target, null, component.ZapDamage, component.WritheDuration, true, ignoreInsulation: true);
+        if (!Resolve(uid, ref component))
+            return;
 
-        // TODO : powercell should be rewritten to shared instead of strictly be on Server side
+        // TODO : powercell TryUseActivatableCharge should be rewritten to shared instead of strictly be on Server side
         if (!_powerCell.TryUseActivatableCharge(uid, user: user))
+            return;
+
+        if (!TryComp<MobStateComponent>(target, out var mob) ||
+            !TryComp<MobThresholdsComponent>(target, out var thresholds))
             return;
 
         ICommonSession? session = null;
@@ -95,14 +93,6 @@ public sealed class DefibrillatorSystem : SharedDefibrillatorSystem
             ? component.FailureSound
             : component.SuccessSound;
         _audio.PlayPvs(sound, uid);
-
-        // if we don't have enough power left for another shot, turn it off
-        if (!_powerCell.HasActivatableCharge(uid))
-            _toggle.TryDeactivate(uid);
-
-        // TODO clean up this clown show above
-        var ev = new TargetDefibrillatedEvent(user, (uid, component));
-        RaiseLocalEvent(target, ref ev);
 
         Dirty(uid, component);
     }
