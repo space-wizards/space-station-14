@@ -7,7 +7,9 @@ namespace Content.Shared.Salvage.Magnet;
 /// </summary>
 public record struct AsteroidOffering : ISalvageMagnetOffering
 {
-    public DungeonConfigPrototype DungeonConfig;
+    public string Id;
+
+    public DungeonConfig DungeonConfig;
 
     /// <summary>
     /// Calculated marker layers for the asteroid.

@@ -68,3 +68,14 @@
     materialComposition:
       Plastic: 50
   - type: DnaSubstanceTrace
+
+- type: entity
+  parent: Bucket
+  id: BorgBucket
+  name: internal tank
+  description: The internal reservoir of a custodial cyborg, capable of holding a entire mop bucket worth of water.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      bucket:
+        maxVol: 500

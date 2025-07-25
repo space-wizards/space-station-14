@@ -3378,9 +3378,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
@@ -49396,13 +49394,6 @@ entities:
     components:
     - type: Transform
       pos: 7.2571726,18.545927
-      parent: 31
-- proto: MaterialReclaimer
-  entities:
-  - uid: 9264
-    components:
-    - type: Transform
-      pos: -32.5,-17.5
       parent: 31
 - proto: MaterialWoodPlank1
   entities:

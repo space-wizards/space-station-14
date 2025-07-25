@@ -1,0 +1,147 @@
+#Spawners
+- type: entity
+  id: RandomMeat
+  name: random meat spawner
+  parent: MarkerBase
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Transform
+    anchored: false
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Consumable/Food/meat.rsi
+        state: plain
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: MeatTable
+      prob: 0.85
+
+#Tables
+- type: entityTable
+  id: MeatTable
+  table: !type:GroupSelector
+    children:
+    #Meat
+    - !type:GroupSelector
+      weight: 10
+      children:
+      - id: FoodMeat
+    #Medium-Rare
+    - !type:GroupSelector
+      weight: 7.5
+      children:
+      - id: FoodMeatFish
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodMeatBacon
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodMeatChicken
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodMeatDuck
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodMeatCrab
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodMeatWheat
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodMeatSalami
+        amount: !type:RangeNumberSelector
+          range: 1, 2
+      - id: FoodMeatMeatball
+        amount: !type:RangeNumberSelector
+          range: 1, 8
+      - !type:GroupSelector
+        children:
+        - id: FoodMeatCutlet
+          amount: !type:RangeNumberSelector
+            range: 1, 4
+        - id: FoodMeatChickenCutlet
+          amount: !type:RangeNumberSelector
+            range: 1, 4
+        - id: FoodMeatDuckCutlet
+          amount: !type:RangeNumberSelector
+            range: 1, 4
+        - id: FoodMeatSalamiSlice
+          amount: !type:RangeNumberSelector
+            range: 1, 4
+    #Rotten
+    - !type:GroupSelector
+      weight: 2
+      children:
+      - id: FoodMeatRotten
+        weight: 2
+        amount: !type:RangeNumberSelector
+          range: 1, 6
+      - id: FoodMeatRat
+        amount: !type:RangeNumberSelector
+          range: 1, 6
+      - id: FoodMeatSnake
+        amount: !type:RangeNumberSelector
+          range: 1, 6
+    #Rare
+    - !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 0.5
+        children:
+        - id: FoodMeatHuman
+          amount: !type:RangeNumberSelector
+            range: 1, 3
+        - id: FoodMeatLizard
+          amount: !type:RangeNumberSelector
+            range: 1, 3
+        - id: FoodMeatPlant
+          amount: !type:RangeNumberSelector
+            range: 1, 3
+        - id: FoodMeatSpider
+          amount: !type:RangeNumberSelector
+            range: 1, 3
+        - id: FoodMeatSlime
+          amount: !type:RangeNumberSelector
+            range: 1, 3
+        - !type:GroupSelector
+          children:
+          - id: FoodMeatLizardCutlet
+            amount: !type:RangeNumberSelector
+              range: 1, 2
+          - id: FoodMeatSpiderCutlet
+            amount: !type:RangeNumberSelector
+              range: 1, 2
+          - id: FoodMeatXenoCutlet
+            amount: !type:RangeNumberSelector
+              range: 1, 2
+          - id: FoodMeatSpider
+            amount: !type:RangeNumberSelector
+              range: 1, 2
+          - id: FoodMeatSlime
+            amount: !type:RangeNumberSelector
+              range: 1, 2
+      - id: FoodMeatBear
+        amount: !type:RangeNumberSelector
+          range: 1, 4
+      - id: FoodMeatPenguin
+        amount: !type:RangeNumberSelector
+          range: 1, 4
+      - id: FoodMeatSpiderLeg
+        amount: !type:RangeNumberSelector
+          range: 1, 4
+      - id: FoodMeatXeno
+        amount: !type:RangeNumberSelector
+          range: 1, 4
+      - !type:GroupSelector
+        children:
+          - id: FoodMeatBearCutlet
+            amount: !type:RangeNumberSelector
+              range: 1, 4
+          - id: FoodMeatPenguinCutlet
+            amount: !type:RangeNumberSelector
+              range: 1, 4
+          - id: FoodMeatXenoCutlet
+            amount: !type:RangeNumberSelector
+              range: 1, 4

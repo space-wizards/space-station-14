@@ -1,15 +1,16 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Explosion.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Throwing;
+using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -20,7 +21,7 @@ namespace Content.Server.Nutrition.EntitySystems
     [UsedImplicitly]
     public sealed class CreamPieSystem : SharedCreamPieSystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutions = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
         [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly TriggerSystem _trigger = default!;
@@ -40,22 +41,24 @@ namespace Content.Server.Nutrition.EntitySystems
 
         protected override void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie)
         {
-            _audio.PlayPvs(_audio.GetSound(creamPie.Sound), uid, AudioParams.Default.WithVariation(0.125f));
+            // The entity is deleted, so play the sound at its position rather than parenting
+            var coordinates = Transform(uid).Coordinates;
+            _audio.PlayPvs(_audio.ResolveSound(creamPie.Sound), coordinates, AudioParams.Default.WithVariation(0.125f));
 
-            if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
+            if (TryComp(uid, out FoodComponent? foodComp))
             {
                 if (_solutions.TryGetSolution(uid, foodComp.Solution, out _, out var solution))
                 {
                     _puddle.TrySpillAt(uid, solution, out _, false);
                 }
-                if (!string.IsNullOrEmpty(foodComp.Trash))
+                foreach (var trash in foodComp.Trash)
                 {
-                    EntityManager.SpawnEntity(foodComp.Trash, Transform(uid).Coordinates);
+                    Spawn(trash, Transform(uid).Coordinates);
                 }
             }
             ActivatePayload(uid);
 
-            EntityManager.QueueDeleteEntity(uid);
+            QueueDel(uid);
         }
 
         private void OnConsume(Entity<CreamPieComponent> entity, ref ConsumeDoAfterEvent args)
@@ -90,13 +93,16 @@ namespace Content.Server.Nutrition.EntitySystems
 
         protected override void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
         {
-            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message", ("thrower", args.Thrown)), uid, args.Target);
-            var otherPlayers = Filter.Empty().AddPlayersByPvs(uid);
-            if (TryComp<ActorComponent>(args.Target, out var actor))
-            {
-                otherPlayers.RemovePlayer(actor.PlayerSession);
-            }
-            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", uid), ("thrower", args.Thrown)), uid, otherPlayers, false);
+            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message",
+                                            ("thrown", Identity.Entity(args.Thrown, EntityManager))),
+                                            uid, args.Target);
+
+            var otherPlayers = Filter.PvsExcept(uid);
+
+            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others",
+                                            ("owner", Identity.Entity(uid, EntityManager)),
+                                            ("thrown", Identity.Entity(args.Thrown, EntityManager))),
+                                            uid, otherPlayers, false);
         }
 
         private void OnRejuvenate(Entity<CreamPiedComponent> entity, ref RejuvenateEvent args)

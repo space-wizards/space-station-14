@@ -222,6 +222,20 @@
   - sprite: Mobs/Customization/gauze.rsi
     state: gauze_boxerwrap_l
 
+- type: marking
+  id: GauzeHead
+  bodyPart: Head
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_head
+
 # Lizard Specific Markings
 - type: marking
   id: GauzeLizardLefteyePatch

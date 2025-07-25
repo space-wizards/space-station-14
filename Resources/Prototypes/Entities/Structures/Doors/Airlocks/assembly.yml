@@ -138,6 +138,25 @@
     sprite: Structures/Doors/Airlocks/Standard/freezer.rsi
     state: "assembly"
 
+#Hydroponics
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyHydroponics
+  suffix: Hydroponics
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/hydroponics.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyHydroponicsGlass
+  suffix: Hydroponics, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/hydroponics.rsi
+    state: "assembly"
+
 #Maintenance
 - type: entity
   parent: AirlockAssembly
@@ -174,6 +193,25 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/medical.rsi
+    state: "assembly"
+
+#Salvage
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySalvage
+  suffix: Salvage
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/salvage.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySalvageGlass
+  suffix: Salvage, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/salvage.rsi
     state: "assembly"
 
 #Science

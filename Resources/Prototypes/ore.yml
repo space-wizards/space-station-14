@@ -56,7 +56,7 @@
   id: OreBananium
   oreEntity: BananiumOre1
   minOreYield: 1
-  maxOreYield: 3
+  maxOreYield: 2
 
 - type: ore
   id: OreDiamond
@@ -73,8 +73,20 @@
   oreEntity: MobSpawnCrabIron
 
 - type: ore
+  id: OreCoalCrab
+  oreEntity: MobSpawnCrabCoal
+
+- type: ore
   id: OreSilverCrab
   oreEntity: MobSpawnCrabSilver
+
+- type: ore
+  id: OreGoldCrab
+  oreEntity: MobSpawnCrabGold
+
+- type: ore
+  id: OreBananiumCrab
+  oreEntity: MobSpawnCrabBananium
 
 - type: ore
   id: OreUraniumCrab
@@ -83,8 +95,8 @@
 - type: ore
   id: OreArtifactFragment
   oreEntity: ArtifactFragment1
-  minOreYield: 2
-  maxOreYield: 4
+  minOreYield: 1
+  maxOreYield: 3
 
 - type: weightedRandomOre
   id: RandomOreDistributionStandard
@@ -106,3 +118,6 @@
     OreIronCrab: 5
     OreUraniumCrab: 2
     OreSilverCrab: 3
+    OreBananiumCrab: 1
+    OreCoalCrab: 5
+    OreGoldCrab: 2

@@ -1,4 +1,5 @@
 using Content.Server.Traitor.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traitor.Components;
 
@@ -9,14 +10,8 @@ namespace Content.Server.Traitor.Components;
 public sealed partial class AutoTraitorComponent : Component
 {
     /// <summary>
-    /// Whether to give the traitor an uplink or not.
+    /// The traitor profile to use
     /// </summary>
-    [DataField("giveUplink"), ViewVariables(VVAccess.ReadWrite)]
-    public bool GiveUplink = true;
-
-    /// <summary>
-    /// Whether to give the traitor objectives or not.
-    /// </summary>
-    [DataField("giveObjectives"), ViewVariables(VVAccess.ReadWrite)]
-    public bool GiveObjectives = true;
+    [DataField]
+    public EntProtoId Profile = "Traitor";
 }

@@ -24,7 +24,7 @@ namespace Content.Client.Info
         }
         public void SetInfoBlob(string markup)
         {
-            _richTextLabel.SetMessage(FormattedMessage.FromMarkup(markup));
+            _richTextLabel.SetMessage(FormattedMessage.FromMarkupOrThrow(markup));
         }
     }
 }

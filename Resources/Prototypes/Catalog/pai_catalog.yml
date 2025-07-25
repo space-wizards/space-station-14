@@ -1,0 +1,43 @@
+# Some things might seem like great ideas on paper for pAI apps, but have deliberately been excluded.
+# e.g. Monitoring (Power/Atmos/Crew), Cameras, etc. are excluded as apps for performance and balance reasons.
+# Generally speaking, if you're adding an application, it needs to *not* be round-impacting.
+# Remember that pAI's are *assistants*, not players.
+
+- type: listing
+  id: PAIMassScanner
+  name: pai-mass-scanner-name
+  description: pai-mass-scanner-desc
+  productAction: ActionPAIMassScanner
+  cost:
+    SiliconMemory: 10
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: PAIMIDIPlayer
+  name: pai-midi-player-name
+  description: pai-midi-player-desc
+  productAction: ActionPAIPlayMidi
+  cost:
+    SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: PAIStationMap
+  name: pai-station-map-name
+  description: pai-station-map-desc
+  productAction: ActionPAIOpenMap
+  cost:
+    SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
@@ -7,28 +8,10 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed partial class SkeletonAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
     [GeneratedRegex(@"(?<!\w)[^aeiou]one", RegexOptions.IgnoreCase, "en-US")]
     private static partial Regex BoneRegex();
-
-    private static readonly Dictionary<string, string> DirectReplacements = new()
-    {
-        { "fuck you", "I've got a BONE to pick with you" },
-        { "fucked", "boned"},
-        { "fuck", "RATTLE RATTLE" },
-        { "fck", "RATTLE RATTLE" },
-        { "shit", "RATTLE RATTLE" }, // Capitalize RATTLE RATTLE regardless of original message case.
-        { "definitely", "make no bones about it" },
-        { "absolutely", "make no bones about it" },
-        { "afraid", "rattled"},
-        { "scared", "rattled"},
-        { "spooked", "rattled"},
-        { "shocked", "rattled"},
-        { "killed", "skeletonized"},
-        { "humorous", "humerus"},
-        { "to be a", "tibia"},
-        { "under", "ulna"}
-    };
 
     public override void Initialize()
     {
@@ -50,11 +33,8 @@ public sealed partial class SkeletonAccentSystem : EntitySystem
         // At the start of words, any non-vowel + "one" becomes "bone", e.g. tone -> bone ; lonely -> bonely; clone -> clone (remains unchanged).
         msg = BoneRegex().Replace(msg, "bone");
 
-        // Direct word/phrase replacements:
-        foreach (var (first, replace) in DirectReplacements)
-        {
-            msg = Regex.Replace(msg, $@"(?<!\w){first}(?!\w)", replace, RegexOptions.IgnoreCase);
-        }
+        // apply word replacements
+        msg = _replacement.ApplyReplacements(msg, "skeleton");
 
         // Suffix:
         if (_random.Prob(component.ackChance))

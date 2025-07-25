@@ -6,6 +6,8 @@
   description:  A small piece of crystal.
   components:
   - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
   - type: Sprite
     layers:
       - sprite: Objects/Materials/Shards/crystal.rsi
@@ -73,6 +75,22 @@
 
 - type: entity
   parent: ShardCrystalBase
+  name: yellow crystal shard
+  id: ShardCrystalYellow
+  components:
+  - type: Sprite
+    color: "#ffde46"
+  - type: PointLight
+    radius: 2
+    energy: 2.5
+    color: "#ffde46"
+  - type: Tag
+    tags:
+      - Trash
+      - CrystalYellow
+
+- type: entity
+  parent: ShardCrystalBase
   id: ShardCrystalOrange
   name: orange crystal shard
   components:
@@ -86,6 +104,22 @@
     tags:
       - Trash
       - CrystalOrange
+
+- type: entity
+  parent: ShardCrystalBase
+  name: black crystal shard
+  id: ShardCrystalBlack
+  components:
+  - type: Sprite
+    color: "#363636"
+  - type: PointLight
+    radius: 2
+    energy: 2.5
+    color: "#363636"
+  - type: Tag
+    tags:
+      - Trash
+      - CrystalBlack
 
 - type: entity
   parent: ShardCrystalBase

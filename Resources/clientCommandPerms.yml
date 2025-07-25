@@ -20,7 +20,6 @@
     - net_watchent
     - devwindow
     - fill
-    - dumpentities
     - ">"
     - gcf
     - gc
@@ -39,6 +38,7 @@
     - replay_stop
     - replay_load
     - saveconfig
+    - chatwindow
 
 - Flags: DEBUG
   Commands:
@@ -66,22 +66,28 @@
     - showemergencyshuttle
     - zoom
     - showsubfloor
-    - showsubfloorforever
     - showmarkers
     - nodevis
     - nodevisfilter
     - detachent
     - localdelete
     - fullstatereset
+    - dumpentities
+    - showaccessreaders
 
 - Flags: MAPPING
   Commands:
     - mapping
     - toggleautosave
     - toggledecals
+    - showaccessreaders
 
 - Flags: QUERY
   Commands:
     - uploadfile
     - loadprototype
     - uploadfolder
+
+- Flags: ADMINCHAT
+  Commands:
+    - achatwindow

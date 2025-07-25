@@ -194,12 +194,12 @@ namespace Content.Client.Inventory
 
         public void UIInventoryActivate(string slot)
         {
-            EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
+            RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
         }
 
         public void UIInventoryStorageActivate(string slot)
         {
-            EntityManager.RaisePredictiveEvent(new OpenSlotStorageNetworkMessage(slot));
+            RaisePredictiveEvent(new OpenSlotStorageNetworkMessage(slot));
         }
 
         public void UIInventoryExamine(string slot, EntityUid uid)
@@ -223,7 +223,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            EntityManager.RaisePredictiveEvent(
+            RaisePredictiveEvent(
                 new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: false));
         }
 
@@ -232,12 +232,26 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
+            RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
+        }
+
+        protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
+        {
+            base.UpdateInventoryTemplate(ent);
+
+            if (TryComp(ent, out InventorySlotsComponent? inventorySlots))
+            {
+                foreach (var slot in ent.Comp.Slots)
+                {
+                    if (inventorySlots.SlotData.TryGetValue(slot.Name, out var slotData))
+                        slotData.SlotDef = slot;
+                }
+            }
         }
 
         public sealed class SlotData
         {
-            public readonly SlotDefinition SlotDef;
+            public SlotDefinition SlotDef;
             public EntityUid? HeldEntity => Container?.ContainedEntity;
             public bool Blocked;
             public bool Highlighted;

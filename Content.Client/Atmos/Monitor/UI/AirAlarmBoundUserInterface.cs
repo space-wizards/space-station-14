@@ -1,11 +1,7 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 
 namespace Content.Client.Atmos.Monitor.UI;
 
@@ -30,7 +26,6 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
         _window.AirAlarmModeChanged += OnAirAlarmModeChanged;
         _window.AutoModeChanged += OnAutoModeChanged;
         _window.ResyncAllRequested += ResyncAllDevices;
-        _window.AirAlarmTabChange += OnTabChanged;
     }
 
     private void ResyncAllDevices()
@@ -63,11 +58,6 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
         SendMessage(new AirAlarmUpdateAlarmThresholdMessage(address, type, threshold, gas));
     }
 
-    private void OnTabChanged(AirAlarmTab tab)
-    {
-        SendMessage(new AirAlarmTabSetMessage(tab));
-    }
-
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
@@ -84,6 +74,7 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
     {
         base.Dispose(disposing);
 
-        if (disposing) _window?.Dispose();
+        if (disposing)
+            _window?.Dispose();
     }
 }

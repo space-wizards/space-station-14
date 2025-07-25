@@ -8,6 +8,7 @@ using Content.Server.Roles;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
+using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Objectives.Components;
 using Robust.Shared.GameObjects;
@@ -20,6 +21,8 @@ public sealed class TraitorRuleTest
 {
     private const string TraitorGameRuleProtoId = "Traitor";
     private const string TraitorAntagRoleName = "Traitor";
+    private static readonly ProtoId<NpcFactionPrototype> SyndicateFaction = "Syndicate";
+    private static readonly ProtoId<NpcFactionPrototype> NanotrasenFaction = "NanoTrasen";
 
     [Test]
     public async Task TestTraitorObjectives()
@@ -77,16 +80,17 @@ public sealed class TraitorRuleTest
         await pair.SetAntagPreference(TraitorAntagRoleName, true);
 
         // Add the game rule
-        var gameRuleEnt = ticker.AddGameRule(TraitorGameRuleProtoId);
-        Assert.That(entMan.TryGetComponent<TraitorRuleComponent>(gameRuleEnt, out var traitorRule));
-
-        // Ready up
-        ticker.ToggleReadyAll(true);
-        Assert.That(ticker.PlayerGameStatuses.Values.All(x => x == PlayerGameStatus.ReadyToPlay));
-
-        // Start the round
+        TraitorRuleComponent traitorRule = null;
         await server.WaitPost(() =>
         {
+            var gameRuleEnt = ticker.AddGameRule(TraitorGameRuleProtoId);
+            Assert.That(entMan.TryGetComponent<TraitorRuleComponent>(gameRuleEnt, out traitorRule));
+
+            // Ready up
+            ticker.ToggleReadyAll(true);
+            Assert.That(ticker.PlayerGameStatuses.Values.All(x => x == PlayerGameStatus.ReadyToPlay));
+
+            // Start the round
             ticker.StartRound();
             // Force traitor mode to start (skip the delay)
             ticker.StartGameRule(gameRuleEnt);
@@ -107,8 +111,8 @@ public sealed class TraitorRuleTest
         // Make sure the player is a traitor.
         var mind = mindSys.GetMind(player)!.Value;
         Assert.That(roleSys.MindIsAntagonist(mind));
-        Assert.That(factionSys.IsMember(player, "Syndicate"), Is.True);
-        Assert.That(factionSys.IsMember(player, "NanoTrasen"), Is.False);
+        Assert.That(factionSys.IsMember(player, SyndicateFaction), Is.True);
+        Assert.That(factionSys.IsMember(player, NanotrasenFaction), Is.False);
         Assert.That(traitorRule.TotalTraitors, Is.EqualTo(1));
         Assert.That(traitorRule.TraitorMinds[0], Is.EqualTo(mind));
 

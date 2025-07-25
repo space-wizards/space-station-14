@@ -47,6 +47,18 @@ public sealed partial class DefibrillatorComponent : Component
     public TimeSpan WritheDuration = TimeSpan.FromSeconds(3);
 
     /// <summary>
+    ///     ID of the cooldown use delay.
+    /// </summary>
+    [DataField]
+    public string DelayId = "defib-delay";
+
+    /// <summary>
+    ///     Cooldown after using the defibrillator.
+    /// </summary>
+    [DataField]
+    public TimeSpan ZapDelay = TimeSpan.FromSeconds(5);
+
+    /// <summary>
     /// How long the doafter for zapping someone takes
     /// </summary>
     /// <remarks>
@@ -78,12 +90,6 @@ public sealed partial class DefibrillatorComponent : Component
 
     [DataField]
     public SoundSpecifier? ReadySound = new SoundPathSpecifier("/Audio/Items/Defib/defib_ready.ogg");
-}
-
-[Serializable, NetSerializable]
-public enum DefibrillatorVisuals : byte
-{
-    Ready
 }
 
 [Serializable, NetSerializable]

@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: MobObserver
+  parent: MobObserverBase
   id: ReplayObserver
   categories: [ HideSpawnMenu ]
   save: false

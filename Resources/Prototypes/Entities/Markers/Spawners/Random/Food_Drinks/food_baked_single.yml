@@ -46,6 +46,8 @@
       - FoodBakedMuffinBerry
       - FoodBakedMuffinCherry
       - FoodBakedMuffinBluecherry
+      - FoodBakedMuffinChocolate
+      - FoodBakedMuffinBanana
       - FoodBakedBunHoney
       - FoodBakedBunHotX
       - FoodBakedBunMeat
@@ -53,6 +55,8 @@
       - FoodBakedCookieOatmeal
       - FoodBakedCookieRaisin
       - FoodBakedCookieSugar
+      - FoodBakedGrilledCheeseSandwich
+      - FoodBakedGrilledCheeseSandwichCotton
       - FoodBakedNugget
       - FoodBakedPancake
       - FoodBakedPancakeBb

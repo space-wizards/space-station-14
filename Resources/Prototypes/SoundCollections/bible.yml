@@ -1,0 +1,9 @@
+- type: soundCollection
+  id: Summon
+  files:
+  - /Audio/Effects/radpulse9.ogg
+
+- type: soundCollection
+  id: BibleHit
+  files:
+  - /Audio/Effects/hit_kick.ogg

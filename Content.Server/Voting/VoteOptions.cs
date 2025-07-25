@@ -1,5 +1,5 @@
+using Content.Server.Voting.Managers;
 using Robust.Shared.Player;
-
 
 namespace Content.Server.Voting
 {
@@ -38,6 +38,21 @@ namespace Content.Server.Voting
         ///     and a data object that can be used to keep track of options later.
         /// </summary>
         public List<(string text, object data)> Options { get; set; } = new();
+
+        /// <summary>
+        ///     Which sessions may send a vote. Used when only a subset of players should be able to vote. Defaults to all.
+        /// </summary>
+        public VoteManager.VoterEligibility VoterEligibility = VoteManager.VoterEligibility.All;
+
+        /// <summary>
+        ///     Whether the vote should send and display the number of votes to the clients. Being an admin defaults this option to true for your client.
+        /// </summary>
+        public bool DisplayVotes = true;
+
+        /// <summary>
+        ///     Whether the vote should have an entity attached to it, to be used for things like letting ghosts follow it. 
+        /// </summary>
+        public NetEntity? TargetEntity = null;
 
         /// <summary>
         ///     Sets <see cref="InitiatorPlayer"/> and <see cref="InitiatorText"/>

@@ -23,7 +23,7 @@ public sealed class RejuvenateCommand : ToolshedCommand
     }
 
     [CommandImplementation]
-    public void Rejuvenate([CommandInvocationContext] IInvocationContext ctx)
+    public void Rejuvenate(IInvocationContext ctx)
     {
         _rejuvenate ??= GetSys<RejuvenateSystem>();
         if (ExecutingEntity(ctx) is not { } ent)

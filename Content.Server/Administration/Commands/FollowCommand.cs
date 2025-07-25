@@ -6,20 +6,17 @@ using Robust.Shared.Enums;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class FollowCommand : IConsoleCommand
+public sealed class FollowCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly FollowerSystem _followerSystem = default!;
 
-    public string Command => "follow";
-    public string Description => Loc.GetString("follow-command-description");
-    public string Help => Loc.GetString("follow-command-help");
+    public override string Command => "follow";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player;
-        if (player == null)
+        if (shell.Player is not { } player)
         {
-            shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
+            shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
             return;
         }
 
@@ -35,10 +32,7 @@ public sealed class FollowCommand : IConsoleCommand
             return;
         }
 
-        var entity = args[0];
-        if (NetEntity.TryParse(entity, out var uidNet) && _entManager.TryGetEntity(uidNet, out var uid))
-        {
-            _entManager.System<FollowerSystem>().StartFollowingEntity(playerEntity, uid.Value);
-        }
+        if (NetEntity.TryParse(args[0], out var uidNet) && EntityManager.TryGetEntity(uidNet, out var uid))
+            _followerSystem.StartFollowingEntity(playerEntity, uid.Value);
     }
 }

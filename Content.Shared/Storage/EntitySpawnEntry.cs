@@ -9,10 +9,10 @@ namespace Content.Shared.Storage;
 /// Prototype wrapper around <see cref="EntitySpawnEntry"/>
 /// </summary>
 [Prototype]
-public sealed class EntitySpawnEntryPrototype : IPrototype
+public sealed partial class EntitySpawnEntryPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = string.Empty;
+    public string ID { get; private set; } = string.Empty;
 
     [DataField]
     public List<EntitySpawnEntry> Entries = new();
@@ -74,6 +74,18 @@ public static class EntitySpawnCollection
     {
         public List<EntitySpawnEntry> Entries { get; set; } = new();
         public float CumulativeProbability { get; set; } = 0f;
+    }
+
+    public static List<string> GetSpawns(ProtoId<EntitySpawnEntryPrototype> proto, IPrototypeManager? protoManager = null, IRobustRandom? random = null)
+    {
+        IoCManager.Resolve(ref protoManager, ref random);
+        return GetSpawns(protoManager.Index(proto).Entries, random);
+    }
+
+    public static List<string?> GetSpawns(ProtoId<EntitySpawnEntryPrototype> proto, System.Random random, IPrototypeManager? protoManager = null)
+    {
+        IoCManager.Resolve(ref protoManager);
+        return GetSpawns(protoManager.Index(proto).Entries, random);
     }
 
     /// <summary>

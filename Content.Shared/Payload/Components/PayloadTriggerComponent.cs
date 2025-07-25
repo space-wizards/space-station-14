@@ -1,3 +1,4 @@
+using Content.Shared.Explosion.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 

@@ -1,9 +1,14 @@
+#While you were busy charging your batong... I studied the blade.
+
+#BaseSword
 - type: entity
   parent: BaseItem
   id: BaseSword
   abstract: true
   components:
   - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
   - type: MeleeWeapon
     wideAnimationRotation: -135
   - type: Sprite
@@ -13,10 +18,65 @@
   - type: Utensil
     types:
       - Knife
+  - type: Tool
+    qualities:
+    - Slicing
+
+#Shortswords
+- type: entity
+  name: cutlass
+  parent: [ BaseSword, BaseMajorContraband ]
+  id: Cutlass
+  description: A wickedly curved blade, often seen in the hands of space pirates.
+  components:
+  - type: Tag
+    tags:
+    - Machete
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cutlass.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 16
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/cutlass.rsi
+    shape:
+    - 0,0,0,2
+  - type: DisarmMalus
 
 - type: entity
+  name: machete
+  parent: [ BaseSword, BaseMajorContraband ]
+  id: Machete
+  description: A large, vicious looking blade.
+  components:
+  - type: Tag
+    tags:
+    - Machete
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/machete.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 15
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/machete.rsi
+    shape:
+    - 0,0,0,2
+  - type: DisarmMalus
+
+#Longswords
+- type: entity
   name: captain's sabre
-  parent: BaseSword
+  parent: [ BaseSword, BaseCommandContraband ]
   id: CaptainSabre
   description: A ceremonial weapon belonging to the captain of the station.
   components:
@@ -33,15 +93,24 @@
     reflectProb: .1
     spread: 90
   - type: Item
-    sprite: Objects/Weapons/Melee/captain_sabre.rsi
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/captain_sabre_storage_64x.rsi #Done in 64x64 because it looks way too puny in 32x32
+    shape:
+    - 0,0,0,3
   - type: Tag
     tags:
     - CaptainSabre
   - type: DisarmMalus
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-inanimate
+    weight: 0.0002 # 5,000 times less likely than 1 regular animal
+  - type: PirateAccent
+    # not putting a BlockMovement component here cause that's funny.
 
 - type: entity
   name: katana
-  parent: BaseSword
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Katana
   description: Ancient craftwork made with not so ancient plasteel.
   components:
@@ -57,7 +126,16 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/katana_storage_64x.rsi #Done in 64x64 because it looks way too puny in 32x32
+    shape:
+    - 0,0,0,3
+  - type: Clothing
     sprite: Objects/Weapons/Melee/katana.rsi
+    slots:
+    - Back
+    - Belt
   - type: DisarmMalus
 
 - type: entity
@@ -74,12 +152,15 @@
       types:
         Slash: 30
   - type: Item
-    sprite: Objects/Weapons/Melee/energykatana.rsi
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/energykatana_storage_64x.rsi #Done in 64x64 because it looks way too puny in 32x32
+    shape:
+    - 0,0,0,3
   - type: EnergyKatana
   - type: DashAbility
   - type: LimitedCharges
     maxCharges: 3
-    charges: 3
   - type: AutoRecharge
     rechargeDuration: 20
   - type: Clothing
@@ -88,31 +169,13 @@
     - Back
     - Belt
   - type: Reflect
+    slotFlags:
+    - NONE
 
-- type: entity
-  name: machete
-  parent: BaseSword
-  id: Machete
-  description: A large, vicious looking blade.
-  components:
-  - type: Tag
-    tags:
-    - Machete
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/machete.rsi
-  - type: MeleeWeapon
-    damage:
-      types:
-        Slash: 15
-    soundHit:
-        path: /Audio/Weapons/bladeslice.ogg
-  - type: Item
-    sprite: Objects/Weapons/Melee/machete.rsi
-  - type: DisarmMalus
-
+#Greatswords
 - type: entity
   name: claymore
-  parent: BaseSword
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Claymore
   description: An ancient war blade.
   components:
@@ -126,38 +189,24 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/claymore_storage_64x.rsi #Done in 64x64 because it looks way too puny in 32x32
+    shape:
+    - 0,0,1,3
   - type: Clothing
     sprite: Objects/Weapons/Melee/claymore.rsi
     slots:
-    - back
+    - Back
+    - SuitStorage #Bigger than the other swords, easier to strap to your suit.
   - type: DisarmMalus
 
+#Other/Weird
 - type: entity
-  name: cutlass
-  parent: BaseSword
-  id: Cutlass
-  description: A wickedly curved blade, often seen in the hands of space pirates.
-  components:
-  - type: Tag
-    tags:
-    - Machete
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/cutlass.rsi
-  - type: MeleeWeapon
-    damage:
-      types:
-        Slash: 16
-    soundHit:
-        path: /Audio/Weapons/bladeslice.ogg
-  - type: Item
-    sprite: Objects/Weapons/Melee/cutlass.rsi
-  - type: DisarmMalus
-
-- type: entity
-  name: Throngler
-  parent: BaseSword
+  name: throngler
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Throngler
-  description: Why would you make this?
+  description: If Security dares take it from you, just remind them that they are indeed mortal.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/Throngler2.rsi

@@ -67,8 +67,7 @@ namespace Content.Client.Changelog
                 Tabs.SetTabTitle(i++, Loc.GetString($"changelog-tab-title-{changelog.Name}"));
             }
 
-            var version = typeof(ChangelogWindow).Assembly.GetName().Version ?? new Version(1, 0);
-            VersionLabel.Text = Loc.GetString("changelog-version-tag", ("version", version.ToString()));
+            VersionLabel.Text = _changelog.GetClientVersion();
 
             TabsUpdated();
         }
@@ -113,15 +112,15 @@ namespace Content.Client.Changelog
     }
 
     [UsedImplicitly, AnyCommand]
-    public sealed class ChangelogCommand : IConsoleCommand
+    public sealed class ChangelogCommand : LocalizedCommands
     {
-        public string Command => "changelog";
-        public string Description => "Opens the changelog";
-        public string Help => "Usage: changelog";
+        [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "changelog";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<ChangelogUIController>().OpenWindow();
+            _uiManager.GetUIController<ChangelogUIController>().OpenWindow();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿advertisement-donut-1 = Each of us is a little cop!
-advertisement-donut-2 = Hope you're hunger!
+advertisement-donut-2 = Hope you're hungry!
 advertisement-donut-3 = Over 1 million donuts sold!
 advertisement-donut-4 = We pride ourselves in the consistency of our products!
 advertisement-donut-5 = Sweet, sugary and delicious!

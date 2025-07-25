@@ -58,6 +58,15 @@
 			"name": "syringe2"
 		},
 		{
+			"name": "minisyringe1"
+		},
+		{
+			"name": "minisyringe2"
+		},
+		{
+			"name": "minisyringe3"
+		},
+		{
 		  "name": "inhand-left",
 		  "directions": 4
 		},

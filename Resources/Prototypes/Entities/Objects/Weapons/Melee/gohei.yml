@@ -11,7 +11,7 @@
     wideAnimationRotation: -150
     damage:
       types:
-        Blunt: 0
+        Holy: 4
   - type: Item
     size: Small
     sprite: Objects/Weapons/Melee/gohei.rsi

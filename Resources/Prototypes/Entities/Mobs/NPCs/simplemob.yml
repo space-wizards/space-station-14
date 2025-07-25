@@ -3,7 +3,7 @@
   parent:
   - BaseMob
   - MobDamageable
-  - MobAtmosExposed
+  - MobPolymorphable
   id: BaseSimpleMob
   suffix: AI
   abstract: true
@@ -22,12 +22,11 @@
     - SlowedDown
     - Stutter
     - Electrocution
-    - ForcedSleep
     - TemporaryBlindness
     - Pacified
     - Flashed
     - RadiationProtection
-    - Drowsiness
+    - Adrenaline
   - type: Buckle
   - type: StandingState
   - type: Tag
@@ -38,6 +37,7 @@
   abstract: true
   parent:
   - BaseSimpleMob
+  - MobAtmosExposed
   - MobCombat
   - MobBloodstream
   - MobFlammable
@@ -98,13 +98,12 @@
     - SlowedDown
     - Stutter
     - Electrocution
-    - ForcedSleep
     - TemporaryBlindness
     - Pacified
     - StaminaModifier
     - Flashed
     - RadiationProtection
-    - Drowsiness
+    - Adrenaline
   - type: Bloodstream
     bloodMaxVolume: 150
   - type: MobPrice

@@ -92,7 +92,7 @@
       disposable: false
 
 - type: entity
-  parent: BaseHardBomb
+  parent: [BaseHardBomb, BaseSyndicateContraband]
   id: SyndicateBomb
   name: syndicate bomb
   description: A bomb for Syndicate operatives and agents alike. The real deal, no more training, get to it!
@@ -126,6 +126,8 @@
       totalIntensity: 4000.0
       intensitySlope: 3
       maxIntensity: 400
+    - type: StaticPrice
+      price: 10000 # Good luck!
 
 - type: entity
   parent: SyndicateBomb
