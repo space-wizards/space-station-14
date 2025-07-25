@@ -150,7 +150,7 @@
 - type: soundCollection
   id: AmbienceDanger
   files:
-    - /Audio/Ambience/ambidanger1.ogg
+    - /Audio/Ambience/ambidanger.ogg
     - /Audio/Ambience/ambidanger2.ogg
 
 # Spooky
