@@ -103,6 +103,13 @@
   source: "https://freesound.org/people/IENBA/sounds/697379/"
 
 - files:
+  - borgwalk3.ogg
+  - borgwalk4.ogg
+  license: "CC-BY-SA-4.0"
+  copyright: "Modified version from borgwalk1 and borgwalk2 by https://github.com/Samuka-C."
+  source: "https://github.com/space-wizards/space-station-14/pull/36867"
+
+- files:
   - heelsclack1.ogg
   - heelsclack2.ogg
   - heelsclack3.ogg

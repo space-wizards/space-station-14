@@ -5,8 +5,6 @@ namespace Content.Client.PowerCell;
 
 public sealed class PowerChargerVisualizerSystem : VisualizerSystem<PowerChargerVisualsComponent>
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-
     protected override void OnAppearanceChange(EntityUid uid, PowerChargerVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -16,22 +14,22 @@ public sealed class PowerChargerVisualizerSystem : VisualizerSystem<PowerCharger
         if (AppearanceSystem.TryGetData<bool>(uid, CellVisual.Occupied, out var occupied, args.Component) && occupied)
         {
             // TODO: don't throw if it doesn't have a full state
-            _sprite.LayerSetRsiState((uid, args.Sprite), PowerChargerVisualLayers.Base, comp.OccupiedState);
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), PowerChargerVisualLayers.Base, comp.OccupiedState);
         }
         else
         {
-            _sprite.LayerSetRsiState((uid, args.Sprite), PowerChargerVisualLayers.Base, comp.EmptyState);
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), PowerChargerVisualLayers.Base, comp.EmptyState);
         }
 
         // Update lighting
         if (AppearanceSystem.TryGetData<CellChargerStatus>(uid, CellVisual.Light, out var status, args.Component)
             && comp.LightStates.TryGetValue(status, out var lightState))
         {
-            _sprite.LayerSetRsiState((uid, args.Sprite), PowerChargerVisualLayers.Light, lightState);
-            _sprite.LayerSetVisible((uid, args.Sprite), PowerChargerVisualLayers.Light, true);
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), PowerChargerVisualLayers.Light, lightState);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), PowerChargerVisualLayers.Light, true);
         }
         else
-            _sprite.LayerSetVisible((uid, args.Sprite), PowerChargerVisualLayers.Light, false);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), PowerChargerVisualLayers.Light, false);
     }
 }
 

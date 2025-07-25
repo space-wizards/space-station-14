@@ -28,7 +28,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly TurfSystem _turfSystem = default!;
 
     public const float CloseDistance = 15f;
     public const float FarDistance = 30f;
@@ -101,10 +101,13 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
     private void OnTileChanged(ref TileChangedEvent ev)
     {
+        if (!_navQuery.TryComp(ev.Entity, out var navMap))
+            return;
+
         foreach (var change in ev.Changes)
         {
-            if (!change.EmptyChanged || !_navQuery.TryComp(ev.Entity, out var navMap))
-                return;
+            if (!change.EmptyChanged)
+                continue;
 
             var tile = change.GridIndices;
             var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
@@ -115,11 +118,11 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
             ref var tileData = ref chunk.TileData[GetTileIndex(relative)];
 
-            if (change.NewTile.IsSpace(_tileDefManager))
+            if (_turfSystem.IsSpace(change.NewTile))
             {
                 tileData = 0;
                 if (PruneEmpty((ev.Entity, navMap), chunk))
-                    return;
+                    continue;
             }
             else
             {

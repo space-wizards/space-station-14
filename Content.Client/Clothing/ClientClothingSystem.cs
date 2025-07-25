@@ -335,7 +335,7 @@ public sealed class ClientClothingSystem : ClothingSystem
                 if (layerData.State is not null && inventory.SpeciesId is not null && layerData.State.EndsWith(inventory.SpeciesId))
                     continue;
 
-                if (_displacement.TryAddDisplacement(displacementData, sprite, index, key, out var displacementKey))
+                if (_displacement.TryAddDisplacement(displacementData, (equipee, sprite), index, key, out var displacementKey))
                 {
                     revealedLayers.Add(displacementKey);
                     index++;

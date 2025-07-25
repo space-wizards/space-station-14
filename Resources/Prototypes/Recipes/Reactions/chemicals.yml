@@ -516,3 +516,12 @@
   products:
     Tazinide: 1
 
+- type: reaction
+  id: ArtifactGlue
+  reactants:
+    SpaceGlue:
+      amount: 1
+    Artifexium:
+      amount: 1
+  products:
+    ArtifactGlue: 2

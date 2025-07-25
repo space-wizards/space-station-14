@@ -1147,5 +1147,135 @@ Entries:
   id: 138
   time: '2025-05-15T20:56:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37426
+- author: VerinSenpai
+  changes:
+  - message: Round controls in the admin window now require confirmation. This can
+      be bypassed by using the console.
+    type: Tweak
+  id: 139
+  time: '2025-05-26T02:37:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37836
+- author: perryprog
+  changes:
+  - message: The server shutdown button in the admin window now requires confirmation.
+      This can be bypassed by using the console.
+    type: Tweak
+  id: 140
+  time: '2025-05-27T23:44:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37849
+- author: Samuka
+  changes:
+  - message: the command solution:adjreagent now actually works and no longer needs
+      a "FixedPoint2" for the amount
+    type: Fix
+  id: 141
+  time: '2025-06-08T03:47:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38134
+- author: ScarKy0
+  changes:
+  - message: 'addaction/rmaction commands. NOTE: Addaction will not work correctly
+      if the action requires the entity to have a component (such as Dragon''s Devour).'
+    type: Add
+  id: 142
+  time: '2025-06-16T10:25:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38317
+- author: Errant, crazybrain
+  changes:
+  - message: The admin player and object tabs now show entries in the correct visual
+      style.
+    type: Fix
+  id: 143
+  time: '2025-06-21T01:13:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38261
+- author: SlamBamActionman
+  changes:
+  - message: customvote and cancelvote command permission has been moved from Moderator
+      to Round.
+    type: Tweak
+  id: 144
+  time: '2025-06-21T16:34:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38385
+- author: beck-thompson
+  changes:
+  - message: Role ban panel is now prettier!
+    type: Tweak
+  id: 145
+  time: '2025-06-21T17:54:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37952
+- author: beck-thompson
+  changes:
+  - message: You can now export round logs to CSV files
+    type: Add
+  id: 146
+  time: '2025-06-22T19:28:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38206
+- author: perryprog
+  changes:
+  - message: The /showaccessreaders command is now usable by those with +MAPPING or
+      +DEBUG, instead of being +HOST only.
+    type: Tweak
+  id: 147
+  time: '2025-06-26T10:43:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38593
+- author: VerinSenpai
+  changes:
+  - message: The addbodypart command no longer incorrectly errors out when you try
+      to pass the required number of arguments.
+    type: Fix
+  id: 148
+  time: '2025-06-28T11:11:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38612
+- author: BramvanZijp
+  changes:
+  - message: The Super Door Remote can now effect doors that the user's ID card has
+      access to, even if the remote itself somehow cannot access them.
+    type: Tweak
+  id: 149
+  time: '2025-06-29T16:21:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35536
+- author: Kowlin
+  changes:
+  - message: Changed the way CSVs are exported
+    type: Tweak
+  id: 150
+  time: '2025-06-30T21:09:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38531
+- author: Smugman
+  changes:
+  - message: Added the ID locked CentComm flippo for admeme use
+    type: Add
+  id: 151
+  time: '2025-07-07T18:53:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35514
+- author: perryprog
+  changes:
+  - message: Admin ghosts can now interact with things beneath subfloors, such as
+      disposal routers.
+    type: Tweak
+  id: 152
+  time: '2025-07-10T11:14:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38813
+- author: VerinSenpai
+  changes:
+  - message: The showrules command now has autocomplete.
+    type: Tweak
+  id: 153
+  time: '2025-07-11T17:48:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38855
+- author: perryprog
+  changes:
+  - message: The runverbas command should now work better with other toolshed commands.
+    type: Fix
+  id: 154
+  time: '2025-07-14T15:45:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38155
+- author: slarticodefast
+  changes:
+  - message: The aghost's satchel of holding is now explosion resistant. Same for
+      the aghost themselves, so held explosives no longer chain react.
+    type: Tweak
+  id: 155
+  time: '2025-07-16T22:35:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38384
 Name: Admin
 Order: 2

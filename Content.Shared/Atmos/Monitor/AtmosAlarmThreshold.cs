@@ -348,6 +348,11 @@ public readonly partial struct AlarmThresholdSetting: IEquatable<AlarmThresholdS
         return true;
     }
 
+    public override bool Equals(object? obj)
+    {
+        return obj is AlarmThresholdSetting ats && Equals(ats);
+    }
+
     public static bool operator ==(AlarmThresholdSetting lhs, AlarmThresholdSetting rhs)
     {
         return lhs.Equals(rhs);
