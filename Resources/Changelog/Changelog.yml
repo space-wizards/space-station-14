@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Entvari
-  changes:
-  - message: Added a new Wizard headset.
-    type: Add
-  - message: The Wizard now starts with the Wizard headset.
-    type: Tweak
-  id: 8295
-  time: '2025-04-20T21:38:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35732
 - author: aada
   changes:
   - message: Filter categories added to the circuit imprinter.
@@ -3911,3 +3902,11 @@
   id: 8806
   time: '2025-07-24T11:24:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39177
+- author: SlamBamActionman
+  changes:
+  - message: Potassium-water explosion damage scaling has been tweaked to be less
+      potent.
+    type: Tweak
+  id: 8807
+  time: '2025-07-25T16:04:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37924
