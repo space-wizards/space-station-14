@@ -79,7 +79,7 @@
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
       shader: unshaded
     - state: mwb
-      map: [ "broken" ]
+      map: ["broken"]
       visible: false
     - state: mwbloody0
       map: ["bloody"]
@@ -101,7 +101,7 @@
         damage: 200
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
   - type: Explosive
     explosionType: Default
     maxIntensity: 10
