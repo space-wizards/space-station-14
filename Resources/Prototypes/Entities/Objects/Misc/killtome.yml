@@ -2,7 +2,7 @@
   name: black tome
   parent: BasePaper
   id: KillTome
-  suffix: KillTome
+  suffix: KillTome, Admeme # To stay true to the lore, please never make this accessible outside of divine intervention (admeme).
   description: A worn black tome. It smells like old paper.
   components:
   - type: Sprite

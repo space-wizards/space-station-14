@@ -328,9 +328,9 @@ public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
 public record struct PaperWriteAttemptEvent(EntityUid Paper, string? FailReason = null, bool Cancelled = false);
 
 /// <summary>
-/// Event, that is raised after writing on a piece of paper ON PAPER (not actor).
+/// Event raised on paper after it was written on by someone.
 /// </summary>
-/// <param name="Actor">Entity that wrote something in paper.</param>
+/// <param name="Actor">Entity that wrote something on the paper.</param>
 [ByRefEvent]
 public readonly record struct PaperAfterWriteEvent(EntityUid Actor);
 

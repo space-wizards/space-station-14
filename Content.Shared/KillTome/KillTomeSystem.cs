@@ -48,7 +48,20 @@ public sealed class KillTomeSystem : EntitySystem
             if (_gameTiming.CurTime < targetComp.KillTime)
                 continue;
 
+            // The component doesn't get removed fast enough and the update loop will run through it a few more times.
+            // This check is here to ensure it will not spam popups or kill you several times over.
+            if (targetComp.Dead)
+                continue;
+
             Kill(uid, targetComp);
+
+            _popupSystem.PopupPredicted(Loc.GetString("killtome-death"),
+                Loc.GetString("killtome-death-others", ("target", uid)),
+                uid,
+                uid,
+                PopupType.LargeCaution);
+
+            targetComp.Dead = true;
 
             RemCompDeferred<KillTomeTargetComponent>(uid);
         }
@@ -78,7 +91,7 @@ public sealed class KillTomeSystem : EntitySystem
             var delay = ent.Comp.DefaultKillDelay;
 
             if (parts.Length == 2 && Parse.TryInt32(parts[1].Trim(), out var parsedDelay) && parsedDelay > 0)
-                delay = parsedDelay;
+                delay = TimeSpan.FromSeconds(parsedDelay);
 
             if (!CheckIfEligible(name, ent.Comp, out var uid))
             {
@@ -93,10 +106,14 @@ public sealed class KillTomeSystem : EntitySystem
 
             EnsureComp<KillTomeTargetComponent>(realUid, out var targetComp);
 
-            targetComp.KillTime = _gameTiming.CurTime + TimeSpan.FromSeconds(delay);
+            targetComp.KillTime = _gameTiming.CurTime + delay;
             targetComp.Damage = ent.Comp.Damage;
 
+            Dirty(realUid, targetComp);
+
             ent.Comp.KilledEntities.Add(realUid);
+
+            Dirty(ent);
 
             _adminLogs.Add(LogType.Chat,
                 LogImpact.High,
