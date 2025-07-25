@@ -71,7 +71,8 @@ namespace Content.Server.Radiation.Systems
                 }
             }
 
-            UpdateGridcastDebugOverlay(stopwatch.Elapsed.TotalMilliseconds, sourcesCount, _activeReceivers.Count, debugRays!.ToList());
+            if(debug)
+                UpdateGridcastDebugOverlay(stopwatch.Elapsed.TotalMilliseconds, sourcesCount, _activeReceivers.Count, debugRays!.ToList());
 
             RaiseLocalEvent(new RadiationSystemUpdatedEvent());
         }
