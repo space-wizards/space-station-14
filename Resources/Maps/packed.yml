@@ -10083,8 +10083,23 @@ entities:
   - uid: 2337
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 33.5,26.5
+      pos: 47.5,34.5
+      parent: 2
+  - uid: 1831
+    components:
+    - type: Transform
+      pos: 44.5,30.5
+      parent: 2
+    - type: Door
+      secondsUntilStateChange: -4038.7175
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
+  - uid: 3259
+    components:
+    - type: Transform
+      pos: 47.5,35.5
       parent: 2
   - uid: 7736
     components:
@@ -72034,7 +72049,7 @@ entities:
 
         4: Place a standard 50u beaker of cryogenic medicine into the tube. As soon as it is inserted, it will begin transferring the liquid into the patient’s bloodstream. Continue to monitor their vitals on the display.
 
-        5: Once the desired effect has been achieved, eject the beaker and remove the patient from the tube. A injection of 5u Leporazine is recommended to quickly raise their body temp back to comfortable levels. 
+        5: Once the desired effect has been achieved, eject the beaker and remove the patient from the tube. A injection of 5u Leporazine is recommended to quickly raise their body temp back to comfortable levels.
 
 
         [head=3][bold]Supported Chemicals[/bold][/head]
