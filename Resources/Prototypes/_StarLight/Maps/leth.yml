@@ -3,7 +3,7 @@
   mapName: 'Leth Vessel'
   mapPath: /Maps/_Starlight/Stations/Leth.yml
   minPlayers: 15
-  #maxPlayers: 65
+  maxPlayers: 65
   stations:
     Lobster:
       stationProto: StandardNanotrasenStation
