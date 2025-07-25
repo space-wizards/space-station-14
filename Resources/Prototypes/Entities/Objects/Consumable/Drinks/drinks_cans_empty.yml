@@ -65,10 +65,10 @@
   description: Sweetened drink with a grape flavor and a deep purple color.
 
 - type: entity
-  parent: [ DrinkCanBaseEmpty, DrinkGrapeCan ]
-  id: DrinkGrapeCanEmpty
-  name: grape soda can
-  description: Sweetened drink with a grape flavor and a deep purple color.
+  parent: [ DrinkCanBaseEmpty, DrinkRootBeerCan ]
+  id: DrinkRootBeerCanEmpty
+  name: root beer can
+  description: Some of that tasty root beer goodness, now in a portable can!
   components:
   - type: Tag
     tags:

@@ -1,0 +1,186 @@
+# TODO: Find remaining cans and move to drinks_cans
+# TODO: Find empty containers (e.g. mug, pitcher) and move to their own yml
+
+# For cups, beakers, and other fully accessible solutions
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: DrinkBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+  - type: DnaSubstanceTrace
+  - type: Drink
+  - type: Spillable
+    solution: drink
+  - type: MixableSolution
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+
+# A fragile, transparent glass cup
+- type: entity
+  abstract: true
+  parent: DrinkBase
+  id: DrinkGlassBase
+  components:
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+        transferForensics: true
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 25
+  - type: ExaminableSolution
+    solution: drink
+  - type: FitsInDispenser
+    solution: drink
+  - type: Tag
+    tags:
+    - DrinkGlass
+
+
+
+###
+# TODO: MOVE
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkTeapot
+  name: teapot  # short and stout
+  description: An elegant teapot. It simply oozes class.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Tea
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teapot.rsi
+
+- type: entity
+  name: coupe glass
+  description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
+  parent: DrinkGlassBase
+  id: DrinkGlassCoupeShaped
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
+    layers:
+    - state: icon
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: fill1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: icon-front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill
+    inHandsMaxFillLevels: 1
+    inHandsFillBaseName: -fill-
+
+#
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkShakeBlue
+  name: blue milkshake
+  description: ''
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shake-blue.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkShakeEmpty
+  name: shakeempty
+  description: ''
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shake-empty.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkShakeMeat
+  name: meat shake
+  description: ''
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shake-meat.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkShakeRobo
+  name: robo shake
+  description: ''
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shake-robo.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkShakeWhite
+  name: white shake
+  description: ''
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shake-white.rsi
