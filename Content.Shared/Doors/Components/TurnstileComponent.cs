@@ -22,12 +22,6 @@ public sealed partial class TurnstileComponent : Component
     public EntityWhitelist? ProcessWhitelist;
 
     /// <summary>
-    /// If the turnstile is emagged, it will flip directions
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Flipped;
-
-    /// <summary>
     /// The next time at which the resist message can show.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]

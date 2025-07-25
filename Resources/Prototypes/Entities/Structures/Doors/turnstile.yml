@@ -68,7 +68,6 @@
   name: turnstile
   description: A mechanical door that permits one-way access and prevents tailgating.
   components:
-  - type: StationAiWhitelist
   - type: Icon
     sprite: Structures/Doors/turnstile.rsi
     state: turnstile_map
@@ -85,11 +84,6 @@
       shader: unshaded
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-    - state: electrified_ai
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.HUD" ]
     - state: electrified
       sprite: Effects/electricity.rsi
       shader: unshaded
@@ -127,20 +121,12 @@
       components:
       - MobState # no mobs
       - Pullable # no dragging things in
-  - type: DoorBolt
   - type: GenericVisualizer
     visuals:
       enum.ElectrifiedVisuals.ShowSparks:
         enum.ElectrifiedLayers.Sparks:
           True: { visible: True }
           False: { visible: False }
-      enum.DoorVisuals.BoltLights:
-        enum.TurnstileVisualLayers.Indicators:
-          True:
-            visible: True
-            state: bolted
-          False:
-            visible: False
   - type: WiresVisuals
   - type: Electrified
     enabled: false

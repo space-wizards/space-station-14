@@ -1,9 +1,7 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors.Components;
-using Content.Shared.Emag.Systems;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Power;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
@@ -23,7 +21,6 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -31,7 +28,6 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         SubscribeLocalEvent<TurnstileComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<TurnstileComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<TurnstileComponent, EndCollideEvent>(OnEndCollide);
-        SubscribeLocalEvent<TurnstileComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     private void OnPreventCollide(Entity<TurnstileComponent> ent, ref PreventCollideEvent args)
@@ -61,7 +57,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
             return;
         }
 
-        if (!_doorSystem.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
+        if (CanPassDirection(ent, args.OtherEntity))
         {
             if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 return;
@@ -88,7 +84,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
     {
         if (!ent.Comp.CollideExceptions.Contains(args.OtherEntity))
         {
-            if (!_doorSystem.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
+            if (CanPassDirection(ent, args.OtherEntity))
             {
                 if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 {
@@ -120,8 +116,6 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         var otherXform = Transform(other);
 
         var (pos, rot) = _transform.GetWorldPositionRotation(xform);
-        if(ent.Comp.Flipped)
-            rot += Angle.FromDegrees(180);
         var otherPos = _transform.GetWorldPosition(otherXform);
 
         var approachAngle = (pos - otherPos).ToAngle();
@@ -138,15 +132,5 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
     protected virtual void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
     {
 
-    }
-
-    private void OnEmagged(Entity<TurnstileComponent> ent, ref GotEmaggedEvent args)
-    {
-        if (args.Type != EmagType.Interaction)
-            return;
-        args.Handled = true;
-        args.Repeatable = true;
-        ent.Comp.Flipped = !ent.Comp.Flipped;
-        Dirty(ent);
     }
 }

@@ -63,10 +63,7 @@
   id: Turnstile
   wires:
   - !type:LogWireAction
-  - !type:DoorBoltWireAction
-  - !type:DoorBoltLightWireAction
-  - !type:AiInteractWireAction
-  dummyWires: 4
+  dummyWires: 7
 
 - type: wireLayout
   parent: Turnstile
