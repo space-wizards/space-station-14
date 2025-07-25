@@ -119,7 +119,7 @@
         amount: 2
         doAfter: 1
     - to: turnstileMedSecurityUnfinished
-      condition:
+      conditions:
       - !type:WirePanel {}
       steps:
       - material: Steel
