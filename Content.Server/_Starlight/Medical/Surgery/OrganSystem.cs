@@ -45,7 +45,7 @@ public sealed partial class OrganSystem : EntitySystem
     {
         foreach (var comp in (ent.Comp.Components ?? []).Values)
             if (!EntityManager.HasComponent(args.Body, comp.Component.GetType()))
-                EntityManager.AddComponent(args.Body, _compFactory.GetComponent(comp.Component.GetType()));
+                EntityManager.AddComponent(args.Body, comp.Component);
     }
 
     private void OnFunctionalOrganExtracted(Entity<FunctionalOrganComponent> ent, ref SurgeryOrganExtracted args)
@@ -99,7 +99,7 @@ public sealed partial class OrganSystem : EntitySystem
 
     private void OnTongueImplanted(Entity<OrganTongueComponent> ent, ref SurgeryOrganImplantationCompleted args)
     {
-        if (HasComp<AbductorComponent>(args.Body) || !ent.Comp.IsMuted) return;
+        if (HasComp<AbductorComponent>(args.Body) || ent.Comp.IsMuted) return;
         RemComp<MutedComponent>(args.Body);
     }
 
