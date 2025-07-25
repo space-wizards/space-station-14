@@ -553,6 +553,7 @@
   - type: GuideHelp
     guides:
     - GasRecycling
+  - type: TegCirculator
 
 - type: entity
   parent: GasBinaryBase
