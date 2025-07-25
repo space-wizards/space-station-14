@@ -10,10 +10,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Changeling.Devour;
 
 /// <summary>
-/// Component responsible for Changelings Devour attack. including the amount of damage, if a successful devour husks
+/// Component responsible for Changelings Devour attack. Including the amount of damage, if a successful devour husks
 /// and how long it takes to devour someone
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(ChangelingDevourSystem))]
 public sealed partial class ChangelingDevourComponent : Component
 {
@@ -118,7 +118,7 @@ public sealed partial class ChangelingDevourComponent : Component
     /// <summary>
     /// The next Tick to deal damage on (utilized during the consumption "do-during" (a do after with an attempt event))
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextTick = TimeSpan.Zero;
 
     /// <summary>

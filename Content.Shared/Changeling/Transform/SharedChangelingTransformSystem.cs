@@ -24,6 +24,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
+    private const string ChangelingBuiXmlGeneratedName = "ChangelingTransformBoundUserInterface";
     public override void Initialize()
     {
         base.Initialize();
@@ -32,6 +33,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformActionEvent>(OnTransformAction);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformWindupDoAfterEvent>(OnSuccessfulTransform);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentitySelectMessage>(OnTransformSelected);
+        SubscribeLocalEvent<ChangelingTransformComponent, ComponentShutdown>(OnShutdown);
     }
 
     private void OnMapInit(Entity<ChangelingTransformComponent> ent, ref MapInitEvent init)
@@ -39,21 +41,29 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingTransformActionEntity, ent.Comp.ChangelingTransformAction);
 
         var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
-        _uiSystem.SetUi((ent, userInterfaceComp), TransformUi.Key, new InterfaceData("ChangelingTransformBoundUserInterface"));
+        _uiSystem.SetUi((ent, userInterfaceComp), TransformUi.Key, new InterfaceData(ChangelingBuiXmlGeneratedName));
+    }
+
+    private void OnShutdown(Entity<ChangelingTransformComponent> ent, ref ComponentShutdown args)
+    {
+        if (ent.Comp.ChangelingTransformActionEntity != null)
+        {
+            _actionsSystem.RemoveAction(ent.Owner, ent.Comp.ChangelingTransformActionEntity);
+        }
     }
 
     protected void OnTransformAction(Entity<ChangelingTransformComponent> ent,
         ref ChangelingTransformActionEvent args)
     {
-        if (!HasComp<UserInterfaceComponent>(ent))
+        if (!TryComp<UserInterfaceComponent>(ent, out var userInterfaceComp))
             return;
 
         if (!TryComp<ChangelingIdentityComponent>(ent, out var userIdentity))
             return;
 
-        if (!_uiSystem.IsUiOpen(ent.Owner, TransformUi.Key, args.Performer))
+        if (!_uiSystem.IsUiOpen((ent, userInterfaceComp), TransformUi.Key, args.Performer))
         {
-            _uiSystem.OpenUi(ent.Owner, TransformUi.Key, args.Performer);
+            _uiSystem.OpenUi((ent, userInterfaceComp), TransformUi.Key, args.Performer);
 
             var identityData = new List<ChangelingIdentityData>();
 
@@ -62,12 +72,12 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
                 identityData.Add(new ChangelingIdentityData(GetNetEntity(consumedIdentity.Value), Name(consumedIdentity.Value)));
             }
 
-            _uiSystem.SetUiState(ent.Owner, TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(identityData));
+            _uiSystem.SetUiState((ent, userInterfaceComp), TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(identityData));
         }
         else // if the UI is already opened and the command action is done again, transform into the last consumed identity
         {
             TransformPreviousConsumed(ent);
-            _uiSystem.CloseUi(ent.Owner, TransformUi.Key, args.Performer);
+            _uiSystem.CloseUi((ent, userInterfaceComp), TransformUi.Key, args.Performer);
         }
     }
 
@@ -83,7 +93,11 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             PopupType.MediumCaution);
 
         if (_net.IsServer) // Gotta do this on the server and with PlayPvs cause PlayPredicted doesn't return the Entity
-            ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent, new AudioParams())!.Value.Entity;
+        {
+            var pvsSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent);
+            if(pvsSound != null)
+                ent.Comp.CurrentTransformSound = pvsSound.Value.Entity;
+        }
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
@@ -134,7 +148,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     {
         args.Handled = true;
 
-        if(EntityManager.EntityExists(ent.Comp.CurrentTransformSound))
+        if (EntityManager.EntityExists(ent.Comp.CurrentTransformSound))
             _audio.Stop(ent.Comp.CurrentTransformSound);
 
         if (args.Cancelled)
@@ -153,5 +167,11 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Copy the entire Set of components over from a target onto another EntityUid directly using Cloning system
+    /// </summary>
+    /// <param name="ent">Entity to clone too</param>
+    /// <param name="target">Entity to Clone from</param>
+    /// <param name="settingsId">the cloning settings to use (I.E What components that should be cloned)</param>
     protected virtual void ApplyComponentChanges(EntityUid ent, EntityUid target, ProtoId<CloningSettingsPrototype> settingsId) { }
 }

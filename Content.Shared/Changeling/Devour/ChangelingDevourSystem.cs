@@ -32,8 +32,6 @@ public sealed class ChangelingDevourSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly ChangelingIdentitySystem _changelingIdentitySystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -49,6 +47,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourWindupDoAfterEvent>(OnDevourWindup);
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourConsumeDoAfterEvent>(OnDevourConsume);
         SubscribeLocalEvent<ChangelingDevourComponent, DoAfterAttemptEvent<ChangelingDevourConsumeDoAfterEvent>>(OnConsumeAttemptTick);
+        SubscribeLocalEvent<ChangelingDevourComponent, ComponentShutdown>(OnShutdown);
     }
 
     private void OnMapInit(Entity<ChangelingDevourComponent> ent, ref MapInitEvent args)
@@ -56,17 +55,27 @@ public sealed class ChangelingDevourSystem : EntitySystem
         _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingDevourActionEntity, ent.Comp.ChangelingDevourAction);
     }
 
+    private void OnShutdown(Entity<ChangelingDevourComponent> ent, ref ComponentShutdown args)
+    {
+        if (ent.Comp.ChangelingDevourActionEntity != null)
+        {
+            _actionsSystem.RemoveAction(ent.Owner, ent.Comp.ChangelingDevourActionEntity);
+        }
+    }
+
+    //TODO: Allow doafters to have proper update loop support. Attempt events should not be doing state changes.
     private void OnConsumeAttemptTick(Entity<ChangelingDevourComponent> ent,
        ref DoAfterAttemptEvent<ChangelingDevourConsumeDoAfterEvent> eventData)
     {
+
         var curTime = _timing.CurTime;
 
         if (curTime < ent.Comp.NextTick)
             return;
 
         ConsumeDamageTick(eventData.Event.Target, ent.Comp, eventData.Event.User);
-
-        ent.Comp.NextTick += ent.Comp.DamageTimeBetweenTicks; //TODO: Add this to the component
+        ent.Comp.NextTick += ent.Comp.DamageTimeBetweenTicks;
+        Dirty(ent, ent.Comp);
     }
 
     private void ConsumeDamageTick(EntityUid? target, ChangelingDevourComponent comp, EntityUid? user)
@@ -86,11 +95,17 @@ public sealed class ChangelingDevourSystem : EntitySystem
         _damageable.TryChangeDamage(target, comp.DamagePerTick, true, true, damage, user);
     }
 
-    private bool TargetIsProtected(EntityUid target, Entity<ChangelingDevourComponent> ent)
+    /// <summary>
+    /// Checkes if the targets outerclothing is beyond a DamageCoefficientThreshold to protect them from being devoured.
+    /// </summary>
+    /// <param name="target">The Targeted entity</param>
+    /// <param name="ent">Changelings Devour Component</param>
+    /// <returns>Is the target Protected from the attack</returns>
+    private bool IsTargetProtected(EntityUid target, Entity<ChangelingDevourComponent> ent)
     {
         var ev = new CoefficientQueryEvent(SlotFlags.OUTERCLOTHING);
 
-        RaiseLocalEvent(target, ev, true);
+        RaiseLocalEvent(target, ev);
 
         foreach (var compProtectiveDamageType in ent.Comp.ProtectiveDamageTypes)
         {
@@ -121,7 +136,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return;
         }
 
-        if (TargetIsProtected(target, ent))
+        if (IsTargetProtected(target, ent))
         {
             _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-protected"), ent, ent, PopupType.Medium);
             return;
@@ -134,7 +149,12 @@ public sealed class ChangelingDevourSystem : EntitySystem
         }
 
         if (_net.IsServer)
-            ent.Comp.CurrentDevourSound = _audio.PlayPvs(ent.Comp.DevourWindupNoise!, ent,  new AudioParams())!.Value.Entity;
+        {
+            var pvsSound = _audio.PlayPvs(ent.Comp.DevourWindupNoise, ent);
+            if(pvsSound != null)
+                ent.Comp.CurrentDevourSound = pvsSound.Value.Entity;
+        }
+
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started changeling devour windup against {target:player}");
 
@@ -170,7 +190,13 @@ public sealed class ChangelingDevourSystem : EntitySystem
             PopupType.LargeCaution);
 
         if (_net.IsServer)
-            ent.Comp.CurrentDevourSound = _audio.PlayPvs(ent.Comp.ConsumeNoise!, ent,  new AudioParams())!.Value.Entity;
+        {
+            var pvsSound = _audio.PlayPvs(ent.Comp.ConsumeNoise, ent);
+
+            if (pvsSound != null)
+                ent.Comp.CurrentDevourSound = pvsSound.Value.Entity;
+        }
+
 
         ent.Comp.NextTick = curTime + ent.Comp.DamageTimeBetweenTicks;
 
@@ -208,7 +234,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
         if (!_mobState.IsDead((EntityUid)target))
         {
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player}  unsuccessfully devoured {ToPrettyString(args.Target):player}'s identity");
-            _popupSystem.PopupClient(Loc.GetString("changeling-devour-consume-failed-not-dead"), args.User,  args.User, PopupType.Medium);
+            _popupSystem.PopupClient(Loc.GetString("changeling-devour-consume-failed-not-dead"), args.User, args.User, PopupType.Medium);
             return;
         }
 
@@ -249,6 +275,6 @@ public sealed class ChangelingDevourSystem : EntitySystem
             PredictedSpawnNextToOrDrop(proto, victim);
         }
 
-        QueueDel(item);
+        PredictedQueueDel(item.Owner);
     }
 }
