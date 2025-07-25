@@ -81,7 +81,7 @@ public sealed partial class ChangelingDevourComponent : Component
     /// <summary>
     /// The Currently active devour sound in the world
     /// </summary>
-    [DataField] //asdfg
+    [DataField]
     public EntityUid? CurrentDevourSound;
 
     /// <summary>
