@@ -141,7 +141,8 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 14
+        Piercing: 13
+        Heat: 1
   - type: PointLight
     enabled: true
     color: "#ff4300"
