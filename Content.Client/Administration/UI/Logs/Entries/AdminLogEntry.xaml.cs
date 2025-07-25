@@ -38,7 +38,7 @@ public sealed partial class AdminLogEntry : BoxContainer
     /// </summary>
     public void RenderResults(Regex highlightRegex, bool renderRichText, bool removeMarkup)
     {
-        var color =_cfgManager.GetCVar(CCVars.AdminLogsHighlightColor);
+        var color = _cfgManager.GetCVar(CCVars.AdminLogsHighlightColor);
         var formattedMessage = renderRichText
             ? _rawMessage
             : removeMarkup
@@ -47,9 +47,18 @@ public sealed partial class AdminLogEntry : BoxContainer
 
         // Want to avoid highlighting smaller strings
         if (highlightRegex.ToString().Length > 4)
-            formattedMessage = highlightRegex.Replace(formattedMessage, $"[color={color}]$1[/color]", 3);
+        {
+            try
+            {
+                formattedMessage = highlightRegex.Replace(formattedMessage, $"[color={color}]$1[/color]", 3);
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                // if we time out then don't bother highlighting results
+            }
+        }
 
-        if (!FormattedMessage.TryFromMarkup(formattedMessage, out var outputMessage, out _))
+        if (!FormattedMessage.TryFromMarkup(formattedMessage, out var outputMessage))
             return;
 
         Message.SetMessage(outputMessage);

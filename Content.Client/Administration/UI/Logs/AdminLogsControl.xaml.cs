@@ -114,7 +114,10 @@ public sealed partial class AdminLogsControl : Control
         // This exception is thrown if the regex is invalid, which happens often, so we ignore it.
         try
         {
-            LogSearchRegex = new Regex("(" + LogSearch.Text + ")", RegexOptions.IgnoreCase);
+            LogSearchRegex = new Regex(
+                "(" + LogSearch.Text + ")",
+                RegexOptions.IgnoreCase,
+                TimeSpan.FromSeconds(1));
         }
         catch (ArgumentException)
         {
