@@ -189,8 +189,7 @@ public sealed partial class ZombieSystem
             // humanoid zombies get to pry open doors and shit
             var pryEnt = new Entity<PryingComponent>(target, EnsureComp<PryingComponent>(target));
             PryingSystem.SetPryingSpeedModifier(pryEnt, 0.75f);
-            PryingSystem.SetPryingCanPryPowered(pryEnt, true);
-            PryingSystem.SetPryingForcedMode(pryEnt, true);
+            PryingSystem.SetPryingStrength(pryEnt, PryStrength.Forced);
 
             Dirty(pryEnt.Owner, pryEnt.Comp);
         }

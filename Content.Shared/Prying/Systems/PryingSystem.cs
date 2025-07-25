@@ -122,7 +122,7 @@ public sealed class PryingSystem : EntitySystem
         if (Resolve(user, ref prying, false))
         {
             // Check if we can pry this entity with this tool
-            canev = new BeforePryEvent(user, prying.PryPowered, prying.Force, true);
+            canev = new BeforePryEvent(user, prying.Strength);
         }
         else
         {
@@ -130,15 +130,15 @@ public sealed class PryingSystem : EntitySystem
             if (!Resolve(target, ref unpoweredComp))
                 return false;
 
-            // Check if we can pry this entity without tools in it's current state
-            canev = new BeforePryEvent(user, false, false, false);
+            // Check if we can pry this entity without tools in its current state
+            canev = new BeforePryEvent(user, PryStrength.Weak);
         }
 
         RaiseLocalEvent(target, ref canev);
 
         message = canev.Message;
 
-        return !canev.Cancelled;
+        return canev.CanPry;
     }
 
     private bool StartPry(Entity<PryableComponent> target, EntityUid user, Entity<PryingComponent>? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
@@ -203,14 +203,9 @@ public sealed class PryingSystem : EntitySystem
         ent.Comp.SpeedModifier = value;
     }
 
-    public static void SetPryingCanPryPowered(Entity<PryingComponent> ent, bool value)
+    public static void SetPryingStrength(Entity<PryingComponent> ent, PryStrength value)
     {
-        ent.Comp.PryPowered = value;
-    }
-
-    public static void SetPryingForcedMode(Entity<PryingComponent> ent, bool value)
-    {
-        ent.Comp.Force = value;
+        ent.Comp.Strength = value;
     }
 }
 

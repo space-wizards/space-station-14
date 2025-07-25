@@ -71,7 +71,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
-        SubscribeLocalEvent<DoorComponent, BeforePryEvent>(OnBeforePry);
         SubscribeLocalEvent<DoorComponent, PriedEvent>(OnAfterPry);
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
@@ -209,12 +208,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
             _pryingSystem.TryPry(uid, args.User, out _);
 
         args.Handled = true;
-    }
-
-    private void OnBeforePry(EntityUid uid, DoorComponent door, ref BeforePryEvent args)
-    {
-        if (door.State == DoorState.Welded)
-            args.Cancelled = true;
     }
 
     /// <summary>
