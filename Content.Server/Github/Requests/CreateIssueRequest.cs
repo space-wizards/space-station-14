@@ -11,6 +11,9 @@ public sealed class CreateIssueRequest : IGithubRequest
     [JsonIgnore]
     public HttpMethod RequestMethod => HttpMethod.Post;
 
+    [JsonIgnore]
+    public AuthMethod AuthenticationMethodMethod => AuthMethod.Token;
+
     [JsonPropertyName("title"), JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public required string Title;
     [JsonPropertyName("body"), JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

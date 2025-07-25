@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json.Serialization;
 
 namespace Content.Server.Github.Requests;
@@ -11,6 +12,8 @@ namespace Content.Server.Github.Requests;
 /// </remarks>
 [JsonPolymorphic(UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization)]
 [JsonDerivedType(typeof(CreateIssueRequest))]
+[JsonDerivedType(typeof(InstallationsRequest))]
+[JsonDerivedType(typeof(TokenRequest))]
 public interface IGithubRequest
 {
     /// <summary>
@@ -19,6 +22,9 @@ public interface IGithubRequest
     [JsonIgnore]
     public HttpMethod RequestMethod { get; }
 
+    [JsonIgnore]
+    public AuthMethod AuthenticationMethodMethod { get; }
+
     /// <summary>
     /// Location of the api endpoint for this request.
     /// </summary>
@@ -26,4 +32,10 @@ public interface IGithubRequest
     /// <param name="repository">The repository to make the request.</param>
     /// <returns>The api location for this request.</returns>
     public string GetLocation(string owner, string repository);
+}
+
+public enum AuthMethod
+{
+    JWT,
+    Token,
 }

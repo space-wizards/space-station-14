@@ -39,7 +39,7 @@ public sealed partial class CCVars
     ///  <br/> github_pat_11XYZ123A0b98xJKLmNoPQ_7rT5UV6wOp9yBC3DfGh42zMnvQ1WXYZaBsJK789LmNOPQRSTU
     /// </example>
     public static readonly CVarDef<string> GithubAuthToken =
-        CVarDef.Create("github.github_auth_token", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+        CVarDef.Create("github.github_auth_token", "ffff", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
     /// <summary>
     /// Name of the targeted GitHub repository.
@@ -48,7 +48,7 @@ public sealed partial class CCVars
     /// If your URL was https://github.com/space-wizards/space-station-14 the repo name would be "space-station-14".
     /// </example>>
     public static readonly CVarDef<string> GithubRepositoryName =
-        CVarDef.Create("github.github_repository_name", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+        CVarDef.Create("github.github_repository_name", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
     /// <summary>
     /// Owner of the GitHub repository.
@@ -57,7 +57,7 @@ public sealed partial class CCVars
     ///  If your URL was https://github.com/space-wizards/space-station-14 the owner would be "space-wizards".
     /// </example>>
     public static readonly CVarDef<string> GithubRepositoryOwner =
-        CVarDef.Create("github.github_repository_owner", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+        CVarDef.Create("github.github_repository_owner", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
     /// <summary>
     /// The maximum number of times the api will retry requests before giving up.
@@ -97,4 +97,10 @@ public sealed partial class CCVars
     /// <seealso cref="GithubIssueRateLimitPeriod"/>
     public static readonly CVarDef<int> GithubIssueRateLimitCount =
         CVarDef.Create("github.rate_limit_count", 10, CVar.SERVERONLY);
+
+    public static readonly CVarDef<string> GithubAppId =
+        CVarDef.Create("github.github_app_id", "", CVar.SERVERONLY);
+
+    public static readonly CVarDef<string> GithubAppPrivateKey =
+        CVarDef.Create("github.github_app_private_key", "", CVar.SERVERONLY);
 }

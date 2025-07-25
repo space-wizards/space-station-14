@@ -2,13 +2,17 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Github.Requests;
+using Content.Server.Github.Responses;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
+
 
 namespace Content.Server.Github;
 
@@ -31,6 +35,10 @@ public sealed class GithubClient
     private HttpClient _httpClient = default!;
 
     private ISawmill _sawmill = default!;
+
+    private (DateTime Expiery, string Token) TokenData;
+
+    private (DateTime Expiery, string JWT) JWTData;
 
     private const int ErrorResponseMaxLogSize = 200;
 
@@ -85,7 +93,6 @@ public sealed class GithubClient
             DefaultRequestHeaders =
             {
                 { AcceptHeader, AcceptHeaderType },
-                { AuthHeader, AuthHeaderBearer + _authToken },
                 { VersionHeader, VersionNumber },
             },
             Timeout = TimeSpan.FromSeconds(15),
@@ -106,12 +113,17 @@ public sealed class GithubClient
     /// <param name="request">The request you want to make.</param>
     /// <param name="ct">Token for operation cancellation.</param>
     /// <returns>The direct HTTP response from the API. If null the request could not be made.</returns>
-    public async Task TryMakeRequestSafe(IGithubRequest request, CancellationToken ct)
+    public async Task<HttpResponseMessage?> TryMakeRequestSafe(IGithubRequest request, CancellationToken ct)
     {
         if (!HaveFullApiData())
         {
             _sawmill.Info("Tried to make a github api request but the api was not enabled.");
-            return;
+            return null;
+        }
+
+        if (request.AuthenticationMethodMethod == AuthMethod.Token)
+        {
+            await EnsureTokenNotExpired();
         }
 
         var httpRequestMessage = BuildRequest(request);
@@ -122,17 +134,18 @@ public sealed class GithubClient
         if (response.IsSuccessStatusCode)
         {
             _sawmill.Info(message);
+            return response;
         }
-        else
-        {
-            _sawmill.Error(message);
-            var responseText = await response.Content.ReadAsStringAsync(ct);
 
-            if (responseText.Length > ErrorResponseMaxLogSize)
-                responseText = responseText.Substring(0, ErrorResponseMaxLogSize);
+        _sawmill.Error(message);
+        var responseText = await response.Content.ReadAsStringAsync(ct);
 
-            _sawmill.Error(responseText);
-        }
+        if (responseText.Length > ErrorResponseMaxLogSize)
+            responseText = responseText.Substring(0, ErrorResponseMaxLogSize);
+
+        _sawmill.Error(responseText);
+
+        return null;
     }
 
     /// <summary>
@@ -180,6 +193,8 @@ public sealed class GithubClient
             RequestUri = builder.Uri,
             Content = payload,
         };
+        httpRequest.Headers.Add(AuthHeader, CreateAuthenticationHeader(request));
+        // httpRequest.RequestUri = new Uri("https://api.github.com/app");
         return httpRequest;
     }
 
@@ -188,6 +203,129 @@ public sealed class GithubClient
         return !string.IsNullOrWhiteSpace(_authToken) &&
                !string.IsNullOrWhiteSpace(_repository) &&
                !string.IsNullOrWhiteSpace(_owner);
+    }
+
+    private string CreateAuthenticationHeader(IGithubRequest request)
+    {
+        if (request.AuthenticationMethodMethod == AuthMethod.Token)
+            return AuthHeaderBearer + TokenData.Token;
+        if (request.AuthenticationMethodMethod == AuthMethod.JWT)
+            return AuthHeaderBearer + GetValidJWT();
+
+        throw new Exception("Unknown auth method");
+    }
+
+    private async Task EnsureTokenNotExpired()
+    {
+        if (TokenData.Expiery > DateTime.UtcNow)
+            return;
+
+        _sawmill.Info("Token expired - requesting new token!");
+
+        var installationRequest = new InstallationsRequest();
+        var installationHttpResponse = await TryMakeRequestSafe(installationRequest, CancellationToken.None);
+        if (installationHttpResponse == null)
+            return;
+
+        var parsedResponse = await installationHttpResponse.Content.ReadFromJsonAsync<List<GithubInstallation>>();
+
+        if (parsedResponse == null)
+            return;
+
+        if (parsedResponse.Count == 0)
+        {
+            _sawmill.Error("App not installed anywhere.");
+        }
+
+        if (parsedResponse.Count > 1)
+        {
+            _sawmill.Error("App installed in more than one location");
+        }
+
+        var tokenLocation = parsedResponse[0].AccessToken;
+
+        var tokenRequest = new TokenRequest
+        {
+            Location = tokenLocation.Split("https://api.github.com/")[1],
+        };
+
+        var tokenHttpResponse = await TryMakeRequestSafe(tokenRequest, CancellationToken.None);
+
+        if (tokenHttpResponse == null)
+            return;
+
+        var tokenResponse = await tokenHttpResponse.Content.ReadFromJsonAsync<TokenResponse>();
+
+        if (tokenResponse == null)
+            return;
+
+        TokenData = (tokenResponse.Exp, tokenResponse.Token);
+    }
+
+    // TODO: YOU CAN GET PERMISSIONS FROM THE https://api.github.com/app ENDPOINT. ENSURE PERMISSIONS ARE THE SAME
+    // See: https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-json-web-token-jwt-for-a-github-app
+    private string GetValidJWT()
+    {
+        if (JWTData.Expiery > DateTime.UtcNow)
+            return JWTData.JWT;
+
+        var clientID = _cfg.GetCVar(CCVars.GithubAppId);
+        var keyPem = _cfg.GetCVar(CCVars.GithubAppPrivateKey);
+
+        //todo: fix this sus
+        var time = DateTime.UtcNow;
+        var expTime = time + TimeSpan.FromMinutes(10);
+
+        var iat = ((DateTimeOffset)(time - TimeSpan.FromMinutes(2))).ToUnixTimeSeconds();
+        var exp = ((DateTimeOffset) expTime).ToUnixTimeSeconds();
+
+        var header_json =
+"""
+{
+    "typ":"JWT",
+    "alg":"RS256"
+}
+""";
+
+        var header_encoded = Base64Encode(header_json);
+
+        var payload_json =
+$$"""
+{
+    "iat":{{iat}},
+    "exp":{{exp}},
+    "iss":"{{clientID}}"
+}
+""";
+
+        var payload_json_encoded = Base64Encode(payload_json);
+
+        var head_payload = $"{header_encoded}.{payload_json_encoded}";
+
+        var RSA = System.Security.Cryptography.RSA.Create();
+        RSA.ImportFromPem(keyPem);
+
+        // var hashBytes = SHA256.HashData(Encoding.UTF8.GetBytes(head_payload));
+        // var signedData = RSA.SignData(System.Text.Encoding.Unicode.GetBytes(head_payload), HashAlgorithmName.SHA256);
+
+        var bytesPlainTextData = Encoding.UTF8.GetBytes(head_payload);
+
+        var signedData = RSA.SignData(bytesPlainTextData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        var signBase64 = Convert.ToBase64String(signedData).TrimEnd('=').Replace('+', '-').Replace('/', '_');
+
+        var JWT = $"{head_payload}.{signBase64}";
+
+        JWTData = (expTime, JWT);
+
+        _sawmill.Info("Generated new JWT.");
+
+        return JWT;
+    }
+
+    private string Base64Encode(string plainText)
+    {
+        return Convert.ToBase64String(Encoding.UTF8.GetBytes(plainText)).TrimEnd('=').Replace('+', '-')
+            .Replace('/', '_');
     }
 
     #endregion
