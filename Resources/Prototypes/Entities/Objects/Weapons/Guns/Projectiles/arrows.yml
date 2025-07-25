@@ -206,7 +206,7 @@
       types:
         Blunt: 1
   - type: StaminaDamageOnCollide
-    damage: 30
+    damage: 20
   - type: Construction
     graph: CardArrow
     node: CardArrow
