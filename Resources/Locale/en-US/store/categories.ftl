@@ -14,8 +14,9 @@ store-category-wearables = Wearables
 store-category-pointless = Pointless
 store-discounted-items = Discounts
 
-# Revenant
+# Revenant / PAI
 store-category-abilities = Abilities
+store-category-syndicate-abilities = Syndicate Abilities
 
 # Wizard
 store-caregory-spellbook-offensive = Offensive Spells
