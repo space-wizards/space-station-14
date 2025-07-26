@@ -1,14 +1,14 @@
-using Content.Server.Silicons.Laws;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Station.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
 public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
 {
-    [Dependency] private readonly IonStormSystem _ionStorm = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     protected override void Started(EntityUid uid, IonStormRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -17,14 +17,15 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
         if (!TryGetRandomStation(out var chosenStation))
             return;
 
-        var query = EntityQueryEnumerator<SiliconLawBoundComponent, TransformComponent, IonStormTargetComponent>();
-        while (query.MoveNext(out var ent, out var lawBound, out var xform, out var target))
+        var query = EntityQueryEnumerator<IonStormTargetComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var target, out var xform))
         {
-            // only affect law holders on the station
-            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
+            // only affect entities on the station, and check random chance
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation ||
+                !_random.Prob(target.Chance))
                 continue;
-
-            _ionStorm.IonStormTarget((ent, lawBound, target));
+            var ev = new IonStormEvent();
+            RaiseLocalEvent(ent, ref ev);
         }
     }
 }
