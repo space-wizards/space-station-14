@@ -1,0 +1,21 @@
+- type: skinColoration
+  id: Hues
+  strategy: !type:ClampedHsvColoration
+    value: [0.175, 1]
+
+- type: skinColoration
+  id: TintedHues
+  strategy: !type:ClampedHslColoration
+    saturation: [0, 0.1]
+    lightness: [0.85, 1]
+
+- type: skinColoration
+  id: VoxFeathers
+  strategy: !type:ClampedHsvColoration
+    hue: [0.081, 0.48]
+    saturation: [0.2, 0.8]
+    value: [0.36, 0.55]
+
+- type: skinColoration
+  id: HumanToned
+  strategy: !type:HumanTonedSkinColoration {}
