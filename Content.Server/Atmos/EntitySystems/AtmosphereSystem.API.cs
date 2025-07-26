@@ -5,6 +5,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Reactions;
+using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
@@ -215,6 +216,24 @@ public partial class AtmosphereSystem
         // If nothing handled the event, it'll default to true.
         // Oh well, this is a space game after all, deal with it!
         return true;
+    }
+
+    /// <summary>
+    /// Determines if a grid tile is true space (not lattice).
+    /// </summary>
+    /// <param name="grid">The grid whose tile coordinates are checked.</param>
+    /// <param name="tile">The tile to check.</param>
+    /// <returns>A bool whether a tile is true space or not. Returns false if the grid is null.</returns>
+    public bool IsTileNoGrid(Entity<GridAtmosphereComponent?>? grid,
+        Vector2i tile)
+    {
+        if (grid is { } gridEnt && _atmosQuery.Resolve(gridEnt, ref gridEnt.Comp, false)
+                                && gridEnt.Comp.Tiles.TryGetValue(tile, out var tileAtmos))
+        {
+            return tileAtmos.NoGridTile;
+        }
+
+        return false;
     }
 
     public bool IsTileMixtureProbablySafe(Entity<GridAtmosphereComponent?>? grid, Entity<MapAtmosphereComponent?> map, Vector2i tile)
