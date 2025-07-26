@@ -119,7 +119,7 @@ public sealed partial class BorgSystem
 
         var message = Loc.GetString(ent.Comp.DestroyingPopup, ("name", Name(ent)));
         Popup.PopupEntity(message, ent);
-        _trigger.StartTimer(ent.Owner, user: null);
+        _trigger.ActivateTimerTrigger(ent.Owner);
 
         // prevent a shitter borg running into people
         RemComp<InputMoverComponent>(ent);
