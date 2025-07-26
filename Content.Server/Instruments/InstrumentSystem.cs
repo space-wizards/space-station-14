@@ -14,6 +14,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Server.GameStates;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
@@ -37,6 +38,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly IAdminLogManager _admingLogSystem = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
     private const float MaxInstrumentBandRange = 10f;
 
@@ -116,6 +118,9 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     {
         var uid = GetEntity(msg.Uid);
 
+        // DOOM TOOTS AS HE PLEASES
+        _pvsOverride.AddGlobalOverride(uid);
+
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
@@ -129,6 +134,9 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     private void OnMidiStop(InstrumentStopMidiEvent msg, EntitySessionEventArgs args)
     {
         var uid = GetEntity(msg.Uid);
+
+        // DOOM RESPECTFULLY PUTS THE TRUMPET BACK IN ITS CASE
+        _pvsOverride.RemoveGlobalOverride(uid);
 
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
