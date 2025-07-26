@@ -47,6 +47,44 @@
     noAirWhenFullyAirBlocked: false
 
 - type: entity
+  id: HoloPeel
+  parent: HolosignWetFloor
+  name: holopeel
+  description: A banana peel made of slippery hard light, watch your step!
+  components:
+  - type: Sprite
+    sprite: Structures/Holo/peel.rsi
+    state: icon
+  - type: Physics
+    bodyType: Static
+    canCollide: true
+  - type: Slippery
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - SlipLayer
+  - type: TimedDespawn
+    lifetime: 30
+  - type: Clickable
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
+- type: entity
   id: HolosignSecurity
   parent: HolosignWetFloor
   name: holographic barrier
