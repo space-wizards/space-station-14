@@ -5,6 +5,9 @@
   name: trait-pacifist-name
   description: trait-pacifist-desc
   category: Quirks
+  blacklist:
+    components:
+    - Thieving # Blacklisted to prevent thieves losing pacifism when gaining an antag role.
   components:
   - type: Pacified
 
