@@ -256,7 +256,7 @@
   - Materials
   completetime: 3
   materials:
-    Biomass: 15
+    Biomass: 2
 
 - type: latheRecipe
   id: BioGenUnstableMutagen
