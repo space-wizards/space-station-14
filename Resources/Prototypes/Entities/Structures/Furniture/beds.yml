@@ -62,7 +62,9 @@
     noRot: true
   - type: Anchorable
   - type: Pullable
-
+  - type: Tag
+    tags:
+      - CommandEquipment # yes, this belongs here. this tag is used for determining when command ambience plays, and most head quarters have beds in them
 
 - type: entity
   parent: Bed

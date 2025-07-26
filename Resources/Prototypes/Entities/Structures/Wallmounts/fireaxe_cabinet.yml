@@ -74,6 +74,9 @@
     containers:
       ItemCabinet:
       - FireAxe
+  - type: Tag
+    tags:
+      - CommandEquipment
 
 - type: entity
   parent: [FireAxeCabinetFilled, FireAxeCabinetOpen]

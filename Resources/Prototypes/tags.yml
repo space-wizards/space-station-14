@@ -10,6 +10,9 @@
   id: AirAlarmElectronics
 
 - type: Tag
+  id: AiEquipment
+
+- type: Tag
   id: Airlock
 
 - type: Tag
@@ -170,6 +173,9 @@
 
 - type: Tag
   id: Bread
+
+- type: Tag
+  id: BridgeEquipment
 
 - type: Tag
   id: Briefcase
@@ -348,6 +354,9 @@
   id: ComputerTelevisionCircuitboard
 
 - type: Tag
+  id: CommandEquipment
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -518,6 +527,9 @@
 - type: Tag
   id: EmitterBolt
 
+- type: Tag
+  id: EngineeringEquipment
+  
 - type: Tag
   id: EncryptionCargo
 

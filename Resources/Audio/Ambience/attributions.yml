@@ -61,7 +61,8 @@
           ambitech2.ogg,
           ambitech3.ogg,
           maintambience.ogg,
-          ambispace2.ogg"]
+          ambispace2.ogg,
+          signal.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from /tg/station"
   source: "https://github.com/tgstation/tgstation/tree/ae9767664701396501af5dcef8e34c4b5add3d47/sound/ambience"

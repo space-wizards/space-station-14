@@ -335,6 +335,9 @@
         type: PowerMonitoringConsoleBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
+  - type: Tag
+    tags:
+      - CommandEquipment
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -399,6 +402,9 @@
   - type: GuideHelp
     guides:
     - CriminalRecords
+  - type: Tag
+    tags:
+      - CommandEquipment
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -424,6 +430,9 @@
   - type: GuideHelp
     guides:
     - Forensics
+  - type: Tag
+    tags:
+      - CommandEquipment
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -463,6 +472,9 @@
     receiveFrequencyId: CrewMonitor
   - type: WirelessNetworkConnection
     range: 1200
+  - type: Tag
+    tags:
+      - CommandEquipment
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -620,6 +632,7 @@
   - type: Tag
     tags:
     - AccessBreakerImmune
+    - CommandEquipment
   - type: ItemSlots
   - type: ContainerContainer
     containers:
@@ -683,6 +696,9 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Tag
+    tags:
+      - CommandEquipment
 
 - type: entity
   parent: ComputerComms
@@ -1150,6 +1166,9 @@
     radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
+  - type: Tag
+    tags:
+      - CommandEquipment
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -1331,6 +1350,9 @@
           type: SurveillanceCameraMonitorBoundUserInterface
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
+  - type: Tag
+    tags:
+      - CommandEquipment
 
 - type: entity
   parent: BaseComputer
@@ -1372,6 +1394,9 @@
           type: SurveillanceCameraMonitorBoundUserInterface
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
+  - type: Tag
+    tags:
+      - CommandEquipment
 
 - type: entity
   id: ComputerPalletConsole
@@ -1539,6 +1564,9 @@
     access: [["ResearchDirector"]]
   - type: Lock
     unlockOnClick: false
+  - type: Tag
+    tags:
+      - AiEquipment
 
 - type: entity
   id: StationAiUploadComputer
@@ -1587,3 +1615,6 @@
     containers:
       circuit_holder: !type:ContainerSlot
       board: !type:Container
+  - type: Tag
+    tags:
+      - AiEquipment
