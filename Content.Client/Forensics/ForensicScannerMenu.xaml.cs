@@ -53,6 +53,12 @@ namespace Content.Client.Forensics
                 text.AppendLine(fiber);
             }
             text.AppendLine();
+            text.AppendLine(Loc.GetString("forensic-scanner-interface-micro-fibers"));
+            foreach (var microFiber in msg.MicroFibers)
+            {
+                text.AppendLine(microFiber);
+            }
+            text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
             foreach (var dna in msg.TouchDNAs)
             {

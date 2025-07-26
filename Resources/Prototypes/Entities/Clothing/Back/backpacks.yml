@@ -30,6 +30,9 @@
     delay: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-grey
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -46,6 +49,9 @@
   - type: Storage
     storageOpenSound:
       collection: BikeHorn
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-green
 
 - type: entity
   parent: ClothingBackpack
@@ -58,6 +64,9 @@
   - type: Storage
     storageOpenSound:
       collection: IanBark
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-orange
 
 - type: entity
   parent: [ClothingBackpack, BaseSecurityContraband]
@@ -67,6 +76,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/security.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: [ClothingBackpack, BaseSecurityContraband]
@@ -76,6 +88,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/brigmedic.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: ClothingBackpack
@@ -85,6 +100,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/engineering.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-rubber
+    microFiberColor: micro-fibers-yellow
 
 - type: entity
   parent: ClothingBackpack
@@ -94,6 +112,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/atmospherics.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-rubber
+    microFiberColor: micro-fibers-light-blue
 
 - type: entity
   parent: ClothingBackpack
@@ -103,6 +124,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/medical.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: [ClothingBackpack, BaseCommandContraband]
@@ -112,6 +136,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/captain.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-blue
 
 - type: entity
   parent: ClothingBackpack
@@ -121,6 +148,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/mime.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: ClothingBackpack
@@ -130,6 +160,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/chemistry.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-orange
 
 - type: entity
   parent: ClothingBackpack
@@ -139,6 +172,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/hydroponics.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-floral
+    microFiberColor: micro-fibers-green
 
 - type: entity
   parent: ClothingBackpack
@@ -148,6 +184,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/science.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-purple
 
 - type: entity
   parent: ClothingBackpack
@@ -157,6 +196,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/virology.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-green
 
 - type: entity
   parent: ClothingBackpack
@@ -166,6 +208,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/genetics.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-blue
 
 - type: entity
   parent: ClothingBackpack
@@ -175,6 +220,9 @@
   components:
     - type: Sprite
       sprite: Clothing/Back/Backpacks/cargo.rsi
+    - type: MicroFiber
+      microFiberMaterial: micro-fibers-textile
+      microFiberColor: micro-fibers-yellow
 
 - type: entity
   parent: ClothingBackpack
@@ -184,6 +232,9 @@
   components:
     - type: Sprite
       sprite: Clothing/Back/Backpacks/salvage.rsi
+    - type: MicroFiber
+      microFiberMaterial: micro-fibers-leather
+      microFiberColor: micro-fibers-brown
 
 - type: entity
   parent: ClothingBackpack
@@ -193,6 +244,9 @@
   components:
     - type: Sprite
       sprite: Clothing/Back/Backpacks/merc.rsi
+    - type: MicroFiber
+      microFiberMaterial: micro-fibers-reinforced-textile
+      microFiberColor: micro-fibers-moss
 
 #ERT
 - type: entity
@@ -206,6 +260,9 @@
   - type: Storage
     grid:
     - 0,0,10,3
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -215,6 +272,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertsec.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -224,6 +284,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertmed.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -233,6 +296,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/erteng.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -242,6 +308,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertjanitor.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -251,6 +320,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertclown.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -260,6 +332,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertchaplain.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingBackpackERTSecurity
@@ -270,6 +345,9 @@
     - type: Storage
       grid:
       - 0,0,7,6
+    - type: MicroFiber
+      microFiberMaterial: micro-fibers-reinforced-textile
+      microFiberColor: micro-fibers-black
 
 #Syndicate
 - type: entity
@@ -288,6 +366,10 @@
     - 8,1,8,3
   - type: StaticPrice
     price: 1000
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
+
 
 #Special
 - type: entity
@@ -311,6 +393,8 @@
     maxItemSize: Huge
     grid:
     - 0,0,19,9
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-plasma
 
 - type: entity
   parent: ClothingBackpackClown
@@ -323,6 +407,9 @@
     sprite: Clothing/Back/Backpacks/cluwne.rsi
   - type: Unremoveable
     deleteOnDrop: false
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-red
 
 - type: entity
   parent: ClothingBackpack
@@ -346,6 +433,9 @@
   - type: DeviceLinkSink
     ports:
       - Trigger
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-moss
 
 # Debug
 - type: entity
