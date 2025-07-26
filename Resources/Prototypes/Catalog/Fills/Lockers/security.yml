@@ -28,7 +28,7 @@
   table: !type:AllSelector
     children:
     - id: FlashlightSeclite
-    - id: WeaponDisabler
+    - id: WeaponEnergyShotgun # Ronstation - modification
     - id: ClothingBeltSecurityFilled
     - id: Flash
     - id: ClothingEyesGlassesSecurity

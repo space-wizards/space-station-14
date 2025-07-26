@@ -1,3 +1,4 @@
+# Modifications ported by Ronstation from CorvaxNext, therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 ## Static
 
 - type: latheRecipePack
@@ -31,6 +32,7 @@
   id: Robotics
   recipes:
   - ProximitySensor
+  - AiRemoteBrain # Corvax-Next-AiRemoteControl
 
 - type: latheRecipePack
   id: BorgModules
