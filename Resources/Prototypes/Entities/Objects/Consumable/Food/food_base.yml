@@ -36,8 +36,6 @@
   components:
   - type: InjectableSolution
     solution: food
-  - type: RefillableSolution
-    solution: food
 
 # usable by any food that can be opened
 # handles appearance with states "icon" and "icon-open"
