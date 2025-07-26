@@ -1,0 +1,71 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Assets taken from Skyrat 13 (/tg/station Downstream) at https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297. body_fin by Blackern5000 (github). body_underbelly by Nairod (github). snout_splotch* modified from snout_sharp by KittenColony (github).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "snout_splotch_primary",
+            "directions": 4
+        },
+        {
+            "name": "snout_splotch_secondary",
+            "directions": 4
+        },
+        {
+            "name": "snout_round",
+            "directions": 4
+        },
+        {
+            "name": "snout_roundlight",
+            "directions": 4
+        },
+        {
+            "name": "snout_sharp",
+            "directions": 4
+        },
+        {
+            "name": "snout_sharplight",
+            "directions": 4
+        },
+        {
+            "name": "body_tiger",
+            "directions": 4
+        },
+        {
+            "name": "head_tiger",
+            "directions": 4
+        },
+        {
+            "name": "l_arm_tiger",
+            "directions": 4
+        },
+        {
+            "name": "l_leg_tiger",
+            "directions": 4
+        },
+        {
+            "name": "r_arm_tiger",
+            "directions": 4
+        },
+        {
+            "name": "r_leg_tiger",
+            "directions": 4
+        },
+        {
+            "name": "body_underbelly",
+            "directions": 4
+        },
+        {
+            "name": "body_backspikes",
+            "directions": 4
+        },
+        {
+            "name": "body_fin",
+            "directions": 4
+        }
+    ]
+}
