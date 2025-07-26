@@ -113,6 +113,42 @@
   - !type:AiVisionWireAction
 
 - type: wireLayout
+  parent: SurveillanceCamera
+  id: SurveillanceCameraSecurity
+
+- type: wireLayout
+  parent: SurveillanceCamera
+  id: SurveillanceCameraService
+
+- type: wireLayout
+  parent: SurveillanceCamera
+  id: SurveillanceCameraSupply
+
+- type: wireLayout
+  parent: SurveillanceCamera
+  id: SurveillanceCameraEngineering
+
+- type: wireLayout
+  parent: SurveillanceCamera
+  id: SurveillanceCameraMedical
+
+- type: wireLayout
+  parent: SurveillanceCamera
+  id: SurveillanceCameraScience
+
+- type: wireLayout
+  parent: SurveillanceCamera
+  id: SurveillanceCameraCommand
+
+- type: wireLayout
+  parent: SurveillanceCamera
+  id: SurveillanceCameraGeneral
+
+- type: wireLayout
+  parent: SurveillanceCamera
+  id: SurveillanceCameraConstructed
+
+- type: wireLayout
   id: CryoPod
   dummyWires: 2
   wires:
