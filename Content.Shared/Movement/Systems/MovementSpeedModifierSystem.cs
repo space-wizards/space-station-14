@@ -173,6 +173,12 @@ namespace Content.Shared.Movement.Systems
         public float WalkSpeedModifier { get; private set; } = 1.0f;
         public float SprintSpeedModifier { get; private set; } = 1.0f;
 
+        public void ModifySpeed(float walk, float sprint, float zeroGravityModifer)
+        {
+            WalkSpeedModifier *= walk;
+            SprintSpeedModifier *= sprint;
+        }
+
         public void ModifySpeed(float walk, float sprint)
         {
             WalkSpeedModifier *= walk;
@@ -188,6 +194,7 @@ namespace Content.Shared.Movement.Systems
     [ByRefEvent]
     public record struct RefreshWeightlessModifiersEvent
     {
+
         public float WeightlessAcceleration;
         public float WeightlessAccelerationMod;
 
@@ -198,6 +205,11 @@ namespace Content.Shared.Movement.Systems
 
         public float WeightlessFrictionNoInput;
         public float WeightlessFrictionNoInputMod;
+
+        public void ModifySpeed(float mod)
+        {
+            WeightlessModifier *= mod;
+        }
 
         public void ModifyFriction(float friction, float noInput)
         {
@@ -210,15 +222,15 @@ namespace Content.Shared.Movement.Systems
             ModifyFriction(friction, friction);
         }
 
-        public void ModifyAcceleration(float acceleration, float modifier)
+        public void ModifyAcceleration(float acceleration)
         {
             WeightlessAcceleration *= acceleration;
-            WeightlessModifier *= modifier;
         }
 
-        public void ModifyAcceleration(float modifier)
+        public void ModifyAccelerationAndSpeed(float modifier)
         {
-            ModifyAcceleration(modifier, modifier);
+            ModifyAcceleration(modifier);
+            ModifySpeed(modifier);
         }
     }
     [ByRefEvent]
