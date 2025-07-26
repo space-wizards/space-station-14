@@ -7,9 +7,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        reagents:
-        - ReagentId: Cola
-          Quantity: 30
         maxVol: 30
       grindable:
         reagents: # 5u -> 1/2 steel sheet (10u)
@@ -22,20 +19,8 @@
     maxTransferAmount: 15
   - type: Extractable
     grindableSolutionName: grindable
-  - type: Sprite
-    state: icon
-    layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
   - type: FitsInDispenser
     solution: drink
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
   - type: Tool
     qualities:
     - Rolling

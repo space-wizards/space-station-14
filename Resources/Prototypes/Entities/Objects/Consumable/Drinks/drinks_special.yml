@@ -1,4 +1,68 @@
 - type: entity
+  parent: DrinkGlassBase
+  id: DrinkShotGlass
+  name: shot glass
+  description: Perfect for slamming down onto the table angrily.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 5
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shotglass.rsi
+    layers:
+    - state: icon
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: fill1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: icon-front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: fill
+    inHandsMaxFillLevels: 1
+    inHandsFillBaseName: -fill-
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkIceBucket
+  name: ice bucket
+  description: A special bucket of refreshy ice. Prohibited use for challenge with the same name!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Ice
+          Quantity: 200
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/icebucket.rsi
+    state: icon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 75
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkTeapot
+  name: teapot  # short and stout
+  description: An elegant teapot. It simply oozes class.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Tea
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teapot.rsi
+
+# Bartender tools
+
+- type: entity
   parent: DrinkBase
   id: DrinkShaker
   name: shaker
@@ -25,43 +89,6 @@
     - Shake
 
 - type: entity
-  parent: DrinkGlassBase
-  id: DrinkShotGlass
-  name: shot glass
-  description: Perfect for slamming down onto the table angrily.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 5
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/shotglass.rsi
-    layers:
-      - state: icon
-        map: [ "enum.SolutionContainerLayers.Base" ]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-        visible: false
-      - state: icon-front
-        map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 2
-    fillBaseName: fill
-    inHandsMaxFillLevels: 1
-    inHandsFillBaseName: -fill-
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkJarWhat
-  name: jar of something
-  description: You can't really tell what this is.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/jar_what.rsi
-
-- type: entity
   parent: DrinkBase
   id: DrinkJigger
   name: jigger
@@ -83,25 +110,6 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 20
-
-- type: entity
-  parent: DrinkBase
-  id: DrinkIceBucket
-  name: ice bucket
-  description: A special bucket of refreshy ice. Prohibited use for challenge with the same name!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Ice
-          Quantity: 200
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/icebucket.rsi
-    state: icon
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 75
 
 - type: entity
   parent: DrinkBase
@@ -132,3 +140,55 @@
       Steel: 300
   - type: FitsInDispenser
     solution: drink
+
+# Weird empty shakes
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkShakeBlue
+  name: blue milkshake
+  description: ''
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shake-blue.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkShakeEmpty
+  name: shakeempty
+  description: ''
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shake-empty.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkShakeMeat
+  name: meat shake
+  description: ''
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shake-meat.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkShakeRobo
+  name: robo shake
+  description: ''
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shake-robo.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkShakeWhite
+  name: white shake
+  description: ''
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shake-white.rsi

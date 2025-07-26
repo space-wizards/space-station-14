@@ -43,8 +43,6 @@
     materialComposition:
       Glass: 25
 
-##
-
 # Misc Cups
 - type: entity
   parent: DrinkBaseCup
@@ -59,6 +57,53 @@
   - type: PhysicalComposition
     materialComposition:
       Gold: 100
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkTeacupEmpty
+  name: teacup
+  description: A plain white porcelain teacup.
+  components:
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    state: icon-vend-tea
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    layers:
+    - state: icon-0
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+
+- type: entity
+  name: coupe glass
+  description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
+  parent: DrinkGlassBase
+  id: DrinkGlassCoupeShaped
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
+    layers:
+    - state: icon
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: fill1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: icon-front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill
+    inHandsMaxFillLevels: 1
+    inHandsFillBaseName: -fill-
 
 - type: entity
   parent: DrinkBaseCup
@@ -276,10 +321,8 @@
     solution: drink
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkTeacupEmpty
   id: DrinkTeacup
-  name: teacup
-  description: A plain white porcelain teacup.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -287,24 +330,11 @@
         reagents:
         - ReagentId: Tea
           Quantity: 20
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/teacup.rsi
-    state: icon-vend-tea
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/teacup.rsi
-    layers:
-      - state: icon-0
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: icon-4
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 4
-    fillBaseName: icon-
   - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkTeacupEmpty
   id: DrinkGreenTea
   name: green tea
   description: A plain white porcelain teacup.
@@ -318,16 +348,6 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-vend-green-tea
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/teacup.rsi
-    layers:
-      - state: icon-0
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: icon-4
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 4
-    fillBaseName: icon-
   - type: TrashOnSolutionEmpty
     solution: drink
 
