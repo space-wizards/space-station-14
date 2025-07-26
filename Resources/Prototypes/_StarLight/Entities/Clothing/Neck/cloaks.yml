@@ -1,0 +1,425 @@
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakCapElite
+  name: elite captain's cloak
+  description: An elite captain's cloak made from the latest composite glowing fabric, ensuring you stand out and are easier to target. Live bright, die young.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/cap_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#BAF9FF"
+  - type: StaticPrice
+    price: 2000
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        whitelist:
+          tags:
+            - PowerCell
+            - PowerCellSmall
+  - type: EnergyDomeGenerator
+    damageEnergyDraw: 8
+    domePrototype: EnergyDomeSmallCap
+  - type: PowerCellDraw
+    enabled: false
+    drawRate: 2
+    useRate: 0
+  - type: UseDelay
+    delay: 12.0
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakHopElite
+  name: elite hop's cloak
+  description: An elite hop's cloak made from the latest composite glowing fabric, ensuring you stand out and are easier to target. Live bright, hop hard, and pray your team knows how to catch!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/hop_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#BAF9FF"
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingCloakCmoElite
+  name: elite chief medical officer's cloak
+  description: An elite chief medical officer's cloak made from the latest composite glowing fabric. Not recommended for breaking cancer diagnoses to patients.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/cmo_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#52B4E9"
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent:  [ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakHosElite
+  name: elite head of security's cloak
+  description: An elite head of security's cloak crafted from the latest composite glowing fabric. Only for a true paladin.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/hos_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 4
+    color: "#DE3A3A"
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakCeElite
+  name: elite chief engineer's cloak
+  description: Chief engineer's cloak made from the latest composite glowing fabric, ensuring you stand out. The brightest cloak—so everyone knows where all the station's light went.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/ce_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 4
+    energy: 2
+    color: "#FaFaFa"
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent:  [ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakRdElite
+  name: elite research director's cloak
+  description: Research Director's cloak made from the latest composite glowing fabric, ensuring you stand out. Make sure to tell everyone you invented it.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/rd_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 4
+    color: "#D381C9"
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakQmElite
+  name: elite quartermaster's cloak
+  description: Quartermaster's cloak made from the latest composite glowing fabric, of course, you doesn't want to sell it.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/qm_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 5
+    color: "#A46106"
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakBsoElite
+  name: Elite Blueshield Officer's cloak
+  description: An elite Blueshield Officer's cloak crafted from the latest composite glowing fabric. Any true BlueShield is not afraid of shining in the dark!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/bso_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 4
+    color: "#84BEF4"
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakBsoCape
+  name: Blueshield Officer's Formal Cloak
+  description: An incredibly large coat, owned only by the most experienced blueshields. It's said the sleeves have never been worn.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/bso_formal.rsi
+  - type: Clothing
+    slots:
+      - neck
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckOldMantle
+  name: old wrap
+  description: A tattered fabric wrap, faded over the years. Smells faintly of cigars.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Mantles/oldmantle.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Neck/Mantles/oldmantle.rsi
+
+# Fashion-O-Mat, not obtainable any other way, unless mapped
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseCentcommContraband ]
+  id: ClothingNeckCloakCentcomBlack
+  name: special operations officer cloak
+  description: The NanoTrasen logo embroidered in gold speaks for itself.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/centcom_officer_black.rsi
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseCentcommContraband ]
+  id: ClothingNeckCloakCentcomAdmiral
+  name: admiral's cape
+  description: A vibrant green cape with gold stitching, worn by Nanotrasen Navy Admirals.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/admiral.rsi
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseCentcommContraband ]
+  id: ClothingNeckMantleERTLeader
+  name: ERT leader's mantle
+  description: Extraordinary decorative drape over the shoulders.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Mantles/ERTmantle.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Neck/Mantles/ERTmantle.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckHorrific
+  name: horrific necktie
+  description: The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Ties/disco.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Neck/Ties/disco.rsi
+
+# Fashion-O-Mat-END
+
+
+# ## USSP
+
+- type: entity
+  parent: [BaseItem, ClothingNeckBase, ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSovietContraband]
+  id: ClothingNeckCloakCommissar
+  name: Commissar overcoat
+  description: Rumor has it entire regiments of aides exist solely to press seams, polish buttons, and remind the Commissar which coat goes over which.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/commissar.rsi
+  - type: Clothing
+    slots:
+    - outerClothing
+    - neck
+    sprite: _Starlight/Clothing/Neck/Cloaks/commissar.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: HeldSpeedModifier
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+  - type: GroupExamine
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.7
+        Caustic: 0.9
+        Radiation: 0.85
+  - type: Item
+    size: Huge
+  - type: StaticPrice
+    price: 5000
+
+## Cool
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTatteredHood
+  name: tattered hood
+  description: A tattered hood of dull fabric. It's weave is thick and coarse, whatever tore this took some effort.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/tattered_hood.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Neck/Cloaks/tattered_hood.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+## colored
+
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapeGray
+  # name: gray torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
+    
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapeBlue
+  # name: blue torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # layers:
+    # - state: icon
+      # color: "#52aecc"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-NECK
+        # color: "#52aecc"
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapeGreen
+  # name: green torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # layers:
+    # - state: icon
+      # color: "#9ed63a"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-NECK
+        # color: "#9ed63a"
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapeOrange
+  # name: orange torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # layers:
+    # - state: icon
+      # color: "#ff8c19"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-NECK
+        # color: "#ff8c19"
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapeRed
+  # name: red torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # layers:
+    # - state: icon
+      # color: "#eb0c07"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-NECK
+        # color: "#eb0c07"
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapePurple
+  # name: purple torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # layers:
+    # - state: icon
+      # color: "#9f70cc"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-NECK
+        # color: "#9f70cc"
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapeBrown
+  # name: brown torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # layers:
+    # - state: icon
+      # color: "#c59431"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-NECK
+        # color: "#c59431"
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
