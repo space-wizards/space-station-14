@@ -86,6 +86,8 @@ namespace Content.Client.Stylesheets
 
         public const string StyleClassButtonHelp = "HelpButton";
 
+        public const string StyleClassPowerSwitchButton = "PowerSwitchButton";
+
         public const string StyleClassPopupMessageSmall = "PopupMessageSmall";
         public const string StyleClassPopupMessageSmallCaution = "PopupMessageSmallCaution";
         public const string StyleClassPopupMessageMedium = "PopupMessageMedium";
@@ -476,6 +478,12 @@ namespace Content.Client.Stylesheets
             var checkBoxTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/checkbox_unchecked.svg.96dpi.png");
             var monotoneCheckBoxTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/Monotone/monotone_checkbox_checked.svg.96dpi.png");
             var monotoneCheckBoxTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/Monotone/monotone_checkbox_unchecked.svg.96dpi.png");
+
+            // SwitchButton
+            var switchButtonTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_off.svg.96dpi.png");
+            var switchButtonTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_on.svg.96dpi.png");
+            var switchButtonTexturePowerUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_power_off.svg.96dpi.png");
+            var switchButtonTexturePowerChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_power_on.svg.96dpi.png");
 
             // Tooltip box
             var tooltipTexture = resCache.GetTexture("/Textures/Interface/Nano/tooltip.png");
@@ -1014,6 +1022,25 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(TextureRect), new [] { MonotoneCheckBox.StyleClassMonotoneCheckBox, CheckBox.StyleClassCheckBoxChecked }, null, null), new[]
                 {
                     new StyleProperty(TextureRect.StylePropertyTexture, monotoneCheckBoxTextureChecked),
+                }),
+
+                // SwitchButton
+                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, null), new[]
+                {
+                    new StyleProperty(SwitchButton.StylePropertyTextureUnchecked,  switchButtonTextureUnchecked),
+                    new StyleProperty(SwitchButton.StylePropertyTextureChecked,  switchButtonTextureChecked),
+                }),
+
+                // Power-style SwitchButton
+                new StyleRule(new SelectorElement(typeof(SwitchButton), new [] { StyleClassPowerSwitchButton }, null, null), new[]
+                {
+                    new StyleProperty(SwitchButton.StylePropertyTextureUnchecked,  switchButtonTexturePowerUnchecked),
+                    new StyleProperty(SwitchButton.StylePropertyTextureChecked,  switchButtonTexturePowerChecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(BoxContainer), new [] { SwitchButton.StyleClassSwitchButton }, null, null), new[]
+                {
+                    new StyleProperty(BoxContainer.StylePropertySeparation, 10),
                 }),
 
                 // Tooltip
