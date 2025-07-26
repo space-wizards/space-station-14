@@ -173,6 +173,20 @@
   - UplinkWeaponry
 
 - type: listing
+  id: UplinkChemMultilaserBundle
+  name: uplink-chemmultilaser-name
+  description: uplink-chemmultilaser-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Battery/chem_multilaser.rsi, state: icon }
+  productEntity: WeaponChemMultilaser
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 7
+  cost:
+    Telecrystal: 14
+  categories:
+  - UplinkWeaponry
+
+- type: listing
   id: UplinkC20RBundle
   name: uplink-c20r-bundle-name
   description: uplink-c20r-bundle-desc
@@ -197,6 +211,20 @@
     Telecrystal: 12
   cost:
     Telecrystal: 20
+  categories:
+  - UplinkWeaponry
+
+- type: listing
+  id: UplinkChemlaserBundle
+  name: uplink-chemlaser-bundle-name
+  description: uplink-chemlaser-bundle-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Battery/chem_laser.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledChemLaser
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 12
+  cost:
+    Telecrystal: 22
   categories:
   - UplinkWeaponry
 
@@ -542,6 +570,17 @@
   productEntity: MagazineBoxAntiMateriel
   cost:
     Telecrystal: 2
+  categories:
+  - UplinkAmmo
+
+# for the gorlex chem-lasers
+- type: listing
+  id: UplinkChemlaserAmmo
+  name: uplink-plasmacell-ammo-name
+  description: uplink-plasmacell-ammo-desc
+  productEntity: GorlexPlasmaCellFilled
+  cost:
+    Telecrystal: 8
   categories:
   - UplinkAmmo
 

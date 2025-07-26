@@ -862,10 +862,10 @@
     proto: RedHeavyLaser
 
 - type: entity
-  name: gorlex chem-laser
+  name: Gorlex chem-laser
   parent: [ BaseWeaponPowerCell, BaseGunWieldable, BaseSyndicateContraband ]
   id: WeaponChemLaser
-  description: #add description
+  description: Every marauders favorite space-geneva convention breaking laser rifle. Requires plasma fuel and a cell to spark the chemical reaction.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/chem_laser.rsi
@@ -879,7 +879,7 @@
       map: [ "tank" ]
       visible: false
   - type: PneumaticCannon
-    gasUsage: 0.08
+    gasUsage: 0.32
     throwItems: false
     allowedGases: 
     - Plasma
@@ -901,7 +901,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
     proto: ChemicalLaser
-    fireCost: 25
+    fireCost: 50
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/chem_laser.rsi
     quickEquip: false
@@ -929,7 +929,7 @@
             volume: -3
       cell_slot:
         name: Magazine
-        startingItem: PowerCellSmall
+        startingItem: PowerCellMedium
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:
@@ -943,10 +943,10 @@
       gas_tank: !type:ContainerSlot
 
 - type: entity
-  name: gorlex chem-multilaser
+  name: Gorlex chem-multilaser
   parent: [ BaseWeaponPowerCell, BaseGunWieldable, BaseSyndicateContraband ]
   id: WeaponChemMultilaser
-  description: #add description
+  description: A Gorlex laser smg that couldn't hit the broad side of a bar, but very effective at suppression. Requires plasma fuel and a cell to spark the chemical reaction.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/chem_multilaser.rsi
@@ -960,7 +960,7 @@
       map: [ "tank" ]
       visible: false
   - type: PneumaticCannon
-    gasUsage: 0.02
+    gasUsage: 0.08
     throwItems: false
     allowedGases: 
     - Plasma
@@ -991,7 +991,7 @@
         volume: -2
   - type: HitscanBatteryAmmoProvider
     proto: ChemicalMultilaser
-    fireCost: 8
+    fireCost: 16
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/chem_laser.rsi
     quickEquip: false
@@ -1020,7 +1020,7 @@
             volume: -3
       cell_slot:
         name: Magazine
-        startingItem: PowerCellSmall
+        startingItem: PowerCellMedium
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:

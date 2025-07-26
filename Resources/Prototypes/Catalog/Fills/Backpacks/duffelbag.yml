@@ -59,6 +59,20 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledChemLaser
+  name: Gorlex Chem-laser bundle
+  description: "Contains a Gorlex chem-laser, bundled with plasma cell and a power cell. Perfect for providing supporting fire."
+  components: 
+  - type: StorageFill
+    contents:
+      - id: WeaponChemLaser
+      - id: PowerCellMedium
+        amount: 1
+      - id: GorlexPlasmaCellFilled
+        amount: 1
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledRevolver
   name: Python bundle
   description: "Go loud and proud with a fully loaded Magnum Python, bundled with two speed loaders."

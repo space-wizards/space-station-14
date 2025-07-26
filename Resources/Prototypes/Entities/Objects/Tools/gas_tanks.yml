@@ -253,7 +253,7 @@
   parent: GasTankBase
   id: GorlexPlasmaCell
   name: plasma cell
-  description: . #add description dumbass
+  description: A plasma cell for use in Gorlex chemical laser weapons. very volatile. It can hold 20 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/plasmacell.rsi

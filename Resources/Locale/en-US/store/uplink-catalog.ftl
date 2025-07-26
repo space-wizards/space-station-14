@@ -230,17 +230,26 @@ uplink-knives-kit-desc = A set of 4 syndicate branded throwing knives, perfect f
 uplink-meds-bundle-name = Interdyne Medical Bundle
 uplink-meds-bundle-desc = An assortment of autoinjectors and premium medical equipment to cover for every possible situation. Contains an elite compact defibrillator that can be used as a weapon.
 
+uplink-plasmacell-ammo-name = Gorlex Plasma cell
+uplink-plasmacell-ammo-desc = Contains a plasma cell for use in Gorlex chemical laser weapons.
+
 uplink-ammo-bundle-name = Ammo Bundle
 uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW.
 
 uplink-sniper-bundle-name = Sniper Bundle
 uplink-sniper-bundle-desc = An inconspicuous briefcase that contains a Hristov, 10 spare bullets and a convenient disguise.
 
+uplink-chemmultilaser-name = Gorlex Chem-Multilaser
+uplink-chemmultilaser-desc = Spray and pray: Gorlex's home grown laser sidearm, the chemical multilaser.
+
 uplink-c20r-bundle-name = C-20r Bundle
 uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundled with three magazines.
 
 uplink-buldog-bundle-name = Bulldog Bundle
 uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun and four 12g buckshot drums.
+
+uplink-chemlaser-bundle-name = Gorlex Chem-laser Bundle
+uplink-chemlaser-bundle-desc = Contains a Gorlex chem-laser, bundled with plasma cell and a power cell. Perfect for providing supporting fire.
 
 uplink-grenade-launcher-bundle-name = China-Lake Bundle
 uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 11 rounds of varying destructive capability.
