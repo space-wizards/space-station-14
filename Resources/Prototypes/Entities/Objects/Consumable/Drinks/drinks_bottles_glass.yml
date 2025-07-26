@@ -386,6 +386,8 @@
     - Wine
     - DrinkBottle
 
+# Extra large bottles
+
 - type: entity
   parent: [DrinkVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkBeerGrowler # Needs to be renamed DrinkBeerBottleFull
