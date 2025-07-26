@@ -71,8 +71,8 @@ public partial class RadiationSystem
             }
         }
 
-        if(debug)
-            UpdateGridcastDebugOverlay(stopwatch.Elapsed.TotalMilliseconds, sourcesCount, _activeReceivers.Count, debugRays!.ToList());
+        if (debug && debugRays is not null)
+            UpdateGridcastDebugOverlay(stopwatch.Elapsed.TotalMilliseconds, sourcesCount, _activeReceivers.Count, debugRays.ToList());
 
         RaiseLocalEvent(new RadiationSystemUpdatedEvent());
     }
@@ -139,8 +139,8 @@ public partial class RadiationSystem
                 continue;
 
             ray.Rads -= resData;
-            if (saveVisitedTiles)
-                blockers!.Add((point, ray.Rads));
+            if (saveVisitedTiles && blockers is not null)
+                blockers.Add((point, ray.Rads));
 
             if (ray.Rads <= MinIntensity)
             {
@@ -149,11 +149,14 @@ public partial class RadiationSystem
             }
         }
 
-        if (!saveVisitedTiles || blockers!.Count <= 0)
-            return ray;
+        if (blockers is not null)
+            if (!saveVisitedTiles || blockers!.Count <= 0)
+                return ray;
 
         ray.Blockers ??= new();
-        ray.Blockers.Add(GetNetEntity(gridUid), blockers);
+
+        if (blockers is not null)
+            ray.Blockers.Add(GetNetEntity(gridUid), blockers);
         return ray;
     }
 
@@ -236,9 +239,9 @@ public partial class RadiationSystem
                 if (ray.ReachedDestination)
                     rads += ray.Rads;
 
-                if (Debug)
+                if (Debug && DebugRays is not null)
                 {
-                    DebugRays!.Add(new DebugRadiationRay(
+                    DebugRays.Add(new DebugRadiationRay(
                         ray.MapId,
                         System.GetNetEntity(ray.SourceUid),
                         ray.Source,
