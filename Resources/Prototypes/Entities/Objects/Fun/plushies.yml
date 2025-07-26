@@ -84,10 +84,10 @@
     noRot: true
   - type: Item
   - type: Physics
-    angularDamping: 0.02
-    linearDamping: 0.02
     fixedRotation: true
     bodyType: Dynamic
+  - type: MovementIgnoreGravity
+    gravityState: true
   - type: Fixtures
     fixtures:
       fix1:
