@@ -881,6 +881,8 @@
   - type: PneumaticCannon
     gasUsage: 0.08
     throwItems: false
+    allowedGases: 
+    - Plasma
   - type: Item
     size: Large
     shape:
@@ -960,6 +962,8 @@
   - type: PneumaticCannon
     gasUsage: 0.02
     throwItems: false
+    allowedGases: 
+    - Plasma
   - type: Item
     size: Large
     shape:

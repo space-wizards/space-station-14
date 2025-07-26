@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Ranged.Systems;
+using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
@@ -29,7 +30,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PneumaticCannonComponent, InteractUsingEvent>(OnInteractUsing, before: new []{ typeof(StorageSystem) });
+        SubscribeLocalEvent<PneumaticCannonComponent, InteractUsingEvent>(OnInteractUsing, before: new[] { typeof(StorageSystem) });
         SubscribeLocalEvent<PneumaticCannonComponent, GunShotEvent>(OnShoot);
         SubscribeLocalEvent<PneumaticCannonComponent, ContainerIsInsertingAttemptEvent>(OnContainerInserting);
         SubscribeLocalEvent<PneumaticCannonComponent, GunRefreshModifiersEvent>(OnGunRefreshModifiers);
@@ -62,11 +63,21 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         if (args.Container.ID != PneumaticCannonComponent.TankSlotId)
             return;
 
-        if (!TryComp<GasTankComponent>(args.EntityUid, out var gas))
+        if (!TryComp<GasTankComponent>(args.EntityUid, out var tank))
             return;
 
+        // check if not allowed gas is present
+        foreach (var gas in tank.Air)
+        {
+            if (!component.AllowedGases.Contains(gas.gas) && gas.moles > 0)
+            {
+                args.Cancel();
+                return;
+            }
+        }
+
         // only accept tanks if it uses gas
-        if (gas.Air.TotalMoles >= component.GasUsage && component.GasUsage > 0f)
+        if (tank.Air.TotalMoles >= component.GasUsage && component.GasUsage > 0f)
             return;
 
         args.Cancel();
