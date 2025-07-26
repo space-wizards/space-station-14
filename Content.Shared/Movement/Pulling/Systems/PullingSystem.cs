@@ -439,7 +439,7 @@ public sealed class PullingSystem : EntitySystem
             return false;
         }
 
-        if (!_containerSystem.IsInSameOrNoContainer(puller, pullableUid))
+        if (!_containerSystem.IsInSameOrNoContainer((puller, null), (pullableUid, null)))
         {
             return false;
         }
