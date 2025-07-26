@@ -65,6 +65,28 @@
   - type: Item
     sprite: Objects/Consumable/Drinks/cola.rsi
 
+# created when taking apart an ied
+- type: entity
+  parent: [ BaseDrinkOpenableOpen, DrinkColaCan ]
+  id: DrinkColaCanEmpty
+  suffix: Empty
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
+  - type: Tag
+    tags:
+    - Cola
+    - DrinkCan
+    - Trash
+
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkIcedTeaCan
