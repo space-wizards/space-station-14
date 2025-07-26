@@ -1,4 +1,5 @@
 # Material costs to apply to a drink
+# Adding one of these entities as the first parent will override a previous inherited material
 
 # Fragile glass
 - type: entity
@@ -66,8 +67,9 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-#      - !type:PlaySoundBehavior TODO
-#        sound:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalCrunch # TODO a plastic break collection
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -95,8 +97,9 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-#      - !type:PlaySoundBehavior TODO
-#        sound:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/unwrap.ogg # TODO a cardboard destruction collection
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -124,8 +127,9 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-#      - !type:PlaySoundBehavior TODO
-#        sound:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalCrunch # TODO a flimsier metal break collection
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -153,8 +157,9 @@
         !type:DamageTrigger
         damage: 25
       behaviors:
-#      - !type:PlaySoundBehavior TODO
-#        sound:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalCrunch
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -182,8 +187,9 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-#      - !type:PlaySoundBehavior TODO
-#        sound:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak # Could use a shinier sound
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
