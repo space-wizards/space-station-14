@@ -67,7 +67,7 @@ public sealed partial class RadiationSystem : EntitySystem
             args.NewPosition.Position.EqualsApprox(args.OldPosition.Position))
             return;
 
-        UpdateSource(entity, args.Component);
+        UpdateSource(entity);
     }
 
     private void OnSourceStackChanged(Entity<RadiationSourceComponent> entity, ref StackCountChangedEvent args)
@@ -85,9 +85,9 @@ public sealed partial class RadiationSystem : EntitySystem
         _activeReceivers.Remove(uid);
     }
 
-    private void UpdateSource(Entity<RadiationSourceComponent> entity, TransformComponent? xform = null)
+    private void UpdateSource(Entity<RadiationSourceComponent> entity)
     {
-        if (!Resolve(entity.Owner, ref xform))
+        if (!TryComp(entity.Owner, out TransformComponent? xform))
             return;
 
         if (!entity.Comp.Enabled || Terminating(entity.Owner))
