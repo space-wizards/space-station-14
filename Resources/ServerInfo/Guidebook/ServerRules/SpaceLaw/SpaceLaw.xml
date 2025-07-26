@@ -41,7 +41,7 @@
 
   [color=#a4885c]Stackable Crimes:[/color] Crimes are to be considered 'stackable' in the sense that if you charge someone with two or more different crimes, you should combine the times you would give them for each crime. Linked crimes, shown in matching colors and suffixes on the Quick Crime Guide, can not be stacked and instead override each other, you should pick the highest crime that matches the case.
 
-  - Example: A suspect has committed a 2-01 (possession: major) and a 3-01 (possession: syndicate). The maximum sentence here would be 10 minutes due to them being linked crimes, and 3-01 is the greater crime.
+  - Example: A suspect has committed a 2-01 (possession: major) and a 3-01 (possession: highly illegal). The maximum sentence here would be 10 minutes due to them being linked crimes, and 3-01 is the greater crime.
   - Example 2: A suspect commits a 3-04 (Secure trespassing) and a 3-06 (manslaughter). Those crimes stack since they are not linked crimes. You could sentence for a maximum of 20 minutes, but context matters heavily, and maximum sentences should only be used for the worst offenders.
 
   [color=#a4885c]Repeater Offenders:[/color] Repeated crimes are when someone is released for a crime and then goes to commit the same crime within the same shift. Repeated crimes can be charged with tacked-on time; first repeat: 3:00, second repeat: 6:00, third repeat: permanent confinement. It should be noted each tacked-on time is directly linked to one type of crime, so for example, if someone does their first repeat of trespass and petty theft, you can charge them with an extra 6 minutes.

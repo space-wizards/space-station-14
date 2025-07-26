@@ -76,7 +76,7 @@
     </ColorBox>
     <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession: Syndicate (P)
+        Possession: Highly Illegal (P)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -571,17 +571,17 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession/Use of Syndicate Contraband
+        Possession/Use of Highly Illegal Contraband
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To make, hold, or use Syndicate contraband.
+        To make, hold, or use highly illegal contraband.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Syndicate contraband may only be used in emergencies, and only to prevent death or gross bodily harm.
+        Highly illegal contraband includes Syndicate contraband and magical contraband. Without explicit authorization from Central Command, highly illegal contraband may only be used in emergencies, and only to prevent death or gross bodily harm.
       </Box>
     </ColorBox>
     <ColorBox>
