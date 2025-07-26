@@ -1,0 +1,8 @@
+- type: alert
+  id: RailroadingChoice
+  icons:
+  - sprite: /Textures/_Starlight/Interface/Alerts/railroading.rsi
+    state: cards
+  clickEvent: !type:OpenCardsAlertEvent
+  name: alerts-cards-name
+  description: alerts-cards-desc

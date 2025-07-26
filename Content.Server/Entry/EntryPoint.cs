@@ -36,6 +36,8 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Server._NullLink;
+using Content.Server._NullLink.Core;
 
 namespace Content.Server.Entry
 {
@@ -123,6 +125,7 @@ namespace Content.Server.Entry
 
                 //🌟Starlight🌟
                 IoCManager.Resolve<ITTSManager>().Initialize();
+                IoCManager.Resolve<IActorRouter>().Initialize(); // nulllink 
                 IoCManager.Resolve<HolidaySystem>().Initialize();
             }
         }
@@ -196,9 +199,9 @@ namespace Content.Server.Entry
             _playTimeTracking?.Shutdown();
             _dbManager?.Shutdown();
             IoCManager.Resolve<ServerApi>().Shutdown();
-
             IoCManager.Resolve<DiscordLink>().Shutdown();
             IoCManager.Resolve<DiscordChatLink>().Shutdown();
+            IoCManager.Resolve<IActorRouter>().Shutdown(); // nulllink 
         }
 
         private static void LoadConfigPresets(IConfigurationManager cfg, IResourceManager res, ISawmill sawmill)

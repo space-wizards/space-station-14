@@ -914,6 +914,9 @@
 
 - type: Tag
   id: LightBulb
+  
+- type: Tag
+  id: Lighters
 
 - type: Tag
   id: Lime

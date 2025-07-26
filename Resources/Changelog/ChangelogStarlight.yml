@@ -9431,5 +9431,262 @@ Entries:
   id: 1299
   time: '2025-07-16T19:14:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1043
+- author: beck-thompson
+  changes:
+  - message: Duplicate light action on justice helmet removed.
+    type: Remove
+  id: 1300
+  time: '2025-07-16T19:54:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1040
+- author: beck-thompson
+  changes:
+  - message: Fixed error sprite states for justice helmet.
+    type: Fix
+  id: 1301
+  time: '2025-07-16T19:54:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1040
+- author: beck-thompson
+  changes:
+  - message: Fixed mentor button styling.
+    type: Fix
+  id: 1302
+  time: '2025-07-16T20:05:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1039
+- author: stickycheZ101
+  changes:
+  - message: given the QM some phresh drip (QM’s luxury maxim hardsuit has been added,
+      and added to RS QM lockers)
+    type: Add
+  id: 1303
+  time: '2025-07-16T20:17:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1033
+- author: Conflee
+  changes:
+  - message: Changed overall time requirement for Security Cadet from 30 hours to
+      20 hours
+    type: Tweak
+  id: 1304
+  time: '2025-07-17T15:31:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1048
+- author: Conflee
+  changes:
+  - message: Changed lockout time on Security Cadet from 15 hours to 20 hours, allowing
+      players to remain Cadets for longer if they feel the need to
+    type: Tweak
+  id: 1305
+  time: '2025-07-17T15:31:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1048
+- author: Conflee
+  changes:
+  - message: Changed time requirement for Security Officer from 2.5 hours as Security
+      Cadet to 10 hours as Security Cadet, to match intended unlock time in overrides
+      that wasn't being used properly
+    type: Tweak
+  id: 1306
+  time: '2025-07-17T15:31:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1048
+- author: Dimyell
+  changes:
+  - message: Added Armor and Neck slot options to BSO Loadout
+    type: Add
+  id: 1307
+  time: '2025-07-17T15:37:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1014
+- author: Dimyell
+  changes:
+  - message: Several minor adjustments to BSO Coat and Formal Cloak sprites
+    type: Add
+  id: 1308
+  time: '2025-07-17T15:37:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1014
+- author: IamSidzilla
+  changes:
+  - message: 7 new job icons. Specially made for the Syndicate, accessible though
+      your Agent ID. Glory to the Syndicate.
+    type: Add
+  id: 1309
+  time: '2025-07-17T15:49:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1010
+- author: KarmaKitsuna and Quantum
+  changes:
+  - message: Roleplayers rejoice! Added story objectives for traitors, and a system
+      which picks a department at random for objectives.
+    type: Add
+  id: 1310
+  time: '2025-07-17T16:43:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1047
+- author: Conflee and Eroph
+  changes:
+  - message: Changed Borg and AI job icons to match each other, and stand out from
+      other icons more (gray background, light blue icon)
+    type: Tweak
+  id: 1311
+  time: '2025-07-17T16:47:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1049
+- author: Salem
+  changes:
+  - message: Fixed XML issue with slime guidebook
+    type: Fix
+  id: 1312
+  time: '2025-07-17T22:23:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1051
+- author: stickycheZ101
+  changes:
+  - message: added a bunch of new trinkets to the loadout menu
+    type: Add
+  id: 1313
+  time: '2025-07-21T22:23:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1067
+- author: RoadTrain
+  changes:
+  - message: 2 new lines for Vanilla's plushie
+    type: Add
+  id: 1314
+  time: '2025-07-21T21:07:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1063
+- author: RoadTrain
+  changes:
+  - message: Amali's plushie now uses feminine sounds for interactions etc.
+    type: Fix
+  id: 1315
+  time: '2025-07-21T21:07:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1063
+- author: Trosling
+  changes:
+  - message: Fixed knives chopping at the same rate as they screw (very slowly), they
+      now chop as before
+    type: Fix
+  id: 1316
+  time: '2025-07-21T21:10:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1061
+- author: Trosling
+  changes:
+  - message: Spent shotgun casings are now visually spent and eject as normal
+    type: Fix
+  id: 1317
+  time: '2025-07-21T21:13:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1062
+- author: Fasuh
+  changes:
+  - message: Add new colors to atmos pipes.
+    type: Add
+  id: 1318
+  time: '2025-07-21T21:23:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1056
+- author: CommanderAlex365
+  changes:
+  - message: Made Atmospheric Technicians more important than Technical Assistants
+    type: Tweak
+  id: 1319
+  time: '2025-07-21T21:24:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1059
+- author: Dimyell
+  changes:
+  - message: Blueshield no longer spawns an additional armour vest when arriving to
+      the station.
+    type: Add
+  id: 1320
+  time: '2025-07-21T21:26:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1052
+- author: Dimyell
+  changes:
+  - message: Voxes Blueshield Overcoat is now sprited correctly. Sorry Jack.
+    type: Add
+  id: 1321
+  time: '2025-07-21T21:26:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1052
+- author: STARLIGHT TEAM
+  changes:
+  - message: Railroading system added (a term from tabletop role-playing games).
+    type: Add
+  id: 1322
+  time: '2025-07-21T23:22:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1072
+- author: Cyanogen
+  changes:
+  - message: Cyclorites now do 13 blunt damage with their first
+    type: Tweak
+  id: 1323
+  time: '2025-07-21T23:24:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/778
+- author: Cyanogen
+  changes:
+  - message: Cyclorites now do 10 structural damage on punches
+    type: Add
+  id: 1324
+  time: '2025-07-21T23:24:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/778
+- author: Cyanogen
+  changes:
+  - message: Cyclorites now take 15% less blunt damage. Have you ever tried punching
+      a rock?
+    type: Tweak
+  id: 1325
+  time: '2025-07-21T23:24:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/778
+- author: Cyanogen
+  changes:
+  - message: Cyclorites take 25% less slash damage
+    type: Tweak
+  id: 1326
+  time: '2025-07-21T23:24:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/778
+- author: Grapegifter
+  changes:
+  - message: Metashield entry to guidebook
+    type: Add
+  id: 1327
+  time: '2025-07-21T23:51:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/889
+- author: walksanatora
+  changes:
+  - message: Station borgis can now be ionstormed
+    type: Fix
+  id: 1328
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: walksanatora
+  changes:
+  - message: Station borgis appear in the robotics console
+    type: Fix
+  id: 1329
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: walksanatora
+  changes:
+  - message: Station borgis can now be exploded.
+    type: Fix
+  id: 1330
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: walksanatora
+  changes:
+  - message: Station borgis are no longer targeted by AI core turrets.
+    type: Fix
+  id: 1331
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: walksanatora
+  changes:
+  - message: Borgis now have dammaged silicon accent component and become harder to
+      understand as they are harmed.
+    type: Fix
+  id: 1332
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: walksanatora
+  changes:
+  - message: Station borgis no longer come with a hyper-capacity cell.
+    type: Tweak
+  id: 1333
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: walksanatora
+  changes:
+  - message: All borgi health nerfed from 750 -> 300 to match borgs
+    type: Tweak
+  id: 1334
+  time: '2025-07-22T02:09:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/931
 Order: -1
 

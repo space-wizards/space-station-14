@@ -26,11 +26,17 @@ using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.Store.Components;
 using Content.Server.Starlight.Antags.Abductor;
+using Prometheus; // Starlight
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {
+    private static readonly Gauge NukeopsCount = Metrics.CreateGauge( // Startlight
+        "nukie_count",
+        "Number of all nukies Win/Loses Count.",
+        Enum.GetNames<WinType>());
+
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
@@ -417,6 +423,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     private void SetWinType(Entity<NukeopsRuleComponent> ent, WinType type, bool endRound = true)
     {
         ent.Comp.WinType = type;
+
+        NukeopsCount.WithLabels(type.ToString()).Inc(); // Starlight
 
         if (endRound && (type == WinType.CrewMajor || type == WinType.OpsMajor))
             _roundEndSystem.EndRound();
