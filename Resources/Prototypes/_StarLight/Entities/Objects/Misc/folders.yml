@@ -22,4 +22,4 @@
     - type: StorageFill
       contents:
         - id: Paper
-          amount: 10
+          amount: 20
