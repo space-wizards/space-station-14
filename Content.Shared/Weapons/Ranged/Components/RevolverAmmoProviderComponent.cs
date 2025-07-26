@@ -16,36 +16,49 @@ public sealed partial class RevolverAmmoProviderComponent : AmmoProviderComponen
      * for example 7 entities when revolver spawns (1 for the revolver and 6 cylinders) we can instead defer it.
      */
 
-    [DataField("whitelist")]
+    [DataField]
     public EntityWhitelist? Whitelist;
 
     public Container AmmoContainer = default!;
 
-    [DataField("currentSlot")]
+    [DataField]
     public int CurrentIndex;
 
-    [DataField("capacity")]
+    [DataField]
     public int Capacity = 6;
 
     // Like BallisticAmmoProvider we defer spawning until necessary
     // AmmoSlots is the instantiated ammo and Chambers is the unspawned ammo (that may or may not have been shot).
 
     // TODO: Using an array would be better but this throws!
-    [DataField("ammoSlots")]
-    public List<EntityUid?> AmmoSlots = new();
 
-    [DataField("chambers")]
-    public bool?[] Chambers = Array.Empty<bool?>();
+    /// <summary>
+    /// List of entities inside revolver that will be used as ammo.
+    /// </summary>
+    [DataField]
+    public List<EntityUid?> AmmoSlots = [];
 
+    /// <summary>
+    /// Bool array for status of AmmoSlots. Every bool can be null, true or false.
+    /// Null - empty chamber.
+    /// True - chamber with <see cref="FillPrototype"/>.
+    /// False - chamber with used ammo.
+    /// </summary>
+    [DataField]
+    public bool?[] Chambers = [];
+
+    /// <summary>
+    /// Prototype id that will be used as started ammo. Null will create entity with empty magazine.
+    /// </summary>
     [DataField("proto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? FillPrototype = "CartridgeMagnum";
 
-    [DataField("soundEject")]
+    [DataField]
     public SoundSpecifier? SoundEject = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
 
-    [DataField("soundInsert")]
+    [DataField]
     public SoundSpecifier? SoundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
 
-    [DataField("soundSpin")]
+    [DataField]
     public SoundSpecifier? SoundSpin = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/revolver_spin.ogg");
 }
