@@ -38,11 +38,29 @@ public sealed partial class StoreSystem
         SubscribeLocalEvent<StoreComponent, StoreRequestWithdrawMessage>(OnRequestWithdraw);
         SubscribeLocalEvent<StoreComponent, StoreRequestRefundMessage>(OnRequestRefund);
         SubscribeLocalEvent<StoreComponent, RefundEntityDeletedEvent>(OnRefundEntityDeleted);
+        SubscribeLocalEvent<RemoteStoreComponent, StoreRequestUpdateInterfaceMessage>((e, c, ev) =>
+            RemoteStoreRelay((e, c), ev));
+        SubscribeLocalEvent<RemoteStoreComponent, StoreBuyListingMessage>((e, c, ev) =>
+            RemoteStoreRelay((e, c), ev));
+        SubscribeLocalEvent<RemoteStoreComponent, StoreRequestWithdrawMessage>((e, c, ev) =>
+            RemoteStoreRelay((e, c), ev));
+        SubscribeLocalEvent<RemoteStoreComponent, StoreRequestRefundMessage>((e, c, ev) =>
+            RemoteStoreRelay((e, c), ev));
+        SubscribeLocalEvent<RemoteStoreComponent, RefundEntityDeletedEvent>((e, c, ev) =>
+            RemoteStoreRelay((e, c), ev));
     }
 
     private void OnRefundEntityDeleted(Entity<StoreComponent> ent, ref RefundEntityDeletedEvent args)
     {
         ent.Comp.BoughtEntities.Remove(args.Uid);
+    }
+
+    private void RemoteStoreRelay(Entity<RemoteStoreComponent> entity, object ev)
+    {
+        if (entity.Comp.Store == null || !TryComp<StoreComponent>(entity.Comp.Store, out var store))
+            return;
+
+        RaiseLocalEvent(entity.Comp.Store.Value, ev);
     }
 
     /// <summary>
@@ -51,15 +69,20 @@ public sealed partial class StoreSystem
     /// <param name="user">the person doing the toggling</param>
     /// <param name="storeEnt">the store being toggled</param>
     /// <param name="component"></param>
-    public void ToggleUi(EntityUid user, EntityUid storeEnt, StoreComponent? component = null)
+    /// <param name="remoteAccess">The entity remotely accessing the store, if any.</param>
+    /// <param name="remoteComponent">The remote access component, if any.</param>
+    public void ToggleUi(EntityUid user, EntityUid storeEnt, StoreComponent? component = null, EntityUid? remoteAccess = null, RemoteStoreComponent? remoteComponent = null)
     {
         if (!Resolve(storeEnt, ref component))
+            return;
+
+        if (remoteAccess != null && !Resolve(remoteAccess.Value, ref remoteComponent) && remoteComponent!.Store != storeEnt)
             return;
 
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
-        if (!_ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.PlayerSession))
+        if (!_ui.TryToggleUi(remoteAccess != null ? remoteAccess.Value : storeEnt, StoreUiKey.Key, actor.PlayerSession))
             return;
 
         UpdateUserInterface(user, storeEnt, component);
@@ -111,7 +134,25 @@ public sealed partial class StoreSystem
         var showFooter = HasComp<RingerUplinkComponent>(store);
 
         var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter, component.RefundAllowed);
+        UpdateRemoteStores(store, state);
         _ui.SetUiState(store, StoreUiKey.Key, state);
+    }
+
+    /// <summary>
+    /// Updates any remote store connections to a specific store.
+    /// </summary>
+    /// <param name="store">The store being updated.</param>
+    /// <param name="state">The state being applied.</param>
+    public void UpdateRemoteStores(EntityUid store, StoreUpdateState state)
+    {
+        var query = EntityQueryEnumerator<RemoteStoreComponent, UserInterfaceComponent>();
+        while (query.MoveNext(out var uid, out var remote, out var ui))
+        {
+            if (remote.Store != store)
+                continue;
+
+            _ui.SetUiState((uid, ui), StoreUiKey.Key, state);
+        }
     }
 
     private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)
@@ -267,7 +308,8 @@ public sealed partial class StoreSystem
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {ToPrettyString(uid)}");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
-        _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
+        if (msg.SoundSource != null && GetEntity(msg.SoundSource) != null)
+            _audio.PlayEntity(component.BuySuccessSound, msg.Actor, GetEntity(msg.SoundSource.Value)); //cha-ching!
 
         var buyFinished = new StoreBuyFinishedEvent
         {
