@@ -75,6 +75,10 @@
     tags:
     - DrinkCan
   - type: DnaSubstanceTrace
+  - type: ExaminableSolution
+    solution: drink
+    opaque: true
+    estimate: true
 
 - type: entity
   parent: DrinkCanBaseFull
