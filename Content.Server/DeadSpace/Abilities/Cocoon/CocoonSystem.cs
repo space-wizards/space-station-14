@@ -54,10 +54,10 @@ public sealed class CocoonSystem : EntitySystem
         return _container.IsEntityInContainer(target);
     }
 
-    protected void OnMapInit(EntityUid uid, CocoonComponent component, MapInitEvent args)
+    private void OnMapInit(EntityUid uid, CocoonComponent component, MapInitEvent args)
     {
         component.NextTick = _gameTiming.CurTime + TimeSpan.FromSeconds(1);
-        component.Stomach = _container.EnsureContainer<Container>(uid, "stomach");
+        component.Cocoon = _container.EnsureContainer<Container>(uid, "cocoon");
     }
 
     private void OnInsert(EntityUid uid, CocoonComponent component, InsertIntoCocoonEvent args)
@@ -116,8 +116,8 @@ public sealed class CocoonSystem : EntitySystem
             return;
         }
 
-        if (!_container.IsEntityOrParentInContainer(target.Value))
-            _container.EmptyContainer(component.Stomach);
+        if (IsEntityInCocoon(uid, target.Value, component))
+            _container.EmptyContainer(component.Cocoon);
 
         if (!component.IsHermetically)
             return;
@@ -166,7 +166,7 @@ public sealed class CocoonSystem : EntitySystem
         if (!Resolve(uid, ref component, false))
             return;
 
-        _container.Insert(target, component.Stomach);
+        _container.Insert(target, component.Cocoon);
 
         component.Prisoner = target;
 
