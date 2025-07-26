@@ -13,5 +13,6 @@ public enum ToggleableGhostRoleStatus : byte
 {
     Off,
     Searching,
-    On
+    On,
+    Ssd,
 }
