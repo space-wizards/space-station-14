@@ -47,6 +47,7 @@
   components:
   - type: Damageable
     damageContainer: Inorganic
+#TODO    damageModifierSet:
   - type: Destructible
     thresholds:
     - trigger:
@@ -69,6 +70,7 @@
   components:
   - type: Damageable
     damageContainer: Inorganic
+    damageModifierSet: FlimsyWood
   - type: Destructible
     thresholds:
     - trigger:
