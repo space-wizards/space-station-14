@@ -43,14 +43,14 @@ public sealed partial class RadiationSystem : EntitySystem
         SubscribeLocalEvent<RadiationSourceComponent, ComponentShutdown>(OnSourceShutdown);
         SubscribeLocalEvent<RadiationSourceComponent, MoveEvent>(OnSourceMove);
         SubscribeLocalEvent<RadiationSourceComponent, StackCountChangedEvent>(OnSourceStackChanged);
-        
+
         SubscribeLocalEvent<RadiationReceiverComponent, ComponentInit>(OnReceiverInit);
         SubscribeLocalEvent<RadiationReceiverComponent, ComponentShutdown>(OnReceiverShutdown);
     }
 
-    private void OnSourceInit(EntityUid uid, RadiationSourceComponent component, ComponentInit args)
+    private void OnSourceInit(Entity<RadiationSourceComponent> entity, ref ComponentInit args)
     {
-        UpdateSource(uid, component);
+        UpdateSource(entity);
     }
 
     private void OnSourceShutdown(EntityUid uid, RadiationSourceComponent component, ComponentShutdown args)
@@ -61,18 +61,18 @@ public sealed partial class RadiationSystem : EntitySystem
         }
     }
 
-    private void OnSourceMove(EntityUid uid, RadiationSourceComponent component, ref MoveEvent args)
+    private void OnSourceMove(Entity<RadiationSourceComponent> entity, ref MoveEvent args)
     {
         if (args.NewPosition.EntityId == args.OldPosition.EntityId &&
             args.NewPosition.Position.EqualsApprox(args.OldPosition.Position))
             return;
 
-        UpdateSource(uid, component, args.Component);
+        UpdateSource(entity, args.Component);
     }
 
-    private void OnSourceStackChanged(EntityUid uid, RadiationSourceComponent component, StackCountChangedEvent args)
+    private void OnSourceStackChanged(Entity<RadiationSourceComponent> entity, ref StackCountChangedEvent args)
     {
-        UpdateSource(uid, component);
+        UpdateSource(entity);
     }
 
     private void OnReceiverInit(EntityUid uid, RadiationReceiverComponent component, ComponentInit args)
@@ -85,42 +85,44 @@ public sealed partial class RadiationSystem : EntitySystem
         _activeReceivers.Remove(uid);
     }
 
-    private void UpdateSource(EntityUid uid, RadiationSourceComponent component, TransformComponent? xform = null)
+    private void UpdateSource(Entity<RadiationSourceComponent> entity, TransformComponent? xform = null)
     {
-        if (!Resolve(uid, ref xform))
+        if (!Resolve(entity.Owner, ref xform))
             return;
 
-        if (!component.Enabled || Terminating(uid))
+        if (!entity.Comp.Enabled || Terminating(entity.Owner))
         {
-            if (_sourceDataMap.Remove(uid)) _sourceTree.Remove(uid);
+            if (_sourceDataMap.Remove(entity.Owner))
+                _sourceTree.Remove(entity.Owner);
             return;
         }
 
         var worldPos = _transform.GetWorldPosition(xform);
-        var intensity = component.Intensity * _stack.GetCount(uid);
-        intensity = GetAdjustedRadiationIntensity(uid, intensity);
+        var intensity = entity.Comp.Intensity * _stack.GetCount(entity.Owner);
+        intensity = GetAdjustedRadiationIntensity(entity.Owner, intensity);
 
         if (intensity <= 0)
         {
-            if (_sourceDataMap.Remove(uid)) _sourceTree.Remove(uid);
+            if (_sourceDataMap.Remove(entity.Owner))
+                _sourceTree.Remove(entity.Owner);
             return;
         }
 
-        var maxRange = component.Slope > 1e-6f ? intensity / component.Slope : GridcastMaxDistance;
+        var maxRange = entity.Comp.Slope > 1e-6f ? intensity / entity.Comp.Slope : GridcastMaxDistance;
         maxRange = Math.Min(maxRange, GridcastMaxDistance);
 
-        var sourceData = new SourceData(intensity, component.Slope, maxRange, (uid, component, xform), worldPos);
+        var sourceData = new SourceData(intensity, entity.Comp.Slope, maxRange, (entity.Owner, entity.Comp, xform), worldPos);
         var aabb = Box2.CenteredAround(worldPos, new Vector2(maxRange * 2, maxRange * 2));
 
-        if (_sourceDataMap.ContainsKey(uid))
+        if (_sourceDataMap.ContainsKey(entity.Owner))
         {
-            _sourceDataMap[uid] = sourceData;
-            _sourceTree.Update(uid, aabb);
+            _sourceDataMap[entity.Owner] = sourceData;
+            _sourceTree.Update(entity.Owner, aabb);
         }
         else
         {
-            _sourceDataMap.Add(uid, sourceData);
-            _sourceTree.Add(uid, aabb);
+            _sourceDataMap.Add(entity.Owner, sourceData);
+            _sourceTree.Add(entity.Owner, aabb);
         }
     }
 
@@ -147,14 +149,13 @@ public sealed partial class RadiationSystem : EntitySystem
     {
         if (!Resolve(entity, ref entity.Comp, false))
             return;
+        if (entity.Comp.Enabled == val)
+            return;
 
         entity.Comp.Enabled = val;
-        UpdateSource(entity, entity.Comp);
+        UpdateSource((entity.Owner, entity.Comp));
     }
 
-    /// <summary>
-    ///     Marks entity to receive/ignore radiation rays.
-    /// </summary>
     public void SetCanReceive(EntityUid uid, bool canReceive)
     {
         if (canReceive)
