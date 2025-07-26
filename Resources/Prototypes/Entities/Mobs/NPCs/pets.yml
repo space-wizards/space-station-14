@@ -712,7 +712,7 @@
       types:
         Piercing: 8
         Poison: 8
-  - type: Spider
+  - type: WebPlacer
     spawnsWebsAsNonPlayer: false
   - type: Grammar
     attributes:
