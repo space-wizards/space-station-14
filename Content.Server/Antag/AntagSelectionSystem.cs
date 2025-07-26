@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Administration.Managers;
 using Content.Server.Antag.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -8,11 +9,11 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
-using Content.Server.Station.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Antag;
 using Content.Shared.Clothing;
@@ -40,12 +41,14 @@ namespace Content.Server.Antag;
 public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelectionComponent>
 {
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly IBanManager _ban = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly LoadoutSystem _loadout = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
@@ -497,11 +500,35 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (ent.Comp.PreSelectedSessions.TryGetValue(def, out var preSelected) && preSelected.Contains(session))
                 continue;
 
-            if (HasPrimaryAntagPreference(session, def))
+            var blocked = false;
+            var fallbackBlocked = false;
+
+            // Check for role bans
+            // These are not in IsSessionValid so that we can have a Preferred role ban not block a Fallback role
+            if (_ban.IsRoleBanned(session, def.PrefRoles) )
+                blocked = true;
+            if (_ban.IsRoleBanned(session, def.FallbackRoles))
+                fallbackBlocked = true;
+
+            // Check if the player meets all requirements for the roles
+            foreach (var antag in def.PrefRoles)
+            {
+                if (!_playTime.IsAllowed(session, antag))
+                    blocked = true;
+            }
+
+            foreach (var antag in def.FallbackRoles)
+            {
+                if (!_playTime.IsAllowed(session, antag))
+                    fallbackBlocked = true;
+            }
+
+            // Add player to the appropriate antag pool
+            if (HasPrimaryAntagPreference(session, def) && !blocked)
             {
                 preferredList.Add(session);
             }
-            else if (HasFallbackAntagPreference(session, def))
+            else if (HasFallbackAntagPreference(session, def) && !fallbackBlocked)
             {
                 fallbackList.Add(session);
             }
