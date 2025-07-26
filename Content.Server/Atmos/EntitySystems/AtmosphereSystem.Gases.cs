@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
@@ -442,17 +443,17 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
-        ///     Performs reactions for a given gas mixture on an optional holder.
+        ///     Performs reactions for a given gas mixture on an optional holder and
+        ///     optional <see cref="EntityUid"/> for that holder.
         /// </summary>
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, EntityUid? holderUid = null)
         {
             var reaction = ReactionResult.NoReaction;
             var temperature = mixture.Temperature;
-            var energy = GetThermalEnergy(mixture);
 
             foreach (var prototype in GasReactions)
             {
-                if (energy < prototype.MinimumEnergyRequirement ||
+                if (GetThermalEnergy(mixture) < prototype.MinimumEnergyRequirement ||
                     temperature < prototype.MinimumTemperatureRequirement ||
                     temperature > prototype.MaximumTemperatureRequirement)
                     continue;
@@ -460,9 +461,6 @@ namespace Content.Server.Atmos.EntitySystems
                 var doReaction = true;
                 for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
                 {
-                    if(i >= Atmospherics.TotalNumberOfGases)
-                        throw new IndexOutOfRangeException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
-
                     var req = prototype.MinimumRequirements[i];
 
                     if (!(mixture.GetMoles(i) < req))
@@ -475,13 +473,20 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!doReaction)
                     continue;
 
-                reaction = prototype.React(mixture, holder, this, HeatScale);
-                if(reaction.HasFlag(ReactionResult.StopReactions))
+                reaction = prototype.React(mixture, holder, this, HeatScale, holderUid);
+                if (reaction.HasFlag(ReactionResult.StopReactions))
                     break;
             }
 
             return reaction;
         }
+
+        /// <summary>
+        ///     Performs reactions for a given gas mixture on an entity with a
+        ///     component that inherits <see cref="IGasMixtureHolder"/> .
+        /// </summary>
+        public ReactionResult React<T>(Entity<T> holderEntity) where T : IComponent, IGasMixtureHolder
+            => React(holderEntity.Comp.Air, holderEntity.Comp, holderEntity);
 
         public enum GasCompareResult
         {
