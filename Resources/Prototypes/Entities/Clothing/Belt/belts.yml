@@ -269,7 +269,7 @@
   - type: Storage
     whitelist:
       tags:
-        - Wrench
+        - BodyBag
         - Bottle
         - Spray
         - Brutepack
@@ -351,7 +351,6 @@
         - BotanyShovel
         - BotanyHoe
         - BotanyHatchet
-        - PlantSampleTaker
         - PlantBGone
         - Bottle
         - Syringe
@@ -503,6 +502,7 @@
         - DoorRemote
         - Whistle
         - BalloonPopper
+        - Ensnaring
   - type: ItemMapper
     mapLayers:
       flashbang:
