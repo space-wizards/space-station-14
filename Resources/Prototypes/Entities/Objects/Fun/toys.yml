@@ -297,13 +297,16 @@
         ents: []
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseGunMeleeSmallHarmless]
   id: ToyGunBase
   name: ToyGunBase
   description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
+  - type: MeleeWeapon
+    soundHit:
+      collection: MetalThud #harmless, but keep it sounding real
 
 - type: entity
   parent: ToyGunBase
