@@ -57790,8 +57790,6 @@ entities:
       pos: -25.5,20.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 58
     - type: AtmosPipeColor
