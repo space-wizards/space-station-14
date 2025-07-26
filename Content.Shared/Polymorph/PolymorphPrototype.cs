@@ -60,7 +60,7 @@ public sealed partial record PolymorphConfiguration
     /// can be null if there is not one
     /// </summary>
     [DataField(serverOnly: true)]
-    public int? Duration;
+    public float? Duration;
 
     /// <summary>
     /// whether or not the target can transform as will
