@@ -62,7 +62,7 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
         // Go through every outfit and add them to the correct department.
         foreach (var outfit in _outfits)
         {
-            _prototypeManager.TryIndex(outfit.Job, out var jobProto);
+            _prototypeManager.Resolve(outfit.Job, out var jobProto);
 
             var name = outfit.LoadoutName ?? outfit.Name ?? jobProto?.Name ?? "Prototype has no name or job.";
 

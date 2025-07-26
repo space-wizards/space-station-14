@@ -108,7 +108,7 @@ public sealed class DumpableSystem : EntitySystem
         foreach (var entity in storage.Container.ContainedEntities)
         {
             if (!_itemQuery.TryGetComponent(entity, out var itemComp) ||
-                !_prototypeManager.TryIndex(itemComp.Size, out var itemSize))
+                !_prototypeManager.Resolve(itemComp.Size, out var itemSize))
             {
                 continue;
             }

@@ -65,7 +65,7 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
             };
 
             // pick the icon if it exists, otherwise fallback to the ghost role's entity
-            if (_prototypeManager.TryIndex(ghostRoleProto.IconPrototype, out var iconProto))
+            if (_prototypeManager.Resolve(ghostRoleProto.IconPrototype, out var iconProto))
                 entProtoView.SetPrototype(iconProto);
             else
                 entProtoView.SetPrototype(ghostRoleProto.EntityPrototype);

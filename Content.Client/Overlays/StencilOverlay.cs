@@ -65,7 +65,7 @@ public sealed partial class StencilOverlay : Overlay
         {
             foreach (var (proto, weather) in comp.Weather)
             {
-                if (!_protoManager.TryIndex<WeatherPrototype>(proto, out var weatherProto))
+                if (!_protoManager.Resolve<WeatherPrototype>(proto, out var weatherProto))
                     continue;
 
                 var alpha = _weather.GetPercent(weather, mapUid);
