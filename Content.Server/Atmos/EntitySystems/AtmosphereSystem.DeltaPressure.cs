@@ -1,8 +1,7 @@
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
-using Content.Shared.Damage;
+using Robust.Shared.Threading;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -23,64 +22,30 @@ public sealed partial class AtmosphereSystem
         // TODO: profile because doing this for every tile seems really bad
         var indices = _transformSystem.GetGridOrMapTilePosition(ent, xform);
 
-        // TODO: probably can be null suppressed
-        if (!gridAtmosComp.Tiles.TryGetValue(indices, out var tileAtmos))
-        {
-            return;
-        }
-
-        // Next, we need to check if this entity is airtight.
-        // If it isn't, we can save a lot of work.
-        if (!_airtightQuery.TryComp(ent, out var airtightComp))
-        {
-            return;
-        }
-
-        // Since we're not airtight, we can simply determine the pressure
-        // acting on the entity, as we don't expect there to be any pressure deltas.
-        // We cannot use the cached AirtightData that AtmosphereSystem collects as
-        // this entity could be something like a soda can.
-        if (!airtightComp.AirBlocked && tileAtmos.Air != null)
-        {
-            PerformDamage(ent, tileAtmos.Air.Pressure);
-            if (ent.Comp.StackDamage)
-            {
-                return;
-            }
-        }
-
         /*
          We need to determine comparisons in a performant way.
          To generalize, we can simply compare the N - S and E - W directions.
          */
+
+        // First, we null check data and prep it for comparison.
+        Span<float> floatArray = stackalloc float[4];
+        for (var i = 0; i < Atmospherics.Directions; i++)
+        {
+            var dir = (AtmosDirection)(1 << i);
+            ref var tile = ref CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices.Offset(dir));
+
+            // This can be a null ref! We need to check it or bad things will happen!
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref tile))
+                floatArray[i] = tile.Air?.Pressure ?? 0f;
+        }
 
         // This effectively checks the N direction and the E direction
         // (as we check the opposing side at the same time
         var maxDeltaPressure = 0f;
         for (var i = 0; i < Atmospherics.Directions; i += 2)
         {
-            var dir = (AtmosDirection)(1 << i);
-            var oppDir = dir.GetOpposite();
-
-            // gridAtmosComp.Tiles.TryGetValue(indices.Offset(direction), out var tile1);
-            // gridAtmosComp.Tiles.TryGetValue(indices.Offset(direction.GetOpposite()), out var tile2);
-            var tile1 = CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices.Offset(dir));
-            var tile2 = CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices.Offset(oppDir));
-
-            // If both TileAtmospheres are somehow null then there's no delta-P.
-            var deltaPressure = 0f;
-
-            if (tile1 is { Air: not null })
-            {
-                // If only one side has air, then we're bearing down on the window with full force.
-                deltaPressure = tile1.Air.Pressure;
-
-                // Both sides aren't null, so now we compute a proper delta-P.
-                if (tile2 is { Air: not null })
-                {
-                    deltaPressure = Math.Abs(deltaPressure - tile2.Air.Pressure);
-                }
-            }
+            var oppi = i.ToOppositeIndex();
+            var deltaPressure = Math.Abs(floatArray[i] - floatArray[oppi]);
 
             maxDeltaPressure = Math.Max(deltaPressure, maxDeltaPressure);
         }
