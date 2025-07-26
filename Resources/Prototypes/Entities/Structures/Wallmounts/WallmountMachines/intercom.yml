@@ -1,12 +1,11 @@
 - type: entity
+  parent: BaseWallmountMachine
   id: BaseIntercom
   name: intercom
   description: An intercom. For when the station just needs to know something.
   abstract: true
   components:
   - type: StationAiWhitelist
-  - type: WallMount
-  - type: ApcPowerReceiver
   - type: Electrified
     enabled: false
     usesApcPower: true
@@ -27,9 +26,6 @@
   - type: VoiceOverride # This is for the wire that makes an electricity zapping noise.
     speechVerbOverride: Electricity
     enabled: false
-  - type: ExtensionCableReceiver
-  - type: Clickable
-  - type: InteractionOutline
   - type: Appearance
   - type: WiresVisuals
   - type: WiresPanelSecurity
@@ -60,9 +56,6 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
       visible: false
-  - type: Transform
-    noRot: false
-    anchored: true
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-intercom
@@ -83,9 +76,6 @@
     containers:
     - board
     - key_slots
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
       - trigger:
@@ -123,19 +113,12 @@
         enum.RadioDeviceVisualLayers.Speaker:
           True: { visible: true }
           False: { visible: false }
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
 
 - type: entity
   id: IntercomAssembly
   name: intercom assembly
   description: An intercom. It doesn't seem very helpful right now.
   components:
-  - type: WallMount
-  - type: Clickable
-  - type: InteractionOutline
   - type: Sprite
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/intercom.rsi
@@ -154,12 +137,6 @@
   - type: Construction
     graph: Intercom
     node: assembly
-  - type: Transform
-    anchored: true
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
 
 # this weird inheritance BS exists for construction shitcode
 - type: entity

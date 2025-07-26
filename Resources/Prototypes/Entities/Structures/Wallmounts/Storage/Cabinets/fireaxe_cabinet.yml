@@ -1,15 +1,11 @@
-# TODO: same as fire extinguisher make it use a base structure theres lots of copy paste
 - type: entity
-  parent: BaseItemCabinetGlass
+  parent: BaseWallmountCabinetGlass
   id: FireAxeCabinet
   name: fire axe cabinet
   description: There is a small label that reads "For Emergency use only" along with details for safe use of the axe. As if.
   placement:
     mode: SnapgridCenter
   components:
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Glass
   - type: Destructible
     thresholds:
     - trigger:
@@ -28,13 +24,6 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-  - type: MeleeSound
-    soundGroups:
-      Brute:
-        collection: GlassSmash
-  - type: WallMount
-  - type: Clickable
-  - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Wallmounts/fireaxe_cabinet.rsi
     layers:
