@@ -1,5 +1,4 @@
-# Empty drink containers; different from bottles in that these are intended to be spawned empty
-# When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_soda.yml
+# A cup is a small container used to hold liquids for drinking.[1]
 - type: entity
   abstract: true
   parent: DrinkBase
@@ -20,10 +19,13 @@
   - type: Tag
     tags:
     - DrinkCup
+  - type: StaticPrice
+    price: 10
 
+# A mug is a type of cup.[2]
 - type: entity
   abstract: true
-  parent: DrinkBaseCup
+  parent: [DrinkBaseCup, DrinkGlassBase]
   id: DrinkBaseMug
   name: mug
   description: A mug.
@@ -39,13 +41,13 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: icon-
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 25
+  - type: StaticPrice
+    price: 10
 
-# Misc Cups
+## Misc Cups
+
 - type: entity
-  parent: DrinkBaseCup
+  parent: [DrinkBaseCup, DrinkGoldBase]
   id: DrinkGoldenCup
   name: golden cup
   description: A golden cup.
@@ -54,12 +56,9 @@
     sprite: Objects/Consumable/Drinks/golden_cup.rsi
   - type: StaticPrice
     price: 125
-  - type: PhysicalComposition
-    materialComposition:
-      Gold: 100
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: [DrinkBaseCup, DrinkGlassBase]
   id: DrinkTeacupEmpty
   name: teacup
   description: A plain white porcelain teacup.
@@ -79,11 +78,15 @@
     fillBaseName: icon-
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: [ DrinkBase, DrinkGlassBase ]
   id: DrinkGlassCoupeShaped
   name: coupe glass
   description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
     layers:
@@ -95,22 +98,31 @@
     - state: icon-front
       map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: Appearance
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: fill
     inHandsMaxFillLevels: 1
     inHandsFillBaseName: -fill-
+  - type: ExaminableSolution
+    solution: drink
+  - type: FitsInDispenser
+    solution: drink
+  - type: Tag
+    tags:
+    - DrinkGlass
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: [DrinkBase, DrinkCardboardBase]
   id: DrinkWaterCup
   name: water cup
   description: A paper water cup.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 5 # One sip at a time. No rushing at the water cooler
+  - type: FitsInDispenser
+    solution: drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
     layers:
@@ -237,6 +249,7 @@
     sprite: Objects/Consumable/Drinks/mug_red.rsi
 
 ## Filled
+# TODO these a material for destruction
 
 - type: entity
   parent: DrinkBaseCup
@@ -370,3 +383,6 @@
     sprite: Objects/Consumable/Drinks/lean.rsi
   - type: TrashOnSolutionEmpty
     solution: drink
+
+#[1] https://en.wikipedia.org/wiki/Cup
+#[2] https://en.wikipedia.org/wiki/Mug

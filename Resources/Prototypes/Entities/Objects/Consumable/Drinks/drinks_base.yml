@@ -1,0 +1,125 @@
+# When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_soda.yml
+
+# A drink is a freely accessible solution like cups, teapots, cans, flasks, bottles, or beakers.
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: DrinkBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+  - type: DnaSubstanceTrace
+  - type: Drink
+  - type: Spillable
+    solution: drink
+  - type: MixableSolution
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+
+## Misc
+
+# This drink is empty trash
+- type: entity
+  abstract: true
+  id: DrinkEmptyTrashBase
+  suffix: Empty
+  components:
+  - type: SpaceGarbage
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: Tag
+    tags:
+    - Trash
+
+## For drinks with a lid
+
+# Un-opened
+- type: entity
+  abstract: true
+  id: DrinkOpenableBase
+  components:
+  - type: Openable
+  - type: PressurizedSolution
+    solution: drink
+  - type: Shakeable
+  - type: Sealable
+
+# Pre-opened
+- type: entity
+  abstract: true
+  parent: DrinkOpenableBase
+  id: DrinkOpenableOpenBase
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_open
+  - type: Openable
+    opened: true
+  - type: Sealable
+    sealed: false
+
+## For visuals
+
+# Basic visualizer for an openable entity, often paired with BaseDrinkOpenable
+- type: entity
+  abstract: true
+  id: DrinkVisualsOpenable
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+
+# Visualizer for an openable entity with fill levels
+- type: entity
+  abstract: true
+  id: DrinkVisualsAll
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon_empty"}
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/alco-bottle.rsi
+    layers:
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-

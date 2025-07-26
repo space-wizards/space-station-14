@@ -1,38 +1,17 @@
 - type: entity
   abstract: true
-  parent: [ DrinkPlasticBase, BaseDrinkOpenable ]
-  id: DrinkBottlePlasticSmallBaseFull
+  parent: [ DrinkBase, DrinkPlasticBase, DrinkOpenableBase ]
+  id: DrinkBottlePlasticBaseFull
   suffix: Full
   components:
+  - type: Item
+    size: Normal
   - type: Openable
     sound:
       collection: bottleOpenSounds
     closeable: true
     closeSound:
       collection: bottleCloseSounds
-  - type: Tag
-    tags:
-    - DrinkCup
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-  - type: FitsInDispenser
-    solution: drink
-  - type: Sprite
-    state: icon
-    sprite: Objects/Consumable/Drinks/waterbottle.rsi # fallback
-  - type: TrashOnSolutionEmpty
-    solution: drink
-
-- type: entity
-  abstract: true
-  parent: DrinkBottlePlasticSmallBaseFull
-  id: DrinkBottlePlasticBaseFull
-  components:
-  - type: Tag
-    tags:
-    - DrinkBottle
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -40,8 +19,31 @@
   - type: Sprite
     state: icon
     sprite: Objects/Consumable/Drinks/generic_jug.rsi # fallback to generic plastic jug
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: Tag
+    tags:
+    - DrinkCup
+
+- type: entity
+  abstract: true
+  parent: DrinkBottlePlasticBaseFull
+  id: DrinkBottlePlasticSmallBaseFull
+  components:
   - type: Item
-    size: Normal
+    size: Small
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: Sprite
+    state: icon
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi # fallback
+  - type: Tag
+    tags:
+    - DrinkBottle
+  - type: FitsInDispenser
+    solution: drink
 
 # Empty
 
@@ -182,6 +184,7 @@
   # TODO new sprite
 
 # Xtra large
+# TODO these have too much volume
 
 - type: entity
   parent: [DrinkVisualsOpenable, DrinkBottlePlasticBaseFull]

@@ -1,5 +1,5 @@
 - type: entity
-  parent: DrinkGlassBase
+  parent: [DrinkBase, DrinkGlassBase]
   id: DrinkShotGlass
   name: shot glass
   description: Perfect for slamming down onto the table angrily.
@@ -24,6 +24,13 @@
     fillBaseName: fill
     inHandsMaxFillLevels: 1
     inHandsFillBaseName: -fill-
+  - type: ExaminableSolution
+    solution: drink
+  - type: FitsInDispenser
+    solution: drink
+  - type: Tag
+    tags:
+    - DrinkGlass
 
 - type: entity
   parent: DrinkBase
@@ -45,7 +52,7 @@
       Steel: 75
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: [DrinkBase, DrinkGlassBase]
   id: DrinkTeapot
   name: teapot  # short and stout
   description: An elegant teapot. It simply oozes class.
@@ -59,6 +66,11 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teapot.rsi
+  - type: FitsInDispenser
+    solution: drink
+  - type: Tag
+    tags:
+    - DrinkGlass
 
 - type: entity
   id: DrinkCanPack
@@ -197,51 +209,55 @@
 # Weird empty shakes
 
 - type: entity
-  parent: DrinkGlassBase
-  id: DrinkShakeBlue
-  name: blue milkshake
+  abstract: true
+  parent: [DrinkBase, DrinkGlassBase]
+  id: DrinkShakeBase
   description: ''
   components:
-  - type: Drink
+  - type: ExaminableSolution
+    solution: drink
+  - type: FitsInDispenser
+    solution: drink
+  - type: Tag
+    tags:
+    - DrinkGlass
+
+- type: entity
+  parent: DrinkShakeBase
+  id: DrinkShakeBlue
+  name: blue milkshake
+  components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-blue.rsi
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkShakeBase
   id: DrinkShakeEmpty
   name: shakeempty
-  description: ''
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-empty.rsi
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkShakeBase
   id: DrinkShakeMeat
   name: meat shake
-  description: ''
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-meat.rsi
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkShakeBase
   id: DrinkShakeRobo
   name: robo shake
-  description: ''
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-robo.rsi
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: DrinkShakeBase
   id: DrinkShakeWhite
   name: white shake
-  description: ''
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi

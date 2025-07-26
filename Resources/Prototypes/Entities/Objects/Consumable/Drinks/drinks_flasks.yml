@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: DrinkBase
+  parent: [DrinkBase, DrinkOpenableBase, DrinkStrongMetalBase]
   id: FlaskBase
   components:
   - type: SolutionContainerManager
@@ -10,9 +10,6 @@
   - type: Sprite
     state: icon
     sprite: Objects/Consumable/Drinks/flask.rsi
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 300
   - type: FitsInDispenser
     solution: drink
   - type: Openable

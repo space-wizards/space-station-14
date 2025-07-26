@@ -1,5 +1,5 @@
 - type: entity
-  parent: [DrinkVisualsOpenable, DrinkBase]
+  parent: [DrinkBase, DrinkPlasticBase, DrinkVisualsOpenable ]
   id: DrinkSpaceGlue
   name: space glue tube
   description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
@@ -35,7 +35,7 @@
     solution: drink
 
 - type: entity
-  parent: [DrinkVisualsOpenable, DrinkBase]
+  parent: [DrinkBase, DrinkPlasticBase, DrinkVisualsOpenable ]
   id: DrinkSpaceLube
   name: space lube tube
   description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
@@ -90,14 +90,20 @@
         Quantity: 200
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: [DrinkBase, DrinkGlassBase]
   id: DrinkJarWhat
   name: jar of something
   description: You can't really tell what this is.
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jar_what.rsi
+  - type: ExaminableSolution
+    solution: drink
+  - type: FitsInDispenser
+    solution: drink
+  - type: Tag
+    tags:
+    - DrinkGlass
 
 # Mopwata
 - type: weightedRandomFillSolution

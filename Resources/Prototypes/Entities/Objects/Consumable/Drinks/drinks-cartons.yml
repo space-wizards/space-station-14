@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
-  parent: [ DrinkCardboardBase, BaseDrinkOpenable ]
-  id: DrinkCartonBaseFull
+  parent: [ DrinkBase, DrinkCardboardBase, DrinkOpenableBase ]
+  id: DrinkCartonBaseLargeFull
   suffix: Full
   components:
   - type: Openable
@@ -13,33 +13,33 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 100
   - type: TrashOnSolutionEmpty
     solution: drink
-
-- type: entity
-  abstract: true
-  parent: DrinkCartonBaseFull
-  id: DrinkCartonBaseLargeFull
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
   - type: Item
     size: Normal
 
 - type: entity
   abstract: true
-  parent: DrinkCartonBaseFull
+  parent: DrinkCartonBaseLargeFull
+  id: DrinkCartonBaseFull
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+  - type: Item
+    size: Small
+
+- type: entity
+  abstract: true
+  parent: DrinkCartonBaseLargeFull
   id: DrinkCartonBaseXtraLargeFull
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 150
-  - type: Item
-    size: Normal
 
 # Small carton
 

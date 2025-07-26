@@ -1,12 +1,13 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_bottles.yml
 
-
 - type: entity
   abstract: true
-  parent: [ DrinkGlassBase, BaseDrinkOpenable ]
-  id: DrinkBottleGlassSmallBaseFull
+  parent: [ DrinkBase, DrinkGlassBase, DrinkOpenableBase ]
+  id: DrinkBottleGlassBaseFull
   suffix: Full
   components:
+  - type: Item
+    size: Normal
   - type: Openable
     sound:
       collection: bottleOpenSounds
@@ -16,9 +17,9 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 100
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/beer.rsi # fallback
+    sprite: Objects/Consumable/Drinks/alco-bottle.rsi # fallback
   - type: Tool
     qualities:
     - Rolling
@@ -28,20 +29,24 @@
   - type: Tag
     tags:
     - DrinkBottle
+  - type: ExaminableSolution
+    solution: drink
 
 - type: entity
   abstract: true
-  parent: DrinkBottleGlassSmallBaseFull
-  id: DrinkBottleGlassBaseFull
+  parent: DrinkBottleGlassBaseFull
+  id: DrinkBottleGlassSmallBaseFull
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 100
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/alco-bottle.rsi # fallback
+        maxVol: 50
   - type: Item
-    size: Normal
+    size: Small
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/beer.rsi # fallback
+  - type: FitsInDispenser
+    solution: drink
 
 # Large Glass Bottles
 

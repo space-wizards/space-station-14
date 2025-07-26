@@ -1,8 +1,9 @@
 # File for containers like bottles or milk jugs that are empty
 
+# When used as the first parent, this empties a bottle's reagent and spawns it opened
 - type: entity
   abstract: true
-  parent: [ BaseDrinkOpenableOpen, BaseDrinkEmptyTrash ]
+  parent: [ DrinkOpenableOpenBase, DrinkEmptyTrashBase ]
   id: DrinkBottleBaseEmpty
   components:
   - type: SolutionContainerManager
@@ -16,7 +17,7 @@
 
 - type: entity
   abstract: true
-  parent: [ BaseDrinkOpenableOpen, BaseDrinkEmptyTrash ]
+  parent: [ DrinkOpenableOpenBase, DrinkEmptyTrashBase ]
   id: DrinkBottleBaseSmallEmpty
   components:
   - type: SolutionContainerManager
@@ -30,7 +31,7 @@
 
 - type: entity
   abstract: true
-  parent: [ BaseDrinkOpenableOpen, BaseDrinkEmptyTrash ]
+  parent: [ DrinkOpenableOpenBase, DrinkEmptyTrashBase ]
   id: DrinkCartonBaseEmpty
   components:
   - type: SolutionContainerManager
@@ -40,7 +41,7 @@
 
 - type: entity
   abstract: true
-  parent: [ BaseDrinkOpenableOpen, BaseDrinkEmptyTrash ]
+  parent: [ DrinkOpenableOpenBase, DrinkEmptyTrashBase ]
   id: DrinkCartonBaseLargeEmpty
   components:
   - type: SolutionContainerManager
