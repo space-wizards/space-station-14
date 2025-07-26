@@ -231,7 +231,6 @@
   - type: GasTank
     outputPressure: 101.3
     air:
-      # 6 minutes of agony
       volume: 10
       moles:
         - 0           # oxygen
