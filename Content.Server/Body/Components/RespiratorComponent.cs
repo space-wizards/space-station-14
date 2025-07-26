@@ -83,10 +83,10 @@ namespace Content.Server.Body.Components
         public TimeSpan LastGaspEmoteTime;
 
         /// <summary>
-        ///     The emote when gasps
+        ///     The emote when gasping. If null, no emote is performed.
         /// </summary>
         [DataField]
-        public ProtoId<EmotePrototype> GaspEmote = "Gasp";
+        public ProtoId<EmotePrototype>? GaspEmote = "Gasp";
 
         /// <summary>
         ///     How many cycles in a row has the mob been under-saturated?
