@@ -26,7 +26,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Text.RegularExpressions;
-using Discord;
 
 namespace Content.Server.GameTicking
 {
