@@ -23,7 +23,6 @@ public sealed class StandingStateSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<StandingStateComponent, AttemptMobCollideEvent>(OnMobCollide);
         SubscribeLocalEvent<StandingStateComponent, AttemptMobTargetCollideEvent>(OnMobTargetCollide);
-        SubscribeLocalEvent<StandingStateComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         SubscribeLocalEvent<StandingStateComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionModifiers);
         SubscribeLocalEvent<StandingStateComponent, TileFrictionEvent>(OnTileFriction);
     }
@@ -44,25 +43,19 @@ public sealed class StandingStateSystem : EntitySystem
         }
     }
 
-    private void OnRefreshMovementSpeedModifiers(Entity<StandingStateComponent> entity, ref RefreshMovementSpeedModifiersEvent args)
-    {
-        if (!entity.Comp.Standing)
-            args.ModifySpeed(entity.Comp.FrictionModifier);
-    }
-
     private void OnRefreshFrictionModifiers(Entity<StandingStateComponent> entity, ref RefreshFrictionModifiersEvent args)
     {
         if (entity.Comp.Standing)
             return;
 
-        args.ModifyFriction(entity.Comp.FrictionModifier);
-        args.ModifyAcceleration(entity.Comp.FrictionModifier);
+        args.ModifyFriction(entity.Comp.DownFrictionMod);
+        args.ModifyAcceleration(entity.Comp.DownFrictionMod);
     }
 
     private void OnTileFriction(Entity<StandingStateComponent> entity, ref TileFrictionEvent args)
     {
         if (!entity.Comp.Standing)
-            args.Modifier *= entity.Comp.FrictionModifier;
+            args.Modifier *= entity.Comp.DownFrictionMod;
     }
 
     public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
