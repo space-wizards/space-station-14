@@ -375,10 +375,15 @@
   minLimit: 1
   loadouts:
   - Bible
-  - BibleDruid
+  - BibleCarpsCrypts
   - BibleNanoTrasen
-  - BibleSatanic
-  - BibleTanakh
+  - BibleCommunistManifesto
+  - BibleLamp
+  - BibleDruid
+  - BibleItalian
+  - BibleHonk
+  - BibleRatvar
+  - BibleNarsie
 
 - type: loadoutGroup
   id: JanitorHead
