@@ -1,0 +1,68 @@
+- type: entity
+  parent: [ ClothingMaskGas, BaseCommandContraband ]
+  id: ClothingMaskGasBSO
+  name: Blue Swat Gas Mask
+  description: A elite issue Security gas mask. Now in blue!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/blueswat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/blueswat.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    hideOnToggle: true
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.95
+
+- type: entity
+  parent: [ClothingMaskGas, BaseSovietContraband]
+  id: ClothingSovietGasMask
+  name: GP-32 gas mask
+  description: An old uncomfortable mechanical gas mask of standard use in USSP. Meant to protect from radioactive fallout.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/sovietgas.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/sovietgas.rsi
+  - type: FlashImmunity
+    blocksSpecialVision: false
+  - type: EyeProtection
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.90
+        Heat: 0.90
+        Radiation: 0.60
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingKitsuneMask
+  name: kitsune mask
+  description: A ceramic mask fox mask.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/kitsune_mask.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/kitsune_mask.rsi
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.05
