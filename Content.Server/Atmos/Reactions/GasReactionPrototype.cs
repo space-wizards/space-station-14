@@ -48,6 +48,27 @@ namespace Content.Server.Atmos.Reactions
         /// </summary>
         [DataField("effects")] private List<IGasReactionEffect> _effects = new();
 
+        [DataField("enthalpy")]
+        public float Enthalpy;
+
+        /// <summary>
+        /// Integer gas IDs and integer ratios required in the reaction.
+        /// </summary>
+        [DataField("reactants")]
+        public Dictionary<Gas, int> Reactants = new();
+
+        /// <summary>
+        /// Integer gas IDs and integer ratios of reaction products.
+        /// </summary>
+        [DataField("products")]
+        public Dictionary<Gas, int> Products = new();
+
+        /// <summary>
+        /// Integer gas IDs and how much they modify the activation energy (J/mol).
+        /// </summary>
+        [DataField("catalysts")]
+        public Dictionary<Gas, int> Catalysts = new();
+
         /// <summary>
         /// Process all reaction effects.
         /// </summary>
