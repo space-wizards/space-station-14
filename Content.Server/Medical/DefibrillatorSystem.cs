@@ -93,7 +93,5 @@ public sealed class DefibrillatorSystem : SharedDefibrillatorSystem
             ? component.FailureSound
             : component.SuccessSound;
         _audio.PlayPvs(sound, uid);
-
-        Dirty(uid, component);
     }
 }
