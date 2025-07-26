@@ -312,8 +312,8 @@
     access: [["Command"]]
 
 - type: entity
-  id: LockableButtonCryogenics
-  suffix: Cryogenics
+  id: LockableButtonHypersleep
+  suffix: Hypersleep
   parent: LockableButton
   components:
   - type: AccessReader
