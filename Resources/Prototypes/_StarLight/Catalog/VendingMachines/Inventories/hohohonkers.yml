@@ -1,0 +1,107 @@
+- type: listing
+  id: VendorFakeGrenade
+  productEntity: FakeGrenade
+  cost:
+    NTCredit: 86
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+  - !type:BuyerAccessCondition
+    
+- type: listing
+  id: VendorHoloparasiteFakeInjector
+  productEntity: HoloparasiteFakeInjector
+  cost:
+    NTCredit: 327
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerAccessCondition
+    
+- type: listing
+  id: VendorToySwordDoubled
+  productEntity: ToySwordDoubled
+  cost:
+    NTCredit: 127
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerAccessCondition
+    
+- type: listing
+  id: VendorFakeAnomalyFlatpack
+  productEntity: FakeAnomalyFlatpack
+  cost:
+    NTCredit: 98
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 6
+  - !type:BuyerAccessCondition
+    
+- type: listing
+  id: VendorFoodPieBananaCream
+  productEntity: FoodPieBananaCream
+  cost:
+    NTCredit: 64
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 8
+  - !type:BuyerAccessCondition
+    
+- type: listing
+  id: VendorLauncherCreamPie
+  productEntity: LauncherCreamPie
+  cost:
+    NTCredit: 156
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerAccessCondition
+    
+- type: listing
+  id: VendorWhoopieCushion
+  productEntity: WhoopieCushion
+  cost:
+    NTCredit: 35
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 5
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorCandyClownUniformSuit
+  productEntity: CandyClownUniformSuit
+  cost:
+    NTCredit: 50
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorStripedClownUniformSuit
+  productEntity: StripedClownUniformSuit
+  cost:
+    NTCredit: 50
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerAccessCondition
