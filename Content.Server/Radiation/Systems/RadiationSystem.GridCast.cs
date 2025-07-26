@@ -150,7 +150,7 @@ public partial class RadiationSystem
         }
 
         if (blockers is not null)
-            if (!saveVisitedTiles || blockers!.Count <= 0)
+            if (!saveVisitedTiles || blockers.Count <= 0)
                 return ray;
 
         ray.Blockers ??= new();
