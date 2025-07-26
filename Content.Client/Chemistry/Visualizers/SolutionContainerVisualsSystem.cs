@@ -4,10 +4,12 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands;
 using Content.Shared.Item;
 using Content.Shared.Rounding;
 using Robust.Client.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chemistry.Visualizers;
@@ -16,6 +18,8 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ItemSystem _itemSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -43,7 +47,15 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             }
         }
 
-        if (!AppearanceSystem.TryGetData<float>(uid, SolutionContainerVisuals.FillFraction, out var fraction, args.Component))
+        float fraction = 0;
+        SolutionComponent? solutionComponent = null;
+        if (component.InsertedItemSlotID != null)
+        {
+            GetSolutionFromEntity(uid, component.InsertedItemSlotID, out solutionComponent);
+            if (solutionComponent != null)
+                fraction = solutionComponent.Solution.FillFraction;
+        }
+        else if (!AppearanceSystem.TryGetData<float>(uid, SolutionContainerVisuals.FillFraction, out fraction, args.Component))
             return;
 
         if (args.Sprite == null)
@@ -122,7 +134,9 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
                 SpriteSystem.LayerSetSprite((uid, args.Sprite), fillLayer, fillSprite);
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), fillLayer, stateName);
 
-            if (changeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, args.Component))
+            if (component.InsertedItemSlotID != null && solutionComponent != null)
+                SpriteSystem.LayerSetColor((uid, args.Sprite), fillLayer, solutionComponent.Solution.GetColor(_prototype));
+            else if (changeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, args.Component))
                 SpriteSystem.LayerSetColor((uid, args.Sprite), fillLayer, color);
             else
                 SpriteSystem.LayerSetColor((uid, args.Sprite), fillLayer, Color.White);
@@ -141,8 +155,38 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             }
         }
 
+        var parentuid = Transform(uid).ParentUid;
+        var parentApp = CompOrNull<AppearanceComponent>(parentuid);
+        if (parentApp != null && HasComp<SolutionContainerVisualsComponent>(parentuid))
+            _appearance.QueueUpdate(parentuid, parentApp);
+
         // in-hand visuals
         _itemSystem.VisualsChanged(uid);
+    }
+
+    private bool GetSolutionFromEntity(EntityUid containerUid, string insertedItemSlotID, out SolutionComponent? solutionComponent)
+    {
+        solutionComponent = null;
+        var itemSlotsComponent = CompOrNull<ItemSlotsComponent>(containerUid);
+
+        if (itemSlotsComponent == null) return false;
+
+        var slot = itemSlotsComponent.Slots[insertedItemSlotID];
+        var insertedUid = slot.Item;  //Uid of item (beaker for example) inserted into machine 
+        if (insertedUid == null) return false;
+
+        var containerManagerComponent = CompOrNull<ContainerManagerComponent>(insertedUid); // now trying to get Solution inside beaker
+        if (containerManagerComponent == null) return false;
+
+        foreach (var con in _container.GetAllContainers(insertedUid.Value, containerManagerComponent))
+        {
+            if (con == null || con.ContainedEntities.Count == 0) continue;
+
+            solutionComponent = Comp<SolutionComponent>(con.ContainedEntities[0]);
+
+            return true;
+        }
+        return false;
     }
 
     private void OnGetHeldVisuals(EntityUid uid, SolutionContainerVisualsComponent component, GetInhandVisualsEvent args)
