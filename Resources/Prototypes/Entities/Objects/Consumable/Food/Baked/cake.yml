@@ -1190,3 +1190,58 @@
       Burger: SuppermatterBurger
   - type: Item
     heldPrefix: suppermatter-shard
+
+- type: entity
+  name: cotton cake
+  parent: FoodCakeBase
+  id: FoodCakeCotton
+  description: A cake with a fiber frosting and a wad of cotton on top.
+  components:
+  - type: Sprite
+    state: cotton
+  - type: SliceableFood
+    slice: FoodCakeCottonSlice
+  - type: Tag
+    tags:
+    - Cake
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 55
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: Item
+    heldPrefix: cotton
+
+- type: entity
+  name: slice of cotton cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeCottonSlice
+  description: A slice of cotton cake. You can just lick the frosting, it's fine.
+  components:
+  - type: Sprite
+    state: cotton-slice
+  - type: Tag
+    tags:
+    - Cake
+    - ClothMade
+    - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Fiber
+          Quantity: 2
+  - type: Item
+    heldPrefix: cotton-slice
