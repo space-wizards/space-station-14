@@ -12,6 +12,7 @@
     TriggerTritium: 0.1
     TriggerAmmonia: 0.1
     TriggerFrezon: 0.1
+    TriggerElectrovae: 0.1
     TriggerRadiation: 1
     TriggerPressureHigh: 0.5
     TriggerPressureLow: 1
@@ -141,6 +142,16 @@
   - type: XATReactive
     reagents:
     - Frezon
+
+- type: xenoArchTrigger
+  id: TriggerElectrovae
+  tip: xenoarch-trigger-tip-electrovae
+  components:
+  - type: XATGas
+    targetGas: Electrovae
+  - type: XATReactive
+    reagents:
+    - Electrovae
 
 - type: xenoArchTrigger
   id: TriggerRadiation
