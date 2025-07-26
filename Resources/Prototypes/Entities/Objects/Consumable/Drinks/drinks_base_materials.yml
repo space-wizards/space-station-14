@@ -11,6 +11,12 @@
   - type: Destructible
     thresholds:
     - trigger:
+        !type:DamageTrigger # Overkill threshold
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
         !type:DamageTrigger
         damage: 5
       behaviors:
@@ -51,6 +57,12 @@
   - type: Destructible
     thresholds:
     - trigger:
+        !type:DamageTrigger # Overkill threshold
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
         !type:DamageTrigger
         damage: 5
       behaviors:
@@ -73,6 +85,12 @@
     damageModifierSet: FlimsyWood
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger # Overkill threshold
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 5
@@ -97,6 +115,12 @@
   - type: Destructible
     thresholds:
     - trigger:
+        !type:DamageTrigger # Overkill threshold
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
         !type:DamageTrigger
         damage: 10
       behaviors:
@@ -120,6 +144,12 @@
   - type: Destructible
     thresholds:
     - trigger:
+        !type:DamageTrigger # Overkill threshold
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
         !type:DamageTrigger
         damage: 25
       behaviors:
@@ -142,6 +172,12 @@
     damageModifierSet: FlimsyMetallic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger # Overkill threshold
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 10
