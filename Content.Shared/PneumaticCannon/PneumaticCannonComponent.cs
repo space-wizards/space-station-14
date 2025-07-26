@@ -52,7 +52,7 @@ public sealed partial class PneumaticCannonComponent : Component
     public bool ThrowItems = true;
 
     [DataField]
-    public HashSet<Gas> AllowedGases = new(SharedPneumaticCannonSystem.DefaultAllowedGases);
+    public HashSet<Gas>? AllowedGases;
 }
 
 /// <summary>

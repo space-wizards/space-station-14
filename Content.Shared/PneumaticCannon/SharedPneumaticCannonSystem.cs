@@ -11,17 +11,6 @@ public abstract class SharedPneumaticCannonSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
-    public static HashSet<Gas> DefaultAllowedGases = new()
-    {
-        Gas.CarbonDioxide,
-        Gas.Plasma,
-        Gas.Tritium,
-        Gas.WaterVapor,
-        Gas.Ammonia,
-        Gas.NitrousOxide,
-        Gas.Frezon
-    };
-
     public override void Initialize()
     {
         base.Initialize();

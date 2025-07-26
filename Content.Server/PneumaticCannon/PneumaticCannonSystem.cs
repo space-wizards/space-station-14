@@ -67,12 +67,15 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
             return;
 
         // check if not allowed gas is present
-        foreach (var gas in tank.Air)
+        if (component.AllowedGases != null)
         {
-            if (!component.AllowedGases.Contains(gas.gas) && gas.moles > 0)
+            foreach (var gas in tank.Air)
             {
-                args.Cancel();
-                return;
+                if (!component.AllowedGases.Contains(gas.gas) && gas.moles > 0)
+                {
+                    args.Cancel();
+                    return;
+                }
             }
         }
 
