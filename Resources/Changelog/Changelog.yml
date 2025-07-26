@@ -3903,7 +3903,7 @@
   url: https://github.com/space-wizards/space-station-14/pull/37915
 - author: Quantum-cross
   changes:
-  - message: pinpointer will no longer trigger sufferers of OCD
+  - message: Fixed pinpointer arrow not being centered properly.
     type: Fix
   id: 8809
   time: '2025-07-25T19:46:42.0000000+00:00'
