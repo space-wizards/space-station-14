@@ -28,6 +28,7 @@
     size: Normal
     shape:
     - 0,0,2,1
+    storedOffset: 0,-5
   - type: Tag
     tags:
     - Pizza
