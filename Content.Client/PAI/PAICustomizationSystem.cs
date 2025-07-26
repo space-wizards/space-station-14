@@ -16,7 +16,6 @@ public sealed class PAICustomizationSystem : EntitySystem
 
     private void OnAfterAutoHandleState(EntityUid uid, PAICustomizationComponent component, ref AfterAutoHandleStateEvent args)
     {
-        // Обновляем UI только если компонент кастомизации существует
         if (_ui.TryGetOpenUi<PAICustomizationBoundUserInterface>(uid, PAICustomizationUiKey.Key, out var bui))
             bui.UpdateEmotion(component.CurrentEmotion);
     }
