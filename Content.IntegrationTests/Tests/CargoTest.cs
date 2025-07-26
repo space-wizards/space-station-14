@@ -5,6 +5,7 @@ using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Storage.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
@@ -77,17 +78,51 @@ public sealed class CargoTest
 
             Assert.Multiple(() =>
             {
-                foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
+                var cargoProducts = protoManager.EnumeratePrototypes<CargoProductPrototype>();
+                foreach (var proto in cargoProducts)
                 {
-                    var ent = entManager.SpawnEntity(proto.Product, new MapCoordinates(Vector2.Zero, mapId));
-
                     foreach (var bounty in bounties)
                     {
-                        if (cargo.IsBountyComplete(ent, bounty))
-                            Assert.That(proto.Cost, Is.GreaterThanOrEqualTo(bounty.Reward), $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
-                    }
+                        var ent = entManager.SpawnEntity(proto.Product, new MapCoordinates(Vector2.Zero, mapId));
+                        var totalcost = proto.Cost;
+                        if (!bounty.Entries.Any(b =>
+                                cargo.GetBountyEntities(ent).Any(c => cargo.IsValidBountyEntry(c, b))))
+                        {
+                            entManager.DeleteEntity(ent);
+                            continue;
+                        }
 
-                    entManager.DeleteEntity(ent);
+                        while (totalcost < bounty.Reward)
+                        {
+                            if (cargo.IsBountyComplete(ent, bounty))
+                            {
+                                Assert.That(totalcost,
+                                    Is.GreaterThanOrEqualTo(bounty.Reward),
+                                    $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {totalcost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
+                                break;
+                            }
+                            if (entManager.TryGetComponent<EntityStorageComponent>(ent, out var outstore))
+                            {
+                                var ids = new List<string>();
+                                foreach (var entity in outstore.Contents.ContainedEntities)
+                                {
+                                    if (entManager.TryGetComponent<MetaDataComponent>(entity, out var meta))
+                                    {
+                                        var protoId = meta.EntityPrototype?.ID;
+                                        if (protoId != null)
+                                            ids.Add(protoId);
+                                    }
+                                }
+                                foreach (var id in ids)
+                                {
+                                    entManager.TrySpawnInContainer(id, ent, outstore.Contents.ID, out _);
+                                }
+                            }
+
+                            totalcost += proto.Cost;
+                        }
+                        entManager.DeleteEntity(ent);
+                    }
                 }
             });
 
