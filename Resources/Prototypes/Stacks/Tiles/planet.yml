@@ -1,0 +1,19 @@
+# tiles that spawn on planets and are generally unobtainable
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileGrass
+  name: stack-grass-floor-tile
+  spawn: FloorTileItemGrass
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileGrassJungle
+  name: stack-grass-jungle-floor-tile
+  spawn: FloorTileItemGrassJungle
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSnow
+  name: stack-snow-floor-tile
+  spawn: FloorTileItemSnow
