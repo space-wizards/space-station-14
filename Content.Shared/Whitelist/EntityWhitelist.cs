@@ -57,4 +57,9 @@ public sealed partial class EntityWhitelist
     /// </summary>
     [DataField]
     public bool RequireAll;
+
+    public EntityWhitelist(string[]? components) : this()
+    {
+        Components = components;
+    }
 }
