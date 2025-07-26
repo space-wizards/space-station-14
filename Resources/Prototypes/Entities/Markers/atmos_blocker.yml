@@ -1,111 +1,128 @@
 - type: entity
-  name: Atmos Fix Vacuum Marker
+  parent: MarkerBase
   id: AtmosFixBlockerMarker
-  description: "Vacuum, T20C"
-  parent: MarkerBase
+  name: Atmos Fix Vacuum Marker
+  suffix: Vacuum
+  description: Vacuum, T20C
   components:
-    - type: Sprite
-      layers:
-        - sprite: Markers/atmos.rsi # {
-          state: base
-          shader: unshaded
-        - sprite: Markers/atmos.rsi
-          shader: unshaded # }
-          state: vacuum
-    - type: AtmosFixMarker
-      mode: 1
+  - type: Sprite
+    sprite: Markers/atmos.rsi
+    layers:
+    - state: base-cold
+      shader: unshaded
+    - state: vacuum
+      shader: unshaded
+  - type: AtmosFixMarker
+    mode: 1
 
 - type: entity
-  name: Atmos Fix Oxygen Marker
+  parent: MarkerBase
   id: AtmosFixOxygenMarker
-  description: "Oxygen @ gas miner pressure, T20C"
-  parent: MarkerBase
+  name: Atmos Fix Oxygen Marker
+  suffix: Gas Miner
+  description: Oxygen @ gas miner pressure, T20C
   components:
-    - type: Sprite
-      layers:
-        - sprite: Markers/atmos.rsi # {
-          state: base
-          shader: unshaded
-        - sprite: Markers/atmos.rsi
-          shader: unshaded # }
-          state: oxygen
-    - type: AtmosFixMarker
-      mode: 2
+  - type: Sprite
+    sprite: Markers/atmos.rsi
+    layers:
+    - state: base
+      shader: unshaded
+    - state: atm-miner
+      shader: unshaded
+    - state: oxygen
+      shader: unshaded
+  - type: AtmosFixMarker
+    mode: 2
 
 - type: entity
-  name: Atmos Fix Nitrogen Marker
+  parent: MarkerBase
   id: AtmosFixNitrogenMarker
-  description: "Nitrogen @ gas miner pressure, T20C"
-  parent: MarkerBase
+  name: Atmos Nitrogen Marker
+  suffix: Gas Miner
+  description: Nitrogen @ gas miner pressure, T20C
   components:
-    - type: Sprite
-      layers:
-        - sprite: Markers/atmos.rsi # {
-          state: base
-          shader: unshaded
-        - sprite: Markers/atmos.rsi
-          shader: unshaded # }
-          state: nitrogen
-    - type: AtmosFixMarker
-      mode: 3
+  - type: Sprite
+    sprite: Markers/atmos.rsi
+    layers:
+    - state: base
+      shader: unshaded
+    - state: atm-miner
+      shader: unshaded
+    - state: nitrogen
+      shader: unshaded
+  - type: AtmosFixMarker
+    mode: 3
 
 - type: entity
-  name: Atmos Fix Plasma Marker
+  parent: MarkerBase
   id: AtmosFixPlasmaMarker
-  description: "Plasma @ gas miner pressure, T20C"
-  parent: MarkerBase
+  name: Atmos Fix Plasma Marker
+  suffix: Gas Miner
+  description: Plasma @ gas miner pressure, T20C
   components:
-    - type: Sprite
-      layers:
-        - sprite: Markers/atmos.rsi # {
-          state: base
-          shader: unshaded
-        - sprite: Markers/atmos.rsi
-          shader: unshaded # }
-          state: plasma
-    - type: AtmosFixMarker
-      mode: 4
+  - type: Sprite
+    sprite: Markers/atmos.rsi
+    layers:
+    - state: base
+      shader: unshaded
+    - state: atm-miner
+      shader: unshaded
+    - state: plasma
+      shader: unshaded
+  - type: AtmosFixMarker
+    mode: 4
 
 - type: entity
-  name: Atmos Fix Instant Plasmafire Marker
+  parent: MarkerBase
   id: AtmosFixInstantPlasmaFireMarker
-  description: "INSTANT PLASMAFIRE"
-  parent: MarkerBase
+  name: Atmos Fix Plasma Marker
+  suffix: FIRE
+  description: INSTANT PLASMAFIRE!!
   components:
-    - type: Sprite
-      layers:
-        - sprite: Markers/atmos.rsi # {
-          state: base-hot
-          shader: unshaded
-        - sprite: Markers/atmos.rsi
-          shader: unshaded # }
-          state: fire
-    - type: AtmosFixMarker
-      mode: 5
+  - type: Sprite
+    sprite: Markers/atmos.rsi
+    layers:
+    - state: base-hot
+      shader: unshaded
+    - state: atm-fire
+      shader: unshaded
+    - state: plasma
+      shader: unshaded
+  - type: AtmosFixMarker
+    mode: 5
 
 - type: entity
-  name: Atmos Fix Freezer Marker
-  id: AtmosFixFreezerMarker
-  description: "Change air temp to 235K, for freezer with a bit of wiggle room to get set up."
   parent: MarkerBase
+  id: AtmosFixFreezerMarker
+  name: Atmos Fix Air Marker
+  suffix: Freezer
+  description: Change air temp to 235K, for freezer with a bit of wiggle room to get set up.
   components:
-    - type: Sprite
-      layers:
-        - sprite: Markers/atmos.rsi # {
-          state: base
-          shader: unshaded
-        - sprite: Markers/atmos.rsi
-          shader: unshaded # }
-          state: freeze
-    - type: AtmosFixMarker
-      mode: 6
+  - type: Sprite
+    sprite: Markers/atmos.rsi
+    layers:
+    - state: base-cold
+      shader: unshaded
+    - state: atm-freeze
+      shader: unshaded
+    - state: air
+      shader: unshaded
+  - type: AtmosFixMarker
+    mode: 6
 
 - type: entity
   parent: AtmosFixNitrogenMarker
   id: AtmosFixVoxMarker
-  suffix: Vox Atmosphere
-  description: "Nitrogen @ 101 kPa, 20C"
+  suffix: Standard, vox
+  description: Nitrogen @ 101 kPa, 20C
   components:
+  - type: Sprite
+    sprite: Markers/atmos.rsi
+    layers:
+    - state: base
+      shader: unshaded
+    - state: nitrogen
+      shader: unshaded
   - type: AtmosFixMarker
     mode: 7
 
@@ -113,15 +130,17 @@
   parent: MarkerBase
   id: AtmosFixAirMarker
   name: Atmos Fix Air Marker
-  description: "Oxygen (21%) and nitrogen (79%) @ gas miner pressure, T20C"
+  suffix: Gas Miner
+  description: Oxygen (21%) and nitrogen (79%) @ gas miner pressure, T20C
   components:
   - type: Sprite
+    sprite: Markers/atmos.rsi
     layers:
-    - sprite: Markers/atmos.rsi # {
-      state: base
+    - state: base
       shader: unshaded
-    - sprite: Markers/atmos.rsi
-      shader: unshaded # }
-      state: air
+    - state: atm-miner
+      shader: unshaded
+    - state: air
+      shader: unshaded
   - type: AtmosFixMarker
     mode: 8
