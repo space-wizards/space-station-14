@@ -17,11 +17,4 @@ public sealed partial class FactionClothingComponent : Component
     /// </summary>
     [DataField(required: true)]
     public ProtoId<NpcFactionPrototype> Faction = string.Empty;
-
-    /// <summary>
-    /// If true, the wearer was already part of the faction.
-    /// This prevents wrongly removing them after removing the item.
-    /// </summary>
-    [DataField]
-    public bool AlreadyMember;
 }
