@@ -289,6 +289,31 @@
   - !type:AutoCablingDunGen
     entity: CableApcExtension
 
+- type: dungeonConfig
+  id: SyndicateBase
+  data:
+    colors:
+      Decals: "#6E2323"
+    entities:
+      Cabling: CableApcExtension
+      CornerWalls: WallReinforced
+      Walls: WallReinforced
+    spawnGroups:
+      CornerClutter: BaseClutter
+      Entrance: SyndicateBaseEntrancePossiblyRigged
+      EntranceFlank: SyndicateBaseWindow
+      Junction: SyndicateBaseAirlock
+      Window: SyndicateBaseWindow
+    tiles:
+      FallbackTile: FloorDark
+    whitelists:
+      Rooms:
+        tags:
+        - SalvageSyndicateBase
+  layers:
+  - !type:PrototypeDunGen
+    proto: PlanetBase
+
 # Spawn groups
 # Basic
 - type: entityTable
@@ -388,3 +413,36 @@
       prob: 0.05
     - id: IntercomScience
       prob: 0.1
+
+# Syndicate base
+- type: entitySpawnEntry
+  id: SyndicateBaseAirlock
+  entries:
+  - id: CableApcExtension
+  - id: AirlockSyndicateGlass
+
+- type: entitySpawnEntry
+  id: SyndicateBaseWindow
+  table: !type:GroupSelector
+    children:
+    - id: CableApcExtension
+    - id: Grille
+    - id: ReinforcedPlasmaWindow
+
+- type: entitySpawnEntry
+  id: SyndicateBaseEntrance
+  table: !type:GroupSelector
+    children:
+    - id: CableApcExtension
+    - id: AirlockSyndicateGlassLocked
+
+- type: entitySpawnEntry
+  id: SyndicateBaseEntrancePossiblyRigged
+  table: !type:GroupSelector
+    children:
+    - id: CableApcExtension
+    - id: AirlockSyndicateGlassLocked
+    - id: LandMineExplosive
+      prob: 0.02
+    - id: LandMineModular
+      prob: 0.05
