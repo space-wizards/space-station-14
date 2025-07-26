@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Clothing;
 using Content.Client.Examine;
 using Content.Client.Verbs.UI;
@@ -9,8 +10,10 @@ using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Inventory
 {
@@ -19,6 +22,8 @@ namespace Content.Client.Inventory
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
@@ -41,11 +46,42 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<InventorySlotsComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
             SubscribeLocalEvent<InventoryComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<InventoryComponent, ComponentHandleState>(OnHandleState);
 
             SubscribeLocalEvent<InventorySlotsComponent, DidEquipEvent>((_, comp, args) =>
                 _equipEventsQueue.Enqueue((comp, args)));
             SubscribeLocalEvent<InventorySlotsComponent, DidUnequipEvent>((_, comp, args) =>
                 _equipEventsQueue.Enqueue((comp, args)));
+        }
+
+        private void OnHandleState(Entity<InventoryComponent> ent, ref ComponentHandleState args)
+        {
+            if (args.Current is not InventoryComponentState state)
+                return;
+
+            // If nothing changed, just skip the update.
+            if (state.TemplateId == ent.Comp.TemplateId && state.SpeciesId == ent.Comp.SpeciesId)
+                return;
+
+            ent.Comp.TemplateId = state.TemplateId;
+            ent.Comp.SpeciesId = state.SpeciesId;
+            ent.Comp.Displacements = state.Displacements;
+            ent.Comp.FemaleDisplacements = state.FemaleDisplacements;
+            ent.Comp.MaleDisplacements = state.MaleDisplacements;
+
+            // Update the template clientside as well, to make sure all visuals and containers are refreshed.
+            UpdateInventoryTemplate(ent);
+        }
+
+        protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
+        {
+            base.UpdateInventoryTemplate(ent);
+
+            if (TryComp<InventorySlotsComponent>(ent.Owner, out var slots))
+                UpdateContainerData((ent, slots));
+
+            _clothingVisualsSystem.InitClothing(ent, ent.Comp);
+            ReloadInventory();
         }
 
         public override void Update(float frameTime)
@@ -91,6 +127,14 @@ namespace Content.Client.Inventory
 
         private void OnShutdown(EntityUid uid, InventoryComponent component, ComponentShutdown args)
         {
+            if (!TryComp(uid, out InventorySlotsComponent? inventorySlots))
+                return;
+
+            foreach (var slot in component.Slots)
+            {
+                TryRemoveSlotDef(uid, slot);
+            }
+
             if (uid == _playerManager.LocalEntity)
                 OnUnlinkInventory?.Invoke();
         }
@@ -100,26 +144,11 @@ namespace Content.Client.Inventory
             OnUnlinkInventory?.Invoke();
         }
 
-        private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, LocalPlayerAttachedEvent args)
+        private void OnPlayerAttached(Entity<InventorySlotsComponent> ent, ref LocalPlayerAttachedEvent args)
         {
-            if (TryGetSlots(uid, out var definitions))
-            {
-                foreach (var definition in definitions)
-                {
-                    if (!TryGetSlotContainer(uid, definition.Name, out var container, out _))
-                        continue;
+            UpdateContainerData(ent);
 
-                    if (!component.SlotData.TryGetValue(definition.Name, out var data))
-                    {
-                        data = new SlotData(definition);
-                        component.SlotData[definition.Name] = data;
-                    }
-
-                    data.Container = container;
-                }
-            }
-
-            OnLinkInventorySlots?.Invoke(uid, component);
+            OnLinkInventorySlots?.Invoke(ent, ent.Comp);
         }
 
         public override void Shutdown()
@@ -138,7 +167,7 @@ namespace Content.Client.Inventory
 
             foreach (var slot in component.Slots)
             {
-                TryAddSlotDef(uid, inventorySlots, slot);
+                TryAddSlotDef(uid, slot);
             }
         }
 
@@ -165,6 +194,9 @@ namespace Content.Client.Inventory
         public void UpdateSlot(EntityUid owner, InventorySlotsComponent component, string slotName,
             bool? blocked = null, bool? highlight = null)
         {
+            if (!HasSlot(owner, slotName))
+                return;
+
             var oldData = component.SlotData[slotName];
             var newHighlight = oldData.Highlighted;
             var newBlocked = oldData.Blocked;
@@ -181,15 +213,58 @@ namespace Content.Client.Inventory
                 EntitySlotUpdate?.Invoke(newData);
         }
 
-        public bool TryAddSlotDef(EntityUid owner, InventorySlotsComponent component, SlotDefinition newSlotDef)
+        public override bool TryAddSlotDef(EntityUid owner, SlotDefinition newSlotDef)
         {
+            if (!TryComp<InventorySlotsComponent>(owner, out var component))
+                return false;
+
             SlotData newSlotData = newSlotDef; //convert to slotData
             if (!component.SlotData.TryAdd(newSlotDef.Name, newSlotData))
                 return false;
 
             if (owner == _playerManager.LocalEntity)
                 OnSlotAdded?.Invoke(newSlotData);
+
             return true;
+        }
+
+        public override bool TryRemoveSlotDef(EntityUid owner, SlotDefinition newSlotDef)
+        {
+            if (!TryComp<InventorySlotsComponent>(owner, out var component))
+                return false;
+
+            SlotData newSlotData = newSlotDef; //convert to slotData
+            if (!component.SlotData.Remove(newSlotDef.Name))
+                return false;
+
+            if (owner == _playerManager.LocalEntity)
+                OnSlotRemoved?.Invoke(newSlotData);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Updates the containers in InventorySlotsComponent according to their slots.
+        /// </summary>
+        /// <param name="ent">Entity to update.</param>
+        private void UpdateContainerData(Entity<InventorySlotsComponent> ent)
+        {
+            if (!TryGetSlots(ent, out var definitions))
+                return;
+
+            foreach (var definition in definitions)
+            {
+                if (!TryGetSlotContainer(ent, definition.Name, out var container, out _))
+                    continue;
+
+                if (!ent.Comp.SlotData.TryGetValue(definition.Name, out var data))
+                {
+                    data = new SlotData(definition);
+                    ent.Comp.SlotData[definition.Name] = data;
+                }
+
+                data.Container = container;
+            }
         }
 
         public void UIInventoryActivate(string slot)
@@ -233,20 +308,6 @@ namespace Content.Client.Inventory
                 return;
 
             RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
-        }
-
-        protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
-        {
-            base.UpdateInventoryTemplate(ent);
-
-            if (TryComp(ent, out InventorySlotsComponent? inventorySlots))
-            {
-                foreach (var slot in ent.Comp.Slots)
-                {
-                    if (inventorySlots.SlotData.TryGetValue(slot.Name, out var slotData))
-                        slotData.SlotDef = slot;
-                }
-            }
         }
 
         public sealed class SlotData
