@@ -88,10 +88,17 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
     private void OnFreedomImplant(EntityUid uid, SubdermalImplantComponent component, UseFreedomImplantEvent args)
     {
-        if (!TryComp<CuffableComponent>(component.ImplantedEntity, out var cuffs) || cuffs.Container.ContainedEntities.Count < 1)
+        // How did we even get here?
+        if (component.ImplantedEntity == null)
+        {
+            Log.Error($"Freedom Implant {ToPrettyString(uid)} is attempting to remove cuffs but it's not implanted into an entity.");
+            return;
+        }
+
+        if (!_cuffable.TryGetLastCuff(component.ImplantedEntity.Value, out var cuff))
             return;
 
-        _cuffable.Uncuff(component.ImplantedEntity.Value, cuffs.LastAddedCuffs, cuffs.LastAddedCuffs);
+        _cuffable.Uncuff(component.ImplantedEntity.Value, cuff, cuff.Value);
         args.Handled = true;
     }
 
