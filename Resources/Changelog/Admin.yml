@@ -1285,5 +1285,13 @@ Entries:
   id: 156
   time: '2025-07-24T15:13:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39025
+- author: slarticodefast, beck-thompson
+  changes:
+  - message: Added the "Open Camera" admin verb and the "camera" console command which
+      allow you to observe entities in separate window using a remote camera.
+    type: Add
+  id: 157
+  time: '2025-07-25T16:53:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36969
 Name: Admin
 Order: 2
