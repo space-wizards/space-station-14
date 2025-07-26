@@ -172,14 +172,13 @@
           factor: 1
         - !type:SatiateThirst
           factor: 1
-        - !type:HealthChange
+        - !type:EvenHealthChange
           conditions:
           - !type:TotalDamage
             min: 70 # only heals when you're more dead than alive
           damage: # heals at the same rate as tricordrazine, doesn't heal poison because if you OD'd I'm not giving you a safety net
-            groups:
-              Burn: -1
-              Brute: -1
+            Burn: -1
+            Brute: -1
 
 - type: reagent
   id: THC
