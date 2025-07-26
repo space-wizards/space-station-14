@@ -63,6 +63,12 @@ public sealed partial class DoAfter
     public string? InitialHand;
 
     /// <summary>
+    ///     If <see cref="DoAfterArgs.BreakOnContainerChange"/> is true, this is the container ID for the event target entity when the doafter started.
+    /// </summary>
+    [DataField("initialContainer")]
+    public string? InitialContainerID;
+
+    /// <summary>
     ///     If <see cref="NeedHand"/> is true, this is the entity that was in the active hand when the doafter started.
     /// </summary>
     [NonSerialized]
@@ -96,6 +102,7 @@ public sealed partial class DoAfter
         UserPosition = other.UserPosition;
         TargetDistance = other.TargetDistance;
         InitialHand = other.InitialHand;
+        InitialContainerID = other.InitialContainerID;
         InitialItem = other.InitialItem;
 
         NetUserPosition = other.NetUserPosition;
