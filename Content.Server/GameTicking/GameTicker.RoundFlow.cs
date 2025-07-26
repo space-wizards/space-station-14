@@ -14,6 +14,7 @@ using Content.Shared.Players;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Prometheus;
+using Robust.Shared;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Audio;
 using Robust.Shared.EntitySerialization;
@@ -24,8 +25,8 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Shared.Starlight.CCVar;
 using System.Text.RegularExpressions;
+using Discord;
 
 namespace Content.Server.GameTicking
 {
@@ -58,7 +59,7 @@ namespace Content.Server.GameTicking
 
         private string? _replayRoundText;
 
-        private static readonly Regex GreekRegex = new (@"{.}", RegexOptions.Compiled);
+        private static readonly Regex GreekRegex = new (@"(?<={).(?=})", RegexOptions.Compiled);
 
         [ViewVariables]
         public GameRunLevel RunLevel
@@ -606,11 +607,10 @@ namespace Content.Server.GameTicking
                     return;
 
                 var duration = RoundDuration();
-                var serverName = _cfg.GetCVar(StarlightCCVars.ServerName);
-                var greekIndicator = GreekRegex.Match(serverName);
+                var greekIndicator = GreekRegex.Match(_cfg.GetCVar(CVars.GameHostName));
                 var content = Loc.GetString("discord-round-notifications-end",
                     ("id", RoundId),
-                    ("serverIndicator", greekIndicator),
+                    ("serverIndicator", greekIndicator.Value),
                     ("hours", Math.Truncate(duration.TotalHours)),
                     ("minutes", duration.Minutes),
                     ("seconds", duration.Seconds));
@@ -687,10 +687,9 @@ namespace Content.Server.GameTicking
                 if (_webhookIdentifier == null)
                     return;
 
-                var serverName = _cfg.GetCVar(StarlightCCVars.ServerName);
-                var greekIndicator = GreekRegex.Match(serverName);
+                var greekIndicator = GreekRegex.Match(_cfg.GetCVar(CVars.GameHostName));
 
-                var content = Loc.GetString("discord-round-notifications-new", ("serverIndicator", greekIndicator));
+                var content = Loc.GetString("discord-round-notifications-new", ("serverIndicator", greekIndicator.Value));
 
                 var payload = new WebhookPayload { Content = content };
 
@@ -812,9 +811,8 @@ namespace Content.Server.GameTicking
                     return;
 
                 var mapName = _gameMapManager.GetSelectedMap()?.MapName ?? Loc.GetString("discord-round-notifications-unknown-map");
-                var serverName = _cfg.GetCVar(StarlightCCVars.ServerName);
-                var greekIndicator = GreekRegex.Match(serverName);
-                var content = Loc.GetString("discord-round-notifications-started", ("id", RoundId), ("map", mapName), ("serverIndicator", greekIndicator));
+                var greekIndicator = GreekRegex.Match(_cfg.GetCVar(CVars.GameHostName));
+                var content = Loc.GetString("discord-round-notifications-started", ("id", RoundId), ("map", mapName), ("serverIndicator", greekIndicator.Value));
 
                 var payload = new WebhookPayload { Content = content };
 
