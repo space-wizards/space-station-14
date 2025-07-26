@@ -253,6 +253,19 @@
     stock: 1
 
 - type: listing
+  id: SpellbookSpellblade
+  name: spellbook-spellblade-name
+  description: spellbook-spellblade-description
+  productEntity: WeaponSpellblade
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
   id: SpellbookHammerSingularity
   name: spellbook-hammer-singularity-name
   description: spellbook-hammer-singularity-description
