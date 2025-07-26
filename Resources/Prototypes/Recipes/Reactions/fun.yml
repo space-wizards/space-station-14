@@ -25,32 +25,96 @@
     BuzzochloricBees: 3
 
 - type: reaction
-  id: CreateSoap
-  impact: Low
+  id: CreateRegularSoap
   quantized: true
   reactants:
-    Fat:
-      amount: 15
-    Saline:
-      amount: 25
+    SoapReagent:
+      amount: 50
+    TableSalt:
+      amount: 5
   effects:
     - !type:CreateEntityReactionEffect
       entity: Soap
 
 - type: reaction
-  id: CreateSoapHomemade
-  impact: Low
+  id: CreateNTSoap
   quantized: true
   reactants:
-    Fat:
-      amount: 15
+    SoapReagent:
+      amount: 90
     TableSalt:
-      amount: 10
+      amount: 5
+    Plasma:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapNT
+
+- type: reaction
+  id: CreateDeluxeSoap
+  quantized: true
+  reactants:
+    SoapReagent:
+      amount: 50
+    TableSalt:
+      amount: 5
+    JuiceBerry:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapDeluxe
+
+- type: reaction
+  id: CreateSyndieSoap
+  quantized: true
+  reactants:
+    SoapReagent:
+      amount: 50
+    TableSalt:
+      amount: 5
+    Stimulants:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapSyndie
+
+- type: reaction
+  id: CreateBloodSoap
+  quantized: true
+  reactants:
+    SoapReagent:
+      amount: 50
+    TableSalt:
+      amount: 5
     Blood:
-      amount: 10
+      amount: 5
   effects:
     - !type:CreateEntityReactionEffect
       entity: SoapHomemade
+
+- type: reaction
+  id: CreateOmegaSoap
+  quantized: true
+  reactants:
+    SoapReagent:
+      amount: 240
+    TableSalt:
+      amount: 10
+    SpaceLube:
+      amount: 10
+    SpaceDrugs:
+      amount: 10
+    Honk:
+      amount: 10
+    THC:
+      amount: 10
+    JuiceBanana:
+      amount: 20
+    Bananadine:
+      amount: 20
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapOmega
 
 - type: reaction
   id: Meatification
