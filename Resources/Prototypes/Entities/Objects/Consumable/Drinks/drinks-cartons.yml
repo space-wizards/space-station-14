@@ -40,6 +40,9 @@
     solutions:
       drink:
         maxVol: 150
+  - type: Tag
+    tags:
+    - DrinkBottle # Need this to fit in the soda dispenser, probably needs a better name
 
 # Small carton
 

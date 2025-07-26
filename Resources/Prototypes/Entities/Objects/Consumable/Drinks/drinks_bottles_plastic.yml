@@ -23,7 +23,7 @@
     solution: drink
   - type: Tag
     tags:
-    - DrinkCup
+    - DrinkBottle
 
 - type: entity
   abstract: true
