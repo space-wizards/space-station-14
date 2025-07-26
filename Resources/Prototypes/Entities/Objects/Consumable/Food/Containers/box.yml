@@ -534,8 +534,6 @@
         orGroup: GiftPool
       - id: ToyFigurinePassenger
         orGroup: GiftPool
-      - id: ToyGriffin
-        orGroup: GiftPool
       - id: ToyHonk
         orGroup: GiftPool
       - id: ToyIan
@@ -547,8 +545,6 @@
       - id: ToyGygax
         orGroup: GiftPool
       - id: ToyOdysseus
-        orGroup: GiftPool
-      - id: ToyOwlman
         orGroup: GiftPool
       - id: ToyDeathRipley
         orGroup: GiftPool
@@ -563,8 +559,6 @@
       - id: ToySeraph
         orGroup: GiftPool
       - id: ToyDurand
-        orGroup: GiftPool
-      - id: ToySkeleton
         orGroup: GiftPool
       - id: FoamBlade
         orGroup: GiftPool
@@ -734,8 +728,6 @@
         orGroup: GiftPool
       - id: ToyFigurinePassenger
         orGroup: GiftPool
-      - id: ToyGriffin
-        orGroup: GiftPool
       - id: ToyHonk
         orGroup: GiftPool
       - id: ToyIan
@@ -747,8 +739,6 @@
       - id: ToyGygax
         orGroup: GiftPool
       - id: ToyOdysseus
-        orGroup: GiftPool
-      - id: ToyOwlman
         orGroup: GiftPool
       - id: ToyDeathRipley
         orGroup: GiftPool
@@ -763,8 +753,6 @@
       - id: ToySeraph
         orGroup: GiftPool
       - id: ToyDurand
-        orGroup: GiftPool
-      - id: ToySkeleton
         orGroup: GiftPool
       - id: FoamBlade
         orGroup: GiftPool
@@ -811,8 +799,6 @@
         orGroup: GiftPool
       - id: ToyFigurinePassenger
         orGroup: GiftPool
-      - id: ToyGriffin
-        orGroup: GiftPool
       - id: ToyHonk
         orGroup: GiftPool
       - id: ToyIan
@@ -824,8 +810,6 @@
       - id: ToyGygax
         orGroup: GiftPool
       - id: ToyOdysseus
-        orGroup: GiftPool
-      - id: ToyOwlman
         orGroup: GiftPool
       - id: ToyDeathRipley
         orGroup: GiftPool
@@ -840,8 +824,6 @@
       - id: ToySeraph
         orGroup: GiftPool
       - id: ToyDurand
-        orGroup: GiftPool
-      - id: ToySkeleton
         orGroup: GiftPool
       - id: FoamBlade
         orGroup: GiftPool
