@@ -26,7 +26,7 @@
 - type: entity
   abstract: true
   parent: FoodDonutBase
-  id: FoodDonutFruitBase
+  id: FoodDonutFruitBase # Use this for ALL jelly donuts *and* for ANY other donuts that are fruit-flavored
   components:
   - type: Tag
     tags:
@@ -56,7 +56,7 @@
 
 - type: entity
   name: plain jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutJellyPlain
   components:
   - type: FlavorProfile
@@ -148,7 +148,7 @@
 
 - type: entity
   name: apple donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutApple
   description: Goes great with a shot of cinnamon schnapps.
   components:
@@ -194,7 +194,7 @@
 
 - type: entity
   name: blue pumpkin donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutBluePumpkin
   description: Goes great with a mug of soothing drunken blue pumpkin.
   components:
@@ -208,7 +208,7 @@
 
 - type: entity
   name: bungo donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutBungo
   description: Goes great with a mason jar of hippie's delight.
   components:
@@ -247,7 +247,7 @@
 
 - type: entity
   name: jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutJellyHomer
   description: You jelly?
   components:
@@ -267,7 +267,7 @@
 
 - type: entity
   name: pink jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutJellyPink
   description: Goes great with a soy latte.
   components:
@@ -287,7 +287,7 @@
 
 - type: entity
   name: spaceman's jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutJellySpaceman
   description: Goes great with a cold beaker of malk.
   components:
@@ -326,7 +326,7 @@
 
 - type: entity
   name: caramel jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutJellyCaramel
   description: Goes great with a mug of hot coco.
   components:
@@ -345,7 +345,7 @@
 
 - type: entity
   name: chocolate jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutJellyChocolate
   description: Goes great with a glass of warm milk.
   components:
@@ -408,7 +408,7 @@
 
 - type: entity
   name: matcha jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutJelly
   description: The L-theanine in this jelly-donut is relaxing, yet not euphoric. Goes great with a cup of tea.
   components:
@@ -427,7 +427,7 @@
 
 - type: entity
   name: sweet pea jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutJellySweetpea
   description: Goes great with a bottle of Bastion Burbon!
   components:
@@ -446,7 +446,7 @@
 
 - type: entity
   name: slugcat jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutJellySlugcat
   description: No holes in this donut in case a suspicious looking pole shows up.
   components:
