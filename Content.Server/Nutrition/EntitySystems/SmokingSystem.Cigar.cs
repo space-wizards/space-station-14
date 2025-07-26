@@ -1,3 +1,4 @@
+using Content.Server.Explosion.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
@@ -49,6 +50,10 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             SetSmokableState(entity, SmokableState.Lit, smokable);
+            if (TryComp<TriggerOnSmokableExpendedComponent>(entity, out var triggerComp))
+            {
+                triggerComp.LitBy = args.User;
+            }
             args.Handled = true;
         }
 
