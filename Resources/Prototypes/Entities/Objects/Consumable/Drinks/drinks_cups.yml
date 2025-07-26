@@ -249,7 +249,7 @@
     sprite: Objects/Consumable/Drinks/mug_red.rsi
 
 ## Filled
-# TODO these a material for destruction
+# TODO these need a material for destruction, maybe a better parent
 
 - type: entity
   parent: DrinkBaseCup
