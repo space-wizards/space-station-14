@@ -11,6 +11,17 @@
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckEpaulettesCap
+  name: captain's epaulettes
+  description: Expensive epaulettes befitting of the Master of Command. Awarded to only the best captains.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/capepaulettes.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/capepaulettes.rsi
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckMantleCE
   name: chief engineer's mantle
   description: High visibility, check. RIG system, check. High capacity cell, check. Everything a chief engineer could need in a stylish mantle.
