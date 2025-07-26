@@ -47,6 +47,8 @@ public sealed class ParrotMemoryEui : BaseEui
                 _showBlocked = refreshMsg.ShowBlocked;
                 _textFilter = refreshMsg.TextFilter;
 
+                // requestedround can be null if the current round is requested
+                // this will usually be when first opening or returning to current round
                 _requestedRound = refreshMsg.RequestedRoundId ?? _currentRound;
 
                 RefreshParrotMemories(_requestedRound);

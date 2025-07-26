@@ -20,8 +20,8 @@ namespace Content.Server.Animals.Systems;
 /// </summary>
 public sealed partial class ParrotDbSystem : EntitySystem
 {
-    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly ActorSystem _actor = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
