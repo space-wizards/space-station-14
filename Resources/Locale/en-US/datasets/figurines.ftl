@@ -245,7 +245,7 @@ figurines-nukie-3 = The nuke makes boom.
 figurines-nukie-4 = What's the code?
 figurines-nukie-5 = Commander...? ...That's a balloon...
 
-figurines-nukie-elite-1 = Not a word in Nanotrasen.
+figurines-nukie-elite-1 = Not a word in NanoTrasen.
 figurines-nukie-elite-2 = THAT'S A KEG!
 figurines-nukie-elite-3 = Guys, are you alive?
 figurines-nukie-elite-4 = Breach and clear!
@@ -261,8 +261,8 @@ figurines-nukie-commander-5 = Whoops.
 figurines-footsoldier-1 = I'm an evil boy. Less boy every day, more evil every day.
 figurines-footsoldier-2 = Who will you choose? Them or us? Us or them?
 figurines-footsoldier-3 = Glory to the Syndicate!
-figurines-footsoldier-4 = Down with Nanotrasen!
-figurines-footsoldier-5 = I'd rather die than join Nanotrasen.
+figurines-footsoldier-4 = Down with NanoTrasen!
+figurines-footsoldier-5 = I'd rather die than join NanoTrasen.
 
 figurines-wizard-1 = Ei Nath!!
 figurines-wizard-2 = Real wizards support trans rights.

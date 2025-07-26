@@ -589,7 +589,7 @@
   parent: BaseSign
   id: SignHead
   name: head sign
-  description: An official sign indicating the dwellings of a Nanotrasen-certified head of department.
+  description: An official sign indicating the dwellings of a NanoTrasen-certified head of department.
   components:
   - type: Sprite
     state: commander
@@ -994,7 +994,7 @@
   parent: BaseSign
   id: SignZomlab
   name: zombie lab sign
-  description: The final remains of a shut-down Nanotrasen research project that aimed to harness the powers of Romerol. I wonder how that went...
+  description: The final remains of a shut-down NanoTrasen research project that aimed to harness the powers of Romerol. I wonder how that went...
   components:
   - type: Sprite
     state: zomlab
