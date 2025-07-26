@@ -1,12 +1,10 @@
 using System.Numerics;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.ImmovableRod;
 using Content.Server.StationEvents.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 using System.Linq;
 
@@ -35,7 +33,7 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
             var speed = RobustRandom.NextFloat(rod.MinSpeed, rod.MaxSpeed);
             var angle = RobustRandom.NextAngle();
             var direction = angle.ToVec();
-            var spawnCoords = targetCoords.ToMap(EntityManager, _transform).Offset(-direction * speed * despawn.Lifetime / 2);
+            var spawnCoords = _transform.ToMapCoordinates(targetCoords).Offset(-direction * speed * despawn.Lifetime / 2);
             var ent = Spawn(protoName, spawnCoords);
             _gun.ShootProjectile(ent, direction, Vector2.Zero, uid, speed: speed);
         }

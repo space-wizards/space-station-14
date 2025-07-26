@@ -27,6 +27,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Throwing;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
@@ -129,7 +130,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         private void OnInit(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentInit args)
         {
             _jitteringSystem.AddJitter(uid, -10, 100);
-            _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid);
+            _sharedAudioSystem.PlayPvs(new ResolvedPathSpecifier("/Audio/Machines/reclaimer_startup.ogg"), uid);
             _ambientSoundSystem.SetAmbience(uid, true);
         }
 
