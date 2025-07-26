@@ -38,6 +38,27 @@
             "name": "Operative"
         },
         {
+            "name": "SyndicateSecurity"
+        },
+        {
+            "name": "SyndicateWarden"
+        },
+        {
+            "name": "SyndicateScience"
+        },
+        {
+            "name": "SyndicateChef"
+        },
+        {
+            "name": "SyndicateEngineer"
+        },
+        {
+            "name": "SyndicateCargo"
+        },
+        {
+            "name": "SyndicateJanitor"
+        },
+        {
             "name": "HeadRevolutionary"
         },
         {

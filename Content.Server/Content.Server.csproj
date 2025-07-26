@@ -16,8 +16,14 @@
   <ItemGroup>
     <PackageReference Include="Discord.Net" />
     <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Orleans.Client" />
+    <PackageReference Include="Microsoft.Orleans.Clustering.Redis" />
+    <PackageReference Include="Microsoft.Orleans.Sdk"
+                      OutputItemType="Analyzer"
+                      PrivateAssets="all" />
     <PackageReference Include="NAudio" />
     <PackageReference Include="OggVorbisEncoder" />
+    <PackageReference Include="SS14.Starlight.NullLink" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Packaging\Content.Packaging.csproj" />

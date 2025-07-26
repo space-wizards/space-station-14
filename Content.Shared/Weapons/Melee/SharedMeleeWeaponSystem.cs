@@ -409,8 +409,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         DirtyField(weaponUid, weapon, nameof(MeleeWeaponComponent.NextAttack));
 
         // Do this AFTER attack so it doesn't spam every tick
-        var ev = new AttemptMeleeEvent(user);
+        var ev = new AttemptMeleeEvent
+        {
+            User = user,
+            Weapon = weaponUid,
+        };
         RaiseLocalEvent(weaponUid, ref ev);
+
+        RaiseLocalEvent(user, ref ev); // 🌟Starlight🌟
 
         if (ev.Cancelled)
         {

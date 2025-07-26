@@ -1922,8 +1922,9 @@
     delay: 0.8
   - type: Slippery
     slipData:
-      paralyzeTime: 0
       launchForwardsMultiplier: 0
+      stunTime: 0
+      knockdownTime: 0
     slipSound:
       collection: Parp
       params:
@@ -2027,7 +2028,7 @@
 - type: entity
   parent: BaseItem
   id: NewtonCradle
-  name: newton cradle
+  name: newton's cradle
   description: A device bored paper pushers use to remind themselves that time did not stop yet. Contains gravity.
   components:
   - type: Sprite

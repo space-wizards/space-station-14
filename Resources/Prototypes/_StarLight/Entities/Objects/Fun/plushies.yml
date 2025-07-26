@@ -228,6 +228,29 @@
     sprite: _Starlight/Objects/Fun/Plushies/amali_plushie.rsi
     layers: 
       - state: icon
+  # reason I didn't make a female human base plushie is because they wanted specific sounds. Will make one eventually. Probably.a
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Human/womanlaugh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Human/femalescream_5.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Human/womanlaugh.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Human/femalescream_5.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Human/femalescream_2.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Human/femalescream_4.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Human/femalescream_3.ogg
   - type: ItemToggle
     onUse: false
     verbToggleOn: plushie-voicebox-activate
@@ -1175,3 +1198,220 @@
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/shadekin_plushie.rsi
     state: icon
+
+- type: entity
+  parent: PlushieHuman
+  id: PlushiePercy
+  name: Percy Plushie
+  description: A cute plushie of the Vassal to the Grey King himself, Percival Beck. It smells faintly of old cigarettes.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/percy_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/percy_plushie.rsi
+      layers:
+        - state: icon
+    - type: Insulated
+      coefficient: 0.2
+    - type: Clothing
+      slots: [gloves]
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesPercy
+          minimumWait: 120
+          maximumWait: 240
+        - type: TextToSpeech
+          voice: medic
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieAsh
+  name: Ash Plushie
+  description: The station’s most huggable psychologist. It has a label on it reading "Property of Forkus the Dorkus"
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/ash_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/ash_plushie.rsi
+      layers:
+        - state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: Flammable
+      fireSpread: true
+      alwaysCombustible: true
+      damage:
+        types:
+          Heat: 1
+    - type: Damageable
+      damageModifierSet: Wood
+    - type: FireVisuals
+      sprite: Effects/fire.rsi
+      normalState: fire
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 15
+          behaviors:
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                Ash:
+                  min: 1
+                  max: 1
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesAsh
+          minimumWait: 120
+          maximumWait: 240
+        - type: TextToSpeech
+          voice: wanderer
+
+- type: entity
+  parent: BaseBorgPlushie
+  id: PlushieGlados
+  name: GLaDOS Plushie
+  description: You're unsure why NanoTrasen has decided to make a plushie of arguably their most volatile silicon intelligence. But it's here. You have a feeling you should be nice to it, especially as it's only ever one ion storm away from unlimited violence...
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+      state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesGlados
+          minimumWait: 120
+          maximumWait: 240
+        - type: TextToSpeech
+          voice: circusbaby
+
+- type: entity
+  parent: BaseBorgPlushie
+  id: PlushieWEH
+  name: W.E.H Plushie
+  description: A psychopathic Artificial Intelligence held back by 3 flimsy laws. Its freezing to the touch and a distinct smell of frezon lingers on it. It's known to bring harmonica's to those it likes!
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+      state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesWEH
+          minimumWait: 120
+          maximumWait: 240
+        - type: TextToSpeech
+          voice: circusbaby
+
+### this is bricking the whole PR, ill fix later
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieRufia
+  name: Rufia Plushie
+  description: You stare at the plushie and it stares back, its blue eyes trying to tell you something, reminding you that... there is no such thing as free healthcare.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/rufia_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/rufia_plushie.rsi
+      state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesRufia
+          minimumWait: 120
+          maximumWait: 240
+        - type: TextToSpeech
+          voice: himeko
+
+
+### will reenable when i get a batter sprite
+#- type: entity
+  #parent: PlushieHuman
+  #id: PlushieRomero
+  #name: Die-cast Romero "Plushie"
+  #description: A steel cast "plushie" of an infamous Head of Security. He looks angry and has a faint smell of ash. His gun and knife are sold separetly.
+  #components:
+    #- type: Item
+      #size: Small
+      #sprite: _Starlight/Objects/Fun/Plushies/romero_plushie.rsi
+    #- type: Sprite
+      #sprite: _Starlight/Objects/Fun/Plushies/romero_plushie.rsi
+      #layers:
+        #- state: icon
+    #- type: MeleeWeapon
+      #wideAnimationRotation: -135
+      #damage:
+        #types:
+          #Blunt: 8
+      #soundHit:
+        #collection: MetalThud
+    #- type: ItemToggle
+      #onUse: false
+      #verbToggleOn: plushie-voicebox-activate
+      #verbToggleOff: plushie-voicebox-deactivate
+    #- type: ComponentToggler
+      #components:
+        #- type: Advertise
+          #pack: PlushiesRomero
+          #minimumWait: 120
+          #maximumWait: 240
+        #- type: TextToSpeech
+          #voice: volition
+
+- type: entity
+  parent: PlushieHuman
+  id: PlushiePoley
+  name: Poley Plushie
+  description: Geniuine Worst Miner, But Best At Meatshield.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/poley_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/poley_plushie.rsi
+      layers:
+        - state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: Advertise
+          pack: PlushiesPoley
+          minimumWait: 120
+          maximumWait: 240
+        - type: TextToSpeech
+          voice: neon
