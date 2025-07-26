@@ -39,7 +39,7 @@ public sealed class RoundEndSummaryUIController : UIController,
         if (_window?.RoundId == message.RoundId)
             return;
 
-        _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
+        _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundStats,
             message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager);
     }
 
