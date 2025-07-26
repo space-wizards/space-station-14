@@ -30,6 +30,7 @@
     damageContainers:
     - Inorganic
     - Silicon
+  - type: ShowAccessReaderSettings
 
 - type: entity
   parent: [ClothingEyesBase, ShowMedicalIcons]
