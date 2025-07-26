@@ -1,4 +1,3 @@
-using Content.Server.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -12,6 +11,9 @@ public sealed class MindRememberBodySystem : EntitySystem
         SubscribeLocalEvent<MindRememberBodyComponent, BeforeBodyDestructionEvent>(SaveBody);
     }
 
+    /// <summary>
+    /// Saves the damage of a player's previous body inside their MindComponent
+    /// </summary>
     private void SaveBody(EntityUid uid, MindRememberBodyComponent component, BeforeBodyDestructionEvent args)
     {
         if (!TryComp<DamageableComponent>(uid, out var damageable)

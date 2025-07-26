@@ -5,7 +5,6 @@ using Content.Server.Body.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
-using Content.Server.GhostTypes;
 using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
@@ -19,6 +18,7 @@ using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
+using Content.Server.GhostTypes;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
@@ -484,10 +484,9 @@ namespace Content.Server.Ghost
             var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition.Value);
             var ghostComponent = Comp<GhostComponent>(ghost);
 
-            // Raise an event to assign a sprite state according to the damage taken
             if (TryComp<GhostSpriteStateComponent>(ghost, out var state))
             {
-                _ghostState.SetGhostSprite(ghost, mind.Comp, state);
+                _ghostState.SetGhostSprite(ghost, mind.Comp, state);  //Assings the ghost a sprite according to the damage taken
             }
 
             // Try setting the ghost entity name to either the character name or the player name.

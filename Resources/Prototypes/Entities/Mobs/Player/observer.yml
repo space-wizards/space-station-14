@@ -51,9 +51,15 @@
     visuals:
       enum.GhostVisuals.Damage:
         ghostVariant:
-          ghost_blunt: { state: ghost_blunt }
-          ghost_slash: { state: ghost_slash }
-          ghost_piercing: { state: ghost_piercing }
+          ghost_blunt1: { state: ghost_blunt1 }
+          ghost_blunt2: { state: ghost_blunt2 }
+          ghost_blunt3: { state: ghost_blunt3 }
+          ghost_slash1: { state: ghost_slash1 }
+          ghost_slash2: { state: ghost_slash2 }
+          ghost_slash3: { state: ghost_slash3 }
+          ghost_pierce1: { state: ghost_pierce1 }
+          ghost_pierce2: { state: ghost_pierce2 }
+          ghost_pierce3: { state: ghost_pierce3 }
           ghost_heat: { state: ghost_heat }
           ghost_cold: { state: ghost_cold }
           ghost_shock: { state: ghost_shock }
@@ -61,7 +67,9 @@
           ghost_cellular: { state: ghost_cellular }
           ghost_poison: { state: ghost_poison }
           ghost_airloss: { state: ghost_airloss }
-          ghost_explosion: { state: ghost_explosion }
+          ghost_explosion1: { state: ghost_explosion1 }
+          ghost_explosion2: { state: ghost_explosion2 }
+          ghost_explosion3: { state: ghost_explosion3 }
           ghost_bloodloss: { state: animated }
   - type: ContentEye
     maxZoom: 1.44,1.44

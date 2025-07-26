@@ -7,25 +7,75 @@
     "y": 32
   },
   "states": [
-    {
-      "name": "animated",
-      "directions": 4
-    },
       {
-          "name": "ghost_blunt",
+          "name": "animated",
           "directions": 4
       },
       {
-          "name": "ghost_slash",
+          "name": "ghost_blunt1",
           "directions": 4
       },
       {
-          "name": "ghost_piercing",
+          "name": "ghost_blunt2",
+          "directions": 4
+      },
+      {
+          "name": "ghost_blunt3",
+          "directions": 4
+      },
+      {
+          "name": "ghost_slash1",
+          "directions": 4
+      },
+      {
+          "name": "ghost_slash2",
+          "directions": 4
+      },
+      {
+          "name": "ghost_slash3",
+          "directions": 4
+      },
+      {
+          "name": "ghost_pierce1",
+          "directions": 4
+      },
+      {
+          "name": "ghost_pierce2",
+          "directions": 4
+      },
+      {
+          "name": "ghost_pierce3",
           "directions": 4
       },
       {
           "name": "ghost_heat",
-          "directions": 4
+          "directions": 4,
+          "delays": [
+              [
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1
+              ],
+              [
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1
+              ],
+              [
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1
+              ],
+              [
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1
+              ]
+          ]
       },
       {
           "name": "ghost_cold",
@@ -33,11 +83,71 @@
       },
       {
           "name": "ghost_shock",
-          "directions": 4
+          "directions": 4,
+          "delays": [
+              [
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1
+              ],
+              [
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1
+              ],
+              [
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1
+              ],
+              [
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1
+              ]
+          ]
       },
       {
           "name": "ghost_radiation",
-          "directions": 4
+          "directions": 4,
+          "delays": [
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ],
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ],
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ],
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ]
+          ]
       },
       {
           "name": "ghost_cellular",
@@ -52,11 +162,19 @@
           "directions": 4
       },
       {
-          "name": "ghost_explosion",
+          "name": "ghost_explosion1",
           "directions": 4
       },
-    {
-      "name": "icon"
-    }
+      {
+          "name": "ghost_explosion2",
+          "directions": 4
+      },
+      {
+          "name": "ghost_explosion3",
+          "directions": 4
+      },
+      {
+        "name": "icon"
+      }
   ]
 }

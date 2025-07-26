@@ -379,6 +379,7 @@ namespace Content.Shared.Damage
                 {
                     if (damage.DamageDict.TryGetValue(type, out var damageValue) && damageValue > 0)  //get value and make sure it isnt 0
                     {
+                        Log.Debug($"damagie {damageValue}");
                         if (damageValue > highestValue)  //if its higher, clear the list and add the value
                         {
                             highestType.Clear();
