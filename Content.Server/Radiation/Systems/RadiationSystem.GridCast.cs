@@ -224,8 +224,8 @@ namespace Content.Server.Radiation.Systems
 
                 foreach (var sourceUid in nearbySources)
                 {
-                    if (!SourceDataMap.TryGetValue(sourceUid, out var source)) continue;
-                    if (source.Transform.MapID != destMapId) continue;
+                    if (!SourceDataMap.TryGetValue(sourceUid, out var source)
+                        || source.Transform.MapID != destMapId) continue;
                     var delta = source.WorldPosition - destWorld;
                     if (delta.LengthSquared() > source.MaxRange * source.MaxRange) continue;
                     var dist = delta.Length();
