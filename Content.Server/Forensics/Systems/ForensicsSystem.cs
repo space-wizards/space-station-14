@@ -1,3 +1,5 @@
+using Content.Server.Body;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
@@ -79,7 +81,7 @@ namespace Content.Server.Forensics
             else
             {
                 // If set manually (for example by cloning) we also need to inform the bloodstream of the correct DNA string so it can be updated
-                var ev = new GenerateDnaEvent { Owner = ent.Owner, DNA = ent.Comp.DNA };
+                var ev = new RefreshBloodEvent();
                 RaiseLocalEvent(ent.Owner, ref ev);
             }
         }
@@ -330,7 +332,7 @@ namespace Content.Server.Forensics
             ent.Comp.DNA = GenerateDNA();
             Dirty(ent);
 
-            var ev = new GenerateDnaEvent { Owner = ent.Owner, DNA = ent.Comp.DNA };
+            var ev = new RefreshBloodEvent();
             RaiseLocalEvent(ent.Owner, ref ev);
         }
 

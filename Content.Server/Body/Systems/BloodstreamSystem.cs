@@ -2,6 +2,20 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Forensics;
+using Content.Shared.Forensics.Components;
+using Content.Shared.HealthExaminable;
+using Content.Shared.Humanoid;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
+using Content.Shared.Rejuvenate;
+using Content.Shared.Speech.EntitySystems;
+using Content.Shared.Sprite;
+using Robust.Server.Audio;
+using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
@@ -12,7 +26,7 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
         base.Initialize();
 
         SubscribeLocalEvent<BloodstreamComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<BloodstreamComponent, GenerateDnaEvent>(OnDnaGenerated);
+        SubscribeLocalEvent<BloodstreamComponent, RefreshBloodEvent>(OnRefreshBlood);
     }
 
     // not sure if we can move this to shared or not
@@ -41,18 +55,52 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
     }
 
     // forensics is not predicted yet
-    private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
+    private void OnRefreshBlood(Entity<BloodstreamComponent> entity, ref RefreshBloodEvent args)
     {
+        // TODO: this can fail due to component initialization order.
+        // As an example, the SlimeBloodSystem raises this event
+        // when a slime's appearance gets loaded.
+        // However, appearance could be loaded before a blood solution
+        // exists so this check could fail and not refresh the blood data
+        // even though we want it to.
         if (SolutionContainer.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
         {
             foreach (var reagent in bloodSolution.Contents)
             {
-                List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
-                reagentData.RemoveAll(x => x is DnaData);
+                var reagentData = reagent.Reagent.EnsureReagentData();
+                reagentData.Clear();
                 reagentData.AddRange(GetEntityBloodData(entity.Owner));
             }
         }
+    }
+
+    /// <summary>
+    /// Get the reagent data for blood that a specific entity should have.
+    /// </summary>
+    public List<ReagentData> GetEntityBloodData(EntityUid uid)
+    {
+        // All blood always has DNA data, even if it's invalid, but color data is
+        // only added whatsoever if the color is overridden in the event.
+        var bloodData = new List<ReagentData>();
+        var dnaData = new DnaData();
+
+        if (TryComp<DnaComponent>(uid, out var donorComp) && donorComp.DNA != null)
+            dnaData.DNA = donorComp.DNA;
         else
-            Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
+            dnaData.DNA = Loc.GetString("forensics-dna-unknown");
+        bloodData.Add(dnaData);
+
+        var ev = new BloodColorOverrideEvent { OverrideColor = null };
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.OverrideColor != null)
+        {
+            var bloodColorData = new ReagentColorData
+            {
+                SubstanceColor = ev.OverrideColor.Value
+            };
+            bloodData.Add(bloodColorData);
+        }
+
+        return bloodData;
     }
 }
