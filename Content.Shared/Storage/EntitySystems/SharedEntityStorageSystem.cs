@@ -343,6 +343,13 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (attemptEvent.Cancelled)
             return false;
 
+        // Allow other components on the container to prevent inserting the item: e.g. the container is folded
+        var containerAttemptEvent = new EntityStorageInsertedIntoAttemptEvent(toInsert);
+        RaiseLocalEvent(container, ref containerAttemptEvent);
+
+        if (containerAttemptEvent.Cancelled)
+            return false;
+
         // Consult the whitelist. The whitelist ignores the default assumption about how entity storage works.
         if (component.Whitelist != null)
             return _whitelistSystem.IsValid(component.Whitelist, toInsert);

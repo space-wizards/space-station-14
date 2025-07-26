@@ -135,20 +135,6 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         DirtyField(ent.Owner, ent.Comp, nameof(DeliveryComponent.WasPenalized));
     }
 
-    /// <summary>
-    /// Gathers the total multiplier for a delivery.
-    /// This is done by components having subscribed to GetDeliveryMultiplierEvent and having added onto it.
-    /// </summary>
-    /// <param name="ent">The delivery for which to get the multiplier.</param>
-    /// <returns>Total multiplier.</returns>
-    private float GetDeliveryMultiplier(Entity<DeliveryComponent> ent)
-    {
-        var ev = new GetDeliveryMultiplierEvent();
-        RaiseLocalEvent(ent, ref ev);
-
-        return ev.Multiplier;
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

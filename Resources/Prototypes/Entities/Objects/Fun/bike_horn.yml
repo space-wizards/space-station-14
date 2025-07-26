@@ -138,9 +138,9 @@
     price: 1000
   - type: PointLight
     radius: 1.2
-    energy: 1
+    energy: 2.2
     castShadows: false
-    color: "#eef066"
+    color: "#ffca1b"
 
 - type: entity
   parent: BikeHorn
@@ -196,3 +196,36 @@
   - type: Construction
     graph: BananiumHorn
     node: bananiumHorn
+
+- type: entity
+  parent: BaseItem
+  id: PushHorn
+  name: push horn
+  description: This powerful bikehorn is sure to blast frowns away.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/push_horn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/push_horn.rsi
+    size: Tiny
+  - type: Clothing
+    sprite: Objects/Fun/push_horn.rsi
+    slots: [Belt]
+    quickEquip: false
+  - type: EmitSoundOnUse
+    handle: false
+    sound: "/Audio/Items/Toys/pushHornHonk.ogg"
+  - type: EmitSoundOnLand
+    sound: "/Audio/Items/Toys/pushHornFloor.ogg"
+  - type: UseDelay
+    delay: 10
+  - type: TriggerOnUse
+  - type: RepulseAttractOnTrigger
+    speed: 50
+    range: 3.5
+    whitelist:
+      components:
+      - MobMover
+  - type: SpawnOnTrigger
+    proto: EffectGravityPulse
