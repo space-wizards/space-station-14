@@ -97,6 +97,7 @@
   parent: Window
   id: TintedWindow
   name: tinted window
+  description: Smart tinted window with state switching option.
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -111,6 +112,20 @@
   - type: Occluder
   - type: StaticPrice
     price: 70
+  - type: ToggleableOccluder
+  - type: DeviceLinkSink
+    ports:
+    - On
+    - Off
+    - Toggle
+
+- type: entity
+  parent: TintedWindow
+  id: TintedWindowTransparent
+  suffix: Transparent
+  components:
+  - type: Occluder
+    enabled: false
 
 - type: entity
   id: WindowRCDResistant
