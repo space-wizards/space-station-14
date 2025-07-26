@@ -218,6 +218,11 @@
     Plastic: 100
 
 - type: latheRecipe
+  parent: ForensicPad
+  id: ReagentPad
+  result: ReagentPad
+
+- type: latheRecipe
   id: LauncherSyringe
   result: LauncherSyringe
   completetime: 10
