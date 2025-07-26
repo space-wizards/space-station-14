@@ -9,8 +9,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Starlight.NullLink;
-using Starlight.NullLink.Abstract;
-using static Content.Shared._NullLink.NullLink;
 using NLServer = Starlight.NullLink.Server;
 using NLServerInfo = Starlight.NullLink.ServerInfo;
 
@@ -62,10 +60,9 @@ public sealed partial class HubSystem : EntitySystem, IServerObserver, IServerIn
             if ( _actors.Enabled
                 && (_lastResubscribe == null || _lastResubscribe + _grainDelay < _timing.RealTime))
             {
-
+                _processingResubscribe = true;
                 if (_lastResubscribe == null)
                 {
-                    _processingResubscribe = true;
                     Pipe.RunInBackground(async () =>
                     {
                         await _actors.Connection;
