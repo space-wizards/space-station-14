@@ -1,7 +1,6 @@
 using System.Runtime.InteropServices;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
-using Robust.Shared.Threading;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -22,13 +21,8 @@ public sealed partial class AtmosphereSystem
         // TODO: profile because doing this for every tile seems really bad
         var indices = _transformSystem.GetGridOrMapTilePosition(ent, xform);
 
-        /*
-         We need to determine comparisons in a performant way.
-         To generalize, we can simply compare the N - S and E - W directions.
-         */
-
         // First, we null check data and prep it for comparison.
-        Span<float> floatArray = stackalloc float[4];
+        Span<float> floatArray = stackalloc float[Atmospherics.Directions];
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
             var dir = (AtmosDirection)(1 << i);
@@ -39,20 +33,23 @@ public sealed partial class AtmosphereSystem
                 floatArray[i] = tile.Air?.Pressure ?? 0f;
         }
 
-        // This effectively checks the N direction and the E direction
-        // (as we check the opposing side at the same time
-        var maxDeltaPressure = 0f;
-        for (var i = 0; i < Atmospherics.Directions; i += 2)
-        {
-            var oppi = i.ToOppositeIndex();
-            var deltaPressure = Math.Abs(floatArray[i] - floatArray[oppi]);
+        // There's no delta-P, so don't bother doing any more math.
+        // It's lukewarm common for all sides to be null (0).
+        if (NumericsHelpers.HorizontalAdd(floatArray) <= float.Epsilon)
+            return;
 
-            maxDeltaPressure = Math.Max(deltaPressure, maxDeltaPressure);
-        }
+        Span<float> spanMax = stackalloc float[Atmospherics.Directions];
+        Span<float> spanMin = stackalloc float[Atmospherics.Directions];
 
-        if (maxDeltaPressure > ent.Comp.MinPressureDelta)
+        // If I have seen further, it is by standing on the shoulders of giants.
+        NumericsHelpers.Max(spanMax, floatArray);
+        NumericsHelpers.Min(spanMin, floatArray);
+        NumericsHelpers.Sub(spanMin, spanMax);
+        NumericsHelpers.Abs(spanMin);
+
+        if (spanMin[0] > ent.Comp.MinPressureDelta)
         {
-            PerformDamage(ent, maxDeltaPressure);
+            PerformDamage(ent, spanMin[0]);
         }
     }
 
