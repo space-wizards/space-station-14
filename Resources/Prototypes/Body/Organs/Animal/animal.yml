@@ -1,16 +1,13 @@
 - type: entity
-  id: BaseAnimalOrganUnGibbable
-  parent: BaseItem
   abstract: true
+  parent: BaseOrgan
+  id: BaseAnimalOrganUnGibbable
   components:
-  - type: Organ
-  - type: Food
-  - type: Sprite
-    sprite: Mobs/Species/Human/organs.rsi
   - type: StaticPrice
     price: 50
   - type: SolutionContainerManager
     solutions:
+      # no 'organ' solution?
       food:
         maxVol: 5
         reagents:
@@ -18,40 +15,29 @@
           Quantity: 5
   - type: FlavorProfile
     flavors:
-      - chicken # everything kinda tastes like chicken
+    - chicken # everything kinda tastes like chicken
   - type: Tag
     tags:
-      - Meat
+    - Meat
 
 - type: entity
-  id: BaseAnimalOrgan
-  parent: BaseAnimalOrganUnGibbable
   abstract: true
+  parent: BaseAnimalOrganUnGibbable
+  id: BaseAnimalOrgan
   components:
   - type: Gibbable
 
 - type: entity
+  parent: [ BaseAnimalOrgan, BaseOrganLungs ]
   id: OrganAnimalLungs
-  parent: BaseAnimalOrgan
-  name: lungs
   categories: [ HideSpawnMenu ]
+  name: lungs
   components:
-  - type: Sprite
-    layers:
-    - state: lung-l
-    - state: lung-r
-  - type: Organ
-  - type: Lung
   - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
     metabolizerTypes: [ Animal ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
   - type: SolutionContainerManager
     solutions:
+      # No 'organ' solution.
       Lung:
         maxVol: 100.0
         canReact: false
@@ -60,107 +46,64 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Item
-    size: Small
-    heldPrefix: lungs
 
 - type: entity
-  id: OrganAnimalStomach
+
   parent: BaseAnimalOrgan
-  name: stomach
+  id: OrganAnimalStomach
   categories: [ HideSpawnMenu ]
+  name: stomach
   components:
-  - type: Sprite
-    state: stomach
-  - type: Organ
   - type: SolutionContainerManager
     solutions:
       stomach:
-        maxVol: 40
+        maxVol: 40 # Reduced volume
       food:
         maxVol: 5
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Stomach
   - type: Metabolizer
-    maxReagents: 3
     metabolizerTypes: [ Animal ]
-    groups:
-    - id: Food
-    - id: Drink
-  - type: Item
-    size: Small
-    heldPrefix: stomach
 
 - type: entity
-  id: OrganMouseStomach
+
   parent: OrganAnimalStomach
-  name: stomach
+  id: OrganMouseStomach
   categories: [ HideSpawnMenu ]
+  name: stomach
   components:
   - type: SolutionContainerManager
     solutions:
       stomach:
         maxVol: 30
-  - type: Item
-    size: Small
-    heldPrefix: stomach
+        #TODO:ERRANT food solution missing?
 
 - type: entity
+  parent: [ BaseAnimalOrgan, BaseOrganLiver ]
   id: OrganAnimalLiver
-  parent: BaseAnimalOrgan
+  categories: [ HideSpawnMenu ]
   name: liver
-  categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    state: liver
-  - type: Organ
   - type: Metabolizer
-    maxReagents: 1
     metabolizerTypes: [ Animal ]
-    groups:
-    - id: Alcohol
-      rateModifier: 0.1
-  - type: Item
-    size: Small
-    heldPrefix: liver
 
 - type: entity
+
+  parent: [ BaseAnimalOrgan, BaseOrganHeart ]
   id: OrganAnimalHeart
-  parent: BaseAnimalOrgan
-  name: heart
   categories: [ HideSpawnMenu ]
+  name: heart
   components:
-  - type: Sprite
-    state: heart-on
-  - type: Organ
   - type: Metabolizer
-    maxReagents: 2
     metabolizerTypes: [ Animal ]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
-  - type: Item
-    size: Small
-    heldPrefix: heart
 
 - type: entity
+
+  parent: [ BaseAnimalOrgan, BaseOrganKidneys ]
   id: OrganAnimalKidneys
-  parent: BaseAnimalOrgan
-  name: kidneys
   categories: [ HideSpawnMenu ]
+  name: kidneys
   components:
-  - type: Sprite
-    layers:
-    - state: kidney-l
-    - state: kidney-r
-  - type: Organ
   - type: Metabolizer
-    maxReagents: 5
     metabolizerTypes: [ Animal ]
-    removeEmpty: true
-  - type: Item
-    size: Small
-    heldPrefix: kidneys
