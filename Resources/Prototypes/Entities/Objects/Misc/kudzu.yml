@@ -265,6 +265,30 @@
       - Meat
 
 - type: entity
+  id: FleshKudzuSpace
+  parent: FleshKudzu
+  suffix: Space
+  components:
+    - type: Barotrauma
+      damage:
+        types:
+          Blunt: 0
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 10
+      coldDamage:
+        types:
+          Cold: 0
+    - type: Respirator
+      damage:
+        types:
+          Asphyxiation: 0
+      damageRecovery:
+        types:
+          Asphyxiation: 0
+
+- type: entity
   name: dark haze
   id: ShadowKudzu
   parent: [ BaseKudzu, BaseShadow ]
