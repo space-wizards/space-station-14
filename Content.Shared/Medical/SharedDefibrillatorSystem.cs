@@ -79,7 +79,7 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
 
         if (!_toggle.IsActivated(uid))
         {
-            if (user != null && _timing.IsFirstTimePredicted && _net.IsServer)
+            if (user != null && _net.IsClient && _timing.IsFirstTimePredicted)
                 _popup.PopupEntity(Loc.GetString("defibrillator-not-on"), uid, user.Value);
             return false;
         }
