@@ -1,0 +1,130 @@
+- type: entity
+  parent: [ ClothingHeadBase, BaseCommandContraband ]
+  id: ClothingHeadHatCapNtrep
+  name: nt representive cap
+  description: The cap of justice over command!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/ntrep.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/ntrep.rsi
+    
+- type: entity
+  parent: [ClothingHeadBase, BaseCommandContraband]
+  id: ClothingHeadHatBeretBlueShield
+  name: blueshield officer's beret
+  description: This beret completes the outfit of any true BlueShield.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/blueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/blueshield.rsi
+
+- type: entity
+  parent: [ClothingHeadBase, BaseSecurityContraband]
+  id: ClothingHeadHatBeretCorpsman
+  name: Corpsman's Beret
+  description: Losing this hat is considered grounds for demotion.. Kidding, though you will be ridiculed by your fellow corpsmans.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/beret_corpsman.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/beret_corpsman.rsi
+
+- type: entity
+  parent: [ClothingHeadBase, BaseCommandContraband]
+  id: ClothingHeadHatSheriffHat
+  name: head of security's sheriff hat
+  description: It's high noon.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/sheriffhat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/sheriffhat.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - HamsterWearable
+    - WhitelistChameleon
+
+#USSP
+- type: entity
+  parent: [ClothingHeadBase, BaseSovietContraband]
+  id: ClothingHeadHatUshankaAlt
+  name: SNKVD ushanka
+  description: Disappearances are entirely voluntary, tovarisch.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/Ushanka.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/Ushanka.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 1.025
+    coolingCoefficient: 0.65
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingHeadBase, BaseSovietContraband]
+  id: ClothingHeadHatSovietAdmiralHat
+  name: soviet admiral hat
+  description: This hat clearly belongs to someone very important.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/sovietadmiralhat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/sovietadmiralhat.rsi 
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - HamsterWearable
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBrimHat
+  name: wide brimmed hat
+  description: Keep that bloody sun out of your eyes.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/brim_hat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/brim_hat.rsi 
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFeatheredHat
+  name: feathered hat
+  description: You own theses streets.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/feather_hat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/feather_hat.rsi 
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTVHead
+  name: tv head
+  description: The label says it will make you look like a true Tumblr sexyman. What does that even mean?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/tv_head.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/tv_head.rsi 
+  - type: Tag
+    tags:
+    - WhitelistChameleon
