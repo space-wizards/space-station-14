@@ -22,8 +22,7 @@
       NavSmash: !type:Bool
         true
   - type: Prying
-    pryPowered: true
-    force: true
+    strength: Forced
     speedModifier: 1.5
     useSound:
       path: /Audio/Items/crowbar.ogg
