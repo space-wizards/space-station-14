@@ -1,243 +1,218 @@
-# species
+# Unisex Sounds for all species
 - type: emoteSounds
+  id: UnisexSounds
+  params:
+    variation: 0.125
+  sounds:
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Honk:
+      collection: BikeHorn
+    Snore:
+      collection: Snores
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+
+- type: emoteSounds
+  id: UnisexSoundsPitched
+  params:
+    variation: 0.125
+    pitch: 0.75
+  sounds:
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Honk:
+      collection: BikeHorn
+    Snore:
+      collection: Snores
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+
+# Male sounds for all species
+- type: emoteSounds
+  id: MaleSounds
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: MaleScreams
+    Laugh:
+      collection: MaleLaugh
+    Sneeze:
+      collection: MaleSneezes
+    Cough:
+      collection: MaleCoughs
+    Yawn:
+      collection: MaleYawn
+    Sigh:
+      collection: MaleSigh
+    Crying:
+      collection: MaleCry
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
+
+- type: emoteSounds
+  id: MaleSoundsPitched
+  params:
+    variation: 0.125
+    pitch: 0.75
+  sounds:
+    Scream:
+      collection: MaleScreams
+    Laugh:
+      collection: MaleLaugh
+    Sneeze:
+      collection: MaleSneezes
+    Cough:
+      collection: MaleCoughs
+    Yawn:
+      collection: MaleYawn
+    Sigh:
+      collection: MaleSigh
+    Crying:
+      collection: MaleCry
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
+
+# Female sounds for all species
+- type: emoteSounds
+  id: FemaleSounds
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: FemaleScreams
+    Laugh:
+      collection: FemaleLaugh
+    Sneeze:
+      collection: FemaleSneezes
+    Cough:
+      collection: FemaleCoughs
+    Yawn:
+      collection: FemaleYawn
+    Sigh:
+      collection: FemaleSigh
+    Crying:
+      collection: FemaleCry
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
+
+- type: emoteSounds
+  id: FemaleSoundsPitched
+  params:
+    variation: 0.125
+    pitch: 0.75
+  sounds:
+    Scream:
+      collection: FemaleScreams
+    Laugh:
+      collection: FemaleLaugh
+    Sneeze:
+      collection: FemaleSneezes
+    Cough:
+      collection: FemaleCoughs
+    Yawn:
+      collection: FemaleYawn
+    Sigh:
+      collection: FemaleSigh
+    Crying:
+      collection: FemaleCry
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
+
+# Species
+- type: emoteSounds
+  parent: [UnisexSounds, MaleSounds]
   id: MaleHuman
-  params:
-    variation: 0.125
-  sounds:
-    Scream:
-      collection: MaleScreams
-    Laugh:
-      collection: MaleLaugh
-    Sneeze:
-      collection: MaleSneezes
-    Cough:
-      collection: MaleCoughs
-    CatMeow:
-      collection: CatMeows
-    CatHisses:
-      collection: CatHisses
-    MonkeyScreeches:
-      collection: MonkeyScreeches
-    RobotBeep:
-      collection: RobotBeeps
-    Yawn:
-      collection: MaleYawn
-    Snore:
-      collection: Snores
-    Honk:
-      collection: BikeHorn
-    Sigh:
-      collection: MaleSigh
-    Crying:
-      collection: MaleCry
-    Whistle:
-      collection: Whistles
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: MaleDeathGasp
 
 - type: emoteSounds
+  parent: [UnisexSounds, FemaleSounds]
   id: FemaleHuman
+
+- type: emoteSounds
+  id: UnisexReptilian
   params:
     variation: 0.125
   sounds:
     Scream:
-      collection: FemaleScreams
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
-      collection: FemaleLaugh
-    Sneeze:
-      collection: FemaleSneezes
-    Cough:
-      collection: FemaleCoughs
-    CatMeow:
-      collection: CatMeows
-    CatHisses:
-      collection: CatHisses
-    MonkeyScreeches:
-      collection: MonkeyScreeches
-    RobotBeep:
-      collection: RobotBeeps
-    Yawn:
-      collection: FemaleYawn
-    Snore:
-      collection: Snores
-    Honk:
-      collection: CluwneHorn
-    Sigh:
-      collection: FemaleSigh
-    Crying:
-      collection: FemaleCry
-    Whistle:
-      collection: Whistles
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: FemaleGasp
-    DefaultDeathgasp:
-      collection: FemaleDeathGasp
+      path: /Audio/Animals/lizard_happy.ogg
 
 - type: emoteSounds
+  parent: [UnisexSounds, UnisexReptilian, MaleSounds]
   id: MaleReptilian
-  params:
-    variation: 0.125
-  sounds:
-    Scream:
-      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
-    Laugh:
-      path: /Audio/Animals/lizard_happy.ogg
-    Honk:
-      collection: BikeHorn
-    Whistle:
-      collection: Whistles
-    Crying:
-      collection: MaleCry
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: DeathGasp
 
 - type: emoteSounds
+  parent: [UnisexSounds, UnisexReptilian, FemaleSounds]
   id: FemaleReptilian
+
+- type: emoteSounds
+  id: UnisexSlime
   params:
     variation: 0.125
   sounds:
-    Scream:
-      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
-    Laugh:
-      path: /Audio/Animals/lizard_happy.ogg
-    Honk:
-      collection: BikeHorn
-    Whistle:
-      collection: Whistles
-    Crying:
-      collection: FemaleCry
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: FemaleGasp
-    DefaultDeathgasp:
-      collection: FemaleDeathGasp
+    Squish:
+      collection: Squishes
 
 - type: emoteSounds
+  parent: [UnisexSounds, UnisexSlime, MaleSounds]
   id: MaleSlime
-  sounds:
-    Squish:
-      collection: Squishes
-    Scream:
-      collection: MaleScreams
-    Laugh:
-      collection: MaleLaugh
-    Sneeze:
-      collection: MaleSneezes
-    Cough:
-      collection: MaleCoughs
-    CatMeow:
-      collection: CatMeows
-    CatHisses:
-      collection: CatHisses
-    MonkeyScreeches:
-      collection: MonkeyScreeches
-    RobotBeep:
-      collection: RobotBeeps
-    Yawn:
-      collection: MaleYawn
-    Snore:
-      collection: Snores
-    Honk:
-      collection: BikeHorn
-    Sigh:
-      collection: MaleSigh
-    Crying:
-      collection: MaleCry
-    Whistle:
-      collection: Whistles
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: MaleDeathGasp
-  params:
-    variation: 0.125
 
 - type: emoteSounds
+  parent: [UnisexSounds, UnisexSlime, FemaleSounds]
   id: FemaleSlime
-  sounds:
-    Squish:
-      collection: Squishes
-    Scream:
-      collection: FemaleScreams
-    Laugh:
-      collection: FemaleLaugh
-    Sneeze:
-      collection: FemaleSneezes
-    Cough:
-      collection: FemaleCoughs
-    CatMeow:
-      collection: CatMeows
-    CatHisses:
-      collection: CatHisses
-    MonkeyScreeches:
-      collection: MonkeyScreeches
-    RobotBeep:
-      collection: RobotBeeps
-    Yawn:
-      collection: FemaleYawn
-    Snore:
-      collection: Snores
-    Honk:
-      collection: CluwneHorn
-    Sigh:
-      collection: FemaleSigh
-    Crying:
-      collection: FemaleCry
-    Whistle:
-      collection: Whistles
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: FemaleGasp
-    DefaultDeathgasp:
-      collection: FemaleDeathGasp
-  params:
-    variation: 0.125
 
 - type: emoteSounds
   id: UnisexVox
+  params:
+    variation: 0.125
   sounds:
     Scream:
       path: /Audio/Voice/Vox/shriek1.ogg
     Laugh:
       path: /Audio/Voice/Vox/vox_laugh.ogg
-    Honk:
-      collection: BikeHorn
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-  params:
-    variation: 0.125
-    # We need vox sounds for the other emotes
+
+- type: emoteSounds
+  parent: [UnisexSounds, UnisexVox, MaleSounds]
+  id: MaleVox
+
+- type: emoteSounds
+  parent: [UnisexSounds, UnisexVox, FemaleSounds]
+  id: FemaleVox
 
 - type: emoteSounds
   id: UnisexDiona
+  params:
+    variation: 0.125
   sounds:
     Scream:
       path: /Audio/Voice/Diona/diona_scream.ogg
@@ -245,18 +220,14 @@
       collection: DionaLaugh
     Chirp:
       path: /Audio/Animals/nymph_chirp.ogg
-    Honk:
-      collection: BikeHorn
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: DeathGasp
-  params:
-    variation: 0.125
+
+- type: emoteSounds
+  parent: [UnisexSounds, UnisexDiona, MaleSounds]
+  id: MaleDiona
+
+- type: emoteSounds
+  parent: [UnisexSounds, UnisexDiona, FemaleSounds]
+  id: FemaleDiona
 
 - type: emoteSounds
   id: UnisexArachnid
@@ -271,102 +242,22 @@
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
     Click:
       path: /Audio/Voice/Arachnid/arachnid_click.ogg
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Honk:
-      collection: BikeHorn
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: DeathGasp
 
 - type: emoteSounds
-  id: UnisexDwarf
-  sounds:
-    Scream:
-      collection: MaleScreams
-    Laugh:
-      collection: MaleLaugh
-    Sneeze:
-      collection: MaleSneezes
-    Cough:
-      collection: MaleCoughs
-    CatMeow:
-      collection: CatMeows
-    CatHisses:
-      collection: CatHisses
-    MonkeyScreeches:
-      collection: MonkeyScreeches
-    RobotBeep:
-      collection: RobotBeeps
-    Yawn:
-      collection: MaleYawn
-    Snore:
-      collection: Snores
-    Sigh:
-      collection: MaleSigh
-    Honk:
-      collection: BikeHorn
-    Crying:
-      collection: MaleCry
-    Whistle:
-      collection: Whistles
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: MaleDeathGasp
-  params:
-    variation: 0.125
-    pitch: 0.75
+  parent: [UnisexSounds, UnisexArachnid, MaleSounds]
+  id: MaleArachnid
 
 - type: emoteSounds
+  parent: [UnisexSounds, UnisexArachnid, FemaleSounds]
+  id: FemaleArachnid
+
+- type: emoteSounds
+  parent: [UnisexSoundsPitched, MaleSoundsPitched]
+  id: MaleDwarf
+
+- type: emoteSounds
+  parent: [UnisexSoundsPitched, FemaleSoundsPitched]
   id: FemaleDwarf
-  sounds:
-    Scream:
-      collection: FemaleScreams
-    Laugh:
-      collection: FemaleLaugh
-    Sneeze:
-      collection: FemaleSneezes
-    Cough:
-      collection: FemaleCoughs
-    CatMeow:
-      collection: CatMeows
-    CatHisses:
-      collection: CatHisses
-    MonkeyScreeches:
-      collection: MonkeyScreeches
-    RobotBeep:
-      collection: RobotBeeps
-    Yawn:
-      collection: FemaleYawn
-    Snore:
-      collection: Snores
-    Sigh:
-      collection: FemaleSigh
-    Honk:
-      collection: BikeHorn
-    Crying:
-      collection: FemaleCry
-    Whistle:
-      collection: Whistles
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: FemaleGasp
-    DefaultDeathgasp:
-      collection: FemaleDeathGasp
-  params:
-    variation: 0.125
-    pitch: 0.75
 
 - type: emoteSounds
   id: UnisexMoth
@@ -383,16 +274,16 @@
       path: /Audio/Voice/Moth/moth_chitter.ogg
     Squeak:
       path: /Audio/Voice/Moth/moth_squeak.ogg
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Honk:
-      collection: BikeHorn
-    Gasp:
-      collection: MaleGasp
     DefaultDeathgasp:
       collection: MothDeathGasp
+
+- type: emoteSounds
+  parent: [UnisexSounds, UnisexMoth, MaleSounds]
+  id: MaleMoth
+
+- type: emoteSounds
+  parent: [UnisexSounds, UnisexMoth, FemaleSounds]
+  id: FemaleMoth
 
 - type: emoteSounds
   id: UnisexSilicon
