@@ -146,7 +146,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
         RaiseLocalEvent(uid, ref msg);
 
-        return msg.Continue && !msg.Cancelled;
+        return (component.ForceIgnoreTriggerContinue || msg.Continue) && !msg.Cancelled;
     }
 
     private void OnStartCollide(EntityUid uid, StepTriggerComponent component, ref StartCollideEvent args)

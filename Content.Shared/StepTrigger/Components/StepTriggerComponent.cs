@@ -57,6 +57,16 @@ public sealed partial class StepTriggerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool StepOn = false;
+
+    /// <summary>
+    /// If true, the trigger will activate regardless of whether <see cref="StepTriggerAttemptEvent.Continue"/> is true or false,
+    /// unless the event is explicitly <see cref="StepTriggerAttemptEvent.Cancelled"/>.
+    /// </summary>
+    /// <remarks>
+    /// Disabled by default.
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    public bool ForceIgnoreTriggerContinue = false;
 }
 
 [RegisterComponent]
