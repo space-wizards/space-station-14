@@ -11,7 +11,7 @@
   - type: Clothing
     sprite: _DeadSpace/Clothing/Eyes/Hud/pnv.rsi
   - type: NightVisionClothing
-    color: "#41af0e"
+    color: "#41af0ef2"
 
 - type: latheRecipe
   id: ClothingEyesPNV
@@ -35,7 +35,7 @@
   - type: Clothing
     sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-adv.rsi
   - type: NightVisionClothing
-    color: "#ffffff"
+    color: "#ffffffe6"
 
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSyndicateContraband]
@@ -50,6 +50,6 @@
   - type: Clothing
     sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-synd.rsi
   - type: NightVisionClothing
-    color: "#ffffff"
+    color: "#ffffffe6"
   - type: ShowSyndicateIcons
   - type: ShowHealthBars
