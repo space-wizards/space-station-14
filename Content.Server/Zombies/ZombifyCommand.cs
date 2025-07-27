@@ -21,17 +21,6 @@ public sealed class ZombifyCommand : ToolshedCommand
             _zombieSystem.ZombifyEntity(entity);
         }
     }
-
-    [CommandImplementation("cure")]
-    public void Cure([PipedArgument] IEnumerable<EntityUid> input)
-    {
-        _zombieSystem ??= EntityManager.System<ZombieSystem>();
-
-        foreach (var entity in input)
-        {
-            _zombieSystem.UnZombify(entity, entity, null);
-        }
-    }
 }
 
 [AdminCommand(AdminFlags.Fun)]
