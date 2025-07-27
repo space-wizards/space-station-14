@@ -3,7 +3,7 @@
 
 <GuideEntityEmbed Entity="ToyFigurineHeadOfSecurity" Caption="Head of Security"/>
 
-1 . Standard [color=#00a933]Code Green[/color] equipment is:
+1. Standard [color=#00a933]Code Green[/color] equipment is:
 <Box>
 	<GuideEntityEmbed Entity="WeaponSubMachineGunWt550"/>
 	or
