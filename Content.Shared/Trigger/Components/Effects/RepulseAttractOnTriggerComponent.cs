@@ -16,13 +16,13 @@ public sealed partial class RepulseAttractOnTriggerComponent : BaseXOnTriggerCom
     /// A positive value will repulse objects, a negative value will attract.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Speed;
+    public float Speed = 5.0f;
 
     /// <summary>
     /// How close do the entities need to be?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Range;
+    public float Range = 5.0f;
 
     /// <summary>
     /// What kind of entities should this effect apply to?

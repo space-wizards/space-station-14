@@ -7,4 +7,4 @@ namespace Content.Shared.Trigger.Components.Triggers;
 /// The user is the player holding the gun.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class TriggerOnGunEmptyComponent : BaseTriggerOnXComponent;
+public sealed partial class TriggerOnEmptyGunshotComponent : BaseTriggerOnXComponent;

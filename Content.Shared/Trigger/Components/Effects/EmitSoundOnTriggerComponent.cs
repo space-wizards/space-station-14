@@ -20,12 +20,12 @@ public sealed partial class EmitSoundOnTriggerComponent : BaseXOnTriggerComponen
     /// Play the sound at the position instead of parented to the source entity.
     /// Useful if the entity is deleted after.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Positional;
 
     /// <summary>
     /// Should this sound be predicted for the User?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Predicted;
 }
