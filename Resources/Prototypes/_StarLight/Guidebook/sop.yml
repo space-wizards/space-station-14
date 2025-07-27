@@ -32,6 +32,7 @@
     - cargo-sop-intro
     - science-sop-intro
     - nano-trasen-employee-sop-intro
+    - service-sop-intro
 
 - type: guideEntry
   id: alert-levels
@@ -488,3 +489,19 @@
   name: guide-entry-sl-nano-trasen-employee-sop-iaa
   text: "/ServerInfo/Guidebook/StarlightSOP/NanoTrasenEmployeeSOP/nano-trasen-employee-sop-iaa.xml"
   priority: 5
+
+
+
+- type: guideEntry
+  id: service-sop-intro
+  name: guide-entry-sl-service-sop-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/ServiceSOP/service-sop-intro.xml"
+  priority: 10
+  children:
+    - service-sop-headofpersonnel
+
+- type: guideEntry
+  id: service-sop-headofpersonnel
+  name: guide-entry-sl-service-sop-headofpersonnel
+  text: "/ServerInfo/Guidebook/StarlightSOP/ServiceSOP/HeadOfPersonnel.xml"
+  priority: 1
