@@ -14,42 +14,67 @@ public sealed partial class AtmosphereSystem
     private void ProcessDeltaPressureEntity(Entity<DeltaPressureComponent> ent, GridAtmosphereComponent gridAtmosComp)
     {
         // Retrieve the current tile coords of this ent, use cached lookup
-        // TODO: might be good to cache this alongside the stored ent in the hashset
         if (!_transformQuery.TryComp(ent, out var xform))
             return;
 
-        // TODO: profile because doing this for every tile seems really bad
         var indices = _transformSystem.GetGridOrMapTilePosition(ent, xform);
 
-        // First, we null check data and prep it for comparison.
-        Span<float> floatArray = stackalloc float[Atmospherics.Directions];
-        for (var i = 0; i < Atmospherics.Directions; i++)
+        /*
+         To make our comparisons a little bit faster, we take advantage of SIMD-accelerated methods
+         in the NumericsHelpers class.
+
+         This involves loading our values into a span in the form of opposing pairs,
+         so simple vector operations like min/max/abs can be performed on them.
+         */
+
+        // Directions are always in pairs: the number of directions is always even
+        // (we must consider the future where Multi-Z is real)
+        const int pairCount = Atmospherics.Directions / 2;
+
+        Span<float> opposingGroupA = stackalloc float[pairCount]; // Will hold North, East, ...
+        Span<float> opposingGroupB = stackalloc float[pairCount]; // Will hold South, West, ...
+
+        // First, we null check data and prep it for comparison
+        for (var i = 0; i < pairCount; i++)
         {
-            var dir = (AtmosDirection)(1 << i);
-            ref var tile = ref CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices.Offset(dir));
+            // First direction in the pair (North, East, ...)
+            var dirA = (AtmosDirection)(1 << i);
+
+            // We can use GetValueRefOrNullRef here as we're not modifying the dictionary.
+            // Supposed to be a bit faster than using TryGetValue.
+            ref var tileA = ref CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices.Offset(dirA));
 
             // This can be a null ref! We need to check it or bad things will happen!
-            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref tile))
-                floatArray[i] = tile.Air?.Pressure ?? 0f;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref tileA) && tileA.Air != null)
+            {
+                opposingGroupA[i] = tileA.Air.Pressure;
+            }
+
+            // Second direction in the pair (South, West, ...)
+            var dirB = (AtmosDirection)(1 << (i + pairCount));
+            ref var tileB = ref CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices.Offset(dirB));
+
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref tileB) && tileB.Air != null)
+            {
+                opposingGroupA[i] = tileB.Air.Pressure;
+            }
         }
 
-        // There's no delta-P, so don't bother doing any more math.
-        // It's lukewarm common for all sides to be null (0).
-        if (NumericsHelpers.HorizontalAdd(floatArray) <= float.Epsilon)
-            return;
+        // Calculate pressure differences between opposing directions
+        NumericsHelpers.Sub(opposingGroupA, opposingGroupB);
+        NumericsHelpers.Abs(opposingGroupA);
 
-        Span<float> spanMax = stackalloc float[Atmospherics.Directions];
-        Span<float> spanMin = stackalloc float[Atmospherics.Directions];
-
-        // If I have seen further, it is by standing on the shoulders of giants.
-        NumericsHelpers.Max(spanMax, floatArray);
-        NumericsHelpers.Min(spanMin, floatArray);
-        NumericsHelpers.Sub(spanMin, spanMax);
-        NumericsHelpers.Abs(spanMin);
-
-        if (spanMin[0] > ent.Comp.MinPressureDelta)
+        // Find maximum pressure difference
+        var maxDelta = 0f;
+        for (var i = 0; i < pairCount; i++)
         {
-            PerformDamage(ent, spanMin[0]);
+            if (opposingGroupA[i] > maxDelta)
+                maxDelta = opposingGroupA[i];
+        }
+
+        if (maxDelta > ent.Comp.MinPressureDelta)
+        {
+            PerformDamage(ent, maxDelta);
         }
     }
 
@@ -73,7 +98,6 @@ public sealed partial class AtmosphereSystem
 
             case DeltaPressureDamageScalingType.Log:
                 // This little line's gonna cost us 51 CPU cycles
-                // TODO: Harden this against NaN bullshit because I 100% expect it later
                 appliedDamage *= Math.Log(realPressure, ent.Comp.ScalingPower);
                 break;
 
@@ -84,7 +108,6 @@ public sealed partial class AtmosphereSystem
                 throw new ArgumentOutOfRangeException(nameof(ent), "Invalid damage scaling type!");
         }
 
-        // TODO: this feels like ass
         _damage.TryChangeDamage(ent, appliedDamage, interruptsDoAfters: false);
         ent.Comp.IsTakingDamage = true;
     }
