@@ -55,7 +55,7 @@ public partial class InventorySystem : EntitySystem
         return false;
     }
 
-    protected virtual void OnInit(Entity<InventoryComponent> ent, ref ComponentInit args)
+    private void OnInit(Entity<InventoryComponent> ent, ref ComponentInit args)
     {
         UpdateInventoryTemplate(ent);
     }

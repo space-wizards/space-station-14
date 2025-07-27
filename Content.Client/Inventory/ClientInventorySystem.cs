@@ -138,13 +138,6 @@ namespace Content.Client.Inventory
             base.Shutdown();
         }
 
-        protected override void OnInit(Entity<InventoryComponent> ent, ref ComponentInit args)
-        {
-            base.OnInit(ent, ref args);
-
-            _clothingVisualsSystem.InitClothing(ent.Owner, ent.Comp);
-        }
-
         public void ReloadInventory(InventorySlotsComponent? component = null)
         {
             var player = _playerManager.LocalEntity;
@@ -168,10 +161,10 @@ namespace Content.Client.Inventory
         public void UpdateSlot(EntityUid owner, InventorySlotsComponent component, string slotName,
             bool? blocked = null, bool? highlight = null)
         {
-            if (!_timing.IsFirstTimePredicted)
+            // The slot might have been removed when changing templates, which can cause items to be dropped.
+            if (!component.SlotData.TryGetValue(slotName, out var oldData))
                 return;
 
-            var oldData = component.SlotData[slotName];
             var newHighlight = oldData.Highlighted;
             var newBlocked = oldData.Blocked;
 
@@ -256,7 +249,7 @@ namespace Content.Client.Inventory
         {
             base.UpdateInventoryTemplate(ent);
 
-            if (!TryComp(ent, out InventorySlotsComponent? inventorySlots))
+            if (!TryComp<InventorySlotsComponent>(ent, out var inventorySlots))
                 return;
 
             List<SlotData> slotDataToRemove = new(); // don't modify dict while iterating
