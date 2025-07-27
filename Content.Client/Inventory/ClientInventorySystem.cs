@@ -281,6 +281,10 @@ namespace Content.Client.Inventory
                 else
                     TryAddSlotData((ent.Owner, inventorySlots), (SlotData)slot);
             }
+
+            _clothingVisualsSystem.InitClothing(ent, ent.Comp);
+            if (ent.Owner == _playerManager.LocalEntity)
+                ReloadInventory(inventorySlots);
         }
 
         public sealed class SlotData
