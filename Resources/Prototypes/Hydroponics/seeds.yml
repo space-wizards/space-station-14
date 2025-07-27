@@ -2004,7 +2004,7 @@
   plantRsi: Objects/Specific/Hydroponics/bloonion.rsi
   packetPrototype: BloonionSeeds
   productPrototypes:
-    - FoodBloonion
+  - FoodBloonion
   lifespan: 25
   maturation: 15
   production: 3
@@ -2013,3 +2013,20 @@
   growthStages: 4
   waterConsumption: 0.60
   nutrientConsumption: 0.50
+  chemicals:
+    Potassium:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Phosphorus:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sugar:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Allicin:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10

@@ -2738,12 +2738,12 @@
   - type: PotencyVisuals
   - type: FlavorProfile
     flavors:
-      - onion
-      - strange
+    - onion
+    - strange
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 13
+        maxVol: 7
         canReact: false
         reagents:
         - ReagentId: Potassium
@@ -2753,7 +2753,7 @@
         - ReagentId: Sugar
           Quantity: 1
         - ReagentId: Allicin
-          Quantity: 10
+          Quantity: 4
   - type: Extractable
     grindableSolutionName: food
   - type: ExplodeOnTrigger
