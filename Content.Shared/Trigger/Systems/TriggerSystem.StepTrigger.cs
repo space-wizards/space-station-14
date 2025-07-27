@@ -234,28 +234,3 @@ public readonly record struct TriggerStepTriggeredOnEvent(EntityUid Source, Enti
 /// </summary>
 [ByRefEvent]
 public readonly record struct TriggerStepTriggeredOffEvent(EntityUid Source, EntityUid Tripper);
-
-// [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-// public sealed partial class TriggerOnStepStartComponent : Component { }
-
-// [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-// public sealed partial class TriggerOnStepEndComponent : Component { }
-
-// [Obsolete("Uses legacy StepTriggerSystem. Use TriggerOnStepStartComponent and TriggerOnStepEndComponent instead.")]
-// [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-// public sealed partial class TriggerOnStepTriggerComponent : BaseTriggerOnXComponent { }
-
-// [RegisterComponent, NetworkedComponent]
-// public sealed partial class TriggerOnStepTriggerActiveComponent : Component { }
-
-// [RegisterComponent]
-// public sealed partial class TriggerOnStepAliveAttemptComponent : Component { }
-
-// [RegisterComponent]
-// public sealed partial class TriggerOnStepTagAttemptComponent : Component { }
-
-// [RegisterComponent]
-// public sealed partial class TriggerOnStepWhitelistAttemptComponent : Component { }
-
-// [RegisterComponent]
-// public sealed partial class TriggerOnStepAlwaysAttemptComponent : Component { }
