@@ -726,7 +726,7 @@ namespace Content.Server.Atmos.EntitySystems
                         }
 
                         atmosphere.ProcessingPaused = false;
-                        atmosphere.State = AtmosphereProcessingState.DeltaPressure;
+                        atmosphere.State = AtmosphereProcessingState.PipeNet;
                         continue;
                     case AtmosphereProcessingState.PipeNet:
                         if (!ProcessPipeNets(atmosphere))
