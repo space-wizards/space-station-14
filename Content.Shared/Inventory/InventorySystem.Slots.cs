@@ -67,7 +67,7 @@ public partial class InventorySystem : EntitySystem
 
     protected virtual void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
     {
-        if (!_prototypeManager.TryIndex(ent.Comp.TemplateId, out var invTemplate))
+        if (!_prototypeManager.Resolve(ent.Comp.TemplateId, out var invTemplate))
             return;
 
         // Remove any containers that aren't in the new template.
