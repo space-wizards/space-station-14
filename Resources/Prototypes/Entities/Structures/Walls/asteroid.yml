@@ -2003,7 +2003,7 @@
     - map: [ "enum.EdgeLayer.West" ]
       state: rock_chromite_west
     - state: rock_coal
-    map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+      map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
   id: WallRockChromiteGold
