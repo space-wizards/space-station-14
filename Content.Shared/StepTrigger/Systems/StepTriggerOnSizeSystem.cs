@@ -28,7 +28,7 @@ public sealed class StepTriggerOnSizeSystem : EntitySystem
 
         /// Check if the tripper's collision layer matches any of the allowed <see cref="StepTriggerOnSizeComponent.CollisionMask"/>.
         /// Bitwise AND to determine if any bits overlap.
-        if (((CollisionGroup)physics.CollisionLayer & ent.Comp.CollisionMask) != 0)
+        if (((CollisionGroup)physics.CollisionLayer & ent.Comp.CollisionMask) == 0)
         {
             args.Continue = true;
             return;
