@@ -314,6 +314,7 @@
       effects:
       - !type:Emote
         emote: Laugh
+        showInGuidebook: true
         probability: 0.3
       - !type:PopupMessage
         type: Local
@@ -336,6 +337,7 @@
       - !type:Emote
         emote: Weh
         showInChat: true
+        showInGuidebook: true
         force: true
         probability: 0.5
       - !type:Polymorph
@@ -368,6 +370,7 @@
       - !type:Emote
         emote: Hew
         showInChat: true
+        showInGuidebook: true
         force: true
         probability: 0.5
       - !type:Polymorph
@@ -380,6 +383,37 @@
           min: 50
       - !type:AdjustReagent
         reagent: JuiceThatMakesYouHew
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
+
+- type: reagent
+  id: CorgiJuice
+  name: reagent-name-corgiessence
+  group: Toxins
+  desc: reagent-desc-corgiessence
+  physicalDesc: reagent-physical-desc-fluffy
+  flavor: dogfood
+  color: "#ed9715"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+        damage:
+          types:
+            Cellular: 0.5
+      - !type:Polymorph
+        prototype: SmartCorgiMorph
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
+      - !type:AdjustReagent
+        reagent: CorgiJuice
         amount: -20
         conditions:
         - !type:ReagentThreshold
