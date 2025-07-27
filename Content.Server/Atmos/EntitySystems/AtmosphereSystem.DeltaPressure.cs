@@ -14,7 +14,7 @@ public sealed partial class AtmosphereSystem
     private void ProcessDeltaPressureEntity(Entity<DeltaPressureComponent> ent, GridAtmosphereComponent gridAtmosComp)
     {
         // Retrieve the current tile coords of this ent, use cached lookup
-        if (!_transformQuery.TryComp(ent, out var xform))
+        if (!TryComp(ent, out TransformComponent? xform))
             return;
 
         var indices = _transformSystem.GetGridOrMapTilePosition(ent, xform);
@@ -56,7 +56,7 @@ public sealed partial class AtmosphereSystem
 
             if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref tileB) && tileB.Air != null)
             {
-                opposingGroupA[i] = tileB.Air.Pressure;
+                opposingGroupB[i] = tileB.Air.Pressure;
             }
         }
 
