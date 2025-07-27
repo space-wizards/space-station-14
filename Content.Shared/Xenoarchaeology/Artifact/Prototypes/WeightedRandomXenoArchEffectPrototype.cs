@@ -13,6 +13,6 @@ public sealed partial class WeightedRandomXenoArchEffectPrototype : IWeightedRan
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, XenoArchTriggerPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, EntityPrototype>))]
     public Dictionary<string, float> Weights { get; private set; } = new();
 }

@@ -137,7 +137,7 @@ public sealed partial class XenoArtifactComponent : Component
     /// Effects that can be used during this artifact generation.
     /// </summary>
     [DataField]
-    public ProtoId<WeightedRandomXenoArchEffectPrototype> EffectsWeights = "XenoArtifactEffectsDefaultTableBalanced";
+    public ProtoId<WeightedRandomXenoArchEffectPrototype> EffectsWeights = "XenoArtifactEffectsDefaultWeightedTable";
 
     /// <summary>
     /// Triggers that can be used during this artefact generation.
