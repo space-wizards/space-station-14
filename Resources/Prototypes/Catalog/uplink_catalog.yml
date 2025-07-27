@@ -180,9 +180,10 @@
   productEntity: WeaponChemMultilaser
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 7
+    Telecrystal: 6
   cost:
-    Telecrystal: 14
+    Telecrystal: 12
+
   categories:
   - UplinkWeaponry
 
@@ -238,7 +239,7 @@
   discountDownTo:
     Telecrystal: 12
   cost:
-    Telecrystal: 22
+    Telecrystal: 20
   categories:
   - UplinkWeaponry
 
@@ -628,7 +629,7 @@
   description: uplink-plasmacell-ammo-desc
   productEntity: GorlexPlasmaCellFilled
   cost:
-    Telecrystal: 8
+    Telecrystal: 5
   categories:
   - UplinkAmmo
 
