@@ -4,42 +4,48 @@ using Content.Shared.Damage.Components;
 
 namespace Content.Server.Damage.Systems;
 
-// System for damage that occurs on specific trigger, towards the user..
+/// <summary>
+/// System for damage that occurs on specific trigger events, towards the user...
+/// </summary>
+/// <remarks>
+/// The <see cref="TriggerEvent"/> must have <see cref="TriggerEvent.User"/> argument.
+/// The user must have a <see cref="DamageableComponent"/> (e.g. being a creature or player) to receive damage.
+/// </remarks>
 public sealed class DamageUserOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<DamageUserOnTriggerComponent, TriggerEvent>(OnTrigger);
+        SubscribeLocalEvent<DamageUserOnTriggerComponent, TriggerEvent>(OnUserTrigger);
     }
 
-    private void OnTrigger(EntityUid uid, DamageUserOnTriggerComponent component, TriggerEvent args)
+    private void OnUserTrigger(Entity<DamageUserOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.User is null)
             return;
 
-        args.Handled |= OnDamageTrigger(uid, args.User.Value, component);
+        var comp = ent.Comp;
+
+        args.Handled |= TryDamageTarget(ent.Owner, comp.Damage, comp.IgnoreResistances, args.User.Value);
     }
 
-    private bool OnDamageTrigger(EntityUid source, EntityUid target, DamageUserOnTriggerComponent? component = null)
+    private bool TryDamageTarget(EntityUid uid, DamageSpecifier damage, bool ignoreResistances, EntityUid target)
     {
-        if (!Resolve(source, ref component))
-        {
-            return false;
-        }
-
-        var damage = new DamageSpecifier(component.Damage);
         var ev = new BeforeDamageUserOnTriggerEvent(damage, target);
-        RaiseLocalEvent(source, ev);
+        RaiseLocalEvent(uid, ev);
 
-        return _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, origin: source) is not null;
+        return _damageableSystem.TryChangeDamage(target, ev.Damage, ignoreResistances, origin: uid) is not null;
     }
 }
 
+/// <summary>
+/// Raised before applying damage to the user that triggered a DamageUserOnTrigger component.
+/// Allows other systems to modify the damage.
+/// </summary>
 public sealed class BeforeDamageUserOnTriggerEvent : EntityEventArgs
 {
-    public DamageSpecifier Damage { get; set;  }
+    public DamageSpecifier Damage { get; set; }
     public EntityUid Tripper { get; }
 
     public BeforeDamageUserOnTriggerEvent(DamageSpecifier damage, EntityUid target)

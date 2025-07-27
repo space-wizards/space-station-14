@@ -1,10 +1,16 @@
 namespace Content.Shared.Damage.Components;
 
+/// <summary>
+/// Deals damage to the user (the entity that triggered the entity), such as a player stepping on a mousetrap.
+/// </summary>
+/// <remarks>
+/// This component should be attached to the triggering object (e.g., a mousetrap).
+/// </remarks>
 [RegisterComponent]
 public sealed partial class DamageUserOnTriggerComponent : Component
 {
-    [DataField("ignoreResistances")] public bool IgnoreResistances;
+    [DataField] public bool IgnoreResistances;
 
-    [DataField("damage", required: true)]
+    [DataField(required: true)]
     public DamageSpecifier Damage = default!;
 }
