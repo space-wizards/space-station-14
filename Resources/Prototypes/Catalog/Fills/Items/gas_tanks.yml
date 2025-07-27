@@ -231,7 +231,7 @@
   - type: GasTank
     outputPressure: 101.3
     air:
-      volume: 10
+      volume: 20
       moles:
         - 0           # oxygen
         - 0           # nitrogen

@@ -63,13 +63,15 @@
   name: Gorlex Chem-laser bundle
   description: "Contains a Gorlex chem-laser, bundled with plasma cell and a power cell. Perfect for providing supporting fire."
   components: 
-  - type: StorageFill
-    contents:
-      - id: WeaponChemLaser
-      - id: PowerCellMedium
-        amount: 1
-      - id: GorlexPlasmaCellFilled
-        amount: 1
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: WeaponChemLaser
+        - id: PowerCellMedium
+          amount: 1
+        - id: GorlexPlasmaCellFilled
+          amount: 1
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

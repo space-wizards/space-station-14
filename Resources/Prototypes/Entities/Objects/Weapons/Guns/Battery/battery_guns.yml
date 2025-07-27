@@ -896,7 +896,7 @@
       map: [ "tank" ]
       visible: false
   - type: PneumaticCannon
-    gasUsage: 0.32
+    gasUsage: 0.28
     throwItems: false
     allowedGases: 
     - Plasma
