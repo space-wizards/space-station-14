@@ -1,5 +1,5 @@
 - type: weightedRandomXenoArchEffect
-  id: XenoArtifactEffectsDefaultTableBalanced
+  id: XenoArtifactEffectsDefaultWeightedTable
   weights:
     # hijacks use key, prevents from using artifact, sadly
     #XenoArtifactEffectUniversalIntercom   weight: 10.0
@@ -65,7 +65,7 @@
     XenoArtifactEffectCreationGasCarbonDioxide : 4.0
 
 - type: weightedRandomXenoArchEffect
-  id: XenoArtifactEffectsDefaultTableBalancedHandheld
+  id: XenoArtifactEffectsDefaultWeightedTableHandheld
   weights:
     # hijacks use key, prevents from using artifact, sadly
     #XenoArtifactEffectUniversalIntercom   weight: 10.0
@@ -133,19 +133,6 @@
     #XenoArtifactGun   weight 4.0 #it conflicts with default interaction - it should activate artifact nodes
     XenoArtifactOmnitool : 10.0
     XenoArtifactDrill : 10.0
-
-- type: entityTable
-  id: XenoArtifactEffectsHandheldOnlyTable
-  table: !type:GroupSelector
-    children:
-    #- id: XenoArtifactBecomeRandomInstrument
-    #  weight 10.0 # removed until we have value-based system
-    #- id: XenoArtifactGun
-    #  weight 4.0 #it conflicts with default interaction - it should activate artifact nodes
-    - id: XenoArtifactOmnitool
-      weight: 10.0
-    - id: XenoArtifactDrill
-      weight: 10.0
 
 - type: entity
   id: BaseXenoArtifactEffect

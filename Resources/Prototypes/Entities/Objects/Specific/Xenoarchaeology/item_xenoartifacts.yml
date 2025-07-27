@@ -53,7 +53,7 @@
     graph: Artifact
     node: done
   - type: XenoArtifact
-    effectsWeights: XenoArtifactEffectsDefaultTableBalancedHandheld
+    effectsWeights: XenoArtifactEffectsDefaultWeightedTableHandheld
 
 - type: entity
   parent: BaseXenoArtifactItem
