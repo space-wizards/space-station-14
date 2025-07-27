@@ -29,6 +29,9 @@
     angleDecay: 10
     fireRate: 6  
   - type: Appearance
+  - type: RestrictByEquippedTag
+    requiredTag: "RequiredForLmgTag"
+    denialMessage: "lmg-restricted-to-hardsuit-message"
   - type: ItemSlots
     slots:
       gun_chamber:
