@@ -12,7 +12,7 @@
 <Box>
 	<GuideEntityEmbed Entity="HoloprojectorSecurity"/>
 	<GuideEntityEmbed Entity="FlashlightSeclite"/>
-		<GuideEntityEmbed Entity="RadioHandheldSecurity"/>
+	<GuideEntityEmbed Entity="RadioHandheldSecurity"/>
 </Box>
 <Box>
 	<GuideEntityEmbed Entity="CombatKnife"/>
