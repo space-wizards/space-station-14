@@ -2,7 +2,7 @@
 
 - type: entity
   abstract: true
-  parent: [ DrinkBase, DrinkGlassBase, DrinkOpenableBase ]
+  parent: [ DrinkBase, DrinkBaseGlass, DrinkBaseOpenable ]
   id: DrinkBottleGlassBaseFull
   suffix: Full
   components:

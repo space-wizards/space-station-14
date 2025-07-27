@@ -1,5 +1,5 @@
 - type: entity
-  parent: [DrinkBase, DrinkGlassBase]
+  parent: [DrinkBase, DrinkBaseGlass]
   id: DrinkShotGlass
   name: shot glass
   description: Perfect for slamming down onto the table angrily.
@@ -52,7 +52,7 @@
       Steel: 75
 
 - type: entity
-  parent: [DrinkBase, DrinkGlassBase]
+  parent: [DrinkBase, DrinkBasePorcelain]
   id: DrinkTeapot
   name: teapot  # short and stout
   description: An elegant teapot. It simply oozes class.
@@ -73,8 +73,8 @@
     - DrinkGlass
 
 - type: entity
-  id: DrinkCanPack
   parent: BaseStorageItem
+  id: DrinkCanPack
   name: 6pack
   components:
   - type: Sprite
@@ -210,7 +210,7 @@
 
 - type: entity
   abstract: true
-  parent: [DrinkBase, DrinkGlassBase]
+  parent: [DrinkBase, DrinkBaseGlass]
   id: DrinkShakeBase
   description: ''
   components:

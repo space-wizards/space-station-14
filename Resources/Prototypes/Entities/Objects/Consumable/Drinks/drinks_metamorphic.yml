@@ -4,7 +4,7 @@
 
 # Transformable container - normal glass
 - type: entity
-  parent: [DrinkBase, DrinkGlassBase]
+  parent: [DrinkBase, DrinkBaseGlass]
   id: DrinkGlass
   name: metamorphic glass
   description: A metamorphic glass that automagically turns into a glass appropriate for the drink within. There's a sanded off patent number on the bottom.
@@ -41,7 +41,7 @@
   - type: TransformableContainer
 
 - type: entity
-  parent: [DrinkBase, DrinkGlassBase]
+  parent: [DrinkBase, DrinkBaseGlass]
   id: DrinkJar
   name: jar
   description: The hipster's cup.

@@ -4,7 +4,7 @@
 # Fragile glass
 - type: entity
   abstract: true
-  id: DrinkGlassBase
+  id: DrinkBaseGlass
   components:
   - type: Damageable
     damageContainer: Inorganic
@@ -47,10 +47,49 @@
     materialComposition:
       Glass: 25
 
+# Porcelain (like glass but no shard)
+- type: entity
+  abstract: true
+  id: DrinkBasePorcelain
+  components:
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: FlimsyGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger # Overkill threshold
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassCrack
+      - !type:SpillBehavior { }
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  # so fragile it smashes when thrown
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: PhysicalComposition
+    materialComposition: [] # To override previous compositions and get recycled
+
 # Fragile plastic
 - type: entity
   abstract: true
-  id: DrinkPlasticBase
+  id: DrinkBasePlastic
   components:
   - type: Damageable
     damageContainer: Inorganic
@@ -80,7 +119,7 @@
 # Fragile cardboard
 - type: entity
   abstract: true
-  id: DrinkCardboardBase
+  id: DrinkBaseCardboard
   components:
   - type: Damageable
     damageContainer: Inorganic
@@ -110,7 +149,7 @@
 # Weak metal
 - type: entity
   abstract: true
-  id: DrinkMetalBase
+  id: DrinkBaseMetal
   components:
   - type: Damageable
     damageContainer: Inorganic
@@ -140,7 +179,7 @@
 # strong metal
 - type: entity
   abstract: true
-  id: DrinkStrongMetalBase
+  id: DrinkBaseStrongMetal
   components:
   - type: Damageable
     damageContainer: Inorganic
@@ -170,7 +209,7 @@
 # Weak gold
 - type: entity
   abstract: true
-  id: DrinkGoldBase
+  id: DrinkBaseGold
   components:
   - type: Damageable
     damageContainer: Inorganic

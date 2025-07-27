@@ -3,7 +3,6 @@
   abstract: true
   parent: DrinkBase
   id: DrinkBaseCup
-  name: base cup
   components:
   - type: SolutionContainerManager
     solutions:
@@ -25,7 +24,7 @@
 # A mug is a type of cup.[2]
 - type: entity
   abstract: true
-  parent: DrinkBaseCup # add DrinkGlassBase after fixing the material arbitrage
+  parent: [DrinkBaseCup, DrinkBasePorcelain]
   id: DrinkBaseMug
   name: mug
   description: A mug.
@@ -47,7 +46,7 @@
 ## Misc Cups
 
 - type: entity
-  parent: [DrinkBaseCup, DrinkGoldBase]
+  parent: [DrinkBaseCup, DrinkBaseGold]
   id: DrinkGoldenCup
   name: golden cup
   description: A golden cup.
@@ -58,7 +57,7 @@
     price: 125
 
 - type: entity
-  parent: [DrinkBaseCup, DrinkGlassBase]
+  parent: [DrinkBaseCup, DrinkBasePorcelain]
   id: DrinkTeacupEmpty
   name: teacup
   description: A plain white porcelain teacup.
@@ -78,7 +77,7 @@
     fillBaseName: icon-
 
 - type: entity
-  parent: [ DrinkBase, DrinkGlassBase ]
+  parent: [ DrinkBase, DrinkBaseGlass ]
   id: DrinkGlassCoupeShaped
   name: coupe glass
   description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
@@ -112,7 +111,7 @@
     - DrinkGlass
 
 - type: entity
-  parent: [DrinkBase, DrinkCardboardBase]
+  parent: [DrinkBase, DrinkBaseCardboard]
   id: DrinkWaterCup
   name: water cup
   description: A paper water cup.
@@ -201,16 +200,13 @@
     sprite: Objects/Consumable/Drinks/mug_heart.rsi
 
 - type: entity
-  parent: DrinkBaseMug
+  parent: [DrinkBaseMetal, DrinkBaseMug]
   id: DrinkMugMetal
   name: metal mug
   description: A metal mug. You're not sure which metal.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_metal.rsi
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 25
 
 - type: entity
   parent: DrinkBaseMug
@@ -252,7 +248,7 @@
 # TODO these need a material for destruction, maybe a better parent
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkBaseMug
   id: DrinkHotCoco
   name: hot chocolate
   description: A heated drink consisting melted chocolate and heated milk.
@@ -272,7 +268,6 @@
       - state: icon-0
       - map: ["enum.SolutionContainerLayers.Fill"]
         state: icon-4
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: icon-
@@ -280,7 +275,7 @@
     solution: drink
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkBaseMug
   id: DrinkHotCoffee
   name: coffee
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
@@ -300,7 +295,6 @@
       - state: icon-0
       - map: ["enum.SolutionContainerLayers.Fill"]
         state: icon-4
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: icon-
@@ -308,7 +302,7 @@
     solution: drink
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: [DrinkBaseCup, DrinkBaseCardboard]
   id: DrinkCafeLatte
   name: cafe latte
   description: A nice, strong and tasty beverage while you are reading.
@@ -365,7 +359,7 @@
     solution: drink
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: [DrinkBaseCup, DrinkBasePlastic]
   id: DrinkLean
   name: grape juice
   description: Damn, no fun allowed.

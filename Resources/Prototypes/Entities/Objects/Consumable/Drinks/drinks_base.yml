@@ -42,7 +42,7 @@
 # This drink is empty trash
 - type: entity
   abstract: true
-  id: DrinkEmptyTrashBase
+  id: DrinkBaseEmptyTrash
   suffix: Empty
   components:
   - type: SpaceGarbage
@@ -57,7 +57,7 @@
 # Un-opened
 - type: entity
   abstract: true
-  id: DrinkOpenableBase
+  id: DrinkBaseOpenable
   components:
   - type: Openable
   - type: PressurizedSolution
@@ -69,7 +69,7 @@
 - type: entity
   abstract: true
   parent: DrinkOpenableBase
-  id: DrinkOpenableOpenBase
+  id: DrinkBaseOpenableOpen
   components:
   - type: Sprite
     layers:

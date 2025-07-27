@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [DrinkBase, DrinkOpenableBase, DrinkStrongMetalBase]
+  parent: [DrinkBase, DrinkBaseStrongMetal, DrinkBaseOpenable]
   id: FlaskBase
   components:
   - type: SolutionContainerManager
