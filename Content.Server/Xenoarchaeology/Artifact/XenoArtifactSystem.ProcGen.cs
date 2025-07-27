@@ -103,7 +103,8 @@ public sealed partial class XenoArtifactSystem
 
         for (var i = 0; i < desiredNodeCount; i++)
         {
-            var directPredecessors = SelectDirectPredecessors(predecessors, ref scatterCount);
+            var directPredecessors = SelectDirectPredecessors(predecessors, scatterCount);
+            scatterCount-=(directPredecessors.Count - 1);
 
             var nodeEntity = CreateNode(ent, directPredecessors, triggers, effects, iteration);
             if (!nodeEntity.HasValue)
@@ -123,7 +124,7 @@ public sealed partial class XenoArtifactSystem
 
     private List<Entity<XenoArtifactNodeComponent>> SelectDirectPredecessors(
         IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> predecessors,
-        ref int scatterCount
+        int scatterCount
     )
     {
         List<Entity<XenoArtifactNodeComponent>> directPredecessors = new();
