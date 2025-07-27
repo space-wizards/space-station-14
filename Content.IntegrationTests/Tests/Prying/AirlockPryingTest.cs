@@ -37,7 +37,6 @@ public sealed class AirlockPryingTest : InteractionTest
 
         var airlockSys = SEntMan.System<AirlockSystem>();
         var doorSys = SEntMan.System<DoorSystem>();
-        var boltSys = SEntMan.System<BoltSystem>();
         var apcSys = SEntMan.System<ApcSystem>();
 
         // Make sure the door does not auto close for long DoAfters on powered doors
@@ -48,7 +47,7 @@ public sealed class AirlockPryingTest : InteractionTest
         if (bolted)
         {
             Assert.That(TryComp<DoorBoltComponent>(out var doorBoltComp), "Airlock does not have DoorBoltComponent?");
-            await Server.WaitPost(() => boltSys.TrySetBoltsDown((STarget.Value, doorBoltComp!), true));
+            await Server.WaitPost(() => doorSys.TrySetBoltDown((STarget.Value, doorBoltComp!), true));
             await RunTicks(1);
         }
 
@@ -63,7 +62,7 @@ public sealed class AirlockPryingTest : InteractionTest
         Assert.That(airlockComp!.Powered, Is.EqualTo(powered), "Airlock power state incorrect for this test.");
         Assert.That(TryComp<DoorComponent>(out var doorComp), "Airlock does not have DoorComponent?");
         Assert.That(doorComp!.State, Is.EqualTo(initialState), "Airlock has incorrect initial state");
-        Assert.That(boltSys.IsBolted(STarget.Value), Is.EqualTo(bolted), "Airlock has incorrected bolted state.");
+        Assert.That(doorSys.IsBolted(STarget.Value), Is.EqualTo(bolted), "Airlock has incorrected bolted state.");
 
         // Attempt prying, use hands if null
         if (pryingToolProtoId is not null)
