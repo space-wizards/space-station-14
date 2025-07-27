@@ -8,25 +8,31 @@
     },
     "states": [
         {
-          "name": "arrow",
-          "delays": [
-            [
-              0.5,
-              0.1,
-              0.1,
-              0.1,
-              0.1,
-              0.1,
-              0.1,
-              0.1,
-              0.1,
-              0.1,
-              0.1
+            "name": "arrow",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
             ]
-          ]
         },
         {
             "name": "turnstile"
+        },
+        {
+            "name": "bolted"
+        },
+        {
+            "name": "turnstile_idle"
         },
         {
             "name": "turnstile_map",
@@ -49,6 +55,14 @@
             ]
         },
         {
+            "name": "granted",
+            "delays": [
+                [
+                    0.9
+                ]
+            ]
+        },
+        {
             "name": "deny",
             "delays": [
                 [
@@ -60,6 +74,15 @@
                     0.1
                 ]
             ]
+        },
+        {
+            "name": "panel_open"
+        },
+        {
+            "name": "assembly"
+        },
+        {
+            "name": "wired"
         }
     ]
 }
