@@ -46,13 +46,18 @@ public sealed partial class XenoArtifactSystem
         int maxNodeCount
     )
     {
-        var desiredSegmentSize = GetArtifactSegmentDesiredSize(ent, maxNodeCount);
+        var nodesForSegmentToGenerate = GetArtifactSegmentDesiredSize(ent, maxNodeCount);
         var depth = 0;
         IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> generatedNodes = [];
         List<Entity<XenoArtifactNodeComponent>> totalGenerated = new();
-        while (desiredSegmentSize != 0)
+        while (nodesForSegmentToGenerate != 0)
         {
-            generatedNodes = PopulateArtifactSegmentRecursive(ent, triggers, effects, generatedNodes, ref desiredSegmentSize, depth);
+            generatedNodes = PopulateLayer(ent, triggers, effects, generatedNodes, nodesForSegmentToGenerate, depth);
+            if(generatedNodes.Count == 0)
+                break;
+
+            nodesForSegmentToGenerate -= generatedNodes.Count;
+
             totalGenerated.AddRange(generatedNodes);
             depth++;
         }
@@ -70,23 +75,23 @@ public sealed partial class XenoArtifactSystem
     /// Each next iteration is going to have more chances to have more nodes (so it goes 'from top to bottom' of
     /// the tree, creating its peak nodes first, and then making layers with more and more branches).
     /// </summary>
-    private IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> PopulateArtifactSegmentRecursive(
+    private IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> PopulateLayer(
         Entity<XenoArtifactComponent> ent,
         Dictionary<XenoArchTriggerPrototype, float> triggers,
         Dictionary<EntityPrototype, float> effects,
         IReadOnlyCollection<Entity<XenoArtifactNodeComponent>> predecessors,
-        ref int segmentSize,
+        int maxNodes,
         int iteration = 0
     )
     {
-        if (segmentSize == 0)
+        if (maxNodes == 0)
             return [];
 
         // Try and get larger as we create more layers. Prevents excessive layers.
         var mod = RobustRandom.Next((int)(iteration / 1.5f), iteration + 1);
 
-        var minPerLayer = Math.Min(ent.Comp.NodesPerSegmentLayer.Min + mod, segmentSize);
-        var maxPerLayer = Math.Min(ent.Comp.NodesPerSegmentLayer.Max + mod, segmentSize);
+        var minPerLayer = Math.Min(ent.Comp.NodesPerSegmentLayer.Min + mod, maxNodes);
+        var maxPerLayer = Math.Min(ent.Comp.NodesPerSegmentLayer.Max + mod, maxNodes);
 
         // Default to one node if we had shenanigans and ended up with weird layer counts.
         var desiredNodeCount = 1;
@@ -103,8 +108,6 @@ public sealed partial class XenoArtifactSystem
             var nodeEntity = CreateNode(ent, directPredecessors, triggers, effects, iteration);
             if (!nodeEntity.HasValue)
                 continue;
-
-            segmentSize--;
 
             nodes.Add(nodeEntity.Value);
 
