@@ -27,15 +27,17 @@
     drawdepth: Items
     sprite: Objects/Misc/landmine.rsi
     layers:
-    - state: landmine-inactive
-      map: [ "enum.ToggleVisuals.Layer" ]
+    - state: landmine
+    - state: landmine-unshaded
+      shader: unshaded
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
-          True: {state: landmine}
-          False: {state: landmine-inactive}
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: {visible: true}
+          False: {visible: false}
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -74,9 +76,6 @@
     activated: true
     onActivate: false
   - type: Armable
-  - type: Sprite
-    layers:
-    - state: landmine
 
 - type: entity
   name: modular mine
@@ -98,9 +97,6 @@
     activated: true
     onActivate: false
   - type: Armable
-  - type: Sprite
-    layers:
-    - state: landmine
 
 - type: entity
   name: explosive mine
@@ -124,6 +120,3 @@
     activated: true
     onActivate: false
   - type: Armable
-  - type: Sprite
-    layers:
-    - state: landmine
