@@ -99,6 +99,9 @@ public sealed partial class ZombieSystem
         if (HasComp<ZombieComponent>(target) || HasComp<ZombieImmuneComponent>(target))
             return;
 
+        if (!HasComp<BloodstreamComponent>(target))
+            return;
+
         if (!Resolve(target, ref mobState, logMissing: false))
             return;
 
