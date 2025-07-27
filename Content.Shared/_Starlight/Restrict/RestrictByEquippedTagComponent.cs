@@ -1,4 +1,5 @@
 using Content.Shared.Tag;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -21,4 +22,10 @@ public sealed partial class RestrictByEquippedTagComponent : Component
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public string DenialMessage = "You do not have required item to use this.";
+
+    /// <summary>
+    /// The sound to play when user is denied the access. If null, no sound is played.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier? DenialSound;
 } 

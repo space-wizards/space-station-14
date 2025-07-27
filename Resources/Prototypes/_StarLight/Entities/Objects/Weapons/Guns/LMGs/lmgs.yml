@@ -32,6 +32,7 @@
   - type: RestrictByEquippedTag
     requiredTag: "RequiredForLmgTag"
     denialMessage: "lmg-restricted-to-hardsuit-message"
+    denialSound: /Audio/Machines/custom_deny.ogg
   - type: ItemSlots
     slots:
       gun_chamber:

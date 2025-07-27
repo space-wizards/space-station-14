@@ -4,6 +4,9 @@ using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Shared._Starlight.Restrict;
 
@@ -15,6 +18,7 @@ public abstract partial class SharedRestrictByEquippedTagSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -52,6 +56,12 @@ public abstract partial class SharedRestrictByEquippedTagSystem : EntitySystem
         _popup.PopupClient(message, user);
     }
 
+    protected virtual void PlayDenialSound(SoundSpecifier? sound, EntityUid entity)
+    {
+        if (sound != null)
+            _audio.PlayGlobal(sound, Filter.Pvs(entity), false);
+    }
+
     private void OnAttemptInteract(Entity<RestrictByEquippedTagComponent> ent, ref InteractionAttemptEvent args)
     {
         if (!Exists(ent) || !Exists(args.Uid))
@@ -62,6 +72,7 @@ public abstract partial class SharedRestrictByEquippedTagSystem : EntitySystem
 
         args.Cancelled = true;
         PopupClient(Loc.GetString(ent.Comp.DenialMessage), args.Uid);
+        PlayDenialSound(ent.Comp.DenialSound, ent);
     }
     
     private void OnShotAttempt(Entity<RestrictByEquippedTagComponent> ent, ref AttemptShootEvent args)
@@ -74,6 +85,7 @@ public abstract partial class SharedRestrictByEquippedTagSystem : EntitySystem
 
         args.Cancelled = true;
         args.Message = Loc.GetString(ent.Comp.DenialMessage);
+        PlayDenialSound(ent.Comp.DenialSound, ent);
     }
 
     private void OnAttemptMelee(Entity<RestrictByEquippedTagComponent> ent, ref AttemptMeleeEvent args)
@@ -86,5 +98,6 @@ public abstract partial class SharedRestrictByEquippedTagSystem : EntitySystem
 
         args.Cancelled = true;
         args.Message = Loc.GetString(ent.Comp.DenialMessage);
+        PlayDenialSound(ent.Comp.DenialSound, ent);
     }
 } 
