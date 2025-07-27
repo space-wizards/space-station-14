@@ -1,5 +1,3 @@
-## Static
-
 - type: latheRecipePack
   id: FloorTilesStatic
   recipes:
@@ -48,38 +46,6 @@
   - FloorTileItemOldConcreteMono
   - FloorTileItemOldConcreteSmooth
   # DS14-start
-  - FloorTileItemSteelCheckerDark
-  - FloorTileItemSteelCheckerLight
-  - FloorTileItemDark
-  - FloorTileItemDarkDiagonalMini
-  - FloorTileItemDarkDiagonal
-  - FloorTileItemDarkHerringbone
-  - FloorTileItemDarkMini
-  - FloorTileItemDarkMono
-  - FloorTileItemDarkPavement
-  - FloorTileItemDarkPavementVertical
-  - FloorTileItemDarkOffset
-  - FloorTileItemSteel
-  - FloorTileItemSteelOffset
-  - FloorTileItemSteelDiagonalMini
-  - FloorTileItemSteelDiagonal
-  - FloorTileItemSteelHerringbone
-  - FloorTileItemSteelMini
-  - FloorTileItemSteelMono
-  - FloorTileItemSteelPavement
-  - FloorTileItemSteelPavementVertical
-  - FloorTileItemWhite
-  - FloorTileItemWhiteOffset
-  - FloorTileItemWhiteDiagonalMini
-  - FloorTileItemWhiteDiagonal
-  - FloorTileItemWhiteHerringbone
-  - FloorTileItemWhiteMini
-  - FloorTileItemWhiteMono
-  - FloorTileItemWhitePavement
-  - FloorTileItemWhitePavementVertical
-  - FloorTileItemWood
-  - FloorTileItemWoodPattern
-  - FloorTileItemWoodLarge
   - FloorTileItemWoodParquet
   - FloorTileItemWoodBlack
   - FloorTileItemWoodDark
@@ -98,7 +64,6 @@
   - FloorTileItemWoodChessDark
   - FloorTileItemWoodChessLight
   - FloorTileItemWoodChessRed
-  - FloorTileItemTechmaint
   - FloorTileItemDirty
   - FloorTileItemElevatorShaft
   - FloorTileItemRockVault
@@ -115,8 +80,11 @@
   - FloorTileItemMime
   - FloorTileItemKitchen
   - FloorTileItemLaundry
-  - FloorTileItemSteelMaint
-  - FloorTileItemGratingMaint
+  - FloorTileItemStone
+  - FloorTileItemTerracotta
+  - FloorTileItemTerracottaDiagonal
+  - FloorTileItemTerracottaHerringbone
+  - FloorTileItemTerracottaSmall
   - FloorTileItemLino
   - FloorTileItemShuttleWhite
   - FloorTileItemShuttleBlue
@@ -125,6 +93,13 @@
   - FloorTileItemShuttleRed
   - FloorTileItemShuttleGrey
   - FloorTileItemShuttleBlack
+  - FloorTileItemShuttleMonoWhite
+  - FloorTileItemShuttleMonoBlue
+  - FloorTileItemShuttleMonoOrange
+  - FloorTileItemShuttleMonoPurple
+  - FloorTileItemShuttleMonoRed
+  - FloorTileItemShuttleMonoGrey
+  - FloorTileItemShuttleMonoBlack
   - FloorTileItemArcadeBlue
   - FloorTileItemArcadeBlue2
   - FloorTileItemArcadeRed
@@ -133,14 +108,9 @@
   - FloorTileItemCarpetOffice
   - FloorTileItemBoxing
   - FloorTileItemGym
-  - FloorTileItemConcrete
-  - FloorTileItemConcreteMono
-  - FloorTileItemConcreteSmooth
-  - FloorTileItemGrayConcrete
-  - FloorTileItemGrayConcreteMono
-  - FloorTileItemGrayConcreteSmooth
-  - FloorTileItemOldConcrete
-  - FloorTileItemOldConcreteMono
-  - FloorTileItemOldConcreteSmooth
   - FloorTileItemGold
   - FloorTileItemSilver
+  - FloorTileItemDiamond
+  - FloorTileItemPlasma
+  - FloorTileItemUranium
+# DS14-end
