@@ -34,7 +34,6 @@ public sealed class StepTriggerOnSizeSystem : EntitySystem
             return;
         }
 
-        // If it's not passes CollisionMask then Cancel
-        args.Cancelled = true;
+        args.Continue = false;
     }
 }
