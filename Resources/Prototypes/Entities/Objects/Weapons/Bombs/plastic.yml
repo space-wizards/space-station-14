@@ -38,7 +38,7 @@
 - type: entity
   name: composition C-4
   description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
-  parent: [BasePlasticExplosive, BaseMajorContraband]
+  parent: [BasePlasticExplosive, BaseSyndicateContraband]
   id: C4
   components:
   - type: Sprite
@@ -79,11 +79,13 @@
   - type: HolidayRsiSwap
     sprite:
       festive: Objects/Weapons/Bombs/c4gift.rsi
+  - type: StaticPrice
+    price: 625 # 5000 for a bundle of 8
 
 - type: entity
   name: seismic charge
   description: Concussion based explosive designed to destroy large amounts of rock.
-  parent: BasePlasticExplosive
+  parent: [ BasePlasticExplosive, BaseSecurityCargoContraband ]
   id: SeismicCharge
   components:
   - type: Sprite

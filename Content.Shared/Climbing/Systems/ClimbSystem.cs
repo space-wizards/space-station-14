@@ -170,7 +170,7 @@ public sealed partial class ClimbSystem : VirtualController
 
     private void AddClimbableVerb(EntityUid uid, ClimbableComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
+        if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User) || !component.Vaultable)
             return;
 
         if (!TryComp(args.User, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing || !climbingComponent.CanClimb)
@@ -571,7 +571,7 @@ public sealed partial class ClimbSystem : VirtualController
 
         _damageableSystem.TryChangeDamage(args.Climber, component.ClimberDamage, origin: args.Climber);
         _damageableSystem.TryChangeDamage(uid, component.TableDamage, origin: args.Climber);
-        _stunSystem.TryParalyze(args.Climber, TimeSpan.FromSeconds(component.StunTime), true);
+        _stunSystem.TryUpdateParalyzeDuration(args.Climber, TimeSpan.FromSeconds(component.StunTime));
 
         // Not shown to the user, since they already get a 'you climb on the glass table' popup
         _popupSystem.PopupEntity(
