@@ -68,9 +68,6 @@
     sprite: Objects/Consumable/Drinks/teapot.rsi
   - type: FitsInDispenser
     solution: drink
-  - type: Tag
-    tags:
-    - DrinkGlass
 
 - type: entity
   parent: BaseStorageItem

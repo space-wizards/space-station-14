@@ -68,7 +68,7 @@
 # Pre-opened
 - type: entity
   abstract: true
-  parent: DrinkOpenableBase
+  parent: DrinkBaseOpenable
   id: DrinkBaseOpenableOpen
   components:
   - type: Sprite

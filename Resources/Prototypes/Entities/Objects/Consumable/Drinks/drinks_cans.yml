@@ -68,7 +68,7 @@
 
 # created when taking apart an ied
 - type: entity
-  parent: [ DrinkOpenableOpenBase, DrinkColaCan ]
+  parent: [ DrinkBaseOpenableOpen, DrinkColaCan ]
   id: DrinkColaCanEmpty
   suffix: Empty
   components:
