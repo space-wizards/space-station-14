@@ -9688,5 +9688,63 @@ Entries:
   id: 1334
   time: '2025-07-22T02:09:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/931
+- author: FoxxoTrystan
+  changes:
+  - message: Crawling now face your direction.
+    type: Tweak
+  id: 1335
+  time: '2025-07-23T04:39:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1090
+- author: princess_gurchi
+  changes:
+  - message: You can now give your character basic cyberlimbs in profile editor
+    type: Add
+  id: 1336
+  time: '2025-07-23T04:49:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/912
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Added the Proto-5x Energy Gun, added it the HoS's locker
+    type: Add
+  id: 1337
+  time: '2025-07-23T05:19:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/869
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Moved the Energy Shotgun from HoS's Locker to Warden's locker
+    type: Tweak
+  id: 1338
+  time: '2025-07-23T05:19:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/869
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Removed wide spread from the Energy Shotgun
+    type: Remove
+  id: 1339
+  time: '2025-07-23T05:19:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/869
+- author: Conflee
+  changes:
+  - message: Added 24 new Markings for Cyclorites, a mix of overlays and spikes for
+      shoulders, arms, head, etc.
+    type: Add
+  id: 1340
+  time: '2025-07-23T22:26:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1098
+- author: Conflee
+  changes:
+  - message: Changed base Cyclorite sprites to be 50% desaturated, so custom coloration
+      shows more clearly.
+    type: Tweak
+  id: 1341
+  time: '2025-07-23T22:26:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1098
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Hub.
+    type: Add
+  id: 1342
+  time: '2025-07-24T01:32:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/692
 Order: -1
 
