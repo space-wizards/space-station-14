@@ -160,7 +160,7 @@
   damage:
     types:
       Heat: 9
-    Structural: 5
+      Structural: 5
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_chem_multi
