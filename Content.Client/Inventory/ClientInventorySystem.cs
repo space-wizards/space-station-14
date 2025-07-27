@@ -112,23 +112,6 @@ namespace Content.Client.Inventory
 
         private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, LocalPlayerAttachedEvent args)
         {
-            if (TryGetSlots(uid, out var definitions))
-            {
-                foreach (var definition in definitions)
-                {
-                    if (!TryGetSlotContainer(uid, definition.Name, out var container, out _))
-                        continue;
-
-                    if (!component.SlotData.TryGetValue(definition.Name, out var data))
-                    {
-                        data = new SlotData(definition);
-                        component.SlotData[definition.Name] = data;
-                    }
-
-                    data.Container = container;
-                }
-            }
-
             OnLinkInventorySlots?.Invoke(uid, component);
         }
 
@@ -184,6 +167,9 @@ namespace Content.Client.Inventory
         {
             if (!ent.Comp.SlotData.TryAdd(newSlotData.SlotName, newSlotData))
                 return false;
+
+            if (TryGetSlotContainer(ent.Owner, newSlotData.SlotName, out var newContainer, out _))
+                ent.Comp.SlotData[newSlotData.SlotName].Container = newContainer;
 
             if (ent.Owner == _playerManager.LocalEntity)
                 OnSlotAdded?.Invoke(newSlotData);
@@ -282,21 +268,19 @@ namespace Content.Client.Inventory
 
         public sealed class SlotData
         {
-            public SlotDefinition SlotDef;
-            public EntityUid? HeldEntity => Container?.ContainedEntity;
-            public bool Blocked;
-            public bool Highlighted;
-
-            [ViewVariables]
-            public ContainerSlot? Container;
-            public bool HasSlotGroup => SlotDef.SlotGroup != "Default";
-            public Vector2i ButtonOffset => SlotDef.UIWindowPosition;
-            public string SlotName => SlotDef.Name;
-            public bool ShowInWindow => SlotDef.ShowInWindow;
-            public string SlotGroup => SlotDef.SlotGroup;
-            public string SlotDisplayName => SlotDef.DisplayName;
-            public string TextureName => "Slots/" + SlotDef.TextureName;
-            public string FullTextureName => SlotDef.FullTextureName;
+            [ViewVariables] public SlotDefinition SlotDef;
+            [ViewVariables] public EntityUid? HeldEntity => Container?.ContainedEntity;
+            [ViewVariables] public bool Blocked;
+            [ViewVariables] public bool Highlighted;
+            [ViewVariables] public ContainerSlot? Container;
+            [ViewVariables] public bool HasSlotGroup => SlotDef.SlotGroup != "Default";
+            [ViewVariables] public Vector2i ButtonOffset => SlotDef.UIWindowPosition;
+            [ViewVariables] public string SlotName => SlotDef.Name;
+            [ViewVariables] public bool ShowInWindow => SlotDef.ShowInWindow;
+            [ViewVariables] public string SlotGroup => SlotDef.SlotGroup;
+            [ViewVariables] public string SlotDisplayName => SlotDef.DisplayName;
+            [ViewVariables] public string TextureName => "Slots/" + SlotDef.TextureName;
+            [ViewVariables] public string FullTextureName => SlotDef.FullTextureName;
 
             public SlotData(SlotDefinition slotDef, ContainerSlot? container = null, bool highlighted = false,
                 bool blocked = false)
