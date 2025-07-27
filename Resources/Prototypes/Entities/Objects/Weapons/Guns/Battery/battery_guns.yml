@@ -958,6 +958,7 @@
       storagebase: !type:Container
         ents: []
       gas_tank: !type:ContainerSlot
+      cell_slot: !type:ContainerSlot
 
 - type: entity
   name: Gorlex chem-multilaser
@@ -1049,3 +1050,4 @@
       storagebase: !type:Container
         ents: []
       gas_tank: !type:ContainerSlot
+      cell_slot: !type:ContainerSlot
