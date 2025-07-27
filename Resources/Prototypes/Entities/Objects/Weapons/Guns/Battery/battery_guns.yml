@@ -918,7 +918,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
     proto: ChemicalLaser
-    fireCost: 50
+    fireCost: 25
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/chem_laser.rsi
     quickEquip: false
@@ -1008,7 +1008,7 @@
         volume: -2
   - type: HitscanBatteryAmmoProvider
     proto: ChemicalMultilaser
-    fireCost: 16
+    fireCost: 8
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/chem_laser.rsi
     quickEquip: false
