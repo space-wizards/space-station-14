@@ -1,4 +1,5 @@
 using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Robust.Shared.Serialization;
 using Content.Shared.Electrocution;
 
@@ -6,6 +7,8 @@ namespace Content.Shared.Silicons.StationAi;
 
 public abstract partial class SharedStationAiSystem
 {
+    [Dependency] private readonly SharedBoltSystem _boltSystem = default!;
+
     // Handles airlock radial
 
     private void InitializeAirlock()
@@ -26,7 +29,7 @@ public abstract partial class SharedStationAiSystem
             return;
         }
 
-        var setResult = _doors.TrySetBoltDown((ent, component), args.Bolted, args.User, predicted: true);
+        var setResult = _boltSystem.TrySetBoltsDown((ent, component), args.Bolted, args.User, predicted: true);
         if (!setResult)
         {
             ShowDeviceNotRespondingPopup(args.User);

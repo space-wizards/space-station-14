@@ -31,6 +31,18 @@ public abstract class SharedFirelockSystem : EntitySystem
         SubscribeLocalEvent<FirelockComponent, ComponentStartup>(OnComponentStartup);
 
         SubscribeLocalEvent<FirelockComponent, ExaminedEvent>(OnExamined);
+
+        SubscribeLocalEvent<FirelockComponent, PassagewayAccessRequest>(OnPassagewayAccessRequest);
+    }
+
+    private void OnPassagewayAccessRequest(Entity<FirelockComponent> ent, ref PassagewayAccessRequest args)
+    {
+        if (!TryComp<DoorComponent>(ent, out var door))
+            return;
+
+        // Anyone can click to open firelocks
+        if (door.State == DoorState.Closed)
+            args.Allowed = true;
     }
 
     public bool EmergencyPressureStop(EntityUid uid, FirelockComponent? firelock = null, DoorComponent? door = null)

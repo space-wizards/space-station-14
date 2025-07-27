@@ -1,4 +1,5 @@
 using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Electrocution;
 using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Utility;
@@ -7,6 +8,8 @@ namespace Content.Client.Silicons.StationAi;
 
 public sealed partial class StationAiSystem
 {
+    [Dependency] private readonly SharedBoltSystem _bolt = default!;
+
     private readonly ResPath _aiActionsRsi = new ResPath("/Textures/Interface/Actions/actions_ai.rsi");
 
     private void InitializeAirlock()
@@ -18,19 +21,20 @@ public sealed partial class StationAiSystem
 
     private void OnDoorBoltGetRadial(Entity<DoorBoltComponent> ent, ref GetStationAiRadialEvent args)
     {
+        var isBolted = _bolt.IsBolted(ent, ent.Comp);
         args.Actions.Add(
             new StationAiRadial
             {
-                Sprite = ent.Comp.BoltsDown
+                Sprite = isBolted
                     ? new SpriteSpecifier.Rsi(_aiActionsRsi, "unbolt_door")
                     : new SpriteSpecifier.Rsi(_aiActionsRsi, "bolt_door"),
-                Tooltip = ent.Comp.BoltsDown
+                Tooltip = isBolted
                     ? Loc.GetString("bolt-open")
                     : Loc.GetString("bolt-close"),
                 Event = new StationAiBoltEvent
                 {
-                    Bolted = !ent.Comp.BoltsDown,
-                }
+                    Bolted = !isBolted,
+                },
             }
         );
     }

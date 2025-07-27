@@ -1,11 +1,18 @@
 using Content.Shared.Doors.Components;
+using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Prying.Components;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Doors.Systems;
 
-public abstract partial class SharedDoorSystem
+public abstract class SharedBoltSystem : EntitySystem
 {
-    public void InitializeBolts()
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem  _powerReceiver = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio =  default!;
+
+    public override void Initialize()
     {
         base.Initialize();
 
@@ -14,6 +21,7 @@ public abstract partial class SharedDoorSystem
         SubscribeLocalEvent<DoorBoltComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
         SubscribeLocalEvent<DoorBoltComponent, BeforePryEvent>(OnDoorPry);
         SubscribeLocalEvent<DoorBoltComponent, DoorStateChangedEvent>(OnStateChanged);
+        SubscribeLocalEvent<DoorBoltComponent, PowerChangedEvent>(OnBoltPowerChanged);
     }
 
     private void OnDoorPry(Entity<DoorBoltComponent> ent, ref BeforePryEvent args)
@@ -52,16 +60,20 @@ public abstract partial class SharedDoorSystem
         Dirty(ent, ent.Comp);
     }
 
-    public void UpdateBoltLightStatus(Entity<DoorBoltComponent> ent)
+    protected void UpdateBoltLightStatus(Entity<DoorBoltComponent> ent)
     {
-        AppearanceSystem.SetData(ent, DoorVisuals.BoltLights, GetBoltLightsVisible(ent));
+        _appearance.SetData(ent, DoorVisuals.BoltLights, GetBoltLightsVisible(ent));
     }
 
-    public bool GetBoltLightsVisible(Entity<DoorBoltComponent> ent)
+    private static bool GetBoltLightsVisible(Entity<DoorBoltComponent> ent)
     {
-        return ent.Comp.BoltLightsEnabled &&
-               ent.Comp.BoltsDown &&
-               ent.Comp.Powered;
+        if (ent.Comp is not { BoltLightsEnabled: true, BoltsDown: true })
+            return false;
+
+        if (ent.Comp is { BoltsRequirePower: true, Powered: false })
+            return false;
+
+        return true;
     }
 
     public void SetBoltLightsEnabled(Entity<DoorBoltComponent> ent, bool value)
@@ -74,21 +86,17 @@ public abstract partial class SharedDoorSystem
         UpdateBoltLightStatus(ent);
     }
 
-    public void SetBoltsDown(Entity<DoorBoltComponent> ent, bool value, EntityUid? user = null, bool predicted = false)
+    public bool TrySetBoltsDown(Entity<DoorBoltComponent> ent, bool value, EntityUid? user = null, bool predicted = false)
     {
-        TrySetBoltDown(ent, value, user, predicted);
-    }
-
-    public bool TrySetBoltDown(
-        Entity<DoorBoltComponent> ent,
-        bool value,
-        EntityUid? user = null,
-        bool predicted = false
-    )
-    {
-        if (!_powerReceiver.IsPowered(ent.Owner))
-            return false;
         if (ent.Comp.BoltsDown == value)
+            return false;
+
+        if (ent.Comp.BoltsRequirePower && !_powerReceiver.IsPowered(ent.Owner))
+            return false;
+
+        var args = new BeforeBoltEvent(ent);
+        RaiseLocalEvent(ent, ref args);
+        if (args.Cancelled)
             return false;
 
         ent.Comp.BoltsDown = value;
@@ -121,5 +129,20 @@ public abstract partial class SharedDoorSystem
         }
 
         return component.BoltsDown;
+    }
+
+    private void OnBoltPowerChanged(Entity<DoorBoltComponent> ent, ref PowerChangedEvent args)
+    {
+        if (args.Powered && ent.Comp.BoltWireCut)
+            TrySetBoltsDown(ent, true);
+
+        ent.Comp.Powered = args.Powered;
+        Dirty(ent, ent.Comp);
+        UpdateBoltLightStatus(ent);
+    }
+
+    public bool TrySetBoltsToggle(Entity<DoorBoltComponent> ent, EntityUid? user = null, bool predicted = false)
+    {
+        return TrySetBoltsDown(ent, !ent.Comp.BoltsDown, user, predicted);
     }
 }

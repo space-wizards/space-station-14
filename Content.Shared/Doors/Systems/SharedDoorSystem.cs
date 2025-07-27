@@ -43,7 +43,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] private readonly OccluderSystem _occluder = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly PryingSystem _pryingSystem = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly SharedBoltSystem _boltSystem = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
 
@@ -59,8 +59,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        InitializeBolts();
 
         SubscribeLocalEvent<DoorComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DoorComponent, ComponentRemove>(OnRemove);
@@ -121,7 +119,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!TryComp<AirlockComponent>(uid, out var airlock))
             return;
 
-        if (IsBolted(uid) || !airlock.Powered)
+        if (_boltSystem.IsBolted(uid) || !airlock.Powered)
             return;
 
         if (door.State != DoorState.Closed)
@@ -321,7 +319,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        if (!HasAccess(uid, user, door))
+        if (!HasAccess(uid, user))
         {
             if (!quiet)
                 Deny(uid, door, user, predicted: true);
@@ -355,7 +353,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             Audio.PlayPvs(door.OpenSound, uid, AudioParams.Default.WithVolume(-5));
 
         if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
-            SetBoltsDown((uid, doorBoltComponent), !doorBoltComponent.BoltsDown, user, true);
+            _boltSystem.TrySetBoltsToggle((uid, doorBoltComponent), user, true);
     }
 
     /// <summary>
@@ -383,7 +381,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door, ref airlock))
             return false;
 
-        if (IsBolted(uid) || !airlock.Powered || door.State != DoorState.Closed)
+        if (_boltSystem.IsBolted(uid) || !airlock.Powered || door.State != DoorState.Closed)
         {
             return false;
         }
@@ -428,7 +426,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        if (!HasAccess(uid, user, door))
+        if (!HasAccess(uid, user))
             return false;
 
         return !ev.PerformCollisionCheck || !GetColliding(uid).Any();
@@ -613,7 +611,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     /// <summary>
     ///     Does the user have the permissions required to open this door?
     /// </summary>
-    public bool HasAccess(EntityUid uid, EntityUid? user = null, DoorComponent? door = null, AccessReaderComponent? access = null)
+    public bool HasAccess(EntityUid uid, EntityUid? user = null, AccessReaderComponent? access = null)
     {
         // TODO network AccessComponent for predicting doors
 
@@ -621,14 +619,11 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (user == null || AccessType == AccessTypes.AllowAll)
             return true;
 
-        // If the door is on emergency access we skip the checks.
-        if (TryComp<AirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
-            return true;
-
-        // Anyone can click to open firelocks
-        if (Resolve(uid, ref door) && door.State == DoorState.Closed &&
-            TryComp<FirelockComponent>(uid, out var firelock))
-            return true;
+        // This handles oddball access requests like firelocks and emergency access
+        var args = new PassagewayAccessRequest(uid, user);
+        RaiseLocalEvent(uid, ref args);
+        if(args.Allowed.HasValue)
+            return args.Allowed.Value;
 
         if (!Resolve(uid, ref access, false))
             return true;
@@ -807,4 +802,18 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
     }
     #endregion
+}
+
+/// <summary>
+/// Event called to check it a device should allow access due to something about the state (emergency access?)
+/// If Allowed is set, then the value will be used to grant or deny access before the AccessReader is queried.
+/// </summary>
+/// <param name="Target"></param>
+/// <param name="User"></param>
+[ByRefEvent]
+public record PassagewayAccessRequest(EntityUid Target, EntityUid? User)
+{
+    public readonly EntityUid Target = Target;
+    public readonly EntityUid? User = User;
+    public bool? Allowed = null;
 }

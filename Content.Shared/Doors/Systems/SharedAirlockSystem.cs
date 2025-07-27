@@ -13,7 +13,7 @@ public abstract class SharedAirlockSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedDoorSystem DoorSystem = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly SharedBoltSystem _boltSystem = default!;
     [Dependency] private   readonly SharedWiresSystem _wiresSystem = default!;
 
     public override void Initialize()
@@ -27,6 +27,13 @@ public abstract class SharedAirlockSystem : EntitySystem
         SubscribeLocalEvent<AirlockComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
         SubscribeLocalEvent<AirlockComponent, GetPryTimeModifierEvent>(OnGetPryMod);
         SubscribeLocalEvent<AirlockComponent, BeforePryEvent>(OnBeforePry);
+        SubscribeLocalEvent<AirlockComponent, PassagewayAccessRequest>(OnPassagewayAccessRequest);
+    }
+
+    private void OnPassagewayAccessRequest(Entity<AirlockComponent> ent, ref PassagewayAccessRequest args)
+    {
+        if(ent.Comp.EmergencyAccess)
+            args.Allowed = true;
     }
 
     private void OnBeforeDoorClosed(EntityUid uid, AirlockComponent airlock, BeforeDoorClosedEvent args)
@@ -95,7 +102,7 @@ public abstract class SharedAirlockSystem : EntitySystem
         if (component.Powered)
             args.PryTimeModifier *= component.PoweredPryModifier;
 
-        if (DoorSystem.IsBolted(uid))
+        if (_boltSystem.IsBolted(uid))
             args.PryTimeModifier *= component.BoltedPryModifier;
     }
 
@@ -175,6 +182,6 @@ public abstract class SharedAirlockSystem : EntitySystem
 
     public bool CanChangeState(EntityUid uid, AirlockComponent component)
     {
-        return component.Powered && !DoorSystem.IsBolted(uid);
+        return component.Powered && !_boltSystem.IsBolted(uid);
     }
 }

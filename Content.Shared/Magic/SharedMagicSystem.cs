@@ -63,6 +63,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly SharedBoltSystem _bolt = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
 
@@ -415,7 +416,7 @@ public abstract class SharedMagicSystem : EntitySystem
                 continue;
 
             if (TryComp<DoorBoltComponent>(target, out var doorBoltComp) && doorBoltComp.BoltsDown)
-                _door.SetBoltsDown((target, doorBoltComp), false, predicted: true);
+                _bolt.TrySetBoltsDown((target, doorBoltComp), false, predicted: true);
 
             if (TryComp<DoorComponent>(target, out var doorComp) && doorComp.State is not DoorState.Open)
                 _door.StartOpening(target);

@@ -4,6 +4,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Remotes.Components;
@@ -17,6 +18,7 @@ namespace Content.Shared.Remotes
         [Dependency] private readonly AirlockSystem _airlock = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
+        [Dependency] private readonly SharedBoltSystem _bolt = default!;
 
         public override void Initialize()
         {
@@ -27,21 +29,21 @@ namespace Content.Shared.Remotes
 
         private void OnBeforeInteract(Entity<DoorRemoteComponent> entity, ref BeforeRangedInteractEvent args)
         {
-            bool isAirlock = TryComp<AirlockComponent>(args.Target, out var airlockComp);
+            var isAirlock = TryComp<AirlockComponent>(args.Target, out var airlockComp);
+            var hasBolts = TryComp<DoorBoltComponent>(args.Target, out var boltsComp);
+            TryComp<DoorComponent>(entity, out var doorComp);
 
-            if (args.Handled
-                || args.Target == null
-                || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
-                // Only able to control doors if they are within your vision and within your max range.
-                // Not affected by mobs or machines anymore.
-                || !_examine.InRangeUnOccluded(args.User,
-                    args.Target.Value,
-                    SharedInteractionSystem.MaxRaycastRange,
-                    null))
-
-            {
+            if (args.Handled || args.Target == null)
                 return;
-            }
+
+            if (entity.Comp.Mode == OperatingMode.ToggleBolts && !hasBolts)
+                return;
+
+            if (entity.Comp.Mode != OperatingMode.ToggleBolts && !isAirlock)
+                return;
+
+            if (!_examine.InRangeUnOccluded(args.User, args.Target.Value, SharedInteractionSystem.MaxRaycastRange))
+                return;
 
             args.Handled = true;
 
@@ -60,7 +62,7 @@ namespace Content.Shared.Remotes
             }
 
             if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent)
-                && !_doorSystem.HasAccess(args.Target.Value, accessTarget, doorComp, accessComponent))
+                && !_doorSystem.HasAccess(args.Target.Value, accessTarget, accessComponent))
             {
                 if (isAirlock)
                     _doorSystem.Deny(args.Target.Value, doorComp, accessTarget);
@@ -71,21 +73,21 @@ namespace Content.Shared.Remotes
             switch (entity.Comp.Mode)
             {
                 case OperatingMode.OpenClose:
-                    if (_doorSystem.TryToggleDoor(args.Target.Value, doorComp, accessTarget))
+                    if (doorComp != null && _doorSystem.TryToggleDoor(args.Target.Value, doorComp, accessTarget))
+                    {
                         _adminLogger.Add(LogType.Action,
                             LogImpact.Medium,
                             $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)}: {doorComp.State}");
+                    }
+
                     break;
                 case OperatingMode.ToggleBolts:
-                    if (TryComp<DoorBoltComponent>(args.Target, out var boltsComp))
+                    if(boltsComp is { BoltWireCut: false })
                     {
-                        if (!boltsComp.BoltWireCut)
-                        {
-                            _doorSystem.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, accessTarget);
-                            _adminLogger.Add(LogType.Action,
-                                LogImpact.Medium,
-                                $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
-                        }
+                        _bolt.TrySetBoltsToggle((args.Target.Value, boltsComp), accessTarget);
+                        _adminLogger.Add(LogType.Action,
+                            LogImpact.Medium,
+                            $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
                     }
 
                     break;
@@ -99,6 +101,7 @@ namespace Content.Shared.Remotes
                     }
 
                     break;
+                case OperatingMode.placeholderForUiUpdates:
                 default:
                     throw new InvalidOperationException(
                         $"{nameof(DoorRemoteComponent)} had invalid mode {entity.Comp.Mode}");
