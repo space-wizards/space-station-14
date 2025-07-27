@@ -1,3 +1,4 @@
+using Content.Shared.Mobs;
 using Content.Shared.Physics;
 using Content.Shared.StepTrigger.Components;
 using Robust.Shared.Physics.Components;
@@ -34,6 +35,7 @@ public sealed class StepTriggerOnSizeSystem : EntitySystem
             return;
         }
 
+        args.Cancelled = true;
         args.Continue = false;
     }
 }
