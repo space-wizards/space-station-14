@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Components;
@@ -19,6 +20,8 @@ public sealed partial class DungeonJob
         HashSet<Vector2i> reservedTiles,
         Random random)
     {
+        var remaining = new Dictionary<EntProtoId, int>();
+
         foreach (var dungeon in dungeons)
         {
             var emptyTiles = false;
@@ -143,9 +146,20 @@ public sealed partial class DungeonJob
 
                 if (groupSize > 0)
                 {
-                    _sawmill.Warning($"Found remaining group size for ore veins of {gen.Replacement ?? "null"}!");
+                    var key = gen.Replacement ?? "null";
+                    if (remaining.ContainsKey(key))
+                    {
+                        remaining[key]++;
+                    }
+                    else
+                    {
+                        remaining.Add(key, 1);
+                    }
                 }
             }
         }
+        
+        if (remaining.Count > 0)
+            _sawmill.Warning($"Found remaining group size for groups, ore veins of {String.Join(", ", remaining.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}!");
     }
 }
