@@ -53,6 +53,12 @@ public sealed partial class PneumaticCannonComponent : Component
 
     [DataField]
     public HashSet<Gas>? AllowedGases;
+
+    [DataField]
+    public LocId MessageImpureMix = "tank-eject-invalid-gas";
+
+    [DataField]
+    public LocId MessageInsufficientGas = "tank-eject-insufficient-gas";
 }
 
 /// <summary>

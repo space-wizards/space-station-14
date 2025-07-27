@@ -7,6 +7,7 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.PneumaticCannon;
+using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -23,6 +24,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -71,6 +73,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
             {
                 if (!component.AllowedGases.Contains(gas.gas) && gas.moles > 0)
                 {
+                    _popup.PopupEntity(Loc.GetString(component.MessageImpureMix), uid, Transform(args.EntityUid).ParentUid);
                     args.Cancel();
                     return;
                 }
@@ -81,6 +84,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         if (tank.Air.TotalMoles >= component.GasUsage && component.GasUsage > 0f)
             return;
 
+        _popup.PopupEntity(Loc.GetString(component.MessageInsufficientGas), uid, Transform(args.EntityUid).ParentUid);
         args.Cancel();
     }
 
@@ -116,6 +120,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
 
         // eject gas tank
         _slots.TryEject(uid, PneumaticCannonComponent.TankSlotId, args.User, out _);
+        _popup.PopupEntity(Loc.GetString(component.MessageInsufficientGas), uid);
     }
 
     private void OnGunRefreshModifiers(Entity<PneumaticCannonComponent> ent, ref GunRefreshModifiersEvent args)
