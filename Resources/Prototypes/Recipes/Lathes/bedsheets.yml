@@ -5,15 +5,15 @@
   - Bedsheets
   completetime: 2
   materials:
-    Cloth: 1200
+    Cloth: 150
 
 - type: latheRecipe
   abstract: true
   parent: BaseBedsheetRecipe
   id: BaseSpecifiedBedsheetRecipe
   materials:
-    Cloth: 1200
-    Durathread: 400
+    Cloth: 150
+    Durathread: 50
 
   #Base bedsheets
 
