@@ -17,7 +17,7 @@ public sealed class XenoArtifactTest
   components:
   - type: XenoArtifact
     isGenerationRequired: false
-    effectsWeights: XenoArtifactEffectsDefaultTableBalanced
+    effectsWeights: XenoArtifactEffectsDefaultWeightedTable
 
 - type: entity
   id: TestGenArtifactFlat
@@ -35,7 +35,7 @@ public sealed class XenoArtifactTest
     nodesPerSegmentLayer:
       min: 1
       max: 1
-    effectsWeights: XenoArtifactEffectsDefaultTableBalanced
+    effectsWeights: XenoArtifactEffectsDefaultWeightedTable
 
 - type: entity
   id: TestGenArtifactTall
@@ -53,7 +53,7 @@ public sealed class XenoArtifactTest
     nodesPerSegmentLayer:
       min: 1
       max: 1
-    effectsWeights: XenoArtifactEffectsDefaultTableBalanced
+    effectsWeights: XenoArtifactEffectsDefaultWeightedTable
 
 - type: entity
   id: TestGenArtifactFull
@@ -70,7 +70,7 @@ public sealed class XenoArtifactTest
     nodesPerSegmentLayer:
       min: 2
       max: 2
-    effectsWeights: XenoArtifactEffectsDefaultTableBalanced
+    effectsWeights: XenoArtifactEffectsDefaultWeightedTable
 
 - type: entity
   id: TestArtifactNode
