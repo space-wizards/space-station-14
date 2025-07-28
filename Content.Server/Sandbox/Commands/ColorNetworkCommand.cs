@@ -1,9 +1,9 @@
 using Content.Server.Administration.Managers;
-using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Administration;
-using Content.Shared.NodeContainer;
+using Content.Shared.Atmos.Piping;
 using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer;
+using Robust.Server.GameObjects;
 using Robust.Shared.Console;
 
 namespace Content.Server.Sandbox.Commands
@@ -12,8 +12,8 @@ namespace Content.Server.Sandbox.Commands
     public sealed class ColorNetworkCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly AtmosPipeColorSystem _pipeColorSystem = default!;
         [Dependency] private readonly SandboxSystem _sandboxSystem = default!;
+        [Dependency] private readonly AppearanceSystem _appearance = default!;
 
         public override string Command => "colornetwork";
 
@@ -75,10 +75,7 @@ namespace Content.Server.Sandbox.Commands
 
             foreach (var x in group.Nodes)
             {
-                if (!EntityManager.TryGetComponent(x.Owner, out AtmosPipeColorComponent? atmosPipeColorComponent))
-                    continue;
-
-                _pipeColorSystem.SetColor((x.Owner, atmosPipeColorComponent), color);
+                _appearance.SetData(x.Owner, PipeColorVisuals.Color, color);
             }
         }
     }

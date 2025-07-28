@@ -3,6 +3,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Atmos.Piping;
 using Content.Shared.NodeContainer;
 using Robust.Shared.Map.Components;
 
@@ -18,6 +19,19 @@ public sealed partial class AtmosPipeAppearanceSystem : SharedAtmosPipeAppearanc
         base.Initialize();
 
         SubscribeLocalEvent<PipeAppearanceComponent, NodeGroupsRebuilt>(OnNodeUpdate);
+        SubscribeLocalEvent<AtmosPipeComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<AtmosPipeComponent, ComponentShutdown>(OnShutdown);
+    }
+
+    private void OnStartup(Entity<AtmosPipeComponent> item, ref ComponentStartup args)
+    {
+        if (_appearance.TryGetData<string>(item.Owner, PipeColorVisuals.Color, out var color))
+            _appearance.SetData(item.Owner, PipeColorVisuals.Color, Color.FromHex(color));
+    }
+
+    private void OnShutdown(Entity<AtmosPipeComponent> item, ref ComponentShutdown args)
+    {
+        _appearance.SetData(item.Owner, PipeColorVisuals.Color, Color.White);
     }
 
     private void OnNodeUpdate(EntityUid uid, PipeAppearanceComponent component, ref NodeGroupsRebuilt args)

@@ -9,6 +9,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Consoles;
+using Content.Shared.Atmos.Piping;
 using Content.Shared.Labels.Components;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
@@ -28,6 +29,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly SharedMapSystem _sharedMapSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     // Private variables
     // Note: this data does not need to be saved
@@ -204,7 +206,9 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             netId == null)
             return null;
 
-        var pipeColor = TryComp<AtmosPipeColorComponent>(uid, out var colorComponent) ? colorComponent.Color : Color.White;
+        var pipeColor = Color.White;
+        if (TryComp<AppearanceComponent>(uid, out var comp) && _appearance.TryGetData<Color>(uid, PipeColorVisuals.Color, out var colorComponent, comp))
+            pipeColor = colorComponent;
 
         // Name the entity based on its label, if available
         if (TryComp<LabelComponent>(uid, out var label) && label.CurrentLabel != null)
@@ -285,7 +289,9 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
 
         var direction = xform.LocalRotation.GetCardinalDir();
         var netId = TryGettingFirstPipeNode(uid, out var _, out var firstNetId) ? firstNetId : -1;
-        var color = TryComp<AtmosPipeColorComponent>(uid, out var atmosPipeColor) ? atmosPipeColor.Color : Color.White;
+        var color = Color.White;
+        if (TryComp<AppearanceComponent>(uid, out var comp) && _appearance.TryGetData<Color>(uid, PipeColorVisuals.Color, out var atmosPipeColor, comp))
+            color = atmosPipeColor;
         var layer = TryComp<AtmosPipeLayersComponent>(uid, out var atmosPipeLayers) ? atmosPipeLayers.CurrentPipeLayer : AtmosPipeLayer.Primary;
 
         device = new AtmosDeviceNavMapData(GetNetEntity(uid), GetNetCoordinates(xform.Coordinates), netId.Value, component.NavMapBlip.Value, direction, color, layer);
@@ -321,9 +327,15 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         var allChunks = new Dictionary<Vector2i, AtmosPipeChunk>();
 
         // Adds all atmos pipes to the nav map via bit mask chunks
-        var queryPipes = AllEntityQuery<AtmosPipeColorComponent, NodeContainerComponent, TransformComponent>();
-        while (queryPipes.MoveNext(out var ent, out var entAtmosPipeColor, out var entNodeContainer, out var entXform))
+        var queryPipes = AllEntityQuery<NodeContainerComponent, TransformComponent>();
+        while (queryPipes.MoveNext(out var ent, out var entNodeContainer, out var entXform))
         {
+            if (!TryComp<AppearanceComponent>(ent, out var comp))
+                continue;
+
+            if (!_appearance.TryGetData<Color>(ent, PipeColorVisuals.Color, out var entAtmosPipeColor, comp))
+                continue;
+
             if (entXform.GridUid != gridUid)
                 continue;
 
@@ -381,7 +393,10 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         // Rebuild the tile's pipe data
         foreach (var ent in _sharedMapSystem.GetAnchoredEntities(gridUid, grid, coords))
         {
-            if (!TryComp<AtmosPipeColorComponent>(ent, out var entAtmosPipeColor))
+            if (!TryComp<AppearanceComponent>(ent, out var comp))
+                continue;
+
+            if (!_appearance.TryGetData<Color>(ent, PipeColorVisuals.Color, out var entAtmosPipeColor, comp))
                 continue;
 
             if (!TryComp<NodeContainerComponent>(ent, out var entNodeContainer))
@@ -414,7 +429,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
     private void UpdateAtmosPipeChunk
         (EntityUid uid,
         NodeContainerComponent nodeContainer,
-        AtmosPipeColorComponent pipeColor,
+        Color pipeColor,
         int tileIdx,
         ref AtmosPipeChunk chunk,
         bool showAbsentConnections = true)
@@ -432,7 +447,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
                 continue;
 
             var netId = GetPipeNodeNetId(pipeNode);
-            var subnet = new AtmosMonitoringConsoleSubnet(netId, pipeNode.CurrentPipeLayer, pipeColor.Color);
+            var subnet = new AtmosMonitoringConsoleSubnet(netId, pipeNode.CurrentPipeLayer, pipeColor);
             var pipeDirection = pipeNode.CurrentPipeDirection;
 
             chunk.AtmosPipeData.TryGetValue(subnet, out var atmosPipeData);

@@ -551,7 +551,7 @@
         nodeGroupID: Pipe
         pipeDirection: South
   - type: AtmosDevice
-  - type: AtmosPipeColor
+  - type: AtmosPipe
   - type: AmbientSound
     enabled: true
     volume: -9

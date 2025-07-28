@@ -227,7 +227,7 @@
     - type: PipeColorVisuals
     - type: Rotatable
     - type: GasThermoMachine
-    - type: AtmosPipeColor
+    - type: AtmosPipe
     - type: AtmosPipeLayers
       spriteLayersRsiPaths:
         enum.PipeVisualLayers.Pipe:
@@ -424,7 +424,7 @@
   - type: PipeColorVisuals
   - type: Rotatable
   - type: GasCondenser
-  - type: AtmosPipeColor
+  - type: AtmosPipe
   - type: AtmosPipeLayers
     spriteLayersRsiPaths:
       enum.PipeVisualLayers.Pipe:

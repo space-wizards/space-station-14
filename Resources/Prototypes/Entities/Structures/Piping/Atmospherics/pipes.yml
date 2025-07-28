@@ -50,12 +50,16 @@
     drawdepth: ThinPipe
     visible: false
   - type: Appearance
+    appearanceDataInit:
+      enum.PipeColorVisuals.Color:
+        !type:String
+        '#FFFFFFFF'
   - type: PipeAppearance
   - type: PipeColorVisuals
   - type: NodeContainer
   - type: PipeRestrictOverlap
   - type: AtmosUnsafeUnanchor
-  - type: AtmosPipeColor
+  - type: AtmosPipe
   - type: AtmosMonitoringConsoleDevice
   - type: Tag
     tags:
