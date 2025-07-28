@@ -25,3 +25,8 @@
     Basketball: 1
     FoodSnackBoritos: 3
     DrinkSpaceMountainWindCan: 3
+  # start of modifications
+    CardBoxNanotrasen: 4
+  emaggedInventory:
+    CardBoxSyndicate: 4
+  # end of modifications
