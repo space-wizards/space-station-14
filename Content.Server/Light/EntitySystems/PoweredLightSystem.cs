@@ -76,7 +76,7 @@ namespace Content.Server.Light.EntitySystems
             // TODO: Use ContainerFill dog
             if (light.HasLampOnSpawn != null)
             {
-                var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
+                var entity = Spawn(light.HasLampOnSpawn, Comp<TransformComponent>(uid).Coordinates);
                 _containerSystem.Insert(entity, light.LightBulbContainer);
             }
             // need this to update visualizers
@@ -134,7 +134,7 @@ namespace Content.Server.Light.EntitySystems
                 return false;
 
             // check if bulb fits
-            if (!EntityManager.TryGetComponent(bulbUid, out LightBulbComponent? lightBulb))
+            if (!TryComp(bulbUid, out LightBulbComponent? lightBulb))
                 return false;
             if (lightBulb.Type != light.BulbType)
                 return false;
@@ -226,7 +226,7 @@ namespace Content.Server.Light.EntitySystems
 
             // check bulb state
             var bulbUid = GetBulb(uid, light);
-            if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
+            if (bulbUid == null || !TryComp(bulbUid.Value, out LightBulbComponent? lightBulb))
                 return false;
             if (lightBulb.State == LightBulbState.Broken)
                 return false;
@@ -252,7 +252,7 @@ namespace Content.Server.Light.EntitySystems
 
             // check if light has bulb
             var bulbUid = GetBulb(uid, light);
-            if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
+            if (bulbUid == null || !TryComp(bulbUid.Value, out LightBulbComponent? lightBulb))
             {
                 SetLight(uid, false, light: light);
                 powerReceiver.Load = 0;
@@ -348,7 +348,7 @@ namespace Content.Server.Light.EntitySystems
 
             light.IsBlinking = isNowBlinking;
 
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (!TryComp(uid, out AppearanceComponent? appearance))
                 return;
 
             _appearance.SetData(uid, PoweredLightVisuals.Blinking, isNowBlinking, appearance);
@@ -384,7 +384,7 @@ namespace Content.Server.Light.EntitySystems
             light.CurrentLit = value;
             _ambientSystem.SetAmbience(uid, value);
 
-            if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
+            if (TryComp(uid, out PointLightComponent? pointLight))
             {
                 _pointLight.SetEnabled(uid, value, pointLight);
 
