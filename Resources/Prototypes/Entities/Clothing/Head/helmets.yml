@@ -29,7 +29,7 @@
 
 #Basic Helmet (Security Helmet)
 - type: entity
-  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband, ClothingHeadSuitWithLightBase]
   id: ClothingHeadHelmetBasic
   name: helmet
   description: Standard security gear. Protects the head from impacts.
@@ -38,6 +38,13 @@
     sprite: Clothing/Head/Helmets/security.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/security.rsi
+    clothingVisuals:
+      head:
+      - state: light-equipped-HELMET
+      # - state: shaded
+      head-vox:
+      - state: equipped-HELMET-vox
+      # - state: shaded
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -45,6 +52,14 @@
   - type: HideLayerClothing
     layers:
       Hair: HEAD
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: lighton-equipped-HELMET
+        shader: unshaded
+      head-vox:
+      - state: lighton-equipped-HELMET-vox
+        shader: unshaded
 
 #Mercenary Helmet
 - type: entity
@@ -321,6 +336,7 @@
     tags:
     - WhitelistChameleon
     - FireHelmet
+    - CorgiWearable
   - type: HideLayerClothing
     layers:
       Hair: HEAD
@@ -522,6 +538,13 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/justice.rsi
     equippedPrefix: off
+    # Starlight begin - inheritance fix
+    clothingVisuals:
+      head:
+        - state: off-equipped-HELMET
+      head-vox:
+        - state: off-equipped-HELMET-vox
+    # Starlight end
   - type: ItemToggle
     predictable: false # issues between ToggleCellDraw and ItemToggleActiveSound
     onUse: false
@@ -538,9 +561,11 @@
         volume: -4
   - type: UseDelay
     delay: 1.0
-  - type: ToggleClothing
-    action: ActionToggleJusticeHelm
-    mustEquip: false
+    # Starlight begin - redundant button, the normal sec helmet has a light toggle already
+    #  - type: ToggleClothing
+    #    action: ActionToggleJusticeHelm
+    #    mustEquip: false
+    # Starlight end
   - type: ItemTogglePointLight
   - type: ToggleableVisuals
     spriteLayer: light

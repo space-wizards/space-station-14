@@ -788,35 +788,67 @@
       state: heavylaser
   collisionMask: 64 #BulletImpassable
   reflective: Energy
-  
+
 - type: hitscan
-  id: LaserBolt
-  name: laser bolt
-  parent: EnergyTrace
+  id: LaserTrace
+  abstract: true
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_laser
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_laser
+  reflective: Energy
+
+- type: hitscan
+  id: RedLaserBeam
+  name: laser beam
+  parent: LaserTrace
   damage:
     types:
       Heat: 20
 
 - type: hitscan
-  id: DestroyBolt
-  name: destroying bolt
-  parent: EnergyTrace
+  id: DestroyBeam
+  name: destroying beam
+  parent: LaserTrace
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_blue
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_blue
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_blue
   damage:
     types:
       Heat: 50
       
 - type: hitscan
-  id: DisablerBolt
-  name: disabler bolt
+  id: DisablerBoltPractice
+  name: disabler bolt practice
   parent: EnergyTrace
+  collisionMask: 64 #BulletImpassable
   bullet:
     sprite:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
       state: omnilaser
+
+- type: hitscan
+  id: DisablerBolt
+  name: disabler bolt
+  parent: DisablerBoltPractice
   staminaDamage: 25
-  damage:
-    types:
-      Heat: 5
+
+- type: hitscan
+  id: DisablerBoltSmg
+  name: disabler bolt smg
+  parent: DisablerBolt
+  staminaDamage: 15
       
 - type: hitscan
   id: TaserBolt
@@ -832,7 +864,7 @@
   maxLength: 5
   damage:
     types:
-      Heat: 5
+      Heat: 0
       
 - type: hitscan
   id: AdvancedTaserBolt

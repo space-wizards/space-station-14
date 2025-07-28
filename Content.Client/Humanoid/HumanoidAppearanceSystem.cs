@@ -37,7 +37,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
     private void OnCvarChanged(bool value)
     {
-        var humanoidQuery = EntityManager.AllEntityQueryEnumerator<HumanoidAppearanceComponent, SpriteComponent>();
+        var humanoidQuery = AllEntityQuery<HumanoidAppearanceComponent, SpriteComponent>();
         while (humanoidQuery.MoveNext(out var uid, out var humanoidComp, out var spriteComp))
         {
             UpdateSprite((uid, humanoidComp, spriteComp));
@@ -233,6 +233,19 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         humanoid.EyeColor = profile.Appearance.EyeColor;
         humanoid.EyeGlowing = profile.Appearance.EyeGlowing;
 
+        UpdateSprite((uid, humanoid, Comp<SpriteComponent>(uid)));
+    }
+
+    // Starlight
+    // Maybe this function isn't needed
+    // But I didn't find a way to draw custom base layers without calling UpdateSprite() which is private to this class
+    public void AddCustomBaseLayers(EntityUid uid, Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> layers, HumanoidAppearanceComponent? humanoid = null){
+        if (!Resolve(uid, ref humanoid))
+        {
+            return;
+        }
+        
+        humanoid.CustomBaseLayers = layers;
         UpdateSprite((uid, humanoid, Comp<SpriteComponent>(uid)));
     }
 

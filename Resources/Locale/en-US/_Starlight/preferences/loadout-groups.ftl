@@ -25,6 +25,8 @@ loadout-group-hop-shoes = Head of Personnel shoes
 loadout-group-blueshield-backpack = Blueshield backpack
 loadout-group-blueshield-jumpsuit = Blueshield jumpsuit
 loadout-group-blueshield-eyewear = Blueshield eyewear
+Loadout-group-blueshield-outerclothing = Blueshield Outer Clothing
+Loadout-group-blueshield-neck = Blueshield Neck
 
 # Security
 

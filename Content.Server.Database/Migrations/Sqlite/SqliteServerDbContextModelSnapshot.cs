@@ -1366,6 +1366,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("custom_specie_name");
 
+                    b.PrimitiveCollection<string>("CyberneticIds")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("cybernetic_ids");
+
                     b.Property<int>("ProfileId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("profile_id");

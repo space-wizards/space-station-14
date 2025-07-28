@@ -287,7 +287,7 @@ reagent-name-toxins-special = toxins special
 reagent-desc-toxins-special = This thing is ON FIRE! CALL THE DAMN SHUTTLE!
 
 reagent-name-vampiro = vampiro
-reagent-desc-vampiro = Popular in Mexico and Transylvania.
+reagent-desc-vampiro = Popular in Mexico and Transylvania. Not quite a vampire favorite though.
 
 reagent-name-vodka-martini = vodka martini
 reagent-desc-vodka-martini = Vodka instead of Gin. Not quite how 007 enjoyed it, but still delicious.

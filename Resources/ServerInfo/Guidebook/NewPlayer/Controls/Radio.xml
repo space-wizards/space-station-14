@@ -20,7 +20,7 @@ People may not be able to make out all of what you're saying if you're standing 
 Your radio allows you to communicate across the entire station and to your specific [color=#a4885c]department[/color].
 
 <Box>
-  <GuideEntityEmbed Entity="ClothingHeadsetGrey"/>
+  <GuideEntityEmbed Entity="ClothingHeadsetAssistant"/>
 </Box>
 
 To send a [color=#a4885c]station-wide[/color] message over the radio preface, use the [color=#32cd32]Common[/color] channel by beginning your text with [color=#32cd32]semi-colon (;)[/color].

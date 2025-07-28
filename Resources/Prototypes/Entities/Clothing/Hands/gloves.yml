@@ -417,7 +417,7 @@
       enum.MeleeSpeechUiKey.Key:
         type: MeleeSpeechBoundUserInterface
   - type: StaticPrice
-    price: 0
+    price: 2500
   - type: Tag
     tags:
     - Kangaroo
@@ -517,6 +517,7 @@
   - type: Fiber
     fiberColor: fibers-gold
   - type: MeleeWeapon
+    autoAttack: true # starlight
     attackRate: 1.5
     damage:
       types:
@@ -561,6 +562,8 @@
     tags:
     - WhitelistChameleon
     - Kangaroo
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   name: stun knuckle dusters

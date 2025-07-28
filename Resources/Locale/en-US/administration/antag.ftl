@@ -8,6 +8,7 @@ admin-verb-make-head-rev = Make the target into an SKB revolutionary agent.
 admin-verb-make-thief = Make the target into a thief.
 admin-verb-make-changeling = Make the target into a changeling.
 admin-verb-make-paradox-clone = Create a Paradox Clone ghost role of the target.
+admin-verb-make-vampire = Make the target into a vampire.
 
 admin-verb-text-make-traitor = Make Traitor
 admin-verb-text-make-initial-infected = Make Initial Infected

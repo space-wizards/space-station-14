@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using Content.Client.Resources;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
@@ -12,6 +12,9 @@ namespace Content.Client.Stylesheets
 {
     public abstract class StyleBase
     {
+        public const string ClassCardHeader = "CardHeader"; // 🌟Starlight🌟
+        public const string ClassCardBorder = "CardBorder"; // 🌟Starlight🌟
+
         public const string ClassHighDivider = "HighDivider";
         public const string ClassLowDivider = "LowDivider";
         public const string StyleClassLabelHeading = "LabelHeading";
@@ -40,6 +43,7 @@ namespace Content.Client.Stylesheets
         protected StyleBoxTexture BaseButtonSquare { get; }
 
         protected StyleBoxTexture BaseAngleRect { get; }
+        protected StyleBoxTexture BaseHeaderRect { get; } // 🌟Starlight🌟
         protected StyleBoxTexture AngleBorderRect { get; }
 
         protected StyleBase(IResourceCache resCache)
@@ -116,6 +120,14 @@ namespace Content.Client.Stylesheets
                 Texture = buttonTex,
             };
             BaseAngleRect.SetPatchMargin(StyleBox.Margin.All, 10);
+
+            // 🌟Starlight🌟 start
+            BaseHeaderRect = new StyleBoxTexture
+            {
+                Texture = resCache.GetTexture("/Textures/_Starlight/Interface/Nano/card_header.png"),
+            };
+            BaseHeaderRect.SetPatchMargin(StyleBox.Margin.All, 10);
+            // 🌟Starlight🌟 end
 
             AngleBorderRect = new StyleBoxTexture
             {

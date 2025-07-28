@@ -151,7 +151,9 @@
   - type: TargetObjective
     title: objective-condition-kill-person-title
   - type: PickRandomPerson
-  
+  - type: KillPersonCondition
+    requireMaroon: true
+
 # Drain
 
 - type: entity

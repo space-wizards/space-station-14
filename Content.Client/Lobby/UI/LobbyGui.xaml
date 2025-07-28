@@ -8,6 +8,7 @@
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
     xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
     xmlns:info="clr-namespace:Content.Client.Info"
+    xmlns:nulllink="clr-namespace:Content.Client._NullLink"
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets">
     <!-- Background -->
     <TextureRect Access="Public" VerticalExpand="True" HorizontalExpand="True" Name="Background"
@@ -44,6 +45,7 @@
                                                 StyleClasses="ButtonBig" MinWidth="137" />
                                     </BoxContainer>
                                 </controls:StripeBack>
+                                <RichTextLabel Name="PlaytimeComment" Visible="False" Access="Public" HorizontalAlignment="Center" />
                             </BoxContainer>
                         </PanelContainer>
                         <!-- Voting Popups -->
@@ -52,13 +54,21 @@
                     </BoxContainer>
                     <!-- Vertical Padding-->
                     <Control VerticalExpand="True" />
+            
                     <!-- Left Bot Panel -->
+                  <!-- NullLink start -->
+                  <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    
+                    <nulllink:Hub />
+                    
                     <BoxContainer Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3" />
                         <PanelContainer StyleClasses="AngleRect">
                             <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Center" />
                         </PanelContainer>
                     </BoxContainer>
+                  </BoxContainer>
+                  <!-- NullLink end -->
                 </Control>
                 <!-- Character setup state -->
                 <!-- This is injected on startup. Funky! -->
