@@ -153,6 +153,9 @@ public sealed partial class DungeonJob
         }
         
         if (remaining.Count > 0)
-            _sawmill.Warning($"Found remaining group size for groups, ore veins of {String.Join(", ", remaining.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}!");
+        {
+            _sawmill.Warning($"Found remaining group size for groups, ore veins of "
+                             + $"{string.Join(", ", remaining.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}!");
+        }
     }
 }
