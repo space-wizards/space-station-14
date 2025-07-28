@@ -1,6 +1,6 @@
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseExaminableClothing]
   id: ClothingNeckBronzeheart
   name: bronzeheart medal
   description: Given to crewmates for exemplary bravery in the face of danger.
@@ -13,9 +13,11 @@
     tags:
       - Medal
       - WhitelistChameleon
+  - type: ExaminableClothing
+    examineText: clothing-medal-bronzeheart
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseExaminableClothing]
   id: ClothingNeckGoldmedal
   name: gold medal of crewmanship
   description: Given to crewmates who display excellent crewmanship.
@@ -30,9 +32,11 @@
     tags:
       - Medal
       - WhitelistChameleon
+  - type: ExaminableClothing
+    examineText: clothing-medal-crewmanship
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseExaminableClothing]
   id: ClothingNeckCargomedal
   name: cargo medal
   description: Given for the best work in the cargo department.
@@ -45,9 +49,11 @@
     tags:
       - Medal
       - WhitelistChameleon
+  - type: ExaminableClothing
+    examineText: clothing-medal-cargo
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseExaminableClothing]
   id: ClothingNeckEngineermedal
   name: engineer medal
   description: Given for the best work in the engineering department.
@@ -60,9 +66,11 @@
     tags:
       - Medal
       - WhitelistChameleon
+  - type: ExaminableClothing
+    examineText: clothing-medal-engineer
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseExaminableClothing]
   id: ClothingNeckMedicalmedal
   name: medical medal
   description: Given for the best work in the medical department.
@@ -75,9 +83,11 @@
     tags:
       - Medal
       - WhitelistChameleon
+  - type: ExaminableClothing
+    examineText: clothing-medal-medical
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseExaminableClothing]
   id: ClothingNeckSciencemedal
   name: science medal
   description: Given for the best work in the science department.
@@ -90,9 +100,11 @@
     tags:
       - Medal
       - WhitelistChameleon
+  - type: ExaminableClothing
+    examineText: clothing-medal-science
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseExaminableClothing]
   id: ClothingNeckSecuritymedal
   name: security medal
   description: Given for the best work in the security department.
@@ -105,9 +117,11 @@
     tags:
       - Medal
       - WhitelistChameleon
+  - type: ExaminableClothing
+    examineText: clothing-medal-security
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseExaminableClothing]
   id: ClothingNeckClownmedal
   name: clown medal
   description: Given for the best joke in the universe. HONK!
@@ -122,3 +136,5 @@
     tags:
       - Medal
       - WhitelistChameleon
+  - type: ExaminableClothing
+    examineText: clothing-medal-clown
