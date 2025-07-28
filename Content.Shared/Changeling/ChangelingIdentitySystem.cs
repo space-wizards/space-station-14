@@ -54,9 +54,6 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     {
         CleanupPvsOverride(ent, ent.Owner);
         CleanupChangelingNullspaceIdentities(ent);
-
-        if (PausedMapId != null && Count<ChangelingStoredIdentityComponent>() == 0)
-            _map.DeleteMap(PausedMapId.Value); // map is empty, we can delete it
     }
 
     /// <summary>
@@ -70,7 +67,8 @@ public sealed class ChangelingIdentitySystem : EntitySystem
             PredictedQueueDel(consumedIdentity);
         }
 
-        // delete the paused map if no entities are remaining
+        if (PausedMapId != null && Count<ChangelingStoredIdentityComponent>() == 0)
+            _map.DeleteMap(PausedMapId.Value); // map is empty, we can delete it
     }
 
     /// <summary>
