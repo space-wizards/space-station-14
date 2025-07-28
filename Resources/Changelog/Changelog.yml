@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: insoPL
-  changes:
-  - message: being able to drag certain food items onto drain and chemmasters
-    type: Fix
-  id: 8301
-  time: '2025-04-21T15:50:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34683
 - author: Hrosts
   changes:
   - message: Added rehydratable mop bucket cube, replacing the big and unwieldy yellow
@@ -3906,3 +3899,10 @@
   id: 8812
   time: '2025-07-28T10:19:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39257
+- author: lzk228
+  changes:
+  - message: Janibelt can hold the golden plunger now.
+    type: Fix
+  id: 8813
+  time: '2025-07-28T12:59:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39213
