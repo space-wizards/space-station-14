@@ -47,6 +47,7 @@
   configuration:
     entity: MobCarpMagic
     forced: true
+    duration: 30
     inventory: None
     transferName: true
     transferDamage: true
@@ -62,6 +63,7 @@
   configuration:
     entity: MobSkeletonPerson
     forced: true
+    duration: 30
     inventory: Drop
     transferName: true
     transferDamage: true
@@ -77,6 +79,7 @@
   configuration:
     entity: MobMonkey
     forced: true
+    duration: 30
     inventory: None
     transferName: true
     transferDamage: true
