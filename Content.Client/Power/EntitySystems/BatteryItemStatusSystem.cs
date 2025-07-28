@@ -1,4 +1,4 @@
-using Content.Client.Power.Components;
+using Content.Shared.Power.Components;
 using Content.Client.Power.UI;
 using Content.Client.Items;
 

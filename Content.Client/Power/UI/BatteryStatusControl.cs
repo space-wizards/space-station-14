@@ -1,9 +1,8 @@
-using Content.Client.Power.Components;
+using Content.Shared.Power.Components;
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Power;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Power.UI;
@@ -30,20 +29,15 @@ public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatu
 
     protected override Data PollData()
     {
-        // Get battery info using the shared event
-        var batteryEvent = new GetBatteryInfoEvent();
-        _entityManager.EventBus.RaiseLocalEvent(_parent.Owner, ref batteryEvent);
+        var chargePercent = _parent.Comp.ChargePercent;
 
-        if (!batteryEvent.HasBattery)
-            return default;
-
-        var chargePercent = (int)(batteryEvent.ChargePercent * 100);
-
-        // Check if item has toggle state (like stun baton)
         bool? toggleState = null;
-        if (_parent.Comp.ShowToggleState && _entityManager.TryGetComponent(_parent.Owner, out ItemToggleComponent? toggle))
+        if (_parent.Comp.ShowToggleState)
         {
-            toggleState = toggle.Activated;
+            if (_entityManager.TryGetComponent(_parent.Owner, out ItemToggleComponent? toggle))
+            {
+                toggleState = toggle.Activated;
+            }
         }
 
         return new Data(chargePercent, toggleState);
@@ -55,10 +49,10 @@ public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatu
 
         if (data.ToggleState.HasValue)
         {
-            var toggleText = data.ToggleState.Value
-                ? Loc.GetString("battery-status-on")
-                : Loc.GetString("battery-status-off");
-            markup += "\n" + toggleText;
+            var stateValue = data.ToggleState.Value ? "on" : "off";
+            var stateColor = Loc.GetString("battery-status-switchable-state", ("state", stateValue));
+            var stateLine = Loc.GetString("battery-status-state", ("state", stateColor));
+            markup += "\n" + stateLine;
         }
 
         _label.SetMarkup(markup);

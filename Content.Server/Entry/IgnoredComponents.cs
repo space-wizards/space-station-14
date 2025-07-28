@@ -14,7 +14,6 @@ namespace Content.Server.Entry
             "Icon",
             "CableVisualizer",
             "SolutionItemStatus",
-            "BatteryItemStatus",
             "ChargeItemStatus",
             "TankPressureItemStatus",
             "UIFragment",

@@ -34,7 +34,7 @@ public sealed class TankPressureStatusControl : PollingItemStatusControl<TankPre
         if (!_entityManager.TryGetComponent(_parent.Owner, out GasTankComponent? tank))
             return default;
 
-        var pressureKpa = tank.Air.Pressure;
+        var pressureKpa = tank.InternalPressure;
         var isValveOpen = tank.IsValveOpen;
 
         return new Data(pressureKpa, isValveOpen);
