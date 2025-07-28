@@ -41,7 +41,7 @@ public abstract class SharedCritMobActionsSystem : EntitySystem
             (string lastWords) =>
             {
                 // if a person is gibbed/deleted, they can't say last words
-                if (Deleted(uid))
+                if (Deleted(ent.Owner))
                     return;
 
                 // Intentionally does not check for muteness
