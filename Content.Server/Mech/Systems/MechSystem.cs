@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Hands.Systems;
+using Content.Server.Body.Systems;
 using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -23,6 +24,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Tools;
 using Content.Shared.PowerCell;
 using Content.Shared.Repairable;
 using Content.Shared.Tag;
@@ -30,6 +32,7 @@ using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Whitelist;
 using Content.Shared.Wires;
@@ -39,6 +42,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Linq;
 using Content.Shared.Atmos.Components;
@@ -68,6 +72,9 @@ public sealed partial class MechSystem : SharedMechSystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly GasTankSystem _gasTank = default!;
     
+
+    private static readonly ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -268,7 +275,7 @@ public sealed partial class MechSystem : SharedMechSystem
             InsertGasTank(uid, args.Used, component, gasTank);
         }
 
-        if (_toolSystem.HasQuality(args.Used, "Prying"))
+        if (_toolSystem.HasQuality(args.Used, PryingQuality) && component.BatterySlot.ContainedEntity != null)
         {
             if (component.BatterySlot.ContainedEntity != null)
             {

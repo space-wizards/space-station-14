@@ -9,6 +9,17 @@
     description: ghost-role-information-moproach-description
   - type: Sprite
     sprite: Mobs/Animals/mothroach/moproach.rsi
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Animals/mothroach/moproach.rsi
+    equippedPrefix: 0
+    slots:
+    - HEAD
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      45: Critical
+      65: Dead
   - type: MovementSpeedModifier
     baseSprintSpeed : 5 # extra speed for that moppin'!
   - type: HTN

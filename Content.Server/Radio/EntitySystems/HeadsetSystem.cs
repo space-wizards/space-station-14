@@ -100,11 +100,23 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, ref RadioReceiveEvent args)
     {
-        var actorUid = Transform(uid).ParentUid;
-        if (!TryComp(Transform(uid).ParentUid, out ActorComponent? actor)) return;
-        _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
-        if (actorUid != args.MessageSource && TryComp(args.MessageSource, out TextToSpeechComponent? _))
+        // TODO: change this when a code refactor is done
+        // this is currently done this way because receiving radio messages on an entity otherwise requires that entity
+        // to have an ActiveRadioComponent
+
+        var parent = Transform(uid).ParentUid;
+
+        if (parent.IsValid())
+        {
+            var relayEvent = new HeadsetRadioReceiveRelayEvent(args);
+            RaiseLocalEvent(parent, ref relayEvent);
+        }
+        if (TryComp(parent, out ActorComponent? actor))
+            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
+        #region Starlight
+        if (parent != args.MessageSource && TryComp(args.MessageSource, out TextToSpeechComponent? _))
             args.Receivers.Add(actorUid);
+        #endregion Starlight
     }
 
     private void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)
