@@ -9,7 +9,6 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class TriggerSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private void InitializeProximity()
@@ -92,7 +91,7 @@ public sealed partial class TriggerSystem
     {
         DebugTools.Assert(component.Enabled);
 
-        var curTime = _timing.CurTime;
+        var curTime = _gameTiming.CurTime;
 
         if (!component.Repeating)
         {
@@ -117,7 +116,7 @@ public sealed partial class TriggerSystem
 
     private void UpdateProximity()
     {
-        var curTime = _timing.CurTime;
+        var curTime = _gameTiming.CurTime;
 
         var query = EntityQueryEnumerator<TriggerOnProximityComponent>();
         while (query.MoveNext(out var uid, out var trigger))

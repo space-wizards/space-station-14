@@ -59,8 +59,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
 
-    private static string[] _standoutReagents = [Blood, Slime, CopperBlood, BloodChangeling];
-
     // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
     // loses & then gains reagents in a single tick.
     private HashSet<EntityUid> _deletionQueue = [];
@@ -414,7 +412,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (slipperyUnits > 0)
         {
             slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult / slipperyUnits);
-            slipComp.SlipData.ParalyzeTime = stunTimer / (float)slipperyUnits;
+            slipComp.SlipData.StunTime = stunTimer / (float)slipperyUnits;
         }
 
         // Only make it super slippery if there is enough super slippery units for its own puddle

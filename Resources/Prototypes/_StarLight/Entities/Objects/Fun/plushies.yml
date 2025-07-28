@@ -10,7 +10,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/matthew_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/matthew_plushie.rsi
-    layers: 
+    layers:
       - state: icon
       - state: icon-unshaded
         shader: unshaded
@@ -19,11 +19,9 @@
     verbToggleOn: plushie-voicebox-activate
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
-    components: 
-    - type: Advertise
-      pack: PlushiesMatthew
-      minimumWait: 120
-      maximumWait: 240
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesMatthew
     - type: TextToSpeech
       voice: sampo
 
@@ -38,7 +36,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/emmie_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/emmie_plushie.rsi
-    layers: 
+    layers:
       - state: icon
       - state: icon-unshaded
         shader: unshaded
@@ -47,11 +45,9 @@
     verbToggleOn: plushie-voicebox-activate
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
-    components: 
-    - type: Advertise
-      pack: PlushiesEmmie
-      minimumWait: 120
-      maximumWait: 240
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesEmmie
     - type: TextToSpeech
       voice: ganyu
 
@@ -66,18 +62,16 @@
     sprite: _Starlight/Objects/Fun/Plushies/trystan_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/trystan_plushie.rsi
-    layers: 
+    layers:
       - state: icon
   - type: ItemToggle
     onUse: false
     verbToggleOn: plushie-voicebox-activate
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
-    components: 
-    - type: Advertise
-      pack: PlushiesTrystan
-      minimumWait: 120
-      maximumWait: 240
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesTrystan
     - type: TextToSpeech
       voice: barneycalhoun
 
@@ -92,7 +86,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/morgana_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/morgana_plushie.rsi
-    layers: 
+    layers:
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -100,10 +94,8 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesMorgana
-      minimumWait: 120
-      maximumWait: 240
+    - type: DatasetVocalizer
+      dataset: PlushiesMorgana
     - type: TextToSpeech
       voice: bettylabomba
 
@@ -118,7 +110,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/morgana_round_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/morgana_round_plushie.rsi
-    layers: 
+    layers:
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -126,10 +118,8 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesMorgana
-      minimumWait: 120
-      maximumWait: 240
+    - type: DatasetVocalizer
+      dataset: PlushiesMorgana
     - type: TextToSpeech
       voice: bettylabomba
 
@@ -144,7 +134,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/kiosha_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/kiosha_plushie.rsi
-    layers: 
+    layers:
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -152,10 +142,8 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesKiosha
-      minimumWait: 120
-      maximumWait: 240
+    - type: DatasetVocalizer
+      dataset: PlushiesKiosha
     - type: TextToSpeech
       voice: skye-valorant
 
@@ -170,7 +158,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/lance_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/lance_plushie.rsi
-    layers: 
+    layers:
       - state: icon
       - state: icon-unshaded
         shader: unshaded
@@ -180,10 +168,8 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesLance
-      minimumWait: 120
-      maximumWait: 240
+    - type: DatasetVocalizer
+      dataset: PlushiesLance
     - type: TextToSpeech
       voice: barneycalhoun
 
@@ -198,7 +184,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/killer_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/killer_plushie.rsi
-    layers: 
+    layers:
       - state: icon
       - state: icon-unshaded
         shader: unshaded
@@ -208,13 +194,11 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesKiller
-      minimumWait: 120
-      maximumWait: 240
+    - type: DatasetVocalizer
+      dataset: PlushiesKiller
     - type: TextToSpeech
       voice: heavy
-      
+
 - type: entity
   parent: PlushieHuman
   id: PlushieAmali
@@ -226,7 +210,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/amali_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/amali_plushie.rsi
-    layers: 
+    layers:
       - state: icon
   # reason I didn't make a female human base plushie is because they wanted specific sounds. Will make one eventually. Probably.a
   - type: EmitSoundOnUse
@@ -257,10 +241,8 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesAmali
-      minimumWait: 120
-      maximumWait: 240
+    - type: DatasetVocalizer
+      dataset: PlushiesAmali
     - type: TextToSpeech
       voice: ganyu
 
@@ -275,7 +257,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/oog_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/oog_plushie.rsi
-    layers: 
+    layers:
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -283,10 +265,8 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesOog
-      minimumWait: 120
-      maximumWait: 240
+    - type: DatasetVocalizer
+      dataset: PlushiesOog
     - type: TextToSpeech
       voice: heavy
 
@@ -301,7 +281,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/vanilla_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/vanilla_plushie.rsi
-    layers: 
+    layers:
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -309,10 +289,8 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesVanilla
-      minimumWait: 120
-      maximumWait: 240
+    - type: DatasetVocalizer
+      dataset: PlushiesVanilla
     - type: TextToSpeech
       voice: layla
 #end region
@@ -328,7 +306,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/op_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/op_plushie.rsi
-    layers: 
+    layers:
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -336,10 +314,8 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesOp
-      minimumWait: 120
-      maximumWait: 240
+    - type: DatasetVocalizer
+      dataset: PlushiesOp
     - type: TextToSpeech
       voice: duelist
 
@@ -424,7 +400,7 @@
 
 - type: entity
   parent: BaseLizardPlushie
-  id: PlushieMimeLizard 
+  id: PlushieMimeLizard
   name: lizard mime plushie
   description: Wait, where is the sou-- oh.
   components:
@@ -479,7 +455,7 @@
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/vika_plushie.rsi
     state: icon
-      
+
 - type: entity
   parent: BasePlushie
   id: AbductorPlushie
@@ -512,7 +488,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Guns/Hits/taser_hit.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: AxolotlPlushie
@@ -545,7 +521,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/toysqueak3.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: BorbPlushie
@@ -611,7 +587,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/_Starlight/Items/Toys/yippie.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: GnomePlushie
@@ -644,7 +620,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/_Starlight/Items/Toys/gnome_murderer.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: GoatPlushie
@@ -677,7 +653,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/toysqueak3.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: IanPlushie
@@ -710,7 +686,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/dog_bark2.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: LisaPlushie
@@ -743,7 +719,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/dog_bark2.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: KittenPlushie
@@ -776,7 +752,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/cat_hiss.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: PigPlushie
@@ -809,7 +785,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/pig_oink.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: RenaultPlushie
@@ -842,7 +818,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/fox11.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: SnailPlushie
@@ -875,7 +851,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/toysqueak2.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: SquishimsCow
@@ -908,7 +884,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/toysqueak2.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: SquishimsFrog
@@ -941,7 +917,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/toysqueak2.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: SusPlushie
@@ -1222,10 +1198,8 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesPercy
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesPercy
         - type: TextToSpeech
           voice: medic
 
@@ -1272,10 +1246,8 @@
               acts: [ "Destruction" ]
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesAsh
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesAsh
         - type: TextToSpeech
           voice: wanderer
 
@@ -1297,10 +1269,8 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesGlados
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesGlados
         - type: TextToSpeech
           voice: circusbaby
 
@@ -1322,10 +1292,8 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesWEH
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesWEH
         - type: TextToSpeech
           voice: circusbaby
 
@@ -1348,10 +1316,8 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesRufia
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesRufia
         - type: TextToSpeech
           voice: himeko
 
@@ -1383,10 +1349,8 @@
       #verbToggleOff: plushie-voicebox-deactivate
     #- type: ComponentToggler
       #components:
-        #- type: Advertise
-          #pack: PlushiesRomero
-          #minimumWait: 120
-          #maximumWait: 240
+        #- type: DatasetVocalizer
+          #dataset: PlushiesRomero
         #- type: TextToSpeech
           #voice: volition
 
@@ -1409,9 +1373,7 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesPoley
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesPoley
         - type: TextToSpeech
           voice: neon

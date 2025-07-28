@@ -67,19 +67,6 @@
   equipment:
     head: ClothingHeadHatPurplesoft
 
-- type: htnCompound
-  id: MoproachCompound
-  branches:
-  - tasks:
-    - !type:HTNCompoundTask
-      task: FoodCompound
-  - tasks:
-    - !type:HTNCompoundTask
-      task: BufferNearbyPuddlesCompound
-  - tasks:
-    - !type:HTNCompoundTask
-      task: IdleCompound
-
 - type: entity
   parent: BoxCardboard
   name: moproach kit
@@ -107,15 +94,6 @@
   - type: SpawnItemsOnUse
     items:
     - id: MoproachCube
-
-- type: entity
-  parent: MonkeyCube
-  id: MoproachCube
-  name: moproach cube
-  components:
-  - type: Rehydratable
-    possibleSpawns:
-    - MobMoproach
 
 - type: entity
   parent: Paper

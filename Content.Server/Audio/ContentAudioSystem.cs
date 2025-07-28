@@ -23,7 +23,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
 
     private SoundCollectionPrototype? _lobbyMusicCollection = default!;
     private string[]? _lobbyPlaylist;
-    
+
     // STARLIGHT: Flag to indicate if we should use a custom playlist for the next round end
     private bool _useCustomPlaylist;
     private string? _customFirstTrack;
@@ -94,7 +94,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
         // because ShowRoundEndScoreboard triggers the start of the music playing
         // at the end of a round, and this needs to be set before RestartRound
         // in order for the lobby song status display to be accurate.
-        
+
         // STARLIGHT: Check if we should use a custom playlist
         if (_useCustomPlaylist && _customFirstTrack != null)
         {
@@ -107,7 +107,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
         {
             _lobbyPlaylist = ShuffleLobbyPlaylist();
         }
-        
+
         RaiseNetworkEvent(new LobbyPlaylistChangedEvent(_lobbyPlaylist));
     }
 
@@ -125,7 +125,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
 
         return playlist;
     }
-    
+
     /// <summary>
     /// STARLIGHT: Creates a playlist with a specific track as the first item, followed by the rest of the tracks shuffled.
     /// </summary>
@@ -134,21 +134,21 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
     public string[] CreatePlaylistWithFirstTrack(string firstTrack)
     {
         // Get all tracks except the one we want first
-        var otherTracks = _lobbyMusicCollection.PickFiles
+        var otherTracks = _lobbyMusicCollection?.PickFiles
                                               .Select(x => x.ToString())
                                               .Where(x => x != firstTrack)
-                                              .ToList();
-        
+                                              .ToList() ?? [];
+
         // Shuffle the other tracks
         _robustRandom.Shuffle(otherTracks);
-        
+
         // Create the final playlist with the specified track first
         var playlist = new List<string> { firstTrack };
         playlist.AddRange(otherTracks);
-        
+
         return playlist.ToArray();
     }
-    
+
     /// <summary>
     /// Sets the lobby playlist with a specific track as the first item and broadcasts it to clients.
     /// </summary>

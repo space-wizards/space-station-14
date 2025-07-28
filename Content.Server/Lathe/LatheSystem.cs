@@ -6,7 +6,6 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Lathe.Components;
 using Content.Server.Materials;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Atmos;
@@ -15,9 +14,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.UserInterface;
 using Content.Shared.Database;
-using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Examine;
 using Content.Shared.Lathe;
 using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Materials;
@@ -227,9 +224,9 @@ namespace Content.Server.Lathe
                 {
                     var result = Spawn(resultProto, Transform(uid).Coordinates);
                     _stack.TryMergeToContacts(result);
-                    if (comp.CurrentRecipe.PrintTicket)
+                    if (currentRecipe.PrintTicket)
                     {
-                        var tickets = Spawn(comp.CurrentRecipe.TicketProtoId, Transform(uid).Coordinates);
+                        var tickets = Spawn(currentRecipe.TicketProtoId, Transform(uid).Coordinates);
                         _stack.TryMergeToContacts(tickets);
                     }
                 }

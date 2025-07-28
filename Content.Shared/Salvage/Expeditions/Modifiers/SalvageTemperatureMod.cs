@@ -1,5 +1,6 @@
 using Content.Shared.Procedural;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
@@ -19,8 +20,8 @@ public sealed partial class SalvageTemperatureMod : IPrototype, IBiomeSpecificMo
     public List<ProtoId<SalvageBiomeModPrototype>>? Biomes { get; private set; } = null;
 
     // 🌟Starlight🌟
-    [DataField("difficulties", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageDifficultyPrototype>))]
-    public List<string>? Difficulties { get; private set; } = null;
+    [DataField]
+    public List<ProtoId<SalvageDifficultyPrototype>>? Difficulties { get; private set; } = null;
 
     /// <summary>
     /// Temperature in the planets air mix.

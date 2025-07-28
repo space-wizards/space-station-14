@@ -111,13 +111,13 @@ public sealed class HealingSystem : EntitySystem
                     if (solutionEntity != null && drainReagent != null)
                         reagentsToRemove.Add((reagent, drainReagent.Quantity));
                 }
-                
+
                 foreach (var (reagent, amount) in reagentsToRemove)
                 {
                     if (solutionEntity != null)
                         _solutionContainerSystem.RemoveReagent(solutionEntity.Value, reagent.Reagent, amount);
                 }
-                
+
                 if (!solution.Contents.Any(sol => healing.ReagentsToDrain.Any(req => req.Reagent == sol.Reagent && sol.Quantity >= req.Quantity)))
                     dontRepeat = true;
             }
@@ -215,16 +215,16 @@ public sealed class HealingSystem : EntitySystem
 
         if (TryComp<StackComponent>(healing, out var stack) && stack.Count < 1)
             return false;
-        
+
         // Starlight start
-        if (component.SolutionDrain && TryComp<SolutionContainerManagerComponent>(uid, out var solutionManager))
+        if (healing.Comp.SolutionDrain && TryComp<SolutionContainerManagerComponent>(healing.Owner, out var solutionManager))
         {
             Entity<SolutionComponent>? solutionEntity = null;
-            if (_solutionContainerSystem.ResolveSolution(uid, "injector", ref solutionEntity, out var solution))
+            if (_solutionContainerSystem.ResolveSolution(healing.Owner, "injector", ref solutionEntity, out var solution))
             {
-                if (!solution.Contents.Any(sol => component.ReagentsToDrain.Any(req => req.Reagent == sol.Reagent && sol.Quantity >= req.Quantity)))
+                if (!solution.Contents.Any(sol => healing.Comp.ReagentsToDrain.Any(req => req.Reagent == sol.Reagent && sol.Quantity >= req.Quantity)))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("medical-item-solution-missing", ("item", uid)), uid, user);
+                    _popupSystem.PopupEntity(Loc.GetString("medical-item-solution-missing", ("item", healing.Owner)), healing.Owner, user);
                     return false;
                 }
             }

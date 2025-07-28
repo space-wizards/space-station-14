@@ -3,6 +3,7 @@ using Content.Server.Preferences.Managers;
 using Content.Shared.Access.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
@@ -22,6 +23,7 @@ public sealed class OutfitSystem : EntitySystem
     [Dependency] private readonly HandsSystem _handSystem = default!;
     [Dependency] private readonly InventorySystem _invSystem = default!;
     [Dependency] private readonly SharedStationSpawningSystem _spawningSystem = default!;
+    [Dependency] private readonly SharedHumanoidAppearanceSystem _appearance = default!; //Starlight
 
     public bool SetOutfit(EntityUid target, string gear, Action<EntityUid, EntityUid>? onEquipped = null)
     {
@@ -31,16 +33,11 @@ public sealed class OutfitSystem : EntitySystem
         if (!_prototypeManager.TryIndex<StartingGearPrototype>(gear, out var startingGear))
             return false;
 
+        #region Starlight
         HumanoidCharacterProfile? profile = null;
-        ICommonSession? session = null;
-        // Check if we are setting the outfit of a player to respect the preferences
-        if (EntityManager.TryGetComponent(target, out ActorComponent? actorComponent))
-        {
-            session = actorComponent.PlayerSession;
-            var userId = actorComponent.PlayerSession.UserId;
-            var prefs = _preferenceManager.GetPreferences(userId);
-            profile = prefs.SelectedCharacter as HumanoidCharacterProfile;
-        }
+        if (TryComp<HumanoidAppearanceComponent>(target, out var appearanceComponent))
+            profile = _appearance.GetBaseProfile((target, appearanceComponent));
+        #endregion Starlight
 
         if (_invSystem.TryGetSlots(target, out var slots))
         {
@@ -86,6 +83,7 @@ public sealed class OutfitSystem : EntitySystem
             if (!_prototypeManager.TryIndex<RoleLoadoutPrototype>(jobProtoId, out var jobProto))
                 break;
 
+
             // Don't require a player, so this works on Urists
             profile ??= EntityManager.TryGetComponent<HumanoidAppearanceComponent>(target, out var comp)
                 ? HumanoidCharacterProfile.DefaultWithSpecies(comp.Species)
@@ -95,6 +93,11 @@ public sealed class OutfitSystem : EntitySystem
 
             if (roleLoadout == null)
             {
+                #region Starlight
+                ICommonSession? session = null;
+                if (TryComp<ActorComponent>(target, out var actor))
+                    session = actor.PlayerSession;
+                #endregion
                 // If they don't have a loadout for the role, make a default one
                 roleLoadout = new RoleLoadout(jobProtoId);
                 roleLoadout.SetDefault(profile, session, _prototypeManager);

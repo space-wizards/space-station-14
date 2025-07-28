@@ -1,6 +1,6 @@
-using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Nutrition.EntitySystems;
 
-namespace Content.Server.Nutrition.Components;
+namespace Content.Shared.Nutrition.Components;
 
 /// <summary>
 /// This component prevents food items from being eaten via self-clicking.

@@ -59,6 +59,16 @@ public sealed partial class RepairableSystem : EntitySystem
         if (!TryComp<DamageableComponent>(ent.Owner, out var damageable) || damageable.TotalDamage == 0)
             return;
 
+        #region Starlight
+        var canRepair = new CanRepairEvent();
+        RaiseLocalEvent(ent.Owner, ref canRepair);
+        if (canRepair.Cancelled)
+        {
+            _popup.PopupEntity(canRepair.Message, ent.Owner);
+            return;
+        }
+        #endregion
+
         float delay = ent.Comp.DoAfterDelay;
 
         // Add a penalty to how long it takes if the user is repairing itself
@@ -85,3 +95,12 @@ public readonly record struct RepairedEvent(Entity<RepairableComponent> Ent, Ent
 
 [Serializable, NetSerializable]
 public sealed partial class RepairFinishedEvent : SimpleDoAfterEvent;
+
+#region Starlight
+
+[ByRefEvent]
+public sealed class CanRepairEvent : CancellableEntityEventArgs
+{
+    public string Message = "";
+};
+#endregion

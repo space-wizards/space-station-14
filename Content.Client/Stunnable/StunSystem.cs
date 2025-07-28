@@ -21,7 +21,6 @@ namespace Content.Client.Stunnable;
 public sealed class StunSystem : SharedStunSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
     #region Starlight
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly InputSystem _input = default!;
@@ -39,7 +38,7 @@ public sealed class StunSystem : SharedStunSystem
 
         SubscribeLocalEvent<StunVisualsComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<StunVisualsComponent, AppearanceChangeEvent>(OnAppearanceChanged);
-        
+
         #region Starlight
         SubscribeLocalEvent<KnockedDownComponent, MoveEvent>(OnMovementInput);
 
@@ -59,11 +58,11 @@ public sealed class StunSystem : SharedStunSystem
 
         var spriteEntity = (entity.Owner, sprite);
 
-        _spriteSystem.LayerMapReserve(spriteEntity, StunVisualLayers.StamCrit);
-        _spriteSystem.LayerSetVisible(spriteEntity, StunVisualLayers.StamCrit, false);
-        _spriteSystem.LayerSetOffset(spriteEntity, StunVisualLayers.StamCrit, new Vector2(0, 0.3125f));
+        _sprites.LayerMapReserve(spriteEntity, StunVisualLayers.StamCrit);
+        _sprites.LayerSetVisible(spriteEntity, StunVisualLayers.StamCrit, false);
+        _sprites.LayerSetOffset(spriteEntity, StunVisualLayers.StamCrit, new Vector2(0, 0.3125f));
 
-        _spriteSystem.LayerSetRsi(spriteEntity, StunVisualLayers.StamCrit, entity.Comp.StarsPath);
+        _sprites.LayerSetRsi(spriteEntity, StunVisualLayers.StamCrit, entity.Comp.StarsPath);
 
         UpdateAppearance((entity, sprite), entity.Comp.State);
     }
@@ -79,13 +78,13 @@ public sealed class StunSystem : SharedStunSystem
         if (!Resolve(entity, ref entity.Comp))
             return;
 
-        if (!_spriteSystem.LayerMapTryGet((entity, entity.Comp), StunVisualLayers.StamCrit, out var index, false))
+        if (!_sprites.LayerMapTryGet((entity, entity.Comp), StunVisualLayers.StamCrit, out var index, false))
             return;
 
         var visible = Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars) && stars;
 
-        _spriteSystem.LayerSetVisible((entity, entity.Comp), index, visible);
-        _spriteSystem.LayerSetRsiState((entity, entity.Comp), index, state);
+        _sprites.LayerSetVisible((entity, entity.Comp), index, visible);
+        _sprites.LayerSetRsiState((entity, entity.Comp), index, state);
     }
 
     /// <summary>

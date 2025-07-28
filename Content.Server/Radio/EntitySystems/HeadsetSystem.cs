@@ -115,7 +115,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
         #region Starlight
         if (parent != args.MessageSource && TryComp(args.MessageSource, out TextToSpeechComponent? _))
-            args.Receivers.Add(actorUid);
+            args.Receivers.Add(parent);
         #endregion Starlight
     }
 

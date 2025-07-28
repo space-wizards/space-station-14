@@ -21,8 +21,8 @@ public sealed partial class SalvageWeatherMod : IPrototype, IBiomeSpecificMod
     public List<ProtoId<SalvageBiomeModPrototype>>? Biomes { get; private set; } = null;
 
     // 🌟Starlight🌟
-    [DataField("difficulties", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageDifficultyPrototype>))]
-    public List<string>? Difficulties { get; private set; } = null;
+    [DataField]
+    public List<ProtoId<SalvageDifficultyPrototype>>? Difficulties { get; private set; } = null;
 
     /// <summary>
     /// Weather prototype to use on the planet.

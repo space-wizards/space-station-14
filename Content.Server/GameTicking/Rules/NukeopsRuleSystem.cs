@@ -26,7 +26,8 @@ using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.Store.Components;
 using Content.Server.Starlight.Antags.Abductor;
-using Prometheus; // Starlight
+using Prometheus;
+using Robust.Shared.Prototypes; // Starlight
 
 namespace Content.Server.GameTicking.Rules;
 

@@ -146,7 +146,7 @@ namespace Content.Server.Explosion.EntitySystems
                 return;
 
             var containerEnt = container.Owner;
-            var curTime = _timing.CurTime;
+            var curTime = _gameTiming.CurTime;
 
             if (curTime < shockOnTrigger.Comp.NextTrigger)
             {
@@ -265,10 +265,10 @@ namespace Content.Server.Explosion.EntitySystems
         {
             if (args.Handled || !args.Complex)
                 return;
-            
+
             var currentTime = _gameTiming.CurTime;
             var cooldown = TimeSpan.FromSeconds(component.CooldownTime);
-            
+
             if (currentTime - component.LastTimeActivated < cooldown)
                 return;
 
@@ -309,7 +309,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnRepeatInit(Entity<RepeatingTriggerComponent> ent, ref MapInitEvent args)
         {
-            ent.Comp.NextTrigger = _timing.CurTime + ent.Comp.Delay;
+            ent.Comp.NextTrigger = _gameTiming.CurTime + ent.Comp.Delay;
         }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
@@ -449,7 +449,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void UpdateRepeat()
         {
-            var now = _timing.CurTime;
+            var now = _gameTiming.CurTime;
             var query = EntityQueryEnumerator<RepeatingTriggerComponent>();
             while (query.MoveNext(out var uid, out var comp))
             {

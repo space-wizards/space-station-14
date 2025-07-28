@@ -20,15 +20,12 @@ using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Physics.Systems;
-using Robust.Shared.Timing;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable;
 
 public abstract partial class SharedStunSystem : EntitySystem
 {
-    [Dependency] protected readonly ActionBlockerSystem Blocker = default!;
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
@@ -38,6 +35,8 @@ public abstract partial class SharedStunSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
+    [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
+    [Dependency] protected readonly SharedStaminaSystem Stamina = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
 
     public override void Initialize()
@@ -118,7 +117,7 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
     {
-        Blocker.UpdateCanMove(uid);
+        _blocker.UpdateCanMove(uid);
     }
 
     private void OnStunOnContactCollide(Entity<StunOnContactComponent> ent, ref StartCollideEvent args)
@@ -173,10 +172,10 @@ public abstract partial class SharedStunSystem : EntitySystem
 
         if (!Resolve(uid, ref status, false))
             return false;
-        
+
         var beforeStun = new BeforeStunEvent();
         RaiseLocalEvent(uid, ref beforeStun);
-        
+
         if (beforeStun.Cancelled && !force)
             return false;
 
@@ -206,10 +205,10 @@ public abstract partial class SharedStunSystem : EntitySystem
 
         var beforeKnockdown = new BeforeKnockdownEvent();
         RaiseLocalEvent(uid, beforeKnockdown);
-        
+
         if (beforeKnockdown.Cancelled && !force)
             return false;
-        
+
         var evAttempt = new KnockDownAttemptEvent()
         {
             AutoStand = autoStand,
@@ -426,9 +425,9 @@ public record struct BeforeStunEvent(bool Cancelled = false);
 public sealed class BeforeKnockdownEvent: EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
-    
+
     public bool Cancelled;
-    
+
     public BeforeKnockdownEvent(bool cancelled = false)
     {
         Cancelled = cancelled;
