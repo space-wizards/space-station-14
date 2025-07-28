@@ -24,6 +24,8 @@
     solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: drink
     maxTransferAmount: 15
   - type: Extractable
     grindableSolutionName: grindable

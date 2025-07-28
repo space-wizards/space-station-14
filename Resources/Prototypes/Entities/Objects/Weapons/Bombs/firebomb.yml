@@ -24,6 +24,7 @@
       path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
       params:
         volume: 1
+  - type: TimerTriggerItemStatus
   - type: RandomTimerTrigger
     min: 0
     max: 15

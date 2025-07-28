@@ -14,6 +14,7 @@
     quickEquip: false
     slots:
     - Belt
+  - type: TimerTriggerItemStatus
   - type: OnUseTimerTrigger
     delay: 3
   - type: Damageable

@@ -24,6 +24,7 @@
   - type: Tag
     tags:
       - HolosignProjector
+  - type: BatteryItemStatus
 
 - type: entity
   parent: Holoprojector

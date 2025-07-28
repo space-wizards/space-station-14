@@ -22,6 +22,8 @@
     solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: drink
   - type: Spillable
     solution: drink
   - type: Sprite

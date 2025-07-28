@@ -22,6 +22,8 @@
     solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: drink
     maxTransferAmount: 10
   - type: UserInterface
     interfaces:
