@@ -23,7 +23,7 @@ public sealed partial class StatusEffectsSystem
     )
     {
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
-            return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
+            return duration > TimeSpan.Zero && TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
         AddStatusEffectTime(statusEffect.Value, duration);
 
