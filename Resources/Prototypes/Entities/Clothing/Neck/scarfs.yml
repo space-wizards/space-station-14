@@ -96,6 +96,8 @@
       sprite: Clothing/Neck/Scarfs/syndiegreen.rsi
     - type: Clothing
       sprite: Clothing/Neck/Scarfs/syndiegreen.rsi
+    - type: StaticPrice
+      price: 500
 
 - type: entity
   parent: [ ClothingScarfBase, BaseMajorContraband ] #SL EDIT, Syndie to Major
@@ -107,6 +109,8 @@
       sprite: Clothing/Neck/Scarfs/syndiered.rsi
     - type: Clothing
       sprite: Clothing/Neck/Scarfs/syndiered.rsi
+    - type: StaticPrice
+      price: 500
 
 - type: entity
   parent: [ ClothingScarfBase, BaseCentcommContraband ] #SL EDIT, Syndie to Major

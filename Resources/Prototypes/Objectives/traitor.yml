@@ -46,6 +46,10 @@
       sprite: Structures/Furniture/chairs.rsi
       state: shuttle
   - type: EscapeShuttleCondition
+  - type: ObjectiveBlacklistRequirement # Starlight
+    blacklist:
+      components:
+        - EscapeShuttleCondition
 
 - type: entity
   parent: BaseTraitorObjective

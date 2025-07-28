@@ -1443,6 +1443,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("character varying(32)")
                         .HasColumnName("custom_specie_name");
 
+                    b.PrimitiveCollection<List<string>>("CyberneticIds")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("cybernetic_ids");
+
                     b.Property<int>("ProfileId")
                         .HasColumnType("integer")
                         .HasColumnName("profile_id");

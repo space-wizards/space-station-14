@@ -122,6 +122,7 @@
     contents:
       - id: FlashlightSeclite
         amount: 2
+      - id: WeaponEnergyShotgun
       - id: WeaponDisabler
         amount: 2
       - id: ClothingBeltSecurityFilled
