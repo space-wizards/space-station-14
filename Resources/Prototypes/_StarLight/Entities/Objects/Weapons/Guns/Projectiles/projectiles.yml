@@ -164,7 +164,7 @@
     impactEffect: BulletImpactEffectOrangeDisabler
     damage:
       types:
-        Heat: 16
+        Heat: 10
   
 - type: entity
   name : disabler bolt
@@ -180,7 +180,7 @@
     - state: omnilaser
       shader: unshaded
   - type: StaminaDamageOnCollide
-    damage: 20
+    damage: 12
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
