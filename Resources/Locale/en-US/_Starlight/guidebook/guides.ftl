@@ -76,8 +76,10 @@ guide-entry-sl-security-sop-prisonertreatment = Prisoner Treatment
 guide-entry-sl-legal-sop-intro = Legal
 
 guide-entry-sl-engineering-sop-intro = Engineering
+guide-entry-sl-engineering-sop-genproc-intro = General Procedures
 guide-entry-sl-engineering-sop-power-generation = Power Generation
 guide-entry-sl-engineering-sop-station-damage = Station Damage
+guide-entry-sl-engineering-sop-staff-intro = Staff Procedures
 guide-entry-sl-engineering-sop-chief-engineer = Chief Engineer
 guide-entry-sl-engineering-sop-station-engineer = Station Engineer
 guide-entry-sl-engineering-sop-atmos-tech = Atmospheric Technician

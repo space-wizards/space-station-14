@@ -292,6 +292,7 @@
   priority: 4
 
 
+
 - type: guideEntry
   id: legal-sop-intro
   name: guide-entry-sl-legal-sop-intro
@@ -306,12 +307,18 @@
   text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-intro.xml"
   priority: 5
   children:
+      - engineering-sop-genproc-intro
+      - engineering-sop-staff-intro
+
+
+- type: guideEntry
+  id: engineering-sop-genproc-intro
+  name: guide-entry-sl-engineering-sop-genproc-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-genproc-intro.xml"
+  priority: 1
+  children:
       - engineering-sop-power-generation
       - engineering-sop-station-damage
-      - engineering-sop-chief-engineer
-      - engineering-sop-station-engineer
-      - engineering-sop-atmos-tech
-      - engineering-sop-technical-assistant
 
 - type: guideEntry
   id: engineering-sop-power-generation
@@ -319,39 +326,47 @@
   text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-power-generation.xml"
   priority: 1
 
-
 - type: guideEntry
   id: engineering-sop-station-damage
   name: guide-entry-sl-engineering-sop-station-damage
   text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-station-damage.xml"
   priority: 2
 
+
+- type: guideEntry
+  id: engineering-sop-staff-intro
+  name: guide-entry-sl-engineering-sop-staff-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-staff-intro.xml"
+  priority: 2
+  children:
+      - engineering-sop-chief-engineer
+      - engineering-sop-station-engineer
+      - engineering-sop-atmos-tech
+      - engineering-sop-technical-assistant
+
 - type: guideEntry
   id: engineering-sop-chief-engineer
   name: guide-entry-sl-engineering-sop-chief-engineer
   text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-chief-engineer.xml"
-  priority: 3
-
+  priority: 1
 
 - type: guideEntry
   id: engineering-sop-station-engineer
   name: guide-entry-sl-engineering-sop-station-engineer
   text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-station-engineer.xml"
-  priority: 4
-
+  priority: 2
 
 - type: guideEntry
   id: engineering-sop-atmos-tech
   name: guide-entry-sl-engineering-sop-atmos-tech
   text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-atmos-tech.xml"
-  priority: 5
-
+  priority: 3
 
 - type: guideEntry
   id: engineering-sop-technical-assistant
   name: guide-entry-sl-engineering-sop-technical-assistant
   text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-technical-assistant.xml"
-  priority: 6
+  priority: 4
 
 
 
@@ -454,15 +469,15 @@
       - nano-trasen-employee-sop-bso
       - nano-trasen-employee-sop-magistrate
       - nano-trasen-employee-sop-iaa
-  
-  
+
+
 - type: guideEntry
   id: nano-trasen-employee-sop-safety-protocol
   name: guide-entry-sl-nano-trasen-employee-sop-safety-protocol
   text: "/ServerInfo/Guidebook/StarlightSOP/NanoTrasenEmployeeSOP/nano-trasen-employee-sop-safety-protocol.xml"
   priority: 1
-  
-  
+
+
 - type: guideEntry
   id: nano-trasen-employee-sop-nt-rep
   name: guide-entry-sl-nano-trasen-employee-sop-nt-rep
