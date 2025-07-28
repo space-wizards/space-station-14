@@ -9789,5 +9789,12 @@ Entries:
   id: 1348
   time: '2025-07-28T15:21:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1099
+- author: RoadTrain
+  changes:
+  - message: Adds 2 new pieces of lobby art, drawn by Voy.
+    type: Add
+  id: 1349
+  time: '2025-07-28T15:26:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1127
 Order: -1
 
