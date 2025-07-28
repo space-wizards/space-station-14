@@ -478,6 +478,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!atmosphere.ProcessingPaused)
             {
                 atmosphere.CurrentRunDeltaPressureEntities.Clear();
+                atmosphere.DeltaPressureCoords.Clear();
                 atmosphere.CurrentRunDeltaPressureEntities.EnsureCapacity(atmosphere.DeltaPressureEntity.Count);
                 foreach (var ent in atmosphere.DeltaPressureEntity)
                 {
