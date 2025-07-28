@@ -9725,5 +9725,12 @@ Entries:
   id: 1339
   time: '2025-07-28T05:38:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1106
+- author: Fractalflower
+  changes:
+  - message: Brigmedic goggles now have chem analysis
+    type: Add
+  id: 1340
+  time: '2025-07-28T05:44:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1101
 Order: -1
 
