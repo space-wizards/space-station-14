@@ -25,7 +25,10 @@ public sealed partial class AtmosPipeAppearanceSystem : SharedAtmosPipeAppearanc
 
     private void OnStartup(Entity<AtmosPipeComponent> item, ref ComponentStartup args)
     {
-        if (_appearance.TryGetData<string>(item.Owner, PipeColorVisuals.Color, out var color))
+        if (!TryComp<AppearanceComponent>(item, out var comp))
+            return;
+
+        if (_appearance.TryGetData<string>(item.Owner, PipeColorVisuals.Color, out var color, comp))
             _appearance.SetData(item.Owner, PipeColorVisuals.Color, Color.FromHex(color));
     }
 
