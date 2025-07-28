@@ -384,7 +384,6 @@
     currentLabel: reagent-name-wine
   - type: Sprite
     sprite: Objects/Consumable/Drinks/winebottle.rsi
-  - type: Sealable
   - type: Tag
     tags:
     - Wine
@@ -410,9 +409,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
   - type: Openable
-    closeable: false
+    closeable: false # sprite is just a beer bottle, but this should be removed when there's a more appropriate sprite
   - type: Sealable
-    examineTextUnsealed: drink-component-on-examine-is-unsealed-no-cork # tell the player why it can't close
+    examineTextUnsealed: drink-component-on-examine-is-unsealed-crown-cap # tell the player why it can't close
   - type: Tag
     tags:
     - Beer
@@ -436,9 +435,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
   - type: Openable
-    closeable: false
+    closeable: false # sprite is just a beer bottle, but this should be removed when there's a more appropriate sprite
   - type: Sealable
-    examineTextUnsealed: drink-component-on-examine-is-unsealed-no-cork # tell the player why it can't close
+    examineTextUnsealed: drink-component-on-examine-is-unsealed-crown-cap # tell the player why it can't close
 
 
 # Small glass bottles

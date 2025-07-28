@@ -1,5 +1,5 @@
 - type: entity
-  parent: [DrinkBase, DrinkBaseMaterialPlastic, DrinkBaseOpenable, DrinkVisualsOpenable ]
+  parent: [ DrinkBase, DrinkBaseMaterialPlastic, DrinkBaseOpenable, DrinkVisualsOpenable ]
   id: DrinkSpaceGlue
   name: space glue tube
   description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
@@ -34,7 +34,7 @@
     solution: drink
 
 - type: entity
-  parent: [DrinkBase, DrinkBaseMaterialPlastic, DrinkBaseOpenable, DrinkVisualsOpenable ]
+  parent: [ DrinkBase, DrinkBaseMaterialPlastic, DrinkBaseOpenable, DrinkVisualsOpenable ]
   id: DrinkSpaceLube
   name: space lube tube
   description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.

@@ -23,7 +23,7 @@
     solution: drink
   - type: Tag
     tags:
-    - DrinkBottle
+    - DrinkBottle # Needed to fit in the soda dispenser, needs a better name
 
 - type: entity
   abstract: true
@@ -39,9 +39,6 @@
   - type: Sprite
     state: icon
     sprite: Objects/Consumable/Drinks/waterbottle.rsi # fallback
-  - type: Tag
-    tags:
-    - DrinkBottle
   - type: FitsInDispenser
     solution: drink
 
