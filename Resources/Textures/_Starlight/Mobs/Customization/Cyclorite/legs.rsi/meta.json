@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Conflee",
+  "size": {"x": 32, "y": 32},
+  "states": [
+    {
+      "name": "ankle_stripes",
+      "directions": 4
+    },
+    {
+      "name": "chevron",
+      "directions": 4
+    },
+    {
+      "name": "feet_gradient",
+      "directions": 4
+    },
+    {
+      "name": "heel_spikes",
+      "directions": 4
+    },
+    {
+      "name": "hip_round",
+      "directions": 4
+    }
+  ]
+}

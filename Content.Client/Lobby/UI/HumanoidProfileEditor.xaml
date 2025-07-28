@@ -155,6 +155,13 @@
                         <humanoid:MarkingPicker Name="Markings" IgnoreCategories="Hair,FacialHair" />
                     </ScrollContainer>
                 </BoxContainer>
+                <!-- Starlight -->
+                <BoxContainer Name="CyberneticsTab" Orientation="Vertical" Margin="10">
+                    <!-- Cybernetics -->
+                    <ScrollContainer VerticalExpand="True">
+                        <humanoid:CyberneticsPicker Name="Cybernetics" />
+                    </ScrollContainer>
+                </BoxContainer>
             </TabContainer>
         </BoxContainer>
         <!-- Right side -->

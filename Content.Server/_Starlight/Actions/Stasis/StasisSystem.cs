@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Damage;
@@ -8,6 +7,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared._Starlight.Actions.Stasis;
+using Content.Shared.Body.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server._Starlight.Actions.Stasis;
@@ -91,7 +91,7 @@ public sealed class StasisSystem : SharedStasisSystem
         // Remove bleeding when entering stasis
         if (TryComp<BloodstreamComponent>(uid, out var bloodstream))
         {
-            _bloodstreamSystem.TryModifyBleedAmount(uid, -bloodstream.BleedAmount, bloodstream);
+            _bloodstreamSystem.TryModifyBleedAmount((uid, bloodstream), -bloodstream.BleedAmount);
         }
 
         // Send animation event to all clients
@@ -195,8 +195,7 @@ public sealed class StasisSystem : SharedStasisSystem
         // Heal bleeding
         if (TryComp<BloodstreamComponent>(uid, out var bloodstream) && bloodstream.BleedAmount > 0)
         {
-            _bloodstreamSystem.TryModifyBleedAmount(uid, -healingValues.BleedHeal * (float)args.DeltaSeconds,
-                bloodstream);
+            _bloodstreamSystem.TryModifyBleedAmount((uid, bloodstream), -healingValues.BleedHeal * (float)args.DeltaSeconds);
         }
     }
 

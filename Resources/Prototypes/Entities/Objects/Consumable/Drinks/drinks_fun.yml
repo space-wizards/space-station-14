@@ -188,3 +188,5 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: fill-
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
