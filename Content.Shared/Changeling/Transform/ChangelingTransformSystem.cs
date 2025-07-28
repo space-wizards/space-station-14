@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Transform;
 
-public abstract partial class SharedChangelingTransformSystem : EntitySystem
+public sealed partial class ChangelingTransformSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
@@ -23,6 +23,8 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedCloningSystem _cloningSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     private const string ChangelingBuiXmlGeneratedName = "ChangelingTransformBoundUserInterface";
     public override void Initialize()
@@ -52,7 +54,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         }
     }
 
-    protected void OnTransformAction(Entity<ChangelingTransformComponent> ent,
+    private void OnTransformAction(Entity<ChangelingTransformComponent> ent,
         ref ChangelingTransformActionEvent args)
     {
         if (!TryComp<UserInterfaceComponent>(ent, out var userInterfaceComp))
@@ -113,7 +115,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     }
 
     private void OnTransformSelected(Entity<ChangelingTransformComponent> ent,
-       ref ChangelingTransformIdentitySelectMessage args)
+        ref ChangelingTransformIdentitySelectMessage args)
     {
         _uiSystem.CloseUi(ent.Owner, TransformUI.Key, ent);
 
@@ -144,7 +146,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     }
 
     private void OnSuccessfulTransform(Entity<ChangelingTransformComponent> ent,
-       ref ChangelingTransformDoAfterEvent args)
+        ref ChangelingTransformDoAfterEvent args)
     {
         args.Handled = true;
 
@@ -154,24 +156,18 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         if (args.Cancelled)
             return;
 
+        if (!_prototype.Resolve(ent.Comp.TransformCloningSettings, out var settings))
+            return;
+
         var targetIdentity = GetEntity(args.TargetIdentity);
 
         _humanoidAppearanceSystem.CloneAppearance(targetIdentity, args.User);
-        ApplyComponentChanges(targetIdentity, ent, ent.Comp.TransformCloningSettings);
+        _cloningSystem.CloneComponents(targetIdentity, args.User, settings);
 
         //TODO: While it would be splendid to be able to provide the original owning player who was playing the targetIdentity, it's not exactly feasible to do
-        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player}  successfully transformed into \"{Name(targetIdentity)}\"");
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
         _metaSystem.SetEntityName(ent, Name(targetIdentity), raiseEvents: false);
-        _metaSystem.SetEntityDescription(ent, MetaData(targetIdentity).EntityDescription);
 
         Dirty(ent);
     }
-
-    /// <summary>
-    /// Copy a set of components over from a target onto another EntityUid using CloningSystem
-    /// </summary>
-    /// <param name="ent">Entity to clone too</param>
-    /// <param name="target">Entity to Clone from</param>
-    /// <param name="settingsId">the cloning settings to use (I.E What components that should be cloned)</param>
-    protected virtual void ApplyComponentChanges(EntityUid ent, EntityUid target, ProtoId<CloningSettingsPrototype> settingsId) { }
 }

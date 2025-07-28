@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Content.Shared.Cloning;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
 using Content.Shared.NameModifier.EntitySystems;
@@ -17,6 +18,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     [Dependency] private readonly SharedPvsOverrideSystem _pvsOverrideSystem = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
+    [Dependency] private readonly SharedCloningSystem _cloningSystem = default!;
 
     public MapId? PausedMapId;
 
@@ -52,6 +54,9 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     {
         CleanupPvsOverride(ent, ent.Owner);
         CleanupChangelingNullspaceIdentities(ent);
+
+        if (PausedMapId != null && Count<ChangelingStoredIdentityComponent>() == 0)
+            _map.DeleteMap(PausedMapId.Value); // map is empty, we can delete it
     }
 
     /// <summary>
@@ -64,6 +69,8 @@ public sealed class ChangelingIdentitySystem : EntitySystem
         {
             PredictedQueueDel(consumedIdentity);
         }
+
+        // delete the paused map if no entities are remaining
     }
 
     /// <summary>
@@ -75,17 +82,24 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     public void CloneToPausedMap(Entity<ChangelingIdentityComponent> ent, EntityUid target)
     {
         if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
-            || !_prototype.TryIndex(humanoid.Species, out var speciesPrototype))
+            || !_prototype.Resolve(humanoid.Species, out var speciesPrototype)
+            || !_prototype.Resolve(ent.Comp.IdentityCloningSettings, out var settings))
             return;
 
         EnsurePausedMap();
         var mob = Spawn(speciesPrototype.Prototype, new MapCoordinates(Vector2.Zero, PausedMapId!.Value));
 
+        var storedIdentity = EnsureComp<ChangelingStoredIdentityComponent>(mob);
+        storedIdentity.OriginalEntity = target; // TODO: network this once we have WeakEntityReference
+
+        if (TryComp<ActorComponent>(target, out var actor))
+            storedIdentity.OriginalSession = actor.PlayerSession;
+
         _humanoidSystem.CloneAppearance(target, mob);
+        _cloningSystem.CloneComponents(target, mob, settings);
 
         var targetName = _nameMod.GetBaseName(target);
         _metaSystem.SetEntityName(mob, targetName);
-        _metaSystem.SetEntityDescription(mob, MetaData(target).EntityDescription);
         ent.Comp.ConsumedIdentities.Add(mob);
 
         ent.Comp.LastConsumedEntityUid = mob;
@@ -145,6 +159,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
             return;
 
         var mapUid = _map.CreateMap(out var newMapId);
+        _metaSystem.SetEntityName(mapUid, "changeling identity storage map");
         PausedMapId = newMapId;
         _map.SetPaused(mapUid, true);
     }

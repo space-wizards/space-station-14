@@ -22,7 +22,7 @@ namespace Content.Server.Cloning;
 ///     We only consider the most important components so the paradox clone gets similar equipment.
 ///     This method of using subscriptions was chosen to make it easy for forks to add their own custom components that need to be copied.
 /// </remarks>
-public sealed partial class CloningSystem : EntitySystem
+public sealed partial class CloningSystem
 {
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly LabelSystem _label = default!;

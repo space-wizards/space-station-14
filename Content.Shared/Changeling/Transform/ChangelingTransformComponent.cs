@@ -10,7 +10,7 @@ namespace Content.Shared.Changeling.Transform;
 /// Like how long their windup is, the sounds as well as the Target Cloning settings for changing between identities
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedChangelingTransformSystem))]
+[Access(typeof(ChangelingTransformSystem))]
 public sealed partial class ChangelingTransformComponent : Component
 {
     /// <summary>
@@ -45,7 +45,7 @@ public sealed partial class ChangelingTransformComponent : Component
 
     /// <summary>
     /// The cloning settings passed to the CloningSystem, contains a list of all components to copy or have handled by their
-    /// respective systems
+    /// respective systems.
     /// </summary>
     public ProtoId<CloningSettingsPrototype> TransformCloningSettings = "ChangelingCloningSettings";
 
