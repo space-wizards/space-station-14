@@ -4,7 +4,7 @@
 - type: entity
   name: scurret
   id: MobBaseScurret
-  parent: MobBaseAncestor
+  parent: [ MobBaseAncestor, BaseSpeciesPickupable ] #Starlight - give the scurret uppies.
   abstract: true
   components:
   # Custom names
