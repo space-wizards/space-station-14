@@ -30,6 +30,6 @@ public sealed partial class RandomGlobalSpawnSpellEvent : InstantActionEvent
     /// Assumint MakeSurvivorAntagonist is true. what is the chance of any person becoming a survivor
     /// </summary>
     [DataField]
-    public float SurvivorAntagChance = 0.1;
+    public float SurvivorAntagChance = 0.1f;
     #endregion
 }
