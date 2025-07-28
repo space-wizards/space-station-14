@@ -70,11 +70,11 @@ namespace Content.Server.Database
             {
                 profiles[profile.Slot] = ConvertProfiles(profile);
             }
-            
+
             var constructionFavorites = new List<ProtoId<ConstructionPrototype>>(prefs.ConstructionFavorites.Count);
             foreach (var favorite in prefs.ConstructionFavorites)
                 constructionFavorites.Add(new ProtoId<ConstructionPrototype>(favorite));
-            
+
             var jobPriorities = prefs.JobPriorities.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
 
             return new PlayerPreferences(profiles, Color.FromHex(prefs.AdminOOCColor), constructionFavorites, jobPriorities);
@@ -299,8 +299,8 @@ namespace Content.Server.Database
                     profile.EyeGlowing, //starlight
                     Color.FromHex(profile.SkinColor),
                     markings,
-                    profile.Width, //starlight
-                    profile.Height //starlight
+                    profile.StarLightProfile?.Width ?? 1f, //starlight
+                    profile.StarLightProfile?.Height ?? 1f //starlight
                 ),
                 spawnPriority,
                 jobs,
@@ -332,8 +332,8 @@ namespace Content.Server.Database
             profile.StarLightProfile.CustomSpecieName = humanoid.CustomSpecieName; // Starlight
             profile.StarLightProfile.CyberneticIds = humanoid.Cybernetics; // Starlight
             profile.Age = humanoid.Age;
-            profile.Width = appearance.Width; //starlight
-            profile.Height = appearance.Height; //starlight
+            profile.StarLightProfile.Width = appearance.Width; //starlight
+            profile.StarLightProfile.Height = appearance.Height; //starlight
             profile.Sex = humanoid.Sex.ToString();
             profile.Gender = humanoid.Gender.ToString();
             profile.HairName = appearance.HairStyleId;
