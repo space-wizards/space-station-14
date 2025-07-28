@@ -76,6 +76,8 @@ public sealed partial class AtmosphereSystem
         {
             PerformDamage(ent, maxDelta);
         }
+
+        ent.Comp.IsTakingDamage = false;
     }
 
     /// <summary>
