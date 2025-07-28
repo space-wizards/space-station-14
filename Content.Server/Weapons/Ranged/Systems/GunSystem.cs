@@ -53,6 +53,7 @@ using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 using System.Collections.Generic;
 using Content.Server.PowerCell;
+using Content.Shared.Body.Components;
 using Content.Shared.Cargo;
 
 namespace Content.Server.Weapons.Ranged.Systems;

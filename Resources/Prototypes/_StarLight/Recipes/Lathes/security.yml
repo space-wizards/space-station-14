@@ -4,7 +4,7 @@
   id: WeaponMechCombatImmolationGun
   result: WeaponMechCombatImmolationGun
   categories:
-  - MechWeapons
+  - Mech
   completetime: 10
   materials:
     Steel: 2800
@@ -16,7 +16,7 @@
   id: WeaponMechCombatSolarisLaser
   result: WeaponMechCombatSolarisLaser
   categories:
-  - MechWeapons
+  - Mech
   completetime: 10
   materials:
     Steel: 1650
@@ -28,7 +28,7 @@
   id: WeaponMechCombatFiredartLaser
   result: WeaponMechCombatFiredartLaser
   categories:
-  - MechWeapons
+  - Mech
   completetime: 10
   materials:
     Steel: 1200
@@ -40,7 +40,7 @@
   id: WeaponMechCombatUltraRifle
   result: WeaponMechCombatUltraRifle
   categories:
-  - MechWeapons
+  - Mech
   completetime: 10
   materials:
     Steel: 1000
@@ -50,7 +50,7 @@
   id: WeaponMechCombatShotgun
   result: WeaponMechCombatShotgun
   categories:
-  - MechWeapons
+  - Mech
   completetime: 10
   materials:
     Steel: 1600
@@ -60,7 +60,7 @@
   id: WeaponMechCombatShotgunIncendiary
   result: WeaponMechCombatShotgunIncendiary
   categories:
-  - MechWeapons
+  - Mech
   completetime: 10
   materials:
     Steel: 1500
@@ -71,7 +71,7 @@
   id: WeaponMechCombatDisabler
   result: WeaponMechCombatDisabler
   categories:
-  - MechWeapons
+  - Mech
   completetime: 10
   materials:
     Steel: 750
@@ -82,7 +82,7 @@
   id: WeaponMechCombatFlashbangLauncher
   result: WeaponMechCombatFlashbangLauncher
   categories:
-  - MechWeapons
+  - Mech
   completetime: 10
   materials:
     Steel: 1200
@@ -93,7 +93,7 @@
   id: WeaponMechCombatMissileRack8
   result: WeaponMechCombatMissileRack8
   categories:
-  - MechWeapons
+  - Mech
   completetime: 10
   materials:
     Steel: 2500
@@ -104,7 +104,7 @@
   id: MechEquipmentKineticAccelerator
   result: WeaponMechIndustrialKineticAccelerator
   categories:
-  - MechEquipment
+  - Mech
   completetime: 10
   materials:
     Steel: 1500

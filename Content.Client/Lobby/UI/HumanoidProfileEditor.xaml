@@ -112,6 +112,19 @@
                                 </BoxContainer>
                                 <!--Starlight End-->
                             </BoxContainer>
+                            <!-- STARLIGHT - Species Size -->
+                            <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label SetWidth="150" Name="HeightDescribeLabel" Margin="5 0 10 0" />
+                                    <Slider Name="HeightSlider" MinValue="0.5" Value="1" MaxValue="1.5" HorizontalExpand="True" Margin="10 0 5 0" />
+                                    <Button Name="HeightResetButton" Text="{Loc 'humanoid-profile-editor-slider-reset'}" />
+                                </BoxContainer>
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label SetWidth="150" Name="WidthDescribeLabel" Margin="5 0 10 0" />
+                                    <Slider Name="WidthSlider" MinValue="0.5" Value="1" MaxValue="1.5" HorizontalExpand="True" Margin="10 0 5 0" />
+                                    <Button Name="WidthResetButton" Text="{Loc 'humanoid-profile-editor-slider-reset'}" />
+                                </BoxContainer>
+                            </BoxContainer>
                             <!-- Skin -->
                             <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
                                 <Label Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />
@@ -153,6 +166,13 @@
                     <!-- Markings -->
                     <ScrollContainer VerticalExpand="True">
                         <humanoid:MarkingPicker Name="Markings" IgnoreCategories="Hair,FacialHair" />
+                    </ScrollContainer>
+                </BoxContainer>
+                <!-- Starlight -->
+                <BoxContainer Name="CyberneticsTab" Orientation="Vertical" Margin="10">
+                    <!-- Cybernetics -->
+                    <ScrollContainer VerticalExpand="True">
+                        <humanoid:CyberneticsPicker Name="Cybernetics" />
                     </ScrollContainer>
                 </BoxContainer>
             </TabContainer>
