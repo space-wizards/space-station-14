@@ -17,5 +17,5 @@ public sealed partial class StarlightCCVars
     public static readonly CVarDef<string> OverrideGamemodeName =
         CVarDef.Create("lobby.gamemode_name_override", "", CVar.SERVER | CVar.REPLICATED);
     public static readonly CVarDef<string> OverrideGamemodeDescription =
-        CVarDef.Create("lobby.gamemode_desc_ocerride", "", CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("lobby.gamemode_desc_override", "", CVar.SERVER | CVar.REPLICATED);
 }
