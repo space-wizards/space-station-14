@@ -4,7 +4,7 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/22/2025 16:43:19
+  time: 07/28/2025 01:11:40
   entityCount: 19680
 maps:
 - 1
@@ -92784,6 +92784,8 @@ entities:
     - type: Transform
       pos: 50.5,-96.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
 - proto: ReinforcedGirder
   entities:
   - uid: 8650
@@ -105169,6 +105171,15 @@ entities:
     - type: Transform
       pos: 51.5,-97.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        14690:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
 - proto: UnfinishedMachineFrame
   entities:
   - uid: 17877
