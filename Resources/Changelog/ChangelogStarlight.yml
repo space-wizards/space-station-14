@@ -9761,5 +9761,12 @@ Entries:
   id: 1344
   time: '2025-07-28T06:42:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1123
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: Fixed Duplicate changelog buttons causing the game to be unjoinable.
+    type: Fix
+  id: 1345
+  time: '2025-07-28T07:20:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1124
 Order: -1
 
