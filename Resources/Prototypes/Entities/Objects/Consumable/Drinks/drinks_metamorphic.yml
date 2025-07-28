@@ -4,7 +4,7 @@
 
 # Transformable container - normal glass
 - type: entity
-  parent: [DrinkBase, DrinkBaseGlass]
+  parent: [DrinkBaseCup, DrinkBaseMaterialGlass]
   id: DrinkGlass
   name: metamorphic glass
   description: A metamorphic glass that automagically turns into a glass appropriate for the drink within. There's a sanded off patent number on the bottom.
@@ -33,15 +33,14 @@
       state: icon
   - type: ExaminableSolution
     solution: drink
-  - type: FitsInDispenser
-    solution: drink
   - type: Tag
     tags:
-    - DrinkGlass
+    - DrinkCup # Do these tags
+    - DrinkGlass # even do anything?
   - type: TransformableContainer
 
 - type: entity
-  parent: [DrinkBase, DrinkBaseGlass]
+  parent: DrinkGlass
   id: DrinkJar
   name: jar
   description: The hipster's cup.
@@ -56,29 +55,18 @@
       visible: false
     - state: icon-front
       map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: Appearance
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 50
   - type: SolutionContainerVisuals
-    maxFillLevels: 9
-    fillBaseName: fill
-    metamorphic: true
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/jar.rsi
       state: icon
-  - type: ExaminableSolution
-    solution: drink
-  - type: FitsInDispenser
-    solution: drink
-  - type: Tag
-    tags:
-    - DrinkGlass
-  - type: TransformableContainer
 
 ## Filled
 # TODO entities without IconComponent need a metamorphic sprite on the reagent
+# TODO IconComponent doesn't seem to work in spawn panel
 
 - type: entity
   parent: DrinkGlass

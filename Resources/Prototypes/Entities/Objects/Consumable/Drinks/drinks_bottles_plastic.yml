@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ DrinkBase, DrinkBasePlastic, DrinkBaseOpenable ]
+  parent: [ DrinkBase, DrinkBaseMaterialPlastic, DrinkBaseOpenable ]
   id: DrinkBottlePlasticBaseFull
   suffix: Full
   components:
@@ -61,7 +61,7 @@
 # Small Plastic Bottles
 
 - type: entity
-  parent: [DrinkVisualsAll, DrinkBottlePlasticSmallBaseFull]
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticSmallBaseFull]
   id: DrinkWaterBottleFull
   name: water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
@@ -80,7 +80,7 @@
 # Large Plastic Bottles
 
 - type: entity
-  parent: [DrinkVisualsAll, DrinkBottlePlasticBaseFull]
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
   id: DrinkColaBottleFull
   name: Space Cola bottle
   description: Cola. In spaaace!
@@ -97,7 +97,7 @@
     sprite: Objects/Consumable/Drinks/colabottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAll, DrinkBottlePlasticBaseFull]
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
   id: DrinkSpaceMountainWindBottleFull
   name: Space Solar Wind bottle
   description: Blows right through you like a solar wind.
@@ -114,7 +114,7 @@
     sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAll, DrinkBottlePlasticBaseFull]
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
   id: DrinkSpaceUpBottleFull
   name: Space-Up bottle
   description: Tastes like a hull breach in your mouth.
@@ -131,7 +131,7 @@
     sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
 
 - type: entity
-  parent: [DrinkVisualsAll, DrinkBottlePlasticBaseFull]
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
   id: DrinkSodaWaterBottleFull
   name: soda water bottle
   description: Like water, but angry!
@@ -149,7 +149,7 @@
     currentLabel: reagent-name-soda-water
 
 - type: entity
-  parent: [DrinkVisualsAll, DrinkBottlePlasticBaseFull]
+  parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
   id: DrinkTonicWaterBottleFull
   name: tonic water bottle
   description: Like soda water, but angrier maybe? Often sweeter.

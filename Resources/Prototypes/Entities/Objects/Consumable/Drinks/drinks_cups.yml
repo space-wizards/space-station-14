@@ -24,7 +24,7 @@
 # A mug is a type of cup.[2]
 - type: entity
   abstract: true
-  parent: [DrinkBaseCup, DrinkBasePorcelain]
+  parent: [DrinkBaseCup, DrinkBaseMaterialPorcelain]
   id: DrinkBaseMug
   name: mug
   description: A mug.
@@ -49,7 +49,7 @@
 ## Misc Cups
 
 - type: entity
-  parent: [DrinkBaseCup, DrinkBaseGold]
+  parent: [DrinkBaseCup, DrinkBaseMaterialGold]
   id: DrinkGoldenCup
   name: golden cup
   description: A golden cup.
@@ -78,15 +78,11 @@
     maxFillLevels: 4
 
 - type: entity
-  parent: [ DrinkBase, DrinkBaseGlass ]
+  parent: [ DrinkBaseCup, DrinkBaseMaterialGlass ]
   id: DrinkGlassCoupeShaped
   name: coupe glass
   description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
     layers:
@@ -105,15 +101,9 @@
     inHandsFillBaseName: -fill-
   - type: ExaminableSolution
     solution: drink
-  - type: FitsInDispenser
-    solution: drink
-  - type: Tag
-    tags:
-    - DrinkGlass
-    - Recyclable
 
 - type: entity
-  parent: [DrinkBase, DrinkBaseCardboard]
+  parent: [DrinkBaseCup, DrinkBaseMaterialCardboard]
   id: DrinkWaterCup
   name: water cup
   description: A paper water cup.
@@ -122,21 +112,22 @@
     solutions:
       drink:
         maxVol: 5 # One sip at a time. No rushing at the water cooler
-  - type: FitsInDispenser
-    solution: drink
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
     layers:
     - state: icon-0
-    - map: ["enum.SolutionContainerLayers.Fill"]
-      state: icon-1
-  - type: Appearance
-  - type: SolutionContainerVisuals
+    - state: icon-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals # TODO this doesn't work
     maxFillLevels: 1
     fillBaseName: icon-
   - type: Tag
     tags:
     - Trash
+    - DrinkCup
     - WhitelistChameleon
   - type: TrashOnSolutionEmpty
     solution: drink
@@ -202,7 +193,7 @@
     sprite: Objects/Consumable/Drinks/mug_heart.rsi
 
 - type: entity
-  parent: [DrinkBaseMetal, DrinkBaseMug]
+  parent: [DrinkBaseMaterialMetal, DrinkBaseMug]
   id: DrinkMugMetal
   name: metal mug
   description: A metal mug. You're not sure which metal.
@@ -247,12 +238,12 @@
     sprite: Objects/Consumable/Drinks/mug_red.rsi
 
 ## Filled
-# TODO these need a material for destruction, maybe a better parent
 
 - type: entity
   parent: DrinkBaseMug
   id: DrinkHotCoco
   name: hot chocolate
+  suffix: Full
   description: A heated drink consisting melted chocolate and heated milk.
   components:
   - type: SolutionContainerManager
@@ -280,6 +271,7 @@
   parent: DrinkBaseMug
   id: DrinkHotCoffee
   name: coffee
+  suffix: Full
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
   components:
   - type: SolutionContainerManager
@@ -304,9 +296,10 @@
     solution: drink
 
 - type: entity
-  parent: [DrinkBaseCup, DrinkBaseCardboard]
+  parent: DrinkBaseMug
   id: DrinkCafeLatte
   name: cafe latte
+  suffix: Full
   description: A nice, strong and tasty beverage while you are reading.
   components:
   - type: SolutionContainerManager
@@ -332,6 +325,7 @@
 - type: entity
   parent: DrinkTeacupEmpty
   id: DrinkTeacup
+  name: tea
   components:
   - type: SolutionContainerManager
     solutions:
@@ -346,7 +340,6 @@
   parent: DrinkTeacupEmpty
   id: DrinkGreenTea
   name: green tea
-  description: A plain white porcelain teacup.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -361,7 +354,7 @@
     solution: drink
 
 - type: entity
-  parent: [DrinkBaseCup, DrinkBasePlastic]
+  parent: [DrinkBaseCup, DrinkBaseMaterialPlastic]
   id: DrinkLean
   name: grape juice
   description: Damn, no fun allowed.

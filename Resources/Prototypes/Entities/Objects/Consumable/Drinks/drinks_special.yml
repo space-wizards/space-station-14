@@ -1,5 +1,5 @@
 - type: entity
-  parent: [DrinkBase, DrinkBaseGlass]
+  parent: [DrinkBase, DrinkBaseMaterialGlass]
   id: DrinkShotGlass
   name: shot glass
   description: Perfect for slamming down onto the table angrily.
@@ -8,6 +8,8 @@
     solutions:
       drink:
         maxVol: 5
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shotglass.rsi
     layers:
@@ -33,7 +35,7 @@
     - DrinkGlass
 
 - type: entity
-  parent: DrinkBase
+  parent: [DrinkBase, DrinkBaseMaterialMetal]
   id: DrinkIceBucket
   name: ice bucket
   description: A special bucket of refreshy ice. Prohibited use for challenge with the same name!
@@ -52,7 +54,7 @@
       Steel: 75
 
 - type: entity
-  parent: [DrinkBase, DrinkBasePorcelain]
+  parent: [DrinkBase, DrinkBaseMaterialPorcelain]
   id: DrinkTeapot
   name: teapot  # short and stout
   description: An elegant teapot. It simply oozes class.
@@ -125,7 +127,7 @@
 # Bartender tools
 
 - type: entity
-  parent: DrinkBase
+  parent: [DrinkBase, DrinkBaseMaterialStrongMetal]
   id: DrinkShaker
   name: shaker
   description: The trusty mixing buddy of the bartender.
@@ -151,7 +153,7 @@
     - Shake
 
 - type: entity
-  parent: DrinkBase
+  parent: [DrinkBase, DrinkBaseMaterialMetal]
   id: DrinkJigger
   name: jigger
   description: Like a shaker, but smaller. Used to control the amount of ingredients.
@@ -160,6 +162,8 @@
     solutions:
       drink:
         maxVol: 20
+  - type: Item
+    size: Tiny
   - type: SolutionTransfer
     canChangeTransferAmount: true
     minTransferAmount: 1
@@ -174,7 +178,7 @@
       Steel: 20
 
 - type: entity
-  parent: DrinkBase
+  parent: [DrinkBase, DrinkBaseMaterialStrongMetal]
   id: Pitcher
   name: metal pitcher
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
@@ -197,9 +201,6 @@
     fillBaseName: fill-
     inHandsMaxFillLevels: 2
     inHandsFillBaseName: -fill-
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 300
   - type: FitsInDispenser
     solution: drink
 
@@ -207,7 +208,7 @@
 
 - type: entity
   abstract: true
-  parent: [DrinkBase, DrinkBaseGlass]
+  parent: [DrinkBase, DrinkBaseMaterialGlass]
   id: DrinkShakeBase
   description: ''
   components:

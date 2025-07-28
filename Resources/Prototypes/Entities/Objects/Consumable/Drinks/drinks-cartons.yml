@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ DrinkBase, DrinkBaseCardboard, DrinkBaseOpenable ]
+  parent: [ DrinkBase, DrinkBaseMaterialCardboard, DrinkBaseOpenable ]
   id: DrinkCartonBaseLargeFull
   suffix: Full
   components:

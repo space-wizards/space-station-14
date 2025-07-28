@@ -1,10 +1,10 @@
 # Material costs to apply to a drink
-# Adding one of these entities as the first parent will override a previous inherited material
+# Adding one of these bases as the first parent will override a previous inherited material
 
 # Fragile glass
 - type: entity
   abstract: true
-  id: DrinkBaseGlass
+  id: DrinkBaseMaterialGlass
   components:
   - type: Damageable
     damageContainer: Inorganic
@@ -33,12 +33,11 @@
         transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  # so fragile it smashes when thrown
   - type: DamageOnLand
     ignoreResistances: true
     damage:
       types:
-        Blunt: 5
+        Blunt: 5 # so fragile it smashes when thrown
   - type: DamageOtherOnHit
     damage:
       types:
@@ -50,7 +49,7 @@
 # Porcelain (like glass but no shard)
 - type: entity
   abstract: true
-  id: DrinkBasePorcelain
+  id: DrinkBaseMaterialPorcelain
   components:
   - type: Damageable
     damageContainer: Inorganic
@@ -73,24 +72,23 @@
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  # so fragile it smashes when thrown
   - type: DamageOnLand
     ignoreResistances: true
     damage:
       types:
-        Blunt: 5
+        Blunt: 5 # so fragile it smashes when thrown
   - type: DamageOtherOnHit
     damage:
       types:
         Blunt: 5
-  - type: Tag
-    tags:
-    - Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 10 # Trace amounts of glass I guess. Important for overriding inheritance
 
 # Fragile plastic
 - type: entity
   abstract: true
-  id: DrinkBasePlastic
+  id: DrinkBaseMaterialPlastic
   components:
   - type: Damageable
     damageContainer: Inorganic
@@ -113,6 +111,15 @@
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 2
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
@@ -120,7 +127,7 @@
 # Fragile cardboard
 - type: entity
   abstract: true
-  id: DrinkBaseCardboard
+  id: DrinkBaseMaterialCardboard
   components:
   - type: Damageable
     damageContainer: Inorganic
@@ -143,6 +150,15 @@
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 1
   - type: PhysicalComposition
     materialComposition:
       Cardboard: 25
@@ -150,7 +166,7 @@
 # Weak metal
 - type: entity
   abstract: true
-  id: DrinkBaseMetal
+  id: DrinkBaseMaterialMetal
   components:
   - type: Damageable
     damageContainer: Inorganic
@@ -173,6 +189,15 @@
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
@@ -180,7 +205,7 @@
 # strong metal
 - type: entity
   abstract: true
-  id: DrinkBaseStrongMetal
+  id: DrinkBaseMaterialStrongMetal
   components:
   - type: Damageable
     damageContainer: Inorganic
@@ -203,6 +228,15 @@
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
   - type: PhysicalComposition
     materialComposition:
       Steel: 300
@@ -210,7 +244,7 @@
 # Weak gold
 - type: entity
   abstract: true
-  id: DrinkBaseGold
+  id: DrinkBaseMaterialGold
   components:
   - type: Damageable
     damageContainer: Inorganic
@@ -225,14 +259,29 @@
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 10
+        damage: 10 # Gold is very weak
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak # Could use a shinier sound
       - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          IngotGold1:
+            min: 1
+            max: 1
+        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 5 # Don't drop your fancy golden cup!
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 2
   - type: PhysicalComposition
     materialComposition:
       Gold: 25

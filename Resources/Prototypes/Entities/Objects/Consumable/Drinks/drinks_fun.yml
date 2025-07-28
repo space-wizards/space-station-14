@@ -1,5 +1,5 @@
 - type: entity
-  parent: [DrinkBase, DrinkBasePlastic, DrinkBaseOpenable, DrinkVisualsOpenable ]
+  parent: [DrinkBase, DrinkBaseMaterialPlastic, DrinkBaseOpenable, DrinkVisualsOpenable ]
   id: DrinkSpaceGlue
   name: space glue tube
   description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
@@ -12,9 +12,8 @@
     layers:
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-        visible: false
+      - state: fill6
+        map: [ "enum.SolutionContainerLayers.Fill" ] # already has liquid, so no visible: false
       - state: icon-front
         map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: Glue
@@ -35,7 +34,7 @@
     solution: drink
 
 - type: entity
-  parent: [DrinkBase, DrinkBasePlastic, DrinkBaseOpenable, DrinkVisualsOpenable ]
+  parent: [DrinkBase, DrinkBaseMaterialPlastic, DrinkBaseOpenable, DrinkVisualsOpenable ]
   id: DrinkSpaceLube
   name: space lube tube
   description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
@@ -48,9 +47,8 @@
     layers:
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-        visible: false
+      - state: fill6
+        map: [ "enum.SolutionContainerLayers.Fill" ] # already has liquid, so no visible: false
       - state: icon-front
         map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: SolutionContainerManager
@@ -90,7 +88,7 @@
         Quantity: 200
 
 - type: entity
-  parent: [DrinkBase, DrinkBaseGlass]
+  parent: [DrinkBase, DrinkBaseMaterialGlass]
   id: DrinkJarWhat
   name: jar of something
   description: You can't really tell what this is.
@@ -153,7 +151,7 @@
     - FourteenLoko
 
 - type: entity
-  parent: [DrinkVisualsAll, DrinkBottleGlassSmallBaseFull]
+  parent: [DrinkVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
   id: DrinkMopwataBottleRandom
   name: delicious mopwata
   description: A foggy brown bottle with a faded label depicting a mop. It comes full of murky... vintage.

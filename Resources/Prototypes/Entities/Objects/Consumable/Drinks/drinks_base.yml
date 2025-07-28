@@ -1,6 +1,6 @@
-# When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_soda.yml
+# When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\
 
-# A drink is a freely accessible solution like cups, teapots, cans, flasks, bottles, or beakers.
+# A drink is an easily and freely accessible solution like cups, teapots, cans, flasks, bottles, or beakers.
 - type: entity
   abstract: true
   parent: BaseItem
@@ -111,7 +111,6 @@
           True: {state: "icon_open"}
           False: {state: "icon_empty"}
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/alco-bottle.rsi
     layers:
     - state: icon
       map: ["enum.OpenableVisuals.Layer"]
@@ -123,3 +122,16 @@
     fillBaseName: fill-
     inHandsMaxFillLevels: 3
     inHandsFillBaseName: -fill-
+
+# Visualizer for an openable entity with fill levels, already filled
+- type: entity
+  abstract: true
+  parent: DrinkVisualsAll
+  id: DrinkVisualsAllFilled
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill-5 # this will need to be different with a different maxFillLevels
+      map: ["enum.SolutionContainerLayers.Fill"]

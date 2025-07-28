@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [DrinkBase, DrinkBaseStrongMetal, DrinkBaseOpenable]
+  parent: [DrinkBase, DrinkBaseMaterialStrongMetal, DrinkBaseOpenable]
   id: FlaskBase
   components:
   - type: SolutionContainerManager
@@ -92,6 +92,9 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask_old.rsi
+  - type: Openable # annoying hack
+    opened: true
+    closeable: false
 
 - type: entity
   parent: [FlaskBase, DrinkVisualsOpenable]
