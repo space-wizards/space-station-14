@@ -9803,5 +9803,13 @@ Entries:
   id: 1350
   time: '2025-07-28T15:37:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1128
+- author: Arkanic
+  changes:
+  - message: Player characters now have customisable widths & heights with species-specific
+      limits
+    type: Add
+  id: 1351
+  time: '2025-07-28T23:01:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/952
 Order: -1
 
