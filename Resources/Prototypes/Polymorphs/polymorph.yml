@@ -47,7 +47,7 @@
   configuration:
     entity: MobCarpMagic
     forced: true
-    duration: 30
+    duration: 30 #STARLIGHT
     inventory: None
     transferName: true
     transferDamage: true
@@ -63,7 +63,7 @@
   configuration:
     entity: MobSkeletonPerson
     forced: true
-    duration: 30
+    duration: 30 #STARLIGHT
     inventory: Drop
     transferName: true
     transferDamage: true
@@ -79,7 +79,7 @@
   configuration:
     entity: MobMonkey
     forced: true
-    duration: 30
+    duration: 30 #STARLIGHT
     inventory: None
     transferName: true
     transferDamage: true
@@ -265,7 +265,7 @@
     entity: MobBat
     revertOnDeath: true
     revertOnCrit: true
-    
+
 # Temporary Jaunt
 # Don't make permanent jaunts until action system can be reworked to allow do afters and cooldown pausing
 - type: polymorph
