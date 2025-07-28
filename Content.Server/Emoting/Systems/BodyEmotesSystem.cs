@@ -20,7 +20,6 @@ public sealed class BodyEmotesSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, BodyEmotesComponent component, ComponentStartup args)
     {
-        component.Sounds = null;
         if (component.SoundsId == null)
             return;
         _proto.TryIndex(component.SoundsId, out component.Sounds);

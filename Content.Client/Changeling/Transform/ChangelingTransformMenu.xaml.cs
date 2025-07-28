@@ -24,11 +24,18 @@ public sealed partial class ChangelingTransformMenu : RadialMenu
         Main.DisposeAllChildren();
         foreach (var identity in state.Identites)
         {
+            var identityUid = _entity.GetEntity(identity);
+
+            if (!_entity.TryGetComponent<MetaDataComponent>(identityUid, out var metadata))
+                continue;
+
+            var identityName = metadata.EntityName;
+
             var button = new ChangelingTransformMenuButton()
             {
                 StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64, 64),
-                ToolTip = identity.Name
+                ToolTip = identityName,
             };
 
             var entView = new SpriteView()
@@ -38,10 +45,10 @@ public sealed partial class ChangelingTransformMenu : RadialMenu
                 HorizontalAlignment = HAlignment.Center,
                 Stretch = SpriteView.StretchMode.Fill,
             };
-            entView.SetEntity(_entity.GetEntity(identity.Identity));
+            entView.SetEntity(identityUid);
             button.OnButtonUp += _ =>
             {
-                OnIdentitySelect?.Invoke(identity.Identity);
+                OnIdentitySelect?.Invoke(identity);
                 Close();
             };
             button.AddChild(entView);

@@ -12,11 +12,12 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
     protected override void Open()
     {
         base.Open();
-        
+
         _window = this.CreateWindow<ChangelingTransformMenu>();
 
         _window.OnIdentitySelect += SendIdentitySelect;
     }
+
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);

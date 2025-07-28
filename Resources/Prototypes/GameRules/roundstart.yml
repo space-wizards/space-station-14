@@ -240,12 +240,12 @@
         text: changeling-role-greeting
         color: Red
       components:
-      - type: ChangelingIdentity
       - type: ChangelingDevour
+      - type: ChangelingIdentity
       - type: ChangelingTransform
       - type: ActionGrant
         actions:
-          - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
+        - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
       mindRoles:
       - MindRoleChangeling
 

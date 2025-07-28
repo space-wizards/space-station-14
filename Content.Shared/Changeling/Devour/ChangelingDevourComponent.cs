@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Changeling.Devour;
 
 /// <summary>
-/// Component responsible for Changelings Devour attack. Including the amount of damage, if a successful devour husks
+/// Component responsible for Changelings Devour attack. Including the amount of damage
 /// and how long it takes to devour someone
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
@@ -108,12 +108,6 @@ public sealed partial class ChangelingDevourComponent : Component
         "Piercing",
         "Blunt",
     };
-
-    /// <summary>
-    /// Should a successful devour Husk a target (Remove their visible identity, their Gender becomes They and they are made unrevivable)
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Husking;
 
     /// <summary>
     /// The next Tick to deal damage on (utilized during the consumption "do-during" (a do after with an attempt event))

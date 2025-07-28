@@ -3,11 +3,9 @@ roles-antag-changeling-objective = A intelligent predator that assumes the ident
 
 changeling-role-greeting = You are a Changeling, a highly intelligent predator. Your only goal is to escape the station alive via assuming the identities of the denizens of this station. You are hungry and will not make it long without sustenance... kill, consume, hide, survive.
 changeling-briefing = You are a changeling, your goal is to survive. Consume humanoids to gain biomass and utilize it to evade termination. You are able to utilize and assume the identities of those you consume to evade a grim fate.
-changeling-subtype = Changeling
 
 changeling-devour-attempt-failed-rotting = This corpse has only rotted biomass.
 changeling-devour-attempt-failed-protected = This victim's biomass is protected.
-changeling-devour-attempt-failed-husked = This corpse has nothing left for us.
 
 changeling-devour-begin-windup = Our uncanny mouth reveals itself with otherworldly hunger.
 changeling-devour-begin-windup-others = { CAPITALIZE(POSS-ADJ($user)) } uncanny mouth reveals itself with otherworldly hunger.
@@ -20,7 +18,3 @@ changeling-devour-consume-complete-others = { CAPITALIZE(POSS-ADJ($user)) } unca
 
 changeling-transform-attempt = Our bones snap, muscles tear, one flesh becomes another.
 changeling-transform-attempt-others = { CAPITALIZE(POSS-ADJ($user)) } bones snap, muscles tear, body shifts into another.
-changeling-husked-corpse = [color=red]{ CAPITALIZE(POSS-ADJ($target)) } corpse looks to have had all of { POSS-ADJ($target) } organs forcibly and violently removed. [/color]
-
-changeling-defibrillator-failure = This patient is too internally mangled to be revived.
-changeling-unidentified-husked-corpse = mangled corpse

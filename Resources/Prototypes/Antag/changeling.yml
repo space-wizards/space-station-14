@@ -2,10 +2,14 @@
   parent: MobHuman
   id: MobLing
   name: Urist McLing
+  suffix: Non-Antag
   components:
-  - type: ChangelingTransform
   - type: ChangelingDevour
-
+  - type: ChangelingIdentity
+  - type: ChangelingTransform
+  - type: ActionGrant
+    actions:
+    - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
 
 - type: entity
   id: ActionChangelingDevour
@@ -29,46 +33,3 @@
     icon: { sprite : Interface/Actions/changeling.rsi, state: "transform" }
   - type: InstantAction
     event: !type:ChangelingTransformActionEvent
-
-
-- type: cloningSettings
-  id: ChangelingCloningSettings
-  components:
-  - Speech
-  - TypingIndicator
-  - Dna
-  - BodyEmotes
-  #Accents for Obvious reasons
-  - Accentless
-  - BackwardsAccent
-  - BarkAccent
-  - BleatingAccent
-  - DamagedSiliconAccent
-  - FrenchAccent
-  - GermanAccent
-  - LizardAccent
-  - MobsterAccent
-  - MonkeyAccent
-  - MothAccent
-  - MumbleAccent
-  - OwOAccent
-  - ParrotAccent
-  - PirateAccent
-  - RussianAccent
-  - ScrambledAccent
-  - SkeletonAccent
-  - SlurredAccent
-  - SouthernAccent
-  - SpanishAccent
-  - StutteringAccent
-  - Fixtures
-  eventComponents:
-  - Inventory
-  - Wagging
-  - Vocal
-  - Storage
-  - Rootable
-  - Sericulture
-  copyEquipment: null
-  copyInternalStorage: false
-  copyImplants: false

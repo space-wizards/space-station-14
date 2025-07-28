@@ -314,9 +314,9 @@
   id: MindRoleChangeling
   name: Changeling Role
   components:
-    - type: MindRole
-      antagPrototype: Changeling
-      exclusiveAntag: true
-      roleType: SoloAntagonist
-      subtype: changeling-subtype
-    - type: ChangelingRole
+  - type: MindRole
+    antagPrototype: Changeling
+    exclusiveAntag: true
+    roleType: SoloAntagonist
+    subtype: role-subtype-changeling
+  - type: ChangelingRole
