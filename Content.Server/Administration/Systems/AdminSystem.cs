@@ -383,8 +383,13 @@ public sealed class AdminSystem : EntitySystem
         {
             _chat.DeleteMessagesBy(uid);
 
+            var eraseEvent = new EraseEvent(uid);
+
             if (!_minds.TryGetMind(uid, out var mindId, out var mind) || mind.OwnedEntity == null || TerminatingOrDeleted(mind.OwnedEntity.Value))
+            {
+                RaiseLocalEvent(ref eraseEvent);
                 return;
+            }
 
             var entity = mind.OwnedEntity.Value;
 
@@ -444,6 +449,8 @@ public sealed class AdminSystem : EntitySystem
 
             if (_playerManager.TryGetSessionById(uid, out var session))
                 _gameTicker.SpawnObserver(session);
+
+            RaiseLocalEvent(ref eraseEvent);
         }
 
     private void OnSessionPlayTimeUpdated(ICommonSession session)
@@ -451,3 +458,10 @@ public sealed class AdminSystem : EntitySystem
         UpdatePlayerList(session);
     }
 }
+
+/// <summary>
+/// Event fired after a player is erased by an admin
+/// </summary>
+/// <param name="PlayerNetUserId">NetUserId of the player that was the target of the Erase</param>
+[ByRefEvent]
+public record struct EraseEvent(NetUserId PlayerNetUserId);

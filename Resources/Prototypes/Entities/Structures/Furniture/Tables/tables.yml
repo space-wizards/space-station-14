@@ -643,6 +643,9 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepFloor
+  - type: Construction
+    graph: Table
+    node: TableXeno
 
 # Fancy tables
 

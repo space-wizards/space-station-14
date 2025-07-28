@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.DeviceLinking;
@@ -15,7 +15,7 @@ namespace Content.Client.NetworkConfigurator;
 [GenerateTypedNameReferences]
 public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 {
-    private readonly IPrototypeManager _prototypeManager = null!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private const string PanelBgColor = "#202023";
 
