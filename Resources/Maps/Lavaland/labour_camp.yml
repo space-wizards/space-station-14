@@ -1335,8 +1335,11 @@ entities:
     - type: GasMixer
       inletTwoConcentration: 0.22000003
       inletOneConcentration: 0.78
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#03FCD3FF'
 - proto: GasPipeBend
   entities:
   - uid: 143
@@ -1345,16 +1348,22 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,7.5
       parent: 1
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#03FCD3FF'
   - uid: 144
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,6.5
       parent: 1
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#03FCD3FF'
   - uid: 148
     components:
     - type: Transform
@@ -1545,16 +1554,22 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 5.5,6.5
       parent: 1
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#03FCD3FF'
   - uid: 184
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,7.5
       parent: 1
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#03FCD3FF'
 - proto: GasPressurePump
   entities:
   - uid: 186
@@ -1562,8 +1577,11 @@ entities:
     - type: Transform
       pos: 3.5,6.5
       parent: 1
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#03FCD3FF'
 - proto: GasVentPump
   entities:
   - uid: 146
