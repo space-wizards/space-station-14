@@ -298,7 +298,7 @@
   description: spellbook-event-summon-guns-description
   productAction: ActionSummonGuns
   cost:
-    WizCoin: 15
+    WizCoin: 5 #Starlight edit. more expensive then wizden.
   categories:
   - SpellbookEvents
   conditions:
@@ -312,7 +312,7 @@
   description: spellbook-event-summon-magic-description
   productAction: ActionSummonMagic
   cost:
-    WizCoin: 15
+    WizCoin: 5 #Starlight edit. more expensive then wizden.
   categories:
   - SpellbookEvents
   conditions:
