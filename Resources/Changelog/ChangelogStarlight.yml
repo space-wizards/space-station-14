@@ -9782,5 +9782,12 @@ Entries:
   id: 1347
   time: '2025-07-28T15:00:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1038
+- author: FoxxoTrystan
+  changes:
+  - message: Point Defense Battery
+    type: Add
+  id: 1348
+  time: '2025-07-28T15:21:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1099
 Order: -1
 
