@@ -16,6 +16,7 @@ namespace Content.Server.Entry
             "SolutionItemStatus",
             "ChargeItemStatus",
             "TankPressureItemStatus",
+            "MagazineItemStatus",
             "UIFragment",
             "PdaBorderColor",
             "InventorySlots",

@@ -14,7 +14,7 @@ public sealed partial class BatteryItemStatusComponent : Component
     /// Whether to show On/Off toggle state for this battery-powered item.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool ShowToggleState = false;
+    public bool ShowToggleState = true;
 
     /// <summary>
     /// Current charge percentage (0-100).
