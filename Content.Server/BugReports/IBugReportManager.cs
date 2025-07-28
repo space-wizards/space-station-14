@@ -13,4 +13,10 @@ public interface IBugReportManager
     /// Should be used to clean up anything that needs reset after each round.
     /// </summary>
     public void Restart();
+
+    /// <summary>
+    /// Will get called whenever the round is restarted.
+    /// Should be used to clean up anything that needs reset after each round.
+    /// </summary>
+    public void Shutdown();
 }

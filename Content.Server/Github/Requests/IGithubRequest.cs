@@ -11,6 +11,8 @@ namespace Content.Server.Github.Requests;
 /// </remarks>
 [JsonPolymorphic(UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization)]
 [JsonDerivedType(typeof(CreateIssueRequest))]
+[JsonDerivedType(typeof(InstallationsRequest))]
+[JsonDerivedType(typeof(TokenRequest))]
 public interface IGithubRequest
 {
     /// <summary>
@@ -20,10 +22,23 @@ public interface IGithubRequest
     public HttpMethod RequestMethod { get; }
 
     /// <summary>
+    /// There are different types of authentication methods depending on which endpoint you are working with.
+    /// E.g. the app api endpoint mostly uses JWTs, while stuff like issue creation uses Tokens
+    /// </summary>
+    [JsonIgnore]
+    public AuthMethod AuthenticationMethodMethod { get; }
+
+    /// <summary>
     /// Location of the api endpoint for this request.
     /// </summary>
     /// <param name="owner">Owner of the repository.</param>
     /// <param name="repository">The repository to make the request.</param>
     /// <returns>The api location for this request.</returns>
     public string GetLocation(string owner, string repository);
+}
+
+public enum AuthMethod
+{
+    JWT,
+    Token,
 }

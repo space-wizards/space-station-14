@@ -44,14 +44,7 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
 
         _limits = new BugReportLimits();
 
-        _cfg.OnValueChanged(CCVars.MaximumBugReportTitleLength, x => _limits.TitleMaxLength = x, true);
-        _cfg.OnValueChanged(CCVars.MinimumBugReportTitleLength, x => _limits.TitleMinLength = x, true);
-        _cfg.OnValueChanged(CCVars.MaximumBugReportDescriptionLength, x => _limits.DescriptionMaxLength = x, true);
-        _cfg.OnValueChanged(CCVars.MinimumBugReportDescriptionLength, x => _limits.DescriptionMinLength = x, true);
-
-        _cfg.OnValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, x => _limits.MinimumPlaytimeToEnableBugReports = TimeSpan.FromMinutes(x), true);
-        _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, x => _limits.MaximumBugReportsForPlayerPerRound = x, true);
-        _cfg.OnValueChanged(CCVars.MinimumSecondsBetweenBugReports, x => _limits.MinimumTimeBetweenBugReports = TimeSpan.FromSeconds(x), true);
+        SetupCCvars();
     }
 
     public void Restart()
@@ -80,6 +73,7 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
         _admin.Add(LogType.BugReport, LogImpact.High, $"{message.MsgChannel.UserName}, {netId}: submitted a bug report. Title: {title}, Description: {description}");
 
         var bugReport = CreateBugReport(message);
+
         _githubApiManager.TryCreateIssue(bugReport);
     }
 
@@ -124,7 +118,6 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
     {
         var session = _player.GetSessionById(netId);
         var playtime = _playTime.GetOverallPlaytime(session);
-
         if (_limits.MinimumPlaytimeToEnableBugReports > playtime)
             return false;
 
@@ -132,7 +125,9 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
         var maximumBugReportsForPlayerPerRound = _limits.MaximumBugReportsForPlayerPerRound;
         if (playerBugReportingStats.ReportsCount >= maximumBugReportsForPlayerPerRound)
         {
-            _sawmill.Warning($"{userName}, {netId}: has tried to submit more than {maximumBugReportsForPlayerPerRound} bug reports this round.");
+            _admin.Add(LogType.BugReport,
+                LogImpact.High,
+                $"{userName}, {netId}: has tried to submit more than {maximumBugReportsForPlayerPerRound} bug reports this round.");
             return false;
         }
 
@@ -140,7 +135,8 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
         var timeBetweenBugReports = _limits.MinimumTimeBetweenBugReports;
         if (timeSinceLastReport <= timeBetweenBugReports)
         {
-            _sawmill.Warning(
+            _admin.Add(LogType.BugReport,
+                LogImpact.High,
                 $"{userName}, {netId}: has tried to submit a bug report. "
                 + $"Last bug report was {timeSinceLastReport:g} ago. The limit is {timeBetweenBugReports:g} minutes."
             );
@@ -181,11 +177,75 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
         }
 
         return new ValidPlayerBugReportReceivedEvent(
-            message.ReportInformation.BugReportTitle,
-            message.ReportInformation.BugReportDescription,
+            message.ReportInformation.BugReportTitle.Trim(),
+            message.ReportInformation.BugReportDescription.Trim(),
             metadata
         );
     }
+
+    #region ccvar functions
+
+    private void SetupCCvars()
+    {
+        _cfg.OnValueChanged(CCVars.MaximumBugReportTitleLength, OnMaxTitleLengthChanged, true);
+        _cfg.OnValueChanged(CCVars.MinimumBugReportTitleLength, OnMinTitleLengthChanged, true);
+        _cfg.OnValueChanged(CCVars.MaximumBugReportDescriptionLength, OnMaxDescriptionLengthChanged, true);
+        _cfg.OnValueChanged(CCVars.MinimumBugReportDescriptionLength, OnMinDescriptionLengthChanged, true);
+
+        _cfg.OnValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, OnMinPlaytimeChanged, true);
+        _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, OnMaxReportsPerRoundChanged, true);
+        _cfg.OnValueChanged(CCVars.MinimumSecondsBetweenBugReports, OnMinSecondsBetweenReportsChanged, true);
+    }
+
+    public void Shutdown()
+    {
+        _cfg.UnsubValueChanged(CCVars.MaximumBugReportTitleLength, OnMaxTitleLengthChanged);
+        _cfg.UnsubValueChanged(CCVars.MinimumBugReportTitleLength, OnMinTitleLengthChanged);
+        _cfg.UnsubValueChanged(CCVars.MaximumBugReportDescriptionLength, OnMaxDescriptionLengthChanged);
+        _cfg.UnsubValueChanged(CCVars.MinimumBugReportDescriptionLength, OnMinDescriptionLengthChanged);
+
+        _cfg.UnsubValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, OnMinPlaytimeChanged);
+        _cfg.UnsubValueChanged(CCVars.MaximumBugReportsPerRound, OnMaxReportsPerRoundChanged);
+        _cfg.UnsubValueChanged(CCVars.MinimumSecondsBetweenBugReports, OnMinSecondsBetweenReportsChanged);
+    }
+
+    private void OnMaxTitleLengthChanged(int value)
+    {
+        _limits.TitleMaxLength = value;
+    }
+
+    private void OnMinTitleLengthChanged(int value)
+    {
+        _limits.TitleMinLength = value;
+    }
+
+    private void OnMaxDescriptionLengthChanged(int value)
+    {
+        _limits.DescriptionMaxLength = value;
+    }
+
+    private void OnMinDescriptionLengthChanged(int value)
+    {
+        _limits.DescriptionMinLength = value;
+    }
+
+    private void OnMinPlaytimeChanged(int minutes)
+    {
+        _limits.MinimumPlaytimeToEnableBugReports = TimeSpan.FromMinutes(minutes);
+    }
+
+    private void OnMaxReportsPerRoundChanged(int value)
+    {
+        _limits.MaximumBugReportsForPlayerPerRound = value;
+    }
+
+    private void OnMinSecondsBetweenReportsChanged(int seconds)
+    {
+        _limits.MinimumTimeBetweenBugReports = TimeSpan.FromSeconds(seconds);
+    }
+
+    #endregion
+
 
     void IPostInjectInit.PostInject()
     {

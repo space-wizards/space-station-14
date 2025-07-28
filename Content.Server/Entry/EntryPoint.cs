@@ -199,6 +199,8 @@ namespace Content.Server.Entry
 
             IoCManager.Resolve<DiscordLink>().Shutdown();
             IoCManager.Resolve<DiscordChatLink>().Shutdown();
+
+            IoCManager.Resolve<IBugReportManager>().Shutdown();
         }
 
         private static void LoadConfigPresets(IConfigurationManager cfg, IResourceManager res, ISawmill sawmill)

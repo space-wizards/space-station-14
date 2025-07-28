@@ -37,11 +37,6 @@ public sealed class ContentPlayerData
     /// </summary>
     public bool Stealthed { get; set; }
 
-    /// <summary>
-    /// Rate limit values related to creating issues in github issue tracker.
-    /// </summary>
-    public RateLimitPlayerDataContainer GithubIssueRateLimit = new();
-
     public ContentPlayerData(NetUserId userId, string name)
     {
         UserId = userId;

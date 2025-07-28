@@ -21,7 +21,8 @@ public sealed class TestGithubApiCommand : LocalizedEntityCommands
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var enabled = _cfg.GetCVar(CCVars.GithubEnabled);
-        var auth = _cfg.GetCVar(CCVars.GithubAuthToken);
+        var path = _cfg.GetCVar(CCVars.GithubAppPrivateKeyPath);
+        var appId = _cfg.GetCVar(CCVars.GithubAppId);
         var repoName = _cfg.GetCVar(CCVars.GithubRepositoryName);
         var owner = _cfg.GetCVar(CCVars.GithubRepositoryOwner);
 
@@ -31,9 +32,15 @@ public sealed class TestGithubApiCommand : LocalizedEntityCommands
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(auth))
+        if (string.IsNullOrWhiteSpace(path))
         {
-            shell.WriteError(Loc.GetString("github-command-no-auth"));
+            shell.WriteError(Loc.GetString("github-command-no-key"));
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(appId))
+        {
+            shell.WriteError(Loc.GetString("github-command-no-key"));
             return;
         }
 
