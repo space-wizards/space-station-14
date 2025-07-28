@@ -92784,8 +92784,6 @@ entities:
     - type: Transform
       pos: 50.5,-96.5
       parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 1
 - proto: ReinforcedGirder
   entities:
   - uid: 8650
