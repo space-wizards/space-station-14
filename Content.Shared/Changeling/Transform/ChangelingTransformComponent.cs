@@ -5,7 +5,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Transform;
 
-
 /// <summary>
 /// The component containing information about Changelings Transformation action
 /// Like how long their windup is, the sounds as well as the Target Cloning settings for changing between identities
@@ -14,7 +13,6 @@ namespace Content.Shared.Changeling.Transform;
 [Access(typeof(SharedChangelingTransformSystem))]
 public sealed partial class ChangelingTransformComponent : Component
 {
-    public override bool SendOnlyToOwner => true;
     /// <summary>
     /// The action Prototype for Transforming
     /// </summary>
@@ -50,5 +48,7 @@ public sealed partial class ChangelingTransformComponent : Component
     /// respective systems
     /// </summary>
     public ProtoId<CloningSettingsPrototype> TransformCloningSettings = "ChangelingCloningSettings";
+
+    public override bool SendOnlyToOwner => true;
 }
 

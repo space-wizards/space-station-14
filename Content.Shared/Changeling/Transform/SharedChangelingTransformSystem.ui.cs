@@ -2,44 +2,29 @@
 
 namespace Content.Shared.Changeling.Transform;
 
-
+/// <summary>
+/// Send when a player selects an intentity to transform into in the radial menu.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class ChangelingTransformIdentitySelectMessage : BoundUserInterfaceMessage
+public sealed class ChangelingTransformIdentitySelectMessage(NetEntity targetIdentity) : BoundUserInterfaceMessage
 {
-    public readonly NetEntity TargetIdentity;
-
-    public ChangelingTransformIdentitySelectMessage(NetEntity targetIdentity)
-    {
-        TargetIdentity = targetIdentity;
-    }
+    /// <summary>
+    /// The uid of the cloned identity.
+    /// </summary>
+    public readonly NetEntity TargetIdentity = targetIdentity;
 }
 
 [Serializable, NetSerializable]
-public sealed class ChangelingIdentityData
+public sealed class ChangelingTransformBoundUserInterfaceState(List<NetEntity> identities) : BoundUserInterfaceState
 {
-    public readonly NetEntity Identity;
-    public string Name;
-
-    public ChangelingIdentityData(NetEntity identity, string name)
-    {
-        Identity = identity;
-        Name = name;
-    }
+    /// <summary>
+    /// The uids of the cloned identities.
+    /// </summary>
+    public readonly List<NetEntity> Identites = identities;
 }
 
 [Serializable, NetSerializable]
-public sealed class ChangelingTransformBoundUserInterfaceState : BoundUserInterfaceState
-{
-    public readonly List<ChangelingIdentityData> Identites;
-
-    public ChangelingTransformBoundUserInterfaceState(List<ChangelingIdentityData> identities)
-    {
-        Identites = identities;
-    }
-}
-
-[Serializable, NetSerializable]
-public enum TransformUi : byte
+public enum TransformUI : byte
 {
     Key,
 }

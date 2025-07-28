@@ -59,7 +59,12 @@ public abstract class SharedRootableSystem : EntitySystem
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
-        EnsureComp<RootableComponent>(args.CloneUid);
+        var cloneComp = EnsureComp<RootableComponent>(args.CloneUid);
+        cloneComp.TransferRate = ent.Comp.TransferRate;
+        cloneComp.TransferFrequency = ent.Comp.TransferFrequency;
+        cloneComp.SpeedModifier = ent.Comp.SpeedModifier;
+        cloneComp.RootSound = ent.Comp.RootSound;
+        Dirty(args.CloneUid, cloneComp);
     }
 
     private void OnRootableMapInit(Entity<RootableComponent> entity, ref MapInitEvent args)

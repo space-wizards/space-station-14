@@ -142,19 +142,12 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return;
         }
 
-        if (HasComp<ChangelingHuskedCorpseComponent>(target))
-        {
-            _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-husked"), args.Performer, args.Performer);
-            return;
-        }
-
         if (_net.IsServer)
         {
             var pvsSound = _audio.PlayPvs(ent.Comp.DevourWindupNoise, ent);
-            if(pvsSound != null)
+            if (pvsSound != null)
                 ent.Comp.CurrentDevourSound = pvsSound.Value.Entity;
         }
-
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started changeling devour windup against {target:player}");
 
@@ -250,12 +243,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
         {
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player}  successfully devoured {ToPrettyString(args.Target):player}'s identity");
-            _changelingIdentitySystem.CloneToNullspace((ent, identityStorage), target.Value);
-
-            if (ent.Comp.Husking)
-            {
-                EnsureComp<ChangelingHuskedCorpseComponent>(target.Value);
-            }
+            _changelingIdentitySystem.CloneToPausedMap((ent, identityStorage), target.Value);
 
             if (_inventorySystem.TryGetSlotEntity(target.Value, "jumpsuit", out var item)
                 && TryComp<ButcherableComponent>(item, out var butcherable))

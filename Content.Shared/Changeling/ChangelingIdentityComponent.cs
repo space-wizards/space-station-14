@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Changeling;
 
 /// <summary>
-/// The storage component for Changelings, it handles the link between a changeling and it's consumed identities that
+/// The storage component for Changelings, it handles the link between a changeling and its consumed identities that
 /// exist in nullspace
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

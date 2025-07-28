@@ -31,7 +31,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingTransformComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformActionEvent>(OnTransformAction);
-        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformWindupDoAfterEvent>(OnSuccessfulTransform);
+        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformDoAfterEvent>(OnSuccessfulTransform);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentitySelectMessage>(OnTransformSelected);
         SubscribeLocalEvent<ChangelingTransformComponent, ComponentShutdown>(OnShutdown);
     }
@@ -41,7 +41,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingTransformActionEntity, ent.Comp.ChangelingTransformAction);
 
         var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
-        _uiSystem.SetUi((ent, userInterfaceComp), TransformUi.Key, new InterfaceData(ChangelingBuiXmlGeneratedName));
+        _uiSystem.SetUi((ent, userInterfaceComp), TransformUI.Key, new InterfaceData(ChangelingBuiXmlGeneratedName));
     }
 
     private void OnShutdown(Entity<ChangelingTransformComponent> ent, ref ComponentShutdown args)
@@ -61,23 +61,23 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         if (!TryComp<ChangelingIdentityComponent>(ent, out var userIdentity))
             return;
 
-        if (!_uiSystem.IsUiOpen((ent, userInterfaceComp), TransformUi.Key, args.Performer))
+        if (!_uiSystem.IsUiOpen((ent, userInterfaceComp), TransformUI.Key, args.Performer))
         {
-            _uiSystem.OpenUi((ent, userInterfaceComp), TransformUi.Key, args.Performer);
+            _uiSystem.OpenUi((ent, userInterfaceComp), TransformUI.Key, args.Performer);
 
-            var identityData = new List<ChangelingIdentityData>();
+            var identityData = new List<NetEntity>();
 
             foreach (var consumedIdentity in userIdentity.ConsumedIdentities)
             {
-                identityData.Add(new ChangelingIdentityData(GetNetEntity(consumedIdentity), Name(consumedIdentity)));
+                identityData.Add(GetNetEntity(consumedIdentity));
             }
 
-            _uiSystem.SetUiState((ent, userInterfaceComp), TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(identityData));
+            _uiSystem.SetUiState((ent, userInterfaceComp), TransformUI.Key, new ChangelingTransformBoundUserInterfaceState(identityData));
         }
         else // if the UI is already opened and the command action is done again, transform into the last consumed identity
         {
             TransformPreviousConsumed(ent);
-            _uiSystem.CloseUi((ent, userInterfaceComp), TransformUi.Key, args.Performer);
+            _uiSystem.CloseUi((ent, userInterfaceComp), TransformUI.Key, args.Performer);
         }
     }
 
@@ -95,14 +95,14 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         if (_net.IsServer) // Gotta do this on the server and with PlayPvs cause PlayPredicted doesn't return the Entity
         {
             var pvsSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent);
-            if(pvsSound != null)
+            if (pvsSound != null)
                 ent.Comp.CurrentTransformSound = pvsSound.Value.Entity;
         }
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
             ent.Comp.TransformWindup,
-            new ChangelingTransformWindupDoAfterEvent(GetNetEntity(identity.LastConsumedEntityUid!.Value)),
+            new ChangelingTransformDoAfterEvent(GetNetEntity(identity.LastConsumedEntityUid!.Value)),
             ent,
             used: ent)
         {
@@ -115,7 +115,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     private void OnTransformSelected(Entity<ChangelingTransformComponent> ent,
        ref ChangelingTransformIdentitySelectMessage args)
     {
-        _uiSystem.CloseUi(ent.Owner, TransformUi.Key, ent);
+        _uiSystem.CloseUi(ent.Owner, TransformUI.Key, ent);
 
         var selectedIdentity = args.TargetIdentity;
 
@@ -126,14 +126,14 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             PopupType.MediumCaution);
 
         if (_net.IsServer)
-           ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent, new AudioParams())!.Value.Entity;
+            ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent, new AudioParams())!.Value.Entity;
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(GetEntity(selectedIdentity))}\"");
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
             ent.Comp.TransformWindup,
-            new ChangelingTransformWindupDoAfterEvent(selectedIdentity),
+            new ChangelingTransformDoAfterEvent(selectedIdentity),
             ent,
             used: ent)
         {
@@ -144,7 +144,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     }
 
     private void OnSuccessfulTransform(Entity<ChangelingTransformComponent> ent,
-       ref ChangelingTransformWindupDoAfterEvent args)
+       ref ChangelingTransformDoAfterEvent args)
     {
         args.Handled = true;
 
@@ -168,7 +168,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     }
 
     /// <summary>
-    /// Copy the entire Set of components over from a target onto another EntityUid directly using Cloning system
+    /// Copy a set of components over from a target onto another EntityUid using CloningSystem
     /// </summary>
     /// <param name="ent">Entity to clone too</param>
     /// <param name="target">Entity to Clone from</param>

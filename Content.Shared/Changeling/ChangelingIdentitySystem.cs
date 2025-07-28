@@ -1,6 +1,7 @@
-﻿using Content.Shared.Forensics.Components;
+﻿using System.Numerics;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
+using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -14,6 +15,10 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedPvsOverrideSystem _pvsOverrideSystem = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
+
+    public MapId? PausedMapId;
 
     public override void Initialize()
     {
@@ -21,25 +26,26 @@ public sealed class ChangelingIdentitySystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingIdentityComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChangelingIdentityComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<ChangelingIdentityComponent, MindAddedMessage>(OnMindSwapSpell);
-        SubscribeLocalEvent<ChangelingIdentityComponent, MindRemovedMessage>(OnMindSwapVictim);
+        SubscribeLocalEvent<ChangelingIdentityComponent, MindAddedMessage>(OnMindAdded);
+        SubscribeLocalEvent<ChangelingIdentityComponent, MindRemovedMessage>(OnMindRemoved);
     }
 
-    private void OnMindSwapVictim(Entity<ChangelingIdentityComponent> ent, ref MindRemovedMessage args)
+    private void OnMindAdded(Entity<ChangelingIdentityComponent> ent, ref MindAddedMessage args)
+    {
+        if (!TryComp<ActorComponent>(args.Container.Owner, out var actor))
+            return;
+
+        HandOverPvsOverride(actor.PlayerSession, ent.Comp);
+    }
+
+    private void OnMindRemoved(Entity<ChangelingIdentityComponent> ent, ref MindRemovedMessage args)
     {
         CleanupPvsOverride(ent, args.Container.Owner);
     }
 
-    private void OnMindSwapSpell(Entity<ChangelingIdentityComponent> ent, ref MindAddedMessage args)
-    {
-        if(!TryComp<ActorComponent>(args.Container.Owner, out var actor))
-            return;
-        HandOverPvsOverride(actor.PlayerSession, ent.Comp);
-    }
-
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
-        CloneToNullspace(ent, ent.Owner);
+        CloneToPausedMap(ent, ent.Owner);
     }
 
     private void OnShutdown(Entity<ChangelingIdentityComponent> ent, ref ComponentShutdown args)
@@ -56,41 +62,34 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     {
         foreach (var consumedIdentity in ent.Comp.ConsumedIdentities)
         {
-            QueueDel(consumedIdentity);
+            PredictedQueueDel(consumedIdentity);
         }
     }
 
     /// <summary>
     /// Clone a target humanoid into nullspace and add it to the Changelings list of identities.
-    ///
     /// It creates a perfect copy of the target and can be used to pull components down for future use
-    ///
     /// </summary>
     /// <param name="ent">the Changeling</param>
     /// <param name="target">the targets uid</param>
-    public void CloneToNullspace(Entity<ChangelingIdentityComponent> ent, EntityUid target)
+    public void CloneToPausedMap(Entity<ChangelingIdentityComponent> ent, EntityUid target)
     {
         if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
-            || !_prototype.TryIndex(humanoid.Species, out var speciesPrototype)
-            || !TryComp<DnaComponent>(target, out var targetDna))
+            || !_prototype.TryIndex(humanoid.Species, out var speciesPrototype))
             return;
 
-        var mob = Spawn(speciesPrototype.Prototype, MapCoordinates.Nullspace);
+        EnsurePausedMap();
+        var mob = Spawn(speciesPrototype.Prototype, new MapCoordinates(Vector2.Zero, PausedMapId!.Value));
 
         _humanoidSystem.CloneAppearance(target, mob);
 
-        if (!TryComp<DnaComponent>(mob, out var mobDna))
-            return;
-
-        mobDna.DNA = targetDna.DNA;
-
-        _metaSystem.SetEntityName(mob, Name(target));
+        var targetName = _nameMod.GetBaseName(target);
+        _metaSystem.SetEntityName(mob, targetName);
         _metaSystem.SetEntityDescription(mob, MetaData(target).EntityDescription);
         ent.Comp.ConsumedIdentities.Add(mob);
 
         ent.Comp.LastConsumedEntityUid = mob;
 
-        SetPaused(mob, true);
         Dirty(ent);
         HandlePvsOverride(ent, mob);
     }
@@ -102,7 +101,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     /// <param name="target"></param>
     private void HandlePvsOverride(EntityUid uid, EntityUid target)
     {
-        if(!TryComp<ActorComponent>(uid, out var actor))
+        if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
         _pvsOverrideSystem.AddSessionOverride(target, actor.PlayerSession);
@@ -115,7 +114,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     /// <param name="entityUid">Who specifically to cleanup from, usually just the same owner, but in the case of a mindswap we want to clean up the victim</param>
     private void CleanupPvsOverride(Entity<ChangelingIdentityComponent> ent, EntityUid entityUid)
     {
-        if(!TryComp<ActorComponent>(entityUid, out var actor))
+        if (!TryComp<ActorComponent>(entityUid, out var actor))
             return;
 
         foreach (var identity in ent.Comp.ConsumedIdentities)
@@ -135,5 +134,18 @@ public sealed class ChangelingIdentitySystem : EntitySystem
         {
             _pvsOverrideSystem.AddSessionOverride(entity, session);
         }
+    }
+
+    /// <summary>
+    /// Create a paused map for storing devoured identities as a clone of the player.
+    /// </summary>
+    private void EnsurePausedMap()
+    {
+        if (_map.MapExists(PausedMapId))
+            return;
+
+        var mapUid = _map.CreateMap(out var newMapId);
+        PausedMapId = newMapId;
+        _map.SetPaused(mapUid, true);
     }
 }
