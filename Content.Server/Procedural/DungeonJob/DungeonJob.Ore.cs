@@ -147,13 +147,7 @@ public sealed partial class DungeonJob
                 if (groupSize > 0)
                 {
                     var key = gen.Replacement ?? "null";
-                    if (remaining.ContainsKey(key))
-                    {
-                        remaining[key]++;
-                    }
-                    else
-                    {
-                        remaining.Add(key, 1);
+                    remaining[key] = remaining.GetValueOrDefault(key) + 1;
                     }
                 }
             }
