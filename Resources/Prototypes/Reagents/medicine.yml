@@ -1444,6 +1444,6 @@
             max: 180.0
           damage:
             groups:
-              Brute: 10
+              Brute: 5
             types:
-            Radiation: -5
+              Radiation: -5
