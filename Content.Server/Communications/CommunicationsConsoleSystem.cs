@@ -19,7 +19,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
-using Content.Server.Speech; //Starlight
+using Content.Shared.Speech; //Starlight
 
 namespace Content.Server.Communications
 {
@@ -277,7 +277,7 @@ namespace Content.Server.Communications
                 return;
             }
 
-            _chatSystem.DispatchCommunicationsConsoleAnnouncement(uid, msg, title, announcementSound: comp.Sound, colorOverride: comp.Color); // 🌟Starlight🌟  
+            _chatSystem.DispatchCommunicationsConsoleAnnouncement(uid, msg, title, announcementSound: comp.Sound, colorOverride: comp.Color); // 🌟Starlight🌟
 
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following station announcement: {msg}");
 
