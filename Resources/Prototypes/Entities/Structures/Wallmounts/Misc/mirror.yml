@@ -1,18 +1,14 @@
 ﻿- type: entity
+  parent: BaseWallmountGlass
   id: Mirror
   name: mirror
   description: 'Mirror mirror on the wall , who''s the most robust of them all?'
   placement:
     mode: SnapgridCenter
   components:
-  - type: WallMount
   - type: Sprite
     sprite: Structures/Wallmounts/mirror.rsi
     state: mirror
-  - type: InteractionOutline
-  - type: Clickable
-  - type: Transform
-    anchored: true
   - type: MagicMirror #instant and silent
     changeHairSound: null
     addSlotTime: 0
@@ -26,6 +22,17 @@
     interfaces:
       enum.MagicMirrorUiKey.Key:
         type: MagicMirrorBoundUserInterface
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
 
 - type: entity
   parent: Mirror
