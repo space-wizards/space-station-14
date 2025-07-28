@@ -8,7 +8,6 @@ using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Maps;
@@ -20,7 +19,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -219,7 +217,8 @@ public sealed class NukeSystem : EntitySystem
                 return;
             }
 
-            _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
+            // TODO: What the shit just anchor it, it already snaps?
+            _transform.SetCoordinates(uid, xform, _transform.SnapToGrid(xform.Coordinates));
             _transform.AnchorEntity(uid, xform);
             _itemSlots.SetLock(uid, component.DiskSlot, false);
         }

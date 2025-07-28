@@ -4,7 +4,6 @@ using Content.Server.Resist;
 using Content.Server.Storage.Components;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
-using Content.Shared.Coordinates;
 using Content.Shared.DoAfter;
 using Content.Shared.Lock;
 using Content.Shared.Mind.Components;
@@ -17,6 +16,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
 using Content.Server.Shuttles.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Storage.EntitySystems;
