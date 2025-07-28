@@ -13,7 +13,7 @@ namespace Content.Server.Power.Components
         [DataField("transferRange")]
         public int TransferRange { get; set; } = 3;
 
-        [ViewVariables] public List<ExtensionCableReceiverComponent> LinkedReceivers { get; } = new();
+        [ViewVariables] public List<Entity<ExtensionCableReceiverComponent>> LinkedReceivers { get; } = new();
 
         /// <summary>
         ///     If <see cref="ExtensionCableReceiverComponent"/>s should consider connecting to this.

@@ -37,6 +37,10 @@
       thresholds:
         0: Alive
         100: Dead
+    - type: Butcherable
+      spawned:
+      - id: FoodMeatChicken
+        amount: 2
     - type: MovementSpeedModifier
       baseWalkSpeed: 2
       baseSprintSpeed: 5
@@ -122,9 +126,18 @@
           groups:
             Brute: -2
             Burn: -2
+    - reagents: [ WeedKiller, PlantBGone ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          types:
+            Heat: 2
   - type: ReplacementAccent
     accent: tomatoKiller
   - type: Item
+  - type: MultiHandedItem
   - type: NpcFactionMember
     factions:
       - SimpleHostile
@@ -198,9 +211,7 @@
     group: GenericNumber
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/Effects/Footsteps/slime1.ogg
-      params:
-        volume: 3
+      collection: FootstepSlime
   - type: Tag
     tags:
       - FootstepSound

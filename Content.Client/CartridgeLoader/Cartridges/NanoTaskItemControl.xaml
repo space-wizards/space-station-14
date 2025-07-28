@@ -1,0 +1,32 @@
+<Control xmlns="https://spacestation14.io" xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <BoxContainer Name="MainContainer"
+                  Orientation="Horizontal"
+                  SetWidth="250">
+        <Button Name="MainButton"
+                HorizontalExpand="True"
+                VerticalExpand="True"
+                StyleClasses="ButtonSquare"
+                Margin="-1 0 0 0">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical"
+                              VerticalExpand="True"
+                              HorizontalExpand="True"
+                              Margin="-5 0 0 0">
+                    <Label Name="TaskLabel"
+                           StyleClasses="LabelSubText" />
+                    <Label Name="TaskForLabel"
+                           StyleClasses="LabelSubText"
+                           Margin="0 -5 0 0" />
+                </BoxContainer>
+            </BoxContainer>
+        </Button>
+        <Button Name="DoneButton"
+                VerticalExpand="True"
+                Text="{Loc 'nano-task-ui-done'}">
+            <Button.StyleClasses>
+                <system:String>ButtonSmall</system:String>
+                <system:String>OpenLeft</system:String>
+            </Button.StyleClasses>
+        </Button>
+    </BoxContainer>
+</Control>

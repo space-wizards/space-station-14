@@ -17,7 +17,6 @@ namespace Content.Server.Respawn;
 public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -108,10 +107,10 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
             foreach (var tile in _map.GetTilesIntersecting(entityGridUid.Value, grid, circle))
             {
-                if (tile.IsSpace(_tileDefinitionManager)
+                if (_turf.IsSpace(tile)
                     || _turf.IsTileBlocked(tile, CollisionGroup.MobMask)
                     || !_atmosphere.IsTileMixtureProbablySafe(entityGridUid, entityMapUid.Value,
-                        grid.TileIndicesFor(mapPos)))
+                        _map.TileIndicesFor((entityGridUid.Value, grid), mapPos)))
                 {
                     continue;
                 }
@@ -136,7 +135,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     private void Respawn(EntityUid oldEntity, string prototype, EntityCoordinates coords)
     {
         var entity = Spawn(prototype, coords);
-        _adminLog.Add(LogType.Respawn, LogImpact.High, $"{ToPrettyString(oldEntity)} was deleted and was respawned at {coords.ToMap(EntityManager, _transform)} as {ToPrettyString(entity)}");
+        _adminLog.Add(LogType.Respawn, LogImpact.Extreme, $"{ToPrettyString(oldEntity)} was deleted and was respawned at {_transform.ToMapCoordinates(coords)} as {ToPrettyString(entity)}");
         _chat.SendAdminAlert($"{MetaData(oldEntity).EntityName} was deleted and was respawned as {ToPrettyString(entity)}");
     }
 
@@ -157,7 +156,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
         var xform = Transform(targetGrid);
 
-        if (!grid.TryGetTileRef(xform.Coordinates, out var tileRef))
+        if (!_map.TryGetTileRef(targetGrid, grid, xform.Coordinates, out var tileRef))
             return false;
 
         var tile = tileRef.GridIndices;
@@ -169,21 +168,21 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         //Obviously don't put anything ridiculous in here
         for (var i = 0; i < maxAttempts; i++)
         {
-            var randomX = _random.Next((int) gridBounds.Left, (int) gridBounds.Right);
-            var randomY = _random.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
+            var randomX = _random.Next((int)gridBounds.Left, (int)gridBounds.Right);
+            var randomY = _random.Next((int)gridBounds.Bottom, (int)gridBounds.Top);
 
-            tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-            var mapPos = grid.GridTileToWorldPos(tile);
-            var mapTarget = grid.WorldToTile(mapPos);
+            tile = new Vector2i(randomX - (int)gridPos.X, randomY - (int)gridPos.Y);
+            var mapPos = _map.GridTileToWorldPos(targetGrid, grid, tile);
+            var mapTarget = _map.WorldToTile(targetGrid, grid, mapPos);
             var circle = new Circle(mapPos, 2);
 
             foreach (var newTileRef in _map.GetTilesIntersecting(targetGrid, grid, circle))
             {
-                if (newTileRef.IsSpace(_tileDefinitionManager) || _turf.IsTileBlocked(newTileRef, CollisionGroup.MobMask) || !_atmosphere.IsTileMixtureProbablySafe(targetGrid, targetMap, mapTarget))
+                if (_turf.IsSpace(newTileRef) || _turf.IsTileBlocked(newTileRef, CollisionGroup.MobMask) || !_atmosphere.IsTileMixtureProbablySafe(targetGrid, targetMap, mapTarget))
                     continue;
 
                 found = true;
-                targetCoords = grid.GridTileToLocal(tile);
+                targetCoords = _map.GridTileToLocal(targetGrid, grid, tile);
                 break;
             }
 

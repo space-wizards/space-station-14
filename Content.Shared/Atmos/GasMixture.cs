@@ -33,10 +33,9 @@ namespace Content.Shared.Atmos
         public bool Immutable { get; private set; }
 
         [ViewVariables]
-        public readonly Dictionary<GasReaction, float> ReactionResults = new()
+        public readonly float[] ReactionResults =
         {
-            // We initialize the dictionary here.
-            { GasReaction.Fire, 0f }
+            0f,
         };
 
         [ViewVariables]

@@ -25,3 +25,8 @@
 - type: contrabandSeverity
   id: Syndicate
   examineText: contraband-examine-text-Syndicate
+
+# This is magical contraband and not permitted to be used IC.
+- type: contrabandSeverity
+  id: Magical
+  examineText: contraband-examine-text-Magical

@@ -6,7 +6,6 @@ using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using Vector4 = Robust.Shared.Maths.Vector4;
 
 namespace Content.Client.Power;
 
@@ -269,27 +268,6 @@ public sealed partial class PowerMonitoringWindow
         return false;
     }
 
-    private bool TryGetVerticalScrollbar(ScrollContainer scroll, [NotNullWhen(true)] out VScrollBar? vScrollBar)
-    {
-        vScrollBar = null;
-
-        foreach (var child in scroll.Children)
-        {
-            if (child is not VScrollBar)
-                continue;
-
-            var castChild = child as VScrollBar;
-
-            if (castChild != null)
-            {
-                vScrollBar = castChild;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private void AutoScrollToFocus()
     {
         if (!_autoScrollActive)
@@ -299,15 +277,12 @@ public sealed partial class PowerMonitoringWindow
         if (scroll == null)
             return;
 
-        if (!TryGetVerticalScrollbar(scroll, out var vScrollbar))
-            return;
-
         if (!TryGetNextScrollPosition(out float? nextScrollPosition))
             return;
 
-        vScrollbar.ValueTarget = nextScrollPosition.Value;
+        scroll.VScrollTarget = nextScrollPosition.Value;
 
-        if (MathHelper.CloseToPercent(vScrollbar.Value, vScrollbar.ValueTarget))
+        if (MathHelper.CloseToPercent(scroll.VScroll, scroll.VScrollTarget))
             _autoScrollActive = false;
     }
 

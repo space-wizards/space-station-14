@@ -232,7 +232,7 @@
       - state: equipped-HAND
         color: "#C09F72"
   - type: Fiber
-    fiberColor: fibers-brown
+    fiberColor: fibers-light-brown
 
 # Orange Gloves
 - type: entity

@@ -8,7 +8,7 @@ namespace Content.Server.NPC.HTN;
 [Prototype("htnCompound")]
 public sealed partial class HTNCompoundPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = string.Empty;
+    [IdDataField] public string ID { get; private set; } = string.Empty;
 
     [DataField("branches", required: true)]
     public List<HTNBranch> Branches = new();

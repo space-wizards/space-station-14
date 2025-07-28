@@ -11,6 +11,7 @@
     - Snout
     - HeadTop
     - HeadSide
+    undergarmentBottom: UndergarmentBottomBoxersReptilian
   - type: Hunger
   - type: Puller
     needsHands: false
@@ -64,9 +65,9 @@
         Heat : 1.5 #per second, scales with temperature & other constants
   - type: TemperatureSpeed
     thresholds:
-      301: 0.8
-      295: 0.6
-      285: 0.4
+      301: 0.9
+      295: 0.8
+      285: 0.7
   - type: Wagging
   - type: Inventory
     speciesId: reptilian
@@ -90,6 +91,7 @@
     - Snout
     - HeadTop
     - HeadSide
+    undergarmentBottom: UndergarmentBottomBoxersReptilian
   - type: Inventory
     speciesId: reptilian
     femaleDisplacements:
