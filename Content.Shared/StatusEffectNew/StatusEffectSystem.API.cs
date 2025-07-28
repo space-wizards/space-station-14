@@ -22,6 +22,7 @@ public sealed partial class StatusEffectsSystem
         TimeSpan duration
     )
     {
+        // We check to make sure time is greater than zero here because sometimes you want to use TryAddStatusEffect to remove duration instead...
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
             return duration > TimeSpan.Zero && TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
