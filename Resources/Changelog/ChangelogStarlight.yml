@@ -9732,5 +9732,12 @@ Entries:
   id: 1340
   time: '2025-07-28T05:44:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1101
+- author: Killer Tamashi
+  changes:
+  - message: Fixed Bulwark shield arm not displaying properly
+    type: Fix
+  id: 1341
+  time: '2025-07-28T06:02:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1105
 Order: -1
 
