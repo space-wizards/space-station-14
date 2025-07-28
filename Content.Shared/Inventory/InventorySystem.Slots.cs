@@ -62,13 +62,12 @@ public partial class InventorySystem : EntitySystem
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
-        var comp = EnsureComp<InventoryComponent>(args.CloneUid);
-        comp.TemplateId = ent.Comp.TemplateId;
-        comp.SpeciesId = ent.Comp.SpeciesId;
-        comp.Displacements = ent.Comp.Displacements;
-        comp.MaleDisplacements = ent.Comp.MaleDisplacements;
-        comp.FemaleDisplacements = ent.Comp.FemaleDisplacements;
-        Dirty(args.CloneUid, comp);
+        var cloneComp = EnsureComp<InventoryComponent>(args.CloneUid);
+        cloneComp.SpeciesId = ent.Comp.SpeciesId;
+        cloneComp.Displacements = ent.Comp.Displacements;
+        cloneComp.MaleDisplacements = ent.Comp.MaleDisplacements;
+        cloneComp.FemaleDisplacements = ent.Comp.FemaleDisplacements;
+        SetTemplateId((args.CloneUid, cloneComp), ent.Comp.TemplateId);
     }
 
     private void OnInit(Entity<InventoryComponent> ent, ref ComponentInit args)
