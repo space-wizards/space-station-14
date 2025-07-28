@@ -3,8 +3,8 @@
 
 <svg
    width="35"
-   height="16"
-   viewBox="0 0 35 16"
+   height="20"
+   viewBox="0 0 35 20"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
@@ -26,10 +26,10 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     showguides="true"
-     inkscape:zoom="4.4613916"
-     inkscape:cx="24.095621"
-     inkscape:cy="39.225429"
+     showguides="false"
+     inkscape:zoom="17.845566"
+     inkscape:cx="18.071716"
+     inkscape:cy="7.2286862"
      inkscape:window-width="1600"
      inkscape:window-height="828"
      inkscape:window-x="0"
@@ -39,7 +39,7 @@
      showgrid="true"><inkscape:grid
        id="grid2"
        units="px"
-       originx="0"
+       originx="2.220446e-16"
        originy="0"
        spacingx="1"
        spacingy="1"
@@ -54,11 +54,11 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"><path
-       style="baseline-shift:baseline;display:inline;overflow:visible;fill:none;fill-opacity:1;stroke:#3d4059;stroke-width:2;stroke-dasharray:none;stroke-opacity:1;enable-background:accumulate;stop-color:#000000"
-       d="M 1,1 H 28.585937 L 34,6.414062 V 15 H 6.414062 L 1,9.585938 Z"
-       id="rect1684-3-3-3"
+       style="baseline-shift:baseline;display:inline;overflow:visible;opacity:1;fill:#3d4059;stroke:none;stroke-width:2;stroke-dasharray:none;stroke-opacity:1;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+       d="m 3,7 h 7.757812 L 15,11.242188 V 15 H 7.2421875 L 3,10.757813 Z"
+       id="path1"
        sodipodi:nodetypes="ccccccc" /><path
-       style="baseline-shift:baseline;display:inline;overflow:visible;fill:#3d4059;fill-opacity:1;stroke:#3d4059;stroke-width:2;stroke-dasharray:none;stroke-opacity:1;enable-background:accumulate;stop-color:#000000"
-       d="m 5,5 h 6.929687 L 15,8.070312 V 11 H 8.070313 L 5,7.929687 Z"
-       id="path4"
+       style="baseline-shift:baseline;display:inline;overflow:visible;fill:none;fill-opacity:1;stroke:#3d4059;stroke-width:2;stroke-dasharray:none;stroke-opacity:1;enable-background:accumulate;stop-color:#000000"
+       d="M 1,5 H 28.585937 L 34,10.414062 V 17 H 6.414062 L 1,11.585938 Z"
+       id="rect1684-3-3-3"
        sodipodi:nodetypes="ccccccc" /></g></svg>
