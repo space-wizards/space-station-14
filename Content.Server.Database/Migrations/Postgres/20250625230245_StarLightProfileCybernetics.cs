@@ -15,7 +15,8 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "cybernetic_ids",
                 table: "star_light_profile",
                 type: "text[]",
-                nullable: false);
+                nullable: false,
+                defaultValueSql: "'{}'::text[]");
         }
 
         /// <inheritdoc />

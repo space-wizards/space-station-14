@@ -49,12 +49,20 @@ public static class ServerPackaging
         "Microsoft",
         "NAudio",
         "OggVorbisEncoder",
+        "Microsoft.Orleans", // Starlight
+        "Orleans", // Starlight
+        "Starlight", // Starlight
+        "StackExchange.Redis", // Starlight
+        "System", // Starlight
+        "Newtonsoft", // Starlight
+        "Pipelines", // Starlight
         "Discord",
     };
 
     private static readonly List<string> ServerNotExtraAssemblies = new()
     {
         "Microsoft.CodeAnalysis",
+        "System.Diagnostics.EventLog.Messages",   // Starlight
     };
 
     private static readonly HashSet<string> BinSkipFolders = new()

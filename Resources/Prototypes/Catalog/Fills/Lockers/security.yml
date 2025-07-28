@@ -6,6 +6,7 @@
   - type: StorageFill
     contents:
       - id: FlashlightSeclite
+      - id: WeaponEnergyShotgun
       - id: WeaponDisabler
       - id: ClothingBeltSecurityFilled
       - id: Flash
@@ -35,6 +36,7 @@
   - type: StorageFill
     contents:
       - id: FlashlightSeclite
+      - id: WeaponEnergyShotgun
       - id: WeaponDisabler
       - id: ClothingBeltSecurityFilled
       - id: Flash
