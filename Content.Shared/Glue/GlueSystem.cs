@@ -82,13 +82,13 @@ public sealed class GlueSystem : EntitySystem
         {
             if (_solutionContainer.RemoveReagent(solutionEntity.Value, entity.Comp.Reagent, entity.Comp.ConsumptionUnit))
             {
+                _audio.PlayPredicted(entity.Comp.Squeeze, entity.Owner, actor);
+                _popup.PopupClient(Loc.GetString("glue-success", ("target", target)), actor, actor, PopupType.Medium);
                 EnsureComp<GluedComponent>(target, out var comp);
                 comp.Duration = entity.Comp.ConsumptionUnit.Double() * entity.Comp.DurationPerUnit;
                 Dirty(target, comp);
 
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
-                _audio.PlayPredicted(entity.Comp.Squeeze, entity.Owner, actor);
-                _popup.PopupClient(Loc.GetString("glue-success", ("target", target)), actor, actor, PopupType.Medium);
                 return true;
             }
         }
@@ -121,6 +121,11 @@ public sealed class GlueSystem : EntitySystem
 
     private void OnHandPickUp(Entity<GluedComponent> entity, ref GotEquippedHandEvent args)
     {
+        // When predicting dropping a glued item prediction will reinsert the item into the hand when rerolling the state to a previous one.
+        // So dropping the item would add UnRemoveableComponent on the client without this guard statement.
+        if (_timing.ApplyingState)
+            return;
+
         var comp = EnsureComp<UnremoveableComponent>(entity);
         comp.DeleteOnDrop = false;
         entity.Comp.Until = _timing.CurTime + entity.Comp.Duration;
