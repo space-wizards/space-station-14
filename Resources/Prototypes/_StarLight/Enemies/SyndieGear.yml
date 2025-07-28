@@ -26,8 +26,6 @@
   id: SyndicateFootsoldierGearCobra
   parent: SyndicateFootsoldierGearRuin
   equipment:
-    pocket1: MagazineCaselessRifle10x24
-    pocket2: MagazineCaselessRifle10x24
     outerClothing: ClothingOuterCoatSyndieCapArmored
   inhand:
   - WeaponPistolCobra

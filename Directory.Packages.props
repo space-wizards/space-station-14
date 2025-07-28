@@ -9,13 +9,13 @@
     <PackageVersion Include="Concentus.Oggfile" Version="1.0.6" />
     <PackageVersion Include="CSCore" Version="1.2.1.2" />
     <PackageVersion Include="CsvHelper" Version="33.0.1" />
-    <PackageVersion Include="Discord.Net" Version="3.16.0" />
     <PackageVersion Include="ImGui.NET" Version="1.87.3" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="9.0.1" />
+    <PackageVersion Include="NetCord" Version="1.0.0-alpha.388" />
     <PackageVersion Include="Microsoft.Orleans.Client" Version="9.1.2" />
     <PackageVersion Include="Microsoft.Orleans.Clustering.Redis" Version="9.1.2" />
     <PackageVersion Include="Microsoft.Orleans.Sdk" Version="9.1.2" />
