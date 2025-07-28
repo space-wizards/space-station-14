@@ -9,6 +9,17 @@
     description: ghost-role-information-moproach-description
   - type: Sprite
     sprite: Mobs/Animals/mothroach/moproach.rsi
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Animals/mothroach/moproach.rsi
+    equippedPrefix: 0
+    slots:
+    - HEAD
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      45: Critical
+      65: Dead
   - type: MovementSpeedModifier
     baseSprintSpeed : 5 # extra speed for that moppin'!
   - type: HTN
@@ -56,19 +67,6 @@
   equipment:
     head: ClothingHeadHatPurplesoft
 
-- type: htnCompound
-  id: MoproachCompound
-  branches:
-  - tasks:
-    - !type:HTNCompoundTask
-      task: FoodCompound
-  - tasks:
-    - !type:HTNCompoundTask
-      task: BufferNearbyPuddlesCompound
-  - tasks:
-    - !type:HTNCompoundTask
-      task: IdleCompound
-
 - type: entity
   parent: BoxCardboard
   name: moproach kit
@@ -96,15 +94,6 @@
   - type: SpawnItemsOnUse
     items:
     - id: MoproachCube
-
-- type: entity
-  parent: MonkeyCube
-  id: MoproachCube
-  name: moproach cube
-  components:
-  - type: Rehydratable
-    possibleSpawns:
-    - MobMoproach
 
 - type: entity
   parent: Paper

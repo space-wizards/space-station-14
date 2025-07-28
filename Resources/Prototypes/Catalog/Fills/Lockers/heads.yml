@@ -48,7 +48,7 @@
     - id: ClothingHeadsetAltCommand
     - id: ClothingOuterArmorCaptainCarapace
     - id: CommsComputerCircuitboard
-    - id: DoorRemoteCommand
+    - id: DoorRemoteCustom
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
@@ -351,7 +351,7 @@
   table: !type:AllSelector
     children:
     - id: ClothingNeckCloakHosElite
-    - id: WeaponEnergyShotgun
+    - id: WeaponEnergySMG
     - id: BookSpaceLaw
     - id: BoxEncryptionKeySecurity
     - id: CigarGoldCase

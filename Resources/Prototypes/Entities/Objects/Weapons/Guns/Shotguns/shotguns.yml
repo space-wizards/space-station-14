@@ -111,6 +111,8 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+  - type: StaticPrice
+    price: 5000
 
 - type: entity
   name: double-barreled shotgun
