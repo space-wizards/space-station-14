@@ -25,5 +25,5 @@ public sealed partial class ChargeItemStatusComponent : Component
     /// Whether to show a recovery timer if auto-recharge is available.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool ShowRechargeTimer = false;
+    public bool ShowRechargeTimer = true;
 }

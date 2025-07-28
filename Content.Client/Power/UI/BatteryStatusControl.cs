@@ -2,6 +2,7 @@ using Content.Shared.Power.Components;
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.PowerCell;
 using Robust.Client.UserInterface.Controls;
 
@@ -34,10 +35,10 @@ public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatu
         bool? toggleState = null;
         if (_parent.Comp.ShowToggleState)
         {
-            if (_entityManager.TryGetComponent(_parent.Owner, out PowerCellDrawComponent? powerDraw))
-            {
+            if (_entityManager.TryGetComponent(_parent.Owner, out ItemToggleComponent? toggle))
+                toggleState = toggle.Activated;
+            else if (_entityManager.TryGetComponent(_parent.Owner, out PowerCellDrawComponent? powerDraw))
                 toggleState = powerDraw.Enabled;
-            }
         }
 
         return new Data(chargePercent, toggleState);

@@ -1,0 +1,38 @@
+using Content.Client.Items.UI;
+using Content.Client.Message;
+using Content.Client.Stylesheets;
+using Content.Shared.Explosion;
+using Robust.Client.UserInterface.Controls;
+
+namespace Content.Client.Explosion.UI;
+
+/// <summary>
+/// Displays timer delay information for <see cref="TimerTriggerItemStatusComponent"/>.
+/// </summary>
+public sealed class TimerTriggerStatusControl : PollingItemStatusControl<TimerTriggerStatusControl.Data>
+{
+    private readonly Entity<TimerTriggerItemStatusComponent> _parent;
+    private readonly RichTextLabel _label;
+
+    public TimerTriggerStatusControl(
+        Entity<TimerTriggerItemStatusComponent> parent,
+        IEntityManager entityManager)
+    {
+        _parent = parent;
+        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+        AddChild(_label);
+    }
+
+    protected override Data PollData()
+    {
+        return new Data(_parent.Comp.Delay);
+    }
+
+    protected override void Update(in Data data)
+    {
+        var markup = Loc.GetString("timer-trigger-status-delay", ("delay", data.Delay));
+        _label.SetMarkup(markup);
+    }
+
+    public readonly record struct Data(float Delay);
+}
