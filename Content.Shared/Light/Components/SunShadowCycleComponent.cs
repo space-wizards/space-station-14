@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light.Components;
 
@@ -25,11 +26,32 @@ public sealed partial class SunShadowCycleComponent : Component
     /// Time to have each direction applied. Will lerp from the current value to the next one.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<(float Ratio, Vector2 Direction, float Alpha)> Directions = new()
+    public List<SunShadowCycleDirection> Directions = new()
     {
-        (0f, new Vector2(0f, 3f), 0f),
-        (0.25f, new Vector2(-3f, -0.1f), 0.5f),
-        (0.5f, new Vector2(0f, -3f), 0.8f),
-        (0.75f, new Vector2(3f, -0.1f), 0.5f),
+        new SunShadowCycleDirection(0f, new Vector2(0f, 3f), 0f),
+        new SunShadowCycleDirection(0.25f, new Vector2(-3f, -0.1f), 0.5f),
+        new SunShadowCycleDirection(0.5f, new Vector2(0f, -3f), 0.8f),
+        new SunShadowCycleDirection(0.75f, new Vector2(3f, -0.1f), 0.5f),
     };
-}
+};
+
+[DataDefinition]
+[Serializable, NetSerializable]
+public partial record struct SunShadowCycleDirection
+{
+    [DataField]
+    public float Ratio;
+
+    [DataField]
+    public Vector2 Direction;
+
+    [DataField]
+    public float Alpha;
+
+    public SunShadowCycleDirection(float ratio, Vector2 direction, float alpha)
+    {
+        Ratio = ratio;
+        Direction = direction;
+        Alpha = alpha;
+    }
+};
