@@ -2461,7 +2461,7 @@
       amount: 1
   - type: Speech
     speechVerb: SmallMob
-    speechSounds: Reptilian
+    speechSounds: Lizard
   - type: ReplacementAccent
     accent: xeno
   - type: InteractionPopup
@@ -3635,7 +3635,7 @@
     interactSuccessSound:
       path: /Audio/Animals/pig_oink.ogg
   - type: Speech
-    speechVerb: LageMob
+    speechVerb: LargeMob
     speechSounds: Bass
   - type: ReplacementAccent
     accent: pig
