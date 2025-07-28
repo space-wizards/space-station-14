@@ -65,6 +65,9 @@ namespace Content.Server.Atmos.Components
         public readonly HashSet<Entity<DeltaPressureComponent>> DeltaPressureEntity = new();
 
         [ViewVariables]
+        public readonly Dictionary<Vector2i, float> DeltaPressureCoords = new(1000);
+
+        [ViewVariables]
         public readonly HashSet<IPipeNet> PipeNets = new();
 
         [ViewVariables]

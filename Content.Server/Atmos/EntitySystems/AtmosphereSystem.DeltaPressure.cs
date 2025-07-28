@@ -40,24 +40,11 @@ public sealed partial class AtmosphereSystem
             // First direction in the pair (North, East, ...)
             var dirA = (AtmosDirection)(1 << i);
 
-            // We can use GetValueRefOrNullRef here as we're not modifying the dictionary.
-            // Supposed to be a bit faster than using TryGetValue.
-            ref var tileA = ref CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices.Offset(dirA));
-
-            // This can be a null ref! We need to check it or bad things will happen!
-            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref tileA) && tileA.Air != null)
-            {
-                opposingGroupA[i] = tileA.Air.Pressure;
-            }
-
             // Second direction in the pair (South, West, ...)
             var dirB = (AtmosDirection)(1 << (i + pairCount));
-            ref var tileB = ref CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices.Offset(dirB));
 
-            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref tileB) && tileB.Air != null)
-            {
-                opposingGroupB[i] = tileB.Air.Pressure;
-            }
+            opposingGroupA[i] = GetTilePressure(gridAtmosComp, indices.Offset(dirA));
+            opposingGroupB[i] = GetTilePressure(gridAtmosComp, indices.Offset(dirB));
         }
 
         // Calculate pressure differences between opposing directions
@@ -75,6 +62,7 @@ public sealed partial class AtmosphereSystem
         if (maxDelta > ent.Comp.MinPressureDelta)
         {
             PerformDamage(ent, maxDelta);
+            return;
         }
 
         ent.Comp.IsTakingDamage = false;
@@ -112,5 +100,36 @@ public sealed partial class AtmosphereSystem
 
         _damage.TryChangeDamage(ent, appliedDamage, interruptsDoAfters: false);
         ent.Comp.IsTakingDamage = true;
+    }
+
+    /// <summary>
+    /// Retrieves a cached lookup of the pressure at a specific tile index on a grid.
+    /// If not found, caches the pressure value for that tile index.
+    /// </summary>
+    /// <param name="gridAtmosComp">The grid to check.</param>
+    /// <param name="indices">The indices to check.</param>
+    private float GetTilePressure(GridAtmosphereComponent gridAtmosComp, Vector2i indices)
+    {
+        // First try and retrieve the tile atmosphere for the given indices from our cache.
+        // Use a safe lookup method because we're going to be writing to the dictionary.
+        if (gridAtmosComp.DeltaPressureCoords.TryGetValue(indices, out var cf))
+        {
+            return cf;
+        }
+
+        // Didn't hit the cache.
+        // Since we're not writing to this dict, we can use an unsafe lookup method.
+        // Supposed to be a bit faster, though we need to check for null refs.
+        ref var tileA = ref CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices);
+        var nf = 0f;
+
+        if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref tileA) && tileA.Air != null)
+        {
+            // Cache the pressure value for this tile index.
+            nf = tileA.Air.Pressure;
+        }
+
+        gridAtmosComp.DeltaPressureCoords[indices] = nf;
+        return nf;
     }
 }
