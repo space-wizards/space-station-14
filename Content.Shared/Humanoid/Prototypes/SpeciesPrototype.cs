@@ -136,6 +136,14 @@ public sealed partial class SpeciesPrototype : IPrototype
     /// </summary>
     [DataField]
     public int MaxAge = 120;
+
+    /// Starlight
+    /// <summary>
+    ///     How many points species get for installing cybernetics at roundstart
+    ///     Can be used to disable roundstart cybernetics
+    /// </summary>
+    [DataField]
+    public int RoundstartCyberwareCapacity = 3;
 }
 
 public enum SpeciesNaming : byte
