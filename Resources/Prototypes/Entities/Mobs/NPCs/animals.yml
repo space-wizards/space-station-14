@@ -2459,7 +2459,7 @@
     spawned:
     - id: FoodMeatSnake
       amount: 1
-  - type: Lizard
+  - type: Speech
     speechVerb: SmallMob
     speechSounds: Reptilian
   - type: ReplacementAccent
