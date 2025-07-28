@@ -1,6 +1,5 @@
 
 using Content.Shared.Trigger.Systems;
-using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Trigger.Components;
@@ -24,12 +23,6 @@ public sealed partial class TriggerStepLogicComponent : Component
     [DataField, AutoNetworkedField]
     public float RequiredTriggeredSpeed = 3.5f;
 
-    [DataField]
-    public EntityWhitelist? Blacklist;
-
     [DataField, AutoNetworkedField]
     public bool IgnoreWeightless;
-
-    [DataField, AutoNetworkedField]
-    public bool StepOn = false;
 }

@@ -1,19 +1,18 @@
-﻿using Content.Shared.StepTrigger.Systems;
+using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Trigger.Components;
 using Content.Shared.Trigger.Components.StepTriggers;
 using Content.Shared.Trigger.Components.Triggers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Trigger.Systems;
 
+/// <summary>
+/// Replacing <see cref="StepTriggerSystem"/>.
+/// </summary>
 public sealed partial class TriggerSystem
 {
-    /// <summary>
-    ///     Initialize subscriptions for the new step trigger logic, replacing <see cref="StepTriggerSystem"/>.
-    /// </summary>
     private void InitializeStepTrigger()
     {
         SubscribeLocalEvent<TriggerStepLogicComponent, StartCollideEvent>(OnStepStart);
@@ -37,6 +36,9 @@ public sealed partial class TriggerSystem
         if (!CanTrigger(uid, otherUid, component))
             return;
 
+        var evStep = new TriggerStepTriggeredOnEvent(uid, otherUid);
+        RaiseLocalEvent(uid, ref evStep);
+
         EnsureComp<TriggerOnStepTriggerActiveComponent>(uid);
 
         if (component.Colliding.Add(otherUid))
@@ -57,11 +59,8 @@ public sealed partial class TriggerSystem
         component.CurrentlySteppedOn.Remove(otherUid);
         Dirty(uid, component);
 
-        if (component.StepOn)
-        {
-            var evStepOff = new TriggerStepTriggeredOffEvent(uid, otherUid);
-            RaiseLocalEvent(uid, ref evStepOff);
-        }
+        var evStepOff = new TriggerStepTriggeredOffEvent(uid, otherUid);
+        RaiseLocalEvent(uid, ref evStepOff);
 
         if (component.Colliding.Count == 0)
         {
@@ -69,19 +68,19 @@ public sealed partial class TriggerSystem
         }
     }
 
+    /// <summary>
+    /// Prediction is hard...
+    /// though never use EnsureComp, RemCompDeferred, RemComp in <see cref="AfterAutoHandleStateEvent"/>.
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="args"></param>
     private void TriggerHandleState(Entity<TriggerStepLogicComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         var uid = ent.Owner;
         var component = ent.Comp;
 
-        if (component.Colliding.Count > 0)
-        {
-            EnsureComp<TriggerOnStepTriggerActiveComponent>(uid);
-        }
-        else
-        {
-            RemCompDeferred<TriggerOnStepTriggerActiveComponent>(uid);
-        }
+        if (TryComp<TriggerOnStepTriggerActiveComponent>(uid, out var triggerActive))
+            triggerActive.IsActive = component.Colliding.Count > 0;
     }
 
     private void UpdateStepTrigger()
@@ -91,6 +90,12 @@ public sealed partial class TriggerSystem
 
         while (enumerator.MoveNext(out var uid, out var active, out var trigger, out var transform))
         {
+            if (!active.IsActive)
+            {
+                RemCompDeferred(uid, active);
+                continue;
+            }
+
             if (!UpdateStep(uid, trigger, transform, query))
             {
                 continue;
@@ -108,7 +113,7 @@ public sealed partial class TriggerSystem
             return true;
         }
 
-        if (component.Blacklist != null && TryComp<MapGridComponent>(transform.GridUid, out var grid))
+        if (TryComp<TriggerStepLogicWithWhitelistComponent>(uid, out var whitelistComp) && TryComp<MapGridComponent>(transform.GridUid, out var grid))
         {
             var position = _map.LocalToTile(grid.Owner, grid, Transform(uid).Coordinates);
             var anchored = _map.GetAnchoredEntitiesEnumerator(uid, grid, position);
@@ -118,7 +123,8 @@ public sealed partial class TriggerSystem
                 if (ent == uid)
                     continue;
 
-                if (_whitelist.IsBlacklistPass(component.Blacklist, ent.Value))
+                if (_whitelist.IsWhitelistFail(whitelistComp.Whitelist, ent.Value)
+                    && _whitelist.IsBlacklistPass(whitelistComp.Blacklist, ent.Value))
                     return false;
             }
         }
@@ -130,6 +136,15 @@ public sealed partial class TriggerSystem
         return false;
     }
 
+    /// <summary>
+    /// Check is still collides.
+    /// </summary>
+    /// <remarks>
+    /// TODO: Rewrite this AABBs cursed checks into something appropriate and more readable and maintainable.
+    /// </remarks>
+    /// <param name="ownerXform">Owner entity's transform/xform.</param>
+    /// <param name="otherUid">Other entity's transform/xform that's stepped on the StepTrigger entity.</param>
+    /// <param name="query">PhysicsQuery.</param>
     private void UpdateColliding(EntityUid uid, TriggerStepLogicComponent component, TransformComponent ownerXform, EntityUid otherUid, EntityQuery<PhysicsComponent> query)
     {
         if (!query.TryGetComponent(otherUid, out var otherPhysics))
@@ -140,10 +155,16 @@ public sealed partial class TriggerSystem
         var ourAabb = _entityLookup.GetAABBNoContainer(uid, ownerXform.LocalPosition, ownerXform.LocalRotation);
         var otherAabb = _entityLookup.GetAABBNoContainer(otherUid, otherXform.LocalPosition, otherXform.LocalRotation);
 
+        // Not collides atm
         if (!ourAabb.Intersects(otherAabb))
         {
             if (component.CurrentlySteppedOn.Remove(otherUid))
             {
+                // Well, only because of this TriggerStepTriggeredOffEvent triggers twice.
+                // But AABBs checks are cursed.
+                // Maybe brave soul rewrite this.
+                var evStepOff = new TriggerStepTriggeredOffEvent(uid, otherUid);
+                RaiseLocalEvent(uid, ref evStepOff);
                 Dirty(uid, component);
             }
             return;
@@ -161,16 +182,11 @@ public sealed partial class TriggerSystem
             return;
         }
 
-        if (component.StepOn)
-        {
-            var evStep = new TriggerStepTriggeredOnEvent(uid, otherUid);
-            RaiseLocalEvent(uid, ref evStep);
-        }
-        else
-        {
-            var evStep = new TriggerStepTriggeredOffEvent(uid, otherUid);
-            RaiseLocalEvent(uid, ref evStep);
-        }
+        // Well, only because of this TriggerStepTriggeredOnEvent triggers twice.
+        // But AABBs checks are cursed.
+        // Maybe brave soul rewrite this.
+        var evStepOn = new TriggerStepTriggeredOnEvent(uid, otherUid);
+        RaiseLocalEvent(uid, ref evStepOn);
 
         component.CurrentlySteppedOn.Add(otherUid);
         Dirty(uid, component);
@@ -211,26 +227,52 @@ public sealed partial class TriggerSystem
     }
 }
 
+/// <summary>
+/// Raised when an entity checks that's pass checks.
+/// </summary>
+/// <remarks>
+/// By default, <see cref="TriggerStepAttemptEvent.Continue"/> is false,
+/// use <see cref="TriggerOnStepAlwaysAttemptComponent"/> at to make it always work.
+/// </remarks>
 [ByRefEvent]
 public struct TriggerStepAttemptEvent
 {
-    public EntityUid Source;
-    public EntityUid Tripper;
-    public bool Continue;
     /// <summary>
-    ///     Set by systems which wish to cancel the step trigger event, regardless of event ordering.
+    /// The entity that got triggered by Tripper.
+    /// </summary>
+    public EntityUid Source;
+
+    /// <summary>
+    /// The entity that triggering Source by stepped on event.
+    /// </summary>
+    public EntityUid Tripper;
+
+    /// <summary>
+    /// By default, is false and never pass attempt as is.
+    /// </summary>
+    public bool Continue;
+
+    /// <summary>
+    /// Set by systems which wish to cancel the step trigger event, regardless of event ordering.
     /// </summary>
     public bool Cancelled;
 }
 
 /// <summary>
-/// Raised when an entity stands on a steptrigger initially (assuming it has both on and off states).
+/// Raised when an entity start stands on a steptrigger initially OR when an entity starts intersects a steptrigger.
 /// </summary>
+/// <remarks>
+/// Be cautious, the event triggers twice because of AABBs checks.
+/// </remarks>
 [ByRefEvent]
 public readonly record struct TriggerStepTriggeredOnEvent(EntityUid Source, EntityUid Tripper);
 
 /// <summary>
-/// Raised when an entity leaves a steptrigger if it has on and off states OR when an entity intersects a steptrigger.
+/// Raised when an entity leaves a steptrigger OR when an entity stops intersects a steptrigger.
 /// </summary>
+/// <remarks>
+/// Be cautious, the event triggers twice because of AABBs checks.
+/// Raised after <see cref="TriggerStepTriggeredOnEvent"/>.
+/// </remarks>
 [ByRefEvent]
 public readonly record struct TriggerStepTriggeredOffEvent(EntityUid Source, EntityUid Tripper);

@@ -1,7 +1,7 @@
-using Content.Shared.Trigger.Components.Triggers;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Trigger.Components.StepTriggers;
 
+/// <inheritdoc cref="Systems.TriggerStepTriggeredOnEvent"/>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class TriggerOnStepStartComponent : BaseTriggerOnXComponent;
+public sealed partial class TriggerOnStepStartComponent : BaseStepTriggerOnXComponent;

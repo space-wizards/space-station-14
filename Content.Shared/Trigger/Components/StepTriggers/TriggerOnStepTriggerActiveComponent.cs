@@ -1,7 +1,21 @@
-using Content.Shared.Trigger.Components.Triggers;
+using Content.Shared.Tag;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Trigger.Components.StepTriggers;
 
+/// <summary>
+/// For internal usage only, this component added when entities are stepped on.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class TriggerOnStepTriggerActiveComponent : BaseTriggerOnXComponent;
+public sealed partial class TriggerOnStepTriggerActiveComponent : BaseStepTriggerOnXComponent
+{
+    /// <summary>
+    /// Enables or disables TriggerActive.
+    /// </summary>
+    /// <remarks>
+    /// VERY important for prediction purposes.
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    public bool IsActive = true;
+}
