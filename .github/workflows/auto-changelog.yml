@@ -75,8 +75,8 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git pull origin HEAD:${BRANCH_NAME}
+            git pull origin HEAD:${{ env.BRANCH_NAME }}
             git commit -m "Update changelog for PR #${{ steps.get_pr.outputs.PR_NUMBER }} [skip ci]"
-            git push origin HEAD:${BRANCH_NAME}
+            git push origin HEAD:${{ env.BRANCH_NAME }}
           fi
           
