@@ -57,11 +57,11 @@ guide-entry-sl-non-crew-policies = Non-crew Policies
 guide-entry-sl-docking-and-visitors = Docking and Visitors
 guide-entry-sl-vessels = Vessels
 
-guide-entry-sl-nanotrasen-staff-handling-policies = Nontrasen Staff Handling Policies
+guide-entry-sl-nanotrasen-staff-handling-policies = NanoTrasen Staff Handling Policies
 guide-entry-sl-hiring-transfer-policies = Hiring / Transfer
 guide-entry-sl-firing-demotion-policies = Firing / Demotion
 guide-entry-sl-cause-for-demotion = Causes for Demotion and Dismissal
-guide-entry-sl-vote-of-no-confidence = Vote of No Confidence
+guide-entry-sl-vote-of-no-confidence = Vote Of No Confidence
 guide-entry-sl-money-accounts-and-space-credits = Money Accounts and Space Credits
 
 guide-entry-sl-security-sop-intro = Security
@@ -86,6 +86,8 @@ guide-entry-sl-engineering-sop-atmos-tech = Atmospheric Technician
 guide-entry-sl-engineering-sop-technical-assistant = Technical Assistant
 
 guide-entry-sl-medical-sop-intro = Medical
+guide-entry-sl-medical-sop-genproc-intro = General Procedures
+guide-entry-sl-medical-sop-staff-intro = Staff Procedures
 
 guide-entry-sl-cargo-sop-intro = Cargo
 guide-entry-sl-cargo-sop-cargotechnician = Cargo Technician
@@ -102,11 +104,15 @@ guide-entry-sl-cargo-sop-handlingorders-service = Service Orders
 guide-entry-sl-science-sop-intro = Science
 
 guide-entry-sl-nano-trasen-employee-sop-intro = NanoTrasen Employee
+guide-entry-sl-nano-trasen-employee-sop-genproc-intro = General Procedures
 guide-entry-sl-nano-trasen-employee-sop-safety-protocol = Safety Protocol
+guide-entry-sl-nano-trasen-employee-sop-staff-intro = Staff Procedures
 guide-entry-sl-nano-trasen-employee-sop-nt-rep = NanoTrasen Representative
 guide-entry-sl-nano-trasen-employee-sop-bso = BlueShield Officer
 guide-entry-sl-nano-trasen-employee-sop-magistrate = Magistrate
 guide-entry-sl-nano-trasen-employee-sop-iaa = Internal Affairs Agent
 
 guide-entry-sl-service-sop-intro = Service
+guide-entry-sl-service-sop-genproc-intro = General Procedures
+guide-entry-sl-service-sop-staff-intro = Staff Procedures
 guide-entry-sl-service-sop-headofpersonnel = Head of Personnel
