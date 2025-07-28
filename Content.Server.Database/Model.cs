@@ -425,8 +425,6 @@ namespace Content.Server.Database
         public string Voice { get; set; } = null!;
         public string SiliconVoice { get; set; } = null!; // 🌟Starlight🌟
         public int Age { get; set; }
-        public float Width { get; set; } = 1f; //starlight
-        public float Height { get; set; } = 1f; // starlight
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public string Species { get; set; } = null!;
@@ -451,7 +449,7 @@ namespace Content.Server.Database
 
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
-        
+
         public StarLightModel.StarLightProfile? StarLightProfile { get; set; } // Starlight
     }
 
