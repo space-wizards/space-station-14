@@ -9746,5 +9746,12 @@ Entries:
   id: 1342
   time: '2025-07-24T01:32:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/692
+- author: Fractalflower
+  changes:
+  - message: Nukie agent now has builtin chemgoggles
+    type: Tweak
+  id: 1343
+  time: '2025-07-28T05:55:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1116
 Order: -1
 
