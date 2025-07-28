@@ -5,7 +5,6 @@ using Content.Shared.Atmos.Piping;
 using Content.Shared.Hands;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Item;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Atmos.EntitySystems;
 
