@@ -423,7 +423,7 @@
   id: ConcentratedCorgiJuice
   name: reagent-name-concentratedcorgijuice
   group: Toxins
-  desc: reagent-desc-corgijuice
+  desc: reagent-desc-corgiessence
   physicalDesc: reagent-physical-desc-vibrant
   flavor: dogfood
   color: "#ed9715"

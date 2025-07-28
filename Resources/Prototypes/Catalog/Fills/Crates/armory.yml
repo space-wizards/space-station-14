@@ -105,5 +105,5 @@
     contents:
     - id: WeaponRifleLecter
       amount: 2
-    - id: MagazineRifle
+    - id: MagazineRifleSP
       amount: 4

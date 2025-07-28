@@ -206,12 +206,12 @@
     Telecrystal: 10
   categories:
   - UplinkWearables
-  
+
 - type: listing
   id: UplinkSyndicateBorgi
   name: uplink-syndicate-borgi-name
   description: uplink-syndicate-borgi-desc
-  icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
+  icon: { sprite:  Objects/Fun/Balloons/corgi.rsi, state: icon }
   productEntity: BaseSyndicateBorgiChassis
   cost:
     Telecrystal: 20
@@ -225,7 +225,7 @@
   id: UplinkSyndicateBorgiKitted
   name: uplink-syndicate-borgi-kitted-name
   description: uplink-syndicate-borgi-kitted-desc
-  icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
+  icon: { sprite:  Objects/Fun/Balloons/corgi.rsi, state: icon }
   productEntity: SyndiBorgiKit1
   cost:
     Telecrystal: 60
@@ -243,7 +243,7 @@
   id: UplinkSyndicateBorgiSpeed
   name: uplink-syndicate-borgi-speed-name
   description: uplink-syndicate-borgi-speed-desc
-  icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
+  icon: { sprite:  Objects/Fun/Balloons/corgi.rsi, state: icon }
   productEntity: SyndiBorgiKit2
   cost:
     Telecrystal: 50

@@ -598,7 +598,7 @@
   id: UplinkEstocAmmo
   name: uplink-estoc-ammo-name
   description: uplink-estoc-ammo-desc
-  productEntity: MagazineRifle
+  productEntity: MagazineRifleSP #Starlight
   cost:
     Telecrystal: 2
   categories:

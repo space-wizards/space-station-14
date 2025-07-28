@@ -4,21 +4,21 @@
   abstract: true
   id: BaseClarkePartRecipe
   categories:
-  - Clarke
+  - Mech
   completetime: 10
 
 - type: latheRecipe
   abstract: true
   id: BaseDurandPartRecipe
   categories:
-  - Durand
+  - Mech
   completetime: 10
 
 - type: latheRecipe
   abstract: true
   id: BaseGygaxPartRecipe
   categories:
-  - Gygax
+  - Mech
   completetime: 10
 
 # Recipes
@@ -163,7 +163,7 @@
   id: RipleyMKIIHarness
   result: RipleyMKIIHarness
   categories:
-  - RipleyMKII
+  - Mech
   completetime: 10
   materials:
     Steel: 1500
@@ -173,7 +173,7 @@
   id: RipleyUpgradeKit
   result: RipleyUpgradeKit
   categories:
-  - RipleyMKII
+  - Mech
   completetime: 10
   materials:
     Plasteel: 1000
@@ -184,7 +184,7 @@
   id: PaddyUpgradeKit
   result: PaddyUpgradeKit
   categories:
-  - Paddy
+  - Mech
   completetime: 10
   materials:
     Plasteel: 2000
@@ -194,7 +194,7 @@
   id: MechEquipmentDrill
   result: WeaponMechMelleDrill
   categories:
-  - MechEquipment
+  - Mech
   completetime: 10
   materials:
     Steel: 1000
@@ -204,7 +204,7 @@
   id: MechEquipmentDrillDiamond
   result: WeaponMechMelleDrillDiamond
   categories:
-  - MechEquipment
+  - Mech
   completetime: 10
   materials:
     Steel: 1000
@@ -216,7 +216,7 @@
   id: MechEquipmentHonkerBananaMortar
   result: WeaponMechSpecialBananaMortar
   categories:
-  - MechEquipment
+  - Mech
   completetime: 10
   materials:
     Steel: 1150
@@ -226,7 +226,7 @@
   id: MechEquipmentHonkerMousetrapMortar
   result: WeaponMechSpecialMousetrapMortar
   categories:
-  - MechEquipment
+  - Mech
   completetime: 10
   materials:
     Steel: 1200
@@ -237,7 +237,7 @@
   id: MechAirTank
   result: MechAirTank
   categories:
-  - MechEquipment
+  - Mech
   completetime: 10
   materials:
     Steel: 1000
@@ -247,7 +247,7 @@
   id: MechThruster
   result: MechThruster
   categories:
-  - MechEquipment
+  - Mech
   completetime: 10
   materials:
     Steel: 1000

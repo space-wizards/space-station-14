@@ -14,7 +14,7 @@
       - id: Scalpel
       - id: BoneGel
       - id: BoneSetter
-      
+
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
   id: ClothingBackpackDuffelSyndicateFilledMedical
@@ -70,7 +70,7 @@
   - type: StorageFill
     contents:
     - id: WeaponRifleEstoc
-    - id: MagazineRifle
+    - id: MagazineRifleSP
       amount: 2
 
 - type: entity
