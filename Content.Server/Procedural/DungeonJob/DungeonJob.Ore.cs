@@ -148,7 +148,6 @@ public sealed partial class DungeonJob
                 {
                     var key = gen.Replacement ?? "null";
                     remaining[key] = remaining.GetValueOrDefault(key) + 1;
-                    }
                 }
             }
         }
