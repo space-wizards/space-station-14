@@ -11,7 +11,7 @@ namespace Content.Server.Github.Commands;
 /// Simple command for testing if the GitHub api is set up correctly!
 /// </summary>
 [AdminCommand(AdminFlags.Server)]
-public sealed class TestGithubApiCommand : LocalizedEntityCommands
+public sealed class TestGithubApiCommand : LocalizedCommands
 {
     [Dependency] private readonly GithubApiManager _git = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
