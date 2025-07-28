@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Increased ratio of crew to thieves from 15 to 20.
-    type: Tweak
-  id: 8303
-  time: '2025-04-21T17:24:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36531
 - author: centcomofficer24
   changes:
   - message: Added a genderfluid pin!
@@ -3905,3 +3898,12 @@
   id: 8814
   time: '2025-07-28T16:09:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39254
+- author: TrixxedHeart
+  changes:
+  - message: Several strange sprite issues with Vox have been fixed, most notably
+      jumpsuits and many neck items overlapping the face, as well as a layering issue
+      where their tank would appear over their hair.
+    type: Fix
+  id: 8815
+  time: '2025-07-28T21:28:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39219
