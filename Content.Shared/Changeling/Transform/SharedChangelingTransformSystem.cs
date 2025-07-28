@@ -69,7 +69,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
             foreach (var consumedIdentity in userIdentity.ConsumedIdentities)
             {
-                identityData.Add(new ChangelingIdentityData(GetNetEntity(consumedIdentity.Value), Name(consumedIdentity.Value)));
+                identityData.Add(new ChangelingIdentityData(GetNetEntity(consumedIdentity), Name(consumedIdentity)));
             }
 
             _uiSystem.SetUiState((ent, userInterfaceComp), TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(identityData));

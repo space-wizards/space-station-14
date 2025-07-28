@@ -56,7 +56,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     {
         foreach (var consumedIdentity in ent.Comp.ConsumedIdentities)
         {
-            QueueDel(consumedIdentity.Value);
+            QueueDel(consumedIdentity);
         }
     }
 
@@ -70,9 +70,6 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     /// <param name="target">the targets uid</param>
     public void CloneToNullspace(Entity<ChangelingIdentityComponent> ent, EntityUid target)
     {
-        if(ent.Comp.ConsumedIdentities.ContainsKey(target))
-            return;
-
         if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
             || !_prototype.TryIndex(humanoid.Species, out var speciesPrototype)
             || !TryComp<DnaComponent>(target, out var targetDna))
@@ -89,7 +86,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
 
         _metaSystem.SetEntityName(mob, Name(target));
         _metaSystem.SetEntityDescription(mob, MetaData(target).EntityDescription);
-        ent.Comp.ConsumedIdentities.Add(target, mob);
+        ent.Comp.ConsumedIdentities.Add(mob);
 
         ent.Comp.LastConsumedEntityUid = mob;
 
@@ -123,7 +120,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
 
         foreach (var identity in ent.Comp.ConsumedIdentities)
         {
-            _pvsOverrideSystem.RemoveSessionOverride(identity.Value, actor.PlayerSession);
+            _pvsOverrideSystem.RemoveSessionOverride(identity, actor.PlayerSession);
         }
     }
 
@@ -136,7 +133,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     {
         foreach (var entity in comp.ConsumedIdentities)
         {
-            _pvsOverrideSystem.AddSessionOverride(entity.Value, session);
+            _pvsOverrideSystem.AddSessionOverride(entity, session);
         }
     }
 }
