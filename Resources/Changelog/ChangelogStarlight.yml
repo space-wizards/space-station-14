@@ -9718,5 +9718,12 @@ Entries:
   id: 1338
   time: '2025-07-28T05:26:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1096
+- author: PubliclyExecutedPig
+  changes:
+  - message: Toned down the damage of HoS's new gun
+    type: Tweak
+  id: 1339
+  time: '2025-07-28T05:38:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1106
 Order: -1
 
