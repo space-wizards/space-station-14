@@ -9796,5 +9796,12 @@ Entries:
   id: 1349
   time: '2025-07-28T15:26:04.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1127
+- author: walksanatora.
+  changes:
+  - message: Scurrets can now be picked up like a felinoid.
+    type: Add
+  id: 1350
+  time: '2025-07-28T15:37:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1128
 Order: -1
 
