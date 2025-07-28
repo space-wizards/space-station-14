@@ -155,6 +155,18 @@
     price: 2000
 
 - type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakBsoCape
+  name: Blueshield Officer's Formal Cloak
+  description: An incredibly large coat, owned only by the most experienced blueshields. It's said the sleeves have never been worn.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/bso_formal.rsi
+  - type: Clothing
+    slots:
+      - neck
+
+- type: entity
   parent: ClothingNeckBase
   id: ClothingNeckOldMantle
   name: old wrap

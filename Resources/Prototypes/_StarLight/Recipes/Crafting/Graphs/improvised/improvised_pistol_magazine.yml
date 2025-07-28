@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: ImprovisedPistolMagazineGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shell
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2
+    - node: shell
+      entity: MagazinePistolImprovised

@@ -180,16 +180,21 @@
     - type: StaticPrice
       price: 150
 
+#Starlight Changes Start
+
 - type: entity
   name: makeshift shield
-  parent: BaseShield
+  parent: [ PaladinShield, BaseMinorContraband ]
   id: MakeshiftShield
   description: A rundown looking shield, not good for much.
   components:
     - type: Sprite
-      state: makeshift-icon
+      sprite: _Starlight/Objects/Weapons/Melee/makeshift_shield.rsi
+      state: base
     - type: Item
-      heldPrefix: metal
+      sprite: _Starlight/Objects/Weapons/Melee/makeshift_shield.rsi
+    - type: Clothing
+      sprite: _Starlight/Objects/Weapons/Melee/makeshift_shield.rsi
     - type: Blocking
       passiveBlockModifier:
         coefficients:
@@ -208,6 +213,10 @@
           Slash: 0.5
           Piercing: 0.5
           Heat: 1
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 5
     - type: Construction
       graph: MakeshiftShield
       node: makeshiftShield
@@ -233,6 +242,8 @@
                 SheetSteel:
                   min: 1
                   max: 2
+
+#Starlight Changes End
 
 - type: entity
   name: web shield

@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Killer Tamashi (Discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "base"
+    },
+    {
+      "name": "icon"
+    },
+    {
+      "name": "wrench"
+    },
+    {
+      "name": "wrenchflipped"
+    },
+    {
+      "name": "screwdriver"
+    },
+    {
+      "name": "screwdriverflipped"
+    },
+    {
+      "name": "wirecutter"
+    },
+    {
+      "name": "wirecutterflipped"
+    },
+    {
+      "name": "wirecutterside"
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    }
+  ]
+}

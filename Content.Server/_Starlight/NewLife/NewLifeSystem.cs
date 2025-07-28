@@ -37,6 +37,7 @@ using Content.Shared.Starlight.NewLife;
 using Robust.Shared.Network;
 using Content.Server.RoundEnd;
 using Content.Server.GameTicking;
+using Content.Shared.Starlight.CCVar;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -45,13 +46,25 @@ public sealed class NewLifeSystem : EntitySystem
 {
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
 
     private readonly Dictionary<ICommonSession, NewLifeEui> _openUis = [];
     private readonly Dictionary<NetUserId, HashSet<int>> _roundCharactersUsed = [];
+    private readonly Dictionary<NetUserId, int> _newLifesLeft = [];
+    private int MaxNewLifes = 5;
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<RoundEndSystemChangedEvent>(ClearRoundCharacterUsed);
+        //cvar for max new lifes
+        _configuration.OnValueChanged(StarlightCCVars.MaxNewLifes, UpdateMaxNewLifes, true);
+    }
+
+    private void UpdateMaxNewLifes(int value)
+    {
+        MaxNewLifes = value;
+        //update all open uis
+        UpdateAllEui();
     }
 
     public override void Shutdown()
@@ -61,7 +74,10 @@ public sealed class NewLifeSystem : EntitySystem
     public void ClearRoundCharacterUsed(RoundEndSystemChangedEvent _)
     {
         if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
+        {
             _roundCharactersUsed.Clear();
+            _newLifesLeft.Clear();
+        }
     }
 
     public void OpenEui(ICommonSession session)
@@ -74,7 +90,8 @@ public sealed class NewLifeSystem : EntitySystem
             CloseEui(session);
 
         var usedSlots = _roundCharactersUsed.TryGetValue(session.UserId, out var slots) ? slots : [];
-        var eui = _openUis[session] = new NewLifeEui(usedSlots);
+        var remainingLives = _newLifesLeft.TryGetValue(session.UserId, out var remaining) ? remaining : MaxNewLifes;
+        var eui = _openUis[session] = new NewLifeEui(usedSlots, remainingLives, MaxNewLifes);
 
         _euiManager.OpenEui(eui, session);
         eui.StateDirty();
@@ -107,6 +124,17 @@ public sealed class NewLifeSystem : EntitySystem
             characters.Add(slot);
         else
             _roundCharactersUsed.Add(userId, [slot]);
+
+        //subtract from remaining slots
+        if (_newLifesLeft.TryGetValue(userId, out var remaining))
+        {
+            remaining--;
+            _newLifesLeft[userId] = remaining;
+        }
+        else
+        {
+            _newLifesLeft.Add(userId, MaxNewLifes - 1);
+        }
     }
     internal bool SlotIsAvailable(NetUserId userId, int slot)
         => (!_roundCharactersUsed.TryGetValue(userId, out var characters))

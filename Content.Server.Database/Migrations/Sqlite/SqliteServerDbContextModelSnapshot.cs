@@ -907,6 +907,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("sex");
 
+                    b.Property<string>("SiliconVoice")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("silicon_voice");
+
                     b.Property<string>("SkinColor")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -1360,6 +1365,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasMaxLength(32)
                         .HasColumnType("TEXT")
                         .HasColumnName("custom_specie_name");
+
+                    b.PrimitiveCollection<string>("CyberneticIds")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("cybernetic_ids");
 
                     b.Property<int>("ProfileId")
                         .HasColumnType("INTEGER")

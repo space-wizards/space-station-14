@@ -92,4 +92,52 @@
         - CaptainJetpackStealObjective
         - HandTeleporterStealObjective
         - EnergyShotgunStealObjective
-    
+
+#USSP
+- type: entity
+  id: MailSovietSpamLetter100
+  name: Workers' rights!
+  suffix: 100%
+  description: A propaganda pamphlet that smells of burnt matches. It's so thick it won't fit in the fax.
+  parent: [ Paper, BaseSovietContraband ]
+  components:
+    - type: Paper
+      content: delivery-spam-join-soviets
+      editingDisabled: true
+    - type: AntagOnSign
+      chance: 1
+      antags:
+        - antag: Revolutionary
+          targetComponent: RevolutionaryRule
+
+- type: entity
+  id: MailSovietSpamLetter50
+  name: Workers' rights!
+  suffix: 50%
+  description: A propaganda pamphlet that smells of burnt matches. It's so thick it won't fit in the fax.
+  parent: [ Paper, BaseSovietContraband ]
+  components:
+    - type: Paper
+      content: delivery-spam-join-soviets
+      editingDisabled: true
+    - type: AntagOnSign
+      chance: 0.5
+      antags:
+        - antag: Revolutionary
+          targetComponent: RevolutionaryRule
+
+- type: entity
+  id: MailSovietSpamLetter25
+  name: Workers' rights!
+  suffix: 25%
+  description: A propaganda pamphlet that smells of burnt matches. It's so thick it won't fit in the fax.
+  parent: [ Paper, BaseSovietContraband ]
+  components:
+    - type: Paper
+      content: delivery-spam-join-soviets
+      editingDisabled: true
+    - type: AntagOnSign
+      chance: 0.25
+      antags:
+        - antag: Revolutionary
+          targetComponent: RevolutionaryRule

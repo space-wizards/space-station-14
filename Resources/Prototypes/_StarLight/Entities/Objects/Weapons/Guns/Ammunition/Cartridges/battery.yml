@@ -9,7 +9,7 @@
       - Cartridge
       - CartridgeBattery
   - type: HitScanCartridgeAmmo
-    hitscan: LaserBolt
+    hitscan: RedLaserBeam
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/laser_casing.rsi
     layers:
@@ -17,6 +17,8 @@
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
   - type: SpentAmmoVisuals
+  - type: Contraband
+    allowedDepartments: [ Security, CentralCommand, Command, Cargo ]
   
 - type: entity
   id: CartridgeBattery
@@ -24,4 +26,4 @@
   parent: BaseCartridgeBattery
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: LaserBolt
+    hitscan: RedLaserBeam

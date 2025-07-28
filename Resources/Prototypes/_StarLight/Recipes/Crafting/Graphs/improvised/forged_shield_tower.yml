@@ -1,0 +1,24 @@
+- type: constructionGraph
+  id: ForgedShieldTowerGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: shield
+      steps:
+      - material: MetalRod
+        amount: 10
+      - material: Steel
+        amount: 12
+        doAfter: 15
+      - material: Glass
+        amount: 4
+      - material: Plasteel
+        amount: 10
+        doAfter: 15
+      - material: Plastic
+        amount: 6
+      - material: Cloth
+        amount: 8
+  - node: shield
+    entity: UnfinishedForgedShieldTower

@@ -79,7 +79,7 @@
         variation: 0.09
 
 - type: entity
-  parent: [ ClothingShoesMilitaryBase ]
+  parent: [ ClothingShoesMilitaryBase, BaseSalvageContraband ] #Starlight salvContra
   id: ClothingShoesBootsMerc
   name: mercenary boots
   description: Boots that have gone through many conflicts and that have proven their combat reliability.

@@ -5,7 +5,7 @@
   playTimeTracker: JobConsortiumBlueShield
   setPreference: false
   startingGear: NTCCBlueShieldGear
-  icon: JobIconBlueShield
+  icon: JobIconNTCCBlueShield
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:

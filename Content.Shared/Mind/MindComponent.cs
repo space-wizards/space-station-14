@@ -55,6 +55,9 @@ public sealed partial class MindComponent : Component
     [ViewVariables]
     public bool IsVisitingEntity => VisitingEntity != null;
 
+    /// <summary>
+    /// The entity that this mind may be currently visiting. Used, for example, to allow admin ghosting to not make the owner's body catatonic, as opposed to when normally ghosting.
+    /// </summary>
     [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
     public EntityUid? VisitingEntity { get; set; }
 
@@ -113,4 +116,13 @@ public sealed partial class MindComponent : Component
     /// </summary>
     [DataField]
     public LocId? Subtype;
+
+    // 🌟Starlight🌟
+    [DataField]
+    public string? Voice;
+    
+    // 🌟Starlight🌟
+    [DataField]
+    public string? SiliconVoice;
+
 }

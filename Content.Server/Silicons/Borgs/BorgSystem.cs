@@ -1,13 +1,14 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
-using Content.Server.Body.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
 using Content.Shared.Alert;
-using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Body.Events;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -23,6 +24,7 @@ using Content.Shared.PowerCell.Components;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Starlight.TextToSpeech;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Content.Shared.Wires;
@@ -30,10 +32,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -62,8 +63,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
 
-    [ValidatePrototypeId<JobPrototype>]
-    public const string BorgJobId = "Borg";
+    public static readonly ProtoId<JobPrototype> BorgJobId = "Borg";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -164,7 +164,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         base.OnInserted(uid, component, args);
 
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind) && args.Container == component.BrainContainer)
-        {
+        {            
             _mind.TransferTo(mindId, uid, mind: mind);
         }
     }
@@ -181,6 +181,11 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     private void OnMindAdded(EntityUid uid, BorgChassisComponent component, MindAddedMessage args)
     {
+            //Load voice from mind 🌟Starlight🌟
+            if (TryComp<TextToSpeechComponent>(uid, out var ttscomp))
+            {
+                ttscomp.VoicePrototypeId = args.Mind.Comp.SiliconVoice;
+            }
         BorgActivate(uid, component);
     }
 
@@ -278,6 +283,13 @@ public sealed partial class BorgSystem : SharedBorgSystem
             _throwing.TryThrow(uid, _random.NextVector2() * 5, 5f);
             return;
         }
+
+        //Load voice from mind 🌟Starlight🌟
+		if (TryComp<TextToSpeechComponent>(uid, out var ttscomp))
+		{
+			if(mind != null)
+			    ttscomp.VoicePrototypeId = mind.SiliconVoice;
+		}
 
         _mind.TransferTo(mindId, containerEnt, mind: mind);
     }

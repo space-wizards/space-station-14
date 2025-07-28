@@ -12,3 +12,27 @@
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#43c4f7"
+
+- type: entity
+  id: CartridgeLightRifleImprovised
+  name: improvised cartridge (.30 rifle)
+  description: A handmade rifle bullet, uses phosphorus as a propellent instead of gunpowder which makes it much less effective. 
+  parent: [BaseCartridgeLightRifleSP, BaseMinorContraband]
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletLightRifleTraceImprovised
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/improvised_casing.rsi
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#717171"
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeLightRifleImprovised
+  - type: Construction
+    graph: ImprovisedLightRifleBulletGraph
+    node: shell

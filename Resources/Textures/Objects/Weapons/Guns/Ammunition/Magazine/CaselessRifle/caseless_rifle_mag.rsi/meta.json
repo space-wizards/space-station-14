@@ -5,16 +5,13 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/aed9cbddbf9039dae1e4f02bab592248b0539431/icons/obj/ammo_mags.dmi, inhands by TiniestShark (github)",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/aed9cbddbf9039dae1e4f02bab592248b0539431/icons/obj/ammo_mags.dmi, inhands by TiniestShark (GitHub), stripes by SeamLesss (GitHub)",
     "states": [
         {
             "name": "base"
         },
         {
-            "name": "practice"
-        },
-        {
-            "name": "red"
+            "name": "stripe"
         },
         {
             "name": "rubber"

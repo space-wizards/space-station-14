@@ -23,6 +23,7 @@
     - id: MailTeleporterMachineCircuitboard
     - id: PlushieLance #starlight
     - id: RadioHandheldExpedition #starlight
+    - id: ClothingOuterHardsuitLuxmax #starlight
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -47,7 +48,7 @@
     - id: ClothingHeadsetAltCommand
     - id: ClothingOuterArmorCaptainCarapace
     - id: CommsComputerCircuitboard
-    - id: DoorRemoteCommand
+    - id: DoorRemoteCustom
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
@@ -350,7 +351,7 @@
   table: !type:AllSelector
     children:
     - id: ClothingNeckCloakHosElite
-    - id: WeaponEnergyShotgun
+    - id: WeaponEnergySMG
     - id: BookSpaceLaw
     - id: BoxEncryptionKeySecurity
     - id: CigarGoldCase

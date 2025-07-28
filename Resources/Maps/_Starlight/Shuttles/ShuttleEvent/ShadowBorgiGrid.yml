@@ -13409,32 +13409,23 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         2243:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2244:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2245:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2246:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2247:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2248:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2292:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2291:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2290:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 2275
     components:
     - type: Transform
@@ -13444,80 +13435,55 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         2273:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2272:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2271:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2270:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2269:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2268:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2267:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2266:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2265:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2264:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2263:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2262:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2261:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2260:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2259:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2258:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2257:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2256:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2255:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2254:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2253:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2252:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2251:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2250:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2249:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 2276
     components:
     - type: Transform
@@ -13538,20 +13504,15 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         2283:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2284:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2286:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2285:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2287:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 2289
     components:
     - type: Transform
@@ -13560,20 +13521,15 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         2278:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2279:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2280:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2281:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2282:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignBar
   entities:
   - uid: 2416

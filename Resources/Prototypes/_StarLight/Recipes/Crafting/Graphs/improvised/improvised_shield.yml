@@ -1,0 +1,17 @@
+- type: constructionGraph
+  id: ImprovisedShieldGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: shield
+      steps:
+      - material: MetalRod
+        amount: 8
+      - material: Steel
+        amount: 17
+        doAfter: 15
+      - material: Cloth
+        amount: 3
+  - node: shield
+    entity: UnfinishedImprovisedShield

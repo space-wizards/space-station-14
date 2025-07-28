@@ -904,6 +904,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: ClothingUniformBase
@@ -921,7 +923,7 @@
       mode: SensorOff
 
 - type: entity
-  parent: [ ClothingUniformBase ]
+  parent: [ ClothingUniformBase , BaseSalvageContraband ] #Starlight salvContra
   id: ClothingUniformJumpsuitMercenary
   name: mercenary jumpsuit
   description: Clothing for real mercenaries who have gone through fire, water and the jungle of planets flooded with dangerous monsters or targets for which a reward has been assigned.

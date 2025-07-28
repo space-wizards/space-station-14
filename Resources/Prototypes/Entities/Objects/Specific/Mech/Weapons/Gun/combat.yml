@@ -285,7 +285,7 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: LaserBolt
+    proto: RedLaserBeam
     fireCost: 20
   - type: Appearance
   - type: AmmoCounter

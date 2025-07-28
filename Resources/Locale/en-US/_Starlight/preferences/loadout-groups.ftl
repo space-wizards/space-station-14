@@ -7,6 +7,11 @@ loadout-group-roboticist-goggles = Roboticist eyewear
 loadout-group-roboticist-backpack = Roboticist backpack
 loadout-group-roboticist-shoes = Roboticist shoes
 
+# Civilian
+loadout-group-assistant-glasses = Assistant glasses
+loadout-group-assistant-head = Assistant head
+loadout-group-assistant-backpack = Assistant backpack
+
 # Command
 
 loadout-group-nanotrasenrepresentative-outerclothing = NanoTrasen representative outer clothing
@@ -20,6 +25,8 @@ loadout-group-hop-shoes = Head of Personnel shoes
 loadout-group-blueshield-backpack = Blueshield backpack
 loadout-group-blueshield-jumpsuit = Blueshield jumpsuit
 loadout-group-blueshield-eyewear = Blueshield eyewear
+Loadout-group-blueshield-outerclothing = Blueshield Outer Clothing
+Loadout-group-blueshield-neck = Blueshield Neck
 
 # Security
 

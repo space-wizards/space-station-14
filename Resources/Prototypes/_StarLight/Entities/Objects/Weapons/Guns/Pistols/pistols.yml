@@ -225,12 +225,14 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/1suppres.ogg
+  - type: Contraband
+    severity: Soviet
       
 - type: entity
-  name: desert eagle
-  parent: [WeaponPistolN1984, BaseSecurityContraband]
+  name: Jungle Hawk
+  parent: [ BaseSecuritySalvageContraband, WeaponPistolN1984 ] 
   id: WeaponPistolDeagle
-  description: A robust magnum handgun.
+  description: A high-caliber handgun designed for putting down large game.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/deagle.rsi
@@ -263,3 +265,173 @@
     fireRate: 7
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/colt.ogg
+
+- type: entity
+  name: makeshift pistol
+  parent: [BaseWeaponPistol, BaseMinorContraband]
+  id: WeaponPistolMakeshiftCrafted
+  description: Little more than a space eoka. Very unreliable.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/makeshift_pistol_crafted.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/makeshift_pistol_crafted.rsi
+  - type: Gun
+    fireRate: 5 #Each bullet is manually loaded, no reason to impose a firerate limit.
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_chamber:
+        name: Chamber
+        startingItem: null
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+            - CartridgePistolImprovised
+  - type: Construction
+    graph: MakeshiftPistolCraftedGraph
+    node: shotgun
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0.20
+    selfDamage:
+      types:
+        Blunt: 6
+        Heat: 6
+    items:
+      - id: ModularBarrel
+        launchAngle: 0
+        prob: 1
+      - id: ModularReceiver
+        launchAngle: 90
+        prob: 0.10
+      - id: RifleStock
+        launchAngle: 180
+        prob: 0.80
+
+- type: entity
+  name: improvised pistol
+  parent: [BaseWeaponSniper, BaseMinorContraband]
+  id: WeaponPistolImprovised
+  description: A cobbled together pistol with an internal magazine. More reliable, but still liable to blow up in your face.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/improvised_pistol.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/improvised_pistol.rsi
+  - type: Gun
+    fireRate: 3
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+    minAngle: 1
+    maxAngle: 30
+    angleIncrease: 12
+    angleDecay: 4
+  - type: BallisticAmmoProvider
+    capacity: 5
+    proto: null
+    whitelist:
+      tags:
+      - CartridgePistol
+      - CartridgePistolImprovised
+  - type: Item
+    size: Small #Magazine location makes it bigger but should still fit in a pocket. (This basically serves to keep people from putting it in a boot/stacking them as easily)
+    shape:
+    - 0,0,1,0
+    - 0,1,1,1
+  - type: Construction
+    graph: ImprovisedPistolGraph
+    node: shotgun
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0.10
+    selfDamage:
+      types:
+        Blunt: 6
+        Heat: 6
+    items:
+      - id: ModularBarrel
+        launchAngle: 0
+        prob: 1
+      - id: ModularReceiver
+        launchAngle: 90
+        prob: 0.10
+      - id: SheetSteel1
+        launchAngle: 67
+        prob: 0.20
+      - id: SheetSteel1
+        launchAngle: 87
+        prob: 0.20
+      - id: SheetSteel1
+        launchAngle: 270
+        prob: 0.20
+      - id: RifleStock
+        launchAngle: 180
+        prob: 0.80
+
+- type: entity
+  name: forged pistol
+  parent: [BaseWeaponPistol, BaseMinorContraband]
+  id: WeaponPistolForged
+  description: A reliable magazine-fed pistol made by the best tider blacksmiths.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/forged_pistol.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/forged_pistol.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 3
+    zeroVisible: true  
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,1,1  
+  - type: Gun
+    fireRate: 4
+    minAngle: 1
+    maxAngle: 20
+    angleIncrease: 8
+    angleDecay: 9
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: null
+        whitelist:
+          tags:
+            - MagazinePistolImprovised
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: null
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+            - CartridgePistolImprovised

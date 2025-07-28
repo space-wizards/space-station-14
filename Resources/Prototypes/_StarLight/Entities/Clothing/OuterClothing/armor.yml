@@ -144,6 +144,101 @@
         Piercing: 0.85
         Heat: 0.55
 
+- type: entity
+  parent: [ClothingOuterArmorForged, BaseMinorContraband]
+  id: ClothingOuterArmorMakeshift
+  name: makeshift vest
+  description: Might catch a bullet. Might.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/makeshift.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/makeshift.rsi
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.80
+        Piercing: 0.90
+        Heat: 0.95
+  - type: ClothingSpeedModifier
+    walkModifier: 0.90
+    sprintModifier: 0.90
+  - type: ExplosionResistance
+    damageCoefficient: 0.95
+  - type: Construction
+    graph: ClothingOuterArmorMakeshiftGraph
+    node: vest
+
+- type: entity
+  parent: [ClothingOuterArmorForged, BaseMinorContraband]
+  id: ClothingOuterArmorImprovised
+  name: improvised vest
+  description: Interlocking metal plates ensure you're decently protected against stabs, but not much else.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/improvised.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/improvised.rsi
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.70
+        Piercing: 0.85
+        Heat: 0.90
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: ExplosionResistance
+    damageCoefficient: 0.95
+
+- type: entity
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseMinorContraband] #BaseSecurityContraband overwrites BaseMinorContraband, annoyingly enough.
+  id: ClothingOuterArmorForged
+  name: forged vest
+  description: A product of high-quality tidesmithing, the additional leather padding and the swap for plasteel over steel ensures the armor is lightweight and effective.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/forged.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/forged.rsi
+  - type: Pierceable
+    level: Metal
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.65
+        Piercing: 0.70
+        Heat: 0.85
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+
+- type: entity
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseMajorContraband]
+  id: ClothingOuterArmorPaladin
+  name: paladin suit
+  description: Be the paladin you want to be! Swing swords in maints at the terrified security officer! Battle MONSTERS that are totally not vent creatures! Get shot by lasers and die-! Wait what?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/paladin.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/paladin.rsi
+  - type: Pierceable
+    level: Metal
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.70
+        Slash: 0.50
+        Piercing: 0.55
+        Heat: 0.85
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: ExplosionResistance
+    damageCoefficient: 0.85
 
 - type: entity
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseCentcommContraband]

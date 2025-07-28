@@ -45,11 +45,8 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!; //🌟Starlight🌟
         [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
 
-        [ValidatePrototypeId<EntityPrototype>]
-        public const string ObserverPrototypeName = "MobObserver";
-
-        [ValidatePrototypeId<EntityPrototype>]
-        public const string AdminObserverPrototypeName = "AdminObserver";
+        public static readonly EntProtoId ObserverPrototypeName = "MobObserver";
+        public static readonly EntProtoId AdminObserverPrototypeName = "AdminObserver";
 
         /// <summary>
         /// How many players have joined the round through normal methods.
@@ -108,7 +105,7 @@ namespace Content.Server.GameTicking
             var stationJobCounts = spawnableStations.ToDictionary(e => e, _ => 0);
             foreach (var netUser in netUserIds)
             {
-                if(!assignedJobs.TryGetValue(netUser, out var assignedJobAndStation) || assignedJobAndStation.Item1 is null)
+                if(!assignedJobs.TryGetValue(netUser, out var assignment) || assignment.job is null)
                 {
                     var playerSession = _playerManager.GetSessionById(netUser);
                     var evNoJobs = new NoJobsAvailableSpawningEvent(playerSession); // Used by gamerules to wipe their antag slot, if they got one
@@ -118,7 +115,7 @@ namespace Content.Server.GameTicking
                 }
                 else
                 {
-                    stationJobCounts[assignedJobAndStation.Item2] += 1;
+                    stationJobCounts[assignment.station] += 1;
                 }
             }
 
@@ -330,7 +327,11 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(mobMaybe);
             var mob = mobMaybe!.Value;
 
-            _mind.TransferTo(newMind, mob);
+			//Attach voices to mind 🌟Starlight🌟
+            newMind.Comp.Voice = character.Voice;
+            newMind.Comp.SiliconVoice = character.SiliconVoice;
+            
+			_mind.TransferTo(newMind, mob);
 
             _roles.MindAddJobRole(newMind, silent: silent, jobPrototype: jobId);
             var jobName = _jobs.MindTryGetJobName(newMind);
@@ -363,7 +364,7 @@ namespace Content.Server.GameTicking
 
             if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
             {
-                EntityManager.AddComponent<OwOAccentComponent>(mob);
+                AddComp<OwOAccentComponent>(mob);
             }
             if (player.UserId == new Guid("{c69211d4-1a75-4e57-b539-c90243e2ceda}"))
             {
@@ -517,7 +518,7 @@ namespace Content.Server.GameTicking
         public EntityCoordinates GetObserverSpawnPoint()
         {
             _possiblePositions.Clear();
-            var spawnPointQuery = EntityManager.EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
+            var spawnPointQuery = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
             while (spawnPointQuery.MoveNext(out var uid, out var point, out var transform))
             {
                 if (point.SpawnType != SpawnPointType.Observer

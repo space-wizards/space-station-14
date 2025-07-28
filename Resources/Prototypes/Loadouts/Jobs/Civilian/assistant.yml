@@ -18,7 +18,7 @@
       role: JobPassenger
       time: 72000 #20 hrs, fun mantle for the most experienced assistants
 
-# Face
+# Mask
 - type: loadout
   id: AssistantFace
   effects:
@@ -27,8 +27,7 @@
   equipment:
     mask: ClothingMaskGas
 
-# Jumpsuits
-# Basic
+# Jumpsuit
 - type: loadout
   id: BasicJumpsuit
   equipment:
@@ -39,7 +38,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtAssistant
 
-# Rainbow
 - type: loadout
   id: RainbowJumpsuit
   effects:
@@ -48,7 +46,6 @@
   equipment:
     jumpsuit: ClothingUniformColorRainbow
 
-# Rainbow Jumpskirt
 - type: loadout
   id: RainbowJumpskirt
   effects:
@@ -57,7 +54,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorRainbow
 
-# Ancient
 - type: loadout
   id: AncientJumpsuit
   effects:
@@ -111,7 +107,7 @@
   equipment:
     outerClothing: ClothingOuterWinterCoat
 
-# Shoes
+# Feet
 - type: loadout
   id: BlackShoes
   equipment:

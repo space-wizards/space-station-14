@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: ImprovisedMagazineBoxGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shell
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 5
+            - material: Cloth
+              amount: 3
+              doAfter: 5
+    - node: shell
+      entity: BaseMagazineBoxImprovised

@@ -163,9 +163,96 @@ public sealed partial class AntagSelectionSystem
     }
 
     /// <summary>
-    /// Checks if a given session has the primary antag preferences for a given definition
+    /// Return true if a player has any character that could take any antagonist in antagList
     /// </summary>
-    public bool HasPrimaryAntagPreference(ICommonSession? session, AntagSelectionDefinition def)
+    /// <param name="session">The player session to pull preferences from</param>
+    /// <param name="antagList">List of AntagPrototypes to query</param>
+    /// <param name="selectionTime">If this is IntraPlayerSpawn, then this will properly consider exclude
+    /// mindshielded roles</param>
+    private bool HasAntagPreference(ICommonSession? session, ICollection<ProtoId<AntagPrototype>> antagList, AntagSelectionTime selectionTime)
+    {
+        if (session == null)
+            return true;
+
+        var pref = _pref.GetPreferences(session.UserId);
+        var priorities = pref.JobPriorities.Where(kvp => kvp.Value != JobPriority.Never).ToDictionary().Keys;
+
+        foreach (var profile in pref.Characters.Values)
+        {
+            if (profile is not HumanoidCharacterProfile { Enabled: true } humanoid)
+                continue;
+
+            // If this is a crew antag and this character has no jobs that can be antag, then skip this profile.
+            if (selectionTime == AntagSelectionTime.IntraPlayerSpawn
+                && !humanoid.JobPreferences.Intersect(priorities).Any(_jobs.CanBeAntag))
+                continue;
+
+            foreach (var antag in antagList)
+            {
+                if (humanoid.AntagPreferences.Contains(antag))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Return true if a player has a positive priority for <paramref name="job"/> and also has any character with a
+    /// preference for <paramref name="job"/> with that could take any antagonist in antagList.
+    /// </summary>
+    /// <param name="session">The player session to pull preferences from</param>
+    /// <param name="antagList">List of AntagPrototypes to query</param>
+    /// <param name="selectionTime">If this is IntraPlayerSpawn, then this will properly consider exclude
+    /// mindshielded roles</param>
+    /// <param name="job">The job to filter the player's characters by</param>
+    /// <remarks>This variant is used after antag preselections to build up a player's eligible set of jobs.</remarks>
+    private bool HasAntagPreferenceWithJob(ICommonSession? session,
+        ICollection<ProtoId<AntagPrototype>> antagList,
+        AntagSelectionTime selectionTime,
+        ProtoId<JobPrototype> job)
+    {
+        if (session == null)
+            return true;
+
+        var pref = _pref.GetPreferences(session.UserId);
+        var priorities = pref.JobPriorities.Where(kvp => kvp.Value != JobPriority.Never).ToDictionary().Keys;
+
+        if (!priorities.Contains(job))
+            return false;
+
+        foreach (var profile in pref.Characters.Values)
+        {
+            if (profile is not HumanoidCharacterProfile { Enabled: true } humanoid)
+                continue;
+
+            if (!humanoid.JobPreferences.Contains(job))
+                continue;
+
+            // If this is a crew antag and they have no characters that can be antag considering their selected jobs,
+            // skip them.
+            if (selectionTime == AntagSelectionTime.IntraPlayerSpawn && !_jobs.CanBeAntag(job))
+                continue;
+
+            foreach (var antag in antagList)
+            {
+                if (humanoid.AntagPreferences.Contains(antag))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Check if a player's session has any character that can become a primary antag in <paramref name="def"/>.
+    /// </summary>
+    /// <param name="session">The player session to pull preferences from</param>
+    /// <param name="def">The antag selection definition to check</param>
+    /// <param name="selectionTime">If this is IntraPlayerSpawn, then this will properly consider exclude
+    /// mindshielded roles</param>
+    /// <param name="job">The job to filter the player's characters by</param>
+    public bool HasPrimaryAntagPreference(ICommonSession? session, AntagSelectionDefinition def, AntagSelectionTime selectionTime, ProtoId<JobPrototype>? job = null)
     {
         if (session == null)
             return true;
@@ -173,13 +260,19 @@ public sealed partial class AntagSelectionSystem
         if (def.PrefRoles.Count == 0)
             return false;
 
-        return _pref.GetPreferences(session.UserId).HasAntagPreference(def.PrefRoles);
+        return job is null
+            ? HasAntagPreference(session, def.PrefRoles, selectionTime)
+            : HasAntagPreferenceWithJob(session, def.PrefRoles, selectionTime, job.Value);
     }
 
     /// <summary>
-    /// Checks if a given session has the fallback antag preferences for a given definition
+    /// Check if a player's session has any character that can become a fallback antag in <paramref name="def"/>.
     /// </summary>
-    public bool HasFallbackAntagPreference(ICommonSession? session, AntagSelectionDefinition def)
+    /// <param name="session">The player session to pull preferences from</param>
+    /// <param name="def">The antag selection definition to check</param>
+    /// <param name="selectionTime">If this is IntraPlayerSpawn, then this will properly consider exclude
+    /// mindshielded roles</param>
+    public bool HasFallbackAntagPreference(ICommonSession? session, AntagSelectionDefinition def, AntagSelectionTime selectionTime)
     {
         if (session == null)
             return true;
@@ -187,7 +280,7 @@ public sealed partial class AntagSelectionSystem
         if (def.FallbackRoles.Count == 0)
             return false;
 
-        return _pref.GetPreferences(session.UserId).HasAntagPreference(def.FallbackRoles);
+        return HasAntagPreference(session, def.FallbackRoles, selectionTime);
     }
 
     /// <summary>

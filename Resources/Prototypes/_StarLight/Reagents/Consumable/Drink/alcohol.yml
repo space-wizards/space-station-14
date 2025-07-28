@@ -1,0 +1,102 @@
+- type: reagent
+  id: DraganSpecial
+  name: reagent-name-dragan-special
+  parent: BaseAlcohol
+  desc: reagent-desc-dragan-special
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: draganspecial
+  color: "#610e20"
+  metamorphicSprite:
+    sprite: _Starlight/Objects/Consumable/Drinks/dragan_special.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.45
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Brute: -3
+            Burn: -1.25
+    Alcohol:
+      effects:
+      - !type:Drunk
+        boozePower: 5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+        - !type:OrganType
+          type: Vox
+        damage:
+          types:
+            Poison: 0.4
+    Poison:
+      metabolismRate: 0.5
+      effects:
+      # Enhanced screaming for higher doses
+      - !type:Emote
+        emote: Scream
+        showInChat: true
+        force: true
+        probability: 0.9
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+      # Toxin damage for non-Vox who dare to drink it
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 3
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+        damage:
+          types:
+            Poison: 2
+      - !type:ChemVomit
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: DraganSpecial
+          min: 8
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.20
+        sprintSpeedModifier: 1.20
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 1.5
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 1.5
+        type: Remove
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: DraganSpecial
+          min: 9
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 120
+        refresh: true

@@ -195,3 +195,60 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+
+- type: entity
+  name: forged double-barrel shotgun
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseMinorContraband]
+  id: WeaponShotgunForged
+  description: Decently made double-barrel shotgun, reinforced with mixed steel and plasteel plates to keep it together. Not as accurate as a real gun.
+  components:
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun_inhands_64x.rsi
+    size: Normal
+    shape:
+    - 0,0,4,0
+  - type: Gun
+    spread: 15
+    fireRate: 3
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
+  - type: GunRequiresWield
+  - type: BallisticAmmoProvider
+    capacity: 2
+    proto: null
+
+- type: entity
+  name: makeshift shotgun
+  parent: [WeaponFlareGunSecurity, BaseMinorContraband]
+  id: WeaponShotgunMakeshift
+  description: A small hand-cannon that fires .50 shotgun shells. Has no cloth to hold it together, so it has a high chance of falling apart with every shot.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/makeshift_shotgun.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/makeshift_shotgun.rsi
+  - type: Construction
+    graph: MakeshiftShotgunGraph
+    node: shotgun
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0.50
+    selfDamage:
+      types:
+        Blunt: 5
+        Heat: 5
+    items:
+      - id: ModularBarrel
+        launchAngle: 0
+        prob: 1
+      - id: ModularReceiver
+        launchAngle: 90
+        prob: 0.10
+      - id: RifleStock
+        launchAngle: 180
+        prob: 0.80

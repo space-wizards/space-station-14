@@ -4,12 +4,24 @@
       "x": 32,
       "y": 32
     },
-    "copyright": "Resprited by aedler for SS14",
+    "copyright": "Resprited by aedler for SS14, gatheredlow sprited by Sha-Seng (Github), lowpigtails by Skeleskitty (Discord)",
     "license": "CC-BY-SA-3.0",
     "states": [
         {
           "name": "longbangs",
           "directions": 4
-        }
+        },
+        {
+          "name": "himecutwithtails",
+          "directions": 4
+        },
+         {
+         "name": "gatheredlow",
+         "directions": 4
+        },
+       {
+         "name": "lowpigtails",
+        "directions": 4
+      }
     ]
 }

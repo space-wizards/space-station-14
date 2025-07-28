@@ -50,7 +50,7 @@
     endSound:
       path: /Audio/Weapons/chainsaw.ogg
   - type: Reflect
-    reflectProb: 0.2
+    reflectProb: 0.1
 
 #Mantis Blade
 - type: entity

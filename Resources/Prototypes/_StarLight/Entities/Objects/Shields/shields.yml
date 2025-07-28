@@ -1,0 +1,304 @@
+- type: entity
+  name: paladin shield
+  parent: [ BaseItem, BaseMajorContraband ] # Easier to remake it than inheret it, due to wiz keeping all shields in one folder and mine doing the opposite, due to the suitslot sprites.
+  id: PaladinShield
+  description: A shield for a true paladin! Good at deflecting hits with swords and absorbing the impact from bats, but not much else.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Weapons/Melee/paladin_shield.rsi
+      state: base
+    - type: Item
+      sprite: _Starlight/Objects/Weapons/Melee/paladin_shield.rsi
+      size: Ginormous
+    - type: Clothing
+      sprite: _Starlight/Objects/Weapons/Melee/paladin_shield.rsi
+      quickEquip: false
+      slots:
+      - Back
+      - suitStorage
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.5 #Encourages long swordfights, which I really, really want to see.
+          Piercing: 0.8
+          Heat: 0.85
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.3
+          Piercing: 0.7
+          Heat: 0.75
+        flatReductions:
+          Blunt: 1
+          Slash: 1
+          Piercing: 1
+          Heat: 1
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 14 #Bonk!
+      soundHit:
+        path: "/Audio/Weapons/smash.ogg"
+    - type: Damageable
+      damageContainer: Shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 160
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 120
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetPlasteel:
+                  min: 4
+                  max: 13
+                SheetSteel:
+                  min: 5
+                  max: 13
+
+- type: entity
+  name: paladin greatshield
+  parent: [ PaladinShield, BaseMajorContraband ]
+  id: PaladinShieldGreat
+  description: You're up against the wall and I! AM! THE! FUCKING! WALL!
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Weapons/Melee/paladin_greatshield.rsi
+      state: base
+    - type: Item
+      sprite: _Starlight/Objects/Weapons/Melee/paladin_greatshield.rsi
+    - type: Clothing
+      sprite: _Starlight/Objects/Weapons/Melee/paladin_greatshield.rsi
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.7
+          Piercing: 0.7
+          Heat: 0.85
+      activeBlockModifier:
+        coefficients: #Insanely high resist because normal shields suck when raising. This is a WALL.
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0.1
+          Heat: 0.75 # Achilles Heel
+    - type: MeleeWeapon
+      attackRate: 0.50 # Large and heavy but god help you if someone hits you with this thing.
+      damage:
+        types:
+          Blunt: 20    
+    - type: ClothingSpeedModifier
+      walkModifier: 0.7
+      sprintModifier: 0.5
+    - type: HeldSpeedModifier
+    - type: Damageable
+      damageContainer: Shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 300
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 250 #Combined with damage resistances, IF raised, can tank 6 lector magdumps before finally breaking. You will STAM CRIT before then. If just held, or a laser is used it'll function like a normal shield more or less.
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetPlasteel:
+                  min: 6
+                  max: 20
+                SheetSteel:
+                  min: 4
+                  max: 15
+                SheetGlass:
+                  min: 2
+                  max: 3
+
+- type: entity
+  name: forged buckler shield
+  parent: [ PaladinShield, BaseMinorContraband ]
+  id: ForgedShieldBuckler
+  description: Made from the best plasteel the tidersmiths could offer. Decent all-arounder, however being made out of solid metal makes it get hot real fast.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Weapons/Melee/forged_buckler_shield.rsi
+      state: base
+    - type: Item
+      sprite: _Starlight/Objects/Weapons/Melee/forged_buckler_shield.rsi
+    - type: Clothing
+      sprite: _Starlight/Objects/Weapons/Melee/forged_buckler_shield.rsi
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.6
+          Piercing: 0.7
+          Heat: 0.9
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.5
+          Piercing: 0.6
+          Heat: 0.8
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 12 
+    - type: Damageable
+      damageContainer: Shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 140
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetPlasteel:
+                  min: 2
+                  max: 6
+                SheetSteel:
+                  min: 1
+                  max: 4
+
+- type: entity
+  name: forged tower shield
+  parent: [ ForgedShieldBuckler, BaseMinorContraband ]
+  id: ForgedShieldTower
+  description: Tall and menacing. A bit on the heavy side, however.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Weapons/Melee/forged_tower_shield.rsi
+      state: base
+    - type: Item
+      sprite: _Starlight/Objects/Weapons/Melee/forged_tower_shield.rsi
+    - type: Clothing
+      sprite: _Starlight/Objects/Weapons/Melee/forged_tower_shield.rsi
+    - type: MeleeWeapon
+      attackRate: 0.75
+      damage:
+        types:
+          Blunt: 15
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 0.9
+    - type: HeldSpeedModifier
+    - type: Damageable
+      damageContainer: Shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 180
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetPlasteel:
+                  min: 2
+                  max: 10
+                SheetSteel:
+                  min: 4
+                  max: 10
+                SheetGlass:
+                  min: 1
+                  max: 2
+
+- type: entity
+  name: improvised shield
+  parent: [ PaladinShield, BaseMinorContraband ]
+  id: ImprovisedShield
+  description: Steel welded together in a interlocking pattern to hold up better to various kinds of blows. Don't expect it to do well in a gunfight, however.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Weapons/Melee/improvised_shield.rsi
+      state: base
+    - type: Item
+      sprite: _Starlight/Objects/Weapons/Melee/improvised_shield.rsi
+    - type: Clothing
+      sprite: _Starlight/Objects/Weapons/Melee/improvised_shield.rsi
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.7
+          Piercing: 0.9
+          Heat: 0.95
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.6
+          Piercing: 0.8
+          Heat: 0.85
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 10
+    - type: Damageable
+      damageContainer: Shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 60
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel:
+                  min: 2
+                  max: 10
+    - type: Construction
+      graph: MakeshiftShield
+      node: makeshiftShield

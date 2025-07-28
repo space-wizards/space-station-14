@@ -188,9 +188,11 @@ binds:
   type: State
   key: Z
   mod1: Alt
+# 🌟Starlight🌟
 - function: OpenCharacterMenu
   type: State
   key: C
+  mod1: Shift
 - function: OpenEmotesMenu
   type: State
   key: Y
@@ -525,6 +527,9 @@ binds:
 - function: Arcade3
   type: State
   key: Z
+- function: ToggleKnockdown
+  type: State
+  key: C
 - function: OpenAbilitiesMenu
   type: State
   key: K

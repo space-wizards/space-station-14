@@ -47,6 +47,6 @@ public sealed class NewLifeEui : BaseEui
 
         if (state is not NewLifeEuiState newLifeEuiState)
             return;
-        _window.ReloadUI(newLifeEuiState.UsedSlots);
+        _window.ReloadUI(newLifeEuiState.UsedSlots, newLifeEuiState.RemainingLives, newLifeEuiState.MaxLives);
     }
 }

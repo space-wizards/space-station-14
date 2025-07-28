@@ -53,6 +53,7 @@ using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 using System.Collections.Generic;
 using Content.Server.PowerCell;
+using Content.Shared.Body.Components;
 using Content.Shared.Cargo;
 
 namespace Content.Server.Weapons.Ranged.Systems;
@@ -142,6 +143,8 @@ public sealed partial class GunSystem : SharedGunSystem
         // I must be high because this was getting tripped even when true.
         // DebugTools.Assert(direction != Vector2.Zero);
         var shotProjectiles = new List<EntityUid>(ammo.Count);
+
+        bool bulletSoundCheck = false; //starlight
 
         foreach (var (ent, shootable) in ammo)
         {
@@ -311,7 +314,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         {
                             _stunSystem.TryStun(hitEntity, TimeSpan.FromSeconds(hitscan.StunAmount), true, status);
 
-                            _stunSystem.TryKnockdown(hitEntity, TimeSpan.FromSeconds(hitscan.KnockdownAmount), true, status);
+                            _stunSystem.TryKnockdown(hitEntity, TimeSpan.FromSeconds(hitscan.KnockdownAmount), true, status: status);
 
                             _stunSystem.TrySlowdown(hitEntity, TimeSpan.FromSeconds(hitscan.SlowdownAmount), true, hitscan.WalkSpeedMultiplier, hitscan.RunSpeedMultiplier, status);
                         }
@@ -380,6 +383,7 @@ public sealed partial class GunSystem : SharedGunSystem
         RaiseLocalEvent(gunUid, new AmmoShotEvent()
         {
             FiredProjectiles = shotProjectiles,
+            Shooter = user, //starlight
         });
 
         void CreateAndFireProjectiles(EntityUid ammoEnt, AmmoComponent ammoComp)
@@ -541,7 +545,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
             }
 
-            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+            // Starlight confirm bullet sound should play
+            bulletSoundCheck = true;
 
             return effects;
 
@@ -580,6 +585,11 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                 }
             }
+        }
+
+        //starlight check to see if bullet sound should play
+        if (bulletSoundCheck){
+            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
         }
     }
 

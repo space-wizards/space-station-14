@@ -958,6 +958,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("sex");
 
+                    b.Property<string>("SiliconVoice")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("silicon_voice");
+
                     b.Property<string>("SkinColor")
                         .IsRequired()
                         .HasColumnType("text")
@@ -1437,6 +1442,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)")
                         .HasColumnName("custom_specie_name");
+
+                    b.PrimitiveCollection<List<string>>("CyberneticIds")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("cybernetic_ids");
 
                     b.Property<int>("ProfileId")
                         .HasColumnType("integer")

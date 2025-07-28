@@ -1,4 +1,27 @@
 - type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseCommandContraband]
+  id: ClothingOuterCoatBlueShield
+  name: blueshield officer's overcoat
+  description: A coat worn by Blueshield Officers who don't mind a little diplomancy. Heavily reinforced for when diplomancy won't cut it.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Coats/blueshield_coat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Coats/blueshield_coat.rsi
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.80
+  - type: Item
+
+- type: entity
   parent: [ ClothingOuterStorageFoldableBase, BaseCommandContraband ]
   id: ClothingOuterCoatNtrep
   name: nt representive jacket
@@ -43,6 +66,26 @@
         Heat: 0.85
         Caustic: 0.75
 
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatInspector
+  name: inspector's coat
+  description: A strict inspector's coat from a bygone era.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Coats/insp_coat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Coats/insp_coat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+        Caustic: 0.9
+
+#USSP
 - type: entity
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSovietContraband]
   id: ClothingOuterSovietCoat

@@ -102,14 +102,15 @@ namespace Content.Client.Lobby.UI
 
         private bool _isDirty;
 
-        [ValidatePrototypeId<GuideEntryPrototype>]
-        private const string DefaultSpeciesGuidebook = "Species";
+        private static readonly ProtoId<GuideEntryPrototype> DefaultSpeciesGuidebook = "Species";
 
         public event Action<List<ProtoId<GuideEntryPrototype>>>? OnOpenGuidebook;
 
         private readonly ISawmill _sawmill;
 
         private List<VoicePrototype> _voices = [];
+
+        private List<VoicePrototype> _siliconVoices = []; // 🌟Starlight🌟
 
         public HumanoidProfileEditor(
             IClientPreferencesManager preferencesManager,
@@ -248,6 +249,7 @@ namespace Content.Client.Lobby.UI
             };
 
             RgbSkinColorContainer.AddChild(_rgbSkinColorSelector = new ColorSelectorSliders());
+            _rgbSkinColorSelector.SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv; // defaults color selector to HSV
             _rgbSkinColorSelector.OnColorChanged += _ =>
             {
                 OnSkinColorOnValueChanged();
@@ -454,6 +456,12 @@ namespace Content.Client.Lobby.UI
             Markings.OnMarkingRankChange += OnMarkingChange;
 
             #endregion Markings
+            
+            // Starlight
+            #region Cybernetics
+            TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-cybernetics-tab"));
+            Cybernetics.OnCyberneticsUpdated += OnCyberneticsUpdated;
+            #endregion Cybernetics
 
             RefreshFlavorText();
 
@@ -489,6 +497,22 @@ namespace Content.Client.Lobby.UI
             };
             VoicePreviewButton.OnPressed +=
                 _ => _entManager.System<TextToSpeechSystem>().RequestPreviewTts(Profile?.Voice ?? "");
+
+            // 🌟Starlight🌟 start
+            _siliconVoices = _prototypeManager
+                .EnumeratePrototypes<VoicePrototype>()
+                .Where(o => o.Silicon)
+                .ToList();
+
+            SiliconVoiceButton.OnItemSelected += args =>
+            {
+                SiliconVoiceButton.SelectId(args.Id);
+                Profile = Profile?.WithSiliconVoice(_siliconVoices[args.Id].ID);
+                IsDirty = true;
+            };
+            SiliconVoicePreviewButton.OnPressed +=
+                _ => _entManager.System<TextToSpeechSystem>().RequestPreviewTts(Profile?.SiliconVoice ?? "");
+            // 🌟Starlight🌟 end
         }
         private void UpdateVoicesControls()
         {
@@ -517,6 +541,37 @@ namespace Content.Client.Lobby.UI
             if (voiceChoiceId != -1)
                 VoiceButton.TrySelectId(voiceChoiceId);
         }
+        // 🌟Starlight🌟 Start
+        private void UpdateSiliconVoicesControls()
+        {
+            if (Profile is null)
+                return;
+
+            SiliconVoiceButton.Clear();
+
+            for (var i = 0; i < _siliconVoices.Count; i++)
+            {
+                var voice = _siliconVoices[i];
+
+                SiliconVoiceButton.AddItem($"[{voice.Sex}] {Loc.GetString(voice.Name)}", i);
+            }
+
+            if (string.IsNullOrEmpty(Profile.SiliconVoice))
+            {
+                var available = _siliconVoices.ToArray();
+                if (available.Length > 0)
+                {
+                    var index = new Random().Next(0, available.Length);
+                    Profile.SiliconVoice = available[index].ID;
+                }
+            }
+
+            var siliconVoiceChoiceId = _siliconVoices.FindIndex(x => x.ID == Profile.SiliconVoice);
+            if (siliconVoiceChoiceId != -1)
+                SiliconVoiceButton.TrySelectId(siliconVoiceChoiceId);
+        }
+        // 🌟Starlight🌟 end
+
         /// <summary>
         /// Refreshes the flavor text editor status.
         /// </summary>
@@ -822,6 +877,8 @@ namespace Content.Client.Lobby.UI
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
             UpdateVoicesControls();
+            UpdateSiliconVoicesControls(); // 🌟Starlight🌟
+            UpdateCybernetics(); // Starlight
 
             RefreshAntags();
             RefreshJobs();
@@ -868,9 +925,9 @@ namespace Content.Client.Lobby.UI
             var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
             var page = DefaultSpeciesGuidebook;
             if (_prototypeManager.HasIndex<GuideEntryPrototype>(species))
-                page = species;
+                page = new ProtoId<GuideEntryPrototype>(species.Id); // Gross. See above todo comment.
 
-            if (_prototypeManager.TryIndex<GuideEntryPrototype>(DefaultSpeciesGuidebook, out var guideRoot))
+            if (_prototypeManager.TryIndex(DefaultSpeciesGuidebook, out var guideRoot))
             {
                 var dict = new Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry>();
                 dict.Add(DefaultSpeciesGuidebook, guideRoot);
@@ -1191,6 +1248,12 @@ namespace Content.Client.Lobby.UI
             ReloadProfilePreview();
         }
 
+        // Starlight
+        private void OnCyberneticsUpdated(List<CyberneticImplant> cybernetics) {
+            Profile = Profile?.WithCybernetics(cybernetics.Select(p => p.ID).ToList());
+            ReloadPreview();
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -1228,6 +1291,7 @@ namespace Content.Client.Lobby.UI
             Markings.SetSex(newSex);
             ReloadPreview();
             UpdateVoicesControls();
+            UpdateSiliconVoicesControls(); // 🌟Starlight🌟
         }
 
         private void SetGender(Gender newGender)
@@ -1477,17 +1541,13 @@ namespace Content.Client.Lobby.UI
             {
                 return;
             }
-            var hairMarking = Profile.Appearance.HairStyleId switch
-            {
-                HairStyles.DefaultHairStyle => new List<Marking>(),
-                _ => new() { new(Profile.Appearance.HairStyleId, new List<Color>() { Profile.Appearance.HairColor }, Profile.Appearance.HairGlowing) }, //starlight glowing
-            };
+            var hairMarking = Profile.Appearance.HairStyleId == HairStyles.DefaultHairStyle
+                ? new List<Marking>()
+                : new() { new(Profile.Appearance.HairStyleId, new List<Color>() { Profile.Appearance.HairColor }, Profile.Appearance.HairGlowing) };
 
-            var facialHairMarking = Profile.Appearance.FacialHairStyleId switch
-            {
-                HairStyles.DefaultFacialHairStyle => new List<Marking>(),
-                _ => new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }, Profile.Appearance.FacialHairGlowing) }, //starlight glowing
-            };
+            var facialHairMarking = Profile.Appearance.FacialHairStyleId == HairStyles.DefaultFacialHairStyle
+                ? new List<Marking>()
+                : new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }, Profile.Appearance.FacialHairGlowing) };
 
             HairStylePicker.UpdateData(
                 hairMarking,
@@ -1577,6 +1637,15 @@ namespace Content.Client.Lobby.UI
 
             Markings.CurrentEyeColor = Profile.Appearance.EyeColor;
             EyeColorPicker.SetData(Profile.Appearance.EyeColor, Profile.Appearance.EyeGlowing); //starlight glowing
+        }
+
+        // Starlight
+        private void UpdateCybernetics(){
+            if (Profile is null)
+            {
+                return;
+            }
+            Cybernetics.SetData(Profile.Cybernetics, (_species.Find(x => x.ID == Profile?.Species) ?? _species.First()).RoundstartCyberwareCapacity);
         }
 
         private void UpdateSaveButton()

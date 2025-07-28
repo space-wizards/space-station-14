@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: ModularBarrelGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: shotgun
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 3
+  - node: shotgun
+    entity: ModularBarrel

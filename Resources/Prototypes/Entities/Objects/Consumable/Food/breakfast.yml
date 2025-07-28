@@ -1,0 +1,50 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_breakfast.yml
+
+# Base
+
+- type: entity
+  parent: FoodInjectableBase
+  id: FoodBreakfastBase
+  abstract: true
+  description: A full breakfast, rise and shine!
+  components:
+  - type: Item
+    storedRotation: -90
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/breakfast.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 60
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 40
+        - ReagentId: Vitamin
+          Quantity: 10
+
+# Breakfasts
+
+- type: entity
+  name: full american breakfast
+  parent: FoodBreakfastBase
+  id: FoodBreakfastAmerican
+  description: A huge plate of protein and carbs, more likely to put you back in bed than get you out of it. Oh, what fresh hell is this?
+  components:
+  - type: FlavorProfile
+    flavors:
+      - food
+  - type: Sprite
+    state: fullamerican
+
+- type: entity
+  name: full english breakfast
+  parent: FoodBreakfastBase
+  id: FoodBreakfastEnglish
+  description: A huge plate of protein and carbs, more likely to put you back in bed than get you out of it. Don't mention the war!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - food
+  - type: Sprite
+    state: fullenglish

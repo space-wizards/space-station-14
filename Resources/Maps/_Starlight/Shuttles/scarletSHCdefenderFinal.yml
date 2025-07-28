@@ -4942,32 +4942,23 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         65:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         66:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         67:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         68:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         69:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         70:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         71:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         72:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         73:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignSomethingOld2
   entities:
   - uid: 629

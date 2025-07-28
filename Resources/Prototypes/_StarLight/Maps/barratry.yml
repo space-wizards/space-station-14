@@ -2,7 +2,7 @@
   id: Barratry
   mapName: 'Barratry'
   mapPath: /Maps/_Starlight/Stations/Barratry.yml
-  minPlayers: 30
+  minPlayers: 40
   maxPlayers: 80
   stations:
     Barratry:

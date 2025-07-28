@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseSovietContraband]
   id: SovietDeskFlag
   name: soviet desk flag
   description: Belikov. Have you dug up my mole yet?

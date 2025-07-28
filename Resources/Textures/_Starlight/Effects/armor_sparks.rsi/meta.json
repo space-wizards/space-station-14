@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Drawn by deltanedas (github) for SS14, modified by JustAdler for https://github.com/ss14Starlight/space-station-14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "armor_sparks",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ]
+      ]
+    }
+  ]
+}

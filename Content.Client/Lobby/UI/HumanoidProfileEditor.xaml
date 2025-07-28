@@ -103,6 +103,14 @@
                                     <OptionButton Name="VoiceButton" HorizontalAlignment="Left" />
                                     <Button Name="VoicePreviewButton" Text="{Loc 'humanoid-profile-editor-voice-play'}" MaxWidth="80" />
                                 </BoxContainer>
+                                <!--Starlight Start-->
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-silicon-voice-label'}" />
+                                    <Control HorizontalExpand="True"/>
+                                    <OptionButton Name="SiliconVoiceButton" HorizontalAlignment="Left" />
+                                    <Button Name="SiliconVoicePreviewButton" Text="{Loc 'humanoid-profile-editor-voice-play'}" MaxWidth="80" />
+                                </BoxContainer>
+                                <!--Starlight End-->
                             </BoxContainer>
                             <!-- Skin -->
                             <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
@@ -145,6 +153,13 @@
                     <!-- Markings -->
                     <ScrollContainer VerticalExpand="True">
                         <humanoid:MarkingPicker Name="Markings" IgnoreCategories="Hair,FacialHair" />
+                    </ScrollContainer>
+                </BoxContainer>
+                <!-- Starlight -->
+                <BoxContainer Name="CyberneticsTab" Orientation="Vertical" Margin="10">
+                    <!-- Cybernetics -->
+                    <ScrollContainer VerticalExpand="True">
+                        <humanoid:CyberneticsPicker Name="Cybernetics" />
                     </ScrollContainer>
                 </BoxContainer>
             </TabContainer>
