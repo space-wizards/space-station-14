@@ -97,6 +97,9 @@ public sealed class GithubClient
 
     private void OnPrivateKeyPathChanged(string path)
     {
+        if (string.IsNullOrEmpty(path))
+            return;
+
         if (!File.Exists(path))
         {
             _sawmill.Error($"\"{path}\" does not exist.");
@@ -116,6 +119,7 @@ public sealed class GithubClient
         catch
         {
             _sawmill.Error($"\"{path}\" does not contain a valid private key!");
+            return;
         }
 
         _privateKey = fileText;

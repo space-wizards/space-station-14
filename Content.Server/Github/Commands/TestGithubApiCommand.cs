@@ -34,13 +34,13 @@ public sealed class TestGithubApiCommand : LocalizedCommands
 
         if (string.IsNullOrWhiteSpace(path))
         {
-            shell.WriteError(Loc.GetString("github-command-no-key"));
+            shell.WriteError(Loc.GetString("github-command-no-path"));
             return;
         }
 
         if (string.IsNullOrWhiteSpace(appId))
         {
-            shell.WriteError(Loc.GetString("github-command-no-key"));
+            shell.WriteError(Loc.GetString("github-command-no-app-id"));
             return;
         }
 

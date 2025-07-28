@@ -4,8 +4,8 @@ cmd-testgithubapi-desc = This command makes a few requests to the github api. Re
 cmd-testgithubapi-help = Usage: testgithubapi
 
 github-command-not-enabled = The api is not enabled!
-github-command-no-key = The key path is empty!
-github-command-no-key = The app id is empty!
+github-command-no-path = The key path is empty!
+github-command-no-app-id = The app id is empty!
 github-command-no-repo-name = The repository name is empty!
 github-command-no-owner = The repository owner is empty!
 
