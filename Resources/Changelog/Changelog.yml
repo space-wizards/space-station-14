@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Hrosts
-  changes:
-  - message: Added rehydratable mop bucket cube, replacing the big and unwieldy yellow
-      bucket in the janitorial supplies crate.
-    type: Add
-  id: 8302
-  time: '2025-04-21T17:16:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34586
 - author: K-Dynamic
   changes:
   - message: Increased ratio of crew to thieves from 15 to 20.
@@ -3906,3 +3898,10 @@
   id: 8813
   time: '2025-07-28T12:59:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39213
+- author: SuperGDPWYL
+  changes:
+  - message: The Warden now starts with a network configurator in their locker.
+    type: Add
+  id: 8814
+  time: '2025-07-28T16:09:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39254
