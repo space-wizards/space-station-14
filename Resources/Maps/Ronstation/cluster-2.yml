@@ -40950,8 +40950,6 @@ entities:
       pos: -19.5,2.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 20
   - uid: 6109
