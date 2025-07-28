@@ -4,7 +4,7 @@ using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class TriggerSystem : EntitySystem
+public sealed partial class TriggerSystem
 {
     private void InitializeCollide()
     {
@@ -13,7 +13,7 @@ public sealed partial class TriggerSystem : EntitySystem
 
         SubscribeLocalEvent<TriggerOnTimedCollideComponent, StartCollideEvent>(OnTimedCollide);
         SubscribeLocalEvent<TriggerOnTimedCollideComponent, EndCollideEvent>(OnTimedEndCollide);
-        SubscribeLocalEvent<TriggerOnTimedCollideComponent, ComponentRemove>(OnTimedRemove);
+        SubscribeLocalEvent<TriggerOnTimedCollideComponent, ComponentShutdown>(OnTimedShutdown);
     }
 
     private void OnCollide(Entity<TriggerOnCollideComponent> ent, ref StartCollideEvent args)
@@ -48,7 +48,7 @@ public sealed partial class TriggerSystem : EntitySystem
             RemComp<ActiveTriggerOnTimedCollideComponent>(ent);
     }
 
-    private void OnTimedRemove(Entity<TriggerOnTimedCollideComponent> ent, ref ComponentRemove args)
+    private void OnTimedShutdown(Entity<TriggerOnTimedCollideComponent> ent, ref ComponentShutdown args)
     {
         RemComp<ActiveTriggerOnTimedCollideComponent>(ent);
     }
@@ -63,9 +63,9 @@ public sealed partial class TriggerSystem : EntitySystem
             {
                 if (curTime > collidingTime)
                 {
-                    Trigger(uid, collidingEntity, triggerOnTimedCollide.KeyOut);
                     triggerOnTimedCollide.Colliding[collidingEntity] += triggerOnTimedCollide.Threshold;
                     Dirty(uid, triggerOnTimedCollide);
+                    Trigger(uid, collidingEntity, triggerOnTimedCollide.KeyOut);
                 }
             }
         }

@@ -139,7 +139,7 @@ public sealed partial class TriggerSystem : EntitySystem
     /// Delay an active timer trigger.
     /// Returns false if not active.
     /// </summary>
-    /// <param name="amount">The time to add in seconds.</param>
+    /// <param name="amount">The time to add.</param>
     public bool TryDelay(Entity<TimerTriggerComponent?> ent, TimeSpan amount)
     {
         if (!Resolve(ent, ref ent.Comp, false) || !HasComp<ActiveTimerTriggerComponent>(ent))

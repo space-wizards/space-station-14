@@ -351,6 +351,7 @@
         damage: 50
       behaviors:
       - !type:TriggerBehavior
+        keyOut: timer # immediately explode
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
