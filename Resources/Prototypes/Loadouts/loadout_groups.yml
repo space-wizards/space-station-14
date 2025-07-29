@@ -917,6 +917,11 @@
   - ScientistBackpack
   - ScientistSatchel
   - ScientistDuffel
+  # Ronstation - start of modifications.
+  - RoboticistBackpack
+  - RoboticistSatchel
+  - RoboticistDuffel
+  # Ronstation - end of modifications.
 
 - type: loadoutGroup
   id: ScientistOuterClothing
