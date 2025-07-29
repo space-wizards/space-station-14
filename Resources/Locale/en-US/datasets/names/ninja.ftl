@@ -28,10 +28,8 @@ names-ninja-dataset-26 = Baki
 names-ninja-dataset-27 = Ogre
 names-ninja-dataset-28 = Daemon
 names-ninja-dataset-29 = Goemon
-##STARLIGHT
-names-ninja-dataset-30 = Nagato
-##STARLIGHT
-names-ninja-dataset-31 = Kotaro
+names-ninja-dataset-30 = Nagato # Starlight
+names-ninja-dataset-31 = Kotaro # Starlight
 names-ninja-dataset-32 = Death
 names-ninja-dataset-33 = Aria
 names-ninja-dataset-34 = Bro
