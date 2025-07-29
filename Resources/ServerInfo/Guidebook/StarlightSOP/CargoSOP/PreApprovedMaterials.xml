@@ -11,8 +11,6 @@ Consideration to the station's needs and Cargo's budget still applies.
 <Box>
 	<GuideEntityEmbed Entity="SheetSteel"/>
 	<GuideEntityEmbed Entity="SheetPlastic"/>
-</Box>
-<Box>
 	<GuideEntityEmbed Entity="SheetGlass"/>
 	<GuideEntityEmbed Entity="MaterialCloth"/>
 </Box>
