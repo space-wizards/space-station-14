@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Station AI now has a name identifier appended after their name.
-    type: Tweak
-  id: 8305
-  time: '2025-04-21T17:54:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36801
 - author: lzk228
   changes:
   - message: Fix identity reveal for creaming and meat spike popups.
@@ -3907,3 +3900,13 @@
   id: 8816
   time: '2025-07-29T07:34:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39259
+- author: Alkheemist
+  changes:
+  - message: Protected Grids can now again have their hull and tiles repaired (Evac,
+      ATS, etc)
+    type: Fix
+  - message: Protected Grids can no longer be expanded outside of their original size.
+    type: Fix
+  id: 8817
+  time: '2025-07-29T12:01:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39271
