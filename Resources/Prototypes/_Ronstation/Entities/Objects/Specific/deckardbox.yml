@@ -1,0 +1,63 @@
+- type: entity
+  id: DeckardBox
+  parent: [ BaseStorageItem, BaseBagOpenClose ]
+  name: deckard box
+  description: An artisanal wooden box made to house the Deckard and two speed loaders. It has a good weight to it.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Objects/Storage/deckardbox.rsi
+    layers:
+    - state: closed
+      map: ["closeLayer"]
+    - state: open
+      map: ["openLayer"]
+    - state: loader1
+      map: ["loader1"]
+      visible: false
+    - state: loader2
+      map: ["loader2"]
+      visible: false
+    - state: deckard
+      map: ["deckard"]
+      visible: false
+  - type: Item
+    sprite: _Ronstation/Objects/Storage/deckardbox.rsi
+    size: Normal
+    shape:
+    - 0,0,2,1
+  - type: Storage
+    maxItemSize: Small
+    whitelist:
+      tags:
+        - Sidearm
+        - SpeedLoaderMagnum
+    grid:
+    - 0,0,3,1
+  - type: ItemCounter
+    count:
+      tags: [ Sidearm, SpeedLoaderMagnum ]
+    composite: true
+    layerStates:
+    - deckard
+    - loader1
+    - loader2
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 200
+  - type: StaticPrice
+    price: 250
+  - type: Appearance
+
+- type: entity
+  id: DeckardBoxFilled
+  parent: DeckardBox
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: SpeedLoaderDeckard
+      amount: 2
+    - id: WeaponRevolverDeckard

@@ -98,3 +98,25 @@
   - type: Construction
     graph: ClothingBagPet
     node: bagPet
+
+- type: entity
+  parent: Clothing
+  id: ClothingBackpackHarmpack
+  name: H.A.R.M.P.A.C.K.
+  description: Now you can reload, punch, and eat a snack - simultaneously.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Specific/harmpack.rsi
+    state: icon
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    slots: BACK
+  - type: ExtraHandsEquipment
+    hands:
+      # middle hands to prevent overlapping inhand sprites
+      # This can be changed once we have per-hand displacement maps
+      extra_hand_1:
+        location: Middle
+      extra_hand_2:
+        location: Middle

@@ -1,4 +1,3 @@
-# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 research-discipline-none = None
 research-discipline-industrial = Industrial
 research-discipline-arsenal = Arsenal
@@ -40,6 +39,7 @@ research-technology-kinetic-modifications = Kinetic Modifications
 research-technology-basic-shuttle-armament = Shuttle Basic Armament
 research-technology-advanced-shuttle-weapon = Advanced Shuttle Weapons
 research-technology-thermal-weaponry = Thermal Weaponry
+research-technology-dual-wielding-technology = Dual Wielding Technology
 
 research-technology-basic-robotics = Basic Robotics
 research-technology-basic-anomalous-research = Basic Anomalous Research
@@ -67,7 +67,6 @@ research-technology-audio-visual-communication = A/V Communication
 research-technology-faux-astro-tiles = Faux Astro-Tiles
 research-technology-biochemical-stasis = Biochemical Stasis
 research-technology-mechanized-treatment = Mechanized Treatment
-research-technology-portable-resuscitation = Portable Resuscitation # Ronstation - modification
 research-technology-robotic-cleanliness = Robotic Cleanliness
 research-technology-advanced-cleaning = Advanced Cleaning
 research-technology-meat-manipulation = Meat Manipulation

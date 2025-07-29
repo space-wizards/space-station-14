@@ -1,0 +1,8 @@
+# Traitor single items
+
+- type: stealTargetGroup
+  id: WeaponPistolNegotiator
+  name: steal-target-groups-negotiator
+  sprite:
+    sprite: _Ronstation/Objects/Weapons/Guns/Pistols/negotiator.rsi
+    state: icon

@@ -48,8 +48,7 @@ public class MapLoadBenchmark
         PoolManager.Shutdown();
     }
 
-    public static readonly string[] MapsSource = { "Empty", "Saltern", "Box", "Bagel", "Dev", "CentComm", "Core", "TestTeg", "Packed", "Omega", "Reach", "Meta", "Marathon", "MeteorArena", "Fland", "Oasis", "Convex", "Saltern2", "Cluster2", "Atlas2" }; // Ronstation edit - Saltern2, Cluster2, and Atlas2
-
+    public static readonly string[] MapsSource = { "Empty", "Saltern", "Box", "Bagel", "Dev", "CentComm", "Core", "TestTeg", "Packed", "Omega", "Reach", "Meta", "Marathon", "MeteorArena", "Fland", "Oasis", "Convex", "Saltern2", "Cluster2", "Atlas2", "Atlas3", "Feint"}; // Ronstation edit - Saltern2, Cluster2, Atlas2, Atlas3, Feint
     [ParamsSource(nameof(MapsSource))]
     public string Map;
 

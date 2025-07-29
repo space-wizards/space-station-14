@@ -1,4 +1,5 @@
-# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
+##  Modifications ported by Ronstation from Delta-V, therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entityTable
   id: BasicCalmEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
@@ -292,7 +293,7 @@
     duration: 1
     earliestStart: 30
     reoccurrenceDelay: 60
-    minimumPlayers: 10
+    minimumPlayers: 25 # Ronstation - modification. Wizard on lowpop is rough
   - type: AntagSelection
     agentName: wizard-round-end-name
     definitions:
@@ -427,15 +428,13 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    duration: 60
+    duration: 30 # DeltaV: was 60, used as a delay now
   - type: VentCrittersRule
-    entries:
-    - id: MobAdultSlimesBlueAngry
-      prob: 0.02
-    - id: MobAdultSlimesGreenAngry
-      prob: 0.02
-    - id: MobAdultSlimesYellowAngry
-      prob: 0.02
+    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
+      children:
+      - id: MobAdultSlimesBlueAngry
+      - id: MobAdultSlimesGreenAngry
+      - id: MobAdultSlimesYellowAngry
 
 - type: entity
   id: SnakeSpawn
@@ -446,17 +445,15 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 20
-    minimumPlayers: 25 # Ronstation - should get to the point where there's enough sec.
+    minimumPlayers: 15 # Ronstation - should get to the point where there's enough sec.
     weight: 5
     duration: 30 # Ronstation - needs a reduction.
   - type: VentCrittersRule
-    entries:
-    - id: MobPurpleSnake
-      prob: 0.01 # Ronstation - modification
-    - id: MobSmallPurpleSnake
-      prob: 0.01 # Ronstation - modification
-    - id: MobCobraSpace
-      prob: 0.01 # Ronstation - modification
+    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
+      children:
+      - id: MobPurpleSnake
+      - id: MobSmallPurpleSnake
+      - id: MobCobraSpace
 
 - type: entity
   id: SpiderSpawn
@@ -467,13 +464,12 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 20
-    minimumPlayers: 25 # Ronstation - should get to the point where there's enough sec.
+    minimumPlayers: 15 # Ronstation - should get to the point where there's enough sec.
     weight: 5
     duration: 30 # Ronstation - needs a reduction.
   - type: VentCrittersRule
-    entries:
-    - id: MobGiantSpiderAngry
-      prob: 0.03 # Ronstation - modification
+    table: # DeltaV: EntityTable instead of spawn entries
+      id: MobGiantSpiderAngry
 
 # start of modifications
 #- type: entity

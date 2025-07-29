@@ -1,3 +1,5 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
+
 - type: entity
   id: BaseSpeedLoaderMagnum
   name: "speed loader (.45 magnum)"
@@ -28,7 +30,7 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi # Ronstation - modification
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
@@ -40,13 +42,6 @@
     zeroVisible: false
   - type: Appearance
   - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-mag
-      - state: inhand-left-ammo
-      right:
-      - state: inhand-right-mag
-      - state: inhand-right-ammo
 
 - type: entity
   id: SpeedLoaderMagnumEmpty
@@ -57,7 +52,7 @@
   - type: BallisticAmmoProvider
     proto: null
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi # Ronstation - modification
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
@@ -66,12 +61,6 @@
       #       use the one it was printed for.
       - state: base-6
         map: [ "enum.GunVisualLayers.Mag" ]
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-mag
-      right:
-      - state: inhand-right-mag
 
 - type: entity
   id: SpeedLoaderMagnumIncendiary
@@ -91,7 +80,7 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi # Ronstation - modification
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
@@ -103,17 +92,6 @@
     zeroVisible: false
   - type: Appearance
   - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-mag
-      - state: inhand-left-ammo
-      - state: inhand-left-stripe
-        color: "#ea5800"
-      right:
-      - state: inhand-right-mag
-      - state: inhand-right-ammo
-      - state: inhand-right-stripe
-        color: "#ea5800"
 
 - type: entity
   id: SpeedLoaderMagnumAP
@@ -124,7 +102,7 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi # Ronstation - modification
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
@@ -136,17 +114,6 @@
     zeroVisible: false
   - type: Appearance
   - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-mag
-      - state: inhand-left-ammo
-      - state: inhand-left-stripe
-        color: "#540000"
-      right:
-      - state: inhand-right-mag
-      - state: inhand-right-ammo
-      - state: inhand-right-stripe
-        color: "#540000"
 
 - type: entity
   id: SpeedLoaderMagnumUranium
@@ -157,26 +124,15 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumUranium
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi # Ronstation - modification
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
-      - state: uranium-6
+      - state: base-6 # Ronstation - modification
         map: [ "enum.GunVisualLayers.Mag" ]
   - type: MagazineVisuals
-    magState: uranium
+    magState: base # Ronstation - modification
     steps: 7
     zeroVisible: false
   - type: Appearance
   - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-mag
-      - state: inhand-left-ammo
-      - state: inhand-left-stripe
-        color: "#00cd42"
-      right:
-      - state: inhand-right-mag
-      - state: inhand-right-ammo
-      - state: inhand-right-stripe
-        color: "#00cd42"

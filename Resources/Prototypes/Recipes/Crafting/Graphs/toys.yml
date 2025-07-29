@@ -36,3 +36,50 @@
         doAfter: 5
   - node: suit
     entity: ClothingOuterSuitIan
+
+- type: constructionGraph
+  id: MoproachShoes
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: shoes
+      steps:
+      - tag: MopBasic
+        name: construction-graph-tag-mop-basic
+        icon:
+          sprite: Objects/Specific/Janitorial/mop.rsi
+          state: mop
+        doAfter: 5
+      - tag: MopBasic
+        name: construction-graph-tag-mop-basic
+        icon:
+          sprite: Objects/Specific/Janitorial/mop.rsi
+          state: mop
+        doAfter: 5
+      - tag: MopBasic
+        name: construction-graph-tag-mop-basic
+        icon:
+          sprite: Objects/Specific/Janitorial/mop.rsi
+          state: mop
+        doAfter: 5
+      - tag: MopBasic
+        name: construction-graph-tag-mop-basic
+        icon:
+          sprite: Objects/Specific/Janitorial/mop.rsi
+          state: mop
+        doAfter: 5
+      - tag: MopBasic
+        name: construction-graph-tag-mop-basic
+        icon:
+          sprite: Objects/Specific/Janitorial/mop.rsi
+          state: mop
+        doAfter: 5
+      - tag: MopBasic
+        name: construction-graph-tag-mop-basic
+        icon:
+          sprite: Objects/Specific/Janitorial/mop.rsi
+          state: mop
+        doAfter: 5
+  - node: shoes
+    entity: MoproachShoes

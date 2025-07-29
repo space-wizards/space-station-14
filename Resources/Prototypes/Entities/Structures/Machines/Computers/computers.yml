@@ -1230,11 +1230,11 @@
   #- type: ActivatableUI # Ronstation - Balance.
   #  key: enum.SalvageJobBoardUiKey.Key # Ronstation - Balance.
   #- type: UserInterface
-    interfaces:
+    # interfaces:
       #enum.SalvageJobBoardUiKey.Key: # Ronstation - Balance.
       #  type: SalvageJobBoardBoundUserInterface # Ronstation - Balance.
-      enum.WiresUiKey.Key:
-        type: WiresBoundUserInterface
+      # enum.WiresUiKey.Key:
+      #   type: WiresBoundUserInterface
   #- type: ActiveRadio # Ronstation - Balance.
   #  channels: [ Supply ] # Ronstation - Balance.
   # end of modifications

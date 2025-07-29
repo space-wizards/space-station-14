@@ -1,3 +1,4 @@
+# Contains modifications made by Ronstation contributors, and modifications ported by Ronstation from CorvaxNext, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 # Be careful with these as they get removed on shutdown too!
 - type: entity
   id: AiHeld
@@ -36,6 +37,7 @@
     - ActionJumpToCore
     - ActionSurvCameraLights
     - ActionAIViewLaws
+    - ActionOpenRemoteDevicesMenu # Corvax-Next-AiRemoteControl
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
@@ -48,6 +50,8 @@
         type: SiliconLawBoundUserInterface
       enum.CommunicationsConsoleUiKey.Key:
         type: CommunicationsConsoleBoundUserInterface
+      enum.RemoteDeviceUiKey.Key: # Corvax-Next-AiRemoteControl
+        type: RemoteDevicesBoundUserInterface
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
@@ -252,7 +256,7 @@
   - type: BlockMovement
     blockInteraction: false
   - type: SiliconLawProvider
-    laws: Crewsimov
+    weightedLaws: DefaultLawsets # Ronstation - modification.
   - type: SiliconLawBound
   - type: ActionGrant
     actions:
@@ -293,6 +297,10 @@
       state: ai_female
   - type: NameIdentifier
     group: StationAi
+  # Start of modifications.
+  - type: IonStormTarget
+    chance: 0.25 # 25% as often as borgs
+  # End of modifications.
 
 # Hologram projection that the AI's eye tracks.
 - type: entity

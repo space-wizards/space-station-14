@@ -1,0 +1,29 @@
+- type: entity
+  parent: BaseMentalAction
+  id: ActionBackToAi
+  name: Back to Ai
+  description: Sends your mind back to the core.
+  components:
+  - type: Action
+    priority: -9
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: ai_core
+  - type: InstantAction
+    event: !type:ReturnMindIntoAiEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionOpenRemoteDevicesMenu
+  name: Open list of remote devices
+  description: Opens a menu with available remote devices.
+  components:
+  - type: Action
+    priority: -9
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: borg_control
+  - type: InstantAction
+    event: !type:ToggleRemoteDevicesScreenEvent

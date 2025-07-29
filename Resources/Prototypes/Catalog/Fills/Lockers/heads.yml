@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entityTable
   id: LockerFillQuarterMaster
   table: !type:AllSelector
@@ -328,7 +329,8 @@
   id: LockerFillHeadOfSecurityNoHardsuit
   table: !type:AllSelector
     children:
-    - id: WeaponEnergyShotgun
+    - id: WeaponPistolNegotiator # Ronstation
+    - id: MagazineNegotiator # Ronstation
     - id: BookSpaceLaw
     - id: BoxEncryptionKeySecurity
     - id: CigarGoldCase
@@ -395,7 +397,7 @@
     access: [ [ "Command" ] ]
   - type: StorageFill
     contents:
-    - id: WeaponRevolverDeckard
+    - id: DeckardBoxFilled # Ronstation - modification
     - id: JetpackBlue
     - id: SpaceCash1000
     - id: BeachBall

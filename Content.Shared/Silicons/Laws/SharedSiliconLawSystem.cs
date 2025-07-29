@@ -1,10 +1,12 @@
-﻿using Content.Shared.Emag.Systems;
+// Modifications ported by Ronstation from CorvaxNext, therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+using Content.Shared.Emag.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Wires;
 using Robust.Shared.Audio;
+using Content.Shared._CorvaxNext.Silicons.Borgs.Components;
 
 namespace Content.Shared.Silicons.Laws;
 
@@ -33,6 +35,11 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         if (_emag.CheckFlag(uid, EmagType.Interaction))
             return;
 
+        // Corvax-Next-AiRemoteControl-Start
+        if (HasComp<AiRemoteControllerComponent>(uid))
+            return;
+        // Corvax-Next-AiRemoteControl-End
+
         // prevent self-emagging
         if (uid == args.UserUid)
         {
@@ -57,7 +64,7 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         if(_mind.TryGetMind(uid, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
 
-        _stunSystem.TryParalyze(uid, component.StunTime, true);
+        _stunSystem.TryUpdateParalyzeDuration(uid, component.StunTime);
 
         args.Handled = true;
     }
