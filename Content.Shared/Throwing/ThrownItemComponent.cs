@@ -17,8 +17,8 @@ namespace Content.Shared.Throwing
         /// <summary>
         ///     The entity that threw this entity.
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public EntityUid? Thrower;
+        [DataField, AutoNetworkedField]
+        public WeakEntityReference? Thrower;
 
         /// <summary>
         ///     The <see cref="IGameTiming.CurTime"/> timestamp at which this entity was thrown.
