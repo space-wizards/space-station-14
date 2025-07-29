@@ -37,7 +37,7 @@ public sealed partial class DungeonJob
                 if (!ValidateResume())
                     return;
 
-                if (reservedTiles.Contains(tile) && gen.Table is not NestedSelector)
+                if (reservedTiles.Contains(tile) && !gen.IgnoreReserved)
                     continue;
 
                 if (!_anchorable.TileFree((_gridUid, _grid),
