@@ -11,7 +11,7 @@ public sealed class StarLightModel
         public virtual Profile Profile { get; set; } = null!;
         public string? CustomSpecieName { get; set; }
         public List<string> CyberneticIds { get; set; } = [];
-        public float Width { get; set; }
-        public float Height { get; set; }
+        public float Width { get; set; } = 1f;
+        public float Height { get; set; } = 1f;
     }
 }
