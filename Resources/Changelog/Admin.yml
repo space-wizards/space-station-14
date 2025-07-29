@@ -1240,5 +1240,58 @@ Entries:
   id: 150
   time: '2025-06-30T21:09:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38531
+- author: Smugman
+  changes:
+  - message: Added the ID locked CentComm flippo for admeme use
+    type: Add
+  id: 151
+  time: '2025-07-07T18:53:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35514
+- author: perryprog
+  changes:
+  - message: Admin ghosts can now interact with things beneath subfloors, such as
+      disposal routers.
+    type: Tweak
+  id: 152
+  time: '2025-07-10T11:14:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38813
+- author: VerinSenpai
+  changes:
+  - message: The showrules command now has autocomplete.
+    type: Tweak
+  id: 153
+  time: '2025-07-11T17:48:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38855
+- author: perryprog
+  changes:
+  - message: The runverbas command should now work better with other toolshed commands.
+    type: Fix
+  id: 154
+  time: '2025-07-14T15:45:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38155
+- author: slarticodefast
+  changes:
+  - message: The aghost's satchel of holding is now explosion resistant. Same for
+      the aghost themselves, so held explosives no longer chain react.
+    type: Tweak
+  id: 155
+  time: '2025-07-16T22:35:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38384
+- author: perryprog
+  changes:
+  - message: Rejuvenate will now remove drowsiness, forced sleep, and the seeing rainbows
+      status effect.
+    type: Add
+  id: 156
+  time: '2025-07-24T15:13:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39025
+- author: slarticodefast, beck-thompson
+  changes:
+  - message: Added the "Open Camera" admin verb and the "camera" console command which
+      allow you to observe entities in separate window using a remote camera.
+    type: Add
+  id: 157
+  time: '2025-07-25T16:53:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36969
 Name: Admin
 Order: 2
