@@ -367,6 +367,13 @@
   - type: Unremoveable
   - type: AddAccentClothing
     accent: StutteringAccent
+  #region Starlight
+  - type: Tag
+    tags:
+    - ClownMask
+    - WhitelistChameleon
+    - BibleThwackRemovable
+  #endregion Starlight
 
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityContraband ]

@@ -1120,6 +1120,13 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
   - type: Unremoveable
+  #region Starlight
+  - type: Tag
+    tags:
+    - ClownSuit
+    - WhitelistChameleon
+    - BibleThwackRemovable
+  #endregion
 
 - type: entity
   parent: ClothingUniformBase

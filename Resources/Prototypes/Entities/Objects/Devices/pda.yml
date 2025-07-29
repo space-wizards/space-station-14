@@ -1344,6 +1344,14 @@
   - type: Icon
     state: pda-cluwne
   - type: Unremoveable
+  #region Starlight
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - WhitelistChameleon
+    - WhitelistChameleonPDA
+    - BibleThwackRemovable
+  #endregion Starlight
 
 - type: entity
   parent: ClownPDA

@@ -13,11 +13,13 @@ using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Hands.Components; //Starlight
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
+using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Content.Shared.Vampire.Components;
 using Content.Shared.Verbs;
@@ -44,6 +46,7 @@ namespace Content.Server.Bible
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedStunSystem _stun = default!;
         [Dependency] private readonly HandsSystem _hands = default!; //Starlight
+        [Dependency] private readonly TagSystem _tags = default!; //Starlight
 
         public override void Initialize()
         {
@@ -187,8 +190,10 @@ namespace Content.Server.Bible
                     if (TryComp<InventoryComponent>(target, out var inv))
                     {
                         var slots = _invSystem.GetSlotEnumerator((target, inv));
-                        while (slots.NextItem(out _, out var slot))
+                        while (slots.NextItem(out var itemeuid, out var slot))
                         {
+                            if (TryComp<UnremoveableComponent>(itemeuid, out _) && !_tags.HasTag(itemeuid, component.RemovableAnywaysTag))
+                                continue;
                             _invSystem.TryUnequip(target, target, slot.Name, true, true, inventory: inv);
                         }
 
