@@ -1,22 +1,24 @@
+﻿using System.Linq;
+using System.Text;
+using Content.Server._Starlight.Objectives.Events;
 using Content.Server.GameTicking;
+using Content.Server.Objectives.Commands;
 using Content.Server.Shuttles.Systems;
+using Content.Shared._Starlight.Railroading;
+using Content.Shared.CCVar;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
+using Content.Shared.Prototypes;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using System.Linq;
-using System.Text;
-using Content.Server.Objectives.Commands;
-using Content.Shared.CCVar;
-using Content.Shared.Prototypes;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives;
@@ -125,6 +127,45 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
             ev.AddLine(result.AppendLine().ToString());
         }
+
+        // 🌟Starlight🌟 start
+        var builder = new StringBuilder();
+        builder.AppendLine(Loc.GetString("cards"));
+
+        var mindQuery = EntityQueryEnumerator<MindComponent>();
+        while (mindQuery.MoveNext(out var mindId, out var mind))
+        {
+            if (!(mind.OwnedEntity is { } ent)
+                || !TryComp<RailroadableComponent>(ent, out var railroadable))
+                continue;
+
+            var cardsToProcess = new List<Entity<RailroadCardComponent, RuleOwnerComponent>>();
+
+            if (railroadable.Completed is not null)
+                cardsToProcess.AddRange(railroadable.Completed);
+
+            if (railroadable.ActiveCard is { } activeCard)
+                cardsToProcess.Add(activeCard);
+
+            if (cardsToProcess.Count == 0)
+                continue;
+
+            _job.MindTryGetJobName(mindId, out var jobName);
+            var custody = IsInCustody(mindId, mind) ? Loc.GetString("objectives-in-custody") : string.Empty;
+
+            builder.AppendLine(Loc.GetString("objectives-with-objectives", ("custody", custody), ("title", mind.CharacterName ?? "anonymous"), ("agent", jobName ?? "unemployed")));
+
+            var completedObjectives = 0;
+            foreach (var card in cardsToProcess)
+            {
+                var collect = new CollectObjectiveInfoEvent([]);
+                RaiseLocalEvent(card, ref collect);
+                foreach (var objective in collect.Objectives)
+                    WriteObjective(ref completedObjectives, builder, objective.Title, objective.Progress);
+            }
+        }
+        ev.AddLine(builder.AppendLine().ToString());
+        // 🌟Starlight🌟 end
     }
 
     private void AddSummary(StringBuilder result, string agent, List<(EntityUid, string)> minds)
@@ -167,49 +208,11 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                     var objectiveTitle = info.Value.Title;
                     var progress = info.Value.Progress;
                     totalObjectives++;
-
-                    agentSummary.Append("- ");
-                    if (!_showGreentext)
-                    {
-                        agentSummary.AppendLine(objectiveTitle);
-                    }
-                    else if (progress > 0.99f)
-                    {
-                        agentSummary.AppendLine(Loc.GetString(
-                            "objectives-objective-success",
-                            ("objective", objectiveTitle),
-                            ("progress", progress)
-                        ));
-                        completedObjectives++;
-                    }
-                    else if (progress <= 0.99f && progress >= 0.5f)
-                    {
-                        agentSummary.AppendLine(Loc.GetString(
-                            "objectives-objective-partial-success",
-                            ("objective", objectiveTitle),
-                            ("progress", progress)
-                        ));
-                    }
-                    else if (progress < 0.5f && progress > 0f)
-                    {
-                        agentSummary.AppendLine(Loc.GetString(
-                            "objectives-objective-partial-failure",
-                            ("objective", objectiveTitle),
-                            ("progress", progress)
-                        ));
-                    }
-                    else
-                    {
-                        agentSummary.AppendLine(Loc.GetString(
-                            "objectives-objective-fail",
-                            ("objective", objectiveTitle),
-                            ("progress", progress)
-                        ));
-                    }
+                    WriteObjective(ref completedObjectives, agentSummary, objectiveTitle, progress); // 🌟Starlight🌟
                 }
             }
 
-            var successRate = totalObjectives > 0 ? (float) completedObjectives / totalObjectives : 0f;
+            var successRate = totalObjectives > 0 ? (float)completedObjectives / totalObjectives : 0f;
             agentSummaries.Add((agentSummary.ToString(), successRate, completedObjectives));
         }
 
@@ -219,6 +222,49 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
         foreach (var (summary, _, _) in sortedAgents)
         {
             result.AppendLine(summary);
+        }
+    }
+
+    // 🌟Starlight🌟
+    private void WriteObjective(ref int completedObjectives, StringBuilder builder, string objectiveTitle, float progress)
+    {
+        builder.Append("- ");
+        if (!_showGreentext)
+        {
+            builder.AppendLine(objectiveTitle);
+        }
+        else if (progress > 0.99f)
+        {
+            builder.AppendLine(Loc.GetString(
+                "objectives-objective-success",
+                ("objective", objectiveTitle),
+                ("progress", progress)
+            ));
+            completedObjectives++;
+        }
+        else if (progress <= 0.99f && progress >= 0.5f)
+        {
+            builder.AppendLine(Loc.GetString(
+                "objectives-objective-partial-success",
+                ("objective", objectiveTitle),
+                ("progress", progress)
+            ));
+        }
+        else if (progress < 0.5f && progress > 0f)
+        {
+            builder.AppendLine(Loc.GetString(
+                "objectives-objective-partial-failure",
+                ("objective", objectiveTitle),
+                ("progress", progress)
+            ));
+        }
+        else
+        {
+            builder.AppendLine(Loc.GetString(
+                "objectives-objective-fail",
+                ("objective", objectiveTitle),
+                ("progress", progress)
+            ));
         }
     }
 
@@ -244,8 +290,10 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             var objectives = group.Weights.ShallowClone();
             while (_random.TryPickAndTake(objectives, out var objectiveProto))
             {
-                if (TryCreateObjective((mindId, mind), objectiveProto, out var objective)
-                    && Comp<ObjectiveComponent>(objective.Value).Difficulty <= maxDifficulty)
+                if (!_prototypeManager.Index(objectiveProto).TryGetComponent<ObjectiveComponent>(out var objectiveComp, EntityManager.ComponentFactory))
+                    continue;
+
+                if (objectiveComp.Difficulty <= maxDifficulty && TryCreateObjective((mindId, mind), objectiveProto, out var objective))
                     return objective;
             }
         }

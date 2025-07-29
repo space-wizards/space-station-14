@@ -3,7 +3,7 @@
   id: Trinkets
   name: loadout-group-trinkets
   minLimit: 0
-  maxLimit: 3
+  maxLimit: 4
   loadouts:
   - FlowerWreath
   - Hairflower
@@ -57,6 +57,32 @@
   - ClothWrap # 🌟Starlight🌟
   - ClothingUniformJumpskirtElegantMaid # 🌟Starlight🌟
   - ClothingHeadHatCatEars # 🌟Starlight🌟
+  - RolliePack #SL
+  - GoldRing #SL
+  - SilverRing #SL
+  - Matchbox #SL
+  - FancyPen #SL
+  - HonkImplant #SL
+  - TromboneImplant #SL
+  - NewtonsCradle #SL
+  - POrb #SL
+  - BBall #SL
+  - RubberQuack #SL
+  - GatchaBox #SL
+  - WristWatch #SL
+  - ZippoLighter #SL
+  - MedChecker #SL
+  - ChanceSack #SL
+  - StationMap #SL
+  - YaharJar #SL
+  - PaperFolder1 #SL
+  - PaperFolder2 #SL
+  - PaperFolder3 #SL
+  - PaperFolder4 #SL
+  - PaperFolder5 #SL
+  - PaperFolder6 #SL
+  - PaperFolder7 #SL
+  - PaperClipboard #SL
 
 - type: loadoutGroup
   id: Glasses
@@ -390,6 +416,17 @@
   minLimit: 0
   loadouts:
   - ChaplainNeck
+
+- type: loadoutGroup
+  id: ChaplainBible
+  name: loadout-group-chaplain-bible
+  minLimit: 1
+  loadouts:
+  - Bible
+  - BibleDruid
+  - BibleNanoTrasen
+  - BibleSatanic
+  - BibleTanakh
 
 - type: loadoutGroup
   id: JanitorHead

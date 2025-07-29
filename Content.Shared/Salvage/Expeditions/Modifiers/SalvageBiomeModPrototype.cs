@@ -29,8 +29,8 @@ public sealed partial class SalvageBiomeModPrototype : IPrototype, ISalvageMod
     public bool Weather = true;
 
     // 🌟Starlight🌟
-    [DataField("difficulties", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageDifficultyPrototype>))]
-    public List<string>? Difficulties { get; private set; } = null;
+    [DataField]
+    public List<ProtoId<SalvageDifficultyPrototype>>? Difficulties { get; private set; } = null;
 
     [DataField("biome", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
     public string? BiomePrototype;
