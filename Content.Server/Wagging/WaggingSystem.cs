@@ -42,33 +42,13 @@ public sealed class WaggingSystem : EntitySystem
 
     private void OnMarkingsUpdate(EntityUid uid, WaggingComponent component, MarkingsUpdateEvent args)
     {
-        Log.Warning("Event raised");
         if (TryComp<HumanoidAppearanceComponent>(uid, out var humanoid))
         {
             if (humanoid.MarkingSet.Markings.TryGetValue(MarkingCategories.Tail, out var markings))
             {
-                Log.Warning("Has marking");
                 if (!_actions.GetAction(component.ActionEntity).HasValue)
                 {
-                    Log.Warning("Adding");
                     _actions.AddAction(uid, ref component.ActionEntity, component.Action, uid);
-                }
-                else
-                {
-                    Log.Warning("Already there");
-                }
-            }
-            else
-            {
-                Log.Warning("Checking");
-                if (_actions.GetAction(component.ActionEntity).HasValue)
-                {
-                    Log.Warning("Removing");
-                    _actions.RemoveAction(uid, component.ActionEntity);
-                }
-                else
-                {
-                    Log.Warning("Not present");
                 }
             }
         }
