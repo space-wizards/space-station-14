@@ -38,7 +38,7 @@ public sealed partial class WelderComponent : Component
     public TimeSpan WelderUpdateTimer = TimeSpan.FromSeconds(1);
 
     /// <summary>
-    /// Name of <see cref="FuelSolution"/>.
+    /// Name of the fuel solution.
     /// </summary>
     [DataField]
     public string FuelSolutionName = "Welder";

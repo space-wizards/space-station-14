@@ -204,7 +204,6 @@ public abstract partial class SharedToolSystem
         if (args.User != null && !_actionBlocker.CanComplexInteract(args.User.Value))
         {
             args.Cancelled = true;
-            return;
         }
     }
 
@@ -214,7 +213,6 @@ public abstract partial class SharedToolSystem
         var curTime = _timing.CurTime;
         while (query.MoveNext(out var uid, out var welder, out var solutionContainer))
         {
-
             if (curTime < welder.NextUpdate)
                 continue;
 
