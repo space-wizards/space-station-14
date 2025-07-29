@@ -26,6 +26,10 @@
     solution: drink
   - type: DrainableSolution
     solution: drink
+  - type: InjectableSolution # Injectors (syringe) will fallback to RefillableSolution. This adds support for hyposprays and injector anomalies.
+    solution: drink
+#  - type: SolutionItemStatus todo Currently does not respect if the solution has ExaminableSolution and always shows the reagent count
+#    solution: drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -117,6 +121,8 @@
     inHandsFillBaseName: -fill-
   - type: ExaminableSolution # If you can see the fill levels, you can see the unit count
     solution: drink
+  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase
+    solution: drink
 
 # Layered visualizer for an entity with fill levels
 - type: entity
@@ -171,6 +177,8 @@
     inHandsMaxFillLevels: 3
     inHandsFillBaseName: -fill-
   - type: ExaminableSolution # If you can see the fill levels, you can see the unit count
+    solution: drink
+  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase
     solution: drink
 
 # Visualizer for an openable entity with fill levels, already filled
