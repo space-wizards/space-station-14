@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Nutrition.Components;
 using Content.Server.Starlight.Cybernetics.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
