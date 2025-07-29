@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Damage;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -13,7 +14,9 @@ public sealed partial class AtmosphereSystem
     /// <param name="gridAtmosComp">The <see cref="GridAtmosphereComponent"/> that belongs to the entity's GridUid.</param>
     private void ProcessDeltaPressureEntity(Entity<DeltaPressureComponent> ent, GridAtmosphereComponent gridAtmosComp)
     {
-        // Retrieve the current tile coords of this ent, use cached lookup
+        // Retrieve the current tile coords of this ent, use cached lookup.
+        // This ent could also just not exist anymore when we finally got around to processing it
+        // (as atmos spans processing across multiple ticks), so this is a good check for that.
         if (!TryComp(ent, out TransformComponent? xform))
             return;
 
@@ -33,6 +36,7 @@ public sealed partial class AtmosphereSystem
 
         Span<float> opposingGroupA = stackalloc float[pairCount]; // Will hold North, East, ...
         Span<float> opposingGroupB = stackalloc float[pairCount]; // Will hold South, West, ...
+        Span<float> opposingGroupMax = stackalloc float[pairCount];
 
         // First, we null check data and prep it for comparison
         for (var i = 0; i < pairCount; i++)
@@ -47,60 +51,101 @@ public sealed partial class AtmosphereSystem
             opposingGroupB[i] = GetTilePressure(gridAtmosComp, indices.Offset(dirB));
         }
 
-        // Calculate pressure differences between opposing directions
+        // Need to determine max pressure in opposing directions.
+        NumericsHelpers.Max(opposingGroupA, opposingGroupB, opposingGroupMax);
+
+        // Calculate pressure differences between opposing directions.
         NumericsHelpers.Sub(opposingGroupA, opposingGroupB);
         NumericsHelpers.Abs(opposingGroupA);
+
+        var maxPressure = 0f;
+        for (var i = 0; i < pairCount; i++)
+        {
+            maxPressure = Math.Max(maxPressure, opposingGroupMax[i]);
+        }
 
         // Find maximum pressure difference
         var maxDelta = 0f;
         for (var i = 0; i < pairCount; i++)
         {
-            if (opposingGroupA[i] > maxDelta)
-                maxDelta = opposingGroupA[i];
+            maxDelta = Math.Max(maxDelta, opposingGroupA[i]);
         }
 
-        if (maxDelta > ent.Comp.MinPressureDelta)
-        {
-            PerformDamage(ent, maxDelta);
-            return;
-        }
-
-        ent.Comp.IsTakingDamage = false;
+        PerformDamage(ent, maxPressure, maxDelta);
     }
 
+    // TODO: Move to API
     /// <summary>
-    /// Does damage to an entity depending on the pressure experienced by it.
+    /// Does damage to an entity depending on the pressure experienced by it, based on the
+    /// entity's <see cref="DeltaPressureComponent"/>.
     /// </summary>
     /// <param name="ent">The entity to apply damage to.</param>
     /// <param name="pressure">The absolute pressure being exerted on the entity.</param>
-    private void PerformDamage(Entity<DeltaPressureComponent> ent, float pressure)
+    /// <param name="deltaPressure">The delta pressure being exerted on the entity.</param>
+    private void PerformDamage(Entity<DeltaPressureComponent> ent, float pressure, float deltaPressure)
     {
-        var realPressure = Math.Max(pressure, ent.Comp.MaxPressure);
+        var aboveMinPressure = pressure > ent.Comp.MinPressure;
+        var aboveMinDeltaPressure = deltaPressure > ent.Comp.MinPressureDelta;
+        if (!aboveMinPressure && !aboveMinDeltaPressure)
+        {
+            ent.Comp.IsTakingDamage = false;
+            return;
+        }
 
+        // shitcode
         var appliedDamage = ent.Comp.BaseDamage;
+        if (aboveMinPressure)
+        {
+            appliedDamage = MutateDamage(ent, appliedDamage, pressure - ent.Comp.MinPressure);
+        }
+        if (aboveMinDeltaPressure)
+        {
+            if (ent.Comp.StackDamage)
+            {
+                appliedDamage += MutateDamage(ent, appliedDamage, deltaPressure - ent.Comp.MinPressureDelta);
+            }
+            else
+            {
+                appliedDamage = MutateDamage(ent, appliedDamage, deltaPressure - ent.Comp.MinPressureDelta);
+            }
+        }
+
+        _damage.TryChangeDamage(ent, appliedDamage, interruptsDoAfters: false);
+        ent.Comp.IsTakingDamage = true;
+    }
+
+    // TODO: Move to API
+    /// <summary>
+    /// Mutates the damage dealt by a DamageSpecifier based on current entity conditions and pressure.
+    /// </summary>
+    /// <param name="ent">The entity to base the manipulations off of (pull scaling type)</param>
+    /// <param name="damage">The damage specifier to mutate.</param>
+    /// <param name="pressure">The pressure being exerted on the entity.</param>
+    /// <returns></returns>
+    private DamageSpecifier MutateDamage(Entity<DeltaPressureComponent> ent, DamageSpecifier damage, float pressure)
+    {
         switch (ent.Comp.ScalingType)
         {
             case DeltaPressureDamageScalingType.Threshold:
                 break;
 
             case DeltaPressureDamageScalingType.Linear:
-                appliedDamage *= realPressure * ent.Comp.ScalingPower;
+                damage *= pressure * ent.Comp.ScalingPower;
                 break;
 
             case DeltaPressureDamageScalingType.Log:
                 // This little line's gonna cost us 51 CPU cycles
-                appliedDamage *= Math.Log(realPressure, ent.Comp.ScalingPower);
+                damage *= Math.Log(pressure, ent.Comp.ScalingPower);
                 break;
 
             case DeltaPressureDamageScalingType.Exponential:
-                appliedDamage *= Math.Pow(realPressure, ent.Comp.ScalingPower);
+                damage *= Math.Pow(pressure, ent.Comp.ScalingPower);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(ent), "Invalid damage scaling type!");
         }
 
-        _damage.TryChangeDamage(ent, appliedDamage, interruptsDoAfters: false);
-        ent.Comp.IsTakingDamage = true;
+        return damage;
     }
 
     /// <summary>
