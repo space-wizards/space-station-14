@@ -149,8 +149,6 @@
       id: blinking
       interpolate: Nearest
       maxDuration: 1.0
-      minValue: 0.1
-      maxValue: 2.0
       isLooped: true
   - type: ToggleableLightVisuals
     spriteLayer: light
@@ -264,6 +262,59 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 20
+
+- type: entity
+  name: MT-7 Magnum
+  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband ]
+  id: WeaponEnergyMagnumGun
+  description: This is an expensive, modern recreation of the Mateba revolver, with several unique fire modes. And a slow self recharging battery. However, it has a slower recharge then most battery related weapons.
+  components:
+  - type: Gun
+    fireRate: 1.6
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/Energy_Magnum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Lock
+    mindShieldLock: true
+  - type: AccessReader
+    access: [["Security"]]
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/Energy_Magnum.rsi
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBolt
+    fireCost: 80
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DisablerBolt
+      fireCost: 80
+      magState: disable
+      visualState: disable-unshaded
+    - proto: TaserBolt
+      fireCost: 100
+      magState: stun
+      visualState: stun-unshaded
+    - proto: RedHeavyLaser # Does slightly more damage but costs more energy.
+      fireCost: 222
+      magState: kill
+      visualState: kill-unshaded
+    - proto: DestroyBeam
+      fireCost: 650
+      magState: destroy
+      visualState: destroy-unshaded
+  - type: Battery
+    maxCharge: 2000
+    startingCharge: 2000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 25
 
 - type: entity
   parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
@@ -765,7 +816,7 @@
       steps: 5
       zeroVisible: true
     - type: Appearance
-
+    
 - type: entity
   name: proto-5x energy gun
   parent: [BaseWeaponBattery, BaseGrandTheftContraband]
