@@ -40,6 +40,8 @@
     fillBaseName: icon-
   - type: ExaminableSolution # If you can see the fill levels, you can see the unit count
     solution: drink
+  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase or DrinkVisualsFill is added as a base
+    solution: drink
 
 ## Misc Cups
 
@@ -127,6 +129,8 @@
     - HEAD
     quickEquip: false
     sprite: Clothing/Head/Hats/party_water_cup.rsi
+  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase or DrinkVisualsFill is added as a base
+    solution: drink
 
 # Mugs
 - type: entity

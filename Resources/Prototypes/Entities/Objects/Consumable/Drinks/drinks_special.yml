@@ -147,6 +147,8 @@
     mixOnInteract: false
     reactionTypes:
     - Shake
+  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase
+    solution: drink
 
 - type: entity
   parent: [DrinkBase, DrinkBaseMaterialMetal]
@@ -172,6 +174,8 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 20
+  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase
+    solution: drink
 
 - type: entity
   parent: [DrinkBase, DrinkBaseMaterialStrongMetal, DrinkVisualsFill]
