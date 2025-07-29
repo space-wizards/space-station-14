@@ -8,21 +8,47 @@ namespace Content.Server.Stunnable.Components
     {
         // TODO: Can probably predict this.
 
-        // See stunsystem for what these do
-        [DataField("stunAmount")]
-        public int StunAmount;
+        /// <summary>
+        /// How long we are stunned for
+        /// </summary>
+        [DataField]
+        public TimeSpan StunAmount;
 
-        [DataField("knockdownAmount")]
-        public int KnockdownAmount;
+        /// <summary>
+        /// How long we are knocked down for
+        /// </summary>
+        [DataField]
+        public TimeSpan KnockdownAmount;
 
-        [DataField("slowdownAmount")]
-        public int SlowdownAmount;
+        /// <summary>
+        /// How long we are slowed down for
+        /// </summary>
+        [DataField]
+        public TimeSpan SlowdownAmount;
 
-        [DataField("walkSpeedMultiplier")]
-        public float WalkSpeedMultiplier = 1f;
+        /// <summary>
+        /// Multiplier for a mob's walking speed
+        /// </summary>
+        [DataField]
+        public float WalkSpeedModifier = 1f;
 
-        [DataField("runSpeedMultiplier")]
-        public float RunSpeedMultiplier = 1f;
+        /// <summary>
+        /// Multiplier for a mob's sprinting speed
+        /// </summary>
+        [DataField]
+        public float SprintSpeedModifier = 1f;
+
+        /// <summary>
+        /// Refresh Stun or Slowdown on hit
+        /// </summary>
+        [DataField]
+        public bool Refresh = true;
+
+        /// <summary>
+        /// Should the entity try and stand automatically after being knocked down?
+        /// </summary>
+        [DataField]
+        public bool AutoStand = true;
 
         /// <summary>
         /// Fixture we track for the collision.
