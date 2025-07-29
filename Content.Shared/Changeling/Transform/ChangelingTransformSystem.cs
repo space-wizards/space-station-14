@@ -75,14 +75,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             }
 
             _uiSystem.SetUiState((ent, userInterfaceComp), TransformUI.Key, new ChangelingTransformBoundUserInterfaceState(identityData));
-        }
-        else // if the UI is already opened and the command action is done again, transform into the last consumed identity
-        {
-            if (userIdentity.LastConsumedIdentity != null && userIdentity.CurrentIdentity != userIdentity.LastConsumedIdentity)
-                TransformInto(ent.AsNullable(), userIdentity.LastConsumedIdentity.Value);
-
-            _uiSystem.CloseUi((ent, userInterfaceComp), TransformUI.Key, args.Performer);
-        }
+        } //TODO: Can add a Else here with TransformInto and CloseUI to make a quick switch, issue right now is that Radials cover the Action buttons so clicking the action doens't work but pressing the number does.
     }
 
     /// <summary>
