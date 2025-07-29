@@ -9906,5 +9906,13 @@ Entries:
   id: 1364
   time: '2025-07-29T13:10:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1000
+- author: RoadTrain
+  changes:
+  - message: Access breakers work on bolted doors, though won't re-bolt the door after
+      opening it.
+    type: Fix
+  id: 1365
+  time: '2025-07-29T13:16:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1094
 Order: -1
 
