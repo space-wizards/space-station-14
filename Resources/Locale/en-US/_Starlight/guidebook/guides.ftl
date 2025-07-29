@@ -98,6 +98,7 @@ guide-entry-sl-cargo-sop-salvagespecialist = SalvageSpecialist
 guide-entry-sl-cargo-sop-quartermaster = Quartermaster
 guide-entry-sl-cargo-sop-staff-intro = Staff Procedures
 guide-entry-sl-cargo-sop-handlingorders = Handling Orders
+guide-entry-sl-cargo-sop-preapprovedmaterials = Pre-Approved Materials
 guide-entry-sl-cargo-sop-handlingorders-engineering = Engineering Orders
 guide-entry-sl-cargo-sop-handlingorders-security = Security Orders
 guide-entry-sl-cargo-sop-handlingorders-science = Science Orders

@@ -471,41 +471,49 @@
   text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/HandlingOrders.xml"
   priority: 1
   children:
+    - cargo-sop-preapprovedmaterials
     - cargo-sop-handlingorders-engineering
     - cargo-sop-handlingorders-security
     - cargo-sop-handlingorders-science
     - cargo-sop-handlingorders-medical
     - cargo-sop-handlingorders-service
 
+
+- type: guideEntry
+  id: cargo-sop-preapprovedmaterials
+  name: guide-entry-sl-cargo-sop-preapprovedmaterials
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/PreApprovedMaterials.xml"
+  priority: 1
+
 - type: guideEntry
   id: cargo-sop-handlingorders-engineering
   name: guide-entry-sl-cargo-sop-handlingorders-engineering
   text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/EngineeringOrders.xml"
-  priority: 1
+  priority: 2
 
 - type: guideEntry
   id: cargo-sop-handlingorders-security
   name: guide-entry-sl-cargo-sop-handlingorders-security
   text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/SecurityOrders.xml"
-  priority: 2
+  priority: 3
 
 - type: guideEntry
   id: cargo-sop-handlingorders-science
   name: guide-entry-sl-cargo-sop-handlingorders-science
   text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/ScienceOrders.xml"
-  priority: 3
+  priority: 4
 
 - type: guideEntry
   id: cargo-sop-handlingorders-medical
   name: guide-entry-sl-cargo-sop-handlingorders-medical
   text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/MedicalOrders.xml"
-  priority: 4
+  priority: 5
 
 - type: guideEntry
   id: cargo-sop-handlingorders-service
   name: guide-entry-sl-cargo-sop-handlingorders-service
   text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/ServiceOrders.xml"
-  priority: 5
+  priority: 6
 
 
 - type: guideEntry
