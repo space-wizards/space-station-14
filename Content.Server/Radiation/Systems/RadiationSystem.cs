@@ -87,8 +87,7 @@ public sealed partial class RadiationSystem : EntitySystem
 
     private void UpdateSource(Entity<RadiationSourceComponent> entity)
     {
-        if (!TryComp(entity.Owner, out TransformComponent? xform))
-            return;
+        var xform = Transform(entity.Owner);
 
         if (!entity.Comp.Enabled || Terminating(entity.Owner))
         {
