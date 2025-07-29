@@ -11,7 +11,7 @@ namespace Content.Client.Atmos.UI;
 /// <summary>
 /// Displays gas tank pressure information for <see cref="TankPressureItemStatusComponent"/>.
 /// </summary>
-/// <seealso cref="TankPressureItemStatusSystem"/>
+/// <seealso cref="GasTankSystem"/>
 public sealed class TankPressureStatusControl : PollingItemStatusControl<TankPressureStatusControl.Data>
 {
     private readonly Entity<TankPressureItemStatusComponent> _parent;

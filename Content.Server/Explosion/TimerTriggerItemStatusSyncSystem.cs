@@ -1,5 +1,6 @@
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
+using System;
 
 namespace Content.Server.Explosion;
 
@@ -16,9 +17,10 @@ public sealed class TimerTriggerItemStatusSyncSystem : EntitySystem
         var enumerator = EntityQueryEnumerator<TimerTriggerItemStatusComponent, OnUseTimerTriggerComponent>();
         while (enumerator.MoveNext(out var uid, out var status, out var timer))
         {
-            if (status.Delay != timer.Delay)
+            var timerDelay = TimeSpan.FromSeconds(timer.Delay);
+            if (status.Delay != timerDelay)
             {
-                status.Delay = timer.Delay;
+                status.Delay = timerDelay;
                 Dirty(uid, status);
             }
         }

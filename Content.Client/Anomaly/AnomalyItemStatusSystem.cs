@@ -14,6 +14,6 @@ public sealed class AnomalyItemStatusSystem : EntitySystem
     {
         base.Initialize();
         Subs.ItemStatus<AnomalyItemStatusComponent>(
-            entity => new AnomalyStatusControl(entity, EntityManager));
+            entity => new AnomalyStatusControl(entity));
     }
 }

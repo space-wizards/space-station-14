@@ -15,8 +15,7 @@ public sealed class AnomalyStatusControl : PollingItemStatusControl<AnomalyStatu
     private readonly RichTextLabel _label;
 
     public AnomalyStatusControl(
-        Entity<AnomalyItemStatusComponent> parent,
-        IEntityManager entityManager)
+        Entity<AnomalyItemStatusComponent> parent)
     {
         _parent = parent;
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };

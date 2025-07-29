@@ -6,12 +6,13 @@ namespace Content.Shared.Explosion;
 /// Exposes timer trigger delay information via item status control.
 /// Synced to clients to display set delay for explosives and similar items.
 /// </summary>
+/// <seealso cref="TimerTriggerItemStatusSyncSystem"/>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TimerTriggerItemStatusComponent : Component
 {
     /// <summary>
-    /// Current set delay in seconds.
+    /// Current set delay.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Delay;
+    public TimeSpan Delay;
 }

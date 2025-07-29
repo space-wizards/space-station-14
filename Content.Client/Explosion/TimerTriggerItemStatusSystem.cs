@@ -14,6 +14,6 @@ public sealed class TimerTriggerItemStatusSystem : EntitySystem
     {
         base.Initialize();
         Subs.ItemStatus<TimerTriggerItemStatusComponent>(
-            entity => new TimerTriggerStatusControl(entity, EntityManager));
+            entity => new TimerTriggerStatusControl(entity));
     }
 }
