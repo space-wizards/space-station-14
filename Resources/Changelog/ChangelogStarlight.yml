@@ -9884,5 +9884,12 @@ Entries:
   id: 1361
   time: '2025-07-29T12:52:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1029
+- author: RHSvenson
+  changes:
+  - message: Brains now take 4 bites to eat, instead of one
+    type: Tweak
+  id: 1362
+  time: '2025-07-29T13:04:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1017
 Order: -1
 
