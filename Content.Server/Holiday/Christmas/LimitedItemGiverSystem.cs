@@ -47,13 +47,12 @@ public sealed class LimitedItemGiverSystem : EntitySystem
         }
 
         var toGive = _entityTable.GetSpawns(comp.Table); // TODO move to shared once this is predicted
-        var coords = Transform(args.User).Coordinates;
 
         // Get your gifts here
         var success = false;
         foreach (var item in toGive)
         {
-            var spawned = SpawnAtPosition(item, coords);
+            var spawned = SpawnNextToOrDrop(item, args.User);
             _hands.PickupOrDrop(args.User, spawned);
             success = true;
         }

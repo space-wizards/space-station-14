@@ -64,22 +64,19 @@ public sealed class RandomGiftSystem : EntitySystem
         if (args.Handled || comp.SelectedEntity is null)
             return;
 
-        var xform = Transform(gift);
-        var coords = xform.Coordinates;
-
-        var spawned = SpawnAtPosition(comp.SelectedEntity, coords);
+        var spawned = SpawnNextToOrDrop(comp.SelectedEntity, gift);
         _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low,
             $"{ToPrettyString(args.User)} used {ToPrettyString(gift)} which spawned {ToPrettyString(spawned)}");
 
         if (comp.Wrapper is { } trash)
-            SpawnAtPosition(trash, coords);
+            SpawnNextToOrDrop(trash, gift);
 
         // Play sound at the spawned entity instead of the gift since it's going to get deleted
         _audio.PlayPvs(comp.Sound, spawned);
 
         // Don't delete the entity in the event bus, so we queue it for deletion.
         // We need the free hand for the new item, so we send it to nullspace.
-        _transform.DetachEntity(gift, xform);
+        _transform.DetachEntity(gift, Transform(gift));
         QueueDel(gift);
 
         _hands.PickupOrDrop(args.User, spawned);
