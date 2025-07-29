@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: centcomofficer24
-  changes:
-  - message: Added a genderfluid pin!
-    type: Add
-  id: 8304
-  time: '2025-04-21T17:46:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35854
 - author: ScarKy0
   changes:
   - message: Station AI now has a name identifier appended after their name.
@@ -3907,3 +3900,10 @@
   id: 8815
   time: '2025-07-28T21:28:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39219
+- author: K-Dynamic
+  changes:
+  - message: Quartermaster job and ID icons are now based on Cargo Technicians.
+    type: Tweak
+  id: 8816
+  time: '2025-07-29T07:34:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39259
