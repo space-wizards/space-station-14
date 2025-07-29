@@ -12,6 +12,8 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Random; // Ronstation - modification.
+using Content.Shared.Random.Helpers; // Ronstation - modification.
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
@@ -23,6 +25,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random; // Ronstation - modification.
 using Robust.Shared.Toolshed;
 
 namespace Content.Server.Silicons.Laws;
@@ -37,6 +40,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly IRobustRandom _random = default!; // Ronstation - modification.
     [Dependency] private readonly TagSystem _tagSystem = default!; // Corvax-Next-AiRemoteControl
 
     /// <inheritdoc/>
@@ -132,7 +136,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             return;
 
         if (component.Lawset == null)
-            component.Lawset = GetLawset(component.Laws);
+            component.Lawset = GetLawset(InitOrGetLaws(component)); // Ronstation - modification.
 
         args.Laws = component.Lawset;
 
@@ -162,7 +166,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     private void OnEmagLawsAdded(EntityUid uid, SiliconLawProviderComponent component, ref SiliconEmaggedEvent args)
     {
         if (component.Lawset == null)
-            component.Lawset = GetLawset(component.Laws);
+            component.Lawset = GetLawset(InitOrGetLaws(component)); // Ronstation - modification.
 
         // Corvax-Next-AiRemoteControl-Start
         if (HasComp<AiRemoteControllerComponent>(uid)) // You can't emag controllable entities
@@ -273,6 +277,21 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             _roles.MindPlaySound(mindId, cue);
     }
 
+    // Ronstation - start of modifications.
+
+    /// <summary>
+    /// Initializes Laws with a random from WeightedLaws if Laws is empty
+    /// </summary>
+    private ProtoId<SiliconLawsetPrototype> InitOrGetLaws(SiliconLawProviderComponent provider)
+    {
+        if (provider.Laws != null && provider.Laws != string.Empty)
+            return provider.Laws.Value;
+        var laws = _prototype.Index(provider.WeightedLaws).Pick(_random);
+        provider.Laws = laws;
+        return laws;
+    }
+    // Ronstation - end of modifications.
+
     /// <summary>
     /// Extract all the laws from a lawset's prototype ids.
     /// </summary>
@@ -313,7 +332,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (!TryComp(args.Entity, out SiliconLawProviderComponent? provider))
             return;
 
-        var lawset = GetLawset(provider.Laws).Laws;
+        var lawset = GetLawset(InitOrGetLaws(provider)).Laws; // Ronstation - modification.
         var query = EntityManager.CompRegistryQueryEnumerator(ent.Comp.Components);
 
         while (query.MoveNext(out var update))

@@ -643,6 +643,9 @@
   id: Goat
 
 - type: Tag
+  id: GoldenPlunger
+
+- type: Tag
   id: Goliath
 
 - type: Tag
@@ -827,6 +830,9 @@
 
 - type: Tag
   id: Knife
+
+- type: Tag
+  id: KnockdownImmune
 
 - type: Tag
   id: LavaBrig
@@ -1091,6 +1097,12 @@
   id: PlushieCarp
 
 - type: Tag
+  id: PlushieCarpHolo
+
+- type: Tag
+  id: PlushieCarpMagi
+
+- type: Tag
   id: PlushieGhost
 
 - type: Tag
@@ -1260,6 +1272,9 @@
   id: Slice # sliced fruit, vegetables, pizza etc.
 
 - type: Tag
+  id: SlowImmune
+
+- type: Tag
   id: SmallAIChip
 
 - type: Tag
@@ -1321,6 +1336,9 @@
 
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: StunImmune
 
 - type: Tag
   id: SubdermalImplant

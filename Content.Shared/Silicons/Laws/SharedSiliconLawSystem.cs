@@ -1,4 +1,4 @@
-﻿// Modifications ported by Ronstation from CorvaxNext, therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+// Modifications ported by Ronstation from CorvaxNext, therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
@@ -64,7 +64,7 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         if(_mind.TryGetMind(uid, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
 
-        _stunSystem.TryParalyze(uid, component.StunTime, true);
+        _stunSystem.TryUpdateParalyzeDuration(uid, component.StunTime);
 
         args.Handled = true;
     }
