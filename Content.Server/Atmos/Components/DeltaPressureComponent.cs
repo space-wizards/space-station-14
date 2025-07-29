@@ -7,11 +7,14 @@ namespace Content.Server.Atmos.Components;
 /// <summary>
 /// Entities that have this component will have damage done to them depending on the local pressure
 /// environment that they reside in.
-/// </summary>
-/// <remarks><para>If the entity does not have an <see cref="AirtightComponent"/>,
-/// simple damage depending on the current pressure will be done instead.</para>
 ///
-/// <para>Systems wanting to change these values should go through the <see cref="DeltaPressureSystem"/> API.</para></remarks>
+/// Atmospherics.DeltaPressure batch-processes entities with this component in a list on
+/// the grid's <see cref="GridAtmosphereComponent"/>.
+/// The entities are automatically added and removed from this list, and automatically
+/// added on initialization if <see cref="AutoJoin"/> is set to true.
+/// </summary>
+/// <remarks><para>Systems wanting to change these values should go through the <see cref="DeltaPressureSystem"/> API.</para>
+/// <para>Note that the entity should have an <see cref="AirtightComponent"/> and be a grid structure.</para></remarks>
 [RegisterComponent]
 [Access(typeof(DeltaPressureSystem), typeof(AtmosphereSystem))]
 public sealed partial class DeltaPressureComponent : Component
@@ -25,11 +28,13 @@ public sealed partial class DeltaPressureComponent : Component
     /// <summary>
     /// Whether this entity is currently taking damage.
     /// </summary>
-    [DataField(readOnly:true)]
+    [DataField(readOnly: true)]
     public bool IsTakingDamage;
 
     /// <summary>
-    /// Whether the entity should automatically join the list to be processed by atmospherics on init.
+    /// Whether the entity should automatically join the processing list on the grid's <see cref="GridAtmosphereComponent"/>
+    /// for delta pressure processing.
+    /// If this is set to false, the entity will not be automatically added to the list.
     /// </summary>
     [DataField]
     public bool AutoJoin = true;
@@ -38,6 +43,8 @@ public sealed partial class DeltaPressureComponent : Component
     /// The base damage applied to the entity per atmos tick when it is above the damage threshold.
     /// This damage will be scaled as defined by the <see cref="DeltaPressureDamageScalingType"/> enum
     /// depending on the current effective pressure this entity is experiencing.
+    /// Note that this damage will scale depending on the pressure above the minimum pressure,
+    /// not at the current pressure.
     /// </summary>
     [DataField]
     public DamageSpecifier BaseDamage = new()
@@ -55,12 +62,10 @@ public sealed partial class DeltaPressureComponent : Component
     public bool StackDamage;
 
     /// <summary>
-    /// The minimum pressure at which the entity will start taking damage.
+    /// The minimum pressure in kPa at which the entity will start taking damage.
     /// This doesn't depend on the difference in pressure.
     /// The entity will start to take damage if it is exposed to this pressure.
     /// </summary>
-    /// <remarks>If the entity is not airtight, it will take pressure damage
-    /// based on this field, and <see cref="MinPressureDelta"/> will be ignored.</remarks>
     [DataField]
     public float MinPressure = 5000;
 
@@ -91,6 +96,12 @@ public sealed partial class DeltaPressureComponent : Component
     public DeltaPressureDamageScalingType ScalingType = DeltaPressureDamageScalingType.Threshold;
 }
 
+/// <summary>
+/// An enum that defines how the damage dealt by the <see cref="DeltaPressureComponent"/> scales
+/// depending on the pressure experienced by the entity.
+/// The scaling is done on the effective pressure, which is the pressure above the minimum pressure.
+/// See https://www.desmos.com/calculator/9ctlq3zpnt for a visual representation of the scaling types.
+/// </summary>
 [Serializable]
 public enum DeltaPressureDamageScalingType : byte
 {

@@ -76,6 +76,7 @@ public sealed partial class AtmosphereSystem
     private void PerformDamage(Entity<DeltaPressureComponent> ent, float pressure)
     {
         var realPressure = Math.Max(pressure, ent.Comp.MaxPressure);
+
         var appliedDamage = ent.Comp.BaseDamage;
         switch (ent.Comp.ScalingType)
         {

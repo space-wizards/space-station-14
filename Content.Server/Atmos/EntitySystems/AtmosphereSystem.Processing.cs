@@ -479,8 +479,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 atmosphere.CurrentRunDeltaPressureEntities.Clear();
                 atmosphere.DeltaPressureCoords.Clear();
-                atmosphere.CurrentRunDeltaPressureEntities.EnsureCapacity(atmosphere.DeltaPressureEntity.Count);
-                foreach (var ent in atmosphere.DeltaPressureEntity)
+                atmosphere.CurrentRunDeltaPressureEntities.EnsureCapacity(atmosphere.DeltaPressureEntities.Count);
+                foreach (var ent in atmosphere.DeltaPressureEntities)
                 {
                     atmosphere.CurrentRunDeltaPressureEntities.Enqueue(ent);
                 }
@@ -547,6 +547,8 @@ namespace Content.Server.Atmos.EntitySystems
             if (!MonstermosEqualization)
                 num--;
             if (!ExcitedGroups)
+                num--;
+            if (!DeltaPressureDamage)
                 num--;
             if (!Superconduction)
                 num--;
@@ -692,7 +694,9 @@ namespace Content.Server.Atmos.EntitySystems
                         }
 
                         atmosphere.ProcessingPaused = false;
-                        atmosphere.State = AtmosphereProcessingState.DeltaPressure;
+                        atmosphere.State = DeltaPressureDamage
+                            ? AtmosphereProcessingState.DeltaPressure
+                            : AtmosphereProcessingState.Hotspots;
                         continue;
                     case AtmosphereProcessingState.DeltaPressure:
                         if (!ProcessDeltaPressure(atmosphere))

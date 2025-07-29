@@ -62,7 +62,7 @@ namespace Content.Server.Atmos.Components
         public int HighPressureDeltaCount => HighPressureDelta.Count;
 
         [ViewVariables]
-        public readonly HashSet<Entity<DeltaPressureComponent>> DeltaPressureEntity = new();
+        public readonly HashSet<Entity<DeltaPressureComponent>> DeltaPressureEntities = new();
 
         [ViewVariables]
         public readonly Dictionary<Vector2i, float> DeltaPressureCoords = new(1000);

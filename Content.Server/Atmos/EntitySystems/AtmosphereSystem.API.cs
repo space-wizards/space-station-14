@@ -336,7 +336,7 @@ public partial class AtmosphereSystem
         if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
             return false;
 
-        if (!grid.Comp.DeltaPressureEntity.Add(ent))
+        if (!grid.Comp.DeltaPressureEntities.Add(ent))
             return false;
 
         ent.Comp.Enabled = true;
@@ -356,7 +356,7 @@ public partial class AtmosphereSystem
         if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
             return false;
 
-        if (!grid.Comp.DeltaPressureEntity.Remove(ent))
+        if (!grid.Comp.DeltaPressureEntities.Remove(ent))
             return false;
 
         ent.Comp.Enabled = false;
@@ -372,7 +372,7 @@ public partial class AtmosphereSystem
     [PublicAPI]
     public bool IsDeltaPressureEntityInList(Entity<GridAtmosphereComponent?> grid, Entity<DeltaPressureComponent> ent)
     {
-        return _atmosQuery.Resolve(grid, ref grid.Comp, false) && grid.Comp.DeltaPressureEntity.Contains(ent);
+        return _atmosQuery.Resolve(grid, ref grid.Comp, false) && grid.Comp.DeltaPressureEntities.Contains(ent);
     }
 
     [ByRefEvent] private record struct SetSimulatedGridMethodEvent
