@@ -1,16 +1,16 @@
 meta:
   format: 7
-  category: Map
+  category: Grid
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/29/2025 02:35:20
-  entityCount: 656
-maps:
-- 638
+  time: 07/29/2025 02:57:30
+  entityCount: 655
+maps: []
 grids:
 - 1
-orphans: []
+orphans:
+- 1
 nullspace: []
 tilemap:
   2: Space
@@ -26,7 +26,7 @@ entities:
       name: GL Evac Serpent
     - type: Transform
       pos: -0.46875,-0.46875
-      parent: 638
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -121,16 +121,6 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-  - uid: 638
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: GridTree
-    - type: Broadphase
-    - type: OccluderTree
 - proto: AirlockCargoGlassLocked
   entities:
   - uid: 446

@@ -4,7 +4,7 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/29/2025 02:32:02
+  time: 07/29/2025 02:58:11
   entityCount: 27948
 maps:
 - 1
@@ -70615,6 +70615,13 @@ entities:
     - type: Transform
       pos: -0.5,-65.5
       parent: 2
+- proto: DefaultStationBeaconGorlexBarracks
+  entities:
+  - uid: 604
+    components:
+    - type: Transform
+      pos: 2.5,14.5
+      parent: 2
 - proto: DefaultStationBeaconGravGen
   entities:
   - uid: 21911
@@ -70752,15 +70759,6 @@ entities:
       location: Cybersun R&D
 - proto: DefaultStationBeaconSecurity
   entities:
-  - uid: 604
-    components:
-    - type: Transform
-      pos: 2.5,14.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Gorlex Barracks
-    - type: WarpPoint
-      location: Gorlex Barracks
   - uid: 22509
     components:
     - type: Transform

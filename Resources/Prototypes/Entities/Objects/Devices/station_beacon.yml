@@ -253,6 +253,14 @@
     defaultText: station-beacon-security-checkpoint
 
 - type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconGorlexBarracks
+  suffix: Gorlex Barracks
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-gorlex
+
+- type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconMedical
   suffix: Medical
