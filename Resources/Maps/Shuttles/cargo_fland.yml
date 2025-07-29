@@ -15,7 +15,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: Cargo shuttle
+      name: CS-2S2 "Loadstar" # Starlight rename
     - type: Transform
       pos: -0.59375,1.0312805
       parent: invalid

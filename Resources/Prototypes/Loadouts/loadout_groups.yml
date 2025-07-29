@@ -57,6 +57,8 @@
   - ClothWrap # 🌟Starlight🌟
   - ClothingUniformJumpskirtElegantMaid # 🌟Starlight🌟
   - ClothingHeadHatCatEars # 🌟Starlight🌟
+  - ClothingShoesHighheelShoes # 🌟Starlight🌟
+  - ClothingShoesHighheelBoots # 🌟Starlight🌟
   - RolliePack #SL
   - GoldRing #SL
   - SilverRing #SL
@@ -252,7 +254,7 @@
   loadouts:
   - AssistantGloves
   - GreyGloves #starlight
-  
+
 - type: loadoutGroup
   id: CommonBackpack
   name: loadout-group-backpack

@@ -124,12 +124,14 @@ public sealed partial class DragonSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("carp-rift-weakened"), uid, uid);
             return;
         }
-
+        /* #region Starlight. un-limited dragon rifts
         if (component.Rifts.Count >= RiftsAllowed)
         {
             _popup.PopupEntity(Loc.GetString("carp-rift-max"), uid, uid);
             return;
         }
+        #endregion Starlight.
+        */
 
         if (component.Rifts.Count > 0 && TryComp<DragonRiftComponent>(component.Rifts[^1], out var rift) && rift.State != DragonRiftState.Finished)
         {
