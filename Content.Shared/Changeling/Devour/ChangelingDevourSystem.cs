@@ -7,6 +7,7 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
@@ -156,8 +157,11 @@ public sealed class ChangelingDevourSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.None,
         });
 
-        _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-windup"),
-            Loc.GetString("changeling-devour-begin-windup-others", ("user", args.Performer)),
+        var selfMessage = Loc.GetString("changeling-devour-begin-windup-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
+        var othersMessage = Loc.GetString("changeling-devour-begin-windup-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
+        _popupSystem.PopupPredicted(
+            selfMessage,
+            othersMessage,
             args.Performer,
             args.Performer,
             PopupType.MediumCaution);
@@ -174,8 +178,11 @@ public sealed class ChangelingDevourSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-consume"),
-            Loc.GetString("changeling-devour-begin-consume-others", ("user", args.User)),
+        var selfMessage = Loc.GetString("changeling-devour-begin-consume-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
+        var othersMessage = Loc.GetString("changeling-devour-begin-consume-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
+        _popupSystem.PopupPredicted(
+            selfMessage,
+            othersMessage,
             args.User,
             args.User,
             PopupType.LargeCaution);
@@ -229,8 +236,11 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return;
         }
 
-        _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-consume-complete"),
-            Loc.GetString("changeling-devour-consume-complete-others", ("user", args.User)),
+        var selfMessage = Loc.GetString("changeling-devour-consume-complete-self", ("user", Identity.Entity(args.User, EntityManager)));
+        var othersMessage = Loc.GetString("changeling-devour-consume-complete-others", ("user", Identity.Entity(args.User, EntityManager)));
+        _popupSystem.PopupPredicted(
+            selfMessage,
+            othersMessage,
             args.User,
             args.User,
             PopupType.LargeCaution);

@@ -27,7 +27,7 @@
 - type: entity
   id: ActionChangelingTransform
   name: "[color=red]Transform[/color]"
-  description: Transform and assume the identities of those you have devoured. You can press this action twice to Transform into the last Identity you consumed!
+  description: Transform and assume the identities of those you have devoured. You can press this action twice to transform into the last identity you consumed!
   components:
   - type: Action
     icon: { sprite : Interface/Actions/changeling.rsi, state: "transform" }

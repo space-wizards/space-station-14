@@ -4,8 +4,8 @@ using Content.Shared.Cloning;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -78,40 +78,52 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         }
         else // if the UI is already opened and the command action is done again, transform into the last consumed identity
         {
-            TransformPreviousConsumed(ent);
+            if (userIdentity.LastConsumedIdentity != null && userIdentity.CurrentIdentity != userIdentity.LastConsumedIdentity)
+                TransformInto(ent.AsNullable(), userIdentity.LastConsumedIdentity.Value);
+
             _uiSystem.CloseUi((ent, userInterfaceComp), TransformUI.Key, args.Performer);
         }
     }
 
-    private void TransformPreviousConsumed(Entity<ChangelingTransformComponent> ent)
+    /// <summary>
+    /// Transform the changeling into another identity.
+    /// This can be any cloneable humanoid and doesn't have to be stored in the ChangelingIdentiyComponent,
+    /// so make sure to validate the target before.
+    /// </summary>
+    public void TransformInto(Entity<ChangelingTransformComponent?> ent, EntityUid targetIdentity)
     {
-        if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"),
-            Loc.GetString("changeling-transform-attempt-others", ("user", ent)),
+        var selfMessage = Loc.GetString("changeling-transform-attempt-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
+        var othersMessage = Loc.GetString("changeling-transform-attempt-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
+        _popupSystem.PopupPredicted(
+            selfMessage,
+            othersMessage,
             ent,
             ent,
             PopupType.MediumCaution);
 
-        if (_net.IsServer) // Gotta do this on the server and with PlayPvs cause PlayPredicted doesn't return the Entity
-        {
-            var pvsSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent);
-            if (pvsSound != null)
-                ent.Comp.CurrentTransformSound = pvsSound.Value.Entity;
-        }
+        if (_net.IsServer)
+            ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent)?.Entity;
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(targetIdentity)}\"");
+
+        var result = _doAfterSystem.TryStartDoAfter(new DoAfterArgs(
+            EntityManager,
             ent,
             ent.Comp.TransformWindup,
-            new ChangelingTransformDoAfterEvent(GetNetEntity(identity.LastConsumedEntityUid!.Value)),
+            new ChangelingTransformDoAfterEvent(),
             ent,
-            used: ent)
+            target: targetIdentity)
         {
             BreakOnMove = true,
             BreakOnWeightlessMove = true,
             DuplicateCondition = DuplicateConditions.None,
+            RequireCanInteract = false,
+            DistanceThreshold = null,
         });
+        Log.Debug($"{ent.Owner} {result}");
     }
 
     private void OnTransformSelected(Entity<ChangelingTransformComponent> ent,
@@ -119,30 +131,19 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
     {
         _uiSystem.CloseUi(ent.Owner, TransformUI.Key, ent);
 
-        var selectedIdentity = args.TargetIdentity;
+        if (!TryGetEntity(args.TargetIdentity, out var targetIdentity))
+            return;
 
-        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"),
-            Loc.GetString("changeling-transform-attempt-others", ("user", ent)),
-            ent,
-            ent,
-            PopupType.MediumCaution);
+        if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
+            return;
 
-        if (_net.IsServer)
-            ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent, new AudioParams())!.Value.Entity;
+        if (identity.CurrentIdentity == identity.LastConsumedIdentity)
+            return; // don't transform into ourselves
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(GetEntity(selectedIdentity))}\"");
+        if (!identity.ConsumedIdentities.Contains(targetIdentity.Value))
+            return; // this identity does not belong to this player
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
-            ent,
-            ent.Comp.TransformWindup,
-            new ChangelingTransformDoAfterEvent(selectedIdentity),
-            ent,
-            used: ent)
-        {
-            BreakOnMove = true,
-            BreakOnWeightlessMove = true,
-            DuplicateCondition = DuplicateConditions.None,
-        });
+        TransformInto(ent.AsNullable(), targetIdentity.Value);
     }
 
     private void OnSuccessfulTransform(Entity<ChangelingTransformComponent> ent,
@@ -159,15 +160,22 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!_prototype.Resolve(ent.Comp.TransformCloningSettings, out var settings))
             return;
 
-        var targetIdentity = GetEntity(args.TargetIdentity);
+        if (args.Target is not { } targetIdentity)
+            return;
 
         _humanoidAppearanceSystem.CloneAppearance(targetIdentity, args.User);
         _cloningSystem.CloneComponents(targetIdentity, args.User, settings);
 
-        //TODO: While it would be splendid to be able to provide the original owning player who was playing the targetIdentity, it's not exactly feasible to do
+        //TODO: Add the original player session
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
         _metaSystem.SetEntityName(ent, Name(targetIdentity), raiseEvents: false);
 
         Dirty(ent);
+
+        if (TryComp<ChangelingIdentityComponent>(ent, out var identity)) // in case we ever get changelings that don't store identities
+        {
+            identity.CurrentIdentity = targetIdentity;
+            Dirty(ent.Owner, identity);
+        }
     }
 }

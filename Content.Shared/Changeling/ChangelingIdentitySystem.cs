@@ -47,7 +47,9 @@ public sealed class ChangelingIdentitySystem : EntitySystem
 
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
-        CloneToPausedMap(ent, ent.Owner);
+        // Make a backup of our current identity so we can transform back.
+        var clone = CloneToPausedMap(ent, ent.Owner);
+        ent.Comp.CurrentIdentity = clone;
     }
 
     private void OnShutdown(Entity<ChangelingIdentityComponent> ent, ref ComponentShutdown args)
@@ -77,18 +79,18 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     /// </summary>
     /// <param name="ent">the Changeling</param>
     /// <param name="target">the targets uid</param>
-    public void CloneToPausedMap(Entity<ChangelingIdentityComponent> ent, EntityUid target)
+    public EntityUid? CloneToPausedMap(Entity<ChangelingIdentityComponent> ent, EntityUid target)
     {
         if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
             || !_prototype.Resolve(humanoid.Species, out var speciesPrototype)
             || !_prototype.Resolve(ent.Comp.IdentityCloningSettings, out var settings))
-            return;
+            return null;
 
         EnsurePausedMap();
         var mob = Spawn(speciesPrototype.Prototype, new MapCoordinates(Vector2.Zero, PausedMapId!.Value));
 
         var storedIdentity = EnsureComp<ChangelingStoredIdentityComponent>(mob);
-        storedIdentity.OriginalEntity = target; // TODO: network this once we have WeakEntityReference
+        storedIdentity.OriginalEntity = target; // TODO: network this once we have WeakEntityReference or the autonetworking source gen is fixed
 
         if (TryComp<ActorComponent>(target, out var actor))
             storedIdentity.OriginalSession = actor.PlayerSession;
@@ -100,10 +102,12 @@ public sealed class ChangelingIdentitySystem : EntitySystem
         _metaSystem.SetEntityName(mob, targetName);
         ent.Comp.ConsumedIdentities.Add(mob);
 
-        ent.Comp.LastConsumedEntityUid = mob;
+        ent.Comp.LastConsumedIdentity = mob;
 
         Dirty(ent);
         HandlePvsOverride(ent, mob);
+
+        return mob;
     }
 
     /// <summary>
