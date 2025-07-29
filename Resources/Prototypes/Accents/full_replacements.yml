@@ -145,6 +145,14 @@
   - accent-words-slimes-5
 
 - type: accent
+  id: bee
+  fullReplacements:
+  - accent-words-bee-1
+  - accent-words-bee-2
+  - accent-words-bee-3
+  - accent-words-bee-4
+
+- type: accent
   id: crab
   fullReplacements:
   - accent-words-crab-1
@@ -153,6 +161,88 @@
   - accent-words-crab-4
   - accent-words-crab-5
   - accent-words-crab-6
+
+- type: accent
+  id: cow
+  fullReplacements:
+  - accent-words-cow-1
+  - accent-words-cow-2
+  - accent-words-cow-3
+  - accent-words-cow-4
+
+- type: accent
+  id: ferret
+  fullReplacements:
+  - accent-words-ferret-1
+  - accent-words-ferret-2
+  - accent-words-ferret-3
+
+- type: accent
+  id: fox
+  fullReplacements:
+  - accent-words-fox-1
+  - accent-words-fox-2
+  - accent-words-fox-3
+  - accent-words-fox-4
+
+- type: accent
+  id: frog
+  fullReplacements:
+  - accent-words-frog-1
+  - accent-words-frog-2
+  - accent-words-frog-3
+
+- type: accent
+  id: goat
+  fullReplacements:
+  - accent-words-goat-1
+  - accent-words-goat-2
+  - accent-words-goat-3
+  - accent-words-goat-4
+  - accent-words-goat-5
+
+- type: accent
+  id: gorilla
+  fullReplacements:
+  - accent-words-gorilla-1
+  - accent-words-gorilla-2
+  - accent-words-gorilla-3
+  - accent-words-gorilla-4
+  - accent-words-gorilla-5
+
+- type: accent
+  id: goose
+  fullReplacements:
+  - accent-words-goose-1
+  - accent-words-goose-2
+  - accent-words-goose-3
+  - accent-words-goose-4
+  - accent-words-goose-5
+
+- type: accent
+  id: monkey
+  fullReplacements:
+  - accent-words-monkey-1
+  - accent-words-monkey-2
+  - accent-words-monkey-3
+  - accent-words-monkey-4
+  - accent-words-monkey-5
+  - accent-words-monkey-6
+
+- type: accent
+  id: penguin
+  fullReplacements:
+  - accent-words-penguin-1
+  - accent-words-penguin-2
+  - accent-words-penguin-3
+
+- type: accent
+  id: raccoon
+  fullReplacements:
+  - accent-words-raccoon-1
+  - accent-words-raccoon-2
+  - accent-words-raccoon-3
+  - accent-words-raccoon-4
 
 - type: accent
   id: kobold
