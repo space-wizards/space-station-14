@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.EUI;
@@ -62,7 +61,7 @@ public sealed class ParrotMemoryEui : BaseEui
 
     private async void SetParrotMemoryBlock(int memoryId, bool block)
     {
-        await Task.Run(async () => await _db.SetParrotMemoryBlock(memoryId, block));
+        await _db.SetParrotMemoryBlock(memoryId, block);
     }
 
     private async void RefreshParrotMemories(int roundId)
