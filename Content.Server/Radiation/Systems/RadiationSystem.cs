@@ -23,7 +23,7 @@ public sealed partial class RadiationSystem : EntitySystem
     private EntityQuery<RadiationGridResistanceComponent> _resistanceQuery;
     private EntityQuery<StackComponent> _stackQuery;
 
-    private readonly DynamicTree<EntityUid> _sourceTree = new(static (in EntityUid _) => default, EqualityComparer<EntityUid>.Default);
+    private readonly B2DynamicTree<EntityUid> _sourceTree = new();
     private readonly Dictionary<EntityUid, SourceData> _sourceDataMap = new();
     private readonly List<EntityUid> _activeReceivers = new();
 
@@ -55,10 +55,12 @@ public sealed partial class RadiationSystem : EntitySystem
 
     private void OnSourceShutdown(EntityUid uid, RadiationSourceComponent component, ComponentShutdown args)
     {
-        if (_sourceDataMap.Remove(uid))
+        if (component.Proxy != DynamicTree.Proxy.Free)
         {
-            _sourceTree.Remove(uid);
+            _sourceTree.DestroyProxy(component.Proxy);
+            component.Proxy = DynamicTree.Proxy.Free;
         }
+        _sourceDataMap.Remove(uid);
     }
 
     private void OnSourceMove(Entity<RadiationSourceComponent> entity, ref MoveEvent args)
@@ -87,41 +89,48 @@ public sealed partial class RadiationSystem : EntitySystem
 
     private void UpdateSource(Entity<RadiationSourceComponent> entity)
     {
-        var xform = Transform(entity.Owner);
+        var (uid, component) = entity;
+        var xform = Transform(uid);
 
-        if (!entity.Comp.Enabled || Terminating(entity.Owner))
+        if (!component.Enabled || Terminating(uid))
         {
-            if (_sourceDataMap.Remove(entity.Owner))
-                _sourceTree.Remove(entity.Owner);
+            if (component.Proxy != DynamicTree.Proxy.Free)
+            {
+                _sourceTree.DestroyProxy(component.Proxy);
+                component.Proxy = DynamicTree.Proxy.Free;
+            }
+            _sourceDataMap.Remove(uid);
             return;
         }
 
         var worldPos = _transform.GetWorldPosition(xform);
-        var intensity = entity.Comp.Intensity * _stack.GetCount(entity.Owner);
-        intensity = GetAdjustedRadiationIntensity(entity.Owner, intensity);
+        var intensity = component.Intensity * _stack.GetCount(uid);
+        intensity = GetAdjustedRadiationIntensity(uid, intensity);
 
         if (intensity <= 0)
         {
-            if (_sourceDataMap.Remove(entity.Owner))
-                _sourceTree.Remove(entity.Owner);
+            if (component.Proxy != DynamicTree.Proxy.Free)
+            {
+                _sourceTree.DestroyProxy(component.Proxy);
+                component.Proxy = DynamicTree.Proxy.Free;
+            }
+            _sourceDataMap.Remove(uid);
             return;
         }
 
-        var maxRange = entity.Comp.Slope > 1e-6f ? intensity / entity.Comp.Slope : GridcastMaxDistance;
+        var maxRange = component.Slope > 1e-6f ? intensity / component.Slope : GridcastMaxDistance;
         maxRange = Math.Min(maxRange, GridcastMaxDistance);
 
-        var sourceData = new SourceData(intensity, entity.Comp.Slope, maxRange, (entity.Owner, entity.Comp, xform), worldPos);
+        _sourceDataMap[uid] = new SourceData(intensity, component.Slope, maxRange, (uid, component, xform), worldPos);
         var aabb = Box2.CenteredAround(worldPos, new Vector2(maxRange * 2, maxRange * 2));
 
-        if (_sourceDataMap.ContainsKey(entity.Owner))
+        if (component.Proxy != DynamicTree.Proxy.Free)
         {
-            _sourceDataMap[entity.Owner] = sourceData;
-            _sourceTree.Update(entity.Owner, aabb);
+            _sourceTree.MoveProxy(component.Proxy, in aabb);
         }
         else
         {
-            _sourceDataMap.Add(entity.Owner, sourceData);
-            _sourceTree.Add(entity.Owner, aabb);
+            component.Proxy = _sourceTree.CreateProxy(in aabb, uint.MaxValue, uid);
         }
     }
 

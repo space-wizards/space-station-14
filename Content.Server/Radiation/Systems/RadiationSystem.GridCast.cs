@@ -29,8 +29,6 @@ public partial class RadiationSystem
 
     private void UpdateGridcast()
     {
-        // should we save debug information into rays?
-        // if there is no debug sessions connected - just ignore it
         var debug = _debugSessions.Count > 0;
         var stopwatch = new Robust.Shared.Timing.Stopwatch();
         stopwatch.Start();
@@ -71,7 +69,7 @@ public partial class RadiationSystem
             }
         }
 
-        if (debug && debugRays is not null)
+        if (debugRays is not null)
             UpdateGridcastDebugOverlay(stopwatch.Elapsed.TotalMilliseconds, sourcesCount, _activeReceivers.Count, debugRays.ToList());
 
         RaiseLocalEvent(new RadiationSystemUpdatedEvent());
@@ -149,14 +147,11 @@ public partial class RadiationSystem
             }
         }
 
-        if (blockers is not null)
-            if (!saveVisitedTiles || blockers.Count <= 0)
-                return ray;
+        if (blockers is null || blockers.Count == 0)
+            return ray;
 
         ray.Blockers ??= new();
-
-        if (blockers is not null)
-            ray.Blockers.Add(GetNetEntity(gridUid), blockers);
+        ray.Blockers.Add(GetNetEntity(gridUid), blockers);
         return ray;
     }
 
@@ -197,7 +192,7 @@ public partial class RadiationSystem
     {
         public int BatchSize => 5;
         public required RadiationSystem System { get; init; }
-        public required DynamicTree<EntityUid> SourceTree { get; init; }
+        public required B2DynamicTree<EntityUid> SourceTree { get; init; }
         public required Dictionary<EntityUid, SourceData> SourceDataMap { get; init; }
         public required List<EntityUid> Destinations { get; init; }
         public required float[] Results { get; init; }
@@ -220,10 +215,13 @@ public partial class RadiationSystem
             var destMapId = destTrs.MapID;
             var queryAabb = new Box2(destWorld, destWorld);
 
-            SourceTree.QueryAabb(
-                (in EntityUid value) => { nearbySources.Add(value); return true; },
-                queryAabb,
-                true);
+            var state = (nearbySources, SourceTree);
+            SourceTree.Query(ref state, static (ref (List<EntityUid> nearby, B2DynamicTree<EntityUid> tree) tuple, DynamicTree.Proxy proxy) =>
+            {
+                var uid = tuple.tree.GetUserData(proxy);
+                tuple.nearby.Add(uid);
+                return true;
+            }, in queryAabb);
 
             foreach (var sourceUid in nearbySources)
             {
@@ -239,7 +237,7 @@ public partial class RadiationSystem
                 if (ray.ReachedDestination)
                     rads += ray.Rads;
 
-                if (Debug && DebugRays is not null)
+                if (DebugRays is not null)
                 {
                     DebugRays.Add(new DebugRadiationRay(
                         ray.MapId,
