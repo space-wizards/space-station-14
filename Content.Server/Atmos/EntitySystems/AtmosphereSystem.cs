@@ -16,6 +16,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Robust.Shared.Threading;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -39,6 +40,8 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] public readonly PuddleSystem Puddle = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
+    [Dependency] private readonly IParallelManager _parallel = default!;
+    [Dependency] private readonly DeltaPressureSystem _deltaPressure = default!;
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;

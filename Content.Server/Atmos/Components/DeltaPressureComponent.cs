@@ -35,6 +35,12 @@ public sealed partial class DeltaPressureComponent : Component
     public bool AutoJoin = true;
 
     /// <summary>
+    /// The current effective pressure that the entity is experiencing.
+    /// </summary>
+    [DataField]
+    public float CurrentEffectivePressure;
+
+    /// <summary>
     /// The base damage applied to the entity per atmos tick when it is above the damage threshold.
     /// This damage will be scaled as defined by the <see cref="DeltaPressureDamageScalingType"/> enum
     /// depending on the current effective pressure this entity is experiencing.

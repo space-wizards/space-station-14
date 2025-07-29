@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Serialization;
@@ -65,9 +66,6 @@ namespace Content.Server.Atmos.Components
         public readonly HashSet<Entity<DeltaPressureComponent>> DeltaPressureEntity = new();
 
         [ViewVariables]
-        public readonly Dictionary<Vector2i, float> DeltaPressureCoords = new(1000);
-
-        [ViewVariables]
         public readonly HashSet<IPipeNet> PipeNets = new();
 
         [ViewVariables]
@@ -80,7 +78,10 @@ namespace Content.Server.Atmos.Components
         public readonly Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
 
         [ViewVariables]
-        public readonly Queue<Entity<DeltaPressureComponent>> CurrentRunDeltaPressureEntities = new();
+        public readonly List<Entity<DeltaPressureComponent>> CurrentRunDeltaPressureEntities = new();
+
+        [ViewVariables]
+        public readonly ConcurrentDictionary<Entity<DeltaPressureComponent>, float> DeltaPressureEntitiesDamage = new();
 
         [ViewVariables]
         public readonly Queue<IPipeNet> CurrentRunPipeNet = new();

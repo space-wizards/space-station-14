@@ -478,18 +478,22 @@ namespace Content.Server.Atmos.EntitySystems
             if (!atmosphere.ProcessingPaused)
             {
                 atmosphere.CurrentRunDeltaPressureEntities.Clear();
-                atmosphere.DeltaPressureCoords.Clear();
-                atmosphere.CurrentRunDeltaPressureEntities.EnsureCapacity(atmosphere.DeltaPressureEntity.Count);
+                atmosphere.DeltaPressureEntitiesDamage.Clear();
+
                 foreach (var ent in atmosphere.DeltaPressureEntity)
                 {
-                    atmosphere.CurrentRunDeltaPressureEntities.Enqueue(ent);
+                    atmosphere.CurrentRunDeltaPressureEntities.Add(ent);
                 }
             }
 
+            ProcessDeltaPressureEntities(atmosphere);
+
             var number = 0;
-            while (atmosphere.CurrentRunDeltaPressureEntities.TryDequeue(out var ent))
+            var enumerator = atmosphere.DeltaPressureEntitiesDamage.GetEnumerator();
+            while (enumerator.MoveNext())
             {
-                ProcessDeltaPressureEntity(ent, atmosphere);
+                var keyvalue = enumerator.Current;
+                ProcessDeltaPressureEntityDamage(keyvalue.Key, keyvalue.Value);
 
                 if (number++ < LagCheckIterations)
                     continue;
@@ -498,10 +502,12 @@ namespace Content.Server.Atmos.EntitySystems
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
                 {
+                    enumerator.Dispose();
                     return false;
                 }
             }
 
+            enumerator.Dispose();
             return true;
         }
 
