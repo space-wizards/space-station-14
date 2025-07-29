@@ -24,10 +24,10 @@ public sealed class BatteryInfoSystem : EntitySystem
         var battery = entity.Comp;
         args.HasBattery = true;
 
-        if (battery.MaxCharge > 0)
-        {
-            args.ChargePercent = battery.CurrentCharge / battery.MaxCharge;
-        }
+        if (battery.MaxCharge <= 0)
+            return;
+
+        args.ChargePercent = battery.CurrentCharge / battery.MaxCharge;
     }
 
     private void OnGetPowerCellInfo(Entity<PowerCellSlotComponent> entity, ref GetBatteryInfoEvent args)
@@ -37,9 +37,9 @@ public sealed class BatteryInfoSystem : EntitySystem
 
         args.HasBattery = true;
 
-        if (battery.MaxCharge > 0)
-        {
-            args.ChargePercent = battery.CurrentCharge / battery.MaxCharge;
-        }
+        if (battery.MaxCharge <= 0)
+            return;
+
+        args.ChargePercent = battery.CurrentCharge / battery.MaxCharge;
     }
 }
