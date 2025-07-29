@@ -29,11 +29,17 @@ public sealed partial class CCVars
     /// [Insert YouTube video link with walkthrough here]
     /// </summary>
     /// <example>
-    /// (If your on linux Linux): /home/beck/key.pem
+    /// (If your on linux): /home/beck/key.pem
     /// </example>
     public static readonly CVarDef<string> GithubAppPrivateKeyPath =
         CVarDef.Create("github.github_app_private_key_path", "", CVar.SERVERONLY  | CVar.CONFIDENTIAL);
 
+    /// <summary>
+    /// The GitHub apps app id. Go to https://github.com/settings/apps/APPNAME to find the app id.
+    /// </summary>
+    /// <example>
+    /// 1009555
+    /// </example>
     public static readonly CVarDef<string> GithubAppId =
         CVarDef.Create("github.github_app_id", "", CVar.SERVERONLY);
 

@@ -246,7 +246,6 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
 
     #endregion
 
-
     void IPostInjectInit.PostInject()
     {
         _sawmill = _log.GetSawmill("BugReport");
