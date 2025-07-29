@@ -18,11 +18,6 @@ public sealed partial class ChangelingIdentityComponent : Component
     [DataField, AutoNetworkedField]
     public List<EntityUid> ConsumedIdentities = new();
 
-    /// <summary>
-    /// The last consumed identity of the ling, used by the UI for double pressing the action to quick transform.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? LastConsumedIdentity;
 
     /// <summary>
     /// The currently assumed identity.

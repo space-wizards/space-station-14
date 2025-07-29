@@ -102,8 +102,6 @@ public sealed class ChangelingIdentitySystem : EntitySystem
         _metaSystem.SetEntityName(mob, targetName);
         ent.Comp.ConsumedIdentities.Add(mob);
 
-        ent.Comp.LastConsumedIdentity = mob;
-
         Dirty(ent);
         HandlePvsOverride(ent, mob);
 
