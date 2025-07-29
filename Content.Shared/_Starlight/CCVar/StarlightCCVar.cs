@@ -18,8 +18,8 @@ public sealed partial class StarlightCCVars
 
     [CVarControl(AdminFlags.Adminchat)]
     public static readonly CVarDef<string> OverrideGamemodeName =
-        CVarDef.Create("lobby.gamemode_name_override", "", CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("lobby.gamemode_name_override", "", CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
     [CVarControl(AdminFlags.Adminchat)]
     public static readonly CVarDef<string> OverrideGamemodeDescription =
-        CVarDef.Create("lobby.gamemode_desc_override", "", CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("lobby.gamemode_desc_override", "", CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
 }
