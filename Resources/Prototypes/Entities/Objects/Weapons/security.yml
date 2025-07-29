@@ -148,7 +148,6 @@
     - type: LimitedCharges
       maxCharges: 5
     - type: ChargeItemStatus
-      chargeName: charge-status-name-charges
     - type: MeleeWeapon
       wideAnimationRotation: 180
       damage:

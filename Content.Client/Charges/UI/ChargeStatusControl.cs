@@ -49,15 +49,14 @@ public sealed class ChargeStatusControl : PollingItemStatusControl<ChargeStatusC
                 nextRecharge = nextRechargeTime;
         }
 
-        return new Data(currentCharges, maxCharges, nextRecharge, _parent.Comp.ChargeName);
+        return new Data(currentCharges, maxCharges, nextRecharge);
     }
 
     protected override void Update(in Data data)
     {
         var markup = Loc.GetString("charge-status-count",
             ("current", data.CurrentCharges),
-            ("max", data.MaxCharges),
-            ("name", Loc.GetString(data.ChargeName)));
+            ("max", data.MaxCharges));
 
         if (data.NextRecharge.HasValue)
         {
@@ -68,5 +67,5 @@ public sealed class ChargeStatusControl : PollingItemStatusControl<ChargeStatusC
         _label.SetMarkup(markup);
     }
 
-    public readonly record struct Data(int CurrentCharges, int MaxCharges, TimeSpan? NextRecharge, string ChargeName);
+    public readonly record struct Data(int CurrentCharges, int MaxCharges, TimeSpan? NextRecharge);
 }
