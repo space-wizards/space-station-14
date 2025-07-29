@@ -1,4 +1,5 @@
 # File for containers like bottles or milk jugs that are empty
+# TODO these prototypes have ambiguous names and should be renamed to match their filled versions, with "Full" replaced by "Empty"
 
 # When used as the first parent, this empties a bottle's reagent and spawns it already opened
 - type: entity
