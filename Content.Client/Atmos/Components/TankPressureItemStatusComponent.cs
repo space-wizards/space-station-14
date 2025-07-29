@@ -9,8 +9,8 @@ namespace Content.Client.Atmos.Components;
 /// <remarks>
 /// Shows the tank pressure in kPa and Open/Closed state.
 /// </remarks>
+/// <seealso cref="TankPressureItemStatusSystem"/>
 /// <seealso cref="TankPressureStatusControl"/>
-/// <seealso cref="GasTankSystem"/>
 [RegisterComponent]
 public sealed partial class TankPressureItemStatusComponent : Component
 {
