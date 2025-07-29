@@ -34,7 +34,7 @@
   - type: UseDelay
     delay: 1
 
-# TODO: Ideally, these would use the same sprite as the standard cane, but with a color tint, however this currently doesnt work.
+# TODO: Ideally, these would use the same sprite as the standard cane, but with a color tint, however this currently doesnt work as inhandvisual doesnt account for when its a wielded weapon. Resulting in a colored cane via tint, however the cane will not be able to be (visually) wielded.
 # See above commented lines for an idea of the intended implementation.
 - type: entity
   parent: OffsetCane
