@@ -9811,5 +9811,12 @@ Entries:
   id: 1351
   time: '2025-07-28T23:01:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/952
+- author: Fractalflower
+  changes:
+  - message: roundstart high heels
+    type: Add
+  id: 1352
+  time: '2025-07-29T12:11:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1093
 Order: -1
 
