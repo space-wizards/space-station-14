@@ -157,7 +157,7 @@ public sealed partial class GameTicker //🌟Starlight🌟
 
         embed.Fields[0] = embed.Fields[0] with { Value = $"{_playerManager.PlayerCount}/{_playerManager.MaxPlayers}" };
         embed.Fields[1] = embed.Fields[1] with { Value = mapName };
-        embed.Fields[2] = embed.Fields[2] with { Value = preset };
+        embed.Fields[2] = embed.Fields[2] with { Value = string.IsNullOrWhiteSpace(GamemodeDescOverride) ? preset : Loc.GetString(GamemodeDescOverride) };
         embed.Fields[3] = embed.Fields[3] with { Value = RoundDuration().ToString("hh\\:mm\\:ss") };
 
         _payload.Embeds[0] = embed;
