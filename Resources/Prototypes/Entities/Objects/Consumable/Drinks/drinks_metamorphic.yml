@@ -12,7 +12,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
     layers:
-      - state: icon
+      - state: icon # TODO add "icon_empty" state to match "DrinkVisualsFillOverlay"
         map: [ "enum.SolutionContainerLayers.Base" ]
       - state: fill1
         map: [ "enum.SolutionContainerLayers.Fill" ]
@@ -26,7 +26,7 @@
         maxVol: 30
   - type: SolutionContainerVisuals
     maxFillLevels: 9
-    fillBaseName: fill
+    fillBaseName: fill # todo rename to "fill-", add in-hands, then add parent "DrinkVisualsFillOverlay"
     metamorphic: true
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi

@@ -13,8 +13,6 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10
-  - type: Sprite
-    state: icon
   - type: Tag
     tags:
     - DrinkCup
@@ -24,7 +22,7 @@
 # A mug is a type of cup.[2]
 - type: entity
   abstract: true
-  parent: [DrinkBaseCup, DrinkBaseMaterialPorcelain]
+  parent: [DrinkBaseCup, DrinkBaseMaterialPorcelain] # Should use DrinkVisualsFill, but sprites have no in-hand
   id: DrinkBaseMug
   name: mug
   description: A mug.
@@ -40,11 +38,6 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: icon-
-  - type: StaticPrice
-    price: 10
-  - type: Tag
-    tags:
-    - DrinkCup
 
 ## Misc Cups
 
@@ -60,7 +53,7 @@
     price: 125
 
 - type: entity
-  parent: [DrinkBaseCup, DrinkBaseMaterialPorcelain]
+  parent: DrinkBaseMug
   id: DrinkTeacupEmpty
   name: teacup
   description: A plain white porcelain teacup.
@@ -72,8 +65,9 @@
     sprite: Objects/Consumable/Drinks/teacup.rsi
     layers:
     - state: icon-0
-    - map: ["enum.SolutionContainerLayers.Fill"]
-      state: icon-4
+    - state: icon-4
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4

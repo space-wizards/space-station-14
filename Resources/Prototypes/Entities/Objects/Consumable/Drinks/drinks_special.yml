@@ -1,5 +1,5 @@
 - type: entity
-  parent: [DrinkBase, DrinkBaseMaterialGlass]
+  parent: [DrinkBase, DrinkBaseMaterialGlass, DrinkVisualsFillOverlay]
   id: DrinkShotGlass
   name: shot glass
   description: Perfect for slamming down onto the table angrily.
@@ -13,19 +13,17 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shotglass.rsi
     layers:
-    - state: icon
+    - state: icon # TODO add "icon_empty" state to match "DrinkVisualsFillOverlay"
       map: [ "enum.SolutionContainerLayers.Base" ]
     - state: fill1
       map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
     - state: icon-front
       map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 2
-    fillBaseName: fill
+    fillBaseName: fill # TODO rename to "fill-" to match "DrinkVisualsFillOverlay"
     inHandsMaxFillLevels: 1
-    inHandsFillBaseName: -fill-
   - type: ExaminableSolution
     solution: drink
   - type: FitsInDispenser
@@ -161,7 +159,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol: 20 # 20 might be too much
   - type: Item
     size: Tiny
   - type: SolutionTransfer
@@ -178,7 +176,7 @@
       Steel: 20
 
 - type: entity
-  parent: [DrinkBase, DrinkBaseMaterialStrongMetal]
+  parent: [DrinkBase, DrinkBaseMaterialStrongMetal, DrinkVisualsFill]
   id: Pitcher
   name: metal pitcher
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
@@ -190,17 +188,13 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pitcher.rsi
     layers:
-    - state: icon
-      map: ["enum.SolutionContainerLayers.Base"]
-    - state: fill-6
+    - state: icon # TODO add "icon_empty" state to match "DrinkVisualsFill"
+    - state: fill-1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
-    fillBaseName: fill-
     inHandsMaxFillLevels: 2
-    inHandsFillBaseName: -fill-
   - type: FitsInDispenser
     solution: drink
 

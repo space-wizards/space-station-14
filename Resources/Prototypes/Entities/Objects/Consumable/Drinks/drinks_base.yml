@@ -37,7 +37,7 @@
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
 
-## Misc
+## Misc bases
 
 # This drink is empty trash
 - type: entity
@@ -52,7 +52,7 @@
     tags:
     - Trash
 
-## For drinks with a lid
+## Bases for drinks with a lid
 
 # Un-opened
 - type: entity
@@ -79,9 +79,9 @@
   - type: Sealable
     sealed: false
 
-## For visuals
+## Bases for visuals
 
-# Basic visualizer for an openable entity, often paired with BaseDrinkOpenable
+# Basic visualizer for an openable entity, usually paired with BaseDrinkOpenable
 - type: entity
   abstract: true
   id: DrinkVisualsOpenable
@@ -98,6 +98,52 @@
     - state: icon
       map: ["enum.OpenableVisuals.Layer"]
 
+# Basic visualizer for an entity with fill levels
+- type: entity
+  abstract: true
+  id: DrinkVisualsFill
+  components:
+  - type: Appearance
+  - type: Sprite
+    layers:
+    - state: icon_empty
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
+
+# Layered visualizer for an entity with fill levels
+- type: entity
+  abstract: true
+  parent: DrinkVisualsFill
+  id: DrinkVisualsFillOverlay
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_empty
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: fill-1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: icon-front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+
+# Basic visualizer for an entity with fill levels, already filled
+- type: entity
+  abstract: true
+  parent: DrinkVisualsFill
+  id: DrinkVisualsFillFilled
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: fill-5 # this will need to be different with a different maxFillLevels
+      map: ["enum.SolutionContainerLayers.Fill"]
+
 # Visualizer for an openable entity with fill levels
 - type: entity
   abstract: true
@@ -112,7 +158,7 @@
           False: {state: "icon_empty"}
   - type: Sprite
     layers:
-    - state: icon
+    - state: icon_empty
       map: ["enum.OpenableVisuals.Layer"]
     - state: fill-1
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -131,7 +177,7 @@
   components:
   - type: Sprite
     layers:
-    - state: icon
+    - state: icon_empty
       map: ["enum.OpenableVisuals.Layer"]
     - state: fill-5 # this will need to be different with a different maxFillLevels
       map: ["enum.SolutionContainerLayers.Fill"]

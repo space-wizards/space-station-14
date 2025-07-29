@@ -1,4 +1,4 @@
-# Material costs to apply to a drink
+## Material costs to apply to a drink
 # Adding one of these bases as the first parent will override a previous inherited material
 
 # Fragile glass
@@ -11,8 +11,8 @@
     damageModifierSet: FlimsyGlass
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger # Overkill threshold
+    - trigger: # Overkill threshold
+        !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:DoActsBehavior
@@ -56,8 +56,8 @@
     damageModifierSet: FlimsyGlass
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger # Overkill threshold
+    - trigger: # Overkill threshold
+        !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:DoActsBehavior
@@ -92,11 +92,11 @@
   components:
   - type: Damageable
     damageContainer: Inorganic
-#TODO    damageModifierSet:
+#TODO    damageModifierSet: FlimsyPlastic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger # Overkill threshold
+    - trigger: # Overkill threshold
+        !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:DoActsBehavior
@@ -134,8 +134,8 @@
     damageModifierSet: FlimsyWood
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger # Overkill threshold
+    - trigger: # Overkill threshold
+        !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:DoActsBehavior
@@ -173,8 +173,8 @@
     damageModifierSet: FlimsyMetallic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger # Overkill threshold
+    - trigger: # Overkill threshold
+        !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:DoActsBehavior
@@ -212,8 +212,8 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger # Overkill threshold
+    - trigger: # Overkill threshold
+        !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:DoActsBehavior
@@ -241,7 +241,7 @@
     materialComposition:
       Steel: 300
 
-# Weak gold
+# Flimsy gold
 - type: entity
   abstract: true
   id: DrinkBaseMaterialGold
@@ -251,15 +251,15 @@
     damageModifierSet: FlimsyMetallic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger # Overkill threshold
+    - trigger: # Overkill threshold
+        !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 10 # Gold is very weak
+        damage: 5 # Gold is very weak
       behaviors:
       - !type:PlaySoundBehavior
         sound:
