@@ -106,6 +106,10 @@
         - FlyingMobMask
         layer:
         - FlyingMobLayer
+  - type: Speech
+    speechVerb: Bee
+  - type: ReplacementAccent
+    accent: bee
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -221,7 +225,7 @@
         layer:
         - MobLayer
   - type: Speech
-    speechVerb: SmallMob
+    speechVerb: Chicken
     speechSounds: Cluck
   - type: Tag
     tags:
@@ -661,6 +665,11 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: Duck
+    speechSounds: Quack
+  - type: ReplacementAccent
+    accent: duck
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -703,8 +712,6 @@
     eggSpawn:
     - id: FoodEgg
   - type: ExaminableHunger
-  - type: ReplacementAccent
-    accent: duck
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -875,6 +882,11 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: Cow
+    speechSounds: Moo
+  - type: ReplacementAccent
+    accent: cow
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1077,6 +1089,8 @@
       Male: Goat
       Unsexed: Goat
   - type: BleatingAccent
+  - type: ReplacementAccent
+    accent: goat
   - type: InteractionPopup
     successChance: 0.2
     interactSuccessString: petting-success-goat
@@ -1120,6 +1134,11 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: Goose
+    speechSounds: Goose
+  - type: ReplacementAccent
+    accent: goose
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1169,6 +1188,10 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: LargeMob
+  - type: ReplacementAccent
+    accent: gorilla
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1255,6 +1278,12 @@
   - type: Inventory
     speciesId: kangaroo
     templateId: kangaroo
+  - type: Vocal
+    sounds:
+      Unsexed: Kangaroo
+  - type: Speech
+    speechVerb: LargeMob
+    speechSounds: Kangaroo
   - type: ReplacementAccent
     accent: kangaroo
   - type: Butcherable
@@ -1279,9 +1308,6 @@
     description: ghost-role-information-kangaroo-description
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
-  - type: Vocal
-    sounds:
-      Unsexed: Kangaroo
   - type: Puller
     needsHands: false
   - type: StaminaDamageOnHit
@@ -2028,6 +2054,11 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerbs: Reptilian
+    speechSounds: Lizard
+  - type: ReplacementAccent
+    accent: kangaroo # somehow works
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2138,6 +2169,11 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
+  - type: Speech
+    speechVerb: Frog
+    speechSounds: Frog
+  - type: ReplacementAccent
+    accent: frog
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2219,7 +2255,6 @@
     sounds:
       Unsexed: Parrot
   - type: ActiveListener
-  - type: Vocalizer
   - type: RadioVocalizer
   - type: ParrotListener
   - type: ParrotMemory
@@ -2281,6 +2316,11 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: Vox # quite similar. coincidence? yes
+    speechSounds: Penguin
+  - type: ReplacementAccent
+    accent: penguin
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2415,6 +2455,11 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
+  - type: Speech
+    speechVerb: Snake
+    speechSounds: Snake
+  - type: ReplacementAccent
+    accent: xeno
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2679,6 +2724,10 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: SmallMob
+  - type: ReplacementAccent
+    accent: xeno # possums are weird
   - type: Inventory
     speciesId: possum
     templateId: pet
@@ -2752,6 +2801,11 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: Raccoon
+    speechSounds: Raccoon
+  - type: ReplacementAccent
+    accent: raccoon
   - type: Inventory
     speciesId: possum #close enough
     templateId: pet
@@ -2812,6 +2866,11 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: Canine
+    speechSounds: Fox
+  - type: ReplacementAccent
+    accent: fox
   - type: Inventory
     speciesId: fox
     templateId: pet
@@ -3143,7 +3202,7 @@
     factions:
     - Syndicate
   - type: Access
-    tags: 
+    tags:
     - NuclearOperative
     - SyndicateAgent
   - type: MeleeWeapon
@@ -3276,6 +3335,11 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: SmallMob
+    speechSounds: Sloth
+  - type: ReplacementAccent
+    accent: mouse # literally just squeaks and creaking noises
   - type: Inventory
     speciesId: sloth
     templateId: pet
@@ -3330,6 +3394,11 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: Raccoon # also close enough
+    speechSounds: Ferret
+  - type: ReplacementAccent
+    accent: ferret
   - type: Inventory
     speciesId: fox #close enough
     templateId: pet
@@ -3572,6 +3641,8 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/pig_oink.ogg
+  - type: Speech
+    speechSounds: Pig
   - type: ReplacementAccent
     accent: pig
   - type: SentienceTarget
