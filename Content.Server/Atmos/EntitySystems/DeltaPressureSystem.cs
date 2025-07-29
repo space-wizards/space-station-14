@@ -127,15 +127,5 @@ public sealed class DeltaPressureSystem : EntitySystem
         return _atmosphereSystem.TryRemoveDeltaPressureEntity(grid, ent);
     }
 
-    /// <summary>
-    /// Sets the effective pressure on an entity with a <see cref="DeltaPressureComponent"/>.
-    /// </summary>
-    /// <param name="ent">The entity to set.</param>
-    /// <param name="pressure">The pressure to set on the component.</param>
-    public void SetEffectivePressure(Entity<DeltaPressureComponent> ent, float pressure)
-    {
-        ent.Comp.CurrentEffectivePressure = pressure;
-    }
-
     // TODO: API for setting fields
 }
