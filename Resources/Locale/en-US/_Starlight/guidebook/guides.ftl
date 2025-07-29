@@ -90,10 +90,12 @@ guide-entry-sl-medical-sop-genproc-intro = General Procedures
 guide-entry-sl-medical-sop-staff-intro = Staff Procedures
 
 guide-entry-sl-cargo-sop-intro = Cargo
+guide-entry-sl-cargo-sop-genproc-intro = General Procedures
 guide-entry-sl-cargo-sop-cargotechnician = Cargo Technician
 guide-entry-sl-cargo-sop-miningspecialist = Mining Specialist
 guide-entry-sl-cargo-sop-salvagespecialist = SalvageSpecialist
 guide-entry-sl-cargo-sop-quartermaster = Quartermaster (QM)
+guide-entry-sl-cargo-sop-staff-intro = Staff Procedures
 guide-entry-sl-cargo-sop-handlingorders = Handling Orders
 guide-entry-sl-cargo-sop-handlingorders-engineering = Engineering Orders
 guide-entry-sl-cargo-sop-handlingorders-security = Security Orders
