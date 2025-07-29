@@ -22,7 +22,7 @@
 # A mug is a type of cup.[2]
 - type: entity
   abstract: true
-  parent: [DrinkBaseCup, DrinkBaseMaterialPorcelain] # Should use DrinkVisualsFill, but sprites have no in-hand
+  parent: [DrinkBaseCup, DrinkBaseMaterialPorcelain] # todo Should use DrinkVisualsFill, but inheritors have no in-hand and state names are wrong
   id: DrinkBaseMug
   name: mug
   description: A mug.
@@ -38,6 +38,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: icon-
+  - type: ExaminableSolution # If you can see the fill levels, you can see the unit count
+    solution: drink
 
 ## Misc Cups
 
@@ -58,9 +60,6 @@
   name: teacup
   description: A plain white porcelain teacup.
   components:
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/teacup.rsi
-    state: icon-vend-tea
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
     layers:
@@ -68,12 +67,11 @@
     - state: icon-4
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4
 
 - type: entity
-  parent: [ DrinkBaseCup, DrinkBaseMaterialGlass ]
+  parent: [ DrinkBaseCup, DrinkBaseMaterialGlass, DrinkVisualsFillOverlay ]
   id: DrinkGlassCoupeShaped
   name: coupe glass
   description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
@@ -81,24 +79,19 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
     layers:
-    - state: icon
+    - state: icon # todo add "icon_empty" state to match DrinkVisualsFillOverlay
       map: [ "enum.SolutionContainerLayers.Base" ]
     - state: fill1
       map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
     - state: icon-front
       map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: fill
+    fillBaseName: fill # todo rename to "fill-" to match DrinkVisualsFillOverlay
     inHandsMaxFillLevels: 1
-    inHandsFillBaseName: -fill-
-  - type: ExaminableSolution
-    solution: drink
 
 - type: entity
-  parent: [DrinkBaseCup, DrinkBaseMaterialCardboard]
+  parent: [DrinkBaseCup, DrinkBaseMaterialCardboard] # TODO should use DrinkVisualsFill but state names are wrong and no inhand
   id: DrinkWaterCup
   name: water cup
   description: A paper water cup.
@@ -125,6 +118,8 @@
     - DrinkCup
     - WhitelistChameleon
   - type: Appearance
+  - type: ExaminableSolution # If you can see the fill levels, you can see the unit count
+    solution: drink
   - type: TrashOnSolutionEmpty
     solution: drink
   - type: Clothing
@@ -259,7 +254,6 @@
         state: icon-4
   - type: SolutionContainerVisuals
     maxFillLevels: 4
-    fillBaseName: icon-
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -287,7 +281,6 @@
         state: icon-4
   - type: SolutionContainerVisuals
     maxFillLevels: 4
-    fillBaseName: icon-
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -329,6 +322,9 @@
         reagents:
         - ReagentId: Tea
           Quantity: 20
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    state: icon-vend-tea
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -364,7 +360,6 @@
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lean.rsi
-    state: icon
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi
   - type: TrashOnSolutionEmpty

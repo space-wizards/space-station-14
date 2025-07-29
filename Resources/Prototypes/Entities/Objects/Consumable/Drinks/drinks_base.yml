@@ -115,6 +115,8 @@
     fillBaseName: fill-
     inHandsMaxFillLevels: 3
     inHandsFillBaseName: -fill-
+  - type: ExaminableSolution # If you can see the fill levels, you can see the unit count
+    solution: drink
 
 # Layered visualizer for an entity with fill levels
 - type: entity
@@ -168,6 +170,8 @@
     fillBaseName: fill-
     inHandsMaxFillLevels: 3
     inHandsFillBaseName: -fill-
+  - type: ExaminableSolution # If you can see the fill levels, you can see the unit count
+    solution: drink
 
 # Visualizer for an openable entity with fill levels, already filled
 - type: entity

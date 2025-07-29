@@ -24,8 +24,6 @@
     maxFillLevels: 2
     fillBaseName: fill # TODO rename to "fill-" to match "DrinkVisualsFillOverlay"
     inHandsMaxFillLevels: 1
-  - type: ExaminableSolution
-    solution: drink
   - type: FitsInDispenser
     solution: drink
   - type: Tag
@@ -159,7 +157,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20 # 20 might be too much
+        maxVol: 20 # might be too much
   - type: Item
     size: Tiny
   - type: SolutionTransfer

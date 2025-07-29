@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ DrinkBase, DrinkBaseMaterialPlastic, DrinkBaseOpenable, DrinkVisualsOpenable ] # Should use DrinkVisualAll, but sprite has no inhand
+  parent: [ DrinkBase, DrinkBaseMaterialPlastic, DrinkBaseOpenable, DrinkVisualsOpenable ] # todo Should use DrinkVisualAll, but sprite has no inhand
   id: DrinkSpaceGlue
   name: space glue tube
   description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!

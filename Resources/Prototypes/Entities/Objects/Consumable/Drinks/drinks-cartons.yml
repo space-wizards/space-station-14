@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   parent: [ DrinkBase, DrinkBaseMaterialCardboard, DrinkBaseOpenable, DrinkVisualsOpenable ]
-  id: DrinkCartonBaseLargeFull
+  id: DrinkCartonBaseLargeFull # todo rename DrinkCartonBaseFull to match bottles
   suffix: Full
   components:
   - type: Openable
@@ -22,7 +22,7 @@
 - type: entity
   abstract: true
   parent: DrinkCartonBaseLargeFull
-  id: DrinkCartonBaseFull
+  id: DrinkCartonBaseFull # todo rename DrinkCartonSmallBaseFull to match bottles
   components:
   - type: SolutionContainerManager
     solutions:

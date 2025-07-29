@@ -29,8 +29,6 @@
   - type: Tag
     tags:
     - DrinkBottle
-  - type: ExaminableSolution
-    solution: drink
 
 - type: entity
   abstract: true
@@ -84,7 +82,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-bottle.rsi
     layers:
-      - state: icon_blue
+      - state: icon_blue # todo add "icon_empty" state
         map: ["enum.OpenableVisuals.Layer"]
       - state: fill-6
         map: ["enum.SolutionContainerLayers.Fill"]
@@ -164,7 +162,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grenadinebottle.rsi
     layers:
-    - state: icon
+    - state: icon_empty
       map: ["enum.OpenableVisuals.Layer"]
     - state: fill-6
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -239,7 +237,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-bottle.rsi
     layers:
-      - state: icon_green
+      - state: icon_green # todo icon_empty
         map: ["enum.OpenableVisuals.Layer"]
       - state: fill-6
         map: ["enum.SolutionContainerLayers.Fill"]
@@ -393,7 +391,7 @@
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
-  id: DrinkBeerGrowler # Needs to be renamed DrinkBeerBottleFull
+  id: DrinkBeerGrowler # todo Needs to be renamed DrinkBeerBottleFullGrowler
   name: beer growler  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water. XL growler bottle.
   components:

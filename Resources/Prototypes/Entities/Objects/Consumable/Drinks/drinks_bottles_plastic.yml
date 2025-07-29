@@ -17,7 +17,6 @@
       drink:
         maxVol: 100
   - type: Sprite
-    state: icon
     sprite: Objects/Consumable/Drinks/generic_jug.rsi # fallback to generic plastic jug
   - type: TrashOnSolutionEmpty
     solution: drink
@@ -37,7 +36,6 @@
       drink:
         maxVol: 30
   - type: Sprite
-    state: icon
     sprite: Objects/Consumable/Drinks/waterbottle.rsi # fallback
   - type: FitsInDispenser
     solution: drink
