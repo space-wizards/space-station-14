@@ -1,19 +1,18 @@
-using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Power.Components;
 
 /// <summary>
-/// Exposes a battery's charge information via item status control.
-/// Synced to clients to display charge percent and optional On/Off state.
+/// Shared component that contains battery information for display purposes.
+/// Automatically added to items with batteries and synced from server to client.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class BatteryItemStatusComponent : Component
+public sealed partial class SharedBatteryItemComponent : Component
 {
     /// <summary>
     /// Whether to show On/Off toggle state for this battery-powered item.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool ShowToggleState = true;
 
     /// <summary>

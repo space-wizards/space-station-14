@@ -9,17 +9,16 @@ using Robust.Client.UserInterface.Controls;
 namespace Content.Client.Power.UI;
 
 /// <summary>
-/// Displays battery charge information for <see cref="BatteryItemStatusComponent"/>.
+/// Displays battery charge information for entities with SharedBatteryItemComponent.
 /// </summary>
-/// <seealso cref="BatteryItemStatusSystem"/>
 public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatusControl.Data>
 {
-    private readonly Entity<BatteryItemStatusComponent> _parent;
+    private readonly Entity<SharedBatteryItemComponent> _parent;
     private readonly IEntityManager _entityManager;
     private readonly RichTextLabel _label;
 
     public BatteryStatusControl(
-        Entity<BatteryItemStatusComponent> parent,
+        Entity<SharedBatteryItemComponent> parent,
         IEntityManager entityManager)
     {
         _parent = parent;
