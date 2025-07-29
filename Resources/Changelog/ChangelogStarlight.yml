@@ -9891,5 +9891,12 @@ Entries:
   id: 1362
   time: '2025-07-29T13:04:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1017
+- author: Trosling
+  changes:
+  - message: Updated in-game security SOP to match latest wiki SOP as per Jul 10 2025.
+    type: Tweak
+  id: 1363
+  time: '2025-07-29T13:07:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1009
 Order: -1
 
