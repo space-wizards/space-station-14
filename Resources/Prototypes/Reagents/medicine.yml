@@ -836,6 +836,24 @@
           Brute: -2
 
 - type: reagent
+  id: MouseBites
+  name: reagent-name-mousebites
+  group: Medicine
+  desc: reagent-desc-mousebites
+  physicalDesc: reagent-physical-desc-mousy
+  flavor: mousy
+  color: "#ff596d"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:EvenHealthChange
+        damage:
+          Burn: -1
+          Toxin: -1
+          Airloss: -1
+          Brute: -1
+
+- type: reagent
   id: Ultravasculine
   name: reagent-name-ultravasculine
   group: Medicine

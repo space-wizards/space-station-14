@@ -1811,6 +1811,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: MouseBites
+          Quantity: 1
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -3143,7 +3145,7 @@
     factions:
     - Syndicate
   - type: Access
-    tags: 
+    tags:
     - NuclearOperative
     - SyndicateAgent
   - type: MeleeWeapon
