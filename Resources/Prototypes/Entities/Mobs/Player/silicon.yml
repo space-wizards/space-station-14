@@ -256,7 +256,7 @@
   - type: BlockMovement
     blockInteraction: false
   - type: SiliconLawProvider
-    laws: Crewsimov
+    weightedLaws: DefaultLawsets # Ronstation - modification.
   - type: SiliconLawBound
   - type: ActionGrant
     actions:
