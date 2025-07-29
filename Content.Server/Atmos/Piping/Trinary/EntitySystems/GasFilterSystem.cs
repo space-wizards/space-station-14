@@ -53,9 +53,10 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnFilterUpdated(EntityUid uid, GasFilterComponent filter, ref AtmosDeviceUpdateEvent args)
         {
+            // STARLIGHT - Disable outlet node pressure check for inline filter
             if (!filter.Enabled
                 || !_nodeContainer.TryGetNodes(uid, filter.InletName, filter.FilterName, filter.OutletName, out PipeNode? inletNode, out PipeNode? filterNode, out PipeNode? outletNode)
-                || outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
+                || (outletNode != inletNode && outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure)) // No need to transfer if target is full.
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;
@@ -208,6 +209,12 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 outletAirLocal.Volume = outlet.Volume;
                 args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-outlet"), outletAirLocal));
             }
+
+            // STARLIGHT START
+            // if inlet and outlet are the same you cant get a direction from it
+            if (inlet == outlet)
+                return;
+            // STARLIGHT END
 
             args.DeviceFlipped = inlet != null && filterNode != null && inlet.CurrentPipeDirection.ToDirection() == filterNode.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
         }
