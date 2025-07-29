@@ -9862,5 +9862,27 @@ Entries:
   id: 1358
   time: '2025-07-29T12:36:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1073
+- author: biteless-dot
+  changes:
+  - message: Renamed the salvage shuttle to lore name SR-3S2 "Reclaimer"
+    type: Tweak
+  id: 1359
+  time: '2025-07-29T12:52:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1029
+- author: biteless-dot
+  changes:
+  - message: Updated IFF so salvage shuttle name actually shows instead of just "mining"
+    type: Tweak
+  id: 1360
+  time: '2025-07-29T12:52:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1029
+- author: biteless-dot
+  changes:
+  - message: Renamed the cargo shuttles and variants to include new lore friendly
+      names
+    type: Tweak
+  id: 1361
+  time: '2025-07-29T12:52:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1029
 Order: -1
 
