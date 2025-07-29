@@ -9898,5 +9898,13 @@ Entries:
   id: 1363
   time: '2025-07-29T13:07:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1009
+- author: Central Security Division(Insaniam)
+  changes:
+  - message: Added the MT-7 Energy magnum soon made to apear on your stations warden
+      or detectives!
+    type: Add
+  id: 1364
+  time: '2025-07-29T13:10:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1000
 Order: -1
 
