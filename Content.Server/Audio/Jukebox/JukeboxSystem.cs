@@ -27,8 +27,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         SubscribeLocalEvent<JukeboxComponent, ComponentShutdown>(OnComponentShutdown);
 
         SubscribeLocalEvent<JukeboxComponent, PowerChangedEvent>(OnPowerChanged);
-
-        SubscribeLocalEvent<JukeboxAudioComponent, EntityTerminatingEvent>(OnAudioTerminating);
     }
 
     private void OnComponentInit(Entity<JukeboxComponent> ent, ref ComponentInit args)
@@ -109,16 +107,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         _appearanceSystem.SetData(uid, JukeboxVisuals.VisualState, state);
     }
 
-    private void OnAudioTerminating(Entity<JukeboxAudioComponent> ent, ref EntityTerminatingEvent args)
-    {
-        if (!TryComp<JukeboxComponent>(ent.Comp.Jukebox, out var jukebox))
-            return;
-
-        // Clear the jukebox's reference to the audio stream entity
-        jukebox.AudioStream = null;
-        Dirty(ent.Comp.Jukebox, jukebox);
-    }
-
     private void TryUpdateVisualState(Entity<JukeboxComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -177,11 +165,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             }
 
             ent.Comp.AudioStream = Audio.PlayPvs(jukeboxProto.Path, ent, AudioParams.Default.WithMaxDistance(10f))?.Entity;
-            if (ent.Comp.AudioStream is { } audioEnt)
-            {
-                var jukeboxAudioComp = EnsureComp<JukeboxAudioComponent>(audioEnt);
-                jukeboxAudioComp.Jukebox = ent;
-            }
             Dirty(ent);
         }
         return true;
