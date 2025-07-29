@@ -963,3 +963,18 @@
     whitelist:
       components:
       - Body
+
+- type: hitscan
+  id: PointDefenseBeam
+  name: Point Defense beam
+  parent: LaserTrace
+  maxLength: 25
+  muzzleFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: pd_muzzle
+  travelFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: pd_trace
+  impactFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: pd_impact

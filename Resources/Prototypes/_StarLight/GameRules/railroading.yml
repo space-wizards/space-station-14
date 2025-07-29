@@ -1,0 +1,39 @@
+- type: entity
+  parent: BaseGameRule
+  id: RailroadingTest
+  components:
+  - type: StationEvent
+    earliestStart: 1
+    weight: 33.3
+    minimumPlayers: 10
+    duration: 1
+  - type: RailroadRule
+    preSpawnDelay: 3
+    delay: 3
+    cards:
+#    - RRCardFoodSashimi
+#    - RRCardFoodApplePie
+    - RRCardFoodDumplings
+    - RRCardFoodHerbSalad
+    - RRCardFoodMelonFruitBowl
+#    - RRCardFoodStew
+
+- type: entity
+  parent: BaseGameRule
+  id: RailroadingMinor
+  components:
+  - type: StationEvent
+    earliestStart: 1
+    weight: 33.3
+    minimumPlayers: 10
+    duration: 1
+  - type: RailroadRule
+    preSpawnDelay: 10
+    delay: 10
+    cards:
+    - RRCardFoodSashimi
+    - RRCardFoodApplePie
+    - RRCardFoodDumplings
+    - RRCardFoodHerbSalad
+    - RRCardFoodMelonFruitBowl
+    - RRCardFoodStew
