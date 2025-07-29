@@ -8,7 +8,7 @@ battery-status-switchable-state = { $state ->
 battery-status-state = State: {$state}
 
 # Charge Status
-charge-status-count = Сharges: [color=white]{$current}/{$max}[/color]
+charge-status-count = Сharges: [color=fuchsia]{$current}/{$max}[/color]
 charge-status-recharge = Recharge: [color=yellow]{$seconds}s[/color]
 
 # Tank Pressure Status
