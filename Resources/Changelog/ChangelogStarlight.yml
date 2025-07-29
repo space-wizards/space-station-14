@@ -9854,5 +9854,13 @@ Entries:
   id: 1357
   time: '2025-07-29T12:24:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1087
+- author: neurovermi
+  changes:
+  - message: Inline Gas Filter - an atmos device that filters gas without splitting
+      the pipenet in two.
+    type: Add
+  id: 1358
+  time: '2025-07-29T12:36:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1073
 Order: -1
 
