@@ -47,7 +47,7 @@
   configuration:
     entity: MobCarpMagic
     forced: true
-    duration: 30 #STARLIGHT
+    duration: 120 #STARLIGHT
     inventory: None
     transferName: true
     transferDamage: true
@@ -63,7 +63,7 @@
   configuration:
     entity: MobSkeletonPerson
     forced: true
-    duration: 30 #STARLIGHT
+    duration: 120 #STARLIGHT
     inventory: Drop
     transferName: true
     transferDamage: true
@@ -79,7 +79,7 @@
   configuration:
     entity: MobMonkey
     forced: true
-    duration: 30 #STARLIGHT
+    duration: 120 #STARLIGHT
     inventory: None
     transferName: true
     transferDamage: true
