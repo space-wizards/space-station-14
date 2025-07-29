@@ -155,13 +155,15 @@
   flatReductions:
     Blunt: 5
 
+# Generally quite fragile
 - type: damageModifierSet
-  id: FlimsyWood # aka Cardboard
+  id: Cardboard
   coefficients:
-    Blunt: 0.8
-    Slash: 2.0
-    Piercing: 0.5 # poking holes in cardboard doesn't do much
-    Heat: 2.0
+    Blunt: 1.3
+    Slash: 1.3
+    Piercing: 0.3 # poking holes in cardboard doesn't do much
+    Heat: 2.0 # it's wood so it burns
+    Structural: 1.3
 
 - type: damageModifierSet
   id: Web # Very flammable, can be easily hacked and slashed, but shooting or hitting it is another story.
