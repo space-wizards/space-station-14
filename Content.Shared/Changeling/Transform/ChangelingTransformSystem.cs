@@ -123,7 +123,6 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             RequireCanInteract = false,
             DistanceThreshold = null,
         });
-        Log.Debug($"{ent.Owner} {result}");
     }
 
     private void OnTransformSelected(Entity<ChangelingTransformComponent> ent,
@@ -137,7 +136,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
             return;
 
-        if (identity.CurrentIdentity == identity.LastConsumedIdentity)
+        if (identity.CurrentIdentity == targetIdentity)
             return; // don't transform into ourselves
 
         if (!identity.ConsumedIdentities.Contains(targetIdentity.Value))

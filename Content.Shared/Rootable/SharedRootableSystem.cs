@@ -83,6 +83,7 @@ public abstract class SharedRootableSystem : EntitySystem
 
         var actions = new Entity<ActionsComponent?>(entity, comp);
         _actions.RemoveAction(actions, entity.Comp.ActionEntity);
+        _alerts.ClearAlert(entity, entity.Comp.RootedAlert);
     }
 
     private void OnRootableToggle(Entity<RootableComponent> entity, ref ToggleActionEvent args)
