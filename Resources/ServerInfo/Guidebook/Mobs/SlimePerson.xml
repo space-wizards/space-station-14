@@ -1,5 +1,6 @@
 <Document>
-  # Slime People
+  # Laspii 
+  <!--Starlight, renaming of the Slimes-->
 
   <Box>
     <GuideEntityEmbed Entity="MobSlimePerson" Caption=""/>
@@ -10,10 +11,10 @@
   They exhale nitrous oxide and are unaffected by it.
   Their body can process 6 reagents at the same time instead of just 2.
 
-  Slimepeople have an [bold]internal 2x3 storage inventory[/bold] inside of their slime membrane. Anyone can see what's inside and take it out of you without asking,
+  Laspii  have an [bold]internal 2x3 storage inventory[/bold] inside of their slime membrane. Anyone can see what's inside and take it out of you without asking, <!--Starlight-->
   so be careful.
 
-  Slimepeople have slight accelerated regeneration compared to other humanoids. They're also capable of hardening their fists, and as such have stronger punches,
+  Laspii have slight accelerated regeneration compared to other humanoids. They're also capable of hardening their fists, and as such have stronger punches, <!--Starlight-->
   although they punch a little slower.
 
   Their slime "blood" can not be regenerated from Iron. Slime Blood is technically a source of

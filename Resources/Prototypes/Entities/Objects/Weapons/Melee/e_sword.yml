@@ -95,6 +95,8 @@
       path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+  - type: StaticPrice
+    price: 2500
 
 - type: entity
   name: energy dagger

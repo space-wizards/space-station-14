@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made by Killer Tamashi (Discord)",
+    "copyright": "Made by Killer Tamashi (Discord), inhands by TiniestShark (github) then recolored by Killer Tamashi.",
     "states": [
         {
             "name": "base"
@@ -25,6 +25,14 @@
         {
             "name": "mag-5"
 
+        },
+        {
+            "name": "inhand-left-mag",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-mag",
+            "directions": 4
         }
     ]
 }

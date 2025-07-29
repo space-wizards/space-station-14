@@ -67,6 +67,26 @@
         Caustic: 0.75
 
 - type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatInspector
+  name: inspector's coat
+  description: A strict inspector's coat from a bygone era.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Coats/insp_coat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Coats/insp_coat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+        Caustic: 0.9
+
+#USSP
+- type: entity
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSovietContraband]
   id: ClothingOuterSovietCoat
   name: soviet great coat

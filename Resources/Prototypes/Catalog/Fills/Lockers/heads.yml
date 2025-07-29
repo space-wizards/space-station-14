@@ -23,6 +23,7 @@
     - id: MailTeleporterMachineCircuitboard
     - id: PlushieLance #starlight
     - id: RadioHandheldExpedition #starlight
+    - id: ClothingOuterHardsuitLuxmax #starlight
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -47,7 +48,7 @@
     - id: ClothingHeadsetAltCommand
     - id: ClothingOuterArmorCaptainCarapace
     - id: CommsComputerCircuitboard
-    - id: DoorRemoteCommand
+    - id: DoorRemoteCustom
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
@@ -62,18 +63,6 @@
       conditions:
       - !type:PlayerCountCondition
         max: 15
-    - id: PaperTooQuietNeedChaos #Starlight
-      conditions:
-      - !type:PlayerCountCondition
-        invert: true
-        max: 15
-      prob: 0.05
-    - id: PaperTooQuietNeedChaosFew #lowpop varient which needs less singnatures.
-      conditions:
-      - !type:PlayerCountCondition
-        max: 15
-      prob: 0.05
-    #Starlight
 
 
 # No laser table + Laser table
@@ -350,7 +339,7 @@
   table: !type:AllSelector
     children:
     - id: ClothingNeckCloakHosElite
-    - id: WeaponEnergyShotgun
+    - id: WeaponEnergySMG
     - id: BookSpaceLaw
     - id: BoxEncryptionKeySecurity
     - id: CigarGoldCase

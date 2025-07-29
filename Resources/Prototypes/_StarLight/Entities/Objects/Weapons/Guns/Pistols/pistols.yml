@@ -230,7 +230,7 @@
       
 - type: entity
   name: Jungle Hawk
-  parent: [ WeaponPistolN1984, BaseSecuritySalvageContraband ]
+  parent: [ BaseSecuritySalvageContraband, WeaponPistolN1984 ] 
   id: WeaponPistolDeagle
   description: A high-caliber handgun designed for putting down large game.
   components:
@@ -294,11 +294,12 @@
     slots:
       gun_chamber:
         name: Chamber
-        startingItem: CartridgePistolSP
+        startingItem: null
         priority: 1
         whitelist:
           tags:
             - CartridgePistol
+            - CartridgePistolImprovised
   - type: Construction
     graph: MakeshiftPistolCraftedGraph
     node: shotgun
@@ -344,10 +345,11 @@
     angleDecay: 4
   - type: BallisticAmmoProvider
     capacity: 5
-    proto: CartridgePistolSP
+    proto: null
     whitelist:
       tags:
       - CartridgePistol
+      - CartridgePistolImprovised
   - type: Item
     size: Small #Magazine location makes it bigger but should still fit in a pocket. (This basically serves to keep people from putting it in a boot/stacking them as easily)
     shape:

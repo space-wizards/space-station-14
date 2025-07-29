@@ -29,8 +29,8 @@
     gloves: ClothingHandsGlovesBlackNitrile
     id: SovietIdCard
     ears: ClothingHeadsetAltSoviet
-    belt: WeaponPistolAPS
-    pocket1: USSPUplinkRadioPresetDebug
+    belt: ClothingBeltSheathFilled
+    pocket1: WeaponPistolAPS
     pocket2: SovietDeskFlag
   inhand:
   - d6Dice

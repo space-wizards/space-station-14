@@ -17,6 +17,7 @@
     - AllHostile
     - Wizard
     - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: NanoTrasen
@@ -37,6 +38,7 @@
     - Xenoborg
     - Dragon
     - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: Mouse
@@ -62,6 +64,7 @@
     - Dragon
     - HonkHostile
     - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: SimpleHostile
@@ -85,6 +88,7 @@
     - Dragon
     - Xeno
     - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: SimpleNeutral
@@ -108,6 +112,7 @@
     - Xenoborg
     - Dragon
     - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: Xeno
@@ -150,6 +155,7 @@
     - Wizard
     - Dragon
     - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: Revolutionary
@@ -166,6 +172,7 @@
     - Changeling
     - AllHostile
     - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: Changeling
@@ -218,6 +225,7 @@
     - Zombie
     - AllHostile
     - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: AllHostile
@@ -242,6 +250,7 @@
     - Wizard
     - Xenoborg
     - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: Wizard
@@ -262,6 +271,7 @@
     - AllHostile
     - Xenoborg
     - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: Xenoborg
@@ -281,3 +291,4 @@
     # cause they are hostile to them
     - SimpleHostile
     - AllHostile
+    - Abductor # starlight

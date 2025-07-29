@@ -11,6 +11,8 @@ namespace Content.Shared.Starlight.NewLife;
 public sealed class NewLifeEuiState : EuiStateBase
 {
     public HashSet<int> UsedSlots { get; set; } = [];
+    public int RemainingLives { get; set; }
+    public int MaxLives { get; set; }
 }
 [NetSerializable, Serializable]
 public sealed class NewLifeOpenedEvent : EntityEventArgs

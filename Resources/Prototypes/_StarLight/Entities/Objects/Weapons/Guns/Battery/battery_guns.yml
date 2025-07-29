@@ -82,7 +82,7 @@
       visualState: disable
       magState: disable
       heldPrefix: disable4
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 65
       visualState: kill
       magState: kill
@@ -113,7 +113,7 @@
     fireModes:
     - proto: DisablerBolt
       fireCost: 150
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 200
       conditions:
       - !type:AlertLevelCondition
@@ -149,8 +149,6 @@
       id: blinking
       interpolate: Nearest
       maxDuration: 1.0
-      minValue: 0.1
-      maxValue: 2.0
       isLooped: true
   - type: ToggleableLightVisuals
     spriteLayer: light
@@ -196,7 +194,7 @@
         - yellow
         - red
         - gamma
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 66.6
       magState: lethal
       conditions:
@@ -250,11 +248,11 @@
       fireCost: 100
       magState: stun
       visualState: stun-unshaded
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 75
       magState: kill
       visualState: kill-unshaded
-    - proto: DestroyBolt
+    - proto: DestroyBeam
       fireCost: 750
       magState: destroy
       visualState: destroy-unshaded
@@ -264,6 +262,59 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 20
+
+- type: entity
+  name: MT-7 Magnum
+  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband ]
+  id: WeaponEnergyMagnumGun
+  description: This is an expensive, modern recreation of the Mateba revolver, with several unique fire modes. And a slow self recharging battery. However, it has a slower recharge then most battery related weapons.
+  components:
+  - type: Gun
+    fireRate: 1.6
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/Energy_Magnum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Lock
+    mindShieldLock: true
+  - type: AccessReader
+    access: [["Security"]]
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/Energy_Magnum.rsi
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBolt
+    fireCost: 80
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DisablerBolt
+      fireCost: 80
+      magState: disable
+      visualState: disable-unshaded
+    - proto: TaserBolt
+      fireCost: 100
+      magState: stun
+      visualState: stun-unshaded
+    - proto: RedHeavyLaser # Does slightly more damage but costs more energy.
+      fireCost: 222
+      magState: kill
+      visualState: kill-unshaded
+    - proto: DestroyBeam
+      fireCost: 650
+      magState: destroy
+      visualState: destroy-unshaded
+  - type: Battery
+    maxCharge: 2000
+    startingCharge: 2000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 25
 
 - type: entity
   parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
@@ -422,10 +473,10 @@
     - proto: TaserBolt
       fireCost: 100
       magState: stun
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 100
       magState: kill
-    - proto: DestroyBolt
+    - proto: DestroyBeam
       fireCost: 100
       magState: destroy
 
@@ -463,11 +514,11 @@
       fireCost: 100
       magState: stun
       visualState: stun
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 100
       magState: kill
       visualState: kill
-    - proto: DestroyBolt
+    - proto: DestroyBeam
       fireCost: 200
       magState: destroy
       visualState: destroy
@@ -509,7 +560,7 @@
       fireCost: 75
       magState: disable
       visualState: disable
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 100
       magState: kill
       visualState: kill
@@ -545,7 +596,7 @@
       fireCost: 100
     - proto: AdvancedTaserBolt
       fireCost: 100
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 100
   - type: MagazineVisuals
     magState: mag
@@ -632,11 +683,11 @@
       fireCost: 100
       magState: stun
       visualState: stun
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 50
       magState: kill
       visualState: kill
-    - proto: DestroyBolt
+    - proto: DestroyBeam
       fireCost: 100
       magState: destroy
       visualState: destroy
@@ -686,11 +737,11 @@
       fireCost: 10
       magState: stun
       visualState: stun
-    - proto: LaserBolt
+    - proto: RedLaserBeam
       fireCost: 5
       magState: kill
       visualState: kill
-    - proto: DestroyBolt
+    - proto: DestroyBeam
       fireCost: 10
       magState: destroy
       visualState: destroy
@@ -718,11 +769,11 @@
     steps: 5
     zeroVisible: true
   - type: HitscanBatteryAmmoProvider
-    proto: DestroyBolt
+    proto: DestroyBeam
     fireCost: 100
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: DestroyBolt
+    - proto: DestroyBeam
       fireCost: 100
       magState: destroy
       visualState: destroy
@@ -761,3 +812,63 @@
       steps: 5
       zeroVisible: true
     - type: Appearance
+    
+- type: entity
+  name: proto-5x energy gun
+  parent: [BaseWeaponBattery, BaseGrandTheftContraband]
+  id: WeaponEnergySMG
+  description: A one-of-a-kind prototype energy sub-machine gun. It offers high energy firepower and a powerful self recharge.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/energy_smg.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: false
+  - type: Appearance
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/energy_smg.rsi
+  - type: Gun
+    fireRate: 4.5
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      params:
+         volume: -2
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletEnergySMGLaser
+    fireCost: 50
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletEnergySMGLaser
+      fireCost: 50
+    - proto: BulletEnergySMGDisabler
+      fireCost: 25
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,3,1
+    #sprite: _Starlight/Objects/Weapons/Guns/Battery/energy_smg.rsi
+    #heldPrefix: energy
+  - type: Tag
+    tags:
+    - HighRiskItem
+  #- type: StealTarget
+    #stealGroup: WeaponEnergyShotgun
+  #- type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: Battery
+    maxCharge: 1500
+    startingCharge: 1500
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 100
+    autoRechargePause: true
+    autoRechargePauseTime: 10

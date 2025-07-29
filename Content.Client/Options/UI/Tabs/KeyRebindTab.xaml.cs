@@ -161,6 +161,7 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.MoveRight);
             AddButton(EngineKeyFunctions.Walk);
             AddButton(ContentKeyFunctions.Jump); //🌟Starlight🌟
+            AddButton(ContentKeyFunctions.ToggleKnockdown); //🌟Starlight🌟
             AddCheckBox("ui-options-hotkey-toggle-walk", _cfg.GetCVar(CCVars.ToggleWalk), HandleToggleWalk);
             InitToggleWalk();
 

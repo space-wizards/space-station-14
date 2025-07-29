@@ -23,6 +23,7 @@ public sealed class EtherealPhaseSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     private EntProtoId ShadekinShadow = "ShadekinShadow";
     private EntProtoId ShadekinPhaseInEffect = "ShadekinPhaseInEffect";
@@ -80,7 +81,7 @@ public sealed class EtherealPhaseSystem : EntitySystem
     {
         if (TryComp<NullSpaceComponent>(uid, out var ethereal))
         {
-            var tileref = Transform(uid).Coordinates.GetTileRef();
+            var tileref = _turf.GetTileRef(Transform(uid).Coordinates);
             if (tileref != null
             && _physics.GetEntitiesIntersectingBody(uid, (int)CollisionGroup.Impassable).Count > 0)
             {

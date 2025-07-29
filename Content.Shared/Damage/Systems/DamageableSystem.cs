@@ -365,7 +365,7 @@ namespace Content.Shared.Damage
 
             // Has the damage actually changed?
             DamageSpecifier newDamage = new() { DamageDict = new(state.DamageDict) };
-            var delta = component.Damage - newDamage;
+            var delta = newDamage - component.Damage;
             delta.TrimZeros();
 
             if (!delta.Empty)
