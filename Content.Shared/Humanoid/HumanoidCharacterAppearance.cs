@@ -225,7 +225,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
                 break;
             default:
                 break;
-                
+
         }
         // Starlight - End
 
@@ -309,11 +309,11 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
                 eyeColor = Humanoid.EyeColor.ValidEyeColor(speciesProto.EyeColoration, eyeColor);
             }
 
-            if(width > speciesProto.MaxWidth) width = speciesProto.DefaultWidth;
-            if(height > speciesProto.MaxHeight) height = speciesProto.DefaultHeight;
-
-            width = Math.Clamp(width, speciesProto.MinWidth, speciesProto.MaxWidth);
-            height = Math.Clamp(height, speciesProto.MinHeight, speciesProto.MaxHeight);
+            // this isn't a clamp, it's a reset if either is out of range
+            // maximum is done so that small species will get the correct height if they are defaulted (1f dwarf becoming 0.8f for example)
+            // minimum is done so that null values (interpreted as 0f) will get the default height and not become miniatures
+            if (width > speciesProto.MaxWidth || width < speciesProto.MinWidth) width = speciesProto.DefaultWidth;
+            if (height > speciesProto.MaxHeight || height < speciesProto.MinHeight) height = speciesProto.DefaultHeight;
             // Starlight - End
 
             markingSet.EnsureSpecies(species, skinColor, markingManager);
