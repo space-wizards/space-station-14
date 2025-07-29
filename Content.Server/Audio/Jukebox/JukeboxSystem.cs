@@ -99,7 +99,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnComponentShutdown(Entity<JukeboxComponent> ent, ref ComponentShutdown args)
     {
-        ent.Comp.AudioStream = Audio.Stop(ent.Comp.AudioStream);
+        ent.Comp.AudioStream = GetWeakReference(Audio.Stop(Resolve(ent.Comp.AudioStream)));
     }
 
     private void DirectSetVisualState(EntityUid uid, JukeboxVisualState state)
@@ -130,12 +130,13 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (!Audio.IsPlaying(ent.Comp.AudioStream))
+        var audioStream = Resolve(ent.Comp.AudioStream);
+        if (!Audio.IsPlaying(audioStream))
         {
             ent.Comp.SelectedSongId = track;
             DirectSetVisualState(ent, JukeboxVisualState.Select);
             ent.Comp.Selecting = true;
-            ent.Comp.AudioStream = Audio.Stop(ent.Comp.AudioStream);
+            ent.Comp.AudioStream = GetWeakReference(Audio.Stop(audioStream));
         }
 
         Dirty(ent);
@@ -150,13 +151,14 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        if (Exists(ent.Comp.AudioStream))
+        var audioStream = Resolve(ent.Comp.AudioStream);
+        if (Exists(audioStream))
         {
-            Audio.SetState(ent.Comp.AudioStream, AudioState.Playing);
+            Audio.SetState(audioStream, AudioState.Playing);
         }
         else
         {
-            ent.Comp.AudioStream = Audio.Stop(ent.Comp.AudioStream);
+            ent.Comp.AudioStream = GetWeakReference(Audio.Stop(audioStream));
 
             if (string.IsNullOrEmpty(ent.Comp.SelectedSongId) ||
                 !_protoManager.TryIndex(ent.Comp.SelectedSongId, out var jukeboxProto))
@@ -164,7 +166,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
                 return false;
             }
 
-            ent.Comp.AudioStream = Audio.PlayPvs(jukeboxProto.Path, ent, AudioParams.Default.WithMaxDistance(10f))?.Entity;
+            ent.Comp.AudioStream = GetWeakReference(Audio.PlayPvs(jukeboxProto.Path, ent, AudioParams.Default.WithMaxDistance(10f))?.Entity);
             Dirty(ent);
         }
         return true;
@@ -178,7 +180,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         if (!Resolve(entity, ref entity.Comp))
             return;
 
-        Audio.SetState(entity.Comp.AudioStream, AudioState.Stopped);
+        Audio.SetState(Resolve(entity.Comp.AudioStream), AudioState.Stopped);
         Dirty(entity);
     }
 
@@ -190,7 +192,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         if (!Resolve(entity, ref entity.Comp))
             return;
 
-        Audio.SetState(entity.Comp.AudioStream, AudioState.Paused);
+        Audio.SetState(Resolve(entity.Comp.AudioStream), AudioState.Paused);
     }
 
     /// <summary>
@@ -204,6 +206,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         if (!Resolve(entity, ref entity.Comp))
             return;
 
-        Audio.SetPlaybackPosition(entity.Comp.AudioStream, songTime);
+        Audio.SetPlaybackPosition(Resolve(entity.Comp.AudioStream), songTime);
     }
 }
