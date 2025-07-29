@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Fix identity reveal for creaming and meat spike popups.
-    type: Fix
-  id: 8306
-  time: '2025-04-21T20:15:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32003
 - author: ShadowCommander
   changes:
   - message: Added firelock lights for pressure and temperature warnings.
@@ -3910,3 +3903,14 @@
   id: 8817
   time: '2025-07-29T12:01:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39271
+- author: Admiral-Obvious-001
+  changes:
+  - message: Several advanced chemicals now act slower, but with raised OD thresholds
+      and lowered OD damage. The healing per unit remains largely the same.
+    type: Tweak
+  - message: Bicaradine no longer makes razorium when mixed with advanced brute chems.
+      Advanced brute chems still mix and create razorium when combined.
+    type: Tweak
+  id: 8818
+  time: '2025-07-29T18:52:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38811
