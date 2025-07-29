@@ -1,0 +1,17 @@
+﻿# Traitor
+- type: weightedRandom
+  id: TraitorObjectiveGroupStory
+  weights:
+    RetrieveContrabandObjective: 1
+    AccessForAllObjective: 1
+    ArmsDealerObjective: 1
+    FrameObjective: 1
+    FalseUprisingObjective: 1
+    DuelistObjective: 1
+    EspionageObjective: 1
+    ManifestoObjective: 1
+    CallingCardObjective: 1
+    SELFObjective: 1
+    StalkingObjective: 1
+    DisgraceObjective: 1
+    MaintsBarObjective: 1
