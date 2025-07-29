@@ -15,8 +15,7 @@ names-ninja-dataset-14 = Hiryu
 names-ninja-dataset-15 = Hayabusa
 names-ninja-dataset-16 = Midnight
 names-ninja-dataset-17 = Seven
-##STARLIGHT
-names-ninja-dataset-18 = Oni
+names-ninja-dataset-18 = Oni # Starlight
 names-ninja-dataset-19 = Hanzo
 names-ninja-dataset-20 = Blood
 names-ninja-dataset-21 = Iga
