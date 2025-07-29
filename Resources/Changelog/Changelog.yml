@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Increased ratio of crew to thieves from 15 to 20.
-    type: Tweak
-  id: 8303
-  time: '2025-04-21T17:24:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36531
-- author: centcomofficer24
-  changes:
-  - message: Added a genderfluid pin!
-    type: Add
-  id: 8304
-  time: '2025-04-21T17:46:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35854
-- author: ScarKy0
-  changes:
-  - message: Station AI now has a name identifier appended after their name.
-    type: Tweak
-  id: 8305
-  time: '2025-04-21T17:54:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36801
-- author: lzk228
-  changes:
-  - message: Fix identity reveal for creaming and meat spike popups.
-    type: Fix
-  id: 8306
-  time: '2025-04-21T20:15:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32003
 - author: ShadowCommander
   changes:
   - message: Added firelock lights for pressure and temperature warnings.
@@ -3905,3 +3877,40 @@
   id: 8814
   time: '2025-07-28T16:09:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39254
+- author: TrixxedHeart
+  changes:
+  - message: Several strange sprite issues with Vox have been fixed, most notably
+      jumpsuits and many neck items overlapping the face, as well as a layering issue
+      where their tank would appear over their hair.
+    type: Fix
+  id: 8815
+  time: '2025-07-28T21:28:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39219
+- author: K-Dynamic
+  changes:
+  - message: Quartermaster job and ID icons are now based on Cargo Technicians.
+    type: Tweak
+  id: 8816
+  time: '2025-07-29T07:34:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39259
+- author: Alkheemist
+  changes:
+  - message: Protected Grids can now again have their hull and tiles repaired (Evac,
+      ATS, etc)
+    type: Fix
+  - message: Protected Grids can no longer be expanded outside of their original size.
+    type: Fix
+  id: 8817
+  time: '2025-07-29T12:01:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39271
+- author: Admiral-Obvious-001
+  changes:
+  - message: Several advanced chemicals now act slower, but with raised OD thresholds
+      and lowered OD damage. The healing per unit remains largely the same.
+    type: Tweak
+  - message: Bicaradine no longer makes razorium when mixed with advanced brute chems.
+      Advanced brute chems still mix and create razorium when combined.
+    type: Tweak
+  id: 8818
+  time: '2025-07-29T18:52:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38811
