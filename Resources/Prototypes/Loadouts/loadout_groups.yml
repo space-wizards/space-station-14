@@ -36,6 +36,17 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+  - OffsetCane
+  - OffsetCaneBlack
+  - OffsetCaneBlue
+  - OffsetCaneCyan
+  - OffsetCaneGreen
+  - OffsetCanePink
+  - OffsetCanePurple
+  - OffsetCaneRed
+  - OffsetCaneYellow
+  - OffsetCaneMime # Available for everyone since someone might want a striped cane without being a mime, still gotta mime first though :godo:
+  - Cane
   - TowelColorBlack
   - TowelColorDarkBlue
   - TowelColorDarkGreen
