@@ -75,7 +75,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             }
 
             _uiSystem.SetUiState((ent, userInterfaceComp), TransformUI.Key, new ChangelingTransformBoundUserInterfaceState(identityData));
-        } //TODO: Can add a Else here with TransformInto and CloseUI to make a quick switch, issue right now is that Radials cover the Action buttons so clicking the action doens't work but pressing the number does.
+        } //TODO: Can add a Else here with TransformInto and CloseUI to make a quick switch,
+          // issue right now is that Radials cover the Action buttons so clicking the action closes the UI (due to clicking off a radial causing it to close, even with UI)
+          // but pressing the number does.
     }
 
     /// <summary>
