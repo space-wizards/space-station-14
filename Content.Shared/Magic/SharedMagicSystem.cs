@@ -1,6 +1,6 @@
 // Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using System.Numerics;
-using Content.Shared.Bible.Components; // For chaplain immunity check
+using Content.Shared.Bible.Components; // Ronstation - For chaplain immunity check
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Coordinates.Helpers;
