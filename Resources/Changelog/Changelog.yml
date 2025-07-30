@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Added firelock lights for pressure and temperature warnings.
-    type: Add
-  id: 8307
-  time: '2025-04-21T22:39:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28339
 - author: lzk228
   changes:
   - message: Bots now can examine, use zoom and see their alerts (health & stamina).
@@ -3914,3 +3907,13 @@
   id: 8818
   time: '2025-07-29T18:52:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38811
+- author: aada
+  changes:
+  - message: Lipolicide now continues to poison at 0 hunger.
+    type: Fix
+  - message: Tricordrazine now also heals at exactly 50 damage instead of needing
+      to be below 50. Similar thresholds on other reagents tweaked the same.
+    type: Tweak
+  id: 8819
+  time: '2025-07-30T06:44:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36289
