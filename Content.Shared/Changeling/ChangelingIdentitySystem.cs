@@ -32,6 +32,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
         SubscribeLocalEvent<ChangelingIdentityComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ChangelingIdentityComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<ChangelingIdentityComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<ChangelingStoredIdentityComponent, ComponentRemove>(OnStoredRemove);
     }
 
     private void OnMindAdded(Entity<ChangelingIdentityComponent> ent, ref MindAddedMessage args)
@@ -60,6 +61,13 @@ public sealed class ChangelingIdentitySystem : EntitySystem
         CleanupChangelingNullspaceIdentities(ent);
     }
 
+    private void OnStoredRemove(Entity<ChangelingStoredIdentityComponent> ent, ref ComponentRemove args)
+    {
+        // The last stored identity is being deleted, we can clean up the map.
+        if (_net.IsServer && PausedMapId != null && Count<ChangelingStoredIdentityComponent>() <= 1)
+            _map.DeleteMap(PausedMapId.Value);
+    }
+
     /// <summary>
     /// Cleanup all nullspaced Identities when the changeling no longer exists
     /// </summary>
@@ -68,11 +76,8 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     {
         foreach (var consumedIdentity in ent.Comp.ConsumedIdentities)
         {
-            PredictedDel(consumedIdentity);
+            PredictedQueueDel(consumedIdentity);
         }
-
-        if (PausedMapId != null && Count<ChangelingStoredIdentityComponent>() == 0)
-            _map.DeleteMap(PausedMapId.Value); // map is empty, we can delete it
     }
 
     /// <summary>
