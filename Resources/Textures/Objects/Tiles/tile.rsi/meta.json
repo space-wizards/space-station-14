@@ -1,568 +1,586 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24, additional attributions available in the Resources/Textures/Tiles/attributions.yml file. Ice tile and Snow tile modifications, Astreroid tile and in-hands created by Southbridge-fur (github), Astro-asteroid by kosticia (Github)",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "dark"
-    },
-    {
-      "name": "dark-diagonal-mini"
-    },
-    {
-      "name": "dark-diagonal"
-    },
-    {
-      "name": "dark-herringbone"
-    },
-    {
-      "name": "dark-mini"
-    },
-    {
-      "name": "dark-mono"
-    },
-    {
-      "name": "dark-pavement"
-    },
-    {
-      "name": "dark-pavement-vertical"
-    },
-    {
-      "name": "dark-offset"
-    },
-    {
-      "name": "dirty"
-    },
-    {
-      "name": "checker-light"
-    },
-    {
-      "name": "checker-dark"
-    },
-    {
-      "name": "concrete"
-    },
-    {
-      "name": "concrete-mono"
-    },
-    {
-      "name": "concrete-smooth"
-    },
-    {
-      "name": "grayconcrete"
-    },
-    {
-      "name": "grayconcrete-mono"
-    },
-    {
-      "name": "grayconcrete-smooth"
-    },
-    {
-      "name": "oldconcrete"
-    },
-    {
-      "name": "oldconcrete-mono"
-    },
-    {
-      "name": "oldconcrete-smooth"
-    },
-    {
-      "name": "gcircuit"
-    },
-    {
-      "name": "bar"
-    },
-    {
-      "name": "blue"
-    },
-	  {
-	    "name": "brass"
-	  },
-	  {
-	    "name": "brass-filled"
-	  },
-	  {
-	    "name": "reebe"
-	  },
-    {
-      "name": "lime"
-    },
-    {
-      "name": "mining"
-    },
-    {
-      "name": "mining-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "mining-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "miningdark"
-    },
-    {
-      "name": "miningdark-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "miningdark-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "mininglight"
-    },
-    {
-      "name": "mininglight-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "mininglight-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "clown"
-    },
-    {
-      "name": "grass"
-    },
-    {
-      "name": "grassjungle"
-    },
-    {
-      "name": "kitchen"
-    },
-    {
-      "name": "laundry"
-    },
-    {
-      "name": "lino"
-    },
-    {
-      "name": "meat"
-    },
-    {
-      "name": "meat-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "meat-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "mime"
-    },
-    {
-      "name": "bcircuit"
-    },
-    {
-      "name": "rcircuit"
-    },
-    {
-      "name": "carpet-black"
-    },
-    {
-      "name": "carpet-blue"
-    },
-    {
-      "name": "carpet-skyblue"
-    },
-    {
-      "name": "carpet-green"
-    },
-    {
-      "name": "carpet-orange"
-    },
-    {
-      "name": "carpet-purple"
-    },
-    {
-      "name": "carpet-red"
-    },
-    {
-      "name": "carpet-pink"
-    },
-    {
-      "name": "carpet-cyan"
-    },
-    {
-      "name": "carpet-white"
-    },
-    {
-      "name": "hydro"
-    },
-    {
-      "name": "reinforced"
-    },
-    {
-      "name": "rockvault"
-    },
-    {
-      "name": "gold"
-    },
-    {
-      "name": "showroom"
-    },
-    {
-      "name": "snow"
-    },
-    {
-      "name": "steel"
-    },
-    {
-      "name": "steel-offset"
-    },
-    {
-      "name": "steel-diagonal-mini"
-    },
-    {
-      "name": "steel-diagonal"
-    },
-    {
-      "name": "steel-herringbone"
-    },
-    {
-      "name": "steel-mini"
-    },
-    {
-      "name": "steel-mono"
-    },
-    {
-      "name": "steel-pavement"
-    },
-    {
-      "name": "steel-pavement-vertical"
-    },
-    {
-      "name": "silver"
-    },
-    {
-      "name": "techfloor"
-    },
-    {
-      "name": "white"
-    },
-    {
-      "name": "white-offset"
-    },
-    {
-      "name": "white-diagonal-mini"
-    },
-    {
-      "name": "white-diagonal"
-    },
-    {
-      "name": "white-herringbone"
-    },
-    {
-      "name": "white-mini"
-    },
-    {
-      "name": "white-mono"
-    },
-    {
-      "name": "white-pavement"
-    },
-    {
-      "name": "white-pavement-vertical"
-    },
-    {
-      "name": "monofloor"
-    },
-    {
-      "name": "wood"
-    },
-    {
-      "name": "arcadeblue"
-    },
-    {
-      "name": "arcadeblue2"
-    },
-    {
-      "name": "arcadered"
-    },
-    {
-      "name": "eighties"
-    },
-    {
-      "name": "shuttlewhite"
-    },
-    {
-      "name": "shuttleblue"
-    },
-    {
-      "name": "shuttleorange"
-    },
-    {
-      "name": "shuttlepurple"
-    },
-    {
-      "name": "shuttlered"
-    },
-    {
-      "name": "shuttlegrey"
-    },
-    {
-      "name": "shuttleblack"
-    },
-    {
-      "name": "carpetclown"
-    },
-    {
-      "name": "carpetoffice"
-    },
-    {
-      "name": "boxing"
-    },
-    {
-      "name": "gym"
-    },
-    {
-      "name": "metaldiamond"
-    },
-    {
-      "name": "steelmaintfloor"
-    },
-    {
-      "name": "gratingmaintfloor"
-    },
-    {
-      "name": "woodpatternfloor"
-    },
-    {
-      "name": "astrograss"
-    },
-    {
-      "name": "astroice"
-    },
-    {
-      "name": "bcircuit-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "bcircuit-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "carpet-black-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "carpet-black-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "carpet-blue-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "carpet-blue-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "carpet-skyblue-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "carpet-skyblue-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "carpet-green-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "carpet-green-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "carpet-orange-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "carpet-orange-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "carpet-purple-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "carpet-purple-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "carpet-red-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "carpet-red-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "carpet-pink-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "carpet-pink-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "carpet-cyan-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "carpet-cyan-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "carpet-white-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "carpet-white-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "grass-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "grass-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "snow-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "snow-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "dirty-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "dirty-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "dark-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "dark-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "gcircuit-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "gcircuit-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "gold-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "gold-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "rcircuit-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "rcircuit-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "reinforced-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "reinforced-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "showroom-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "showroom-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "silver-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "silver-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "white-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "white-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "wood-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "wood-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "generic-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "generic-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "steel-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "steel-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "hydro-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "hydro-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "wood-large"
-    },
-    {
-      "name": "asteroid"
-    },
-    {
-      "name": "astro-asteroid"
-    },
-    {
-      "name": "asteroid-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "asteroid-inhand-left",
-      "directions": 4
-    }
-  ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24, additional attributions available in the Resources/Textures/Tiles/attributions.yml file. Ice tile and Snow tile modifications, Astreroid tile and in-hands created by Southbridge-fur (github), Astro-asteroid by kosticia (Github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "dark"
+        },
+        {
+            "name": "dark-diagonal-mini"
+        },
+        {
+            "name": "dark-diagonal"
+        },
+        {
+            "name": "dark-herringbone"
+        },
+        {
+            "name": "dark-mini"
+        },
+        {
+            "name": "dark-mono"
+        },
+        {
+            "name": "dark-pavement"
+        },
+        {
+            "name": "dark-pavement-vertical"
+        },
+        {
+            "name": "dark-offset"
+        },
+        {
+            "name": "dirty"
+        },
+        {
+            "name": "checker-light"
+        },
+        {
+            "name": "checker-dark"
+        },
+        {
+            "name": "concrete"
+        },
+        {
+            "name": "concrete-mono"
+        },
+        {
+            "name": "concrete-smooth"
+        },
+        {
+            "name": "grayconcrete"
+        },
+        {
+            "name": "grayconcrete-mono"
+        },
+        {
+            "name": "grayconcrete-smooth"
+        },
+        {
+            "name": "oldconcrete"
+        },
+        {
+            "name": "oldconcrete-mono"
+        },
+        {
+            "name": "oldconcrete-smooth"
+        },
+        {
+            "name": "gcircuit"
+        },
+        {
+            "name": "bar"
+        },
+        {
+            "name": "blue"
+        },
+        {
+            "name": "brass"
+        },
+        {
+            "name": "brass-filled"
+        },
+        {
+            "name": "reebe"
+        },
+        {
+            "name": "lime"
+        },
+        {
+            "name": "mining"
+        },
+        {
+            "name": "mining-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "mining-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "miningdark"
+        },
+        {
+            "name": "miningdark-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "miningdark-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "mininglight"
+        },
+        {
+            "name": "mininglight-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "mininglight-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "clown"
+        },
+        {
+            "name": "grass"
+        },
+        {
+            "name": "grassjungle"
+        },
+        {
+            "name": "kitchen"
+        },
+        {
+            "name": "laundry"
+        },
+        {
+            "name": "lino"
+        },
+        {
+            "name": "meat"
+        },
+        {
+            "name": "meat-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "meat-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "mime"
+        },
+        {
+            "name": "bcircuit"
+        },
+        {
+            "name": "rcircuit"
+        },
+        {
+            "name": "carpet-black"
+        },
+        {
+            "name": "carpet-blue"
+        },
+        {
+            "name": "carpet-skyblue"
+        },
+        {
+            "name": "carpet-green"
+        },
+        {
+            "name": "carpet-orange"
+        },
+        {
+            "name": "carpet-purple"
+        },
+        {
+            "name": "carpet-red"
+        },
+        {
+            "name": "carpet-pink"
+        },
+        {
+            "name": "carpet-cyan"
+        },
+        {
+            "name": "carpet-white"
+        },
+        {
+            "name": "hydro"
+        },
+        {
+            "name": "reinforced"
+        },
+        {
+            "name": "rockvault"
+        },
+        {
+            "name": "gold"
+        },
+        {
+            "name": "showroom"
+        },
+        {
+            "name": "snow"
+        },
+        {
+            "name": "steel"
+        },
+        {
+            "name": "steel-offset"
+        },
+        {
+            "name": "steel-diagonal-mini"
+        },
+        {
+            "name": "steel-diagonal"
+        },
+        {
+            "name": "steel-herringbone"
+        },
+        {
+            "name": "steel-mini"
+        },
+        {
+            "name": "steel-mono"
+        },
+        {
+            "name": "steel-pavement"
+        },
+        {
+            "name": "steel-pavement-vertical"
+        },
+        {
+            "name": "silver"
+        },
+        {
+            "name": "techfloor"
+        },
+        {
+            "name": "techfloordark"
+        },
+        {
+            "name": "white"
+        },
+        {
+            "name": "white-offset"
+        },
+        {
+            "name": "white-diagonal-mini"
+        },
+        {
+            "name": "white-diagonal"
+        },
+        {
+            "name": "white-herringbone"
+        },
+        {
+            "name": "white-mini"
+        },
+        {
+            "name": "white-mono"
+        },
+        {
+            "name": "white-pavement"
+        },
+        {
+            "name": "white-pavement-vertical"
+        },
+        {
+            "name": "monofloor"
+        },
+        {
+            "name": "wood"
+        },
+        {
+            "name": "arcadeblue"
+        },
+        {
+            "name": "arcadeblue2"
+        },
+        {
+            "name": "arcadered"
+        },
+        {
+            "name": "eighties"
+        },
+        {
+            "name": "shuttlewhite"
+        },
+        {
+            "name": "shuttleblue"
+        },
+        {
+            "name": "shuttleorange"
+        },
+        {
+            "name": "shuttlepurple"
+        },
+        {
+            "name": "shuttlered"
+        },
+        {
+            "name": "shuttlegrey"
+        },
+        {
+            "name": "shuttleblack"
+        },
+        {
+            "name": "carpetclown"
+        },
+        {
+            "name": "carpetoffice"
+        },
+        {
+            "name": "boxing"
+        },
+        {
+            "name": "gym"
+        },
+        {
+            "name": "metaldiamond"
+        },
+        {
+            "name": "steelmaintfloor"
+        },
+        {
+            "name": "gratingmaintfloor"
+        },
+        {
+            "name": "woodpatternfloor"
+        },
+        {
+            "name": "astrograss"
+        },
+        {
+            "name": "astroice"
+        },
+        {
+            "name": "bcircuit-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "bcircuit-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "carpet-black-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "carpet-black-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "carpet-blue-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "carpet-blue-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "carpet-skyblue-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "carpet-skyblue-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "carpet-green-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "carpet-green-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "carpet-orange-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "carpet-orange-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "carpet-purple-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "carpet-purple-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "carpet-red-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "carpet-red-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "carpet-pink-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "carpet-pink-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "carpet-cyan-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "carpet-cyan-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "carpet-white-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "carpet-white-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "grass-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "grass-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "snow-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "snow-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "dirty-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "dirty-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "dark-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "dark-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "gcircuit-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "gcircuit-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "gold-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "gold-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "rcircuit-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "rcircuit-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "reinforced-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "reinforced-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "showroom-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "showroom-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "silver-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "silver-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "white-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "white-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wood-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "wood-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "generic-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "generic-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "steel-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "steel-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "hydro-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "hydro-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wood-large"
+        },
+        {
+            "name": "asteroid"
+        },
+        {
+            "name": "astro-asteroid"
+        },
+        {
+            "name": "asteroid-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "asteroid-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "xenofloor"
+        },
+        {
+            "name": "xeno-steel"
+        },
+        {
+            "name": "xeno-steel-corner"
+        },
+        {
+            "name": "xeno-techmaint"
+        },
+        {
+            "name": "dark-squiggly"
+        }
+    ]
 }

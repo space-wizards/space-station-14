@@ -62,6 +62,7 @@
         mining: !type:GridSpawnGroup
           paths:
             - /Maps/Shuttles/mining.yml
+          nameGrid: false # Starlight - honors entityName in mining.yml
         # Spawn last
         ruins: !type:GridSpawnGroup
           hide: true
