@@ -27,8 +27,8 @@
 
 - type: trait #starlight 
   id: Clumsy
-  name: Clumsy
-  description: "You are a bit accident-prone."
+  name: trait-clumsy-name
+  description: trait-clumsy-desc
   category: Quirks
   components:
     - type: Clumsy
