@@ -1,6 +1,5 @@
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
-using System;
 
 namespace Content.Server.Explosion;
 
@@ -10,6 +9,8 @@ namespace Content.Server.Explosion;
 /// </summary>
 public sealed class TimerTriggerItemStatusSyncSystem : EntitySystem
 {
+    private readonly Dictionary<EntityUid, float> _lastDelays = new();
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -18,10 +19,11 @@ public sealed class TimerTriggerItemStatusSyncSystem : EntitySystem
         while (enumerator.MoveNext(out var uid, out var status, out var timer))
         {
             var timerDelay = TimeSpan.FromSeconds(timer.Delay);
-            if (status.Delay != timerDelay)
+            if (!_lastDelays.TryGetValue(uid, out var lastDelay) || lastDelay != timer.Delay)
             {
                 status.Delay = timerDelay;
                 Dirty(uid, status);
+                _lastDelays[uid] = timer.Delay;
             }
         }
     }

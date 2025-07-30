@@ -3,7 +3,6 @@ using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.Explosion;
 using Robust.Client.UserInterface.Controls;
-using System;
 
 namespace Content.Client.Explosion.UI;
 

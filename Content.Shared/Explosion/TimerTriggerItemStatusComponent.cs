@@ -7,6 +7,7 @@ namespace Content.Shared.Explosion;
 /// Synced to clients to display set delay for explosives and similar items.
 /// </summary>
 /// <seealso cref="TimerTriggerItemStatusSyncSystem"/>
+/// <seealso cref="TimerTriggerStatusControl"/>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TimerTriggerItemStatusComponent : Component
 {
