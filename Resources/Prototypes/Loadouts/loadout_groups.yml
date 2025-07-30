@@ -57,8 +57,6 @@
   - ClothWrap # 🌟Starlight🌟
   - ClothingUniformJumpskirtElegantMaid # 🌟Starlight🌟
   - ClothingHeadHatCatEars # 🌟Starlight🌟
-  - ClothingShoesHighheelShoes # 🌟Starlight🌟
-  - ClothingShoesHighheelBoots # 🌟Starlight🌟
   - RolliePack #SL
   - GoldRing #SL
   - SilverRing #SL
@@ -288,6 +286,7 @@
   - BrownShoes
   - WhiteShoes
   - WinterBoots
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: BartenderHead
@@ -700,6 +699,7 @@
   - SalvageBoots # 🌟Starlight🌟
   - WorkBoots # 🌟Starlight🌟
   - CargoWinterBoots
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: CargoTechnicianHead
@@ -739,6 +739,7 @@
   - CargoWinterBoots
   - LeatherShoes # 🌟Starlight🌟
   - WorkBoots # 🌟Starlight🌟
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: SalvageSpecialistBackpack
@@ -762,6 +763,7 @@
   - SalvageBoots
   - CargoWinterBoots
   - WorkBoots # 🌟Starlight🌟
+  - HighHeelBoots # 🌟Starlight🌟
 
 # Engineering
 - type: loadoutGroup
@@ -803,6 +805,7 @@
   - BrownShoes
   - WorkBoots # 🌟Starlight🌟
   - EngineeringWinterBoots
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: TechnicalAssistantJumpsuit
@@ -853,6 +856,7 @@
   loadouts:
   - WorkBoots
   - EngineeringWinterBoots
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: StationEngineerID
@@ -891,6 +895,7 @@
   - WhiteShoes
   - WorkBoots # 🌟Starlight🌟
   - EngineeringWinterBoots
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: SurvivalExtended
@@ -1206,7 +1211,7 @@
   loadouts:
   - JackBoots
   - SecurityWinterBoots
-  - HighHeelBoots # 🌟Starlight🌟
+  - HighHeelBootsFilled # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: SecurityPDA
@@ -1451,6 +1456,7 @@
   - BlueShoes
   - WhiteShoes
   - MedicalWinterBoots
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: MedicalEyewear
