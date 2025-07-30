@@ -242,61 +242,24 @@
     - OffsetCane
   groupBy: "canes"
 
-
 - type: loadout
-  id: OffsetCaneBlack
+  id: OffsetCaneWood
   storage:
     back:
-    - OffsetCaneBlack
+    - OffsetCaneWood
   groupBy: "canes"
 
 - type: loadout
-  id: OffsetCaneBlue
+  id: OffsetCaneClown
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 3600 # 1 hour of clowning to get your rainbow cane.
   storage:
     back:
-    - OffsetCaneBlue
-  groupBy: "canes"
-
-- type: loadout
-  id: OffsetCaneCyan
-  storage:
-    back:
-    - OffsetCaneCyan
-  groupBy: "canes"
-
-- type: loadout
-  id: OffsetCaneGreen
-  storage:
-    back:
-    - OffsetCaneGreen
-  groupBy: "canes"
-
-- type: loadout
-  id: OffsetCanePink
-  storage:
-    back:
-    - OffsetCanePink
-  groupBy: "canes"
-
-- type: loadout
-  id: OffsetCanePurple
-  storage:
-    back:
-    - OffsetCanePurple
-  groupBy: "canes"
-
-- type: loadout
-  id: OffsetCaneRed
-  storage:
-    back:
-    - OffsetCaneRed
-  groupBy: "canes"
-
-- type: loadout
-  id: OffsetCaneYellow
-  storage:
-    back:
-    - OffsetCaneYellow
+    - OffsetCaneClown
   groupBy: "canes"
 
 - type: loadout
@@ -310,6 +273,19 @@
   storage:
     back:
     - OffsetCaneMime
+  groupBy: "canes"
+
+- type: loadout
+  id: OffsetCaneNT
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 18000 # 5 hours, is this too much? Maybe, just git gud.
+  storage:
+    back:
+    - OffsetCaneNT
   groupBy: "canes"
 
 - type: loadout
