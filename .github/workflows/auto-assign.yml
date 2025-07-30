@@ -1,13 +1,7 @@
 name: Auto Assign Reviewers
 
 on:
-  pull_request_target:
-      - opened
-      - reopened
-      - synchronize
-      - labeled
-      - unlabeled
-      - ready_for_review
+- pull_request_target
 
 jobs:
   assign:
