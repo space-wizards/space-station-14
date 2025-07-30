@@ -5,6 +5,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -12,13 +13,14 @@ namespace Content.Shared.Changeling;
 
 public sealed class ChangelingIdentitySystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-    [Dependency] private readonly SharedPvsOverrideSystem _pvsOverrideSystem = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
     [Dependency] private readonly SharedCloningSystem _cloningSystem = default!;
+    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly SharedPvsOverrideSystem _pvsOverrideSystem = default!;
 
     public MapId? PausedMapId;
 
@@ -66,7 +68,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     {
         foreach (var consumedIdentity in ent.Comp.ConsumedIdentities)
         {
-            PredictedQueueDel(consumedIdentity);
+            PredictedDel(consumedIdentity);
         }
 
         if (PausedMapId != null && Count<ChangelingStoredIdentityComponent>() == 0)
@@ -81,6 +83,10 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     /// <param name="target">the targets uid</param>
     public EntityUid? CloneToPausedMap(Entity<ChangelingIdentityComponent> ent, EntityUid target)
     {
+        // Don't create client side duplicate clones or a clientside map.
+        if (_net.IsClient)
+            return null;
+
         if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
             || !_prototype.Resolve(humanoid.Species, out var speciesPrototype)
             || !_prototype.Resolve(ent.Comp.IdentityCloningSettings, out var settings))
@@ -159,7 +165,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
             return;
 
         var mapUid = _map.CreateMap(out var newMapId);
-        _metaSystem.SetEntityName(mapUid, "changeling identity storage map");
+        _metaSystem.SetEntityName(mapUid, "Changeling identity storage map");
         PausedMapId = newMapId;
         _map.SetPaused(mapUid, true);
     }
