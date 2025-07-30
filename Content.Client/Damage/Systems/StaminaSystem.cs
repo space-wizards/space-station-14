@@ -4,6 +4,7 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Damage.Systems;
 
@@ -106,7 +107,7 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
     {
         if (entity.Comp1.AnimationThreshold >= entity.Comp1.CritThreshold)
         {
-            Log.Error($"Animation threshold on {ToPrettyString(entity)} was not less than the crit threshold. This will cause errors, animation has been cancelled.");
+            DebugTools.Assert($"Animation threshold on {ToPrettyString(entity)} was not less than the crit threshold. This will cause errors, animation has been cancelled.");
             return;
         }
 
