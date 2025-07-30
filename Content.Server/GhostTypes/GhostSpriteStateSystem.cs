@@ -58,7 +58,6 @@ public sealed class GhostSpriteStateSystem : EntitySystem
             spriteState = highestType[_random.Next(0, highestType.Count - 1)];
 
         var properStateName = (state.Prefix + spriteState).ToLower();
-        Log.Debug($"LAST THINGI {properStateName}");
         _appearance.SetData(ent, GhostVisuals.Damage, properStateName, appearance);
     }
 }
