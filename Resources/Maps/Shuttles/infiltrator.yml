@@ -4,9 +4,10 @@ meta:
   engineVersion: 263.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/20/2025 06:10:49
-  entityCount: 821
-maps: []
+  time: 07/30/2025 04:00:14
+  entityCount: 823
+maps:
+- 45
 grids:
 - 1
 orphans:
@@ -37,7 +38,7 @@ entities:
       name: GX-13 Infiltrator
     - type: Transform
       pos: 0.64252126,4.1776605
-      parent: invalid
+      parent: 45
     - type: Tag
       tags:
       - Syndicate
@@ -595,6 +596,16 @@ entities:
     - type: SpreaderGrid
     - type: GridPathfinding
     - type: ImplicitRoof
+  - uid: 45
+    components:
+    - type: MetaData
+      name: Map Entity
+    - type: Transform
+    - type: Map
+      mapPaused: True
+    - type: GridTree
+    - type: Broadphase
+    - type: OccluderTree
 - proto: AirlockExternalGlassShuttleSyndicateLocked
   entities:
   - uid: 8
@@ -2194,12 +2205,19 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,-3.5
       parent: 1
+- proto: ClothingBackpackDuffelSyndicateAmmoFilled
+  entities:
+  - uid: 49
+    components:
+    - type: Transform
+      pos: 1.4468282,-11.670399
+      parent: 1
 - proto: ClothingBackpackDuffelSyndicateFilledMedical
   entities:
   - uid: 314
     components:
     - type: Transform
-      pos: -3.5044222,-6.293252
+      pos: -5.6167116,-4.2485933
       parent: 1
 - proto: ClothingHeadHatSyndie
   entities:
@@ -3644,11 +3662,6 @@ entities:
     - type: Transform
       pos: 1.5,-12.5
       parent: 1
-  - uid: 45
-    components:
-    - type: Transform
-      pos: 1.5,-11.5
-      parent: 1
 - proto: NukeOpsLootSpawner
   entities:
   - uid: 46
@@ -3662,6 +3675,11 @@ entities:
     components:
     - type: Transform
       pos: -3.5,-3.5
+      parent: 1
+  - uid: 50
+    components:
+    - type: Transform
+      pos: -3.5,-6.5
       parent: 1
 - proto: NukeOpsMedkitSpawner
   entities:
