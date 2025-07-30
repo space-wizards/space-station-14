@@ -9753,5 +9753,12 @@ Entries:
   id: 1343
   time: '2025-07-28T05:55:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1116
+- author: STARLIGHT TEAM
+  changes:
+  - message: Acorn TTS Voice
+    type: Remove
+  id: 1344
+  time: '2025-07-30T00:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1148
 Order: -1
 
