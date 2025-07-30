@@ -71,81 +71,7 @@ public sealed partial class AtmosphereSystem
             maxDelta = Math.Max(maxDelta, opposingGroupA[i]);
         }
 
-        PerformDamage(ent, maxPressure, maxDelta);
-    }
-
-    // TODO: Move to API
-    /// <summary>
-    /// Does damage to an entity depending on the pressure experienced by it, based on the
-    /// entity's <see cref="DeltaPressureComponent"/>.
-    /// </summary>
-    /// <param name="ent">The entity to apply damage to.</param>
-    /// <param name="pressure">The absolute pressure being exerted on the entity.</param>
-    /// <param name="deltaPressure">The delta pressure being exerted on the entity.</param>
-    private void PerformDamage(Entity<DeltaPressureComponent> ent, float pressure, float deltaPressure)
-    {
-        var aboveMinPressure = pressure > ent.Comp.MinPressure;
-        var aboveMinDeltaPressure = deltaPressure > ent.Comp.MinPressureDelta;
-        if (!aboveMinPressure && !aboveMinDeltaPressure)
-        {
-            ent.Comp.IsTakingDamage = false;
-            return;
-        }
-
-        // shitcode
-        var appliedDamage = ent.Comp.BaseDamage;
-        if (aboveMinPressure)
-        {
-            appliedDamage = MutateDamage(ent, appliedDamage, pressure - ent.Comp.MinPressure);
-        }
-        if (aboveMinDeltaPressure)
-        {
-            if (ent.Comp.StackDamage)
-            {
-                appliedDamage += MutateDamage(ent, appliedDamage, deltaPressure - ent.Comp.MinPressureDelta);
-            }
-            else
-            {
-                appliedDamage = MutateDamage(ent, appliedDamage, deltaPressure - ent.Comp.MinPressureDelta);
-            }
-        }
-
-        _damage.TryChangeDamage(ent, appliedDamage, interruptsDoAfters: false);
-        ent.Comp.IsTakingDamage = true;
-    }
-
-    // TODO: Move to API
-    /// <summary>
-    /// Mutates the damage dealt by a DamageSpecifier based on current entity conditions and pressure.
-    /// </summary>
-    /// <param name="ent">The entity to base the manipulations off of (pull scaling type)</param>
-    /// <param name="damage">The damage specifier to mutate.</param>
-    /// <param name="pressure">The pressure being exerted on the entity.</param>
-    /// <returns></returns>
-    private DamageSpecifier MutateDamage(Entity<DeltaPressureComponent> ent, DamageSpecifier damage, float pressure)
-    {
-        switch (ent.Comp.ScalingType)
-        {
-            case DeltaPressureDamageScalingType.Threshold:
-                break;
-
-            case DeltaPressureDamageScalingType.Linear:
-                damage *= pressure * ent.Comp.ScalingPower;
-                break;
-
-            case DeltaPressureDamageScalingType.Log:
-                // This little line's gonna cost us 51 CPU cycles
-                damage *= Math.Log(pressure, ent.Comp.ScalingPower);
-                break;
-
-            case DeltaPressureDamageScalingType.Exponential:
-                damage *= Math.Pow(pressure, ent.Comp.ScalingPower);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(ent), "Invalid damage scaling type!");
-        }
-
-        return damage;
+        _deltaPressure.PerformDamage(ent, maxPressure, maxDelta);
     }
 
     /// <summary>
@@ -154,7 +80,7 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     /// <param name="gridAtmosComp">The grid to check.</param>
     /// <param name="indices">The indices to check.</param>
-    private float GetTilePressure(GridAtmosphereComponent gridAtmosComp, Vector2i indices)
+    private static float GetTilePressure(GridAtmosphereComponent gridAtmosComp, Vector2i indices)
     {
         // First try and retrieve the tile atmosphere for the given indices from our cache.
         // Use a safe lookup method because we're going to be writing to the dictionary.
