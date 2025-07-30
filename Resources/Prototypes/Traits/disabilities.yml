@@ -83,17 +83,3 @@
   category: Disabilities
   components:
   - type: PainNumbness
-
-- type: trait #starlight 
-  id: Clumsy
-  name: Clumsy
-  description: "You are a bit accident-prone."
-  category: Disabilities
-  components:
-    - type: Clumsy
-      gunShootFailDamage:
-        types: 
-          Blunt: 5
-          Piercing: 4
-        groups:
-          Burn: 3
