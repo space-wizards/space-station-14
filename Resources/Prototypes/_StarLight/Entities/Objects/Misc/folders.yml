@@ -19,3 +19,7 @@
       sprite: _Starlight/Objects/Misc/nt-clipboard.rsi
     - type: Clothing
       sprite: _Starlight/Objects/Misc/nt-clipboard.rsi
+    - type: StorageFill
+      contents:
+        - id: Paper
+          amount: 20

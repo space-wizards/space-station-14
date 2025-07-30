@@ -1,0 +1,12 @@
+- type: construction
+  id: GasFilterInline
+  name: inline-gas-filter
+  description: inline-gas-filter-desc
+  graph: GasTrinaryStarlight
+  startNode: start
+  targetNode: inline_filter
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:NoUnstackableInTile
