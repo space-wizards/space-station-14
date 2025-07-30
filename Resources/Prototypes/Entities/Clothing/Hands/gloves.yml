@@ -417,7 +417,7 @@
       enum.MeleeSpeechUiKey.Key:
         type: MeleeSpeechBoundUserInterface
   - type: StaticPrice
-    price: 0
+    price: 2500
   - type: Tag
     tags:
     - Kangaroo
@@ -562,6 +562,8 @@
     tags:
     - WhitelistChameleon
     - Kangaroo
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   name: stun knuckle dusters

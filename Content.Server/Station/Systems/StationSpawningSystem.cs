@@ -1,4 +1,7 @@
+using System.Linq;
+using Content.Server._Starlight.Medical.Limbs;
 using Content.Server.Access.Systems;
+using Content.Server.Body.Systems;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Server.Mind.Commands;
@@ -6,6 +9,8 @@ using Content.Server.PDA;
 using Content.Server.Station.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.DetailExaminable;
@@ -42,6 +47,17 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly PdaSystem _pdaSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly LimbSystem _limbSystem = default!;
+    [Dependency] private readonly BodySystem _bodySystem = default!;
+
+    private List<CyberneticImplant> _allCybernetics = default!; // Starlight
+
+    // Starlight
+    public override void Initialize()
+    {
+        base.Initialize();
+        _allCybernetics = CyberneticImplant.GetAllCybernetics(_prototypeManager);
+    }
 
     /// <summary>
     /// Attempts to spawn a player character onto the given station.
@@ -110,7 +126,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (prototype?.JobEntity != null)
         {
             DebugTools.Assert(entity is null);
-            var jobEntity = EntityManager.SpawnEntity(prototype.JobEntity, coordinates);
+            var jobEntity = Spawn(prototype.JobEntity, coordinates);
             MakeSentientCommand.MakeSentient(jobEntity, EntityManager);
 
             // Make sure custom names get handled, what is gameticker control flow whoopy.
@@ -141,6 +157,8 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
                 AddComp<DetailExaminableComponent>(entity.Value).Content = profile.FlavorText;
             }
         }
+
+        SetupCybernetics(entity.Value, profile?.Cybernetics ?? []); // Starlight
 
         if (loadout != null)
         {
@@ -175,6 +193,59 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         {
             jobSpecial.AfterEquip(entity);
         }
+    }
+
+    /// Starlight
+    /// <summary>
+    /// Replaces humanoid's limbs with cybernetics on spawn
+    /// </summary>
+    private void SetupCybernetics(EntityUid entity, List<string> cybernetics){
+        if (!TryComp(entity, out TransformComponent? transform) ||
+            !TryComp(entity, out HumanoidAppearanceComponent? appearance) ||
+            !TryComp(entity, out BodyComponent? bodyComp)) {
+                return;
+            }
+        Entity<TransformComponent, HumanoidAppearanceComponent, BodyComponent> body = (entity, transform, appearance, bodyComp);
+
+        var installedCyberlimbs = _allCybernetics.Where(p => cybernetics.Contains(p.ID) && p.Type == CyberneticImplantType.Limb).ToList();
+        // We don't need to manually attach limbs that are already attached by other limbs
+        var filteredCyberlimbs = installedCyberlimbs.Where(p => !installedCyberlimbs.Where(v => v.AttachedParts.Contains(p.ID)).Any())
+                                                    .Select(p => p.ID).ToList();
+                                               
+        
+        foreach (var implant in filteredCyberlimbs){
+            var implantEnt = _prototypeManager.Index<EntityPrototype>(implant);
+
+            var newPart = Spawn(implant, body.Comp1.Coordinates);
+            if(!TryComp(newPart, out BodyPartComponent? bodyPartComp)){
+                Del(newPart);
+                continue;
+            }
+
+            var oldPartId = _bodySystem.GetBodyChildrenOfType(entity, bodyPartComp.PartType).FirstOrDefault(p => p.Component.Symmetry == bodyPartComp.Symmetry);
+            if(!TryComp(oldPartId.Id, out TransformComponent? oldPartTransform) ||
+               !TryComp(oldPartId.Id, out MetaDataComponent? oldPartMetadata) ||
+               !TryComp(oldPartId.Id, out BodyPartComponent? oldPartBodyPart)){
+                Del(newPart);
+                continue;
+               }
+            Entity<TransformComponent, MetaDataComponent, BodyPartComponent> oldPart = (oldPartId.Id, oldPartTransform, oldPartMetadata, oldPartBodyPart);
+
+            if(!_bodySystem.TryGetParentBodyPart(oldPart.Owner, out var parentUid, out var parentBodyPart)){
+                Del(newPart);
+                continue;
+            }
+
+            var slot = CyberneticImplant.SlotIDFromBodypart(bodyPartComp);
+            if(slot == ""){
+                Del(newPart);
+                continue;
+            }
+
+            _limbSystem.Amputatate(body, oldPart);
+            Del(oldPartId.Id);
+            _limbSystem.AttachLimb((entity, appearance), slot, (parentUid.Value, parentBodyPart), (newPart, bodyPartComp));
+        }      
     }
 
     /// <summary>
