@@ -1,4 +1,5 @@
 - type: entity
+  name: baby tarantula
   parent: MobGiantSpider
   suffix: Admeme
   id: MobTinySpider
