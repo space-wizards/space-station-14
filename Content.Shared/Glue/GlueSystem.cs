@@ -80,15 +80,15 @@ public sealed class GlueSystem : EntitySystem
 
         if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solutionEntity, out _))
         {
-            if (_solutionContainer.RemoveReagent(solutionEntity.Value, entity.Comp.Reagent, entity.Comp.ConsumptionUnit))
+            var quantity = _solutionContainer.RemoveReagent(solutionEntity.Value, entity.Comp.Reagent, entity.Comp.ConsumptionUnit);
+            if (quantity > 0)
             {
                 _audio.PlayPredicted(entity.Comp.Squeeze, entity.Owner, actor);
                 _popup.PopupClient(Loc.GetString("glue-success", ("target", target)), actor, actor, PopupType.Medium);
-                EnsureComp<GluedComponent>(target, out var comp);
-                comp.Duration = entity.Comp.ConsumptionUnit.Double() * entity.Comp.DurationPerUnit;
-                Dirty(target, comp);
-
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
+                var gluedComp = EnsureComp<GluedComponent>(target);
+                gluedComp.Duration = quantity.Double() * entity.Comp.DurationPerUnit;
+                Dirty(target, gluedComp);
                 return true;
             }
         }
