@@ -98,30 +98,6 @@
   suffix: Brigmedic, Filled
   parent: LockerBrigmedic
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingEyesGlassesBrigmedic
-      - id: ClothingEyesHudBrigmedic
-      - id: WeaponDisabler
-      - id: TrackingImplanter
-        amount: 1
-      - id: ClothingOuterHardsuitBrigmedic
-      - id: BoxSterileMask
-      - id: ClothingHeadHatBeretBrigmedic
-      - id: ClothingOuterCoatAMG
-      - id: ClothingOuterCoatCorpsman
-      - id: ClothingUniformJumpsuitCorpsman
-      - id: ClothingUniformJumpskirtCorpsman
-      - id: ClothingHeadHatBeretCorpsman
-      - id: ClothingBeltCorpsmanFilled
-      - id: ClothingHandsGlovesBlackNitrile
-      - id: ClothingUniformJumpsuitBrigmedic
-      - id: ClothingUniformJumpskirtBrigmedic
-      - id: ClothingUniformJumpskirtOfLife
-      - id: ClothingShoesBootsMagSec
-      - id: BedsheetBrigmedicStrange
-      - id: RubberStampBrigmedic
-      - id: MedkitFilled
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
