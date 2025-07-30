@@ -6,19 +6,21 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/offset_canes/standard.rsi
-#    color: "#91949C"
     state: icon
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/offset_canes/standard.rsi
-#   color: "#91949C"
-#    inhandVisuals:
-#     left:
-#      - state: inhand-left
-#        color: "#91949C"
-#     right:
-#      - state: inhand-right
-#        color: "#91949C"
+#  - type: RandomSprite # Ideally I'd rather these be their own selectable item instead of randomly picked.
+#    available:
+#    - color: "#91949C"  # standard gray
+#    - color: "#000000"  # black
+#    - color: "#406BDE"  # blue
+#    - color: "#00FFFF"  # cyan
+#    - color: "#00FF00"  # green
+#    - color: "#FF69B4"  # pink
+#    - color: "#800080"  # purple
+#    - color: "#FF0000"  # red
+#    - color: "#FFFF00"  # yellow
   - type: MeleeWeapon
     wideAnimationRotation: 45
     damage:
@@ -34,103 +36,17 @@
   - type: UseDelay
     delay: 1
 
-# TODO: Ideally, these would use the same sprite as the standard cane, but with a color tint, however this currently doesnt work as inhandvisual doesnt account for when its a wielded weapon. Resulting in a colored cane via tint, however the cane will not be able to be (visually) wielded.
-# See above commented lines for an idea of the intended implementation.
 - type: entity
   parent: OffsetCane
-  id: OffsetCaneBlack
-  name: black offset cane
-  description: A sleek black offset cane, blending into the shadows. It's perfect for the mysterious or fashion-forward traveler.
+  id: OffsetCaneClown
+  name: rainbow offset cane
+  description: A rainbow offset cane, perfect for clowns and those who enjoy a splash of color in their lives.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Melee/offset_canes/black.rsi
+    sprite: Objects/Weapons/Melee/offset_canes/clown.rsi
     state: icon
   - type: Item
-    sprite: Objects/Weapons/Melee/offset_canes/black.rsi
-
-- type: entity
-  parent: OffsetCane
-  id: OffsetCaneBlue
-  name: blue offset cane
-  description: A calming blue offset cane, as refreshing as a splash of water. Ideal for those who stride with serene confidence.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/offset_canes/blue.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Weapons/Melee/offset_canes/blue.rsi
-
-- type: entity
-  parent: OffsetCane
-  id: OffsetCaneCyan
-  name: cyan offset cane
-  description: A vibrant cyan offset cane, evoking the tranquility of a clear sky. For those who like to stand out in style.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/offset_canes/cyan.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Weapons/Melee/offset_canes/cyan.rsi
-
-- type: entity
-  parent: OffsetCane
-  id: OffsetCaneGreen
-  name: green offset cane
-  description: A lively green offset cane, reminiscent of nature's vibrant greens. Perfect for nature lovers and optimists.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/offset_canes/green.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Weapons/Melee/offset_canes/green.rsi
-
-- type: entity
-  parent: OffsetCane
-  id: OffsetCanePink
-  name: pink offset cane
-  description: A playful pink offset cane, radiating charm and cheer. For those who believe a little color makes everything better.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/offset_canes/pink.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Weapons/Melee/offset_canes/pink.rsi
-
-- type: entity
-  parent: OffsetCane
-  id: OffsetCanePurple
-  name: purple offset cane
-  description: A purple offset cane, hinting at royal ambitions or eccentric tastes. Walk with dignity and flair.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/offset_canes/purple.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Weapons/Melee/offset_canes/purple.rsi
-
-- type: entity
-  parent: OffsetCane
-  id: OffsetCaneRed
-  name: red offset cane
-  description: A bold red offset cane, impossible to ignore. For the daring souls who want every step to be noticed.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/offset_canes/red.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Weapons/Melee/offset_canes/red.rsi
-
-- type: entity
-  parent: OffsetCane
-  id: OffsetCaneYellow
-  name: yellow offset cane
-  description: A sunny yellow offset cane, bright as a new dawn. Favored by those who spread joy wherever they go.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/offset_canes/yellow.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Weapons/Melee/offset_canes/yellow.rsi
+    sprite: Objects/Weapons/Melee/offset_canes/clown.rsi
 
 - type: entity
   parent: OffsetCane
@@ -138,8 +54,32 @@
   name: striped offset cane
   description: A black and white striped cane, perfect for silent performances.
   components:
-  - type: Sprite #this is the only one that should use a different sprite.
+  - type: Sprite
     sprite: Objects/Weapons/Melee/offset_canes/mime.rsi
     state: icon
   - type: Item
     sprite: Objects/Weapons/Melee/offset_canes/mime.rsi
+
+- type: entity
+  parent: OffsetCane
+  id: OffsetCaneNT
+  name: nanotrasen offset cane
+  description: A nanotrasen standard issue offset cane with the NT logo, favored by those who prefer a more corporate look.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/offset_canes/nanotrasen.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Weapons/Melee/offset_canes/nanotrasen.rsi
+
+- type: entity
+  parent: OffsetCane
+  id: OffsetCaneWood
+  name: wooden offset cane
+  description: A wooden offset cane, a classic choice for those who appreciate natural materials and a sturdy grip.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/offset_canes/wooden.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Weapons/Melee/offset_canes/wooden.rsi
