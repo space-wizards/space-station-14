@@ -49,3 +49,13 @@
     Blunt: 1.25
     Cellular: 0
     Poison: 1.5
+
+- type: damageModifierSet
+  id: DragonResistances
+  flatReductions:
+    Piercing: 10
+  coefficients:
+    Piercing: 0.25
+    Slash: 2
+    Heat: 0
+    Bloodloss: 0

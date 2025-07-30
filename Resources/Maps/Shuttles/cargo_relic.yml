@@ -27,7 +27,7 @@ entities:
   - uid: 173
     components:
     - type: MetaData
-      name: Cargo shuttle
+      name: CS-1S1 "Junker" # Starlight rename
     - type: Transform
       pos: 2.2710133,-2.4148211
       parent: invalid
