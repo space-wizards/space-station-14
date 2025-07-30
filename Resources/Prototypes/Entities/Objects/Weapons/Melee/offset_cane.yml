@@ -79,7 +79,7 @@
   description: A wooden offset cane, a classic choice for those who appreciate natural materials and a sturdy grip.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Melee/offset_canes/wooden.rsi
+    sprite: Objects/Weapons/Melee/offset_canes/wood.rsi
     state: icon
   - type: Item
-    sprite: Objects/Weapons/Melee/offset_canes/wooden.rsi
+    sprite: Objects/Weapons/Melee/offset_canes/wood.rsi
