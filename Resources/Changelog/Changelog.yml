@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Bots now can examine, use zoom and see their alerts (health & stamina).
-    type: Tweak
-  - message: Added borgs emotes to bots.
-    type: Tweak
-  id: 8308
-  time: '2025-04-21T22:49:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29949
 - author: Ghagliiarghii
   changes:
   - message: The monkey version of captain uniforms and the hamster version of captain
@@ -3917,3 +3908,10 @@
   id: 8819
   time: '2025-07-30T06:44:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36289
+- author: Disp-Dev
+  changes:
+  - message: A new recipe has been added, moth-edible cotton cakes.
+    type: Add
+  id: 8820
+  time: '2025-07-30T22:51:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39222
