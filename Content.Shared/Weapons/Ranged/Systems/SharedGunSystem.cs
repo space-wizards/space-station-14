@@ -426,7 +426,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var targetMapVelocity = gunVelocity + direction.Normalized() * speed;
         var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
-        var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity * 2;
+        var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity * 2; // * 2 is a Arbritary Value
         Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
         var projectile = EnsureComp<ProjectileComponent>(uid);
