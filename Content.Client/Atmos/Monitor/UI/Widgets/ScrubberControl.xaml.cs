@@ -22,6 +22,8 @@ public sealed partial class ScrubberControl : BoxContainer
     private FloatSpinBox _volumeRate => CVolumeRate;
     private CheckBox _wideNet => CWideNet;
     private Button _copySettings => CCopySettings;
+    private Button _selectAll => CSelectAll;
+    private Button _deselectAll => CDeselectAll;
 
     private GridContainer _gases => CGasContainer;
     private Dictionary<Gas, Button> _gasControls = new();
@@ -76,6 +78,17 @@ public sealed partial class ScrubberControl : BoxContainer
         _copySettings.OnPressed += _ =>
         {
             ScrubberDataCopied?.Invoke(_data);
+        };
+
+        _selectAll.OnPressed += _ =>
+        {
+            _data.FilterGases = new HashSet<Gas>(Enum.GetValues<Gas>());
+            ScrubberDataChanged?.Invoke(_address, _data);
+        };
+        _deselectAll.OnPressed += _ =>
+        {
+            _data.FilterGases = [];
+            ScrubberDataChanged?.Invoke(_address, _data);
         };
 
         foreach (var value in Enum.GetValues<Gas>())
