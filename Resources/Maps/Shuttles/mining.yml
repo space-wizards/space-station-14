@@ -17,7 +17,7 @@ entities:
   - uid: 181
     components:
     - type: MetaData
-      name: NT-Reclaimer
+      name: SR-3S2 "Reclaimer" # Starlight rename
     - type: Transform
       pos: 2.2710133,-2.4148211
       parent: invalid

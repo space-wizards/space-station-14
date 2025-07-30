@@ -1,4 +1,4 @@
-﻿using Content.Shared.Alert;
+﻿﻿using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -149,7 +149,7 @@ public abstract partial class SharedStunSystem
         else
             AddKnockdownTime(entity, time);
     }
-    
+
     public void SetKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan time)
     {
         entity.Comp.NextUpdate = time;
@@ -170,7 +170,7 @@ public abstract partial class SharedStunSystem
             SetKnockdownTime(entity, GameTiming.CurTime + time);
             return;
         }
-        
+
         entity.Comp.NextUpdate += time;
         DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.NextUpdate));
     }
