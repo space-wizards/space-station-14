@@ -13,7 +13,7 @@ public sealed partial class GlueComponent : Component
     /// <summary>
     /// Noise made when glue applied.
     /// </summary>
-    [DataField("squeeze")]
+    [DataField]
     public SoundSpecifier Squeeze = new SoundPathSpecifier("/Audio/Items/squeezebottle.ogg");
 
     /// <summary>
