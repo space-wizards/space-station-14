@@ -299,10 +299,7 @@ public abstract class SharedMagicSystem : EntitySystem
     // staves.yml ActionRGB light
     private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
     {
-        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
-            return;
 
-        ev.Handled = true;
         // start of modifications
         // Chaplain immunity check
         if (HasComp<BibleUserComponent>(ev.Target))
@@ -311,6 +308,11 @@ public abstract class SharedMagicSystem : EntitySystem
             return;
         }
         // end of modifications
+
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
+            return;
+
+        ev.Handled = true;
 
         RemoveComponents(ev.Target, ev.ToRemove);
         AddComponents(ev.Target, ev.ToAdd);
@@ -417,22 +419,23 @@ public abstract class SharedMagicSystem : EntitySystem
     {
         //Stacking genetic damage on people who are already downed or dead is cringe
         if (TryComp<DamageableComponent>(ev.Target, out var damageable) &&
-        HasComp<MobStateComponent>(ev.Target)){
-            if(_mobStateSystem.IsCritical(ev.Target) || _mobStateSystem.IsDead(ev.Target))
+        HasComp<MobStateComponent>(ev.Target))
+        {
+            if (_mobStateSystem.IsCritical(ev.Target) || _mobStateSystem.IsDead(ev.Target))
                 return;
+
+            // Chaplain immunity check
+            if (HasComp<BibleUserComponent>(ev.Target))
+            {
+                _popup.PopupClient(Loc.GetString("spell-target-immune"), ev.Performer, ev.Performer);
+                return;
+            }
         }
+
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
         ev.Handled = true;
-
-        // Chaplain immunity check
-        if (HasComp<BibleUserComponent>(ev.Target))
-        {
-            _popup.PopupClient(Loc.GetString("spell-target-immune"), ev.Performer, ev.Performer);
-            return;
-        }
-
 
         // Given that this was intended to blow gibs everywhere, not suitable for this version of the spell (gets people stuck in walls)
         // var direction = _transform.GetMapCoordinates(ev.Target, Transform(ev.Target)).Position - _transform.GetMapCoordinates(ev.Performer, Transform(ev.Performer)).Position;
