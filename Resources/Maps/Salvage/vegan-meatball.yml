@@ -495,8 +495,10 @@ entities:
         toxinsTolerance: 4
         heatTolerance: 10
         idealHeat: 298
-        waterConsumption: 0.4
-        nutrientConsumption: 0.75
+        growthComponents:
+          - type: BasicGrowthComponent
+            WaterConsumption: 0.4
+            NutrientConsumption: 0.75
         exudeGasses: {}
         consumeGasses: {}
         chemicals:
@@ -565,8 +567,10 @@ entities:
         toxinsTolerance: 4
         heatTolerance: 10
         idealHeat: 293
-        waterConsumption: 0.6
-        nutrientConsumption: 0.75
+        growthComponents:
+          - type: BasicGrowthComponent
+            WaterConsumption: 0.6
+            NutrientConsumption: 0.75
         exudeGasses: {}
         consumeGasses: {}
         chemicals:
