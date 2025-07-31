@@ -237,6 +237,7 @@
   - type: ShowSyndicateIcons
   - type: ShowHealthBars
   - type: Tag
+  - type: SolutionScanner #starlight
     tags:
     - PetWearable
     - WhitelistChameleon
