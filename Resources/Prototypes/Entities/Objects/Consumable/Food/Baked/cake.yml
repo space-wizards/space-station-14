@@ -1236,8 +1236,10 @@
   components:
   - type: Sprite
     state: cotton
-  - type: SliceableFood
-    slice: FoodCakeCottonSlice
+  - type: Sliceable
+    slices:
+    - id: FoodCakeCottonSlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
