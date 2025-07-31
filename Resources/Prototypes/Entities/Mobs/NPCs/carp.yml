@@ -156,15 +156,11 @@
   parent: MobCarp
   suffix: "Salvage Ruleset"
   components:
-<<<<<<< HEAD
-  - type: SalvageMobRestrictions
-=======
     - type: SalvageMobRestrictions
     - type: MobThresholds
       thresholds:
         0: Alive
         30: Dead
->>>>>>> master
 
 - type: entity
   name: space carp
@@ -172,23 +168,6 @@
   suffix: DragonBrood
   parent: MobCarp
   components:
-<<<<<<< HEAD
-  - type: GhostRole
-    allowMovement: true
-    allowSpeech: true
-    makeSentient: true
-    name: ghost-role-information-sentient-carp-name
-    description: ghost-role-information-sentient-carp-description
-    rules: ghost-role-information-space-dragon-summoned-carp-rules
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonistFlock
-    raffle:
-      settings: short
-  - type: GhostTakeoverAvailable
-  - type: HTN
-    rootTask:
-      task: DragonCarpCompound
-=======
     - type: GhostRole
       allowMovement: true
       allowSpeech: true
@@ -202,7 +181,6 @@
     - type: HTN
       rootTask:
         task: DragonCarpCompound
->>>>>>> master
 
 - type: entity
   id: MobCarpDungeon

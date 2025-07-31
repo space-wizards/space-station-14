@@ -3,8 +3,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
-using Content.Server.Nutrition.Components;
-using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
@@ -13,7 +11,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Content.Shared.Sliceable;
-using Content.Server.Sliceable;
 using Content.Shared.Storage;
 
 namespace Content.IntegrationTests.Tests;

@@ -83,8 +83,9 @@
     solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 2
-  - type: Sharp
-    butcherDelayModifier: 2 #It's a bayonet
+  - type: Tool
+    qualities: Slicing
+    speedModifier: 2 #It's a bayonet
   - type: GunRequiresWield
   - type: StaticPrice
     price: 500

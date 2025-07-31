@@ -316,8 +316,10 @@
   components:
   - type: Sprite
     state: cheese
-  - type: SliceableFood
-    slice: FoodCakeCheeseSlice
+  - type: Sliceable
+    slices:
+    - id: FoodCakeCheeseSlice
+      amount: 6
 
 - type: entity
   name: slice of cheese cake
@@ -347,8 +349,10 @@
   components:
   - type: Sprite
     state: orange
-  - type: SliceableFood
-    slice: FoodCakeOrangeSlice
+  - type: Sliceable
+    slices:
+    - id: FoodCakeOrangeSlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
@@ -399,8 +403,10 @@
   components:
   - type: Sprite
     state: lime
-  - type: SliceableFood
-    slice: FoodCakeLimeSlice
+  - type: Sliceable
+    slices:
+    - id: FoodCakeLimeSlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
@@ -451,8 +457,10 @@
   components:
   - type: Sprite
     state: lemon
-  - type: SliceableFood
-    slice: FoodCakeLemonSlice
+  - type: Sliceable
+    slices:
+    - id: FoodCakeLemonSlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
@@ -578,8 +586,10 @@
   components:
   - type: Sprite
     state: chocolate
-  - type: SliceableFood
-    slice: FoodCakeChocolateSlice
+  - type: Sliceable
+    slices:
+    - id: FoodCakeChocolateSlice
+      amount: 6
   - type: SolutionContainerManager
     solutions:
       food:
@@ -638,8 +648,10 @@
   components:
   - type: Sprite
     state: apple
-  - type: SliceableFood
-    slice: FoodCakeAppleSlice
+  - type: Sliceable
+    slices:
+    - id: FoodCakeAppleSlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
@@ -865,8 +877,10 @@
   components:
   - type: Sprite
     state: birthday
-  - type: SliceableFood
-    slice: FoodCakeBirthdaySlice
+  - type: Sliceable
+    slices:
+    - id: FoodCakeBirthdaySlice
+      amount: 6
 
 - type: entity
   name: slice of birthday cake
