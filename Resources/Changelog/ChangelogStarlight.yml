@@ -9922,5 +9922,12 @@ Entries:
   id: 1366
   time: '2025-07-29T23:04:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1058
+- author: Trep_Maul
+  changes:
+  - message: Wizard Carp Polymorph now lasts 120 seconds instead of forever.
+    type: Tweak
+  id: 1367
+  time: '2025-07-31T19:50:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1135
 Order: -1
 
