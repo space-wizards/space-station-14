@@ -34,7 +34,7 @@
                                 <Button Name="CSelectAll" Text="{Loc 'air-alarm-ui-scrubber-select-all-gases-label'}" />
                                 <Button Name="CDeselectAll" Text="{Loc 'air-alarm-ui-scrubber-deselect-all-gases-label'}" />
                             </BoxContainer>
-                            <GridContainer HorizontalExpand="True" Name="CGasContainer" Columns="3" />
+                            <GridContainer Name="CGasContainer" Columns="3" />
                         </BoxContainer>
                     </CollapsibleBody>
                 </Collapsible>
