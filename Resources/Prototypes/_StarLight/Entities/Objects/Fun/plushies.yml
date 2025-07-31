@@ -20,12 +20,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesMatthew
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: sampo
+      - type: DatasetVocalizer
+        dataset: PlushiesMatthew
+      - type: TextToSpeech
+        voice: sampo
 
 - type: entity
   parent: BaseResomiPlushie
@@ -48,12 +46,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesEmmie
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: ganyu
+      - type: DatasetVocalizer
+        dataset: PlushiesEmmie
+      - type: TextToSpeech
+        voice: ganyu
 
 - type: entity
   parent: BaseVulpkaninPlushie
@@ -74,12 +70,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesTrystan
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: barneycalhoun
+      - type: DatasetVocalizer
+        dataset: PlushiesTrystan
+      - type: TextToSpeech
+        voice: barneycalhoun
 
 - type: entity
   parent: BaseResomiPlushie
@@ -100,12 +94,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesMorgana
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: bettylabomba
+      - type: DatasetVocalizer
+        dataset: PlushiesMorgana
+      - type: TextToSpeech
+        voice: bettylabomba
 
 - type: entity
   parent: BaseResomiPlushie
@@ -126,12 +118,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesMorgana
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: bettylabomba
+      - type: DatasetVocalizer
+        dataset: PlushiesMorgana
+      - type: TextToSpeech
+        voice: bettylabomba
 
 - type: entity
   parent: BaseResomiPlushie
@@ -152,12 +142,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesKiosha
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: skye-valorant
+      - type: DatasetVocalizer
+        dataset: PlushiesKiosha
+      - type: TextToSpeech
+        voice: skye-valorant
 
 - type: entity
   parent: BaseVulpkaninPlushie
@@ -180,12 +168,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesLance
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: barneycalhoun
+      - type: DatasetVocalizer
+        dataset: PlushiesLance
+      - type: TextToSpeech
+        voice: barneycalhoun
 
 - type: entity
   parent: BaseVulpkaninPlushie
@@ -208,12 +194,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesKiller
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: heavy
+      - type: DatasetVocalizer
+        dataset: PlushiesKiller
+      - type: TextToSpeech
+        voice: heavy
 
 - type: entity
   parent: PlushieHuman
@@ -257,12 +241,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesAmali
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: ganyu
+      - type: DatasetVocalizer
+        dataset: PlushiesAmali
+      - type: TextToSpeech
+        voice: ganyu
 
 - type: entity
   parent: PlushieHuman
@@ -283,12 +265,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesOog
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: heavy
+      - type: DatasetVocalizer
+        dataset: PlushiesOog
+      - type: TextToSpeech
+        voice: heavy
 
 - type: entity
   parent: BaseVulpkaninPlushie
@@ -309,12 +289,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesVanilla
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: layla
+      - type: DatasetVocalizer
+        dataset: PlushiesVanilla
+      - type: TextToSpeech
+        voice: layla
 #end region
 
 - type: entity
@@ -336,12 +314,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
-      pack: PlushiesOp
-      minimumWait: 120
-      maximumWait: 240
-    - type: TextToSpeech
-      voice: duelist
+      - type: DatasetVocalizer
+        dataset: PlushiesOp
+      - type: TextToSpeech
+        voice: duelist
 
 - type: entity
   parent: BaseMothPlushie
@@ -1222,10 +1198,8 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesPercy
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesPercy
         - type: TextToSpeech
           voice: medic
 
@@ -1272,10 +1246,8 @@
               acts: [ "Destruction" ]
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesAsh
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesAsh
         - type: TextToSpeech
           voice: wanderer
 
