@@ -31,8 +31,8 @@
                     <CollapsibleBody Margin="20 0 0 0">
                         <BoxContainer Orientation="Vertical">
                             <BoxContainer Orientation="Horizontal" Margin="2" >
-                                <Button Name="CSelectAll" Text="select all"></Button>
-                                <Button Name="CDeselectAll" Text="deselect all"></Button>
+                                <Button Name="CSelectAll" Text="{Loc 'air-alarm-ui-scrubber-select-all-gases-label'}"></Button>
+                                <Button Name="CDeselectAll" Text="{Loc 'air-alarm-ui-scrubber-deselect-all-gases-label'}"></Button>
                             </BoxContainer>
                             <GridContainer HorizontalExpand="True" Name="CGasContainer" Columns="3" />
                         </BoxContainer>
