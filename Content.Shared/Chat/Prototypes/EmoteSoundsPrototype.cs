@@ -35,7 +35,6 @@ public sealed partial class EmoteSoundsPrototype : IPrototype, IInheritingProtot
     ///     This will overwrite any params that may be set in sound specifiers.
     /// </summary>
     [DataField("params")]
-    [AlwaysPushInheritance]
     public AudioParams? GeneralParams;
 
     /// <summary>
