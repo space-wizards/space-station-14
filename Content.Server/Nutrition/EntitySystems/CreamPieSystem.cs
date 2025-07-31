@@ -35,9 +35,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // activate BEFORE entity is deleted and trash is spawned
             SubscribeLocalEvent<CreamPieComponent, ConsumeDoAfterEvent>(OnConsume, before: [typeof(FoodSystem)]);
-            // No idea why it requires SharedSliceableSystem.SliceFoodEvent instead of just SliceFoodEvent.
             SubscribeLocalEvent<CreamPieComponent, SliceEvent>(OnSlice);
-
             SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
         }
 
