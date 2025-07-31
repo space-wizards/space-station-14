@@ -4,7 +4,7 @@ meta:
   engineVersion: 265.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/31/2025 14:35:00
+  time: 07/31/2025 14:44:49
   entityCount: 20079
 maps:
 - 1
@@ -2420,13 +2420,6 @@ entities:
           decals:
             229: -5,-6
         - node:
-            color: '#00000026'
-            id: HalfTileOverlayGreyscale90
-          decals:
-            25: -44,-55
-            26: -44,-54
-            27: -44,-53
-        - node:
             color: '#00000067'
             id: HalfTileOverlayGreyscale90
           decals:
@@ -2544,6 +2537,14 @@ entities:
             id: LoadingAreaGreyscale
           decals:
             3903: -11,-70
+        - node:
+            angle: 1.5707963267948966 rad
+            color: '#00000019'
+            id: MarkupRectangle1x2
+          decals:
+            4962: -44,-55
+            4963: -44,-54
+            4964: -44,-53
         - node:
             color: '#0000003F'
             id: MarkupRectangle1x2
@@ -10600,7 +10601,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -221675.1
+      secondsUntilStateChange: -221758.8
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
