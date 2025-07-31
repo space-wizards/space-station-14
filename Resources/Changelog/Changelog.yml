@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ghagliiarghii
-  changes:
-  - message: The monkey version of captain uniforms and the hamster version of captain
-      hats updated to match humanoid versions
-    type: Tweak
-  id: 8309
-  time: '2025-04-22T01:03:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36804
 - author: Doc-Michael
   changes:
   - message: Changed protection values of Security Hardsuits
@@ -3915,3 +3907,10 @@
   id: 8820
   time: '2025-07-30T22:51:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39222
+- author: spanky-spanky
+  changes:
+  - message: The wizard now spawns in a den instead of a shuttle.
+    type: Tweak
+  id: 8821
+  time: '2025-07-31T04:08:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37701
