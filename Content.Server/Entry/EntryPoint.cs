@@ -99,7 +99,6 @@ namespace Content.Server.Entry
                 _dbManager = IoCManager.Resolve<IServerDbManager>();
                 _watchlistWebhookManager = IoCManager.Resolve<IWatchlistWebhookManager>();
 
-
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
 
@@ -115,16 +114,14 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<GithubClient>().Initialize();
                 IoCManager.Resolve<GithubApiManager>().Initialize();
                 IoCManager.Resolve<GithubBackgroundWorker>().Initialize();
+                IoCManager.Resolve<IBugReportManager>().Initialize();
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();
-
                 _playTimeTracking.Initialize();
                 _watchlistWebhookManager.Initialize();
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
                 IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
-
-                IoCManager.Resolve<IBugReportManager>().Initialize();
             }
         }
 

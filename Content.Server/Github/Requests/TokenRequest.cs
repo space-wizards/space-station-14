@@ -9,7 +9,7 @@ public sealed class TokenRequest : IGithubRequest
 {
     public HttpMethod RequestMethod => HttpMethod.Post;
 
-    public AuthMethod AuthenticationMethodMethod => AuthMethod.JWT;
+    public GithubAuthMethod AuthenticationMethodMethod => GithubAuthMethod.JWT;
 
     public required int Id;
 

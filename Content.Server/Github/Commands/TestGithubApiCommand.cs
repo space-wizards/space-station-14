@@ -8,7 +8,8 @@ using Robust.Shared.Console;
 namespace Content.Server.Github.Commands;
 
 /// <summary>
-/// Simple command for testing if the GitHub api is set up correctly!
+/// Simple command for testing if the GitHub api is set up correctly! It ensures that all necessary ccvars are set,
+/// and will also create one new issue on the targeted repository.
 /// </summary>
 [AdminCommand(AdminFlags.Server)]
 public sealed class TestGithubApiCommand : LocalizedCommands
@@ -57,20 +58,13 @@ public sealed class TestGithubApiCommand : LocalizedCommands
         }
 
         // Create two issues and send them to the api.
-        var request1 = new CreateIssueRequest
+        var request = new CreateIssueRequest
         {
             Title = Loc.GetString("github-command-issue-title-one"),
             Body = Loc.GetString("github-command-issue-description-one"),
         };
 
-        var request2 = new CreateIssueRequest
-        {
-            Title = Loc.GetString("github-command-issue-title-two"),
-            Body = Loc.GetString("github-command-issue-description-two"),
-        };
-
-        _git.TryMakeRequest(request1);
-        _git.TryMakeRequest(request2);
+        _git.TryMakeRequest(request);
 
         shell.WriteLine(Loc.GetString("github-command-finish"));
     }

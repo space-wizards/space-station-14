@@ -16,7 +16,7 @@ namespace Content.Server.Github.Requests;
 public interface IGithubRequest
 {
     /// <summary>
-    /// What kind of request should we make for this?
+    /// The kind of request method for the request.
     /// </summary>
     [JsonIgnore]
     public HttpMethod RequestMethod { get; }
@@ -26,7 +26,7 @@ public interface IGithubRequest
     /// E.g. the app api endpoint mostly uses JWTs, while stuff like issue creation uses Tokens
     /// </summary>
     [JsonIgnore]
-    public AuthMethod AuthenticationMethodMethod { get; }
+    public GithubAuthMethod AuthenticationMethodMethod { get; }
 
     /// <summary>
     /// Location of the api endpoint for this request.
@@ -37,7 +37,7 @@ public interface IGithubRequest
     public string GetLocation(string owner, string repository);
 }
 
-public enum AuthMethod
+public enum GithubAuthMethod
 {
     JWT,
     Token,

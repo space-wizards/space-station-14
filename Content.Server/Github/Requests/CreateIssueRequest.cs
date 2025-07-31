@@ -12,19 +12,19 @@ public sealed class CreateIssueRequest : IGithubRequest
     public HttpMethod RequestMethod => HttpMethod.Post;
 
     [JsonIgnore]
-    public AuthMethod AuthenticationMethodMethod => AuthMethod.Token;
+    public GithubAuthMethod AuthenticationMethodMethod => GithubAuthMethod.Token;
 
-    [JsonPropertyName("title"), JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public required string Title;
-    [JsonPropertyName("body"), JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Body;
-    [JsonPropertyName("assignee"), JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Assignee;
-    [JsonPropertyName("milestone"), JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Milestone;
-    [JsonPropertyName("labels"), JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<string> Labels = [];
-    [JsonPropertyName("assignees"), JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<string> Assignees = [];
 
     public string GetLocation(string owner, string repository)

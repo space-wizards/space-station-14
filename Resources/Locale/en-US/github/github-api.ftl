@@ -1,6 +1,6 @@
 github-command-test-name = testgithubapi
 
-cmd-testgithubapi-desc = This command makes a few requests to the github api. Remember to check the servers console for errors.
+cmd-testgithubapi-desc = This command makes an issue request to the github api. Remember to check the servers console for errors.
 cmd-testgithubapi-help = Usage: testgithubapi
 
 github-command-not-enabled = The api is not enabled!
@@ -9,12 +9,10 @@ github-command-no-app-id = The app id is empty!
 github-command-no-repo-name = The repository name is empty!
 github-command-no-owner = The repository owner is empty!
 
-github-command-issue-title-one = This is a test issue (1/2)
+github-command-issue-title-one = This is a test issue!
 github-command-issue-description-one = This is the description of the first issue. :)
-github-command-issue-title-two = This is a test issue (2/2)
-github-command-issue-description-two = This is the description of the second issue. :P
 
-github-command-finish = Check your repository for (2) newly created issues! If you don't see any, check the console for errors.
+github-command-finish = Check your repository for a newly created issue. If you don't see any, check the server console for errors!
 
 github-issue-title-format = {$title} [In game report]
 

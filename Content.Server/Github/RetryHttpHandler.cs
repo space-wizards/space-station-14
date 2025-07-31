@@ -54,7 +54,6 @@ public sealed class RetryHandler(HttpMessageHandler innerHandler, int maxRetries
         return response;
     }
 
-
     /// <summary>
     /// Follows these guidelines but also has a small buffer so you should never quite hit zero:
     /// <br/>

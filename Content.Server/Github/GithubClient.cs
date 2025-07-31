@@ -45,6 +45,11 @@ public sealed class GithubClient
 
     private const int ErrorResponseMaxLogSize = 200;
 
+    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    };
+
     // Docs say 10 should be the maximum.
     private readonly TimeSpan JWTExpiration = TimeSpan.FromMinutes(10);
     private readonly TimeSpan JWTBackDate = TimeSpan.FromMinutes(1);
@@ -164,7 +169,7 @@ public sealed class GithubClient
             return null;
         }
 
-        if (request.AuthenticationMethodMethod == AuthMethod.Token && !await EnsureTokenNotExpired(ct))
+        if (request.AuthenticationMethodMethod == GithubAuthMethod.Token && !await EnsureTokenNotExpired(ct))
             return null;
 
         var httpRequestMessage = BuildRequest(request);
@@ -219,7 +224,7 @@ public sealed class GithubClient
 
     private HttpRequestMessage BuildRequest(IGithubRequest request)
     {
-        var json = JsonSerializer.Serialize(request);
+        var json = JsonSerializer.Serialize(request, _jsonSerializerOptions);
         var payload = new StringContent(json, Encoding.UTF8, "application/json");
 
         var builder = new UriBuilder(_baseUri)
@@ -251,8 +256,8 @@ public sealed class GithubClient
     {
         return request.AuthenticationMethodMethod switch
         {
-            AuthMethod.Token => AuthHeaderBearer + TokenData.Token,
-            AuthMethod.JWT => AuthHeaderBearer + GetValidJWT(),
+            GithubAuthMethod.Token => AuthHeaderBearer + TokenData.Token,
+            GithubAuthMethod.JWT => AuthHeaderBearer + GetValidJWT(),
             _ => throw new Exception("Unknown auth method!"),
         };
     }
@@ -270,7 +275,7 @@ public sealed class GithubClient
         if (installationHttpResponse == null)
             return false;
 
-        var installationResponse = await installationHttpResponse.Content.ReadFromJsonAsync<List<InstallationResponse>>(ct);
+        var installationResponse = await installationHttpResponse.Content.ReadFromJsonAsync<List<InstallationResponse>>(_jsonSerializerOptions, ct);
 
         if (installationResponse == null)
         {
@@ -310,7 +315,7 @@ public sealed class GithubClient
         if (tokenHttpResponse == null)
             return false;
 
-        var tokenResponse = await tokenHttpResponse.Content.ReadFromJsonAsync<TokenResponse>(ct);
+        var tokenResponse = await tokenHttpResponse.Content.ReadFromJsonAsync<TokenResponse>(_jsonSerializerOptions, ct);
 
         if (tokenResponse == null)
         {
@@ -318,7 +323,7 @@ public sealed class GithubClient
             return false;
         }
 
-        TokenData = (tokenResponse.Exp, tokenResponse.Token);
+        TokenData = (tokenResponse.ExpiresAt, tokenResponse.Token);
         return true;
     }
 

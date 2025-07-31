@@ -8,17 +8,14 @@ namespace Content.Server.Github.Responses;
 /// </summary>
 public sealed class InstallationResponse
 {
-    [JsonPropertyName("id")]
-    public int Id { get; set; } = 0;
+    public required int Id { get; set; }
 
-    [JsonPropertyName("account")]
-    public GithubInstallationAccount Account { get; set; } = new();
+    public required GithubInstallationAccount Account { get; set; }
 }
 
 /// <inheritdoc cref="InstallationResponse"/>
 public sealed class GithubInstallationAccount
 {
-    [JsonPropertyName("login")]
-    public string Login { get; set; } = "";
+    public required string Login { get; set; }
 }
 

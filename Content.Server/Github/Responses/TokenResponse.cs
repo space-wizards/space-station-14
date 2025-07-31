@@ -8,9 +8,8 @@ namespace Content.Server.Github.Responses;
 /// </summary>
 public sealed class TokenResponse
 {
-    [JsonPropertyName("token")]
-    public string Token { get; set; } = "";
+    public required string Token { get; set; }
 
     [JsonPropertyName("expires_at")]
-    public DateTime Exp { get; set; } = default!;
+    public required DateTime ExpiresAt { get; set; }
 }

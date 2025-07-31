@@ -6,6 +6,8 @@ public sealed partial class CCVars
 {
     /// <summary>
     /// Marker, for if the GitHub api is enabled. If it is not enabled, any actions that require GitHub API will be ignored.
+    /// To fully set up the API, you also need to set <see cref="GithubAppPrivateKeyPath"/>, <see cref="GithubAppId"/>,
+    /// <see cref="GithubRepositoryName"/> and <see cref="GithubRepositoryOwner"/>.
     /// </summary>
     public static readonly CVarDef<bool> GithubEnabled =
         CVarDef.Create("github.github_enabled", true, CVar.SERVERONLY);
