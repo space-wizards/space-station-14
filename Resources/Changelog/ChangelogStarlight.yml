@@ -9965,5 +9965,12 @@ Entries:
   id: 1372
   time: '2025-07-31T20:10:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1008
+- author: Fasuh
+  changes:
+  - message: Shortcut for pulling from and putting items into suit storage
+    type: Add
+  id: 1373
+  time: '2025-07-31T20:13:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1037
 Order: -1
 
