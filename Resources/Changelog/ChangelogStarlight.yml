@@ -9979,5 +9979,12 @@ Entries:
   id: 1374
   time: '2025-07-31T20:15:24.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1057
+- author: PubliclyExecutedPig
+  changes:
+  - message: Tweaked the infiltration hardsuit
+    type: Tweak
+  id: 1375
+  time: '2025-07-31T20:17:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1036
 Order: -1
 
