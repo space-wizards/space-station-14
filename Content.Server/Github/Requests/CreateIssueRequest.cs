@@ -14,6 +14,8 @@ public sealed class CreateIssueRequest : IGithubRequest
     [JsonIgnore]
     public GithubAuthMethod AuthenticationMethodMethod => GithubAuthMethod.Token;
 
+    #region JSON fields
+
     [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public required string Title;
     [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -26,6 +28,8 @@ public sealed class CreateIssueRequest : IGithubRequest
     public List<string> Labels = [];
     [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<string> Assignees = [];
+
+    #endregion
 
     public string GetLocation(string owner, string repository)
     {
