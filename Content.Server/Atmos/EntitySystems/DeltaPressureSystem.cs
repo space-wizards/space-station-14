@@ -47,7 +47,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     private void OnExamined(Entity<DeltaPressureComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp.IsTakingDamage)
-            args.PushMarkup("The object is buckling inwards!");
+            args.PushMarkup(Loc.GetString("window-taking-damage"));
     }
 
     private void OnGridChanged(Entity<DeltaPressureComponent> ent, ref GridUidChangedEvent args)
