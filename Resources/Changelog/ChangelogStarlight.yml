@@ -10007,5 +10007,12 @@ Entries:
   id: 1378
   time: '2025-07-31T20:08:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1013
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Hub.
+    type: Add
+  id: 1379
+  time: '2025-07-24T01:32:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/692
 Order: -1
 
