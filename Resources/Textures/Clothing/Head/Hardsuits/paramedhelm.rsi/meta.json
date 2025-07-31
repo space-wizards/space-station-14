@@ -1,36 +1,44 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from paradise station at commit https://github.com/ParadiseSS13/Paradise/commit/e5e584804b4b0b373a6a69d23afb73fd3c094365, redrawn by Ubaser. vox state by Flareguy, icon-flash and light-overlay states by Velken",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from paradise station at commit https://github.com/ParadiseSS13/Paradise/commit/e5e584804b4b0b373a6a69d23afb73fd3c094365, redrawn by Ubaser. vox state by Flareguy, icon-flash and light-overlay states by Velken. Dog states modified from base states by Sparlight (GitHub).",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "icon-flash"
-    },
-    {
-      "name": "light-overlay"
-    },
-    {
-      "name": "equipped-head",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-light",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-vox",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-light-vox",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon-flash"
+        },
+        {
+            "name": "light-overlay"
+        },
+        {
+            "name": "equipped-head",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-vox",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light-vox",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-dog",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light-dog",
+            "directions": 4
+        }
+    ]
 }
