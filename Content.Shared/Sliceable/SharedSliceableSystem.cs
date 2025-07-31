@@ -143,7 +143,11 @@ public sealed class SharedSliceableSystem : EntitySystem
         else
             QueueDel(ent);
 
-        TrySlice(ent);
+        if (TrySlice(ent))
+        {
+            var ev = new SliceEvent();
+            RaiseLocalEvent(ent, ref ev);
+        }
     }
 
     private bool TrySlice(EntityUid uid,
@@ -205,3 +209,9 @@ public sealed class SharedSliceableSystem : EntitySystem
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class TrySliceEvent : SimpleDoAfterEvent;
+
+/// <summary>
+/// Called after slicing of the entity.
+/// </summary>
+[ByRefEvent]
+public record struct SliceEvent;
