@@ -90362,8 +90362,6 @@ entities:
       pos: 49.5,5.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 5232
   - uid: 5248
@@ -90372,8 +90370,6 @@ entities:
       pos: 49.5,-0.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 5232
 - proto: WeaponEnergyTurretSecurityControlPanel
