@@ -38,7 +38,9 @@ public sealed partial class PlantMutateExudeGasses : EntityEffect
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
-        return "TODO";
+        return Loc.GetString("reagent-effect-guidebook-plant-mutate-exude-gasses",
+            ("minValue", MinValue),
+            ("maxValue", MaxValue));
     }
 }
 
@@ -72,6 +74,8 @@ public sealed partial class PlantMutateConsumeGasses : EntityEffect
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
-        return "TODO";
+        return Loc.GetString("reagent-effect-guidebook-plant-mutate-consume-gasses",
+            ("minValue", MinValue),
+            ("maxValue", MaxValue));
     }
 }

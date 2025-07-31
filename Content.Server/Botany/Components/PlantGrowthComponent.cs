@@ -4,9 +4,12 @@ namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
 public abstract partial class PlantGrowthComponent : Component {
+    /// <summary>
+    /// Creates a copy of this component.
+    /// </summary>
     public PlantGrowthComponent DupeComponent()
     {
-        return (PlantGrowthComponent)this.MemberwiseClone(); //TODO TEST if this carries all properties or only base class
+        return (PlantGrowthComponent)this.MemberwiseClone();
     }
 }
 

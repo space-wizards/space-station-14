@@ -1,4 +1,6 @@
+using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
+using Content.Shared.Chemistry.Components.SolutionManager;
 
 namespace Content.Shared.EntityEffects.EffectConditions;
 
@@ -23,8 +25,20 @@ public sealed partial class SolutionTemperature : EntityEffectCondition
                    reagentArgs.Source.Temperature <= Max;
         }
 
-        // TODO: Someone needs to figure out how to do this for non-reagent effects.
-        throw new NotImplementedException();
+        // For non-reagent effects, we need to find the solution differently
+        if (args.EntityManager.TryGetComponent(args.TargetEntity, out SolutionContainerManagerComponent? container) &&
+            container != null && container.Solutions != null)
+        {
+            // Check the first available solution for temperature
+            foreach (var (name, solution) in container.Solutions)
+            {
+                if (solution.Temperature >= Min && solution.Temperature <= Max)
+                    return true;
+            }
+        }
+
+        // If no suitable solution is found, the condition fails
+        return false;
     }
 
     public override string GuidebookExplanation(IPrototypeManager prototype)

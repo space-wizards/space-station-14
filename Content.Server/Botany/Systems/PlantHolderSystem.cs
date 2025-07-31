@@ -25,7 +25,6 @@ using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Database;
 using Content.Shared.Labels.Components;
 
 namespace Content.Server.Botany.Systems;
@@ -458,7 +457,9 @@ public sealed class PlantHolderSystem : EntitySystem
             UpdateSprite(uid, component);
     }
 
-    //TODO: kill this bullshit
+    /// <summary>
+    /// Ensures all plant holder levels are within valid ranges.
+    /// </summary>
     public void CheckLevelSanity(EntityUid uid, PlantHolderComponent? component = null)
     {
         if (!Resolve(uid, ref component))

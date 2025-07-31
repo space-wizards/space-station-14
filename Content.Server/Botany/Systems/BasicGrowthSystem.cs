@@ -6,7 +6,7 @@ namespace Content.Server.Botany.Systems;
 // For all the very common stuff all plants are expected to do.
 
 // TODO: make CO2Boost (add potency if the plant can eat an increasing amount of CO2). separate PR post-merge
-// TOOD: make GrowLight (run bonus ticks if theres a grow light nearby). separate PR post-merge.
+// TODO: make GrowLight (run bonus ticks if theres a grow light nearby). separate PR post-merge.
 public sealed class BasicGrowthSystem : PlantGrowthSystem
 {
     [Dependency] private readonly BotanySystem _botany = default!;
@@ -48,6 +48,15 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
 
         if (holder == null || holder.Seed == null || holder.Dead)
             return;
+
+        // Check if the plant is viable
+        if (holder.Seed.Viable == false)
+        {
+            holder.Health -= _random.Next(5, 10) * HydroponicsSpeedMultiplier;
+            if (holder.DrawWarnings)
+                holder.UpdateSpriteAfterUpdate = true;
+            return;
+        }
 
         // Advance plant age here.
         if (holder.SkipAging > 0)
@@ -138,7 +147,5 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
                 holder.Health -= healthMod;
             }
         }
-
-        //TODO: put Viable back on seed and check it here, or split it off to a separate system and check there?
     }
 }

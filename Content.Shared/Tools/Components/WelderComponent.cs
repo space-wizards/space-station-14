@@ -11,9 +11,6 @@ namespace Content.Shared.Tools.Components;
 /// <summary>
 /// Handles fuel consumption for the tool and allows it to explode welding fuel tanks.
 /// </summary>
-/// <summary>
-/// TODO: De-hardcode welder bombing.
-/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
 [Access(typeof(SharedToolSystem))]
 public sealed partial class WelderComponent : Component

@@ -55,6 +55,22 @@ public sealed class MutationSystem : EntitySystem
         }
 
         CheckRandomMutations(plantHolder, ref seed, severity);
+        EnsureGrowthComponents(plantHolder, seed);
+    }
+
+    /// <summary>
+    /// Ensures that the plant has all the growth components specified in the seed data.
+    /// </summary>
+    private void EnsureGrowthComponents(EntityUid plantHolder, SeedData seed)
+    {
+        foreach (var component in seed.GrowthComponents)
+        {
+            if (!EntityManager.HasComponent(plantHolder, component.GetType()))
+            {
+                var newComponent = component.DupeComponent();
+                EntityManager.AddComponent(plantHolder, newComponent);
+            }
+        }
     }
 
     public SeedData Cross(SeedData a, SeedData b)

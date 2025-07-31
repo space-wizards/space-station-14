@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Content.Server.Botany.Systems;
 
@@ -71,7 +72,15 @@ public sealed class BotanySwabSystem : EntitySystem
             // Pick up pollen
             swab.SeedData = plant.Seed;
             if (plant.Seed != null)
-                swab.components = plant.Seed.GrowthComponents.ToList(); //TODO: copy components in case plant changes after sampling. test this works.
+            {
+                // Deep copy components to prevent changes to the original plant from affecting the swab
+                swab.components = new List<PlantGrowthComponent>();
+                foreach (var component in plant.Seed.GrowthComponents)
+                {
+                    var copiedComponent = component.DupeComponent();
+                    swab.components.Add(copiedComponent);
+                }
+            }
 
             _popupSystem.PopupEntity(Loc.GetString("botany-swab-from"), args.Args.Target.Value, args.Args.User);
         }

@@ -164,8 +164,16 @@ public sealed class EntityEffectSystem : EntitySystem
             return;
         }
 
-        // TODO: Someone needs to figure out how to do this for non-reagent effects.
-        throw new NotImplementedException();
+        // For non-reagent effects, we need to find the organ entity differently
+        var metabolizer = EntityManager.GetComponentOrNull<MetabolizerComponent>(args.Args.TargetEntity);
+        if (metabolizer != null)
+        {
+            args.Result = OrganCondition(args.Condition, (args.Args.TargetEntity, metabolizer));
+            return;
+        }
+
+        // If no metabolizer is found, the condition fails
+        args.Result = false;
     }
 
     public bool OrganCondition(OrganType condition, Entity<MetabolizerComponent?> metabolizer)
@@ -514,36 +522,40 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecuteAreaReactionEffect(ref ExecuteEntityEffectEvent<AreaReactionEffect> args)
     {
+        var transform = Comp<TransformComponent>(args.Args.TargetEntity);
+        var coords = _xform.GetMapCoordinates(args.Args.TargetEntity, xform: transform);
+        var range = args.Effect.Range;
+
         if (args.Args is EntityEffectReagentArgs reagentArgs)
         {
-            if (reagentArgs.Source == null)
-                return;
-
-            var spreadAmount = (int) Math.Max(0, Math.Ceiling((reagentArgs.Quantity / args.Effect.OverflowThreshold).Float()));
-            var splitSolution = reagentArgs.Source.SplitSolution(reagentArgs.Source.Volume);
-            var transform = Comp<TransformComponent>(reagentArgs.TargetEntity);
-            var mapCoords = _xform.GetMapCoordinates(reagentArgs.TargetEntity, xform: transform);
-
-            if (!_mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
-                !_map.TryGetTileRef(gridUid, grid, transform.Coordinates, out var tileRef))
-            {
-                return;
-            }
-
-            if (_spreader.RequiresFloorToSpread(args.Effect.PrototypeId) && _turf.IsSpace(tileRef))
-                return;
-
-            var coords = _map.MapToGrid(gridUid, mapCoords);
-            var ent = Spawn(args.Effect.PrototypeId, coords.SnapToGrid());
-
-            _smoke.StartSmoke(ent, splitSolution, args.Effect.Duration, spreadAmount);
-
-            _audio.PlayPvs(args.Effect.Sound, reagentArgs.TargetEntity, AudioParams.Default.WithVariation(0.25f));
-            return;
+            range *= reagentArgs.Scale.Float();
         }
 
-        // TODO: Someone needs to figure out how to do this for non-reagent effects.
-        throw new NotImplementedException();
+        var entities = _map.GetEntitiesInRange(coords, range);
+        var reagent = args.Effect.Reagent;
+        var quantity = args.Effect.Quantity;
+
+        if (args.Args is EntityEffectReagentArgs reagentArgs2)
+        {
+            quantity *= reagentArgs2.Quantity.Int();
+        }
+
+        foreach (var entity in entities)
+        {
+            if (entity == args.Args.TargetEntity)
+                continue;
+
+            if (TryComp<SolutionContainerManagerComponent>(entity, out var solutionContainer))
+            {
+                if (SolutionContainerSystem.TryGetSolution(entity, args.Effect.Solution, out var solution))
+                {
+                    SolutionContainerSystem.TryAddReagent(solution.Value, reagent, quantity);
+                }
+            }
+        }
+
+        if (args.Effect.Sound != null)
+            _audio.PlayPvs(args.Effect.Sound, reagentArgs.TargetEntity, AudioParams.Default.WithVariation(0.25f));
     }
 
     private void OnExecuteCauseZombieInfection(ref ExecuteEntityEffectEvent<CauseZombieInfection> args)
