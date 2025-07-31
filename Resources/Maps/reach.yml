@@ -8013,8 +8013,11 @@ entities:
     - type: GasMixer
       inletTwoConcentration: 0.22000003
       inletOneConcentration: 0.78
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
 - proto: GasPassiveVent
   entities:
   - uid: 1112
@@ -8035,8 +8038,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,-15.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
 - proto: GasPipeBend
   entities:
   - uid: 1115
@@ -8051,404 +8057,560 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,-12.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1117
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,-11.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1118
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-11.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1119
     components:
     - type: Transform
       pos: 0.5,-9.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1120
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-9.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1121
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1122
     components:
     - type: Transform
       pos: 6.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1123
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1124
     components:
     - type: Transform
       pos: 9.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1125
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 11.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1126
     components:
     - type: Transform
       pos: 12.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1127
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,-4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1128
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1129
     components:
     - type: Transform
       pos: 0.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1130
     components:
     - type: Transform
       pos: 3.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1131
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1132
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1133
     components:
     - type: Transform
       pos: 8.5,5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1134
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1135
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1136
     components:
     - type: Transform
       pos: 7.5,7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1137
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1138
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1139
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1140
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -16.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1141
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -18.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1142
     components:
     - type: Transform
       pos: -18.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1143
     components:
     - type: Transform
       pos: -16.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1144
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -17.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1145
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1146
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,-13.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1147
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,-13.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1148
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1149
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,-5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1150
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,-5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1151
     components:
     - type: Transform
       pos: 6.5,-5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1152
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1153
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1154
     components:
     - type: Transform
       pos: 8.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1155
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1156
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1157
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -15.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1158
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -15.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1159
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1160
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1161
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1162
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 1.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1163
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1164
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1166
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 14.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1167
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -12.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1506
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,9.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 2364
     components:
     - type: Transform
@@ -8462,64 +8624,91 @@ entities:
     - type: Transform
       pos: -0.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1169
     components:
     - type: Transform
       pos: 17.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1170
     components:
     - type: Transform
       pos: 22.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1171
     components:
     - type: Transform
       pos: 7.5,5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1172
     components:
     - type: Transform
       pos: -0.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1173
     components:
     - type: Transform
       pos: -17.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1174
     components:
     - type: Transform
       pos: 6.5,-6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1175
     components:
     - type: Transform
       pos: -8.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1176
     components:
     - type: Transform
       pos: 8.5,-4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1444
     components:
     - type: Transform
@@ -8543,8 +8732,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,-12.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
 - proto: GasPipeSensorWaste
   entities:
   - uid: 1287
@@ -8552,8 +8744,11 @@ entities:
     - type: Transform
       pos: 6.5,-12.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
 - proto: GasPipeStraight
   entities:
   - uid: 91
@@ -8592,23 +8787,32 @@ entities:
       rot: 3.141592653589793 rad
       pos: 6.5,-11.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1178
     components:
     - type: Transform
       pos: 5.5,15.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1179
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 18.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1180
     components:
     - type: Transform
@@ -8633,1596 +8837,2208 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 8.5,-11.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1185
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-11.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1186
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-12.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1187
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,-12.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1188
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-12.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1189
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-12.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1190
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-12.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1191
     components:
     - type: Transform
       pos: -0.5,-8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1192
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,-7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1193
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,-7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1194
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,-7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1195
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1196
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1197
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1198
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1199
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 0.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1200
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 1.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1201
     components:
     - type: Transform
       pos: 3.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1202
     components:
     - type: Transform
       pos: 3.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1203
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1204
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1205
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1206
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1207
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1208
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 11.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1209
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 11.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1210
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1211
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 9.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1212
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1213
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1214
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1215
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1216
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 16.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1217
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 19.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1218
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 20.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1219
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 21.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1220
     components:
     - type: Transform
       pos: 17.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1221
     components:
     - type: Transform
       pos: 17.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1222
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 18.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1223
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 23.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1224
     components:
     - type: Transform
       pos: 22.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1225
     components:
     - type: Transform
       pos: 22.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1226
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 15.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1227
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 15.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1228
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 15.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1229
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1230
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1231
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1232
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 11.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1233
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1234
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 9.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1235
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1236
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1237
     components:
     - type: Transform
       pos: 5.5,8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1238
     components:
     - type: Transform
       pos: 5.5,9.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1239
     components:
     - type: Transform
       pos: 5.5,10.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1240
     components:
     - type: Transform
       pos: 5.5,11.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1241
     components:
     - type: Transform
       pos: 5.5,12.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1242
     components:
     - type: Transform
       pos: 5.5,13.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1243
     components:
     - type: Transform
       pos: 5.5,14.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1244
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1245
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1246
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1247
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1248
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1249
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1250
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1251
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1252
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1253
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 1.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1254
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1255
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1256
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1257
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1258
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1259
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -2.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1260
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1261
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -4.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1262
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -6.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1263
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -8.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1264
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -10.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1265
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -11.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1266
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -12.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1267
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -14.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1268
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -15.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1269
     components:
     - type: Transform
       pos: -17.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1270
     components:
     - type: Transform
       pos: -17.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1271
     components:
     - type: Transform
       pos: -17.5,5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1272
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -19.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1273
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -17.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1274
     components:
     - type: Transform
       pos: -13.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1275
     components:
     - type: Transform
       pos: -9.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1276
     components:
     - type: Transform
       pos: -5.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1277
     components:
     - type: Transform
       pos: -7.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1278
     components:
     - type: Transform
       pos: -7.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1279
     components:
     - type: Transform
       pos: -7.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1280
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -9.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1281
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -10.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1282
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -11.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1283
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -12.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1284
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -6.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1285
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1286
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-10.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1288
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-9.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1290
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1291
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1292
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1293
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,-6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1294
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1295
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,-6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1296
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1297
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1298
     components:
     - type: Transform
       pos: 0.5,-7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1299
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,-8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1300
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,-8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1301
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -2.5,-8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1302
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,-6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1303
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1304
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1305
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1306
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1307
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1308
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1309
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1310
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1311
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1312
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1313
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -4.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1314
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1315
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -6.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1316
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1317
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -10.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1318
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -11.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1319
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1320
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -13.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1321
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -14.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1322
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -17.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1323
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -18.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1324
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -19.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1325
     components:
     - type: Transform
       pos: -3.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1326
     components:
     - type: Transform
       pos: -3.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1327
     components:
     - type: Transform
       pos: -8.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1328
     components:
     - type: Transform
       pos: -9.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1329
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1330
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -6.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1331
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -5.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1332
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -5.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1333
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1334
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1335
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1336
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1337
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1338
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1339
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1340
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1341
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1342
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1343
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1344
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,9.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1345
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,10.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1346
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,11.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1347
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,12.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1348
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,13.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1349
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,14.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1350
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1351
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1352
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1353
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1354
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1355
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1356
     components:
     - type: Transform
       pos: 6.5,6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1357
     components:
     - type: Transform
       pos: 6.5,7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1358
     components:
     - type: Transform
       pos: 6.5,8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1365
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 7.5,9.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1366
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1367
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1368
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1369
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1370
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 11.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1371
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 12.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1372
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 13.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1374
     components:
     - type: Transform
       pos: 14.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1375
     components:
     - type: Transform
       pos: 14.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1376
     components:
     - type: Transform
       pos: 14.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1377
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 15.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1378
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 17.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1379
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 18.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1380
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 20.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1381
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 22.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1382
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 23.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1383
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 21.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1384
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 21.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1385
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 16.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1386
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 16.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1387
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 19.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1388
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 19.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1389
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 19.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1390
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -10.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1391
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -11.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1392
     components:
     - type: Transform
       pos: -12.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1393
     components:
     - type: Transform
       pos: -12.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1394
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -2.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1395
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1396
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1569
     components:
     - type: Transform
@@ -10261,355 +11077,496 @@ entities:
       rot: 3.141592653589793 rad
       pos: 10.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1398
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -9.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1399
     components:
     - type: Transform
       pos: 5.5,-13.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1400
     components:
     - type: Transform
       pos: -1.5,2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1401
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-12.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1402
     components:
     - type: Transform
       pos: 7.5,-11.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1403
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,-12.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1404
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-10.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1405
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,-7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1406
     components:
     - type: Transform
       pos: 2.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1407
     components:
     - type: Transform
       pos: 5.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1408
     components:
     - type: Transform
       pos: 8.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1409
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1410
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 11.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1411
     components:
     - type: Transform
       pos: 11.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1412
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 18.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1413
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 15.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1415
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 0.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1416
     components:
     - type: Transform
       pos: -9.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1417
     components:
     - type: Transform
       pos: -13.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1418
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1419
     components:
     - type: Transform
       pos: -5.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1420
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -16.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1421
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -17.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1422
     components:
     - type: Transform
       pos: -7.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1423
     components:
     - type: Transform
       pos: -8.5,4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1424
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1425
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,-15.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1426
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,-14.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1427
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-7.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1428
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,-5.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1429
     components:
     - type: Transform
       pos: 0.5,-6.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1430
     components:
     - type: Transform
       pos: -1.5,-8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1431
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1432
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1433
     components:
     - type: Transform
       pos: 7.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1434
     components:
     - type: Transform
       pos: -12.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1435
     components:
     - type: Transform
       pos: -16.5,-1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1436
     components:
     - type: Transform
       pos: -3.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1437
     components:
     - type: Transform
       pos: -8.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1438
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,1.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1439
     components:
     - type: Transform
       pos: -2.5,8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1440
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,8.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1441
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1445
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 19.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1446
     components:
     - type: Transform
       pos: 21.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1447
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 23.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
 - proto: GasPort
   entities:
   - uid: 1448
@@ -10623,16 +11580,22 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,-15.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1450
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-14.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
 - proto: GasPressurePump
   entities:
   - uid: 1451
@@ -10640,8 +11603,11 @@ entities:
     - type: Transform
       pos: 5.5,-11.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
 - proto: GasValve
   entities:
   - uid: 1452
@@ -10650,8 +11616,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,-13.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
 - proto: GasVentPump
   entities:
   - uid: 1453
@@ -10663,8 +11632,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 2500
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1454
     components:
     - type: Transform
@@ -10674,8 +11646,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 2500
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1455
     components:
     - type: Transform
@@ -10685,8 +11660,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1456
     components:
     - type: Transform
@@ -10695,8 +11673,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 2621
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1457
     components:
     - type: Transform
@@ -10705,32 +11686,44 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 2623
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1458
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 7.5,0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1459
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1460
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,-4.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1461
     components:
     - type: Transform
@@ -10740,16 +11733,22 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 5
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1462
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1463
     components:
     - type: Transform
@@ -10759,8 +11758,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 5
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1464
     components:
     - type: Transform
@@ -10771,8 +11773,11 @@ entities:
       deviceLists:
       - 7
       - 6
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1465
     components:
     - type: Transform
@@ -10781,8 +11786,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 12
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1466
     components:
     - type: Transform
@@ -10792,8 +11800,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 12
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1467
     components:
     - type: Transform
@@ -10803,16 +11814,22 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 12
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1468
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 17.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1469
     components:
     - type: Transform
@@ -10822,8 +11839,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1470
     components:
     - type: Transform
@@ -10832,8 +11852,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 1753
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1471
     components:
     - type: Transform
@@ -10842,8 +11865,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1472
     components:
     - type: Transform
@@ -10852,8 +11878,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 4
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1473
     components:
     - type: Transform
@@ -10862,8 +11891,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 3
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1474
     components:
     - type: Transform
@@ -10872,8 +11904,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 9
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1475
     components:
     - type: Transform
@@ -10883,16 +11918,22 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 9
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1476
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -16.5,3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1477
     components:
     - type: Transform
@@ -10901,8 +11942,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 9
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1478
     components:
     - type: Transform
@@ -10912,8 +11956,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 9
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1479
     components:
     - type: Transform
@@ -10923,8 +11970,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 8
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1480
     components:
     - type: Transform
@@ -10934,8 +11984,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 8
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1481
     components:
     - type: Transform
@@ -10945,8 +11998,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 8
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1482
     components:
     - type: Transform
@@ -10956,8 +12012,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1483
     components:
     - type: Transform
@@ -10966,8 +12025,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 2366
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1484
     components:
     - type: Transform
@@ -10977,8 +12039,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 7
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 1485
     components:
     - type: Transform
@@ -10988,8 +12053,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 7
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#0055CCFF'
   - uid: 2330
     components:
     - type: Transform
@@ -11026,8 +12094,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 2500
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1487
     components:
     - type: Transform
@@ -11037,8 +12108,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 5
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1488
     components:
     - type: Transform
@@ -11047,8 +12121,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 5
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1489
     components:
     - type: Transform
@@ -11058,8 +12135,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 6
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1490
     components:
     - type: Transform
@@ -11069,8 +12149,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1491
     components:
     - type: Transform
@@ -11079,8 +12162,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 5
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1492
     components:
     - type: Transform
@@ -11089,8 +12175,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 5
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1493
     components:
     - type: Transform
@@ -11100,8 +12189,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 5
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1494
     components:
     - type: Transform
@@ -11111,8 +12203,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 7
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1495
     components:
     - type: Transform
@@ -11122,8 +12217,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 7
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1496
     components:
     - type: Transform
@@ -11133,16 +12231,22 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 9
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1497
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -16.5,-2.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1498
     components:
     - type: Transform
@@ -11151,8 +12255,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 8
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1499
     components:
     - type: Transform
@@ -11161,8 +12268,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 8
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1500
     components:
     - type: Transform
@@ -11171,8 +12281,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 8
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1501
     components:
     - type: Transform
@@ -11182,8 +12295,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 7
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1502
     components:
     - type: Transform
@@ -11193,8 +12309,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1503
     components:
     - type: Transform
@@ -11204,8 +12323,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 3
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1504
     components:
     - type: Transform
@@ -11215,8 +12337,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 4
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1505
     components:
     - type: Transform
@@ -11225,8 +12350,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 3
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1507
     components:
     - type: Transform
@@ -11236,16 +12364,22 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 1753
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1508
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 24.5,-0.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1509
     components:
     - type: Transform
@@ -11254,24 +12388,33 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 12
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1510
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 21.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1511
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 16.5,-3.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1512
     components:
     - type: Transform
@@ -11280,8 +12423,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 2621
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1514
     components:
     - type: Transform
@@ -11291,8 +12437,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 2500
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1515
     components:
     - type: Transform
@@ -11302,8 +12451,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 5
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 1516
     components:
     - type: Transform
@@ -11312,8 +12464,11 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13
-    - type: AtmosPipeColor
-      color: '#990000FF'
+    - type: Appearance
+      appearanceDataInit:
+        enum.PipeColorVisuals.Color:
+          !type:String 
+          '#990000FF'
   - uid: 2622
     components:
     - type: Transform

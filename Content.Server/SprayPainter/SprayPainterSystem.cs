@@ -1,21 +1,20 @@
-using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.EntitySystems;
 using Content.Server.Charges;
 using Content.Server.Decals;
 using Content.Server.Destructible;
 using Content.Server.Popups;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.Atmos.Piping;
 using Content.Shared.Charges.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using Content.Shared.SprayPainter;
 using Content.Shared.SprayPainter.Components;
+using Content.Shared.SprayPainter;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.SprayPainter;
 
@@ -25,12 +24,12 @@ namespace Content.Server.SprayPainter;
 /// </summary>
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
 {
-    [Dependency] private readonly AtmosPipeColorSystem _pipeColor = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly ChargesSystem _charges = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -38,7 +37,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
         SubscribeLocalEvent<SprayPainterComponent, SprayPainterPipeDoAfterEvent>(OnPipeDoAfter);
         SubscribeLocalEvent<SprayPainterComponent, AfterInteractEvent>(OnFloorAfterInteract);
-        SubscribeLocalEvent<AtmosPipeColorComponent, InteractUsingEvent>(OnPipeInteract);
+        SubscribeLocalEvent<AtmosPipeComponent, InteractUsingEvent>(OnPipeInteract);
         SubscribeLocalEvent<GasCanisterComponent, EntityPaintedEvent>(OnCanisterPainted);
     }
 
@@ -139,20 +138,17 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (args.Args.Target is not { } target)
             return;
 
-        if (!TryComp<AtmosPipeColorComponent>(target, out var color))
-            return;
-
         if (TryComp<LimitedChargesComponent>(ent, out var charges) &&
             !_charges.TryUseCharges((ent, charges), ent.Comp.PipeChargeCost))
             return;
 
         Audio.PlayPvs(ent.Comp.SpraySound, ent);
-        _pipeColor.SetColor((target, color), args.Color);
+        _appearance.SetData(target, PipeColorVisuals.Color, args.Color);
 
         args.Handled = true;
     }
 
-    private void OnPipeInteract(Entity<AtmosPipeColorComponent> ent, ref InteractUsingEvent args)
+    private void OnPipeInteract(Entity<AtmosPipeComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;

@@ -21,14 +21,14 @@ public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisual
     }
 
     /// <summary>
-    ///     This method is used to display the color changes of the pipe on the screen..
+    ///     This method is used to display the color changes of the pipe on the screen.
     /// </summary>
     private void OnGetVisuals(Entity<PipeColorVisualsComponent> item, ref GetInhandVisualsEvent args)
     {
         foreach (var (_, layerData) in args.Layers)
         {
-            if (TryComp(item.Owner, out AtmosPipeColorComponent? pipeColor))
-                layerData.Color = pipeColor.Color;
+            if (AppearanceSystem.TryGetData<Color>(item.Owner, PipeColorVisuals.Color, out var color))
+                layerData.Color = color;
         }
     }
 
@@ -37,8 +37,8 @@ public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisual
     /// </summary>
     private void OnDrawInGrid(Entity<PipeColorVisualsComponent> item, ref BeforeRenderInGridEvent args)
     {
-        if (TryComp(item.Owner, out AtmosPipeColorComponent? pipeColor))
-            args.Color = pipeColor.Color;
+        if (AppearanceSystem.TryGetData<Color>(item.Owner, PipeColorVisuals.Color, out var color))
+            args.Color = color;
     }
 
     protected override void OnAppearanceChange(EntityUid uid, PipeColorVisualsComponent component, ref AppearanceChangeEvent args)
@@ -49,13 +49,11 @@ public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisual
             // T-ray scanner / sub floor runs after this visualizer. Lets not bulldoze transparency.
             var layer = sprite[PipeVisualLayers.Pipe];
             layer.Color = color.WithAlpha(layer.Color.A);
+
+            var ev = new AtmosPipeColorChangedEvent(color);
+            RaiseLocalEvent(uid, ref ev);
+
+            _itemSystem.VisualsChanged(uid);
         }
-
-        _itemSystem.VisualsChanged(uid);
     }
-}
-
-public enum PipeVisualLayers : byte
-{
-    Pipe,
 }
