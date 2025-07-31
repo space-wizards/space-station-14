@@ -7,7 +7,6 @@
   - type: TelecomExempt
   - type: RadioMicrophone
     broadcastChannel: Expedition
-    listenRange: 1
   - type: RadioSpeaker
     channels:
     - Expedition
