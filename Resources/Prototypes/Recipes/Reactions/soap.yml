@@ -2,6 +2,7 @@
   id: CreateSoapRegular
   impact: Low
   quantized: true
+  minTemp: 383 # Water boiling point + 10K. We are boiling it
   reactants:
     Oil:
       amount: 10
@@ -17,6 +18,7 @@
   id: CreateSoapNT
   impact: Low
   quantized: true
+  minTemp: 373 # Water boiling point. We are boiling it too, but with higher priority
   reactants:
     Oil:
       amount: 15
@@ -34,6 +36,7 @@
   id: CreateSoapDeluxe
   impact: Low
   quantized: true
+  minTemp: 373
   reactants:
     Oil:
       amount: 15
@@ -51,6 +54,7 @@
   id: CreateSoapBlood
   impact: Low
   quantized: true
+  minTemp: 373
   reactants:
     Fat:
       amount: 10
@@ -68,6 +72,7 @@
   id: CreateSoapSyndie
   impact: Medium
   quantized: true
+  minTemp: 373
   reactants:
     Oil:
       amount: 15
@@ -85,6 +90,7 @@
   id: CreateSoapOmega
   impact: Medium
   quantized: true
+  minTemp: 373
   reactants:
     Oil:
       amount: 5
