@@ -22,19 +22,9 @@
     revertOnDeath: true
 
 - type: polymorph
-  id: CorgiMorph
-  configuration:
-    entity: SmartCorgi
-    forced: false
-    inventory: Drop
-    transferName: true
-    revertOnCrit: false
-    revertOnDeath: false
-    allowRepeatedMorphs: false
-- type: polymorph
   id: PermanentCorgiMorph
   configuration:
-    entity: SmartCorgi
+    entity: MobCorgiSmart
     forced: true
     inventory: Drop
     transferName: true
@@ -262,7 +252,7 @@
     entity: MobBat
     revertOnDeath: true
     revertOnCrit: true
-    
+
 # Temporary Jaunt
 # Don't make permanent jaunts until action system can be reworked to allow do afters and cooldown pausing
 - type: polymorph
