@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ DrinkBase, DrinkBaseMaterialCardboard, DrinkBaseOpenable, DrinkVisualsOpenable ]
+  parent: [ DrinkBaseMaterialCardboard, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ]
   id: DrinkCartonBaseLargeFull # todo rename DrinkCartonBaseFull to match bottles
   suffix: Full
   components:

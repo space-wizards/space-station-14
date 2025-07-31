@@ -4,7 +4,7 @@
 
 # Transformable container - normal glass
 - type: entity
-  parent: [DrinkBaseCup, DrinkBaseMaterialGlass] # todo parent to DrinkVisualsFillOverlay after in-hands are added
+  parent: [DrinkBaseMaterialGlass, DrinkBaseCup] # todo parent to DrinkVisualsFillOverlay after in-hands are added
   id: DrinkGlass
   name: metamorphic glass
   description: A metamorphic glass that automagically turns into a glass appropriate for the drink within. There's a sanded off patent number on the bottom.

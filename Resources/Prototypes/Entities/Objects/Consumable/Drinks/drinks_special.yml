@@ -1,5 +1,5 @@
 - type: entity
-  parent: [DrinkBase, DrinkBaseMaterialGlass, DrinkVisualsFillOverlay]
+  parent: [DrinkBaseMaterialGlass, DrinkBase, DrinkVisualsFillOverlay]
   id: DrinkShotGlass
   name: shot glass
   description: Perfect for slamming down onto the table angrily.
@@ -31,7 +31,7 @@
     - DrinkGlass
 
 - type: entity
-  parent: [DrinkBase, DrinkBaseMaterialMetal]
+  parent: [DrinkBaseMaterialMetal, DrinkBase]
   id: DrinkIceBucket
   name: ice bucket
   description: A special bucket of refreshy ice. Prohibited use for challenge with the same name!
@@ -50,7 +50,7 @@
       Steel: 75
 
 - type: entity
-  parent: [DrinkBase, DrinkBaseMaterialPorcelain]
+  parent: [DrinkBaseMaterialPorcelain, DrinkBase]
   id: DrinkTeapot
   name: teapot  # short and stout
   description: An elegant teapot. It simply oozes class.
@@ -123,7 +123,7 @@
 # Bartender tools
 
 - type: entity
-  parent: [DrinkBase, DrinkBaseMaterialStrongMetal]
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase]
   id: DrinkShaker
   name: shaker
   description: The trusty mixing buddy of the bartender.
@@ -151,7 +151,7 @@
     solution: drink
 
 - type: entity
-  parent: [DrinkBase, DrinkBaseMaterialMetal]
+  parent: [DrinkBaseMaterialMetal, DrinkBase]
   id: DrinkJigger
   name: jigger
   description: Like a shaker, but smaller. Used to control the amount of ingredients.
@@ -178,7 +178,7 @@
     solution: drink
 
 - type: entity
-  parent: [DrinkBase, DrinkBaseMaterialStrongMetal, DrinkVisualsFill]
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase, DrinkVisualsFill]
   id: Pitcher
   name: metal pitcher
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
@@ -204,7 +204,7 @@
 
 - type: entity
   abstract: true
-  parent: [DrinkBase, DrinkBaseMaterialGlass]
+  parent: [DrinkBaseMaterialGlass, DrinkBase]
   id: DrinkShakeBase
   description: ''
   components:

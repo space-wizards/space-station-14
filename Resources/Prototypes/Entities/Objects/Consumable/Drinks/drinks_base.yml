@@ -28,7 +28,7 @@
     solution: drink
   - type: InjectableSolution # Injectors (syringe) will fallback to RefillableSolution. This adds support for hyposprays and injector anomalies.
     solution: drink
-#  - type: SolutionItemStatus todo Currently does not respect if the solution has ExaminableSolution and always shows the reagent count
+#  - type: SolutionItemStatus todo Currently always shows the reagent count. Should show vague fill levels without ExaminableSolution
 #    solution: drink
   - type: SolutionContainerManager
     solutions:
@@ -155,9 +155,9 @@
 # Visualizer for an openable entity with fill levels
 - type: entity
   abstract: true
+  parent: [DrinkVisualsOpenable, DrinkVisualsFill]
   id: DrinkVisualsAll
   components:
-  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
@@ -171,15 +171,6 @@
     - state: fill-1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: fill-
-    inHandsMaxFillLevels: 3
-    inHandsFillBaseName: -fill-
-  - type: ExaminableSolution # If you can see the fill levels, you can see the unit count
-    solution: drink
-  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase
-    solution: drink
 
 # Visualizer for an openable entity with fill levels, already filled
 - type: entity

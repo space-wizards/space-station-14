@@ -1,7 +1,7 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_soda.yml
 - type: entity
   abstract: true
-  parent: [ DrinkBase, DrinkBaseMaterialMetal, DrinkBaseOpenable, DrinkVisualsOpenable ]
+  parent: [ DrinkBaseMaterialMetal, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ]
   id: DrinkCanBaseFull
   suffix: Full
   components:

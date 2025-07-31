@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ DrinkBase, DrinkBaseMaterialPlastic, DrinkBaseOpenable, DrinkVisualsOpenable ] # todo Should use DrinkVisualAll, but sprite has no inhand
+  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ] # todo Should use DrinkVisualAll, but sprite has no inhand
   id: DrinkSpaceGlue
   name: space glue tube
   description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
@@ -34,7 +34,7 @@
     solution: drink
 
 - type: entity
-  parent: [ DrinkBase, DrinkBaseMaterialPlastic, DrinkBaseOpenable, DrinkVisualsOpenable ] # Should use DrinkVisualAll, but sprite has no inhand
+  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ] # Should use DrinkVisualAll, but sprite has no inhand
   id: DrinkSpaceLube
   name: space lube tube
   description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
@@ -88,7 +88,7 @@
         Quantity: 200
 
 - type: entity
-  parent: [DrinkBase, DrinkBaseMaterialGlass]
+  parent: [DrinkBaseMaterialGlass, DrinkBase]
   id: DrinkJarWhat
   name: jar of something
   description: You can't really tell what this is.

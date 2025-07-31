@@ -22,7 +22,7 @@
 # A mug is a type of cup.[2]
 - type: entity
   abstract: true
-  parent: [DrinkBaseCup, DrinkBaseMaterialPorcelain] # todo Should use DrinkVisualsFill, but inheritors have no in-hand and state names are wrong
+  parent: [ DrinkBaseMaterialPorcelain, DrinkBaseCup ] # todo Should use DrinkVisualsFill, but inheritors have no in-hand and state names are wrong
   id: DrinkBaseMug
   name: mug
   description: A mug.
@@ -46,7 +46,7 @@
 ## Misc Cups
 
 - type: entity
-  parent: [DrinkBaseCup, DrinkBaseMaterialGold]
+  parent: [DrinkBaseMaterialGold, DrinkBaseCup]
   id: DrinkGoldenCup
   name: golden cup
   description: A golden cup.
@@ -73,7 +73,7 @@
     maxFillLevels: 4
 
 - type: entity
-  parent: [ DrinkBaseCup, DrinkBaseMaterialGlass, DrinkVisualsFillOverlay ]
+  parent: [ DrinkBaseMaterialGlass, DrinkBaseCup, DrinkVisualsFillOverlay ]
   id: DrinkGlassCoupeShaped
   name: coupe glass
   description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
@@ -93,7 +93,7 @@
     inHandsMaxFillLevels: 1
 
 - type: entity
-  parent: [DrinkBaseCup, DrinkBaseMaterialCardboard] # TODO should use DrinkVisualsFill but state names are wrong and no inhand
+  parent: [DrinkBaseMaterialCardboard, DrinkBaseCup] # TODO should use DrinkVisualsFill but state names are wrong and no inhand
   id: DrinkWaterCup
   name: water cup
   description: A paper water cup.
@@ -351,7 +351,7 @@
 
 # TODO this needs fill levels
 - type: entity
-  parent: [DrinkBaseCup, DrinkBaseMaterialPlastic]
+  parent: [DrinkBaseMaterialPlastic, DrinkBaseCup]
   id: DrinkLean
   name: grape juice
   description: Damn, no fun allowed.

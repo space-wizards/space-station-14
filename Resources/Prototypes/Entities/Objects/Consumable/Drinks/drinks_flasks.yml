@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [DrinkBase, DrinkBaseMaterialStrongMetal, DrinkBaseOpenable, DrinkVisualsOpenable]
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable]
   id: FlaskBase
   components:
   - type: SolutionContainerManager
@@ -21,7 +21,7 @@
 # Flasks
 
 - type: entity
-  parent: [DrinkBase, DrinkBaseMaterialStrongMetal]
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase]
   id: DrinkFlaskOld
   name: old flask
   description: A decrepit old flask, its lid seems to be missing.
