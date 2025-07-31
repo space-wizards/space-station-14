@@ -30,7 +30,7 @@
                     <CollapsibleHeading Title="Gas filters" />
                     <CollapsibleBody Margin="20 0 0 0">
                         <BoxContainer Orientation="Vertical">
-                            <BoxContainer Orientation="Horizontal" Margin="2">
+                            <BoxContainer Margin="2">
                                 <Button Name="CSelectAll" Text="{Loc 'air-alarm-ui-scrubber-select-all-gases-label'}" />
                                 <Button Name="CDeselectAll" Text="{Loc 'air-alarm-ui-scrubber-deselect-all-gases-label'}" />
                             </BoxContainer>
