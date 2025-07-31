@@ -204,5 +204,80 @@ public sealed class DeltaPressureSystem : EntitySystem
         return damage;
     }
 
-    // TODO: API for setting fields
+    /// <summary>
+    /// Sets the base damage applied to the entity per atmos tick when above the damage threshold.
+    /// </summary>
+    /// <param name="ent">The entity whose component to modify.</param>
+    /// <param name="baseDamage">The new base damage specifier.</param>
+    [PublicAPI]
+    public void SetBaseDamage(Entity<DeltaPressureComponent> ent, DamageSpecifier baseDamage)
+    {
+        ent.Comp.BaseDamage = baseDamage;
+    }
+
+    /// <summary>
+    /// Sets whether the entity stacks damage if both minimum pressure requirements are met.
+    /// </summary>
+    /// <param name="ent">The entity whose component to modify.</param>
+    /// <param name="stackDamage">True to stack damage, false otherwise.</param>
+    [PublicAPI]
+    public void SetStackDamage(Entity<DeltaPressureComponent> ent, bool stackDamage)
+    {
+        ent.Comp.StackDamage = stackDamage;
+    }
+
+    /// <summary>
+    /// Sets the minimum pressure in kPa at which the entity will start taking damage.
+    /// </summary>
+    /// <param name="ent">The entity whose component to modify.</param>
+    /// <param name="minPressure">The new minimum pressure in kPa.</param>
+    [PublicAPI]
+    public void SetMinPressure(Entity<DeltaPressureComponent> ent, float minPressure)
+    {
+        ent.Comp.MinPressure = minPressure;
+    }
+
+    /// <summary>
+    /// Sets the minimum difference in pressure between any side required for the entity to start taking damage.
+    /// </summary>
+    /// <param name="ent">The entity whose component to modify.</param>
+    /// <param name="minPressureDelta">The new minimum pressure delta.</param>
+    [PublicAPI]
+    public void SetMinPressureDelta(Entity<DeltaPressureComponent> ent, float minPressureDelta)
+    {
+        ent.Comp.MinPressureDelta = minPressureDelta;
+    }
+
+    /// <summary>
+    /// Sets the maximum pressure at which damage will no longer scale.
+    /// </summary>
+    /// <param name="ent">The entity whose component to modify.</param>
+    /// <param name="maxPressure">The new maximum pressure.</param>
+    [PublicAPI]
+    public void SetMaxPressure(Entity<DeltaPressureComponent> ent, float maxPressure)
+    {
+        ent.Comp.MaxPressure = maxPressure;
+    }
+
+    /// <summary>
+    /// Sets the scaling power constant for damage scaling behavior.
+    /// </summary>
+    /// <param name="ent">The entity whose component to modify.</param>
+    /// <param name="scalingPower">The new scaling power.</param>
+    [PublicAPI]
+    public void SetScalingPower(Entity<DeltaPressureComponent> ent, float scalingPower)
+    {
+        ent.Comp.ScalingPower = scalingPower;
+    }
+
+    /// <summary>
+    /// Sets the scaling type for damage calculation.
+    /// </summary>
+    /// <param name="ent">The entity whose component to modify.</param>
+    /// <param name="scalingType">The new scaling type.</param>
+    [PublicAPI]
+    public void SetScalingType(Entity<DeltaPressureComponent> ent, DeltaPressureDamageScalingType scalingType)
+    {
+        ent.Comp.ScalingType = scalingType;
+    }
 }
