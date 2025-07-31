@@ -41,10 +41,10 @@ public sealed partial class DepartmentTimeRequirement : JobRequirement
 
         var playtime = TimeSpan.Zero;
 
-        //🌟Starlight🌟 start
+        //NullLink start
         if(player is not null && IoCManager.Resolve<ISharedPlayersRoleManager>().IsAllRolesAvailable(player))
             return true;
-        //🌟Starlight🌟 end
+        //NullLink end
 
         // Check all jobs' departments
         var department = protoManager.Index(Department);

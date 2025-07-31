@@ -19,21 +19,6 @@ public sealed class PlayerData
     public Color GhostThemeColor = Color.White;
     
     public int Balance;
-
-    /// <summary>
-    ///     The player's permission flags.
-    /// </summary>
-    public PlayerFlags Flags;
-
-    /// <summary>
-    ///     Checks whether this admin has an admin flag.
-    /// </summary>
-    /// <param name="flag">The flags to check. Multiple flags can be specified, they must all be held.</param>
-    /// <returns>False if this admin is not <see cref="Active"/> or does not have all the flags specified.</returns>
-    public bool HasFlag(PlayerFlags flag)
-    {
-        return (Flags & flag) == flag;
-    }
 }
 [Flags]
 public enum PlayerFlags : uint

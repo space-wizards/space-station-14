@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices.JavaScript;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices.JavaScript;
 using System.Threading.Tasks;
 using Content.Server._NullLink.Helpers;
 using Content.Shared.CCVar;
@@ -49,7 +50,7 @@ public sealed partial class ActorRouter : IActorRouter, IDisposable
 
     public bool TryGetGrain<TGrainInterface>(
             string primaryKey,
-            out TGrainInterface? grain,
+            [NotNullWhen(true)] out TGrainInterface? grain,
             string? grainClassNamePrefix = null)
             where TGrainInterface : IGrainWithStringKey
     {

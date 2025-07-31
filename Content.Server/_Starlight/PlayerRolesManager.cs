@@ -75,30 +75,14 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
     private void UpdatePlayerStatus(ICommonSession session)
     {
         var userid = session.UserId;
-        var msg = new MsgUpdatePlayerStatus()
-        {
-            DiscordLink = GetDiscordAuthUrl(userid.ToString())
-        };
+        var msg = new MsgUpdatePlayerStatus();
 
         if (_players.TryGetValue(session, out var playerData))
             msg.Player = playerData.Data;
 
         _netMgr.ServerSendMessage(msg, session.Channel);
     }
-    private string GetDiscordAuthUrl(string customState)
-    {
-        if (string.IsNullOrEmpty(_discordCallback) || string.IsNullOrEmpty(_discordKey) || string.IsNullOrEmpty(_secret)) return "";
-        var scope = "identify%20guilds%20guilds.members.read";
-        var secretKeyBytes = Encoding.UTF8.GetBytes(_secret);
-        using var hmac = new HMACSHA256(secretKeyBytes);
 
-        var dataBytes = Encoding.UTF8.GetBytes(customState);
-        var hashBytes = hmac.ComputeHash(dataBytes);
-        var state = $"{customState}|{BitConverter.ToString(hashBytes).Replace("-", "").ToLower()}";
-        var encodedState = Uri.EscapeDataString(state);
-
-        return $"https://discord.com/api/oauth2/authorize?client_id={_discordKey}&redirect_uri={Uri.EscapeDataString(_discordCallback)}&response_type=code&scope={scope}&state={encodedState}";
-    }
     private async void Login(ICommonSession session)
     {
         var adminDat = await LoadPlayerData(session);
