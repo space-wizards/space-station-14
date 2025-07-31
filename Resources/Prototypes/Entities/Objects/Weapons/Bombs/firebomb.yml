@@ -55,7 +55,7 @@
 
 # has igniter but no fuel or wires
 - type: entity
-  parent: DrinkColaCanEmpty
+  parent: [ DrinkColaCanEmpty, BaseMinorContraband ]
   id: FireBombEmpty
   name: fire bomb
   suffix: empty

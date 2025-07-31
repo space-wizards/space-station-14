@@ -23,6 +23,16 @@
   - type: Tag
     tags:
     - HandGrenade
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
 - type: entity
   parent: [ScatteringGrenadeBase, BaseSecurityContraband]
@@ -157,7 +167,7 @@
   description: Releases a bothersome spray of foam darts that cause severe welching.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Grenades/foamdart.rsi
+    sprite: Objects/Fun/Foam/foam_grenade.rsi
     layers:
     - state: icon
       map: ["Base"]
