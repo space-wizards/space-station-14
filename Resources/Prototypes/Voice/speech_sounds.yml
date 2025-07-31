@@ -152,6 +152,15 @@
     path: /Audio/Voice/Talk/arachnid_exclaim.ogg
 
 - type: speechSounds
+  id: Bear
+  saySound:
+    path: /Audio/Animals/bear.ogg
+  askSound:
+    path: /Audio/Animals/bear.ogg
+  exclaimSound:
+    path: /Audio/Animals/bear.ogg
+
+- type: speechSounds
   id: Cat
   saySound:
     path: /Audio/Animals/cat_meow2.ogg
@@ -161,15 +170,6 @@
     path: /Audio/Animals/cat_meow.ogg
 
 - type: speechSounds
-  id: Dog
-  saySound:
-    path: /Audio/Animals/dog_bark1.ogg
-  askSound:
-    path: /Audio/Animals/dog_bark3.ogg
-  exclaimSound:
-    path: /Audio/Animals/dog_bark2.ogg
-
-- type: speechSounds
   id: Cluck
   saySound:
     path: /Audio/Animals/chicken_cluck_happy.ogg
@@ -177,6 +177,15 @@
     path: /Audio/Animals/chicken_cluck_happy.ogg
   exclaimSound:
     path: /Audio/Animals/chicken_cluck_happy.ogg
+
+- type: speechSounds
+  id: Dog
+  saySound:
+    path: /Audio/Animals/dog_bark1.ogg
+  askSound:
+    path: /Audio/Animals/dog_bark3.ogg
+  exclaimSound:
+    path: /Audio/Animals/dog_bark2.ogg
 
 - type: speechSounds
   id: Ferret

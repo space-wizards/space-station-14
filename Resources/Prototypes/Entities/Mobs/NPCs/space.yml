@@ -101,6 +101,9 @@
       prob: 0.3
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: Speech
+    speechVerbs: LargeMob
+    speechSounds: Bear
   - type: Vocal
     sounds:
       Unsexed: Bear
@@ -162,6 +165,9 @@
   - type: Vocal
     sounds:
       Unsexed: Kangaroo
+  - type: Speech
+    speechVerbs: LargeMob
+    speechSounds: Kangaroo
   - type: ReplacementAccent
     accent: kangaroo
   - type: Butcherable
