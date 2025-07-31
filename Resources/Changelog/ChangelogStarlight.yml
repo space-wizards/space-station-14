@@ -9943,5 +9943,27 @@ Entries:
   id: 1369
   time: '2025-07-31T20:02:39.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1109
+- author: Trosling
+  changes:
+  - message: Removed differentiation between salvage and mining for the purposes of
+      contraband while they still share the ticket vend
+    type: Tweak
+  id: 1370
+  time: '2025-07-31T20:10:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1008
+- author: Trosling
+  changes:
+  - message: Mercenary combat gloves no longer contra for salvage
+    type: Fix
+  id: 1371
+  time: '2025-07-31T20:10:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1008
+- author: Trosling
+  changes:
+  - message: .45 magnum magazines and the cartridge itself no longer contra for salvage
+    type: Fix
+  id: 1372
+  time: '2025-07-31T20:10:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1008
 Order: -1
 
