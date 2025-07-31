@@ -23,7 +23,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: GR-4P3
+      name: GR-4P3 "Breaker"
     - type: Transform
       pos: -1.2063751,-0.30715814
       parent: invalid

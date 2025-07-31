@@ -63,6 +63,10 @@
           paths:
             - /Maps/Shuttles/mining.yml
           nameGrid: false # Starlight - honors entityName in mining.yml
+        mining_breaker: !type:GridSpawnGroup # Starlight - Grape's mining shuttle
+          paths:
+            - /Maps/_Starlight/Shuttles/GR-4P3.yml
+          nameGrid: false
         # Spawn last
         ruins: !type:GridSpawnGroup
           hide: true
