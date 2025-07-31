@@ -9972,5 +9972,12 @@ Entries:
   id: 1373
   time: '2025-07-31T20:13:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1037
+- author: Grapegifter
+  changes:
+  - message: '"Grenade Penguin" to "Irish car bomb"'
+    type: Tweak
+  id: 1374
+  time: '2025-07-31T20:15:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1057
 Order: -1
 
