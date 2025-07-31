@@ -28,7 +28,6 @@ public sealed partial class EmoteSoundsPrototype : IPrototype, IInheritingProtot
     ///     doesn't have specific sound for this emote id.
     /// </summary>
     [DataField("sound")]
-    [AlwaysPushInheritance]
     public SoundSpecifier? FallbackSound;
 
     /// <summary>
