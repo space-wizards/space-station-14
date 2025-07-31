@@ -33,8 +33,8 @@
 - type: entity
   parent: [ EncryptionKey, BaseCargoContraband ]
   id: EncryptionKeyExpedition
-  name: expedition encryption key # DOTS - update descrption & sprites
-  description: An encryption key used by the most meticulous person.
+  name: expedition encryption key
+  description: An encryption key used by daring explorers.
   components:
   - type: EncryptionKey
     channels:
@@ -42,5 +42,6 @@
     defaultChannel: Expedition
   - type: Sprite
     layers:
-    - state: crypt_silver
-    - state: nano_label
+    - state: crypt_grey
+    - sprite: _Starlight/Objects/Devices/encryption_keys.rsi
+    - state: expedition_label
