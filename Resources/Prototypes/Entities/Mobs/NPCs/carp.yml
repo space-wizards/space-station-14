@@ -54,7 +54,7 @@
           Base: dead
           BaseUnshaded: dead_mouth
     - type: Sliceable
-      spawned:
+      slices:
       - id: FoodMeatFish
         amount: 2
       - id: MaterialToothSpaceCarp1
