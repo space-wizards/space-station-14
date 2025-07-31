@@ -89,7 +89,6 @@
     - CanPilot
     - AnomalyHost
     - DoorBumpOpener
-    maxItemSize: Huge
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
