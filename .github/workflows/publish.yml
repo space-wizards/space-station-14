@@ -51,8 +51,8 @@ jobs:
 
   update-changelog:
     name: Publish Changelogs
+    needs: build
     runs-on: ubuntu-latest
-    environment: prod
     steps:
       - uses: actions/checkout@v4
         with:

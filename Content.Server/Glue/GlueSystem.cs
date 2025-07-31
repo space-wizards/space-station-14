@@ -71,7 +71,9 @@ public sealed class GlueSystem : SharedGlueSystem
     private bool TryGlue(Entity<GlueComponent> entity, EntityUid target, EntityUid actor)
     {
         // if item is glued then don't apply glue again so it can be removed for reasonable time
-        if (HasComp<GluedComponent>(target) || !HasComp<ItemComponent>(target))
+        // If glue is applied to an unremoveable item, the component will disappear after the duration.
+        // This effecitvely means any unremoveable item could be removed with a bottle of glue.
+        if (HasComp<GluedComponent>(target) || !HasComp<ItemComponent>(target) || HasComp<UnremoveableComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("glue-failure", ("target", target)), actor, actor, PopupType.Medium);
             return false;

@@ -24,6 +24,28 @@
     - ClothingUnderSocksCoder
 
 - type: loadout
+  id: ClothingShoesHighheelBoots
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
+  storage:
+    back:
+    - ClothingShoesHighheelBoots
+
+- type: loadout
+  id: ClothingShoesHighheelShoes
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
+  storage:
+    back:
+    - ClothingShoesHighheelShoesAesthetic
+
+- type: loadout
   id: ClothWrap
   storage:
     back:
@@ -84,7 +106,7 @@
   storage:
     back:
       - Matchbox
-        
+
 - type: loadout
   id: FancyPen
   effects:
@@ -94,9 +116,9 @@
         role: JobLibrarian
         time: 3600 # 1 hour of reading books (a fate worse than death)
   storage:
-    back: 
+    back:
       - LuxuryPen
-    
+
 - type: loadout
   id: HonkImplant
   effects:
@@ -131,7 +153,7 @@
         time: 36000 # 10 hours of papers please
   equipment:
     back: NewtonCradle
-  
+
 - type: loadout
   id: POrb
   effects:
@@ -154,7 +176,7 @@
   storage:
     back:
       - ToyRubberDuck
-  
+
 - type: loadout
   id: GatchaBox
   effects:
@@ -204,13 +226,13 @@
         role: JobLibrarian
         time: 3600 # 1 hour of reading books (a fate worse than death)
   storage:
-    back: 
+    back:
       - DiceBag
 
 - type: loadout
   id: StationMap
   storage:
-    back: 
+    back:
       - HandheldStationMap
 
 - type: loadout

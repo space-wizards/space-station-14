@@ -104,11 +104,9 @@
     - SlowedDown
     - Stutter
     - Electrocution
-    - ForcedSleep
     - TemporaryBlindness
     - Pacified
     - RadiationProtection
-    - Drowsiness
     - Adrenaline
   - type: Temperature
     heatDamageThreshold: 800
@@ -139,8 +137,12 @@
         Piercing: 15
         Slash: 15
   - type: Devourer
-    foodPreference: Humanoid
-    shouldStoreDevoured: true
+    foodPreferenceWhitelist:
+      components:
+      - HumanoidAppearance
+    stomachStorageWhitelist:
+      components:
+      - MobState
     chemical: Ichor
     healRate: 7.5
     whitelist:
@@ -166,6 +168,7 @@
     speedModifier: 2.5 # fast because dragon strong
     useSound:
       path: /Audio/Items/crowbar.ogg
+  - type: AntiRottingContainer # starlight. allow corpses to stay in dragon without rotting.
 
 - type: entity
   parent: BaseMobDragon
@@ -182,6 +185,10 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
+  #region Starlight
+  - type: Damageable
+    damageModifierSet: DragonResistances 
+  #endregion Starlight
 
 - type: entity
   categories: [ HideSpawnMenu ]
