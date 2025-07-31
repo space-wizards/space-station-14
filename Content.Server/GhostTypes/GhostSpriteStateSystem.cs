@@ -34,7 +34,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
 
         string spriteState;
         //var random = new System.Random((int)_timing.CurTick.Value);
-        //check length  (yeah i gotta smooth this whole thingi dw)
+        //check length  (can github actually update gosh )
         if (highestType is ["Blunt", "Heat", "Piercing"])
         {
             var number = _random.Next(1, 4);
