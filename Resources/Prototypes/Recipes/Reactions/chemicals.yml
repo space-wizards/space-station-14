@@ -534,7 +534,7 @@
     ArtifactGlue: 2
 
 - type: reaction
-  id: LyeAsh
+  id: Lye
   reactants:
     Water:
       amount: 1
@@ -542,13 +542,3 @@
       amount: 1
   products:
     Lye: 2
-
-- type: reaction
-  id: LyeNaHO
-  reactants:
-    Water:
-      amount: 5
-    SodiumHydroxide:
-      amount: 1
-  products:
-    Lye: 5
