@@ -484,6 +484,8 @@ namespace Content.Client.Stylesheets
             var switchButtonTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_on.svg.96dpi.png");
             var switchButtonTexturePowerUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_power_off.svg.96dpi.png");
             var switchButtonTexturePowerChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_power_on.svg.96dpi.png");
+            var switchButtonTextureDisabledUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_disabled_off.svg.96dpi.png");
+            var switchButtonTextureDisabledChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_disabled_on.svg.96dpi.png");
 
             // Tooltip box
             var tooltipTexture = resCache.GetTexture("/Textures/Interface/Nano/tooltip.png");
@@ -1027,20 +1029,52 @@ namespace Content.Client.Stylesheets
                 // SwitchButton
                 new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, null), new[]
                 {
-                    new StyleProperty(SwitchButton.StylePropertyTextureUnchecked,  switchButtonTextureUnchecked),
-                    new StyleProperty(SwitchButton.StylePropertyTextureChecked,  switchButtonTextureChecked),
+                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureUnchecked),
                 }),
 
-                // Power-style SwitchButton
-                new StyleRule(new SelectorElement(typeof(SwitchButton), new [] { StyleClassPowerSwitchButton }, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, new[] { SwitchButton.StylePseudoClassPressed }), new[]
                 {
-                    new StyleProperty(SwitchButton.StylePropertyTextureUnchecked,  switchButtonTexturePowerUnchecked),
-                    new StyleProperty(SwitchButton.StylePropertyTextureChecked,  switchButtonTexturePowerChecked),
+                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureChecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, new[] { SwitchButton.StylePseudoClassDisabled }), new[]
+                {
+                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureDisabledUnchecked),
+                    new StyleProperty("font-color", DisabledFore),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, new[] { SwitchButton.StylePseudoClassDisabled, SwitchButton.StylePseudoClassPressed }), new[]
+                {
+                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureDisabledChecked),
+                    new StyleProperty("font-color", DisabledFore),
                 }),
 
                 new StyleRule(new SelectorElement(typeof(BoxContainer), new [] { SwitchButton.StyleClassSwitchButton }, null, null), new[]
                 {
                     new StyleProperty(BoxContainer.StylePropertySeparation, 10),
+                }),
+
+                // Power-style SwitchButton
+                new StyleRule(new SelectorElement(typeof(SwitchButton), new [] { StyleClassPowerSwitchButton }, null, null), new[]
+                {
+                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTexturePowerUnchecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(SwitchButton), new [] { StyleClassPowerSwitchButton }, null, new[] {SwitchButton.StylePseudoClassPressed}), new[]
+                {
+                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTexturePowerChecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(SwitchButton), new [] { StyleClassPowerSwitchButton }, null, new[] { SwitchButton.StylePseudoClassDisabled }), new[]
+                {
+                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureDisabledUnchecked),
+                    new StyleProperty("font-color", DisabledFore),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(SwitchButton), new [] { StyleClassPowerSwitchButton }, null, new[] { SwitchButton.StylePseudoClassDisabled, SwitchButton.StylePseudoClassPressed }), new[]
+                {
+                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureDisabledChecked),
+                    new StyleProperty("font-color", DisabledFore),
                 }),
 
                 // Tooltip
