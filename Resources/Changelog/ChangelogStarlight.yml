@@ -9741,14 +9741,6 @@ Entries:
   url: https://github.com/ss14Starlight/space-station-14/pull/1105
 - author: STARLIGHT TEAM, walksanatora
   changes:
-  - message: you ever just take 3 cycles of upstream content at once? yeah ... it
-      sucks ...
-    type: Tweak
-  id: 1342
-  time: '2025-07-28T06:42:42.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/1123
-- author: STARLIGHT TEAM, walksanatora
-  changes:
   - message: returned chameleon thieving gloves back to the traitor uplink,
     type: Tweak
   id: 1343
@@ -10011,8 +10003,16 @@ Entries:
   changes:
   - message: Added Hub.
     type: Add
-  id: 1379
+  id: 1342
   time: '2025-07-24T01:32:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/692
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: you ever just take 3 cycles of upstream content at once? yeah ... it
+      sucks ...
+    type: Tweak
+  id: 1379
+  time: '2025-07-28T06:42:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1123
 Order: -1
 
