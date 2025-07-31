@@ -1415,3 +1415,36 @@
           maximumWait: 240
         - type: TextToSpeech
           voice: neon
+          
+- type: entity
+  parent: BasePlushie
+  id: FixesPlush
+  name: Fixes Standee Plush
+  description: Your beloved Chief Engineer. Definitely performing their job and not just making a shittle again. Now in 1:1 scale!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/fixes_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/fixes_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Effects/Lightning/lightningshock.ogg
