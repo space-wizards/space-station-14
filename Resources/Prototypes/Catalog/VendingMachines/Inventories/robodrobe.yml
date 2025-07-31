@@ -1,9 +1,15 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: vendingMachineInventory
   id: RoboDrobeInventory
   startingInventory:
-    ClothingOuterCoatRobo: 2
+    # Ronstation - start of modifications.
+    ClothingBackpackRoboticist: 2
+    ClothingBackpackSatchelRoboticist: 2
+    ClothingBackpackDuffelRoboticist: 2
+    # Ronstation - end of modifications.
     ClothingUniformJumpsuitRoboticist: 2
     ClothingUniformJumpskirtRoboticist: 2
+    ClothingOuterCoatRobo: 2 # Ronstation - modification.
     ClothingShoesColorBlack: 2
     ClothingHandsGlovesRobohands: 2
     ClothingHeadHatCorpsoft: 2
