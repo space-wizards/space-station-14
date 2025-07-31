@@ -20,8 +20,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesMatthew
+    - type: Advertise
+      pack: PlushiesMatthew
+      minimumWait: 120
+      maximumWait: 240
     - type: TextToSpeech
       voice: sampo
 
@@ -46,8 +48,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesEmmie
+    - type: Advertise
+      pack: PlushiesEmmie
+      minimumWait: 120
+      maximumWait: 240
     - type: TextToSpeech
       voice: ganyu
 
@@ -70,8 +74,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesTrystan
+    - type: Advertise
+      pack: PlushiesTrystan
+      minimumWait: 120
+      maximumWait: 240
     - type: TextToSpeech
       voice: barneycalhoun
 
@@ -94,8 +100,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesMorgana
+    - type: Advertise
+      pack: PlushiesMorgana
+      minimumWait: 120
+      maximumWait: 240
     - type: TextToSpeech
       voice: bettylabomba
 
@@ -118,8 +126,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesMorgana
+    - type: Advertise
+      pack: PlushiesMorgana
+      minimumWait: 120
+      maximumWait: 240
     - type: TextToSpeech
       voice: bettylabomba
 
@@ -142,8 +152,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesKiosha
+    - type: Advertise
+      pack: PlushiesKiosha
+      minimumWait: 120
+      maximumWait: 240
     - type: TextToSpeech
       voice: skye-valorant
 
@@ -168,8 +180,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesLance
+    - type: Advertise
+      pack: PlushiesLance
+      minimumWait: 120
+      maximumWait: 240
     - type: TextToSpeech
       voice: barneycalhoun
 
@@ -194,8 +208,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesKiller
+    - type: Advertise
+      pack: PlushiesKiller
+      minimumWait: 120
+      maximumWait: 240
     - type: TextToSpeech
       voice: heavy
 
@@ -241,8 +257,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesAmali
+    - type: Advertise
+      pack: PlushiesAmali
+      minimumWait: 120
+      maximumWait: 240
     - type: TextToSpeech
       voice: ganyu
 
@@ -265,8 +283,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesOog
+    - type: Advertise
+      pack: PlushiesOog
+      minimumWait: 120
+      maximumWait: 240
     - type: TextToSpeech
       voice: heavy
 
@@ -289,8 +309,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesVanilla
+    - type: Advertise
+      pack: PlushiesVanilla
+      minimumWait: 120
+      maximumWait: 240
     - type: TextToSpeech
       voice: layla
 #end region
@@ -314,8 +336,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesOp
+    - type: Advertise
+      pack: PlushiesOp
+      minimumWait: 120
+      maximumWait: 240
     - type: TextToSpeech
       voice: duelist
 
@@ -1198,8 +1222,10 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
-        - type: DatasetVocalizer
-          dataset: PlushiesPercy
+        - type: Advertise
+          pack: PlushiesPercy
+          minimumWait: 120
+          maximumWait: 240
         - type: TextToSpeech
           voice: medic
 
@@ -1246,8 +1272,10 @@
               acts: [ "Destruction" ]
     - type: ComponentToggler
       components:
-        - type: DatasetVocalizer
-          dataset: PlushiesAsh
+        - type: Advertise
+          pack: PlushiesAsh
+          minimumWait: 120
+          maximumWait: 240
         - type: TextToSpeech
           voice: wanderer
 
@@ -1377,3 +1405,79 @@
           dataset: PlushiesPoley
         - type: TextToSpeech
           voice: neon
+
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieGalio #Weh!
+  name: tiny galio plushie
+  description: A galio you can carry with you to feel silly wherever you go!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/galio_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/galio_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/lizard_happy.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/lizard_happy.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: FootstepClown
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: _Starlight/Objects/Fun/Plushies/galio_plushie.rsi
+    slots:
+    - HEAD
+  - type: Speech
+    speechVerb: Reptilian # for pais (In the secret stash)
+  - type: Tag
+    tags:
+    - ClothMade
+    - Payload
+    - PlushieLizard
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: LizardPlushie
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesGalio
+      - type: TextToSpeech
+        voice: batman

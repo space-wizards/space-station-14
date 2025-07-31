@@ -45,7 +45,7 @@
   values:
     prefix: plushie-op-
     count: 6
-    
+
 - type: localizedDataset
   id: PlushiesAmali
   values:
@@ -105,3 +105,9 @@
   values:
     prefix: plushie-poley-
     count: 6
+
+- type: localizedDataset
+  id: PlushiesGalio
+  values:
+    prefix: plushie-galio-
+    count: 7
