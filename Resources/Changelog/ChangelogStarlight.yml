@@ -9936,5 +9936,12 @@ Entries:
   id: 1368
   time: '2025-07-31T20:00:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1137
+- author: Citrea
+  changes:
+  - message: Role weight no longer takes precendence over role priority
+    type: Fix
+  id: 1369
+  time: '2025-07-31T20:02:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1109
 Order: -1
 
