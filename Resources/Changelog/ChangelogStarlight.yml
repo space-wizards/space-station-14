@@ -9929,5 +9929,12 @@ Entries:
   id: 1367
   time: '2025-07-31T19:50:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1135
+- author: Trep_Maul
+  changes:
+  - message: LRP Ghostrole names replaced.
+    type: Tweak
+  id: 1368
+  time: '2025-07-31T20:00:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1137
 Order: -1
 
