@@ -96,7 +96,7 @@ public sealed partial class CCVars
         /// </summary>
         [CVarControl(AdminFlags.VarEdit)]
         public static readonly CVarDef<bool> PlaytestGlobalNukeCodes =
-            CVarDef.Create("playtest.global_nuke_codes", true, CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("playtest.global_nuke_codes", false, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         ///     Length of global nuke codes that are generated
