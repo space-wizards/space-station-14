@@ -13,7 +13,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Rotatable;
 
 /// <summary>
-///     Handles verbs for the <see cref="RotatableComponent"/> and <see cref="FlippableComponent"/> components.
+/// Handles verbs for the <see cref="RotatableComponent"/> and <see cref="FlippableComponent"/> components.
 /// </summary>
 public sealed class RotatableSystem : EntitySystem
 {
@@ -42,7 +42,7 @@ public sealed class RotatableSystem : EntitySystem
             return;
 
         // Check if the object is anchored.
-        if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physics) && physics.BodyType == BodyType.Static)
+        if (TryComp<PhysicsComponent>(uid, out var physics) && physics.BodyType == BodyType.Static)
             return;
 
         Verb verb = new()
@@ -67,7 +67,7 @@ public sealed class RotatableSystem : EntitySystem
 
         // Check if the object is anchored, and whether we are still allowed to rotate it.
         if (!component.RotateWhileAnchored &&
-            EntityManager.TryGetComponent(uid, out PhysicsComponent? physics) &&
+            TryComp<PhysicsComponent>(uid, out var physics) &&
             physics.BodyType == BodyType.Static)
             return;
 
@@ -77,7 +77,7 @@ public sealed class RotatableSystem : EntitySystem
             Act = () => ResetRotation(uid),
             Category = VerbCategory.Rotate,
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/refresh.svg.192dpi.png")),
-            Text = "Reset",
+            Text = Loc.GetString("rotate-reset-verb-get-data-text"),
             Priority = -2, // show CCW, then CW, then reset
             CloseMenu = false,
         };
@@ -89,6 +89,7 @@ public sealed class RotatableSystem : EntitySystem
             Act = () => Rotate(uid, -component.Increment),
             Category = VerbCategory.Rotate,
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png")),
+            Text = Loc.GetString("rotate-verb-get-data-text"),
             Priority = -1,
             CloseMenu = false, // allow for easy double rotations.
         };
@@ -100,6 +101,7 @@ public sealed class RotatableSystem : EntitySystem
             Act = () => Rotate(uid, component.Increment),
             Category = VerbCategory.Rotate,
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png")),
+            Text = Loc.GetString("rotate-counter-verb-get-data-text"),
             Priority = 0,
             CloseMenu = false, // allow for easy double rotations.
         };
@@ -107,16 +109,16 @@ public sealed class RotatableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Replace a flippable entity with it's flipped / mirror-symmetric entity.
+    /// Replace a flippable entity with it's flipped / mirror-symmetric entity.
     /// </summary>
     public void Flip(EntityUid uid, FlippableComponent component)
     {
-        var oldTransform = EntityManager.GetComponent<TransformComponent>(uid);
-        var entity = EntityManager.SpawnEntity(component.MirrorEntity, oldTransform.Coordinates);
-        var newTransform = EntityManager.GetComponent<TransformComponent>(entity);
+        var oldTransform = Comp<TransformComponent>(uid);
+        var entity = PredictedSpawnAtPosition(component.MirrorEntity, oldTransform.Coordinates);
+        var newTransform = Comp<TransformComponent>(entity);
         _transform.SetLocalRotation(entity, oldTransform.LocalRotation);
         _transform.Unanchor(entity, newTransform);
-        EntityManager.DeleteEntity(uid);
+        PredictedDel(uid);
     }
 
     private bool HandleRotateObjectClockwise(ICommonSession? playerSession, EntityCoordinates coordinates, EntityUid entity)
@@ -133,10 +135,10 @@ public sealed class RotatableSystem : EntitySystem
             return false;
 
         // Check if the object is anchored, and whether we are still allowed to rotate it.
-        if (!rotatableComp.RotateWhileAnchored && EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) &&
+        if (!rotatableComp.RotateWhileAnchored && TryComp<PhysicsComponent>(entity, out var physics) &&
             physics.BodyType == BodyType.Static)
         {
-            _popup.PopupEntity(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
+            _popup.PopupClient(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
             return false;
         }
 
@@ -158,10 +160,10 @@ public sealed class RotatableSystem : EntitySystem
             return false;
 
         // Check if the object is anchored, and whether we are still allowed to rotate it.
-        if (!rotatableComp.RotateWhileAnchored && EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) &&
+        if (!rotatableComp.RotateWhileAnchored && TryComp<PhysicsComponent>(entity, out var physics) &&
             physics.BodyType == BodyType.Static)
         {
-            _popup.PopupEntity(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
+            _popup.PopupClient(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
             return false;
         }
 
@@ -183,9 +185,9 @@ public sealed class RotatableSystem : EntitySystem
             return false;
 
         // Check if the object is anchored.
-        if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) && physics.BodyType == BodyType.Static)
+        if (TryComp<PhysicsComponent>(entity, out var physics) && physics.BodyType == BodyType.Static)
         {
-            _popup.PopupEntity(Loc.GetString("flippable-component-try-flip-is-stuck"), entity, player);
+            _popup.PopupClient(Loc.GetString("flippable-component-try-flip-is-stuck"), entity, player);
             return false;
         }
 
