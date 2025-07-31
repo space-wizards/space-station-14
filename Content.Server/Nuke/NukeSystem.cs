@@ -1,12 +1,15 @@
+using System.Linq;
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.GameTicking.Events;
 using Content.Server.Kitchen.Components;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Audio;
+using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
@@ -17,6 +20,7 @@ using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -28,6 +32,7 @@ namespace Content.Server.Nuke;
 
 public sealed class NukeSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosions = default!;
@@ -50,7 +55,12 @@ public sealed class NukeSystem : EntitySystem
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
     /// </summary>
     private float _nukeSongLength;
+
     private ResolvedSoundSpecifier _selectedNukeSong = String.Empty;
+
+    public bool GlobalCodes;
+
+    private int _globalCodeLength;
 
     /// <summary>
     ///     Time to leave between the nuke song and the nuke alarm playing.
@@ -60,6 +70,9 @@ public sealed class NukeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        // Global Nuke codes
+        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
 
         SubscribeLocalEvent<NukeComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<NukeComponent, ComponentRemove>(OnRemove);
@@ -82,6 +95,19 @@ public sealed class NukeSystem : EntitySystem
         SubscribeLocalEvent<NukeComponent, NukeDisarmDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<NukeDiskComponent, BeingMicrowavedEvent>(OnMicrowaved);
+
+        Subs.CVar(_config, CCVars.PlaytestGlobalNukeCodes, value => { GlobalCodes = value; }, true);
+        Subs.CVar(_config, CCVars.PlaytestGlobalNukeCodeLength, value => { _globalCodeLength = value; }, true);
+    }
+
+    private void OnRoundStart(RoundStartingEvent ev)
+    {
+        if (!GlobalCodes)
+            return;
+
+        var manager = Spawn();
+        EnsureComp<NukeCodeManagerComponent>(manager, out var code);
+        code.Code = GenerateRandomNumberString(_globalCodeLength);
     }
 
     private void OnInit(EntityUid uid, NukeComponent component, ComponentInit args)
@@ -126,7 +152,13 @@ public sealed class NukeSystem : EntitySystem
             nuke.OriginMapGrid = (transform.MapID, transform.GridUid);
         }
 
-        nuke.Code = GenerateRandomNumberString(nuke.CodeLength);
+        // If we're using global codes, copy the global code, otherwise make our own code. If for some reason global codes don't exist, generate codes.
+        nuke.Code = GlobalCodes ? ReturnNukeCodes() ?? GenerateRandomNumberString(nuke.CodeLength) : GenerateRandomNumberString(nuke.CodeLength);
+    }
+
+    public string? ReturnNukeCodes()
+    {
+        return EntityQuery<NukeCodeManagerComponent>().FirstOrDefault()?.Code;
     }
 
     /// <summary>
@@ -243,7 +275,7 @@ public sealed class NukeSystem : EntitySystem
         if (component.Status != NukeStatus.AWAIT_CODE)
             return;
 
-        if (component.EnteredCode.Length >= component.CodeLength)
+        if (component.EnteredCode.Length >= component.Code.Length)
             return;
 
         component.EnteredCode += args.Value.ToString();
@@ -413,7 +445,7 @@ public sealed class NukeSystem : EntitySystem
             IsAnchored = anchored,
             AllowArm = allowArm,
             EnteredCodeLength = component.EnteredCode.Length,
-            MaxCodeLength = component.CodeLength,
+            MaxCodeLength = component.Code.Length,
             CooldownTime = (int) component.CooldownTime,
         };
 
