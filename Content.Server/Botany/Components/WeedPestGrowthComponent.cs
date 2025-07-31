@@ -1,6 +1,7 @@
 namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
+[DataDefinition]
 public sealed partial class WeedPestGrowthComponent : PlantGrowthComponent
 {
     [DataField]

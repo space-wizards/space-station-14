@@ -27,6 +27,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using LogType = Content.Shared.Database.LogType;
 using Content.Shared.Labels.Components;
+using System.Linq;
 
 namespace Content.Server.Botany.Systems;
 
@@ -200,8 +201,13 @@ public sealed class PlantHolderSystem : EntitySystem
                 }
                 component.LastCycle = _gameTiming.CurTime;
 
+                // Ensure no existing growth components before adding new ones
+                var existingGrowthComponents = EntityManager.GetComponents<PlantGrowthComponent>(uid).ToList();
+                foreach(var g in existingGrowthComponents)
+                    EntityManager.RemoveComponent(uid, g);
+
                 foreach(var g in seed.GrowthComponents)
-                    EntityManager.AddComponent(uid, _copier.CreateCopy(g, notNullableOverride: true));
+                    EntityManager.AddComponent(uid, _copier.CreateCopy(g, notNullableOverride: true), overwrite: true);
 
                 if (TryComp<PaperLabelComponent>(args.Used, out var paperLabel))
                 {
@@ -595,8 +601,9 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!Resolve(uid, ref component) || component.Seed == null)
             return;
 
-        //OK, how do i check the entity instead of the seed?
-        foreach(var g in EntityManager.GetComponents<PlantGrowthComponent>(uid))
+        // Remove all growth components before planting new seed
+        var growthComponents = EntityManager.GetComponents<PlantGrowthComponent>(uid).ToList();
+        foreach(var g in growthComponents)
             EntityManager.RemoveComponent(uid, g);
 
         component.YieldMod = 1;
