@@ -88,11 +88,11 @@
     prefix: plushie-rufia-
     count: 6
 
-#- type: localizedDataset
-  #id: PlushiesRomero
-  #values:
-    #prefix: plushie-romero-
-    #count: 6
+- type: localizedDataset
+  id: PlushiesRomero
+  values:
+    prefix: plushie-romero-
+    count: 6
 
 - type: localizedDataset
   id: PlushiesVanilla
