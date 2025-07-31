@@ -85,6 +85,7 @@ public sealed partial class ScrubberControl : BoxContainer
             _data.FilterGases = new HashSet<Gas>(Enum.GetValues<Gas>());
             ScrubberDataChanged?.Invoke(_address, _data);
         };
+
         _deselectAll.OnPressed += _ =>
         {
             _data.FilterGases = [];
