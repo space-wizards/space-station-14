@@ -493,13 +493,13 @@ entities:
         toxinsTolerance: 4
         growthComponents:
           - !type:BasicGrowthComponent
-            WaterConsumption: 0.4
-            NutrientConsumption: 0.75
+              waterConsumption: 0.4
+              nutrientConsumption: 0.75
           - !type:AtmosphericGrowthComponent
-            IdealHeat: 298
-            HeatTolerance: 10
-            LowPressureTolerance: 81
-            HighPressureTolerance: 121
+              idealHeat: 298
+              heatTolerance: 10
+              lowPressureTolerance: 81
+              highPressureTolerance: 121
         chemicals:
           THC:
             Inherent: True
@@ -564,13 +564,13 @@ entities:
         toxinsTolerance: 4
         growthComponents:
           - !type:BasicGrowthComponent
-            WaterConsumption: 0.6
-            NutrientConsumption: 0.75
+              waterConsumption: 0.6
+              nutrientConsumption: 0.75
           - !type:AtmosphericGrowthComponent
-            IdealHeat: 293
-            HeatTolerance: 10
-            LowPressureTolerance: 81
-            HighPressureTolerance: 121
+              idealHeat: 293
+              heatTolerance: 10
+              lowPressureTolerance: 81
+              highPressureTolerance: 121
         chemicals:
           Stellibinin:
             Inherent: True

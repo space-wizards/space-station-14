@@ -6,6 +6,7 @@ namespace Content.Server.Botany.Systems;
 public sealed class ConsumeExudeGasGrowthSystem : PlantGrowthSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -22,26 +23,25 @@ public sealed class ConsumeExudeGasGrowthSystem : PlantGrowthSystem
 
         var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
 
-        holder.MissingGas = 0;
-        if (component.ConsumeGasses.Count > 0)
+        // Consume Gasses
+        foreach (var (gas, amount) in component.ConsumeGasses)
         {
-            foreach (var (gas, amount) in component.ConsumeGasses)
+            if (environment.GetMoles(gas) >= amount)
             {
-                if (environment.GetMoles(gas) < amount)
-                {
-                    holder.MissingGas++;
-                    continue;
-                }
-
                 environment.AdjustMoles(gas, -amount);
             }
+        }
 
-            if (holder.MissingGas > 0)
-            {
-                holder.Health -= holder.MissingGas * HydroponicsSpeedMultiplier;
-                if (holder.DrawWarnings)
-                    holder.UpdateSpriteAfterUpdate = true;
-            }
+        // Exude Gasses
+        foreach (var (gas, amount) in component.ExudeGasses)
+        {
+            environment.AdjustMoles(gas, amount);
+        }
+
+        var containingMixture = _atmosphere.GetContainingMixture(uid, true, true);
+        if (containingMixture != null)
+        {
+            _atmosphere.Merge(containingMixture, environment);
         }
     }
 }

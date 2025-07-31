@@ -18,20 +18,20 @@ public sealed class WeedPestGrowthSystem : PlantGrowthSystem
         if (holder == null || holder.Seed == null || holder.Dead)
             return;
 
-        // There's a small chance the pest population increases. Only happens with plants present.
-        if (_random.Prob(0.01f))
+        // Weed growth logic
+        if (_random.Prob(component.WeedGrowthChance))
         {
-            holder.PestLevel += 0.5f * HydroponicsSpeedMultiplier;
+            holder.WeedLevel += component.WeedGrowthAmount;
             if (holder.DrawWarnings)
                 holder.UpdateSpriteAfterUpdate = true;
         }
 
-        // Pest levels.
-        if (holder.PestLevel > component.PestTolerance)
-            holder.Health -= HydroponicsSpeedMultiplier;
-
-        // Weed levels.
-        if (holder.WeedLevel >= component.WeedTolerance)
-            holder.Health -= HydroponicsSpeedMultiplier;
+        // Pest damage logic
+        if (_random.Prob(component.PestDamageChance))
+        {
+            holder.Health -= component.PestDamageAmount;
+            if (holder.DrawWarnings)
+                holder.UpdateSpriteAfterUpdate = true;
+        }
     }
 }

@@ -1,9 +1,10 @@
 using Content.Server.Botany.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
+
 public sealed class AutoHarvestGrowthSystem : PlantGrowthSystem
 {
-    [Dependency] private readonly PlantHolderSystem _plantHolderSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -15,9 +16,21 @@ public sealed class AutoHarvestGrowthSystem : PlantGrowthSystem
         PlantHolderComponent? holder = null;
         Resolve<PlantHolderComponent>(uid, ref holder);
 
-        if (holder == null || holder.Seed == null || holder.Dead || !holder.Harvest)
+        if (holder == null || holder.Seed == null || holder.Dead)
             return;
 
-        _plantHolderSystem.AutoHarvest(uid, holder);
+        if (holder.Harvest && _random.Prob(component.HarvestChance))
+        {
+            // Auto-harvest the plant
+            holder.Harvest = false;
+            holder.LastProduce = holder.Age;
+
+            // Spawn the harvested items
+            if (holder.Seed.ProductPrototypes.Count > 0)
+            {
+                var product = _random.Pick(holder.Seed.ProductPrototypes);
+                var entity = Spawn(product, Transform(uid).Coordinates);
+            }
+        }
     }
 }

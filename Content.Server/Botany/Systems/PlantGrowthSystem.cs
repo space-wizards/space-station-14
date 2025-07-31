@@ -8,19 +8,15 @@ namespace Content.Server.Botany.Systems;
 public readonly record struct OnPlantGrowEvent;
 
 /// <summary>
-/// Base system for plant growth mechanics. Handles the core growth cycle and provides
-/// common functionality for all plant growth systems.
+/// Handles the main growth cycle for all plants.
 /// </summary>
-public abstract class PlantGrowthSystem : EntitySystem
+public sealed class PlantGrowthCycleSystem : EntitySystem
 {
-    [Dependency] protected readonly IRobustRandom _random = default!;
-    [Dependency] protected readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public TimeSpan nextUpdate = TimeSpan.Zero;
     public TimeSpan updateDelay = TimeSpan.FromSeconds(15); // PlantHolder has a 15 second delay on cycles
-
-    public const float HydroponicsSpeedMultiplier = 1f;
-    public const float HydroponicsConsumptionMultiplier = 2f;
 
     public override void Initialize()
     {
@@ -46,9 +42,29 @@ public abstract class PlantGrowthSystem : EntitySystem
 
             var plantGrow = new OnPlantGrowEvent();
             RaiseLocalEvent(uid, ref plantGrow);
+
+            // Update the last cycle time after processing growth
+            plantHolder.LastCycle = _gameTiming.CurTime;
         }
 
         nextUpdate = _gameTiming.CurTime + updateDelay;
+    }
+}
+
+/// <summary>
+/// Base system for plant growth mechanics. Provides common functionality for all plant growth systems.
+/// </summary>
+public abstract class PlantGrowthSystem : EntitySystem
+{
+    [Dependency] protected readonly IRobustRandom _random = default!;
+    [Dependency] protected readonly IGameTiming _gameTiming = default!;
+
+    public const float HydroponicsSpeedMultiplier = 1f;
+    public const float HydroponicsConsumptionMultiplier = 2f;
+
+    public override void Initialize()
+    {
+        base.Initialize();
     }
 
     /// <summary>

@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Botany;
 
@@ -99,7 +100,7 @@ public partial class SeedData
     public string PacketPrototype = "SeedBase";
 
     /// <summary>
-    ///     The entity prototype this seed spawns when it gets harvested.
+    ///     The entity prototypes that are spawned when this type of seed is harvested.
     /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> ProductPrototypes = new();
@@ -196,14 +197,8 @@ public partial class SeedData
     /// </summary>
     [DataField]
     public LogImpact? PlantLogImpact;
-    //{
-    //    new PlantComponent(),
-    //    new BasicGrowthComponent(),
-    //    new AtmosphericGrowthComponent(),
-    //    new WeedPestGrowthComponent(),
-    //    };
-        //TODO: the mutation system should add the missing components when they mutate.
-        //This would be done with EnsureComp<>
+    //TODO: the mutation system should add the missing components when they mutate.
+    //This would be done with EnsureComp<>
 
     public SeedData Clone()
     {
@@ -253,7 +248,9 @@ public partial class SeedData
         // Deep copy growth components
         foreach (var component in GrowthComponents)
         {
-            newSeed.GrowthComponents.Add(component.DupeComponent());
+            // Use serialization manager for proper deep copying
+            var newComponent = IoCManager.Resolve<ISerializationManager>().CreateCopy(component, notNullableOverride: true);
+            newSeed.GrowthComponents.Add(newComponent);
         }
 
         newSeed.Mutations.AddRange(Mutations);
@@ -327,7 +324,9 @@ public partial class SeedData
         // Deep copy growth components from the new species
         foreach (var component in other.GrowthComponents)
         {
-            newSeed.GrowthComponents.Add(component.DupeComponent());
+            // Use serialization manager for proper deep copying
+            var newComponent = IoCManager.Resolve<ISerializationManager>().CreateCopy(component, notNullableOverride: true);
+            newSeed.GrowthComponents.Add(newComponent);
         }
 
         return newSeed;

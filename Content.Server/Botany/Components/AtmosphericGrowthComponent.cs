@@ -4,15 +4,15 @@ namespace Content.Server.Botany.Components;
 [DataDefinition]
 public sealed partial class AtmosphericGrowthComponent : PlantGrowthComponent
 {
-    [DataField]
+    [DataField("idealHeat")]
     public float IdealHeat = 293f;
 
-    [DataField]
+    [DataField("heatTolerance")]
     public float HeatTolerance = 10f;
 
-    [DataField]
+    [DataField("lowPressureTolerance")]
     public float LowPressureTolerance = 81f;
 
-    [DataField]
+    [DataField("lighPressureTolerance")]
     public float HighPressureTolerance = 121f;
 }
