@@ -2,7 +2,7 @@
 using System.Linq;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Mind.Commands;
+using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -339,7 +339,7 @@ public sealed partial class MindTests
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
 
-        var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
         EntityUid entity = default!;
         EntityUid mindId = default!;
@@ -379,7 +379,7 @@ public sealed partial class MindTests
 
             mob = entMan.SpawnEntity(null, new MapCoordinates());
 
-            MakeSentientCommand.MakeSentient(mob, entMan);
+            mindSystem.MakeSentient(mob);
             mobMindId = mindSystem.CreateMind(player.UserId, "Mindy McThinker the Second");
             mobMind = entMan.GetComponent<MindComponent>(mobMindId);
 
