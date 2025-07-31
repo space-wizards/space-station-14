@@ -9760,5 +9760,12 @@ Entries:
   id: 1344
   time: '2025-07-30T00:10:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1148
+- author: Scarlet Lightweaver(isansiam)
+  changes:
+  - message: Added a new energy dome sprite (admeme only for now)
+    type: Add
+  id: 1345
+  time: '2025-07-31T20:08:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1013
 Order: -1
 
