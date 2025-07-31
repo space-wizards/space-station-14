@@ -1,13 +1,11 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
-using Content.Server.Kitchen.Components;
-using Content.Server.Fluids.Components;
+using Content.Server.Hands.Systems;
 using Content.Server.Popups;
-
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Botany;
 using Content.Shared.Burial.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
@@ -18,11 +16,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Tag;
-using Content.Shared.Tools.Systems;
-
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -31,6 +26,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Labels.Components;
+using Content.Shared.Tools.Systems;
 
 namespace Content.Server.Botany.Systems;
 
@@ -42,6 +38,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly MutationSystem _mutation = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
@@ -50,9 +47,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-
-    [Dependency] private readonly SharedToolSystem _tools = default!;
-
+    [Dependency] private readonly SharedToolSystem _tool = default!;
 
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
@@ -324,10 +319,10 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_tools.HasQuality(args.Used, "Slicing"))
+        if (_tool.HasQuality(args.Used, entity.Comp.HarvestToolQuality))
         {
-            DoHarvest(uid, args.User, component);
             args.Handled = true;
+            DoHarvest(uid, args.User, component);
             return;
         }
 
@@ -714,9 +709,9 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (component.Harvest && !component.Dead)
         {
-            if (TryComp<HandsComponent>(user, out var hands))
+            if (_hands.TryGetActiveItem(user, out var activeItem))
             {
-                if (!_botany.CanHarvest(component.Seed, hands.ActiveHandEntity))
+                if (!_botany.CanHarvest(component.Seed, activeItem))
                 {
                     _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), user);
                     return false;

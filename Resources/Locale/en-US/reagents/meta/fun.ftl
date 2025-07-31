@@ -30,3 +30,6 @@ reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
 
 reagent-name-hew = juice that makes you Hew
 reagent-desc-hew = Pure essence of inversed lizard plush. Makes you Hew!
+
+reagent-name-corgiessence = corgium
+reagent-desc-corgiessence = Tastes like dog food. Clearly an acquired taste.
