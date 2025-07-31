@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Cloning.Events;
+using Content.Shared.DisplacementMap;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
@@ -23,7 +23,6 @@ public partial class InventorySystem : EntitySystem
             .AddHandler(HandleViewVariablesSlots, ListViewVariablesSlots);
 
         SubscribeLocalEvent<InventoryComponent, AfterAutoHandleStateEvent>(AfterAutoState);
-        SubscribeLocalEvent<InventoryComponent, CloningEvent>(OnCloned);
     }
 
     private void ShutdownSlots()
@@ -57,17 +56,21 @@ public partial class InventorySystem : EntitySystem
         return false;
     }
 
-    private void OnCloned(Entity<InventoryComponent> ent, ref CloningEvent args)
+    /// <summary>
+    /// Copy this component's datafields from one entity to another.
+    /// This can't use CopyComp because the template needs to be applied using the API method.
+    /// <summary>
+    public void CopyComponent(Entity<InventoryComponent?> source, EntityUid target)
     {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+        if (!Resolve(source, ref source.Comp))
             return;
 
-        var cloneComp = EnsureComp<InventoryComponent>(args.CloneUid);
-        cloneComp.SpeciesId = ent.Comp.SpeciesId;
-        cloneComp.Displacements = ent.Comp.Displacements;
-        cloneComp.MaleDisplacements = ent.Comp.MaleDisplacements;
-        cloneComp.FemaleDisplacements = ent.Comp.FemaleDisplacements;
-        SetTemplateId((args.CloneUid, cloneComp), ent.Comp.TemplateId);
+        var targetComp = EnsureComp<InventoryComponent>(target);
+        targetComp.SpeciesId = source.Comp.SpeciesId;
+        targetComp.Displacements = new Dictionary<string, DisplacementData>(source.Comp.Displacements);
+        targetComp.FemaleDisplacements = new Dictionary<string, DisplacementData>(source.Comp.FemaleDisplacements);
+        targetComp.MaleDisplacements = new Dictionary<string, DisplacementData>(source.Comp.MaleDisplacements);
+        SetTemplateId((target, targetComp), source.Comp.TemplateId);
     }
 
     private void OnInit(Entity<InventoryComponent> ent, ref ComponentInit args)

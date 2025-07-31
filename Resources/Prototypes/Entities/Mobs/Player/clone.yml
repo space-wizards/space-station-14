@@ -112,12 +112,13 @@
   - TypingIndicator
   eventComponents:
   # these need special treatment in the event subscription
-  - Inventory
-  - Wagging
-  - Vocal
-  - Storage
-  - Rootable
-  - Sericulture
+  - Inventory # arachnid pockets and diona feet
+  - Wagging # lizard tails
+  - Vocal # voice sounds
+  - Storage # slime storage
+  - Rootable # diona
+  - Sericulture # arachnids
+  - MovementSpeedModifier # moths when weightless
   copyEquipment: null
   copyInternalStorage: false
   copyImplants: false

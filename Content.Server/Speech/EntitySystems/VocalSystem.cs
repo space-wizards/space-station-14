@@ -30,20 +30,25 @@ public sealed class VocalSystem : EntitySystem
         SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
         SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
-        SubscribeLocalEvent<VocalComponent, CloningEvent>(OnCloning);
     }
 
-    private void OnCloning(Entity<VocalComponent> ent, ref CloningEvent args)
+    /// <summary>
+    /// Copy this component's datafields from one entity to another.
+    /// This can't use CopyComp because of the ScreamActionEntity DataField, which should not be copied.
+    /// <summary>
+    public void CopyComponent(Entity<VocalComponent?> source, EntityUid target)
     {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+        if (!Resolve(source, ref source.Comp))
             return;
 
-        var v = EnsureComp<VocalComponent>(args.CloneUid);
-        v.ScreamId = ent.Comp.ScreamId;
-        v.Wilhelm = ent.Comp.Wilhelm;
-        v.WilhelmProbability = ent.Comp.WilhelmProbability;
-        v.EmoteSounds = ent.Comp.EmoteSounds;
-        LoadSounds(args.CloneUid, v);
+        var targetComp = EnsureComp<VocalComponent>(target);
+        targetComp.Sounds = source.Comp.Sounds;
+        targetComp.ScreamId = source.Comp.ScreamId;
+        targetComp.Wilhelm = source.Comp.Wilhelm;
+        targetComp.WilhelmProbability = source.Comp.WilhelmProbability;
+        LoadSounds(target, targetComp);
+
+        Dirty(target, targetComp);
     }
 
     private void OnMapInit(EntityUid uid, VocalComponent component, MapInitEvent args)
