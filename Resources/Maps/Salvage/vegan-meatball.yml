@@ -490,17 +490,16 @@ entities:
         endurance: 100
         weedTolerance: 5
         pestTolerance: 5
-        highPressureTolerance: 121
-        lowPressureTolerance: 81
         toxinsTolerance: 4
-        heatTolerance: 10
-        idealHeat: 298
         growthComponents:
           - type: BasicGrowthComponent
             WaterConsumption: 0.4
             NutrientConsumption: 0.75
-        exudeGasses: {}
-        consumeGasses: {}
+          - type: AtmosphericGrowthComponent
+            IdealHeat: 298
+            HeatTolerance: 10
+            LowPressureTolerance: 81
+            HighPressureTolerance: 121
         chemicals:
           THC:
             Inherent: True
@@ -562,17 +561,16 @@ entities:
         endurance: 100
         weedTolerance: 5
         pestTolerance: 5
-        highPressureTolerance: 121
-        lowPressureTolerance: 81
         toxinsTolerance: 4
-        heatTolerance: 10
-        idealHeat: 293
         growthComponents:
           - type: BasicGrowthComponent
             WaterConsumption: 0.6
             NutrientConsumption: 0.75
-        exudeGasses: {}
-        consumeGasses: {}
+          - type: AtmosphericGrowthComponent
+            IdealHeat: 293
+            HeatTolerance: 10
+            LowPressureTolerance: 81
+            HighPressureTolerance: 121
         chemicals:
           Stellibinin:
             Inherent: True
