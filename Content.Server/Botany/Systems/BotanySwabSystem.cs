@@ -4,10 +4,8 @@ using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Swab;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Content.Server.Botany.Systems;
@@ -90,45 +88,23 @@ public sealed class BotanySwabSystem : EntitySystem
             if (old == null)
                 return;
 
-            for (int index = 0; index < old.GrowthComponents.Count(); index++)
+            // Cross-pollenate the plants
+            plant.Seed = _mutationSystem.Cross(swab.SeedData, old);
+
+            // Transfer old plant pollen to swab
+            swab.SeedData = old;
+
+            // Copy components from the old plant to the swab
+            if (old.GrowthComponents != null)
             {
-                var c1 = old.GrowthComponents[index];
-                foreach (var c2 in swab.components)
+                swab.components = new List<PlantGrowthComponent>();
+                foreach (var component in old.GrowthComponents)
                 {
-                    if (c1.GetType() == c2.GetType())
-                    {
-                        if (_random.Prob(0.5f))
-                            _serializationManager.CopyTo(c2, ref c1, notNullableOverride: true);
-                    }
+                    var copiedComponent = component.DupeComponent();
+                    swab.components.Add(copiedComponent);
                 }
             }
 
-            //Growth Components mean that those systems listed for the BotanySwabDoAfterEvent and do their stuff.
-            //Wait, no. If the swab has components the plant doesn't that wont fire off.
-            //I DO need to check that here (though maybe I can get away with calling an event for it instead of looking up systems?
-            //Or maybe some override function that only applies the Cross math (since the other effect is copying the component?)
-
-            //OR OR MAYBE THIS: the event fires, this handles  ones that aren't on the plant, and those system handle the event for ones that do?
-            //that might be more work?
-            var plantcomps = EntityManager.GetComponents<PlantGrowthComponent>(args.Args.Target.Value);
-            foreach (var gc in swab.components)
-            {
-                if (plantcomps.Any(p => p.GetType() == gc.GetType()))
-                {
-                    //fire the event or override to handle the 50% variable swap test.
-                }
-                else
-                {
-                    //copy the component over on the 50% chance.
-                    if (_random.Prob(0.5f)) {
-                        //EntityManager.add
-                    }
-                }
-            }
-
-
-            plant.Seed = _mutationSystem.Cross(swab.SeedData, old); // Cross-pollenate
-            swab.SeedData = old; // Transfer old plant pollen to swab
             _popupSystem.PopupEntity(Loc.GetString("botany-swab-to"), args.Args.Target.Value, args.Args.User);
         }
 

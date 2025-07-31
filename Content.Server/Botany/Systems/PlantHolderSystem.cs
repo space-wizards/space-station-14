@@ -25,6 +25,7 @@ using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
+using LogType = Content.Shared.Database.LogType;
 using Content.Shared.Labels.Components;
 
 namespace Content.Server.Botany.Systems;

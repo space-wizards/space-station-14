@@ -522,40 +522,36 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecuteAreaReactionEffect(ref ExecuteEntityEffectEvent<AreaReactionEffect> args)
     {
-        var transform = Comp<TransformComponent>(args.Args.TargetEntity);
-        var coords = _xform.GetMapCoordinates(args.Args.TargetEntity, xform: transform);
-        var range = args.Effect.Range;
-
         if (args.Args is EntityEffectReagentArgs reagentArgs)
         {
-            range *= reagentArgs.Scale.Float();
-        }
+            if (reagentArgs.Source == null)
+                return;
 
-        var entities = _map.GetEntitiesInRange(coords, range);
-        var reagent = args.Effect.Reagent;
-        var quantity = args.Effect.Quantity;
+            var spreadAmount = (int) Math.Max(0, Math.Ceiling((reagentArgs.Quantity / args.Effect.OverflowThreshold).Float()));
+            var splitSolution = reagentArgs.Source.SplitSolution(reagentArgs.Source.Volume);
+            var transform = Comp<TransformComponent>(reagentArgs.TargetEntity);
+            var mapCoords = _xform.GetMapCoordinates(reagentArgs.TargetEntity, xform: transform);
 
-        if (args.Args is EntityEffectReagentArgs reagentArgs2)
-        {
-            quantity *= reagentArgs2.Quantity.Int();
-        }
-
-        foreach (var entity in entities)
-        {
-            if (entity == args.Args.TargetEntity)
-                continue;
-
-            if (TryComp<SolutionContainerManagerComponent>(entity, out var solutionContainer))
+            if (!_mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
+                !_map.TryGetTileRef(gridUid, grid, transform.Coordinates, out var tileRef))
             {
-                if (SolutionContainerSystem.TryGetSolution(entity, args.Effect.Solution, out var solution))
-                {
-                    SolutionContainerSystem.TryAddReagent(solution.Value, reagent, quantity);
-                }
+                return;
             }
+
+            if (_spreader.RequiresFloorToSpread(args.Effect.PrototypeId) && _turf.IsSpace(tileRef))
+                return;
+
+            var coords = _map.MapToGrid(gridUid, mapCoords);
+            var ent = Spawn(args.Effect.PrototypeId, coords.SnapToGrid());
+
+            _smoke.StartSmoke(ent, splitSolution, args.Effect.Duration, spreadAmount);
+
+            _audio.PlayPvs(args.Effect.Sound, reagentArgs.TargetEntity, AudioParams.Default.WithVariation(0.25f));
+            return;
         }
 
-        if (args.Effect.Sound != null)
-            _audio.PlayPvs(args.Effect.Sound, reagentArgs.TargetEntity, AudioParams.Default.WithVariation(0.25f));
+        // TODO: Someone needs to figure out how to do this for non-reagent effects.
+        throw new NotImplementedException();
     }
 
     private void OnExecuteCauseZombieInfection(ref ExecuteEntityEffectEvent<CauseZombieInfection> args)
@@ -896,59 +892,64 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantMutateConsumeGasses(ref ExecuteEntityEffectEvent<PlantMutateConsumeGasses> args)
     {
-        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
-
-        if (plantholder.Seed == null)
+        if (!TryComp<PlantHolderComponent>(args.Args.TargetEntity, out var plantholder) ||
+            plantholder.Seed == null)
             return;
 
-        var gasses = plantholder.Seed.ExudeGasses;
+        // Get or create the gas growth component
+        var gasComponent = EnsureComp<ConsumeExudeGasGrowthComponent>(args.Args.TargetEntity);
 
         // Add a random amount of a random gas to this gas dictionary
         float amount = _random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
         Gas gas = _random.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
-        if (gasses.ContainsKey(gas))
+        if (gasComponent.ConsumeGasses.ContainsKey(gas))
         {
-            gasses[gas] += amount;
+            gasComponent.ConsumeGasses[gas] += amount;
         }
         else
         {
-            gasses.Add(gas, amount);
+            gasComponent.ConsumeGasses.Add(gas, amount);
         }
     }
 
     private void OnExecutePlantMutateExudeGasses(ref ExecuteEntityEffectEvent<PlantMutateExudeGasses> args)
     {
-        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
-
-        if (plantholder.Seed == null)
+        if (!TryComp<PlantHolderComponent>(args.Args.TargetEntity, out var plantholder) ||
+            plantholder.Seed == null)
             return;
 
-        var gasses = plantholder.Seed.ConsumeGasses;
+        // Get or create the gas growth component
+        var gasComponent = EnsureComp<ConsumeExudeGasGrowthComponent>(args.Args.TargetEntity);
 
         // Add a random amount of a random gas to this gas dictionary
         float amount = _random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
         Gas gas = _random.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
-        if (gasses.ContainsKey(gas))
+        if (gasComponent.ExudeGasses.ContainsKey(gas))
         {
-            gasses[gas] += amount;
+            gasComponent.ExudeGasses[gas] += amount;
         }
         else
         {
-            gasses.Add(gas, amount);
+            gasComponent.ExudeGasses.Add(gas, amount);
         }
     }
 
     private void OnExecutePlantMutateHarvest(ref ExecuteEntityEffectEvent<PlantMutateHarvest> args)
     {
-        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
-
-        if (plantholder.Seed == null)
+        if (!TryComp<PlantHolderComponent>(args.Args.TargetEntity, out var plantholder) ||
+            plantholder.Seed == null)
             return;
 
-        if (plantholder.Seed.HarvestRepeat == HarvestType.NoRepeat)
-            plantholder.Seed.HarvestRepeat = HarvestType.Repeat;
-        else if (plantholder.Seed.HarvestRepeat == HarvestType.Repeat)
-            plantholder.Seed.HarvestRepeat = HarvestType.SelfHarvest;
+        // Clone the seed to make it mutable
+        var clonedSeed = plantholder.Seed.Clone();
+
+        if (clonedSeed.HarvestRepeat == HarvestType.NoRepeat)
+            clonedSeed.HarvestRepeat = HarvestType.Repeat;
+        else if (clonedSeed.HarvestRepeat == HarvestType.Repeat)
+            clonedSeed.HarvestRepeat = HarvestType.SelfHarvest;
+
+        // Update the plant holder with the cloned seed
+        plantholder.Seed = clonedSeed;
     }
 
     private void OnExecutePlantSpeciesChange(ref ExecuteEntityEffectEvent<PlantSpeciesChange> args)

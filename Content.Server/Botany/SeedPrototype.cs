@@ -1,6 +1,7 @@
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Server.EntityEffects;
+using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.Random;
 using Robust.Shared.Audio;
@@ -177,6 +178,24 @@ public partial class SeedData
     /// </summary>
     [DataField]
     public List<PlantGrowthComponent> GrowthComponents = new();
+
+    /// <summary>
+    /// Whether this seed is viable for growth.
+    /// </summary>
+    [DataField]
+    public bool Viable = true;
+
+    /// <summary>
+    /// Log impact for harvest operations.
+    /// </summary>
+    [DataField]
+    public LogImpact? HarvestLogImpact;
+
+    /// <summary>
+    /// Log impact for plant operations.
+    /// </summary>
+    [DataField]
+    public LogImpact? PlantLogImpact;
     //{
     //    new PlantComponent(),
     //    new BasicGrowthComponent(),
@@ -192,15 +211,18 @@ public partial class SeedData
 
         var newSeed = new SeedData
         {
-            GrowthComponents = GrowthComponents,
+            GrowthComponents = new List<PlantGrowthComponent>(),
+            Viable = Viable,
+            HarvestLogImpact = HarvestLogImpact,
+            PlantLogImpact = PlantLogImpact,
             Name = Name,
             Noun = Noun,
             DisplayName = DisplayName,
             Mysterious = Mysterious,
 
             PacketPrototype = PacketPrototype,
-            ProductPrototypes = new List<EntProtoId>(ProductPrototypes),
-            MutationPrototypes = new List<ProtoId<SeedPrototype>>(MutationPrototypes),
+            ProductPrototypes = new List<string>(ProductPrototypes),
+            MutationPrototypes = new List<string>(MutationPrototypes),
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
 
             ToxinsTolerance = ToxinsTolerance,
@@ -228,6 +250,12 @@ public partial class SeedData
             Unique = true,
         };
 
+        // Deep copy growth components
+        foreach (var component in GrowthComponents)
+        {
+            newSeed.GrowthComponents.Add(component.DupeComponent());
+        }
+
         newSeed.Mutations.AddRange(Mutations);
         return newSeed;
     }
@@ -240,14 +268,18 @@ public partial class SeedData
     {
         var newSeed = new SeedData
         {
+            GrowthComponents = new List<PlantGrowthComponent>(),
+            Viable = other.Viable,
+            HarvestLogImpact = other.HarvestLogImpact,
+            PlantLogImpact = other.PlantLogImpact,
             Name = other.Name,
             Noun = other.Noun,
             DisplayName = other.DisplayName,
             Mysterious = other.Mysterious,
 
             PacketPrototype = other.PacketPrototype,
-            ProductPrototypes = new List<EntProtoId>(other.ProductPrototypes),
-            MutationPrototypes = new List<ProtoId<SeedPrototype>>(other.MutationPrototypes),
+            ProductPrototypes = new List<string>(other.ProductPrototypes),
+            MutationPrototypes = new List<string>(other.MutationPrototypes),
 
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
 
@@ -290,6 +322,12 @@ public partial class SeedData
             {
                 newSeed.Chemicals.Remove(originalChem.Key);
             }
+        }
+
+        // Deep copy growth components from the new species
+        foreach (var component in other.GrowthComponents)
+        {
+            newSeed.GrowthComponents.Add(component.DupeComponent());
         }
 
         return newSeed;
