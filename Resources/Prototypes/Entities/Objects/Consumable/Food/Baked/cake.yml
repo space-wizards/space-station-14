@@ -320,6 +320,16 @@
     slices:
     - id: FoodCakeCheeseSlice
       amount: 6
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#ffffff"
+      right:
+      - state: plain-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#ffffff"
 
 - type: entity
   name: slice of cheese cake
@@ -348,7 +358,10 @@
   description: A cake with added orange.
   components:
   - type: Sprite
-    state: orange
+    layers:
+    - state: plain
+    - state: alpha-filling
+      color: "#ff9900"
   - type: Sliceable
     slices:
     - id: FoodCakeOrangeSlice
@@ -402,7 +415,10 @@
   description: A cake with added lime.
   components:
   - type: Sprite
-    state: lime
+    layers:
+    - state: plain
+    - state: alpha-filling
+      color: "#00ff00"
   - type: Sliceable
     slices:
     - id: FoodCakeLimeSlice
@@ -456,7 +472,10 @@
   description: A cake with added lemon.
   components:
   - type: Sprite
-    state: lemon
+    layers:
+    - state: plain
+    - state: alpha-filling
+      color: "#ffff00"
   - type: Sliceable
     slices:
     - id: FoodCakeLemonSlice
@@ -585,7 +604,9 @@
   description: A cake with added chocolate.
   components:
   - type: Sprite
-    state: chocolate
+    layers:
+    - state: alpha
+      color: "#ba672e"
   - type: Sliceable
     slices:
     - id: FoodCakeChocolateSlice
@@ -647,7 +668,10 @@
   description: A cake centred with apple.
   components:
   - type: Sprite
-    state: apple
+    layers:
+    - state: plain
+    - state: alpha-filling
+      color: "#ff4300"
   - type: Sliceable
     slices:
     - id: FoodCakeAppleSlice
@@ -881,6 +905,8 @@
     slices:
     - id: FoodCakeBirthdaySlice
       amount: 6
+  - type: Item
+    heldPrefix: birthday
 
 - type: entity
   name: slice of birthday cake
