@@ -38,7 +38,7 @@ public sealed class ReplacementAccentVocalizationSystem : EntitySystem
         if (_actor.TryGetSession(entity, out _))
             return;
 
-        if (!_prototypes.TryIndex<ReplacementAccentPrototype>(entity.Comp.Accent, out var prototype))
+        if (!_prototypes.Resolve<ReplacementAccentPrototype>(entity.Comp.Accent, out var prototype))
             return;
 
         if (prototype.FullReplacements is null)
