@@ -21,7 +21,7 @@
   - MiningEquipment
   conditions:
   - !type:BuyerAccessCondition
-    
+
 - type: listing
   id: VendorMechClarke
   productEntity: MechClarke
@@ -33,7 +33,7 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   - !type:BuyerAccessCondition
-  
+
 #- type: listing
 #  id: VendorClothingOuterHardsuitMaxim
 #  productEntity: ClothingOuterHardsuitMaxim
@@ -45,7 +45,7 @@
 #  - !type:ListingLimitedStockCondition
 #    stock: 3
 #  - !type:BuyerAccessCondition
-  
+
 - type: listing
   id: VendorClothingOuterHardsuitLuxury
   productEntity: ClothingOuterHardsuitLuxury
@@ -55,7 +55,7 @@
   - MiningEquipment
   conditions:
   - !type:BuyerAccessCondition
-  
+
 - type: listing
   id: VendorClothingOuterHardsuitSalvage
   productEntity: ClothingOuterHardsuitSalvage
@@ -65,7 +65,7 @@
   - MiningEquipment
   conditions:
   - !type:BuyerAccessCondition
-  
+
 #- type: listing
 #  id: VendorClothingOuterHardsuitSpatio
 #  productEntity: ClothingOuterHardsuitSpatio
@@ -75,7 +75,7 @@
 #  - MiningEquipment
 #  conditions:
 #  - !type:BuyerAccessCondition
-  
+
 - type: listing
   id: VendorMiningDrill
   productEntity: MiningDrill
@@ -87,7 +87,7 @@
   - !type:ListingLimitedStockCondition
     stock: 2
   - !type:BuyerAccessCondition
-  
+
 - type: listing
   id: VendorMiningDrillDiamond
   productEntity: MiningDrillDiamond
@@ -109,7 +109,7 @@
   - MiningEquipment
   conditions:
   - !type:BuyerAccessCondition
-  
+
 - type: listing
   id: VendorWeaponMechMelleDrill
   productEntity: WeaponMechMelleDrill
@@ -121,7 +121,7 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   - !type:BuyerAccessCondition
-  
+
 - type: listing
   id: VendorWeaponMechMelleDrillDiamond
   productEntity: WeaponMechMelleDrillDiamond
@@ -133,7 +133,9 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   - !type:BuyerAccessCondition
-  
+
+# DOTS - add purchasble floodlights! to salvage also maybe?
+
 #consumables
 - type: listing
   id: VendorMedkitAdvancedFilled
@@ -144,7 +146,7 @@
   - MiningConsumeables
   conditions:
   - !type:BuyerAccessCondition
-  
+
 - type: listing
   id: VendorMedkitFilled
   productEntity: MedkitFilled
@@ -154,7 +156,7 @@
   - MiningConsumeables
   conditions:
   - !type:BuyerAccessCondition
-  
+
 - type: listing
   id: VendorMedkitCombatFilled
   productEntity: MedkitCombatFilled
