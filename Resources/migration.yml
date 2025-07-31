@@ -700,3 +700,16 @@ BarSignWhiskeyEchoesAlignTile: BarSignWhiskeyEchoes
 
 # 2025-06-21
 ClothingNeckHeadphones: ClothingMultipleHeadphones
+
+# 2025-07-07
+BoxFolderBase: BoxFolderBaseFilled
+BoxFolderRed: BoxFolderRedFilled
+BoxFolderBlue: BoxFolderBlueFilled
+BoxFolderYellow: BoxFolderYellowFilled
+BoxFolderGrey: BoxFolderGreyFilled
+BoxFolderBlack: BoxFolderBlackFilled
+BoxFolderGreen: BoxFolderGreenFilled
+BoxFolderWhite: BoxFolderMedicalFilled
+BoxFolderCentCom: BoxFolderCentComFilled
+BoxFolderClipboard: BoxFolderClipboardFilled
+BoxFolderCentComClipboard: BoxFolderCentComClipboardFilled
