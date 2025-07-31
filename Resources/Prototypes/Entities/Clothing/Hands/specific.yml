@@ -24,9 +24,18 @@
 
 - type: entity
   parent: ClothingHandsChameleon
-  id: ClothingHandsChameleonThief
+  id: ClothingHandsChameleonThieving
   suffix: Chameleon, Thieving
   components:
   - type: Thieving
     stripTimeReduction: 2
-    stealthy: true
+    stealthiness: Stealthy
+
+- type: entity
+  parent: ClothingHandsChameleon
+  id: ClothingHandsChameleonRipping
+  suffix: Chameleon, Ripping
+  components:
+  - type: Thieving
+    stripTimeReduction: 2
+    stealthiness: Ripping
