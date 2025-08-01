@@ -10021,5 +10021,20 @@ Entries:
   id: 1380
   time: '2025-08-01T04:54:21.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1171
+- author: Arkanic
+  changes:
+  - message: 1984 the character min/max sizes to something more reasonable
+    type: Tweak
+  id: 1381
+  time: '2025-08-01T16:02:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1174
+- author: Arkanic
+  changes:
+  - message: Width slider now acts more like an "aspect ratio" slider to stop goofy
+      min width max height characters
+    type: Tweak
+  id: 1382
+  time: '2025-08-01T16:02:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1174
 Order: -1
 
