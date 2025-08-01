@@ -488,8 +488,6 @@ entities:
         splatPrototype: null
         lifespan: 75
         endurance: 100
-        weedTolerance: 5
-        pestTolerance: 5
         toxinsTolerance: 4
         growthComponents:
           - !type:BasicGrowthComponent
@@ -500,6 +498,9 @@ entities:
               heatTolerance: 10
               lowPressureTolerance: 81
               highPressureTolerance: 121
+          - !type:WeedPestGrowthComponent
+              weedTolerance: 5
+              pestTolerance: 5
         chemicals:
           THC:
             Inherent: True
@@ -559,8 +560,6 @@ entities:
         splatPrototype: null
         lifespan: 25
         endurance: 100
-        weedTolerance: 5
-        pestTolerance: 5
         toxinsTolerance: 4
         growthComponents:
           - !type:BasicGrowthComponent
@@ -571,6 +570,9 @@ entities:
               heatTolerance: 10
               lowPressureTolerance: 81
               highPressureTolerance: 121
+          - !type:WeedPestGrowthComponent
+              weedTolerance: 5
+              pestTolerance: 5
         chemicals:
           Stellibinin:
             Inherent: True
