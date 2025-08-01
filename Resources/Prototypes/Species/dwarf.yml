@@ -7,10 +7,10 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobDwarfDummy
   skinColoration: HumanToned
-  customName: true # Starlight
-  minWidth: 0.9 # Starlight
-  defaultWidth: 1 # Starlight
-  maxWidth: 1.2 # Starlight
-  minHeight: 0.6 # Starlight
-  defaultHeight: 0.8 # Starlight
-  maxHeight: 0.8 # Starlight
+  customName: true # Starlight start
+  minWidth: 1.2
+  defaultWidth: 1.2
+  maxWidth: 1.5
+  minHeight: 0.8
+  defaultHeight: 0.8
+  maxHeight: 0.85 # Starlight end
