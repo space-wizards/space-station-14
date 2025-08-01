@@ -3,11 +3,10 @@ using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Singularity.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class EmitterComponent : Component
 {
     public CancellationTokenSource? TimerCancel;
@@ -26,7 +25,7 @@ public sealed partial class EmitterComponent : Component
     /// <summary>
     /// The entity that is spawned when the emitter fires.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntProtoId BoltType = "EmitterBolt";
 
     [DataField]
@@ -95,8 +94,8 @@ public sealed partial class EmitterComponent : Component
     /// <summary>
     /// Map of signal ports to entity prototype IDs of the entity that will be fired.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<string, SinkPortPrototype>))]
-    public Dictionary<string, string> SetTypePorts = new();
+    [DataField]
+    public Dictionary<ProtoId<SinkPortPrototype>, EntProtoId> SetTypePorts = new();
 }
 
 [NetSerializable, Serializable]
