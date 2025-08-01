@@ -105,7 +105,7 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
 
     private void PlayAnimation(Entity<StaminaComponent, SpriteComponent> entity)
     {
-        DebugTools.Assert($"Animation threshold on {ToPrettyString(entity)} was not less than the crit threshold. This will cause errors, animation has been cancelled.");
+        DebugTools.Assert(entity.Comp1.CritThreshold > entity.Comp1.AnimationThreshold, $"Animation threshold on {ToPrettyString(entity)} was not less than the crit threshold. This will cause errors, animation has been cancelled.");
 
         var step = Math.Clamp((entity.Comp1.StaminaDamage - entity.Comp1.AnimationThreshold) /
                               (entity.Comp1.CritThreshold - entity.Comp1.AnimationThreshold),
