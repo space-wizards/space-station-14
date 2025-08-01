@@ -30,6 +30,8 @@ public sealed partial class TriggerSystem
         {
             _physics.RegenerateContacts((ent.Owner, body));
         }
+
+        Dirty(ent);
     }
 
     private void OnMapInit(Entity<TriggerOnProximityComponent> ent, ref MapInitEvent args)
@@ -48,6 +50,8 @@ public sealed partial class TriggerSystem
             hard: false,
             body: body,
             collisionLayer: ent.Comp.Layer);
+
+        Dirty(ent);
     }
 
     private void OnProximityStartCollide(EntityUid uid, TriggerOnProximityComponent component, ref StartCollideEvent args)
@@ -87,6 +91,7 @@ public sealed partial class TriggerSystem
 
         // Queue a visual update for when the animation is complete.
         ent.Comp.NextVisualUpdate = curTime + ent.Comp.AnimationDuration;
+        Dirty(ent);
 
         _appearance.SetData(ent.Owner, ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active);
 
@@ -104,6 +109,7 @@ public sealed partial class TriggerSystem
             {
                 // Update the visual state once the animation is done.
                 trigger.NextVisualUpdate = TimeSpan.MaxValue;
+                Dirty(uid, trigger);
                 SetProximityAppearance((uid, trigger));
             }
 
@@ -117,7 +123,7 @@ public sealed partial class TriggerSystem
             // Check for anything colliding and moving fast enough.
             foreach (var (collidingUid, colliding) in trigger.Colliding)
             {
-                if (Deleted(collidingUid))
+                if (TerminatingOrDeleted(collidingUid))
                     continue;
 
                 if (colliding.LinearVelocity.Length() < trigger.TriggerSpeed)
