@@ -96,6 +96,9 @@ public sealed class LockSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, LockComponent lockComp, ExaminedEvent args)
     {
+        if (!lockComp.ShowExamine)
+            return;
+
         args.PushText(Loc.GetString(lockComp.Locked
                 ? "lock-comp-on-examined-is-locked"
                 : "lock-comp-on-examined-is-unlocked",

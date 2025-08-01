@@ -1,26 +1,16 @@
-using Content.Shared.Lock;
+using Content.Shared.SecretLocks;
 
 namespace Content.Server.SecretLocks;
 
-public sealed class VoiceTriggerLockSystem : EntitySystem
+public sealed class VoiceTriggerLockSystem : SharedVoiceTriggerLockSystem
 {
-    [Dependency] private readonly LockSystem _lock = default!;
-
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<VoiceTriggerLockComponent, ComponentInit>(OnComponentInit);
-
         SubscribeLocalEvent<VoiceTriggerLockComponent, VoiceTriggeredEvent>(OnVoiceTriggered);
         SubscribeLocalEvent<VoiceTriggerLockComponent, TryShowVoiceTriggerVerbs>(OnShowVoiceTriggerVerbs);
         SubscribeLocalEvent<VoiceTriggerLockComponent, TryShowVoiceTriggerExamine>(OnShowVoiceTriggerExamine);
-    }
-
-    private void OnComponentInit(Entity<VoiceTriggerLockComponent> ent, ref ComponentInit args)
-    {
-        if (!HasComp<LockComponent>(ent))
-            Log.Warning($"Entity with VoiceTriggerLockComponent {ent.Owner} has no lock component.");
     }
 
     private void OnVoiceTriggered(Entity<VoiceTriggerLockComponent> ent, ref VoiceTriggeredEvent args)

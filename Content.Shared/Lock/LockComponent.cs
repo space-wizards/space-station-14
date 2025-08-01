@@ -22,10 +22,16 @@ public sealed partial class LockComponent : Component
     public bool Locked  = true;
 
     /// <summary>
-    ///     If true, will show verbs to lock and unlock the item. Otherwise it will not.
+    /// If true, will show verbs to lock and unlock the item. Otherwise, it will not.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool ShowLockVerbs = true;
+
+    /// <summary>
+    /// If true will show examine text.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ShowExamine = true;
 
     /// <summary>
     /// Whether or not the lock is locked by simply clicking.

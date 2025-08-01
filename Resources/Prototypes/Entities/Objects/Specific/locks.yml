@@ -5,6 +5,7 @@
   - type: Lock
     locked: false
     showLockVerbs: false
+    showExamine: false
     lockOnClick: false
     unlockOnClick: false
     useAccess: false
