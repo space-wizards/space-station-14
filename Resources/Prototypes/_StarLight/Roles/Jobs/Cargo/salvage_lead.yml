@@ -1,5 +1,5 @@
 ﻿- type: job
-  id: SalvageLead
+  id: SalvageLead # DOTS - Still need to add starting loadout stuff
   name: job-name-salvagelead
   description: job-description-salvagelead
   playTimeTracker: JobSalvageLead
@@ -23,7 +23,7 @@
 - type: startingGear
   id: SalvageLeadGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist #DOTS: add custom clothing
+    jumpsuit: ClothingUniformJumpsuitSalvageLead
     id: SalvageLeadPDA
     ears: ClothingHeadsetMining
   #storage:

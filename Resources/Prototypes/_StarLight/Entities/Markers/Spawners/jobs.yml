@@ -67,6 +67,32 @@
       - state: jobicon
 
 - type: entity
+  id: SpawnPointSalvageLead
+  parent: SpawnPointJobBase
+  name: salvage lead
+  components:
+  - type: SpawnPoint
+    job_id: SalvageLead
+  - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
+    layers:
+    - state: green
+    - state: salvagelead # DOTS - finish sprite .../Resources/Textures/_Starlight/Markers/jobs.rsi
+
+- type: entity
+  id: SpawnPointSalvageMedic
+  parent: SpawnPointJobBase
+  name: salvage medic
+  components:
+  - type: SpawnPoint
+    job_id: SalvageMedic
+  - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
+    layers:
+    - state: green
+    - state: salvagemedic # DOTS - finish sprite .../Resources/Textures/_Starlight/Markers/jobs.rsi
+
+- type: entity
   id: SpawnPointminingspecialist
   parent: SpawnPointJobBase
   name: miningspecialist
@@ -74,9 +100,10 @@
   - type: SpawnPoint
     job_id: MiningSpecialist
   - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
     layers:
       - state: green
-      - state: salvagespecialist
+      - state: miningspecialist
 
 - type: entity
   id: SpawnPointmailtech
