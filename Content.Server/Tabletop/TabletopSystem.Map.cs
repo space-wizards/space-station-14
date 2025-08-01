@@ -66,7 +66,7 @@ namespace Content.Server.Tabletop
         /// <returns>The mapped 2D position for the scalar.</returns>
         private Vector2i UlamSpiral(int n)
         {
-            var k = (int)MathF.Ceiling(MathF.Sqrt(n) - 1) / 2;
+            var k = (int)MathF.Ceiling((MathF.Sqrt(n) - 1) / 2);
             var t = 2 * k + 1;
             var m = (int)MathF.Pow(t, 2);
             t--;
