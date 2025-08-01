@@ -166,7 +166,7 @@ public sealed class DeltaPressureSystem : EntitySystem
             }
         }
 
-        _damage.TryChangeDamage(ent, appliedDamage, interruptsDoAfters: false);
+        _damage.TryChangeDamage(ent, appliedDamage, ignoreResistances: true, interruptsDoAfters: false);
         ent.Comp.IsTakingDamage = true;
     }
 
