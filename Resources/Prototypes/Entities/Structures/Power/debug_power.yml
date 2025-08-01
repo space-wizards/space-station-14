@@ -125,28 +125,49 @@
   - type: Anchorable
 
 - type: entity
-  id: DebugSMES
   parent: BaseSMES
+  id: DebugSMES
   suffix: DEBUG
   components:
+  - type: BatterySelfRecharger
+    autoRechargeRate: 50000
+    autoRecharge: True
   - type: Tag
     tags:
       - Debug
 
 - type: entity
-  id: DebugSubstation
   parent: BaseSubstation
+  id: DebugSubstation
   suffix: DEBUG
   components:
+  - type: BatterySelfRecharger
+    autoRechargeRate: 50000
+    autoRecharge: True
   - type: Tag
     tags:
       - Debug
 
 - type: entity
-  id: DebugAPC
-  parent: BaseAPC
+  parent: BaseSubstationWall
+  id: DebugSubstationWall
   suffix: DEBUG
   components:
+  - type: BatterySelfRecharger
+    autoRechargeRate: 50000
+    autoRecharge: True
+  - type: Tag
+    tags:
+      - Debug
+
+- type: entity
+  parent: BaseAPC
+  id: DebugAPC
+  suffix: DEBUG
+  components:
+  - type: BatterySelfRecharger
+    autoRechargeRate: 50000
+    autoRecharge: True
   - type: Tag
     tags:
       - Debug
