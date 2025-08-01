@@ -9741,14 +9741,6 @@ Entries:
   url: https://github.com/ss14Starlight/space-station-14/pull/1105
 - author: STARLIGHT TEAM, walksanatora
   changes:
-  - message: you ever just take 3 cycles of upstream content at once? yeah ... it
-      sucks ...
-    type: Tweak
-  id: 1342
-  time: '2025-07-28T06:42:42.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/1123
-- author: STARLIGHT TEAM, walksanatora
-  changes:
   - message: returned chameleon thieving gloves back to the traitor uplink,
     type: Tweak
   id: 1343
@@ -9922,5 +9914,112 @@ Entries:
   id: 1366
   time: '2025-07-29T23:04:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1058
+- author: Trep_Maul
+  changes:
+  - message: Wizard Carp Polymorph now lasts 120 seconds instead of forever.
+    type: Tweak
+  id: 1367
+  time: '2025-07-31T19:50:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1135
+- author: Trep_Maul
+  changes:
+  - message: LRP Ghostrole names replaced.
+    type: Tweak
+  id: 1368
+  time: '2025-07-31T20:00:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1137
+- author: Citrea
+  changes:
+  - message: Role weight no longer takes precendence over role priority
+    type: Fix
+  id: 1369
+  time: '2025-07-31T20:02:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1109
+- author: Trosling
+  changes:
+  - message: Removed differentiation between salvage and mining for the purposes of
+      contraband while they still share the ticket vend
+    type: Tweak
+  id: 1370
+  time: '2025-07-31T20:10:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1008
+- author: Trosling
+  changes:
+  - message: Mercenary combat gloves no longer contra for salvage
+    type: Fix
+  id: 1371
+  time: '2025-07-31T20:10:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1008
+- author: Trosling
+  changes:
+  - message: .45 magnum magazines and the cartridge itself no longer contra for salvage
+    type: Fix
+  id: 1372
+  time: '2025-07-31T20:10:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1008
+- author: Fasuh
+  changes:
+  - message: Shortcut for pulling from and putting items into suit storage
+    type: Add
+  id: 1373
+  time: '2025-07-31T20:13:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1037
+- author: Grapegifter
+  changes:
+  - message: '"Grenade Penguin" to "Irish car bomb"'
+    type: Tweak
+  id: 1374
+  time: '2025-07-31T20:15:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1057
+- author: PubliclyExecutedPig
+  changes:
+  - message: Tweaked the infiltration hardsuit
+    type: Tweak
+  id: 1375
+  time: '2025-07-31T20:17:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1036
+- author: Fractalflower
+  changes:
+  - message: Nukie agent now has builtin chemgoggles
+    type: Tweak
+  id: 1376
+  time: '2025-07-28T05:55:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1116
+- author: STARLIGHT TEAM
+  changes:
+  - message: Acorn TTS Voice
+    type: Remove
+  id: 1377
+  time: '2025-07-30T00:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1148
+- author: Scarlet Lightweaver(isansiam)
+  changes:
+  - message: Added a new energy dome sprite (admeme only for now)
+    type: Add
+  id: 1378
+  time: '2025-07-31T20:08:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1013
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Hub.
+    type: Add
+  id: 1342
+  time: '2025-07-24T01:32:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/692
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: you ever just take 3 cycles of upstream content at once? yeah ... it
+      sucks ...
+    type: Tweak
+  id: 1379
+  time: '2025-07-28T06:42:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1123
+- author: darkrell, Happyrobot33
+  changes:
+  - message: Fixed a bug that occurred when trying to remove handcuffs.
+    type: Fix
+  id: 1380
+  time: '2025-08-01T04:54:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1171
 Order: -1
 
