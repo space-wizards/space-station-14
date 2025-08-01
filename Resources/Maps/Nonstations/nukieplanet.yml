@@ -10721,7 +10721,7 @@ entities:
     - type: Transform
       pos: 2.5389562,-6.3072195
       parent: 104
-- proto: FoodDonutJellySlugcat
+- proto: FoodDonutJellyScurret
   entities:
   - uid: 3327
     components:
