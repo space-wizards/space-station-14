@@ -14,3 +14,88 @@
               doAfter: 5
     - node: shell
       entity: BaseMagazineBoxImprovised
+    - node: startpistol
+      edges:
+      - to: pistol
+        steps:
+        - tag: ImprovisedAmmoBox
+          icon:
+            sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Boxes/improvised.rsi
+            state: base
+          name: crafting-menu-name-IMGB
+          doAfter: 10
+        - material: Steel
+          amount: 30
+          doAfter: 0.5
+        - material: CrushedPhosphorus
+          amount: 30
+          doAfter: 0.5
+    - node: pistol
+      entity: MagazineBoxImprovisedPistol
+    - node: startrifle
+      edges:
+      - to: rifle
+        steps:
+        - tag: ImprovisedAmmoBox
+          icon:
+            sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Boxes/improvised.rsi
+            state: base
+          name: crafting-menu-name-IMGB
+          doAfter: 10
+        - material: Steel
+          amount: 30
+          doAfter: 0.5
+        - material: CrushedPhosphorus
+          amount: 30
+          doAfter: 0.5
+        - material: CrushedPhosphorus
+          amount: 30
+          doAfter: 0.5
+    - node: rifle
+      entity: MagazineBoxImprovisedRifle
+    - node: startmagnum
+      edges:
+      - to: magnum
+        steps:
+        - tag: ImprovisedAmmoBox
+          icon:
+            sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Boxes/improvised.rsi
+            state: base
+          name: crafting-menu-name-IMGB
+          doAfter: 10
+        - material: Steel
+          amount: 30
+          doAfter: 0.5
+        - material: CrushedPhosphorus
+          amount: 30
+          doAfter: 0.5
+        - material: CrushedPhosphorus
+          amount: 30
+          doAfter: 0.5
+    - node: magnum
+      entity: MagazineBoxImprovisedMagnum
+    - node: startshotgun
+      edges:
+      - to: shotgun
+        steps:
+        - tag: ImprovisedAmmoBox
+          icon:
+            sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Boxes/improvised.rsi
+            state: base
+          name: crafting-menu-name-IMGB
+          doAfter: 10
+        - material: Steel
+          amount: 30
+          doAfter: 0.5
+        - material: Glass
+          amount: 30
+          doAfter: 1.5
+        - material: CrushedPhosphorus
+          amount: 30
+          doAfter: 0.5
+        - material: CrushedPhosphorus
+          amount: 30
+          doAfter: 0.5
+      entity: MagazineBoxImprovisedShotgun
+    - node: shotgun
+      entity: MagazineBoxImprovisedShotgun

@@ -62,6 +62,9 @@
   id: HiltWood
 
 - type: Tag
+  id: ImprovisedAmmoBox
+
+- type: Tag
   id: ImprovisedMultitool
 
 - type: Tag

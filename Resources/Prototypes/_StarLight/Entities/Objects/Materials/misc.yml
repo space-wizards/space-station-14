@@ -76,3 +76,6 @@
     state: phosphorus
   - type: Stack
     count: 1
+  - type: Construction
+    graph: CrushedPhosphorus
+    node: crushed

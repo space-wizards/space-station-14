@@ -1,0 +1,9 @@
+﻿- type: construction
+  name: crafting-menu-name-phosphorus
+  id: CrushedPhosphorus
+  graph: CrushedPhosphorus
+  startNode: start
+  targetNode: crushed
+  category: construction-category-misc
+  objectType: Item
+  description: crafting-menu-text-phosphorus

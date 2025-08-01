@@ -38,3 +38,74 @@
   - type: Construction
     graph: ImprovisedMagazineBoxGraph
     node: shell
+  - type: Tag
+    tags:
+    - ImprovisedAmmoBox
+
+- type: entity
+  parent: BaseMagazineBoxImprovised
+  id: MagazineBoxImprovisedPistol
+  name: improvised ammunition box (.35 auto improvised)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolImprovised
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - type: Construction
+      graph: ImprovisedMagazineBoxGraph
+      node: pistol
+
+- type: entity
+  parent: BaseMagazineBoxImprovised
+  id: MagazineBoxImprovisedRifle
+  name: improvised ammunition box (.30 rifle improvised)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleImprovised
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - type: Construction
+      graph: ImprovisedMagazineBoxGraph
+      node: rifle
+
+- type: entity
+  parent: BaseMagazineBoxImprovised
+  id: MagazineBoxImprovisedMagnum
+  name: improvised ammunition box (.45 magnum improvised)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumImprovised
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - type: Construction
+      graph: ImprovisedMagazineBoxGraph
+      node: magnum
+
+- type: entity
+  parent: BaseMagazineBoxImprovised
+  id: MagazineBoxImprovisedShotgun
+  name: improvised ammunition box (.50 shotgun improvised)
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunImprovised
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - type: Construction
+      graph: ImprovisedMagazineBoxGraph
+      node: shotgun
