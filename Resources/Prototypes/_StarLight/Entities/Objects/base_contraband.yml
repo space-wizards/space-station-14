@@ -12,7 +12,7 @@
   components:
   - type: Contraband
     severity: AdvancedCyberlimbs
-
+# DOTS - Look at https://github.com/ss14Starlight/space-station-14/pull/1008 and revert the contraband changes?
 - type: entity
   id: BaseSalvageContraband
   parent: BaseRestrictedContraband
