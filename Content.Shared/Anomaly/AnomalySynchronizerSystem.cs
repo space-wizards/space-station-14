@@ -63,7 +63,11 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
                 continue;
             }
 
-            var anomalyTransform = Transform(sync.ConnectedAnomaly.Value);
+            // Use TryComp instead of Transform(uid) to take care of cases where the anomaly is out of
+            // PVS range on the client, but the synchronizer isn't.
+            if (!TryComp(sync.ConnectedAnomaly.Value, out TransformComponent? anomalyTransform))
+                continue;
+
             if (anomalyTransform.MapUid != synchronizerTransform.MapUid)
             {
                 DisconnectFromAnomaly((uid, sync));
