@@ -1,6 +1,7 @@
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Emp;
 using Content.Server.Medical.CrewMonitoring;
+using Content.Server.Station.Systems;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Medical.SuitSensors;
@@ -11,6 +12,7 @@ namespace Content.Server.Medical.SuitSensors;
 
 public sealed class SuitSensorSystem : SharedSuitSensorSystem
 {
+    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
@@ -76,10 +78,25 @@ public sealed class SuitSensorSystem : SharedSuitSensorSystem
         }
     }
 
+    /// <summary>
+    /// Checks whether the sensor is assigned to a station or not
+    /// and tries to assign an unassigned sensor to a station if it's currently on a grid
+    /// </summary>
+    /// <returns>True if the sensor is assigned to a station or assigning it was successful. False otherwise.</returns>
+    public bool CheckSensorAssignedStation(EntityUid uid, SuitSensorComponent sensor)
+    {
+        if (!sensor.StationId.HasValue && Transform(uid).GridUid == null)
+            return false;
+
+        sensor.StationId = _stationSystem.GetOwningStation(uid);
+        Dirty(uid, sensor);
+        return sensor.StationId.HasValue;
+    }
+
     private void OnMapInit(EntityUid uid, SuitSensorComponent component, MapInitEvent args)
     {
         // Fallback
-        component.StationId ??= _stationSystem.GetCurrentStation(uid);
+        component.StationId ??= _stationSystem.GetOwningStation(uid);
 
         // generate random mode
         if (component.RandomMode)

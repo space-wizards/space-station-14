@@ -27,7 +27,6 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] protected readonly SharedStationSystem _stationSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -48,21 +47,6 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         SubscribeLocalEvent<SuitSensorComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
         SubscribeLocalEvent<SuitSensorComponent, EntGotRemovedFromContainerMessage>(OnRemove);
         SubscribeLocalEvent<SuitSensorComponent, SuitSensorChangeDoAfterEvent>(OnSuitSensorDoAfter);
-    }
-
-    /// <summary>
-    /// Checks whether the sensor is assigned to a station or not
-    /// and tries to assign an unassigned sensor to a station if it's currently on a grid
-    /// </summary>
-    /// <returns>True if the sensor is assigned to a station or assigning it was successful. False otherwise.</returns>
-    public bool CheckSensorAssignedStation(EntityUid uid, SuitSensorComponent sensor)
-    {
-        if (!sensor.StationId.HasValue && Transform(uid).GridUid == null)
-            return false;
-
-        sensor.StationId = _stationSystem.GetCurrentStation(uid);
-        Dirty(uid, sensor);
-        return sensor.StationId.HasValue;
     }
 
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent ev)
