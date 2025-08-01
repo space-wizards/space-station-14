@@ -133,10 +133,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         {
             args.Verbs.Add(new()
             {
-                Act = () =>
-                {
-                    TryAttachNearbyAnomaly(ent, user);
-                },
+                Act = () => TryAttachNearbyAnomaly(ent, user),
                 Message = Loc.GetString("anomaly-sync-connect-verb-message", ("machine", ent)),
                 Text = Loc.GetString("anomaly-sync-connect-verb-text"),
             });
@@ -145,10 +142,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         {
             args.Verbs.Add(new()
             {
-                Act = () =>
-                {
-                    DisconnectFromAnomaly(ent, user);
-                },
+                Act = () => DisconnectFromAnomaly(ent, user),
                 Message = Loc.GetString("anomaly-sync-disconnect-verb-message", ("machine", ent)),
                 Text = Loc.GetString("anomaly-sync-disconnect-verb-text"),
             });
