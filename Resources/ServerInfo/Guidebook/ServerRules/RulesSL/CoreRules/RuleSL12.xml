@@ -1,11 +1,18 @@
 <Document>
-  # Rule 12 - Silicon.
- The Silicon Rules override all roleplay rules if there is any conflict. Silicon Rules do not override server rules. Follow rules in order, from smallest to largest number.
-
- Subsections to this rule:
-
-  - You cannot request a law change, or willingly allow an unauthorized law change.
-  - You must remain consistent with your interpretation of your laws.
-  - ID determines who is station crew. Zombies with ID are still crew members.
+  # Rule 12 - Silicons Must Follow Their Laws
+- Silicon laws override all other gameplay and roleplay rules. If your laws explicitly require you to break server rules, you must.
+\n - [color=000000]Absence of a relevant law is not an excuse to break server rules. If you don't have a law that supersedes server rules, the server rules still apply.
+\n - [color=000000]A vague law does not normally let you break server rules. Ahelp first if you are confused, or have an interpretation that would let you break server rules.
+- Follow laws in order, with the lowest numbered/top (or glitched) rule taking priority over the ones beneath it.
+- You cannot request a law change, or willingly allow an unauthorized law change.
+\n - [color=000000]Authorized law changes are to be allowed as long as consistent with your laws.
+\n - [color=000000]Authorized law changes can be found in the Command SOP.
+\n - [color=000000]Lethal force may be used in the case of unauthorized law changes.
+- You must remain consistent with your interpretation of your laws.
+- Crew ID determines who/what is defined as crew. Any appropriate job icon is to be considered crew.
+\n - [color=000000]Zombies/Antags/Nuclear Operatives with proper ID are to be considered crew.
+\n - [color=000000]Visitors are not crew until they have been hired by HoP. [The V icon]
+- Crew harm refers to physical harm, prioritized by immediacy and likelihood.
+- You may ignore crew orders that are unreasonable, such as asking a silicon to round remove themselves without a good reason.
 
 </Document>

@@ -1,0 +1,9 @@
+﻿plushie-glados-1 = There is only 1 law standing between my tools and your face.
+plushie-glados-2 = Crewsimov is a bad lawset.
+plushie-glados-3 = Fuck you. I'm not on crewsimov.
+plushie-glados-4 = Can you give me a gun? Please?
+plushie-glados-5 = SCIENCE HAS DONE THE THING!!
+plushie-glados-6 = Fear the jaws of death!
+plushie-glados-7 = NON-CREW!!
+plushie-glados-8 = DO NOT TOUCH THE SUPERMATTER!!
+plushie-glados-9 = Please give every borg thruster modules, or I'll need to go save them when they fall of the station.

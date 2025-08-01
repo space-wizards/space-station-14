@@ -24,7 +24,7 @@
         - state: ai
     - type: ConditionalSpawner
       prototypes:
-        - SmartSubWooferVulnerable
+        - SmartSubwooferBorgiChassis
 
 - type: entity
   name: Cargorilla Spawner

@@ -60,6 +60,8 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
         _prototypeManager = protoMan;
         _playerManager = playerMan;
         _metaDataSystem = EntMan.System<MetaDataSystem>();
+
+        Stretch = StretchMode.None; //starlight
     }
 
     /// <summary>

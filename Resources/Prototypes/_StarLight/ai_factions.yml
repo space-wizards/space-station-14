@@ -18,6 +18,7 @@
     - Changeling
     - AllHostile
     - Gorilla
+    - Abductor
 
 - type: npcFaction
   id: DungeonSoviet
@@ -37,6 +38,7 @@
     - Changeling
     - AllHostile
     - Gorilla
+    - Abductor
 
 - type: npcFaction
   id: DungeonSyndicate
@@ -56,6 +58,7 @@
     - Changeling
     - AllHostile
     - Gorilla
+    - Abductor
 
 - type: npcFaction
   id: Gorilla
@@ -78,6 +81,7 @@
     - Abyss
     - DungeonSoviet
     - DungeonSyndicate
+    - Abductor
 
 - type: npcFaction
   id: NanoTrasenSilicon # purely making this so zombies STOP ATTACKING FUCKING SILICONS
@@ -97,6 +101,7 @@
   - Xenoborg
   - Dragon
   - Gorilla
+  - Abductor
 
 - type: npcFaction
   id: SyndicateSilicon # Again, zombies fuck you.
@@ -116,3 +121,38 @@
     - Xenoborg
     - Dragon
     - Gorilla
+    - Abductor
+
+- type: npcFaction
+  id: Abductor
+  hostile: # SimpleHostile with additions so that it gets attacked by mobs
+  - NanoTrasen
+  - NanoTrasenSilicon # starlight
+  - Syndicate
+  - SyndicateSilicon # starlight
+  - DungeonSyndicate
+  - DungeonSoviet
+  - Passive
+  - PetsNT
+  - Zombie
+  - Revolutionary
+  - Abyss
+  - Vampire
+  - Changeling
+  - AllHostile
+  - Wizard
+  - Xenoborg
+  - Dragon
+  - Xeno
+  - Gorilla
+  # New
+  - Dragon
+  - SimpleHostile
+
+- type: npcFaction
+  id: PointDefenseTarget
+
+- type: npcFaction
+  id: PointDefenseWeapon
+  hostile:
+  - PointDefenseTarget
