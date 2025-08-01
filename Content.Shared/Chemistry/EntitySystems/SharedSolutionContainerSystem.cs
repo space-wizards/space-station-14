@@ -12,6 +12,8 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -61,14 +63,15 @@ public partial record struct SolutionAccessAttemptEvent(string SolutionName)
 [UsedImplicitly]
 public abstract partial class SharedSolutionContainerSystem : EntitySystem
 {
-    [Robust.Shared.IoC.Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly SharedHandsSystem Hands = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly INetManager NetManager = default!;
+    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
+    [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
+    [Dependency] protected readonly OpenableSystem Openable = default!;
+    [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
+    [Dependency] protected readonly SharedHandsSystem Hands = default!;
+    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+    [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
+    [Dependency] protected readonly INetManager NetManager = default!;
 
     public override void Initialize()
     {
@@ -791,6 +794,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    ///     Shift click examine. Adds the volume and physical description of contained reagents.
+    /// </summary>
     private void OnExamineSolution(Entity<ExaminableSolutionComponent> entity, ref ExaminedEvent args)
     {
         if (!TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
@@ -799,6 +805,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
 
         if (!CanSeeHiddenSolution(entity, args.Examiner))
+            return;
+
+        TryComp<OpenableComponent>(entity, out var openable);
+        if (Openable.IsClosed(entity.Owner, null, openable, true) || !args.IsInDetailsRange)
             return;
 
         var primaryReagent = solution.GetPrimaryReagentId();
@@ -813,6 +823,24 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         {
             Log.Error($"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
             return;
+        }
+
+        if (!entity.Comp.VagueExamine)
+        {
+            //provide exact measurement for beakers
+            args.PushText(Loc.GetString("drink-component-on-examine-exact-volume", ("amount", solution.Volume)));
+        }
+        else
+        {
+            //general approximation
+            var remainingString = (int) PercentFull(entity) switch
+            {
+                100 => "drink-component-on-examine-is-full",
+                > 66 => "drink-component-on-examine-is-mostly-full",
+                > 33 => HalfEmptyOrHalfFull(args),
+                _ => "drink-component-on-examine-is-mostly-empty",
+            };
+            args.PushMarkup(Loc.GetString(remainingString));
         }
 
         var colorHex = solution.GetColor(PrototypeManager)
@@ -880,6 +908,21 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
     }
 
+    // some see half empty, and others see half full
+    private string HalfEmptyOrHalfFull(ExaminedEvent args)
+    {
+        string remainingString = "drink-component-on-examine-is-half-full";
+
+        if (TryComp(args.Examiner, out MetaDataComponent? examiner) && examiner.EntityName.Length > 0
+                                                                    && string.Compare(examiner.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
+            remainingString = "drink-component-on-examine-is-half-empty";
+
+        return remainingString;
+    }
+
+    /// <summary>
+    ///     Full reagent scan, such as with chemical analysis goggles.
+    /// </summary>
     private void OnSolutionExaminableVerb(Entity<ExaminableSolutionComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
