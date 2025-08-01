@@ -99,7 +99,7 @@
     - GhostOnlyWarp
   - type: WarpPoint
     follow: true
-    location: Nar'Sie
+    location: location-nar-sie
     blacklist:
       tags:
       - GhostOnlyWarp
