@@ -7929,7 +7929,7 @@ entities:
     - type: Transform
       pos: 7.4771204,20.977934
       parent: 1
-- proto: FoodDonutJellySlugcat
+- proto: FoodDonutJellyScurret
   entities:
   - uid: 2217
     components:

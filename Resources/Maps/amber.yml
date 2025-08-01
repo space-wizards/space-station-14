@@ -82709,7 +82709,7 @@ entities:
     - type: Transform
       pos: 31.391466,-35.205338
       parent: 2
-- proto: FoodDonutJellySlugcat
+- proto: FoodDonutJellyScurret
   entities:
   - uid: 3759
     components:
