@@ -55,7 +55,7 @@
   flatReductions:
     Piercing: 4
   coefficients:
-    Piercing: 0.2
+    Piercing: 0.3
     Slash: 2
     Heat: 0.5
     Bloodloss: 0
