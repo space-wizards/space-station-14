@@ -138,4 +138,7 @@ public sealed partial class PlantHolderComponent : Component
 
     [ViewVariables]
     public Entity<SolutionComponent>? SoilSolution = null;
+
+    [DataField]
+    public string HarvestToolQuality = "Slicing";
 }

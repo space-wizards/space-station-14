@@ -27,8 +27,6 @@
   - type: Food #All pies here made with a pie tin; unless you're some kind of savage, you're probably not destroying this when you eat or slice the pie!
     trash:
     - FoodPlateTin
-  - type: SliceableFood
-    count: 4
   - type: Tag
     tags:
     - Pie
@@ -78,8 +76,10 @@
     layers:
     - state: tin
     - state: apple
-  - type: SliceableFood
-    slice: FoodPieAppleSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPieAppleSlice
+      amount: 4
   - type: Tag
     tags:
     - Fruit
@@ -120,8 +120,10 @@
     layers:
     - state: tin
     - state: baklava
-  - type: SliceableFood
-    slice: FoodPieBaklavaSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPieBaklavaSlice
+      amount: 4
 
 - type: entity
   name: slice of baklava
@@ -175,8 +177,10 @@
     tags:
     - Fruit
     - Pie
-  - type: SliceableFood
-    slice: FoodPieBananaCreamSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPieBananaCreamSlice
+      amount: 4
 
 - type: entity
   name: slice of banana cream pie
@@ -213,8 +217,10 @@
     - state: tin
       color: pink
     - state: berryclafoutis
-  - type: SliceableFood
-    slice: FoodPieClafoutisSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPieClafoutisSlice
+      amount: 4
   - type: Tag
     tags:
     - Fruit
@@ -254,8 +260,10 @@
     layers:
     - state: tin
     - state: cherry
-  - type: SliceableFood
-    slice: FoodPieCherrySlice
+  - type: Sliceable
+    slices:
+    - id: FoodPieCherrySlice
+      amount: 4
   - type: Tag
     tags:
     - Fruit
@@ -294,8 +302,10 @@
     layers:
     - state: tin
     - state: meat
-  - type: SliceableFood
-    slice: FoodPieMeatSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPieMeatSlice
+      amount: 4
   - type: Tag
     tags:
     - Meat
@@ -335,8 +345,9 @@
     layers:
     - state: tin
     - state: pumpkin
-  - type: SliceableFood
-    slice: FoodPiePumpkinSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPiePumpkinSlice
   - type: Tag
     tags:
     - Pie
@@ -371,8 +382,10 @@
     layers:
     - state: tin
     - state: xeno
-  - type: SliceableFood
-    slice: FoodPieXenoSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPieXenoSlice
+      amount: 4
   - type: Tag
     tags:
     - Meat
@@ -412,8 +425,10 @@
     layers:
     - state: tin
     - state: frosty
-  - type: SliceableFood
-    slice: FoodPieFrostySlice
+  - type: Sliceable
+    slices:
+    - id: FoodPieFrostySlice
+      amount: 4
 
 - type: entity
   name: slice of frosty pie
@@ -443,8 +458,10 @@
     state: mime
   - type: Item
     heldPrefix: mime
-  - type: SliceableFood
-    slice: FoodTartMimeSlice
+  - type: Sliceable
+    slices:
+    - id: FoodTartMimeSlice
+      amount: 4
 
 - type: entity
   name: slice of mime tart

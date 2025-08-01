@@ -22,8 +22,6 @@
           Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
-  - type: SliceableFood
-    count: 8
   - type: Item
     size: Normal
     shape:
@@ -79,8 +77,10 @@
   - type: Sprite
     layers:
     - state: margherita
-  - type: SliceableFood
-    slice: FoodPizzaMargheritaSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaMargheritaSlice
+      amount: 8
 
 - type: entity
   name: slice of margherita pizza
@@ -114,8 +114,10 @@
   - type: Sprite
     layers:
     - state: meat
-  - type: SliceableFood
-    slice: FoodPizzaMeatSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaMeatSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -159,8 +161,10 @@
   - type: Sprite
     layers:
     - state: mushroom
-  - type: SliceableFood
-    slice: FoodPizzaMushroomSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaMushroomSlice
+      amount: 8
 
 - type: entity
   name: slice of mushroom pizza
@@ -197,8 +201,10 @@
   - type: Sprite
     layers:
     - state: vegetable
-  - type: SliceableFood
-    slice: FoodPizzaVegetableSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaVegetableSlice
+      amount: 8
   - type: SolutionContainerManager
     solutions:
       food:
@@ -257,8 +263,10 @@
   - type: Sprite
     layers:
     - state: donkpocket
-  - type: SliceableFood
-    slice: FoodPizzaDonkpocketSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaDonkpocketSlice
+      amount: 8
   - type: SolutionContainerManager
     solutions:
       food:
@@ -323,8 +331,10 @@
   - type: Sprite
     layers:
     - state: dank
-  - type: SliceableFood
-    slice: FoodPizzaDankSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaDankSlice
+      amount: 8
   - type: SolutionContainerManager
     solutions:
       food:
@@ -378,8 +388,10 @@
   - type: Sprite
     layers:
     - state: sassysage
-  - type: SliceableFood
-    slice: FoodPizzaSassysageSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaSassysageSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -425,8 +437,10 @@
   - type: Sprite
     layers:
     - state: pineapple
-  - type: SliceableFood
-    slice: FoodPizzaPineappleSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaPineappleSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -474,8 +488,10 @@
   - type: Sprite
     layers:
     - state: arnold
-  - type: SliceableFood
-    slice: FoodPizzaArnoldSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaArnoldSlice
+      amount: 8
   - type: SolutionContainerManager
     solutions:
       food:
@@ -581,8 +597,10 @@
   - type: Sprite
     layers:
     - state: uranium-pizza
-  - type: SliceableFood
-    slice: FoodPizzaUraniumSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaUraniumSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -656,8 +674,10 @@
     - state: cotton-pizza
   - type: Food
     requiresSpecialDigestion: true
-  - type: SliceableFood
-    slice: FoodPizzaCottonSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaCottonSlice
+      amount: 8
   - type: Tag
     tags:
     - ClothMade
@@ -719,8 +739,9 @@
   - type: Sprite
     layers:
     - state: worldpeas
-  - type: SliceableFood
-    slice: FoodPizzaWorldpeasSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaWorldpeasSlice
   - type: SolutionContainerManager
     solutions:
       food:

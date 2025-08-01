@@ -42,10 +42,9 @@
       75: Dead
   - type: Stamina
     critThreshold: 50
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
-      amount: 1
   - type: Bloodstream
     bloodMaxVolume: 100
   - type: CombatMode
@@ -240,10 +239,9 @@
       75: Dead
   - type: Stamina
     critThreshold: 50
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
-      amount: 1
   - type: Bloodstream
     bloodMaxVolume: 100
   - type: CombatMode
