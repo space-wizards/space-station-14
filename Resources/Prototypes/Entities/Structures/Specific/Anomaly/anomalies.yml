@@ -979,6 +979,7 @@
     solution: anomaly
   - type: ExaminableSolution
     solution: anomaly
+    exactVolume: true
   - type: RefillableSolution
     solution: anomaly
   - type: InjectableSolution

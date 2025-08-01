@@ -208,6 +208,7 @@
     examinable: false
   - type: ExaminableSolution
     solution: puddle
+    exactVolume: true
   - type: DrawableSolution
     solution: puddle
   - type: BadDrink
