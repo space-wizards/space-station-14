@@ -43,7 +43,7 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
             if (!TryComp<HandsComponent>(hitEntity, out var hands))
                 continue;
 
-            if (!_hands.IsHolding(hitEntity, uid, out _, hands) && _hands.TryForcePickupAnyHand(hitEntity, uid, handsComp: hands))
+            if (!_hands.IsHolding((hitEntity, hands), uid, out _) && _hands.TryForcePickupAnyHand(hitEntity, uid, handsComp: hands))
             {
                 _popup.PopupEntity(Loc.GetString("hot-potato-passed",
                     ("from", args.User), ("to", hitEntity)), uid, PopupType.Medium);

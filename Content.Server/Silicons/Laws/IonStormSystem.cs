@@ -22,42 +22,24 @@ public sealed class IonStormSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     // funny
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Threats = "IonStormThreats";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Objects = "IonStormObjects";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Crew = "IonStormCrew";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Adjectives = "IonStormAdjectives";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Verbs = "IonStormVerbs";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string NumberBase = "IonStormNumberBase";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string NumberMod = "IonStormNumberMod";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Areas = "IonStormAreas";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Feelings = "IonStormFeelings";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string FeelingsPlural = "IonStormFeelingsPlural";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Musts = "IonStormMusts";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Requires = "IonStormRequires";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Actions = "IonStormActions";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Allergies = "IonStormAllergies";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string AllergySeverities = "IonStormAllergySeverities";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Concepts = "IonStormConcepts";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Drinks = "IonStormDrinks";
-    [ValidatePrototypeId<DatasetPrototype>]
-    private const string Foods = "IonStormFoods";
+    private static readonly ProtoId<DatasetPrototype> Threats = "IonStormThreats";
+    private static readonly ProtoId<DatasetPrototype> Objects = "IonStormObjects";
+    private static readonly ProtoId<DatasetPrototype> Crew = "IonStormCrew";
+    private static readonly ProtoId<DatasetPrototype> Adjectives = "IonStormAdjectives";
+    private static readonly ProtoId<DatasetPrototype> Verbs = "IonStormVerbs";
+    private static readonly ProtoId<DatasetPrototype> NumberBase = "IonStormNumberBase";
+    private static readonly ProtoId<DatasetPrototype> NumberMod = "IonStormNumberMod";
+    private static readonly ProtoId<DatasetPrototype> Areas = "IonStormAreas";
+    private static readonly ProtoId<DatasetPrototype> Feelings = "IonStormFeelings";
+    private static readonly ProtoId<DatasetPrototype> FeelingsPlural = "IonStormFeelingsPlural";
+    private static readonly ProtoId<DatasetPrototype> Musts = "IonStormMusts";
+    private static readonly ProtoId<DatasetPrototype> Requires = "IonStormRequires";
+    private static readonly ProtoId<DatasetPrototype> Actions = "IonStormActions";
+    private static readonly ProtoId<DatasetPrototype> Allergies = "IonStormAllergies";
+    private static readonly ProtoId<DatasetPrototype> AllergySeverities = "IonStormAllergySeverities";
+    private static readonly ProtoId<DatasetPrototype> Concepts = "IonStormConcepts";
+    private static readonly ProtoId<DatasetPrototype> Drinks = "IonStormDrinks";
+    private static readonly ProtoId<DatasetPrototype> Foods = "IonStormFoods";
 
     /// <summary>
     /// Randomly alters the laws of an individual silicon.
@@ -200,11 +182,11 @@ public sealed class IonStormSystem : EntitySystem
         // i dont think theres a way to do this in fluent
         var (who, plural) = _robustRandom.Next(0, 5) switch
         {
-            0 => (Loc.GetString("ion-storm-you"), false),
-            1 => (Loc.GetString("ion-storm-the-station"), true),
-            2 => (Loc.GetString("ion-storm-the-crew"), true),
-            3 => (Loc.GetString("ion-storm-the-job", ("job", crew2)), false),
-            _ => (area, true) // THE SINGULARITY REQUIRES THE HAPPY CLOWNS
+            0 => (Loc.GetString("ion-storm-you"), true),
+            1 => (Loc.GetString("ion-storm-the-station"), false),
+            2 => (Loc.GetString("ion-storm-the-crew"), false),
+            3 => (Loc.GetString("ion-storm-the-job", ("job", crew2)), true),
+            _ => (area, false) // THE SINGULARITY REQUIRES THE HAPPY CLOWNS
         };
         var jobChange = _robustRandom.Next(0, 3) switch
         {
@@ -231,7 +213,7 @@ public sealed class IonStormSystem : EntitySystem
         return _robustRandom.Next(0, 35) switch
         {
             0  => Loc.GetString("ion-storm-law-on-station", ("joined", joined), ("subjects", triple)),
-            1  => Loc.GetString("ion-storm-law-no-shuttle", ("joined", joined), ("subjects", triple)),
+            1  => Loc.GetString("ion-storm-law-call-shuttle", ("joined", joined), ("subjects", triple)),
             2  => Loc.GetString("ion-storm-law-crew-are", ("who", crewAll), ("joined", joined), ("subjects", objectsThreats)),
             3  => Loc.GetString("ion-storm-law-subjects-harmful", ("adjective", adjective), ("subjects", triple)),
             4  => Loc.GetString("ion-storm-law-must-harmful", ("must", must)),

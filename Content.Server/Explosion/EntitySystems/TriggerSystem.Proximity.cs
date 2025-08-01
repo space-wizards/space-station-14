@@ -82,7 +82,7 @@ public sealed partial class TriggerSystem
 
     private void SetProximityAppearance(EntityUid uid, TriggerOnProximityComponent component)
     {
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        if (TryComp(uid, out AppearanceComponent? appearance))
         {
             _appearance.SetData(uid, ProximityTriggerVisualState.State, component.Enabled ? ProximityTriggerVisuals.Inactive : ProximityTriggerVisuals.Off, appearance);
         }
@@ -107,7 +107,7 @@ public sealed partial class TriggerSystem
         // Queue a visual update for when the animation is complete.
         component.NextVisualUpdate = curTime + component.AnimationDuration;
 
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        if (TryComp(uid, out AppearanceComponent? appearance))
         {
             _appearance.SetData(uid, ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active, appearance);
         }

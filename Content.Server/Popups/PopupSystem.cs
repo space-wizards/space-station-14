@@ -35,6 +35,16 @@ namespace Content.Server.Popups
                 RaiseNetworkEvent(new PopupCursorEvent(message, type), actor.PlayerSession);
         }
 
+        public override void PopupPredictedCursor(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
+        {
+            // Do nothing, since the client already predicted the popup.
+        }
+
+        public override void PopupPredictedCursor(string? message, EntityUid recipient, PopupType type = PopupType.Small)
+        {
+            // Do nothing, since the client already predicted the popup.
+        }
+
         public override void PopupCoordinates(string? message, EntityCoordinates coordinates, Filter filter, bool replayRecord, PopupType type = PopupType.Small)
         {
             if (message == null)
@@ -147,6 +157,20 @@ namespace Content.Server.Popups
                 // With no recipient, send to everyone (in PVS range)
                 RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)));
             }
+        }
+
+        public override void PopupPredicted(string? message, EntityUid uid, EntityUid? recipient, Filter filter, bool recordReplay, PopupType type = PopupType.Small)
+        {
+            if (message == null)
+                return;
+
+            if (recipient != null)
+            {
+                // Don't send to recipient, since they predicted it locally
+                filter = filter.RemovePlayerByAttachedEntity(recipient.Value);
+            }
+
+            RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)), filter, recordReplay);
         }
 
         public override void PopupPredicted(string? recipientMessage, string? othersMessage, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)

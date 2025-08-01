@@ -1,7 +1,7 @@
 <DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-    Title="{Loc ban-panel-title}" MinSize="350 500">
+    Title="{Loc ban-panel-title}" MinSize="410 500">
     <BoxContainer Orientation="Vertical">
         <TabContainer Name="Tabs" VerticalExpand="True">
             <!-- Basic info -->

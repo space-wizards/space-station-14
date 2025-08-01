@@ -31,7 +31,7 @@ traitor-role-greeting =
 traitor-role-codewords =
     The codewords are: [color = lightgray]
     {$codewords}.[/color]
-    Codewords can be used in regular conversation to identify yourself discretely to other syndicate agents.
+    Codewords can be used in regular conversation to identify yourself discreetly to other syndicate agents.
     Listen for them, and keep them secret.
 traitor-role-uplink-code =
     Set your ringtone to the notes [color = lightgray]{$code}[/color] to lock or unlock your uplink.

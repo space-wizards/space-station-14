@@ -1,3 +1,5 @@
+using System.Numerics;
+using Content.Client.Changelog;
 using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
@@ -7,6 +9,7 @@ using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
@@ -20,9 +23,11 @@ namespace Content.Client.Gameplay
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+        [Dependency] private readonly ChangelogManager _changelog = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         private FpsCounter _fpsCounter = default!;
+        private Label _version = default!;
 
         public MainViewport Viewport => _uiManager.ActiveScreen!.GetWidget<MainViewport>()!;
 
@@ -40,6 +45,7 @@ namespace Content.Client.Gameplay
             base.Startup();
 
             LoadMainScreen();
+            _configurationManager.OnValueChanged(CCVars.UILayout, ReloadMainScreenValueChange);
 
             // Add the hand-item overlay.
             _overlayManager.AddOverlay(new ShowHandItemOverlay());
@@ -50,7 +56,24 @@ namespace Content.Client.Gameplay
             UserInterfaceManager.PopupRoot.AddChild(_fpsCounter);
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
-            _configurationManager.OnValueChanged(CCVars.UILayout, ReloadMainScreenValueChange);
+
+            // Version number watermark.
+            _version = new Label();
+            _version.FontColorOverride = Color.FromHex("#FFFFFF20");
+            _version.Text = _changelog.GetClientVersion();
+            UserInterfaceManager.PopupRoot.AddChild(_version);
+            _configurationManager.OnValueChanged(CCVars.HudVersionWatermark, (show) => { _version.Visible = VersionVisible(); }, true);
+            _configurationManager.OnValueChanged(CCVars.ForceClientHudVersionWatermark, (show) => { _version.Visible = VersionVisible(); }, true);
+            // TODO make this centered or something
+            LayoutContainer.SetPosition(_version, new Vector2(70, 0));
+        }
+
+        // This allows servers to force the watermark on clients
+        private bool VersionVisible()
+        {
+            var client = _configurationManager.GetCVar(CCVars.HudVersionWatermark);
+            var server = _configurationManager.GetCVar(CCVars.ForceClientHudVersionWatermark);
+            return client || server;
         }
 
         protected override void Shutdown()

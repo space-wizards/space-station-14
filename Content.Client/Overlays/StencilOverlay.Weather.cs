@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Light.Components;
 using Content.Shared.Weather;
 using Robust.Client.Graphics;
 using Robust.Shared.Map.Components;
@@ -34,11 +35,12 @@ public sealed partial class StencilOverlay
                 var matrix = _transform.GetWorldMatrix(grid, xformQuery);
                 var matty =  Matrix3x2.Multiply(matrix, invMatrix);
                 worldHandle.SetTransform(matty);
+                _entManager.TryGetComponent(grid.Owner, out RoofComponent? roofComp);
 
                 foreach (var tile in _map.GetTilesIntersecting(grid.Owner, grid, worldAABB))
                 {
                     // Ignored tiles for stencil
-                    if (_weather.CanWeatherAffect(grid.Owner, grid, tile))
+                    if (_weather.CanWeatherAffect(grid.Owner, grid, tile, roofComp))
                     {
                         continue;
                     }
@@ -53,13 +55,13 @@ public sealed partial class StencilOverlay
         }, Color.Transparent);
 
         worldHandle.SetTransform(Matrix3x2.Identity);
-        worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilMask").Instance());
+        worldHandle.UseShader(_protoManager.Index(StencilMask).Instance());
         worldHandle.DrawTextureRect(_blep!.Texture, worldBounds);
         var curTime = _timing.RealTime;
         var sprite = _sprite.GetFrame(weatherProto.Sprite, curTime);
 
         // Draw the rain
-        worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilDraw").Instance());
+        worldHandle.UseShader(_protoManager.Index(StencilDraw).Instance());
         _parallax.DrawParallax(worldHandle, worldAABB, sprite, curTime, position, Vector2.Zero, modulate: (weatherProto.Color ?? Color.White).WithAlpha(alpha));
 
         worldHandle.SetTransform(Matrix3x2.Identity);

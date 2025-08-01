@@ -10,42 +10,60 @@
       - state: green
       - sprite: Objects/Consumable/Drinks/dr_gibb.rsi
         state: icon
-  - type: RandomSpawner
-    prototypes:
-      - DrinkColaBottleFull
-      - DrinkSpaceMountainWindBottleFull
-      - DrinkSpaceUpBottleFull
-      - DrinkWaterBottleFull
-      - DrinkColaCan
-      - DrinkIcedTeaCan
-      - DrinkLemonLimeCan
-      - DrinkLemonLimeCranberryCan
-      - DrinkGrapeCan
-      - DrinkRootBeerCan
-      - DrinkSodaWaterCan
-      - DrinkSpaceMountainWindCan
-      - DrinkSpaceUpCan
-      - DrinkStarkistCan
-      - DrinkTonicWaterCan
-      - DrinkFourteenLokoCan
-      - DrinkChangelingStingCan
-      - DrinkDrGibbCan
-      - DrinkEnergyDrinkCan
-      - DrinkShamblersJuiceCan
-      - DrinkSolDryCan
-      - DrinkPwrGameCan
-      - DrinkHotCoco
-      - DrinkHotCoffee
-      - DrinkCafeLatte
-      - DrinkTeacup
-      - DrinkGreenTea
-      - DrinkWaterCup
-      - DrinkBeerCan
-      - DrinkWineCan
-    chance: 0.8
-    offset: 0.0
-    #rare
-    rarePrototypes:
-      - DrinkNukieCan
-      - DrinkLean
-    rareChance: 0.01
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomAllSodaTable
+      prob: 0.8
+
+- type: entityTable
+  id: RandomAllSodaTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomCommonSodaTable
+      weight: 0.95
+    - !type:NestedSelector
+      tableId: RandomRareSodaTable
+      weight: 0.05
+
+- type: entityTable
+  id: RandomCommonSodaTable
+  table: !type:GroupSelector
+    children:
+    - id: DrinkBeerCan
+    - id: DrinkCafeLatte
+    - id: DrinkChangelingStingCan
+    - id: DrinkColaBottleFull
+    - id: DrinkColaCan
+    - id: DrinkDrGibbCan
+    - id: DrinkEnergyDrinkCan
+    - id: DrinkFourteenLokoCan
+    - id: DrinkGrapeCan
+    - id: DrinkGreenTea
+    - id: DrinkHotCoco
+    - id: DrinkHotCoffee
+    - id: DrinkIcedTeaCan
+    - id: DrinkLemonLimeCan
+    - id: DrinkLemonLimeCranberryCan
+    - id: DrinkPwrGameCan
+    - id: DrinkRootBeerCan
+    - id: DrinkShamblersJuiceCan
+    - id: DrinkSodaWaterCan
+    - id: DrinkSolDryCan
+    - id: DrinkSpaceMountainWindBottleFull
+    - id: DrinkSpaceMountainWindCan
+    - id: DrinkSpaceUpBottleFull
+    - id: DrinkSpaceUpCan
+    - id: DrinkStarkistCan
+    - id: DrinkTeacup
+    - id: DrinkTonicWaterCan
+    - id: DrinkWaterBottleFull
+    - id: DrinkWaterCup
+    - id: DrinkWineCan
+
+- type: entityTable
+  id: RandomRareSodaTable
+  table: !type:GroupSelector
+    children:
+    - id: DrinkNukieCan
+    - id: DrinkLean

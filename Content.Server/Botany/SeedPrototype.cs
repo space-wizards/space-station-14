@@ -1,20 +1,20 @@
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
+using Content.Server.EntityEffects;
 using Content.Shared.Atmos;
-using Content.Shared.EntityEffects;
+using Content.Shared.Database;
 using Content.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Botany;
 
-[Prototype("seed")]
+[Prototype]
 public sealed partial class SeedPrototype : SeedData, IPrototype
 {
-    [IdDataField] public string ID { get; private init; } = default!;
+    [IdDataField] public string ID { get; private set; } = default!;
 }
 
 public enum HarvestType : byte
@@ -81,7 +81,7 @@ public partial struct SeedChemQuantity
 
 // TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
 [Virtual, DataDefinition]
-[Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(EntityEffect), typeof(MutationSystem))]
+[Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(EntityEffectSystem), typeof(MutationSystem))]
 public partial class SeedData
 {
     #region Tracking
@@ -130,8 +130,8 @@ public partial class SeedData
     /// <summary>
     ///     The entity prototype this seed spawns when it gets harvested.
     /// </summary>
-    [DataField("productPrototypes", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> ProductPrototypes = new();
+    [DataField]
+    public List<EntProtoId> ProductPrototypes = new();
 
     [DataField] public Dictionary<string, SeedChemQuantity> Chemicals = new();
 
@@ -240,8 +240,20 @@ public partial class SeedData
     /// <summary>
     ///     The seed prototypes this seed may mutate into when prompted to.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<SeedPrototype>))]
-    public List<string> MutationPrototypes = new();
+    [DataField]
+    public List<ProtoId<SeedPrototype>> MutationPrototypes = new();
+
+    /// <summary>
+    ///  Log impact for when the seed is planted.
+    /// </summary>
+    [DataField]
+    public LogImpact? PlantLogImpact = null;
+
+    /// <summary>
+    ///  Log impact for when the seed is harvested.
+    /// </summary>
+    [DataField]
+    public LogImpact? HarvestLogImpact = null;
 
     public SeedData Clone()
     {
@@ -255,8 +267,8 @@ public partial class SeedData
             Mysterious = Mysterious,
 
             PacketPrototype = PacketPrototype,
-            ProductPrototypes = new List<string>(ProductPrototypes),
-            MutationPrototypes = new List<string>(MutationPrototypes),
+            ProductPrototypes = new List<EntProtoId>(ProductPrototypes),
+            MutationPrototypes = new List<ProtoId<SeedPrototype>>(MutationPrototypes),
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
             ConsumeGasses = new Dictionary<Gas, float>(ConsumeGasses),
             ExudeGasses = new Dictionary<Gas, float>(ExudeGasses),
@@ -315,8 +327,8 @@ public partial class SeedData
             Mysterious = other.Mysterious,
 
             PacketPrototype = other.PacketPrototype,
-            ProductPrototypes = new List<string>(other.ProductPrototypes),
-            MutationPrototypes = new List<string>(other.MutationPrototypes),
+            ProductPrototypes = new List<EntProtoId>(other.ProductPrototypes),
+            MutationPrototypes = new List<ProtoId<SeedPrototype>>(other.MutationPrototypes),
 
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
             ConsumeGasses = new Dictionary<Gas, float>(ConsumeGasses),
