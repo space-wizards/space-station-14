@@ -147,8 +147,8 @@
       coefficients:
         Blunt: 0.8
         Slash: 0.8
-        Piercing: 0.8  
-        
+        Piercing: 0.8
+
 # USSP
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase, BaseSovietContraband]
@@ -197,9 +197,9 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-        
+
 ##ntcc-medics
-        
+
 - type: entity
   parent: [ BaseCentcommContraband, ClothingHeadHelmetHardsuitSyndie ]
   id: ClothingHeadHelmetHardsuitNTCCConsortiumMedic
@@ -220,7 +220,7 @@
         Heat: 0.9
 
 - type: entity
-  parent: ClothingHeadHardsuitBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitLuxmax
   categories: [ HideSpawnMenu ]
   name: QM's luxury maxim hardsuit helmet
