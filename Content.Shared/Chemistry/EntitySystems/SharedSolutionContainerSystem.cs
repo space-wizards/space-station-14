@@ -298,7 +298,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     /// <summary>
     /// Dirties a solution entity that has been modified and prompts updates to chemical reactions and overflow state.
-    /// Should be invoked whenever a solution entity is changed.
+    /// Should be invoked whenever a solution entity is modified.
     /// </summary>
     /// <remarks>
     /// 90% of this system is ensuring that this proc is invoked whenever a solution entity is changed. The other 10% <i>is</i> this proc.
@@ -572,7 +572,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (quantity == 0)
             return false;
 
-        return TryDirectTransferReagents(soln, source, quantity);
+        // TODO This should be made into a function that directly transfers reagents.
+        // Currently this is quite inefficient.
+        solution.AddSolution(source.SplitSolution(quantity), PrototypeManager);
+
+        UpdateChemicals(soln);
+        return true;
     }
 
     /// <summary>
@@ -810,22 +815,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        var colorHex = primary.SubstanceColor
-            .ToHexNoAlpha();
-
-        // Ensure readability for dark colors by checking contrast
-        // For very dark colors, use a lighter variant
-        if (primary.SubstanceColor.R + primary.SubstanceColor.G + primary.SubstanceColor.B < 0.3f * 3)
-        {
-            // Create a lighter version of the color
-            var lighterColor = new Color(
-                Math.Min(1f, primary.SubstanceColor.R + 0.3f),
-                Math.Min(1f, primary.SubstanceColor.G + 0.3f),
-                Math.Min(1f, primary.SubstanceColor.B + 0.3f),
-                primary.SubstanceColor.A
-            );
-            colorHex = lighterColor.ToHexNoAlpha();
-        }
+        var colorHex = solution.GetColor(PrototypeManager)
+            .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
         var messageString = "shared-solution-container-component-on-examine-main-text";
 
         using (args.PushGroup(nameof(ExaminableSolutionComponent)))
@@ -1241,33 +1232,5 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (overflow < 0)
             dissolvedReagentAmount += overflow;
         return dissolvedReagentAmount;
-    }
-
-    /// <summary>
-    /// Directly transfers reagents from one solution to another without creating intermediate solutions.
-    /// </summary>
-    public bool TryDirectTransferReagents(Entity<SolutionComponent> targetSoln, Solution source, FixedPoint2 quantity)
-    {
-        var (uid, comp) = targetSoln;
-        var solution = comp.Solution;
-
-        if (quantity <= FixedPoint2.Zero || source.Volume <= FixedPoint2.Zero)
-            return false;
-
-        quantity = FixedPoint2.Min(quantity, solution.AvailableVolume, source.Volume);
-        if (quantity == 0)
-            return false;
-
-        foreach (var (reagentId, amount) in source.Contents)
-        {
-            var transferAmount = amount * (quantity / source.Volume);
-            if (transferAmount > FixedPoint2.Zero)
-            {
-                solution.AddReagent(reagentId, transferAmount);
-            }
-        }
-
-        UpdateChemicals(targetSoln);
-        return true;
     }
 }

@@ -31,18 +31,15 @@ public sealed class PlantGrowthCycleSystem : EntitySystem
         var query = EntityQueryEnumerator<PlantHolderComponent>();
         while (query.MoveNext(out var uid, out var plantHolder))
         {
-            // Only process plants that have seeds and are alive
             if (plantHolder.Seed == null || plantHolder.Dead)
                 continue;
 
-            // Check if it's time for this plant to grow
             if (_gameTiming.CurTime < plantHolder.LastCycle + plantHolder.CycleDelay)
                 continue;
 
             var plantGrow = new OnPlantGrowEvent();
             RaiseLocalEvent(uid, ref plantGrow);
 
-            // Update the last cycle time after processing growth
             plantHolder.LastCycle = _gameTiming.CurTime;
         }
 

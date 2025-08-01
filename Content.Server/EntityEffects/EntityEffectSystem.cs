@@ -164,16 +164,8 @@ public sealed class EntityEffectSystem : EntitySystem
             return;
         }
 
-        // For non-reagent effects, we need to find the organ entity differently
-        var metabolizer = EntityManager.GetComponentOrNull<MetabolizerComponent>(args.Args.TargetEntity);
-        if (metabolizer != null)
-        {
-            args.Result = OrganCondition(args.Condition, (args.Args.TargetEntity, metabolizer));
-            return;
-        }
-
-        // If no metabolizer is found, the condition fails
-        args.Result = false;
+        // TODO: Someone needs to figure out how to do this for non-reagent effects.
+        throw new NotImplementedException();
     }
 
     public bool OrganCondition(OrganType condition, Entity<MetabolizerComponent?> metabolizer)

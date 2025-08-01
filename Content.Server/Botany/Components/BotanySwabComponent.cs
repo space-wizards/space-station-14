@@ -11,7 +11,7 @@ public sealed partial class BotanySwabComponent : Component
     /// <summary>
     /// Delay in seconds between swab uses.
     /// </summary>
-    [DataField("swabDelay")]
+    [DataField]
     public float SwabDelay = 2f;
 
     /// <summary>
