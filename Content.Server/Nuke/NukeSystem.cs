@@ -108,6 +108,12 @@ public sealed class NukeSystem : EntitySystem
         var manager = Spawn();
         EnsureComp<NukeCodeManagerComponent>(manager, out var code);
         code.Code = GenerateRandomNumberString(_globalCodeLength);
+
+        var query = EntityQueryEnumerator<NukeComponent>();
+        while (query.MoveNext(out var uid, out var nuke))
+        {
+            nuke.Code = code.Code;
+        }
     }
 
     private void OnInit(EntityUid uid, NukeComponent component, ComponentInit args)
