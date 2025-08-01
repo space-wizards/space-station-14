@@ -1177,7 +1177,7 @@
 
 - type: entity
   parent: PlushieHuman
-  id: PlushiePercy
+  id: PlushiePercy #greytide worldwide
   name: Percy Plushie
   description: A cute plushie of the Vassal to the Grey King himself, Percival Beck. It smells faintly of old cigarettes.
   components:
