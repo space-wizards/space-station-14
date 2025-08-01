@@ -1,7 +1,7 @@
 ﻿namespace Content.Shared.Chemistry.Components.SolutionManager;
 
 /// <summary>
-///     Component for examining a solution with shift click.
+///     Component for examining a solution with shift click or through <see cref="SolutionScanEvent"/>.
 /// </summary>
 [RegisterComponent]
 public sealed partial class ExaminableSolutionComponent : Component
@@ -19,9 +19,9 @@ public sealed partial class ExaminableSolutionComponent : Component
     public bool HeldOnly;
 
     /// <summary>
-    ///     If true, the examine text will give an approximation of the remaining solution.
-    ///     If false, the exact unit count will be shown.
+    ///     If false, the examine text will give an approximation of the remaining solution.
+    ///     If true, the exact unit count will be shown.
     /// </summary>
     [DataField]
-    public bool VagueExamine;
+    public bool ExactVolume;
 }

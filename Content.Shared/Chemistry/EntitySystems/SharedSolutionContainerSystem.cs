@@ -795,71 +795,51 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Shift click examine. Adds the volume and physical description of contained reagents.
+    ///     Shift click examine.
     /// </summary>
     private void OnExamineSolution(Entity<ExaminableSolutionComponent> entity, ref ExaminedEvent args)
     {
-        if (!TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
-        {
-            return;
-        }
-
-        if (!CanSeeHiddenSolution(entity, args.Examiner))
-            return;
-
-        TryComp<OpenableComponent>(entity, out var openable);
-        if (Openable.IsClosed(entity.Owner, null, openable, true) || !args.IsInDetailsRange)
+        if (!args.IsInDetailsRange ||
+            !CanSeeHiddenSolution(entity, args.Examiner) ||
+            !TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution) ||
+            Openable.IsClosed(entity.Owner, predicted: true))
             return;
 
         var primaryReagent = solution.GetPrimaryReagentId();
 
-        if (string.IsNullOrEmpty(primaryReagent?.Prototype))
+        if (string.IsNullOrEmpty(primaryReagent?.Prototype) ||
+            !PrototypeManager.Resolve<ReagentPrototype>(primaryReagent.Value.Prototype, out var primary))
         {
             args.PushText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
             return;
         }
 
-        if (!PrototypeManager.TryIndex(primaryReagent.Value.Prototype, out ReagentPrototype? primary))
-        {
-            Log.Error($"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
-            return;
-        }
-
-        if (!entity.Comp.VagueExamine)
-        {
-            //provide exact measurement for beakers
-            args.PushText(Loc.GetString("drink-component-on-examine-exact-volume", ("amount", solution.Volume)));
-        }
-        else
-        {
-            //general approximation
-            var remainingString = (int) PercentFull(entity) switch
-            {
-                100 => "drink-component-on-examine-is-full",
-                > 66 => "drink-component-on-examine-is-mostly-full",
-                > 33 => HalfEmptyOrHalfFull(args),
-                _ => "drink-component-on-examine-is-mostly-empty",
-            };
-            args.PushMarkup(Loc.GetString(remainingString));
-        }
-
-        var colorHex = solution.GetColor(PrototypeManager)
-            .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
-        var messageString = "shared-solution-container-component-on-examine-main-text";
-
         using (args.PushGroup(nameof(ExaminableSolutionComponent)))
         {
-            args.PushMarkup(Loc.GetString(messageString,
-                ("color", colorHex),
-                ("wordedAmount", Loc.GetString(solution.Contents.Count == 1
-                    ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
-                    : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-                ("desc", primary.LocalizedPhysicalDescription)));
+            // Push amount of reagent
 
-            var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
+            var amountString = entity.Comp.ExactVolume ?
+                        Loc.GetString("drink-component-on-examine-exact-volume", ("amount", solution.Volume)) : //Exact measurement
+                        Loc.GetString(VagueSolutionVolume(solution, args.Examiner)); //General approximation
+
+            args.PushMarkup(amountString);
+
+            // Push the physical description of the primary reagent
+
+            var colorHex = solution.GetColor(PrototypeManager)
+                .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
+
+            args.PushMarkup(Loc.GetString("shared-solution-container-component-on-examine-main-text",
+                                        ("color", colorHex),
+                                        ("wordedAmount", Loc.GetString(solution.Contents.Count == 1
+                                            ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
+                                            : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
+                                        ("desc", primary.LocalizedPhysicalDescription)));
+
+            // Push the recognizable reagents
 
             // Sort the reagents by amount, descending then alphabetically
-            var sortedReagentPrototypes = reagentPrototypes
+            var sortedReagentPrototypes = solution.GetReagentPrototypes(PrototypeManager)
                 .OrderByDescending(pair => pair.Value.Value)
                 .ThenBy(pair => pair.Key.LocalizedName);
 
@@ -880,6 +860,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             if (recognized.Count == 0)
                 return;
 
+            // Build a message of all recognizable reagents
             var msg = new StringBuilder();
             foreach (var reagent in recognized)
             {
@@ -908,13 +889,28 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
     }
 
-    // some see half empty, and others see half full
-    private string HalfEmptyOrHalfFull(ExaminedEvent args)
+    /// <returns>A LocId with an approximation of how much volume is left in a solution.</returns>
+    public string VagueSolutionVolume(Solution sol, EntityUid examiner)
+    {
+        return (int) PercentFull(sol) switch
+            {
+                100 => "drink-component-on-examine-is-full",
+                > 66 => "drink-component-on-examine-is-mostly-full",
+                > 33 => HalfEmptyOrHalfFull(examiner),
+                _ => "drink-component-on-examine-is-mostly-empty",
+            };
+    }
+
+    /// <summary>
+    ///     Some spessmen see half full, some see half empty, but they always see the same thing.
+    /// </summary>
+    /// <returns>A LocId for half full or half empty.</returns>
+    private string HalfEmptyOrHalfFull(EntityUid examiner)
     {
         string remainingString = "drink-component-on-examine-is-half-full";
 
-        if (TryComp(args.Examiner, out MetaDataComponent? examiner) && examiner.EntityName.Length > 0
-                                                                    && string.Compare(examiner.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
+        if (TryComp(examiner, out MetaDataComponent? meta) && meta.EntityName.Length > 0
+                                                            && string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
             remainingString = "drink-component-on-examine-is-half-empty";
 
         return remainingString;
