@@ -310,7 +310,7 @@
     autoRecharge: true
     autoRechargeRate: 100
     autoRechargePause: true
-    autoRechargePauseTime: 50
+    autoRechargePauseTime: 44
 
 - type: entity
   parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
