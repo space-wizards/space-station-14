@@ -1,4 +1,5 @@
 using System.Security.Policy;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Botany.Components;
 
@@ -10,7 +11,7 @@ public partial class PlantGrowthComponent : Component {
     /// </summary>
     public PlantGrowthComponent DupeComponent()
     {
-        return (PlantGrowthComponent)this.MemberwiseClone();
+        return IoCManager.Resolve<ISerializationManager>().CreateCopy(this, notNullableOverride: true);
     }
 }
 
