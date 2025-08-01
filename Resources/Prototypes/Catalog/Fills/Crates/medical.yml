@@ -176,7 +176,7 @@
   id: CrateUnidentifiedCorpse
   parent: CrateFreezer
   name: cadaver crate
-  description: placeholder
+  description: a single corpse, that definitely died of natural causes.
   components:
   - type: StorageFill
     contents:

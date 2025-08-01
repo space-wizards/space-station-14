@@ -147,3 +147,13 @@
   cost: 750
   category: cargoproduct-category-name-medical
   group: market
+
+- type: cargoProduct
+  id: CrateUnidentifiedCorpse
+  icon:
+   sprite: Structures/Storage/Crates/freezer.rsi
+   state: icon
+  product: CrateUnidentifiedCorpse
+  cost: 3000
+  category: cargoproduct-category-name-medical
+  group: market
