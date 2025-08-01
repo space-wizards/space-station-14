@@ -171,3 +171,13 @@
         amount: 2
       - id: ClothingMaskSterile
         amount: 2
+
+- type: entity
+  id: CrateUnidentifiedCorpse
+  parent: CrateFreezer
+  name: cadaver crate
+  description: placeholder
+  components:
+  - type: StorageFill
+    contents:
+    - id: SalvageHumanCorpse
