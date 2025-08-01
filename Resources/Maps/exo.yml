@@ -58812,7 +58812,7 @@ entities:
     - type: Transform
       pos: 6.386328,-82.455345
       parent: 2
-- proto: FoodDonutJellyScurret
+- proto: FoodDonutJellySlugcat
   entities:
   - uid: 7256
     components:

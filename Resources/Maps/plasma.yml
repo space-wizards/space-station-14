@@ -83253,7 +83253,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -47.5,-26.5
       parent: 2
-- proto: FoodDonutJellyScurret
+- proto: FoodDonutJellySlugcat
   entities:
   - uid: 18408
     components:
