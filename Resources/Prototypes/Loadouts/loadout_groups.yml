@@ -173,6 +173,7 @@
   - CaptainBackpack
   - CaptainSatchel
   - CaptainDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: CaptainOuterClothing
@@ -218,6 +219,7 @@
   - CommonSatchel
   - CommonDuffel
   - HoPBackpackIan
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: HoPOuterClothing
@@ -491,6 +493,7 @@
   - BotanistBackpack
   - BotanistSatchel
   - BotanistDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: BotanistOuterClothing
@@ -524,6 +527,7 @@
   - ClownBackpack
   - ClownSatchel
   - ClownDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: ClownOuterClothing
@@ -582,6 +586,7 @@
   - MimeBackpack
   - MimeSatchel
   - MimeDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: MimeOuterClothing
@@ -723,6 +728,7 @@
   - CargoTechnicianBackpack
   - CargoTechnicianSatchel
   - CargoTechnicianDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: CargoTechnicianOuterClothing
@@ -748,6 +754,7 @@
   - SalvageSpecialistBackpack
   - SalvageSpecialistSatchel
   - SalvageSpecialistDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: SalvageSpecialistOuterClothing
@@ -839,6 +846,7 @@
   - StationEngineerBackpack
   - StationEngineerSatchel
   - StationEngineerDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: StationEngineerOuterClothing
@@ -884,6 +892,7 @@
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianSatchel
   - AtmosphericTechnicianDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: AtmosphericTechnicianShoes
@@ -981,6 +990,7 @@
   - ScientistBackpack
   - ScientistSatchel
   - ScientistDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: ScientistOuterClothing
@@ -1117,6 +1127,7 @@
   - BrigmedicBackpack
   - BrigmedicSatchel
   - BrigmedicDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: BrigmedicOuterClothing
@@ -1182,6 +1193,7 @@
   - SecurityBackpack
   - SecuritySatchel
   - SecurityDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: SecurityBelt
@@ -1359,6 +1371,7 @@
   - MedicalDoctorBackpack
   - MedicalDoctorSatchel
   - MedicalDoctorDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: MedicalShoes
@@ -1422,6 +1435,7 @@
   - ChemistBackpack
   - ChemistSatchel
   - ChemistDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: ParamedicHead

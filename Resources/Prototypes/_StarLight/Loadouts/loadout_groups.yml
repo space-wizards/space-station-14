@@ -80,6 +80,7 @@
   - RoboticistBackpack
   - RoboticistSatchel
   - RoboticistDuffel
+  - LeatherSatchel
   
 - type: loadoutGroup
   id: NanoTrasenRepresentativeJumpsuit
@@ -103,6 +104,7 @@
   - BlueShieldBackpack
   - BlueShieldSatchel
   - BlueShieldDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: BlueShieldJumpsuit
