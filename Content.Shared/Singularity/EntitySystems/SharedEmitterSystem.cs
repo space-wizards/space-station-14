@@ -34,7 +34,7 @@ public abstract class SharedEmitterSystem : EntitySystem
 
         foreach (var type in ent.Comp.SelectableTypes)
         {
-            var proto = _prototype.Index<EntityPrototype>(type);
+            var proto = _prototype.Index(type);
 
             var v = new Verb
             {
@@ -60,7 +60,7 @@ public abstract class SharedEmitterSystem : EntitySystem
         if (ent.Comp.SelectableTypes.Count < 2)
             return;
 
-        var proto = _prototype.Index<EntityPrototype>(ent.Comp.BoltType);
+        var proto = _prototype.Index(ent.Comp.BoltType);
         args.PushMarkup(Loc.GetString("emitter-component-current-type", ("type", proto.Name)));
     }
 }
