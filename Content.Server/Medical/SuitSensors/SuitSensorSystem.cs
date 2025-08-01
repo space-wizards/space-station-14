@@ -74,7 +74,6 @@ public sealed class SuitSensorSystem : SharedSuitSensorSystem
             }
 
             _deviceNetworkSystem.QueuePacket(uid, sensor.ConnectedServer, payload, device: device);
-            Dirty(uid, sensor);
         }
     }
 
@@ -131,6 +130,5 @@ public sealed class SuitSensorSystem : SharedSuitSensorSystem
     {
         SetSensor((uid, component), component.PreviousMode, null);
         component.ControlsLocked = component.PreviousControlsLocked;
-        Dirty(uid, component);
     }
 }

@@ -10,11 +10,10 @@ using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Medical.SuitSensor;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Mobs;
 using Content.Shared.Popups;
-using Content.Shared.Station;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -195,6 +194,12 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         return Loc.GetString(name);
     }
 
+    /// <summary>
+    /// Attempts to set <see cref="SuitSensorComponent"/> mode of the entity to the selected in params
+    /// </summary>
+    /// <param name="sensors">Entity and it's component that should be changed</param>
+    /// <param name="mode">Selected mode</param>
+    /// <param name="userUid">userUid, when not equal to the <see cref="SuitSensorComponent.User"/>, creates doafter</param>
     public void TrySetSensor(Entity<SuitSensorComponent> sensors, SuitSensorMode mode, EntityUid userUid)
     {
         var comp = sensors.Comp;
@@ -225,6 +230,13 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         SetSensor(sensors, args.Mode, args.User);
     }
 
+    /// <summary>
+    /// Sets mode of the <see cref="SuitSensorComponent"/> of the chosen entity.
+    /// Makes popup when <param name="userUid"> not null
+    /// </summary>
+    /// <param name="sensors">Entity and it's component that should be changed</param>
+    /// <param name="mode">Selected mode</param>
+    /// <param name="userUid">uid, required for the popup</param>
     public void SetSensor(Entity<SuitSensorComponent> sensors, SuitSensorMode mode, EntityUid? userUid = null)
     {
         var comp = sensors.Comp;
@@ -253,6 +265,11 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Attempts to get full <see cref="SuitSensorStatus"/> from the <see cref="SuitSensorComponent"/>
+    /// </summary>
+    /// <param name="uid">Entity to get status</param>
+    /// <returns>Full <see cref="SuitSensorStatus"/> of the chosen uid</returns>
     public SuitSensorStatus? GetSensorState(EntityUid uid, SuitSensorComponent? sensor = null, TransformComponent? transform = null)
     {
         if (!Resolve(uid, ref sensor, ref transform))
