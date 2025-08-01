@@ -27,12 +27,11 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.05
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         conditions:
         - !type:ReagentThreshold
           min: 10
-        key: SeeingRainbows
-        component: SeeingRainbows
         type: Add
         time: 5
         refresh: false
@@ -1208,12 +1207,12 @@
   fizziness: 0.6
 
 - type: reagent
-  id: IrishSlammer
-  name: reagent-name-irish-slammer
+  id: IrishCarBomb #Starlight Change
+  name: reagent-name-irish-car-bomb #Starlight Change
   parent: BaseAlcohol
-  desc: reagent-desc-irish-slammer
+  desc: reagent-desc-irish-car-bomb #Starlight Change
   physicalDesc: reagent-physical-desc-bubbly
-  flavor: irishslammer
+  flavor: irishcarbomb
   color: "#2E6671"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/irishslammer.rsi
@@ -2048,9 +2047,9 @@
         - !type:AdjustReagent
           reagent: Theobromine
           amount: 0.05
-        - !type:GenericStatusEffect
-          key: Drowsiness
-          time: 1.0
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectDrowsiness
+          time: 1
           type: Remove
   fizziness: 0.25
 
@@ -2079,9 +2078,9 @@
         - !type:AdjustReagent
           reagent: Theobromine
           amount: 0.05
-        - !type:GenericStatusEffect
-          key: Drowsiness
-          time: 1.0
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectDrowsiness
+          time: 1
           type: Remove
   fizziness: 0.15
 
@@ -2110,9 +2109,9 @@
         - !type:AdjustReagent
           reagent: Theobromine
           amount: 0.05
-        - !type:GenericStatusEffect
-          key: Drowsiness
-          time: 1.0
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectDrowsiness
+          time: 1
           type: Remove
   fizziness: 0.15
 
@@ -2141,9 +2140,9 @@
         - !type:AdjustReagent
           reagent: Theobromine
           amount: 0.05
-        - !type:GenericStatusEffect
-          key: Drowsiness
-          time: 1.0
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectDrowsiness
+          time: 1
           type: Remove
   fizziness: 0.25
 
@@ -2172,9 +2171,9 @@
         - !type:AdjustReagent
           reagent: Theobromine
           amount: 0.05
-        - !type:GenericStatusEffect
-          key: Drowsiness
-          time: 1.0
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectDrowsiness
+          time: 1
           type: Remove
   fizziness: 0.15
 
@@ -2203,9 +2202,9 @@
         - !type:AdjustReagent
           reagent: Theobromine
           amount: 0.05
-        - !type:GenericStatusEffect
-          key: Drowsiness
-          time: 1.0
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectDrowsiness
+          time: 1
           type: Remove
   fizziness: 0.25
 

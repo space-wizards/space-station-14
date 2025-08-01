@@ -31,5 +31,7 @@
           weight: 6
         - id: WeaponRifleAk
           weight: 1
+        - id: EmagCommie
+          weight: 3
         rolls: !type:ConstantNumberSelector
           value: 1
