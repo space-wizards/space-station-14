@@ -7,7 +7,6 @@ namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class TriggerSystem
 {
-
     private void InitializeTimer()
     {
         SubscribeLocalEvent<RepeatingTriggerComponent, MapInitEvent>(OnRepeatInit);
