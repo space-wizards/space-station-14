@@ -200,7 +200,7 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#575EF5"
-            
+
 - type: entity
   id: MagazinePistolHP
   name: pistol magazine (.35 auto HP)
@@ -224,7 +224,7 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#F5514C"
-            
+
 - type: entity
   id: MagazinePistolFMJ
   name: pistol magazine (.35 auto FMJ)
@@ -248,7 +248,7 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#080706"
-            
+
 - type: entity
   id: MagazinePistolAP
   name: pistol magazine (.35 auto AP)
@@ -441,7 +441,7 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#F5514C"
-      
+
 - type: entity
   id: MagazinePistolHighCapacityFMJ
   name: machine pistol magazine (.35 auto FMJ)
@@ -465,7 +465,7 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#080706"
-      
+
 - type: entity
   id: MagazinePistolHighCapacityAP
   name: machine pistol magazine (.35 auto AP)
@@ -671,7 +671,7 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#F5514C"
-      
+
 - type: entity
   id: MagazinePistolSubMachineGunFMJ
   name: SMG magazine (.35 auto FMJ)
@@ -701,7 +701,7 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#080706"
-      
+
 - type: entity
   id: MagazinePistolSubMachineGunAP
   name: SMG magazine (.35 auto AP)
@@ -781,7 +781,7 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#40F57A"
-      
+
 - type: entity
   id: MagazinePistolSubMachineGunIncendiary
   name: SMG magazine (.35 auto incendiary)
@@ -832,7 +832,7 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#28E7DC"
-      
+
 - type: entity
   id: MagazinePistolSubMachineGunUzi
   name: Uzi magazine (.35 auto rubber)
@@ -865,7 +865,7 @@
 - type: entity
   id: MagazinePistolSubMachineGunImprovised
   name: Improvised SMG magazine (.35 auto)
-  parent: [ BaseMagazinePistolSubMachineGun, BaseMinorContraband ] 
+  parent: [ BaseMagazinePistolSubMachineGun, BaseMinorContraband ]
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -880,7 +880,7 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"] 
+      map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
     magState: mag
     steps: 3
@@ -906,6 +906,12 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -979,7 +985,7 @@
   - type: Sprite
     layers:
     - state: sp
-      map: ["enum.GunVisualLayers.Base"]  
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
@@ -1003,7 +1009,7 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.GunVisualLayers.Base"]  
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
@@ -1027,7 +1033,7 @@
   - type: Sprite
     layers:
     - state: fmj
-      map: ["enum.GunVisualLayers.Base"]  
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
@@ -1051,7 +1057,7 @@
   - type: Sprite
     layers:
     - state: ap
-      map: ["enum.GunVisualLayers.Base"]  
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
@@ -1071,7 +1077,7 @@
   parent: BaseMagazinePistol
   components:
   - type: Item
-    size: Tiny  
+    size: Tiny
   - type: BallisticAmmoProvider
     proto: null
     capacity: 6
@@ -1079,7 +1085,7 @@
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/improvised_pistol_magazine.rsi
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]  
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
   - type: Tag

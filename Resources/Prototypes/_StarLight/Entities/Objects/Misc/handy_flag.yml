@@ -50,7 +50,7 @@
   - type: UseDelay
   - type: ClothingSpeedModifier
     walkModifier: 1
-    sprintModifier: 0.85
+    sprintModifier: 0.95
   - type: HeldSpeedModifier
   - type: DamageOtherOnHit
     damage:
@@ -89,4 +89,4 @@
         Piercing: 6
   - type: StaticPrice
     price: 1000
-        
+

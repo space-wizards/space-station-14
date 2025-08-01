@@ -1,0 +1,9 @@
+- type: decal
+  id: ussp
+  tags: ["crayon", "crayon-5-graffiti"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Starlight/Effects/crayondecals.rsi
+    state: ussp
