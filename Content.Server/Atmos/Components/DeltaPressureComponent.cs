@@ -51,7 +51,7 @@ public sealed partial class DeltaPressureComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Structural", 20 },
+            { "Structural", 10 },
         },
     };
 
@@ -67,13 +67,13 @@ public sealed partial class DeltaPressureComponent : Component
     /// The entity will start to take damage if it is exposed to this pressure.
     /// </summary>
     [DataField]
-    public float MinPressure = 5000;
+    public float MinPressure = 10000;
 
     /// <summary>
     /// The minimum difference in pressure between any side required for the entity to start taking damage.
     /// </summary>
     [DataField]
-    public float MinPressureDelta = 2000;
+    public float MinPressureDelta = 7500;
 
     /// <summary>
     /// The maximum pressure at which damage will no longer scale.
