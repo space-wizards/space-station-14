@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: ClothingHeadsetGrey
+  parent: [ClothingHeadsetGrey, VoiceLock]
   id: ClothingHeadsetChameleon
   name: passenger headset
   description: An updated, modular intercom that fits over the head. Takes encryption keys.
