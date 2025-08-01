@@ -16,9 +16,6 @@
   youngAge: 103
   oldAge: 257
   maxAge: 430
-  minWidth: 0.8
-  defaultWidth: 0.91
-  maxWidth: 1
   minHeight: 0.8
   defaultHeight: 0.91
   maxHeight: 1
