@@ -13,6 +13,7 @@ import time
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 CHANGELOG_FILE = "Resources/Changelog/ChangelogStarlight.yml"
 SENT_IDS_FILE = "Tools/changelogs/sent_changelog_ids.yml"
+DISCORD_SPLIT_LIMIT = 2000
 
 TYPES_TO_EMOJI = {
     "Fix":    "🐛",
@@ -33,7 +34,7 @@ def main():
 
     sent_ids = load_sent_ids(SENT_IDS_FILE)
     new_entries = diff_changelog(sent_ids, cur_changelog)
-    
+
     if new_entries:
         send_to_discord(new_entries)
         update_sent_ids(SENT_IDS_FILE, new_entries)
@@ -107,7 +108,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
         for emoji, messages in changes_by_type.items():
             for message in messages:
                 embed["description"] += f"\n {emoji} {message}"
-                
+
         if urls:
             embed["description"] += "\n\nRelated Pull Requests:\n" + "\n".join(f"- [GitHub Pull Request]({url})" for url in urls)
 
