@@ -24,10 +24,10 @@
             - CartridgeRifle
 
 - type: entity
-  name: LR-30
+  name: lr-30
   parent: [BaseItem, BaseGunWieldable, BaseSecuritySalvageContraband]
   id: WeaponLr30
-  description: Experimental energy carbines capable of tearing through most armor. Only loads with LR30's unique laser magazines.
+  description: Energy carbine with lethal mode.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/lr30.rsi
@@ -56,7 +56,7 @@
     containers:
       gun_magazine: !type:ContainerSlot
   - type: Gun
-    fireRate: 3
+    fireRate: 5
     selectedMode: FullAuto
     availableModes:
       - SemiAuto
@@ -174,9 +174,9 @@
 
 - type: entity
   name: Aussec Armory M-52
-  parent: [WeaponRifleLecter, BaseCentcommContraband]
+  parent: [WeaponRifleLecter, BaseSecurityContraband]
   id: WeaponRifleM52
-  description: Standard issue assault rifle in broad use, either by the federation or the 'scientifically inclined' paramilitaries. Uses a specific .20 magazine ammo.
+  description: One of the least popular examples of heavy assault rifles. It has impressive firepower.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/m-52.rsi
@@ -198,7 +198,7 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineRifleM52FMJ
+        startingItem: MagazineRifleM52SP
         insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
         priority: 2
@@ -208,7 +208,7 @@
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeRifleFMJ
+        startingItem: CartridgeRifleSP
         priority: 1
         whitelist:
           tags:
