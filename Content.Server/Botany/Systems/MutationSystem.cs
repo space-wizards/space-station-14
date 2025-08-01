@@ -89,6 +89,7 @@ public sealed class MutationSystem : EntitySystem
         CrossBool(ref result.Seedless, a.Seedless);
         CrossBool(ref result.Ligneous, a.Ligneous);
         CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
+        CrossBool(ref result.CanScream, a.CanScream);
 
         // LINQ Explanation
         // For the list of mutation effects on both plants, use a 50% chance to pick each one.

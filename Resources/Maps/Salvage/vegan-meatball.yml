@@ -485,7 +485,6 @@ entities:
       age: 1
       health: 100
       seed:
-        splatPrototype: null
         lifespan: 75
         endurance: 100
         growthComponents:
@@ -558,7 +557,6 @@ entities:
       age: 1
       health: 100
       seed:
-        splatPrototype: null
         lifespan: 25
         endurance: 100
         growthComponents:

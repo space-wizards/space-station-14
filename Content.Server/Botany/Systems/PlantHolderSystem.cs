@@ -455,6 +455,7 @@ public sealed class PlantHolderSystem : EntitySystem
             UpdateSprite(uid, component);
     }
 
+    //TODO: kill this bullshit
     /// <summary>
     /// Ensures all plant holder levels are within valid ranges.
     /// </summary>
