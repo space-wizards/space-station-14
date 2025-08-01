@@ -24,5 +24,29 @@ namespace Content.Server.Explosion.Components
 
         [DataField("maxLength")]
         public int MaxLength = 50;
+
+        /// <summary>
+        /// The verb text that is shown when you can start recording a message.
+        /// </summary>
+        [DataField]
+        public LocId StartRecordingVerb = "verb-trigger-voice-record";
+
+        /// <summary>
+        /// The verb text that is shown when you can stop recording a message.
+        /// </summary>
+        [DataField]
+        public LocId StopRecordingVerb = "verb-trigger-voice-stop";
+
+        /// <summary>
+        /// Tooltip that appears when hovering overthe stop or start recording verbs.
+        /// </summary>
+        [DataField]
+        public LocId? RecordingVerbMessage;
+
+        /// <summary>
+        /// The verb text that is shown when you can clear a recording.
+        /// </summary>
+        [DataField]
+        public LocId ClearRecordingVerb = "verb-trigger-voice-clear";
     }
 }

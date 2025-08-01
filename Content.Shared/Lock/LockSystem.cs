@@ -240,6 +240,19 @@ public sealed class LockSystem : EntitySystem
     }
 
     /// <summary>
+    /// Toggle the lock to locked if unlocked, and unlocked if locked.
+    /// </summary>
+    /// <param name="uid">Entity to toggle the lock state of.</param>
+    /// <param name="lockComp">Entites lock comp (will be resolved)</param>
+    public void ToggleLock(EntityUid uid, LockComponent? lockComp = null)
+    {
+        if (IsLocked((uid, lockComp)))
+            Unlock(uid, null, lockComp);
+        else
+            Lock(uid, null, lockComp);
+    }
+
+    /// <summary>
     /// Returns true if the entity is locked.
     /// Entities with no lock component are considered unlocked.
     /// </summary>
@@ -287,7 +300,7 @@ public sealed class LockSystem : EntitySystem
 
     private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || !component.ShowLockVerbs)
             return;
 
         AlternativeVerb verb = new()

@@ -1,12 +1,28 @@
+using Content.Shared.Access.Components;
+using Content.Shared.Lock;
 using Content.Shared.StatusIcon;
+using Content.Shared.UserInterface;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access.Systems
 {
-    public abstract class SharedAgentIdCardSystem : EntitySystem
+    public abstract partial class SharedAgentIdCardSystem : EntitySystem
     {
-        // Just for friending for now
+         [Dependency] private readonly LockSystem _lock = default!;
+
+         public override void Initialize()
+         {
+             base.Initialize();
+
+             SubscribeLocalEvent<AgentIDCardComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttemptEvent);
+         }
+
+         private void OnActivatableUIOpenAttemptEvent(Entity<AgentIDCardComponent> ent, ref ActivatableUIOpenAttemptEvent args)
+         {
+             if (_lock.IsLocked(ent.Owner))
+                 args.Cancel();
+         }
     }
 
     /// <summary>

@@ -44,7 +44,6 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ChameleonClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ChameleonClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
-        SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
 
         SubscribeLocalEvent<ChameleonClothingComponent, PrototypesReloadedEventArgs>(OnPrototypeReload);
         PrepareAllVariants();
@@ -118,22 +117,6 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         {
             RemComp<ContrabandComponent>(uid);
         }
-    }
-
-    private void OnVerb(Entity<ChameleonClothingComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
-    {
-        if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
-            return;
-
-        // Can't pass args from a ref event inside of lambdas
-        var user = args.User;
-
-        args.Verbs.Add(new InteractionVerb()
-        {
-            Text = Loc.GetString("chameleon-component-verb-text"),
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
-            Act = () => UI.TryToggleUi(ent.Owner, ChameleonUiKey.Key, user)
-        });
     }
 
     protected virtual void UpdateSprite(EntityUid uid, EntityPrototype proto) { }

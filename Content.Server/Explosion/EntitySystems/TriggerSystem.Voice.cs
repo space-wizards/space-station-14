@@ -66,12 +66,17 @@ namespace Content.Server.Explosion.EntitySystems
             if (!args.CanInteract || !args.CanAccess)
                 return;
 
+            var showEvent = new TryShowVoiceTriggerVerbs(args.User);
+            RaiseLocalEvent(ent, ref showEvent);
+            if (showEvent.Canceled)
+                return;
+
             var component = ent.Comp;
 
             var @event = args;
             args.Verbs.Add(new AlternativeVerb()
             {
-                Text = Loc.GetString(component.IsRecording ? "verb-trigger-voice-stop" : "verb-trigger-voice-record"),
+                Text = Loc.GetString(component.IsRecording ? ent.Comp.StopRecordingVerb : ent.Comp.StartRecordingVerb),
                 Act = () =>
                 {
                     if (component.IsRecording)
@@ -79,7 +84,8 @@ namespace Content.Server.Explosion.EntitySystems
                     else
                         StartRecording(ent, @event.User);
                 },
-                Priority = 1
+                Priority = 1,
+                Message = component.RecordingVerbMessage != null ? Loc.GetString(component.RecordingVerbMessage) : null,
             });
 
             if (string.IsNullOrWhiteSpace(component.KeyPhrase))
@@ -87,7 +93,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             args.Verbs.Add(new AlternativeVerb()
             {
-                Text = Loc.GetString("verb-trigger-voice-clear"),
+                Text = Loc.GetString(ent.Comp.ClearRecordingVerb),
                 Act = () =>
                 {
                     component.KeyPhrase = null;
@@ -133,12 +139,15 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnVoiceExamine(EntityUid uid, TriggerOnVoiceComponent component, ExaminedEvent args)
         {
-            if (args.IsInDetailsRange)
-            {
-                args.PushText(string.IsNullOrWhiteSpace(component.KeyPhrase)
-                    ? Loc.GetString("trigger-voice-uninitialized")
-                    : Loc.GetString("examine-trigger-voice", ("keyphrase", component.KeyPhrase)));
-            }
+            var shouldShowEvnt = new TryShowVoiceTriggerExamine(args.Examiner);
+            RaiseLocalEvent(uid, ref shouldShowEvnt);
+
+            if (!args.IsInDetailsRange || shouldShowEvnt.Canceled)
+                return;
+
+            args.PushText(string.IsNullOrWhiteSpace(component.KeyPhrase)
+                ? Loc.GetString("trigger-voice-uninitialized")
+                : Loc.GetString("examine-trigger-voice", ("keyphrase", component.KeyPhrase)));
         }
     }
 }
@@ -152,3 +161,19 @@ namespace Content.Server.Explosion.EntitySystems
 /// <param name="MessageWithoutPhrase"> The message without the phrase that triggered it.</param>
 [ByRefEvent]
 public readonly record struct VoiceTriggeredEvent(EntityUid Source, string Message, string MessageWithoutPhrase);
+
+/// <summary>
+/// This event gets raised when trying the recording verbs
+/// </summary>
+/// <param name="Source">Ent that is getting the verbs</param>
+/// <param name="Canceled">Set to true to cancel showing the verbs</param>
+[ByRefEvent]
+public record struct TryShowVoiceTriggerVerbs(EntityUid Source, bool Canceled = false);
+
+/// <summary>
+/// This event gets raised when trying to show the examine text.
+/// </summary>
+/// <param name="Examiner">Ent that is getting the examine text</param>
+/// <param name="Canceled">Set to true to cancel showing the verbs</param>
+[ByRefEvent]
+public record struct TryShowVoiceTriggerExamine(EntityUid Examiner, bool Canceled = false);

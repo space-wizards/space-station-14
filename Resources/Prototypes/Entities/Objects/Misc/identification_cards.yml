@@ -580,7 +580,7 @@
 
 - type: entity
   name: passenger ID card
-  parent: IDCardStandard
+  parent: [IDCardStandard, VoiceLock]
   id: AgentIDCard
   suffix: Agent
   components:
@@ -598,6 +598,7 @@
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true
+    verbText: agent-id-ui-verb
   - type: Tag
     tags:
     - DoorBumpOpener
