@@ -109,11 +109,6 @@ public partial class SeedData
 
     #endregion
 
-    #region Tolerances
-    [DataField] public float ToxinsTolerance = 4f;
-
-    #endregion
-
     #region General traits
 
     [DataField] public float Endurance = 100f;
@@ -220,8 +215,6 @@ public partial class SeedData
             MutationPrototypes = new List<string>(MutationPrototypes),
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
 
-            ToxinsTolerance = ToxinsTolerance,
-
             Endurance = Endurance,
             Yield = Yield,
             Lifespan = Lifespan,
@@ -278,8 +271,6 @@ public partial class SeedData
             MutationPrototypes = new List<string>(other.MutationPrototypes),
 
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
-
-            ToxinsTolerance = ToxinsTolerance,
 
             Endurance = Endurance,
             Yield = Yield,

@@ -488,7 +488,6 @@ entities:
         splatPrototype: null
         lifespan: 75
         endurance: 100
-        toxinsTolerance: 4
         growthComponents:
           - !type:BasicGrowthComponent
               waterConsumption: 0.4
@@ -501,6 +500,8 @@ entities:
           - !type:WeedPestGrowthComponent
               weedTolerance: 5
               pestTolerance: 5
+          - !type:ToxinsComponent
+              toxinsTolerance: 4
         chemicals:
           THC:
             Inherent: True
@@ -560,7 +561,6 @@ entities:
         splatPrototype: null
         lifespan: 25
         endurance: 100
-        toxinsTolerance: 4
         growthComponents:
           - !type:BasicGrowthComponent
               waterConsumption: 0.6
@@ -573,6 +573,8 @@ entities:
           - !type:WeedPestGrowthComponent
               weedTolerance: 5
               pestTolerance: 5
+          - !type:ToxinsComponent
+              toxinsTolerance: 4
         chemicals:
           Stellibinin:
             Inherent: True

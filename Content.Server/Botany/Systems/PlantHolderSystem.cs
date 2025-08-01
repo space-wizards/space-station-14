@@ -446,21 +446,6 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        // Toxin levels beyond the plant's tolerance cause damage.
-        // They are, however, slowly reduced over time.
-        if (component.Toxins > 0)
-        {
-            var toxinUptake = MathF.Max(1, MathF.Round(component.Toxins / 10f));
-            if (component.Toxins > component.Seed.ToxinsTolerance)
-            {
-                component.Health -= toxinUptake;
-            }
-
-            component.Toxins -= toxinUptake;
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
         CheckHealth(uid, component);
         CheckLevelSanity(uid, component);
 
