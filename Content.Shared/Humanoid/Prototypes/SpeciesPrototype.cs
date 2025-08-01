@@ -167,7 +167,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     ///     You cannot fit in our cloning pods.
     /// </summary>
     [DataField]
-    public float MaxHeight = 1.1f;
+    public float MaxHeight = 1.15f;
 
     /// <summary>
     ///     The normal height for this species.
