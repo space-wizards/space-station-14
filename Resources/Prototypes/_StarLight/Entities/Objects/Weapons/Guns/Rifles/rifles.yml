@@ -184,10 +184,8 @@
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/m-52.rsi
   - type: Item
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/m-52_wielded_x64.rsi
-  - type: Contraband
-    allowedDepartments: [ CentralCommand ]
   - type: Gun
-    fireRate: 6
+    fireRate: 8
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/aussec.ogg
   - type: MagazineVisuals
