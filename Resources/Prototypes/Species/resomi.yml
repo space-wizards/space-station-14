@@ -17,12 +17,6 @@
   oldAge: 257
   maxAge: 430
   customName: true # Starlight
-  minWidth: 0.9
-  defaultWidth: 1
-  maxWidth: 1.2
-  minHeight: 0.8
-  defaultHeight: 1
-  maxHeight: 1.1
   standardSize: 150
   standardWeight: 40
   standardDensity: 17
