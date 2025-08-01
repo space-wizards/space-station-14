@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text.Json.Serialization;
 
 namespace Content.Server.Github.Requests;
 
@@ -9,12 +10,13 @@ public sealed class TokenRequest : IGithubRequest
 {
     public HttpMethod RequestMethod => HttpMethod.Post;
 
-    public GithubAuthMethod AuthenticationMethodMethod => GithubAuthMethod.JWT;
+    public GithubAuthMethod AuthenticationMethod => GithubAuthMethod.JWT;
 
-    public required int Id;
+    [JsonPropertyName("id")]
+    public required int InstallationId;
 
     public string GetLocation(string owner, string repository)
     {
-        return $"/app/installations/{Id}/access_tokens";
+        return $"/app/installations/{InstallationId}/access_tokens";
     }
 }

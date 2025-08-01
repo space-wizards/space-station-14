@@ -52,4 +52,13 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<int> MinimumBugReportDescriptionLength =
         CVarDef.Create("bug_reports.minimum_bug_report_description_length", 10, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    /// List of tags that are added to the report. Separate each value with ",".
+    /// </summary>
+    /// <example>
+    /// IG report, Bug
+    /// </example>
+    public static readonly CVarDef<string> BugReportTags =
+        CVarDef.Create("bug_reports.tags", "IG bug report", CVar.SERVER | CVar.REPLICATED);
 }

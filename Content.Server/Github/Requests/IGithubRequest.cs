@@ -26,7 +26,7 @@ public interface IGithubRequest
     /// E.g. the app api endpoint mostly uses JWTs, while stuff like issue creation uses Tokens
     /// </summary>
     [JsonIgnore]
-    public GithubAuthMethod AuthenticationMethodMethod { get; }
+    public GithubAuthMethod AuthenticationMethod { get; }
 
     /// <summary>
     /// Location of the api endpoint for this request.

@@ -1,12 +1,4 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Chat.Managers;
 using Content.Server.Github.Requests;
-using Content.Shared.CCVar;
-using Content.Shared.Database;
-using Content.Shared.Players;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
-using Robust.Shared.Timing;
 using System.Threading.Tasks;
 using Content.Server.BugReports;
 
@@ -36,7 +28,8 @@ public sealed class GithubApiManager
     {
         var request = new CreateIssueRequest
         {
-            Title = Loc.GetString("github-issue-title-format", ("title", bugReport.Title)),
+            Title = bugReport.Title,
+            Labels = bugReport.Tags,
         };
 
         var metadata = bugReport.MetaData;

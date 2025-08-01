@@ -37,11 +37,11 @@ public sealed class GithubClient
     private ISawmill _sawmill = default!;
 
     // Token data for the GitHub app (This is used to authenticate stuff like new issue creation)
-    private (DateTime? Expiery, string Token) TokenData;
+    private (DateTime? Expiery, string Token) _tokenData;
 
     // Json web token for the GitHub app (This is used to authenticate stuff like seeing where the app is installed)
     // The token is created locally.
-    private (DateTime? Expiery, string JWT) JWTData;
+    private (DateTime? Expiery, string JWT) _jwtData;
 
     private const int ErrorResponseMaxLogSize = 200;
 
@@ -51,12 +51,12 @@ public sealed class GithubClient
     };
 
     // Docs say 10 should be the maximum.
-    private readonly TimeSpan JWTExpiration = TimeSpan.FromMinutes(10);
-    private readonly TimeSpan JWTBackDate = TimeSpan.FromMinutes(1);
+    private readonly TimeSpan _jwtExpiration = TimeSpan.FromMinutes(10);
+    private readonly TimeSpan _jwtBackDate = TimeSpan.FromMinutes(1);
 
     // Buffers because requests can take a while. We don't want the tokens to expire in the middle of doing requests!
-    private readonly TimeSpan JWTBuffer = TimeSpan.FromMinutes(2);
-    private readonly TimeSpan TokenBuffer = TimeSpan.FromMinutes(2);
+    private readonly TimeSpan _jwtBuffer = TimeSpan.FromMinutes(2);
+    private readonly TimeSpan _tokenBuffer = TimeSpan.FromMinutes(2);
 
     private string _privateKey = "";
 
@@ -90,8 +90,8 @@ public sealed class GithubClient
     public void Initialize()
     {
         _sawmill = _log.GetSawmill("github");
-        TokenData = (null, "");
-        JWTData = (null, "");
+        _tokenData = (null, "");
+        _jwtData = (null, "");
 
         _cfg.OnValueChanged(CCVars.GithubAppPrivateKeyPath, OnPrivateKeyPathChanged, true);
         _cfg.OnValueChanged(CCVars.GithubAppId, val => Interlocked.Exchange(ref _appId, val), true);
@@ -111,9 +111,16 @@ public sealed class GithubClient
             return;
         }
 
-        var fileStream = File.OpenText(path);
-
-        var fileText = fileStream.ReadToEnd();
+        var fileText = "";
+        try
+        {
+            fileText = File.ReadAllText(path);
+        }
+        catch
+        {
+            _sawmill.Error($"\"{path}\" could not be read!");
+            return;
+        }
 
         var RSA = System.Security.Cryptography.RSA.Create();
 
@@ -169,7 +176,7 @@ public sealed class GithubClient
             return null;
         }
 
-        if (request.AuthenticationMethodMethod == GithubAuthMethod.Token && !await EnsureTokenNotExpired(ct))
+        if (request.AuthenticationMethod == GithubAuthMethod.Token && !await EnsureTokenNotExpired(ct))
             return null;
 
         var httpRequestMessage = BuildRequest(request);
@@ -189,7 +196,7 @@ public sealed class GithubClient
         if (responseText.Length > ErrorResponseMaxLogSize)
             responseText = responseText.Substring(0, ErrorResponseMaxLogSize);
 
-        _sawmill.Error(responseText);
+        _sawmill.Error(message + "\\r\\n" + responseText);
 
         return null;
     }
@@ -254,9 +261,9 @@ public sealed class GithubClient
 
     private string CreateAuthenticationHeader(IGithubRequest request)
     {
-        return request.AuthenticationMethodMethod switch
+        return request.AuthenticationMethod switch
         {
-            GithubAuthMethod.Token => AuthHeaderBearer + TokenData.Token,
+            GithubAuthMethod.Token => AuthHeaderBearer + _tokenData.Token,
             GithubAuthMethod.JWT => AuthHeaderBearer + GetValidJWT(),
             _ => throw new Exception("Unknown auth method!"),
         };
@@ -265,7 +272,7 @@ public sealed class GithubClient
     // TODO: Maybe ensure that perms are only read metadata / write issues so people don't give full access
     private async Task<bool> EnsureTokenNotExpired(CancellationToken ct)
     {
-        if (TokenData.Expiery != null && TokenData.Expiery - TokenBuffer > DateTime.UtcNow)
+        if (_tokenData.Expiery != null && _tokenData.Expiery - _tokenBuffer > DateTime.UtcNow)
             return true;
 
         _sawmill.Info("Token expired - requesting new token!");
@@ -276,7 +283,6 @@ public sealed class GithubClient
             return false;
 
         var installationResponse = await installationHttpResponse.Content.ReadFromJsonAsync<List<InstallationResponse>>(_jsonSerializerOptions, ct);
-
         if (installationResponse == null)
         {
             _sawmill.Error("Could not parse installation response.");
@@ -289,17 +295,17 @@ public sealed class GithubClient
             return false;
         }
 
-        int? id = null;
+        int? installationId = null;
         foreach (var installation in installationResponse)
         {
             if (installation.Account.Login != _owner)
                 continue;
 
-            id = installation.Id;
+            installationId = installation.Id;
             break;
         }
 
-        if (id == null)
+        if (installationId == null)
         {
             _sawmill.Error("App not installed in given repository.");
             return false;
@@ -307,88 +313,84 @@ public sealed class GithubClient
 
         var tokenRequest = new TokenRequest
         {
-            Id = id.Value,
+            InstallationId = installationId.Value,
         };
 
         var tokenHttpResponse = await TryMakeRequestSafe(tokenRequest, ct);
-
         if (tokenHttpResponse == null)
             return false;
 
         var tokenResponse = await tokenHttpResponse.Content.ReadFromJsonAsync<TokenResponse>(_jsonSerializerOptions, ct);
-
         if (tokenResponse == null)
         {
             _sawmill.Error("Could not parse token response.");
             return false;
         }
 
-        TokenData = (tokenResponse.ExpiresAt, tokenResponse.Token);
+        _tokenData = (tokenResponse.ExpiresAt, tokenResponse.Token);
         return true;
     }
 
     // See: https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-json-web-token-jwt-for-a-github-app
     private string GetValidJWT()
     {
-        if (JWTData.Expiery != null && JWTData.Expiery - JWTBuffer > DateTime.UtcNow)
-            return JWTData.JWT;
+        if (_jwtData.Expiery != null && _jwtData.Expiery - _jwtBuffer > DateTime.UtcNow)
+            return _jwtData.JWT;
 
         var githubClientId = _appId;
         var apiPrivateKey = _privateKey;
 
         var time = DateTime.UtcNow;
-        var expTime = time + JWTExpiration;
-        var iatTime = time - JWTBackDate;
+        var expTime = time + _jwtExpiration;
+        var iatTime = time - _jwtBackDate;
 
         var iat = ((DateTimeOffset) iatTime).ToUnixTimeSeconds();
         var exp = ((DateTimeOffset) expTime).ToUnixTimeSeconds();
 
-        var headerJson =
-"""
-{
-    "typ":"JWT",
-    "alg":"RS256"
-}
-""";
+        const string headerJson = """
+                                  {
+                                      "typ":"JWT",
+                                      "alg":"RS256"
+                                  }
+                                  """;
 
-        var headerEncoded = Base64Encode(headerJson);
+        var headerEncoded = Base64EncodeUrlSafe(headerJson);
 
-        var payloadJson =
-$$"""
-{
-    "iat":{{iat}},
-    "exp":{{exp}},
-    "iss":"{{githubClientId}}"
-}
-""";
+        var payloadJson = $$"""
+                            {
+                                "iat":{{iat}},
+                                "exp":{{exp}},
+                                "iss":"{{githubClientId}}"
+                            }
+                            """;
 
-        var payloadJsonEncoded = Base64Encode(payloadJson);
+        var payloadJsonEncoded = Base64EncodeUrlSafe(payloadJson);
 
         var headPayload = $"{headerEncoded}.{payloadJsonEncoded}";
 
-        var RSA = System.Security.Cryptography.RSA.Create();
-        RSA.ImportFromPem(apiPrivateKey);
+        var rsa = System.Security.Cryptography.RSA.Create();
+        rsa.ImportFromPem(apiPrivateKey);
 
         var bytesPlainTextData = Encoding.UTF8.GetBytes(headPayload);
 
-        var signedData = RSA.SignData(bytesPlainTextData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
-        var signBase64 = Base64Encode(signedData);
+        var signedData = rsa.SignData(bytesPlainTextData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        var signBase64 = Base64EncodeUrlSafe(signedData);
 
-        var JWT = $"{headPayload}.{signBase64}";
+        var jwt = $"{headPayload}.{signBase64}";
 
-        JWTData = (expTime, JWT);
+        _jwtData = (expTime, jwt);
 
         _sawmill.Info("Generated new JWT.");
 
-        return JWT;
+        return jwt;
     }
 
-    private string Base64Encode(string plainText)
+    private string Base64EncodeUrlSafe(string plainText)
     {
-        return Base64Encode(Encoding.UTF8.GetBytes(plainText));
+        return Base64EncodeUrlSafe(Encoding.UTF8.GetBytes(plainText));
     }
 
-    private string Base64Encode(byte[] plainText)
+    private string Base64EncodeUrlSafe(byte[] plainText)
     {
         return Convert.ToBase64String(plainText)
             .TrimEnd('=')

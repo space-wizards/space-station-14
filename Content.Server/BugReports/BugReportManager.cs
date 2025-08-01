@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Github;
@@ -37,6 +38,8 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
     private readonly Dictionary<NetUserId, (int ReportsCount, DateTime ReportedDateTime)> _bugReportsPerPlayerThisRound = new();
 
     private BugReportLimits _limits = default!;
+
+    private List<string> _tags = [];
 
     public void Initialize()
     {
@@ -179,7 +182,8 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
         return new ValidPlayerBugReportReceivedEvent(
             message.ReportInformation.BugReportTitle.Trim(),
             message.ReportInformation.BugReportDescription.Trim(),
-            metadata
+            metadata,
+            _tags
         );
     }
 
@@ -194,7 +198,7 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
 
         _cfg.OnValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, OnMinPlaytimeChanged, true);
         _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, OnMaxReportsPerRoundChanged, true);
-        _cfg.OnValueChanged(CCVars.MinimumSecondsBetweenBugReports, OnMinSecondsBetweenReportsChanged, true);
+        _cfg.OnValueChanged(CCVars.BugReportTags, OnBugReportTags, true);
     }
 
     public void Shutdown()
@@ -207,6 +211,7 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
         _cfg.UnsubValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, OnMinPlaytimeChanged);
         _cfg.UnsubValueChanged(CCVars.MaximumBugReportsPerRound, OnMaxReportsPerRoundChanged);
         _cfg.UnsubValueChanged(CCVars.MinimumSecondsBetweenBugReports, OnMinSecondsBetweenReportsChanged);
+        _cfg.UnsubValueChanged(CCVars.BugReportTags, OnBugReportTags);
     }
 
     private void OnMaxTitleLengthChanged(int value)
@@ -242,6 +247,11 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
     private void OnMinSecondsBetweenReportsChanged(int seconds)
     {
         _limits.MinimumTimeBetweenBugReports = TimeSpan.FromSeconds(seconds);
+    }
+
+    private void OnBugReportTags(string tags)
+    {
+        _tags = tags.Split(",").ToList();
     }
 
     #endregion

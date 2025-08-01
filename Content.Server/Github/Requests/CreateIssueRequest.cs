@@ -12,7 +12,7 @@ public sealed class CreateIssueRequest : IGithubRequest
     public HttpMethod RequestMethod => HttpMethod.Post;
 
     [JsonIgnore]
-    public GithubAuthMethod AuthenticationMethodMethod => GithubAuthMethod.Token;
+    public GithubAuthMethod AuthenticationMethod => GithubAuthMethod.Token;
 
     #region JSON fields
 

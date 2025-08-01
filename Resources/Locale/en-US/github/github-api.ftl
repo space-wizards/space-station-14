@@ -14,8 +14,6 @@ github-command-issue-description-one = This is the description of the first issu
 
 github-command-finish = Check your repository for a newly created issue. If you don't see any, check the server console for errors!
 
-github-issue-title-format = {$title} [In game report]
-
 github-issue-format = ## Description:
                       {$description}
 

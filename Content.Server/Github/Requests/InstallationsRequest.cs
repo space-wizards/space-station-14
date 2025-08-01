@@ -9,7 +9,7 @@ public sealed class InstallationsRequest : IGithubRequest
 {
     public HttpMethod RequestMethod => HttpMethod.Get;
 
-    public GithubAuthMethod AuthenticationMethodMethod => GithubAuthMethod.JWT;
+    public GithubAuthMethod AuthenticationMethod => GithubAuthMethod.JWT;
 
     public string GetLocation(string owner, string repository)
     {
