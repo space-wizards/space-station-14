@@ -102,7 +102,10 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (_net.IsServer)
             ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent)?.Entity;
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(targetIdentity)}\"");
+        if(TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player}) ");
+        else
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(targetIdentity)}\"");
 
         var result = _doAfterSystem.TryStartDoAfter(new DoAfterArgs(
             EntityManager,
@@ -159,9 +162,11 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         _humanoidAppearanceSystem.CloneAppearance(targetIdentity, args.User);
         _cloningSystem.CloneComponents(targetIdentity, args.User, settings);
-
-        //TODO: Add the original player session
-        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
+        
+        if(TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
+        else
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
         _metaSystem.SetEntityName(ent, Name(targetIdentity), raiseEvents: false);
 
         Dirty(ent);
