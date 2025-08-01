@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Doc-Michael
-  changes:
-  - message: Changed protection values of Security Hardsuits
-    type: Tweak
-  - message: Made Warden/HoS coats slightly more protective to better fit their position
-    type: Tweak
-  id: 8310
-  time: '2025-04-22T03:22:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30212
 - author: K-Dynamic
   changes:
   - message: Changed instances of 3.5 second grenade timers to 3 seconds, including
@@ -3914,3 +3905,11 @@
   id: 8821
   time: '2025-07-31T04:08:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37701
+- author: perryprog
+  changes:
+  - message: Fixed board game areas sometimes overlapping with those of other board
+      games.
+    type: Fix
+  id: 8822
+  time: '2025-08-01T21:48:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39327
