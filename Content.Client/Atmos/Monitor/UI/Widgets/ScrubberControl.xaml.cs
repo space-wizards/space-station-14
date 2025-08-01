@@ -61,7 +61,7 @@ public sealed partial class ScrubberControl : BoxContainer
 
         foreach (var value in Enum.GetValues<ScrubberPumpDirection>())
         {
-            _pumpDirection.AddItem(Loc.GetString($"{value}"), (int) value);
+            _pumpDirection.AddItem(Loc.GetString($"air-alarm-ui-pump-direction-{value.ToString().ToLower()}"), (int) value);
         }
 
         _pumpDirection.SelectId((int) _data.PumpDirection);
@@ -83,7 +83,13 @@ public sealed partial class ScrubberControl : BoxContainer
             var gasButton = new Button
             {
                 Name = value.ToString(),
-                Text = Loc.GetString($"{value}"),
+                Text = Loc.GetString(value switch
+                {
+                    Gas.CarbonDioxide => "gases-co2",
+                    Gas.WaterVapor => "gases-water-vapor",
+                    Gas.NitrousOxide => "gases-n2o",
+                    _ => $"gases-{value.ToString().ToLower()}",
+                }),
                 ToggleMode = true,
                 HorizontalExpand = true,
                 Pressed = _data.FilterGases.Contains(value)
