@@ -210,7 +210,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     /// <param name="ent">The entity whose component to modify.</param>
     /// <param name="baseDamage">The new base damage specifier.</param>
     [PublicAPI]
-    public void SetBaseDamage(Entity<DeltaPressureComponent> ent, DamageSpecifier baseDamage)
+    public static void SetBaseDamage(Entity<DeltaPressureComponent> ent, DamageSpecifier baseDamage)
     {
         ent.Comp.BaseDamage = baseDamage;
     }
@@ -221,7 +221,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     /// <param name="ent">The entity whose component to modify.</param>
     /// <param name="stackDamage">True to stack damage, false otherwise.</param>
     [PublicAPI]
-    public void SetStackDamage(Entity<DeltaPressureComponent> ent, bool stackDamage)
+    public static void SetStackDamage(Entity<DeltaPressureComponent> ent, bool stackDamage)
     {
         ent.Comp.StackDamage = stackDamage;
     }
@@ -232,7 +232,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     /// <param name="ent">The entity whose component to modify.</param>
     /// <param name="minPressure">The new minimum pressure in kPa.</param>
     [PublicAPI]
-    public void SetMinPressure(Entity<DeltaPressureComponent> ent, float minPressure)
+    public static void SetMinPressure(Entity<DeltaPressureComponent> ent, float minPressure)
     {
         ent.Comp.MinPressure = minPressure;
     }
@@ -243,7 +243,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     /// <param name="ent">The entity whose component to modify.</param>
     /// <param name="minPressureDelta">The new minimum pressure delta.</param>
     [PublicAPI]
-    public void SetMinPressureDelta(Entity<DeltaPressureComponent> ent, float minPressureDelta)
+    public static void SetMinPressureDelta(Entity<DeltaPressureComponent> ent, float minPressureDelta)
     {
         ent.Comp.MinPressureDelta = minPressureDelta;
     }
@@ -254,7 +254,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     /// <param name="ent">The entity whose component to modify.</param>
     /// <param name="maxPressure">The new maximum pressure.</param>
     [PublicAPI]
-    public void SetMaxPressure(Entity<DeltaPressureComponent> ent, float maxPressure)
+    public static void SetMaxPressure(Entity<DeltaPressureComponent> ent, float maxPressure)
     {
         ent.Comp.MaxPressure = maxPressure;
     }
@@ -265,7 +265,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     /// <param name="ent">The entity whose component to modify.</param>
     /// <param name="scalingPower">The new scaling power.</param>
     [PublicAPI]
-    public void SetScalingPower(Entity<DeltaPressureComponent> ent, float scalingPower)
+    public static void SetScalingPower(Entity<DeltaPressureComponent> ent, float scalingPower)
     {
         ent.Comp.ScalingPower = scalingPower;
     }
@@ -276,7 +276,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     /// <param name="ent">The entity whose component to modify.</param>
     /// <param name="scalingType">The new scaling type.</param>
     [PublicAPI]
-    public void SetScalingType(Entity<DeltaPressureComponent> ent, DeltaPressureDamageScalingType scalingType)
+    public static void SetScalingType(Entity<DeltaPressureComponent> ent, DeltaPressureDamageScalingType scalingType)
     {
         ent.Comp.ScalingType = scalingType;
     }
