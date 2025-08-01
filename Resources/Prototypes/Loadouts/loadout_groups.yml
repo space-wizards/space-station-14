@@ -262,6 +262,7 @@
   - CommonBackpack
   - CommonSatchel
   - CommonDuffel
+  - LeatherSatchel # starlight
 
 - type: loadoutGroup
   id: AssistantNeck

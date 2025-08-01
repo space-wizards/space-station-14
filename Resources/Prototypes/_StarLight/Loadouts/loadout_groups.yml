@@ -30,6 +30,7 @@
   - CommonBackpack
   - CommonSatchel
   - CommonDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: RoboticistJumpsuit
@@ -233,4 +234,3 @@
   - LaceupShoes
   - Heels
   - LeatherShoes
-
