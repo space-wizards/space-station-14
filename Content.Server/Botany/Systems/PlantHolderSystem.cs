@@ -1,5 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
@@ -394,6 +395,12 @@ public sealed class PlantHolderSystem : EntitySystem
         }
 
         component.LastCycle = curTime;
+
+        if (component.Seed != null && !component.Dead)
+        {
+            var plantGrow = new OnPlantGrowEvent();
+            RaiseLocalEvent(uid, ref plantGrow);
+        }
 
         // Process mutations. All plants can mutate, so this stays here.
         if (component.MutationLevel > 0)
