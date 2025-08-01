@@ -52,7 +52,7 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
         // Check if the plant is viable
         if (holder.Seed.Viable == false)
         {
-            holder.Health -= _random.Next(5, 10) * HydroponicsSpeedMultiplier;
+            holder.Health -= _random.Next(5, 10) * PlantGrowthSystem.HydroponicsSpeedMultiplier;
             if (holder.DrawWarnings)
                 holder.UpdateSpriteAfterUpdate = true;
             return;
@@ -65,14 +65,14 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
         {
             if (_random.Prob(0.8f))
             {
-                holder.Age += (int)(1 * HydroponicsSpeedMultiplier);
+                holder.Age += (int)(1 * PlantGrowthSystem.HydroponicsSpeedMultiplier);
                 holder.UpdateSpriteAfterUpdate = true;
             }
         }
 
         if (holder.Age > holder.Seed.Lifespan)
         {
-            holder.Health -= _random.Next(3, 5) * HydroponicsSpeedMultiplier;
+            holder.Health -= _random.Next(3, 5) * PlantGrowthSystem.HydroponicsSpeedMultiplier;
             if (holder.DrawWarnings)
                 holder.UpdateSpriteAfterUpdate = true;
         }
@@ -110,7 +110,7 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
         if (component.WaterConsumption > 0 && holder.WaterLevel > 0 && _random.Prob(0.75f))
         {
             holder.WaterLevel -= MathF.Max(0f,
-                component.WaterConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
+                component.WaterConsumption * PlantGrowthSystem.HydroponicsConsumptionMultiplier * PlantGrowthSystem.HydroponicsSpeedMultiplier);
             if (holder.DrawWarnings)
                 holder.UpdateSpriteAfterUpdate = true;
         }
@@ -118,12 +118,12 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
         if (component.NutrientConsumption > 0 && holder.NutritionLevel > 0 && _random.Prob(0.75f))
         {
             holder.NutritionLevel -= MathF.Max(0f,
-                component.NutrientConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
+                component.NutrientConsumption * PlantGrowthSystem.HydroponicsConsumptionMultiplier * PlantGrowthSystem.HydroponicsSpeedMultiplier);
             if (holder.DrawWarnings)
                 holder.UpdateSpriteAfterUpdate = true;
         }
 
-        var healthMod = _random.Next(1, 3) * HydroponicsSpeedMultiplier;
+        var healthMod = _random.Next(1, 3) * PlantGrowthSystem.HydroponicsSpeedMultiplier;
         if (holder.SkipAging < 10)
         {
             // Make sure the plant is not thirsty.

@@ -59,20 +59,20 @@ public partial class SeedData
     #region Tracking
 
     /// <summary>
-    ///     The name of this seed. Determines the name of seed packets.
+    /// The name of this seed. Determines the name of seed packets.
     /// </summary>
     [DataField]
     public string Name { get; private set; } = "";
 
     /// <summary>
-    ///     The noun for this type of seeds. E.g. for fungi this should probably be "spores" instead of "seeds". Also
-    ///     used to determine the name of seed packets.
+    /// The noun for this type of seeds. E.g. for fungi this should probably be "spores" instead of "seeds". Also
+    /// used to determine the name of seed packets.
     /// </summary>
     [DataField]
     public string Noun { get; private set; } = "";
 
     /// <summary>
-    ///     Name displayed when examining the hydroponics tray. Describes the actual plant, not the seed itself.
+    /// Name displayed when examining the hydroponics tray. Describes the actual plant, not the seed itself.
     /// </summary>
     [DataField]
     public string DisplayName { get; private set; } = "";
@@ -80,13 +80,13 @@ public partial class SeedData
     [DataField] public bool Mysterious;
 
     /// <summary>
-    ///     If true, the properties of this seed cannot be modified.
+    /// If true, the properties of this seed cannot be modified.
     /// </summary>
     [DataField] public bool Immutable;
 
     /// <summary>
-    ///     If true, there is only a single reference to this seed and it's properties can be directly modified without
-    ///     needing to clone the seed.
+    /// If true, there is only a single reference to this seed and it's properties can be directly modified without
+    /// needing to clone the seed.
     /// </summary>
     [ViewVariables]
     public bool Unique = false; // seed-prototypes or yaml-defined seeds for entity prototypes will not generally be unique.
@@ -94,13 +94,13 @@ public partial class SeedData
 
     #region Output
     /// <summary>
-    ///     The entity prototype that is spawned when this type of seed is extracted from produce using a seed extractor.
+    /// The entity prototype that is spawned when this type of seed is extracted from produce using a seed extractor.
     /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string PacketPrototype = "SeedBase";
 
     /// <summary>
-    ///     The entity prototypes that are spawned when this type of seed is harvested.
+    /// The entity prototypes that are spawned when this type of seed is harvested.
     /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> ProductPrototypes = new();
@@ -129,13 +129,13 @@ public partial class SeedData
     [DataField] public float Potency = 1f;
 
     /// <summary>
-    ///     If true, cannot be harvested for seeds. Balances hybrids and
-    ///     mutations.
+    /// If true, cannot be harvested for seeds. Balances hybrids and
+    /// mutations.
     /// </summary>
     [DataField] public bool Seedless = false;
 
     /// <summary>
-    ///     If true, a sharp tool is required to harvest this plant.
+    /// If true, a sharp tool is required to harvest this plant.
     /// </summary>
     [DataField] public bool Ligneous;
 
@@ -169,7 +169,7 @@ public partial class SeedData
     [DataField] public List<RandomPlantMutation> Mutations { get; set; } = new();
 
     /// <summary>
-    ///     The seed prototypes this seed may mutate into when prompted to.
+    /// The seed prototypes this seed may mutate into when prompted to.
     /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<SeedPrototype>))]
     public List<string> MutationPrototypes = new();

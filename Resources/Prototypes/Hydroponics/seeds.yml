@@ -14,11 +14,10 @@
   production: 3
   yield: 3
   potency: 5
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
         nutrientConsumption: 0.4
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -43,11 +42,10 @@
   production: 3
   yield: 3
   potency: 5
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
         nutrientConsumption: 0.4
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -72,11 +70,10 @@
   production: 3
   yield: 3
   potency: 5
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
         nutrientConsumption: 0.4
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -103,11 +100,9 @@
   maturation: 6
   production: 6
   yield: 2
-  idealLight: 9
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -134,11 +129,9 @@
   maturation: 6
   production: 6
   yield: 2
-  idealLight: 9
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -169,7 +162,7 @@
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     JuiceCarrot:
       Min: 1
@@ -201,12 +194,12 @@
   production: 5
   yield: 3
   potency: 20
-  idealLight: 8
   harvestRepeat: Repeat
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
         nutrientConsumption: 0.6
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -240,11 +233,9 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -270,11 +261,9 @@
   production: 6
   yield: 4
   potency: 1
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Vitamin:
       Min: 1
@@ -303,11 +292,9 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -337,11 +324,9 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -367,11 +352,9 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Haloperidol:
       Min: 1
@@ -401,12 +384,10 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 8
   growthStages: 3
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -439,7 +420,7 @@
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -470,8 +451,6 @@
   growthStages: 3
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -496,11 +475,9 @@
   yield: 2
   potency: 20
   growthStages: 5
-  idealLight: 9
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -527,8 +504,6 @@
   growthStages: 3
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
 
@@ -550,11 +525,8 @@
   yield: 5
   potency: 1
   growthStages: 3
-  lightTolerance: 6
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 288
 
@@ -574,11 +546,8 @@
   yield: 3
   potency: 1
   growthStages: 3
-  lightTolerance: 6
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 288
 
@@ -600,7 +569,6 @@
   production: 6
   yield: 2
   potency: 10
-  idealLight: 8
   splatPrototype: PuddleSplatter
   growthComponents:
     - !type:BasicGrowthComponent
@@ -637,7 +605,6 @@
   production: 6
   yield: 2
   potency: 10
-  idealLight: 8
   splatPrototype: PuddleSplatter
   growthComponents:
     - !type:BasicGrowthComponent
@@ -676,7 +643,6 @@
   production: 6
   yield: 2
   potency: 10
-  idealLight: 8
   splatPrototype: PuddleSplatter
   growthComponents:
     - !type:BasicGrowthComponent
@@ -711,7 +677,6 @@
   production: 6
   yield: 2
   potency: 10
-  idealLight: 8
   growthStages: 2
   splatPrototype: PuddleSplatter
   growthComponents:
@@ -748,11 +713,8 @@
   yield: 2
   potency: 20
   growthStages: 3
-  idealLight: 9
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -782,8 +744,7 @@
   growthStages: 1
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -811,8 +772,7 @@
   growthStages: 3
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -844,11 +804,9 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 6
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -874,11 +832,10 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 6
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.75
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -908,11 +865,9 @@
   yield: 2
   potency: 20
   growthStages: 3
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -942,11 +897,9 @@
   yield: 2
   potency: 20
   growthStages: 3
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -978,11 +931,9 @@
   yield: 2
   potency: 20
   growthStages: 3
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -1014,7 +965,6 @@
   yield: 5
   potency: 1
   growthStages: 3
-  lightTolerance: 6
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
@@ -1042,10 +992,8 @@
   production: 12
   yield: 2
   potency: 20
-  idealLight: 9
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
         nutrientConsumption: 0.5
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
@@ -1073,11 +1021,9 @@
   yield: 2
   potency: 20
   growthStages: 3
-  idealLight: 9
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.4
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -1102,11 +1048,9 @@
   yield: 2
   potency: 20
   growthStages: 3
-  idealLight: 9
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.4
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -1151,11 +1095,9 @@
   yield: 2
   potency: 20
   growthStages: 3
-  idealLight: 9
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.4
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -1181,11 +1123,9 @@
   yield: 2
   potency: 20
   growthStages: 5
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -1211,7 +1151,6 @@
   yield: 2
   potency: 20
   growthStages: 5
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.7
@@ -1245,11 +1184,8 @@
   production: 6
   yield: 2
   potency: 20
-  idealLight: 9
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -1281,11 +1217,8 @@
   production: 6
   yield: 2
   potency: 20
-  idealLight: 9
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -1322,7 +1255,7 @@
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1351,7 +1284,7 @@
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Aloe:
       Min: 1
@@ -1382,7 +1315,7 @@
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1411,7 +1344,7 @@
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Ultravasculine:
       Min: 1
@@ -1442,7 +1375,7 @@
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1483,7 +1416,7 @@
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1522,7 +1455,7 @@
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Stellibinin:
       Min: 1
@@ -1546,8 +1479,7 @@
   growthStages: 3
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Razorium:
       Min: 1
@@ -1573,6 +1505,7 @@
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
         nutrientConsumption: 0.5
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Amatoxin:
       Min: 1
@@ -1601,11 +1534,9 @@
   yield: 1
   potency: 10
   growthStages: 2
-  idealLight: 6
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1631,11 +1562,9 @@
   yield: 1
   potency: 10
   growthStages: 2
-  idealLight: 6
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1661,11 +1590,9 @@
   yield: 1
   potency: 10
   growthStages: 2
-  idealLight: 6
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1691,11 +1618,11 @@
   yield: 3
   potency: 5
   growthStages: 4
-  idealLight: 5
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
         nutrientConsumption: 0.4
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1723,11 +1650,10 @@
   production: 6
   yield: 3
   potency: 5
-  idealLight: 7
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
         nutrientConsumption: 0.4
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1752,7 +1678,7 @@
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1778,11 +1704,10 @@
   production: 6
   yield: 3
   potency: 5
-  idealLight: 7
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
         nutrientConsumption: 0.4
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1810,8 +1735,7 @@
   growthStages: 2
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1838,11 +1762,9 @@
   production: 3
   yield: 1
   potency: 1
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1871,11 +1793,9 @@
   production: 3
   yield: 1
   potency: 1
-  idealLight: 8
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -1904,7 +1824,6 @@
   maturation: 6
   production: 6
   yield: 6
-  idealLight: 7
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 1.0
@@ -1935,11 +1854,10 @@
   maturation: 6
   production: 6
   yield: 4
-  idealLight: 7
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
         nutrientConsumption: 0.6
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 2
@@ -1965,12 +1883,10 @@
   production: 6
   potency: 10
   yield: 3
-  idealLight: 8
   growthStages: 4
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 298
   chemicals:
@@ -2000,12 +1916,11 @@
   production: 6
   yield: 3
   potency: 25
-  idealLight: 8
   harvestRepeat: Repeat
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
         nutrientConsumption: 0.5
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -2031,12 +1946,11 @@
   production: 6
   yield: 3
   potency: 25
-  idealLight: 8
   harvestRepeat: Repeat
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
         nutrientConsumption: 0.5
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Happiness:
       Min: 1
@@ -2070,8 +1984,6 @@
   growthStages: 3
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 288
   chemicals:
@@ -2101,8 +2013,6 @@
   growthStages: 3
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
     - !type:AtmosphericGrowthComponent
         idealHeat: 288
   chemicals:
@@ -2135,12 +2045,11 @@
   production: 3
   yield: 3
   potency: 5
-  idealLight: 8
   growthStages: 3
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Fiber:
       Min: 5
@@ -2161,12 +2070,11 @@
   production: 3
   yield: 2
   potency: 5
-  idealLight: 8
   growthStages: 3
   growthComponents:
     - !type:BasicGrowthComponent
         waterConsumption: 0.8
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Fiber:
       Min: 5
@@ -2192,11 +2100,9 @@
   production: 6
   yield: 5
   potency: 10
-  idealLight: 6
   growthComponents:
     - !type:BasicGrowthComponent
-        waterConsumption: 0.5
-        nutrientConsumption: 0.75
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Nutriment:
       Min: 1
@@ -2226,6 +2132,7 @@
     - !type:BasicGrowthComponent
         waterConsumption: 0.6
         nutrientConsumption: 0.5
+    - !type:AtmosphericGrowthComponent
   chemicals:
     Artifexium:
       Min: 1

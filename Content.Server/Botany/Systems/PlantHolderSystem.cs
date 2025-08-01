@@ -47,13 +47,10 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISerializationManager _copier = default!;
-
-    public const float WeedHighLevelThreshold = 10f;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
-    public const float HydroponicsSpeedMultiplier = 1f;
-    public const float HydroponicsConsumptionMultiplier = 2f;
+    public const float WeedHighLevelThreshold = 10f;
 
     private static readonly ProtoId<TagPrototype> HoeTag = "Hoe";
     private static readonly ProtoId<TagPrototype> PlantSampleTakerTag = "PlantSampleTaker";
@@ -418,7 +415,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 chance = 0.01f;
 
             if (_random.Prob(chance))
-                component.WeedLevel += 1 + component.WeedCoefficient; // * HydroponicsSpeedMultiplier
+                component.WeedLevel += 1 + component.WeedCoefficient;
 
             if (component.DrawWarnings)
                 component.UpdateSpriteAfterUpdate = true;
@@ -591,7 +588,7 @@ public sealed class PlantHolderSystem : EntitySystem
         component.YieldMod = 1;
         component.MutationMod = 1;
         component.ImproperPressure = false;
-        component.WeedLevel += 1; // * HydroponicsSpeedMultiplier;
+        component.WeedLevel += 1;
         component.PestLevel = 0;
         UpdateSprite(uid, component);
     }

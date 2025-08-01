@@ -8,6 +8,9 @@ namespace Content.Server.Botany;
 [RegisterComponent]
 public sealed partial class BotanySwabComponent : Component
 {
+    /// <summary>
+    /// Delay in seconds between swab uses.
+    /// </summary>
     [DataField("swabDelay")]
     public float SwabDelay = 2f;
 
@@ -16,6 +19,8 @@ public sealed partial class BotanySwabComponent : Component
     /// </summary>
     public SeedData? SeedData;
 
-    //data from first plant.
+    /// <summary>
+    /// Growth components from the first plant that got swabbed.
+    /// </summary>
     public List<PlantGrowthComponent> components;
 }
