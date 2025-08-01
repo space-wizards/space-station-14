@@ -20,7 +20,7 @@ DEBUG_CHANGELOG_FILE_OLD = Path("Resources/Changelog/Old.yml")
 GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
 
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
-DISCORD_CHANGELOG_ROLE_ID = os.environ.get("DISCORD_CHANGELOG_ROLE_ID")
+DISCORD_CHANGELOG_ROLE_ID = 1308143973684088883
 
 CHANGELOG_FILE = "Resources/Changelog/ChangelogStarlight.yml"
 TYPES_TO_EMOJI = {"Fix": "🐛", "Add": "🆕", "Remove": "❌", "Tweak": "⚒️"}
@@ -51,9 +51,7 @@ def main():
         print("No new entries to report.")
         return
 
-    # Ping role once if specified
-    if DISCORD_CHANGELOG_ROLE_ID:
-        ping_role_once(DISCORD_CHANGELOG_ROLE_ID)
+    ping_role_once(DISCORD_CHANGELOG_ROLE_ID)
 
     pr_groups = group_entries_by_pr(new_entries)
     for pr_id, entries in pr_groups.items():
@@ -139,9 +137,8 @@ def group_entries_by_pr(entries: Iterable[ChangelogEntry]) -> dict[str, list[Cha
 
 
 def build_embed_for_pr(pr_id: str, entries: list[ChangelogEntry]) -> dict[str, Any]:
-    title = f"Changelog for PR #{pr_id}" if pr_id != "no-pr" else "Changelog (no PR)"
-    description_lines: list[str] = []
     authors = set()
+    description_lines: list[str] = []
 
     for entry in entries:
         authors.add(entry.get("author", "Unknown"))
@@ -160,9 +157,27 @@ def build_embed_for_pr(pr_id: str, entries: list[ChangelogEntry]) -> dict[str, A
     if len(description) > EMBED_DESCRIPTION_LIMIT:
         description = description[: EMBED_DESCRIPTION_LIMIT - 50].rstrip() + "\n*...truncated...*"
 
-    author_field = ", ".join(sorted(authors))
+    sorted_authors = sorted(authors)
+    authors_str = ", ".join(sorted_authors)
+    title = authors_str
+    if len(title) > EMBED_TITLE_LIMIT:
+        # truncate authors part to fit
+        overflow = len(title) - EMBED_TITLE_LIMIT + 3  # for "..."
+        # remove overflow chars from authors_str
+        truncated_authors = authors_str
+        if overflow < len(authors_str):
+            truncated_authors = authors_str[: -overflow].rstrip()
+            # avoid cutting mid-comma: optionally rstrip to last comma-space
+            if "," in truncated_authors:
+                truncated_authors = truncated_authors.rsplit(",", 1)[0]
+            truncated_authors = truncated_authors.rstrip() + "..."
+        title = truncated_authors
+        if len(title) > EMBED_TITLE_LIMIT:
+            title = title[:EMBED_TITLE_LIMIT]
+
+    author_field = ", ".join(sorted_authors)
     embed: dict[str, Any] = {
-        "title": title[:EMBED_TITLE_LIMIT],
+        "title": title,
         "description": description,
         "fields": [
             {"name": "Author(s)", "value": author_field[:EMBED_FIELD_VALUE_LIMIT], "inline": False}
