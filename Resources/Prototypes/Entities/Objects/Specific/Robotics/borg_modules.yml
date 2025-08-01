@@ -911,7 +911,6 @@
     - state: icon-clown-adv
   - type: ItemBorgModule
     items:
-    - BananiumHorn
     - HoloprojectorClownBorg
     - BorgLauncherCreamPie
     - ClownRecorder
