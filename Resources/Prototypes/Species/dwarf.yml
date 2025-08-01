@@ -11,6 +11,6 @@
   minWidth: 1.2
   defaultWidth: 1.2
   maxWidth: 1.5
-  minHeight: 0.75
+  minHeight: 0.8
   defaultHeight: 0.8
   maxHeight: 0.85 # Starlight end
