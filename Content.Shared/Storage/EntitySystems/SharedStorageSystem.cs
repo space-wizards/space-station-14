@@ -385,6 +385,7 @@ public abstract class SharedStorageSystem : EntitySystem
         targetComp.SilentStorageUserTag = source.Comp.SilentStorageUserTag;
         targetComp.ShowVerb = source.Comp.ShowVerb;
 
+        UpdateOccupied((target, targetComp));
         Dirty(target, targetComp);
 
         var targetUI = EnsureComp<UserInterfaceComponent>(target);
