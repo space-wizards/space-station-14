@@ -20,6 +20,7 @@
       - id: FoodPacketSusTrash
       - id: FoodPacketSyndiTrash
       - id: BrokenBottle
+      - id: DonkPocketBasicSleeve
     - !type:GroupSelector
       weight: 5
       children:
