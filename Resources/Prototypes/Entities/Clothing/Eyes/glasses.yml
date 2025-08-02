@@ -194,7 +194,7 @@
     coverage: EYES
 
 - type: entity
-  parent: [ClothingEyesBase, BaseCommandContraband]
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseCommandContraband]
   id: ClothingEyesGlassesCommand
   name: administration glasses
   description: Upgraded sunglasses that provide flash immunity and show ID card status.
@@ -213,7 +213,6 @@
     - WhitelistChameleon
   - type: IdentityBlocker
     coverage: EYES
-  - type: ShowJobIcons
 
 - type: entity
   parent: ClothingEyesBase
