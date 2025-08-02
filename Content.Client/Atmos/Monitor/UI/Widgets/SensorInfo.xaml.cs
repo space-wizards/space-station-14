@@ -46,13 +46,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             var fractionGas = amount / data.TotalMoles;
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
-                ("gas", Loc.GetString(gas switch
-                {
-                    Gas.CarbonDioxide => "gases-co2",
-                    Gas.WaterVapor => "gases-water-vapor",
-                    Gas.NitrousOxide => "gases-n2o",
-                    _ => $"gases-{gas.ToString().ToLower()}",
-                })),
+                ("gas", Loc.GetString("air-alarm-ui-thresholds-gas-name", ("gas", $"{gas}"))),
                 ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
                 ("amount", $"{amount:0.####}"),
                 ("percentage", $"{(100 * fractionGas):0.##}")));
@@ -60,13 +54,7 @@ public sealed partial class SensorInfo : BoxContainer
             _gasLabels.Add(gas, label);
 
             var threshold = data.GasThresholds[gas];
-            var gasThresholdControl = new ThresholdControl(Loc.GetString($"air-alarm-ui-thresholds-gas-title", ("gas", Loc.GetString(gas switch
-            {
-                Gas.CarbonDioxide => "gases-co2",
-                Gas.WaterVapor => "gases-water-vapor",
-                Gas.NitrousOxide => "gases-n2o",
-                _ => $"gases-{gas.ToString().ToLower()}",
-            }))), threshold, AtmosMonitorThresholdType.Gas, gas, 100);
+            var gasThresholdControl = new ThresholdControl(Loc.GetString($"air-alarm-ui-thresholds-gas-title"), threshold, AtmosMonitorThresholdType.Gas, gas, 100);
             gasThresholdControl.Margin = new Thickness(20, 2, 2, 2);
             gasThresholdControl.ThresholdDataChanged += (type, alarmThreshold, arg3) =>
             {
@@ -125,13 +113,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             var fractionGas = amount / data.TotalMoles;
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
-                ("gas", Loc.GetString(gas switch
-                {
-                    Gas.CarbonDioxide => "gases-co2",
-                    Gas.WaterVapor => "gases-water-vapor",
-                    Gas.NitrousOxide => "gases-n2o",
-                    _ => $"gases-{gas.ToString().ToLower()}",
-                })),
+                ("gas", Loc.GetString("air-alarm-ui-thresholds-gas-name", ("gas", $"{gas}"))),
                 ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
                 ("amount", $"{amount:0.####}"),
                 ("percentage", $"{(100 * fractionGas):0.##}")));
