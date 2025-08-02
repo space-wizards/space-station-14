@@ -10691,6 +10691,8 @@ entities:
       pos: 26.5,19.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 7720
       - 15466
@@ -10702,6 +10704,8 @@ entities:
       pos: 24.5,25.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 2045
       - 10524
@@ -48542,6 +48546,8 @@ entities:
       pos: 24.5,22.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 12517
       - 7720
@@ -48554,6 +48560,8 @@ entities:
       pos: 24.5,21.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 12517
       - 7720
@@ -48566,6 +48574,8 @@ entities:
       pos: 24.5,20.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 7720
       - 15466
@@ -48658,6 +48668,8 @@ entities:
       pos: 24.5,24.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 7720
       - 15466
@@ -48668,6 +48680,8 @@ entities:
       pos: 24.5,25.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 7720
       - 15466
@@ -73353,7 +73367,7 @@ entities:
 
         4: Place a standard 50u beaker of cryogenic medicine into the tube. As soon as it is inserted, it will begin transferring the liquid into the patient’s bloodstream. Continue to monitor their vitals on the display.
 
-        5: Once the desired effect has been achieved, eject the beaker and remove the patient from the tube. A injection of 5u Leporazine is recommended to quickly raise their body temp back to comfortable levels.
+        5: Once the desired effect has been achieved, eject the beaker and remove the patient from the tube. A injection of 5u Leporazine is recommended to quickly raise their body temp back to comfortable levels. 
 
 
         [head=3][bold]Supported Chemicals[/bold][/head]
