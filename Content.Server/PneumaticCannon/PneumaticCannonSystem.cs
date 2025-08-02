@@ -2,7 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Ranged.Systems;
-using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
@@ -81,7 +80,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         }
 
         // only accept tanks if it uses gas
-        if (tank.Air.TotalMoles >= component.GasUsage && component.GasUsage > 0f)
+        if (component.GasUsage > 0f && component.GasUsage <= tank.Air.TotalMoles)
             return;
 
         _popup.PopupEntity(Loc.GetString(component.MessageInsufficientGas), uid, Transform(args.EntityUid).ParentUid);
