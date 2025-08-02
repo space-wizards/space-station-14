@@ -20,17 +20,9 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
           - !type:PlaySoundBehavior
             sound:
               collection: MetalGlassBreak
-              params:
-                volume: -4
   - type: Construction
     graph: WallmountTelescreen
     node: Telescreen
