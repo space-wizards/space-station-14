@@ -34,7 +34,7 @@ We are not currently accepting translations of the game on our main repository. 
 
 We do not accept any form of AI-generated content in this repository, including but not limited to:
 - Code (including yaml)
-- Artwork, sound files and or other assets
+- Artwork, sound files or other assets
 - Pull request descriptions or issue reports written by AI
 - Documentation or comments generated using AI assistance
 
