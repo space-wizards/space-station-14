@@ -1,6 +1,5 @@
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Pinpointer;
-using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;
