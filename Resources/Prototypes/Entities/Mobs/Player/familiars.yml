@@ -56,8 +56,10 @@
     animation: WeaponArcBite
     damage:
       types:
-        Piercing: 8
-        Slash: 7
+        Burn: 6
+        Slash: 6
+  - type: IgniteOnMeleeHit
+    fireStacks: 1
   - type: InputMover
   - type: MobMover
   - type: HTN
@@ -75,6 +77,24 @@
     thresholds:
       0: Alive
       120: Dead
+  - type: PassiveDamage # Assuming one damage type, 6 HP a minute
+    allowedStates:
+    - Alive
+    damageCap: 40
+    damage:
+      types:
+        Heat: -0.1
+      groups:
+        Brute: -0.1
+  - type: Flammable # Fireproof
+    damage:
+      types: {}
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+  - type: Puller # FETCH ME THEIR SOULS
+    needsHands: false
   - type: Grammar
     attributes:
       gender: male
