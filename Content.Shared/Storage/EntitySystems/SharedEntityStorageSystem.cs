@@ -350,9 +350,12 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (containerAttemptEvent.Cancelled)
             return false;
 
-        // Consult the whitelist. The whitelist ignores the default assumption about how entity storage works.
-        if (component.Whitelist != null)
-            return _whitelistSystem.IsValid(component.Whitelist, toInsert);
+        // Checks blacklist and whitelist.
+        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, toInsert) ||
+            _whitelistSystem.IsBlacklistPass(component.Blacklist, toInsert))
+        {
+            return false;
+        }
 
         // The inserted entity must be a mob or an item.
         return HasComp<BodyComponent>(toInsert) || HasComp<ItemComponent>(toInsert);
