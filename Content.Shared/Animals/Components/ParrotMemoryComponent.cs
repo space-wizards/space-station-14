@@ -1,5 +1,7 @@
 using Content.Shared.Animals.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Animals.Components;

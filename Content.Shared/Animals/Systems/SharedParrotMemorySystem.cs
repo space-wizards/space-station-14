@@ -3,7 +3,6 @@ using Content.Shared.Animals.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Animals.Systems;
