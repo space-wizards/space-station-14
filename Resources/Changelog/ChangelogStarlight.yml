@@ -10117,5 +10117,27 @@ Entries:
   id: 1393
   time: '2025-08-02T13:48:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1080
+- author: Citrea
+  changes:
+  - message: Botanists and BSO have been informed they can bring other shoes to work.
+    type: Add
+  id: 1394
+  time: '2025-08-02T13:51:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1150
+- author: Citrea
+  changes:
+  - message: Crew can no longer bring a second pair of heels to work.
+    type: Remove
+  id: 1395
+  time: '2025-08-02T13:51:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1150
+- author: Citrea
+  changes:
+  - message: Sec no longer forgets to bring knives to their shift if they choose fancy
+      boots.
+    type: Fix
+  id: 1396
+  time: '2025-08-02T13:51:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1150
 Order: -1
 
