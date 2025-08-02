@@ -10139,5 +10139,34 @@ Entries:
   id: 1396
   time: '2025-08-02T13:51:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1150
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added Breaching shotgun shells for Syndicates and Nuclear Operatives
+    type: Add
+  id: 1397
+  time: '2025-08-02T13:54:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/958
+- author: PubliclyExecutedPig
+  changes:
+  - message: Slug Shells now do 40 pierce and 15 structural, to match wizden
+    type: Tweak
+  id: 1398
+  time: '2025-08-02T13:54:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/958
+- author: PubliclyExecutedPig
+  changes:
+  - message: Normal shotgun shells now have a little bit of structural damage
+    type: Tweak
+  id: 1399
+  time: '2025-08-02T13:54:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/958
+- author: PubliclyExecutedPig
+  changes:
+  - message: Tranquiliser shells now inject 3.5 units of nocturine per hit down from
+      5 (meaning its a three hit sleep now)
+    type: Tweak
+  id: 1400
+  time: '2025-08-02T13:54:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/958
 Order: -1
 
