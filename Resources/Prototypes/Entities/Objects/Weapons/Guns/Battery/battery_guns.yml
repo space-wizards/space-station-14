@@ -10,7 +10,7 @@
     - abductor-gun-restricted-1
   - type: Sprite
   - type: Item
-    size: Huge
+    size: Large # Starlight
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     quickEquip: false
@@ -252,9 +252,18 @@
     magState: mag
     steps: 5
     zeroVisible: true
+  - type: Gun #Starlight - Start
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto #Just allows people to hold down left click
+  - type: Battery 
+    maxCharge: 1500 # ~1:30 minutes for recharge
+    startingCharge: 1500
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
-    fireCost: 62.5
+    fireCost: 30 #Starlight - End
 
 #- type: entity
 #  name: pulse pistol
@@ -370,7 +379,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
     proto: RedHeavyLaser
-    fireCost: 100
+    fireCost: 40 #Starlight
   - type: Tag
     tags:
     - TurretCompatibleWeapon
@@ -427,7 +436,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
     proto: XrayLaser
-    fireCost: 100
+    fireCost: 40 #Starlight
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -786,16 +795,16 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: ProjectileBatteryAmmoProvider
-    proto: BulletLaserSpreadNarrow
-    fireCost: 150
+    proto: BulletLaserSpread
+    fireCost: 60
   - type: BatteryWeaponFireModes
     fireModes:
-    #- proto: BulletLaserSpread
-      #fireCost: 150
-    - proto: BulletLaserSpreadNarrow
-      fireCost: 200
-    - proto: BulletDisablerSmgSpread
-      fireCost: 120
+#    - proto: BulletLaserSpread Starlight
+#      fireCost: 65
+    - proto: BulletLaserSpreadNarrow #Starlight
+      fireCost: 80
+    - proto: BulletDisablerSmgSpread #Starlight
+      fireCost: 60
   - type: Item
     size: Large
     shape:

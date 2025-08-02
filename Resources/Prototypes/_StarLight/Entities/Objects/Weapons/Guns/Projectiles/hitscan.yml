@@ -843,7 +843,7 @@
     state: impact_blue
   damage:
     types:
-      Heat: 50
+      Heat: 60
       
 - type: hitscan
   id: DisablerBoltPractice
