@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Stylesheets;
 using Content.Shared.Crayon;
@@ -9,9 +8,6 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Client.Utility;
-using Robust.Shared.Graphics;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -28,9 +24,14 @@ namespace Content.Client.Crayon.UI
         private string? _autoSelected;
         private string? _selected;
         private Color _color;
+        private float _rotation;
+
+        public FloatSpinBox RotationSpinBox;
 
         public event Action<Color>? OnColorSelected;
         public event Action<string>? OnSelected;
+        public event Action<float>? OnRotationSelected;
+        public event Action<bool>? OnPreviewModeToggled;
 
         public CrayonWindow()
         {
@@ -40,6 +41,24 @@ namespace Content.Client.Crayon.UI
 
             Search.OnTextChanged += SearchChanged;
             ColorSelector.OnColorChanged += SelectColor;
+
+            RotationSpinBox = new FloatSpinBox(90.0f, 0)
+            {
+                Value = _rotation,
+                HorizontalExpand = true
+            };
+            SpinBoxContainer.AddChild(RotationSpinBox);
+
+            RotationSpinBox.OnValueChanged += args =>
+            {
+                _rotation = args.Value;
+                OnRotationSelected?.Invoke(_rotation);
+            };
+
+            CrayonPreviewButton.OnToggled += args =>
+            {
+                OnPreviewModeToggled?.Invoke(args.Pressed);
+            };
         }
 
         private void SelectColor(Color color)
@@ -150,11 +169,15 @@ namespace Content.Client.Crayon.UI
             _selected = state.Selected;
             ColorSelector.Visible = state.SelectableColor;
             _color = state.Color;
+            _rotation = state.Rotation;
 
             if (ColorSelector.Visible)
             {
                 ColorSelector.Color = state.Color;
             }
+
+            RotationSpinBox.Value = state.Rotation;
+            CrayonPreviewButton.Pressed = state.PreviewMode;
 
             RefreshList();
         }
