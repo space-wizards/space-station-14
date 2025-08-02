@@ -154,6 +154,12 @@
     dataset: MedibotAds
   - type: Inventory
     templateId: medibot
+  # starlight
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-medibot
+    layoutId: MedibotControls
+    alwaysRandomize: true
 
 - type: entity
   name: red ointment

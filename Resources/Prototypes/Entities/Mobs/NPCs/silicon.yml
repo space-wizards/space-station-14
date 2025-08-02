@@ -314,7 +314,12 @@
   #region starlight
   - type: Vocalizer
   - type: DatasetVocalizer
-    dataset: CleanBotAds
+    dataset: CleanbotAds
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-cleanbot
+    layoutId: MedibotControls
+    alwaysRandomize: true
   #end region
 - type: entity
   parent:
