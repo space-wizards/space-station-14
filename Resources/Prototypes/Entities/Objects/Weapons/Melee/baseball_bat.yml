@@ -23,6 +23,8 @@
         Structural: 10
   - type: Item
     size: Normal
+    shape:
+    - 0,0,0,3
   - type: Tool
     qualities:
     - Rolling
@@ -54,6 +56,8 @@
     state: icon
   - type: Item
     size: Normal
+    shape:
+    - 0,0,0,3
     sprite: Objects/Weapons/Melee/incomplete_bat.rsi
   - type: Construction
     graph: WoodenBat
