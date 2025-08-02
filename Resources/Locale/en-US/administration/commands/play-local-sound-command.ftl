@@ -1,0 +1,9 @@
+cmd-playlocalsound-desc = Plays a localized sound from your current position for the specified players or for every nearby player if no players are specified.
+cmd-playlocalsound-help = playlocalsound <path> [volume] [follow] [user 1] ... [user n]
+cmd-playlocalsound-no-entity = You have no attached entity and you must play sounds.
+cmd-playlocalsound-player-not-found = Player "{$username}" not found.
+cmd-playlocalsound-volume-parse = Invalid volume of {$volume} specified.
+cmd-playlocalsound-arg-path = <path>
+cmd-playlocalsound-arg-follow = [follow]
+cmd-playlocalsound-arg-volume = [volume]
+cmd-playlocalsound-arg-usern = [user {$user}]
