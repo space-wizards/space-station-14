@@ -103,12 +103,14 @@ public sealed partial class StationJobsSystem
         var stationShares = new Dictionary<EntityUid, int>(stations.Count);
 
         // Ok so the general algorithm:
-        // We start with the highest weight jobs and work our way down. We filter jobs by weight when selecting as well.
-        // Weight > Priority > Station.
-        foreach (var weight in _orderedWeights)
+        // Changed by 🌟Starlight🌟
+        // We start with the highest priority jobs and work our way down. We filter jobs by weight when selecting as well. 
+        // Priority > Weight > Station.
+        for (var selectedPriority = JobPriority.High; selectedPriority > JobPriority.Never; selectedPriority--)
         {
-            for (var selectedPriority = JobPriority.High; selectedPriority > JobPriority.Never; selectedPriority--)
+            foreach (var weight in _orderedWeights)
             {
+                // 🌟Starlight🌟 end
                 if (userIds.Count == 0)
                     goto endFunc;
 

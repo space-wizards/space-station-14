@@ -13,8 +13,6 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    
     protected const string ChamberSlot = "gun_chamber";
 
     protected virtual void InitializeChamberMagazine()
@@ -44,10 +42,10 @@ public abstract partial class SharedGunSystem
     {
         if (component.SelectedPrefix == null && component.AvailablePrefixes.Count > 1)
         {
-            component.SelectedPrefix = _random.Pick(component.AvailablePrefixes);
+            component.SelectedPrefix = Random.Pick(component.AvailablePrefixes);
             Dirty(uid, component);
         }
-        
+
         // Appearance data doesn't get serialized and want to make sure this is correct on spawn (regardless of MapInit) so.
         if (component.BoltClosed != null)
         {
