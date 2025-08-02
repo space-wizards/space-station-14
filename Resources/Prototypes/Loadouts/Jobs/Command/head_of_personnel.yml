@@ -1,4 +1,4 @@
-# For mantles
+# For Master HoPs; over-ear headset, mantle
 - type: loadoutEffectGroup
   id: MasterHoP
   effects:
@@ -8,7 +8,7 @@
       role: JobHeadOfPersonnel
       time: 72000 #20 hrs
 
-# Professional HoP Time
+# For Professional HoPs; backpack
 - type: loadoutEffectGroup
   id: ProfessionalHoP
   effects:
@@ -63,8 +63,28 @@
   equipment:
     back: ClothingBackpackIan
 
-# Outerclothing
+# OuterClothing
 - type: loadout
   id: HoPWintercoat
   equipment:
     outerClothing: ClothingOuterWinterHoP
+
+# Ears
+- type: loadout
+  id: HoPAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterHoP
+
+- type: startingGear
+  id: HoPAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltCommand
+
+# Shoes
+- type: loadout
+  id: BrownShoes
+  equipment:
+    shoes: ClothingShoesColorBrown

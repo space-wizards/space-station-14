@@ -242,6 +242,19 @@
     sprite: Clothing/Ears/Headsets/security.rsi
 
 - type: entity
+  parent: [ClothingHeadsetSecurity, BaseCommandContraband]
+  id: ClothingHeadsetHoS
+  name: hos headset
+  description: A headset used by the head of security, perfect for arguing with the lawyer and captain during shootouts.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
+
+- type: entity
   parent: [ClothingHeadset, BaseSecurityContraband]
   id: ClothingHeadsetBrigmedic
   name: brigmedic headset
