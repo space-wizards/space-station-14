@@ -1,0 +1,35 @@
+- type: entity
+  parent: MobHuman
+  id: MobLing
+  name: Urist McLing
+  suffix: Non-Antag
+  components:
+  - type: ChangelingDevour
+  - type: ChangelingIdentity
+  - type: ChangelingTransform
+  - type: ActionGrant
+    actions:
+    - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
+
+- type: entity
+  id: ActionChangelingDevour
+  name: "[color=red]Devour[/color]"
+  description: Consume the essence of your victims and subsume their identity and mind into your own.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/changeling.rsi, state: "devour" }
+    iconOn: { sprite : Interface/Actions/changeling.rsi, state: "devour_on" }
+    priority: 1
+  - type: TargetAction
+  - type: EntityTargetAction
+    event: !type:ChangelingDevourActionEvent
+
+- type: entity
+  id: ActionChangelingTransform
+  name: "[color=red]Transform[/color]"
+  description: Transform and assume the identities of those you have devoured.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/changeling.rsi, state: "transform" }
+  - type: InstantAction
+    event: !type:ChangelingTransformActionEvent
