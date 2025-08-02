@@ -2,10 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Store.Systems;
 using Content.Shared.GameTicking;
-using Content.Shared.Mobs;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
-using Content.Shared.Store.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -269,6 +267,11 @@ public sealed class RingerSystem : SharedRingerSystem
         }
 
         return randomInt;
+    }
+
+    public void SetBoundUplinkEntity(Entity<RingerAccessUplinkComponent> entity, EntityUid? targetEntity)
+    {
+        entity.Comp.BoundEntity = targetEntity;
     }
 }
 

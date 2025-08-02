@@ -8,7 +8,6 @@ using Content.Shared.Implants;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.PDA;
-using Content.Shared.PDA.Ringer;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Map;
@@ -24,8 +23,9 @@ public sealed class UplinkSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly RingerSystem _ringer = default!;
 
-    public static readonly EntProtoId TraitorUplinkStore = "StorePresetRemoteUplink";
+    public static readonly EntProtoId<StoreComponent> TraitorUplinkStore = "StorePresetRemoteUplink";
     public static readonly ProtoId<CurrencyPrototype> TelecrystalCurrencyPrototype = "Telecrystal";
     private static readonly EntProtoId FallbackUplinkImplant = "UplinkImplant";
     private static readonly ProtoId<ListingPrototype> FallbackUplinkCatalog = "UplinkUplinkImplanter";
@@ -62,7 +62,7 @@ public sealed class UplinkSystem : EntitySystem
         if (bindToPda)
         {
             var accessComp = EnsureComp<RingerAccessUplinkComponent>(storeEntity.Value);
-            accessComp.BoundEntity = uplinkEntity.Value;
+            _ringer.SetBoundUplinkEntity((storeEntity.Value, accessComp), uplinkEntity.Value);
         }
 
         EnsureComp<UplinkComponent>(uplinkEntity.Value);
