@@ -1,9 +1,9 @@
 - type: entity
   parent: ReagentDispenserBase
-  id: SodaDispenser
+  id: SodaDispenserEmpty
   name: soda dispenser
   description: A beverage dispenser with a selection of soda and several other common beverages. Has a single fill slot for containers.
-  suffix: Filled
+  suffix: Empty
   components:
   - type: Rotatable
   - type: Sprite
@@ -15,6 +15,20 @@
     whitelist:
       tags:
       - DrinkBottle
+  - type: Transform
+    noRot: false
+  - type: Machine
+    board: SodaDispenserMachineCircuitboard
+  - type: GuideHelp
+    guides:
+    - Bartender
+    - Drinks
+
+- type: entity
+  parent: SodaDispenserEmpty
+  id: SodaDispenser
+  suffix: Filled
+  components:
   - type: StorageFill
     contents:
     - id: DrinkCoconutWaterJug
@@ -36,16 +50,3 @@
     - id: DrinkTeaJug
     - id: DrinkTonicWaterBottleFull
     - id: DrinkWaterMelonJuiceJug
-  - type: Transform
-    noRot: false
-  - type: Machine
-    board: SodaDispenserMachineCircuitboard
-  - type: GuideHelp
-    guides:
-    - Bartender
-    - Drinks
-
-- type: entity
-  parent: SodaDispenser
-  id: SodaDispenserEmpty
-  suffix: Empty
