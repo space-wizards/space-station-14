@@ -1,3 +1,4 @@
+using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -13,8 +14,8 @@ public sealed partial class ItemActionGrantComponent : Component
     public List<EntProtoId> Actions = new();
 
     /// <summary>
-    /// Actions will only be available if the item is in the clothing slot.
+    /// The slots this must be equipped in to grant the actions.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool ActiveIfWorn;
+    public SlotFlags? AllowedSlots = SlotFlags.WITHOUT_POCKET;
 }
