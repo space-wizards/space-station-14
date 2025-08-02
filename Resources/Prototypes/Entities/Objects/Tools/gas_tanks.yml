@@ -37,8 +37,8 @@
     tankLowPressure: 30.0
   - type: Explosive
     explosionType: MicroBomb
-    maxIntensity: 8
-    canCreateVacuum: false
+    maxIntensity: 8 # STARLIGHT
+    canCreateVacuum: false # STARLIGHT
   - type: MeleeWeapon
     wideAnimationRotation: 45
     attackRate: 0.8
