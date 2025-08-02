@@ -1,10 +1,77 @@
 ﻿#Salvave Lead
-# DOTS - copy from salv specialist
+- type: entityTable
+  id: LockerFillSalvageLead
+  table: !type:AllSelector
+    children: # DOTS - add Lead specific items
+    - id: BoxFolderClipboard
+
+- type: entity
+  id: LockerSalvageLeadFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerSalvageLead
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillSalvageSpecialistHardsuitSpatio
+        - !type:NestedSelector
+          tableId: LockerFillSalvageLead
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
+
+- type: entity
+  id: LockerSalvageLeadFilled
+  suffix: Filled
+  parent: LockerSalvageLead
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:ALlSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillSalvageLead
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
+
 
 #Salvage Medic
-# DOTS - copy from salv specialist
+- type: entityTable
+  id: LockerFillSalvageMedic
+  table: !type:AllSelector
+    children: # DOTS - add Medic specific items
+    - id: MedkitAdvanced
 
-#Salvage Specialist
+- type: entity
+  id: LockerSalvageMedicFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerSalvageMedic
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillSalvageSpecialistHardsuitSpatio
+        - !type:NestedSelector
+          tableId: LockerFillSalvageMedic
+
+- type: entity
+  id: LockerSalvageMedicFilled
+  suffix: Filled
+  parent: LockerSalvageMedic
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:ALlSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillSalvageMedic
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
+
+# Salvage Specialist - location note
 # located in Wizden's Resources/Prototypes/Catalog/Fills/Lockers/cargo.yml
 
 #Mining Specialist

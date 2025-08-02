@@ -14,8 +14,8 @@
     - id: ClothingBeltUtilityFilled
     - id: SurvivalKnife
     - id: HandheldGPSBasic
-    - id: RadioHandheld
-    - id: RadioHandheldExpedition #starlight
+#    - id: RadioHandheld # Starlight - radio replaced with expedition radio
+    - id: RadioHandheldExpedition # Starlight
     - id: AppraisalTool
     - id: FireExtinguisher
     - id: Flare

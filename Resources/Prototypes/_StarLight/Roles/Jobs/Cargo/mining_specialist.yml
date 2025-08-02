@@ -14,7 +14,7 @@
   supervisors: job-supervisors-qm
   access:
   - Cargo
-  - Salvage #DOTS - replace with "Mining" -- but it might break their access to all current doors.
+  - Mining
   - Maintenance
   - External
 
@@ -22,7 +22,7 @@
   id: MiningSpecialistGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitMiningSpecialist
-    id: MiningPDA # DOTS - verify that the new "mining" access actually applies to the mining id card?
+    id: MiningPDA
     ears: ClothingHeadsetMining
     #storage:
     #back:
