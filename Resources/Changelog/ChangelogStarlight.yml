@@ -10066,5 +10066,13 @@ Entries:
   id: 1386
   time: '2025-08-02T13:43:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1129
+- author: walksanatora
+  changes:
+  - message: Server hosts can now force the preset to always be displayed as a specific
+      type.
+    type: Add
+  id: 1387
+  time: '2025-08-02T13:45:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1130
 Order: -1
 
