@@ -10315,5 +10315,76 @@ Entries:
   id: 1419
   time: '2025-08-02T14:32:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/993
+- author: Killer Tamashi
+  changes:
+  - message: Changed All laser sizes to 2x4 instead of 4x4.
+    type: Tweak
+  id: 1420
+  time: '2025-08-02T14:37:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1018
+- author: Killer Tamashi
+  changes:
+  - message: Changed Laser capacity to 50 (2x Magazines)
+    type: Tweak
+  id: 1421
+  time: '2025-08-02T14:37:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1018
+- author: Killer Tamashi
+  changes:
+  - message: Changed Laser damage to 14 -> 20 Heat (On par with Dominator)
+    type: Tweak
+  id: 1422
+  time: '2025-08-02T14:37:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1018
+- author: Killer Tamashi
+  changes:
+  - message: Changed Immolator capacity to 50 (2x Magazines)
+    type: Tweak
+  id: 1423
+  time: '2025-08-02T14:37:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1018
+- author: Killer Tamashi
+  changes:
+  - message: Changed Immolator damage to 14 -> 15 Heat
+    type: Tweak
+  id: 1424
+  time: '2025-08-02T14:37:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1018
+- author: Killer Tamashi
+  changes:
+  - message: Changed Laser Cannon capacity to 25 (1x Magazine)
+    type: Tweak
+  id: 1425
+  time: '2025-08-02T14:37:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1018
+- author: Killer Tamashi
+  changes:
+  - message: Changed X-Ray Laser capacity to 25 (1x Magazine)
+    type: Tweak
+  id: 1426
+  time: '2025-08-02T14:37:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1018
+- author: Killer Tamashi
+  changes:
+  - message: Changed Energy Gun capacity to 20/15 (On par with Dominator)
+    type: Tweak
+  id: 1427
+  time: '2025-08-02T14:37:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1018
+- author: Killer Tamashi
+  changes:
+  - message: Changed Energy Shotgun capacity to 15/20 (Narrow / Disabler for clarity)
+    type: Tweak
+  id: 1428
+  time: '2025-08-02T14:37:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1018
+- author: Killer Tamashi
+  changes:
+  - message: Changed Destroy Mode Damage 50 -> 60 (Should allow for 2-Hit Crits, as
+      intended)
+    type: Tweak
+  id: 1429
+  time: '2025-08-02T14:37:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1018
 Order: -1
 
