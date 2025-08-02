@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access.Systems;
 using Content.Server.AlertLevel;
 using Content.Server.CartridgeLoader;
@@ -17,6 +18,7 @@ using Content.Shared.Light;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
+using Content.Shared.Store.Components;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -187,7 +189,7 @@ namespace Content.Server.PDA
 
             var address = GetDeviceNetAddress(uid);
             var hasInstrument = HasComp<InstrumentComponent>(uid);
-            var showUplink = HasComp<UplinkComponent>(uid) && IsUnlocked(uid);
+            var showUplink = TryGetUnlockedStore(uid, out _);
 
             UpdateStationName(uid, pda);
             UpdateAlertLevel(uid, pda);
@@ -272,8 +274,19 @@ namespace Content.Server.PDA
                 return;
 
             // check if its locked again to prevent malicious clients opening locked uplinks
-            if (HasComp<UplinkComponent>(uid) && IsUnlocked(uid))
-                _store.ToggleUi(msg.Actor, uid);
+            if (TryGetUnlockedStore(uid, out var store))
+            {
+                if (store != uid)
+                {
+                    if (TryComp<RemoteStoreComponent>(uid, out var remoteStore))
+                        remoteStore.Store = store;
+                    _store.ToggleUi(msg.Actor, store.Value, remoteAccess: uid);
+                }
+                else
+                {
+                    _store.ToggleUi(msg.Actor, store.Value);
+                }
+            }
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaLockUplinkMessage msg)
@@ -283,14 +296,24 @@ namespace Content.Server.PDA
 
             if (TryComp<RingerUplinkComponent>(uid, out var uplink))
             {
+                if (TryComp<RemoteStoreComponent>(uid, out var remoteStore))
+                    remoteStore.Store = null;
                 _ringer.LockUplink((uid, uplink));
                 UpdatePdaUi(uid, pda);
             }
         }
 
-        private bool IsUnlocked(EntityUid uid)
+        /// <summary>
+        /// Returns the currently unlocked store, if there is one.
+        /// </summary>
+        private bool TryGetUnlockedStore(EntityUid uid, [NotNullWhen(true)] out EntityUid? store)
         {
-            return !TryComp<RingerUplinkComponent>(uid, out var uplink) || uplink.Unlocked;
+            store = null;
+            if (!TryComp<RingerUplinkComponent>(uid, out var uplink) || !uplink.Unlocked || uplink.TargetStore == null)
+                return false;
+
+            store = uplink.TargetStore;
+            return true;
         }
 
         private void UpdateStationName(EntityUid uid, PdaComponent pda)
