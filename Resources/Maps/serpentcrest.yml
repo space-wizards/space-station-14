@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/30/2025 00:18:50
-  entityCount: 27973
+  time: 08/02/2025 19:24:34
+  entityCount: 27970
 maps:
 - 1
 grids:
@@ -4630,7 +4630,8 @@ entities:
           1,-5:
             0: 65535
           2,-4:
-            0: 49072
+            1: 16
+            0: 49056
           2,-3:
             0: 35839
           2,-2:
@@ -65242,8 +65243,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.7459903
-        - 6.568249
+        - 1.8856695
+        - 7.0937095
         - 0
         - 0
         - 0
@@ -65254,17 +65255,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 10192
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 6034
     components:
     - type: Transform
@@ -66930,13 +66920,6 @@ entities:
     - type: Transform
       pos: -14.508402,-30.587784
       parent: 2
-- proto: ClothingMaskGasSyndicate
-  entities:
-  - uid: 8613
-    components:
-    - type: Transform
-      pos: -18.525969,38.590355
-      parent: 2
 - proto: ClothingMaskJackal
   entities:
   - uid: 1038
@@ -67914,15 +67897,6 @@ entities:
     - type: Transform
       pos: -12.5,-54.5
       parent: 2
-- proto: CombatBakeryKit
-  entities:
-  - uid: 10192
-    components:
-    - type: Transform
-      parent: 4967
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: CombatKnife
   entities:
   - uid: 10934
@@ -154905,11 +154879,6 @@ entities:
     components:
     - type: Transform
       pos: -56.35221,4.626794
-      parent: 2
-  - uid: 25633
-    components:
-    - type: Transform
-      pos: -52.774475,-44.457836
       parent: 2
 - proto: TowelColorNT
   entities:
