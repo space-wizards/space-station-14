@@ -46,3 +46,14 @@
   components:
   - type: Metabolizer
     metabolizerTypes: [Vox]
+
+- type: entity
+  id: OrganVoxBrain
+  parent: OrganHumanBrain
+  name: cortical stack
+  description: "The blue bioengineered brain of a Vox. It has a cortical stack integrated into it."
+  suffix: "vox"
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
+  - type: BorgBrain
