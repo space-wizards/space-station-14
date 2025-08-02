@@ -10168,5 +10168,13 @@ Entries:
   id: 1400
   time: '2025-08-02T13:54:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/958
+- author: DeltaVelocity
+  changes:
+  - message: 'Reverted Wizden PR #38131. Urist Mchands no longer has more HP than
+      a Goliath.'
+    type: Tweak
+  id: 1401
+  time: '2025-08-02T14:01:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1155
 Order: -1
 
