@@ -655,7 +655,7 @@
   - type: SolutionContainerManager
     solutions:
       hypospray:
-        maxVol: 10
+        maxVol: 15
   - type: RefillableSolution
     solution: hypospray
   - type: ExaminableSolution
@@ -663,6 +663,7 @@
     heldOnly: true # Allow examination only when held in hand.
   - type: Hypospray
     onlyAffectsMobs: false
+    transferAmount: 2.5
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
