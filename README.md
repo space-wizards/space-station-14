@@ -32,6 +32,12 @@ Just make sure your changes and pull requests are in accordance with the [contri
 
 We are not currently accepting translations of the game on our main repository. If you would like to translate the game into another language, consider creating a fork or contributing to a fork.
 
+We do not accept any form of AI-generated content in this repository, including but not limited to:
+- Code (including yaml)
+- Artwork, sound files and or other assets
+- Pull request descriptions or issue reports written by AI
+- Documentation or comments generated using AI assistance
+
 ## Building
 
 1. Clone this repo:
