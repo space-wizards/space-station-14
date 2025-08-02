@@ -29,5 +29,8 @@ namespace Content.Shared.Mobs.Components
                 MobState.Critical,
                 MobState.Dead
             };
+
+        [DataField]
+        public bool CanSell = false;
     }
 }
