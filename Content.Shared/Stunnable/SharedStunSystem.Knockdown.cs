@@ -4,6 +4,8 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Gravity;
+using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Movement.Events;
@@ -61,8 +63,9 @@ public abstract partial class SharedStunSystem
         // DoAfter event subscriptions
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
 
-        // Knockdown Extenders
+        // Crawling
         SubscribeLocalEvent<KnockedDownComponent, DamageChangedEvent>(OnDamaged);
+        SubscribeLocalEvent<KnockedDownComponent, WeightlessnessChangedEvent>(OnWeightlessnessChanged);
 
         // Handling Alternative Inputs
         SubscribeAllEvent<ForceStandUpEvent>(OnForceStandup);
@@ -436,7 +439,7 @@ public abstract partial class SharedStunSystem
 
     #endregion
 
-    #region Knockdown Extenders
+    #region Crawling
 
     private void OnDamaged(Entity<KnockedDownComponent> entity, ref DamageChangedEvent args)
     {
@@ -446,6 +449,18 @@ public abstract partial class SharedStunSystem
 
         if (args.DamageDelta.GetTotal() >= KnockdownDamageThreshold) // TODO: Unhardcode this
             SetKnockdownTime(entity, GameTiming.CurTime + DefaultKnockedDuration);
+    }
+
+    private void OnWeightlessnessChanged(Entity<KnockedDownComponent> entity, ref WeightlessnessChangedEvent args)
+    {
+        // I probably don't need this check since weightless -> non-weightless you shouldn't be knocked down
+        // But you never know.
+        if (!args.Weightless)
+            return;
+
+        // Targeted moth attack
+        CancelKnockdownDoAfter((entity, entity.Comp));
+        RemComp<KnockedDownComponent>(entity);
     }
 
     #endregion

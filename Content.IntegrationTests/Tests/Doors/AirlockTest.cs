@@ -21,6 +21,7 @@ namespace Content.IntegrationTests.Tests.Doors
   components:
   - type: Physics
     bodyType: Dynamic
+  - type: Weightlessness
   - type: Fixtures
     fixtures:
       fix1:

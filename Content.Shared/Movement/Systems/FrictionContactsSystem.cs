@@ -84,7 +84,7 @@ public sealed class FrictionContactsSystem : EntitySystem
         var frictionNoInput = 0.0f;
         var acceleration = 0.0f;
 
-        var isAirborne = physicsComponent.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(entity, physicsComponent);
+        var isAirborne = physicsComponent.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(entity.Owner);
 
         var remove = true;
         var entries = 0;
