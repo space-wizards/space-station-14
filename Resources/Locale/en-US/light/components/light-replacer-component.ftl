@@ -21,3 +21,6 @@ comp-light-replacer-light-listing = {$amount ->
     [one] [color=yellow]{$amount}[/color] [color=gray]{$name}[/color]
     *[other] [color=yellow]{$amount}[/color] [color=gray]{$name}s[/color]
 }
+
+# Shown when the player successfully ejects a light from the light replacer
+comp-light-replacer-eject-light = You eject {INDEFINITE($bulb)} {$bulb} onto the floor.
