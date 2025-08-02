@@ -1,24 +1,32 @@
-﻿using System.Numerics;
-
-namespace Content.Server.Traits.Assorted;
+﻿namespace Content.Server.Traits.Assorted;
 
 /// <summary>
 /// This is used for the narcolepsy trait.
 /// </summary>
 [RegisterComponent, Access(typeof(NarcolepsySystem))]
+[AutoGenerateComponentPause]
 public sealed partial class NarcolepsyComponent : Component
 {
     /// <summary>
-    /// The random time between incidents, (min, max).
+    /// The minimum time between naps.
     /// </summary>
-    [DataField("timeBetweenIncidents", required: true)]
-    public Vector2 TimeBetweenIncidents { get; private set; }
+    [DataField]
+    public (TimeSpan Min, TimeSpan Max) TimeBetweenIncidents = (TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(10));
 
     /// <summary>
-    /// The duration of incidents, (min, max).
+    /// The minimum duration that the entity will be unable to wake.
     /// </summary>
-    [DataField("durationOfIncident", required: true)]
-    public Vector2 DurationOfIncident { get; private set; }
+    [DataField]
+    public (TimeSpan Min, TimeSpan Max) IncidentDuration = (TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(30));
 
-    public float NextIncidentTime;
+    /// <summary>
+    /// The next time a forced sleep will occur.
+    /// </summary>
+    [AutoPausedField]
+    public TimeSpan NextIncidentTime;
+
+    /// <summary>
+    /// Whether the entity is asleep due to narcolepsy. (As opposed to normal sleep or chemically induced sleep.)
+    /// </summary>
+    public bool NarcolepsyInducedSleep;
 }
