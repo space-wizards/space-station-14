@@ -1,0 +1,112 @@
+# Salvage and Mining Airlocks
+- type: entity
+  parent: Airlock
+  id: AirlockSalvageMining
+  suffix: Salvage, Mining
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/salvagemining.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+
+## AirlockSalvage is in Wizden airlocks.yml
+
+- type: entity
+  parent: Airlock
+  id: AirlockMiningCargo # Added cargo to differentiate from Wizden "AirlockMining", which is the black door
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/mining_cargo.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockSalvageMiningGlass
+  suffix: Salvage, Mining
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Glass/salvagemining.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+
+## AirlockSalvageGlass is in Wizden airlocks.yml
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockMiningCargoGlass # Added cargo to differentiate from Wizden "AirlockMining", which is the black door
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Glass/mining_cargo.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+
+## Renamed replacement of Wizden black salvage doors #DOTS - add to migration.yml?
+- type: entity
+  parent: AirlockCargo
+  id: AirlockRetroSalvageMining
+  suffix: Salvage, Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+  - type: Paintable
+    group: null
+
+- type: entity
+  parent: AirlockCargo
+  id: AirlockRetroSalvage
+  suffix: Salvage
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+  - type: Paintable
+    group: null
+
+- type: entity
+  parent: AirlockCargo
+  id: AirlockRetroMining
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+  - type: Paintable
+    group: null
+
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockRetroSalvageMiningGlass
+  suffix: Salvage, Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
+  - type: Paintable
+    group: null
+
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockRetroSalvageGlass
+  suffix: Salvage
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
+  - type: Paintable
+    group: null
+
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockRetroMiningGlass
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
+  - type: Paintable
+    group: null
+# Salvage and Mining end

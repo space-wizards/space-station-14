@@ -122,3 +122,110 @@
     - type: ContainerFill
       containers:
         board: [DoorElectronicsSyndicateAgent]
+
+# Salvage and Mining
+- type: entity
+  parent: AirlockSalvageMining
+  id: AirlockSalvageMiningLocked
+  suffix: Salvage, Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvageMining ]
+
+- type: entity
+  parent: AirlockMiningCargo
+  id: AirlockMiningCargoLocked
+  suffix: Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMining ]
+
+- type: entity
+  parent: AirlockSalvageMiningGlass
+  id: AirlockSalvageMiningGlassLocked
+  suffix: Salvage, Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvageMining ]
+
+- type: entity
+  parent: AirlockMiningCargoGlass
+  id: AirlockMiningCargoGlassLocked
+  suffix: Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMining ]
+
+- type: entity
+  parent: AirlockMiningCargoLocked
+  id: AirlockMaintMiningCargoLocked
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+- type: entity
+  parent: AirlockSalvageMiningLocked
+  id: AirlockMaintSalvageMiningLocked
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+## Renamed replacement of Wizden black salvage doors #DOTS - add to migration.yml?
+- type: entity
+  parent: AirlockRetroSalvageMining
+  id: AirlockRetroSalvageMiningLocked
+  suffix: Salvage, Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvageMining ]
+
+- type: entity
+  parent: AirlockRetroSalvage
+  id: AirlockRetroSalvageLocked
+  suffix: Salvage, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvage ]
+
+- type: entity
+  parent: AirlockRetroMining
+  id: AirlockRetroMiningLocked
+  suffix: Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMining ]
+
+- type: entity
+  parent: AirlockRetroSalvageMiningGlass
+  id: AirlockRetroSalvageMiningGlassLocked
+  suffix: Salvage, Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvageMining ]
+
+- type: entity
+  parent: AirlockRetroSalvageGlass
+  id: AirlockRetroSalvageGlassLocked
+  suffix: Salvage, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvage ]
+
+- type: entity
+  parent: AirlockRetroMiningGlass
+  id: AirlockRetroMiningGlassLocked
+  suffix: Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMining ]
+# Salvage and Mining end
