@@ -21,6 +21,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
   id: HumanHandcuffDummy
   components:
   - type: Cuffable
+    baseCuffableState: body-overlay
   - type: Hands
   - type: ComplexInteraction
   - type: Body

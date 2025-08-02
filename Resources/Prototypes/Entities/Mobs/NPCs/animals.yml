@@ -1332,6 +1332,7 @@
   - type: Deathgasp
     prototype: MonkeyDeathgasp
   - type: Cuffable
+    baseCuffableState: body-overlay
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 90
@@ -3781,7 +3782,7 @@
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi # Would do a custom dog handcuff sprite but unfortunately handcuffs have their overlay baked-in to the cuff itself so this is mostly filler
-      state: body-overlay-2
+      state: body-overlay-dog-2
       visible: false
   - type: UserInterface
     interfaces:
@@ -3812,6 +3813,7 @@
   - type: Hands # HANDS!
   - type: Puller
   - type: Cuffable # bad dog!
+    baseCuffableState: body-overlay-dog
   - type: BlockWriting # dogs can't write, paws unwieldy; mouth-writing is a myth
   - type: Stripping
   - type: ComplexInteraction
