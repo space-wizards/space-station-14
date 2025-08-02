@@ -221,7 +221,7 @@ namespace Content.Server.Communications
             var stationUid = _stationSystem.GetOwningStation(uid);
             if (stationUid != null)
             {
-                _alertLevelSystem.SetLevel(stationUid.Value, message.Level, true, true);
+                _alertLevelSystem.SetLevel(stationUid.Value, message.Level, true, true, false, false, uid);
             }
         }
 
