@@ -3,19 +3,20 @@
   id: BasePercussionInstrument
   abstract: true
   components:
-  - type: Tag
-    tags:
-    - PercussionInstrument
+    - type: Tag
+      tags:
+        - PercussionInstrument
 
 - type: entity
   parent: BasePercussionInstrument
   id: GlockenspielInstrument
   name: glockenspiel
   components:
-  - type: Instrument
-    program: 9
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/glockenspiel.rsi
+    - type: Instrument
+      default:
+        program: 9
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/glockenspiel.rsi
 
 - type: entity
   parent: BasePercussionInstrument
@@ -23,12 +24,13 @@
   name: music box
   description: Playing this makes you feel safe from scary animatronics.
   components:
-  - type: Instrument
-    program: 10
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/musicbox.rsi
-  - type: Item
-    size: Small
+    - type: Instrument
+      default:
+        program: 10
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/musicbox.rsi
+    - type: Item
+      size: Small
 
 - type: entity
   parent: BasePercussionInstrument
@@ -36,11 +38,12 @@
   name: xylophone
   description: Rainbow colored glockenspiel.
   components:
-  - type: Instrument
-    program: 13
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/structureinstruments.rsi
-    state: xylophone
+    - type: Instrument
+      default:
+        program: 13
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/structureinstruments.rsi
+      state: xylophone
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -48,17 +51,27 @@
   name: microphone
   description: Perfect for singing your heart out.
   components:
-  - type: Instrument
-    program: 52
-  - type: SwappableInstrument
-    instrumentList:
-      "Aah": {52: 0}
-      "Ooh": {53: 0}
-      "Kweh": {4: 1}
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/microphone.rsi
-  - type: Item
-    size: Small
+    - type: Instrument
+      default:
+        program: 52
+      instrumentList:
+        Aaaaaah:
+          program: 52
+        Ooooooh:
+          program: 53
+        Kweh:
+          bank: 10
+          program: 4
+        Waaaaaa:
+          bank: 10
+          program: 5
+        Waaaaah:
+          bank: 10
+          program: 6
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/microphone.rsi
+    - type: Item
+      size: Small
 
 - type: entity
   parent: BasePercussionInstrument
@@ -66,10 +79,11 @@
   name: woodblock
   description: If you listen to this enough it'll start driving itself into your mind.
   components:
-  - type: Instrument
-    program: 115
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/woodblock.rsi
+    - type: Instrument
+      default:
+        program: 115
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/woodblock.rsi
 
 - type: entity
   parent: BasePercussionInstrument
@@ -77,7 +91,8 @@
   name: reverse cymbals
   description: I think you have it the wrong way around?
   components:
-  - type: Instrument
-    program: 119
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/reversecymbal.rsi
+    - type: Instrument
+      default:
+        program: 119
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/reversecymbal.rsi

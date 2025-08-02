@@ -2030,7 +2030,8 @@
     tags:
     - Flower
   - type: Instrument #hehe trumpet
-    program: 56
+    default:
+      program: 56
   - type: FoodSequenceElement
     entries:
       Taco: SpacemansTrumpet

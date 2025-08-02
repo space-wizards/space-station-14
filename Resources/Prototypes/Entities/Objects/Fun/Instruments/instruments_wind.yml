@@ -3,9 +3,9 @@
   id: BaseWoodwindInstrument
   abstract: true
   components:
-  - type: Tag
-    tags:
-    - WoodwindInstrument
+    - type: Tag
+      tags:
+        - WoodwindInstrument
 
 - type: entity
   parent: BaseWoodwindInstrument
@@ -13,43 +13,48 @@
   name: saxophone
   description: An instrument. You could probably grind this into raw jazz.
   components:
-  - type: Instrument
-    program: 66
-  - type: SwappableInstrument
-    instrumentList:
-      "Soprano": {64: 0}
-      "Alto": {65: 0}
-      "Tenor": {66: 0}
-      "Baritone": {67: 0}
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/saxophone.rsi
-  - type: Extractable
-    grindableSolutionName: sax
-  - type: SolutionContainerManager
-    solutions:
-      sax:
-        reagents:
-          - ReagentId: Saxoite
-            Quantity: 10
+    - type: Instrument
+      default:
+        program: 66
+      instrumentList:
+        Soprano:
+          program: 64
+        Alto:
+          program: 65
+        Tenor:
+          program: 66
+        Baritone:
+          program: 67
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/saxophone.rsi
+    - type: Extractable
+      grindableSolutionName: sax
+    - type: SolutionContainerManager
+      solutions:
+        sax:
+          reagents:
+            - ReagentId: Saxoite
+              Quantity: 10
 
 - type: entity
   parent: BaseWoodwindInstrument
   id: HarmonicaInstrument
   name: harmonica
   components:
-  - type: Instrument
-    program: 22
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/harmonica.rsi
-  - type: Item
-    size: Small
-    storedRotation: -90
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - neck
-  - type: ActivatableUI
-    inHandsOnly: false  
+    - type: Instrument
+      default:
+        program: 22
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/harmonica.rsi
+    - type: Item
+      size: Small
+      storedRotation: -90
+    - type: Clothing
+      quickEquip: false
+      slots:
+        - neck
+    - type: ActivatableUI
+      inHandsOnly: false
 
 - type: entity
   parent: BaseWoodwindInstrument
@@ -57,10 +62,11 @@
   name: clarinet
   description: Skweedward tintacklays.
   components:
-  - type: Instrument
-    program: 71
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/clarinet.rsi
+    - type: Instrument
+      default:
+        program: 71
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/clarinet.rsi
 
 - type: entity
   parent: BaseWoodwindInstrument
@@ -68,10 +74,11 @@
   name: flute
   description: Reaching new heights of being horrifyingly shrill.
   components:
-  - type: Instrument
-    program: 73
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/flute.rsi
+    - type: Instrument
+      default:
+        program: 73
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/flute.rsi
 
 - type: entity
   parent: BaseWoodwindInstrument
@@ -79,10 +86,11 @@
   name: recorder
   description: Comes in various colors of fashionable plastic!
   components:
-  - type: Instrument
-    program: 74
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/recorder.rsi
+    - type: Instrument
+      default:
+        program: 74
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/recorder.rsi
 
 - type: entity
   parent: BaseWoodwindInstrument
@@ -90,10 +98,11 @@
   name: pan flute
   description: Perfect for luring ancient mythical beings to dance with you.
   components:
-  - type: Instrument
-    program: 75
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/panflute.rsi
+    - type: Instrument
+      default:
+        program: 75
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/panflute.rsi
 
 #if you change this to some cringe-ass zelda reference so help me god i will shoot you dead.
 - type: entity
@@ -102,12 +111,13 @@
   name: ocarina
   description: Good for playing lullabies.
   components:
-  - type: Instrument
-    program: 79
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/ocarina.rsi
-  - type: Item
-    size: Small
+    - type: Instrument
+      default:
+        program: 79
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/ocarina.rsi
+    - type: Item
+      size: Small
 
 - type: entity
   parent: BaseWoodwindInstrument
@@ -115,9 +125,10 @@
   name: bagpipe
   description: Pairs nicely with a kilt.
   components:
-  - type: Instrument
-    program: 109
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/bagpipes.rsi
-  - type: Item
-    size: Large
+    - type: Instrument
+      default:
+        program: 109
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/bagpipes.rsi
+    - type: Item
+      size: Large

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
@@ -38,12 +39,18 @@ namespace Content.Client.Instruments.UI
                 _bandMenu?.Populate(bandRx.Nearby, EntMan);
         }
 
+        private string GetCurrentInstrumentName()
+        {
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(EntMan.GetComponent<MetaDataComponent>(Owner)
+                .EntityName);
+        }
+
         protected override void Open()
         {
             base.Open();
 
             _instrumentMenu = this.CreateWindow<InstrumentMenu>();
-            _instrumentMenu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+            _instrumentMenu.Title = GetCurrentInstrumentName();
 
             _instrumentMenu.OnOpenBand += OpenBandMenu;
             _instrumentMenu.OnOpenChannels += OpenChannelsMenu;
@@ -104,6 +111,7 @@ namespace Content.Client.Instruments.UI
             _channelsMenu ??= new ChannelsMenu(this);
             _channelsMenu.Populate();
             _channelsMenu.OpenCenteredRight();
+            _channelsMenu.Title = Loc.GetString("instruments-component-channels-menu", ("name", GetCurrentInstrumentName()));
         }
 
         public void CloseChannelsMenu()

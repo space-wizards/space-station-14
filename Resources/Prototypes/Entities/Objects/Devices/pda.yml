@@ -1008,8 +1008,9 @@
   - type: Instrument
     allowPercussion: false
     handheld: true
-    bank: 1
-    program: 2
+    default:
+      bank: 10
+      program: 2
 
 - type: entity
   parent: MusicianPDA
