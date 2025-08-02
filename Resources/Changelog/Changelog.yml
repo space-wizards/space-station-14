@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: muburu
-  changes:
-  - message: Dragons can now pry open doors, including firelocks.
-    type: Tweak
-  id: 8312
-  time: '2025-04-22T06:33:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36811
 - author: sowelipililimute
   changes:
   - message: The Funding Allocation Computer can now adjust the cut Cargo takes from
@@ -3904,3 +3897,11 @@
   id: 8823
   time: '2025-08-02T15:14:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39333
+- author: FairlySadPanda
+  changes:
+  - message: A new cake, berry delight, that is made with a cake base, berries and
+      milk.
+    type: Add
+  id: 8824
+  time: '2025-08-02T18:35:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38881
