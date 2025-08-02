@@ -18,4 +18,10 @@ public sealed partial class GunRequiresWieldComponent : Component
 
     [DataField]
     public LocId? WieldRequiresExamineMessage  = "gunrequireswield-component-examine";
+
+    [DataField, AutoNetworkedField]
+    public TimeSpan WieldDelay;
+
+    [DataField]
+    public LocId? WieldDelayExamineMessage  = "gunrequireswield-component-delay-examine";
 }
