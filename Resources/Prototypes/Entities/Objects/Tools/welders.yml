@@ -53,7 +53,7 @@
         types:
             Heat: 8
   - type: ItemToggleSize
-    activatedSize: Large
+    activatedSize: Ginormous
   - type: ItemToggleHot
   - type: ComponentToggler
     components:
@@ -110,12 +110,15 @@
   name: industrial welding tool
   parent: Welder
   id: WelderIndustrial
-  description: "An industrial welder with over double the fuel capacity."
+  description: "An industrial welder with a larger, but heavier fuel tank."
   components:
   - type: Sprite
     sprite: Objects/Tools/welder_industrial.rsi
   - type: Item
     sprite: Objects/Tools/welder_industrial.rsi
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
   - type: SolutionContainerManager
     solutions:
       Welder:
@@ -128,7 +131,7 @@
   name: advanced industrial welding tool
   parent: WelderIndustrial
   id: WelderIndustrialAdvanced
-  description: "An advanced industrial welder with over double the fuel capacity and hotter flame."
+  description: "An advanced industrial welder with a hotter flame for faster welding. Its a bit heavier on account of its larger fuel tank."
   components:
   - type: Sprite
     sprite: Objects/Tools/welder_industrialadv.rsi
@@ -154,6 +157,7 @@
     sprite: Objects/Tools/welder_experimental.rsi
   - type: Item
     sprite: Objects/Tools/welder_experimental.rsi
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       Welder:
@@ -192,8 +196,8 @@
       Welder:
         reagents:
         - ReagentId: WeldingFuel
-          Quantity: 50
-        maxVol: 50
+          Quantity: 60 # Just enough to weld two walls in a row.
+        maxVol: 60
   - type: Tool
     speedModifier: 0.7
   - type: PointLight
