@@ -4,7 +4,7 @@ using Content.Shared.Tag;
 
 namespace Content.Shared.Whitelist;
 
-public sealed class EntityWhitelistSystem : EntitySystem
+public partial class EntityWhitelistSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tag = default!;
 
@@ -83,6 +83,7 @@ public sealed class EntityWhitelistSystem : EntitySystem
 
         return list.RequireAll;
     }
+
     /// The following are a list of "helper functions" that are basically the same as each other
     /// to help make code that uses EntityWhitelist a bit more readable because at the moment
     /// it is quite clunky having to write out component.Whitelist == null ? true : _whitelist.IsValid(component.Whitelist, uid)
