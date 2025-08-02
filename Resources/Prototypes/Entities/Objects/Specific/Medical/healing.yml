@@ -695,19 +695,6 @@
       amount: 5
 
 - type: entity
-  name: space mirage
-  parent: Pill
-  id: PillSpaceDrugs
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: SpaceDrugs
-          Quantity: 15
-
-- type: entity
   name: pill
   suffix: Tricordrazine 10u
   parent: Pill
@@ -848,6 +835,233 @@
           reagents:
             - ReagentId: AmbuzolPlus
               Quantity: 5
+
+- type: entity
+  parent: Pill
+  id: PillHaloperidol
+  name: pill
+  suffix: haloperidol 10u
+  components:
+    - type: Pill
+      pillType: 10
+    - type: Sprite
+      state: pill11
+    - type: Label
+      currentLabel: haloperidol 10u
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+          - ReagentId: Haloperidol
+            Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterHaloperidol
+  name: pill canister
+  suffix: Haloperidol 10u, 3
+  components:
+  - type: Label
+    currentLabel: haloperidol 10u
+  - type: StorageFill
+    contents:
+    - id: PillHaloperidol
+      amount: 3
+
+- type: entity
+  parent: Pill
+  id: PillPsicodine
+  name: pill
+  suffix: psicodine 10u
+  components:
+    - type: Pill
+      pillType: 1
+    - type: Sprite
+      state: pill2
+    - type: Label
+      currentLabel: psicodine 10u
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+          - ReagentId: Psicodine
+            Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterPsicodine
+  name: pill canister
+  suffix: Psicodine 10u, 3
+  components:
+  - type: Label
+    currentLabel: psicodine 10u
+  - type: StorageFill
+    contents:
+    - id: PillPsicodine
+      amount: 3
+
+- type: entity
+  parent: Pill
+  id: PillDiphenylmethylamine
+  name: pill
+  suffix: diphenylmethylamine 10u
+  components:
+    - type: Pill
+      pillType: 17
+    - type: Sprite
+      state: pill18
+    - type: Label
+      currentLabel: diphenylmethylamine 10u
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+          - ReagentId: Diphenylmethylamine
+            Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterDiphenylmethylamine
+  name: pill canister
+  suffix: Diphenylmethylamine 10u, 5
+  components:
+  - type: Label
+    currentLabel: diphenylmethylamine 10u
+  - type: StorageFill
+    contents:
+    - id: PillDiphenylmethylamine
+      amount: 5
+
+- type: entity
+  parent: Pill
+  id: PillSpaceDrugs
+  name: pill
+  suffix: space mirage 10u
+  components:
+  - type: Label
+    currentLabel: space mirage 10u
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterSpaceDrugs
+  name: pill canister
+  suffix: Space Mirage 10u, 3
+  components:
+  - type: Label
+    currentLabel: space mirage 10u
+  - type: StorageFill
+    contents:
+    - id: PillSpaceDrugs
+      amount: 3
+
+- type: entity
+  parent: Pill
+  id: PillHappiness
+  name: pill
+  suffix: happiness 10u
+  components:
+    - type: Pill
+      pillType: 19
+    - type: Sprite
+      state: pill20
+    - type: Label
+      currentLabel: happiness 10u
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+          - ReagentId: Happiness
+            Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterHappiness
+  name: pill canister
+  suffix: Happiness 10u, 3
+  components:
+  - type: Label
+    currentLabel: happiness 10u
+  - type: StorageFill
+    contents:
+    - id: PillHappiness
+      amount: 3
+
+- type: entity
+  parent: Pill
+  id: PillTHC
+  name: pill
+  suffix: THC 10u
+  components:
+    - type: Pill
+      pillType: 5
+    - type: Sprite
+      state: pill6
+    - type: Label
+      currentLabel: THC 10u
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+          - ReagentId: THC
+            Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterTHC
+  name: pill canister
+  suffix: THC 10u, 3
+  components:
+  - type: Label
+    currentLabel: THC 10u
+  - type: StorageFill
+    contents:
+    - id: PillTHC
+      amount: 3
+
+- type: entity
+  parent: Pill
+  id: PillMindbreakerToxin
+  name: pill
+  suffix: mindbreaker toxin 10u
+  components:
+    - type: Pill
+      pillType: 2
+    - type: Sprite
+      state: pill3
+    - type: Label
+      currentLabel: mindbreaker toxin 10u
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+          - ReagentId: MindbreakerToxin
+            Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterMindbreakerToxin
+  name: pill canister
+  suffix: Mindbreaker Toxin 10u, 3
+  components:
+  - type: Label
+    currentLabel: mindbreaker toxin 10u
+  - type: StorageFill
+    contents:
+    - id: PillMindbreakerToxin
+      amount: 3
 
 - type: entity
   parent: PillCanister
