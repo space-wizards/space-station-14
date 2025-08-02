@@ -41,3 +41,20 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: PAIEncryption
+  name: pai-encryption-name
+  description: pai-encryption-desc
+  icon:
+    sprite: Interface/Misc/pai_listings.rsi
+    state: encryption
+  raiseProductEventOnUser: true
+  productEvent: !type:PersonalAIEncryptionEvent
+  cost:
+    SiliconMemory: 10
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
