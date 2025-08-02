@@ -105,7 +105,7 @@
   name: Forged Repeater Rifle
   parent: WeaponSniperMakeshift
   id: WeaponSniperForged
-  description: The best a tider can achive, reliable fire-rate and accuracy with a satisfying lever-action system. What more can you ask for?
+  description: The best a tider can achive, reliable fire-rate and accuracy with a satisfying lever-action system. What more can you ask for? Is fitted to be able to chamber both .35 / .45
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Snipers/forged_rifle.rsi
@@ -119,10 +119,17 @@
     minAngle: -8
     maxAngle: -15
   - type: Gun
+    fireRate: 1.5 #Should allow for more intuitive cycling while still being balanced, as a lever action's RoF is determined on how fast you can cycle.
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
   - type: BallisticAmmoProvider
     capacity: 8
+    whitelist:
+      tags:
+      - CartridgeLightRifle
+      - CartridgeLightRifleImprovised
+      - CartridgeMagnum
+      - CartridgeMagnumImprovised
   - type: WeaponDismantleOnShoot
     dismantleChance: 0

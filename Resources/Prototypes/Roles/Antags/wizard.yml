@@ -12,8 +12,11 @@
   setPreference: true
   objective: roles-antag-wizard-objective # TODO: maybe give random objs and stationary ones from AntagObjectives and AntagRandomObjectives
   requirements: # I hate time locked roles but this should be enough time for someone to be acclimated
-  - !type:OverallPlaytimeRequirement
-    time: 90000 # 25h
+    - !type:OverallPlaytimeRequirement
+      time: 86400 # 24h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 21600 # 6h STARLIGHT
   guides: [ Wizard ]
   previewStartingGear: WizardBlueGear
 
