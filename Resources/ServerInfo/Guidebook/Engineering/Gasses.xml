@@ -104,6 +104,34 @@
 
   Remember, atmospherics is all about experimentation and process optimization. Try it until you get it right!
 
+  ## Electrovae
+  <Box>
+    <GuideEntityEmbed Entity="ElectrovaeCanister" Caption=""/>
+  </Box>
+
+  A highly electrolytic gas.
+
+  It will drain electricity when exposed to an electrical field; which will create charged electrovae.
+
+  Electrovae is complicated to create, requiring a mix of water vapor, nitrogen, and nitrous oxide, all tuned precisely to create the gas.
+  If you're looking to create this gas yourself, here's what you need to know:
+  - Water vapor and nitrous oxide are mixed at a ratio of around 2:11.
+  - Nitrogen is required as a catalyst for the reaction. The amount of nitrogen consumed is dependent on the efficiency of the reaction.
+  - The reaction only occurs at cryogenic temperatures between 39.15 K and 149.15 K. The efficency of the reaction (how much electrovae is produced) is dependent on the temperature. The closer to 84.15K, the more electrovae is produced, and the less nitrogen is consumed.
+
+  ## Charged Electrovae
+  <Box>
+    <GuideEntityEmbed Entity="ChargedElectrovaeCanister" Caption=""/>
+  </Box>
+
+  A highly charged electrolytic gas.
+
+  It will send EMP pulses when exposed to oxygen. Enough to disable devices and shock nearby personnel.
+
+  Research suggests that it may have some useful applications as a storage medium for electricity, but it is yet to be proven.
+
+  Charged electrovae is created by electrolysis of electrovae.
+
   ## Nitrous Oxide
   <Box>
     <GuideEntityEmbed Entity="NitrousOxideCanister" Caption=""/>
