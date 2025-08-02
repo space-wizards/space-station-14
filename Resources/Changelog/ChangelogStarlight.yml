@@ -10386,5 +10386,20 @@ Entries:
   id: 1429
   time: '2025-08-02T14:37:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1018
+- author: RoadTrain
+  changes:
+  - message: Adds the ability to add extra radio channels to cyborgs by using an encryption
+      key on the chassis. Doesn't consume the key.
+    type: Add
+  id: 1430
+  time: '2025-08-02T14:59:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1054
+- author: RoadTrain
+  changes:
+  - message: Emagging a cyborg adds the syndicate channel to their available comms.
+    type: Add
+  id: 1431
+  time: '2025-08-02T14:59:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1054
 Order: -1
 
