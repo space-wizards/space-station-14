@@ -44,3 +44,25 @@
   configs:
     DefenseStructure: CarpStatue
     Megafauna: MobDragonDungeon
+
+- type: salvageFaction
+  id: Syndicate
+  desc: salvage-faction-syndicate
+  entries:
+    - proto: MobSyndicateFootSoldier # completely unarmed*
+      cost: 5
+      prob: 0.1
+    - proto: MobSyndicateFootsoldierSalvageToolbox
+      cost: 8
+    - proto: MobSyndicateFootSoldierSalvagePistol
+      cost: 10
+      prob: 0.4
+    - proto: MobSyndicateFootsoldierEliteSalvage # armed with AKMS
+      cost: 15
+    - proto: MobSyndicateRepairman # completely unarmed
+      cost: 6
+      prob: 0.05
+    - proto: MobSyndicateRepairmanSalvage # armed with toolbox
+      cost: 8
+      prob: 0.05
+
