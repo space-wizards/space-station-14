@@ -33,6 +33,8 @@ cmd-roleunban-hint-1 = <role ban id>
 
 cmd-rolebanlist-desc = Lists the user's role bans
 cmd-rolebanlist-help = Usage: <name or user ID> [include unbanned]
+cmd-rolebanlist-no-recorded-bans = Target player has no bans in their record.
+cmd-rolebanlist-shell-output = ID: {$banId} Role: {$role} Reason: {$reason}
 
 ## Completion result hints
 cmd-rolebanlist-hint-1 = <name or user ID>

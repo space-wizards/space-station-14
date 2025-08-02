@@ -6,6 +6,7 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.BanList;
 using Content.Shared.Eui;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.BanList;
 
@@ -15,15 +16,21 @@ public sealed class BanListEui : BaseEui
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
 
-    public BanListEui()
+    public BanListEui(int page = 0)
     {
         IoCManager.InjectDependencies(this);
+
+        DebugTools.Assert(page is 0 or 1);
+
+        Page = page;
     }
 
     private Guid BanListPlayer { get; set; }
     private string BanListPlayerName { get; set; } = string.Empty;
     private List<SharedServerBan> Bans { get; } = new();
     private List<SharedServerRoleBan> RoleBans { get; } = new();
+
+    private int Page { get; }
 
     public override void Opened()
     {
@@ -41,7 +48,7 @@ public sealed class BanListEui : BaseEui
 
     public override EuiStateBase GetNewState()
     {
-        return new BanListEuiState(BanListPlayerName, Bans, RoleBans);
+        return new BanListEuiState(BanListPlayerName, Bans, RoleBans, Page);
     }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
@@ -154,4 +161,7 @@ public sealed class BanListEui : BaseEui
         BanListPlayer = banListPlayer;
         await LoadFromDb();
     }
+
+    public void SwitchToRoleBans()
+    {}
 }
