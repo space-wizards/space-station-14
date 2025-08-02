@@ -5,7 +5,7 @@
   playTimeTracker: JobSecurityCadet
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 72000 # 20 hrs
+      time: 57600 # 16 hrs #STARLIGHT
     - !type:DepartmentTimeRequirement
       department: Security
       time: 72000 # 20 hrs
