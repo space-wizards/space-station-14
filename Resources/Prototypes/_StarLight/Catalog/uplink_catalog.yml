@@ -61,6 +61,24 @@
           - NukeOpsUplink
 
 - type: listing
+  id: UplinkMarriage
+  name: uplink-marriage-axe-name
+  description: uplink-marriage-axe-desc
+  icon: { sprite: /Textures/_Starlight/Objects/Weapons/Melee/marriage_axe.rsi, state: icon }
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 18
+  productEntity: MarriageAxe
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Musician
+
+- type: listing
   id: uplinkWeaponPistolDeagle
   name: uplink-deagle-name
   description: uplink-deagle-desc
