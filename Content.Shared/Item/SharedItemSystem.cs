@@ -169,6 +169,12 @@ public abstract class SharedItemSystem : EntitySystem
     }
 
     [PublicAPI]
+    public int GetItemSizeWeight(ItemComponent item)
+    {
+        return item.Bulk ?? GetItemSizeWeight(item.Size);
+    }
+
+    [PublicAPI]
     public int GetItemSizeWeight(ProtoId<ItemSizePrototype> size)
     {
         return GetSizePrototype(size).Weight;
