@@ -10250,5 +10250,19 @@ Entries:
   id: 1410
   time: '2025-08-02T14:09:17.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1068
+- author: Trep_Maul
+  changes:
+  - message: Antag Role Timers
+    type: Tweak
+  id: 1411
+  time: '2025-08-02T14:16:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/986
+- author: Trep_Maul
+  changes:
+  - message: Abductors roles distinguishable
+    type: Tweak
+  id: 1412
+  time: '2025-08-02T14:16:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/986
 Order: -1
 
