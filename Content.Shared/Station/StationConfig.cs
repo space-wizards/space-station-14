@@ -1,17 +1,15 @@
-﻿using Content.Server.Maps.NameGenerators;
-using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 
-namespace Content.Server.Station;
+namespace Content.Shared.Station;
 
 /// <summary>
 /// A config for a station. Specifies name and component modifications.
 /// </summary>
-[DataDefinition, PublicAPI]
+[DataDefinition]
 public sealed partial class StationConfig
 {
     [DataField("stationProto", required: true)]
-    public string StationPrototype = default!;
+    public EntProtoId StationPrototype;
 
     [DataField("components", required: true)]
     public ComponentRegistry StationComponentOverrides = default!;
