@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using JetBrains.Annotations;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -385,6 +386,7 @@ public sealed class ListContainerButton : ContainerButton, IEntityControl
         AddStyleClass(StyleClassButton);
         Data = data;
         Index = index;
+        StyleBoxOverride = new StyleBoxFlat(Color.White);
         // AddChild(Background = new PanelContainer
         // {
         //     HorizontalExpand = true,
