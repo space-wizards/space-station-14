@@ -6,6 +6,7 @@ using Robust.Shared.CPUJob.JobQueues.Queues;
 using NUnit.Framework;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
+using Robust.UnitTesting.Constraints;
 
 namespace Content.Tests.Server.Jobs
 {
