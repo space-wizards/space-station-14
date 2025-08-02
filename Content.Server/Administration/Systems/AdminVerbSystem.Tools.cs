@@ -415,7 +415,7 @@ public sealed partial class AdminVerbSystem
                     _quickDialog.OpenDialog(player, "Adjust stack", $"Amount (max {_stackSystem.GetMaxCount(stack)})", (int newAmount) =>
                     {
                         _stackSystem.SetCount(args.Target, newAmount, stack);
-                    });
+                    }, null, false);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-adjust-stack-description"),
@@ -449,7 +449,7 @@ public sealed partial class AdminVerbSystem
                 _quickDialog.OpenDialog(player, "Rename", "Name", (string newName) =>
                 {
                     _metaSystem.SetEntityName(args.Target, newName);
-                });
+                }, null, false);
             },
             Impact = LogImpact.Medium,
             Message = Loc.GetString("admin-trick-rename-description"),
@@ -467,7 +467,7 @@ public sealed partial class AdminVerbSystem
                 _quickDialog.OpenDialog(player, "Redescribe", "Description", (LongString newDescription) =>
                 {
                     _metaSystem.SetEntityDescription(args.Target, newDescription.String);
-                });
+                }, null, false);
             },
             Impact = LogImpact.Medium,
             Message = Loc.GetString("admin-trick-redescribe-description"),
@@ -488,7 +488,7 @@ public sealed partial class AdminVerbSystem
                         var meta = MetaData(args.Target);
                         _metaSystem.SetEntityName(args.Target, newName, meta);
                         _metaSystem.SetEntityDescription(args.Target, newDescription.String, meta);
-                    });
+                    }, null, false);
             },
             Impact = LogImpact.Medium,
             Message = Loc.GetString("admin-trick-rename-and-redescribe-description"),
@@ -725,7 +725,7 @@ public sealed partial class AdminVerbSystem
 
                         _gun.SetBallisticUnspawned((args.Target, ballisticAmmo), result);
                         _gun.UpdateBallisticAppearance(args.Target, ballisticAmmo);
-                    });
+                    }, null, false);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-set-bullet-amount-description"),
