@@ -44,7 +44,7 @@ public sealed partial class CloningSystem : EntitySystem
     {
         // if the clone is a stack as well, adjust the count of the copy
         if (TryComp<StackComponent>(args.CloneUid, out var cloneStackComp))
-            _stack.SetCount(args.CloneUid, ent.Comp.Count, cloneStackComp);
+            _stack.SetCount((args.CloneUid, cloneStackComp), ent.Comp.Count);
     }
 
     private void OnCloneLabel(Entity<LabelComponent> ent, ref CloningItemEvent args)

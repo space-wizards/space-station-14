@@ -92,7 +92,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
         if (args.Cancelled || args.Target == null || !TryComp<FultonComponent>(args.Used, out var fulton))
             return;
 
-        if (!_stack.Use(args.Used.Value, 1))
+        if (!_stack.TryUse(args.Used.Value, 1))
         {
             return;
         }
