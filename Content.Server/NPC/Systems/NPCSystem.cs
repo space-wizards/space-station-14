@@ -12,6 +12,8 @@ using Prometheus;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Systems
 {
@@ -48,7 +50,7 @@ namespace Content.Server.NPC.Systems
 
         public void OnPlayerNPCAttach(EntityUid uid, HTNComponent component, PlayerAttachedEvent args)
         {
-            SleepNPC(uid, component);
+            SleepNPC(uid, NPCSleepingCategories.PlayerAttach, component);
         }
 
         public void OnPlayerNPCDetach(EntityUid uid, HTNComponent component, PlayerDetachedEvent args)
@@ -60,18 +62,18 @@ namespace Content.Server.NPC.Systems
             if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind)
                 return;
 
-            WakeNPC(uid, component);
+            WakeNPC(uid, NPCSleepingCategories.PlayerAttach, component);
         }
 
         public void OnNPCMapInit(EntityUid uid, HTNComponent component, MapInitEvent args)
         {
             component.Blackboard.SetValue(NPCBlackboard.Owner, uid);
-            WakeNPC(uid, component);
+            WakeNPC(uid, null, component);
         }
 
         public void OnNPCShutdown(EntityUid uid, HTNComponent component, ComponentShutdown args)
         {
-            SleepNPC(uid, component);
+            SleepNPC(uid, null, component);
         }
 
         /// <summary>
@@ -97,24 +99,48 @@ namespace Content.Server.NPC.Systems
         }
 
         /// <summary>
-        /// Allows the NPC to actively be updated.
+        /// Allows the NPC to actively be updated. If no category is provided, will always wake up the NPC and will
+        /// remove all sleeping categories.
         /// </summary>
-        public void WakeNPC(EntityUid uid, HTNComponent? component = null)
+        public void WakeNPC(EntityUid uid, NPCSleepingCategories? category = NPCSleepingCategories.Default, HTNComponent? component = null)
         {
             if (!Resolve(uid, ref component, false))
             {
                 return;
             }
 
+            if (category == null)
+                RemComp<NPCSleepingComponent>(uid);
+            else if (TryComp<NPCSleepingComponent>(uid, out var sleepingComp))
+            {
+                sleepingComp.SleepReferences.Remove(category.Value);
+                if (sleepingComp.SleepReferences.Count != 0)
+                    return;
+            }
+
+            RemComp<NPCSleepingComponent>(uid);
+
             Log.Debug($"Waking {ToPrettyString(uid)}");
             EnsureComp<ActiveNPCComponent>(uid);
         }
 
-        public void SleepNPC(EntityUid uid, HTNComponent? component = null)
+        /// <summary>
+        /// Sleep the given NPC. If no category is provided, will remove all sleeping information and just sleep the NPC
+        /// without restriction.
+        /// </summary>
+        public void SleepNPC(EntityUid uid, NPCSleepingCategories? category = NPCSleepingCategories.Default, HTNComponent? component = null)
         {
             if (!Resolve(uid, ref component, false))
             {
                 return;
+            }
+            if (category == null)
+                RemComp<NPCSleepingComponent>(uid);
+            else
+            {
+                EnsureComp<NPCSleepingComponent>(uid, out var sleepingComp);
+                if (category != null)
+                    sleepingComp.SleepReferences.Add(category.Value);
             }
 
             // Don't bother with an event
@@ -155,11 +181,11 @@ namespace Content.Server.NPC.Systems
             switch (args.NewMobState)
             {
                 case MobState.Alive:
-                    WakeNPC(uid, component);
+                    WakeNPC(uid, NPCSleepingCategories.MobState, component);
                     break;
                 case MobState.Critical:
                 case MobState.Dead:
-                    SleepNPC(uid, component);
+                    SleepNPC(uid, NPCSleepingCategories.MobState, component);
                     break;
             }
         }
