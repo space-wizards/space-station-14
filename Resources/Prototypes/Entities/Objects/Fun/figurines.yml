@@ -124,7 +124,7 @@
   parent: BaseFigurine
   id: ToyFigurineCaptain
   name: captain figure
-  description: A figurine depicting the standard outfit of a captain belonging to a civilian-sector Nanotrasen vessel.
+  description: A figurine depicting the standard outfit of a captain belonging to a civilian-sector NanoTrasen vessel.
   components:
   - type: Sprite
     state: captain
