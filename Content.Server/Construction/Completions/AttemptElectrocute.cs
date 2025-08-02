@@ -1,4 +1,4 @@
-using Content.Server.Electrocution;
+﻿using Content.Server.Electrocution;
 using Content.Shared.Electrocution;
 using Content.Shared.Construction;
 
