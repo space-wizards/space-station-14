@@ -21,18 +21,22 @@ using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Server.Traits.Assorted;
 using Content.Server.Zombies;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Coordinates.Helpers;
+using Content.Shared.Database;
 using Content.Shared.EntityEffects.EffectConditions;
 using Content.Shared.EntityEffects.Effects.PlantMetabolism;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Components;
 using Content.Shared.Flash;
 using Content.Shared.Maps;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Random;
+using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Zombies;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -40,7 +44,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-
+using Robust.Shared.Timing;
 using TemperatureCondition = Content.Shared.EntityEffects.EffectConditions.Temperature; // disambiguate the namespace
 using PolymorphEffect = Content.Shared.EntityEffects.Effects.Polymorph;
 
@@ -50,6 +54,7 @@ public sealed class EntityEffectSystem : EntitySystem
 {
     private static readonly ProtoId<WeightedRandomFillSolutionPrototype> RandomPickBotanyReagent = "RandomPickBotanyReagent";
 
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
@@ -75,10 +80,13 @@ public sealed class EntityEffectSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly VomitSystem _vomit = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<EntityEffectApplyStatusEffectComponent, ComponentStartup>(EffectCompStartup);
 
         SubscribeLocalEvent<CheckEntityEffectConditionEvent<TemperatureCondition>>(OnCheckTemperature);
         SubscribeLocalEvent<CheckEntityEffectConditionEvent<Breathing>>(OnCheckBreathing);
@@ -126,6 +134,49 @@ public sealed class EntityEffectSystem : EntitySystem
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantSpeciesChange>>(OnExecutePlantSpeciesChange);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PolymorphEffect>>(OnExecutePolymorph);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<ResetNarcolepsy>>(OnExecuteResetNarcolepsy);
+    }
+
+    private void EffectCompStartup(Entity<EntityEffectApplyStatusEffectComponent> ent, ref ComponentStartup args)
+    {
+        ent.Comp.NextApplyTime = _timing.CurTime + ent.Comp.Frequency;
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<EntityEffectApplyStatusEffectComponent, StatusEffectComponent>();
+        while (query.MoveNext(out var uid, out var entityEffects, out var statusEffects))
+        {
+            if (_timing.CurTime < entityEffects.NextApplyTime)
+                continue;
+
+            entityEffects.NextApplyTime += entityEffects.Frequency;
+
+            if (statusEffects.AppliedTo is null)
+                continue;
+
+            var args = new EntityEffectReagentArgs(statusEffects.AppliedTo.Value, EntityManager, null, null, entityEffects.Quantity, null, null, 1f);
+
+            foreach (var effect in entityEffects.Effects)
+            {
+                if (!effect.ShouldApply(args, _random))
+                    continue;
+
+                if (effect.ShouldLog)
+                {
+                    _adminLogger.Add(
+                        LogType.ReagentEffect,
+                        effect.LogImpact,
+                        $"Entity effect {effect.GetType().Name:effect}"
+                        + $" from status effect {uid:entity}"
+                        +$" applied on entity {statusEffects.AppliedTo.Value:entity}"
+                        + $" at {Transform(statusEffects.AppliedTo.Value).Coordinates:coordinates}");
+                }
+
+                effect.Effect(args);
+            }
+        }
     }
 
     private void OnCheckTemperature(ref CheckEntityEffectConditionEvent<TemperatureCondition> args)

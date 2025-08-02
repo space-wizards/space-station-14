@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
@@ -30,6 +30,16 @@ public sealed partial class ConsumeDoAfterEvent : DoAfterEvent
     }
 
     public override DoAfterEvent Clone() => this;
+}
+
+/// <summary>
+/// Called on an entity when it consumed the reagent into its stomach from food, from DrinkComponent or FoodComponent
+/// </summary>
+[NetSerializable, Serializable]
+public sealed class ConsumedSolutionEvent(Solution solution, NetEntity target) : EntityEventArgs
+{
+    public NetEntity Target = target;
+    public Solution Solution = solution;
 }
 
 /// <summary>
