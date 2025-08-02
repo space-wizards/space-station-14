@@ -899,6 +899,26 @@
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
 
+- type: entity
+  id: BorgModuleAdvancedClowning
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: advanced clowning cyborg module
+  description: Advanced service module for only the silliest cyborgs! Comes with a built-in oven that bakes pies automatically over time, a holopeel projector, and a push horn.
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-clown-adv
+  - type: ItemBorgModule
+    items:
+    - HoloprojectorClownBorg
+    - BorgLauncherCreamPie
+    - ClownRecorder
+    - PushHorn
+    - BikeHornInstrument
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-clowning-module }
+
 #syndicate modules
 - type: entity
   id: BorgModuleSyndicateWeapon
