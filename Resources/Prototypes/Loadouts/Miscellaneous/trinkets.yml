@@ -233,6 +233,74 @@
     - ClothingNeckGenderfluidPin
   groupBy: "pin"
 
+# Canes
+# The white cane is intentionally not included here. Thats for the blind.
+- type: loadout
+  id: OffsetCane
+  storage:
+    back:
+    - OffsetCane
+  groupBy: "canes"
+
+- type: loadout
+  id: OffsetCaneWood
+  storage:
+    back:
+    - OffsetCaneWood
+  groupBy: "canes"
+
+- type: loadout
+  id: OffsetCaneClown
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 3600 # 1 hour of clowning to get your rainbow cane.
+  storage:
+    back:
+    - OffsetCaneClown
+  groupBy: "canes"
+
+- type: loadout
+  id: OffsetCaneMime
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMime
+      time: 3600 # 1 hour of miming to get your cane... is this job ADA compliant? Does the ADA even exist in space?
+  storage:
+    back:
+    - OffsetCaneMime
+  groupBy: "canes"
+
+- type: loadout
+  id: OffsetCaneNT
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 18000 # 5 hours, is this too much? Maybe, just git gud.
+  storage:
+    back:
+    - OffsetCaneNT
+  groupBy: "canes"
+
+- type: loadout
+  id: Cane
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLibrarian
+      time: 3600 # same as Jamjar, im not subjecting librarians to more than one hour of playtime.
+  storage:
+    back:
+    - Cane
+  groupBy: "canes"
+
 # Towels
 - type: loadout
   id: TowelColorWhite
