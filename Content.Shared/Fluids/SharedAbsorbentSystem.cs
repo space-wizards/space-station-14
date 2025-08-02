@@ -351,6 +351,12 @@ public abstract class SharedAbsorbentSystem : EntitySystem
 
         _melee.DoLunge(user, absorbEnt, Angle.Zero, localPos, null);
 
+        if (absorber.CleanedStatistic is not null)
+        {
+            var evChangeStatsValue = new ChangeStatsValueEvent(absorber.CleanedStatistic, 1);
+            RaiseLocalEvent(ref evChangeStatsValue);
+        }
+
         return true;
     }
 }

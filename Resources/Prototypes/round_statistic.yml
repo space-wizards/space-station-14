@@ -1,0 +1,11 @@
+- type: roundStatistic
+  id: SlippedCount
+  statString: round-end-statistic-slippedcount
+
+- type: roundStatistic
+  id: CreamedCount
+  statString: round-end-statistic-creamedcount
+
+- type: roundStatistic
+  id: MoppedCount
+  statString: round-end-statistic-moppedcount
