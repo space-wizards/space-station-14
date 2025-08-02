@@ -70,7 +70,6 @@
   - MedkitBrute
   - MedkitAdvanced
   - MedkitRadiation
-  - MedkitCombat
 
 - type: latheRecipePack
   id: MedicalBoardsStatic
