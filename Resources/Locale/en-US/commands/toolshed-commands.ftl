@@ -96,3 +96,5 @@ command-description-xenoartifact-unlockAllNodes =
     Unlocks all nodes of artifact.
 command-description-jobboard-completeJob =
     Completes a given salvage job board job for the station.
+command-description-zombify-infect =
+    Make a given entity a zombie. Does not have to be a player.
