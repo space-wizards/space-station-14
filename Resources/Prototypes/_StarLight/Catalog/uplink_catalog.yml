@@ -82,7 +82,8 @@
       whitelist:
         tags:
           - NukeOpsUplink
-
+          
+- type: listing
   id: UplinkMarriage
   name: uplink-marriage-axe-name
   description: uplink-marriage-axe-desc
