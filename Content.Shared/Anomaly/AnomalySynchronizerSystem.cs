@@ -1,33 +1,30 @@
 using System.Linq;
-using System.Numerics;
-using Content.Server.Anomaly.Components;
-using Content.Server.DeviceLinking.Systems;
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power;
-using Robust.Shared.Audio.Systems;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Anomaly;
+namespace Content.Shared.Anomaly;
 
 /// <summary>
-/// a device that allows you to translate anomaly activity into multitool signals.
+/// A device that allows you to translate anomaly activity into multitool signals.
 /// </summary>
 public sealed partial class AnomalySynchronizerSystem : EntitySystem
 {
-    [Dependency] private readonly AnomalySystem _anomaly = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly DeviceLinkSystem _signal = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly PowerReceiverSystem _power = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedAnomalySystem _anomaly = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -47,27 +44,41 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        var curTime = _timing.CurTime;
         var query = EntityQueryEnumerator<AnomalySynchronizerComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var sync, out var xform))
+        while (query.MoveNext(out var uid, out var sync, out var synchronizerTransform))
         {
-            if (sync.ConnectedAnomaly is null)
+            if (sync.ConnectedAnomaly == null)
                 continue;
 
-            if (_timing.CurTime < sync.NextCheckTime)
+            if (curTime < sync.NextCheckTime)
                 continue;
+
             sync.NextCheckTime += sync.CheckFrequency;
+            Dirty(uid, sync);
 
-            if (Transform(sync.ConnectedAnomaly.Value).MapUid != Transform(uid).MapUid)
+            if (TerminatingOrDeleted(sync.ConnectedAnomaly))
             {
-                DisconnectFromAnomaly((uid, sync), sync.ConnectedAnomaly.Value);
+                DisconnectFromAnomaly((uid, sync));
                 continue;
             }
 
-            if (!xform.Coordinates.TryDistance(EntityManager, Transform(sync.ConnectedAnomaly.Value).Coordinates, out var distance))
+            // Use TryComp instead of Transform(uid) to take care of cases where the anomaly is out of
+            // PVS range on the client, but the synchronizer isn't.
+            if (!TryComp(sync.ConnectedAnomaly.Value, out TransformComponent? anomalyTransform))
+                continue;
+
+            if (anomalyTransform.MapUid != synchronizerTransform.MapUid)
+            {
+                DisconnectFromAnomaly((uid, sync));
+                continue;
+            }
+
+            if (!synchronizerTransform.Coordinates.TryDistance(EntityManager, anomalyTransform.Coordinates, out var distance))
                 continue;
 
             if (distance > sync.AttachRange)
-                DisconnectFromAnomaly((uid, sync), sync.ConnectedAnomaly.Value);
+                DisconnectFromAnomaly((uid, sync));
         }
     }
 
@@ -76,11 +87,9 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
     /// </summary>
     public bool TryAttachNearbyAnomaly(Entity<AnomalySynchronizerComponent> ent, EntityUid? user = null)
     {
-        if (!_power.IsPowered(ent))
+        if (!_power.IsPowered(ent.Owner))
         {
-            if (user is not null)
-                _popup.PopupEntity(Loc.GetString("base-computer-ui-component-not-powered", ("machine", ent)), ent, user.Value);
-
+            _popup.PopupClient(Loc.GetString("base-computer-ui-component-not-powered", ("machine", ent)), ent, user);
             return false;
         }
 
@@ -89,13 +98,11 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
 
         if (anomaly.Owner is { Valid: false }) // no anomaly in range
         {
-            if (user is not null)
-                _popup.PopupEntity(Loc.GetString("anomaly-sync-no-anomaly"), ent, user.Value);
-
+            _popup.PopupClient(Loc.GetString("anomaly-sync-no-anomaly"), ent, user);
             return false;
         }
 
-        ConnectToAnomaly(ent, anomaly);
+        ConnectToAnomaly(ent, anomaly, user);
         return true;
     }
 
@@ -104,10 +111,10 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         if (args.Powered)
             return;
 
-        if (ent.Comp.ConnectedAnomaly is null)
+        if (ent.Comp.ConnectedAnomaly == null)
             return;
 
-        DisconnectFromAnomaly(ent, ent.Comp.ConnectedAnomaly.Value);
+        DisconnectFromAnomaly(ent);
     }
 
     private void OnExamined(Entity<AnomalySynchronizerComponent> ent, ref ExaminedEvent args)
@@ -117,19 +124,29 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
 
     private void OnGetInteractionVerbs(Entity<AnomalySynchronizerComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands is null || ent.Comp.ConnectedAnomaly.HasValue)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
         var user = args.User;
-        args.Verbs.Add(new()
+
+        if (ent.Comp.ConnectedAnomaly == null)
         {
-            Act = () =>
+            args.Verbs.Add(new()
             {
-                TryAttachNearbyAnomaly(ent, user);
-            },
-            Message = Loc.GetString("anomaly-sync-connect-verb-message", ("machine", ent)),
-            Text = Loc.GetString("anomaly-sync-connect-verb-text"),
-        });
+                Act = () => TryAttachNearbyAnomaly(ent, user),
+                Message = Loc.GetString("anomaly-sync-connect-verb-message", ("machine", ent)),
+                Text = Loc.GetString("anomaly-sync-connect-verb-text"),
+            });
+        }
+        else
+        {
+            args.Verbs.Add(new()
+            {
+                Act = () => DisconnectFromAnomaly(ent, user),
+                Message = Loc.GetString("anomaly-sync-disconnect-verb-message", ("machine", ent)),
+                Text = Loc.GetString("anomaly-sync-disconnect-verb-text"),
+            });
+        }
     }
 
     private void OnInteractHand(Entity<AnomalySynchronizerComponent> ent, ref InteractHandEvent args)
@@ -137,12 +154,13 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         TryAttachNearbyAnomaly(ent, args.User);
     }
 
-    private void ConnectToAnomaly(Entity<AnomalySynchronizerComponent> ent, Entity<AnomalyComponent> anomaly)
+    private void ConnectToAnomaly(Entity<AnomalySynchronizerComponent> ent, Entity<AnomalyComponent> anomaly, EntityUid? user = null)
     {
         if (ent.Comp.ConnectedAnomaly == anomaly)
             return;
 
         ent.Comp.ConnectedAnomaly = anomaly;
+        Dirty(ent);
         //move the anomaly to the center of the synchronizer, for aesthetics.
         var targetXform = _transform.GetWorldPosition(ent);
         _transform.SetWorldPosition(anomaly, targetXform);
@@ -150,27 +168,27 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         if (ent.Comp.PulseOnConnect)
             _anomaly.DoAnomalyPulse(anomaly, anomaly);
 
-        _popup.PopupEntity(Loc.GetString("anomaly-sync-connected"), ent, PopupType.Medium);
-        _audio.PlayPvs(ent.Comp.ConnectedSound, ent);
+        _popup.PopupPredicted(Loc.GetString("anomaly-sync-connected"), ent, user, PopupType.Medium);
+        _audio.PlayPredicted(ent.Comp.ConnectedSound, ent, user);
     }
 
     //TODO: disconnection from the anomaly should also be triggered if the anomaly is far away from the synchronizer.
     //Currently only bluespace anomaly can do this, but for some reason it is the only one that cannot be connected to the synchronizer.
-    private void DisconnectFromAnomaly(Entity<AnomalySynchronizerComponent> ent, EntityUid other)
+    private void DisconnectFromAnomaly(Entity<AnomalySynchronizerComponent> ent, EntityUid? user = null)
     {
         if (ent.Comp.ConnectedAnomaly == null)
             return;
 
-        if (TryComp<AnomalyComponent>(other, out var anomaly))
+        if (ent.Comp.PulseOnDisconnect && TryComp<AnomalyComponent>(ent.Comp.ConnectedAnomaly, out var anomaly))
         {
-            if (ent.Comp.PulseOnDisconnect)
-                _anomaly.DoAnomalyPulse(ent.Comp.ConnectedAnomaly.Value, anomaly);
+            _anomaly.DoAnomalyPulse(ent.Comp.ConnectedAnomaly.Value, anomaly);
         }
 
-        _popup.PopupEntity(Loc.GetString("anomaly-sync-disconnected"), ent, PopupType.Large);
-        _audio.PlayPvs(ent.Comp.ConnectedSound, ent);
+        _popup.PopupPredicted(Loc.GetString("anomaly-sync-disconnected"), ent, user, PopupType.Large);
+        _audio.PlayPredicted(ent.Comp.DisconnectedSound, ent, user);
 
         ent.Comp.ConnectedAnomaly = null;
+        Dirty(ent);
     }
 
     private void OnAnomalyPulse(ref AnomalyPulseEvent args)
@@ -184,19 +202,19 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
             if (!_power.IsPowered(uid))
                 continue;
 
-            _signal.InvokePort(uid, component.PulsePort);
+            _deviceLink.InvokePort(uid, component.PulsePort);
         }
     }
 
     private void OnAnomalySeverityChanged(ref AnomalySeverityChangedEvent args)
     {
         var query = EntityQueryEnumerator<AnomalySynchronizerComponent>();
-        while (query.MoveNext(out var ent, out var component))
+        while (query.MoveNext(out var uid, out var component))
         {
             if (args.Anomaly != component.ConnectedAnomaly)
                 continue;
 
-            if (!_power.IsPowered(ent))
+            if (!_power.IsPowered(uid))
                 continue;
 
             //The superscritical port is invoked not at the AnomalySupercriticalEvent,
@@ -204,34 +222,34 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
             //ATTENTION! the console command supercriticalanomaly does not work here,
             //as it forcefully causes growth to start without increasing severity.
             if (args.Severity >= 1)
-                _signal.InvokePort(ent, component.SupercritPort);
+                _deviceLink.InvokePort(uid, component.SupercritPort);
         }
     }
 
     private void OnAnomalyStabilityChanged(ref AnomalyStabilityChangedEvent args)
     {
-        Entity<AnomalyComponent> anomaly = (args.Anomaly, Comp<AnomalyComponent>(args.Anomaly));
+        var anomaly = Comp<AnomalyComponent>(args.Anomaly);
 
         var query = EntityQueryEnumerator<AnomalySynchronizerComponent>();
-        while (query.MoveNext(out var ent, out var component))
+        while (query.MoveNext(out var uid, out var sync))
         {
-            if (component.ConnectedAnomaly != anomaly)
+            if (sync.ConnectedAnomaly != args.Anomaly)
                 continue;
 
-            if (!_power.IsPowered(ent))
+            if (!_power.IsPowered(uid))
                 continue;
 
-            if (args.Stability < anomaly.Comp.DecayThreshold)
+            if (args.Stability < anomaly.DecayThreshold)
             {
-                _signal.InvokePort(ent, component.DecayingPort);
+                _deviceLink.InvokePort(uid, sync.DecayingPort);
             }
-            else if (args.Stability > anomaly.Comp.GrowthThreshold)
+            else if (args.Stability > anomaly.GrowthThreshold)
             {
-                _signal.InvokePort(ent, component.GrowingPort);
+                _deviceLink.InvokePort(uid, sync.GrowingPort);
             }
             else
             {
-                _signal.InvokePort(ent, component.StabilizePort);
+                _deviceLink.InvokePort(uid, sync.StabilizePort);
             }
         }
     }
