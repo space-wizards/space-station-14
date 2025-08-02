@@ -17,8 +17,8 @@ stack-gunpowder = gunpowder
 stack-cardboard = cardboard
 
 stack-bones = {$amount ->
-    [1] bone
-    *[other] bones
+    [1] charred bone
+    *[other] charred bones
 }
 stack-cloth = {$amount ->
     [1] cloth

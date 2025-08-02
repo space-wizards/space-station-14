@@ -253,6 +253,7 @@
     spawned:
     - id: FoodMeatChicken
       amount: 1
+    - id: FoodBone
   - type: InteractionPopup
     successChance: 0.8
     interactSuccessString: petting-success-bird
@@ -691,6 +692,7 @@
     spawned:
     - id: FoodMeatDuck
       amount: 1
+    - id: FoodBone
   - type: InteractionPopup
     successChance: 0.9
     interactSuccessString: petting-success-bird
@@ -900,6 +902,7 @@
     spawned:
     - id: FoodMeat
       amount: 5
+    - id: FoodBone
   - type: Grammar
     attributes:
       gender: female # Here because of UdderComponent
@@ -1066,6 +1069,7 @@
     spawned:
     - id: FoodMeat
       amount: 4
+    - id: FoodBone
   - type: Grammar
     attributes:
       gender: female # Here because of UdderComponent
@@ -1133,6 +1137,7 @@
     spawned:
     - id: FoodMeatChicken
       amount: 2
+    - id: FoodBone
   - type: InteractionPopup # TODO: Make it so there's a separate chance to make certain animals outright hostile towards you.
     successChance: 0.1 # Yeah, good luck with that.
     interactSuccessString: petting-success-goose
@@ -1182,6 +1187,7 @@
     spawned:
     - id: FoodMeat
       amount: 4
+    - id: FoodBone
   - type: Bloodstream
     bloodMaxVolume: 300
     # if you fuck with the gorilla he will harambe you
@@ -1261,6 +1267,7 @@
   - type: Butcherable
     spawned:
     - id: FoodMeat
+    - id: FoodBone
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1406,6 +1413,7 @@
     spawned:
     - id: FoodMeat
       amount: 3
+    - id: FoodBone
   - type: Puller
     needsHands: false
   - type: CanHostGuardian
@@ -1623,6 +1631,7 @@
     spawned:
     - id: FoodMeat
       amount: 2
+    - id: FoodBone
   - type: AlwaysRevolutionaryConvertible
   - type: GhostTakeoverAvailable
   - type: SentienceTarget
