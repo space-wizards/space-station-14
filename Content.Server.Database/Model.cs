@@ -461,6 +461,7 @@ namespace Content.Server.Database
         public int ProfileId { get; set; }
 
         public string TraitName { get; set; } = null!;
+        public bool AntagDisable { get; set; }
     }
 
     #region Loadouts

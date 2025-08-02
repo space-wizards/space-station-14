@@ -1005,6 +1005,11 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(BoxContainer.StylePropertySeparation, 10),
                 }),
 
+                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#d6d6d6")),
+                }),
+
                 // MonotoneCheckBox
                 new StyleRule(new SelectorElement(typeof(TextureRect), new [] { MonotoneCheckBox.StyleClassMonotoneCheckBox }, null, null), new[]
                 {
