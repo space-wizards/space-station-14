@@ -1,14 +1,17 @@
 using Content.Shared.DisplacementMap;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
 namespace Content.Client.DisplacementMap;
 
 public sealed class DisplacementMapSystem : EntitySystem
 {
-    [Dependency] private readonly ISerializationManager _serialization = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly ISerializationManager _serialization = null!;
+    [Dependency] private readonly SpriteSystem _sprite = null!;
+
+    private static readonly ProtoId<ShaderPrototype> UnshadedID = "unshaded";
 
     /// <summary>
     /// Attempting to apply a displacement map to a specific layer of SpriteComponent
@@ -31,7 +34,12 @@ public sealed class DisplacementMapSystem : EntitySystem
             return false;
 
         if (data.ShaderOverride != null)
-            sprite.Comp.LayerSetShader(index, data.ShaderOverride);
+        {
+            sprite.Comp.LayerSetShader(index,
+                (sprite.Comp[index] is SpriteComponent.Layer layer && layer.ShaderPrototype == UnshadedID) //don't like doing a fixed comparison like this but it's the only real way to check if the current shader is unshaded atm. could expose parsedShader from the proto?
+                    ? data.ShaderOverrideUnshaded
+                    : data.ShaderOverride);
+        }
 
         _sprite.RemoveLayer(sprite.AsNullable(), displacementKey, false);
 
