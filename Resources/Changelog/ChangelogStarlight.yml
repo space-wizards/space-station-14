@@ -10271,5 +10271,12 @@ Entries:
   id: 1413
   time: '2025-08-02T14:18:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1055
+- author: PubliclyExecutedPig
+  changes:
+  - message: Updated Lagan
+    type: Tweak
+  id: 1414
+  time: '2025-08-02T14:26:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1069
 Order: -1
 
