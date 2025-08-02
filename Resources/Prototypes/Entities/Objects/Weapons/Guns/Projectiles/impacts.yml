@@ -70,3 +70,21 @@
   - type: Tag
     tags:
       - HideContextMenu
+
+- type: entity
+  id: BulletImpactEffectFlamer
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: TimedDespawn
+      lifetime: 0.2
+    - type: Sprite
+      drawdepth: Effects
+      layers:
+        - shader: unshaded
+          map: ["enum.EffectLayers.Unshaded"]
+          sprite: Objects/Weapons/Guns/Projectiles/projectiles3.rsi
+          state: impact-fire
+    - type: EffectVisuals
+    - type: Tag
+      tags:
+        - HideContextMenu
