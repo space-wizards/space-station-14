@@ -170,31 +170,28 @@ namespace Content.Client.Chemistry.UI
             var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
             var bufferVolume = castState.BufferCurrentVolume?.Int() ?? 0;
 
-            PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
-
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
 
-            PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
+            // Set values without triggering ValueChanged event
+            PillNumber.OverrideValue(Math.Min((int)castState.SelectedPillNumber, pillNumberMax));
+            PillDosage.OverrideValue(Math.Min((int)castState.SelectedPillDosage, (int)Math.Min(bufferVolume, castState.PillDosageLimit)));
+            BottleDosage.OverrideValue(Math.Min((int)castState.SelectedBottleDosage, (int)Math.Min(bottleAmountMax, bufferVolume)));
+
+            PillNumber.IsValid = x => x > 0 && x <= pillNumberMax;
             PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
-            BottleDosage.IsValid = x => x >= 0 && x <= bottleAmountMax;
+            BottleDosage.IsValid = x => x > 0 && x <= bottleAmountMax;
 
-            if (PillNumber.Value > pillNumberMax)
-                PillNumber.Value = pillNumberMax;
-            if (BottleDosage.Value > bottleAmountMax)
-                BottleDosage.Value = bottleAmountMax;
-
-            // Avoid division by zero
-            if (PillDosage.Value > 0)
+            // Adjust pill number based on buffer volume
+            if (bufferVolume == 0)
             {
-                PillNumber.Value = Math.Min(bufferVolume / PillDosage.Value, pillNumberMax);
+                PillNumber.OverrideValue(0);
             }
-            else
+            else if (PillDosage.Value > 0 && PillNumber.Value == 0)
             {
-                PillNumber.Value = 0;
+                PillNumber.OverrideValue(Math.Min(bufferVolume / PillDosage.Value, pillNumberMax));
             }
-
-            BottleDosage.Value = Math.Min(bottleAmountMax, bufferVolume);
         }
+
         /// <summary>
         /// Generate a product label based on reagents in the buffer.
         /// </summary>
@@ -266,7 +263,7 @@ namespace Content.Client.Chemistry.UI
                 _prototypeManager.TryIndex(reagentId.Prototype, out ReagentPrototype? proto);
                 var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
                 var reagentColor = proto?.SubstanceColor ?? default(Color);
-                reagentList.Add(new (reagentId, name, reagentColor, quantity));
+                reagentList.Add(new(reagentId, name, reagentColor, quantity));
             }
 
             // We sort here since we need sorted list to be filled first.
@@ -359,7 +356,7 @@ namespace Content.Client.Chemistry.UI
             var rowColor1 = Color.FromHex("#1B1B1E");
             var rowColor2 = Color.FromHex("#202025");
             var currentRowColor = (rowCount % 2 == 1) ? rowColor1 : rowColor2;
-            if ((reagentColor == default(Color))|(!addReagentButtons))
+            if ((reagentColor == default(Color)) | (!addReagentButtons))
             {
                 reagentColor = currentRowColor;
             }
