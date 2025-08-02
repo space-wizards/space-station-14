@@ -38,10 +38,8 @@ public abstract class SharedParrotMemorySystem : EntitySystem
             {
                 _popup.PopupClient(Loc.GetString("parrot-popup-memory-cleared"), entity.Owner, user);
 
-                if (_net.IsClient)
-                    return;
-
-                entity.Comp.SpeechMemories.Clear();
+                if (_net.IsServer)
+                    entity.Comp.SpeechMemories.Clear();
             },
         };
 
