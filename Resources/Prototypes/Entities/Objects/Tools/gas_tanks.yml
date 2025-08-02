@@ -35,6 +35,7 @@
       volume: 5
       temperature: 293.15
     tankLowPressure: 30.0
+  - type: TankPressureItemStatus
   - type: Explosive
     explosionType: MicroBomb
     maxIntensity: 20

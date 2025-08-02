@@ -93,6 +93,12 @@ public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     [DataField]
     public float TankFragmentScale = 2.25f * Atmospherics.OneAtmosphere;
 
+    /// <summary>
+    ///     Current internal pressure of the tank in kPa. Replicated to clients for UI purposes.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float InternalPressure;
+
     [DataField]
     public EntProtoId ToggleAction = "ActionToggleInternals";
 

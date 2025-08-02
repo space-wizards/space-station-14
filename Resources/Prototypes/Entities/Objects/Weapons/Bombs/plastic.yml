@@ -61,6 +61,7 @@
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
     startOnStick: true
     canToggleStartOnStick: true
+  - type: TimerTriggerItemStatus
   - type: TimerStartOnSignal
   - type: DeviceLinkSink
     ports:
@@ -104,6 +105,7 @@
         volume: -6
     startOnStick: false
     canToggleStartOnStick: true
+  - type: TimerTriggerItemStatus
   - type: TimerStartOnSignal
   - type: DeviceLinkSink
     ports:
