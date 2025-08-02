@@ -485,9 +485,10 @@ entities:
       age: 1
       health: 100
       seed:
-        lifespan: 75
-        endurance: 100
         growthComponents:
+          - !type:PlantTraitsComponent
+              lifespan: 75
+              endurance: 100
           - !type:BasicGrowthComponent
               waterConsumption: 0.4
               nutrientConsumption: 0.75
@@ -557,9 +558,10 @@ entities:
       age: 1
       health: 100
       seed:
-        lifespan: 25
-        endurance: 100
         growthComponents:
+          - !type:PlantTraitsComponent
+              lifespan: 25
+              endurance: 100
           - !type:BasicGrowthComponent
               waterConsumption: 0.6
               nutrientConsumption: 0.75

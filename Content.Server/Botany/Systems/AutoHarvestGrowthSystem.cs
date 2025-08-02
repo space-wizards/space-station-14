@@ -19,11 +19,12 @@ public sealed class AutoHarvestGrowthSystem : PlantGrowthSystem
         if (holder == null || holder.Seed == null || holder.Dead)
             return;
 
-        if (holder.Harvest && _random.Prob(component.HarvestChance))
+        // Check if ready for harvest using HarvestComponent
+        if (TryComp<HarvestComponent>(uid, out var harvestComp) && harvestComp.ReadyForHarvest && _random.Prob(component.HarvestChance))
         {
             // Auto-harvest the plant
-            holder.Harvest = false;
-            holder.LastProduce = holder.Age;
+            harvestComp.ReadyForHarvest = false;
+            harvestComp.LastHarvestTime = holder.Age;
 
             // Spawn the harvested items
             if (holder.Seed.ProductPrototypes.Count > 0)

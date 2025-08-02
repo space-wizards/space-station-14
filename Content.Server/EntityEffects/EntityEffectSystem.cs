@@ -64,6 +64,7 @@ public sealed class EntityEffectSystem : EntitySystem
     [Dependency] private readonly MutationSystem _mutation = default!;
     [Dependency] private readonly NarcolepsySystem _narcolepsy = default!;
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly BasicGrowthSystem _plantGrowth = default!;
     [Dependency] private readonly PolymorphSystem _polymorph = default!;
     [Dependency] private readonly RespiratorSystem _respirator = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -252,8 +253,13 @@ public sealed class EntityEffectSystem : EntitySystem
         if (plantHolderComp.Seed == null)
             return;
 
-        _plantHolder.EnsureUniqueSeed(args.Args.TargetEntity, plantHolderComp);
-        plantHolderComp.Seed.Potency = Math.Max(plantHolderComp.Seed.Potency + args.Effect.Amount, 1);
+        PlantTraitsComponent? traits = null;
+        Resolve<PlantTraitsComponent>(args.Args.TargetEntity, ref traits);
+
+        if (traits == null)
+            return;
+
+        traits.Potency = Math.Max(traits.Potency + args.Effect.Amount, 1);
     }
 
     private void OnExecutePlantAdjustToxins(ref ExecuteEntityEffectEvent<PlantAdjustToxins> args)
@@ -285,7 +291,7 @@ public sealed class EntityEffectSystem : EntitySystem
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp))
             return;
 
-        _plantHolder.AffectGrowth(args.Args.TargetEntity, (int) args.Effect.Amount, plantHolderComp);
+        _plantGrowth.AffectGrowth(args.Args.TargetEntity, (int) args.Effect.Amount, plantHolderComp);
     }
 
     // Mutate reference 'val' between 'min' and 'max' by pretending the value
@@ -364,35 +370,39 @@ public sealed class EntityEffectSystem : EntitySystem
         if (plantHolderComp.Seed == null)
             return;
 
-        var member = plantHolderComp.Seed.GetType().GetField(args.Effect.TargetValue);
+        // Try to find the field in PlantTraitsComponent first
+        PlantTraitsComponent? traits = null;
+        Resolve<PlantTraitsComponent>(args.Args.TargetEntity, ref traits);
 
-        if (member == null)
+        // Fallback to SeedData for fields that haven't been moved to components yet
+        var seedMember = plantHolderComp.Seed.GetType().GetField(args.Effect.TargetValue);
+        if (seedMember == null)
         {
             _mutation.Log.Error(args.Effect.GetType().Name + " Error: Member " + args.Effect.TargetValue + " not found on " + plantHolderComp.Seed.GetType().Name + ". Did you misspell it?");
             return;
         }
 
-        var currentValObj = member.GetValue(plantHolderComp.Seed);
-        if (currentValObj == null)
+        var currentSeedValObj = seedMember.GetValue(plantHolderComp.Seed);
+        if (currentSeedValObj == null)
             return;
 
-        if (member.FieldType == typeof(float))
+        if (seedMember.FieldType == typeof(float))
         {
-            var floatVal = (float)currentValObj;
+            var floatVal = (float)currentSeedValObj;
             MutateFloat(ref floatVal, args.Effect.MinValue, args.Effect.MaxValue, args.Effect.Steps);
-            member.SetValue(plantHolderComp.Seed, floatVal);
+            seedMember.SetValue(plantHolderComp.Seed, floatVal);
         }
-        else if (member.FieldType == typeof(int))
+        else if (seedMember.FieldType == typeof(int))
         {
-            var intVal = (int)currentValObj;
+            var intVal = (int)currentSeedValObj;
             MutateInt(ref intVal, (int)args.Effect.MinValue, (int)args.Effect.MaxValue, args.Effect.Steps);
-            member.SetValue(plantHolderComp.Seed, intVal);
+            seedMember.SetValue(plantHolderComp.Seed, intVal);
         }
-        else if (member.FieldType == typeof(bool))
+        else if (seedMember.FieldType == typeof(bool))
         {
-            var boolVal = (bool)currentValObj;
+            var boolVal = (bool)currentSeedValObj;
             boolVal = !boolVal;
-            member.SetValue(plantHolderComp.Seed, boolVal);
+            seedMember.SetValue(plantHolderComp.Seed, boolVal);
         }
     }
 
@@ -401,14 +411,21 @@ public sealed class EntityEffectSystem : EntitySystem
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp))
             return;
 
-        var deviation = 0;
         var seed = plantHolderComp.Seed;
         if (seed == null)
             return;
-        if (plantHolderComp.Age > seed.Maturation)
-            deviation = (int) Math.Max(seed.Maturation - 1, plantHolderComp.Age - _random.Next(7, 10));
+
+        PlantTraitsComponent? traits = null;
+        Resolve<PlantTraitsComponent>(args.Args.TargetEntity, ref traits);
+
+        if (traits == null)
+            return;
+
+        var deviation = 0;
+        if (plantHolderComp.Age > traits.Maturation)
+            deviation = (int) Math.Max(traits.Maturation - 1, plantHolderComp.Age - _random.Next(7, 10));
         else
-            deviation = (int) (seed.Maturation / seed.GrowthStages);
+            deviation = (int) (traits.Maturation / traits.GrowthStages);
         plantHolderComp.Age -= deviation;
         plantHolderComp.LastProduce = plantHolderComp.Age;
         plantHolderComp.SkipAging++;
@@ -420,7 +437,10 @@ public sealed class EntityEffectSystem : EntitySystem
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveMutableSeed: true))
             return;
 
-        if (plantHolderComp.Seed!.Seedless == false)
+        PlantTraitsComponent? traits = null;
+        Resolve<PlantTraitsComponent>(args.Args.TargetEntity, ref traits);
+
+        if (traits != null && !traits.Seedless)
         {
             _plantHolder.EnsureUniqueSeed(args.Args.TargetEntity, plantHolderComp);
             _popup.PopupEntity(
@@ -428,7 +448,7 @@ public sealed class EntityEffectSystem : EntitySystem
                 args.Args.TargetEntity,
                 PopupType.SmallCaution
             );
-            plantHolderComp.Seed.Seedless = true;
+            traits.Seedless = true;
         }
     }
 
@@ -437,16 +457,20 @@ public sealed class EntityEffectSystem : EntitySystem
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveMutableSeed: true))
             return;
 
+        PlantTraitsComponent? traits = null;
+        Resolve<PlantTraitsComponent>(args.Args.TargetEntity, ref traits);
+
+        if (traits == null)
+            return;
+
         if (_random.Prob(0.1f))
         {
-            _plantHolder.EnsureUniqueSeed(args.Args.TargetEntity, plantHolderComp);
-            plantHolderComp.Seed!.Lifespan++;
+            traits.Lifespan++;
         }
 
         if (_random.Prob(0.1f))
         {
-            _plantHolder.EnsureUniqueSeed(args.Args.TargetEntity, plantHolderComp);
-            plantHolderComp.Seed!.Endurance++;
+            traits.Endurance++;
         }
     }
 
@@ -463,11 +487,14 @@ public sealed class EntityEffectSystem : EntitySystem
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveMutableSeed: true))
             return;
 
-        if (plantHolderComp.Seed!.Seedless)
+        PlantTraitsComponent? traits = null;
+        Resolve<PlantTraitsComponent>(args.Args.TargetEntity, ref traits);
+
+        if (traits != null && traits.Seedless)
         {
             _plantHolder.EnsureUniqueSeed(args.Args.TargetEntity, plantHolderComp);
             _popup.PopupEntity(Loc.GetString("botany-plant-seedsrestored"), args.Args.TargetEntity);
-            plantHolderComp.Seed.Seedless = false;
+            traits.Seedless = false;
         }
     }
 
@@ -479,21 +506,25 @@ public sealed class EntityEffectSystem : EntitySystem
         if (plantHolderComp.Seed == null)
             return;
 
-        if (plantHolderComp.Seed.Potency < args.Effect.PotencyLimit)
-        {
-            _plantHolder.EnsureUniqueSeed(args.Args.TargetEntity, plantHolderComp);
-            plantHolderComp.Seed.Potency = Math.Min(plantHolderComp.Seed.Potency + args.Effect.PotencyIncrease, args.Effect.PotencyLimit);
+        PlantTraitsComponent? traits = null;
+        Resolve<PlantTraitsComponent>(args.Args.TargetEntity, ref traits);
 
-            if (plantHolderComp.Seed.Potency > args.Effect.PotencySeedlessThreshold)
+        if (traits == null)
+            return;
+
+        if (traits.Potency < args.Effect.PotencyLimit)
+        {
+            traits.Potency = Math.Min(traits.Potency + args.Effect.PotencyIncrease, args.Effect.PotencyLimit);
+
+            if (traits.Potency > args.Effect.PotencySeedlessThreshold)
             {
-                plantHolderComp.Seed.Seedless = true;
+                traits.Seedless = true;
             }
         }
-        else if (plantHolderComp.Seed.Yield > 1 && _random.Prob(0.1f))
+        else if (traits.Yield > 1 && _random.Prob(0.1f))
         {
             // Too much of a good thing reduces yield
-            _plantHolder.EnsureUniqueSeed(args.Args.TargetEntity, plantHolderComp);
-            plantHolderComp.Seed.Yield--;
+            traits.Yield--;
         }
     }
 
@@ -932,16 +963,14 @@ public sealed class EntityEffectSystem : EntitySystem
             plantholder.Seed == null)
             return;
 
-        // Clone the seed to make it mutable
-        var clonedSeed = plantholder.Seed.Clone();
+        // Get or create the harvest component
+        var harvestComponent = EnsureComp<HarvestComponent>(args.Args.TargetEntity);
 
-        if (clonedSeed.HarvestRepeat == HarvestType.NoRepeat)
-            clonedSeed.HarvestRepeat = HarvestType.Repeat;
-        else if (clonedSeed.HarvestRepeat == HarvestType.Repeat)
-            clonedSeed.HarvestRepeat = HarvestType.SelfHarvest;
-
-        // Update the plant holder with the cloned seed
-        plantholder.Seed = clonedSeed;
+        // Mutate the harvest type
+        if (harvestComponent.HarvestRepeat == HarvestType.NoRepeat)
+            harvestComponent.HarvestRepeat = HarvestType.Repeat;
+        else if (harvestComponent.HarvestRepeat == HarvestType.Repeat)
+            harvestComponent.HarvestRepeat = HarvestType.SelfHarvest;
     }
 
     private void OnExecutePlantSpeciesChange(ref ExecuteEntityEffectEvent<PlantSpeciesChange> args)
