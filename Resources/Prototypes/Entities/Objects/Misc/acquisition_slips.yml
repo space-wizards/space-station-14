@@ -21,7 +21,7 @@
     - Document
     - Paper
   - type: Paper
-    editingDisabled: true
+    editingState: Locked
   - type: PaperVisuals
     footerImagePath: "/Textures/Interface/Paper/AcquisitionSlips/barcode.svg.192dpi.png"
     maxWritableArea: 512.0, 512.0
