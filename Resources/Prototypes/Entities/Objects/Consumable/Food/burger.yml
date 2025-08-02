@@ -31,10 +31,10 @@
   id: FoodBreadBunBottom
   parent: FoodBreadSliceBase
   name: bottom bun
-  description: It's time to start building the burger tower. 
+  description: It's time to start building the burger tower.
   components:
   - type: Item
-    size: Normal #patch until there is an adequate resizing system in place 
+    size: Normal #patch until there is an adequate resizing system in place
   - type: Food
   - type: Sprite
     drawdepth: Mobs
@@ -83,7 +83,7 @@
   - type: FoodSequenceElement
     entries:
       Burger: BunTopBurger
-  
+
 # Base
 
 - type: entity
@@ -95,8 +95,6 @@
     flavors:
       - bun
       - meaty
-  - type: Food
-    transferAmount: 5
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
   - type: SolutionContainerManager
@@ -499,7 +497,7 @@
         - ReagentId: Vitamin
           Quantity: 8
         - ReagentId: Sulfur # What you get for eating something with a flare in it
-          Quantity: 5 
+          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -691,7 +689,7 @@
   description: An elusive rib shaped burger with limited availability across the galaxy. Not as good as you remember it.
   components:
   - type: Food
-    trash: 
+    trash:
     - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
@@ -702,7 +700,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30 
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
           Quantity: 11
@@ -987,4 +985,4 @@
   - type: Tag
     tags:
     - Meat
-    
+

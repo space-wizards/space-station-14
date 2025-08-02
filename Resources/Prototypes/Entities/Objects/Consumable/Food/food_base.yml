@@ -9,7 +9,7 @@
   - type: FlavorProfile
     flavors:
       - food
-  - type: Food
+  - type: Edible
   - type: Sprite
   - type: StaticPrice
     price: 0
