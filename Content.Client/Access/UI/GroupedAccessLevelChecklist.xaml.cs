@@ -57,7 +57,7 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
 
         foreach (var accessGroup in _accessGroups)
         {
-            if (!_protoManager.TryIndex(accessGroup, out var accessGroupProto))
+            if (!_protoManager.Resolve(accessGroup, out var accessGroupProto))
                 continue;
 
             _groupedAccessLevels.Add(accessGroupProto, new());
@@ -65,13 +65,13 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
 
         // Ensure that the 'general' access group is added to handle
         // misc. access levels that aren't associated with any group
-        if (_protoManager.TryIndex(GeneralAccessGroup, out var generalAccessProto))
+        if (_protoManager.Resolve(GeneralAccessGroup, out var generalAccessProto))
             _groupedAccessLevels.TryAdd(generalAccessProto, new());
 
         // Assign known access levels with their associated groups
         foreach (var accessLevel in _accessLevels)
         {
-            if (!_protoManager.TryIndex(accessLevel, out var accessLevelProto))
+            if (!_protoManager.Resolve(accessLevel, out var accessLevelProto))
                 continue;
 
             var assigned = false;
