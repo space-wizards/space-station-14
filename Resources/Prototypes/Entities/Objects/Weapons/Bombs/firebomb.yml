@@ -16,10 +16,10 @@
     - state: wires
   - type: Item
     sprite: Objects/Weapons/Bombs/ied.rsi
-  - type: OnUseTimerTrigger
+  - type: TriggerOnUse
+  - type: TimerTrigger
     delay: 5
     examinable: false
-    initialBeepDelay: 0
     beepSound:
       path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
       params:
@@ -34,6 +34,8 @@
     maxIntensity: 3
     canCreateVacuum: false
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Appearance
   - type: AnimationPlayer
   - type: TimerTriggerVisuals

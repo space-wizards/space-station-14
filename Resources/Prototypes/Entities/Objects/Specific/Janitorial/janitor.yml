@@ -181,24 +181,31 @@
       path: /Audio/Effects/beep_landmine.ogg
       params:
         maxDistance: 10
-  - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBomb  # normally Default and max 5 total 60
     maxIntensity: 10 # about a ~67.5 total damage
     totalIntensity: 30 # about a ~3 tile radius
     canCreateVacuum: false
+  - type: ExplodeOnTrigger
+    keysIn:
+    - timer
+    - trigger # directly explode from the landmine
   - type: DeleteOnTrigger
-  - type: OnUseTimerTrigger
-    useVerbInstead: true
+    keysIn:
+    - timer
+    - trigger
+  - type: TimerTrigger
     beepInterval: .25
     beepSound:
       path: /Audio/Items/Janitor/floor_sign_beep.ogg
       params:
         volume: 1
     examinable: false
+  - type: TriggerOnVerb
+    text: trigger-on-verb-detonation
   - type: Tag
     tags: # ignore "WhitelistChameleon" tag
-      - WetFloorSign
+    - WetFloorSign
 
 - type: entity
   name: plunger
