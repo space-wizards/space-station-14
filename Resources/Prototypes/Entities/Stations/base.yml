@@ -48,7 +48,7 @@
 - type: entity
   id: BaseStationShuttles
   abstract: true
-  components: # DOTS - add new spawn for Grape's mining shuttle. Reference https://github.com/ss14Starlight/space-station-14/pull/1029
+  components:
     - type: StationCargoShuttle
       path: /Maps/Shuttles/cargo.yml
     - type: GridSpawn
