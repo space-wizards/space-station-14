@@ -7,6 +7,6 @@ public sealed class BibleSystem : SharedBibleSystem
 {
     protected override void AttemptSummon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent? position)
     {
-        // No logic, only server side.
+        base.AttemptSummon(ent, user, position);
     }
 }
