@@ -95,17 +95,16 @@ air-alarm-ui-thresholds-upper-warning-bound = Warning above
 air-alarm-ui-thresholds-lower-warning-bound = Warning below
 air-alarm-ui-thresholds-copy = Copy thresholds to all devices
 air-alarm-ui-thresholds-copy-tooltip = Copies the sensor thresholds of this device to all devices in this air alarm tab.
-air-alarm-ui-thresholds-gas-name = { -air-alarm-ui-thresholds-gas-names(gas:$gas) }
 
--air-alarm-ui-thresholds-gas-names = { $gas ->
-[Oxygen] Oxygen
-[Nitrogen] Nitrogen
-[CarbonDioxide] Carbon Dioxide
-[Plasma] Plasma
-[Tritium] Tritium
-[WaterVapor] Water Vapor
-[Ammonia] Ammonia
-[NitrousOxide] Nitrous Oxide
-[Frezon] Frezon
-*[else] Unknown gas
+air-alarm-ui-thresholds-gas-name = { $gas ->
+    [Oxygen] Oxygen
+    [Nitrogen] Nitrogen
+    [CarbonDioxide] Carbon Dioxide
+    [Plasma] Plasma
+    [Tritium] Tritium
+    [WaterVapor] Water Vapor
+    [Ammonia] Ammonia
+    [NitrousOxide] Nitrous Oxide
+    [Frezon] Frezon
+    *[else] Unknown gas
 }
