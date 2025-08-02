@@ -40,6 +40,8 @@ public sealed partial class ThresholdControl : BoxContainer
 
         _name.Title = name;
 
+        _enabled.Text = Loc.GetString("air-alarm-ui-widget-enable");
+
         // i miss rust macros
 
         _upperBoundControl = new ThresholdBoundControl(LabelForBound("upper-bound"), _threshold.UpperBound.Value, modifier);
