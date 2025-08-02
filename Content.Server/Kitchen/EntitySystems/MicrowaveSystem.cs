@@ -543,7 +543,7 @@ namespace Content.Server.Kitchen.EntitySystems
             foreach (var item in component.Storage.ContainedEntities.ToArray())
             {
                 // special behavior when being microwaved ;)
-                var ev = new BeingMicrowavedEvent(uid, user);
+                var ev = new BeingMicrowavedEvent(uid, user, component.CurrentCookTimerTime);
                 RaiseLocalEvent(item, ev);
 
                 // TODO MICROWAVE SPARKS & EFFECTS
