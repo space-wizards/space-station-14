@@ -144,6 +144,7 @@
   components:
   - type: AccessReader
     access: [["StationAi"], ["ResearchDirector"]]
+  - type: StationAiTurret
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Borg
