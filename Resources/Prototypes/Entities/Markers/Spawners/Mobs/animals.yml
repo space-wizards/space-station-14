@@ -88,6 +88,21 @@
 
 - type: entity
   parent: MarkerBase
+  id: SpawnMobMoproach
+  name: Moproach Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Animals/mothroach/moproach.rsi
+      state: icon
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobMoproach
+
+- type: entity
+  parent: MarkerBase
   id: SpawnMobCow
   name: Cow Spawner
   components:
