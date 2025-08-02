@@ -157,6 +157,27 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         // Show the silicon has been subverted.
         component.Subverted = true;
 
+        #region Starlight: Add the new channel to the silicon.
+        var emag = args.emagComp;
+        if (emag != null)
+        {
+            if (TryComp(uid, out ActiveRadioComponent? activeRadio))
+            {
+                activeRadio.Channels.UnionWith(emag.ChannelAdd.Select(item => item.Id.ToString()).ToHashSet());
+            }
+            if (TryComp(uid, out IntrinsicRadioTransmitterComponent? transmitter))
+            {
+                transmitter.Channels.UnionWith(emag.ChannelAdd.Select(item => item.Id.ToString()).ToHashSet());
+            }
+            var lawset = emag.Lawset;
+            if (lawset != null)
+            {
+                component.Lawset = GetLawset(lawset.Value);
+                return;
+            }
+        }
+        #endregion
+
         // Add the first emag law before the others
         component.Lawset?.Laws.RemoveAt(0);
 
@@ -173,17 +194,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
             Order = component.Lawset.Laws.Max(law => law.Order) + 1
         });
-
-        //Starlight: Add the syndicate channel to the silicon.
-        //TODO: When different types of emags are added, update this.
-        if (TryComp(uid, out ActiveRadioComponent? activeRadio))
-        {
-            activeRadio.Channels.Add("Syndicate");
-        }
-        if (TryComp(uid, out IntrinsicRadioTransmitterComponent? transmitter))
-        {
-            transmitter.Channels.Add("Syndicate");
-        }
     }
 
     protected override void EnsureSubvertedSiliconRole(EntityUid mindId)
