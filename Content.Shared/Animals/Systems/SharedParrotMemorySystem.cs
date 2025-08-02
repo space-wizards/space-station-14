@@ -17,6 +17,7 @@ public abstract class SharedParrotMemorySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ParrotMemoryComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
     }
 
@@ -36,11 +37,12 @@ public abstract class SharedParrotMemorySystem : EntitySystem
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/clear-parrot.png")),
             Act = () =>
             {
+                _popup.PopupClient(Loc.GetString("parrot-popup-memory-cleared"), entity.Owner, user);
+
                 if (_net.IsClient)
                     return;
 
                 entity.Comp.SpeechMemories.Clear();
-                _popup.PopupClient(Loc.GetString("parrot-popup-memory-cleared"), entity.Owner, user);
             },
         };
 
