@@ -28,6 +28,7 @@ public sealed class SmartEquipSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    private const string SuitStorageSlot = "suitstorage"; // Starlight edit - Suit storage equip
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -35,6 +36,7 @@ public sealed class SmartEquipSystem : EntitySystem
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack, handle: false, outsidePrediction: false))
             .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt, handle: false, outsidePrediction: false))
+            .Bind(ContentKeyFunctions.SmartEquipSuitStorage, InputCmdHandler.FromDelegate(HandleSmartEquipSuitStorage, handle: false, outsidePrediction: false)) // Starlight edit - Suit storage Equip
             .Register<SmartEquipSystem>();
     }
 
@@ -55,6 +57,13 @@ public sealed class SmartEquipSystem : EntitySystem
         HandleSmartEquip(session, "belt");
     }
 
+    // Starlight Start - Suit storage equip
+    private void HandleSmartEquipSuitStorage(ICommonSession? session)
+    {
+        HandleSmartEquip(session, SuitStorageSlot);
+    }
+    // Starlight End
+    
     private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
     {
         if (session is not { } playerSession)
@@ -166,6 +175,20 @@ public sealed class SmartEquipSystem : EntitySystem
         // case 3 (itemslot item):
         if (TryComp<ItemSlotsComponent>(slotItem, out var slots))
         {
+            // Starlight Start - Suit storage equip
+            if (handItem == null && equipmentSlot == SuitStorageSlot)
+            {
+                if (!_inventory.CanUnequip(uid, equipmentSlot, out var suitStorageReason))
+                {
+                    _popup.PopupClient(Loc.GetString(suitStorageReason), uid, uid);
+                    return;
+                }
+
+                _inventory.TryUnequip(uid, equipmentSlot, inventory: inventory, predicted: true, checkDoafter: true);
+                _hands.TryPickup(uid, slotItem, handsComp: hands);
+                return;
+            }
+            // Starlight End
             if (handItem == null)
             {
                 ItemSlot? toEjectFrom = null;

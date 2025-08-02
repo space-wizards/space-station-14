@@ -1,5 +1,7 @@
 uplink-contortionist-jumpsuit-name = Contortionist's Jumpsuit
 uplink-contortionist-jumpsuit-desc = It looks like an atmos jumpsuit, but it really is. This jumpsuit allows the agent to slip through the vents.
+uplink-marriage-axe-name = Marriage axe
+uplink-marriage-axe-desc = A charming subtle instrument of chaos—perfect for when diplomacy fails. Screams like a banshee, cuts like a demon, and turns people into regrettable memories. Handle with enthusiasm.
 uplink-mini-energy-crossbow-name = mini energy crossbow
 uplink-mini-energy-crossbow-desc = Fires low-damage kinetic bolts at a short range.
 uplink-minotaur-name = Minotaur bundle
@@ -26,6 +28,9 @@ uplink-uzi-bundle-desc = Contains the Type U3 Uzi, with two additional magazines
 uplink-uzi-magazine-name = Uzi Magazine (.35 auto)
 uplink-uzi-magazine-desc = Submachine gun magazine with 32 cartridges. Compatible with the Type U3 Uzi
 
+uplink-breaching-magazine-name = Shotgun Magazine (.50 breaching)
+uplink-breaching-magazine-desc = A magazine loaded with breaching shells, for breaking down airlocks, windows and walls. Less effective on people.
+
 uplink-syndicate-borgi-name = Syndicate Borgi
 uplink-syndicate-borgi-desc = A basic syndicate borgi
 
@@ -34,4 +39,3 @@ uplink-syndicate-borgi-kitted-desc = A syndicate borgi, with assault modules
 
 uplink-syndicate-borgi-speed-name = Speed Syndicate Borgi
 uplink-syndicate-borgi-speed-desc = A syndicate borgi, with dagger modules and additional speed
-
