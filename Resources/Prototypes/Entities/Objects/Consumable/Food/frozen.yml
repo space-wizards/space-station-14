@@ -25,6 +25,9 @@
   id: FoodFrozenSandwich
   description: Portable ice-cream in its own packaging.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
   - type: Sprite
     state: sandwich
 
@@ -34,6 +37,9 @@
   id: FoodFrozenSandwichStrawberry
   description: Portable ice-cream in its own packaging of the strawberry variety.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
   - type: Sprite
     state: sandwich-strawberry
 
@@ -61,6 +67,8 @@
   id: FoodFrozenCornuto
   description: A Neapolitan vanilla and chocolate ice-cream cone. It menaces with a sprinkling of caramelized nuts.
   components:
+  - type: Item
+    storedRotation: -45
   - type: Sprite
     state: cornuto
   - type: SolutionContainerManager
@@ -88,7 +96,7 @@
     - state: popsicle
       color: orange
   - type: Food
-    trash: 
+    trash:
     - FoodFrozenPopsicleTrash
   - type: Tag
     tags:
@@ -108,7 +116,7 @@
     - state: popsicle
       color: red
   - type: Food
-    trash: 
+    trash:
     - FoodFrozenPopsicleTrash
   - type: Tag
     tags:
@@ -126,7 +134,7 @@
     - state: stick
     - state: jumbo
   - type: Food
-    trash: 
+    trash:
     - FoodFrozenPopsicleTrash
   - type: SolutionContainerManager
     solutions:
@@ -157,7 +165,7 @@
         - state: alpha-filling
     #      color: foo
     - type: Food
-      trash: 
+      trash:
       - FoodFrozenSnowconeTrash
     - type: SolutionContainerManager
       solutions:
@@ -196,7 +204,7 @@
     - state: cone
     - state: berry
   - type: Food
-    trash: 
+    trash:
     - FoodFrozenSnowconeTrash
   - type: Tag
     tags:
@@ -213,7 +221,7 @@
     - state: cone
     - state: fruitsalad
   - type: Food
-    trash: 
+    trash:
     - FoodFrozenSnowconeTrash
   - type: Tag
     tags:
@@ -230,7 +238,7 @@
     - state: cone
     - state: clown
   - type: Food
-    trash: 
+    trash:
     - FoodFrozenSnowconeTrash
 
 - type: entity
@@ -244,7 +252,7 @@
     - state: cone
     - state: mime
   - type: Food
-    trash: 
+    trash:
     - FoodFrozenSnowconeTrash
 
 - type: entity
@@ -258,7 +266,7 @@
     - state: cone
     - state: rainbow
   - type: Food
-    trash: 
+    trash:
     - FoodFrozenSnowconeTrash
 
 # Trash
@@ -269,6 +277,8 @@
   id: FoodFrozenSnowconeTrash
   description: A crumpled paper cone used for an icy treat. Worthless.
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi
     state: cone-trash
