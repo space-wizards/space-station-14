@@ -4,16 +4,6 @@ shared-solution-container-component-on-examine-main-text = It contains {INDEFINI
     *[other] mixture of chemicals.
     }
 
-drink-examine-sicko-hours = Vol: { $fillLevel ->
-    [full] [color=white]Full[/color]
-    [mostlyFull] [color=white]Mostly Full[/color]
-    [halfFull] [color=white]Mostly Full[/color]
-    [halfEmpty] [color=white]Half Empty[/color]
-    [mostlyEmpty] [color=white]Mostly Empty[/color]
-    [exact] [color=white]{$current}/{$max}u[/color]
-    *[empty] [color=gray]Empty[/color]
-    }
-
 # Legacy names
 drink-component-on-examine-is-full = Vol: [color=white]Full[/color]
 drink-component-on-examine-is-mostly-full = Vol: [color=white]Mostly Full[/color]
@@ -28,3 +18,28 @@ examinable-solution-recognized-first = [color={$color}]{$chemical}[/color]
 examinable-solution-recognized-next = , [color={$color}]{$chemical}[/color]
 # Special handling to include a space at the start of the line
 examinable-solution-recognized-last = {" "}and [color={$color}]{$chemical}[/color]
+
+examinable-solution-on-examine-volume = The contained solution { $fillLevel ->
+    [exact] holds [color=white]{$current}/{$max}u[/color].
+    [full] is { -solution-vague-fill-level(fillLevel: "full") }.
+    [mostlyFull] is { -solution-vague-fill-level(fillLevel: "mostlyFull") }.
+    [halfFull] is { -solution-vague-fill-level(fillLevel: "halfFull") }.
+    [halfEmpty] is { -solution-vague-fill-level(fillLevel: "halfEmpty") }.
+    [mostlyEmpty] is { -solution-vague-fill-level(fillLevel: "mostlyEmpty") }.
+    *[empty] is { -solution-vague-fill-level(fillLevel: "empty") }.
+}
+
+solution-status-volume = Vol: { $fillLevel ->
+    [exact] [color=white]{$current}/{$max}u[/color]
+    *[other] { -solution-vague-fill-level(fillLevel: $fillLevel) }
+}
+
+-solution-vague-fill-level =
+    { $fillLevel ->
+        [full] [color=white]Full[/color]
+        [mostlyFull] [color=white]Mostly Full[/color]
+        [halfFull] [color=white]Half Full[/color]
+        [halfEmpty] [color=white]Half Empty[/color]
+        [mostlyEmpty] [color=white]Mostly Empty[/color]
+        *[empty] [color=gray]Empty[/color]
+    }

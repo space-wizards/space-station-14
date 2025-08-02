@@ -818,7 +818,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         {
             // Push amount of reagent
 
-            args.PushMarkup(LocalizedExaminableVolume(entity, solution, args.Examiner));
+            args.PushMarkup(Loc.GetString("examinable-solution-on-examine-volume",
+                                ("fillLevel", LocalizedExaminableVolume(entity, solution, args.Examiner)),
+                                ("current", solution.Volume),
+                                ("max", solution.MaxVolume)));
 
             // Push the physical description of the primary reagent
 
@@ -888,40 +891,38 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="sol">The solution being looked at.</param>
     /// <param name="examiner">The player looking at the volume.</param>
     /// <returns>A localized string for a solution's volume.</returns>
-    public string LocalizedExaminableVolume(Entity<ExaminableSolutionComponent> ent, Solution sol, EntityUid? examiner = null)
+    public ExaminedVolumeState LocalizedExaminableVolume(Entity<ExaminableSolutionComponent> ent, Solution sol, EntityUid? examiner = null)
     {
         //Exact measurement
         if (ent.Comp.ExactVolume)
-            return Loc.GetString("drink-examine-sick-hours", ("fillLevel", "Exact"), ("current", sol.Volume), ("max", sol.MaxVolume));
+            return ExaminedVolumeState.Exact;
 
         //General approximation
         return (int)PercentFull(sol) switch
         {
-            100 => Loc.GetString("drink-examine-sicko-hours", ("fillLevel", "full")),
-            > 66 => Loc.GetString("drink-examine-sicko-hours", ("fillLevel", "mostlyFull")),
-            > 33 => HalfEmptyOrHalfFull(ent, examiner) ?
-                        Loc.GetString("drink-examine-sicko-hours", ("fillLevel", "halfFull")) :
-                        Loc.GetString("drink-examine-sicko-hours", ("fillLevel", "halfEmpty")),
-            > 0 => Loc.GetString("drink-examine-sicko-hours", ("fillLevel", "mostlyEmpty")),
-            _ => Loc.GetString("drink-examine-sicko-hours", ("fillLevel", "empty")),
+            100 => ExaminedVolumeState.Full,
+            > 66 => ExaminedVolumeState.MostlyFull,
+            > 33 => HalfEmptyOrHalfFull(examiner),
+            > 0 => ExaminedVolumeState.MostlyEmpty,
+            _ => ExaminedVolumeState.Empty,
         };
     }
 
     /// <summary>
     ///     Some spessmen see half full, some see half empty, but always the same one.
     /// </summary>
-    private bool HalfEmptyOrHalfFull(Entity<ExaminableSolutionComponent> ent, EntityUid? examiner)
+    private ExaminedVolumeState HalfEmptyOrHalfFull(EntityUid? examiner = null)
     {
         // Optimism when un-observed
         if (examiner == null)
-            return true;
+            return ExaminedVolumeState.HalfFull;
 
         if (TryComp<MetaDataComponent>(examiner, out var meta)
         && meta.EntityName.Length > 0
         && string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
-            return true;
+            return ExaminedVolumeState.HalfFull;
 
-        return false;
+        return ExaminedVolumeState.HalfEmpty;
     }
 
     /// <summary>

@@ -43,27 +43,31 @@ public sealed class SolutionStatusControl : PollingItemStatusControl<SolutionSta
         if (_entityManager.TryGetComponent(_parent.Owner, out SolutionTransferComponent? transfer))
             transferAmount = transfer.TransferAmount;
 
-        string? volumeString = null;
+        ExaminedVolumeState? state = null;
         if (_entityManager.TryGetComponent(_parent.Owner, out ExaminableSolutionComponent? examine) &&
             _entityManager.TryGetComponent(_parent.Owner, out TransformComponent? xform))
         {
-            volumeString = _solutionContainers.LocalizedExaminableVolume((_parent, examine), solution, xform.ParentUid);
+            state = _solutionContainers.LocalizedExaminableVolume((_parent, examine), solution, xform.ParentUid);
         }
 
-        return new Data(transferAmount, volumeString);
+        return new Data(solution.Volume, solution.MaxVolume, transferAmount, state);
     }
 
     protected override void Update(in Data data)
     {
         var markup = "";
 
-        if (data.LocVolume is { } value)
-            markup = value;
+        if (data.VolumeState is { } value)
+            markup = Loc.GetString("solution-status-volume",
+                            ("fillLevel", value),
+                            ("current", data.CurrentVolume),
+                            ("max", data.MaxVolume));
 
         if (data.TransferVolume is { } transferVolume)
             markup += "\n" + Loc.GetString("solution-status-transfer", ("volume", transferVolume));
+
         _label.SetMarkup(markup);
     }
 
-    public readonly record struct Data(FixedPoint2? TransferVolume, string? LocVolume);
+    public readonly record struct Data(FixedPoint2 CurrentVolume, FixedPoint2 MaxVolume, FixedPoint2? TransferVolume, ExaminedVolumeState? VolumeState);
 }

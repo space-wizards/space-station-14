@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Chemistry.Components.SolutionManager;
+﻿using Robust.Shared.Serialization;
+
+namespace Content.Shared.Chemistry.Components.SolutionManager;
 
 /// <summary>
 ///     Component for examining a solution with shift click or through <see cref="SolutionScanEvent"/>.
@@ -54,4 +56,19 @@ public sealed partial class ExaminableSolutionComponent : Component
 
     [DataField]
     public LocId MessageRecognizableReagents = "examinable-solution-has-recognizable-chemicals";
+}
+
+/// <summary>
+///     The
+/// </summary>
+[Serializable, NetSerializable]
+public enum ExaminedVolumeState
+{
+    Exact,
+    Full,
+    MostlyFull,
+    HalfFull,
+    HalfEmpty,
+    MostlyEmpty,
+    Empty,
 }
