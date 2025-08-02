@@ -10200,5 +10200,55 @@ Entries:
   id: 1404
   time: '2025-08-02T14:07:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1132
+- author: Conflee
+  changes:
+  - message: (Kiloton) Added more Sentry Turrets, and Control Panels where needed.
+    type: Add
+  id: 1405
+  time: '2025-08-02T14:09:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1068
+- author: Conflee
+  changes:
+  - message: (Kiloton) Added a second N2 miner and O2 miner, since this station somehow
+      hogs up a max sized miner of each. No more losing distro after an hour and a
+      half.
+    type: Add
+  id: 1406
+  time: '2025-08-02T14:09:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1068
+- author: Conflee
+  changes:
+  - message: (Kiloton) Added glass airlocks around the main hallway loop. Firelocks
+      are supposed to shut the second there is depressurization, but there is an upstream
+      bug making them lag by a second (which is being fixed upstream soon). This causes
+      the entire hallway loop to lose air at once if any part of it does. The glass
+      airlocks should mitigate this bug for now.
+    type: Add
+  id: 1407
+  time: '2025-08-02T14:09:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1068
+- author: Conflee
+  changes:
+  - message: (Kiloton) Changed the two waste recycling chambers in atmos to be usable
+      as burn chambers, by adding blast doors to them.
+    type: Tweak
+  id: 1408
+  time: '2025-08-02T14:09:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1068
+- author: Conflee
+  changes:
+  - message: (Kiloton) Fixed the wiring in Botany, and the APC rotation in Sci.
+    type: Fix
+  id: 1409
+  time: '2025-08-02T14:09:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1068
+- author: Conflee
+  changes:
+  - message: (Kiloton) Fixed East Maints sometimes being extremely over pressurized
+      round start, probably.
+    type: Fix
+  id: 1410
+  time: '2025-08-02T14:09:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1068
 Order: -1
 
