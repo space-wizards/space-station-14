@@ -18,67 +18,59 @@
   spawn: FoodBakedPancakeCc
   maxCount: 9
 
-# Food Containers
-
-- type: stack
-  id: PizzaBox
-  name: stack-pizza-box
-  icon: { sprite: Objects/Consumable/Food/Baked/pizza.rsi, state: box }
-  spawn: FoodBoxPizza
-  maxCount: 30
-
 # Smokeables
 
 - type: stack
+  parent: BaseVerySmallStack
   id: PaperRolling
   name: stack-rolling-paper
   icon: { sprite: /Textures/Objects/Consumable/Smokeables/Cigarettes/paper.rsi, state: cigpaper }
   spawn: PaperRolling
-  maxCount: 5
 
 - type: stack
+  parent: BaseVerySmallStack
   id: CigaretteFilter
   name: stack-cigarette-filter
   icon: { sprite: /Textures/Objects/Consumable/Smokeables/Cigarettes/paper.rsi, state: cigfilter }
   spawn: CigaretteFilter
-  maxCount: 5
 
 - type: stack
+  parent: BaseVerySmallStack
   id: GroundTobacco
   name: stack-ground-tobacco
   icon: { sprite: /Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
   spawn: GroundTobacco
-  maxCount: 5
 
 - type: stack
+  parent: BaseVerySmallStack
   id: GroundCannabis
   name: stack-ground-cannabis
   icon: { sprite: /Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
   spawn: GroundCannabis
-  maxCount:
 
 - type: stack
+  parent: BaseVerySmallStack
   id: GroundCannabisRainbow
   name: stack-ground-rainbow-cannabis
   icon: { sprite: /Textures/Objects/Specific/Hydroponics/rainbow_cannabis.rsi, state: powderpile_rainbow }
   spawn: GroundCannabisRainbow
-  maxCount:
 
 - type: stack
+  parent: BaseVerySmallStack
   id: LeavesTobaccoDried
   name: stack-dried-tobacco-leaves
   icon: { sprite: /Textures/Objects/Specific/Hydroponics/tobacco.rsi, state: dried }
   spawn: LeavesTobaccoDried
-  maxCount: 5
 
 - type: stack
+  parent: BaseVerySmallStack
   id: LeavesCannabisDried
   name: stack-dried-cannabis-leaves
   icon: { sprite: /Textures/Objects/Specific/Hydroponics/tobacco.rsi, state: dried }
   spawn: LeavesCannabisDried
-  maxCount: 5
 
 - type: stack
+  parent: BaseVerySmallStack
   id: LeavesCannabisRainbowDried
   name: stack-dried-rainbow-cannabis-leaves
   icon: { sprite: /Textures/Objects/Specific/Hydroponics/rainbow_cannabis.rsi, state: dried }
