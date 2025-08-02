@@ -152,7 +152,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             return;
         }
 
-        if (!_containers.IsInSameOrTransparentContainer(args.User, args.Target, otherContainer: targetContainer))
+        if (!_containers.IsInSameOrTransparentContainer((args.User, null), (args.Target, null), otherContainer: targetContainer))
         {
             return;
         }
