@@ -1,10 +1,7 @@
-using Content.Server.StationEvents.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
-using Content.Shared.GameTicking.Components;
-using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
@@ -41,14 +38,19 @@ public sealed class IonStormSystem : EntitySystem
     private static readonly ProtoId<DatasetPrototype> Drinks = "IonStormDrinks";
     private static readonly ProtoId<DatasetPrototype> Foods = "IonStormFoods";
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<IonStormSiliconLawComponent, IonStormEvent>(IonStormTarget);
+    }
+
     /// <summary>
     /// Randomly alters the laws of an individual silicon.
     /// </summary>
-    public void IonStormTarget(Entity<SiliconLawBoundComponent, IonStormTargetComponent> ent, bool adminlog = true)
+    public void IonStormTarget(Entity<IonStormSiliconLawComponent> ent, ref IonStormEvent args)
     {
-        var lawBound = ent.Comp1;
-        var target = ent.Comp2;
-        if (!_robustRandom.Prob(target.Chance))
+        if (!TryComp<SiliconLawBoundComponent>(ent, out var lawBound))
             return;
 
         var laws = _siliconLaw.GetLaws(ent, lawBound);
@@ -56,9 +58,9 @@ public sealed class IonStormSystem : EntitySystem
             return;
 
         // try to swap it out with a random lawset
-        if (_robustRandom.Prob(target.RandomLawsetChance))
+        if (_robustRandom.Prob(ent.Comp.RandomLawsetChance))
         {
-            var lawsets = _proto.Index<WeightedRandomPrototype>(target.RandomLawsets);
+            var lawsets = _proto.Index(ent.Comp.IonRandomLawsets);
             var lawset = lawsets.Pick(_robustRandom);
             laws = _siliconLaw.GetLawset(lawset);
         }
@@ -66,7 +68,7 @@ public sealed class IonStormSystem : EntitySystem
         laws = laws.Clone();
 
         // shuffle them all
-        if (_robustRandom.Prob(target.ShuffleChance))
+        if (_robustRandom.Prob(ent.Comp.ShuffleChance))
         {
             // hopefully work with existing glitched laws if there are multiple ion storms
             var baseOrder = FixedPoint2.New(1);
@@ -86,7 +88,7 @@ public sealed class IonStormSystem : EntitySystem
         }
 
         // see if we can remove a random law
-        if (laws.Laws.Count > 0 && _robustRandom.Prob(target.RemoveChance))
+        if (laws.Laws.Count > 0 && _robustRandom.Prob(ent.Comp.RemoveChance))
         {
             var i = _robustRandom.Next(laws.Laws.Count);
             laws.Laws.RemoveAt(i);
@@ -96,7 +98,7 @@ public sealed class IonStormSystem : EntitySystem
         var newLaw = GenerateLaw();
 
         // see if the law we add will replace a random existing law or be a new glitched order one
-        if (laws.Laws.Count > 0 && _robustRandom.Prob(target.ReplaceChance))
+        if (laws.Laws.Count > 0 && _robustRandom.Prob(ent.Comp.ReplaceChance))
         {
             var i = _robustRandom.Next(laws.Laws.Count);
             laws.Laws[i] = new SiliconLaw()
@@ -134,7 +136,7 @@ public sealed class IonStormSystem : EntitySystem
         }
 
         // adminlog is used to prevent adminlog spam.
-        if (adminlog)
+        if (args.Adminlog)
             _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent):silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
 
         // laws unique to this silicon, dont use station laws anymore

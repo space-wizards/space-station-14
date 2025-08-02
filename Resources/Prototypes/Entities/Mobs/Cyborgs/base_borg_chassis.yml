@@ -253,6 +253,7 @@
   id: BaseBorgChassis
   components:
   - type: IonStormTarget
+  - type: IonStormSiliconLaw
 
 - type: entity
   abstract: true
@@ -381,6 +382,7 @@
     ionStormAmount: 3
   - type: IonStormTarget
     chance: 1
+  - type: IonStormSiliconLaw
   - type: ShowJobIcons
 
 - type: entity
