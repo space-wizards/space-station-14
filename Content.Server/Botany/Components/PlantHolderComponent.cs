@@ -19,9 +19,15 @@ public sealed partial class PlantHolderComponent : Component
     [DataField]
     public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
 
+    /// <summary>
+    /// Age when the plant last produced harvestable items.
+    /// </summary>
     [DataField]
     public int LastProduce;
 
+    /// <summary>
+    /// Number of missing gases required for plant growth.
+    /// </summary>
     [DataField]
     public int MissingGas;
 
@@ -43,6 +49,9 @@ public sealed partial class PlantHolderComponent : Component
     [DataField]
     public SoundSpecifier? WateringSound;
 
+    /// <summary>
+    /// Whether to update the sprite after the next update cycle.
+    /// </summary>
     [DataField]
     public bool UpdateSpriteAfterUpdate;
 
@@ -53,30 +62,57 @@ public sealed partial class PlantHolderComponent : Component
     [DataField]
     public bool DrawWarnings = false;
 
+    /// <summary>
+    /// Current water level in the plant holder (0-100).
+    /// </summary>
     [DataField]
     public float WaterLevel = 100f;
 
+    /// <summary>
+    /// Current nutrient level in the plant holder (0-100).
+    /// </summary>
     [DataField]
     public float NutritionLevel = 100f;
 
+    /// <summary>
+    /// Current pest level in the plant holder (0-10).
+    /// </summary>
     [DataField]
     public float PestLevel;
 
+    /// <summary>
+    /// Current weed level in the plant holder (0-10).
+    /// </summary>
     [DataField]
     public float WeedLevel;
 
+    /// <summary>
+    /// Current toxin level in the plant holder (0-100).
+    /// </summary>
     [DataField]
     public float Toxins;
 
+    /// <summary>
+    /// Current age of the plant in growth cycles.
+    /// </summary>
     [DataField]
     public int Age;
 
+    /// <summary>
+    /// Number of growth cycles to skip due to poor conditions.
+    /// </summary>
     [DataField]
     public int SkipAging;
 
+    /// <summary>
+    /// Whether the plant is dead.
+    /// </summary>
     [DataField]
     public bool Dead;
 
+    /// <summary>
+    /// Whether the plant is ready for harvest.
+    /// </summary>
     [DataField]
     public bool Harvest;
 
@@ -93,18 +129,33 @@ public sealed partial class PlantHolderComponent : Component
     [DataField]
     public int YieldMod = 1;
 
+    /// <summary>
+    /// Multiplier for mutation chance and severity.
+    /// </summary>
     [DataField]
     public float MutationMod = 1f;
 
+    /// <summary>
+    /// Current mutation level (0-100).
+    /// </summary>
     [DataField]
     public float MutationLevel;
 
+    /// <summary>
+    /// Current health of the plant (0 to seed endurance).
+    /// </summary>
     [DataField]
     public float Health;
 
+    /// <summary>
+    /// Multiplier for weed growth rate.
+    /// </summary>
     [DataField]
     public float WeedCoefficient = 1f;
 
+    /// <summary>
+    /// Seed data for the currently planted seed.
+    /// </summary>
     [DataField]
     public SeedData? Seed;
 
@@ -133,9 +184,15 @@ public sealed partial class PlantHolderComponent : Component
     [DataField]
     public bool ForceUpdate;
 
+    /// <summary>
+    /// Name of the solution container that holds the soil/nutrient solution.
+    /// </summary>
     [DataField]
     public string SoilSolutionName = "soil";
 
+    /// <summary>
+    /// Reference to the soil solution container.
+    /// </summary>
     [ViewVariables]
     public Entity<SolutionComponent>? SoilSolution = null;
 }
