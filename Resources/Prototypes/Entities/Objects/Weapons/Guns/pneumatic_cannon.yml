@@ -1,6 +1,6 @@
 - type: entity
   name: improvised pneumatic cannon
-  parent: [BaseStorageItem, BaseMinorContraband]
+  parent: [BaseStorageItem, BaseMinorContraband, BaseGunMeleeHeavy]
   id: WeaponImprovisedPneumaticCannon
   description: Improvised using nothing but a pipe, some zipties, and a pneumatic cannon. Doesn't accept tanks without enough gas.
   components:
@@ -64,7 +64,7 @@
 
 - type: entity
   name: pie cannon
-  parent: BaseStorageItem
+  parent: [BaseStorageItem, BaseGunMeleeHeavy]
   id: LauncherCreamPie
   description: Load cream pie for optimal results.
   components:
@@ -103,10 +103,14 @@
     containers:
       storagebase: !type:Container
         ents: []
-        
+  - type: MeleeWeapon #pie launcher is bulky but probably light, so less damage
+    damage:
+      types:
+       Blunt: 8 
+
 - type: entity
   name: syringe gun
-  parent: BaseStorageItem
+  parent: [BaseStorageItem, BaseGunMeleeSmall]
   id: LauncherSyringe
   description: Load full of poisoned syringes for optimal fun.
   components:
