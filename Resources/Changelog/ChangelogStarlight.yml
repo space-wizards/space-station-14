@@ -10043,5 +10043,12 @@ Entries:
   id: 1383
   time: '2025-08-02T13:21:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1187
+- author: Trosling
+  changes:
+  - message: Made it possible to equip the LR-30 to the back and suit storage slots
+    type: Tweak
+  id: 1384
+  time: '2025-08-02T13:28:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1190
 Order: -1
 
