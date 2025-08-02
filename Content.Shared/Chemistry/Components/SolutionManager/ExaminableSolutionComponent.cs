@@ -29,6 +29,9 @@ public sealed partial class ExaminableSolutionComponent : Component
     public LocId MessageEmptyVolume = "shared-solution-container-component-on-examine-empty-container";
 
     [DataField]
+    public LocId ShortMessageEmptyVolume = "drink-component-on-examine-is-empty";
+
+    [DataField]
     public LocId MessageExactVolume = "drink-component-on-examine-exact-volume";
 
     [DataField]

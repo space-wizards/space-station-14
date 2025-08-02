@@ -818,11 +818,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         {
             // Push amount of reagent
 
-            var amountString = entity.Comp.ExactVolume ?
-                        Loc.GetString(entity.Comp.MessageExactVolume, ("amount", solution.Volume)) : //Exact measurement
-                        Loc.GetString(VagueSolutionVolume(solution, args.Examiner, entity)); //General approximation
-
-            args.PushMarkup(amountString);
+            args.PushMarkup(LocalizedExaminableVolume(entity, solution, args.Examiner));
 
             // Push the physical description of the primary reagent
 
@@ -885,32 +881,47 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
     }
 
-    /// <returns>A LocId with an approximation of how much volume is left in a solution.</returns>
-    public string VagueSolutionVolume(Solution sol, EntityUid examiner, Entity<ExaminableSolutionComponent> ent)
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="ent">The entity containing the solution.</param>
+    /// <param name="sol">The solution being looked at.</param>
+    /// <param name="examiner">The player looking at the volume.</param>
+    /// <returns>A localized string for a solution's volume.</returns>
+    public string LocalizedExaminableVolume(Entity<ExaminableSolutionComponent> ent, Solution sol, EntityUid? examiner = null)
     {
-        return (int) PercentFull(sol) switch
-            {
-                100 => ent.Comp.MessageVagueVolumeFull,
-                > 66 => ent.Comp.MessageVagueVolumeMostlyFull,
-                > 33 => HalfEmptyOrHalfFull(examiner, ent),
-                _ => ent.Comp.MessageVagueVolumeMostlyEmpty,
-            };
+        //Exact measurement
+        if (ent.Comp.ExactVolume)
+            return Loc.GetString("drink-examine-sick-hours", ("fillLevel", "Exact"), ("current", sol.Volume), ("max", sol.MaxVolume));
+
+        //General approximation
+        return (int)PercentFull(sol) switch
+        {
+            100 => Loc.GetString("drink-examine-sicko-hours", ("fillLevel", "full")),
+            > 66 => Loc.GetString("drink-examine-sicko-hours", ("fillLevel", "mostlyFull")),
+            > 33 => HalfEmptyOrHalfFull(ent, examiner) ?
+                        Loc.GetString("drink-examine-sicko-hours", ("fillLevel", "halfFull")) :
+                        Loc.GetString("drink-examine-sicko-hours", ("fillLevel", "halfEmpty")),
+            > 0 => Loc.GetString("drink-examine-sicko-hours", ("fillLevel", "mostlyEmpty")),
+            _ => Loc.GetString("drink-examine-sicko-hours", ("fillLevel", "empty")),
+        };
     }
 
     /// <summary>
     ///     Some spessmen see half full, some see half empty, but always the same one.
     /// </summary>
-    /// <returns>A LocId for half full or half empty.</returns>
-    private string HalfEmptyOrHalfFull(EntityUid examiner, Entity<ExaminableSolutionComponent> ent)
+    private bool HalfEmptyOrHalfFull(Entity<ExaminableSolutionComponent> ent, EntityUid? examiner)
     {
-        string remainingString = ent.Comp.MessageVagueVolumeHalfFull;
+        // Optimism when un-observed
+        if (examiner == null)
+            return true;
 
-        if (TryComp(examiner, out MetaDataComponent? meta)
+        if (TryComp<MetaDataComponent>(examiner, out var meta)
         && meta.EntityName.Length > 0
         && string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
-            remainingString = ent.Comp.MessageVagueVolumeHalfEmpty;
+            return true;
 
-        return remainingString;
+        return false;
     }
 
     /// <summary>
