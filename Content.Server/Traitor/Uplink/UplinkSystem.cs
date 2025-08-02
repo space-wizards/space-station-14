@@ -35,57 +35,13 @@ public sealed class UplinkSystem : EntitySystem
     /// </summary>
     /// <param name="user">The person who is getting the uplink</param>
     /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
+    /// <param name="code">The code which was generated, if any.</param>
     /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
     /// <param name="storeEntity">The entity that will have the store in it.</param>
     /// <param name="giveDiscounts">Marker that enables discounts for uplink items.</param>
     /// <param name="bindToPda">Binds the uplink to the specific uplink entity.</param>
     /// <returns>Whether the uplink was added successfully to a PDA, implant or not at all.</returns>
     public AddUplinkResult AddUplink(
-        EntityUid user,
-        FixedPoint2 balance,
-        EntityUid? uplinkEntity = null,
-        EntityUid? storeEntity = null,
-        bool giveDiscounts = false,
-        bool bindToPda = false)
-    {
-        // Try to find target item if none passed
-
-        uplinkEntity ??= FindUplinkTarget(user);
-
-        if (uplinkEntity == null)
-        {
-            return ImplantUplink(user, balance, giveDiscounts) ? AddUplinkResult.Implant : AddUplinkResult.Failure;
-        }
-
-        storeEntity ??= Spawn(TraitorUplinkStore, MapCoordinates.Nullspace);
-
-        if (bindToPda)
-        {
-            var accessComp = EnsureComp<RingerAccessUplinkComponent>(storeEntity.Value);
-            _ringer.SetBoundUplinkEntity((storeEntity.Value, accessComp), uplinkEntity.Value);
-        }
-
-        EnsureComp<UplinkComponent>(uplinkEntity.Value);
-
-        SetUplink(user, storeEntity.Value, balance, giveDiscounts);
-
-        // TODO add BUI. Currently can't be done outside of yaml -_-
-        // ^ What does this even mean?
-
-        return AddUplinkResult.Pda;
-    }
-    /// <summary>
-    /// Adds an uplink to the target
-    /// </summary>
-    /// <param name="user">The person who is getting the uplink</param>
-    /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
-    /// <param name="code">The code that was generated if successfully applied to a PDA.</param>
-    /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
-    /// <param name="storeEntity">The entity that will have the store in it.</param>
-    /// <param name="giveDiscounts">Marker that enables discounts for uplink items.</param>
-    /// <param name="bindToPda">Binds the uplink to the specific uplink entity.</param>
-    /// <returns>Whether the uplink was added successfully to a PDA, implant or not at all.</returns>
-    public AddUplinkResult AddUplinkWithCode(
         EntityUid user,
         FixedPoint2 balance,
         out Note[]? code,
@@ -96,22 +52,57 @@ public sealed class UplinkSystem : EntitySystem
     {
         code = null;
 
-        storeEntity ??= Spawn(TraitorUplinkStore, MapCoordinates.Nullspace);
-
-        var ev = new GenerateUplinkCodeEvent();
-        RaiseLocalEvent(storeEntity.Value, ref ev);
-
-        var result = AddUplink(user, balance, uplinkEntity, storeEntity, giveDiscounts, bindToPda);
-
-        if (result == AddUplinkResult.Pda && ev.Code is { } generatedCode)
+        if (TryAddEntityUplink(user, balance, out var generatedCode, uplinkEntity, storeEntity, giveDiscounts, bindToPda))
         {
             code = generatedCode;
             return AddUplinkResult.Pda;
         }
-        else
+
+        if (TryImplantUplink(user, balance, giveDiscounts))
         {
-            return result;
+            return AddUplinkResult.Implant;
         }
+
+        return AddUplinkResult.Failure;
+    }
+
+    public bool TryAddEntityUplink(
+        EntityUid user,
+        FixedPoint2 balance,
+        out Note[]? code,
+        EntityUid? uplinkEntity,
+        EntityUid? storeEntity,
+        bool giveDiscounts = false,
+        bool bindToPda = false)
+    {
+        code = null;
+
+        uplinkEntity ??= FindUplinkTarget(user);
+        storeEntity ??= Spawn(TraitorUplinkStore, MapCoordinates.Nullspace);
+
+        if (uplinkEntity == null)
+            return false;
+
+        var ev = new GenerateUplinkCodeEvent();
+        RaiseLocalEvent(storeEntity.Value, ref ev);
+
+        if (ev.Code == null)
+        {
+            QueueDel(storeEntity);
+            return false;
+        }
+
+        code = ev.Code;
+
+        if (bindToPda)
+        {
+            var accessComp = EnsureComp<RingerAccessUplinkComponent>(storeEntity.Value);
+            _ringer.SetBoundUplinkEntity((storeEntity.Value, accessComp), uplinkEntity.Value);
+        }
+
+        SetUplink(user, storeEntity.Value, balance, giveDiscounts);
+
+        return true;
     }
 
     /// <summary>
@@ -143,7 +134,7 @@ public sealed class UplinkSystem : EntitySystem
     /// <summary>
     /// Implant an uplink as a fallback measure if the traitor had no PDA
     /// </summary>
-    public bool ImplantUplink(EntityUid user, FixedPoint2 balance, bool giveDiscounts)
+    public bool TryImplantUplink(EntityUid user, FixedPoint2 balance, bool giveDiscounts)
     {
         if (!_proto.TryIndex<ListingPrototype>(FallbackUplinkCatalog, out var catalog))
             return false;

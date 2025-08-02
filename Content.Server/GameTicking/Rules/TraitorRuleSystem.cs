@@ -152,10 +152,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     private (Note[]?, string) RequestUplink(EntityUid traitor, FixedPoint2 startingBalance, string briefing)
     {
         var pda = _uplink.FindUplinkTarget(traitor);
-        var storeEntity = Spawn(UplinkSystem.TraitorUplinkStore, MapCoordinates.Nullspace);
 
         Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink add");
-        var uplinked = _uplink.AddUplinkWithCode(traitor, startingBalance, out var code, pda, storeEntity, giveDiscounts: true, bindToPda: false);
+        var uplinked = _uplink.AddUplink(traitor, startingBalance, out var code, pda, giveDiscounts: true, bindToPda: false);
 
         if (code != null && uplinked == AddUplinkResult.Pda)
         {

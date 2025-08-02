@@ -132,8 +132,15 @@ public sealed class RingerSystem : SharedRingerSystem
     /// <remarks>The logic for this is on the Server so that we don't get a different result on the Client every time.</remarks>
     private Note[]? GenerateRingtone(Note[] notes, bool excludeReserved = false, bool reserveRingtone = false)
     {
-        var excludedRingtones = excludeReserved ? ReservedSerializedRingtones.ToArray() : new int[0];
-        var generatedRingtone = NextIntInRangeButExclude(0, Convert.ToInt32(Math.Pow(notes.Length, RingtoneLength - 1)), excludedRingtones);
+        var excludedRingtones = excludeReserved ? ReservedSerializedRingtones.ToArray() : null;
+
+        var maxPow = Math.Pow(notes.Length, RingtoneLength);
+        if (maxPow > int.MaxValue)
+        {
+            return null;
+        }
+
+        var generatedRingtone = NextIntInRangeButExclude(0, Convert.ToInt32(maxPow) - 1, excludedRingtones);
 
         if (!TryDeserializeRingtone(notes, generatedRingtone, out var ringtone))
             return null;
@@ -156,9 +163,9 @@ public sealed class RingerSystem : SharedRingerSystem
         var noteLength = allowedNotes.Length;
 
         // The serialization stores as an Int32, and therefore using Pow risks overshooting the max value, so we check for if that's a risk.
-        // If using 12 possible notes, you can have a ringtone of 8 notes safely without overshooting.
-        var pow = Math.Pow(noteLength, ringtone.Length);
-        if (pow > int.MaxValue)
+        // If using 12 possible notes, you can have a ringtone sequence of 7 notes safely without overshooting.
+        var maxPow = Math.Pow(noteLength, ringtone.Length);
+        if (maxPow > int.MaxValue)
         {
             serializedRingtone = null;
             return false;
@@ -168,6 +175,7 @@ public sealed class RingerSystem : SharedRingerSystem
 
         for (var i = 0; i < ringtone.Length; i++)
         {
+            var pow = Math.Pow(noteLength, i);
             var index = Array.IndexOf(allowedNotes, ringtone[i]);
             if (index == -1)
             {
@@ -195,9 +203,9 @@ public sealed class RingerSystem : SharedRingerSystem
         ringtone = new Note[RingtoneLength];
 
         // The serialization stores as an Int32, and therefore using Pow risks overshooting the max value, so we check for if that's a risk.
-        // If using 12 possible notes, you can have a ringtone of 8 notes safely without overshooting.
-        var pow = Math.Pow(noteLength, RingtoneLength - 1);
-        if (pow > int.MaxValue)
+        // If using 12 possible notes, you can have a ringtone sequence of 7 notes safely without overshooting.
+        var maxPow = Math.Pow(noteLength, RingtoneLength);
+        if (maxPow > int.MaxValue)
         {
             ringtone = null;
             return false;
@@ -205,6 +213,7 @@ public sealed class RingerSystem : SharedRingerSystem
 
         for (var i = 0; i < RingtoneLength; i++)
         {
+            var pow = Math.Pow(noteLength, RingtoneLength - 1 - i);
             var powInt = Convert.ToInt32(pow);
             var val = serializedRingtone / powInt;
             if (!AllowedNotes.TryGetValue(val, out var note))
@@ -250,8 +259,9 @@ public sealed class RingerSystem : SharedRingerSystem
         ReservedSerializedRingtones.Clear();
     }
 
-    private int NextIntInRangeButExclude(int start, int end, int[] excludes)
+    private int NextIntInRangeButExclude(int start, int end, int[]? excludes)
     {
+        excludes ??= new int[0];
         Array.Sort(excludes);
         var rangeLength = end - start - excludes.Length;
         var randomInt = _random.Next(rangeLength) + start;

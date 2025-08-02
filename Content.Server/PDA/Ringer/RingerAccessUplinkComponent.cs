@@ -1,5 +1,4 @@
 using Content.Shared.PDA;
-using Robust.Shared.GameStates;
 
 namespace Content.Server.PDA.Ringer;
 
@@ -7,7 +6,7 @@ namespace Content.Server.PDA.Ringer;
 /// Opens the store UI when a PDA's ringtone is set to the secret code.
 /// Traitors are told the code when greeted.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(RingerSystem))]
+[RegisterComponent, Access(typeof(RingerSystem))]
 public sealed partial class RingerAccessUplinkComponent : Component
 {
     /// <summary>
