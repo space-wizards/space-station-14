@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Changed instances of 3.5 second grenade timers to 3 seconds, including
-      clusterbangs and atmos metal foam grenades.
-    type: Tweak
-  - message: Atmos metal foam grenades have been reworked to disperse foam in a 5x5
-      diamond pattern and harden within two seconds.
-    type: Tweak
-  - message: Reduced hardened metal foam health (breakable in 6 crowbar swings).
-    type: Tweak
-  - message: Changed syndicate trickbomb timer from 3.5 seconds to 5 seconds to match
-      minibombs.
-    type: Tweak
-  id: 8311
-  time: '2025-04-22T05:51:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34579
 - author: muburu
   changes:
   - message: Dragons can now pry open doors, including firelocks.
@@ -3913,3 +3897,10 @@
   id: 8822
   time: '2025-08-01T21:48:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39327
+- author: Krosus
+  changes:
+  - message: Fixed crash when loading saved character profiles
+    type: Fix
+  id: 8823
+  time: '2025-08-02T15:14:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39333
