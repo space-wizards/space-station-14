@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+- type: entity
   id: TegCenter
   name: thermo-electric generator
   description: A high efficiency generator that uses energy transfer between hot and cold gases to produce electricity.
@@ -126,6 +127,15 @@
         - state: circ-0-light
           shader: unshaded
           map: [ "enum.TegVisualLayers.CirculatorLight" ]
+    
+    # Ronstation - start of modifications
+    - type: AtmosPipeLayers
+#      spriteLayersRsiPaths:
+#        enum.PipeVisualLayers.Pipe:
+#          Primary: Structures/Piping/Atmospherics/pipe.rsi
+#          Secondary: Structures/Piping/Atmospherics/pipe_alt1.rsi
+#          Tertiary: Structures/Piping/Atmospherics/pipe_alt2.rsi
+    # Ronstation - end of modifications
 
     - type: GenericVisualizer
       visuals:
