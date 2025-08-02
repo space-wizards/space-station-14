@@ -30,7 +30,10 @@ public sealed partial class BugReportWindow : DefaultWindow
     private DateTime _lastBugReportSubmittedTime = DateTime.MinValue;
     private int _amountOfBugReportsSubmitted;
 
-    // CCvar cached values.
+    private readonly ConfigurationMultiSubscriptionBuilder _configSub;
+
+    #region ccvar
+
     private bool _enablePlayerBugReports;
     private int _minimumPlaytimeBugReports;
     private int _minimumTimeBetweenBugReports;
@@ -41,12 +44,22 @@ public sealed partial class BugReportWindow : DefaultWindow
     private int _maximumBugReportDescriptionLength;
     private int _minimumBugReportDescriptionLength;
 
+    #endregion
+
     public BugReportWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        SetupCCvars();
+        _configSub = _cfg.SubscribeMultiple()
+            .OnValueChanged(CCVars.EnablePlayerBugReports, x => _enablePlayerBugReports = x, true)
+            .OnValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, x => _minimumPlaytimeBugReports = x, true)
+            .OnValueChanged(CCVars.MinimumSecondsBetweenBugReports, x => _minimumTimeBetweenBugReports = x, true)
+            .OnValueChanged(CCVars.MaximumBugReportsPerRound, x => _maximumBugReportsPerRound = x, true)
+            .OnValueChanged(CCVars.MaximumBugReportTitleLength, x => _maximumBugReportTitleLength = x, true)
+            .OnValueChanged(CCVars.MinimumBugReportTitleLength, x => _minimumBugReportTitleLength = x, true)
+            .OnValueChanged(CCVars.MaximumBugReportDescriptionLength, x => _maximumBugReportDescriptionLength = x, true)
+            .OnValueChanged(CCVars.MinimumBugReportDescriptionLength, x => _minimumBugReportDescriptionLength = x, true);
 
         // Hook up the events
         SubmitButton.OnPressed += _ => OnSubmitButtonPressed();
@@ -161,73 +174,8 @@ public sealed partial class BugReportWindow : DefaultWindow
             UpdateEnabled();
     }
 
-    #region ccvar functions
-
-    private void SetupCCvars()
-    {
-        _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, OnEnablePlayerBugReportsChanged, true);
-        _cfg.OnValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, OnMinimumPlaytimeChanged, true);
-        _cfg.OnValueChanged(CCVars.MinimumSecondsBetweenBugReports, OnMinimumTimeBetweenReportsChanged, true);
-        _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, OnMaximumReportsPerRoundChanged, true);
-
-        _cfg.OnValueChanged(CCVars.MaximumBugReportTitleLength, OnMaxTitleLengthChanged, true);
-        _cfg.OnValueChanged(CCVars.MinimumBugReportTitleLength, OnMinTitleLengthChanged, true);
-        _cfg.OnValueChanged(CCVars.MaximumBugReportDescriptionLength, OnMaxDescriptionLengthChanged, true);
-        _cfg.OnValueChanged(CCVars.MinimumBugReportDescriptionLength, OnMinDescriptionLengthChanged, true);
-    }
-
     public void CleanupCCvars()
     {
-        _cfg.UnsubValueChanged(CCVars.EnablePlayerBugReports, OnEnablePlayerBugReportsChanged);
-        _cfg.UnsubValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, OnMinimumPlaytimeChanged);
-        _cfg.UnsubValueChanged(CCVars.MinimumSecondsBetweenBugReports, OnMinimumTimeBetweenReportsChanged);
-        _cfg.UnsubValueChanged(CCVars.MaximumBugReportsPerRound, OnMaximumReportsPerRoundChanged);
-
-        _cfg.UnsubValueChanged(CCVars.MaximumBugReportTitleLength, OnMaxTitleLengthChanged);
-        _cfg.UnsubValueChanged(CCVars.MinimumBugReportTitleLength, OnMinTitleLengthChanged);
-        _cfg.UnsubValueChanged(CCVars.MaximumBugReportDescriptionLength, OnMaxDescriptionLengthChanged);
-        _cfg.UnsubValueChanged(CCVars.MinimumBugReportDescriptionLength, OnMinDescriptionLengthChanged);
+        _configSub.Dispose();
     }
-
-    private void OnEnablePlayerBugReportsChanged(bool value)
-    {
-        _enablePlayerBugReports = value;
-    }
-
-    private void OnMinimumPlaytimeChanged(int value)
-    {
-        _minimumPlaytimeBugReports = value;
-    }
-
-    private void OnMinimumTimeBetweenReportsChanged(int value)
-    {
-        _minimumTimeBetweenBugReports = value;
-    }
-
-    private void OnMaximumReportsPerRoundChanged(int value)
-    {
-        _maximumBugReportsPerRound = value;
-    }
-
-    private void OnMaxTitleLengthChanged(int value)
-    {
-        _maximumBugReportTitleLength = value;
-    }
-
-    private void OnMinTitleLengthChanged(int value)
-    {
-        _minimumBugReportTitleLength = value;
-    }
-
-    private void OnMaxDescriptionLengthChanged(int value)
-    {
-        _maximumBugReportDescriptionLength = value;
-    }
-
-    private void OnMinDescriptionLengthChanged(int value)
-    {
-        _minimumBugReportDescriptionLength = value;
-    }
-
-    #endregion
 }

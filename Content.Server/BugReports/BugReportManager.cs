@@ -41,19 +41,34 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
 
     private List<string> _tags = [];
 
+    private ConfigurationMultiSubscriptionBuilder _configSub = default!;
+
     public void Initialize()
     {
         _net.RegisterNetMessage<BugReportMessage>(ReceivedPlayerBugReport);
 
         _limits = new BugReportLimits();
 
-        SetupCCvars();
+        _configSub = _cfg.SubscribeMultiple()
+            .OnValueChanged(CCVars.MaximumBugReportTitleLength, x => _limits.TitleMaxLength = x, true)
+            .OnValueChanged(CCVars.MinimumBugReportTitleLength, x => _limits.TitleMinLength = x, true)
+            .OnValueChanged(CCVars.MaximumBugReportDescriptionLength, x => _limits.DescriptionMaxLength = x, true)
+            .OnValueChanged(CCVars.MinimumBugReportDescriptionLength, x => _limits.DescriptionMinLength = x, true)
+            .OnValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, x => _limits.MinimumPlaytimeToEnableBugReports = TimeSpan.FromMinutes(x), true)
+            .OnValueChanged(CCVars.MaximumBugReportsPerRound, x => _limits.MaximumBugReportsForPlayerPerRound = x, true)
+            .OnValueChanged(CCVars.MinimumSecondsBetweenBugReports, x => _limits.MinimumTimeBetweenBugReports = TimeSpan.FromSeconds(x), true)
+            .OnValueChanged(CCVars.BugReportTags, x => _tags = x.Split(",").ToList(), true);
     }
 
     public void Restart()
     {
         // When the round restarts, clear the dictionary.
         _bugReportsPerPlayerThisRound.Clear();
+    }
+
+    public void Shutdown()
+    {
+        _configSub.Dispose();
     }
 
     private void ReceivedPlayerBugReport(BugReportMessage message)
@@ -186,75 +201,6 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
             _tags
         );
     }
-
-    #region ccvar functions
-
-    private void SetupCCvars()
-    {
-        _cfg.OnValueChanged(CCVars.MaximumBugReportTitleLength, OnMaxTitleLengthChanged, true);
-        _cfg.OnValueChanged(CCVars.MinimumBugReportTitleLength, OnMinTitleLengthChanged, true);
-        _cfg.OnValueChanged(CCVars.MaximumBugReportDescriptionLength, OnMaxDescriptionLengthChanged, true);
-        _cfg.OnValueChanged(CCVars.MinimumBugReportDescriptionLength, OnMinDescriptionLengthChanged, true);
-
-        _cfg.OnValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, OnMinPlaytimeChanged, true);
-        _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, OnMaxReportsPerRoundChanged, true);
-        _cfg.OnValueChanged(CCVars.BugReportTags, OnBugReportTags, true);
-    }
-
-    public void Shutdown()
-    {
-        _cfg.UnsubValueChanged(CCVars.MaximumBugReportTitleLength, OnMaxTitleLengthChanged);
-        _cfg.UnsubValueChanged(CCVars.MinimumBugReportTitleLength, OnMinTitleLengthChanged);
-        _cfg.UnsubValueChanged(CCVars.MaximumBugReportDescriptionLength, OnMaxDescriptionLengthChanged);
-        _cfg.UnsubValueChanged(CCVars.MinimumBugReportDescriptionLength, OnMinDescriptionLengthChanged);
-
-        _cfg.UnsubValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, OnMinPlaytimeChanged);
-        _cfg.UnsubValueChanged(CCVars.MaximumBugReportsPerRound, OnMaxReportsPerRoundChanged);
-        _cfg.UnsubValueChanged(CCVars.MinimumSecondsBetweenBugReports, OnMinSecondsBetweenReportsChanged);
-        _cfg.UnsubValueChanged(CCVars.BugReportTags, OnBugReportTags);
-    }
-
-    private void OnMaxTitleLengthChanged(int value)
-    {
-        _limits.TitleMaxLength = value;
-    }
-
-    private void OnMinTitleLengthChanged(int value)
-    {
-        _limits.TitleMinLength = value;
-    }
-
-    private void OnMaxDescriptionLengthChanged(int value)
-    {
-        _limits.DescriptionMaxLength = value;
-    }
-
-    private void OnMinDescriptionLengthChanged(int value)
-    {
-        _limits.DescriptionMinLength = value;
-    }
-
-    private void OnMinPlaytimeChanged(int minutes)
-    {
-        _limits.MinimumPlaytimeToEnableBugReports = TimeSpan.FromMinutes(minutes);
-    }
-
-    private void OnMaxReportsPerRoundChanged(int value)
-    {
-        _limits.MaximumBugReportsForPlayerPerRound = value;
-    }
-
-    private void OnMinSecondsBetweenReportsChanged(int seconds)
-    {
-        _limits.MinimumTimeBetweenBugReports = TimeSpan.FromSeconds(seconds);
-    }
-
-    private void OnBugReportTags(string tags)
-    {
-        _tags = tags.Split(",").ToList();
-    }
-
-    #endregion
 
     void IPostInjectInit.PostInject()
     {
