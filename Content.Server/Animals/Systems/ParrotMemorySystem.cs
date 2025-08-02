@@ -193,6 +193,9 @@ public sealed partial class ParrotMemorySystem : EntitySystem
 
         var newMemory = new SpeechMemory(sourceNetUserId, message);
 
+        var learnEvent = new LearnEvent(message, source);
+        RaiseLocalEvent(entity, ref learnEvent);
+
         // add a new message if there is space in the memory
         if (entity.Comp.SpeechMemories.Count < entity.Comp.MaxSpeechMemory)
         {
@@ -242,6 +245,10 @@ public sealed partial class ParrotMemorySystem : EntitySystem
 
             // order isn't important in this list so we can use the faster means of removing
             memoryComponent.SpeechMemories.RemoveSwap(i);
+            i--;
         }
     }
 }
+
+[ByRefEvent]
+public record struct LearnEvent(string Message, EntityUid SourcePlayer);
