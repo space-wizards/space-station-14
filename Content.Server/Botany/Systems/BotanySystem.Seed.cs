@@ -145,7 +145,7 @@ public sealed partial class BotanySystem : EntitySystem
         return seed;
     }
 
-    public IEnumerable<EntityUid> AutoHarvest(SeedData proto, EntityCoordinates position, int yieldMod = 1)
+    public IEnumerable<EntityUid> AutoHarvest(SeedData proto, EntityCoordinates position, EntityUid? plantEntity = null)
     {
         if (position.IsValid(EntityManager) &&
             proto.ProductPrototypes.Count > 0)
@@ -153,13 +153,15 @@ public sealed partial class BotanySystem : EntitySystem
             if (proto.HarvestLogImpact != null)
                 _adminLogger.Add(LogType.Botany, proto.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(proto.Name):seed} at Pos:{position}.");
 
+            var yieldMod = Comp<PlantHolderComponent>(plantEntity!.Value).YieldMod;
+
             return GenerateProduct(proto, position, yieldMod);
         }
 
         return Enumerable.Empty<EntityUid>();
     }
 
-    public IEnumerable<EntityUid> Harvest(SeedData proto, EntityUid user, int yieldMod = 1)
+    public IEnumerable<EntityUid> Harvest(SeedData proto, EntityUid user, EntityUid? plantEntity = null)
     {
         var traits = GetPlantTraits(proto);
         if (traits == null || proto.ProductPrototypes.Count == 0 || traits.Yield <= 0)
@@ -173,6 +175,8 @@ public sealed partial class BotanySystem : EntitySystem
 
         if (proto.HarvestLogImpact != null)
             _adminLogger.Add(LogType.Botany, proto.HarvestLogImpact.Value, $"{ToPrettyString(user):player} harvested {Loc.GetString(proto.Name):seed} at Pos:{Transform(user).Coordinates}.");
+
+        var yieldMod = Comp<PlantHolderComponent>(plantEntity!.Value).YieldMod;
 
         return GenerateProduct(proto, Transform(user).Coordinates, yieldMod);
     }
