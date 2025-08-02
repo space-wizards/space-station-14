@@ -1430,3 +1430,25 @@
       - !type:AdjustReagent
         reagent: MindbreakerToxin
         amount: -3.0
+
+- type: reagent
+  id: Radioxadone
+  name: reagent-name-radioxadone
+  group: Medicine
+  desc: reagent-desc-radioxadone
+  physicalDesc: reagent-physical-desc-glowing
+  flavor: medicine
+  color: "#1FE229"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            max: 180.0
+          damage:
+            groups:
+              Brute: 5
+            types:
+              Radiation: -5
