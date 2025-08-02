@@ -69,3 +69,10 @@
   - type: ItemToggle
     onUse: false # can't really wear it like that
   - type: ToggleClothing
+
+# a piece of clothing that is obvious when worn
+- type: entity
+  abstract: true
+  id: BaseExaminableClothing
+  components:
+  - type: ExaminableClothing

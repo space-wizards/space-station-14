@@ -46,7 +46,7 @@
     sprite: Clothing/Neck/Misc/bling.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseExaminableClothing]
   id: ClothingNeckLawyerbadge
   name: lawyer badge
   description: A badge to show that the owner is a 'legitimate' lawyer who passed the NT bar exam required to practice law.
@@ -57,6 +57,8 @@
     sprite: Clothing/Neck/Misc/lawyerbadge.rsi
   - type: TypingIndicatorClothing
     proto: lawyer
+  - type: ExaminableClothing
+    examineText: clothing-badge-lawyer
 
 - type: entity
   parent: ClothingNeckBase
