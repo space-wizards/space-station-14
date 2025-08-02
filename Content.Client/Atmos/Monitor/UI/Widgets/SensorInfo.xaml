@@ -1,10 +1,17 @@
-<BoxContainer xmlns="https://spacestation14.io" HorizontalExpand="True">
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+              HorizontalExpand="True">
     <Collapsible>
         <CollapsibleHeading Name="SensorAddress" />
         <CollapsibleBody Margin="20 2 2 2">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                 <BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
-                    <Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-thresholds-copy'}" ToolTip="{Loc 'air-alarm-ui-thresholds-copy-tooltip'}" />
+                    <controls:ConfirmButton Name="CCopySettings"
+                                            Text="{Loc 'air-alarm-ui-thresholds-copy'}"
+                                            ToolTip="{Loc 'air-alarm-ui-thresholds-copy-tooltip'}" />
+                    <controls:ConfirmButton Name="ToggleThresholds"
+                                            Text="{Loc 'air-alarm-ui-thresholds-toggle'}"
+                                            ToolTip="{Loc 'air-alarm-ui-thresholds-toggle-tooltip'}" />
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical" Margin="0 0 2 0" HorizontalExpand="True">
                     <RichTextLabel Name="AlarmStateLabel" />
