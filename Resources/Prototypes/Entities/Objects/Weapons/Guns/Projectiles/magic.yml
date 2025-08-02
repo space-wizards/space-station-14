@@ -93,7 +93,7 @@
     disableWhenFirstOpened: true
     whitelist:
       components:
-        - Body
+        - MobState
   - type: LockVisuals
     stateLocked: cursed_door
     stateUnlocked: decursed_door
@@ -188,7 +188,7 @@
   - type: TriggerWhitelist
     whitelist:
       components:
-      - Body
+      - MobState
 
 - type: entity
   id: ProjectilePolyboltMonkey
@@ -202,7 +202,7 @@
   - type: TriggerWhitelist
     whitelist:
       components:
-      - Body
+      - MobState
 
 - type: entity
   id: ProjectilePolyboltDoor
@@ -272,7 +272,7 @@
   - type: TriggerWhitelist
     whitelist:
       components:
-      - Body
+      - MobState
 
 - type: entity
   id: ProjectileIcicle
@@ -302,4 +302,4 @@
   - type: TriggerWhitelist
     whitelist:
       components:
-      - Body
+      - MobState

@@ -12,7 +12,7 @@
   - type: EntityTargetAction
     whitelist:
       components:
-      - Body
+      - MobState
     canTargetSelf: false
 
 - type: entity
