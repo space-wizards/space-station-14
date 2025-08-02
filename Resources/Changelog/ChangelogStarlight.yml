@@ -10286,5 +10286,34 @@ Entries:
   id: 1415
   time: '2025-08-02T14:28:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1032
+- author: Killer Tamashi
+  changes:
+  - message: Added Repeater Speedloader.
+    type: Add
+  id: 1416
+  time: '2025-08-02T14:32:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/993
+- author: Killer Tamashi
+  changes:
+  - message: Changed Repeater RoF (1 -> 1.5) to more accurately reflect cycling it.
+    type: Tweak
+  id: 1417
+  time: '2025-08-02T14:32:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/993
+- author: Killer Tamashi
+  changes:
+  - message: Forged Repeater can dual chamber rounds. 30 / 45 are both valid to use.
+    type: Tweak
+  id: 1418
+  time: '2025-08-02T14:32:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/993
+- author: Killer Tamashi
+  changes:
+  - message: Fixed incorrect contraband tags (certain items being labeled sec contra
+      when it should be minor contra)
+    type: Fix
+  id: 1419
+  time: '2025-08-02T14:32:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/993
 Order: -1
 
