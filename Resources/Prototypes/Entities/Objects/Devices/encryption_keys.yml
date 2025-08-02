@@ -224,7 +224,7 @@
     - EncryptionService
 
 - type: entity
-  parent: [ EncryptionKey, BaseSyndicateContraband ]
+  parent: [ EncryptionKey, BaseSyndicateSecurityContraband ]
   id: EncryptionKeySyndie
   name: blood-red encryption key
   description: An encryption key used by... wait... Who is the owner of this chip?
