@@ -9,7 +9,7 @@ namespace Content.Shared.Access.Components;
 ///     Simple mutable access provider found on ID cards and such.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedAccessSystem))]
+[Access(typeof(AccessSystem))]
 [AutoGenerateComponentState]
 public sealed partial class AccessComponent : Component
 {
@@ -21,7 +21,7 @@ public sealed partial class AccessComponent : Component
     public bool Enabled = true;
 
     [DataField]
-    [Access(typeof(SharedAccessSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
+    [Access(typeof(AccessSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     [AutoNetworkedField]
     public HashSet<ProtoId<AccessLevelPrototype>> Tags = new();
 

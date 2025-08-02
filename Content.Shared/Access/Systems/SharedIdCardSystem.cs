@@ -20,7 +20,7 @@ public abstract class SharedIdCardSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedAccessSystem _access = default!;
+    [Dependency] private readonly AccessSystem _access = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
