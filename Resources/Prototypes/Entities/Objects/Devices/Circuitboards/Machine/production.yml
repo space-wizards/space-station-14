@@ -1,4 +1,26 @@
 ﻿- type: entity
+  id: BSAMachineCircuitboard
+  parent: [ BaseMachineCircuitboard, BaseCommandContraband ]
+  name: Bluespace artillery circuitboard
+  description: A high-tech machine printed circuit board for an bluespace artillery.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: bluespacearray
+    - type: MachineBoard
+      prototype: BSACannon
+      stackRequirements:
+        MatterBin: 30
+        Manipulator: 20
+        PlasmaGlass: 90
+        Steel: 450
+      tagRequirements:
+        GlassBeaker:
+          amount: 20
+          defaultPrototype: Beaker
+
+
+- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board

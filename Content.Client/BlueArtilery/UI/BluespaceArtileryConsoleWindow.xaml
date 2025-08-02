@@ -1,0 +1,21 @@
+<ui:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                xmlns:coordinate="clr-namespace:Content.Client.CoordinateSystem.UI"
+                Title="Bluespace artillery control"
+                Resizable="False"
+                MinSize="500 300">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4">
+        <Label Text="Current location:" />
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'admin-explosion-eui-label-xmap'}" MinSize="120 0" />
+            <FloatSpinBox Name="MapX" MinSize="70 0" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'admin-explosion-eui-label-ymap'}" MinSize="120 0" />
+            <FloatSpinBox Name="MapY" MinSize="70 0" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="FireBSA" HorizontalAlignment="Left" Text="Fire" />
+        </BoxContainer>
+    </BoxContainer>
+</ui:FancyWindow>
