@@ -1,0 +1,186 @@
+# When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\
+
+# A drink is an easily and freely accessible solution like cups, teapots, cans, flasks, bottles, or beakers.
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: DrinkBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+  - type: DnaSubstanceTrace
+  - type: Drink
+  - type: Spillable
+    solution: drink
+  - type: MixableSolution
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
+  - type: InjectableSolution # Injectors (syringe) will fallback to RefillableSolution. This adds support for hyposprays and injector anomalies.
+    solution: drink
+#  - type: SolutionItemStatus todo Currently always shows the reagent count. Should show vague fill levels without ExaminableSolution
+#    solution: drink
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+
+## Misc bases
+
+# This drink is empty trash
+- type: entity
+  abstract: true
+  id: DrinkBaseEmptyTrash
+  suffix: Empty
+  components:
+  - type: SpaceGarbage
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: Tag
+    tags:
+    - Trash
+
+## Bases for drinks with a lid
+
+# Un-opened
+- type: entity
+  abstract: true
+  id: DrinkBaseOpenable
+  components:
+  - type: Openable
+  - type: PressurizedSolution
+    solution: drink
+  - type: Shakeable
+  - type: Sealable
+
+# Pre-opened
+- type: entity
+  abstract: true
+  parent: DrinkBaseOpenable
+  id: DrinkBaseOpenableOpen
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_open
+  - type: Openable
+    opened: true
+  - type: Sealable
+    sealed: false
+
+## Bases for visuals
+
+# Basic visualizer for an openable entity, usually paired with BaseDrinkOpenable
+- type: entity
+  abstract: true
+  id: DrinkVisualsOpenable
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+
+# Basic visualizer for an entity with fill levels
+- type: entity
+  abstract: true
+  id: DrinkVisualsFill
+  components:
+  - type: Appearance
+  - type: Sprite
+    layers:
+    - state: icon_empty
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
+  - type: ExaminableSolution # If you can see the fill levels, you can see the unit count
+    solution: drink
+  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase
+    solution: drink
+
+# Layered visualizer for an entity with fill levels
+- type: entity
+  abstract: true
+  parent: DrinkVisualsFill
+  id: DrinkVisualsFillOverlay
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_empty
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: fill-1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: icon-front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+
+# Basic visualizer for an entity with fill levels, already filled
+- type: entity
+  abstract: true
+  parent: DrinkVisualsFill
+  id: DrinkVisualsFillFilled
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: fill-5 # this will need to be different with a different maxFillLevels
+      map: ["enum.SolutionContainerLayers.Fill"]
+
+# Visualizer for an openable entity with fill levels
+- type: entity
+  abstract: true
+  parent: [DrinkVisualsOpenable, DrinkVisualsFill]
+  id: DrinkVisualsAll
+  components:
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon_empty"}
+  - type: Sprite
+    layers:
+    - state: icon_empty
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+
+# Visualizer for an openable entity with fill levels, already filled
+- type: entity
+  abstract: true
+  parent: DrinkVisualsAll
+  id: DrinkVisualsAllFilled
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_empty
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill-5 # this will need to be different with a different maxFillLevels
+      map: ["enum.SolutionContainerLayers.Fill"]

@@ -1,5 +1,5 @@
 - type: entity
-  parent: DrinkBase
+  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ] # todo Should use DrinkVisualAll, but sprite has no inhand
   id: DrinkSpaceGlue
   name: space glue tube
   description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
@@ -12,12 +12,10 @@
     layers:
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-        visible: false
+      - state: fill6
+        map: [ "enum.SolutionContainerLayers.Fill" ] # already has liquid, so no visible: false
       - state: icon-front
         map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: Appearance
   - type: Glue
   - type: SolutionContainerManager
     solutions:
@@ -29,12 +27,6 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: fill
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
   - type: Tag
     tags:
       - DrinkSpaceGlue
@@ -42,7 +34,7 @@
     solution: drink
 
 - type: entity
-  parent: DrinkBase
+  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ] # Should use DrinkVisualAll, but sprite has no inhand
   id: DrinkSpaceLube
   name: space lube tube
   description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
@@ -55,12 +47,10 @@
     layers:
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-        visible: false
+      - state: fill6
+        map: [ "enum.SolutionContainerLayers.Fill" ] # already has liquid, so no visible: false
       - state: icon-front
         map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: Appearance
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -71,16 +61,11 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: fill
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
   - type: Lube
   - type: TrashOnSolutionEmpty
     solution: drink
 
+# Find your nearest clown and give them a gift :o)
 - type: entity
   parent: BluespaceBeaker
   id: BottomlessLube
@@ -101,6 +86,22 @@
       reagents:
       - ReagentId: SpaceLube
         Quantity: 200
+
+- type: entity
+  parent: [DrinkBaseMaterialGlass, DrinkBase]
+  id: DrinkJarWhat
+  name: jar of something
+  description: You can't really tell what this is.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/jar_what.rsi
+  - type: ExaminableSolution
+    solution: drink
+  - type: FitsInDispenser
+    solution: drink
+  - type: Tag
+    tags:
+    - DrinkGlass
 
 # Mopwata
 - type: weightedRandomFillSolution
@@ -150,13 +151,11 @@
     - FourteenLoko
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
   id: DrinkMopwataBottleRandom
   name: delicious mopwata
   description: A foggy brown bottle with a faded label depicting a mop. It comes full of murky... vintage.
   components:
-  - type: Item
-    size: Small
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -167,26 +166,5 @@
   - type: RandomFillSolution
     solution: drink
     weightedRandomId: RandomFillMopwata
-  - type: PressurizedSolution
-    solution: drink
-  - type: Shakeable
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon_empty"}
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mopwata.rsi
-    layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: fill-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: fill-
-    inHandsMaxFillLevels: 3
-    inHandsFillBaseName: -fill-
