@@ -40,8 +40,6 @@
     solution: chamber
   - type: RefillableSolution
     solution: chamber
-  - type: DrainableSolution
-    solution: chamber
   - type: ExaminableSolution
     solution: chamber
   - type: StaticPrice
