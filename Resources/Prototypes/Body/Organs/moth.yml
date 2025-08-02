@@ -1,7 +1,10 @@
+# TODO moth organ sprites?
+
 - type: entity
+  parent: [BaseHumanOrgan, BaseOrganStomach]
   id: OrganMothStomach
-  parent: [OrganAnimalStomach, OrganHumanStomach]
   categories: [ HideSpawnMenu ]
+  name: stomach
   components:
   - type: Stomach
     specialDigestible:
@@ -9,19 +12,6 @@
       - ClothMade
       - Paper
       - Pill
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 50
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
   - type: Metabolizer
-    maxReagents: 3
     metabolizerTypes: [ Moth ]
     removeEmpty: true
-    groups:
-      - id: Food
-      - id: Drink
