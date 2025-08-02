@@ -1,8 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Events;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
+using Content.Shared.Strip.Components;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -29,10 +32,46 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<DoAfterComponent, ActionAttemptDoAfterEvent>(OnActionDoAfterAttempt);
         SubscribeLocalEvent<DoAfterComponent, DamageChangedEvent>(OnDamage);
         SubscribeLocalEvent<DoAfterComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
+    }
+
+    private void OnActionDoAfterAttempt(Entity<DoAfterComponent> ent, ref ActionAttemptDoAfterEvent args)
+    {
+        // relay to user
+        if (!TryComp<DoAfterComponent>(args.Performer, out var userDoAfter))
+            return;
+
+        var actionDoAfter = ent.Comp;
+
+        var delay = actionDoAfter.Delay;
+
+        var actionDoAfterEvent = new ActionDoAfterEvent(args.Performer, args.OriginalUseDelay, args.Input);
+
+        // TODO: Should add a raise on used in the attemptactiondoafterevent or something to add a conditional item or w/e
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.Performer, delay, actionDoAfterEvent, ent.Owner, args.Performer)
+        {
+            AttemptFrequency = actionDoAfter.AttemptFrequency,
+            Broadcast = actionDoAfter.Broadcast,
+            Hidden = actionDoAfter.Hidden,
+            NeedHand = actionDoAfter.NeedHand,
+            BreakOnHandChange = actionDoAfter.BreakOnHandChange,
+            BreakOnDropItem = actionDoAfter.BreakOnDropItem,
+            BreakOnMove = actionDoAfter.BreakOnMove,
+            BreakOnWeightlessMove = actionDoAfter.BreakOnWeightlessMove,
+            MovementThreshold = actionDoAfter.MovementThreshold,
+            DistanceThreshold = actionDoAfter.DistanceThreshold,
+            BreakOnDamage = actionDoAfter.BreakOnDamage,
+            DamageThreshold = actionDoAfter.DamageThreshold,
+            RequireCanInteract = actionDoAfter.RequireCanInteract
+        };
+
+        TryStartDoAfter(doAfterArgs, userDoAfter);
     }
 
     private void OnUnpaused(EntityUid uid, DoAfterComponent component, ref EntityUnpausedEvent args)
@@ -121,6 +160,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         comp.NextId = state.NextId;
+        comp.DelayReduction = state.DelayReduction;
         DebugTools.Assert(!comp.DoAfters.ContainsKey(comp.NextId));
 
         if (comp.DoAfters.Count == 0)
@@ -313,16 +353,16 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     /// <summary>
     ///     Cancels an active DoAfter.
     /// </summary>
-    public void Cancel(DoAfterId? id, DoAfterComponent? comp = null)
+    public void Cancel(DoAfterId? id, DoAfterComponent? comp = null, bool force = false)
     {
         if (id != null)
-            Cancel(id.Value.Uid, id.Value.Index, comp);
+            Cancel(id.Value.Uid, id.Value.Index, comp, force);
     }
 
     /// <summary>
     ///     Cancels an active DoAfter.
     /// </summary>
-    public void Cancel(EntityUid entity, ushort id, DoAfterComponent? comp = null)
+    public void Cancel(EntityUid entity, ushort id, DoAfterComponent? comp = null, bool force = false)
     {
         if (!Resolve(entity, ref comp, false))
             return;
@@ -333,13 +373,13 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             return;
         }
 
-        InternalCancel(doAfter, comp);
+        InternalCancel(doAfter, comp, force: force);
         Dirty(entity, comp);
     }
 
-    private void InternalCancel(DoAfter doAfter, DoAfterComponent component)
+    private void InternalCancel(DoAfter doAfter, DoAfterComponent component, bool force = false)
     {
-        if (doAfter.Cancelled || doAfter.Completed)
+        if (doAfter.Cancelled || (doAfter.Completed && !force))
             return;
 
         // Caller is responsible for dirtying the component.
