@@ -27,7 +27,15 @@ public sealed partial class TriggerOnMobstateChangeSystem : EntitySystem
         if (!component.MobState.Contains(args.NewMobState))
             return;
 
-        _trigger.Trigger(uid, component.TargetOwner ? uid : args.Origin, component.KeyOut);
+        _trigger.Trigger(uid, component.TargetMobstateEntity ? uid : args.Origin, component.KeyOut);
+    }
+
+    private void OnMobStateRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<MobStateChangedEvent> args)
+    {
+        if (!component.MobState.Contains(args.Event.NewMobState))
+            return;
+
+        _trigger.Trigger(uid, component.TargetMobstateEntity ? args.ImplantedEntity : args.Event.Origin, component.KeyOut);
     }
 
     /// <summary>
@@ -47,13 +55,15 @@ public sealed partial class TriggerOnMobstateChangeSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnMobStateRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<MobStateChangedEvent> args)
-    {
-        OnMobStateChanged(uid, component, args.Event);
-    }
-
     private void OnSuicideRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<SuicideEvent> args)
     {
-        OnSuicide(uid, component, args.Event);
+        if (args.Event.Handled)
+            return;
+
+        if (!component.PreventSuicide)
+            return;
+
+        _popup.PopupClient(Loc.GetString("suicide-prevented"), args.Event.Victim);
+        args.Event.Handled = true;
     }
 }

@@ -25,11 +25,11 @@ public sealed partial class TriggerOnMobstateChangeComponent : BaseTriggerOnXCom
 
     /// <summary>
     /// If false, the trigger user will be the entity that caused the mobstate to change.
-    /// If true, the trigger user will the owner of the component.
+    /// If true, the trigger user will the entity that changed its mob state.
     /// </summary>
     /// <summary>
     /// Set this to true for implants that apply an effect on the implanted entity.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool TargetOwner = true;
+    public bool TargetMobstateEntity = true;
 }
