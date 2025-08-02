@@ -15,33 +15,35 @@ namespace Content.Shared.Clothing.EntitySystems;
 
 public abstract class SharedChameleonClothingSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    private static readonly ProtoId<TagPrototype> WhitelistChameleonTag = "WhitelistChameleon";
+
+    [Dependency] protected readonly IPrototypeManager Proto = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
     [Dependency] private readonly ContrabandSystem _contraband = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] protected readonly IGameTiming _timing = default!;
 
     private static readonly SlotFlags[] IgnoredSlots =
-    {
+    [
         SlotFlags.All,
         SlotFlags.PREVENTEQUIP,
-        SlotFlags.NONE
-    };
-    private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>().Except(IgnoredSlots).ToArray();
+        SlotFlags.NONE,
+    ];
+    private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>()
+                                                    .Except(IgnoredSlots)
+                                                    .ToArray();
 
     private readonly Dictionary<SlotFlags, List<EntProtoId>> _data = new();
 
-    public readonly Dictionary<SlotFlags, List<string>> ValidVariants = new();
-    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
-
-    private static readonly ProtoId<TagPrototype> WhitelistChameleonTag = "WhitelistChameleon";
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ChameleonClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ChameleonClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
         SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
@@ -72,7 +74,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     protected void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
     {
         if (string.IsNullOrEmpty(component.Default) ||
-            !_proto.TryIndex(component.Default, out EntityPrototype? proto))
+            !Proto.TryIndex(component.Default, out EntityPrototype? proto))
             return;
 
         // world sprite icon
@@ -166,14 +168,14 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     /// <summary>
     ///     Get a list of valid chameleon targets for these slots.
     /// </summary>
-    public IEnumerable<EntProtoId> GetValidTargets(SlotFlags slot, string? tag = null)
+    public IReadOnlyCollection<EntProtoId> GetValidTargets(SlotFlags slot, string? tag = null)
     {
         var validTargets = new List<EntProtoId>();
         if (tag != null)
         {
             foreach (var proto in _data[slot])
             {
-                if (IsValidTarget(_proto.Index(proto), slot, tag))
+                if (IsValidTarget(Proto.Index(proto), slot, tag))
                     validTargets.Add(proto);
             }
         }
@@ -188,7 +190,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     protected void PrepareAllVariants()
     {
         _data.Clear();
-        var prototypes = _proto.EnumeratePrototypes<EntityPrototype>();
+        var prototypes = Proto.EnumeratePrototypes<EntityPrototype>();
 
         foreach (var proto in prototypes)
         {
