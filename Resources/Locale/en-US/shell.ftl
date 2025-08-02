@@ -40,6 +40,7 @@ shell-entity-with-uid-lacks-component = Entity with uid {$uid} doesn't have {IND
 shell-entity-target-lacks-component = Target entity doesn't have {INDEFINITE($componentName)} {$componentName} component
 shell-invalid-color-hex = Invalid color hex!
 shell-target-player-does-not-exist = Target player does not exist!
+shell-target-player-lacks-mind = Target player doesn't have a mind.
 shell-target-entity-does-not-have-message = Target entity does not have {INDEFINITE($missing)} {$missing}!
 shell-timespan-minutes-must-be-correct = {$span} is not a valid minutes timespan.
 shell-argument-must-be-prototype = Argument {$index} must be a {LOC($prototypeName)}!
