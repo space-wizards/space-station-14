@@ -10278,5 +10278,13 @@ Entries:
   id: 1414
   time: '2025-08-02T14:26:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1069
+- author: Aedler
+  changes:
+  - message: Added mira's marriage axe. A brutal energy axe/instrument available in
+      musician's uplink.
+    type: Add
+  id: 1415
+  time: '2025-08-02T14:28:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1032
 Order: -1
 
