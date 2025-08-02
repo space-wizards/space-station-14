@@ -163,7 +163,7 @@
     sprite: Clothing/Shoes/Specific/wizard.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: [ClothingShoesBase, VoiceLock]
   id: ClothingShoesChameleon
   name: black shoes
   suffix: Chameleon

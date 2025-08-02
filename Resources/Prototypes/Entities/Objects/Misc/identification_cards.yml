@@ -580,7 +580,7 @@
 
 - type: entity
   name: passenger ID card
-  parent: IDCardStandard
+  parent: [IDCardStandard, VoiceLock]
   id: AgentIDCard
   suffix: Agent
   components:
@@ -595,9 +595,12 @@
     - state: default
     - state: idpassenger
   - type: AgentIDCard
+#  - type: ActivatableUIRequiresLock TODO: fix this and probably use it instead of the custom stuff
+
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true
+    verbText: agent-id-ui-verb
   - type: Tag
     tags:
     - DoorBumpOpener

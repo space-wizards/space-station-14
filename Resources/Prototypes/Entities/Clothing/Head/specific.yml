@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, VoiceLock]
   id: ClothingHeadHatChameleon
   name: beret
   description: A beret, an artists favorite headwear.

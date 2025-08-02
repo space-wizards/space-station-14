@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, VoiceLock]
   id: ClothingUniformJumpsuitChameleon
   name: black jumpsuit
   description: A generic black jumpsuit with no rank markings.
