@@ -10401,5 +10401,20 @@ Entries:
   id: 1431
   time: '2025-08-02T14:59:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1054
+- author: RoadTrain
+  changes:
+  - message: Adds 12 voice lines to the cleanbot, including one to honor a particular
+      silicon player. (Yes, you will be able to shut it up. But would you?)
+    type: Add
+  id: 1432
+  time: '2025-08-02T15:02:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1188
+- author: RoadTrain
+  changes:
+  - message: You can now shut up real doctor bots just like medibots.
+    type: Tweak
+  id: 1433
+  time: '2025-08-02T15:02:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1188
 Order: -1
 
