@@ -5,6 +5,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Robust.Shared.Player;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -13,6 +14,7 @@ namespace Content.Server.Ghost.Roles;
 /// </summary>
 public sealed class ToggleableGhostRoleSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedPlayerManager _sharedPlayerManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
@@ -21,9 +23,10 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ToggleableGhostRoleComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<ToggleableGhostRoleComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<ToggleableGhostRoleComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<ToggleableGhostRoleComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, GetVerbsEvent<ActivationVerb>>(AddWipeVerb);
     }
 
@@ -60,25 +63,6 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         ghostRole.MindRoles = component.MindRoles;
     }
 
-    private void OnExamined(EntityUid uid, ToggleableGhostRoleComponent component, ExaminedEvent args)
-    {
-        if (!args.IsInDetailsRange)
-            return;
-
-        if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
-        {
-            args.PushMarkup(Loc.GetString(component.ExamineTextMindPresent));
-        }
-        else if (HasComp<GhostTakeoverAvailableComponent>(uid))
-        {
-            args.PushMarkup(Loc.GetString(component.ExamineTextMindSearching));
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString(component.ExamineTextNoMind));
-        }
-    }
-
     private void OnMindAdded(EntityUid uid, ToggleableGhostRoleComponent pai, MindAddedMessage args)
     {
         // Mind was added, shutdown the ghost role stuff so it won't get in the way
@@ -91,6 +75,18 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         // Mind was removed, prepare for re-toggle of the role
         RemCompDeferred<GhostRoleComponent>(uid);
         UpdateAppearance(uid, ToggleableGhostRoleStatus.Off);
+    }
+
+    private void OnPlayerAttached(Entity<ToggleableGhostRoleComponent> entity, ref PlayerAttachedEvent args)
+    {
+        // Player was attached, change the appearance
+        UpdateAppearance(entity, ToggleableGhostRoleStatus.On);
+    }
+
+    private void OnPlayerDetached(Entity<ToggleableGhostRoleComponent> entity, ref PlayerDetachedEvent args)
+    {
+        // Player was detached, change the appearance
+        UpdateAppearance(entity, ToggleableGhostRoleStatus.Ssd);
     }
 
     private void UpdateAppearance(EntityUid uid, ToggleableGhostRoleStatus status)
