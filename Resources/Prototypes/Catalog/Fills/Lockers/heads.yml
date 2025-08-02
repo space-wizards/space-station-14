@@ -242,6 +242,8 @@
     - id: MedkitFilled
     - id: RubberStampCMO
     - id: MedTekCartridge
+    - id: AutoMenderBurnFilled #Starlight
+    - id: AutoMenderBruteFilled #Starlight
     - id: CMOLicense #STARLIGHT
 
 # Hardsuit table, used for suit storage as well
