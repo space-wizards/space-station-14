@@ -471,6 +471,9 @@ namespace Content.Shared.Cuffs
             if (!_interaction.InRangeUnobstructed(handcuff, target))
                 return false;
 
+            cuff.Used = true;
+            Dirty(handcuff, cuff);
+
             // if the amount of hands the target has is equal to or less than the amount of hands that are cuffed
             // don't apply the new set of cuffs
             // (how would you even end up with more cuffed hands than actual hands? either way accounting for it)

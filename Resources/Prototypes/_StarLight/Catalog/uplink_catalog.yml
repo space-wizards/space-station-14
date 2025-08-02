@@ -83,6 +83,23 @@
         tags:
           - NukeOpsUplink
 
+  id: UplinkMarriage
+  name: uplink-marriage-axe-name
+  description: uplink-marriage-axe-desc
+  icon: { sprite: /Textures/_Starlight/Objects/Weapons/Melee/marriage_axe.rsi, state: icon }
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 18
+  productEntity: MarriageAxe
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Musician
+
 - type: listing
   id: uplinkWeaponPistolDeagle
   name: uplink-deagle-name
@@ -126,6 +143,7 @@
   categories:
     - UplinkAmmo
 
+
 # For the Pitbull
 - type: listing
   id: UplinkMagazineMagnumRifle
@@ -137,6 +155,17 @@
      state: mag-1 
     }
   productEntity: MagazineMagnumRifleSP
+
+- type: listing
+  id: UplinkShotgunBreachingMagazine
+  name: uplink-breaching-magazine-name
+  description: uplink-breaching-magazine-desc
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi,
+      state: breach,
+    }
+  productEntity: MagazineShotgunBreach
   cost:
     Telecrystal: 2
   categories:

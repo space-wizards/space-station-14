@@ -484,7 +484,7 @@ namespace Content.Client.Lobby.UI
             Markings.OnMarkingRankChange += OnMarkingChange;
 
             #endregion Markings
-            
+
             // Starlight
             #region Cybernetics
             TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-cybernetics-tab"));
@@ -1333,8 +1333,8 @@ namespace Content.Client.Lobby.UI
         private void UpdateSizeText() {
             if(Profile is null) return;
             if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype)) {
-                var height = speciesPrototype.StandardSize * Profile.Appearance.Height;
-                var weight = speciesPrototype.StandardWeight + speciesPrototype.StandardDensity * ((Profile.Appearance.Width * Profile.Appearance.Height) - 1);
+                var height = speciesPrototype.StandardSize * (Profile.Appearance.Height - 1f) * 2f + speciesPrototype.StandardSize;
+                var weight = speciesPrototype.StandardWeight + speciesPrototype.StandardDensity * (Profile.Appearance.Width * Profile.Appearance.Height * Profile.Appearance.Height - 1);
                 HeightDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-height-label", ("height", Math.Round(height)));
                 WidthDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-width-label", ("weight", Math.Round(weight, 1)));
             }
@@ -1496,7 +1496,7 @@ namespace Content.Client.Lobby.UI
                 HeightSlider.MinValue = speciesPrototype.MinHeight;
                 HeightSlider.MaxValue = speciesPrototype.MaxHeight;
                 HeightSlider.Value = Profile.Appearance.Height;
-                
+
                 UpdateSizeText();
             }
         }
