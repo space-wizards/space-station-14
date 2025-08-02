@@ -21,7 +21,7 @@
 - type: startingGear
   id: BotanistGear
   equipment:
-    shoes: ClothingShoesColorBrown
+    #shoes: ClothingShoesColorBrown 🌟Starlight🌟
     id: BotanistPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltPlantFilled

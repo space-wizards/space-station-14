@@ -532,7 +532,7 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Blunt: 15
+        Blunt: 25
         Structural: 30
   # Short lifespan
   - type: TimedDespawn
@@ -589,8 +589,8 @@
         - MobState
     damage:
       types:
-        Blunt: 18
-        Slash: 4
+        Blunt: 20
+        Slash: 5
   - type: Projectile
     impactEffect: BulletImpactEffectKinetic
     damage:
@@ -599,21 +599,6 @@
   # Short lifespan
   - type: TimedDespawn
     lifetime: 0.4
-
-  # Deals less damage, glaive has better HP recovery
-- type: entity
-  id: BulletChargeGlaive
-  name: leech bolt
-  parent: BulletCharge
-  components:
-  - type: DamageMarkerOnCollide
-    whitelist:
-      components:
-        - MobState
-    damage:
-      types:
-        Blunt: 1
-        Slash: 5
 
 - type: entity
   parent: BaseBullet

@@ -38,6 +38,12 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: Huge
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Rifles/lr30.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
   - type: MagazineAmmoProvider
   - type: ItemSlots
     slots:
