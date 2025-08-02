@@ -307,7 +307,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
-            component.Health -= (_random.Next(3, 5) * 10);
+            component.Health -= _random.Next(3, 5) * 10;
 
             float? healthOverride;
             if (component.Harvest)
@@ -319,20 +319,33 @@ public sealed class PlantHolderSystem : EntitySystem
                 healthOverride = component.Health;
             }
             var packetSeed = component.Seed;
-            var seed = _botany.SpawnSeedPacket(packetSeed, Transform(args.User).Coordinates, args.User, healthOverride);
-            _randomHelper.RandomOffset(seed, 0.25f);
-            var displayName = Loc.GetString(component.Seed.DisplayName);
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
-                ("seedName", displayName)), args.User);
 
-            DoScream(entity.Owner, component.Seed);
+            if (packetSeed != null)
+            {
+                // Copy growth components from the plant to the seed before creating seed packet
+                var plantGrowthComponents = EntityManager.GetComponents<PlantGrowthComponent>(uid).ToList();
+                packetSeed.GrowthComponents?.Clear();
+                foreach (var growthComponent in plantGrowthComponents)
+                {
+                    var newComponent = growthComponent.DupeComponent();
+                    packetSeed.GrowthComponents?.Add(newComponent);
+                }
 
-            if (_random.Prob(0.3f))
-                component.Sampled = true;
+                var seed = _botany.SpawnSeedPacket(packetSeed, Transform(args.User).Coordinates, args.User, healthOverride);
+                _randomHelper.RandomOffset(seed, 0.25f);
+                var displayName = Loc.GetString(component.Seed.DisplayName);
+                _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
+                    ("seedName", displayName)), args.User);
 
-            // Just in case.
-            CheckLevelSanity(uid, component);
-            ForceUpdateByExternalCause(uid, component);
+                DoScream(entity.Owner, component.Seed);
+
+                if (_random.Prob(0.3f))
+                    component.Sampled = true;
+
+                // Just in case.
+                CheckLevelSanity(uid, component);
+                ForceUpdateByExternalCause(uid, component);
+            }
 
             return;
         }
@@ -527,6 +540,7 @@ public sealed class PlantHolderSystem : EntitySystem
             }
 
             _botany.Harvest(component.Seed, user, plantholder);
+
             AfterHarvest(plantholder, component);
             return true;
         }

@@ -153,9 +153,7 @@ public sealed partial class BotanySystem : EntitySystem
             if (proto.HarvestLogImpact != null)
                 _adminLogger.Add(LogType.Botany, proto.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(proto.Name):seed} at Pos:{position}.");
 
-            var yieldMod = Comp<PlantHolderComponent>(plantEntity!.Value).YieldMod;
-
-            return GenerateProduct(proto, position, yieldMod);
+            return GenerateProduct(proto, position, plantEntity);
         }
 
         return Enumerable.Empty<EntityUid>();
@@ -176,17 +174,16 @@ public sealed partial class BotanySystem : EntitySystem
         if (proto.HarvestLogImpact != null)
             _adminLogger.Add(LogType.Botany, proto.HarvestLogImpact.Value, $"{ToPrettyString(user):player} harvested {Loc.GetString(proto.Name):seed} at Pos:{Transform(user).Coordinates}.");
 
-        var yieldMod = Comp<PlantHolderComponent>(plantEntity!.Value).YieldMod;
-
-        return GenerateProduct(proto, Transform(user).Coordinates, yieldMod);
+        return GenerateProduct(proto, Transform(user).Coordinates, plantEntity);
     }
 
-    public IEnumerable<EntityUid> GenerateProduct(SeedData proto, EntityCoordinates position, int yieldMod = 1)
+    public IEnumerable<EntityUid> GenerateProduct(SeedData proto, EntityCoordinates position, EntityUid? plantEntity = null)
     {
         var traits = GetPlantTraits(proto);
         if (traits == null)
             return Enumerable.Empty<EntityUid>();
 
+        var yieldMod = Comp<PlantHolderComponent>(plantEntity!.Value).YieldMod;
         var totalYield = 0;
 
         if (traits.Yield > -1)
@@ -215,6 +212,7 @@ public sealed partial class BotanySystem : EntitySystem
             var produce = EnsureComp<ProduceComponent>(entity);
 
             produce.Seed = proto.Clone();
+
             ProduceGrown(entity, produce);
 
             _appearance.SetData(entity, ProduceVisuals.Potency, traits.Potency);
