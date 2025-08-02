@@ -233,14 +233,14 @@
     - lime
     - orange
   growthComponents:
-      - !type:PlantTraitsComponent
-          lifespan: 55
-          maturation: 6
-          production: 6
-          yield: 3
-          potency: 10
-      - !type:HarvestComponent
-          harvestRepeat: Repeat
+    - !type:PlantTraitsComponent
+        lifespan: 55
+        maturation: 6
+        production: 6
+        yield: 3
+        potency: 10
+    - !type:HarvestComponent
+        harvestRepeat: Repeat
   chemicals:
     Nutriment:
       Min: 1
@@ -292,14 +292,14 @@
     - orange
     - lemon
   growthComponents:
-      - !type:PlantTraitsComponent
-          lifespan: 55
-          maturation: 6
-          production: 6
-          yield: 3
-          potency: 10
-      - !type:HarvestComponent
-          harvestRepeat: Repeat
+    - !type:PlantTraitsComponent
+        lifespan: 55
+        maturation: 6
+        production: 6
+        yield: 3
+        potency: 10
+    - !type:HarvestComponent
+        harvestRepeat: Repeat
   chemicals:
     Nutriment:
       Min: 1
