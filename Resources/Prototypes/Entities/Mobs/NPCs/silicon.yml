@@ -320,6 +320,10 @@
     boardName: wires-board-name-cleanbot
     layoutId: MedibotControls
     alwaysRandomize: true
+  - type: UserInterface
+    interfaces:
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   #end region
 - type: entity
   parent:

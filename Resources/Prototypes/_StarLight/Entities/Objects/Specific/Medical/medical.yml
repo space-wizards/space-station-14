@@ -160,6 +160,10 @@
     boardName: wires-board-name-medibot
     layoutId: MedibotControls
     alwaysRandomize: true
+  - type: UserInterface
+    interfaces:
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - type: entity
   name: red ointment
