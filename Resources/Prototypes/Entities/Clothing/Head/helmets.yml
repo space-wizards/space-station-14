@@ -27,22 +27,48 @@
         Piercing: 0.9
         Heat: 0.9
 
-#Basic Helmet (Security Helmet)
+#Security Helmet
 - type: entity
   parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
   id: ClothingHeadHelmetBasic
-  name: helmet
+  name: security helmet
   description: Standard security gear. Protects the head from impacts.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/security.rsi
+    layers:
+    - state: icon
+    - state: icon-visor
+      visible: false
+      map: [ "visor" ]
   - type: Clothing
     sprite: Clothing/Head/Helmets/security.rsi
+    equippedPrefix: raised
+  - type: Item
+    heldPrefix: raised
+  - type: ToggleableVisuals
+    spriteLayer: visor
+    clothingVisuals:
+      head:
+      - state: lowered-equipped-HELMET
+      head-vox:
+      - state: lowered-equipped-HELMET-vox
+    inhandVisuals:
+      left:
+      - state: lowered-inhand-left
+      right:
+      - state: lowered-inhand-right
+  - type: Appearance
   - type: Tag
     tags:
     - WhitelistChameleon
     - SecurityHelmet
+  - type: ItemToggle
+    predictable: false
+    verbToggleOn: item-toggle-lower-visor
+    verbToggleOff: item-toggle-raise-visor
   - type: HideLayerClothing
+    slots: []
     layers:
       Hair: HEAD
 
@@ -472,7 +498,7 @@
 
 #Justice Helmet
 - type: entity
-  parent: ClothingHeadHelmetBasic
+  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
   id: ClothingHeadHelmetJustice
   name: justice helm
   description: Advanced security gear. Protects the station from ne'er-do-wells.
@@ -543,6 +569,10 @@
   - type: HideLayerClothing
     layers:
       Hair: HEAD
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - SecurityHelmet
 
 - type: entity
   parent: ClothingHeadHelmetJustice
