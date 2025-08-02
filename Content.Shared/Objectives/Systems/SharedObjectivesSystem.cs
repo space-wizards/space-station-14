@@ -76,7 +76,11 @@ public abstract class SharedObjectivesSystem : EntitySystem
 
         var ev = new ObjectiveAssignedEvent(mindId, mind);
         RaiseLocalEvent(uid, ref ev);
-        if (ev.Cancelled)
+
+        var fEv = new ObjectiveAssignedFinalEvent(mindId, mind);
+        RaiseLocalEvent(uid, ref fEv);
+
+        if (ev.Cancelled || fEv.Cancelled)
         {
             Del(uid);
             Log.Warning($"Could not assign objective {proto}, deleted it");
