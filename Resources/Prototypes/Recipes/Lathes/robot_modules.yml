@@ -1,0 +1,70 @@
+- type: latheRecipe
+  abstract: true
+  id: BaseBorgModuleRecipe
+  categories:
+    - Modules
+  completetime: 3
+  materials:
+    Steel: 250
+    Glass: 250
+    Plastic: 250
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseBorgModuleRecipe
+  id: BaseGoldBorgModuleRecipe
+  materials:
+    Steel: 500
+    Glass: 500
+    Plastic: 250
+    Gold: 50
+
+## Recipes
+
+# Generic
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleTool
+  result: BorgModuleTool
+
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleCable
+  result: BorgModuleCable
+
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleFireExtinguisher
+  result: BorgModuleFireExtinguisher
+
+# Cargo Modules
+
+- type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleAdvancedMining
+  result: BorgModuleAdvancedMining
+
+# Engineering Modules
+
+- type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleAdvancedTool
+  result: BorgModuleAdvancedTool
+
+# Janitor Modules
+
+- type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleAdvancedCleaning
+  result: BorgModuleAdvancedCleaning
+
+# Medical Modules
+
+- type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleAdvancedChemical
+  result: BorgModuleAdvancedChemical
+
+# Science Modules
+
+# Service Modules

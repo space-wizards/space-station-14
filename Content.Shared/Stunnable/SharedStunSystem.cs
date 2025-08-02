@@ -33,9 +33,10 @@ public abstract partial class SharedStunSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
     [Dependency] protected readonly SharedStaminaSystem Stamina = default!;
-    [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
 
     public override void Initialize()
@@ -50,7 +51,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<FrictionStatusComponent, TileFrictionEvent>(OnRefreshTileFrictionStatus);
 
         SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
-        SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(UpdateCanMove);
+        SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(OnStunShutdown);
 
         SubscribeLocalEvent<StunOnContactComponent, StartCollideEvent>(OnStunOnContactCollide);
 
@@ -67,7 +68,10 @@ public abstract partial class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<StunnedComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
         SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
 
-        InitializeKnockdown();
+        // Stun Appearance Data
+        InitializeAppearance();
+
+        InitializeKnockdown();// Starlight
     }
 
     private void OnAttemptInteract(Entity<StunnedComponent> ent, ref InteractionAttemptEvent args)
@@ -102,6 +106,13 @@ public abstract partial class SharedStunSystem : EntitySystem
                 return;
         }
 
+    }
+
+    private void OnStunShutdown(Entity<StunnedComponent> ent, ref ComponentShutdown args)
+    {
+        // This exists so the client can end their funny animation if they're playing one.
+        UpdateCanMove(ent, ent.Comp, args);
+        Appearance.RemoveData(ent, StunVisuals.SeeingStars);
     }
 
     private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
@@ -161,10 +172,10 @@ public abstract partial class SharedStunSystem : EntitySystem
 
         if (!Resolve(uid, ref status, false))
             return false;
-        
+
         var beforeStun = new BeforeStunEvent();
         RaiseLocalEvent(uid, ref beforeStun);
-        
+
         if (beforeStun.Cancelled && !force)
             return false;
 
@@ -194,10 +205,10 @@ public abstract partial class SharedStunSystem : EntitySystem
 
         var beforeKnockdown = new BeforeKnockdownEvent();
         RaiseLocalEvent(uid, beforeKnockdown);
-        
+
         if (beforeKnockdown.Cancelled && !force)
             return false;
-        
+
         var evAttempt = new KnockDownAttemptEvent()
         {
             AutoStand = autoStand,
@@ -414,9 +425,9 @@ public record struct BeforeStunEvent(bool Cancelled = false);
 public sealed class BeforeKnockdownEvent: EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
-    
+
     public bool Cancelled;
-    
+
     public BeforeKnockdownEvent(bool cancelled = false)
     {
         Cancelled = cancelled;

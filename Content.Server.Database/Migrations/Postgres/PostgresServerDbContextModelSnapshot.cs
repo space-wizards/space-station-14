@@ -1443,9 +1443,22 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("character varying(32)")
                         .HasColumnName("custom_specie_name");
 
+                    b.PrimitiveCollection<List<string>>("CyberneticIds")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("cybernetic_ids");
+
+                    b.Property<float>("Height")
+                        .HasColumnType("real")
+                        .HasColumnName("height");
+
                     b.Property<int>("ProfileId")
                         .HasColumnType("integer")
                         .HasColumnName("profile_id");
+
+                    b.Property<float>("Width")
+                        .HasColumnType("real")
+                        .HasColumnName("width");
 
                     b.HasKey("Id")
                         .HasName("PK_star_light_profile");

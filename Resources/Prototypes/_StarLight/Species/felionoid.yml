@@ -12,6 +12,12 @@
   femaleFirstNames: names_felionoid
   naming: First
   customName: true
+  minHeight: 0.8
+  defaultHeight: 0.8
+  maxHeight: 0.9
+  standardSize: 170
+  standardWeight: 48
+  standardDensity: 45
 
 - type: speciesBaseSprites
   id: MobFelionoidSprites

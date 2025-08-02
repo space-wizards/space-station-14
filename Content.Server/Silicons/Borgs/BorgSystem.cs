@@ -1,15 +1,17 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
-using Content.Server.Body.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
 using Content.Shared._Starlight.Silicons.Borgs;
 using Content.Shared.Actions.Components;
+using Content.Server.Radio.Components;
 using Content.Shared.Alert;
-using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Body.Events;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -22,6 +24,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Radio.Components;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
@@ -33,10 +36,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -65,8 +67,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
 
-    [ValidatePrototypeId<JobPrototype>]
-    public const string BorgJobId = "Borg";
+    public static readonly ProtoId<JobPrototype> BorgJobId = "Borg";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -108,10 +109,11 @@ public sealed partial class BorgSystem : SharedBorgSystem
         var used = args.Used;
         TryComp<BorgBrainComponent>(used, out var brain);
         TryComp<BorgModuleComponent>(used, out var module);
+        TryComp<EncryptionKeyComponent>(used, out var key);
 
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
         {
-            if (brain != null || module != null)
+            if (brain != null || module != null || key != null)
             {
                 Popup.PopupEntity(Loc.GetString("borg-panel-not-open"), uid, args.User);
             }
@@ -146,7 +148,39 @@ public sealed partial class BorgSystem : SharedBorgSystem
             args.Handled = true;
             UpdateUI(uid, component);
         }
+        // Starlight, encryption keys.
+        if (key != null)
+        {
+            AddRadioChannels((uid, component),used);
+            _adminLog.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(args.User):player} added encryption key {ToPrettyString(used)} to borg {ToPrettyString(uid)}");
+            args.Handled = true;
+        }
+        // End Starlight
     }
+    // Starlight, this allows people to use an encryption key on a borg to add channels to them.
+    public void AddRadioChannels(Entity<BorgChassisComponent> ent, EntityUid args)
+    {
+        if (TryComp<EncryptionKeyComponent>(args, out var key))
+        {
+
+            if (TryComp(ent, out ActiveRadioComponent? activeRadio))
+            {
+                foreach (var channel in key.Channels)
+                {
+                    activeRadio.Channels.Add(channel);
+                }
+            }
+            if (TryComp(ent, out IntrinsicRadioTransmitterComponent? transmitter))
+            {
+                foreach (var channel in key.Channels)
+                {
+                    transmitter.Channels.Add(channel);
+                }
+            }
+        }
+    }
+    // end Starlight
 
     /// <summary>
     /// Inserts a new module into a borg, the same as if a player inserted it manually.
