@@ -90,6 +90,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 return;
             comp.Fingerprints = forensicsComponent.Fingerprints;
             comp.Fibers = forensicsComponent.Fibers;
+            comp.MicroFibers = forensicsComponent.MicroFibers;
         }
     }
 }

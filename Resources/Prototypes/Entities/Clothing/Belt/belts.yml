@@ -84,6 +84,9 @@
             - Multitool
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-brown
   - type: Tag
     tags:
     - UtilityBelt
@@ -170,6 +173,9 @@
           - Wrench
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-rubber
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -210,6 +216,9 @@
           - SmokeOnTrigger
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -256,6 +265,9 @@
           - Wrench
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-dark-purple
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -322,6 +334,9 @@
           - Wrench
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-light-blue
 
 - type: entity
   parent: ClothingBeltMedical
@@ -333,6 +348,9 @@
     sprite: Clothing/Belt/emt.rsi
   - type: Clothing
     sprite: Clothing/Belt/emt.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -390,6 +408,9 @@
           - Bottle
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-floral
+    microFiberColor: micro-fibers-yellow
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -467,6 +488,9 @@
           - PepperShaker
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSecurityContraband]
@@ -520,6 +544,9 @@
           - SmokeOnTrigger
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: [ClothingBeltBase, ClothingSlotBase, BaseCommandContraband]
@@ -552,6 +579,9 @@
           tags:
           - CaptainSabre
   - type: Appearance
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-red
 
 # Belts without visualizers
 
@@ -572,6 +602,9 @@
       tags:
         - ShellShotgun
     capacity: 14
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingBeltBase
@@ -625,6 +658,10 @@
         - CartridgeAmmo
   - type: StaticPrice
     price: 500
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-leather
+    microFiberColor: micro-fibers-red
+
 
 - type: entity
   parent: ClothingBeltSecurity
@@ -636,6 +673,9 @@
     sprite: Clothing/Belt/securitywebbing.rsi
   - type: Clothing
     sprite: Clothing/Belt/securitywebbing.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: [ ClothingBeltStorageBase, BaseSecurityCargoContraband ]
@@ -647,6 +687,9 @@
     sprite: Clothing/Belt/mercwebbing.rsi
   - type: Clothing
     sprite: Clothing/Belt/mercwebbing.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-moss
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -673,6 +716,9 @@
     damageCoefficient: 0.1
   - type: StaticPrice
     price: 500
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-grey
 
 - type: entity
   parent: ClothingBeltMilitaryWebbing
@@ -688,6 +734,9 @@
     size: Huge
   - type: ExplosionResistance
     damageCoefficient: 0.1
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-grey
 
 - type: entity
   parent: ClothingBeltBase
@@ -731,3 +780,6 @@
     whitelist:
       tags:
       - WizardWand
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-dark-purple
