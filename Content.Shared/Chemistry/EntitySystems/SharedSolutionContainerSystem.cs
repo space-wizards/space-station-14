@@ -810,7 +810,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (string.IsNullOrEmpty(primaryReagent?.Prototype) ||
             !PrototypeManager.Resolve<ReagentPrototype>(primaryReagent.Value.Prototype, out var primary))
         {
-            args.PushText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
+            args.PushMarkup(Loc.GetString(entity.Comp.MessageEmptyVolume));
             return;
         }
 
@@ -819,8 +819,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             // Push amount of reagent
 
             var amountString = entity.Comp.ExactVolume ?
-                        Loc.GetString("drink-component-on-examine-exact-volume", ("amount", solution.Volume)) : //Exact measurement
-                        Loc.GetString(VagueSolutionVolume(solution, args.Examiner)); //General approximation
+                        Loc.GetString(entity.Comp.MessageExactVolume, ("amount", solution.Volume)) : //Exact measurement
+                        Loc.GetString(VagueSolutionVolume(solution, args.Examiner, entity)); //General approximation
 
             args.PushMarkup(amountString);
 
@@ -829,12 +829,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             var colorHex = solution.GetColor(PrototypeManager)
                 .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
 
-            args.PushMarkup(Loc.GetString("shared-solution-container-component-on-examine-main-text",
+            args.PushMarkup(Loc.GetString(entity.Comp.MessagePhysicalQuality,
                                         ("color", colorHex),
-                                        ("wordedAmount", Loc.GetString(solution.Contents.Count == 1
-                                            ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
-                                            : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-                                        ("desc", primary.LocalizedPhysicalDescription)));
+                                        ("desc", primary.LocalizedPhysicalDescription),
+                                        ("chemCount", solution.Contents.Count) ));
 
             // Push the recognizable reagents
 
@@ -871,8 +869,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 }
                 else if (reagent == recognized[^1])
                 {
-                    // this loc specifically  requires space to be appended, fluent doesnt support whitespace
-                    msg.Append(' ');
                     part = "examinable-solution-recognized-last";
                 }
                 else
@@ -884,34 +880,35 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     ("chemical", reagent.LocalizedName)));
             }
 
-            args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals",
+            args.PushMarkup(Loc.GetString(entity.Comp.MessageRecognizableReagents,
                 ("recognizedString", msg.ToString())));
         }
     }
 
     /// <returns>A LocId with an approximation of how much volume is left in a solution.</returns>
-    public string VagueSolutionVolume(Solution sol, EntityUid examiner)
+    public string VagueSolutionVolume(Solution sol, EntityUid examiner, Entity<ExaminableSolutionComponent> ent)
     {
         return (int) PercentFull(sol) switch
             {
-                100 => "drink-component-on-examine-is-full",
-                > 66 => "drink-component-on-examine-is-mostly-full",
-                > 33 => HalfEmptyOrHalfFull(examiner),
-                _ => "drink-component-on-examine-is-mostly-empty",
+                100 => ent.Comp.MessageVagueVolumeFull,
+                > 66 => ent.Comp.MessageVagueVolumeMostlyFull,
+                > 33 => HalfEmptyOrHalfFull(examiner, ent),
+                _ => ent.Comp.MessageVagueVolumeMostlyEmpty,
             };
     }
 
     /// <summary>
-    ///     Some spessmen see half full, some see half empty, but they always see the same thing.
+    ///     Some spessmen see half full, some see half empty, but always the same one.
     /// </summary>
     /// <returns>A LocId for half full or half empty.</returns>
-    private string HalfEmptyOrHalfFull(EntityUid examiner)
+    private string HalfEmptyOrHalfFull(EntityUid examiner, Entity<ExaminableSolutionComponent> ent)
     {
-        string remainingString = "drink-component-on-examine-is-half-full";
+        string remainingString = ent.Comp.MessageVagueVolumeHalfFull;
 
-        if (TryComp(examiner, out MetaDataComponent? meta) && meta.EntityName.Length > 0
-                                                            && string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
-            remainingString = "drink-component-on-examine-is-half-empty";
+        if (TryComp(examiner, out MetaDataComponent? meta)
+        && meta.EntityName.Length > 0
+        && string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
+            remainingString = ent.Comp.MessageVagueVolumeHalfEmpty;
 
         return remainingString;
     }
