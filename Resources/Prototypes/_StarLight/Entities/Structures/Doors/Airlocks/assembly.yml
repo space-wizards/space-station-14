@@ -1,0 +1,72 @@
+#Salvage + Mining
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySalvageMining
+  suffix: Salvage, Mining
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/salvagemining.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMining
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/mining.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyRetroSalvageMining
+  suffix: Salvage, Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/retromining.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyRetroMining
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/retromining.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySalvageMiningGlass
+  suffix: Salvage, Mining, Glass
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Glass/salvagemining.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMiningGlass
+  suffix: Mining, Glass
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Glass/mining.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyRetroSalvageMiningGlass
+  suffix: Salvage, Mining, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/retromining.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyRetroMiningGlass
+  suffix: Mining, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/retromining.rsi
+    state: "assembly"

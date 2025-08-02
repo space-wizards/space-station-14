@@ -241,9 +241,9 @@
       board: [ DoorElectronicsSalvage ]
 
 - type: entity
-  parent: AirlockMining
-  id: AirlockMiningLocked
-  suffix: Mining(Salvage), Locked
+  parent: AirlockRetroMining # Starlight - rename
+  id: AirlockRetroMiningLocked # Starlight - rename
+  suffix: Salvage, Locked # Starlight - rename, to denote Salvage only access
   components:
   - type: ContainerFill
     containers:
@@ -655,9 +655,9 @@
       board: [ DoorElectronicsSalvage ]
 
 - type: entity
-  parent: AirlockMiningGlass
-  id: AirlockMiningGlassLocked
-  suffix: Mining(Salvage), Locked
+  parent: AirlockRetroMiningGlass # Starlight - rename
+  id: AirlockRetroMiningGlassLocked # Starlight - rename
+  suffix: Salvage, Locked # Starlight - rename, to denote Salvage only access
   components:
   - type: ContainerFill
     containers:

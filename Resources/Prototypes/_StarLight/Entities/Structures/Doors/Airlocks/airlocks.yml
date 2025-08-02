@@ -1,0 +1,83 @@
+- type: entity
+  parent: Airlock
+  id: AirlockSalvageMining
+  suffix: Salvage, Mining
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/salvagemining.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: Airlock
+  id: AirlockMining
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/mining.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: AirlockCargo
+  id: AirlockRetroSalvageMining
+  suffix: Salvage, Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/retromining.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+  - type: Paintable
+    group: null
+
+- type: entity
+  parent: AirlockCargo
+  id: AirlockRetroMining
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/retromining.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+  - type: Paintable
+    group: null
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockSalvageMiningGlass
+  suffix: Salvage, Mining
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Glass/salvagemining.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockMiningGlass
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Glass/mining.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockRetroSalvageMiningGlass
+  suffix: Salvage, Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/retromining.rsi
+  - type: Paintable
+    group: null
+
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockRetroMiningGlass
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/retromining.rsi
+  - type: Paintable
+    group: null

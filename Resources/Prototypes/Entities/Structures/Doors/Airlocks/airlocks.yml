@@ -132,11 +132,11 @@
 
 - type: entity
   parent: AirlockCargo
-  id: AirlockMining
-  suffix: Mining(Salvage)
+  id: AirlockRetroMining # Starlight - rename
+  suffix: Salvage # Starlight - rename, to denote Salvage only access
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
+    sprite: Structures/Doors/Airlocks/Standard/retromining.rsi # Starlight - rename
   - type: Wires
     layoutId: AirlockCargo
   - type: Paintable
@@ -294,12 +294,12 @@
     sprite: Structures/Doors/Airlocks/Glass/syndicate.rsi
 
 - type: entity
-  parent: AirlockCargoGlass
-  id: AirlockMiningGlass
-  suffix: Mining(Salvage)
+  parent: AirlockCargoGlass # Starlight - rename
+  id: AirlockRetroMiningGlass # Starlight - rename, to denote Salvage only access
+  suffix: Salvage
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
+    sprite: Structures/Doors/Airlocks/Glass/retromining.rsi # Starlight - rename
   - type: Paintable
     group: null
 

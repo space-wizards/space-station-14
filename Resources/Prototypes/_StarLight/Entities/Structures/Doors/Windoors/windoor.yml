@@ -1,0 +1,17 @@
+- type: entity
+  parent: WindoorSecureCargoLocked
+  id: WindoorSecureMiningLocked
+  suffix: Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMining ]
+
+- type: entity
+  parent: WindoorSecureCargoLocked
+  id: WindoorSecureSalvageMiningLocked
+  suffix: Salvage, Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvageMining ]

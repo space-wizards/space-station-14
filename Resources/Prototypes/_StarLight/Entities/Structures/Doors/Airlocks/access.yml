@@ -122,3 +122,89 @@
     - type: ContainerFill
       containers:
         board: [DoorElectronicsSyndicateAgent]
+
+- type: entity
+  parent: AirlockSalvageMining
+  id: AirlockSalvageMiningLocked
+  suffix: Salvage, Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvageMining ]
+
+- type: entity
+  parent: AirlockMining
+  id: AirlockMiningLocked
+  suffix: Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMining ]
+
+- type: entity
+  parent: AirlockRetroSalvageMining
+  id: AirlockRetroSalvageMiningLocked
+  suffix: Salvage, Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvageMining ]
+
+- type: entity
+  parent: AirlockRetroMining
+  id: AirlockRetroMiningLocked
+  suffix: Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMining ]
+
+- type: entity
+  parent: AirlockSalvageMiningGlass
+  id: AirlockSalvageMiningGlassLocked
+  suffix: Salvage, Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvageMining ]
+
+- type: entity
+  parent: AirlockMiningGlass
+  id: AirlockMiningGlassLocked
+  suffix: Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMining ]
+
+- type: entity
+  parent: AirlockRetroSalvageMiningGlass
+  id: AirlockRetroSalvageMiningGlassLocked
+  suffix: Saslvage, Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSalvageMining ]
+
+- type: entity
+  parent: AirlockRetroMiningGlass
+  id: AirlockRetroMiningGlassLocked
+  suffix: Mining, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMining ]
+
+- type: entity
+  parent: AirlockMiningLocked
+  id: AirlockMaintMiningLocked
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+- type: entity
+  parent: AirlockSalvageMiningLocked
+  id: AirlockMaintSalvageMiningLocked
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
