@@ -64,6 +64,12 @@
               amount: 1
               doAfter: 1
 
+        - to: TableCard
+          steps:
+            - material: Cardboard
+              amount: 3
+              doAfter: 1
+
         - to: TableReinforcedGlass
           steps:
             - material: ReinforcedGlass
@@ -161,6 +167,18 @@
           steps:
             - tool: Anchoring
               doAfter: 1
+
+    - node: TableCard
+      entity: TableCard
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialCardboard1
+              amount: 3
+          steps:
+            - tool: Slicing
+              doAfter: 2
 
     - node: TableReinforcedGlass
       entity: TableReinforcedGlass
