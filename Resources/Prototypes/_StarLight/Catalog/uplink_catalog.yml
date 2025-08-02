@@ -103,6 +103,21 @@
   categories:
     - UplinkAmmo
 
+- type: listing
+  id: UplinkShotgunBreachingMagazine
+  name: uplink-breaching-magazine-name
+  description: uplink-breaching-magazine-desc
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi,
+      state: breach,
+    }
+  productEntity: MagazineShotgunBreach
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkAmmo
+
 # Cybernetics
 
 - type: listing
