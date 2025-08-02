@@ -88,6 +88,13 @@ public sealed class PayloadSystem : EntitySystem
         if (trigger.Components == null)
             return;
 
+        // Create a set of components that the entity has before the operation
+        var componentSetBefore = new HashSet<Type>();
+        foreach (var component in EntityManager.GetComponents(uid))
+        {
+            componentSetBefore.Add(component.GetType());
+        }
+
         // ANY payload trigger that gets inserted can grant components. It is up to the construction graphs to determine trigger capacity.
         foreach (var (name, data) in trigger.Components)
         {
@@ -103,8 +110,17 @@ public sealed class PayloadSystem : EntitySystem
             var temp = (object) component;
             _serializationManager.CopyTo(data.Component, ref temp);
             AddComp(uid, (Component) temp!);
+        }
 
-            trigger.GrantedComponents.Add(registration.Type);
+        // Ensure that any components that were added during the operation are tracked in GrantedComponents
+        //   so that they can be removed when the trigger component is removed.
+        foreach (var component in EntityManager.GetComponents(uid))
+        {
+            var type = component.GetType();
+            if (!componentSetBefore.Contains(type))
+            {
+                trigger.GrantedComponents.Add(type);
+            }
         }
     }
 
