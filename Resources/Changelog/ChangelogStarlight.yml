@@ -10423,5 +10423,12 @@ Entries:
   id: 1434
   time: '2025-08-02T15:10:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1191
+- author: Scarlet Lightweaver(insaniam)
+  changes:
+  - message: Tweaked stats of the MT-7 Energy Magnum (still admin only FOR NOW!!)
+    type: Tweak
+  id: 1435
+  time: '2025-08-02T15:13:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1178
 Order: -1
 
