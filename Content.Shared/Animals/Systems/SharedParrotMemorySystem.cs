@@ -47,7 +47,3 @@ public abstract class SharedParrotMemorySystem : EntitySystem
         args.Verbs.Add(clearMemoryVerb);
     }
 }
-
-
-[Serializable, NetSerializable]
-public record struct SpeechMemory(NetUserId? NetUserId, string Message);

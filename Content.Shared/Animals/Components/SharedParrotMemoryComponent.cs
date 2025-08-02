@@ -54,3 +54,6 @@ public sealed partial class ParrotMemoryComponent : Component
     [DataField]
     public int MaxEntryLength = 50;
 }
+
+[Serializable, NetSerializable]
+public record struct SpeechMemory(NetUserId? NetUserId, string Message);
