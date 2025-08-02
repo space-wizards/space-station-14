@@ -698,6 +698,13 @@ BarSignSpacebucksAlignTile: BarSignSpacebucks
 BarSignMaltroachAlignTile: BarSignMaltroach
 BarSignWhiskeyEchoesAlignTile: BarSignWhiskeyEchoes
 
+# 2025-06-12
+HappyHonk: FoodBoxHappyHonkFill
+HappyHonkMime: FoodBoxHappyHonkMimeFill
+HappyHonkCluwne: FoodBoxHappyHonkCluwneFill
+HappyHonkNukie: FoodBoxHappyHonkNukieFill # powergamers better remember where these are mapped
+HappyHonkNukieSnacks: FoodBoxHappyHonkNukieFillLunch
+
 # 2025-06-21
 ClothingNeckHeadphones: ClothingMultipleHeadphones
 
