@@ -129,6 +129,9 @@ public abstract partial class SharedStunSystem : EntitySystem
     // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
     public bool TryAddStunDuration(EntityUid uid, TimeSpan duration)
     {
+        if (duration == TimeSpan.Zero)
+            return false;
+
         if (!_status.TryAddStatusEffectDuration(uid, StunId, duration))
             return false;
 
@@ -138,6 +141,9 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     public bool TryUpdateStunDuration(EntityUid uid, TimeSpan? duration)
     {
+        if (duration <= TimeSpan.Zero)
+            return false;
+
         if (!_status.TryUpdateStatusEffectDuration(uid, StunId, duration))
             return false;
 
@@ -158,6 +164,9 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     public bool TryAddKnockdownDuration(EntityUid uid, TimeSpan duration)
     {
+        if (duration == TimeSpan.Zero)
+            return false;
+
         if (!_status.TryAddStatusEffectDuration(uid, KnockdownId, duration))
             return false;
 
@@ -169,6 +178,9 @@ public abstract partial class SharedStunSystem : EntitySystem
 
     public bool TryUpdateKnockdownDuration(EntityUid uid, TimeSpan? duration)
     {
+        if (duration <= TimeSpan.Zero)
+            return false;
+
         if (!_status.TryUpdateStatusEffectDuration(uid, KnockdownId, duration))
             return false;
 
