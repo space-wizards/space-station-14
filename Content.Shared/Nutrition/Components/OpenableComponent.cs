@@ -36,7 +36,7 @@ public sealed partial class OpenableComponent : Component
     /// Text shown when examining and its open.
     /// </summary>
     [DataField]
-    public LocId ExamineText = "drink-component-on-examine-is-opened";
+    public LocId ExamineText = "examinable-solution-on-examine-is-opened";
 
     /// <summary>
     /// The locale id for the popup shown when IsClosed is called and closed. Needs a "owner" entity argument passed to it.

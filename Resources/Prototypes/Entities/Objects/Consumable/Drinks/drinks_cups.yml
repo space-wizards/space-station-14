@@ -42,6 +42,9 @@
   - type: Tag
     tags:
     - DrinkCup
+  - type: ExaminableSolution
+    solution: drink
+    estimate: true
 
 - type: entity
   parent: DrinkBaseCup
