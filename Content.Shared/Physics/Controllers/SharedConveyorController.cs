@@ -29,6 +29,11 @@ public abstract class SharedConveyorController : VirtualController
 
     private ConveyorJob _job;
 
+    // TODO: These values should be defined by ConveyorComponent and then passed to Conveyed entities
+    private const float Friction = 10f;
+    private const float StopFriction = 40f;
+    private const float Acceleration = 20f;
+
     private EntityQuery<ConveyorComponent> _conveyorQuery;
     private EntityQuery<ConveyedComponent> _conveyedQuery;
     protected EntityQuery<PhysicsComponent> PhysicsQuery;
@@ -47,6 +52,7 @@ public abstract class SharedConveyorController : VirtualController
         UpdatesAfter.Add(typeof(SharedMoverController));
 
         SubscribeLocalEvent<ConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
+        SubscribeLocalEvent<ConveyedComponent, MoverTileDefEvent>(OnMoverTileDefEvent);
         SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
         SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
 
@@ -58,8 +64,30 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnConveyedFriction(Entity<ConveyedComponent> ent, ref TileFrictionEvent args)
     {
+        if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsOnConveyor((ent, fixture)))
+            return;
+
         // Conveyed entities don't get friction, they just get wishdir applied so will inherently slowdown anyway.
         args.Modifier = 0f;
+    }
+
+    private void OnMoverTileDefEvent(Entity<ConveyedComponent> ent, ref MoverTileDefEvent args)
+    {
+        // We explicitly don't check if this has been handled yet because Conveyors are special
+
+        if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsOnConveyor((ent, fixture)))
+            return;
+
+        var bodyCompensation = 1f;
+
+        if (TryComp<MovementSpeedModifierComponent>(ent, out var move)
+            && !MathHelper.CloseTo(move.BaseFriction, MovementSpeedModifierComponent.DefaultFriction))
+            bodyCompensation *= move.BaseFriction / MovementSpeedModifierComponent.DefaultFriction;
+
+        args.MobFriction = 0.5f * bodyCompensation;
+        args.Friction = 0.5f * bodyCompensation;
+        args.MobAcceleration = 1f;
+        args.Handled = true;
     }
 
     private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
@@ -140,7 +168,12 @@ public abstract class SharedConveyorController : VirtualController
                 continue;
 
             var physics = ent.Entity.Comp3;
+
+            if (physics.BodyStatus != BodyStatus.OnGround)
+                continue;
+
             var velocity = physics.LinearVelocity;
+            var angularVelocity = physics.AngularVelocity;
             var targetDir = ent.Direction;
 
             // If mob is moving with the conveyor then combine the directions.
@@ -163,17 +196,20 @@ public abstract class SharedConveyorController : VirtualController
                     // We provide a small minimum friction speed as well for those times where the friction would stop large objects
                     // snagged on corners from sliding into the centerline.
                     _mover.Friction(0.2f, frameTime: frameTime, friction: 5f, ref velocity);
+                    _mover.Friction(0f, frameTime, Friction, ref angularVelocity);
                 }
 
-                SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
+                SharedMoverController.Accelerate(ref velocity, targetDir, Acceleration, frameTime);
             }
             else if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
             {
                 // Need friction to outweigh the movement as it will bounce a bit against the wall.
                 // This facilitates being able to sleep entities colliding into walls.
-                _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref velocity);
+                _mover.Friction(0f, frameTime, StopFriction, ref velocity);
+                _mover.Friction(0f, frameTime, StopFriction, ref angularVelocity);
             }
 
+            PhysicsSystem.SetAngularVelocity(ent.Entity.Owner, angularVelocity);
             PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity, wakeBody: false);
 
             if (!IsConveyed((ent.Entity.Owner, ent.Entity.Comp2)))
@@ -395,6 +431,39 @@ public abstract class SharedConveyorController : VirtualController
             var other = contact.OtherEnt(ent.Owner);
 
             if (_conveyorQuery.TryComp(other, out var comp) && CanRun(comp))
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool IsOnConveyor(Entity<FixturesComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        // Can't be on a conveyor if we're on the ground
+        if (!PhysicsQuery.TryComp(ent, out var body) || body.BodyStatus != BodyStatus.OnGround)
+            return false;
+
+        var transform = PhysicsSystem.GetPhysicsTransform(ent);
+
+        var contacts = PhysicsSystem.GetContacts(ent.Owner);
+
+        while (contacts.MoveNext(out var contact))
+        {
+            if (!contact.IsTouching)
+                continue;
+
+            var other = contact.OtherEnt(ent.Owner);
+
+            if (!_conveyorQuery.HasComp(other))
+                continue;
+
+            var otherFixture = contact.OtherFixture(ent.Owner);
+            var otherTransform = PhysicsSystem.GetPhysicsTransform(other);
+
+            if (_fixtures.TestPoint(otherFixture.Item2.Shape, otherTransform, transform.Position))
                 return true;
         }
 
