@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Content.Server.Github.Requests;
 using Content.Server.Github.Responses;
 using Content.Shared.CCVar;
+using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 
 namespace Content.Server.Github;
@@ -111,7 +112,7 @@ public sealed class GithubClient
             return;
         }
 
-        var fileText = "";
+        string fileText;
         try
         {
             fileText = File.ReadAllText(path);
@@ -122,11 +123,10 @@ public sealed class GithubClient
             return;
         }
 
-        var RSA = System.Security.Cryptography.RSA.Create();
-
+        var rsa = RSA.Create();
         try
         {
-            RSA.ImportFromPem(fileText);
+            rsa.ImportFromPem(fileText);
         }
         catch
         {
@@ -176,9 +176,14 @@ public sealed class GithubClient
             return null;
         }
 
-        if (request.AuthenticationMethod == GithubAuthMethod.Token && !await EnsureTokenNotExpired(ct))
-            return null;
+        if (request.AuthenticationMethod == GithubAuthMethod.Token)
+            await EnsureTokenNotExpired(ct);
 
+        return await MakeRequest(request, ct);
+    }
+
+    private async Task<HttpResponseMessage?> MakeRequest(IGithubRequest request, CancellationToken ct)
+    {
         var httpRequestMessage = BuildRequest(request);
 
         var response = await _httpClient.SendAsync(httpRequestMessage, ct);
@@ -264,35 +269,38 @@ public sealed class GithubClient
         return request.AuthenticationMethod switch
         {
             GithubAuthMethod.Token => AuthHeaderBearer + _tokenData.Token,
-            GithubAuthMethod.JWT => AuthHeaderBearer + GetValidJWT(),
+            GithubAuthMethod.JWT => AuthHeaderBearer + GetValidJwt(),
             _ => throw new Exception("Unknown auth method!"),
         };
     }
 
     // TODO: Maybe ensure that perms are only read metadata / write issues so people don't give full access
-    private async Task<bool> EnsureTokenNotExpired(CancellationToken ct)
+    private async Task EnsureTokenNotExpired(CancellationToken ct)
     {
         if (_tokenData.Expiery != null && _tokenData.Expiery - _tokenBuffer > DateTime.UtcNow)
-            return true;
+            return;
 
         _sawmill.Info("Token expired - requesting new token!");
 
         var installationRequest = new InstallationsRequest();
-        var installationHttpResponse = await TryMakeRequestSafe(installationRequest, ct);
+        var installationHttpResponse = await MakeRequest(installationRequest, ct);
         if (installationHttpResponse == null)
-            return false;
+        {
+            _sawmill.Error("Could not make http installation request when creating token.");
+            return ;
+        }
 
         var installationResponse = await installationHttpResponse.Content.ReadFromJsonAsync<List<InstallationResponse>>(_jsonSerializerOptions, ct);
         if (installationResponse == null)
         {
             _sawmill.Error("Could not parse installation response.");
-            return false;
+            return;
         }
 
         if (installationResponse.Count == 0)
         {
             _sawmill.Error("App not installed anywhere.");
-            return false;
+            return;
         }
 
         int? installationId = null;
@@ -308,7 +316,7 @@ public sealed class GithubClient
         if (installationId == null)
         {
             _sawmill.Error("App not installed in given repository.");
-            return false;
+            return;
         }
 
         var tokenRequest = new TokenRequest
@@ -316,23 +324,25 @@ public sealed class GithubClient
             InstallationId = installationId.Value,
         };
 
-        var tokenHttpResponse = await TryMakeRequestSafe(tokenRequest, ct);
+        var tokenHttpResponse = await MakeRequest(tokenRequest, ct);
         if (tokenHttpResponse == null)
-            return false;
+        {
+            _sawmill.Error("Could not make http token request when creating token..");
+            return ;
+        }
 
         var tokenResponse = await tokenHttpResponse.Content.ReadFromJsonAsync<TokenResponse>(_jsonSerializerOptions, ct);
         if (tokenResponse == null)
         {
             _sawmill.Error("Could not parse token response.");
-            return false;
+            return ;
         }
 
         _tokenData = (tokenResponse.ExpiresAt, tokenResponse.Token);
-        return true;
     }
 
     // See: https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-json-web-token-jwt-for-a-github-app
-    private string GetValidJWT()
+    private string GetValidJwt()
     {
         if (_jwtData.Expiery != null && _jwtData.Expiery - _jwtBuffer > DateTime.UtcNow)
             return _jwtData.JWT;
