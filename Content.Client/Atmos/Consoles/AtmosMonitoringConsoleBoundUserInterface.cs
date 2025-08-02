@@ -35,6 +35,6 @@ public sealed class AtmosMonitoringConsoleBoundUserInterface : BoundUserInterfac
         if (!disposing)
             return;
 
-        _menu?.Dispose();
+        _menu?.Close();
     }
 }

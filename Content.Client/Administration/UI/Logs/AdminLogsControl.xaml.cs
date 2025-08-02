@@ -515,9 +515,9 @@ public sealed partial class AdminLogsControl : Control
         );
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
-        base.Dispose(disposing);
+        base.ExitedTree();
 
         TypeSearch.OnTextChanged -= TypeSearchChanged;
         PlayerSearch.OnTextChanged -= PlayerSearchChanged;

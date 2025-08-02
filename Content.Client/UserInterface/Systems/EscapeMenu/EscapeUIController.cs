@@ -116,7 +116,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     {
         if (_escapeWindow != null)
         {
-            _escapeWindow.Dispose();
+            _escapeWindow.Close();
             _escapeWindow = null;
         }
 
