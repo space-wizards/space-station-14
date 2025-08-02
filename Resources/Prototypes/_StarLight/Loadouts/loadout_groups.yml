@@ -70,8 +70,8 @@
   loadouts:
   - RoboticistWeldingGoggles
   - RoboticistDiagnosticsHud
-  
-  
+
+
 - type: loadoutGroup
   id: RoboticistBackpack
   name: loadout-group-roboticist-backpack
@@ -79,7 +79,7 @@
   - RoboticistBackpack
   - RoboticistSatchel
   - RoboticistDuffel
-  
+
 - type: loadoutGroup
   id: NanoTrasenRepresentativeJumpsuit
   name: loadout-group-nanotrasenrepresentative-jumpsuit
@@ -94,7 +94,7 @@
   loadouts:
   - NanoTrasenRepresentativeGlasses
   - NanoTrasenRepresentativeHud
-  
+
 - type: loadoutGroup
   id: BlueShieldBackpack
   name: loadout-group-blueshield-backpack
@@ -119,21 +119,21 @@
   loadouts:
   - BlueShieldVest
   - BlueShieldCoat
-  
+
 - type: loadoutGroup
   id: BlueShieldNeck
   name: Loadout-group-blueshield-neck
   loadouts:
   - BlueShieldFormalCloak
   - BlueShieldEliteCloak
-  
+
 - type: loadoutGroup
   id: BlueShieldEyewear
   name: loadout-group-blueshield-eyewear
   loadouts:
   - BlueShieldGlasses
   - BlueShieldHud
-    
+
 - type: loadoutGroup
   id: SecurityNonLethalWeapon
   name: loadout-group-security-non-lethal-weapon
@@ -167,9 +167,10 @@
   - LaceupShoes
   - Heels
   - LeatherShoes
-  - CowboyBootsBrown
-  - CowboyBootsBlack
-  - CowboyBootsWhite
+  - CowboyBootsBrownFilled
+  - CowboyBootsBlackFilled
+  - CowboyBootsWhiteFilled
+  - HighHeelBootsFilled
 
 - type: loadoutGroup
   id: HoPShoes
@@ -206,11 +207,11 @@
   - JackBoots
   - SecurityWinterBoots
   - LaceupShoes
-  - CowboyBootsBrown
-  - CowboyBootsBlack
-  - CowboyBootsWhite
+  - CowboyBootsBrownFilled
+  - CowboyBootsBlackFilled
+  - CowboyBootsWhiteFilled
   - Heels
-  - HighHeelBoots
+  - HighHeelBootsFilled
 
 - type: loadoutGroup
   id: CivilianShoes
@@ -233,4 +234,11 @@
   - LaceupShoes
   - Heels
   - LeatherShoes
+
+- type: loadoutGroup
+  id: BlueShieldShoes
+  name: loadout-group-security-shoes
+  loadouts:
+  - CombatBoots
+  - HighHeelBootsFilled
 
