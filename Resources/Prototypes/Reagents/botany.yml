@@ -222,7 +222,7 @@
       - !type:HealthChange
         conditions:
         - !type:OrganType
-          type: Rat
+          type: AmmoniaHealer
           shouldHave: false
         - !type:ReagentThreshold
           reagent: Ammonia
@@ -235,10 +235,7 @@
         probability: 0.12
         conditions:
         - !type:OrganType
-          type: Rat
-          shouldHave: false
-        - !type:OrganType
-          type: Vox
+          type: AmmoniaResistant
           shouldHave: false
         - !type:ReagentThreshold
           reagent: Ammonia
@@ -255,7 +252,7 @@
       - !type:HealthChange
         conditions:
         - !type:OrganType
-          type: Rat
+          type: AmmoniaHealer
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 1
@@ -267,10 +264,12 @@
             Burn: -5
           types:
             Bloodloss: -5
-      - !type:Oxygenate # ammonia displaces nitrogen in vox blood
+      - !type:Oxygenate # ammonia displaces nitrogen in vox blood, should it also happen in slimes?
         conditions:
         - !type:OrganType
-          type: Vox
+          type: OxygenAllergic
+        - !type:OrganType
+          type: NitrogenBreather
         factor: -4
 
 

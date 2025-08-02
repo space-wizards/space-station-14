@@ -13,24 +13,12 @@
       - !type:Oxygenate
         conditions:
         - !type:OrganType
-          type: Human
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Animal
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Rat
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Plant
+          type: OxygenBreather
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
         - !type:OrganType
-          type: Vox
+          type: OxygenAllergic
           shouldHave: false
         ratios:
           CarbonDioxide: 1.0
@@ -38,7 +26,7 @@
       - !type:HealthChange
         conditions:
         - !type:OrganType
-          type: Vox
+          type: OxygenAllergic
         scaleByQuantity: true
         ignoreResistances: true
         damage:
@@ -51,7 +39,7 @@
           - !type:ReagentThreshold
             min: 0.5
           - !type:OrganType
-            type: Vox
+            type: OxygenAllergic
         clear: true
         time: 5
     Gas:
@@ -59,24 +47,12 @@
       - !type:Oxygenate
         conditions:
         - !type:OrganType
-          type: Human
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Animal
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Rat
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Plant
+          type: OxygenBreather
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
         - !type:OrganType
-          type: Vox
+          type: OxygenAllergic # Should this just be limited to OxygenBreather instead of Not Vox?
           shouldHave: false
         ratios:
           CarbonDioxide: 1.0
@@ -84,7 +60,7 @@
       - !type:HealthChange
         conditions:
         - !type:OrganType
-          type: Vox
+          type: OxygenAllergic
         scaleByQuantity: true
         ignoreResistances: true
         damage:
@@ -97,7 +73,7 @@
           - !type:ReagentThreshold
             min: 0.5
           - !type:OrganType
-            type: Vox
+            type: OxygenAllergic
         clear: true
         time: 5
 
@@ -201,14 +177,11 @@
       - !type:Oxygenate
         conditions:
         - !type:OrganType
-          type: Plant
+          type: CarbonDioxideBreather
       - !type:HealthChange
         conditions:
         - !type:OrganType
-          type: Plant
-          shouldHave: false
-        - !type:OrganType
-          type: Vox
+          type: CarbonDioxideImmune
           shouldHave: false
         scaleByQuantity: true
         ignoreResistances: true
@@ -219,7 +192,7 @@
       - !type:Oxygenate
         conditions:
         - !type:OrganType
-          type: Plant
+          type: CarbonDioxideBreather
           shouldHave: false
         factor: -4
     Gas:
@@ -227,14 +200,11 @@
       - !type:Oxygenate
         conditions:
         - !type:OrganType
-          type: Plant
+          type: CarbonDioxideBreather
       - !type:HealthChange
         conditions:
         - !type:OrganType
-          type: Plant
-          shouldHave: false
-        - !type:OrganType
-          type: Vox
+          type: CarbonDioxideImmune
           shouldHave: false
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
@@ -249,7 +219,7 @@
       - !type:Oxygenate # carbon dioxide displaces oxygen from the bloodstream, causing asphyxiation
         conditions:
         - !type:OrganType
-          type: Plant
+          type: CarbonDioxideBreather
           shouldHave: false
         factor: -4
       # We need a metabolism effect on reagent removal
@@ -277,23 +247,24 @@
       - !type:Oxygenate
         conditions:
         - !type:OrganType
-          type: Vox
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Slime
+          type: NitrogenBreather
       # Converts Nitrogen into CO2
       - !type:ModifyLungGas
         conditions:
         - !type:OrganType
-          type: Vox
+          type: NitrogenBreather
+        - !type:OrganType
+          type: OxygenAllergic
         ratios:
           Ammonia: 1.0
           Nitrogen: -1.0
       - !type:ModifyLungGas
         conditions:
         - !type:OrganType
-          type: Slime
+          type: NitrogenBreather
+        - !type:OrganType
+          type: OxygenAllergic
+          shouldHave: false
         ratios:
           NitrousOxide: 1.0
           Nitrogen: -1.0
@@ -322,7 +293,7 @@
           reagent: NitrousOxide
           min: 0.2
         - !type:OrganType
-          type: Slime
+          type: NitrousOxideImmune
           shouldHave: false
         emote: Laugh
         showInChat: true
@@ -333,7 +304,7 @@
           reagent: NitrousOxide
           min: 0.2
         - !type:OrganType
-          type: Slime
+          type: NitrousOxideImmune
           shouldHave: false
         emote: Scream
         showInChat: true
@@ -344,7 +315,7 @@
           reagent: NitrousOxide
           min: 0.5
         - !type:OrganType
-          type: Slime
+          type: NitrousOxideImmune
           shouldHave: false
         type: Local
         visualType: Medium
@@ -356,7 +327,7 @@
           reagent: NitrousOxide
           min: 1
         - !type:OrganType
-          type: Slime
+          type: NitrousOxideImmune
           shouldHave: false
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
@@ -366,7 +337,7 @@
           reagent: NitrousOxide
           min: 1.8
         - !type:OrganType
-          type: Slime
+          type: NitrousOxideImmune
           shouldHave: false
         effectProto: StatusEffectForcedSleeping
         time: 3
@@ -377,7 +348,7 @@
           reagent: NitrousOxide
           min: 3.5
         - !type:OrganType
-          type: Slime
+          type: NitrousOxideImmune
           shouldHave: false
         ignoreResistances: true
         damage:
