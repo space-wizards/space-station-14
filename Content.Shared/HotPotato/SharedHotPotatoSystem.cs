@@ -2,6 +2,7 @@ using Content.Shared.Audio;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Trigger;
 using Content.Shared.Weapons.Melee.Events;
@@ -56,13 +57,19 @@ public abstract class SharedHotPotatoSystem : EntitySystem
 
             if (!_hands.IsHolding((hitEntity, hands), ent.Owner, out _) && _hands.TryForcePickupAnyHand(hitEntity, ent.Owner, handsComp: hands))
             {
-                _popup.PopupPredicted(Loc.GetString("hot-potato-passed",
-                    ("from", args.User), ("to", hitEntity)), ent.Owner, args.User, PopupType.Medium);
+                _popup.PopupPredicted(
+                    Loc.GetString("hot-potato-passed", ("from", Identity.Entity(args.User, EntityManager)), ("to", Identity.Entity(hitEntity, EntityManager))),
+                    ent.Owner,
+                    args.User,
+                    PopupType.Medium);
                 break;
             }
 
-            _popup.PopupEntity(Loc.GetString("hot-potato-failed",
-                ("to", hitEntity)), ent.Owner, args.User, PopupType.Medium);
+            _popup.PopupClient(
+                Loc.GetString("hot-potato-failed", ("to", Identity.Entity(hitEntity, EntityManager))),
+                ent.Owner,
+                args.User,
+                PopupType.Medium);
 
             break;
         }
