@@ -111,6 +111,21 @@
     malus: 0.225
   - type: ThrowingAngle
     angle: 225
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          radius: 0.01
+          vertices:
+          - -0.4,-0.2
+          - -0.2,-0.4
+          - 0.4,0.2
+          - 0.2,0.4
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
 - type: entity
   name: survival knife
@@ -304,3 +319,18 @@
     angle: 225
   - type: StaticPrice
     price: 500 # 2000 for a set of 4
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          radius: 0.01
+          vertices:
+          - -0.475,-0.225
+          - -0.225,-0.475
+          - 0.525,0.275
+          - 0.275,0.525
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2

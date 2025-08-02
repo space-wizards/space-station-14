@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
-using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Medical.Components;
 using Content.Server.NodeContainer.EntitySystems;
@@ -10,6 +9,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Temperature.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -68,7 +68,6 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         SubscribeLocalEvent<CryoPodComponent, AtmosDeviceUpdateEvent>(OnCryoPodUpdateAtmosphere);
         SubscribeLocalEvent<CryoPodComponent, DragDropTargetEvent>(HandleDragDropOn);
         SubscribeLocalEvent<CryoPodComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<CryoPodComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<CryoPodComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<CryoPodComponent, GasAnalyzerScanEvent>(OnGasAnalyzed);
         SubscribeLocalEvent<CryoPodComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
@@ -116,7 +115,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
                 }
 
                 var solutionToInject = _solutionContainerSystem.SplitSolution(containerSolution.Value, cryoPod.BeakerTransferAmount);
-                _bloodstreamSystem.TryAddToChemicals(patient.Value, solutionToInject, bloodstream);
+                _bloodstreamSystem.TryAddToChemicals((patient.Value, bloodstream), solutionToInject);
                 _reactiveSystem.DoEntityReaction(patient.Value, solutionToInject, ReactionMethod.Injection);
             }
         }
@@ -216,22 +215,6 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
             return;
 
         args.Handled = _toolSystem.UseTool(args.Used, args.User, entity.Owner, entity.Comp.PryDelay, PryingQuality, new CryoPodPryFinished());
-    }
-
-    private void OnExamined(Entity<CryoPodComponent> entity, ref ExaminedEvent args)
-    {
-        var container = _itemSlotsSystem.GetItemOrNull(entity.Owner, entity.Comp.SolutionContainerName);
-        if (args.IsInDetailsRange && container != null && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out _, out var containerSolution))
-        {
-            using (args.PushGroup(nameof(CryoPodComponent)))
-            {
-                args.PushMarkup(Loc.GetString("cryo-pod-examine", ("beaker", Name(container.Value))));
-                if (containerSolution.Volume == 0)
-                {
-                    args.PushMarkup(Loc.GetString("cryo-pod-empty-beaker"));
-                }
-            }
-        }
     }
 
     private void OnPowerChanged(Entity<CryoPodComponent> entity, ref PowerChangedEvent args)

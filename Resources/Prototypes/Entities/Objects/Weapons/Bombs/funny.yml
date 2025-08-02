@@ -102,6 +102,11 @@
       - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+    - BananaPeel
 
 - type: entity
   parent: BaseItem
