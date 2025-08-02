@@ -1,7 +1,7 @@
 using System.IO;
 using JetBrains.Annotations;
 
-namespace Content.Server.Holiday.ShouldCelebrate
+namespace Content.Shared.Holiday.ShouldCelebrate
 {
     /// <summary>
     ///     Computus for easter calculation.

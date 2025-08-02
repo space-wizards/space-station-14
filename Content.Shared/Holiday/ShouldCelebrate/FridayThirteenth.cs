@@ -1,7 +1,7 @@
-using Content.Server.Holiday.Interfaces;
+using Content.Shared.Holiday.Interfaces;
 using JetBrains.Annotations;
 
-namespace Content.Server.Holiday.ShouldCelebrate
+namespace Content.Shared.Holiday.ShouldCelebrate
 {
     /// <summary>
     ///     For Friday the 13th. Spooky!
