@@ -12,6 +12,14 @@ using static Content.Shared.Administration.Notes.AdminMessageEuiState;
 namespace Content.Server.GameTicking;
 public sealed partial class GameTicker //🌟Starlight🌟
 {
+
+    #region Starlight
+    [ViewVariables]
+    public string GamemodeNameOverride = "";
+    [ViewVariables]
+    public string GamemodeDescOverride = "";
+    #endregion
+
     private WebhookIdentifier? _statusWebhookIdentifier;
     private WebhookIdentifier? _statusWebhookStaffIdentifier;
     private ulong _statusMessageId = 0;
@@ -125,6 +133,9 @@ public sealed partial class GameTicker //🌟Starlight🌟
         Subs.CVar(_cfg, StarlightCCVars.StatusMessageId, v => _statusMessageId = v, true);
         Subs.CVar(_cfg, StarlightCCVars.StatusMessageStaffId, v => _statusStaffMessageId = v, true);
         Subs.CVar(_cfg, CVars.GameHostName, v => _serverName = v[..Math.Min(v.Length, 1500)], true);
+        Subs.CVar(_cfg, StarlightCCVars.OverrideGamemodeName, v => GamemodeNameOverride = v, true);
+        Subs.CVar(_cfg, StarlightCCVars.OverrideGamemodeDescription, v => GamemodeDescOverride = v, true);
+
 
         _timer = new(StarlightStatus, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
     }
@@ -146,7 +157,7 @@ public sealed partial class GameTicker //🌟Starlight🌟
 
         embed.Fields[0] = embed.Fields[0] with { Value = $"{_playerManager.PlayerCount}/{_playerManager.MaxPlayers}" };
         embed.Fields[1] = embed.Fields[1] with { Value = mapName };
-        embed.Fields[2] = embed.Fields[2] with { Value = preset };
+        embed.Fields[2] = embed.Fields[2] with { Value = string.IsNullOrWhiteSpace(GamemodeDescOverride) ? preset : Loc.GetString(GamemodeDescOverride) };
         embed.Fields[3] = embed.Fields[3] with { Value = RoundDuration().ToString("hh\\:mm\\:ss") };
 
         _payload.Embeds[0] = embed;
@@ -184,7 +195,7 @@ public sealed partial class GameTicker //🌟Starlight🌟
         if (_statusStaffMessageId == 0)
         {
             _ = _discord.CreateMessage(_statusWebhookStaffIdentifier.Value, _payloadWithAdmins);
-            _statusWebhookIdentifier = null;
+            _statusWebhookStaffIdentifier = null;
         }
         else
             _ = _discord.EditMessage(_statusWebhookStaffIdentifier.Value, _statusStaffMessageId, _payloadWithAdmins);

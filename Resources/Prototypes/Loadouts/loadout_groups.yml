@@ -3,7 +3,7 @@
   id: Trinkets
   name: loadout-group-trinkets
   minLimit: 0
-  maxLimit: 3
+  maxLimit: 4
   loadouts:
   - FlowerWreath
   - Hairflower
@@ -57,6 +57,32 @@
   - ClothWrap # 🌟Starlight🌟
   - ClothingUniformJumpskirtElegantMaid # 🌟Starlight🌟
   - ClothingHeadHatCatEars # 🌟Starlight🌟
+  - RolliePack #SL
+  - GoldRing #SL
+  - SilverRing #SL
+  - Matchbox #SL
+  - FancyPen #SL
+  - HonkImplant #SL
+  - TromboneImplant #SL
+  - NewtonsCradle #SL
+  - POrb #SL
+  - BBall #SL
+  - RubberQuack #SL
+  - GatchaBox #SL
+  - WristWatch #SL
+  - ZippoLighter #SL
+  - MedChecker #SL
+  - ChanceSack #SL
+  - StationMap #SL
+  - YaharJar #SL
+  - PaperFolder1 #SL
+  - PaperFolder2 #SL
+  - PaperFolder3 #SL
+  - PaperFolder4 #SL
+  - PaperFolder5 #SL
+  - PaperFolder6 #SL
+  - PaperFolder7 #SL
+  - PaperClipboard #SL
 
 - type: loadoutGroup
   id: Glasses
@@ -210,6 +236,46 @@
   - RainbowJumpskirt
   - GreyJumpsuit #starlight
   - GreyJumpskirt #starlight
+  - WhiteJumpsuitLoadout #SL
+  - WhiteJumpskirtLoadout #SL
+  - BlackJumpsuitLoadout #SL
+  - BlackJumpskirtLoadout #SL
+  - BlueJumpsuitLoadout #SL
+  - BlueJumpskirtLoadout #SL
+  - DarkBlueJumpsuitLoadout #SL
+  - DarkBlueJumpskirtLoadout #SL
+  - TealJumpsuitLoadout #SL
+  - TealJumpskirtLoadout #SL
+  - GreenJumpsuitLoadout #SL
+  - GreenJumpskirtLoadout #SL
+  - DarkGreenJumpsuitLoadout #SL
+  - DarkGreenJumpskirtLoadout #SL
+  - OrangeJumpsuitLoadout #SL
+  - OrangeJumpskirtLoadout #SL
+  - PinkJumpsuitLoadout #SL
+  - PinkJumpskirtLoadout #SL
+  - RedJumpsuitLoadout #SL
+  - RedJumpskirtLoadout #SL
+  - YellowJumpsuitLoadout #SL
+  - YellowJumpskirtLoadout #SL
+  - PurpleJumpsuitLoadout #SL
+  - PurpleJumpskirtLoadout #SL
+  - LightBrownJumpsuitLoadout #SL
+  - LightBrownJumpskirtLoadout #SL
+  - BrownJumpsuitLoadout #SL
+  - BrownJumpskirtLoadout #SL
+  - MaroonJumpsuitLoadout #SL
+  - MaroonJumpskirtLoadout #SL
+  - BodysuitJeans #SL
+  - CoolTanktop #SL
+  - LumberjackOveralls #SL
+  - MechanicOveralls #SL
+  - MessyDressShirt #SL
+  - OldWomanDress #SL
+  - PunkJeans #SL
+  - TatteredClothes #SL
+  - TieDye #SL
+  - VintageClothes #SL
 
 - type: loadoutGroup
   id: AssistantFace
@@ -226,7 +292,7 @@
   loadouts:
   - AssistantGloves
   - GreyGloves #starlight
-  
+
 - type: loadoutGroup
   id: CommonBackpack
   name: loadout-group-backpack
@@ -251,6 +317,7 @@
   - GreyHoodieA #starlight
   - GreyTrenchcoatA #starlight
   - SpaceAssholeCoat #starlight
+  - RedLeatherJacker #SL
 
 - type: loadoutGroup
   id: AssistantShoes
@@ -260,6 +327,7 @@
   - BrownShoes
   - WhiteShoes
   - WinterBoots
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: BartenderHead
@@ -390,6 +458,17 @@
   minLimit: 0
   loadouts:
   - ChaplainNeck
+
+- type: loadoutGroup
+  id: ChaplainBible
+  name: loadout-group-chaplain-bible
+  minLimit: 1
+  loadouts:
+  - Bible
+  - BibleDruid
+  - BibleNanoTrasen
+  - BibleSatanic
+  - BibleTanakh
 
 - type: loadoutGroup
   id: JanitorHead
@@ -661,6 +740,7 @@
   - SalvageBoots # 🌟Starlight🌟
   - WorkBoots # 🌟Starlight🌟
   - CargoWinterBoots
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: CargoTechnicianHead
@@ -700,6 +780,7 @@
   - CargoWinterBoots
   - LeatherShoes # 🌟Starlight🌟
   - WorkBoots # 🌟Starlight🌟
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: SalvageSpecialistBackpack
@@ -723,6 +804,7 @@
   - SalvageBoots
   - CargoWinterBoots
   - WorkBoots # 🌟Starlight🌟
+  - HighHeelBoots # 🌟Starlight🌟
 
 # Engineering
 - type: loadoutGroup
@@ -764,6 +846,7 @@
   - BrownShoes
   - WorkBoots # 🌟Starlight🌟
   - EngineeringWinterBoots
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: TechnicalAssistantJumpsuit
@@ -814,6 +897,7 @@
   loadouts:
   - WorkBoots
   - EngineeringWinterBoots
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: StationEngineerID
@@ -852,6 +936,7 @@
   - WhiteShoes
   - WorkBoots # 🌟Starlight🌟
   - EngineeringWinterBoots
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: SurvivalExtended
@@ -1167,7 +1252,7 @@
   loadouts:
   - JackBoots
   - SecurityWinterBoots
-  - HighHeelBoots # 🌟Starlight🌟
+  - HighHeelBootsFilled # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: SecurityPDA
@@ -1412,6 +1497,7 @@
   - BlueShoes
   - WhiteShoes
   - MedicalWinterBoots
+  - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: MedicalEyewear

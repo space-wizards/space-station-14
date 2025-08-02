@@ -5,6 +5,7 @@
 
   <Box>
   <GuideEntityEmbed Entity="MobArachnid" Caption="Arachnid"/>
+  <GuideEntityEmbed Entity="MobCyclorite" Caption="Cyclorite"/>
   <GuideEntityEmbed Entity="MobDiona" Caption="Diona"/>
   <GuideEntityEmbed Entity="MobDwarf" Caption="Dwarf"/>
   <GuideEntityEmbed Entity="MobHuman" Caption="Human"/>
@@ -13,7 +14,7 @@
   <Box>
 
   <GuideEntityEmbed Entity="MobReptilian" Caption="Reptilian"/>
-  <GuideEntityEmbed Entity="MobSlimePerson" Caption="Slime Person"/>
+  <GuideEntityEmbed Entity="MobSlimePerson" Caption="Laspi"/> <!--Starlight-->
   <GuideEntityEmbed Entity="MobVox" Caption="Vox"/>
   <GuideEntityEmbed Entity="MobFelionoid" Caption="Felionoid"/>
   <GuideEntityEmbed Entity="MobVulpkanin" Caption="Vulpkanin"/>

@@ -104,11 +104,16 @@
   priority: 13
   text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL13.xml"
 
-# Clarifications
+- type: guideEntry
+  id: RuleSL14
+  name: guide-entry-sl-rule-14
+  ruleEntry: true
+  priority: 14
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL14.xml"
 
 - type: guideEntry
-  id: RuleSLC1
-  name: guide-entry-sl-clarification-1
+  id: Metashield
+  name: guide-entry-Metashield
   ruleEntry: true
-  priority: 1
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/Clarifications/RuleSLC1.xml"
+  priority: 15
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/Clarifications/Metashield.xml"

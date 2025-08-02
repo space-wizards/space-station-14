@@ -159,7 +159,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         // Add the first emag law before the others
         component.Lawset?.Laws.RemoveAt(0);
-        
+
         component.Lawset?.Laws.Insert(0, new SiliconLaw
         {
             LawString = Loc.GetString("law-emag-custom", ("name", Name(args.user)), ("title", Loc.GetString(component.Lawset.ObeysTo))),
@@ -173,6 +173,17 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
             Order = component.Lawset.Laws.Max(law => law.Order) + 1
         });
+
+        //Starlight: Add the syndicate channel to the silicon.
+        //TODO: When different types of emags are added, update this.
+        if (TryComp(uid, out ActiveRadioComponent? activeRadio))
+        {
+            activeRadio.Channels.Add("Syndicate");
+        }
+        if (TryComp(uid, out IntrinsicRadioTransmitterComponent? transmitter))
+        {
+            transmitter.Channels.Add("Syndicate");
+        }
     }
 
     protected override void EnsureSubvertedSiliconRole(EntityUid mindId)
@@ -273,7 +284,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         };
         foreach (var law in proto.Laws)
         {
-            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
+            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law).ShallowClone());
         }
         laws.ObeysTo = proto.ObeysTo;
 
