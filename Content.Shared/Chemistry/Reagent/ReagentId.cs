@@ -2,6 +2,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using System.Linq;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Reagent;
 
@@ -33,6 +34,28 @@ public partial struct ReagentId : IEquatable<ReagentId>
     {
         Prototype = default!;
         Data = new();
+    }
+
+    [Obsolete("If you are using this, you don't care about getting extended reagent runtime data like DNA and dynamic color")]
+    public ReagentId(string prototype)
+    {
+        Prototype = prototype;
+        Data = null;
+    }
+
+    public Color GetColor()
+    {
+        // There should only ever be one color in Data,
+        // but maybe we should interpolate the whole list here anyway.
+        var fetchedReagentColorData = Data?.OfType<ReagentColorData>().FirstOrDefault();
+        if (fetchedReagentColorData != null)
+            return fetchedReagentColorData.SubstanceColor;
+
+        var protoMan =  IoCManager.Resolve<IPrototypeManager>();
+        var proto = new ProtoId<ReagentPrototype>(Prototype);
+        return !protoMan.TryIndex(proto, out var regProto)
+               ? default(Color)
+               : regProto.SubstanceColor;
     }
 
     public List<ReagentData> EnsureReagentData()

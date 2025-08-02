@@ -23,10 +23,9 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     private static readonly ProtoId<ReagentPrototype> Blood = "Blood";
-    private static readonly ProtoId<ReagentPrototype> Slime = "Slime";
     private static readonly ProtoId<ReagentPrototype> CopperBlood = "CopperBlood";
 
-    private static readonly string[] StandoutReagents = [Blood, Slime, CopperBlood];
+    private static readonly string[] StandoutReagents = [Blood, CopperBlood];
 
     /// <summary>
     /// The lowest threshold to be considered for puddle sprite states as well as slipperiness of a puddle.
@@ -168,8 +167,9 @@ public abstract partial class SharedPuddleSystem : EntitySystem
                     continue;
 
                 var interpolateValue = quantity.Float() / solution.Volume.Float();
+                var dummyExtendedReagent = new ReagentId(standout);
                 color = Color.InterpolateBetween(color,
-                    _prototypeManager.Index<ReagentPrototype>(standout).SubstanceColor,
+                    dummyExtendedReagent.GetColor(),
                     interpolateValue);
             }
         }

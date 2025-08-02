@@ -32,6 +32,8 @@
   parent: BaseHumanOrganUnGibbable
   abstract: true
   components:
+  - type: Appearance
+  - type: Organ
   - type: Gibbable
 
 - type: entity
@@ -74,7 +76,7 @@
   - type: Item
     size: Small
     heldPrefix: brain
-  
+
 - type: entity
   id: OrganHumanEyes
   parent: BaseHumanOrgan
