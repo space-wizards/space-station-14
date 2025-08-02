@@ -60,6 +60,20 @@
   dummyWires: 4
 
 - type: wireLayout
+  id: Turnstile
+  wires:
+  - !type:LogWireAction
+  - !type:DoorBoltWireAction
+  - !type:DoorBoltLightWireAction
+  - !type:AiInteractWireAction
+  - !type:TurnstileSolenoidWireAction
+  dummyWires: 3
+
+- type: wireLayout
+  parent: Turnstile
+  id: TurnstileGenpop
+
+- type: wireLayout
   id: Vending
   wires:
   - !type:AiInteractWireAction
