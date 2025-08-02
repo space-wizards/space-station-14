@@ -40,6 +40,16 @@ public sealed partial class DeltaPressureComponent : Component
     public bool AutoJoin = true;
 
     /// <summary>
+    /// The percent chance that the entity will take damage each atmos tick,
+    /// when the entity is above the damage threshold.
+    /// Makes it so that windows don't all break in one go.
+    /// Float is from 0 to 1, where 1 means 100% chance.
+    /// If this is set to 0, the entity will never take damage.
+    /// </summary>
+    [DataField]
+    public float RandomDamageChance = 1f;
+
+    /// <summary>
     /// The base damage applied to the entity per atmos tick when it is above the damage threshold.
     /// This damage will be scaled as defined by the <see cref="DeltaPressureDamageScalingType"/> enum
     /// depending on the current effective pressure this entity is experiencing.
