@@ -142,7 +142,7 @@ public sealed class FloorTileSystem : EntitySystem
 
                 var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
-                if (HasBaseTurf(currentTileDefinition, baseTurf.ID))
+                if (CanPlaceOn(currentTileDefinition, baseTurf.ID))
                 {
                     if (!_stackSystem.Use(uid, 1, stack))
                         continue;
@@ -176,14 +176,28 @@ public sealed class FloorTileSystem : EntitySystem
         return tileDef.BaseTurf == baseTurf;
     }
 
+    private bool CanPlaceOn(ContentTileDefinition tileDef, string currentTurfId)
+    {
+        //Check exact BaseTurf match
+        if (!string.IsNullOrEmpty(tileDef.BaseTurf) && tileDef.BaseTurf == currentTurfId)
+            return true;
+
+        // Check whitelist match
+        if (tileDef.BaseWhitelist != null && tileDef.BaseWhitelist.Contains(currentTurfId))
+            return true;
+
+        return false;
+    }
+
     private void PlaceAt(EntityUid user, EntityUid gridUid, MapGridComponent mapGrid, EntityCoordinates location,
         ushort tileId, SoundSpecifier placeSound, float offset = 0)
     {
         _adminLogger.Add(LogType.Tile, LogImpact.Low, $"{ToPrettyString(user):actor} placed tile {_tileDefinitionManager[tileId].Name} at {ToPrettyString(gridUid)} {location}");
 
-        var random = new System.Random((int) _timing.CurTick.Value);
-        var variant = _tile.PickVariant((ContentTileDefinition) _tileDefinitionManager[tileId], random);
-        _map.SetTile(gridUid, mapGrid,location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
+        var random = new System.Random((int)_timing.CurTick.Value);
+        var variant = _tile.PickVariant((ContentTileDefinition)_tileDefinitionManager[tileId], random);
+        var tileRef = _map.GetTileRef(gridUid, mapGrid, location.Offset(new Vector2(offset, offset)));
+        _tile.ReplaceTile(tileRef, (ContentTileDefinition)_tileDefinitionManager[tileId], gridUid, mapGrid);
 
         _audio.PlayPredicted(placeSound, location, user);
     }
