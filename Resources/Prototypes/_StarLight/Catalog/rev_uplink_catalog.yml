@@ -152,7 +152,7 @@
   name: dp-name
   description: dp-desc
   icon: { sprite: _Starlight/Objects/Weapons/Guns/LMGs/DP28.rsi, state: icon }
-  productEntity: WeaponLightMachineGunDP28
+  productEntity: ClothingBackpackDuffelDP28Bundle
   cost:
     Telebond: 20
   categories:
@@ -166,7 +166,7 @@
   name: ppsh-name
   description: ppsh-desc
   icon: { sprite: _Starlight/Objects/Weapons/Guns/SMGs/PPSh59.rsi, state: icon }
-  productEntity: WeaponSubMachineGunPPSH
+  productEntity: ClothingBackpackDuffelPPShBundle
   cost:
     Telebond: 27
   categories:
