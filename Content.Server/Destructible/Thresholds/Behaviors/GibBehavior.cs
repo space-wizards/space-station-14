@@ -16,7 +16,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         {
             if (system.EntityManager.TryGetComponent(owner, out BodyComponent? body))
             {
-                system.BodySystem.GibBody(owner, _recursive, body);
+                system.BodySystem.GibBody(owner, _recursive, body: body);
             }
         }
     }
