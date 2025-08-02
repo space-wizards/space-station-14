@@ -1,31 +1,37 @@
-using Content.Server.Storage.EntitySystems;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Storage.Components;
+namespace Content.Shared.Storage.Components;
 
 /// <summary>
 /// Adds a verb to pick a random item from a container.
 /// Only picks items that match the whitelist.
 /// </summary>
-[RegisterComponent]
+/// </remarks>
+/// This has to do a lot of whitelist checks and needs to sort the items by uid for prediction reasons,
+/// so this will be quite expensive if you use it a container with many items.
+/// Consider just spawning a random item instead instead of having the container pre-filled.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(PickRandomSystem))]
 public sealed partial class PickRandomComponent : Component
 {
     /// <summary>
     /// Whitelist for potential picked items.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// Locale id for the pick verb text.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public LocId VerbText = "comp-pick-random-verb-text";
 
     /// <summary>
     /// Locale id for the empty storage message.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public LocId EmptyText = "comp-pick-random-empty";
 }
