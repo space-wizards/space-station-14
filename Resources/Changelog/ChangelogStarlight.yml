@@ -10050,5 +10050,21 @@ Entries:
   id: 1384
   time: '2025-08-02T13:28:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1190
+- author: walksanatora
+  changes:
+  - message: bodies can no longer be automatically cryoslept when their brain is surgically
+      removed.
+    type: Tweak
+  id: 1385
+  time: '2025-08-02T13:43:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1129
+- author: walksanatora
+  changes:
+  - message: Surgically putting a tongue into someone's mouth now lets them speak
+      again.
+    type: Fix
+  id: 1386
+  time: '2025-08-02T13:43:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1129
 Order: -1
 
