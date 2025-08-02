@@ -1,4 +1,6 @@
+// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using System.Numerics;
+using Content.Shared.Bible.Components; // Ronstation - For chaplain immunity check
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Coordinates.Helpers;
@@ -297,6 +299,16 @@ public abstract class SharedMagicSystem : EntitySystem
     // staves.yml ActionRGB light
     private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
     {
+
+        // start of modifications
+        // Chaplain immunity check
+        if (HasComp<BibleUserComponent>(ev.Target))
+        {
+            _popup.PopupClient(Loc.GetString("spell-target-immune"), ev.Performer, ev.Performer);
+            return;
+        }
+        // end of modifications
+
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
@@ -402,16 +414,24 @@ public abstract class SharedMagicSystem : EntitySystem
         _body.GibBody(ev.Target, true, body);
     }
 
+// start of modifications
     private void OnCellularSmiteSpell(CellularSmiteSpellEvent ev)
     {
         //Stacking genetic damage on people who are already downed or dead is cringe
         if (TryComp<DamageableComponent>(ev.Target, out var damageable) &&
-        HasComp<MobStateComponent>(ev.Target)){
-            if(_mobStateSystem.IsCritical(ev.Target))
+        HasComp<MobStateComponent>(ev.Target))
+        {
+            if (_mobStateSystem.IsCritical(ev.Target) || _mobStateSystem.IsDead(ev.Target))
                 return;
-            if(_mobStateSystem.IsDead(ev.Target))
+
+            // Chaplain immunity check
+            if (HasComp<BibleUserComponent>(ev.Target))
+            {
+                _popup.PopupClient(Loc.GetString("spell-target-immune"), ev.Performer, ev.Performer);
                 return;
+            }
         }
+
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
@@ -426,6 +446,7 @@ public abstract class SharedMagicSystem : EntitySystem
         _jittering.DoJitter(ev.Target, TimeSpan.FromSeconds(1f), false, 80f, 8f, true);
         _damageableSystem.TryChangeDamage(ev.Target, ev.smiteDamage, true);
     }
+// end of modifications
 
     // End Touch Spells
     #endregion
@@ -528,6 +549,15 @@ public abstract class SharedMagicSystem : EntitySystem
             return;
 
         ev.Handled = true;
+        
+        // start of modifications
+        // Chaplain immunity check
+        if (HasComp<BibleUserComponent>(ev.Target))
+        {
+            _popup.PopupClient(Loc.GetString("spell-target-immune"), ev.Performer, ev.Performer);
+            return;
+        }
+        // end of modifications
 
         // Need performer mind, but target mind is unnecessary, such as taking over a NPC
         // Need to get target mind before putting performer mind into their body if they have one

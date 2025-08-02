@@ -1,9 +1,11 @@
+// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using Content.Server.Bible.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Bible;
+using Content.Shared.Bible.Components; // Ronstation - moved BibleUserComponent to Shared
 using Content.Shared.Damage;
 using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.IdentityManagement;
