@@ -33,6 +33,41 @@
       - id: SyringeStimulants
 
 - type: entity
+  name: holoparasite kit
+  parent: [BoxCardboard, BaseSyndicateContraband]
+  id: HoloparasiteKit
+  description: A box containing a holoparasite implanter.
+  components:
+  - type: StorageFill
+    contents:
+      - id: HoloparasiteImplanter
+      - id: HoloparasiteInfo
+      - id: ClothingHeadHatBizarreSoft
+  - type: Sprite
+    layers:
+      - state: box
+      - state: holo
+
+- type: entity
+  name: holoclown kit
+  parent: [BoxCardboard, BaseSyndicateContraband]
+  id: HoloClownKit
+  description: A box containing a holoclown injector.
+  components:
+  - type: StorageFill
+    contents:
+      - id: HoloClownInjector
+      - id: ToyFigurineHoloClown
+      - id: ToyHammer
+  - type: Sprite
+    layers:
+      - state: box_hug
+      - state: holo
+  - type: Tag
+    tags:
+      - BoxHug
+
+- type: entity
   parent: [BoxCardboard, BaseSyndicateContraband]
   id: ThrowingKnivesKit
   name: throwing knives kit

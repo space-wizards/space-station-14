@@ -13,8 +13,10 @@ book-text-holoparasite-info = Thanks for choosing our holoparasite package!
       3. Check your holoparasite for the ability to communicate and cooperate, and capacity to understand your orders.
       4. Use your recall-manifest ability to summon or recall the holoparasite back into your body.
       5. Keep the holoparasite within a short distance from yourself, otherwise it will be recalled by force!
-      WARNING: Guardians are metaphysical beings, but draw from your HEALTH in order to exist. Direct damage done to guardians will be partially transferred to you!
-      Cybersun inc. is not responsible for complete annihilation following the misuse of Holoparasite technology.
+      Enjoy your new holo-buddy!
+
+      Upon implantation, holoparasite forms a symbiotic link with the owner by embedding into their body on a molecular level. Damage done to guardian may cause pain, bruising, internal hemmorage and quantum collapse.
+      Cybersun Inc. is not resposible for complete annihilation upon death following the misuse of holoparasite technology in a combat setting.
 
 book-text-ame-scribbles = I don't know if you're trained already, so I hope this'll help.
       AME controller needs LV power and an HV wire to output to. Check the area with a crowbar if you aren't sure.
