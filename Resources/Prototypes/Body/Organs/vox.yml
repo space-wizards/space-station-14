@@ -21,12 +21,13 @@
   description: "A stomach that smells of ammonia."
   components:
   - type: Metabolizer #Skreeeee!
-    metabolizerTypes: [Vox]
+    metabolizerTypes: [ Vox ]
   - type: Stomach
 #Bird vs tags
     specialDigestible:
       tags:
       - Trash
+      - ClothMade
     isSpecialDigestibleExclusive: false
 
 - type: entity
