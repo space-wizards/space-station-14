@@ -10176,5 +10176,22 @@ Entries:
   id: 1401
   time: '2025-08-02T14:01:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1155
+- author: Conflee
+  changes:
+  - message: Added 39 new clothing items to the game. They can be found in the Assistant
+      loadout, ClothesMate Vender, Fashion Dispenser, Honk Dispenser, Theatre Vender,
+      and Chaplain Vender
+    type: Add
+  id: 1402
+  time: '2025-08-02T14:05:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1115
+- author: Conflee
+  changes:
+  - message: Added all colors of jumpsuits and jumpskirts to the Assistant loadout,
+      for easier round start character customization
+    type: Add
+  id: 1403
+  time: '2025-08-02T14:05:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1115
 Order: -1
 
