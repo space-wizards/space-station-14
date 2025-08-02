@@ -19,4 +19,10 @@ public sealed partial class GibOnRoundEndComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId? SpawnProto;
+
+    /// <summary>
+    /// A list of entities that will be gibbed on round-end
+    /// </summary>
+    [DataField]
+    public List<EntityUid> ToGib = new();
 }
