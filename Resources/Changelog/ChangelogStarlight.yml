@@ -10264,5 +10264,12 @@ Entries:
   id: 1412
   time: '2025-08-02T14:16:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/986
+- author: Fasuh
+  changes:
+  - message: Subframe atmos bug.
+    type: Fix
+  id: 1413
+  time: '2025-08-02T14:18:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1055
 Order: -1
 
