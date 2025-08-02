@@ -10193,5 +10193,12 @@ Entries:
   id: 1403
   time: '2025-08-02T14:05:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1115
+- author: PublicyExecutedPig
+  changes:
+  - message: Hotel has returned (the station for all you newgens)
+    type: Add
+  id: 1404
+  time: '2025-08-02T14:07:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1132
 Order: -1
 
