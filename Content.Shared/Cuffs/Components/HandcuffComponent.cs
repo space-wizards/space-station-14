@@ -39,10 +39,22 @@ public sealed partial class HandcuffComponent : Component
     public bool BreakOnRemove;
 
     /// <summary>
+    ///     Will the cuffs vanish when removed?
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool DestroyOnRemove;
+
+    /// <summary>
     ///     Will the cuffs break when removed?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId? BrokenPrototype;
+
+    /// <summary>
+    ///     The tool used to apply the handcuff, null if the tool was the own handcuff
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntityUid? HandcuffTool;
 
     /// <summary>
     /// Whether or not these cuffs are in the process of being removed.
