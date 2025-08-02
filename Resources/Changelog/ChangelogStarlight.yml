@@ -10074,5 +10074,48 @@ Entries:
   id: 1387
   time: '2025-08-02T13:45:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1130
+- author: Salem
+  changes:
+  - message: Zombies deal 20 slash damage, instead of 13 pierce & 7 slash
+    type: Tweak
+  id: 1388
+  time: '2025-08-02T13:48:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1080
+- author: Salem
+  changes:
+  - message: Biosuits now provide infection immunity, those wearing them will still
+      be zombified if killed by one though
+    type: Tweak
+  id: 1389
+  time: '2025-08-02T13:48:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1080
+- author: Salem
+  changes:
+  - message: CMO Hardsuit and Paramed Voidsuits no longer give *any* slowdown
+    type: Tweak
+  id: 1390
+  time: '2025-08-02T13:48:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1080
+- author: Salem
+  changes:
+  - message: Security hardsuits have a little bit more heat protection
+    type: Tweak
+  id: 1391
+  time: '2025-08-02T13:48:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1080
+- author: Salem
+  changes:
+  - message: CMO locker now spawns with automenders (yes this is tacked on)
+    type: Tweak
+  id: 1392
+  time: '2025-08-02T13:48:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1080
+- author: Salem
+  changes:
+  - message: All zombies attack the same speed now
+    type: Tweak
+  id: 1393
+  time: '2025-08-02T13:48:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1080
 Order: -1
 
