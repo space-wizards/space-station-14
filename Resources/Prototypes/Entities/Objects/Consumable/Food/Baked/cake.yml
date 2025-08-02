@@ -1321,10 +1321,12 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: plain-slice-inhand-left
+      - state: alpha-slice-inhand-left
+        color: white
       - state: alpha-slice-filling-inhand-left
-        color: blue
+        color: red
       right:
-      - state: plain-slice-inhand-right
+      - state: alpha-slice-inhand-right
+        color: white
       - state: alpha-slice-filling-inhand-right
-        color: blue
+        color: red
