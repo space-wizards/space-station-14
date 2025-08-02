@@ -12,6 +12,10 @@ using Content.Shared.Store.Components;
 using Content.Shared.Instruments;
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
+using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Events;
+using Robust.Server.GameObjects;
 using System.Text;
 
 namespace Content.Server.PAI;
@@ -24,7 +28,7 @@ public sealed class PAISystem : SharedPAISystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
-
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
     /// <summary>
     /// Possible symbols that can be part of a scrambled pai's name.
     /// </summary>
@@ -40,6 +44,7 @@ public sealed class PAISystem : SharedPAISystem
         SubscribeLocalEvent<PAIComponent, BeingMicrowavedEvent>(OnMicrowaved);
 
         SubscribeLocalEvent<PAIComponent, PAIShopActionEvent>(OnShop);
+        SubscribeLocalEvent<PAIComponent, PAICustomizationEvent>(OnCustomization);
     }
 
     private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
@@ -113,6 +118,12 @@ public sealed class PAISystem : SharedPAISystem
             return;
 
         _store.ToggleUi(args.Performer, ent, store);
+    }
+
+    private void OnCustomization(Entity<PAIComponent> ent, ref PAICustomizationEvent _)
+    {
+        _actions.AddAction(ent, "ActionPAIRadialCustomization");
+        _actions.AddAction(ent, "ActionPAICustomization");
     }
 
     public void PAITurningOff(EntityUid uid)
