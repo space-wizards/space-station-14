@@ -81,18 +81,31 @@
       gun_magazine:
         name: Magazine
         startingItem: MagazineShotgun
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
         priority: 2
         whitelist:
           tags:
-          - MagazineShotgun
+            - MagazineShotgun
         whitelistFailPopup: gun-magazine-whitelist-fail
-        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+      gun_chamber:
+        name: Chamber
+        startingItem: ShellShotgun
+        priority: 1
+        whitelist:
+          tags:
+            - ShellShotgun
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
-  - type: MagazineAmmoProvider
+  - type: ChamberMagazineAmmoProvider
+    autoCycle: true
+    boltClosed: false
+    canRack: true
+    soundBoltClosed: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
+    soundBoltOpened: /Audio/Weapons/Guns/Cock/shotgun_open.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/smg_cock.ogg
   - type: MagazineVisuals
     magState: mag
     steps: 1
