@@ -223,7 +223,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 await PostGen(markerPost, dungeons[^1], reservedTiles, random);
                 break;
             case BiomeDunGen biome:
-                await PostGen(biome, dungeons[^1], reservedTiles, random);
+                await PostGen(biome, dungeons, reservedTiles, random);
                 break;
             case BoundaryWallDunGen boundary:
                 await PostGen(boundary, dungeons[^1], reservedTiles, random);
