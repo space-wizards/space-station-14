@@ -14,8 +14,7 @@ public sealed partial class AtmosphereSystem
     /// <param name="gridAtmosComp">The <see cref="GridAtmosphereComponent"/> that belongs to the entity's GridUid.</param>
     private void ProcessDeltaPressureEntity(Entity<DeltaPressureComponent> ent, GridAtmosphereComponent gridAtmosComp)
     {
-        // ReSharper disable once CompareOfFloatsByEqualityOperator
-        if (ent.Comp.RandomDamageChance != 1f || ent.Comp.RandomDamageChance == 0f &&
+        if (ent.Comp.RandomDamageChance is not 1f &&
             Random.Shared.NextSingle() >= ent.Comp.RandomDamageChance)
         {
             return;
