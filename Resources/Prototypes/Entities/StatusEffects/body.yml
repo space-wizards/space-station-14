@@ -1,0 +1,18 @@
+﻿- type: entity
+  parent: MobStatusEffectBase
+  id: BloodstreamStatusEffectBase
+  abstract: true
+  components:
+    - type: StatusEffect
+      whitelist:
+        components:
+          - Bloodstream
+
+- type: entity
+  parent: [ BloodstreamStatusEffectBase ]
+  id: StatusEffectBloodloss
+  name: bloodloss
+  components:
+    - type: StutteringAccent
+    - type: DrunkStatusEffect
+    - type: RejuvenateRemovedStatusEffect
