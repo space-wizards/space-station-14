@@ -46,7 +46,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             var fractionGas = amount / data.TotalMoles;
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
-                ("gas", Loc.GetString("air-alarm-ui-thresholds-gas-name", ("gas", $"{gas}"))),
+                ("gas", Loc.GetString("atmospherics-gas-name", ("gas", $"{gas}"))),
                 ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
                 ("amount", $"{amount:0.####}"),
                 ("percentage", $"{(100 * fractionGas):0.##}")));
@@ -113,7 +113,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             var fractionGas = amount / data.TotalMoles;
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
-                ("gas", Loc.GetString("air-alarm-ui-thresholds-gas-name", ("gas", $"{gas}"))),
+                ("gas", Loc.GetString("atmospherics-gas-name", ("gas", $"{gas}"))),
                 ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
                 ("amount", $"{amount:0.####}"),
                 ("percentage", $"{(100 * fractionGas):0.##}")));
