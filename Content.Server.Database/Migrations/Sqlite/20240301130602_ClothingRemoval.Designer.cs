@@ -14,7 +14,6 @@ namespace Content.Server.Database.Migrations.Sqlite
     [Migration("20240301130602_ClothingRemoval")]
     partial class ClothingRemoval
     {
-#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1762,6 +1761,5 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
 #pragma warning restore 612, 618
         }
-#endif
     }
 }
