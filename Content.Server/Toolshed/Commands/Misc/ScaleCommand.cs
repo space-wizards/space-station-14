@@ -5,7 +5,7 @@ using Content.Shared.Sprite;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Toolshed;
 
-namespace Content.Shared.Toolshed.Commands.Misc;
+namespace Content.Server.Toolshed.Commands.Misc;
 
 /// <summary>
 /// Used to change an entity's sprite scale.

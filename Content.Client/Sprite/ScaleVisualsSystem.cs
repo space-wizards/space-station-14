@@ -1,7 +1,8 @@
 using System.Numerics;
 using Content.Shared.Sprite;
+using Robust.Client.GameObjects;
 
-namespace Robust.Client.GameObjects;
+namespace Content.Client.Sprite;
 
 public sealed class ScaleVisualsSystem : SharedScaleVisualsSystem
 {
