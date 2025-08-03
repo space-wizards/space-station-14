@@ -22,41 +22,12 @@ public sealed class ZombifyCommand : ToolshedCommand
             _zombieSystem.ZombifyEntity(entity);
         }
     }
-}
 
-[AdminCommand(AdminFlags.Fun)]
-public sealed class ZombifyConsoleCommand : LocalizedEntityCommands
-{
-    [Dependency] private readonly ZombieSystem _zombieSystem = default!;
-
-    public override string Command => "zombify";
-
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    [CommandImplementation("infect")]
+    public void Infect(EntityUid input)
     {
-        if (args.Length != 1)
-        {
-            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
-            return;
-        }
+        _zombieSystem ??= EntityManager.System<ZombieSystem>();
 
-        if (!NetEntity.TryParse(args[0], out var netEntity) || !EntityManager.TryGetEntity(netEntity, out var entity))
-        {
-            shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
-            return;
-        }
-
-        if (EntityManager.HasComponent<ZombieComponent>(entity))
-        {
-            shell.WriteError(Loc.GetString("cmd-zombify-target-is-already-zombified"));
-            return;
-        }
-
-        if (EntityManager.HasComponent<ZombieImmuneComponent>(entity))
-        {
-            shell.WriteError(Loc.GetString("cmd-zombify-target-cannot-be-zombified"));
-            return;
-        }
-
-        _zombieSystem.ZombifyEntity(entity.Value);
+        _zombieSystem.ZombifyEntity(input);
     }
 }
