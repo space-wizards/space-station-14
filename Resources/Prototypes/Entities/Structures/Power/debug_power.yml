@@ -127,50 +127,86 @@
 - type: entity
   parent: BaseSMES
   id: DebugSMES
-  suffix: DEBUG
+  suffix: DEBUG, empty
+  components:
+  - type: Tag
+    tags:
+    - Debug
+
+- type: entity
+  parent: BaseSMES
+  id: DebugSMESInfinite
+  suffix: DEBUG, infinite
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
     autoRecharge: True
   - type: Tag
     tags:
-      - Debug
+    - Debug
 
 - type: entity
   parent: BaseSubstation
   id: DebugSubstation
-  suffix: DEBUG
+  suffix: DEBUG, empty
+  components:
+  - type: Tag
+    tags:
+    - Debug
+
+- type: entity
+  parent: BaseSubstation
+  id: DebugSubstation
+  suffix: DEBUG, infinite
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
     autoRecharge: True
   - type: Tag
     tags:
-      - Debug
+    - Debug
 
 - type: entity
   parent: BaseSubstationWall
   id: DebugSubstationWall
-  suffix: DEBUG
+  suffix: DEBUG, empty
+  components:
+  - type: Tag
+    tags:
+    - Debug
+
+- type: entity
+  parent: BaseSubstationWall
+  id: DebugSubstationWallInfinite
+  suffix: DEBUG, infinite
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
     autoRecharge: True
   - type: Tag
     tags:
-      - Debug
+    - Debug
 
 - type: entity
   parent: BaseAPC
   id: DebugAPC
-  suffix: DEBUG
+  suffix: DEBUG, empty
+  components:
+  - type: Tag
+    tags:
+    - Debug
+
+- type: entity
+  parent: BaseAPC
+  id: DebugAPCInfinite
+  suffix: DEBUG, infinite
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
     autoRecharge: True
   - type: Tag
     tags:
-      - Debug
+    - Debug
 
 - type: entity
   id: DebugPowerReceiver
