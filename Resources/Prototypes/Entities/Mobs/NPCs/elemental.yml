@@ -415,7 +415,6 @@
     solution: bloodstream
   - type: DrainableSolution
     solution: bloodstream
-  - type: CargoSellBlacklist
 
 - type: entity
   name: Reagent Slime Spawner

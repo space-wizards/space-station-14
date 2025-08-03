@@ -118,7 +118,6 @@
     molsPerSecondPerUnitMass: 0.0005
   - type: Speech
     speechVerb: LargeMob
-  - type: CargoSellBlacklist
 
 - type: entity
   name: praetorian
@@ -571,4 +570,3 @@
     transferAmount: 1
     solution: bite
     pierceArmor: true
-  - type: CargoSellBlacklist

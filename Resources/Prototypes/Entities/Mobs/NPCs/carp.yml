@@ -86,7 +86,6 @@
       interactFailureString: petting-failure-carp
       interactFailureSound:
         path: /Audio/Effects/bite.ogg
-    - type: CargoSellBlacklist
 
 - type: entity
   parent: BaseMobCarp

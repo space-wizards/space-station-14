@@ -117,7 +117,6 @@
     - type: Bloodstream
       bloodMaxVolume: 300
       bloodReagent: Laughter
-    - type: CargoSellBlacklist
 
 - type: entity
   name: behonker

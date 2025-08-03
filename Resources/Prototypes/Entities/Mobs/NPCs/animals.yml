@@ -161,7 +161,6 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
-  - type: CargoSellBlacklist
 
 - type: entity
   name: bee
@@ -436,7 +435,6 @@
     damage:
       types:
         Piercing: 0
-  - type: CargoSellBlacklist
 
 - type: entity
   name: glockroach
@@ -841,7 +839,6 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
-  - type: CargoSellBlacklist
 
 - type: entity
   name: cow
@@ -1878,7 +1875,6 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
-  - type: CargoSellBlacklist
 
 - type: entity
   parent: MobMouse
@@ -3515,7 +3511,6 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
-  - type: CargoSellBlacklist
 
 - type: entity
   name: pig

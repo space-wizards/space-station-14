@@ -126,7 +126,6 @@
     attributes:
       gender: male
   - type: Sharp
-  - type: CargoSellBlacklist
 
 - type: entity
   id: MobRatKingBuff
@@ -164,7 +163,6 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
-  - type: CargoSellBlacklist
 
 - type: entity
   name: rat servant
@@ -307,7 +305,6 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
-  - type: CargoSellBlacklist
 
 - type: weightedRandomEntity
   id: RatKingLoot

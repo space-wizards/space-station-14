@@ -88,7 +88,6 @@
   - type: Speech
     speechVerb: SmallMob
   - type: NonSpreaderZombie
-  - type: CargoSellBlacklist
 
 - type: entity
   id: MobTickSalvage

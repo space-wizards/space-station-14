@@ -59,7 +59,6 @@
         Slash: 6
   - type: ReplacementAccent
     accent: genericAggressive
-  - type: CargoSellBlacklist
 
 - type: entity
   parent: BaseMobFlesh
@@ -200,7 +199,6 @@
     damage:
       types:
         Blunt: 10
-  - type: CargoSellBlacklist
 
 - type: entity
   parent: [ SimpleSpaceMobBase, MobCombat ]
@@ -260,7 +258,6 @@
   - type: ReplacementAccent
     accent: genericAggressive
   - type: SalvageMobRestrictions
-  - type: CargoSellBlacklist
 
 - type: entity
   parent: BaseMobFleshSalvage
