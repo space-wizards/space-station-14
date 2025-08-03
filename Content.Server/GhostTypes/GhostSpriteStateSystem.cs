@@ -33,8 +33,6 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         highestType.Sort();
 
         string spriteState;
-        //var random = new System.Random((int)_timing.CurTick.Value);
-        //check length  (can github actually update gosh )
         if (highestType is ["Blunt", "Heat", "Piercing"])
         {
             var number = _random.Next(1, 4);
@@ -57,7 +55,6 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         else // if it doesn't fall into any specific category, choose randomly
             spriteState = highestType[_random.Next(0, highestType.Count - 1)];
 
-        var properStateName = (state.Prefix + spriteState).ToLower();
-        _appearance.SetData(ent, GhostVisuals.Damage, properStateName, appearance);
+        _appearance.SetData(ent, GhostVisuals.Damage, (state.Prefix + spriteState).ToLower(), appearance);
     }
 }

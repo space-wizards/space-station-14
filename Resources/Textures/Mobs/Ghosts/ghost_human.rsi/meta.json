@@ -161,7 +161,7 @@
             ]
         },
         {
-            "name": "ghost_cellular",
+            "name": "ghost_genetic",
             "directions": 4
         },
         {
