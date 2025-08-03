@@ -10487,5 +10487,13 @@ Entries:
   id: 1443
   time: '2025-08-03T22:48:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1066
+- author: Trosling
+  changes:
+  - message: Discord notifications now show the server's Greek letter to differentiate
+      the notifications
+    type: Tweak
+  id: 1444
+  time: '2025-08-03T22:52:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1113
 Order: -1
 
