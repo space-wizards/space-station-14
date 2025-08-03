@@ -51,3 +51,9 @@
   id: DetectiveCoatGrey
   equipment:
     outerClothing: ClothingOuterCoatDetectiveLoadoutGrey
+
+#SL
+- type: loadout
+  id: DetectiveNoirGlasses
+  equipment:
+    Eyes: ClothingEyesGlassesNoir
