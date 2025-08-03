@@ -14,6 +14,11 @@ examinable-solution-on-examine-volume = The contained solution is { $fillLevel -
    *[other] { -solution-vague-fill-level(fillLevel: $fillLevel) }.
 }
 
+examinable-solution-on-examine-volume-no-max = The contained solution is { $fillLevel ->
+    [exact] holding [color=white]{$current}u[/color].
+   *[other] { -solution-vague-fill-level(fillLevel: $fillLevel) }.
+}
+
 -solution-vague-fill-level =
     { $fillLevel ->
         [full] [color=white]Full[/color]

@@ -209,6 +209,7 @@
   - type: ExaminableSolution
     solution: puddle
     exactVolume: true
+    locVolume: "examinable-solution-on-examine-volume-no-max"
   - type: DrawableSolution
     solution: puddle
   - type: BadDrink
