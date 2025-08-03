@@ -33,6 +33,7 @@
   - type: DisassembleOnAltVerb
     prototypeToSpawn: InflatableWallStack1
     disassembleTime: 3
+  - type: InflatableSafeDisassembly
   - type: Airtight
   - type: Transform
     anchored: true
@@ -81,5 +82,6 @@
   - type: DisassembleOnAltVerb
     prototypeToSpawn: InflatableDoorStack1
     disassembleTime: 3
+  - type: InflatableSafeDisassembly
   - type: Occluder
     enabled: false
