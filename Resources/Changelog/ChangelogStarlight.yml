@@ -10444,5 +10444,20 @@ Entries:
   id: 1437
   time: '2025-08-03T13:03:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1159
+- author: walksanatora
+  changes:
+  - message: Derelict borgis can now wash up near the station.
+    type: Add
+  id: 1438
+  time: '2025-08-03T21:55:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/933
+- author: walksanatora
+  changes:
+  - message: Borgimov can now appear in the list of random lawsets given to ionstorm'd
+      borgs
+    type: Add
+  id: 1439
+  time: '2025-08-03T21:55:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/933
 Order: -1
 
