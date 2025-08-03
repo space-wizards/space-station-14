@@ -2,6 +2,7 @@ using Content.Shared.Alert;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -71,7 +72,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     private void OfferItemVerb(EntityUid uid, HandsComponent component, GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.User == args.Target
-            || args.Using is null || HasComp<UnremoveableComponent>(args.Using)
+            || args.Using is null || HasComp<UnremoveableComponent>(args.Using) || HasComp<VirtualItemComponent>(args.Using)
             || component.Offering || component.ReceivingOffer
             || !TryComp<HandsComponent>(args.User, out var targetHands)
             || targetHands.Offering || targetHands.ReceivingOffer)
@@ -87,7 +88,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Offer the ActiveHandEntity to the target (if they have a HandsComponent)
+    /// Offer the ActiveItem to the target (if they have a HandsComponent)
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="target"></param>
@@ -97,11 +98,11 @@ public abstract partial class SharedHandsSystem : EntitySystem
     {
         if (!Resolve(uid, ref handsComp, false)
             || !Resolve(target, ref targetHands, false)
-            || handsComp.ActiveHandEntity is null)
+            || !TryGetActiveItem(uid, out var helditem))
             return;
 
-        handsComp.OfferItem = handsComp.ActiveHandEntity;
-        targetHands.OfferItem = handsComp.ActiveHandEntity;
+        handsComp.OfferItem = helditem;
+        targetHands.OfferItem = helditem;
 
         handsComp.Offering = true;
         handsComp.OfferTarget = target;
@@ -113,8 +114,8 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         if (_net.IsServer)
         {
-            _popupSystem.PopupEntity(Loc.GetString("offering", ("item", handsComp.ActiveHandEntity), ("target", target)), uid, uid);
-            _popupSystem.PopupEntity(Loc.GetString("offering-target", ("item", handsComp.ActiveHandEntity), ("user", uid)), uid, target);
+            _popupSystem.PopupEntity(Loc.GetString("offering", ("item", helditem), ("target", target)), uid, uid);
+            _popupSystem.PopupEntity(Loc.GetString("offering-target", ("item", helditem), ("user", uid)), uid, target);
         }
     }
 
