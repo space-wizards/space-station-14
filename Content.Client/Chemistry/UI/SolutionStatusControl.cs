@@ -58,13 +58,13 @@ public sealed class SolutionStatusControl : PollingItemStatusControl<SolutionSta
         var markup = "";
 
         if (data.VolumeState is { } value)
-            markup = Loc.GetString("solution-status-volume",
+            markup = Loc.GetString(_parent.Comp.LocControlVolume,
                             ("fillLevel", value),
                             ("current", data.CurrentVolume),
                             ("max", data.MaxVolume));
 
         if (data.TransferVolume is { } transferVolume)
-            markup += "\n" + Loc.GetString("solution-status-transfer", ("volume", transferVolume));
+            markup += "\n" + Loc.GetString(_parent.Comp.LocControlTransfer, ("volume", transferVolume));
 
         _label.SetMarkup(markup);
     }

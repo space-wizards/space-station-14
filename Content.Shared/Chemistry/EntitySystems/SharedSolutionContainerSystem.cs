@@ -810,7 +810,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (string.IsNullOrEmpty(primaryReagent?.Prototype) ||
             !PrototypeManager.Resolve<ReagentPrototype>(primaryReagent.Value.Prototype, out var primary))
         {
-            args.PushMarkup(Loc.GetString(entity.Comp.MessageEmptyVolume));
+            args.PushMarkup(Loc.GetString(entity.Comp.LocEmptyVolume));
             return;
         }
 
@@ -818,7 +818,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         {
             // Push amount of reagent
 
-            args.PushMarkup(Loc.GetString("examinable-solution-on-examine-volume",
+            args.PushMarkup(Loc.GetString(entity.Comp.LocVolume,
                                 ("fillLevel", LocalizedExaminableVolume(entity, solution, args.Examiner)),
                                 ("current", solution.Volume),
                                 ("max", solution.MaxVolume)));
@@ -828,7 +828,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             var colorHex = solution.GetColor(PrototypeManager)
                 .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
 
-            args.PushMarkup(Loc.GetString(entity.Comp.MessagePhysicalQuality,
+            args.PushMarkup(Loc.GetString(entity.Comp.LocPhysicalQuality,
                                         ("color", colorHex),
                                         ("desc", primary.LocalizedPhysicalDescription),
                                         ("chemCount", solution.Contents.Count) ));
@@ -879,7 +879,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     ("chemical", reagent.LocalizedName)));
             }
 
-            args.PushMarkup(Loc.GetString(entity.Comp.MessageRecognizableReagents,
+            args.PushMarkup(Loc.GetString(entity.Comp.LocRecognizableReagents,
                 ("recognizedString", msg.ToString())));
         }
     }

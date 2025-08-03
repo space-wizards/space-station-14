@@ -28,34 +28,16 @@ public sealed partial class ExaminableSolutionComponent : Component
     public bool ExactVolume;
 
     [DataField]
-    public LocId MessageEmptyVolume = "shared-solution-container-component-on-examine-empty-container";
+    public LocId LocEmptyVolume = "shared-solution-container-component-on-examine-empty-container";
 
     [DataField]
-    public LocId ShortMessageEmptyVolume = "drink-component-on-examine-is-empty";
+    public LocId LocVolume = "examinable-solution-on-examine-volume";
 
     [DataField]
-    public LocId MessageExactVolume = "drink-component-on-examine-exact-volume";
+    public LocId LocPhysicalQuality = "shared-solution-container-component-on-examine-main-text";
 
     [DataField]
-    public LocId MessageVagueVolumeFull = "drink-component-on-examine-is-full";
-
-    [DataField]
-    public LocId MessageVagueVolumeMostlyFull = "drink-component-on-examine-is-mostly-full";
-
-    [DataField]
-    public LocId MessageVagueVolumeHalfFull = "drink-component-on-examine-is-half-full";
-
-    [DataField]
-    public LocId MessageVagueVolumeHalfEmpty = "drink-component-on-examine-is-half-empty";
-
-    [DataField]
-    public LocId MessageVagueVolumeMostlyEmpty = "drink-component-on-examine-is-mostly-empty";
-
-    [DataField]
-    public LocId MessagePhysicalQuality = "shared-solution-container-component-on-examine-main-text";
-
-    [DataField]
-    public LocId MessageRecognizableReagents = "examinable-solution-has-recognizable-chemicals";
+    public LocId LocRecognizableReagents = "examinable-solution-has-recognizable-chemicals";
 }
 
 /// <summary>
