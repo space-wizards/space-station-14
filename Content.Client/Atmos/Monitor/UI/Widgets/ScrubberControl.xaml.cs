@@ -80,9 +80,10 @@ public sealed partial class ScrubberControl : BoxContainer
             ScrubberDataCopied?.Invoke(_data);
         };
 
+        var allGases = Enum.GetValues<Gas>();
         _selectAll.OnPressed += _ =>
         {
-            _data.FilterGases = new HashSet<Gas>(Enum.GetValues<Gas>());
+            _data.FilterGases = new HashSet<Gas>(allGases);
             ScrubberDataChanged?.Invoke(_address, _data);
         };
 
@@ -92,7 +93,7 @@ public sealed partial class ScrubberControl : BoxContainer
             ScrubberDataChanged?.Invoke(_address, _data);
         };
 
-        foreach (var value in Enum.GetValues<Gas>())
+        foreach (var value in allGases)
         {
             var gasButton = new Button
             {
