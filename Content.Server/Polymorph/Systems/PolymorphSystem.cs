@@ -1,4 +1,5 @@
 using Content.Server.Actions;
+using Content.Server.Body.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Polymorph.Components;
@@ -30,6 +31,7 @@ public sealed partial class PolymorphSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly SharedBuckleSystem _buckle = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -53,12 +55,28 @@ public sealed partial class PolymorphSystem : EntitySystem
         SubscribeLocalEvent<PolymorphableComponent, PolymorphActionEvent>(OnPolymorphActionEvent);
         SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
 
+        SubscribeLocalEvent<PolymorphedEntityComponent, BeforeBeingGibbedEvent>(OnBeforeBeingGibbed);
+
         SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
         SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
         SubscribeLocalEvent<PolymorphedEntityComponent, DestructionEventArgs>(OnDestruction);
 
         InitializeMap();
         InitializeTrigger();
+    }
+
+    private void OnBeforeBeingGibbed(Entity<PolymorphedEntityComponent> ent, ref BeforeBeingGibbedEvent args)
+    {
+        if (!ent.Comp.Configuration.RevertOnDeath)
+            return;
+
+        // Gibbing should count as death so we trigger revert here.
+        args.Canceled = true;
+        Revert(ent.Owner);
+
+        // If damage is meant to transfer then gibbing should also transfer.
+        if (ent.Comp.Configuration.TransferDamage)
+            _body.GibBody(ent.Comp.Parent);
     }
 
     public override void Update(float frameTime)
