@@ -72,7 +72,6 @@ public sealed partial class ThresholdBoundControl : BoxContainer
 
         CSpinner.OnValueChanged += SpinnerValueChanged;
         CBoundEnabled.OnToggled += CheckboxToggled;
-        CBoundEnabled.Text = Loc.GetString("air-alarm-ui-widget-enable");
     }
 
     private void SpinnerValueChanged(FloatSpinBox.FloatSpinBoxEventArgs args)
