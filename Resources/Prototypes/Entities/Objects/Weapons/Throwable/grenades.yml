@@ -71,6 +71,7 @@
       path: "/Audio/Effects/beep1.ogg"
       params:
         volume: 5
+    initialBeepDelay: 0
     beepInterval: 2 # 2 beeps total (at 0 and 2)
 
 - type: entity
@@ -193,6 +194,7 @@
       path: /Audio/Effects/Grenades/SelfDestruct/SDS_Charge2.ogg
       params:
         volume: 30
+    initialBeepDelay: 0
     beepInterval: 16
 
 

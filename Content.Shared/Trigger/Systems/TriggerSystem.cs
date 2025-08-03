@@ -103,7 +103,8 @@ public sealed partial class TriggerSystem : EntitySystem
         AddComp<ActiveTimerTriggerComponent>(ent);
         var curTime = _timing.CurTime;
         ent.Comp.NextTrigger = curTime + ent.Comp.Delay;
-        ent.Comp.NextBeep = curTime + ent.Comp.BeepInterval;
+        var delay = ent.Comp.InitialBeepDelay ?? ent.Comp.BeepInterval;
+        ent.Comp.NextBeep = curTime + delay;
         Dirty(ent);
 
         var ev = new ActiveTimerTriggerEvent(user);

@@ -16,6 +16,7 @@
   - type: TimerTrigger
     delay: 10
     delayOptions: [5, 10, 30, 60]
+    initialBeepDelay: 0
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
   - type: Sticky
     stickDelay: 5

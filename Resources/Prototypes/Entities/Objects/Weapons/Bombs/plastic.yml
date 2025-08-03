@@ -70,6 +70,7 @@
     - stuck
     delay: 10
     delayOptions: [10, 30, 60, 120, 300]
+    initialBeepDelay: 0
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
   - type: DeviceLinkSink
     ports:
@@ -121,6 +122,7 @@
     - stuck
     delay: 5
     delayOptions: [5, 10, 15, 20]
+    initialBeepDelay: 0
     beepSound:
       path: /Audio/Effects/Cargo/buzz_two.ogg
       params:
