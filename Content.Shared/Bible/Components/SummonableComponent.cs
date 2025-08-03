@@ -29,6 +29,9 @@ public sealed partial class SummonableComponent : Component
     /// </summary>
     public bool AlreadySummoned = false;
 
+    /// <summary>
+    /// Is entity's user should have <see cref="BibleUserComponent"/>.
+    /// </summary>
     [DataField]
     public bool RequiresBibleUser = true;
 
