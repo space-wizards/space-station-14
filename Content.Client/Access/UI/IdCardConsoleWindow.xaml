@@ -26,10 +26,16 @@
             <Button Name="JobTitleSaveButton" Text="{Loc 'id-card-console-window-save-button'}" Disabled="True" />
         </GridContainer>
         <Control MinSize="0 8" />
-        <GridContainer Columns="2">
+        <BoxContainer>
+            <BoxContainer Margin="0 0 8 0">
+                <Button Name="SelectAllButton" Text="{Loc 'id-card-console-window-select-all-button'}" />
+                <Button Name="DeselectAllButton" Text="{Loc 'id-card-console-window-deselect-all-button'}" />
+            </BoxContainer>
             <Label Text="{Loc 'id-card-console-window-job-selection-label'}" />
             <OptionButton Name="JobPresetOptionButton" />
-        </GridContainer>
+            <BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
         <Control Name="AccessLevelControlContainer" />
     </BoxContainer>
 </DefaultWindow>
