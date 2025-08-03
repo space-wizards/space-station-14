@@ -4,6 +4,16 @@
   table: !type:AllSelector
     children:
     - id: BoxFolderClipboard
+    - id:
+
+- type: entityTable
+  id: FillSalvageLeadHardsuitSpatio
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingShoesBootsMag
+    - id: ClothingOuterHardsuitSpatioLead
+    - id: ClothingMaskGasExplorer
 
 - type: entity
   id: LockerSalvageLeadFilledHardsuit
@@ -42,6 +52,16 @@
   table: !type:AllSelector
     children:
     - id: MedkitAdvanced
+    - id: BoxBodyBag
+
+- type: entityTable
+  id: FillSalvageMedicHardsuitSpatio
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingShoesBootsMag
+    - id: ClothingOuterHardsuitSpatioMedic
+    - id: ClothingMaskGasExplorer
 
 - type: entity
   id: LockerSalvageMedicFilledHardsuit
