@@ -581,6 +581,20 @@
   params:
     variation: 0.125
   sounds:
+    Thump:
+      path: /Audio/Effects/soft_thump.ogg
+      params:
+        variation: 0.125
+    Clap:
+      collection: Claps
+    ClapSingle:
+      collection: ClapSingle
+    Snap:
+      collection: Snaps
+      params:
+        volume: -6
+    Salute:
+      collection: Salutes
     Laugh:
       collection: WawaLaugh
     Sneeze:
@@ -593,3 +607,19 @@
       collection: WawaSigh
     Scream:
       collection: WawaScream
+    Yawn:
+      collection: WawaYawn
+    Crying:
+      collection: WawaCry
+    Snore:
+      collection: Snores
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Honk:
+      collection: BikeHorn
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: WawaDeath
