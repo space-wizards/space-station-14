@@ -51,7 +51,7 @@
   - type: StorageFill
     contents:
     - id: SmokingPipeFilledTobacco
-    - id: FlippoEngravedLighter
+    - id: FlippoLighter
   - type: ExplosionResistance
     damageCoefficient: 1 #its a coat. it doesnt do shit
 
