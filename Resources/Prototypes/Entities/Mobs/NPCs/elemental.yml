@@ -70,6 +70,7 @@
   - type: MobMover
   - type: ZombieImmune
   - type: ProtectedFromStepTriggers
+  - type: CargoSellBlacklist
 
 - type: entity
   abstract: true
@@ -414,6 +415,7 @@
     solution: bloodstream
   - type: DrainableSolution
     solution: bloodstream
+  - type: CargoSellBlacklist
 
 - type: entity
   name: Reagent Slime Spawner

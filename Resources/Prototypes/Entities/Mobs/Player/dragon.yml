@@ -167,6 +167,7 @@
     speedModifier: 2.5 # fast because dragon strong
     useSound:
       path: /Audio/Items/crowbar.ogg
+  - type: CargoSellBlacklist
 
 - type: entity
   parent: BaseMobDragon

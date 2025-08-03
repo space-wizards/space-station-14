@@ -177,9 +177,6 @@ public sealed partial class CargoSystem
                     continue;
                 }
 
-                if (_blacklistQuery.HasComponent(ent))
-                    continue;
-
                 var price = _pricing.GetPrice(ent);
                 if (price == 0)
                     continue;
@@ -191,10 +188,8 @@ public sealed partial class CargoSystem
 
     private bool CanSell(EntityUid uid, TransformComponent xform)
     {
-        if (_mobQuery.HasComponent(uid))
-        {
-            return false;
-        }
+        if (_blacklistQuery.HasComponent(ent))
+            continue;
 
         var complete = IsBountyComplete(uid, out var bountyEntities);
 

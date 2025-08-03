@@ -109,6 +109,7 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: CargoSellBlacklist
 
 - type: entity
   parent: BaseSpeciesDummy
