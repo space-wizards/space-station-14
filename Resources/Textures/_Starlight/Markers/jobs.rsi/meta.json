@@ -30,6 +30,15 @@
     },
     {
       "name": "mailtech"
+    },
+    {
+      "name": "salvagelead"
+    },
+    {
+      "name": "salvagemedic"
+    },
+    {
+      "name": "miningspecialist"
     }
   ]
 }

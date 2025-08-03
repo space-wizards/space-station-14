@@ -212,9 +212,10 @@
   name: salvage ID card
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Misc/id_cards.rsi # Starlight - new salv icon
     layers:
     - state: default
-    - state: idsalvagespecialist # Starlight
+    - state: idsalvagespecialist # Starlight - new salv icon
   - type: PresetIdCard
     job: SalvageSpecialist
 

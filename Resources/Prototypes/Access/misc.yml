@@ -38,6 +38,7 @@
   - BlueShield
   - GenpopEnter
   - GenpopLeave
+  - Mining # Starlight
 
 - type: accessGroup
   id: General

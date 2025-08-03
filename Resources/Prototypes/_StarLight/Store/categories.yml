@@ -29,7 +29,7 @@
 - type: storeCategory
   id: SLClown
   name: store-category-service-clown
-  
+
 - type: storeCategory
   id: SLSecurity
   name: store-category-security-main
@@ -40,7 +40,7 @@
 
 - type: storeCategory
   id: SLFahsionSkirt
-  name: Luxury dresses 
+  name: Luxury dresses
 
 - type: storeCategory
   id: SLFahsionSuit
@@ -96,17 +96,16 @@
 - type: storeCategory
   id: UplinkCybernetics
   name: Cybernetics
-  
-# salvage
 
+# salvage
 - type: storeCategory
   id: SalvageEquipment
   name: Equipment
-  
+
 - type: storeCategory
   id: SalvageWeapons
   name: Weapons
-  
+
 - type: storeCategory
   id: SalvageConsumeables
   name: Consumeables
@@ -114,6 +113,15 @@
 - type: storeCategory
   id: SalvageMercenaryEquipment
   name: Mercenary
+
+# mining
+- type: storeCategory
+  id: MiningEquipment
+  name: Equipment
+
+- type: storeCategory
+  id: MiningConsumeables
+  name: Consumeables
 
 # USSP
 

@@ -42,6 +42,6 @@
     defaultChannel: Expedition
   - type: Sprite
     layers:
-    - state: crypt_grey
+    - state: crypt_gray
     - sprite: _Starlight/Objects/Devices/encryption_keys.rsi
-    - state: expedition_label
+      state: expedition_label
