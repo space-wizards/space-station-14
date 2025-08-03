@@ -15,8 +15,8 @@
   - type: Destructible
     thresholds:
     - trigger:
-      !type:DamageTrigger
-      damage: 200
+        !type:DamageTrigger
+        damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
