@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO.Compression;
+using System.Xml.Linq;
 using Robust.Packaging;
 using Robust.Packaging.AssetProcessing;
 using Robust.Packaging.AssetProcessing.Passes;
@@ -182,6 +183,23 @@ public static class ServerPackaging
 
         // Additional assemblies that need to be copied such as EFCore.
         var sourcePath = Path.Combine(contentDir, "bin", "Content.Server");
+
+        var serverExtraAssemblies = new List<string>(ServerExtraAssemblies);
+        var serverProj = XDocument.Load(Path.Combine("Content.Server", "Content.Server.csproj"));
+        if (serverProj.Root is { } root)
+        {
+            foreach (var group in root.Elements("ItemGroup"))
+            {
+                foreach (var reference in group.Elements("PackageReference"))
+                {
+                    if (reference.Attribute("Include")?.Value is not { } include)
+                        continue;
+
+                    if (!serverExtraAssemblies.Contains(include))
+                        serverExtraAssemblies.Add(include);
+                }
+            }
+        }
 
         // Should this be an asset pass?
         // For future archaeologists I just want audio rework to work and need the audio pass so
