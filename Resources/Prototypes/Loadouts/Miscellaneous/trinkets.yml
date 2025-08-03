@@ -256,7 +256,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobClown
-      time: 3600 # 1 hour of clowning to get your rainbow cane.
+      time: 3600 # 1hr
   storage:
     back:
     - OffsetCaneClown
@@ -269,7 +269,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMime
-      time: 3600 # 1 hour of miming to get your cane... is this job ADA compliant? Does the ADA even exist in space?
+      time: 3600 # 1hr
   storage:
     back:
     - OffsetCaneMime
@@ -282,7 +282,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Command
-      time: 18000 # 5 hours, is this too much? Maybe, just git gud.
+      time: 18000 # 5hr
   storage:
     back:
     - OffsetCaneNT
@@ -295,7 +295,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobLibrarian
-      time: 3600 # same as Jamjar, im not subjecting librarians to more than one hour of playtime.
+      time: 3600 # 1hr same as Jamjar.
   storage:
     back:
     - Cane
