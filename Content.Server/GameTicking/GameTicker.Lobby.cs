@@ -82,8 +82,8 @@ namespace Content.Server.GameTicking
                 ("playerCount", playerCount),
                 ("readyCount", readyCount),
                 ("mapName", stationNames.ToString()),
-                ("gmTitle", gmTitle),
-                ("desc", desc));
+                ("gmTitle", string.IsNullOrWhiteSpace(GamemodeNameOverride) ? gmTitle : Loc.GetString(GamemodeNameOverride)), //Starlight edit: gamemode name override
+                ("desc", string.IsNullOrWhiteSpace(GamemodeDescOverride) ? desc : Loc.GetString(GamemodeDescOverride))); //Starlight edit: gamemode desc override
         }
 
         private TickerConnectionStatusEvent GetConnectionStatusMsg()

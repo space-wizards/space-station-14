@@ -182,6 +182,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         targetHumanoid.EyeColor = sourceHumanoid.EyeColor;
         targetHumanoid.EyeGlowing = sourceHumanoid.EyeGlowing; //starlight
         targetHumanoid.Age = sourceHumanoid.Age;
+        targetHumanoid.Width = sourceHumanoid.Width; //starlight
+        targetHumanoid.Height = sourceHumanoid.Height; //starlight
         SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
@@ -447,6 +449,9 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         var ev = new EyeColorInitEvent(); //starlight
         RaiseLocalEvent(uid, ref ev); //starlight
+
+        humanoid.Width = profile.Appearance.Width; //starlight
+        humanoid.Height = profile.Appearance.Height; //starlight
 
         SetSkinColor(uid, profile.Appearance.SkinColor, false);
 

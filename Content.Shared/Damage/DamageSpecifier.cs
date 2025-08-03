@@ -164,7 +164,7 @@ namespace Content.Shared.Damage
                     newValue = Math.Max(0f, newValue - (reduction - (reduction * armorPenetration))); // flat reductions can't heal you
 
                 if (modifierSet.Coefficients.TryGetValue(key, out var coefficient))
-                    newValue *= Math.Min(1f, coefficient + ((1f - coefficient) * armorPenetration)); // coefficients can heal you, e.g. cauterizing bleeding
+                    newValue *= (coefficient + ((1f - coefficient) * armorPenetration)); // coefficients can heal you, e.g. cauterizing bleeding, Starlight change: removed maximum coefficent allowing for weaknesses
 
                 if (newValue != 0)
                     newDamage.DamageDict[key] = FixedPoint2.New(newValue);
