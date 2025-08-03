@@ -1489,7 +1489,7 @@
   flavorType: Base
   description: flavor-base-alkaline
 
-- type: falvor
+- type: flavor
   id: motivating
   flavorType: Base
   description: flavor-base-motivating
