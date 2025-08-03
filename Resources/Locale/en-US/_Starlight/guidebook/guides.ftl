@@ -87,6 +87,14 @@ guide-entry-sl-engineering-sop-technical-assistant = Technical Assistant
 
 guide-entry-sl-medical-sop-intro = Medical
 guide-entry-sl-medical-sop-genproc-intro = General Procedures
+guide-entry-sl-medical-sop-contrabandchemicals = Contraband Chemicals
+guide-entry-sl-medical-sop-chemsminorcontraband = Minor Contraband
+guide-entry-sl-medical-sop-chemsmajorcontraband = Major Contraband
+guide-entry-sl-medical-sop-chemssyndicatecontraband = Syndicate Contraband
+guide-entry-sl-medical-sop-medicalbay = Medical Bay
+guide-entry-sl-medical-sop-patientcare = Patient Care
+guide-entry-sl-medical-sop-deceasedpatientcare = Deceased Patient Care
+guide-entry-sl-medical-sop-violetalertprotocol = Violet Alert Protocol
 guide-entry-sl-medical-sop-staff-intro = Staff Procedures
 guide-entry-sl-medical-sop-chiefmedicalofficer = Chief Medical Officer
 guide-entry-sl-medical-sop-surgeon = Surgeon

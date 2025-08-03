@@ -40,7 +40,7 @@
   name: guide-entry-sl-code-green
   text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/Alerts/code-green.xml"
   priority: 1
-  
+
 - type: guideEntry
   id: code-blue
   name: guide-entry-sl-code-blue
@@ -576,6 +576,68 @@
   name: guide-entry-sl-medical-sop-genproc-intro
   text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/medical-sop-genproc-intro.xml"
   priority: 1
+  children:
+      - medical-sop-contrabandchemicals
+      - medical-sop-medicalbay
+      - medical-sop-patientcare
+      - medical-sop-deceasedpatientcare
+      - medical-sop-violetalertprotocol
+
+
+- type: guideEntry
+  id: medical-sop-contrabandchemicals
+  name: guide-entry-sl-medical-sop-contrabandchemicals
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/ContrabandChemicals.xml"
+  priority: 1
+  children:
+      - medical-sop-chemsminorcontraband
+      - medical-sop-chemsmajorcontraband
+      - medical-sop-chemssyndicatecontraband
+
+
+- type: guideEntry
+  id: medical-sop-chemsminorcontraband
+  name: guide-entry-sl-medical-sop-chemsminorcontraband
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/ChemsMinorContraband.xml"
+  priority: 1
+
+- type: guideEntry
+  id: medical-sop-chemsmajorcontraband
+  name: guide-entry-sl-medical-sop-chemsmajorcontraband
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/ChemsMajorContraband.xml"
+  priority: 2
+
+- type: guideEntry
+  id: medical-sop-chemssyndicatecontraband
+  name: guide-entry-sl-medical-sop-chemssyndicatecontraband
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/ChemsSyndicateContraband.xml"
+  priority: 3
+
+
+- type: guideEntry
+  id: medical-sop-medicalbay
+  name: guide-entry-sl-medical-sop-medicalbay
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/MedicalBay.xml"
+  priority: 2
+
+- type: guideEntry
+  id: medical-sop-patientcare
+  name: guide-entry-sl-medical-sop-patientcare
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/PatientCare.xml"
+  priority: 3
+
+- type: guideEntry
+  id: medical-sop-deceasedpatientcare
+  name: guide-entry-sl-medical-sop-deceasedpatientcare
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/DeceasedPatientCare.xml"
+  priority: 4
+
+- type: guideEntry
+  id: medical-sop-violetalertprotocol
+  name: guide-entry-sl-medical-sop-violetalertprotocol
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/VioletAlertProtocol.xml"
+  priority: 3
+
 
 
 - type: guideEntry
