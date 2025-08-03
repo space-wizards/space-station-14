@@ -2,7 +2,7 @@
 - type: entityTable
   id: LockerFillSalvageLead
   table: !type:AllSelector
-    children: # DOTS - add Lead specific items
+    children:
     - id: BoxFolderClipboard
 
 - type: entity
@@ -40,7 +40,7 @@
 - type: entityTable
   id: LockerFillSalvageMedic
   table: !type:AllSelector
-    children: # DOTS - add Medic specific items
+    children:
     - id: MedkitAdvanced
 
 - type: entity

@@ -20,7 +20,7 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
-  
+
 - type: roleLoadout
   id: JobSurgeon
   groups:
@@ -118,7 +118,7 @@
 
 - type: roleLoadout
   id: JobSalvageLead
-  groups: # DOTS - add custom groups to Resources/Prototypes/_StarLight/Loadouts/loadout_groups.yml, reference here
+  groups:
     - GroupTankHarness
     - SalvageSpecialistBackpack
     - SalvageSpecialistOuterClothing
@@ -130,7 +130,7 @@
 
 - type: roleLoadout
   id: SalvageMedic
-  groups: # DOTS - add custom groups to Resources/Prototypes/_StarLight/Loadouts/loadout_groups.yml, reference here
+  groups:
     - GroupTankHarness
     - SalvageSpecialistBackpack
     - SalvageSpecialistOuterClothing

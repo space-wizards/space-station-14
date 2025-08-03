@@ -77,7 +77,7 @@
     sprite: _Starlight/Markers/jobs.rsi
     layers:
     - state: green
-    - state: salvagelead # DOTS - finish sprite .../Resources/Textures/_Starlight/Markers/jobs.rsi
+    - state: salvagelead
 
 - type: entity
   id: SpawnPointSalvageMedic
@@ -90,7 +90,7 @@
     sprite: _Starlight/Markers/jobs.rsi
     layers:
     - state: green
-    - state: salvagemedic # DOTS - finish sprite .../Resources/Textures/_Starlight/Markers/jobs.rsi
+    - state: salvagemedic
 
 - type: entity
   id: SpawnPointminingspecialist
