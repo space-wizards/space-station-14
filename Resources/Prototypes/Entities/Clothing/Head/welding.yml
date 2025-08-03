@@ -23,6 +23,7 @@
   - type: HideLayerClothing
     slots:
     - Snout
+  - type: WeldingMaskOverlay
 
 - type: entity
   parent: WeldingMaskBase

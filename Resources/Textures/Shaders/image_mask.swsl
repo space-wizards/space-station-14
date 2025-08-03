@@ -1,0 +1,7 @@
+light_mode unshaded;
+
+uniform sampler2D overlayTexture;
+
+void fragment() {
+    COLOR = zTextureSpec(overlayTexture, FRAGCOORD.xy* SCREEN_PIXEL_SIZE);
+}
