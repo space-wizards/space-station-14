@@ -807,10 +807,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         var primaryReagent = solution.GetPrimaryReagentId();
 
+        // If there's no primary reagent, assume the solution is empty
         if (string.IsNullOrEmpty(primaryReagent?.Prototype) ||
             !PrototypeManager.Resolve<ReagentPrototype>(primaryReagent.Value.Prototype, out var primary))
         {
-            args.PushMarkup(Loc.GetString(entity.Comp.MessageEmptyVolume));
+            args.PushMarkup(Loc.GetString(entity.Comp.LocEmptyVolume));
             return;
         }
 
@@ -818,18 +819,17 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         {
             // Push amount of reagent
 
-            var amountString = entity.Comp.ExactVolume ?
-                        Loc.GetString(entity.Comp.MessageExactVolume, ("amount", solution.Volume)) : //Exact measurement
-                        Loc.GetString(VagueSolutionVolume(solution, args.Examiner, entity)); //General approximation
-
-            args.PushMarkup(amountString);
+            args.PushMarkup(Loc.GetString(entity.Comp.LocVolume,
+                                ("fillLevel", ExaminedVolume(entity, solution, args.Examiner)),
+                                ("current", solution.Volume),
+                                ("max", solution.MaxVolume)));
 
             // Push the physical description of the primary reagent
 
             var colorHex = solution.GetColor(PrototypeManager)
                 .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
 
-            args.PushMarkup(Loc.GetString(entity.Comp.MessagePhysicalQuality,
+            args.PushMarkup(Loc.GetString(entity.Comp.LocPhysicalQuality,
                                         ("color", colorHex),
                                         ("desc", primary.LocalizedPhysicalDescription),
                                         ("chemCount", solution.Contents.Count) ));
@@ -841,7 +841,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 .OrderByDescending(pair => pair.Value.Value)
                 .ThenBy(pair => pair.Key.LocalizedName);
 
-            // Add descriptions of immediately recognizable reagents, like water or beer
+            // Collect recognizable reagents, like water or beer
             var recognized = new List<ReagentPrototype>();
             foreach (var keyValuePair in sortedReagentPrototypes)
             {
@@ -854,7 +854,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 recognized.Add(proto);
             }
 
-            // Skip if there's nothing recognizable
             if (recognized.Count == 0)
                 return;
 
@@ -880,37 +879,43 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     ("chemical", reagent.LocalizedName)));
             }
 
-            args.PushMarkup(Loc.GetString(entity.Comp.MessageRecognizableReagents,
+            // Finally push the full message
+            args.PushMarkup(Loc.GetString(entity.Comp.LocRecognizableReagents,
                 ("recognizedString", msg.ToString())));
         }
     }
 
-    /// <returns>A LocId with an approximation of how much volume is left in a solution.</returns>
-    public string VagueSolutionVolume(Solution sol, EntityUid examiner, Entity<ExaminableSolutionComponent> ent)
+    /// <returns>An enum for how to display the solution.</returns>
+    public ExaminedVolumeDisplay ExaminedVolume(Entity<ExaminableSolutionComponent> ent, Solution sol, EntityUid? examiner = null)
     {
-        return (int) PercentFull(sol) switch
-            {
-                100 => ent.Comp.MessageVagueVolumeFull,
-                > 66 => ent.Comp.MessageVagueVolumeMostlyFull,
-                > 33 => HalfEmptyOrHalfFull(examiner, ent),
-                _ => ent.Comp.MessageVagueVolumeMostlyEmpty,
-            };
+        // Exact measurement
+        if (ent.Comp.ExactVolume)
+            return ExaminedVolumeDisplay.Exact;
+
+        // General approximation
+        return (int)PercentFull(sol) switch
+        {
+            100 => ExaminedVolumeDisplay.Full,
+            > 66 => ExaminedVolumeDisplay.MostlyFull,
+            > 33 => HalfEmptyOrHalfFull(examiner),
+            > 0 => ExaminedVolumeDisplay.MostlyEmpty,
+            _ => ExaminedVolumeDisplay.Empty,
+        };
     }
 
-    /// <summary>
-    ///     Some spessmen see half full, some see half empty, but always the same one.
-    /// </summary>
-    /// <returns>A LocId for half full or half empty.</returns>
-    private string HalfEmptyOrHalfFull(EntityUid examiner, Entity<ExaminableSolutionComponent> ent)
+    // Some spessmen see half full, some see half empty, but always the same one.
+    private ExaminedVolumeDisplay HalfEmptyOrHalfFull(EntityUid? examiner = null)
     {
-        string remainingString = ent.Comp.MessageVagueVolumeHalfFull;
+        // Optimistic when un-observed
+        if (examiner == null)
+            return ExaminedVolumeDisplay.HalfFull;
 
-        if (TryComp(examiner, out MetaDataComponent? meta)
+        if (TryComp<MetaDataComponent>(examiner, out var meta)
         && meta.EntityName.Length > 0
         && string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
-            remainingString = ent.Comp.MessageVagueVolumeHalfEmpty;
+            return ExaminedVolumeDisplay.HalfFull;
 
-        return remainingString;
+        return ExaminedVolumeDisplay.HalfEmpty;
     }
 
     /// <summary>

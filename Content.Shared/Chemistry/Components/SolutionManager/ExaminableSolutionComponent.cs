@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Chemistry.Components.SolutionManager;
+﻿using Robust.Shared.Serialization;
+
+namespace Content.Shared.Chemistry.Components.SolutionManager;
 
 /// <summary>
 ///     Component for examining a solution with shift click or through <see cref="SolutionScanEvent"/>.
@@ -26,29 +28,29 @@ public sealed partial class ExaminableSolutionComponent : Component
     public bool ExactVolume;
 
     [DataField]
-    public LocId MessageEmptyVolume = "shared-solution-container-component-on-examine-empty-container";
+    public LocId LocEmptyVolume = "shared-solution-container-component-on-examine-empty-container";
 
     [DataField]
-    public LocId MessageExactVolume = "drink-component-on-examine-exact-volume";
+    public LocId LocVolume = "examinable-solution-on-examine-volume";
 
     [DataField]
-    public LocId MessageVagueVolumeFull = "drink-component-on-examine-is-full";
+    public LocId LocPhysicalQuality = "shared-solution-container-component-on-examine-main-text";
 
     [DataField]
-    public LocId MessageVagueVolumeMostlyFull = "drink-component-on-examine-is-mostly-full";
+    public LocId LocRecognizableReagents = "examinable-solution-has-recognizable-chemicals";
+}
 
-    [DataField]
-    public LocId MessageVagueVolumeHalfFull = "drink-component-on-examine-is-half-full";
-
-    [DataField]
-    public LocId MessageVagueVolumeHalfEmpty = "drink-component-on-examine-is-half-empty";
-
-    [DataField]
-    public LocId MessageVagueVolumeMostlyEmpty = "drink-component-on-examine-is-mostly-empty";
-
-    [DataField]
-    public LocId MessagePhysicalQuality = "shared-solution-container-component-on-examine-main-text";
-
-    [DataField]
-    public LocId MessageRecognizableReagents = "examinable-solution-has-recognizable-chemicals";
+/// <summary>
+///     Used to choose how to display a volume.
+/// </summary>
+[Serializable, NetSerializable]
+public enum ExaminedVolumeDisplay
+{
+    Exact,
+    Full,
+    MostlyFull,
+    HalfFull,
+    HalfEmpty,
+    MostlyEmpty,
+    Empty,
 }
