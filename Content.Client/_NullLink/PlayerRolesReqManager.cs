@@ -33,6 +33,7 @@ public sealed class PlayerRolesReqManager : SharedPlayerRolesReqManager
         => _player.LocalSession == session
         && _mentorReq is not null
         && _playerRolesManager.ContainsAny(_mentorReq.Roles);
+        
     public override bool IsPeacefulBypass(EntityUid uid)
         => _player.LocalEntity == uid
         && _peacefulBypass is not null
