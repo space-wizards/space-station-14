@@ -28,6 +28,7 @@ using Content.Shared.Chat;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
 using Content.Shared.Starlight;
+using Content.Client._NullLink;
 
 namespace Content.Client.IoC
 {

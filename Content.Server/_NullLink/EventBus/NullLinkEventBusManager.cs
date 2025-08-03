@@ -9,7 +9,7 @@ using Starlight.NullLink.Event;
 
 namespace Content.Server._NullLink.EventBus;
 
-public sealed partial class NullLinkEventBusManager : IPostInjectInit, IEventBusObserver, INullLinkEventBusManager
+public sealed partial class NullLinkEventBusManager : IEventBusObserver, INullLinkEventBusManager
 {
     private static readonly TimeSpan _grainDelay = TimeSpan.FromSeconds(180);
     private Timer? _resubscribeTimer;
@@ -21,7 +21,7 @@ public sealed partial class NullLinkEventBusManager : IPostInjectInit, IEventBus
     private ISawmill _sawmill = default!;
     private readonly ConcurrentQueue<BaseEvent> _eventQueue = [];
 
-    void IPostInjectInit.PostInject()
+    public void Initialize()
     {
         _sawmill = _logManager.GetSawmill("NullLink event bus");
         _resubscribeTimer = new Timer(

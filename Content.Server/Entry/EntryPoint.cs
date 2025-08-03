@@ -30,6 +30,7 @@ using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.Starlight.TextToSpeech;
 using Content.Server.Voting.Managers;
+using Content.Shared._NullLink;
 using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
 using Content.Shared.Localizations;
@@ -85,7 +86,7 @@ namespace Content.Server.Entry
 
             foreach (var callback in TestingCallbacks)
             {
-                var cast = (ServerModuleTestingCallbacks) callback;
+                var cast = (ServerModuleTestingCallbacks)callback;
                 cast.ServerBeforeIoC?.Invoke();
             }
 
@@ -125,10 +126,10 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
                 IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
 
-                //🌟Starlight🌟
+                //🌟Starlight🌟 start
                 IoCManager.Resolve<ITTSManager>().Initialize();
-                IoCManager.Resolve<IActorRouter>().Initialize(); // nulllink 
                 IoCManager.Resolve<HolidaySystem>().Initialize();
+                //🌟Starlight🌟 end
             }
         }
 
@@ -171,6 +172,13 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IConnectionManager>().PostInit();
                 IoCManager.Resolve<MultiServerKickManager>().Initialize();
                 IoCManager.Resolve<CVarControlManager>().Initialize();
+
+                // NullLink start
+                IoCManager.Resolve<IActorRouter>().Initialize();
+                IoCManager.Resolve<ISharedNullLinkPlayerRolesReqManager>().Initialize();
+                IoCManager.Resolve<INullLinkEventBusManager>().Initialize();
+                IoCManager.Resolve<INullLinkPlayerManager>().Initialize();
+                // NullLink end
             }
         }
 

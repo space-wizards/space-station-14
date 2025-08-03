@@ -1,10 +1,11 @@
 ﻿using Content.Shared.Starlight;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._NullLink;
 
-[Prototype("RoleRequirement")]
+[Prototype("roleRequirementPrototype")]
 public sealed partial class RoleRequirementPrototype : IPrototype
 {
     [ViewVariables]
@@ -20,5 +21,5 @@ public sealed partial class RoleRequirementPrototype : IPrototype
     public string Discord = default!;
 
     [DataField(required: true)]
-    public string HowToGetRole = default!;
+    public string RolesLoc = default!;
 }

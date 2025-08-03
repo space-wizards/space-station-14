@@ -24,6 +24,7 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface;
 using Content.Client.Viewport;
 using Content.Client.Voting;
+using Content.Shared._NullLink;
 using Content.Shared.Ame.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Localizations;
@@ -80,6 +81,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly ClientsidePlaytimeTrackingManager _clientsidePlaytimeManager = default!;
        	[Dependency] private readonly INullLinkPlayerRolesManager _nullLinkPlayerRolesManager = default!; //NullLink
+       	[Dependency] private readonly ISharedNullLinkPlayerRolesReqManager _sharedNullLinkPlayer = default!; //NullLink
 
         public override void Init()
         {
@@ -135,8 +137,6 @@ namespace Content.Client.Entry
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
             _clientPlayerManager.Initialize(); //🌟Starlight🌟
-            _nullLinkPlayerRolesManager.Initialize(); //NullLink
-
             _screenshotHook.Initialize();
             _fullscreenHook.Initialize();
             _changelogManager.Initialize();
@@ -191,6 +191,11 @@ namespace Content.Client.Entry
                                          args.OldLevel == ClientRunLevel.InGame);
                 }
             };
+
+            // NullLink start
+            _nullLinkPlayerRolesManager.Initialize();
+            _sharedNullLinkPlayer.Initialize();
+            // NullLink end
 
             // Disable engine-default viewport since we use our own custom viewport control.
             _userInterfaceManager.MainViewport.Visible = false;

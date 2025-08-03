@@ -1,4 +1,4 @@
-- type: RoleRequirement
+- type: roleRequirementPrototype
   id: AllRolesReq
   roles:
   - 1275161200115712071 # AlfaTester
@@ -8,4 +8,4 @@
   - 1294132218918207639 # Mentor
   - 1303872867485880360 # AllRoles
   discord: roles-req-discord-starlight
-  howToGetRole: roles-req-how-to-get-all
+  rolesLoc: roles-req-all-roles
