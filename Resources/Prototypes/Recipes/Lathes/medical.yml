@@ -231,7 +231,7 @@
   completetime: 2
   materials:
     Steel: 100
-    Wood: 100 # its wood
+    Wood: 100
 
 - type: latheRecipe
   id: LauncherSyringe
