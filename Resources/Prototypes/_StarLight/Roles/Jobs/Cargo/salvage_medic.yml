@@ -1,5 +1,5 @@
 ﻿- type: job
-  id: SalvageMedic # DOTS - Still need to add starting loadout stuff
+  id: SalvageMedic
   name: job-name-salvagemedic
   description: job-description-salvagemedic
   playTimeTracker: JobSalvageMedic

@@ -37,7 +37,7 @@
     stateDoorClosed: warden_door
   - type: AccessReader
     access: [["Armory"]]
-  
+
 # Brigmedic
 - type: entity
   id: LockerBrigmedicLarge
@@ -82,7 +82,7 @@
       stateDoorOpen: salvagelead_open
       stateDoorClosed: salvagelead_door
     - type: AccessReader
-      access: [["Salvage"]] #DOTS - do we add salv lead access type???
+      access: [["Salvage"]]
 
 # Salvage Medic
 - type: entity
@@ -98,7 +98,7 @@
       stateDoorOpen: salvagemedic_open
       stateDoorClosed: salvagemedic_door
     - type: AccessReader
-      access: [["Salvage"]] #DOTS - do we add salv medic access type???
+      access: [["Salvage"]]
 
 # Mining Specialist
 - type: entity
@@ -114,4 +114,4 @@
     stateDoorOpen: miner_open
     stateDoorClosed: miner_door
   - type: AccessReader
-    access: [["Mining"]] #DOTS - confirm this works
+    access: [["Mining"]]

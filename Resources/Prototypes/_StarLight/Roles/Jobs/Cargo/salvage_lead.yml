@@ -1,5 +1,5 @@
 ﻿- type: job
-  id: SalvageLead # DOTS - Still need to add starting loadout stuff
+  id: SalvageLead
   name: job-name-salvagelead
   description: job-description-salvagelead
   playTimeTracker: JobSalvageLead

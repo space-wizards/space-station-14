@@ -8,4 +8,6 @@ job-name-surgeon = Surgeon
 job-name-mailtech = Mail Technician
 job-name-centcomm = CentComm Official
 
+job-name-salvagelead = Salvage Lead
+job-name-salvagemedic = Salvage Medic
 job-name-abductor = Abductor
