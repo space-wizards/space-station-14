@@ -17,6 +17,7 @@ using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Bible;
 
@@ -32,6 +33,7 @@ public sealed class BibleSystem : SharedBibleSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _delay = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -69,22 +71,21 @@ public sealed class BibleSystem : SharedBibleSystem
         var query = EntityQueryEnumerator<SummonableRespawningComponent, SummonableComponent>();
         while (query.MoveNext(out var uid, out var _, out var summonableComp))
         {
-            summonableComp.Accumulator += frameTime;
-            if (summonableComp.Accumulator < summonableComp.RespawnTime)
-            {
+            if (_timing.CurTime < summonableComp.RespawnEndTime)
                 continue;
-            }
+
             // Clean up the old body
             if (summonableComp.Summon != null)
             {
                 Del(summonableComp.Summon.Value);
                 summonableComp.Summon = null;
             }
+
             summonableComp.AlreadySummoned = false;
             _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", uid)), uid, PopupType.Medium);
             _audio.PlayPvs(summonableComp.SummonSound, uid);
-            // Clean up the accumulator and respawn tracking component
-            summonableComp.Accumulator = 0;
+            // Clean up the respawnEndTime and respawn tracking component
+            summonableComp.RespawnEndTime = _timing.CurTime + summonableComp.RespawnInterval;
             _remQueue.Enqueue(uid);
         }
     }

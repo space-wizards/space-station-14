@@ -1,6 +1,7 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Bible.Components;
 
@@ -8,6 +9,7 @@ namespace Content.Shared.Bible.Components;
 /// This lets you summon a mob or item with an alternative verb on the item.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentPause]
 public sealed partial class SummonableComponent : Component
 {
     /// <summary>
@@ -45,12 +47,13 @@ public sealed partial class SummonableComponent : Component
     /// <summary>
     /// Used for respawning.
     /// </summary>
-    [DataField]
-    public float Accumulator = 0f;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
+    public TimeSpan? RespawnEndTime;
 
     /// <summary>
     /// Cooldown between entity summon attempts.
     /// </summary>
     [DataField]
-    public float RespawnTime = 180f;
+    public TimeSpan RespawnInterval = TimeSpan.FromSeconds(180);
 }
