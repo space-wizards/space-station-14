@@ -13,6 +13,8 @@ using Robust.Server.GameObjects;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Security.Components;
+using System.Linq;
+using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -42,6 +44,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             subs.Event<CriminalRecordChangeStatus>(OnChangeStatus);
             subs.Event<CriminalRecordAddHistory>(OnAddHistory);
             subs.Event<CriminalRecordDeleteHistory>(OnDeleteHistory);
+            subs.Event<CriminalRecordSetStatusFilter>(OnStatusFilterPressed);
         });
     }
 
@@ -55,6 +58,11 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     {
         // no concern of sus client since record retrieval will fail if invalid id is given
         ent.Comp.ActiveKey = msg.SelectedKey;
+        UpdateUserInterface(ent);
+    }
+    private void OnStatusFilterPressed(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordSetStatusFilter msg)
+    {
+        ent.Comp.FilterStatus = msg.FilterStatus;
         UpdateUserInterface(ent);
     }
 
@@ -112,13 +120,26 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         }
 
         // will probably never fail given the checks above
+        name = _records.RecordName(key.Value);
+        officer = Loc.GetString("criminal-records-console-unknown-officer");
+        var jobName = "Unknown";
+
+        _records.TryGetRecord<GeneralStationRecord>(key.Value, out var entry);
+        if (entry != null)
+            jobName = entry.JobTitle;
+
+        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(null, mob.Value);
+        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
+        if (tryGetIdentityShortInfoEvent.Title != null)
+            officer = tryGetIdentityShortInfoEvent.Title;
+
         _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer);
 
         (string, object)[] args;
         if (reason != null)
-            args = new (string, object)[] { ("name", name), ("officer", officer), ("reason", reason) };
+            args = new (string, object)[] { ("name", name), ("officer", officer), ("reason", reason), ("job", jobName) };
         else
-            args = new (string, object)[] { ("name", name), ("officer", officer) };
+            args = new (string, object)[] { ("name", name), ("officer", officer), ("job", jobName) };
 
         // figure out which radio message to send depending on transition
         var statusString = (oldStatus, msg.Status) switch
@@ -193,7 +214,17 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             return;
         }
 
+        // get the listing of records to display
         var listing = _records.BuildListing((owningStation.Value, stationRecords), console.Filter);
+
+        // filter the listing by the selected criminal record status
+        //if NONE, dont filter by status, just show all crew
+        if (console.FilterStatus != SecurityStatus.None)
+        {
+            listing = listing
+                .Where(x => _records.TryGetRecord<CriminalRecord>(new StationRecordKey(x.Key, owningStation.Value), out var record) && record.Status == console.FilterStatus)
+                .ToDictionary(x => x.Key, x => x.Value);
+        }
 
         var state = new CriminalRecordsConsoleState(listing, console.Filter);
         if (console.ActiveKey is { } id)
@@ -204,6 +235,9 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             _records.TryGetRecord(key, out state.CriminalRecord, stationRecords);
             state.SelectedKey = id;
         }
+
+        // Set the Current Tab aka the filter status type for the records list
+        state.FilterStatus = console.FilterStatus;
 
         _ui.SetUiState(uid, CriminalRecordsConsoleKey.Key, state);
     }

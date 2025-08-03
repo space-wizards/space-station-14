@@ -65,12 +65,6 @@ public abstract partial class SharedEntityStorageComponent : Component
     public float EnteringRange = 0.18f;
 
     /// <summary>
-    /// If true, there may be mobs inside the container, even if the container is an Item
-    /// </summary>
-    [DataField]
-    public bool ItemCanStoreMobs = false;
-
-    /// <summary>
     /// Whether or not to show the contents when the storage is closed
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -152,11 +146,17 @@ public sealed class EntityStorageComponentState : ComponentState
     }
 }
 
+/// <summary>
+/// Raised on the entity being inserted whenever checking if an entity can be inserted into an entity storage.
+/// </summary>
 [ByRefEvent]
-public record struct InsertIntoEntityStorageAttemptEvent(bool Cancelled = false);
+public record struct InsertIntoEntityStorageAttemptEvent(EntityUid ItemToInsert, bool Cancelled = false);
 
+/// <summary>
+/// Raised on the entity storage whenever checking if an entity can be inserted into it.
+/// </summary>
 [ByRefEvent]
-public record struct StoreMobInItemContainerAttemptEvent(bool Handled, bool Cancelled = false);
+public record struct EntityStorageInsertedIntoAttemptEvent(EntityUid ItemToInsert, bool Cancelled = false);
 
 [ByRefEvent]
 public record struct StorageOpenAttemptEvent(EntityUid User, bool Silent, bool Cancelled = false);
@@ -168,7 +168,7 @@ public readonly record struct StorageBeforeOpenEvent;
 public readonly record struct StorageAfterOpenEvent;
 
 [ByRefEvent]
-public record struct StorageCloseAttemptEvent(bool Cancelled = false);
+public record struct StorageCloseAttemptEvent(EntityUid? User, bool Cancelled = false);
 
 [ByRefEvent]
 public readonly record struct StorageBeforeCloseEvent(HashSet<EntityUid> Contents, HashSet<EntityUid> BypassChecks);

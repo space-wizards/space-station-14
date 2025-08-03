@@ -1,0 +1,16 @@
+- type: entity
+  parent: BaseAction
+  id: ActionSmoke
+  name: Smoke
+  description: Summons smoke around the user.
+  components:
+  - type: Action
+    useDelay: 10
+    itemIconStyle: BigAction
+    icon:
+      sprite: Actions/smokeaction.rsi
+      state: smokeaction
+  - type: InstantAction
+    event: !type:InstantSpawnSpellEvent
+      prototype: WizardSmoke
+      posData: !type:TargetInFront

@@ -55,9 +55,6 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
   - type: Occluder
   - type: BlockWeather
 
@@ -136,6 +133,11 @@
   - type: Construction
     graph: DoorGraph
     node: paperDoor
+  - type: Door
+    openSound:
+      path: /Audio/Effects/paperdoor_openclose.ogg
+    closeSound:
+      path: /Audio/Effects/paperdoor_openclose.ogg
 
 - type: entity
   id: PlasmaDoor
@@ -229,6 +231,15 @@
     node: door
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50

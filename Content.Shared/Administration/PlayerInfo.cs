@@ -1,5 +1,6 @@
 using Content.Shared.Mind;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration;
@@ -11,7 +12,9 @@ public sealed record PlayerInfo(
     string IdentityName,
     string StartingJob,
     bool Antag,
-    RoleTypePrototype RoleProto,
+    ProtoId<RoleTypePrototype>? RoleProto,
+    LocId? Subtype,
+    int SortWeight,
     NetEntity? NetEntity,
     NetUserId SessionId,
     bool Connected,

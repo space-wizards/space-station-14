@@ -1,3 +1,5 @@
+using Robust.Shared.Map;
+
 namespace Content.Server.Antag.Components;
 
 /// <summary>
@@ -5,4 +7,11 @@ namespace Content.Server.Antag.Components;
 /// Requires <see cref="AntagSelectionComponent"/>.
 /// </summary>
 [RegisterComponent]
-public sealed partial class AntagRandomSpawnComponent : Component;
+public sealed partial class AntagRandomSpawnComponent : Component
+{
+    /// <summary>
+    /// Location that was picked.
+    /// </summary>
+    [DataField]
+    public EntityCoordinates? Coords;
+}

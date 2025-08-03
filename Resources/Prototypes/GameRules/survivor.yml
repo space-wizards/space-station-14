@@ -1,0 +1,5 @@
+﻿- type: entity
+  id: Survivor
+  parent: BaseGameRule
+  components:
+  - type: SurvivorRule

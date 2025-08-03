@@ -18,7 +18,7 @@
     tags:
     - Figurine
   - type: UseDelay
-    delay: 10
+    delay: 5
   - type: TriggerOnActivate
   - type: TriggerOnSignal
   - type: Speech

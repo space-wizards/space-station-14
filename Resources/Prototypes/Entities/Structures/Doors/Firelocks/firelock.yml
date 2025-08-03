@@ -23,6 +23,9 @@
       cost: 4
       delay: 6
       fx: EffectRCDDeconstruct6
+    - type: Tag
+      tags:
+      - ForceFixRotations # Allow fixrotations to target these
     - type: Destructible
       thresholds:
       - trigger:
@@ -49,6 +52,24 @@
           visible: false
         - state: panel_open
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
+        - state: pressure_unlit
+          visible: false
+          shader: unshaded
+          map: ["enum.FirelockVisualLayersPressure.Base"]
+        - state: temperature_unlit
+          visible: false
+          shader: unshaded
+          map: ["enum.FirelockVisualLayersTemperature.Base"]
+    - type: GenericVisualizer
+      visuals:
+        enum.FirelockVisuals.PressureWarning:
+          enum.FirelockVisualLayersPressure.Base:
+            True: { visible: true }
+            False: { visible: false }
+        enum.FirelockVisuals.TemperatureWarning:
+          enum.FirelockVisualLayersTemperature.Base:
+            True: { visible: true }
+            False: { visible: false }
     - type: AnimationPlayer
     - type: Fixtures
       fixtures:
@@ -116,6 +137,12 @@
       enabled: false
       castShadows: false
     - type: NavMapDoor
+    - type: GuideHelp
+      guides:
+      - FireAndGasControl
+      - Fires
+      - Spacing
+    - type: SyncSprite
 
 - type: entity
   id: Firelock
@@ -187,6 +214,9 @@
           - GlassAirlockLayer
     - type: Occluder
       enabled: false
+    - type: Tag
+      tags:
+      - ForceNoFixRotations # Prevent fixrotations from targeting these, since the base Firelock is targeted
     - type: Door
       occludes: false
     - type: Physics

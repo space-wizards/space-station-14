@@ -11,7 +11,6 @@ namespace Content.Shared.Traits.Assorted;
 /// </summary>
 public sealed class PermanentBlindnessSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly BlindableSystem _blinding = default!;
 
     /// <inheritdoc/>
@@ -24,7 +23,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
 
     private void OnExamined(Entity<PermanentBlindnessComponent> blindness, ref ExaminedEvent args)
     {
-        if (args.IsInDetailsRange && !_net.IsClient && blindness.Comp.Blindness == 0)
+        if (args.IsInDetailsRange && blindness.Comp.Blindness == 0)
         {
             args.PushMarkup(Loc.GetString("permanent-blindness-trait-examined", ("target", Identity.Entity(blindness, EntityManager))));
         }

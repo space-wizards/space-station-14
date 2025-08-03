@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/blob/bd704770f7146d820e1e93b04ae1dcf3723b299a/icons/obj/stack_objects.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "brown",
+            "directions": 1
+        },
+        {
+            "name": "empty-roll",
+            "directions": 1
+        }
+    ]
+}

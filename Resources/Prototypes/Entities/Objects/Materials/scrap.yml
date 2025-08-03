@@ -25,6 +25,7 @@
   - type: Tag
     tags:
     - Recyclable
+    - SalvageScrap
 
 - type: entity
   parent: BaseStructure
@@ -77,7 +78,9 @@
       - state: metal-1
         map: [ "base" ]
   - type: Item
-    size: Ginormous
+    size: Large
+    shape:
+    - 0,0,4,4 # 5x5
     heldPrefix: metal
   - type: MultiHandedItem
   - type: RandomSprite
@@ -135,7 +138,9 @@
         junk-airlock-1: ""
         junk-airlock-2: ""
   - type: Item
-    size: Ginormous
+    size: Large
+    shape:
+    - 0,0,4,4 # 5x5
     heldPrefix: "airlock"
   - type: MultiHandedItem
   - type: PhysicalComposition
@@ -273,7 +278,9 @@
     layers:
     - state: junk-firelock-1
   - type: Item
-    size: Ginormous
+    size: Large
+    shape:
+    - 0,0,4,4 # 5x5
     heldPrefix: firelock-1
   - type: MultiHandedItem
   - type: PhysicalComposition
@@ -290,7 +297,9 @@
     layers:
     - state: junk-firelock-2
   - type: Item
-    size: Ginormous
+    size: Large
+    shape:
+    - 0,0,4,4 # 5x5
     heldPrefix: firelock-2
   - type: MultiHandedItem
   - type: PhysicalComposition
