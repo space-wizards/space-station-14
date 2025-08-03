@@ -64,15 +64,7 @@
       "directions": 4
     },
     {
-      "name": "tail_docked_full",
-      "directions": 4
-    },
-    {
       "name": "tail_docked",
-      "directions": 4
-    },
-    {
-      "name": "tail_talisman_base",
       "directions": 4
     },
     {
