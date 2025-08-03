@@ -62,8 +62,8 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
                     ("Color", card.Comp1.Color),
                     ("IconColor", card.Comp1.IconColor),
                     ("Icon", card.Comp1.Icon),
-                    ("Title", card.Comp1.Title),
-                    ("Desc", card.Comp1.Description),
+                    ("Title", Loc.GetString(card.Comp1.Title)),
+                    ("Desc", Loc.GetString(card.Comp1.Description)),
                 ];
                 args.PushMarkup(Loc.GetString("railroading-card-examined", @params));
             }
@@ -75,7 +75,7 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
                         ("Color", item.Comp1.Color),
                         ("IconColor", item.Comp1.IconColor),
                         ("Icon", item.Comp1.Icon),
-                        ("Title", item.Comp1.Title)
+                        ("Title", Loc.GetString(item.Comp1.Title))
                     ];
                     args.PushMarkup(Loc.GetString("railroading-issued-card", @params));
                 }
