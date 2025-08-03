@@ -52,7 +52,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         if (ent.Comp.NumberOfPipeLayers <= 1 || ent.Comp.PipeLayersLocked)
             return;
 
-        if (!_protoManager.TryIndex(ent.Comp.Tool, out var toolProto))
+        if (!_protoManager.Resolve(ent.Comp.Tool, out var toolProto))
             return;
 
         var user = args.User;
@@ -138,7 +138,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         if (!TryGetHeldTool(args.User, ent.Comp.Tool, out var tool))
         {
-            if (_protoManager.TryIndex(ent.Comp.Tool, out var toolProto))
+            if (_protoManager.Resolve(ent.Comp.Tool, out var toolProto))
             {
                 var toolName = Loc.GetString(toolProto.ToolName).ToLower();
                 var message = Loc.GetString("atmos-pipe-layers-component-tool-missing", ("toolName", toolName));

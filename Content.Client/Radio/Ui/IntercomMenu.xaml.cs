@@ -42,7 +42,7 @@ public sealed partial class IntercomMenu : FancyWindow
         for (var i = 0; i < entity.Comp.SupportedChannels.Count; i++)
         {
             var channel = entity.Comp.SupportedChannels[i];
-            if (!_prototype.TryIndex(channel, out var prototype))
+            if (!_prototype.Resolve(channel, out var prototype))
                 continue;
 
             _channels.Add(channel);

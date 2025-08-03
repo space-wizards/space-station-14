@@ -29,7 +29,7 @@ namespace Content.Client.Access.UI
 
             foreach (var access in accessLevels)
             {
-                if (!protoManager.TryIndex(access, out var accessLevel))
+                if (!protoManager.Resolve(access, out var accessLevel))
                 {
                     continue;
                 }
