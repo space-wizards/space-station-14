@@ -1,7 +1,6 @@
 using Content.Server.Bible.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Popups;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Bible;
 using Content.Shared.Bible.Components;
@@ -24,7 +23,6 @@ namespace Content.Server.Bible;
 public sealed class BibleSystem : SharedBibleSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly InventorySystem _invSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
@@ -203,21 +201,9 @@ public sealed class BibleSystem : SharedBibleSystem
         summonable.Summon = ent.Owner;
     }
 
-    protected override void AttemptSummon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent? position)
+    protected override void Summon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent position)
     {
-        base.AttemptSummon(ent, user, position);
-
-        var (uid, component) = ent;
-        if (component.AlreadySummoned || component.SpecialItemPrototype == null)
-            return;
-        if (component.RequiresBibleUser && !HasComp<BibleUserComponent>(user))
-            return;
-        if (!Resolve(user, ref position))
-            return;
-        if (component.Deleted || Deleted(uid))
-            return;
-        if (!_blocker.CanInteract(user, uid))
-            return;
+        var component = ent.Comp;
 
         // Make this familiar the component's summon
         var familiar = Spawn(component.SpecialItemPrototype, position.Coordinates);
@@ -227,7 +213,7 @@ public sealed class BibleSystem : SharedBibleSystem
         if (HasComp<GhostRoleMobSpawnerComponent>(familiar))
         {
             _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), user, user, PopupType.Medium);
-            _transform.SetParent(familiar, uid);
+            _transform.SetParent(familiar, ent.Owner);
         }
         component.AlreadySummoned = true;
         _actionsSystem.RemoveAction(user, component.SummonActionEntity);

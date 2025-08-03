@@ -1,3 +1,4 @@
+using Content.Shared.ActionBlocker;
 using Content.Shared.Bible.Components;
 using Content.Shared.Verbs;
 
@@ -8,6 +9,8 @@ namespace Content.Shared.Bible;
 /// </summary>
 public abstract class SharedBibleSystem : EntitySystem
 {
+    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -42,7 +45,27 @@ public abstract class SharedBibleSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    protected virtual void AttemptSummon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent? position)
+    protected void AttemptSummon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent? position)
+    {
+        // TODO : because it's predicted, maybe put some popup feedback to the player/client?
+        var uid = ent.Owner;
+        var component = ent.Comp;
+
+        if (component.AlreadySummoned || component.SpecialItemPrototype == null)
+            return;
+        if (component.RequiresBibleUser && !HasComp<BibleUserComponent>(user))
+            return;
+        if (!Resolve(user, ref position))
+            return;
+        if (component.Deleted || Deleted(uid))
+            return;
+        if (!_blocker.CanInteract(user, uid))
+            return;
+
+        Summon(ent, user, position);
+    }
+
+    protected virtual void Summon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent position)
     {
         // Server-side logic.
     }
