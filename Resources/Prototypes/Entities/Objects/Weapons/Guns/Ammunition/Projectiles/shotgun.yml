@@ -13,7 +13,6 @@
         Piercing: 40
         Structural: 15
 
-
 - type: entity
   id: PelletShotgunBeanbag
   name: beanbag (.50)

@@ -4,6 +4,7 @@ using Content.Server._NullLink.Helpers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Players.RateLimiting;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -19,16 +20,24 @@ public sealed partial class HubSystem : EntitySystem
     private static readonly TimeSpan _minInterval = TimeSpan.FromMilliseconds(300);
     private TimeSpan _lastSent;         
     private bool _sendScheduled;   
+    private int _maxPlayers;
 
     private ServerInfoRequest _serverInfo = new();
 
     public void InitializeServerInfo()
     {
+        _cfg.OnValueChanged(CCVars.SoftMaxPlayers, OnSoftMaxPlayersChanged, true);
+
         SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => OnLobby());
         SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => OnRoundEnding());
         SubscribeLocalEvent<RoundStartingEvent>(_ => OnRoundStart());
 
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+    }
+
+    private void OnSoftMaxPlayersChanged(int maxPlayers)
+    {
+        _maxPlayers = maxPlayers;
     }
 
     private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -37,7 +46,7 @@ public sealed partial class HubSystem : EntitySystem
         _serverInfo = _serverInfo with
         {
             Players = _playerManager.PlayerCount,
-            MaxPlayers = _playerManager.MaxPlayers,
+            MaxPlayers = _maxPlayers
         };
         TryUpdateServerInfo();
     }
@@ -49,7 +58,7 @@ public sealed partial class HubSystem : EntitySystem
             СurrentStateStartedAt = DateTime.UtcNow,
             Status = ServerStatus.Round,
             Players = _playerManager.PlayerCount,
-            MaxPlayers = _playerManager.MaxPlayers,
+            MaxPlayers = _maxPlayers,
         };
         TryUpdateServerInfo();
     }
@@ -60,7 +69,7 @@ public sealed partial class HubSystem : EntitySystem
             СurrentStateStartedAt = DateTime.UtcNow,
             Status = ServerStatus.RoundEnding,
             Players = _playerManager.PlayerCount,
-            MaxPlayers = _playerManager.MaxPlayers,
+            MaxPlayers = _maxPlayers,
         };
         TryUpdateServerInfo();
     }
@@ -71,7 +80,7 @@ public sealed partial class HubSystem : EntitySystem
             СurrentStateStartedAt = DateTime.UtcNow,
             Status = ServerStatus.Lobby,
             Players = _playerManager.PlayerCount,
-            MaxPlayers = _playerManager.MaxPlayers,
+            MaxPlayers = _maxPlayers,
         };
         TryUpdateServerInfo();
     }

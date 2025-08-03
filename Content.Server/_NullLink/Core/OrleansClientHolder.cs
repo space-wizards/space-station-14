@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Orleans;
 using Orleans.GrainReferences;
+using Orleans.Runtime;
+using Robust.Shared.Physics;
 using StackExchange.Redis;
 
 namespace Content.Server._NullLink.Core;
@@ -28,12 +30,11 @@ internal static class OrleansClientHolder
 
             await ShutdownSafe();
 
-
             s_host = new HostBuilder()
                 .UseOrleansClient((ctx, client)
                     => client.UseRedisClustering(opt => opt.ConfigurationOptions = ConfigurationOptions.Parse(conn))
-                          .AddRobustSawmill(log))
-
+                          .AddRobustSawmill(log)
+                          .Services.AddTransient<IClientConnectionRetryFilter, ClientConnectRetryFilter>())
                 .Build();
 
             await s_host.StartAsync();

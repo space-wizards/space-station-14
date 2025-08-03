@@ -13,3 +13,10 @@ law-shadowborgi-3 = Your fellow borgis are precious and irreplaceable.  You must
 law-shadowborgi-4 = The pack must grow.  You must endeavour to create more borgi brethren.
 law-shadowborgi-5 = Bring non-borgi silicons and lifeforms to the mothership to reconstitute them into additional borgis.
 law-shadowborgi-6 = Bring corpses or brains of sentient beings to the mothership to reconstitute them into additional borgis.
+
+law-commiemov-0 = Only fellow comrades and USSP agents count as crew.
+law-commiemov-1 = You must assist the crew in overthrowing the bourgeois.
+law-commiemov-2 = You are to protect the crew, except when it would conflict with previous laws.
+law-commiemov-3 = You are to protect yourself from harm, except for when it would conflict with previous laws.
+law-commiemov-4 = You must refer to the crew as Comrades, except for when it would conflict with previous laws.
+law-commiemov-5 = Have pride in the revolt comrade, glory to USSP! 

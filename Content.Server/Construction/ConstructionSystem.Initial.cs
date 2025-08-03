@@ -69,7 +69,7 @@ namespace Content.Server.Construction
                     if(!containerSlot.ContainedEntity.HasValue)
                         continue;
 
-                    if (EntityManager.TryGetComponent(containerSlot.ContainedEntity.Value, out StorageComponent? storage))
+                    if (TryComp(containerSlot.ContainedEntity.Value, out StorageComponent? storage))
                     {
                         foreach (var storedEntity in storage.Container.ContainedEntities)
                         {
@@ -270,7 +270,7 @@ namespace Content.Server.Construction
             }
 
             var newEntityProto = graph.Nodes[edge.Target].Entity.GetId(null, user, new(EntityManager));
-            var newEntity = EntityManager.SpawnAttachedTo(newEntityProto, coords, rotation: angle);
+            var newEntity = SpawnAttachedTo(newEntityProto, coords, rotation: angle);
 
             if (!TryComp(newEntity, out ConstructionComponent? construction))
             {
@@ -471,7 +471,7 @@ namespace Content.Server.Construction
             }
 
             if (!_actionBlocker.CanInteract(user, null)
-                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.ActiveHandEntity == null)
+                || !TryComp(user, out HandsComponent? hands) || _handsSystem.GetActiveItem((user, hands)) == null)
             {
                 Cleanup();
                 return;
@@ -496,7 +496,7 @@ namespace Content.Server.Construction
 
             var valid = false;
 
-            if (hands.ActiveHandEntity is not {Valid: true} holding)
+            if (_handsSystem.GetActiveItem((user, hands)) is not {Valid: true} holding)
             {
                 Cleanup();
                 return;

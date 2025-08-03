@@ -7,5 +7,5 @@
   - type: Sprite
     layers:
     - state: green
-    - sprite: Objects/Fun/toys.rsi
-      state: synb
+    - sprite: Objects/Fun/Balloons/syndicate.rsi
+      state: icon
