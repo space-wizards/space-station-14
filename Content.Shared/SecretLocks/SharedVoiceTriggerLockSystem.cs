@@ -1,22 +1,41 @@
-using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Lock;
+using Content.Shared.Trigger;
+using Content.Shared.Trigger.Systems;
 
 namespace Content.Shared.SecretLocks;
 
-public abstract partial class SharedVoiceTriggerLockSystem : EntitySystem
+public sealed partial class SharedVoiceTriggerLockSystem : EntitySystem
 {
-    [Dependency] protected readonly LockSystem _lock = default!;
+    [Dependency] private readonly LockSystem _lock = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<VoiceTriggerLockComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<VoiceTriggerLockComponent, VoiceTriggeredEvent>(OnVoiceTriggered);
+        SubscribeLocalEvent<VoiceTriggerLockComponent, TryShowVoiceTriggerVerbs>(OnShowVoiceTriggerVerbs);
+        SubscribeLocalEvent<VoiceTriggerLockComponent, TryShowVoiceTriggerExamine>(OnShowVoiceTriggerExamine);
     }
 
     private void OnComponentInit(Entity<VoiceTriggerLockComponent> ent, ref ComponentInit args)
     {
         if (!HasComp<LockComponent>(ent))
             Log.Warning($"Entity with VoiceTriggerLockComponent {ent.Owner} has no lock component.");
+    }
+
+    private void OnVoiceTriggered(Entity<VoiceTriggerLockComponent> ent, ref VoiceTriggeredEvent args)
+    {
+        _lock.ToggleLock(ent);
+    }
+
+    private void OnShowVoiceTriggerVerbs(Entity<VoiceTriggerLockComponent> ent, ref TryShowVoiceTriggerVerbs args)
+    {
+        args.Canceled = _lock.IsLocked(ent.Owner);
+    }
+
+    private void OnShowVoiceTriggerExamine(Entity<VoiceTriggerLockComponent> ent, ref TryShowVoiceTriggerExamine args)
+    {
+        args.Canceled = _lock.IsLocked(ent.Owner);
     }
 }
