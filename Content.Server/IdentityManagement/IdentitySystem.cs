@@ -62,11 +62,17 @@ public sealed class IdentitySystem : SharedIdentitySystem
     // This is where the magic happens
     private void OnMapInit(EntityUid uid, IdentityComponent component, MapInitEvent args)
     {
+        if (component.IdentityEntitySlot is not { } slot)
+        {
+            Log.Error($"Uninitialized IdentityEntitySlot for {ToPrettyString(uid)}.");
+            return;
+        }
+
         var ident = Spawn(null, Transform(uid).Coordinates);
 
         _metaData.SetEntityName(ident, "identity");
         QueueIdentityUpdate(uid);
-        _container.Insert(ident, component.IdentityEntitySlot);
+        _container.Insert(ident, slot);
     }
 
     /// <summary>
@@ -84,7 +90,7 @@ public sealed class IdentitySystem : SharedIdentitySystem
     /// </summary>
     private void UpdateIdentityInfo(EntityUid uid, IdentityComponent identity)
     {
-        if (identity.IdentityEntitySlot.ContainedEntity is not { } ident)
+        if (identity.IdentityEntitySlot?.ContainedEntity is not { } ident)
             return;
 
         var representation = GetIdentityRepresentation(uid);
