@@ -8,7 +8,7 @@
         weight: .83
       - !type:NestedSelector
         tableId: MailAntagSpamLetter
-        weight: .17
+        weight: .17 #pre-nerf antag mail chance
 
 
 # all the letters here should have a `AntagOnSign` component of some sort so that when they are signed it can antag them
