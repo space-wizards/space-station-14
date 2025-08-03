@@ -9,14 +9,14 @@ gases-n2o = Nitrous Oxide
 gases-frezon = Frezon
 
 atmospherics-gas-name = { $gas ->
-    [Oxygen] Oxygen
-    [Nitrogen] Nitrogen
-    [CarbonDioxide] Carbon Dioxide
-    [Plasma] Plasma
-    [Tritium] Tritium
-    [WaterVapor] Water Vapor
-    [Ammonia] Ammonia
-    [NitrousOxide] Nitrous Oxide
-    [Frezon] Frezon
+    [Oxygen] { gases-oxygen }
+    [Nitrogen] { gases-nitrogen }
+    [CarbonDioxide] { gases-co2 }
+    [Plasma] { gases-plasma }
+    [Tritium] { gases-tritium }
+    [WaterVapor] { gases-water-vapor }
+    [Ammonia] { gases-ammonia }
+    [NitrousOxide] { gases-n2o }
+    [Frezon] { gases-frezon }
     *[else] Unknown gas
 }
