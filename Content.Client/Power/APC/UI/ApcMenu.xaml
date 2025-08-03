@@ -19,7 +19,7 @@
                         <!-- Power On/Off -->
                         <Label Text="{Loc 'apc-menu-breaker-label'}" HorizontalExpand="True"
                                 StyleClasses="StatusFieldTitle" MinWidth="120"/>
-                        <SwitchButton Name="BreakerButton" StyleClasses="PowerSwitchButton" MinWidth="90"/>
+                        <SwitchButton Name="BreakerButton" MinWidth="90"/>
                         <!--Charging Status-->
                         <Label Text="{Loc 'apc-menu-external-label'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
                         <Label Name="ExternalPowerStateLabel" Text="{Loc 'apc-menu-power-state-good'}" />

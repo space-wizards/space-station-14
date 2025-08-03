@@ -86,8 +86,6 @@ namespace Content.Client.Stylesheets
 
         public const string StyleClassButtonHelp = "HelpButton";
 
-        public const string StyleClassPowerSwitchButton = "PowerSwitchButton";
-
         public const string StyleClassPopupMessageSmall = "PopupMessageSmall";
         public const string StyleClassPopupMessageSmallCaution = "PopupMessageSmallCaution";
         public const string StyleClassPopupMessageMedium = "PopupMessageMedium";
@@ -482,8 +480,6 @@ namespace Content.Client.Stylesheets
             // SwitchButton
             var switchButtonTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_off.svg.96dpi.png");
             var switchButtonTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_on.svg.96dpi.png");
-            var switchButtonTexturePowerUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_power_off.svg.96dpi.png");
-            var switchButtonTexturePowerChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_power_on.svg.96dpi.png");
             var switchButtonTextureDisabledUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_disabled_off.svg.96dpi.png");
             var switchButtonTextureDisabledChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_disabled_on.svg.96dpi.png");
 
@@ -1052,29 +1048,6 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(BoxContainer), new [] { SwitchButton.StyleClassSwitchButton }, null, null), new[]
                 {
                     new StyleProperty(BoxContainer.StylePropertySeparation, 10),
-                }),
-
-                // Power-style SwitchButton
-                new StyleRule(new SelectorElement(typeof(SwitchButton), new [] { StyleClassPowerSwitchButton }, null, null), new[]
-                {
-                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTexturePowerUnchecked),
-                }),
-
-                new StyleRule(new SelectorElement(typeof(SwitchButton), new [] { StyleClassPowerSwitchButton }, null, new[] {SwitchButton.StylePseudoClassPressed}), new[]
-                {
-                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTexturePowerChecked),
-                }),
-
-                new StyleRule(new SelectorElement(typeof(SwitchButton), new [] { StyleClassPowerSwitchButton }, null, new[] { SwitchButton.StylePseudoClassDisabled }), new[]
-                {
-                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureDisabledUnchecked),
-                    new StyleProperty("font-color", DisabledFore),
-                }),
-
-                new StyleRule(new SelectorElement(typeof(SwitchButton), new [] { StyleClassPowerSwitchButton }, null, new[] { SwitchButton.StylePseudoClassDisabled, SwitchButton.StylePseudoClassPressed }), new[]
-                {
-                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureDisabledChecked),
-                    new StyleProperty("font-color", DisabledFore),
                 }),
 
                 // Tooltip
