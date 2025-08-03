@@ -474,7 +474,7 @@
   - !type:GroupLoadoutEffect
     proto: HonoredAssistant
   equipment:
-    outerClothing: ClothingOuterCoatDetectiveLoadoutGreyArmourless
+    outerClothing: ClothingOuterCoatGreytiderTrenchcoat
   
 - type: loadout
   id: SpaceAssholeCoat
