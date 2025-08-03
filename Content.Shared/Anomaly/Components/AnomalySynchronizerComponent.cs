@@ -1,46 +1,51 @@
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Anomaly.Components;
+namespace Content.Shared.Anomaly.Components;
 
 /// <summary>
-/// a device that allows you to translate anomaly activity into multitool signals.
+/// A device that allows you to translate anomaly activity into multitool signals.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentPause, Access(typeof(AnomalySynchronizerSystem))]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(AnomalySynchronizerSystem))]
 public sealed partial class AnomalySynchronizerComponent : Component
 {
     /// <summary>
     /// The uid of the anomaly to which the synchronizer is connected.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public EntityUid? ConnectedAnomaly;
 
     /// <summary>
     /// Should the anomaly pulse when connected to the synchronizer?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool PulseOnConnect = true;
 
     /// <summary>
     /// Should the anomaly pulse when disconnected from synchronizer?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool PulseOnDisconnect = false;
 
     /// <summary>
-    /// minimum distance from the synchronizer to the anomaly to be attached
+    /// Minimum distance from the synchronizer to the anomaly to be attached.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float AttachRange = 0.4f;
 
     /// <summary>
-    /// Periodicheski checks to see if the anomaly has moved to disconnect it.
+    /// Periodically checks to see if the anomaly has moved to disconnect it.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan CheckFrequency = TimeSpan.FromSeconds(1f);
 
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextCheckTime = TimeSpan.Zero;
 
     [DataField]
@@ -58,9 +63,9 @@ public sealed partial class AnomalySynchronizerComponent : Component
     [DataField]
     public ProtoId<SourcePortPrototype> SupercritPort = "Supercritical";
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier ConnectedSound = new SoundPathSpecifier("/Audio/Machines/anomaly_sync_connect.ogg");
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier DisconnectedSound = new SoundPathSpecifier("/Audio/Machines/anomaly_sync_connect.ogg");
 }
