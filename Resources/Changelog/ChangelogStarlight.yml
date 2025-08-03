@@ -10459,5 +10459,26 @@ Entries:
   id: 1439
   time: '2025-08-03T21:55:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/933
+- author: Cerzix
+  changes:
+  - message: New emotes scree, call and squawk to resomi
+    type: Add
+  id: 1440
+  time: '2025-08-03T22:21:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/954
+- author: Cerzix
+  changes:
+  - message: Basic emotes (cough, cry, ...) to resomi and felionoid
+    type: Add
+  id: 1441
+  time: '2025-08-03T22:21:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/954
+- author: Cerzix
+  changes:
+  - message: Icons for felionoid and resomi / bird-specific emotes
+    type: Add
+  id: 1442
+  time: '2025-08-03T22:21:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/954
 Order: -1
 
