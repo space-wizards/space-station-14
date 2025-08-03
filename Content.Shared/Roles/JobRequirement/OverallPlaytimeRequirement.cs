@@ -8,6 +8,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Content.Shared._NullLink;
 
 namespace Content.Shared.Roles;
 
@@ -32,10 +33,10 @@ public sealed partial class OverallPlaytimeRequirement : JobRequirement
         if (playTimes == null)
             return true;
 
-        //🌟Starlight🌟 start
-        if (player is not null && IoCManager.Resolve<ISharedPlayersRoleManager>().IsAllRolesAvailable(player))
+        //NullLink start
+        if (player is not null && IoCManager.Resolve<ISharedNullLinkPlayerRolesReqManager>().IsAllRolesAvailable(player))
             return true;
-        //🌟Starlight🌟 end
+        //NullLink end
 
         var overallTime = playTimes.GetValueOrDefault(PlayTimeTrackingShared.TrackerOverall);
         var overallDiffSpan = Time - overallTime;

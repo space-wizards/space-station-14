@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices.JavaScript;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices.JavaScript;
 using System.Threading.Tasks;
 using Content.Server._NullLink.Helpers;
 using Content.Shared.CCVar;
@@ -38,7 +39,7 @@ public sealed partial class ActorRouter : IActorRouter, IDisposable
     }
     public ValueTask Shutdown() => OrleansClientHolder.Shutdown();
 
-    public bool TryGetServerGrain(out IServerGrain? serverGrain)
+    public bool TryGetServerGrain([NotNullWhen(true)] out IServerGrain? serverGrain)
     {
         if (!string.IsNullOrEmpty(_project)
             && !string.IsNullOrEmpty(_server)
