@@ -14,7 +14,7 @@ namespace Content.Client.RoundEnd
         private readonly IEntityManager _entityManager;
         public int RoundId;
 
-        public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, int roundId,
+        public RoundEndSummaryWindow(string gm, string roundEnd, string roundStats, TimeSpan roundTimeSpan, int roundId,
             RoundEndMessageEvent.RoundEndPlayerInfo[] info, IEntityManager entityManager)
         {
             _entityManager = entityManager;
@@ -33,6 +33,7 @@ namespace Content.Client.RoundEnd
             var roundEndTabs = new TabContainer();
             roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId));
             roundEndTabs.AddChild(MakePlayerManifestTab(info));
+            roundEndTabs.AddChild(MakeRoundStatisticsTab(roundStats));
 
             Contents.AddChild(roundEndTabs);
 
@@ -165,6 +166,37 @@ namespace Content.Client.RoundEnd
             playerManifestTab.AddChild(playerInfoContainerScrollbox);
 
             return playerManifestTab;
+        }
+
+        private BoxContainer MakeRoundStatisticsTab(string roundStats)
+        {
+            var roundStatisticsTab = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Name = Loc.GetString("round-end-summary-window-round-statistic-tab-title")
+            };
+
+            var roundStatisticsContainerScrollbox = new ScrollContainer
+            {
+                VerticalExpand = true,
+                Margin = new Thickness(10)
+            };
+            var roundStatisticsContainer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
+
+            var statsLabel = new RichTextLabel();
+
+            statsLabel.SetMarkup(string.IsNullOrEmpty(roundStats)
+                ? Loc.GetString("round-end-statistic-none")
+                : roundStats);
+
+            roundStatisticsContainer.AddChild(statsLabel);
+            roundStatisticsContainerScrollbox.AddChild(roundStatisticsContainer);
+            roundStatisticsTab.AddChild(roundStatisticsContainerScrollbox);
+
+            return roundStatisticsTab;
         }
     }
 
