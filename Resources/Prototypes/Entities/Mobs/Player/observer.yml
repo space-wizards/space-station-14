@@ -51,7 +51,7 @@
     visuals:
       enum.GhostVisuals.Damage:
         ghostVariant:
-          ghost_blunt1: { state: ghost_blunt1 }
+          ghost_blunt1: { state: ghost_blunt1 } #wawa tis is icki gotta make it less icki
           ghost_blunt2: { state: ghost_blunt2 }
           ghost_blunt3: { state: ghost_blunt3 }
           ghost_slash1: { state: ghost_slash1 }
