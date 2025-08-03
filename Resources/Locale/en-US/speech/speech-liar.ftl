@@ -16,8 +16,8 @@ liar-word-replacement-5 = nope
 liar-word-6 = nope
 liar-word-replacement-6 = yep
 
-liar-word-7 = sure
-liar-word-replacement-7 = nah
+liar-word-7 = not
+liar-word-replacement-7 = {""}
 
 liar-word-8 = was
 liar-word-replacement-8 = wasn't
@@ -83,8 +83,8 @@ liar-word-26 = didn't
 liar-word-26-2 = didnt
 liar-word-replacement-26 = did
 
-liar-word-27 = did
-liar-word-replacement-27 = didn't
+liar-word-27 = want
+liar-word-replacement-27 = don't want
 
 liar-word-28 = ye
 liar-word-28-2 = ya
@@ -110,9 +110,3 @@ liar-word-replacement-34 = bad
 
 liar-word-35 = bad
 liar-word-replacement-35 = good
-
-liar-word-36 = want
-liar-word-replacement-36 = don't want
-
-liar-word-37 = not
-liar-word-replacement-37 = {""}
