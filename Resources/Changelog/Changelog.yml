@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: The Funding Allocation Computer can now adjust the cut Cargo takes from
-      lockbox sales
-    type: Add
-  - message: The Funding Allocation Computer doesn't show Cargo separately from its
-      75% cut
-    type: Tweak
-  id: 8313
-  time: '2025-04-22T12:34:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36790
 - author: yuitop
   changes:
   - message: Fingerless gloves no more blocking taking the fingerprint.
@@ -3905,3 +3894,11 @@
   id: 8824
   time: '2025-08-02T18:35:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38881
+- author: DrSmugleaf
+  changes:
+  - message: Fixed rotate verbs being delayed when used, and your right click UI bounce
+      when they appear after a short delay.
+    type: Fix
+  id: 8825
+  time: '2025-08-03T00:34:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38165
