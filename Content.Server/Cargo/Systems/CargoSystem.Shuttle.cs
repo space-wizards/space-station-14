@@ -191,7 +191,7 @@ public sealed partial class CargoSystem
 
     private bool CanSell(EntityUid uid, TransformComponent xform)
     {
-        if (_mobQuery.TryComp(uid, out var comp) && comp.CanSell == false)
+        if (_mobQuery.HasComponent(uid))
         {
             return false;
         }

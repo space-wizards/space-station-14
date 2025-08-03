@@ -79,7 +79,6 @@
   - type: MobState
     allowedStates:
       - Alive
-    canSell: true
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -100,8 +99,6 @@
   - type: Tag
     tags:
     - SiliconEmotes
-  - type: StaticPrice
-    price: 100
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
