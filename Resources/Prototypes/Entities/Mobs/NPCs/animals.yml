@@ -114,6 +114,7 @@
       10: Dead
   - type: Stamina
     critThreshold: 10
+    animationThreshold: 1
   - type: DamageStateVisuals
     states:
       Alive:
@@ -3144,7 +3145,7 @@
     factions:
     - Syndicate
   - type: Access
-    tags: 
+    tags:
     - NuclearOperative
     - SyndicateAgent
   - type: MeleeWeapon

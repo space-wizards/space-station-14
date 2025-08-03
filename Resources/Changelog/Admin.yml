@@ -1293,5 +1293,13 @@ Entries:
   id: 157
   time: '2025-07-25T16:53:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36969
+- author: perryprog
+  changes:
+  - message: savegrid and savemap will no longer fail to save unpaused grids with
+      vending machines on them.
+    type: Fix
+  id: 158
+  time: '2025-07-31T18:34:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38406
 Name: Admin
 Order: 2
