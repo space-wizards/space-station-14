@@ -484,7 +484,6 @@
     items:
     - InflatableDoorStackLingering4
     - InflatableWallStackLingering10
-    - WeaponMeleeNeedle
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: inflatable-module }
     
