@@ -51,7 +51,6 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
-    public const float WeedHighLevelThreshold = 10f;
 
     private static readonly ProtoId<TagPrototype> HoeTag = "Hoe";
     private static readonly ProtoId<TagPrototype> PlantSampleTakerTag = "PlantSampleTaker";
@@ -61,7 +60,6 @@ public sealed class PlantHolderSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<PlantHolderComponent, SolutionTransferredEvent>(OnSolutionTransferred);
     }
 
@@ -337,12 +335,9 @@ public sealed class PlantHolderSystem : EntitySystem
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                     ("seedName", displayName)), args.User);
 
-                DoScream(entity.Owner, component.Seed);
-
                 if (_random.Prob(0.3f))
                     component.Sampled = true;
 
-                // Just in case.
                 CheckLevelSanity(uid, component);
                 ForceUpdateByExternalCause(uid, component);
             }
@@ -350,12 +345,6 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (HasComp<SharpComponent>(args.Used))
-        {
-            args.Handled = true;
-            DoHarvest(uid, args.User, component);
-            return;
-        }
 
         if (TryComp<ProduceComponent>(args.Used, out var produce))
         {
@@ -399,11 +388,6 @@ public sealed class PlantHolderSystem : EntitySystem
     {
         _audio.PlayPvs(ent.Comp.WateringSound, ent.Owner);
     }
-    private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
-    {
-        DoHarvest(entity, args.User, entity.Comp);
-    }
-
 
     public void Update(EntityUid uid, PlantHolderComponent? component = null)
     {
@@ -414,6 +398,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         var curTime = _gameTiming.CurTime;
 
+        // ForceUpdate is used for external triggers like swabbing
         if (component.ForceUpdate)
             component.ForceUpdate = false;
         else if (curTime < (component.LastCycle + component.CycleDelay))
@@ -439,33 +424,6 @@ public sealed class PlantHolderSystem : EntitySystem
             component.MutationLevel = 0;
         }
 
-        // Weeds like water and nutrients! They may appear even if there's not a seed planted. Isnt connected to the plant, stays here in PlantHolder.
-        if (component.WaterLevel > 10 && component.NutritionLevel > 5)
-        {
-            var chance = 0f;
-            if (component.Seed == null)
-                chance = 0.05f;
-            else if (TryComp<PlantTraitsComponent>(uid, out var traits) && traits.TurnIntoKudzu)
-                chance = 1f;
-            else
-                chance = 0.01f;
-
-            if (_random.Prob(chance))
-                component.WeedLevel += 1 + component.WeedCoefficient;
-
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
-        if (component.Seed != null && TryComp<PlantTraitsComponent>(uid, out var kudzuTraits) && kudzuTraits.TurnIntoKudzu
-            && component.WeedLevel >= WeedHighLevelThreshold)
-        {
-            Spawn(component.Seed.KudzuPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
-            kudzuTraits.TurnIntoKudzu = false;
-            component.Health = 0;
-        }
-
-
         // If we have no seed planted, or the plant is dead, stop processing here.
         if (component.Seed == null || component.Dead)
         {
@@ -488,9 +446,9 @@ public sealed class PlantHolderSystem : EntitySystem
             UpdateSprite(uid, component);
     }
 
-    //TODO: kill this bullshit
     /// <summary>
     /// Ensures all plant holder levels are within valid ranges.
+    /// TODO: Move this validation logic to individual growth components
     /// </summary>
     public void CheckLevelSanity(EntityUid uid, PlantHolderComponent? component = null)
     {
@@ -515,60 +473,6 @@ public sealed class PlantHolderSystem : EntitySystem
         component.MutationMod = MathHelper.Clamp(component.MutationMod, 0f, 3f);
     }
 
-    public bool DoHarvest(EntityUid plantholder, EntityUid user, PlantHolderComponent? component = null)
-    {
-        if (!Resolve(plantholder, ref component))
-            return false;
-
-        if (component.Seed == null || Deleted(user))
-            return false;
-
-        // Try to get HarvestComponent for harvest system
-        if (TryComp<HarvestComponent>(plantholder, out var harvestComp) && harvestComp.ReadyForHarvest && !component.Dead)
-        {
-            if (_hands.TryGetActiveItem(user, out var activeItem))
-            {
-                if (!_botany.CanHarvest(component.Seed, activeItem))
-                {
-                    _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), user);
-                    return false;
-                }
-            }
-            else if (!_botany.CanHarvest(component.Seed))
-            {
-                return false;
-            }
-
-            _botany.Harvest(component.Seed, user, plantholder);
-
-            AfterHarvest(plantholder, component);
-            return true;
-        }
-
-        if (!component.Dead)
-            return false;
-
-        RemovePlant(plantholder, component);
-        AfterHarvest(plantholder, component);
-        return true;
-    }
-
-    /// <summary>
-    /// Force do scream on PlantHolder (like plant is screaming) using seed's ScreamSound specifier (collection or soundPath)
-    /// </summary>
-    /// <returns></returns>
-    public bool DoScream(EntityUid plantholder, SeedData? seed = null)
-    {
-        if (seed == null)
-            return false;
-
-        if (!TryComp<PlantTraitsComponent>(plantholder, out var traits) || !traits.CanScream)
-            return false;
-
-        _audio.PlayPvs(seed.ScreamSound, plantholder);
-        return true;
-    }
-
     public void AutoHarvest(EntityUid uid, PlantHolderComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -577,8 +481,11 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed == null || !component.Harvest)
             return;
 
-        _botany.AutoHarvest(component.Seed, Transform(uid).Coordinates, uid);
-        AfterHarvest(uid, component);
+        if (TryComp<HarvestComponent>(uid, out var harvestComp))
+        {
+            var harvestSystem = EntitySystem.Get<HarvestSystem>();
+            harvestSystem.DoHarvest(uid, uid, harvestComp, component);
+        }
     }
 
     private void AfterHarvest(EntityUid uid, PlantHolderComponent? component = null)
@@ -588,8 +495,6 @@ public sealed class PlantHolderSystem : EntitySystem
 
         component.Harvest = false;
         component.LastProduce = component.Age;
-
-        DoScream(uid, component.Seed);
 
         HarvestComponent? harvest = null;
         if (TryComp<HarvestComponent>(uid, out harvest))

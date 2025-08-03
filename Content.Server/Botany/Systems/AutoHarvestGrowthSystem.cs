@@ -5,6 +5,8 @@ namespace Content.Server.Botany.Systems;
 
 public sealed class AutoHarvestGrowthSystem : PlantGrowthSystem
 {
+    [Dependency] private readonly HarvestSystem _harvestSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -22,16 +24,7 @@ public sealed class AutoHarvestGrowthSystem : PlantGrowthSystem
         // Check if ready for harvest using HarvestComponent
         if (TryComp<HarvestComponent>(uid, out var harvestComp) && harvestComp.ReadyForHarvest && _random.Prob(component.HarvestChance))
         {
-            // Auto-harvest the plant
-            harvestComp.ReadyForHarvest = false;
-            harvestComp.LastHarvestTime = holder.Age;
-
-            // Spawn the harvested items
-            if (holder.Seed.ProductPrototypes.Count > 0)
-            {
-                var product = _random.Pick(holder.Seed.ProductPrototypes);
-                var entity = Spawn(product, Transform(uid).Coordinates);
-            }
+            _harvestSystem.DoHarvest(uid, uid, harvestComp, holder);
         }
     }
 }

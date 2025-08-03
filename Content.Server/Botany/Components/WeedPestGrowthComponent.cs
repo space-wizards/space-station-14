@@ -29,6 +29,12 @@ public sealed partial class WeedPestGrowthComponent : PlantGrowthComponent
     public float WeedGrowthAmount = 0.5f;
 
     /// <summary>
+    /// Weed level threshold at which the plant is considered overgrown and will transform into kudzu.
+    /// </summary>
+    [DataField]
+    public float WeedHighLevelThreshold = 10f;
+
+    /// <summary>
     /// Chance per tick for pests to damage this plant.
     /// </summary>
     [DataField]
