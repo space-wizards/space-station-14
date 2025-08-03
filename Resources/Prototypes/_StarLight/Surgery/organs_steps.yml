@@ -297,7 +297,7 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     state: scalpel
-    
+
 # eye implants
 - type: entity
   parent: SurgeryStepBase
@@ -551,6 +551,8 @@
     duration: 5
     tools:
     - type: Retractor
+    bodyAdd:
+    - type: Uncryoable
   - type: SurgeryStepOrganExtract
     organ:
     - type: OrganBrain
@@ -604,7 +606,7 @@
     state: hemostat
 
 # kidneys
-    
+
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepPrepareImplantSiteKidneys
@@ -649,7 +651,7 @@
     state: hemostat
 
 # stomach
-    
+
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepPrepareImplantSiteStomach
@@ -692,7 +694,7 @@
     state: hemostat
 
 # lungs
-    
+
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepPrepareImplantSiteLungs
@@ -735,7 +737,7 @@
     state: hemostat
 
 # heart
-    
+
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepPrepareImplantSiteHeart
@@ -821,7 +823,7 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
     state: hemostat
-    
+
 # eye implants
 
 - type: entity
@@ -864,6 +866,8 @@
     duration: 2
     tools:
     - type: OrganTongue
+    bodyRemove:
+    - type: Muted
   - type: SurgeryStepOrganInsert
     slot: tongue
   - type: Sprite
@@ -934,6 +938,8 @@
     duration: 5
     tools:
     - type: OrganBrain
+    bodyRemove:
+    - type: Uncryoable
   - type: SurgeryStepOrganInsert
     slot: brain
   - type: Sprite
@@ -1048,7 +1054,7 @@
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     state: scalpel
   - type: SurgeryStepEmoteEffect
-  
+
 # Cavity
 
 - type: entity
@@ -1079,7 +1085,7 @@
     organ:
     - type: Item
     slot: cavity
-    
+
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepPrepareImplantSiteCavity

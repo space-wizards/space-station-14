@@ -89,6 +89,10 @@
       - id: ClothingUniformJumpsuitLoungewear
       - id: ClothingHeadHatCowboyRed
       - id: ClothingNeckOldMantle # Starlight
+      - id: TatteredClothesUniformSuit #SL
+      - id: CamoUniformSuit #SL
+      - id: ClothingOuterBurnedRobes #SL
+      - id: ClothingNeckTatteredHood #SL
     # Uncommon Group
     - !type:GroupSelector
       weight: 23

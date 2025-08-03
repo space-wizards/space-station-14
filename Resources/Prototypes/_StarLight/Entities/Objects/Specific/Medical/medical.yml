@@ -154,6 +154,16 @@
     dataset: MedibotAds
   - type: Inventory
     templateId: medibot
+  # starlight
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-medibot
+    layoutId: MedibotControls
+    alwaysRandomize: true
+  - type: UserInterface
+    interfaces:
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - type: entity
   name: red ointment

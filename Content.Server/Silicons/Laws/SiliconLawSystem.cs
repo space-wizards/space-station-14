@@ -157,30 +157,33 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         // Show the silicon has been subverted.
         component.Subverted = true;
 
-        //#region Starlight
-        if (args.lawset != null)
+        // Add the first emag law before the others
+        component.Lawset?.Laws.RemoveAt(0);
+
+        component.Lawset?.Laws.Insert(0, new SiliconLaw
         {
-            component.Lawset = GetLawset(args.lawset);
+            LawString = Loc.GetString("law-emag-custom", ("name", Name(args.user)), ("title", Loc.GetString(component.Lawset.ObeysTo))),
+            Order = 0,
+            Sayable = false
+        });
+
+        //Add the secrecy law after the others
+        component.Lawset?.Laws.Add(new SiliconLaw
+        {
+            LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
+            Order = component.Lawset.Laws.Max(law => law.Order) + 1
+        });
+
+        //Starlight: Add the syndicate channel to the silicon.
+        //TODO: When different types of emags are added, update this.
+        if (TryComp(uid, out ActiveRadioComponent? activeRadio))
+        {
+            activeRadio.Channels.Add("Syndicate");
         }
-        else
+        if (TryComp(uid, out IntrinsicRadioTransmitterComponent? transmitter))
         {
-            // Add the first emag law before the others
-            component.Lawset?.Laws.RemoveAt(0);
-
-            component.Lawset?.Laws.Insert(0, new SiliconLaw
-            {
-                LawString = Loc.GetString("law-emag-custom", ("name", Name(args.user)), ("title", Loc.GetString(component.Lawset.ObeysTo))),
-                Order = 0,
-                Sayable = false
-            });
-
-            //Add the secrecy law after the others
-            component.Lawset?.Laws.Add(new SiliconLaw
-            {
-                LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
-                Order = component.Lawset.Laws.Max(law => law.Order) + 1
-            });
-        }//#endregion Starlight
+            transmitter.Channels.Add("Syndicate");
+        }
     }
 
     protected override void EnsureSubvertedSiliconRole(EntityUid mindId)

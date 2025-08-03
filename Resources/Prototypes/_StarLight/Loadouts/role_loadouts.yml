@@ -20,7 +20,7 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
-  
+
 - type: roleLoadout
   id: JobSurgeon
   groups:
@@ -66,6 +66,7 @@
   - BlueShieldJumpsuit
   - BlueShieldBackpack
   - BlueShieldOuterclothing
+  - BlueShieldShoes
   - BlueShieldNeck
   - BlueShieldEyewear
   - Trinkets

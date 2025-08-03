@@ -12,12 +12,9 @@
   femaleFirstNames: names_cyclorite
   naming: First
   customName: true
-  minWidth: 0.9
-  defaultWidth: 1
-  maxWidth: 1.25
   minHeight: 0.9
   defaultHeight: 1
-  maxHeight: 1.25
+  maxHeight: 1.2
   standardSize: 170
   standardWeight: 100
   standardDensity: 110
