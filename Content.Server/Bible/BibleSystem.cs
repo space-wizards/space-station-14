@@ -200,13 +200,13 @@ namespace Content.Server.Bible
                     }
                     if (EntityManager.TryGetComponent<HandsComponent>(target, out var hands))
                     {
-                        foreach (var hand in _hands.EnumerateHands(target, hands))
+                        foreach (var hand in _hands.EnumerateHands((target, hands)))
                         {
                             _hands.TryDrop(target,
                                 hand,
                                 checkActionBlocker: false,
-                                doDropInteraction: false,
-                                handsComp: hands);
+                                doDropInteraction: false
+                            );
                         }
                     }
                 }
