@@ -41,10 +41,10 @@ public sealed partial class ExaminableSolutionComponent : Component
 }
 
 /// <summary>
-///     The
+///     Used to choose how to display a volume.
 /// </summary>
 [Serializable, NetSerializable]
-public enum ExaminedVolumeState
+public enum ExaminedVolumeDisplay
 {
     Exact,
     Full,

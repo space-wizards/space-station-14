@@ -1,9 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.Reaction;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
@@ -139,6 +137,14 @@ public abstract partial class SharedSolutionContainerSystem
 
     #endregion Solution Modifiers
 
+    public float PercentFull(EntityUid uid)
+    {
+        if (!TryGetDrainableSolution(uid, out _, out var solution) || solution.MaxVolume.Equals(FixedPoint2.Zero))
+            return 0;
+
+        return solution.FillFraction * 100;
+    }
+
     #region Static Methods
 
     public static string ToPrettyString(Solution solution)
@@ -167,6 +173,7 @@ public abstract partial class SharedSolutionContainerSystem
         return sb.ToString();
     }
 
+    /// <returns>A value between 0 and 100 inclusive.</returns>
     public static float PercentFull(Solution sol)
     {
         if (sol.MaxVolume.Equals(FixedPoint2.Zero))

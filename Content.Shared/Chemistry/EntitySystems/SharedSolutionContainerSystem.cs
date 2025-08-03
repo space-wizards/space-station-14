@@ -807,6 +807,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         var primaryReagent = solution.GetPrimaryReagentId();
 
+        // If there's no primary reagent, assume the solution is empty
         if (string.IsNullOrEmpty(primaryReagent?.Prototype) ||
             !PrototypeManager.Resolve<ReagentPrototype>(primaryReagent.Value.Prototype, out var primary))
         {
@@ -819,7 +820,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             // Push amount of reagent
 
             args.PushMarkup(Loc.GetString(entity.Comp.LocVolume,
-                                ("fillLevel", LocalizedExaminableVolume(entity, solution, args.Examiner)),
+                                ("fillLevel", ExaminedVolume(entity, solution, args.Examiner)),
                                 ("current", solution.Volume),
                                 ("max", solution.MaxVolume)));
 
@@ -840,7 +841,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 .OrderByDescending(pair => pair.Value.Value)
                 .ThenBy(pair => pair.Key.LocalizedName);
 
-            // Add descriptions of immediately recognizable reagents, like water or beer
+            // Collect recognizable reagents, like water or beer
             var recognized = new List<ReagentPrototype>();
             foreach (var keyValuePair in sortedReagentPrototypes)
             {
@@ -853,7 +854,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 recognized.Add(proto);
             }
 
-            // Skip if there's nothing recognizable
             if (recognized.Count == 0)
                 return;
 
@@ -879,50 +879,43 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     ("chemical", reagent.LocalizedName)));
             }
 
+            // Finally push the full message
             args.PushMarkup(Loc.GetString(entity.Comp.LocRecognizableReagents,
                 ("recognizedString", msg.ToString())));
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="ent">The entity containing the solution.</param>
-    /// <param name="sol">The solution being looked at.</param>
-    /// <param name="examiner">The player looking at the volume.</param>
-    /// <returns>A localized string for a solution's volume.</returns>
-    public ExaminedVolumeState LocalizedExaminableVolume(Entity<ExaminableSolutionComponent> ent, Solution sol, EntityUid? examiner = null)
+    /// <returns>An enum for how to display the solution.</returns>
+    public ExaminedVolumeDisplay ExaminedVolume(Entity<ExaminableSolutionComponent> ent, Solution sol, EntityUid? examiner = null)
     {
-        //Exact measurement
+        // Exact measurement
         if (ent.Comp.ExactVolume)
-            return ExaminedVolumeState.Exact;
+            return ExaminedVolumeDisplay.Exact;
 
-        //General approximation
+        // General approximation
         return (int)PercentFull(sol) switch
         {
-            100 => ExaminedVolumeState.Full,
-            > 66 => ExaminedVolumeState.MostlyFull,
+            100 => ExaminedVolumeDisplay.Full,
+            > 66 => ExaminedVolumeDisplay.MostlyFull,
             > 33 => HalfEmptyOrHalfFull(examiner),
-            > 0 => ExaminedVolumeState.MostlyEmpty,
-            _ => ExaminedVolumeState.Empty,
+            > 0 => ExaminedVolumeDisplay.MostlyEmpty,
+            _ => ExaminedVolumeDisplay.Empty,
         };
     }
 
-    /// <summary>
-    ///     Some spessmen see half full, some see half empty, but always the same one.
-    /// </summary>
-    private ExaminedVolumeState HalfEmptyOrHalfFull(EntityUid? examiner = null)
+    // Some spessmen see half full, some see half empty, but always the same one.
+    private ExaminedVolumeDisplay HalfEmptyOrHalfFull(EntityUid? examiner = null)
     {
-        // Optimism when un-observed
+        // Optimistic when un-observed
         if (examiner == null)
-            return ExaminedVolumeState.HalfFull;
+            return ExaminedVolumeDisplay.HalfFull;
 
         if (TryComp<MetaDataComponent>(examiner, out var meta)
         && meta.EntityName.Length > 0
         && string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
-            return ExaminedVolumeState.HalfFull;
+            return ExaminedVolumeDisplay.HalfFull;
 
-        return ExaminedVolumeState.HalfEmpty;
+        return ExaminedVolumeDisplay.HalfEmpty;
     }
 
     /// <summary>

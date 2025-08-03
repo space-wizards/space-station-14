@@ -43,11 +43,11 @@ public sealed class SolutionStatusControl : PollingItemStatusControl<SolutionSta
         if (_entityManager.TryGetComponent(_parent.Owner, out SolutionTransferComponent? transfer))
             transferAmount = transfer.TransferAmount;
 
-        ExaminedVolumeState? state = null;
+        ExaminedVolumeDisplay? state = null;
         if (_entityManager.TryGetComponent(_parent.Owner, out ExaminableSolutionComponent? examine) &&
             _entityManager.TryGetComponent(_parent.Owner, out TransformComponent? xform))
         {
-            state = _solutionContainers.LocalizedExaminableVolume((_parent, examine), solution, xform.ParentUid);
+            state = _solutionContainers.ExaminedVolume((_parent, examine), solution, xform.ParentUid);
         }
 
         return new Data(solution.Volume, solution.MaxVolume, transferAmount, state);
@@ -57,9 +57,9 @@ public sealed class SolutionStatusControl : PollingItemStatusControl<SolutionSta
     {
         var markup = "";
 
-        if (data.VolumeState is { } value)
+        if (data.VolumeState is { } state)
             markup = Loc.GetString(_parent.Comp.LocControlVolume,
-                            ("fillLevel", value),
+                            ("fillLevel", state),
                             ("current", data.CurrentVolume),
                             ("max", data.MaxVolume));
 
@@ -69,5 +69,5 @@ public sealed class SolutionStatusControl : PollingItemStatusControl<SolutionSta
         _label.SetMarkup(markup);
     }
 
-    public readonly record struct Data(FixedPoint2 CurrentVolume, FixedPoint2 MaxVolume, FixedPoint2? TransferVolume, ExaminedVolumeState? VolumeState);
+    public readonly record struct Data(FixedPoint2 CurrentVolume, FixedPoint2 MaxVolume, FixedPoint2? TransferVolume, ExaminedVolumeDisplay? VolumeState);
 }
