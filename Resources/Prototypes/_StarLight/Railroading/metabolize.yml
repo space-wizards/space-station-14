@@ -1,6 +1,18 @@
 - type: entity
+  id: MetabolizeCondition
+  categories: [ HideSpawnMenu ]
+  abstract: true
+  components:
+  - type: Conditions
+    conditions:
+    - !type:SubjectSpeciesCondition
+      blacklist:
+      - Abductor
+      - Skeleton
+
+- type: entity
   id: RRCardMetabolizeNicotine
-  parent: [FoodConditionWithReptilian]
+  parent: MetabolizeCondition
   categories: [ HideSpawnMenu ]
   components:
   - type: RailroadSpawnFlow
