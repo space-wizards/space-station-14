@@ -1,38 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Changed instances of 3.5 second grenade timers to 3 seconds, including
-      clusterbangs and atmos metal foam grenades.
-    type: Tweak
-  - message: Atmos metal foam grenades have been reworked to disperse foam in a 5x5
-      diamond pattern and harden within two seconds.
-    type: Tweak
-  - message: Reduced hardened metal foam health (breakable in 6 crowbar swings).
-    type: Tweak
-  - message: Changed syndicate trickbomb timer from 3.5 seconds to 5 seconds to match
-      minibombs.
-    type: Tweak
-  id: 8311
-  time: '2025-04-22T05:51:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34579
-- author: muburu
-  changes:
-  - message: Dragons can now pry open doors, including firelocks.
-    type: Tweak
-  id: 8312
-  time: '2025-04-22T06:33:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36811
-- author: sowelipililimute
-  changes:
-  - message: The Funding Allocation Computer can now adjust the cut Cargo takes from
-      lockbox sales
-    type: Add
-  - message: The Funding Allocation Computer doesn't show Cargo separately from its
-      75% cut
-    type: Tweak
-  id: 8313
-  time: '2025-04-22T12:34:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36790
 - author: yuitop
   changes:
   - message: Fingerless gloves no more blocking taking the fingerprint.
@@ -3913,3 +3879,26 @@
   id: 8822
   time: '2025-08-01T21:48:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39327
+- author: Krosus
+  changes:
+  - message: Fixed crash when loading saved character profiles
+    type: Fix
+  id: 8823
+  time: '2025-08-02T15:14:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39333
+- author: FairlySadPanda
+  changes:
+  - message: A new cake, berry delight, that is made with a cake base, berries and
+      milk.
+    type: Add
+  id: 8824
+  time: '2025-08-02T18:35:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38881
+- author: DrSmugleaf
+  changes:
+  - message: Fixed rotate verbs being delayed when used, and your right click UI bounce
+      when they appear after a short delay.
+    type: Fix
+  id: 8825
+  time: '2025-08-03T00:34:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38165
