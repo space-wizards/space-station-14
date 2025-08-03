@@ -3818,13 +3818,6 @@
   id: 8809
   time: '2025-07-25T19:46:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38657
-- author: Toast_Enjoyer, Djmc216
-  changes:
-  - message: The scrap armor now functions as a utility belt too!
-    type: Add
-  id: 8810
-  time: '2025-07-27T06:17:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39233
 - author: PJB3005
   changes:
   - message: Made most plushie sounds quieter, and made plushies slower to use.
