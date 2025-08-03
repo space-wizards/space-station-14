@@ -204,3 +204,11 @@
     contents:
     - id: FoodShakerSalt
     - id: FoodShakerPepper
+
+- type: entity
+  parent: ClothingBeltBandolier
+  id: ClothingBeltBandolierIncendiary #Intended to spawn with CBURN agents
+  suffix: Incendiary
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunIncendiary

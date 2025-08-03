@@ -1,39 +1,33 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Made by EmoGarbage404. Vox states by Flareguy for SS14",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by EmoGarbage404. Vox states by Flareguy for SS14. on-equipped-HELMET and on-equipped-HELMET-vox by RedBookcase on Github.",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "icon-unshaded"
-    },
-    {
-      "name": "icon-flash"
-    },
-    {
-      "name": "light-overlay"
-    },
-    {
-      "name": "equipped-head",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-unshaded",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-vox",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-unshaded-vox",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon-flash"
+        },
+        {
+            "name": "off-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "off-equipped-HELMET-vox",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-HELMET-vox",
+            "directions": 4
+        }
+    ]
 }
