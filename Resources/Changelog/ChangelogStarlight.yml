@@ -10430,5 +10430,19 @@ Entries:
   id: 1435
   time: '2025-08-02T15:13:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1178
+- author: STARLIGHT TEAM
+  changes:
+  - message: Discord integration 2.0
+    type: Tweak
+  id: 1436
+  time: '2025-08-03T13:03:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1159
+- author: STARLIGHT TEAM
+  changes:
+  - message: OOC title display has been updated.
+    type: Tweak
+  id: 1437
+  time: '2025-08-03T13:03:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1159
 Order: -1
 
