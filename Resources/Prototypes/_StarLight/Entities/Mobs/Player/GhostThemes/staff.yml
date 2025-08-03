@@ -1,0 +1,21 @@
+- type: ghostTheme
+  id: Abomination
+  name: Abomination
+  description: Cute man.
+  spriteSpecifier:
+    sprite:
+      sprite: Mobs/Demons/abomination.rsi
+      state: abomination
+    color: "#ffffff"
+  requirement: StaffRolesReq
+
+- type: ghostTheme
+  id: ShadowDemon
+  name: ShadowDemon
+  description: Careful, the manager is watching.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/shadow_demon.rsi
+      state: shadow_demon
+    color: "#ffffff"
+  requirement: ManagerReq

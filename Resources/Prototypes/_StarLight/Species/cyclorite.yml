@@ -12,6 +12,12 @@
   femaleFirstNames: names_cyclorite
   naming: First
   customName: true
+  minHeight: 0.9
+  defaultHeight: 1
+  maxHeight: 1.2
+  standardSize: 170
+  standardWeight: 100
+  standardDensity: 110
 
 - type: speciesBaseSprites
   id: MobCycloriteSprites
@@ -42,19 +48,19 @@
       points: 1
       required: false
     Head:
-      points: 1
-      required: true
+      points: 3
+      required: false
     Snout:
       points: 1
-      required: true
+      required: false
     Arms:
-      points: 1
-      required: true
+      points: 4
+      required: false
     Legs:
-      points: 1
-      required: true
+      points: 2
+      required: false
     Chest:
-      points: 1
+      points: 2
       required: false
 
 - type: humanoidBaseSprite

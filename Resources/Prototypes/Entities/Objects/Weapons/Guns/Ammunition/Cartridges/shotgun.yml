@@ -15,7 +15,7 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: Appearance
   - type: SpentAmmoVisuals
-    state: null
+    revealSpent: true # Starlight
     tip: true
 
 - type: entity
@@ -177,10 +177,10 @@
     solutions:
       ammo:
         reagents:
-        - ReagentId: Nocturine #Starlight
+        - ReagentId: Nocturine #🌟Starlight🌟
           Quantity: 5
   - type: SolutionTransfer
-    maxTransferAmount: 5
+    maxTransferAmount: 3.5
 
 - type: entity
   id: ShellShotgunImprovised
@@ -231,3 +231,23 @@
     soundEject:
       collection: ShellEject
     hitscan: PelletShotgunUraniumSpreadTrace
+
+- type: entity #🌟Starlight🌟 
+  id: ShellShotgunBreaching
+  name: shell (.50 breaching)
+  parent: [ BaseShellShotgun, BaseSyndicateContraband ]
+  components:
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip-long
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#0096FF"
+      - state: spent
+        map: [ "enum.AmmoVisualLayers.Spent" ]
+        visible: false
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunBreachTrace

@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: SpeedLoaderMagnumLeverImprovisedGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shell
+          steps:
+            - material: Steel
+              amount: 8
+              doAfter: 8
+    - node: shell
+      entity: SpeedLoaderMagnumLeverImprovised

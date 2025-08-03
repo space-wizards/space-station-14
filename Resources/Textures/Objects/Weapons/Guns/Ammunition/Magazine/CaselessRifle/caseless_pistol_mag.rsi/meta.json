@@ -11,10 +11,7 @@
             "name": "base"
         },
         {
-            "name": "practice"
-        },
-        {
-            "name": "red"
+            "name": "stripe"
         },
         {
             "name": "red-icon"
@@ -39,6 +36,12 @@
         },
         {
             "name": "mag-5"
+        },
+        {
+            "name": "red"
+        },
+        {
+            "name": "practice"
         },
         {
             "name": "inhand-left-mag",

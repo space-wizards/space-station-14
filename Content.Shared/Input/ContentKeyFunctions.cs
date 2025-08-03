@@ -32,6 +32,7 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenInventoryMenu = "OpenInventoryMenu";
         public static readonly BoundKeyFunction SmartEquipBackpack = "SmartEquipBackpack";
         public static readonly BoundKeyFunction SmartEquipBelt = "SmartEquipBelt";
+        public static readonly BoundKeyFunction SmartEquipSuitStorage = "SmartEquipSuitStorage"; // Starlight edit - Suit storage Equip
         public static readonly BoundKeyFunction OpenBackpack = "OpenBackpack";
         public static readonly BoundKeyFunction OpenBelt = "OpenBelt";
         public static readonly BoundKeyFunction OpenAHelp = "OpenAHelp";
@@ -133,5 +134,6 @@ namespace Content.Shared.Input
 
         // 🌟Starlight🌟
         public static readonly BoundKeyFunction Jump = "Jump";
+        public static readonly BoundKeyFunction ToggleKnockdown = "ToggleKnockdown";
     }
 }

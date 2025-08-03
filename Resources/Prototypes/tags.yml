@@ -36,6 +36,9 @@
   id: AppraisalTool
 
 - type: Tag
+  id: Apron
+
+- type: Tag
   id: Arrow
 
 - type: Tag
@@ -43,6 +46,9 @@
 
 - type: Tag
   id: ATVKeys
+
+- type: Tag
+  id: Backpack
 
 - type: Tag
   id: Balloon
@@ -226,7 +232,6 @@
 
 - type: Tag
   id: CanPilot
-
 
 - type: Tag
   id: CaptainSabre
@@ -914,6 +919,9 @@
 
 - type: Tag
   id: LightBulb
+  
+- type: Tag
+  id: Lighters
 
 - type: Tag
   id: Lime
@@ -967,9 +975,6 @@
 
 - type: Tag
   id: MagazineShotgun
-
-- type: Tag
-  id: MagazineMagnumSubMachineGun
 
 - type: Tag
   id: MagazinePistolSubMachineGunSP
@@ -1127,6 +1132,9 @@
   id: PercussionInstrument
 
 - type: Tag
+  id: PetOnly
+
+- type: Tag
   id: PetWearable
 
 - type: Tag
@@ -1236,6 +1244,9 @@
   id: ReinforcedGlassShard
 
 - type: Tag
+  id: RemoteSignaller
+
+- type: Tag
   id: ReptilianFood
 
 - type: Tag
@@ -1288,6 +1299,9 @@
 
 - type: Tag
   id: Screwdriver
+
+- type: Tag # Flags items that scurrets can wear in their back and outerwear slots.
+  id: ScurretWearable
 
 - type: Tag
   id: SecBeltEquip
@@ -1516,6 +1530,9 @@
   id: UraniumGlassShard
 
 - type: Tag
+  id: UtilityBelt
+
+- type: Tag
   id: Vegetable
 
 - type: Tag
@@ -1576,6 +1593,9 @@
   id: Wine
 
 - type: Tag
+  id: WireBrush
+
+- type: Tag
   id: Wirecutter
 
 - type: Tag
@@ -1616,5 +1636,4 @@
 
 - type: Tag
   id: XenoborgModuleStealth
-
 # ALPHABETICAL
