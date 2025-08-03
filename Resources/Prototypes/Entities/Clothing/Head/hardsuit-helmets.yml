@@ -886,7 +886,7 @@
       - state: equipped-head
       - state: equipped-head-unshaded
         shader: unshaded
-      head:
+      head-vox:
       - state: equipped-head-vox
       - state: equipped-head-unshaded-vox
         shader: unshaded
