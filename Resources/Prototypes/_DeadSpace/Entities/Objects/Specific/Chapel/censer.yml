@@ -14,17 +14,18 @@
           - ReagentId: Holywater
             Quantity: 100
   - type: SolutionTransfer
+    transferAmount: 100
+    maxTransferAmount: 100
+    minTransferAmount: 10
     canChangeTransferAmount: true
-  - type: Sprite
-    sprite: _DeadSpace/Objects/Specific/Chapel/censer.rsi
-    layers:
-    - state: icon
-  - type: RefillableSolution
-    solution: censer
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Chapel/censer.rsi
+    layers:
+    - state: icon
   - type: MeleeWeapon
     soundHit:
       collection: MetalThud
@@ -41,5 +42,9 @@
         Brute: -15
         Burn: -15
         Airloss: -15
-  - type: ExaminableSolution
-    solution: censer
+  - type: DrawableSolution
+    solution: сenser
+  - type: RefillableSolution
+    solution: сenser
+  - type: DrainableSolution
+    solution: сenser

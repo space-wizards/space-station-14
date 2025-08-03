@@ -30,6 +30,12 @@
                 <OptionButton Name="CharacterSelector" />
             </BoxContainer>
 
+            <RichTextLabel
+                Name="AllowedSpeciesDescription"
+                HorizontalExpand="True"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left" />
+
             <cc:HSeparator Margin="0 4" StyleClasses="LowDivider" />
 
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True">

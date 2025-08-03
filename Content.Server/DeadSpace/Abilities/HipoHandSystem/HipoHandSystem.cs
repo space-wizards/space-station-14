@@ -47,9 +47,9 @@ public sealed partial class HipoHandSystem : EntitySystem
 
         if (TryComp<CocoonComponent>(target, out var cocoonComponent))
         {
-            if (cocoonComponent.Stomach.ContainedEntities.Count > 0)
+            if (cocoonComponent.Cocoon.ContainedEntities.Count > 0)
             {
-                var firstEntity = cocoonComponent.Stomach.ContainedEntities[0];
+                var firstEntity = cocoonComponent.Cocoon.ContainedEntities[0];
                 target = firstEntity;
             }
         }

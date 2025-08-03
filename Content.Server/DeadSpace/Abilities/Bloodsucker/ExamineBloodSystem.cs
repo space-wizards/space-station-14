@@ -28,9 +28,9 @@ public sealed partial class ExamineBloodSystem : SharedBloodsuckerSystem
 
         if (TryComp<CocoonComponent>(target, out var cocoonComp))
         {
-            if (cocoonComp.Stomach.ContainedEntities.Count > 0)
+            if (cocoonComp.Cocoon.ContainedEntities.Count > 0)
             {
-                var firstEntity = cocoonComp.Stomach.ContainedEntities[0];
+                var firstEntity = cocoonComp.Cocoon.ContainedEntities[0];
                 target = firstEntity;
 
                 if (_mobState.IsDead(target))

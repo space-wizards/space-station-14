@@ -599,18 +599,6 @@
 # New
 
 - type: entity
-  id: SpawnPointMagistrat
-  parent: SpawnPointJobBase
-  name: magistrat spawn
-  components:
-    - type: SpawnPoint
-      job_id: Magistrat
-    - type: Sprite
-      layers:
-        - state: green
-        - state: magistrat
-
-- type: entity
   id: SpawnPointBlueShieldOfficer
   parent: SpawnPointJobBase
   name: blue shield spawn

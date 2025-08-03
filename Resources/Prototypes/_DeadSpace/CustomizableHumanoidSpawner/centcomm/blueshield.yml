@@ -42,7 +42,20 @@
 - type: roleLoadout
   id: JobCentralCommandBlueShieldOfficer
   groups:
-  - GroupTankHarness
+  # - GroupTankHarness # outerClothing slot occupied by startingGear
+  - CentralCommandBlueShieldOfficerLoadout
   - Survival
   - GroupSpeciesBreathTool
   - BlueShieldOfficerUnderwear
+
+- type: loadoutGroup
+  id: CentralCommandBlueShieldOfficerLoadout
+  name: spawner-loadout-blueshield
+  hidden: true
+  loadouts:
+  - CentralCommandBlueShieldOfficerLoadout
+
+- type: loadout
+  id: CentralCommandBlueShieldOfficerLoadout
+  equipment:
+    back: ClothingBackpackBlueShield

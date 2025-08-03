@@ -162,18 +162,16 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             profile = HumanoidCharacterProfile.RandomWithSpecies(speciesId);
         }
 
-        // DS14-edit-start
+        if (loadout != null)
+        {
+            EquipRoleLoadout(entity.Value, loadout, roleProto!);
+        }
+
         if (prototype?.StartingGear != null)
         {
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(prototype.StartingGear);
             EquipStartingGear(entity.Value, startingGear, raiseEvent: false);
         }
-
-        if (loadout != null)
-        {
-            EquipRoleLoadout(entity.Value, loadout, roleProto!);
-        }
-        // DS14-edit-end
 
         var gearEquippedEv = new StartingGearEquippedEvent(entity.Value);
         RaiseLocalEvent(entity.Value, ref gearEquippedEv);

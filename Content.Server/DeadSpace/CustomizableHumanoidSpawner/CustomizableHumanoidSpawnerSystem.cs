@@ -79,7 +79,8 @@ public sealed class CustomizableHumanoidSpawnerSystem : EntitySystem
         var state = new CustomizableHumanoidSpawnerBuiState(
             GetAvailableCharacters(actor, comp),
             !isRandomizedName,
-            randomizedName);
+            randomizedName,
+            comp.AllowedSpecies);
 
         _ui.SetUiState(uid, CustomizableHumanoidSpawnerUiKey.Key, state);
     }

@@ -6,7 +6,7 @@ namespace Content.Server.DeadSpace.Abilities.Cocoon.Components;
 [Access(typeof(CocoonSystem))]
 public sealed partial class CocoonComponent : Component
 {
-    public Container Stomach = default!;
+    public Container Cocoon = default!;
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public bool IsHermetically = true;

@@ -1,0 +1,18 @@
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerMagistrat
+  name: Магистрат
+  suffix: Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: Markers/jobs.rsi
+      state: magistrat
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: Magistrat
+    allowedSpecies:
+    - Human
+    - Shark
+    - Demon
+    - Vulpkanin

@@ -3,6 +3,7 @@
   name: терракотовая плитка
   parent: FloorTileItemBase
   id: FloorTileItemTerracotta
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -20,6 +21,7 @@
   name: терракотовая диагональная плитка
   parent: FloorTileItemTerracotta
   id: FloorTileItemTerracottaDiagonal
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -35,6 +37,7 @@
   name: терракотовая плитка ёлочкой
   parent: FloorTileItemTerracotta
   id: FloorTileItemTerracottaHerringbone
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -47,9 +50,10 @@
     stackType: FloorTileTerracottaHerringbone
 
 - type: entity
-  name: терракотовые мини плиты
+  name: терракотовая мини плитка
   parent: FloorTileItemTerracotta
   id: FloorTileItemTerracottaSmall
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -65,6 +69,7 @@
   name: каменный пол
   parent: FloorTileItemBase
   id: FloorTileItemStone
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -82,6 +87,7 @@
   name: культовый пол
   parent: FloorTileItemBase
   id: FloorTileItemCult
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -97,9 +103,10 @@
 
 # Shuttle mono tiles
 - type: entity
-  name: белый моно пол шаттла
+  name: белая моно плитка шаттла
   parent: FloorTileItemBase
   id: FloorTileItemShuttleMonoWhite
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -114,9 +121,10 @@
     stackType: FloorTileStackShuttleMonoWhite
 
 - type: entity
-  name: синий моно пол шаттла
+  name: синяя моно плитка шаттла
   parent: FloorTileItemBase
   id: FloorTileItemShuttleMonoBlue
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -131,9 +139,10 @@
     stackType: FloorTileStackShuttleMonoBlue
 
 - type: entity
-  name: оранжевый моно пол шаттла
+  name: оранжевая моно плитка шаттла
   parent: FloorTileItemBase
   id: FloorTileItemShuttleMonoOrange
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -148,9 +157,10 @@
     stackType: FloorTileStackShuttleMonoOrange
 
 - type: entity
-  name: фиолетовый моно пол шаттла
+  name: фиолетовая моно плитка шаттла
   parent: FloorTileItemBase
   id: FloorTileItemShuttleMonoPurple
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -165,9 +175,10 @@
     stackType: FloorTileStackShuttleMonoPurple
 
 - type: entity
-  name: красный моно пол шаттла
+  name: красная моно плитка шаттла
   parent: FloorTileItemBase
   id: FloorTileItemShuttleMonoRed
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -182,9 +193,10 @@
     stackType: FloorTileStackShuttleMonoRed
 
 - type: entity
-  name: серый моно пол шаттла
+  name: серая моно плитка шаттла
   parent: FloorTileItemBase
   id: FloorTileItemShuttleMonoGrey
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -199,9 +211,10 @@
     stackType: FloorTileStackShuttleMonoGrey
 
 - type: entity
-  name: чёрный моно пол шаттла
+  name: чёрная моно плитка шаттла
   parent: FloorTileItemBase
   id: FloorTileItemShuttleMonoBlack
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -220,7 +233,7 @@
   name: сказочная трава
   parent: FloorTileItemBase
   id: FloorTileItemFairyGrass
-  description: A vibrant, otherworldly grass that grows on alien planets.
+  description: Может послужить неплохим метательным оружием.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -238,7 +251,7 @@
   name: сказочная астро-трава
   parent: FloorTileItemBase
   id: FloorTileItemFairyAstroGrass
-  description: Synthetic fairy grass, designed to mimic the real thing on space installations.
+  description: Искусственная трава, отлично прячущая провода, поставляется с реалистичными НаноТравинками!
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -254,10 +267,10 @@
 
 # Material tiles
 - type: entity
-  name: алмазный пол
+  name: алмазная плитка
   parent: FloorTileItemBase
   id: FloorTileItemDiamond
-  description: A sparkling tile made from pure diamond.
+  description: Сверкающая плитка из чистого алмаза.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -272,10 +285,10 @@
     stackType: FloorTileDiamond
 
 - type: entity
-  name: плазменный пол
+  name: плазменная плитка
   parent: FloorTileItemBase
   id: FloorTileItemPlasma
-  description: A tile infused with raw plasma energy.
+  description: Плитка, наполненная чистой плазменной энергией.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi
@@ -290,10 +303,10 @@
     stackType: FloorTilePlasma
 
 - type: entity
-  name: урановый пол
+  name: урановая плитка
   parent: FloorTileItemBase
   id: FloorTileItemUranium
-  description: A heavy tile made from radioactive uranium.
+  description: Тяжёлая плитка из радиоактивного урана.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Tiles/tile.rsi

@@ -22,7 +22,6 @@
             Captain: [ 1, 1 ]
             BlueShieldOfficer: [ 1, 1 ]
             # law
-            # Magistrat: [ 1, 1 ]
             IAA: [ 1, 1 ]
             Lawyer: [ 3, 3 ]
             # sec
@@ -39,7 +38,7 @@
             SeniorPhysician: [ 1, 1 ]
             Chemist: [ 3, 3 ]
             MedicalDoctor: [ 5, 5 ]
-            Paramedic: [ 2, 2 ]
+            Paramedic: [ 1, 1 ]
             Coroner: [ 1, 1 ]
             MedicalIntern: [ 4, 4 ]
             # rnd

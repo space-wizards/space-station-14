@@ -95,7 +95,7 @@ public sealed partial class NecromorfComponent : Component
     /// A multiplier applied to <see cref="PassiveHealing"/> when the entity is in critical condition.
     /// </summary>
     [DataField("passiveHealingCritMultiplier")]
-    public float PassiveHealingCritMultiplier = 4f;
+    public float PassiveHealingCritMultiplier = 2f;
 
     /// <summary>
     ///     Hit sound on Necromorf bite.

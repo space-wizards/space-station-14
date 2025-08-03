@@ -227,7 +227,7 @@
 # Травяные плитки
 - type: latheRecipe
   parent: BaseFauxTileRecipe
-  id: FloorTileItemFairyAstroGrass
+  id: FauxTileFairyAstroGrass
   result: FloorTileItemFairyAstroGrass
 
 # Плитки шаттла

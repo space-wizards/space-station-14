@@ -9,12 +9,15 @@ using Robust.Shared.Utility;
 using System.Threading;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Shared.Preferences;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.DeadSpace.CustomizableHumanoidSpawner;
 
 [GenerateTypedNameReferences]
 public sealed partial class CustomizableHumanoidSpawnerUI : FancyWindow
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     public event Action<bool, int, string, bool, string>? OnConfirm;
 
     private readonly List<CustomizableHumanoidSpawnerCharacterInfo> _characters = new();
@@ -28,6 +31,7 @@ public sealed partial class CustomizableHumanoidSpawnerUI : FancyWindow
     public CustomizableHumanoidSpawnerUI()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
         UseSelectedCharacter.OnPressed += _ =>
         {
@@ -95,6 +99,19 @@ public sealed partial class CustomizableHumanoidSpawnerUI : FancyWindow
 
         if (state.RandomizedName != null)
             CustomNameInput.Text = state.RandomizedName;
+
+        if (state.AllowedSpecies.Count > 10)
+        {
+            List<string> speciesList = [];
+            foreach (var species in state.AllowedSpecies)
+            {
+                if (_prototypeManager.TryIndex(species, out var specie))
+                    speciesList.Add(Loc.GetString(specie.Name));
+            }
+
+            AllowedSpeciesDescription.Text =
+                Loc.GetString("customizable-humanoid-spawner-species-list") + " " + string.Join(", ", speciesList);
+        }
 
         if (_timerStarted)
             return;
