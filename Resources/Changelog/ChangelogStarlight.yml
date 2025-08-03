@@ -10014,5 +10014,42 @@ Entries:
   id: 1379
   time: '2025-07-28T06:42:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1123
+- author: darkrell, Happyrobot33
+  changes:
+  - message: Fixed a bug that occurred when trying to remove handcuffs.
+    type: Fix
+  id: 1380
+  time: '2025-08-01T04:54:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1171
+- author: Arkanic
+  changes:
+  - message: 1984 the character min/max sizes to something more reasonable
+    type: Tweak
+  id: 1381
+  time: '2025-08-01T16:02:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1174
+- author: Arkanic
+  changes:
+  - message: Width slider now acts more like an "aspect ratio" slider to stop goofy
+      min width max height characters
+    type: Tweak
+  id: 1382
+  time: '2025-08-01T16:02:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1174
+- author: PubliclyExecutedPig
+  changes:
+  - message: Fixed dragons being wayyy too powerful
+    type: Fix
+  id: 1383
+  time: '2025-08-02T13:53:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1177
+- author: PubliclyExecutedPig
+  changes:
+  - message: Buffed carp a little to encourage actual strategy instead of just running
+      in
+    type: Tweak
+  id: 1384
+  time: '2025-08-02T13:53:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1177
 Order: -1
 

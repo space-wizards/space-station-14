@@ -57,11 +57,11 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         //starlight start
         if (humanoidAppearance.EyeGlowing)
             sprite.LayerSetShader(HumanoidVisualLayers.Eyes, "unshaded");
-        else 
+        else
             if(_sprite.LayerMapTryGet((entity.Owner, sprite), HumanoidVisualLayers.Eyes, out var layerIndex, true))
                 sprite.LayerSetShader(layerIndex, (ShaderInstance?)null);
 
-        sprite.Scale = new Vector2(humanoidAppearance.Width, humanoidAppearance.Height);
+        sprite.Scale = new Vector2(humanoidAppearance.Width * humanoidAppearance.Height, humanoidAppearance.Height);
         //starlight end
     }
 
@@ -249,7 +249,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         {
             return;
         }
-        
+
         humanoid.CustomBaseLayers = layers;
         UpdateSprite((uid, humanoid, Comp<SpriteComponent>(uid)));
     }
