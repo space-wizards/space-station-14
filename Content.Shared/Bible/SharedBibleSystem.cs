@@ -5,7 +5,7 @@ using Content.Shared.Verbs;
 namespace Content.Shared.Bible;
 
 /// <summary>
-/// Shared bible system.
+/// Shared bible system basically for GetVerbsEvent predictions.
 /// </summary>
 public abstract class SharedBibleSystem : EntitySystem
 {
@@ -45,26 +45,48 @@ public abstract class SharedBibleSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    protected void AttemptSummon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent? position)
+    /// <summary>
+    /// Check is entity summonable.
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckSummonable(Entity<SummonableComponent> ent, EntityUid user, TransformComponent position)
     {
-        // TODO : because it's predicted, maybe put some popup feedback to the player/client?
         var uid = ent.Owner;
         var component = ent.Comp;
 
         if (component.AlreadySummoned || component.SpecialItemPrototype == null)
-            return;
+            return false;
         if (component.RequiresBibleUser && !HasComp<BibleUserComponent>(user))
-            return;
-        if (!Resolve(user, ref position))
-            return;
+            return false;
         if (component.Deleted || Deleted(uid))
-            return;
+            return false;
         if (!_blocker.CanInteract(user, uid))
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Try to summon with checks.
+    /// </summary>
+    protected void AttemptSummon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent? position)
+    {
+        // TODO : because it's predicted, maybe put some popup feedback to the player/client?
+        if (!Resolve(user, ref position) || !CheckSummonable(ent, user, position))
+        {
+            // _popup.PopupClient failure
             return;
+        }
 
         Summon(ent, user, position);
     }
 
+    /// <summary>
+    /// Internal server's side entity summoning.
+    /// </summary>
+    /// <remarks>
+    /// Only activated on Shared side when <see cref="SharedBibleSystem.CheckSummonable"/> passed.
+    /// </remarks>
     protected virtual void Summon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent position)
     {
         // Server-side logic.
