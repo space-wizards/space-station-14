@@ -117,9 +117,9 @@ public sealed class GithubClient
         {
             fileText = File.ReadAllText(path);
         }
-        catch
+        catch (Exception e)
         {
-            _sawmill.Error($"\"{path}\" could not be read!");
+            _sawmill.Error($"\"{path}\" could not be read!\n{e}");
             return;
         }
 
@@ -176,8 +176,8 @@ public sealed class GithubClient
             return null;
         }
 
-        if (request.AuthenticationMethod == GithubAuthMethod.Token)
-            await EnsureTokenNotExpired(ct);
+        if (request.AuthenticationMethod == GithubAuthMethod.Token && !await TryEnsureTokenNotExpired(ct))
+            return null;
 
         return await MakeRequest(request, ct);
     }
@@ -201,7 +201,7 @@ public sealed class GithubClient
         if (responseText.Length > ErrorResponseMaxLogSize)
             responseText = responseText.Substring(0, ErrorResponseMaxLogSize);
 
-        _sawmill.Error(message + "\\r\\n" + responseText);
+        _sawmill.Error(message + "\r\n" + responseText);
 
         return null;
     }
@@ -275,10 +275,14 @@ public sealed class GithubClient
     }
 
     // TODO: Maybe ensure that perms are only read metadata / write issues so people don't give full access
-    private async Task EnsureTokenNotExpired(CancellationToken ct)
+    /// <summary>
+    /// Try to get a valid verification token from the GitHub api
+    /// </summary>
+    /// <returns>True if the token is valid and successfully found, false if there was an error.</returns>
+    private async Task<bool> TryEnsureTokenNotExpired(CancellationToken ct)
     {
         if (_tokenData.Expiery != null && _tokenData.Expiery - _tokenBuffer > DateTime.UtcNow)
-            return;
+            return true;
 
         _sawmill.Info("Token expired - requesting new token!");
 
@@ -287,20 +291,20 @@ public sealed class GithubClient
         if (installationHttpResponse == null)
         {
             _sawmill.Error("Could not make http installation request when creating token.");
-            return ;
+            return false;
         }
 
         var installationResponse = await installationHttpResponse.Content.ReadFromJsonAsync<List<InstallationResponse>>(_jsonSerializerOptions, ct);
         if (installationResponse == null)
         {
             _sawmill.Error("Could not parse installation response.");
-            return;
+            return false;
         }
 
         if (installationResponse.Count == 0)
         {
             _sawmill.Error("App not installed anywhere.");
-            return;
+            return false;
         }
 
         int? installationId = null;
@@ -316,7 +320,7 @@ public sealed class GithubClient
         if (installationId == null)
         {
             _sawmill.Error("App not installed in given repository.");
-            return;
+            return false;
         }
 
         var tokenRequest = new TokenRequest
@@ -328,17 +332,18 @@ public sealed class GithubClient
         if (tokenHttpResponse == null)
         {
             _sawmill.Error("Could not make http token request when creating token..");
-            return ;
+            return false;
         }
 
         var tokenResponse = await tokenHttpResponse.Content.ReadFromJsonAsync<TokenResponse>(_jsonSerializerOptions, ct);
         if (tokenResponse == null)
         {
             _sawmill.Error("Could not parse token response.");
-            return ;
+            return false;
         }
 
         _tokenData = (tokenResponse.ExpiresAt, tokenResponse.Token);
+        return true;
     }
 
     // See: https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-json-web-token-jwt-for-a-github-app
