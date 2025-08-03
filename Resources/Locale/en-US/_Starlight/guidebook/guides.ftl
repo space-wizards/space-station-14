@@ -88,6 +88,13 @@ guide-entry-sl-engineering-sop-technical-assistant = Technical Assistant
 guide-entry-sl-medical-sop-intro = Medical
 guide-entry-sl-medical-sop-genproc-intro = General Procedures
 guide-entry-sl-medical-sop-staff-intro = Staff Procedures
+guide-entry-sl-medical-sop-chiefmedicalofficer = Chief Medical Officer
+guide-entry-sl-medical-sop-surgeon = Surgeon
+guide-entry-sl-medical-sop-medicaldoctor = Medical Doctor
+guide-entry-sl-medical-sop-medicalintern = Medical Intern
+guide-entry-sl-medical-sop-paramedic = Paramedic
+guide-entry-sl-medical-sop-psychologist = Psychologist
+guide-entry-sl-medical-sop-chemist = Chemist
 
 guide-entry-sl-cargo-sop-intro = Cargo
 guide-entry-sl-cargo-sop-genproc-intro = General Procedures

@@ -583,7 +583,57 @@
   name: guide-entry-sl-medical-sop-staff-intro
   text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/medical-sop-staff-intro.xml"
   priority: 2
+  children:
+      - medical-sop-chiefmedicalofficer
+      - medical-sop-surgeon
+      - medical-sop-medicaldoctor
+      - medical-sop-medicalintern
+      - medical-sop-paramedic
+      - medical-sop-psychologist
+      - medical-sop-chemist
 
+
+- type: guideEntry
+  id: medical-sop-chiefmedicalofficer
+  name: guide-entry-sl-medical-sop-chiefmedicalofficer
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/ChiefMedicalOfficer.xml"
+  priority: 1
+
+- type: guideEntry
+  id: medical-sop-surgeon
+  name: guide-entry-sl-medical-sop-surgeon
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/Surgeon.xml"
+  priority: 2
+
+- type: guideEntry
+  id: medical-sop-medicaldoctor
+  name: guide-entry-sl-medical-sop-medicaldoctor
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/MedicalDoctor.xml"
+  priority: 3
+
+- type: guideEntry
+  id: medical-sop-medicalintern
+  name: guide-entry-sl-medical-sop-medicalintern
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/MedicalIntern.xml"
+  priority: 4
+
+- type: guideEntry
+  id: medical-sop-paramedic
+  name: guide-entry-sl-medical-sop-paramedic
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/Paramedic.xml"
+  priority: 5
+
+- type: guideEntry
+  id: medical-sop-psychologist
+  name: guide-entry-sl-medical-sop-psychologist
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/Psychologist.xml"
+  priority: 6
+
+- type: guideEntry
+  id: medical-sop-chemist
+  name: guide-entry-sl-medical-sop-chemist
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/Chemist.xml"
+  priority: 7
 
 
 - type: guideEntry
