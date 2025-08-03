@@ -90,8 +90,11 @@ public sealed class BibleSystem : SharedBibleSystem
         }
     }
 
-    private void OnAfterInteract(EntityUid uid, BibleComponent component, AfterInteractEvent args)
+    private void OnAfterInteract(Entity<BibleComponent> ent, ref AfterInteractEvent args)
     {
+        var component = ent.Comp;
+        var uid = ent.Owner;
+
         if (!args.CanReach)
             return;
 
@@ -154,8 +157,10 @@ public sealed class BibleSystem : SharedBibleSystem
         }
     }
 
-    private void GetSummonAction(EntityUid uid, SummonableComponent component, GetItemActionsEvent args)
+    private void GetSummonAction(Entity<SummonableComponent> ent, ref GetItemActionsEvent args)
     {
+        var component = ent.Comp;
+
         if (component.AlreadySummoned)
             return;
 
@@ -171,8 +176,10 @@ public sealed class BibleSystem : SharedBibleSystem
     /// Starts up the respawn stuff when
     /// the chaplain's familiar dies.
     /// </summary>
-    private void OnFamiliarDeath(EntityUid uid, FamiliarComponent component, MobStateChangedEvent args)
+    private void OnFamiliarDeath(Entity<FamiliarComponent> ent, ref MobStateChangedEvent args)
     {
+        var component = ent.Comp;
+
         if (args.NewMobState != MobState.Dead || component.Source == null)
             return;
 
@@ -186,14 +193,14 @@ public sealed class BibleSystem : SharedBibleSystem
     /// <summary>
     /// When the familiar spawns, set its source to the bible.
     /// </summary>
-    private void OnSpawned(EntityUid uid, FamiliarComponent component, GhostRoleSpawnerUsedEvent args)
+    private void OnSpawned(Entity<FamiliarComponent> ent, ref GhostRoleSpawnerUsedEvent args)
     {
         var parent = Transform(args.Spawner).ParentUid;
         if (!TryComp<SummonableComponent>(parent, out var summonable))
             return;
 
-        component.Source = parent;
-        summonable.Summon = uid;
+        ent.Comp.Source = parent;
+        summonable.Summon = ent.Owner;
     }
 
     protected override void AttemptSummon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent? position)
