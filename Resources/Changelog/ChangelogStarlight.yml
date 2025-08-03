@@ -10480,5 +10480,12 @@ Entries:
   id: 1442
   time: '2025-08-03T22:21:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/954
+- author: Quantum-Cross
+  changes:
+  - message: Add admin tooling to send subtle messages to multiple players via toolshed
+    type: Add
+  id: 1443
+  time: '2025-08-03T22:48:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1066
 Order: -1
 
