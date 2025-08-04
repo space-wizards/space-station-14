@@ -20,11 +20,11 @@
   categories: [ HideSpawnMenu ]
   abstract: true
   components:
+  - type: Conditions
+    conditions:
     - !type:SubjectMindJobCondition
       blacklist:
       - Chef
-  - type: Conditions
-    conditions:
     - !type:SubjectSpeciesCondition
       blacklist:
       - Abductor
