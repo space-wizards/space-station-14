@@ -100,6 +100,23 @@
     - type: AccessReader
       access: [["Salvage"]]
 
+# Salvage Lead/Medic Combo Large Locker
+- type: entity
+  id: LockerLargeSalvageLeadMedic
+  parent: LockerBaseSecure
+  name: salvage lead and medic's equipment
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Structures/Storage/closet.rsi
+  - type: EntityStorageVisuals
+    stateBaseClosed: salvage
+    stateDoorOpen: salvageleadmed_door
+    stateDoorClosed: salvage_door
+  - type: AccessReader
+    access: [["Salvage"]]
+
+# Salvage Specialist (regular) is in wizden files
 # Salvage Specialist (Large)
 - type: entity
   id: LockerSalvageSpecialistLarge
@@ -132,17 +149,17 @@
   - type: AccessReader
     access: [["Mining"]]
 
-#- type: entity
-#  id: LockerMiningSpecialistLarge
-#  parent: LockerLargeBaseSecure
-#  name: large mining specialist's locker
-#  components:
-#  - type: Appearance
-#  - type: Sprite
-#    sprite: _Starlight/Structures/Storage/closet-large.rsi
-#  - type: EntityStorageVisuals
-#    stateBaseClosed: miner
-#    stateDoorOpen: miner_open
-#    stateDoorClosed: miner_door
-#  - type: AccessReader
-#    access: [["Mining"]]
+- type: entity
+  id: LockerMiningSpecialistLarge
+  parent: LockerLargeBaseSecure
+  name: large mining specialist's locker
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Structures/Storage/closet-large.rsi
+  - type: EntityStorageVisuals
+    stateBaseClosed: miner
+    stateDoorOpen: miner_open
+    stateDoorClosed: miner_door
+  - type: AccessReader
+    access: [["Mining"]]

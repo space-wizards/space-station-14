@@ -75,6 +75,9 @@
         },
         {
             "name": "salvage_open"
+        },
+        {
+            "name": "salvageleadmed_door"
         }
     ]
 }

@@ -15,22 +15,6 @@
     - id: ClothingMaskGasExplorer
 
 - type: entity
-  id: LockerSalvageLeadFilledHardsuit
-  suffix: Filled, Hardsuit
-  parent: LockerSalvageLead
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:AllSelector
-        children:
-        - !type:NestedSelector
-          tableId: FillSalvageSpecialistHardsuitSpatio
-        - !type:NestedSelector
-          tableId: LockerFillSalvageLead
-        - !type:NestedSelector
-          tableId: LockerFillSalvageSpecialist
-
-- type: entity
   id: LockerSalvageLeadFilled
   suffix: Filled
   parent: LockerSalvageLead
@@ -44,6 +28,21 @@
         - !type:NestedSelector
           tableId: LockerFillSalvageSpecialist
 
+- type: entity
+  id: LockerSalvageLeadFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerSalvageLead
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillSalvageLeadHardsuitSpatio
+        - !type:NestedSelector
+          tableId: LockerFillSalvageLead
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
 
 #Salvage Medic
 - type: entityTable
@@ -72,9 +71,11 @@
       entity_storage: !type:AllSelector
         children:
         - !type:NestedSelector
-          tableId: FillSalvageSpecialistHardsuitSpatio
+          tableId: FillSalvageMedicHardsuitSpatio
         - !type:NestedSelector
           tableId: LockerFillSalvageMedic
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
 
 - type: entity
   id: LockerSalvageMedicFilled
@@ -85,6 +86,47 @@
     containers:
       entity_storage: !type:AllSelector
         children:
+        - !type:NestedSelector
+          tableId: LockerFillSalvageMedic
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
+
+# Salvage Lead/Medic Combo Large Locker
+- type: entity
+  id: LockerSalvageLeadMedicFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerLargeSalvageLeadMedic
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillSalvageLeadHardsuitSpatio
+        - !type:NestedSelector
+          tableId: LockerFillSalvageLead
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
+        - !type:NestedSelector
+          tableId: FillSalvageMedicHardsuitSpatio
+        - !type:NestedSelector
+          tableId: LockerFillSalvageMedic
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
+
+- type: entity
+  id: LockerSalvageLeadMedicFilled
+  suffix: Filled
+  parent: LockerLargeSalvageLeadMedic
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillSalvageLead
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
         - !type:NestedSelector
           tableId: LockerFillSalvageMedic
         - !type:NestedSelector
@@ -125,6 +167,29 @@
           tableId: LockerFillSalvageSpecialist
 
 #Mining Specialist
+- type: entityTable
+  id: FillMiningSpecialistHardsuitSpaceHazard
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingShoesBootsMag
+    - id: ClothingOuterHardsuitSpaceHazard
+    - id: ClothingMaskGasExplorer
+
+- type: entity
+  id: LockerMiningSpecialistFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerMiningSpecialist
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillMiningSpecialistHardsuitSpaceHazard
+        - !type:NestedSelector
+          tableId: LockerFillMiningSpecialist
+
 - type: entity
   id: LockerMiningSpecialistFilled
   suffix: Filled
@@ -179,5 +244,3 @@
     - id: Pickaxe
     - id: Shovel
     - id: OreBag
-
-#DOTS - create large locker variant for mining specialist, as well as update their locker to have a fill
