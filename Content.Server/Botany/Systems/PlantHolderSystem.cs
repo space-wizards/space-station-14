@@ -473,43 +473,6 @@ public sealed class PlantHolderSystem : EntitySystem
         component.MutationMod = MathHelper.Clamp(component.MutationMod, 0f, 3f);
     }
 
-    public void AutoHarvest(EntityUid uid, PlantHolderComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        if (component.Seed == null || !component.Harvest)
-            return;
-
-        if (TryComp<HarvestComponent>(uid, out var harvestComp))
-        {
-            var harvestSystem = EntitySystem.Get<HarvestSystem>();
-            harvestSystem.DoHarvest(uid, uid, harvestComp, component);
-        }
-    }
-
-    private void AfterHarvest(EntityUid uid, PlantHolderComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        component.Harvest = false;
-        component.LastProduce = component.Age;
-
-        HarvestComponent? harvest = null;
-        if (TryComp<HarvestComponent>(uid, out harvest))
-        {
-            harvest.ReadyForHarvest = false;
-            harvest.LastHarvestTime = component.Age;
-
-            if (harvest.HarvestRepeat == HarvestType.NoRepeat)
-                RemovePlant(uid, component);
-        }
-
-        CheckLevelSanity(uid, component);
-        UpdateSprite(uid, component);
-    }
-
     public void CheckHealth(EntityUid uid, PlantHolderComponent? component = null)
     {
         if (!Resolve(uid, ref component))

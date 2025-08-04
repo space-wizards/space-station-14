@@ -63,10 +63,20 @@ public sealed class HarvestSystem : EntitySystem
             return;
 
         // Check if plant is ready for harvest
-        if (plantHolder.Age >= traits.Production)
+        if (component.HarvestRepeat == HarvestType.Repeat || component.HarvestRepeat == HarvestType.SelfHarvest)
         {
+            // Repeat harvest
             var timeSinceLastHarvest = plantHolder.Age - component.LastHarvestTime;
             if (timeSinceLastHarvest >= traits.Production && !component.ReadyForHarvest)
+            {
+                component.ReadyForHarvest = true;
+                plantHolder.UpdateSpriteAfterUpdate = true;
+            }
+        }
+        else
+        {
+            // Non-repeat harvest
+            if (plantHolder.Age >= traits.Production && !component.ReadyForHarvest)
             {
                 component.ReadyForHarvest = true;
                 plantHolder.UpdateSpriteAfterUpdate = true;

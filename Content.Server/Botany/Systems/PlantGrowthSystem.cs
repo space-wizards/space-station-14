@@ -31,13 +31,8 @@ public sealed class PlantGrowthCycleSystem : EntitySystem
         var query = EntityQueryEnumerator<PlantHolderComponent>();
         while (query.MoveNext(out var uid, out var plantHolder))
         {
-            if (_gameTiming.CurTime < plantHolder.LastCycle + plantHolder.CycleDelay)
-                continue;
-
             var plantGrow = new OnPlantGrowEvent();
             RaiseLocalEvent(uid, ref plantGrow);
-
-            plantHolder.LastCycle = _gameTiming.CurTime;
         }
 
         nextUpdate = _gameTiming.CurTime + updateDelay;
