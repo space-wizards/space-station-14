@@ -841,6 +841,7 @@
     - CorgiWearable
     - Hardsuit
     - WhitelistChameleon
+    - RequiredForLmgTag #Starlight
 
 #Wizard Hardsuit
 - type: entity
