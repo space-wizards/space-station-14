@@ -99,7 +99,13 @@ namespace Content.Client.Lobby.UI
                     character,
                     slot == selectedSlot);
 
-                if (slot > maxCharactersSlots) characterPickerButton.Disabled = true;
+                if (slot >= maxCharactersSlots)
+                {
+                    characterPickerButton.Disabled = true;
+                    characterPickerButton.ToolTip =
+                        Loc.GetString("character-setup-gui-character-picker-select-limited-tooltip",
+                                      ("maxCharacters", maxCharactersSlots));
+                }
 
                 Characters.AddChild(characterPickerButton);
 
