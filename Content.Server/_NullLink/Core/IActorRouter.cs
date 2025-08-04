@@ -9,6 +9,8 @@ public interface IActorRouter
     Task Connection { get; }
     bool Enabled { get; }
 
+    event Action OnConnected;
+
     void Initialize();
     ValueTask Shutdown();
     bool TryCreateObjectReference<TGrainObserverInterface>(IGrainObserver obj, out TGrainObserverInterface? objectReference) where TGrainObserverInterface : IGrainObserver;

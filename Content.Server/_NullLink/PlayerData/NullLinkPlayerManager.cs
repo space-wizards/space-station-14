@@ -15,6 +15,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Starlight.NullLink;
 using Starlight.NullLink.Event;
 
 namespace Content.Server._NullLink.PlayerData;
@@ -43,10 +44,21 @@ public sealed partial class NullLinkPlayerManager : INullLinkPlayerManager
         InitializeLinking();
         _cfg.OnValueChanged(NullLinkCCVars.RoleReqMentors, UpdateMentors, true);
         _cfg.OnValueChanged(NullLinkCCVars.TitleBuild, UpdateTitleBuilder, true);
+        _actors.OnConnected += OnNullLinkConnected;
+    }
+
+    private void OnNullLinkConnected()
+    {
+        if (!_actors.TryGetServerGrain(out var serverGrain))
+            return;
+
+        foreach (var player in _playerById)
+            _ = serverGrain.PlayerConnected(player.Key);
     }
 
     public void Shutdown()
     {
+        _actors.OnConnected -= OnNullLinkConnected;
         _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
         _playerById.Clear();
     }
