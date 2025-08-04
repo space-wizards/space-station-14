@@ -580,7 +580,7 @@
 
 - type: entity
   name: passenger ID card
-  parent: [IDCardStandard, VoiceLock]
+  parent: [IDCardStandard, BaseChameleon]
   id: AgentIDCard
   suffix: Agent
   components:
@@ -595,10 +595,8 @@
     - state: default
     - state: idpassenger
   - type: AgentIDCard
-  - type: ActivatableUIRequiresLock
-    accessDeniedSound: null
-    popup: null
-
+  - type: UIRequiresLock
+    userInterfaceKeys: null
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true

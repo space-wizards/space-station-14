@@ -167,7 +167,7 @@
   - type: Lock
     locked: true
     unlockOnClick: false
-  - type: ActivatableUIRequiresLock
+  - type: UIRequiresLock
   - type: LockedWiresPanel
   - type: Damageable
     damageContainer: Silicon

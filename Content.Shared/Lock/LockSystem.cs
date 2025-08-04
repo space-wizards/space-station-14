@@ -28,12 +28,12 @@ public sealed class LockSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -54,8 +54,8 @@ public sealed class LockSystem : EntitySystem
         SubscribeLocalEvent<LockedWiresPanelComponent, AttemptChangePanelEvent>(OnAttemptChangePanel);
         SubscribeLocalEvent<LockedAnchorableComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
 
-        SubscribeLocalEvent<ActivatableUIRequiresLockComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
-        SubscribeLocalEvent<ActivatableUIRequiresLockComponent, LockToggledEvent>(LockToggled);
+        SubscribeLocalEvent<UIRequiresLockComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
+        SubscribeLocalEvent<UIRequiresLockComponent, LockToggledEvent>(LockToggled);
 
         SubscribeLocalEvent<ItemToggleRequiresLockComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
     }
@@ -410,29 +410,38 @@ public sealed class LockSystem : EntitySystem
         args.Cancel();
     }
 
-    private void OnUIOpenAttempt(EntityUid uid, ActivatableUIRequiresLockComponent component, ActivatableUIOpenAttemptEvent args)
+    private void OnUIOpenAttempt(EntityUid uid, UIRequiresLockComponent component, ActivatableUIOpenAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked != component.RequireLocked)
-        {
-            args.Cancel();
-            if (lockComp.Locked && component.Popup != null)
-            {
-                _sharedPopupSystem.PopupClient(Loc.GetString(component.Popup), uid, args.User);
-            }
+        if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.RequireLocked)
+            return;
 
-            _audio.PlayPredicted(component.AccessDeniedSound, uid, args.User);
+        args.Cancel();
+        if (lockComp.Locked && component.Popup != null)
+        {
+            _sharedPopupSystem.PopupClient(Loc.GetString(component.Popup), uid, args.User);
         }
+
+        _audio.PlayPredicted(component.AccessDeniedSound, uid, args.User);
     }
 
-    private void LockToggled(EntityUid uid, ActivatableUIRequiresLockComponent component, LockToggledEvent args)
+    private void LockToggled(EntityUid uid, UIRequiresLockComponent component, LockToggledEvent args)
     {
         if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.RequireLocked)
             return;
 
-        _activatableUI.CloseAll(uid);
+        if (component.UserInterfaceKeys == null)
+        {
+            _ui.CloseUis(uid);
+            return;
+        }
+
+        foreach (var key in component.UserInterfaceKeys)
+        {
+            _ui.CloseUi(uid, key);
+        }
     }
 
     private void OnActivateAttempt(EntityUid uid, ItemToggleRequiresLockComponent component, ref ItemToggleActivateAttemptEvent args)
