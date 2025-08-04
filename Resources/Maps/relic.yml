@@ -51,10 +51,12 @@ entities:
     - type: GridTree
     - type: Broadphase
     - type: OccluderTree
+    - type: Parallax
+      parallax: RelicStation
   - uid: 2
     components:
     - type: MetaData
-      name: grid
+      name: oldstation
     - type: Transform
       pos: -2.6405587,0.6332514
       parent: 1
