@@ -976,12 +976,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Check if examinable solution requires you to hold the item in hand.
+    ///     Check if an examinable solution is hidden by something.
     /// </summary>
     private bool CanSeeHiddenSolution(Entity<ExaminableSolutionComponent> entity, EntityUid examiner)
     {
         // If not held-only then it's always visible.
-        if (!entity.Comp.HeldOnly && !Hands.IsHolding(examiner, entity, out _))
+        if (entity.Comp.HeldOnly && !Hands.IsHolding(examiner, entity, out _))
             return false;
 
         if (entity.Comp.Opaque && Openable.IsClosed(entity.Owner, predicted: true))

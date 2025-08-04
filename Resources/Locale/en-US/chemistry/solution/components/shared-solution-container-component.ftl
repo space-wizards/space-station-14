@@ -20,9 +20,9 @@ examinable-solution-on-examine-volume-no-max = The contained solution is { $fill
 -solution-vague-fill-level =
     { $fillLevel ->
         [full] [color=white]Full[/color]
-        [mostlyfull] [color=white]Mostly Full[/color]
-        [halffull] [color=white]Half Full[/color]
-        [halfempty] [color=white]Half Empty[/color]
-        [mostlyempty] [color=white]Mostly Empty[/color]
+        [mostlyfull] [color=#DFDFDF]Mostly Full[/color]
+        [halffull] [color=#C8C8C8]Half Full[/color]
+        [halfempty] [color=#C8C8C8]Half Empty[/color]
+        [mostlyempty] [color=#A4A4A4]Mostly Empty[/color]
        *[empty] [color=gray]Empty[/color]
     }

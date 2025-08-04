@@ -30,17 +30,31 @@ public sealed partial class ExaminableSolutionComponent : Component
     /// <summary>
     ///     If true, the solution can't be examined when this entity is closed.
     /// </summary>
+    [DataField]
     public bool Opaque;
 
+    /// <summary>
+    ///     Examine text for when the solution is empty.
+    /// </summary>
     [DataField]
     public LocId LocEmptyVolume = "shared-solution-container-component-on-examine-empty-container";
 
+    /// <summary>
+    ///     Examine text for the amount of solution.
+    /// </summary>
+    /// <seealso cref="ExaminedVolumeDisplay"/>
     [DataField]
     public LocId LocVolume = "examinable-solution-on-examine-volume";
 
+    /// <summary>
+    ///     Examine text for the physical description of the primary reagent.
+    /// </summary>
     [DataField]
     public LocId LocPhysicalQuality = "shared-solution-container-component-on-examine-main-text";
 
+    /// <summary>
+    ///     Examine text for reagents that are obvious like water.
+    /// </summary>
     [DataField]
     public LocId LocRecognizableReagents = "examinable-solution-has-recognizable-chemicals";
 }
