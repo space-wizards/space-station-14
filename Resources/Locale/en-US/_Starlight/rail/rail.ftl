@@ -34,3 +34,21 @@ rail-metabolize-task = Metabolize {INDEFINITE($Target)} {$Target}
 
 rr-smoke = Smokeables
 rr-smoking-desc = I can always quit, I’m not addicted.
+
+# Description for all alcoholic drinks
+
+rr-alcohol-desc = I think alcohol addiction is not that scary. I can always ask the bartender to pour me a non-alcoholic beer, right?
+
+# Alcohol names
+
+rr-absinthe = Absinthe
+rr-ale = Ale
+rr-beer = Beer
+rr-bluecuracao = Blue Curaçao
+rr-cognac = Cognac
+rr-deadrum = Dead Rum
+rr-gin = Gin
+rr-coffeeliqueur = Coffee Liqueur
+rr-melonliquor = Melon Liquor
+rr-ntcahors = Neotheology Cahors Whine
+rr-poisonwine = Poison Wine

@@ -15,9 +15,12 @@
 #    - RRCardFoodApplePie
 #    - RRCardFoodDumplings
 #    - RRCardFoodHerbSalad
-    - RRCardMetabolizeNicotine
 #    - RRCardFoodMelonFruitBowl
 #    - RRCardFoodStew
+#    - RRCardMetabolizeNicotine
+    - RRCardMetabolizeAbsinthe
+    - RRCardMetabolizeAle
+    - RRCardMetabolizeBeer
 
 - type: entity
   parent: BaseGameRule
