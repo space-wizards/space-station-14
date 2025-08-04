@@ -5,6 +5,9 @@
   components:
   - type: Conditions
     conditions:
+    - !type:SubjectMindJobCondition
+      blacklist:
+      - Chef
     - !type:SubjectSpeciesCondition
       blacklist:
       - Abductor
@@ -17,6 +20,9 @@
   categories: [ HideSpawnMenu ]
   abstract: true
   components:
+    - !type:SubjectMindJobCondition
+      blacklist:
+      - Chef
   - type: Conditions
     conditions:
     - !type:SubjectSpeciesCondition

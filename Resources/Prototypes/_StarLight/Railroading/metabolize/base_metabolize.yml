@@ -1,3 +1,5 @@
+# Conditions
+
 - type: entity
   id: MetabolizeCondition
   categories: [ HideSpawnMenu ]
@@ -9,6 +11,23 @@
       blacklist:
       - Abductor
       - Skeleton
+      
+- type: entity
+  id: MetabolizeDrinkCondition # With bartender blacklist
+  categories: [ HideSpawnMenu ]
+  abstract: true
+  components:
+  - type: Conditions
+    conditions:
+    - !type:SubjectMindJobCondition
+      blacklist:
+      - Bartender
+    - !type:SubjectSpeciesCondition
+      blacklist:
+      - Abductor
+      - Skeleton
+
+# Example(Smokeable) Prototype
 
 - type: entity
   id: RRCardMetabolizeNicotine
