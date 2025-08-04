@@ -27,6 +27,12 @@
     sprite: Objects/Fun/Foam/foam_crossbow.rsi
     layers:
       - state: foamdart
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
   - type: EmbeddableProjectile
     removalTime: .2
   - type: ThrowingAngle
