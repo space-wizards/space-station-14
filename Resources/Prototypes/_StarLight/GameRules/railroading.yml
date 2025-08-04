@@ -17,7 +17,7 @@
 #    - RRCardFoodHerbSalad
 #    - RRCardFoodMelonFruitBowl
 #    - RRCardFoodStew
-#    - RRCardMetabolizeNicotine
+    - RRCardMetabolizeNicotine
     - RRCardMetabolizeAbsinthe
     - RRCardMetabolizeAle
     - RRCardMetabolizeBeer
@@ -41,4 +41,27 @@
     - RRCardFoodHerbSalad
     - RRCardFoodMelonFruitBowl
     - RRCardFoodStew
+    
+    # Metabolize: Smokeables
+    
     - RRCardMetabolizeNicotine
+    
+    # Metabolize: Alcohol Drinks
+    
+    - RRCardMetabolizeAbsinthe
+    - RRCardMetabolizeAle
+    - RRCardMetabolizeBeer
+    - RRCardMetabolizeBlueCuracao
+    - RRCardMetabolizeCognac
+    - RRCardMetabolizeGin
+    - RRCardMetabolizeCoffeeLiqueur
+    - RRCardMetabolizeMelonLiquor
+    - RRCardMetabolizeRum
+    - RRCardMetabolizeSake
+    - RRCardMetabolizeTequila
+    - RRCardMetabolizeVermouth
+    - RRCardMetabolizeVodka
+    - RRCardMetabolizeWhiskey
+    - RRCardMetabolizeWine
+    - RRCardMetabolizeChampagne
+    - RRCardMetabolizeAcidSpit

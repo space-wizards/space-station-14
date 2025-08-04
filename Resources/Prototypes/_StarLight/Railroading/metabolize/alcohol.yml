@@ -404,3 +404,336 @@
     amount:
       min: 25
       max: 50
+
+- type: entity
+  id: RRCardMetabolizeRum
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 3
+  - type: RailroadCard
+    title: rr-rum
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Rum
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/rumglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
+      max: 10
+
+- type: entity
+  id: RRCardMetabolizeSake
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 3
+  - type: RailroadCard
+    title: rr-sake
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Sake
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/sakeglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
+      max: 10
+
+- type: entity
+  id: RRCardMetabolizeTequila
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 3
+  - type: RailroadCard
+    title: rr-tequila
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Tequila
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/tequillaglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
+      max: 10
+
+- type: entity
+  id: RRCardMetabolizeVermouth
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 3
+  - type: RailroadCard
+    title: rr-vermouth
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Vermouth
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/vermouthglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
+      max: 10
+
+- type: entity
+  id: RRCardMetabolizeVodka
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 3
+  - type: RailroadCard
+    title: rr-vodka
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Vodka
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
+      max: 10
+
+- type: entity
+  id: RRCardMetabolizeWhiskey
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 3
+  - type: RailroadCard
+    title: rr-whiskey
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Whiskey
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
+      max: 10
+
+- type: entity
+  id: RRCardMetabolizeWine
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 3
+  - type: RailroadCard
+    title: rr-wine
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Wine
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/wineglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
+      max: 10
+
+- type: entity
+  id: RRCardMetabolizeChampagne
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-champagne
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#8acc4b' # UnCommon
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Champagne
+      Quantity: 15 # half of One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/champagneglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 10
+      max: 15
+
+- type: entity
+  id: RRCardMetabolizeAcidSpit
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-acidspit
+    icon: 
+    iconColor: '#BBCC0096' # Normal
+    color: '#8acc4b' # UnCommon
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: AcidSpit
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/acidspitglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 15
+      max: 20
