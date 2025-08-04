@@ -28,6 +28,9 @@
         {
             "name": "direction_mining",
             "directions": 4
+        },
+        {
+            "name": "mining"
         }
     ]
 }
