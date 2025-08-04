@@ -596,7 +596,6 @@
     - state: idpassenger
   - type: AgentIDCard
   - type: UIRequiresLock
-    userInterfaceKeys: null
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true

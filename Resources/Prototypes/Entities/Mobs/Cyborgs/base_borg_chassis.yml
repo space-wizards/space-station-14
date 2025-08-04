@@ -168,8 +168,8 @@
     locked: true
     unlockOnClick: false
   - type: UIRequiresLock
-  - type: LockedWiresPanel
     userInterfaceKeys: enum.BorgUiKey.Key
+  - type: LockedWiresPanel
   - type: Damageable
     damageContainer: Silicon
   - type: Destructible
