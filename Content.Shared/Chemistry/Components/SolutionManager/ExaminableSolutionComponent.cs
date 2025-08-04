@@ -30,7 +30,7 @@ public sealed partial class ExaminableSolutionComponent : Component
     /// <summary>
     ///     If true, the solution can't be examined when this entity is closed.
     /// </summary>
-    public bool CantSeeWhenClosed;
+    public bool Opaque;
 
     [DataField]
     public LocId LocEmptyVolume = "shared-solution-container-component-on-examine-empty-container";
