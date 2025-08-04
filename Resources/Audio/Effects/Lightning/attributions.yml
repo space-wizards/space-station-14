@@ -8,6 +8,11 @@
   copyright: "Made by dj-34 (https://github.com/dj-34). Modified by Ko4erga"
   source: "https://github.com/ss220-space/Paradise/blob/05043bcfb35c2e7bcf1efbdbfbf976e1a2504bc2/sound/effects/epsilon.ogg" 
 
+- files: ["lightningbolt.ogg"]
+  license: "CC0-1.0"
+  copyright: "Source unknown - added by EmoGarbage404 in PR #12204. Likely from Freesound.org"
+  source: "https://github.com/space-wizards/space-station-14/pull/12204"
+
 - files: ["strobe.ogg"]
   source: "https://freesound.org/people/blukotek/sounds/431651/"
   license: "CC0-1.0"
