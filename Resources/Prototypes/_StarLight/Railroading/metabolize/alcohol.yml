@@ -737,3 +737,373 @@
     amount:
       min: 15
       max: 20
+
+- type: entity
+  id: RRCardMetabolizeAlienBrainHemorrhage
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-alienbrainhemorrhage
+    icon: 
+    iconColor: '#BBCC0096' # Normal
+    color: '#8acc4b' # UnCommon
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: AlienBrainHemorrhage
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/alienbrainhemorrhage.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 15
+      max: 20
+
+- type: entity
+  id: RRCardMetabolizeAlliesCocktail
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-alliescocktail
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#8acc4b' # UnCommon
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: AlliesCocktail
+      Quantity: 60 # Two glasses
+    icon:
+      sprite: Objects/Consumable/Drinks/alliescocktail.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 10
+      max: 15
+
+- type: entity
+  id: RRCardMetabolizeAmasec
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-amasec
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#8acc4b' # UnCommon
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Amasec
+      Quantity: 60 # Two glasses
+    icon:
+      sprite: Objects/Consumable/Drinks/amasecglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 10
+      max: 15
+
+- type: entity
+  id: RRCardMetabolizeAndalusia
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-andalusia
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#8acc4b' # UnCommon
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Andalusia
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/andalusia.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 10
+      max: 15
+
+- type: entity
+  id: RRCardMetabolizeAntifreeze
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-antifreeze
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#8acc4b' # UnCommon
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Antifreeze
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/antifreeze.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 10
+      max: 15
+
+- type: entity
+  id: RRCardMetabolizeAtomicBomb
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 1
+  - type: RailroadCard
+    title: rr-atomicbomb
+    icon: 
+    iconColor: '#ED555596' # Hard
+    color: '#9146cc' # Myphic
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: AtomicBomb
+      Quantity: 15 # half of One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/atomicbombglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 100
+      max: 200
+
+- type: entity
+  id: RRCardMetabolizeB52
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 1
+  - type: RailroadCard
+    title: rr-b52
+    icon: 
+    iconColor: '#ED9f2296' # Difficult
+    color: '#398bce' # Rare
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-b52-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: B52
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/b52glass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 50
+      max: 100
+
+- type: entity
+  id: RRCardMetabolizeBahamaMama
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 1
+  - type: RailroadCard
+    title: rr-bahamamama
+    icon: 
+    iconColor: '#ED9f2296' # Difficult
+    color: '#398bce' # Rare
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: BahamaMama
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/bahama_mama.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 50
+      max: 100
+
+- type: entity
+  id: RRCardMetabolizeBananaHonk
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-bananahonk
+    icon: 
+    iconColor: '#BBCC0096' # Normal
+    color: '#8acc4b' # UnCommon
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: BananaHonk
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/bananahonkglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 15
+      max: 20
+
+- type: entity
+  id: RRCardMetabolizeBarefoot
+  parent: MetabolizeDrinkCondition
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-barefoot
+    icon: 
+    iconColor: '#BBCC0096' # Normal
+    color: '#8acc4b' # UnCommon
+    images:
+    - /Textures/_Starlight/Railroading/whiskey.png
+    - /Textures/_Starlight/Railroading/daiquiri.png
+    - /Textures/_Starlight/Railroading/martini.png
+    - /Textures/_Starlight/Railroading/white.png
+    - /Textures/_Starlight/Railroading/margarita.png
+    - /Textures/_Starlight/Railroading/shampagne.png
+    - /Textures/_Starlight/Railroading/glass.png
+    - /Textures/_Starlight/Railroading/shot.png
+    description: rr-alcohol-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Barefoot
+      Quantity: 30 # One glass
+    icon:
+      sprite: Objects/Consumable/Drinks/b&p.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 15
+      max: 20
