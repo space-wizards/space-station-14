@@ -3,7 +3,6 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
-using System.Numerics;
 
 namespace Content.Client.Overlays;
 
@@ -40,7 +39,7 @@ public sealed partial class ImageOverlay : Overlay
         {
             var handle = args.WorldHandle;
 
-            var texture = _resourceCache.GetTexture("/Textures/weldingTexture.png");
+            var texture = _resourceCache.GetTexture(values.PathToOverlayImage);
             shader.SetParameter("OverlayTexture", texture);
 
             Color color = values.AdditionalColor;

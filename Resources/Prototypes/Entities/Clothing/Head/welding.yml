@@ -23,7 +23,10 @@
   - type: HideLayerClothing
     slots:
     - Snout
-  - type: WeldingMaskOverlay
+  - type: ImageOverlay
+    pathToOverlayImage: "/Textures/weldingTexture.png"
+    additionalOverlayAlpha: 0.7
+    additionalColor: "#A00000"
 
 - type: entity
   parent: WeldingMaskBase
