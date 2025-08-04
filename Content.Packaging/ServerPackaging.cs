@@ -208,7 +208,7 @@ public static class ServerPackaging
         {
             var fileName = Path.GetFileNameWithoutExtension(fullPath);
 
-            if (!ServerNotExtraAssemblies.Any(o => fileName.StartsWith(o)) && ServerExtraAssemblies.Any(o => fileName.StartsWith(o)))
+            if (!ServerNotExtraAssemblies.Any(o => fileName.StartsWith(o)) && serverExtraAssemblies.Any(o => fileName.StartsWith(o)))
             {
                 contentAssemblies.Add(fileName);
             }
