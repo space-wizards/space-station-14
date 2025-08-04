@@ -30,6 +30,8 @@ public sealed partial class InventoryComponent : Component
     [DataField, AutoNetworkedField]
     public string? SpeciesId;
 
+    [DataField, AutoNetworkedField]
+    public bool DisplaceSpeciesAppropriateClothing = false;
 
     [ViewVariables]
     public SlotDefinition[] Slots = Array.Empty<SlotDefinition>();
