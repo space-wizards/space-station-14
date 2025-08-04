@@ -16,7 +16,9 @@
       state: fill-1
       visible: false
   - type: Item
-    size: Ginormous
+    size: Large
+    shape:
+    - 0,0,2,2
   - type: Clothing
     sprite: Objects/Tools/bucket.rsi
     slots:
