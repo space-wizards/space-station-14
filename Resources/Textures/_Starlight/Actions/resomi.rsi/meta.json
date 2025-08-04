@@ -9,6 +9,9 @@
   "states": [
     {
       "name": "jump"
-    }
+    },
+	{
+	  "name": "bird_call"
+	}
   ]
 }

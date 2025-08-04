@@ -6,8 +6,9 @@
               VerticalExpand="True"
               VerticalAlignment="Center">
 
+    <!-- STARLIGHT -->
     <!-- Actual sprite view -->
-    <profile:ProfilePreviewSpriteView Name="SpriteView" Scale="8 8" Margin="4" SizeFlagsStretchRatio="1" />
+    <profile:ProfilePreviewSpriteView Name="SpriteView" Scale="8 8" Margin="4" SizeFlagsStretchRatio="1" SetSize="256 384"/>
 
     <!-- Rotation buttons -->
     <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">

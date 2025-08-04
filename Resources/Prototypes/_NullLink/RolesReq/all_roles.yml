@@ -1,0 +1,11 @@
+- type: roleRequirementPrototype
+  id: AllRolesReq
+  roles:
+  - 1275161200115712071 # AlfaTester
+  - 1294130153651306516 # BetaTester
+  - 1294130614508716155 # Staff
+  - 1294131297437876254 # Retired
+  - 1294132218918207639 # Mentor
+  - 1303872867485880360 # AllRoles
+  discord: roles-req-discord-starlight
+  rolesLoc: roles-req-all-roles

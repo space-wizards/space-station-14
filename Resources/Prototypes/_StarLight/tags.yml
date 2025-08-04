@@ -4,7 +4,7 @@
   id: Arachnid
 
 
-- type: Tag  
+- type: Tag
   id: Avali
 
 - type: Tag
@@ -83,6 +83,9 @@
   id: MagazineBattery
 
 - type: Tag
+  id: MagazineMagnumSubMachineGun
+
+- type: Tag
   id: MagazinePistolDP
 
 - type: Tag
@@ -93,7 +96,7 @@
 
 - type: Tag
   id: MagazineSMGPPSH
-  
+
 - type: Tag
   id: MagazineSMGUzi
 
