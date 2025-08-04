@@ -268,7 +268,6 @@ namespace Content.Client.Inventory
                     TryAddSlotData((ent.Owner, inventorySlots), (SlotData)slot);
             }
 
-            _clothingVisualsSystem.InitClothing(ent, ent.Comp);
             if (ent.Owner == _playerManager.LocalEntity)
                 ReloadInventory(inventorySlots);
         }
