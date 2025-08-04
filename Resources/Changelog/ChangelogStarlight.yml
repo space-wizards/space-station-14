@@ -10509,5 +10509,24 @@ Entries:
   id: 1446
   time: '2025-08-04T22:39:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1141
+- author: Conflee
+  changes:
+  - message: Added the NTSV Harrier-class Ship. This is a more robust alternative
+      to the NT Cruiser, being Reach-sized and capable of sustaining a crew of 10-20
+      players. For Event use.
+    type: Add
+  id: 1447
+  time: '2025-08-04T22:43:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1071
+- author: Conflee
+  changes:
+  - message: Added the NSSV Meta-class Cargo Freighter. This is a very robust logistical
+      freighter with a massive cargo bay, loading docks, reception for handling business
+      transactions, and a leisure area for crew. Can sustain a crew of 5-10 players
+      easily. For Event use.
+    type: Add
+  id: 1448
+  time: '2025-08-04T22:43:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1071
 Order: -1
 
