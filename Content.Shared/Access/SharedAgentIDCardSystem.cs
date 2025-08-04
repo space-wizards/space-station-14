@@ -1,12 +1,14 @@
-using Content.Shared.Access.Components;
-using Content.Shared.Lock;
 using Content.Shared.StatusIcon;
-using Content.Shared.UserInterface;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access.Systems
 {
+    public abstract class SharedAgentIdCardSystem : EntitySystem
+    {
+        // Just for friending for now
+    }
+
     /// <summary>
     /// Key representing which <see cref="PlayerBoundUserInterface"/> is currently open.
     /// Useful when there are multiple UI for an object. Here it's future-proofing only.
