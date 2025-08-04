@@ -56,8 +56,9 @@ internal static class OrleansClientHolder
     {
         if (e.PreviousNumberOfConnectedGateways != 0 || e.NumberOfConnectedGateways <= 0)
             return;
-        await _connectionTcs.Task; // Ensure the connection is established before invoking the event.
-        OnConnected.Invoke();
+        _connectionTcs.Task
+            .Then(OnConnected.Invoke)
+            .FireAndForget(); // Ensure the connection is established before invoking the event.
     }
 
     public static async ValueTask Shutdown()
