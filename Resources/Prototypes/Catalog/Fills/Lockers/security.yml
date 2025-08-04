@@ -46,6 +46,7 @@
       amount: 2
     - id: RemoteSignaller
       amount: 2
+    - id: NetworkConfigurator
     - id: Binoculars
 
 - type: entityTable
