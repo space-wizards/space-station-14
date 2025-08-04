@@ -45,6 +45,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     private SlotButton? _inventoryButton;
 
     private SlotControl? _lastHovered;
+    private Task? _hoverUpdateTask;
 
     public override void Initialize()
     {
@@ -481,19 +482,28 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private void OnItemAdded(string name, EntityUid entity)
     {
-        if (_lastHovered != null)
-            UpdateHover(_lastHovered);
+        ScheduleHoverUpdate();
     }
 
     private void OnItemRemoved(string name, EntityUid entity)
     {
-        if (_lastHovered != null)
-            UpdateHover(_lastHovered);
+        ScheduleHoverUpdate();
     }
 
     private void SetActiveHand(string? handName)
     {
-        if (_lastHovered != null)
-            UpdateHover(_lastHovered);
+        ScheduleHoverUpdate();
+    }
+
+    private void ScheduleHoverUpdate()
+    {
+        if (_lastHovered == null)
+            return;
+
+        _hoverUpdateTask = Task.Delay(16).ContinueWith(_ =>
+        {
+            if (_lastHovered != null)
+                UpdateHover(_lastHovered);
+        }, TaskScheduler.FromCurrentSynchronizationContext());
     }
 }
