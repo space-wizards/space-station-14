@@ -144,8 +144,7 @@
       effects:
       - !type:EvenHealthChange
         damage:
-          groups:
-            Brute: -2 #Starlight adv. chem nerf revert
+          Brute: -2 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
