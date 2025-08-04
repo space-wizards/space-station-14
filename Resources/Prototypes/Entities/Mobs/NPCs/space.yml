@@ -65,6 +65,8 @@
     energy: 2
     color: "#4faffb"
   - type: GhostTakeoverAvailable
+  - type: NightVision
+    color: "#163247"
   - type: Speech
     speechVerb: LargeMob
 

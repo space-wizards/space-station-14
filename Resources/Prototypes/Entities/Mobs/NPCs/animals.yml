@@ -2511,6 +2511,8 @@
     tags:
     - DoorBumpOpener
     - FootstepSound
+  - type: NightVision
+    color: "#163247"
   - type: Prying # Open door from xeno.yml.
     pryPowered: true
     force: true
@@ -3143,7 +3145,7 @@
     factions:
     - Syndicate
   - type: Access
-    tags: 
+    tags:
     - NuclearOperative
     - SyndicateAgent
   - type: MeleeWeapon
