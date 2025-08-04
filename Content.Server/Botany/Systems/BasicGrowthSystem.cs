@@ -50,7 +50,7 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
             return;
 
         // Check if the plant is viable
-        if (holder.Seed.Viable == false)
+        if (TryComp<PlantTraitsComponent>(uid, out var traits) && !traits.Viable)
         {
             holder.Health -= _random.Next(5, 10) * PlantGrowthSystem.HydroponicsSpeedMultiplier;
             if (holder.DrawWarnings)

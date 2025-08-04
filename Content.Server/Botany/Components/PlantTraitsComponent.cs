@@ -71,4 +71,10 @@ public sealed partial class PlantTraitsComponent : PlantGrowthComponent
     /// </summary>
     [DataField]
     public bool TurnIntoKudzu = false;
+
+    /// <summary>
+    /// If false, rapidly decrease health while growing. Adds a bit of challenge to keep mutated plants alive via Unviable's frequency.
+    /// </summary>
+    [DataField]
+    public bool Viable = true;
 }

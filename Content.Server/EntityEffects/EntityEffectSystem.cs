@@ -370,40 +370,59 @@ public sealed class EntityEffectSystem : EntitySystem
         if (plantHolderComp.Seed == null)
             return;
 
-        // Try to find the field in PlantTraitsComponent first
-        PlantTraitsComponent? traits = null;
-        Resolve<PlantTraitsComponent>(args.Args.TargetEntity, ref traits);
+        var targetValue = args.Effect.TargetValue;
+        var entity = args.Args.TargetEntity;
 
-        // Fallback to SeedData for fields that haven't been moved to components yet
-        var seedMember = plantHolderComp.Seed.GetType().GetField(args.Effect.TargetValue);
-        if (seedMember == null)
+        // List of component types to check
+        var componentTypes = new[]
         {
-            _mutation.Log.Error(args.Effect.GetType().Name + " Error: Member " + args.Effect.TargetValue + " not found on " + plantHolderComp.Seed.GetType().Name + ". Did you misspell it?");
-            return;
+            typeof(PlantTraitsComponent),
+            typeof(BasicGrowthComponent),
+            typeof(AtmosphericGrowthComponent),
+            typeof(ToxinsComponent),
+            typeof(WeedPestGrowthComponent)
+        };
+
+        // Try to find and mutate the field in any component
+        foreach (var componentType in componentTypes)
+        {
+            if (!EntityManager.HasComponent(entity, componentType))
+                continue;
+
+            var component = EntityManager.GetComponent(entity, componentType);
+            var field = componentType.GetField(targetValue);
+
+            if (field == null)
+                continue;
+
+            var currentValue = field.GetValue(component);
+            if (currentValue == null)
+                continue;
+
+            if (field.FieldType == typeof(float))
+            {
+                var floatVal = (float)currentValue;
+                MutateFloat(ref floatVal, args.Effect.MinValue, args.Effect.MaxValue, args.Effect.Steps);
+                field.SetValue(component, floatVal);
+                return;
+            }
+            else if (field.FieldType == typeof(int))
+            {
+                var intVal = (int)currentValue;
+                MutateInt(ref intVal, (int)args.Effect.MinValue, (int)args.Effect.MaxValue, args.Effect.Steps);
+                field.SetValue(component, intVal);
+                return;
+            }
+            else if (field.FieldType == typeof(bool))
+            {
+                var boolVal = (bool)currentValue;
+                field.SetValue(component, !boolVal);
+                return;
+            }
         }
 
-        var currentSeedValObj = seedMember.GetValue(plantHolderComp.Seed);
-        if (currentSeedValObj == null)
-            return;
-
-        if (seedMember.FieldType == typeof(float))
-        {
-            var floatVal = (float)currentSeedValObj;
-            MutateFloat(ref floatVal, args.Effect.MinValue, args.Effect.MaxValue, args.Effect.Steps);
-            seedMember.SetValue(plantHolderComp.Seed, floatVal);
-        }
-        else if (seedMember.FieldType == typeof(int))
-        {
-            var intVal = (int)currentSeedValObj;
-            MutateInt(ref intVal, (int)args.Effect.MinValue, (int)args.Effect.MaxValue, args.Effect.Steps);
-            seedMember.SetValue(plantHolderComp.Seed, intVal);
-        }
-        else if (seedMember.FieldType == typeof(bool))
-        {
-            var boolVal = (bool)currentSeedValObj;
-            boolVal = !boolVal;
-            seedMember.SetValue(plantHolderComp.Seed, boolVal);
-        }
+        // Field not found in any component
+        _mutation.Log.Error($"{args.Effect.GetType().Name} Error: Field '{targetValue}' not found in any plant component. Did you misspell it?");
     }
 
     private void OnExecutePlantCryoxadone(ref ExecuteEntityEffectEvent<PlantCryoxadone> args)
@@ -479,7 +498,8 @@ public sealed class EntityEffectSystem : EntitySystem
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveMutableSeed: true))
             return;
 
-        plantHolderComp.Seed!.Viable = true;
+        if (TryComp<PlantTraitsComponent>(args.Args.TargetEntity, out var traits))
+            traits.Viable = true;
     }
 
     private void OnExecutePlantRestoreSeeds(ref ExecuteEntityEffectEvent<PlantRestoreSeeds> args)
