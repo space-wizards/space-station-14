@@ -10495,5 +10495,12 @@ Entries:
   id: 1444
   time: '2025-08-03T22:52:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1113
+- author: STARLIGHT TEAM
+  changes:
+  - message: NullLink re-fetches player data when reconnecting to a cluster.
+    type: Fix
+  id: 1445
+  time: '2025-08-04T20:42:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1218
 Order: -1
 
