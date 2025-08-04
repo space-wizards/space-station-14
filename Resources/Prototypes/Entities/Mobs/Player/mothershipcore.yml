@@ -8,7 +8,6 @@
   parent:
   - BaseMachinePowered
   - BaseMob
-  - StripableInventoryBase
   id: MothershipCore
   name: mothership core
   description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
@@ -100,8 +99,6 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
         requireInputValidation: false
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
       enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
       enum.LatheUiKey.Key:
@@ -171,7 +168,6 @@
   - type: SiliconLawProvider
     laws: MothershipCoreLawset # custom laws here
     subverted: true
-  - type: Stripping
   - type: Access
     enabled: true
     tags:
