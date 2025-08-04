@@ -721,10 +721,11 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-  - type: WeldingMaskOverlay
-    PathToOverlayImage: "Textures/weldingTexture.png"
-    AdditionalOverlayAlpha: 0.5
-    
+  - type: ImageOverlay
+    pathToOverlayImage: "/Textures/weldingTexture.png"
+    additionalOverlayAlpha: 0.2
+    additionalColor: "#000000"
+
 # Entity tables
 - type: entityTable
   id: AnimalMaskTable

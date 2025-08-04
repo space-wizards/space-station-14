@@ -9,7 +9,7 @@ namespace Content.Client.Overlays;
 /// <summary>
 /// Adds a rectangular shader when wearing a welding mask or similar.
 /// </summary>
-public sealed partial class WeldingMaskOverlaySystem : EquipmentHudSystem<WeldingMaskOverlayComponent>
+public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlayComponent>
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -24,7 +24,7 @@ public sealed partial class WeldingMaskOverlaySystem : EquipmentHudSystem<Weldin
         _overlay = new();
     }
 
-    protected override void UpdateInternal(RefreshEquipmentHudEvent<WeldingMaskOverlayComponent> component)
+    protected override void UpdateInternal(RefreshEquipmentHudEvent<ImageOverlayComponent> component)
     {
         base.UpdateInternal(component);
 

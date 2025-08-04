@@ -41,10 +41,11 @@ public sealed partial class ImageOverlay : Overlay
             var handle = args.WorldHandle;
 
             var texture = _resourceCache.GetTexture("/Textures/weldingTexture.png");
+            shader.SetParameter("OverlayTexture", texture);
 
-            shader.SetParameter("overlayTexture", texture);
-            shader.SetParameter("additionalColor", values.AdditionalColor);
-            shader.SetParameter("additionalOverlayColor", values.AdditionalOverlayAlpha);
+            Color color = values.AdditionalColor;
+            color.A = values.AdditionalOverlayAlpha;
+            shader.SetParameter("AdditionalColor", color);
 
             handle.UseShader(shader);
             handle.DrawRect(args.WorldBounds, Color.White);
