@@ -345,7 +345,6 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-
         if (TryComp<ProduceComponent>(args.Used, out var produce))
         {
             args.Handled = true;
@@ -590,13 +589,16 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(uid, out var app))
             return;
 
-        TryComp<PlantTraitsComponent>(uid, out var spriteTraits);
+        TryComp<PlantTraitsComponent>(uid, out var traits);
+
+        if (traits == null)
+            return;
 
         if (component.Seed != null)
         {
             if (component.DrawWarnings)
             {
-                _appearance.SetData(uid, PlantHolderVisuals.HealthLight, component.Health <= (spriteTraits?.Endurance ?? 100f) / 2f);
+                _appearance.SetData(uid, PlantHolderVisuals.HealthLight, component.Health <= traits.Endurance / 2f);
             }
 
             if (component.Dead)
@@ -611,10 +613,7 @@ public sealed class PlantHolderSystem : EntitySystem
             }
             else
             {
-                if (spriteTraits == null)
-                    return;
-
-                if (component.Age < spriteTraits.Maturation)
+                if (component.Age < traits.Maturation)
                 {
                     var growthStage = GetCurrentGrowthStage((uid, component));
 
@@ -625,7 +624,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 else
                 {
                     _appearance.SetData(uid, PlantHolderVisuals.PlantRsi, component.Seed.PlantRsi.ToString(), app);
-                    _appearance.SetData(uid, PlantHolderVisuals.PlantState, $"stage-{spriteTraits.GrowthStages}", app);
+                    _appearance.SetData(uid, PlantHolderVisuals.PlantState, $"stage-{traits.GrowthStages}", app);
                 }
             }
         }
@@ -647,8 +646,8 @@ public sealed class PlantHolderSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Check if the currently contained seed is unique. If it is not, clone it so that we have a unique seed.
-    ///     Necessary to avoid modifying global seeds.
+    /// Check if the currently contained seed is unique. If it is not, clone it so that we have a unique seed.
+    /// Necessary to avoid modifying global seeds.
     /// </summary>
     public void EnsureUniqueSeed(EntityUid uid, PlantHolderComponent? component = null)
     {

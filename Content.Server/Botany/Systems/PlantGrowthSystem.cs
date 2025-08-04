@@ -8,38 +8,6 @@ namespace Content.Server.Botany.Systems;
 public readonly record struct OnPlantGrowEvent;
 
 /// <summary>
-/// Handles the main growth cycle for all plants.
-/// </summary>
-public sealed class PlantGrowthCycleSystem : EntitySystem
-{
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-    public TimeSpan nextUpdate = TimeSpan.Zero;
-    public TimeSpan updateDelay = TimeSpan.FromSeconds(15); // PlantHolder has a 15 second delay on cycles
-
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
-
-    public override void Update(float frameTime)
-    {
-        if (nextUpdate > _gameTiming.CurTime)
-            return;
-
-        var query = EntityQueryEnumerator<PlantHolderComponent>();
-        while (query.MoveNext(out var uid, out var plantHolder))
-        {
-            var plantGrow = new OnPlantGrowEvent();
-            RaiseLocalEvent(uid, ref plantGrow);
-        }
-
-        nextUpdate = _gameTiming.CurTime + updateDelay;
-    }
-}
-
-/// <summary>
 /// Base system for plant growth mechanics. Provides common functionality for all plant growth systems.
 /// </summary>
 public abstract class PlantGrowthSystem : EntitySystem
@@ -86,14 +54,14 @@ public abstract class PlantGrowthSystem : EntitySystem
         {
             if (component.Age < traits.Maturation)
                 component.Age += amount;
-            else if (!component.Harvest && traits.Yield > 0f)
+            else if (!component.Harvest && traits.Yield <= 0f)
                 component.LastProduce -= amount;
         }
         else
         {
             if (component.Age < traits.Maturation)
                 component.SkipAging++;
-            else if (!component.Harvest && traits.Yield > 0f)
+            else if (!component.Harvest && traits.Yield <= 0f)
                 component.LastProduce += amount;
         }
     }

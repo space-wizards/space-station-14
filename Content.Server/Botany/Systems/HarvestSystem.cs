@@ -67,7 +67,7 @@ public sealed class HarvestSystem : EntitySystem
         {
             // Repeat harvest
             var timeSinceLastHarvest = plantHolder.Age - component.LastHarvestTime;
-            if (timeSinceLastHarvest >= traits.Production && !component.ReadyForHarvest)
+            if (timeSinceLastHarvest > traits.Production && !component.ReadyForHarvest)
             {
                 component.ReadyForHarvest = true;
                 plantHolder.UpdateSpriteAfterUpdate = true;
@@ -76,7 +76,7 @@ public sealed class HarvestSystem : EntitySystem
         else
         {
             // Non-repeat harvest
-            if (plantHolder.Age >= traits.Production && !component.ReadyForHarvest)
+            if (plantHolder.Age > traits.Production && !component.ReadyForHarvest)
             {
                 component.ReadyForHarvest = true;
                 plantHolder.UpdateSpriteAfterUpdate = true;
@@ -155,6 +155,7 @@ public sealed class HarvestSystem : EntitySystem
             case HarvestType.SelfHarvest:
                 harvestComp.ReadyForHarvest = false;
                 harvestComp.LastHarvestTime = plantHolder.Age;
+                plantHolder.Harvest = false;
                 break;
         }
 

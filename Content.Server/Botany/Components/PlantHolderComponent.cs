@@ -14,12 +14,6 @@ public sealed partial class PlantHolderComponent : Component
     public TimeSpan NextUpdate = TimeSpan.Zero;
 
     /// <summary>
-    /// Time between plant reagent consumption updates.
-    /// </summary>
-    [DataField]
-    public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
-
-    /// <summary>
     /// Age when the plant last produced harvestable items.
     /// </summary>
     [DataField]
@@ -36,6 +30,12 @@ public sealed partial class PlantHolderComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan CycleDelay = TimeSpan.FromSeconds(15f);
+
+    /// <summary>
+    /// Time between plant reagent consumption updates.
+    /// </summary>
+    [DataField]
+    public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
 
     /// <summary>
     /// Game time when the plant last did a growth update.

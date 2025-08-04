@@ -32,26 +32,5 @@ public sealed class PlantTraitsSystem : PlantGrowthSystem
             if (holder.DrawWarnings)
                 holder.UpdateSpriteAfterUpdate = true;
         }
-
-        // Check if plant is ready for harvest
-        if (holder.Seed.ProductPrototypes.Count > 0 && TryComp<HarvestComponent>(uid, out var harvestComp))
-        {
-            if (holder.Age > component.Production)
-            {
-                if (holder.Age - harvestComp.LastHarvestTime > component.Production && !harvestComp.ReadyForHarvest)
-                {
-                    harvestComp.ReadyForHarvest = true;
-                    harvestComp.LastHarvestTime = holder.Age;
-                }
-            }
-            else
-            {
-                if (harvestComp.ReadyForHarvest)
-                {
-                    harvestComp.ReadyForHarvest = false;
-                    harvestComp.LastHarvestTime = holder.Age;
-                }
-            }
-        }
     }
 }
