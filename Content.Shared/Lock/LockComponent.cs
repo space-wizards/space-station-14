@@ -33,6 +33,9 @@ public sealed partial class LockComponent : Component
     [DataField, AutoNetworkedField]
     public bool ShowExamine = true;
 
+    [DataField, AutoNetworkedField]
+    public bool ShowPopups = true;
+
     /// <summary>
     /// Whether or not the lock is locked by simply clicking.
     /// </summary>

@@ -1,41 +1,31 @@
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Lock;
-using Content.Shared.Trigger;
-using Content.Shared.Trigger.Systems;
+using Content.Shared.Trigger.Components.Triggers;
 
 namespace Content.Shared.SecretLocks;
 
 public sealed partial class SharedVoiceTriggerLockSystem : EntitySystem
 {
-    [Dependency] private readonly LockSystem _lock = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<VoiceTriggerLockComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<VoiceTriggerLockComponent, VoiceTriggeredEvent>(OnVoiceTriggered);
-        SubscribeLocalEvent<VoiceTriggerLockComponent, TryShowVoiceTriggerVerbs>(OnShowVoiceTriggerVerbs);
-        SubscribeLocalEvent<VoiceTriggerLockComponent, TryShowVoiceTriggerExamine>(OnShowVoiceTriggerExamine);
+        SubscribeLocalEvent<VoiceTriggerLockComponent, LockToggledEvent>(OnLockToggled);
     }
 
-    private void OnComponentInit(Entity<VoiceTriggerLockComponent> ent, ref ComponentInit args)
+    private void OnLockToggled(Entity<VoiceTriggerLockComponent> ent, ref LockToggledEvent args)
     {
-        if (!HasComp<LockComponent>(ent))
-            Log.Warning($"Entity with VoiceTriggerLockComponent {ent.Owner} has no lock component.");
+        if (!TryComp<TriggerOnVoiceComponent>(ent.Owner, out var triggerComp))
+            return;
+
+        triggerComp.ShowVerbs = !args.Locked;
+        triggerComp.ShowExamine = !args.Locked;
+
+        _toggle.TryDeactivate(ent.Owner, null, true, false);
+
+        Dirty(ent.Owner, triggerComp);
     }
 
-    private void OnVoiceTriggered(Entity<VoiceTriggerLockComponent> ent, ref VoiceTriggeredEvent args)
-    {
-        _lock.ToggleLock(ent);
-    }
-
-    private void OnShowVoiceTriggerVerbs(Entity<VoiceTriggerLockComponent> ent, ref TryShowVoiceTriggerVerbs args)
-    {
-        args.Canceled = _lock.IsLocked(ent.Owner);
-    }
-
-    private void OnShowVoiceTriggerExamine(Entity<VoiceTriggerLockComponent> ent, ref TryShowVoiceTriggerExamine args)
-    {
-        args.Canceled = _lock.IsLocked(ent.Owner);
-    }
 }

@@ -14,4 +14,11 @@ public sealed partial class ItemToggleRequiresLockComponent : Component
     /// </summary>
     [DataField]
     public bool RequireLocked;
+
+    /// <summary>
+    /// TRUE: the lock must be locked to toggle the item.
+    /// FALSE: the lock must be unlocked to toggle the item.
+    /// </summary>
+    [DataField]
+    public LocId? LockedPopup = "lock-comp-generic-fail";
 }

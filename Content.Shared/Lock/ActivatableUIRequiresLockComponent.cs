@@ -21,4 +21,10 @@ public sealed partial class ActivatableUIRequiresLockComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+
+    /// <summary>
+    /// Sound to be played if an attempt is blocked.
+    /// </summary>
+    [DataField]
+    public LocId? Popup = "entity-storage-component-locked-message";
 }

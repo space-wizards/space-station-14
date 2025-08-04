@@ -27,10 +27,7 @@ public sealed partial class TriggerSystem
 
     private void OnVoiceExamine(EntityUid uid, TriggerOnVoiceComponent component, ExaminedEvent args)
     {
-        var shouldShowEvnt = new TryShowVoiceTriggerExamine(args.Examiner);
-        RaiseLocalEvent(uid, ref shouldShowEvnt);
-
-        if (!args.IsInDetailsRange || shouldShowEvnt.Canceled)
+        if (!args.IsInDetailsRange || !component.ShowExamine)
             return;
 
         args.PushText(string.IsNullOrWhiteSpace(component.KeyPhrase)
@@ -75,18 +72,13 @@ public sealed partial class TriggerSystem
 
     private void OnVoiceGetAltVerbs(Entity<TriggerOnVoiceComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
-            return;
-
-        var showEvent = new TryShowVoiceTriggerVerbs(args.User);
-        RaiseLocalEvent(ent, ref showEvent);
-        if (showEvent.Canceled)
+        if (!args.CanInteract || !args.CanAccess || !ent.Comp.ShowVerbs)
             return;
 
         var user = args.User;
         args.Verbs.Add(new AlternativeVerb
         {
-            Text = Loc.GetString(ent.Comp.IsRecording ? "trigger-on-voice-stop" : "trigger-on-voice-record"),
+            Text = Loc.GetString(ent.Comp.IsRecording ? ent.Comp.StopRecordingVerb : ent.Comp.StartRecordingVerb),
             Act = () =>
             {
                 if (ent.Comp.IsRecording)
@@ -102,7 +94,7 @@ public sealed partial class TriggerSystem
 
         args.Verbs.Add(new AlternativeVerb
         {
-            Text = Loc.GetString("trigger-on-voice-clear"),
+            Text = Loc.GetString(ent.Comp.ClearRecordingVerb),
             Act = () =>
             {
                 ClearRecording(ent);
@@ -167,19 +159,3 @@ public sealed partial class TriggerSystem
         RemComp<ActiveListenerComponent>(ent);
     }
 }
-
-/// <summary>
-/// This event gets raised when trying the recording verbs
-/// </summary>
-/// <param name="Source">Ent that is getting the verbs</param>
-/// <param name="Canceled">Set to true to cancel showing the verbs</param>
-[ByRefEvent]
-public record struct TryShowVoiceTriggerVerbs(EntityUid Source, bool Canceled = false);
-
-/// <summary>
-/// This event gets raised when trying to show the examine text.
-/// </summary>
-/// <param name="Examiner">Ent that is getting the examine text</param>
-/// <param name="Canceled">Set to true to cancel showing the verbs</param>
-[ByRefEvent]
-public record struct TryShowVoiceTriggerExamine(EntityUid Examiner, bool Canceled = false);

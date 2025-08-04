@@ -595,7 +595,9 @@
     - state: default
     - state: idpassenger
   - type: AgentIDCard
-#  - type: ActivatableUIRequiresLock TODO: fix this and probably use it instead of the custom stuff
+  - type: ActivatableUIRequiresLock
+    accessDeniedSound: null
+    popup: null
 
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key

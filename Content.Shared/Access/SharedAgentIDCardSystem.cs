@@ -9,20 +9,20 @@ namespace Content.Shared.Access.Systems
 {
     public abstract partial class SharedAgentIdCardSystem : EntitySystem
     {
-         [Dependency] private readonly LockSystem _lock = default!;
+         // [Dependency] private readonly LockSystem _lock = default!;
 
-         public override void Initialize()
-         {
-             base.Initialize();
+         // public override void Initialize()
+         // {
+         //     base.Initialize();
+         //
+         //     // SubscribeLocalEvent<AgentIDCardComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttemptEvent);
+         // }
 
-             SubscribeLocalEvent<AgentIDCardComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttemptEvent);
-         }
-
-         private void OnActivatableUIOpenAttemptEvent(Entity<AgentIDCardComponent> ent, ref ActivatableUIOpenAttemptEvent args)
-         {
-             if (_lock.IsLocked(ent.Owner))
-                 args.Cancel();
-         }
+         // private void OnActivatableUIOpenAttemptEvent(Entity<AgentIDCardComponent> ent, ref ActivatableUIOpenAttemptEvent args)
+         // {
+         //     if (_lock.IsLocked(ent.Owner))
+         //         args.Cancel();
+         // }
     }
 
     /// <summary>

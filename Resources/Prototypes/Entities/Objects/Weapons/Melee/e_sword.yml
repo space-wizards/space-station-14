@@ -231,6 +231,7 @@
   - type: UseDelay
     delay: 1.5
   - type: ItemToggleRequiresLock #  TODO: FIX THIS VERB IS COOKED
+    lockedPopup: null
   - type: Tag
     tags:
     - Write

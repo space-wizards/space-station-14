@@ -46,19 +46,31 @@ public sealed partial class TriggerOnVoiceComponent : BaseTriggerOnXComponent
     public int MaxLength = 50;
 
     /// <summary>
+    /// When examining the item, should it show information about what word is recorded?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ShowExamine = true;
+
+    /// <summary>
+    /// Should there be verbs that allow re-recording of the trigger word?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ShowVerbs = true;
+
+    /// <summary>
     /// The verb text that is shown when you can start recording a message.
     /// </summary>
     [DataField]
-    public LocId StartRecordingVerb = "verb-trigger-voice-record";
+    public LocId StartRecordingVerb = "trigger-on-voice-record";
 
     /// <summary>
     /// The verb text that is shown when you can stop recording a message.
     /// </summary>
     [DataField]
-    public LocId StopRecordingVerb = "verb-trigger-voice-stop";
+    public LocId StopRecordingVerb = "trigger-on-voice-stop";
 
     /// <summary>
-    /// Tooltip that appears when hovering overthe stop or start recording verbs.
+    /// Tooltip that appears when hovering over the stop or start recording verbs.
     /// </summary>
     [DataField]
     public LocId? RecordingVerbMessage;
@@ -67,5 +79,5 @@ public sealed partial class TriggerOnVoiceComponent : BaseTriggerOnXComponent
     /// The verb text that is shown when you can clear a recording.
     /// </summary>
     [DataField]
-    public LocId ClearRecordingVerb = "verb-trigger-voice-clear";
+    public LocId ClearRecordingVerb = "trigger-on-voice-clear";
 }

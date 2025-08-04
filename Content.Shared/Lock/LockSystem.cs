@@ -247,12 +247,12 @@ public sealed class LockSystem : EntitySystem
     /// </summary>
     /// <param name="uid">Entity to toggle the lock state of.</param>
     /// <param name="lockComp">Entites lock comp (will be resolved)</param>
-    public void ToggleLock(EntityUid uid, LockComponent? lockComp = null)
+    public void ToggleLock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
     {
         if (IsLocked((uid, lockComp)))
-            Unlock(uid, null, lockComp);
+            Unlock(uid, user, lockComp);
         else
-            Lock(uid, null, lockComp);
+            Lock(uid, user, lockComp);
     }
 
     /// <summary>
@@ -418,9 +418,9 @@ public sealed class LockSystem : EntitySystem
         if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked != component.RequireLocked)
         {
             args.Cancel();
-            if (lockComp.Locked)
+            if (lockComp.Locked && component.Popup != null)
             {
-                _sharedPopupSystem.PopupClient(Loc.GetString("entity-storage-component-locked-message"), uid, args.User);
+                _sharedPopupSystem.PopupClient(Loc.GetString(component.Popup), uid, args.User);
             }
 
             _audio.PlayPredicted(component.AccessDeniedSound, uid, args.User);
@@ -434,17 +434,21 @@ public sealed class LockSystem : EntitySystem
 
         _activatableUI.CloseAll(uid);
     }
+
     private void OnActivateAttempt(EntityUid uid, ItemToggleRequiresLockComponent component, ref ItemToggleActivateAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked != component.RequireLocked)
+        if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.RequireLocked)
+            return;
+
+        args.Cancelled = true;
+
+        if (lockComp.Locked && component.LockedPopup != null)
         {
-            args.Cancelled = true;
-            if (lockComp.Locked)
-                _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-generic-fail",
-                ("target", Identity.Entity(uid, EntityManager))),
+            _sharedPopupSystem.PopupClient(Loc.GetString(component.LockedPopup,
+                    ("target", Identity.Entity(uid, EntityManager))),
                 uid,
                 args.User);
         }
