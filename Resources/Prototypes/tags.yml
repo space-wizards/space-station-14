@@ -31,9 +31,6 @@
   id: AppraisalTool
 
 - type: Tag
-  id: Apron
-
-- type: Tag
   id: Arrow
 
 - type: Tag
@@ -41,9 +38,6 @@
 
 - type: Tag
   id: ATVKeys
-
-- type: Tag
-  id: Backpack
 
 - type: Tag
   id: Balloon
@@ -225,6 +219,8 @@
 - type: Tag
   id: CanPilot
 
+- type: Tag
+  id: CapacitorStockPart
 
 - type: Tag
   id: CaptainSabre
@@ -939,9 +935,6 @@
   id: MimeHappyHonk
 
 - type: Tag
-  id: FakeMindShieldImplant
-
-- type: Tag
   id: MindTransferTarget
 
 - type: Tag
@@ -970,9 +963,6 @@
 
 - type: Tag
   id: Multitool
-
-- type: Tag
-  id: Mushroom
 
 - type: Tag
   id: NoBlockAnchoring
@@ -1039,9 +1029,6 @@
 
 - type: Tag
   id: PercussionInstrument
-
-- type: Tag
-  id: PetOnly
 
 - type: Tag
   id: PetWearable
@@ -1414,9 +1401,6 @@
   id: UraniumGlassShard
 
 - type: Tag
-  id: UtilityBelt
-
-- type: Tag
   id: Vegetable
 
 - type: Tag
@@ -1472,9 +1456,6 @@
 
 - type: Tag
   id: Wine
-
-- type: Tag
-  id: WireBrush
 
 - type: Tag
   id: Wirecutter

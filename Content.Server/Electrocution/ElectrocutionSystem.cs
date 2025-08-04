@@ -57,7 +57,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKey = "Electrocution";
@@ -138,7 +137,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
         if (electrified.NoWindowInTile)
         {
-            var tileRef = _turf.GetTileRef(transform.Coordinates);
+            var tileRef = transform.Coordinates.GetTileRef(EntityManager, _mapManager);
 
             if (tileRef != null)
             {

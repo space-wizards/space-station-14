@@ -1199,28 +1199,6 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
-    blackboard:
-      NavClimb: !type:Bool
-        true
-      NavInteract: !type:Bool
-        true
-      NavPry: !type:Bool
-        true
-      NavSmash: !type:Bool
-        true
-  - type: Prying
-    pryPowered: true
-    force: true
-    speedModifier: 1.5
-    useSound:
-      path: /Audio/Items/crowbar.ogg
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      200: Critical
-      250: Dead
-  - type: StaminaResistance
-    damageCoefficient: 0.40
 
 - type: entity
   name: kangaroo
@@ -2333,7 +2311,6 @@
         Brute: 5
   - type: Item
     size: Normal
-    sprite: Mobs/Animals/grenadepenguin.rsi
   - type: OnUseTimerTrigger
     delay: 10
     beepSound:
@@ -3107,10 +3084,6 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
-  - type: Access
-    tags: 
-    - NuclearOperative
-    - SyndicateAgent
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -3266,7 +3239,6 @@
   - type: Grammar
     attributes:
       gender: epicene
-  - type: SlowAccent
   - type: Tag
     tags:
     - VimPilot
@@ -3791,6 +3763,3 @@
     - DoorBumpOpener
   - type: StatusIcon # marks them as crew
     bounds: -0.5,-0.5,0.5,0.5
-  - type: NpcFactionMember
-    factions:
-    - NanoTrasen

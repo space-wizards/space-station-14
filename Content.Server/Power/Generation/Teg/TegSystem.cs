@@ -101,12 +101,7 @@ public sealed class TegSystem : EntitySystem
         else
         {
             var supplier = Comp<PowerSupplierComponent>(uid);
-
-            using (args.PushGroup(nameof(TegGeneratorComponent)))
-            {
-                args.PushMarkup(Loc.GetString("teg-generator-examine-power", ("power", supplier.CurrentSupply)));
-                args.PushMarkup(Loc.GetString("teg-generator-examine-power-max-output", ("power", supplier.MaxSupply)));
-            }
+            args.PushMarkup(Loc.GetString("teg-generator-examine-power", ("power", supplier.CurrentSupply)));
         }
     }
 
@@ -191,12 +186,8 @@ public sealed class TegSystem : EntitySystem
 
         // Turn energy (at atmos tick rate) into wattage.
         var power = electricalEnergy / args.dt;
-
         // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
-        // Also apply an exponential moving average to smooth out fluttering, as it was causing
-        // seizures.
-        supplier.MaxSupply = component.PowerSmoothingFactor * (power * component.RampFactor) +
-                             (1 - component.PowerSmoothingFactor) * supplier.MaxSupply;
+        supplier.MaxSupply = power * component.RampFactor;
 
         var circAComp = Comp<TegCirculatorComponent>(circA);
         var circBComp = Comp<TegCirculatorComponent>(circB);

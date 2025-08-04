@@ -139,11 +139,6 @@
     layers:
     - state: milkalyzer
   - type: GasAnalyzer
-  - type: ActivatableUI
-    inHandsOnly: true
-    singleUser: true
-    requireActiveHand: false
-    key: enum.GasAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
       enum.GasAnalyzerUiKey.Key:

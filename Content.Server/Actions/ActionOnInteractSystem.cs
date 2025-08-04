@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Actions;
-using Content.Shared.Actions.Components;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Interaction;
@@ -15,6 +14,7 @@ namespace Content.Server.Actions;
 public sealed class ActionOnInteractSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
@@ -60,10 +60,8 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (!TryUseCharge((uid, component)))
             return;
 
-        // not predicted as this is in server due to random
-        // TODO: use predicted random and move to shared?
-        var (actId, action, comp) = _random.Pick(options);
-        _actions.PerformAction(args.User, (actId, action), predicted: false);
+        var (actId, act) = _random.Pick(options);
+        _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
     }
 
@@ -81,13 +79,13 @@ public sealed class ActionOnInteractSystem : EntitySystem
         }
 
         // First, try entity target actions
-        if (args.Target is {} target)
+        if (args.Target != null)
         {
             var entOptions = GetValidActions<EntityTargetActionComponent>(actionEnts, args.CanReach);
             for (var i = entOptions.Count - 1; i >= 0; i--)
             {
                 var action = entOptions[i];
-                if (!_actions.ValidateEntityTarget(args.User, target, (action, action.Comp2)))
+                if (!_actions.ValidateEntityTarget(args.User, args.Target.Value, action))
                     entOptions.RemoveAt(i);
             }
 
@@ -96,19 +94,50 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 if (!TryUseCharge((uid, component)))
                     return;
 
-                var (actionId, action, _) = _random.Pick(entOptions);
-                _actions.SetEventTarget(actionId, target);
-                _actions.PerformAction(args.User, (actionId, action), predicted: false);
+                var (entActId, entAct) = _random.Pick(entOptions);
+                if (entAct.Event != null)
+                {
+                    entAct.Event.Target = args.Target.Value;
+                }
+
+                _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
                 args.Handled = true;
                 return;
             }
         }
+
+        // Then EntityWorld target actions
+        var entWorldOptions = GetValidActions<EntityWorldTargetActionComponent>(actionEnts, args.CanReach);
+        for (var i = entWorldOptions.Count - 1; i >= 0; i--)
+        {
+            var action = entWorldOptions[i];
+            if (!_actions.ValidateEntityWorldTarget(args.User, args.Target, args.ClickLocation, action))
+                entWorldOptions.RemoveAt(i);
+        }
+
+        if (entWorldOptions.Count > 0)
+        {
+            if (!TryUseCharge((uid, component)))
+                return;
+
+            var (entActId, entAct) = _random.Pick(entWorldOptions);
+            if (entAct.Event != null)
+            {
+                entAct.Event.Entity = args.Target;
+                entAct.Event.Coords = args.ClickLocation;
+            }
+
+            _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
+            args.Handled = true;
+            return;
+        }
+
         // else: try world target actions
         var options = GetValidActions<WorldTargetActionComponent>(component.ActionEntities, args.CanReach);
         for (var i = options.Count - 1; i >= 0; i--)
         {
             var action = options[i];
-            if (!_actions.ValidateWorldTarget(args.User, args.ClickLocation, (action, action.Comp2)))
+            if (!_actions.ValidateWorldTarget(args.User, args.ClickLocation, action))
                 options.RemoveAt(i);
         }
 
@@ -118,34 +147,33 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (!TryUseCharge((uid, component)))
             return;
 
-        var (actId, comp, world) = _random.Pick(options);
-        if (world.Event is {} worldEv)
+        var (actId, act) = _random.Pick(options);
+        if (act.Event != null)
         {
-            worldEv.Target = args.ClickLocation;
-            worldEv.Entity = HasComp<EntityTargetActionComponent>(actId) ? args.Target : null;
+            act.Event.Target = args.ClickLocation;
         }
 
-        _actions.PerformAction(args.User, (actId, comp), world.Event, predicted: false);
+        _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
     }
 
-    private List<Entity<ActionComponent, T>> GetValidActions<T>(List<EntityUid>? actions, bool canReach = true) where T: Component
+    private List<(EntityUid Id, T Comp)> GetValidActions<T>(List<EntityUid>? actions, bool canReach = true) where T : BaseActionComponent
     {
-        var valid = new List<Entity<ActionComponent, T>>();
+        var valid = new List<(EntityUid Id, T Comp)>();
 
         if (actions == null)
             return valid;
 
         foreach (var id in actions)
         {
-            if (_actions.GetAction(id) is not {} action ||
-                !TryComp<T>(id, out var comp) ||
+            if (!_actions.TryGetActionData(id, out var baseAction) ||
+                baseAction as T is not { } action ||
                 !_actions.ValidAction(action, canReach))
             {
                 continue;
             }
 
-            valid.Add((id, action, comp));
+            valid.Add((id, action));
         }
 
         return valid;

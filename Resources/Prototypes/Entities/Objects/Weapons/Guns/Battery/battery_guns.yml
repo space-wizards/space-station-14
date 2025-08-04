@@ -471,7 +471,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisablerPractice
-    fireCost: 62.5
+    fireCost: 50
   - type: Tag
     tags:
     - Taser
@@ -499,7 +499,7 @@
       - Belt
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
-    fireCost: 62.5
+    fireCost: 50
   - type: GuideHelp
     guides:
     - Security

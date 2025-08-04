@@ -4,27 +4,27 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Ghost;
 
-public sealed class GhostToggleSelfVisibility : LocalizedEntityCommands
+public sealed class GhostToggleSelfVisibility : IConsoleCommand
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-
-    public override string Command => "toggleselfghost";
-
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    public string Command => "toggleselfghost";
+    public string Description => "Toggles seeing your own ghost.";
+    public string Help => "toggleselfghost";
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var attachedEntity = shell.Player?.AttachedEntity;
         if (!attachedEntity.HasValue)
             return;
 
-        if (!EntityManager.HasComponent<GhostComponent>(attachedEntity))
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+        if (!entityManager.HasComponent<GhostComponent>(attachedEntity))
         {
-            shell.WriteError(Loc.GetString($"cmd-toggleselfghost-must-be-ghost"));
+            shell.WriteError("Entity must be a ghost.");
             return;
         }
 
-        if (!EntityManager.TryGetComponent(attachedEntity, out SpriteComponent? spriteComponent))
+        if (!entityManager.TryGetComponent(attachedEntity, out SpriteComponent? spriteComponent))
             return;
 
-        _sprite.SetVisible((attachedEntity.Value, spriteComponent), !spriteComponent.Visible);
+        spriteComponent.Visible = !spriteComponent.Visible;
     }
 }

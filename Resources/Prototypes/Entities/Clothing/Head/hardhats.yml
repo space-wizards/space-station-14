@@ -25,22 +25,22 @@
     radiatingBehaviourId: radiating
   - type: LightBehaviour
     behaviours:
-    - !type:FadeBehaviour
-      id: radiating
-      interpolate: Linear
-      maxDuration: 2.0
-      startValue: 3.0
-      endValue: 2.0
-      isLooped: true
-      reverseWhenFinished: true
-    - !type:PulseBehaviour
-      id: blinking
-      interpolate: Nearest
-      maxDuration: 1.0
-      minValue: 0.1
-      maxValue: 2.0
-      isLooped: true
-  - type: ToggleableVisuals
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        minValue: 0.1
+        maxValue: 2.0
+        isLooped: true
+  - type: ToggleableLightVisuals
     spriteLayer: light
     inhandVisuals:
       left:
@@ -50,7 +50,6 @@
     clothingVisuals:
       head:
       - state: on-equipped-HELMET
-  - type: ItemTogglePointLight
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ItemSlots
@@ -66,6 +65,11 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+      HeadTop : HEAD
+      HeadSide : HEAD 
 
 - type: entity
   parent: ClothingHeadHatHardhatBase

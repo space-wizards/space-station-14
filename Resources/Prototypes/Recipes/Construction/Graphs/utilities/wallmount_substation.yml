@@ -57,7 +57,7 @@
             sprite: "Objects/Power/power_cells.rsi"
             state: "medium"
           doAfter: 0.5
-        - material: Manipulator
+        - material: Capacitor
           amount: 1
           doAfter: 0.5
       - to: frame

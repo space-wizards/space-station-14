@@ -90,7 +90,7 @@ namespace Content.Client.Sandbox
 
             // Try copy entity.
             if (uid.IsValid()
-                && TryComp(uid, out MetaDataComponent? comp)
+                && EntityManager.TryGetComponent(uid, out MetaDataComponent? comp)
                 && !comp.EntityDeleted)
             {
                 if (comp.EntityPrototype == null || comp.EntityPrototype.HideSpawnMenu || comp.EntityPrototype.Abstract)

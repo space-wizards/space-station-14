@@ -47,11 +47,11 @@
           basic_icon_base-11: ""
   - type: GenericVisualizer
     visuals:
-      enum.ToggleableVisuals.Enabled:
+      enum.ToggleVisuals.Toggled:
         flame:
           True: { visible: true }
           False: { visible: false }
-  - type: ToggleableVisuals
+  - type: ToggleableLightVisuals
     spriteLayer: lighter_flame
     inhandVisuals:
       left:
@@ -164,7 +164,7 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleableVisuals.Enabled:
+      enum.ToggleVisuals.Toggled:
         flame:
           True: { visible: true }
           False: { visible: false }
@@ -188,7 +188,7 @@
     fuelConsumption: 0.01
     fuelLitCost: 0.1
     tankSafe: true
-  - type: ToggleableVisuals
+  - type: ToggleableLightVisuals
     spriteLayer: lighter_flame
     inhandVisuals:
       left:

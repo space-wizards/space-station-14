@@ -13,73 +13,72 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class OpenExplosionEui : LocalizedEntityCommands
+public sealed class OpenExplosionEui : IConsoleCommand
 {
-    [Dependency] private readonly EuiManager _euiManager = default!;
+    public string Command => "explosionui";
+    public string Description => "Opens a window for easy access to station destruction";
+    public string Help => $"Usage: {Command}";
 
-    public override string Command => "explosionui";
-
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;
         if (player == null)
         {
-            shell.WriteError(Loc.GetString($"shell-cannot-run-command-from-server"));
+            shell.WriteError("This does not work from the server console.");
             return;
         }
 
+        var eui = IoCManager.Resolve<EuiManager>();
         var ui = new SpawnExplosionEui();
-        _euiManager.OpenEui(ui, player);
+        eui.OpenEui(ui, player);
     }
 }
 
 [AdminCommand(AdminFlags.Fun)] // for the admin. Not so much for anyone else.
-public sealed class ExplosionCommand : LocalizedEntityCommands
+public sealed class ExplosionCommand : IConsoleCommand
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ExplosionSystem _explosion = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-
-    public override string Command => "explosion";
+    public string Command => "explosion";
+    public string Description => "Train go boom";
 
     // Note that if you change the arguments, you should also update the client-side SpawnExplosionWindow, as that just
     // uses this command.
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    public string Help => "Usage: explosion [intensity] [slope] [maxIntensity] [x y] [mapId] [prototypeId]";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0 || args.Length == 4 || args.Length > 7)
         {
-            shell.WriteError(Loc.GetString($"shell-wrong-arguments-number"));
+            shell.WriteError("Wrong number of arguments.");
             return;
         }
 
         if (!float.TryParse(args[0], out var intensity))
         {
-            shell.WriteError(Loc.GetString($"cmd-explosion-failed-to-parse-intensity", ("value", args[0])));
+            shell.WriteError($"Failed to parse intensity: {args[0]}");
             return;
         }
 
         float slope = 5;
         if (args.Length > 1 && !float.TryParse(args[1], out slope))
         {
-            shell.WriteError(Loc.GetString($"cmd-explosion-failed-to-parse-float", ("value", args[1])));
+            shell.WriteError($"Failed to parse float: {args[1]}");
             return;
         }
 
         float maxIntensity = 100;
         if (args.Length > 2 && !float.TryParse(args[2], out maxIntensity))
         {
-            shell.WriteError(Loc.GetString($"cmd-explosion-failed-to-parse-float", ("value", args[2])));
+            shell.WriteError($"Failed to parse float: {args[2]}");
             return;
         }
 
         float x = 0, y = 0;
         if (args.Length > 4)
         {
-            if (!float.TryParse(args[3], out x) || !float.TryParse(args[4], out y))
+            if (!float.TryParse(args[3], out x) ||
+                !float.TryParse(args[4], out y))
             {
-                shell.WriteError(Loc.GetString($"cmd-explosion-failed-to-parse-coords",
-                    ("value1", args[3]),
-                    ("value2", args[4])));
+                shell.WriteError($"Failed to parse coordinates: {(args[3], args[4])}");
                 return;
             }
         }
@@ -89,7 +88,7 @@ public sealed class ExplosionCommand : LocalizedEntityCommands
         {
             if (!int.TryParse(args[5], out var parsed))
             {
-                shell.WriteError(Loc.GetString($"cmd-explosion-failed-to-parse-map-id", ("value", args[5])));
+                shell.WriteError($"Failed to parse map ID: {args[5]}");
                 return;
             }
             coords = new MapCoordinates(new Vector2(x, y), new(parsed));
@@ -97,39 +96,42 @@ public sealed class ExplosionCommand : LocalizedEntityCommands
         else
         {
             // attempt to find the player's current position
-            if (!EntityManager.TryGetComponent(shell.Player?.AttachedEntity, out TransformComponent? xform))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            if (!entMan.TryGetComponent(shell.Player?.AttachedEntity, out TransformComponent? xform))
             {
-                shell.WriteError(Loc.GetString($"cmd-explosion-need-coords-explicit"));
+                shell.WriteError($"Failed get default coordinates/map via player's transform. Need to specify explicitly.");
                 return;
             }
 
             if (args.Length > 4)
                 coords = new MapCoordinates(new Vector2(x, y), xform.MapID);
             else
-                coords = _transform.GetMapCoordinates(shell.Player.AttachedEntity.Value, xform: xform);
+                coords = entMan.System<TransformSystem>().GetMapCoordinates(shell.Player.AttachedEntity.Value, xform: xform);
         }
 
         ExplosionPrototype? type;
+        var protoMan = IoCManager.Resolve<IPrototypeManager>();
         if (args.Length > 6)
         {
-            if (!_prototypeManager.TryIndex(args[6], out type))
+            if (!protoMan.TryIndex(args[6], out type))
             {
-                shell.WriteError(Loc.GetString($"cmd-explosion-unknown-prototype", ("value", args[6])));
+                shell.WriteError($"Unknown explosion prototype: {args[6]}");
                 return;
             }
         }
-        else if (!_prototypeManager.TryIndex(ExplosionSystem.DefaultExplosionPrototypeId, out type))
+        else if (!protoMan.TryIndex(ExplosionSystem.DefaultExplosionPrototypeId, out type))
         {
             // no prototype was specified, so lets default to whichever one was defined first
-            type = _prototypeManager.EnumeratePrototypes<ExplosionPrototype>().FirstOrDefault();
+            type = protoMan.EnumeratePrototypes<ExplosionPrototype>().FirstOrDefault();
 
             if (type == null)
             {
-                shell.WriteError(Loc.GetString($"cmd-explosion-no-prototypes"));
+                shell.WriteError($"Prototype manager has no explosion prototypes?");
                 return;
             }
         }
 
-        _explosion.QueueExplosion(coords, type.ID, intensity, slope, maxIntensity, null);
+        var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+        sysMan.GetEntitySystem<ExplosionSystem>().QueueExplosion(coords, type.ID, intensity, slope, maxIntensity, null);
     }
 }

@@ -4,7 +4,6 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Components;
 using Content.Shared.Construction.Components;
 using Content.Shared.NodeContainer;
 using JetBrains.Annotations;
@@ -98,27 +97,27 @@ public sealed class PipeRestrictOverlapSystem : EntitySystem
 
     public bool PipeNodesOverlap(Entity<NodeContainerComponent, TransformComponent> ent, Entity<NodeContainerComponent, TransformComponent> other)
     {
-        var entDirsAndLayers = GetAllDirectionsAndLayers(ent).ToList();
-        var otherDirsAndLayers = GetAllDirectionsAndLayers(other).ToList();
+        var entDirs = GetAllDirections(ent).ToList();
+        var otherDirs = GetAllDirections(other).ToList();
 
-        foreach (var (dir, layer) in entDirsAndLayers)
+        foreach (var dir in entDirs)
         {
-            foreach (var (otherDir, otherLayer) in otherDirsAndLayers)
+            foreach (var otherDir in otherDirs)
             {
-                if ((dir & otherDir) != 0 && layer == otherLayer)
+                if ((dir & otherDir) != 0)
                     return true;
             }
         }
 
         return false;
 
-        IEnumerable<(PipeDirection, AtmosPipeLayer)> GetAllDirectionsAndLayers(Entity<NodeContainerComponent, TransformComponent> pipe)
+        IEnumerable<PipeDirection> GetAllDirections(Entity<NodeContainerComponent, TransformComponent> pipe)
         {
             foreach (var node in pipe.Comp1.Nodes.Values)
             {
                 // we need to rotate the pipe manually like this because the rotation doesn't update for pipes that are unanchored.
                 if (node is PipeNode pipeNode)
-                    yield return (pipeNode.OriginalPipeDirection.RotatePipeDirection(pipe.Comp2.LocalRotation), pipeNode.CurrentPipeLayer);
+                    yield return pipeNode.OriginalPipeDirection.RotatePipeDirection(pipe.Comp2.LocalRotation);
             }
         }
     }

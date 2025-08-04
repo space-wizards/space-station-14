@@ -74,8 +74,8 @@
   components:
   - type: Vape
     damage:
-      types:
-        Heat: 2
+      groups:
+        Burn: 2
   - type: SolutionContainerManager
     solutions:
       smokable:

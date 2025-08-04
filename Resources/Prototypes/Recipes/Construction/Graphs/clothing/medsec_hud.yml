@@ -27,7 +27,7 @@
                 sprite: Objects/Devices/communication.rsi
                 state: walkietalkie
               doAfter: 5
-            - material: Manipulator
+            - material: Capacitor
               amount: 2
               doAfter: 5
     - node: medsecHud

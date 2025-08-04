@@ -4,6 +4,7 @@
   name: maintenance wall closet
   description: It's a storage unit.
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -15,6 +16,7 @@
   parent: BaseWallCloset
   description: It's a storage unit for emergency breath masks and O2 tanks.
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: emergency
     stateDoorOpen: emergency_open
@@ -26,6 +28,7 @@
   name: emergency nitrogen wall closet
   description: It's full of life-saving equipment. Assuming, that is, that you breathe nitrogen.
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: n2
     stateDoorOpen: n2_open
@@ -37,6 +40,7 @@
   parent: BaseWallCloset
   description: It's a storage unit for fire-fighting supplies.
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: fire
     stateDoorOpen: fire_open
@@ -48,6 +52,7 @@
   name: blue wall closet
   description: "A wardrobe packed with stylish blue clothing."
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -59,6 +64,7 @@
   name: pink wall closet
   description: "A wardrobe packed with fabulous pink clothing."
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -70,6 +76,7 @@
   name: black wall closet
   description: "A wardrobe packed with stylish black clothing."
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -81,6 +88,7 @@
   name: green wall closet
   description: "A wardrobe packed with stylish green clothing."
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -91,6 +99,7 @@
   parent: BaseWallCloset
   name: prison wall closet
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -102,6 +111,7 @@
   name: yellow wall closet
   description: "A wardrobe packed with stylish yellow clothing."
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -113,6 +123,7 @@
   name: white wall closet
   description: "A wardrobe packed with stylish white clothing."
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -124,6 +135,7 @@
   name: grey wall closet
   description: "A wardrobe packed with a tide of grey clothing."
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -135,6 +147,7 @@
   name: mixed wall closet
   description: "A wardrobe packed with a mix of colorful clothing."
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -145,6 +158,7 @@
   parent: BaseWallCloset
   name: atmospherics wall closet
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -155,85 +169,10 @@
   parent: BaseWallLocker
   name: medical wall locker
   components:
+  - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: med
     stateDoorOpen: med_open
     stateDoorClosed: med_door
   - type: AccessReader
     access: [["Medical"]]
-
-- type: entity
-  parent: BaseWallLocker
-  id: LockerWallEvacRepair
-  name: emergency shuttle emergency wall locker
-  description: It's emergencies all the way down.
-  components:
-  - type: EntityStorageVisuals
-    stateBaseClosed: eng
-    stateDoorOpen: eng_open
-    stateDoorClosed: eng_evac_door
-  - type: AccessReader
-    access: [["Engineering"]]
-
-- type: entity
-  parent: [ GenpopBase , BaseWallLocker ]
-  id: LockerWallBasePrisoner
-  name: prisoner wall closet
-  description: It's a secure locker for an inmate's personal belongings during their time in prison.
-  suffix: 1
-
-- type: entity
-  parent: LockerWallBasePrisoner
-  id: LockerWallPrisoner2
-  suffix: 2
-  components:
-  - type: EntityStorageVisuals
-    stateDoorClosed: genpop_door_2
-
-- type: entity
-  parent: LockerWallBasePrisoner
-  id: LockerWallPrisoner3
-  suffix: 3
-  components:
-  - type: EntityStorageVisuals
-    stateDoorClosed: genpop_door_3
-
-- type: entity
-  parent: LockerWallBasePrisoner
-  id: LockerWallPrisoner4
-  suffix: 4
-  components:
-  - type: EntityStorageVisuals
-    stateDoorClosed: genpop_door_4
-
-- type: entity
-  parent: LockerWallBasePrisoner
-  id: LockerWallPrisoner5
-  suffix: 5
-  components:
-  - type: EntityStorageVisuals
-    stateDoorClosed: genpop_door_5
-
-- type: entity
-  parent: LockerWallBasePrisoner
-  id: LockerWallPrisoner6
-  suffix: 6
-  components:
-  - type: EntityStorageVisuals
-    stateDoorClosed: genpop_door_6
-
-- type: entity
-  parent: LockerWallBasePrisoner
-  id: LockerWallPrisoner7
-  suffix: 7
-  components:
-  - type: EntityStorageVisuals
-    stateDoorClosed: genpop_door_7
-
-- type: entity
-  parent: LockerWallBasePrisoner
-  id: LockerWallPrisoner8
-  suffix: 8
-  components:
-  - type: EntityStorageVisuals
-    stateDoorClosed: genpop_door_8

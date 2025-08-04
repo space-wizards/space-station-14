@@ -1,18 +1,18 @@
 using Content.Client.Weapons.Ranged.Systems;
 using Robust.Shared.Console;
 
-namespace Content.Client.Weapons.Ranged.Commands;
+namespace Content.Client.Weapons.Ranged;
 
-public sealed class ShowSpreadCommand : LocalizedEntityCommands
+public sealed class ShowSpreadCommand : IConsoleCommand
 {
-    [Dependency] private readonly GunSystem _gunSystem = default!;
-
-    public override string Command => "showgunspread";
-
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    public string Command => "showgunspread";
+    public string Description => $"Shows gun spread overlay for debugging";
+    public string Help => $"{Command}";
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        _gunSystem.SpreadOverlay ^= true;
+        var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GunSystem>();
+        system.SpreadOverlay ^= true;
 
-        shell.WriteLine(Loc.GetString($"cmd-showgunspread-status", ("status", _gunSystem.SpreadOverlay)));
+        shell.WriteLine($"Set spread overlay to {system.SpreadOverlay}");
     }
 }

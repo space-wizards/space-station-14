@@ -782,7 +782,6 @@
     - state: idcluwne
   - type: IdCard
     jobTitle: job-title-cluwne
-    jobIcon: JobIconCluwne
   - type: Unremoveable
 
 - type: entity

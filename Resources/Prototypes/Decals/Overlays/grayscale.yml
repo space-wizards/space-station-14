@@ -1,4 +1,4 @@
-- type: decal
+﻿- type: decal
   id: FullTileOverlayGreyscale
   tags: ["station", "overlay"]
   defaultCustomColor: true

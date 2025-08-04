@@ -54,7 +54,6 @@
     - Electrolysis
   - type: Sprite
     sprite: Structures/Machines/Medical/electrolysis.rsi
-    noRot: true
     offset: "0.0,0.4"
     layers:
     - state: base
@@ -94,7 +93,6 @@
     - Centrifuge
   - type: Sprite
     sprite: Structures/Machines/Medical/centrifuge.rsi
-    noRot: true
     offset: "0.0,0.4"
     layers:
     - state: base

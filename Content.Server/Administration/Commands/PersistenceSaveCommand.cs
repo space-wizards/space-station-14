@@ -9,15 +9,17 @@ using Robust.Shared.Utility;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Server)]
-public sealed class PersistenceSave : LocalizedEntityCommands
+public sealed class PersistenceSave : IConsoleCommand
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
+    [Dependency] private readonly IEntitySystemManager _system = default!;
+    [Dependency] private readonly IMapManager _map = default!;
 
-    public override string Command => "persistencesave";
+    public string Command => "persistencesave";
+    public string Description => "Saves server data to a persistence file to be loaded later.";
+    public string Help => "persistencesave [mapId] [filePath - default: game.map (CCVar) ]";
 
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length < 1 || args.Length > 2)
         {
@@ -45,7 +47,8 @@ public sealed class PersistenceSave : LocalizedEntityCommands
             return;
         }
 
-        _mapLoader.TrySaveMap(mapId, new ResPath(saveFilePath));
+        var mapLoader = _system.GetEntitySystem<MapLoaderSystem>();
+        mapLoader.TrySaveMap(mapId, new ResPath(saveFilePath));
         shell.WriteLine(Loc.GetString("cmd-savemap-success"));
     }
 }

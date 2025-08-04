@@ -2,18 +2,19 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Medical.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Temperature.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
-using Content.Shared.Body.Components;
+using Content.Shared.UserInterface;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
@@ -25,14 +26,11 @@ using Content.Shared.Interaction;
 using Content.Shared.Medical.Cryogenics;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Power;
-using Content.Shared.Tools;
-using Content.Shared.Tools.Systems;
-using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Server.Medical;
 
@@ -52,8 +50,6 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-
-    private static readonly ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
 
     public override void Initialize()
     {
@@ -116,7 +112,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
                 }
 
                 var solutionToInject = _solutionContainerSystem.SplitSolution(containerSolution.Value, cryoPod.BeakerTransferAmount);
-                _bloodstreamSystem.TryAddToChemicals((patient.Value, bloodstream), solutionToInject);
+                _bloodstreamSystem.TryAddToChemicals(patient.Value, solutionToInject, bloodstream);
                 _reactiveSystem.DoEntityReaction(patient.Value, solutionToInject, ReactionMethod.Injection);
             }
         }
@@ -215,7 +211,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         if (args.Handled || !entity.Comp.Locked || entity.Comp.BodyContainer.ContainedEntity == null)
             return;
 
-        args.Handled = _toolSystem.UseTool(args.Used, args.User, entity.Owner, entity.Comp.PryDelay, PryingQuality, new CryoPodPryFinished());
+        args.Handled = _toolSystem.UseTool(args.Used, args.User, entity.Owner, entity.Comp.PryDelay, "Prying", new CryoPodPryFinished());
     }
 
     private void OnExamined(Entity<CryoPodComponent> entity, ref ExaminedEvent args)

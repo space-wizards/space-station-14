@@ -107,7 +107,7 @@
     capacity: 10
   - type: Sprite
     slayers:
-    - state: base
+    - state: red
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
@@ -122,7 +122,6 @@
       - state: inhand-left-mag
       right:
       - state: inhand-right-mag
-      - state: inhand-right-stripe
 
 - type: entity
   id: MagazinePistolCaselessRiflePractice
@@ -135,12 +134,10 @@
     capacity: 10
   - type: Sprite
     layers:
-    - state: base
+    - state: practice
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-    - state: stripe
-      color: "#dbdbdb"
   - type: MagazineVisuals
     magState: mag
     steps: 6
@@ -151,11 +148,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#dbdbdb"
+        color: "#ea5800"
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#dbdbdb"
+        color: "#ea5800"
 
 - type: entity
   id: MagazineCaselessRifle
@@ -166,7 +163,7 @@
     proto: CartridgeCaselessRifle
   - type: Sprite
     layers:
-    - state: base
+    - state: red
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
@@ -174,8 +171,12 @@
     inhandVisuals:
       left:
       - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#9b0000"
       right:
       - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#9b0000"
 
 - type: entity
   id: MagazineCaselessRiflePractice
@@ -186,22 +187,20 @@
     proto: CartridgeCaselessRiflePractice
   - type: Sprite
     layers:
-    - state: base
+    - state: practice
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-    - state: stripe
-      color: "#dbdbdb"
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#dbdbdb"
+        color: "#ea5800"
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#dbdbdb"
+        color: "#ea5800"
 
 - type: entity
   id: MagazineCaselessRifleShort
@@ -213,7 +212,7 @@
     capacity: 20
   - type: Sprite
     layers:
-    - state: base
+    - state: red
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
@@ -221,8 +220,12 @@
     inhandVisuals:
       left:
       - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#9b0000"
       right:
       - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#9b0000"
 
 - type: entity
   id: MagazineCaselessRifleShortPractice
@@ -234,19 +237,17 @@
     capacity: 20
   - type: Sprite
     layers:
-    - state: base
+    - state: practice
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-    - state: stripe
-      color: "#dbdbdb"
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#dbdbdb"
+        color: "#ea5800"
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#dbdbdb"
+        color: "#ea5800"

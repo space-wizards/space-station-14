@@ -9,6 +9,7 @@ public sealed class DeliveryVisualizerSystem : VisualizerSystem<DeliveryComponen
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private static readonly ProtoId<JobIconPrototype> UnknownIcon = "JobIconUnknown";
 
@@ -24,11 +25,11 @@ public sealed class DeliveryVisualizerSystem : VisualizerSystem<DeliveryComponen
 
         if (!_prototype.TryIndex<JobIconPrototype>(job, out var icon))
         {
-            SpriteSystem.LayerSetTexture((uid, args.Sprite), DeliveryVisualLayers.JobStamp, SpriteSystem.Frame0(_prototype.Index(UnknownIcon).Icon));
+            args.Sprite.LayerSetTexture(DeliveryVisualLayers.JobStamp, _sprite.Frame0(_prototype.Index("JobIconUnknown")));
             return;
         }
 
-        SpriteSystem.LayerSetTexture((uid, args.Sprite), DeliveryVisualLayers.JobStamp, SpriteSystem.Frame0(icon.Icon));
+        args.Sprite.LayerSetTexture(DeliveryVisualLayers.JobStamp, _sprite.Frame0(icon.Icon));
     }
 }
 

@@ -9,7 +9,7 @@ namespace Content.Shared.StoreDiscount.Components;
 /// <summary>
 /// Partner-component for adding discounts functionality to StoreSystem using StoreDiscountSystem.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class StoreDiscountComponent : Component
 {
     /// <summary>

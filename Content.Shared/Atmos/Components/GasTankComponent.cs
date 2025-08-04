@@ -44,7 +44,7 @@ public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     /// <summary>
     ///     Distributed pressure.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float OutputPressure = DefaultOutputPressure;
 
     /// <summary>

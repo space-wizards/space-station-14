@@ -1,5 +1,6 @@
 using Content.Shared.Flash;
 using Content.Shared.Flash.Components;
+using Content.Shared.StatusEffect;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;

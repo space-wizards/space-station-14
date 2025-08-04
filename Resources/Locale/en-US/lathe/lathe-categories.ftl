@@ -4,7 +4,7 @@ lathe-category-clothing = Clothing
 lathe-category-lights = Lights
 lathe-category-machines = Machines
 lathe-category-parts = Parts
-lathe-category-tiles = Tiles
+lathe-category-robotics = Robotics
 lathe-category-tools = Tools
 lathe-category-weapons = Weapons
 
@@ -23,20 +23,10 @@ lathe-category-security = Security
 lathe-category-service = Service
 lathe-category-supply = Supply
 
-# Cutter
-lathe-category-concrete = Concrete
-lathe-category-dark = Dark
-lathe-category-maints = Maints
-lathe-category-steel = Steel
-lathe-category-white = White
-lathe-category-wood = Wood
-
 # Science
 lathe-category-mechs = Mechs
-lathe-category-modules = Modules
-lathe-category-robotics = Robotics
 
-# Security TechFab
+# Sec
 lathe-category-ammo = Ammo
 lathe-category-boxes = Boxes
 lathe-category-magazines = Magazines

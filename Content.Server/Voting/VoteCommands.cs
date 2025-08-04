@@ -8,20 +8,23 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Voting;
+using Robust.Server;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Voting
 {
     [AnyCommand]
-    public sealed class CreateVoteCommand : LocalizedEntityCommands
+    public sealed class CreateVoteCommand : IConsoleCommand
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IVoteManager _voteManager = default!;
 
-        public override string Command => "createvote";
+        public string Command => "createvote";
+        public string Description => Loc.GetString("cmd-createvote-desc");
+        public string Help => Loc.GetString("cmd-createvote-help");
 
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1 && args[0] != StandardVoteType.Votekick.ToString())
             {
@@ -41,17 +44,19 @@ namespace Content.Server.Voting
                 return;
             }
 
-            if (shell.Player != null && !_voteManager.CanCallVote(shell.Player, type))
+            var mgr = IoCManager.Resolve<IVoteManager>();
+
+            if (shell.Player != null && !mgr.CanCallVote(shell.Player, type))
             {
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} failed to start {type.ToString()} vote");
                 shell.WriteError(Loc.GetString("cmd-createvote-cannot-call-vote-now"));
                 return;
             }
 
-            _voteManager.CreateStandardVote(shell.Player, type, args.Skip(1).ToArray());
+            mgr.CreateStandardVote(shell.Player, type, args.Skip(1).ToArray());
         }
 
-        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length == 1)
             {
@@ -63,7 +68,7 @@ namespace Content.Server.Voting
         }
     }
 
-    [AdminCommand(AdminFlags.Round)]
+    [AdminCommand(AdminFlags.Moderator)]
     public sealed class CreateCustomCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IVoteManager _voteManager = default!;
@@ -72,12 +77,16 @@ namespace Content.Server.Voting
         [Dependency] private readonly VoteWebhooks _voteWebhooks = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
+        private ISawmill _sawmill = default!;
+
         private const int MaxArgCount = 10;
 
         public override string Command => "customvote";
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            _sawmill = Logger.GetSawmill("vote");
+
             if (args.Length < 3 || args.Length > MaxArgCount)
             {
                 shell.WriteError(Loc.GetString("shell-need-between-arguments",("lower", 3), ("upper", 10)));
@@ -145,13 +154,13 @@ namespace Content.Server.Voting
     }
 
     [AnyCommand]
-    public sealed class VoteCommand : LocalizedEntityCommands
+    public sealed class VoteCommand : IConsoleCommand
     {
-        [Dependency] private readonly IVoteManager _voteManager = default!;
+        public string Command => "vote";
+        public string Description => Loc.GetString("cmd-vote-desc");
+        public string Help => Loc.GetString("cmd-vote-help");
 
-        public override string Command => "vote";
-
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player == null)
             {
@@ -177,7 +186,8 @@ namespace Content.Server.Voting
                 return;
             }
 
-            if (!_voteManager.TryGetVote(voteId, out var vote))
+            var mgr = IoCManager.Resolve<IVoteManager>();
+            if (!mgr.TryGetVote(voteId, out var vote))
             {
                 shell.WriteError(Loc.GetString("cmd-vote-on-execute-error-invalid-vote"));
                 return;
@@ -203,38 +213,43 @@ namespace Content.Server.Voting
     }
 
     [AnyCommand]
-    public sealed class ListVotesCommand : LocalizedEntityCommands
+    public sealed class ListVotesCommand : IConsoleCommand
     {
-        [Dependency] private readonly IVoteManager _voteManager = default!;
+        public string Command => "listvotes";
+        public string Description => Loc.GetString("cmd-listvotes-desc");
+        public string Help => Loc.GetString("cmd-listvotes-help");
 
-        public override string Command => "listvotes";
-
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            foreach (var vote in _voteManager.ActiveVotes)
+            var mgr = IoCManager.Resolve<IVoteManager>();
+
+            foreach (var vote in mgr.ActiveVotes)
             {
                 shell.WriteLine($"[{vote.Id}] {vote.InitiatorText}: {vote.Title}");
             }
         }
     }
 
-    [AdminCommand(AdminFlags.Round)]
-    public sealed class CancelVoteCommand : LocalizedEntityCommands
+    [AdminCommand(AdminFlags.Moderator)]
+    public sealed class CancelVoteCommand : IConsoleCommand
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IVoteManager _voteManager = default!;
 
-        public override string Command => "cancelvote";
+        public string Command => "cancelvote";
+        public string Description => Loc.GetString("cmd-cancelvote-desc");
+        public string Help => Loc.GetString("cmd-cancelvote-help");
 
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var mgr = IoCManager.Resolve<IVoteManager>();
+
             if (args.Length < 1)
             {
                 shell.WriteError(Loc.GetString("cmd-cancelvote-error-missing-vote-id"));
                 return;
             }
 
-            if (!int.TryParse(args[0], out var id) || !_voteManager.TryGetVote(id, out var vote))
+            if (!int.TryParse(args[0], out var id) || !mgr.TryGetVote(id, out var vote))
             {
                 shell.WriteError(Loc.GetString("cmd-cancelvote-error-invalid-vote-id"));
                 return;
@@ -247,11 +262,12 @@ namespace Content.Server.Voting
             vote.Cancel();
         }
 
-        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
+            var mgr = IoCManager.Resolve<IVoteManager>();
             if (args.Length == 1)
             {
-                var options = _voteManager.ActiveVotes
+                var options = mgr.ActiveVotes
                     .OrderBy(v => v.Id)
                     .Select(v => new CompletionOption(v.Id.ToString(), v.Title));
 

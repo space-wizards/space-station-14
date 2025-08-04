@@ -29,8 +29,6 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: eyes
       shader: unshaded
-  - type: TypingIndicator
-    proto: regal
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -92,9 +90,9 @@
     makeSentient: true
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-antagonist-rules
+    rules: ghost-role-information-freeagent-rules
     mindRoles:
-    - MindRoleGhostRoleSoloAntagonist
+    - MindRoleGhostRoleFreeAgent
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -315,40 +313,35 @@
     IngotGold1: 5 #loot
 
 - type: entity
-  parent: BaseAction
   id: ActionRatKingRaiseArmy
   name: Raise Army
   description: Spend some hunger to summon an allied rat to help defend you.
   components:
-  - type: Action
+  - type: InstantAction
     useDelay: 4
     icon:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: ratKingArmy
-  - type: InstantAction
     event: !type:RatKingRaiseArmyActionEvent
 
 - type: entity
-  parent: BaseAction
   id: ActionRatKingDomain
   name: Rat King's Domain
   description: Spend some hunger to release a cloud of ammonia into the air.
   components:
-  - type: Action
+  - type: InstantAction
     useDelay: 6
     icon:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: ratKingDomain
-  - type: InstantAction
     event: !type:RatKingDomainActionEvent
 
 - type: entity
-  parent: BaseAction
   id: ActionRatKingOrderStay
   name: Stay
   description: Command your army to stand in place.
   components:
-  - type: Action
+  - type: InstantAction
     useDelay: 1
     icon:
       sprite: Interface/Actions/actions_rat_king.rsi
@@ -356,18 +349,17 @@
     iconOn:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: stay
+    event:
+      !type:RatKingOrderActionEvent
+        type: Stay
     priority: 5
-  - type: InstantAction
-    event: !type:RatKingOrderActionEvent
-      type: Stay
 
 - type: entity
-  parent: BaseAction
   id: ActionRatKingOrderFollow
   name: Follow
   description: Command your army to follow you around.
   components:
-  - type: Action
+  - type: InstantAction
     useDelay: 1
     icon:
       sprite: Interface/Actions/actions_rat_king.rsi
@@ -375,18 +367,17 @@
     iconOn:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: follow
-    priority: 6
-  - type: InstantAction
-    event: !type:RatKingOrderActionEvent
+    event:
+      !type:RatKingOrderActionEvent
       type: Follow
+    priority: 6
 
 - type: entity
-  parent: BaseAction
   id: ActionRatKingOrderCheeseEm
   name: Cheese 'Em
   description: Command your army to attack whoever you point at.
   components:
-  - type: Action
+  - type: InstantAction
     useDelay: 1
     icon:
       sprite: Interface/Actions/actions_rat_king.rsi
@@ -394,18 +385,17 @@
     iconOn:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: attack
-    priority: 7
-  - type: InstantAction
-    event: !type:RatKingOrderActionEvent
+    event:
+      !type:RatKingOrderActionEvent
       type: CheeseEm
+    priority: 7
 
 - type: entity
-  parent: BaseAction
   id: ActionRatKingOrderLoose
   name: Loose
   description: Command your army to act at their own will.
   components:
-  - type: Action
+  - type: InstantAction
     useDelay: 1
     icon:
       sprite: Interface/Actions/actions_rat_king.rsi
@@ -413,8 +403,7 @@
     iconOn:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: loose
-    priority: 8
-  - type: InstantAction
     event:
       !type:RatKingOrderActionEvent
       type: Loose
+    priority: 8

@@ -1,6 +1,6 @@
 using Content.Shared.Inventory;
 
-namespace Content.Shared.Storage.Components;
+namespace Content.Server.Storage.Components;
 
 /// <summary>
 /// Applies an ongoing pickup area around the attached entity.

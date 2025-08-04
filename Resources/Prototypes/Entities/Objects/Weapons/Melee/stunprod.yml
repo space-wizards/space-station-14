@@ -8,7 +8,7 @@
     sprite: Objects/Weapons/Melee/stunprod.rsi
     layers:
     - state: stunprod_off
-      map: [ "enum.ToggleableVisuals.Layer" ]
+      map: [ "enum.ToggleVisuals.Layer" ]
   - type: ItemToggle
     soundActivate:
       collection: sparks
@@ -59,8 +59,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleableVisuals.Enabled:
-        enum.ToggleableVisuals.Layer:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
           True: {state: stunprod_on}
           False: {state: stunprod_off}
   - type: StaticPrice

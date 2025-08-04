@@ -8,8 +8,6 @@ namespace Content.Client.Nutrition.EntitySystems;
 /// </summary>
 public sealed class InfantSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -23,7 +21,7 @@ public sealed class InfantSystem : EntitySystem
             return;
 
         component.DefaultScale = sprite.Scale;
-        _sprite.SetScale((uid, sprite), component.VisualScale);
+        sprite.Scale = component.VisualScale;
     }
 
     private void OnShutdown(EntityUid uid, InfantComponent component, ComponentShutdown args)
@@ -31,6 +29,6 @@ public sealed class InfantSystem : EntitySystem
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        _sprite.SetScale((uid, sprite), component.DefaultScale);
+        sprite.Scale = component.DefaultScale;
     }
 }

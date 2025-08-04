@@ -24,8 +24,6 @@ namespace Content.IntegrationTests.Tests.Minds;
 [TestFixture]
 public sealed partial class MindTests
 {
-    private static readonly ProtoId<DamageTypePrototype> BluntDamageType = "Blunt";
-
     [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
@@ -146,7 +144,7 @@ public sealed partial class MindTests
         await server.WaitAssertion(() =>
         {
             var damageable = entMan.GetComponent<DamageableComponent>(entity);
-            if (!protoMan.TryIndex(BluntDamageType, out var prototype))
+            if (!protoMan.TryIndex<DamageTypePrototype>("Blunt", out var prototype))
             {
                 return;
             }

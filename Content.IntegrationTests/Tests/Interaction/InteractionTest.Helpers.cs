@@ -120,18 +120,18 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task DeleteHeldEntity()
     {
-        if (HandSys.GetActiveItem((ToServer(Player), Hands)) is { } held)
+        if (Hands.ActiveHandEntity is { } held)
         {
             await Server.WaitPost(() =>
             {
-                Assert.That(HandSys.TryDrop((SEntMan.GetEntity(Player), Hands), null, false, true));
+                Assert.That(HandSys.TryDrop(SEntMan.GetEntity(Player), null, false, true, Hands));
                 SEntMan.DeleteEntity(held);
                 SLogger.Debug($"Deleting held entity");
             });
         }
 
         await RunTicks(1);
-        Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.Null);
+        Assert.That(Hands.ActiveHandEntity, Is.Null);
     }
 
     /// <summary>
@@ -152,7 +152,7 @@ public abstract partial class InteractionTest
     /// <param name="enableToggleable">Whether or not to automatically enable any toggleable items</param>
     protected async Task<NetEntity> PlaceInHands(EntitySpecifier entity, bool enableToggleable = true)
     {
-        if (Hands.ActiveHandId == null)
+        if (Hands.ActiveHand == null)
         {
             Assert.Fail("No active hand");
             return default;
@@ -169,7 +169,7 @@ public abstract partial class InteractionTest
         {
             var playerEnt = SEntMan.GetEntity(Player);
 
-            Assert.That(HandSys.TryPickup(playerEnt, item, Hands.ActiveHandId, false, false, false, Hands));
+            Assert.That(HandSys.TryPickup(playerEnt, item, Hands.ActiveHand, false, false, Hands));
 
             // turn on welders
             if (enableToggleable && SEntMan.TryGetComponent(item, out itemToggle) && !itemToggle.Activated)
@@ -179,7 +179,7 @@ public abstract partial class InteractionTest
         });
 
         await RunTicks(1);
-        Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.EqualTo(item));
+        Assert.That(Hands.ActiveHandEntity, Is.EqualTo(item));
         if (enableToggleable && itemToggle != null)
             Assert.That(itemToggle.Activated);
 
@@ -193,7 +193,7 @@ public abstract partial class InteractionTest
     {
         entity ??= Target;
 
-        if (Hands.ActiveHandId == null)
+        if (Hands.ActiveHand == null)
         {
             Assert.Fail("No active hand");
             return;
@@ -212,11 +212,11 @@ public abstract partial class InteractionTest
 
         await Server.WaitPost(() =>
         {
-            Assert.That(HandSys.TryPickup(ToServer(Player), uid.Value, Hands.ActiveHandId, false, false, false, Hands, item));
+            Assert.That(HandSys.TryPickup(SEntMan.GetEntity(Player), uid.Value, Hands.ActiveHand, false, false, Hands, item));
         });
 
         await RunTicks(1);
-        Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.EqualTo(uid));
+        Assert.That(Hands.ActiveHandEntity, Is.EqualTo(uid));
     }
 
     /// <summary>
@@ -224,7 +224,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task Drop()
     {
-        if (HandSys.GetActiveItem((ToServer(Player), Hands)) == null)
+        if (Hands.ActiveHandEntity == null)
         {
             Assert.Fail("Not holding any entity to drop");
             return;
@@ -232,11 +232,11 @@ public abstract partial class InteractionTest
 
         await Server.WaitPost(() =>
         {
-            Assert.That(HandSys.TryDrop((ToServer(Player), Hands)));
+            Assert.That(HandSys.TryDrop(SEntMan.GetEntity(Player), handsComp: Hands));
         });
 
         await RunTicks(1);
-        Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.Null);
+        Assert.That(Hands.ActiveHandEntity, Is.Null);
     }
 
     #region Interact
@@ -246,7 +246,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task UseInHand()
     {
-        if (HandSys.GetActiveItem((ToServer(Player), Hands)) is not { } target)
+        if (Hands.ActiveHandEntity is not { } target)
         {
             Assert.Fail("Not holding any entity");
             return;
@@ -791,7 +791,7 @@ public abstract partial class InteractionTest
             gridUid = gridEnt;
             gridComp = gridEnt.Comp;
             var gridXform = SEntMan.GetComponent<TransformComponent>(gridUid);
-            Transform.SetWorldPosition((gridUid, gridXform), pos.Position);
+            Transform.SetWorldPosition(gridXform, pos.Position);
             MapSystem.SetTile((gridUid, gridComp), SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
 
             if (!MapMan.TryFindGridAt(pos, out _, out _))

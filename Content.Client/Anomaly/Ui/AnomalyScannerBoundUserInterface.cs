@@ -20,7 +20,6 @@ public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
 
         _menu = new AnomalyScannerMenu();
         _menu.OpenCentered();
-        _menu.OnClose += Close;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

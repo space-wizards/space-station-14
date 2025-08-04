@@ -10,7 +10,7 @@ namespace Content.Server.GhostKick;
 
 // Handles logic for "ghost kicking".
 // Basically we boot the client off the server without telling them, so the game shits itself.
-// Hilarious, isn't it?
+// Hilariously isn't it?
 
 public sealed class GhostKickManager
 {
@@ -45,30 +45,32 @@ public sealed class GhostKickManager
 }
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class GhostKickCommand : LocalizedEntityCommands
+public sealed class GhostKickCommand : IConsoleCommand
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly GhostKickManager _ghostKick = default!;
+    public string Command => "ghostkick";
+    public string Description => "Kick a client from the server as if their network just dropped.";
+    public string Help => "Usage: ghostkick <Player> [Reason]";
 
-    public override string Command => "ghostkick";
-
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length < 1)
         {
-            shell.WriteError(Loc.GetString($"shell-need-exactly-one-argument"));
+            shell.WriteError("Need at least one argument");
             return;
         }
 
         var playerName = args[0];
-        var reason = args.Length > 1 ? args[1] : Loc.GetString($"cmd-ghostkick-default-reason");
+        var reason = args.Length > 1 ? args[1] : "Ghost kicked by console";
 
-        if (!_playerManager.TryGetSessionByUsername(playerName, out var player))
+        var players = IoCManager.Resolve<IPlayerManager>();
+        var ghostKick = IoCManager.Resolve<GhostKickManager>();
+
+        if (!players.TryGetSessionByUsername(playerName, out var player))
         {
-            shell.WriteError(Loc.GetString($"shell-target-player-does-not-exist"));
+            shell.WriteError($"Unable to find player: '{playerName}'.");
             return;
         }
 
-        _ghostKick.DoDisconnect(player.Channel, reason);
+        ghostKick.DoDisconnect(player.Channel, reason);
     }
 }

@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.Components;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
@@ -24,7 +23,6 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly MobStateSystem _mob = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -141,14 +139,14 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         gunUid = null;
         gun = null;
 
-        if (!_hands.TryGetActiveItem(user, out var activeItem) ||
-            !TryComp(activeItem, out gun) ||
+        if (!TryComp<HandsComponent>(user, out var hands) ||
+            !TryComp(hands.ActiveHandEntity, out gun) ||
             _container.IsEntityInContainer(user))
         {
             return false;
         }
 
-        gunUid = activeItem.Value;
+        gunUid = hands.ActiveHandEntity.Value;
         return true;
     }
 
@@ -206,7 +204,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         TryComp<AppearanceComponent>(gunUid, out var appearance);
         _appearance.SetData(gunUid, TetherVisualsStatus.Key, true, appearance);
-        _appearance.SetData(gunUid, ToggleableVisuals.Enabled, true, appearance);
+        _appearance.SetData(gunUid, ToggleableLightVisuals.Enabled, true, appearance);
 
         // Target updates
         TransformSystem.Unanchor(target, targetXform);
@@ -282,7 +280,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         TryComp<AppearanceComponent>(gunUid, out var appearance);
         _appearance.SetData(gunUid, TetherVisualsStatus.Key, false, appearance);
-        _appearance.SetData(gunUid, ToggleableVisuals.Enabled, false, appearance);
+        _appearance.SetData(gunUid, ToggleableLightVisuals.Enabled, false, appearance);
 
         RemComp<TetheredComponent>(component.Tethered.Value);
         _blocker.UpdateCanMove(component.Tethered.Value);

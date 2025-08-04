@@ -1,8 +1,8 @@
-using Content.Shared.Access.Systems;
 using Content.Shared.StationRecords;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Access.Components;
 
@@ -11,11 +11,10 @@ namespace Content.Shared.Access.Components;
 /// and allows checking if something or somebody is authorized with these access levels.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(AccessReaderSystem))]
 public sealed partial class AccessReaderComponent : Component
 {
     /// <summary>
-    /// Whether or not the access reader is enabled.
+    /// Whether or not the accessreader is enabled.
     /// If not, it will always let people through.
     /// </summary>
     [DataField]
@@ -24,6 +23,7 @@ public sealed partial class AccessReaderComponent : Component
     /// <summary>
     /// The set of tags that will automatically deny an allowed check, if any of them are present.
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public HashSet<ProtoId<AccessLevelPrototype>> DenyTags = new();
 
@@ -31,11 +31,12 @@ public sealed partial class AccessReaderComponent : Component
     /// List of access groups that grant access to this reader. Only a single matching group is required to gain access.
     /// A group matches if it is a subset of the set being checked against.
     /// </summary>
-    [DataField("access")]
+    [DataField("access")] [ViewVariables(VVAccess.ReadWrite)]
     public List<HashSet<ProtoId<AccessLevelPrototype>>> AccessLists = new();
 
     /// <summary>
-    /// A list of <see cref="StationRecordKey"/>s that grant access. Only a single matching key is required to gain access.
+    /// A list of <see cref="StationRecordKey"/>s that grant access. Only a single matching key is required to gain
+    /// access.
     /// </summary>
     [DataField]
     public HashSet<StationRecordKey> AccessKeys = new();
@@ -53,7 +54,7 @@ public sealed partial class AccessReaderComponent : Component
     public string? ContainerAccessProvider;
 
     /// <summary>
-    /// A list of past authentications.
+    /// A list of past authentications
     /// </summary>
     [DataField]
     public Queue<AccessRecord> AccessLog = new();
@@ -61,7 +62,7 @@ public sealed partial class AccessReaderComponent : Component
     /// <summary>
     /// A limit on the max size of <see cref="AccessLog"/>
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int AccessLogLimit = 20;
 
     /// <summary>
@@ -94,10 +95,15 @@ public readonly partial record struct AccessRecord(
 public sealed class AccessReaderComponentState : ComponentState
 {
     public bool Enabled;
+
     public HashSet<ProtoId<AccessLevelPrototype>> DenyTags;
+
     public List<HashSet<ProtoId<AccessLevelPrototype>>> AccessLists;
+
     public List<(NetEntity, uint)> AccessKeys;
+
     public Queue<AccessRecord> AccessLog;
+
     public int AccessLogLimit;
 
     public AccessReaderComponentState(bool enabled, HashSet<ProtoId<AccessLevelPrototype>> denyTags, List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists, List<(NetEntity, uint)> accessKeys, Queue<AccessRecord> accessLog, int accessLogLimit)
@@ -111,4 +117,9 @@ public sealed class AccessReaderComponentState : ComponentState
     }
 }
 
-public sealed class AccessReaderConfigurationChangedEvent : EntityEventArgs;
+public sealed class AccessReaderConfigurationChangedEvent : EntityEventArgs
+{
+    public AccessReaderConfigurationChangedEvent()
+    {
+    }
+}

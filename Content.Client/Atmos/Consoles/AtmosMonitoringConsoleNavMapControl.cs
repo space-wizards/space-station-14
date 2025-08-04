@@ -17,10 +17,6 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
     public int? FocusNetId = null;
 
     private const int ChunkSize = 4;
-    private const float ScaleModifier = 4f;
-
-    private readonly float[] _layerFraction = { 0.5f, 0.75f, 0.25f };
-    private const float LineThickness = 0.05f;
 
     private readonly Color _basePipeNetColor = Color.LightGray;
     private readonly Color _unfocusedPipeNetColor = Color.DimGray;
@@ -99,23 +95,23 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
             foreach (var chunkedLine in atmosPipeNetwork)
             {
                 var leftTop = ScalePosition(new Vector2
-                    (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - LineThickness,
-                    Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - LineThickness)
+                    (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
+                    Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f)
                     - offset);
 
                 var rightTop = ScalePosition(new Vector2
-                    (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + LineThickness,
-                    Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - LineThickness)
+                    (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
+                    Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f)
                     - offset);
 
                 var leftBottom = ScalePosition(new Vector2
-                    (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - LineThickness,
-                    Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + LineThickness)
+                    (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
+                    Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f)
                     - offset);
 
                 var rightBottom = ScalePosition(new Vector2
-                    (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + LineThickness,
-                    Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + LineThickness)
+                    (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
+                    Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f)
                     - offset);
 
                 if (!pipeVertexUVs.TryGetValue(chunkedLine.Color, out var pipeVertexUV))
@@ -146,7 +142,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
         if (chunks == null || grid == null)
             return decodedOutput;
 
-        // Clear stale look up table values
+        // Clear stale look up table values 
         _horizLines.Clear();
         _horizLinesReversed.Clear();
         _vertLines.Clear();
@@ -162,7 +158,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
         {
             var list = new List<AtmosMonitoringConsoleLine>();
 
-            foreach (var ((netId, layer, hexColor), atmosPipeData) in chunk.AtmosPipeData)
+            foreach (var ((netId, hexColor), atmosPipeData) in chunk.AtmosPipeData)
             {
                 // Determine the correct coloration for the pipe
                 var color = Color.FromHex(hexColor) * _basePipeNetColor;
@@ -195,9 +191,6 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
                     _vertLinesReversed[color] = vertLinesReversed;
                 }
 
-                var layerFraction = _layerFraction[(int)layer];
-                var origin = new Vector2(grid.TileSize * layerFraction, -grid.TileSize * layerFraction);
-
                 // Loop over the chunk
                 for (var tileIdx = 0; tileIdx < ChunkSize * ChunkSize; tileIdx++)
                 {
@@ -215,22 +208,21 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
 
                     // Calculate the draw point offsets
                     var vertLineOrigin = (atmosPipeData & northMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
-                        new Vector2(grid.TileSize * layerFraction, -grid.TileSize * 1f) : origin;
+                        new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 1f) : new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f);
 
                     var vertLineTerminus = (atmosPipeData & southMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
-                        new Vector2(grid.TileSize * layerFraction, -grid.TileSize * 0f) : origin;
+                        new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0f) : new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f);
 
                     var horizLineOrigin = (atmosPipeData & eastMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
-                        new Vector2(grid.TileSize * 1f, -grid.TileSize * layerFraction) : origin;
+                        new Vector2(grid.TileSize * 1f, -grid.TileSize * 0.5f) : new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f);
 
                     var horizLineTerminus = (atmosPipeData & westMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
-                        new Vector2(grid.TileSize * 0f, -grid.TileSize * layerFraction) : origin;
+                        new Vector2(grid.TileSize * 0f, -grid.TileSize * 0.5f) : new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f);
 
-                    // Scale up the vectors and convert to vector2i so we can merge them
-                    AddOrUpdateNavMapLine(ConvertVector2ToVector2i(tile + horizLineOrigin, ScaleModifier),
-                        ConvertVector2ToVector2i(tile + horizLineTerminus, ScaleModifier), horizLines, horizLinesReversed);
-                    AddOrUpdateNavMapLine(ConvertVector2ToVector2i(tile + vertLineOrigin, ScaleModifier),
-                        ConvertVector2ToVector2i(tile + vertLineTerminus, ScaleModifier), vertLines, vertLinesReversed);
+                    // Since we can have pipe lines that have a length of a half tile, 
+                    // double the vectors and convert to vector2i so we can merge them
+                    AddOrUpdateNavMapLine(ConvertVector2ToVector2i(tile + horizLineOrigin, 2), ConvertVector2ToVector2i(tile + horizLineTerminus, 2), horizLines, horizLinesReversed);
+                    AddOrUpdateNavMapLine(ConvertVector2ToVector2i(tile + vertLineOrigin, 2), ConvertVector2ToVector2i(tile + vertLineTerminus, 2), vertLines, vertLinesReversed);
                 }
             }
         }
@@ -243,7 +235,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
 
             foreach (var (origin, terminal) in horizLines)
                 decodedOutput.Add(new AtmosMonitoringConsoleLine
-                    (ConvertVector2iToVector2(origin, 1f / ScaleModifier), ConvertVector2iToVector2(terminal, 1f / ScaleModifier), sRGB));
+                    (ConvertVector2iToVector2(origin, 0.5f), ConvertVector2iToVector2(terminal, 0.5f), sRGB));
         }
 
         foreach (var (color, vertLines) in _vertLines)
@@ -253,7 +245,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
 
             foreach (var (origin, terminal) in vertLines)
                 decodedOutput.Add(new AtmosMonitoringConsoleLine
-                    (ConvertVector2iToVector2(origin, 1f / ScaleModifier), ConvertVector2iToVector2(terminal, 1f / ScaleModifier), sRGB));
+                    (ConvertVector2iToVector2(origin, 0.5f), ConvertVector2iToVector2(terminal, 0.5f), sRGB));
         }
 
         return decodedOutput;

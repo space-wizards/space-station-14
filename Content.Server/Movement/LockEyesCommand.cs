@@ -6,17 +6,16 @@ using Robust.Shared.Console;
 namespace Content.Server.Movement;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class LockEyesCommand : LocalizedEntityCommands
+public sealed class LockEyesCommand : IConsoleCommand
 {
-    [Dependency] private readonly SharedMoverController _controller = default!;
-
-    public override string Command => $"lockeyes";
-
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    public string Command => $"lockeyes";
+    public string Description => Loc.GetString("lockeyes-command-description");
+    public string Help => Loc.GetString("lockeyes-command-help");
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
-            shell.WriteError(Loc.GetString("shell-need-exactly-one-argument"));
+            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
             return;
         }
 
@@ -26,6 +25,7 @@ public sealed class LockEyesCommand : LocalizedEntityCommands
             return;
         }
 
-        _controller.CameraRotationLocked = value;
+        var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMoverController>();
+        system.CameraRotationLocked = value;
     }
 }

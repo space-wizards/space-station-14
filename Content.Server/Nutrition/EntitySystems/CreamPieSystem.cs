@@ -45,7 +45,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var coordinates = Transform(uid).Coordinates;
             _audio.PlayPvs(_audio.ResolveSound(creamPie.Sound), coordinates, AudioParams.Default.WithVariation(0.125f));
 
-            if (TryComp(uid, out FoodComponent? foodComp))
+            if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
             {
                 if (_solutions.TryGetSolution(uid, foodComp.Solution, out _, out var solution))
                 {
@@ -53,12 +53,12 @@ namespace Content.Server.Nutrition.EntitySystems
                 }
                 foreach (var trash in foodComp.Trash)
                 {
-                    Spawn(trash, Transform(uid).Coordinates);
+                    EntityManager.SpawnEntity(trash, Transform(uid).Coordinates);
                 }
             }
             ActivatePayload(uid);
 
-            QueueDel(uid);
+            EntityManager.QueueDeleteEntity(uid);
         }
 
         private void OnConsume(Entity<CreamPieComponent> entity, ref ConsumeDoAfterEvent args)

@@ -13,7 +13,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
         protected override int? GetCount(ContainerModifiedMessage msg, ItemCounterComponent itemCounter)
         {
-            if (!TryComp(msg.Container.Owner, out StorageComponent? component))
+            if (!EntityManager.TryGetComponent(msg.Container.Owner, out StorageComponent? component))
             {
                 return null;
             }

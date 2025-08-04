@@ -25,7 +25,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.35
-        density: 300
+        density: 150
         mask:
         - MobMask
         layer:
@@ -155,7 +155,7 @@
   - type: Vocal
     sounds:
       Unsexed: UnisexSilicon
-    wilhelmProbability: 0
+    screamAction: null
   - type: DamagedSiliconAccent
   - type: UnblockableSpeech
   - type: FootstepModifier
@@ -220,8 +220,7 @@
       minValue: 0.1
       maxValue: 2.0
       isLooped: true
-  - type: ToggleableVisuals
-    spriteLayer: light
+  - type: ToggleableLightVisuals
   - type: PointLight
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png

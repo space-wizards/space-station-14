@@ -80,7 +80,7 @@ public sealed class CloningPodSystem : EntitySystem
     internal void TransferMindToClone(EntityUid mindId, MindComponent mind)
     {
         if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
-            !Exists(entity) ||
+            !EntityManager.EntityExists(entity) ||
             !TryComp<MindContainerComponent>(entity, out var mindComp) ||
             mindComp.Mind != null)
             return;
@@ -93,11 +93,11 @@ public sealed class CloningPodSystem : EntitySystem
     private void HandleMindAdded(EntityUid uid, BeingClonedComponent clonedComponent, MindAddedMessage message)
     {
         if (clonedComponent.Parent == EntityUid.Invalid ||
-            !Exists(clonedComponent.Parent) ||
+            !EntityManager.EntityExists(clonedComponent.Parent) ||
             !TryComp<CloningPodComponent>(clonedComponent.Parent, out var cloningPodComponent) ||
             uid != cloningPodComponent.BodyContainer.ContainedEntity)
         {
-            RemComp<BeingClonedComponent>(uid);
+            EntityManager.RemoveComponent<BeingClonedComponent>(uid);
             return;
         }
         UpdateStatus(clonedComponent.Parent, CloningPodStatus.Cloning, cloningPodComponent);
@@ -139,7 +139,7 @@ public sealed class CloningPodSystem : EntitySystem
         var mind = mindEnt.Comp;
         if (ClonesWaitingForMind.TryGetValue(mind, out var clone))
         {
-            if (Exists(clone) &&
+            if (EntityManager.EntityExists(clone) &&
                 !_mobStateSystem.IsDead(clone) &&
                 TryComp<MindContainerComponent>(clone, out var cloneMindComp) &&
                 (cloneMindComp.Mind == null || cloneMindComp.Mind == mindEnt))
@@ -204,7 +204,7 @@ public sealed class CloningPodSystem : EntitySystem
             return false;
         }
 
-        var cloneMindReturn = AddComp<BeingClonedComponent>(mob.Value);
+        var cloneMindReturn = EntityManager.AddComponent<BeingClonedComponent>(mob.Value);
         cloneMindReturn.Mind = mind;
         cloneMindReturn.Parent = uid;
         _containerSystem.Insert(mob.Value, clonePod.BodyContainer);
@@ -272,7 +272,7 @@ public sealed class CloningPodSystem : EntitySystem
         if (clonePod.BodyContainer.ContainedEntity is not { Valid: true } entity || clonePod.CloningProgress < clonePod.CloningTime)
             return;
 
-        RemComp<BeingClonedComponent>(entity);
+        EntityManager.RemoveComponent<BeingClonedComponent>(entity);
         _containerSystem.Remove(entity, clonePod.BodyContainer);
         clonePod.CloningProgress = 0f;
         clonePod.UsedBiomass = 0;

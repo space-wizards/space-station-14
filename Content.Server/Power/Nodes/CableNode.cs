@@ -52,6 +52,7 @@ namespace Content.Server.Power.Nodes
                         {
                             // Target tile has a terminal towards us, block the direction.
                             terminalDirs |= 1 << (int) dir;
+                            break;
                         }
                     }
                 }

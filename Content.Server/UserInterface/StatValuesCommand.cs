@@ -19,6 +19,7 @@ namespace Content.Server.UserInterface;
 public sealed class StatValuesCommand : IConsoleCommand
 {
     [Dependency] private readonly EuiManager _eui = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -173,7 +174,7 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetMelee()
     {
         var values = new List<string[]>();
-        var meleeName = _entManager.ComponentFactory.GetComponentName<MeleeWeaponComponent>();
+        var meleeName = _factory.GetComponentName(typeof(MeleeWeaponComponent));
 
         foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
         {
@@ -256,7 +257,7 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetDrawRateMessage()
     {
         var values = new List<string[]>();
-        var powerName = _entManager.ComponentFactory.GetComponentName<ApcPowerReceiverComponent>();
+        var powerName = _factory.GetComponentName(typeof(ApcPowerReceiverComponent));
 
         foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
         {

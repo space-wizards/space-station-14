@@ -194,12 +194,12 @@ namespace Content.Client.Inventory
 
         public void UIInventoryActivate(string slot)
         {
-            RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
+            EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
         }
 
         public void UIInventoryStorageActivate(string slot)
         {
-            RaisePredictiveEvent(new OpenSlotStorageNetworkMessage(slot));
+            EntityManager.RaisePredictiveEvent(new OpenSlotStorageNetworkMessage(slot));
         }
 
         public void UIInventoryExamine(string slot, EntityUid uid)
@@ -223,7 +223,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            RaisePredictiveEvent(
+            EntityManager.RaisePredictiveEvent(
                 new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: false));
         }
 
@@ -232,7 +232,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
+            EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
         }
 
         protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)

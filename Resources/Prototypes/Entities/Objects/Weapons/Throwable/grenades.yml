@@ -143,8 +143,6 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
-  - type: StaticPrice
-    price: 2000
 
 - type: entity
   name: self destruct
@@ -227,8 +225,6 @@
           params:
             volume: 5
       - type: DeleteOnTrigger
-  - type: StaticPrice
-    price: 1000
 
 - type: entity
   name: whitehole grenade
@@ -276,8 +272,6 @@
           params:
             volume: 15
       - type: DeleteOnTrigger
-  - type: StaticPrice
-    price: 1000
 
 - type: entity
   name: the nuclear option
@@ -373,8 +367,6 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
-  - type: StaticPrice
-    price: 666 # 2000 for 3, I love fractions
 
 - type: entity
   name: holy hand grenade
@@ -400,8 +392,6 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/hallelujah.ogg
-  - type: StaticPrice
-    price: 10000
 
 - type: entity
   parent: [ GrenadeBase, BaseSecurityContraband ]
@@ -449,11 +439,10 @@
   - type: SmokeOnTrigger
     duration: 10
     spreadAmount: 30
-    smokePrototype: TearGasSmokeWhite
     solution:
       reagents:
       - ReagentId: TearGas
-        Quantity: 20
+        Quantity: 50
 
 - type: entity
   parent: [ BaseEngineeringContraband, SmokeGrenade ]
@@ -544,5 +533,3 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
-  - type: StaticPrice
-    price: 1000

@@ -84,13 +84,11 @@
     sprite: Objects/Specific/Chapel/necronomicon.rsi
 
 - type: entity
-  parent: BaseAction
   id: ActionBibleSummon
   name: Summon familiar
   description: Summon a familiar that will aid you and gain humanlike intelligence once inhabited by a soul.
   components:
-  - type: Action
-    icon: { sprite: Clothing/Head/Hats/witch.rsi, state: icon }
-    useDelay: 1
   - type: InstantAction
+    icon: { sprite: Clothing/Head/Hats/witch.rsi, state: icon }
     event: !type:SummonActionEvent
+    useDelay: 1

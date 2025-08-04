@@ -24,14 +24,3 @@
   #storage:
     #back:
     #- Stuff
-
-- type: chameleonOutfit
-  id: BoxerChameleonOutfit
-  job: Boxer
-  equipment:
-    head: ClothingHeadHatBlacksoft
-    eyes: ClothingEyesGlassesCheapSunglasses
-    mask: ClothingMaskBreath
-    outerClothing: ClothingOuterWinterColorGray
-    jumpsuit: UniformShortsRedWithTop
-    neck: ClothingNeckScarfStripedRed

@@ -38,21 +38,18 @@ public sealed class SolutionCommand : ToolshedCommand
     public SolutionRef AdjReagent(
             [PipedArgument] SolutionRef input,
             ProtoId<ReagentPrototype> proto,
-            float amount
+            FixedPoint2 amount
         )
     {
         _solutionContainer ??= GetSys<SharedSolutionContainerSystem>();
 
-        // Convert float to FixedPoint2
-        var amountFixed = FixedPoint2.New(amount);
-
-        if (amountFixed > 0)
+        if (amount > 0)
         {
-            _solutionContainer.TryAddReagent(input.Solution, proto, amountFixed, out _);
+            _solutionContainer.TryAddReagent(input.Solution, proto, amount, out _);
         }
-        else if (amountFixed < 0)
+        else if (amount < 0)
         {
-            _solutionContainer.RemoveReagent(input.Solution, proto, -amountFixed);
+            _solutionContainer.RemoveReagent(input.Solution, proto, -amount);
         }
 
         return input;
@@ -62,7 +59,7 @@ public sealed class SolutionCommand : ToolshedCommand
     public IEnumerable<SolutionRef> AdjReagent(
             [PipedArgument] IEnumerable<SolutionRef> input,
             ProtoId<ReagentPrototype> name,
-            float amount
+            FixedPoint2 amount
         )
         => input.Select(x => AdjReagent(x, name, amount));
 }

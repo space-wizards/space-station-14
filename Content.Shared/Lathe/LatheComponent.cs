@@ -29,7 +29,7 @@ namespace Content.Shared.Lathe
         /// The lathe's construction queue
         /// </summary>
         [DataField]
-        public Queue<ProtoId<LatheRecipePrototype>> Queue = new();
+        public List<LatheRecipePrototype> Queue = new();
 
         /// <summary>
         /// The sound that plays when the lathe is producing an item, if any
@@ -64,7 +64,7 @@ namespace Content.Shared.Lathe
         /// The recipe the lathe is currently producing
         /// </summary>
         [ViewVariables]
-        public ProtoId<LatheRecipePrototype>? CurrentRecipe;
+        public LatheRecipePrototype? CurrentRecipe;
 
         #region MachineUpgrading
         /// <summary>

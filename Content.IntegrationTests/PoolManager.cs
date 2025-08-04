@@ -182,29 +182,24 @@ public static partial class PoolManager
     /// </summary>
     /// <param name="poolSettings">See <see cref="PoolSettings"/></param>
     /// <returns></returns>
-    public static async Task<TestPair> GetServerClient(
-        PoolSettings? poolSettings = null,
-        ITestContextLike? testContext = null)
+    public static async Task<TestPair> GetServerClient(PoolSettings? poolSettings = null)
     {
-        return await GetServerClientPair(
-            poolSettings ?? new PoolSettings(),
-            testContext ?? new NUnitTestContextWrap(TestContext.CurrentContext, TestContext.Out));
+        return await GetServerClientPair(poolSettings ?? new PoolSettings());
     }
 
-    private static string GetDefaultTestName(ITestContextLike testContext)
+    private static string GetDefaultTestName(TestContext testContext)
     {
-        return testContext.FullName.Replace("Content.IntegrationTests.Tests.", "");
+        return testContext.Test.FullName.Replace("Content.IntegrationTests.Tests.", "");
     }
 
-    private static async Task<TestPair> GetServerClientPair(
-        PoolSettings poolSettings,
-        ITestContextLike testContext)
+    private static async Task<TestPair> GetServerClientPair(PoolSettings poolSettings)
     {
         if (!_initialized)
             throw new InvalidOperationException($"Pool manager has not been initialized");
 
         // Trust issues with the AsyncLocal that backs this.
-        var testOut = testContext.Out;
+        var testContext = TestContext.CurrentContext;
+        var testOut = TestContext.Out;
 
         DieIfPoolFailure();
         var currentTestName = poolSettings.TestName ?? GetDefaultTestName(testContext);

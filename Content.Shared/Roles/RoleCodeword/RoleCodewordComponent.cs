@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Roles.RoleCodeword;
@@ -15,6 +16,8 @@ public sealed partial class RoleCodewordComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<string, CodewordsData> RoleCodewords = new();
+
+    public override bool SessionSpecific => true;
 }
 
 [DataDefinition, Serializable, NetSerializable]

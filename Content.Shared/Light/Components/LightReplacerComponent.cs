@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Light.Components;
+namespace Content.Server.Light.Components;
 
 /// <summary>
 ///     Device that allows user to quikly change bulbs in <see cref="PoweredLightComponent"/>

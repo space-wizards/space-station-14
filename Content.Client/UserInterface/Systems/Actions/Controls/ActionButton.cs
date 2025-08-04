@@ -4,7 +4,6 @@ using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions;
-using Content.Shared.Actions.Components;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Robust.Client.GameObjects;
@@ -55,7 +54,8 @@ public sealed class ActionButton : Control, IEntityControl
 
     private Texture? _buttonBackgroundTexture;
 
-    public Entity<ActionComponent>? Action { get; private set; }
+    public EntityUid? ActionId { get; private set; }
+    private BaseActionComponent? _action;
     public bool Locked { get; set; }
 
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionPressed;
@@ -193,7 +193,7 @@ public sealed class ActionButton : Control, IEntityControl
 
     private Control? SupplyTooltip(Control sender)
     {
-        if (!_entities.TryGetComponent(Action, out MetaDataComponent? metadata))
+        if (!_entities.TryGetComponent(ActionId, out MetaDataComponent? metadata))
             return null;
 
         var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityName));
@@ -201,14 +201,14 @@ public sealed class ActionButton : Control, IEntityControl
         FormattedMessage? chargesText = null;
 
         // TODO: Don't touch this use an event make callers able to add their own shit for actions or I kill you.
-        if (_entities.TryGetComponent(Action, out LimitedChargesComponent? actionCharges))
+        if (_entities.TryGetComponent(ActionId, out LimitedChargesComponent? actionCharges))
         {
-            var charges = _sharedChargesSys.GetCurrentCharges((Action.Value, actionCharges, null));
+            var charges = _sharedChargesSys.GetCurrentCharges((ActionId.Value, actionCharges, null));
             chargesText = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {charges.ToString()}/{actionCharges.MaxCharges}"));
 
-            if (_entities.TryGetComponent(Action, out AutoRechargeComponent? autoRecharge))
+            if (_entities.TryGetComponent(ActionId, out AutoRechargeComponent? autoRecharge))
             {
-                var chargeTimeRemaining = _sharedChargesSys.GetNextRechargeTime((Action.Value, actionCharges, autoRecharge));
+                var chargeTimeRemaining = _sharedChargesSys.GetNextRechargeTime((ActionId.Value, actionCharges, autoRecharge));
                 chargesText.AddText(Loc.GetString($"{Environment.NewLine}Time Til Recharge: {chargeTimeRemaining}"));
             }
         }
@@ -223,7 +223,7 @@ public sealed class ActionButton : Control, IEntityControl
 
     private void UpdateItemIcon()
     {
-        if (Action?.Comp is not {EntityIcon: { } entity} ||
+        if (_action is not {EntityIcon: { } entity} ||
             !_entities.HasComponent<SpriteComponent>(entity))
         {
             _bigItemSpriteView.Visible = false;
@@ -233,7 +233,7 @@ public sealed class ActionButton : Control, IEntityControl
         }
         else
         {
-            switch (Action?.Comp.ItemIconStyle)
+            switch (_action.ItemIconStyle)
             {
                 case ItemActionIconStyle.BigItem:
                     _bigItemSpriteView.Visible = true;
@@ -259,17 +259,17 @@ public sealed class ActionButton : Control, IEntityControl
 
     private void SetActionIcon(Texture? texture)
     {
-        if (Action?.Comp is not {} action || texture == null)
+        if (_action == null || texture == null)
         {
             _bigActionIcon.Texture = null;
             _bigActionIcon.Visible = false;
             _smallActionIcon.Texture = null;
             _smallActionIcon.Visible = false;
         }
-        else if (action.EntityIcon != null && action.ItemIconStyle == ItemActionIconStyle.BigItem)
+        else if (_action.EntityIcon != null && _action.ItemIconStyle == ItemActionIconStyle.BigItem)
         {
             _smallActionIcon.Texture = texture;
-            _smallActionIcon.Modulate = action.IconColor;
+            _smallActionIcon.Modulate = _action.IconColor;
             _smallActionIcon.Visible = true;
             _bigActionIcon.Texture = null;
             _bigActionIcon.Visible = false;
@@ -277,7 +277,7 @@ public sealed class ActionButton : Control, IEntityControl
         else
         {
             _bigActionIcon.Texture = texture;
-            _bigActionIcon.Modulate = action.IconColor;
+            _bigActionIcon.Modulate = _action.IconColor;
             _bigActionIcon.Visible = true;
             _smallActionIcon.Texture = null;
             _smallActionIcon.Visible = false;
@@ -289,7 +289,7 @@ public sealed class ActionButton : Control, IEntityControl
         UpdateItemIcon();
         UpdateBackground();
 
-        if (Action is not {} action)
+        if (_action == null)
         {
             SetActionIcon(null);
             return;
@@ -297,27 +297,29 @@ public sealed class ActionButton : Control, IEntityControl
 
         _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
         _spriteSys ??= _entities.System<SpriteSystem>();
-        var icon = action.Comp.Icon;
-        if (_controller.SelectingTargetFor == action || action.Comp.Toggled)
+        if ((_controller.SelectingTargetFor == ActionId || _action.Toggled))
         {
-            if (action.Comp.IconOn is {} iconOn)
-                icon = iconOn;
+            if (_action.IconOn != null)
+                SetActionIcon(_spriteSys.Frame0(_action.IconOn));
+            else if (_action.Icon != null)
+                SetActionIcon(_spriteSys.Frame0(_action.Icon));
+            else
+                SetActionIcon(null);
 
-            if (action.Comp.BackgroundOn is {} background)
-                _buttonBackgroundTexture = _spriteSys.Frame0(background);
+            if (_action.BackgroundOn != null)
+                _buttonBackgroundTexture = _spriteSys.Frame0(_action.BackgroundOn);
         }
         else
         {
+            SetActionIcon(_action.Icon != null ? _spriteSys.Frame0(_action.Icon) : null);
             _buttonBackgroundTexture = Theme.ResolveTexture("SlotBackground");
         }
-
-        SetActionIcon(icon != null ? _spriteSys.Frame0(icon) : null);
     }
 
     public void UpdateBackground()
     {
         _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
-        if (Action != null ||
+        if (_action != null ||
             _controller.IsDragging && GetPositionInParent() == Parent?.ChildCount - 1)
         {
             Button.Texture = _buttonBackgroundTexture;
@@ -331,7 +333,9 @@ public sealed class ActionButton : Control, IEntityControl
     public bool TryReplaceWith(EntityUid actionId, ActionsSystem system)
     {
         if (Locked)
+        {
             return false;
+        }
 
         UpdateData(actionId, system);
         return true;
@@ -339,15 +343,16 @@ public sealed class ActionButton : Control, IEntityControl
 
     public void UpdateData(EntityUid? actionId, ActionsSystem system)
     {
-        Action = system.GetAction(actionId);
-
-        Label.Visible = Action != null;
+        ActionId = actionId;
+        system.TryGetActionData(actionId, out _action);
+        Label.Visible = actionId != null;
         UpdateIcons();
     }
 
     public void ClearData()
     {
-        Action = null;
+        ActionId = null;
+        _action = null;
         Cooldown.Visible = false;
         Cooldown.Progress = 1;
         Label.Visible = false;
@@ -360,15 +365,19 @@ public sealed class ActionButton : Control, IEntityControl
 
         UpdateBackground();
 
-        Cooldown.Visible = Action?.Comp.Cooldown != null;
-        if (Action?.Comp is not {} action)
+        Cooldown.Visible = _action != null && _action.Cooldown != null;
+        if (_action == null)
             return;
 
-        if (action.Cooldown is {} cooldown)
-            Cooldown.FromTime(cooldown.Start, cooldown.End);
+        if (_action.Cooldown != null)
+        {
+            Cooldown.FromTime(_action.Cooldown.Value.Start, _action.Cooldown.Value.End);
+        }
 
-        if (_toggled != action.Toggled)
-            _toggled = action.Toggled;
+        if (ActionId != null && _toggled != _action.Toggled)
+        {
+            _toggled = _action.Toggled;
+        }
     }
 
     protected override void MouseEntered()
@@ -395,7 +404,7 @@ public sealed class ActionButton : Control, IEntityControl
     public void Depress(GUIBoundKeyEventArgs args, bool depress)
     {
         // action can still be toggled if it's allowed to stay selected
-        if (Action?.Comp is not {Enabled: true})
+        if (_action is not {Enabled: true})
             return;
 
         _depressed = depress;
@@ -405,17 +414,17 @@ public sealed class ActionButton : Control, IEntityControl
     public void DrawModeChanged()
     {
         _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
-        HighlightRect.Visible = _beingHovered && (Action != null || _controller.IsDragging);
+        HighlightRect.Visible = _beingHovered && (_action != null || _controller.IsDragging);
 
         // always show the normal empty button style if no action in this slot
-        if (Action?.Comp is not {} action)
+        if (_action == null)
         {
             SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassNormal);
             return;
         }
 
         // show a hover only if the action is usable or another action is being dragged on top of this
-        if (_beingHovered && (_controller.IsDragging || action.Enabled))
+        if (_beingHovered && (_controller.IsDragging || _action!.Enabled))
         {
             SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassHover);
         }
@@ -430,16 +439,16 @@ public sealed class ActionButton : Control, IEntityControl
         }
 
         // if it's toggled on, always show the toggled on style (currently same as depressed style)
-        if (action.Toggled || _controller.SelectingTargetFor == Action?.Owner)
+        if (_action.Toggled || _controller.SelectingTargetFor == ActionId)
         {
             // when there's a toggle sprite, we're showing that sprite instead of highlighting this slot
-            SetOnlyStylePseudoClass(action.IconOn != null
+            SetOnlyStylePseudoClass(_action.IconOn != null
                 ? ContainerButton.StylePseudoClassNormal
                 : ContainerButton.StylePseudoClassPressed);
             return;
         }
 
-        if (!action.Enabled)
+        if (!_action.Enabled)
         {
             SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassDisabled);
             return;
@@ -448,5 +457,5 @@ public sealed class ActionButton : Control, IEntityControl
         SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassNormal);
     }
 
-    EntityUid? IEntityControl.UiEntity => Action;
+    EntityUid? IEntityControl.UiEntity => ActionId;
 }

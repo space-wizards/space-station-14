@@ -207,9 +207,7 @@ public sealed class GasTankWindow
         _btnInternals.Disabled = !canConnectInternals;
         _lblInternals.SetMarkup(Loc.GetString("gas-tank-window-internal-text",
             ("status", Loc.GetString(internalsConnected ? "gas-tank-window-internal-connected" : "gas-tank-window-internal-disconnected"))));
-        if (!_spbPressure.HasKeyboardFocus())
-            // Don't update release pressure if we're currently editing it
-            _spbPressure.Value = outputPressure;
+        _spbPressure.Value = outputPressure;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

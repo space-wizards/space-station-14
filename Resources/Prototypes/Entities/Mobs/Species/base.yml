@@ -123,17 +123,20 @@
     - KnockedDown
     - SlowedDown
     - Stutter
+    - SeeingRainbows
     - Electrocution
     - Drunk
     - SlurredSpeech
     - RatvarianLanguage
     - PressureImmunity
     - Muted
+    - ForcedSleep
     - TemporaryBlindness
     - Pacified
     - StaminaModifier
     - Flashed
     - RadiationProtection
+    - Drowsiness
     - Adrenaline
   - type: Body
     prototype: Human

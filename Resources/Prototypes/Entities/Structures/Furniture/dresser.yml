@@ -12,15 +12,10 @@
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
+
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -241,7 +236,7 @@
       - id: ClothingHeadHatAnimalHeadslime
         prob: 0.03
         orGroup: dresserthirdloot
-      - id: ClothingMultipleHeadphones
+      - id: ClothingNeckHeadphones
         prob: 0.03
         orGroup: dresserthirdloot
       - id: ClothingUnderSocksCoder

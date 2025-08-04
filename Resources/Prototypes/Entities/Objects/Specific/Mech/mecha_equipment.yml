@@ -21,13 +21,6 @@
   components:
   - type: Sprite
     state: mecha_clamp
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-big
-      right:
-      - state: inhand-right-big
-  - type: MultiHandedItem
   - type: MechGrabber
   - type: UIFragment
     ui: !type:MechGrabberUi
@@ -43,13 +36,6 @@
   components:
   - type: Sprite
     state: mecha_clamp_small
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-small
-      right:
-      - state: inhand-right-small
-  - type: MultiHandedItem
   - type: MechGrabber
     maxContents: 4
     grabDelay: 3
@@ -72,13 +58,6 @@
   - type: Sprite
     # TODO: use own sprite
     state: mecha_honker
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-honk
-      right:
-      - state: inhand-right-honk
-  - type: MultiHandedItem
   - type: MechSoundboard
     sounds:
     - collection: BikeHorn

@@ -137,14 +137,15 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     }
 }
 
-public sealed class ClearAllNetworkLinkOverlays : LocalizedEntityCommands
+public sealed class ClearAllNetworkLinkOverlays : IConsoleCommand
 {
-    [Dependency] private readonly NetworkConfiguratorSystem _network = default!;
+    [Dependency] private readonly IEntityManager _e = default!;
 
-    public override string Command => "clearnetworklinkoverlays";
-
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    public string Command => "clearnetworklinkoverlays";
+    public string Description => "Clear all network link overlays.";
+    public string Help => Command;
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        _network.ClearAllOverlays();
+        _e.System<NetworkConfiguratorSystem>().ClearAllOverlays();
     }
 }

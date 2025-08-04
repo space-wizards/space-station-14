@@ -63,8 +63,9 @@
       - !type:MovespeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        component: Drowsiness
         time: 4
         type: Add
         refresh: false
@@ -339,8 +340,9 @@
   metabolisms:
     Poison:
       effects:
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectSeeingRainbow
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
         type: Add
         time: 10
         refresh: false
@@ -369,9 +371,8 @@
         damage:
           groups:
             Brute: 2
+            Toxin: 2
             Airloss: 2
-          types:
-            Poison: 2
       - !type:PopupMessage
         type: Local
         messages: [ "histamine-effect-light-itchiness" ]
@@ -569,7 +570,6 @@
       - !type:Emote
         emote: Honk
         showInChat: true
-        showInGuidebook: true
         force: true
         probability: 0.2
       - !type:HealthChange

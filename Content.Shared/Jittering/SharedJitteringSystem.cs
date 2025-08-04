@@ -25,7 +25,7 @@ namespace Content.Shared.Jittering
 
         private void OnRejuvenate(EntityUid uid, JitteringComponent component, RejuvenateEvent args)
         {
-            RemCompDeferred<JitteringComponent>(uid);
+            EntityManager.RemoveComponentDeferred<JitteringComponent>(uid);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Content.Shared.Jittering
 
             if (StatusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, refresh, status))
             {
-                var jittering = Comp<JitteringComponent>(uid);
+                var jittering = EntityManager.GetComponent<JitteringComponent>(uid);
 
                 if(forceValueChange || jittering.Amplitude < amplitude)
                     jittering.Amplitude = amplitude;

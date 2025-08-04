@@ -13,24 +13,24 @@ using Robust.Shared.Utility;
 namespace Content.Server.Mapping
 {
     [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
-    public sealed class MappingCommand : LocalizedEntityCommands
+    sealed class MappingCommand : IConsoleCommand
     {
-        [Dependency] private readonly IResourceManager _resourceMgr = default!;
-        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-        [Dependency] private readonly MappingSystem _mappingSystem = default!;
-        [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
-        public override string Command => "mapping";
+        public string Command => "mapping";
+        public string Description => Loc.GetString("cmd-mapping-desc");
+        public string Help => Loc.GetString("cmd-mapping-help");
 
-        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             switch (args.Length)
             {
                 case 1:
                     return CompletionResult.FromHint(Loc.GetString("cmd-hint-mapping-id"));
                 case 2:
-                    var opts = CompletionHelper.UserFilePath(args[1], _resourceMgr.UserData)
-                        .Concat(CompletionHelper.ContentFilePath(args[1], _resourceMgr));
+                    var res = IoCManager.Resolve<IResourceManager>();
+                    var opts = CompletionHelper.UserFilePath(args[1], res.UserData)
+                        .Concat(CompletionHelper.ContentFilePath(args[1], res));
                     return CompletionResult.FromHintOptions(opts, Loc.GetString("cmd-hint-mapping-path"));
                 case 3:
                     return CompletionResult.FromHintOptions(["false", "true"], Loc.GetString("cmd-mapping-hint-grid"));
@@ -38,7 +38,7 @@ namespace Content.Server.Mapping
             return CompletionResult.Empty;
         }
 
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not { } player)
             {
@@ -65,7 +65,7 @@ namespace Content.Server.Mapping
 
             MapId mapId;
             string? toLoad = null;
-
+            var mapSys = _entities.System<SharedMapSystem>();
             Entity<MapGridComponent>? grid = null;
 
             // Get the map ID to use
@@ -86,7 +86,7 @@ namespace Content.Server.Mapping
                     return;
                 }
 
-                if (_mapSystem.MapExists(mapId))
+                if (mapSys.MapExists(mapId))
                 {
                     shell.WriteError(Loc.GetString("cmd-mapping-exists", ("mapId", mapId)));
                     return;
@@ -95,25 +95,26 @@ namespace Content.Server.Mapping
                 // either load a map or create a new one.
                 if (args.Length <= 1)
                 {
-                    _mapSystem.CreateMap(mapId, runMapInit: false);
+                    mapSys.CreateMap(mapId, runMapInit: false);
                 }
                 else
                 {
                     var path = new ResPath(args[1]);
                     toLoad = path.FilenameWithoutExtension;
                     var opts = new DeserializationOptions {StoreYamlUids = true};
+                    var loader = _entities.System<MapLoaderSystem>();
 
                     if (isGrid == true)
                     {
-                        _mapSystem.CreateMap(mapId, runMapInit: false);
-                        if (!_mapLoader.TryLoadGrid(mapId, path, out grid, opts))
+                        mapSys.CreateMap(mapId, runMapInit: false);
+                        if (!loader.TryLoadGrid(mapId, path, out grid, opts))
                         {
                             shell.WriteError(Loc.GetString("cmd-mapping-error"));
-                            _mapSystem.DeleteMap(mapId);
+                            mapSys.DeleteMap(mapId);
                             return;
                         }
                     }
-                    else if (!_mapLoader.TryLoadMapWithId(mapId, path, out _, out _, opts))
+                    else if (!loader.TryLoadMapWithId(mapId, path, out _, out _, opts))
                     {
                         if (isGrid == false)
                         {
@@ -124,29 +125,31 @@ namespace Content.Server.Mapping
                         // isGrid was not specified and loading it as a map failed, so we fall back to trying to load
                         // the file as a grid
                         shell.WriteLine(Loc.GetString("cmd-mapping-try-grid"));
-                        _mapSystem.CreateMap(mapId, runMapInit: false);
-                        if (!_mapLoader.TryLoadGrid(mapId, path, out grid, opts))
+                        mapSys.CreateMap(mapId, runMapInit: false);
+                        if (!loader.TryLoadGrid(mapId, path, out grid, opts))
                         {
                             shell.WriteError(Loc.GetString("cmd-mapping-error"));
-                            _mapSystem.DeleteMap(mapId);
+                            mapSys.DeleteMap(mapId);
                             return;
                         }
                     }
                 }
 
                 // was the map actually created or did it fail somehow?
-                if (!_mapSystem.MapExists(mapId))
+                if (!mapSys.MapExists(mapId))
                 {
                     shell.WriteError(Loc.GetString("cmd-mapping-error"));
                     return;
                 }
             }
             else
-                _mapSystem.CreateMap(out mapId, runMapInit: false);
+            {
+                mapSys.CreateMap(out mapId, runMapInit: false);
+            }
 
             // map successfully created. run misc helpful mapping commands
             if (player.AttachedEntity is { Valid: true } playerEntity &&
-                EntityManager.GetComponent<MetaDataComponent>(playerEntity).EntityPrototype?.ID != GameTicker.AdminObserverPrototypeName)
+                _entities.GetComponent<MetaDataComponent>(playerEntity).EntityPrototype?.ID != GameTicker.AdminObserverPrototypeName)
             {
                 shell.ExecuteCommand("aghost");
             }
@@ -155,14 +158,15 @@ namespace Content.Server.Mapping
             shell.ExecuteCommand("changecvar events.enabled false");
             shell.ExecuteCommand("changecvar shuttle.auto_call_time 0");
 
+            var auto = _entities.System<MappingSystem>();
             if (grid != null)
-                _mappingSystem.ToggleAutosave(grid.Value.Owner, toLoad ?? "NEWGRID");
+                auto.ToggleAutosave(grid.Value.Owner, toLoad ?? "NEWGRID");
             else
-                _mappingSystem.ToggleAutosave(mapId, toLoad ?? "NEWMAP");
+                auto.ToggleAutosave(mapId, toLoad ?? "NEWMAP");
 
             shell.ExecuteCommand($"tp 0 0 {mapId}");
             shell.RemoteExecuteCommand("mappingclientsidesetup");
-            DebugTools.Assert(_mapSystem.IsPaused(mapId));
+            DebugTools.Assert(mapSys.IsPaused(mapId));
 
             if (args.Length != 2)
                 shell.WriteLine(Loc.GetString("cmd-mapping-success", ("mapId", mapId)));

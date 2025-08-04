@@ -61,7 +61,7 @@ public sealed partial class TriggerSystem
 
     private void OnProximityInit(EntityUid uid, TriggerOnProximityComponent component, ComponentInit args)
     {
-        EnsureComp<AnimationPlayerComponent>(uid);
+        EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
     }
 
     private void OnProxAppChange(EntityUid uid, TriggerOnProximityComponent component, ref AppearanceChangeEvent args)

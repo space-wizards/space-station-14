@@ -27,14 +27,3 @@
   #storage:
     #back:
     #- Stuff
-
-- type: chameleonOutfit
-  id: MedicalInternChameleonOutfit
-  job: MedicalIntern
-  equipment:
-    head: ClothingHeadHatBeretMedic
-    eyes: ClothingEyesHudMedical
-    mask: ClothingMaskSterile
-    neck: ClothingNeckStethoscope
-    outerClothing: ClothingOuterCoatLabOpened
-    gloves: ClothingHandsGlovesLatex

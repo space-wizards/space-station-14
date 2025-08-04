@@ -1,6 +1,8 @@
+using Content.Server.Damage.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
+using Content.Shared.StepTrigger;
+using Content.Shared.StepTrigger.Systems;
 
 namespace Content.Server.Damage.Systems;
 

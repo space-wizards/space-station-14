@@ -25,6 +25,7 @@
     - Electrocution
     - TemporaryBlindness
     - RadiationProtection
+    - Drowsiness
     - Adrenaline
   - type: StandingState
   - type: Tag
@@ -57,7 +58,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Dead
+      250: Dead
   - type: MeleeWeapon
     soundHit:
       path: "/Audio/Weapons/smash.ogg"
@@ -98,12 +99,11 @@
       amount: 3
 
 - type: entity
-  parent: BaseAction
   id: ActionGoliathTentacle
   name: "[color=red]Tentacle Slam[/color]"
   description: Use your tentacles to grab and stun a target player!
   components:
-  - type: Action
+  - type: EntityWorldTargetAction
     raiseOnUser: true
     icon:
       sprite: Mobs/Aliens/Asteroid/goliath.rsi
@@ -113,11 +113,9 @@
       state: goliath_tentacle_wiggle
     sound:
       path: "/Audio/Weapons/slash.ogg"
-    useDelay: 8
-  - type: TargetAction
-    range: 10
-  - type: WorldTargetAction
     event: !type:GoliathSummonTentacleAction
+    useDelay: 8
+    range: 10
 
 - type: entity
   id: GoliathTentacle
@@ -373,12 +371,12 @@
       Dead:
         Base: basilisk_dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2
-    baseSprintSpeed : 3
+    baseWalkSpeed : 3
+    baseSprintSpeed : 3.5
   - type: MobThresholds
     thresholds:
       0: Alive
-      45: Dead
+      80: Dead
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcBite
@@ -390,7 +388,6 @@
         Piercing: 5
   - type: Gun
     fireRate: 0.75
-    projectileSpeed: 10.0 # When we get predicted guns and projectiles this should be raised to like 15, 15 mis-predicts too much right now unfortunately.
     selectedMode: SemiAuto
     showExamineText: false
     availableModes: [ SemiAuto ]

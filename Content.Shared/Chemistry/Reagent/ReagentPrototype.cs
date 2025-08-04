@@ -145,16 +145,16 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public bool WorksOnTheDead;
 
-        [DataField]
+        [DataField(serverOnly: true)]
         public FrozenDictionary<ProtoId<MetabolismGroupPrototype>, ReagentEffectsEntry>? Metabolisms;
 
-        [DataField]
+        [DataField(serverOnly: true)]
         public Dictionary<ProtoId<ReactiveGroupPrototype>, ReactiveReagentEffectEntry>? ReactiveEffects;
 
         [DataField(serverOnly: true)]
         public List<ITileReaction> TileReactions = new(0);
 
-        [DataField("plantMetabolism")]
+        [DataField("plantMetabolism", serverOnly: true)]
         public List<EntityEffect> PlantMetabolisms = new(0);
 
         [DataField]

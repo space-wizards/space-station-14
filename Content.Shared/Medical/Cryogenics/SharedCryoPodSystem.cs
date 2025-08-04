@@ -1,3 +1,4 @@
+using Content.Server.Medical.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Database;

@@ -223,13 +223,6 @@
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: MagazinePistolSubMachineGunPractice
-  result: MagazinePistolSubMachineGunPractice
-  materials:
-    Steel: 150
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
   id: MagazinePistolSubMachineGunUranium
   result: MagazinePistolSubMachineGunUranium
   materials:

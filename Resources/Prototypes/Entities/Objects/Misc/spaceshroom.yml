@@ -24,9 +24,7 @@
         components:
           - Hands
       loot:
-        All: !type:GroupSelector
-          children:
-          - id: FoodSpaceshroom
+        All: SpaceshroomGather
     - type: Damageable
       damageContainer: StructuralInorganic
       damageModifierSet: Wood
@@ -38,6 +36,13 @@
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
+
+- type: entityLootTable
+  id: SpaceshroomGather
+  entries:
+  - id: FoodSpaceshroom
+    amount: 1
+    maxAmount: 1
 
 - type: entity
   name: spaceshroom
@@ -93,9 +98,6 @@
     thickness: 0.02
     area: 0.02
     conductivity: 0.43
-  - type: Tag
-    tags:
-    - Mushroom
 
 - type: weightedRandomFillSolution
   id: RandomFillSpaceshroom

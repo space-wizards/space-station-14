@@ -21,7 +21,7 @@
 
 - type: entity
   name: explosive payload
-  parent: [ BasePayload, BaseSecurityContraband ]
+  parent: BasePayload
   id: ExplosivePayload
   components:
   - type: Sprite
@@ -37,6 +37,12 @@
   - type: Destructible
     thresholds:
     - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 25
+      behaviors:
+      - !type:ExplodeBehavior
+    - trigger:
         !type:DamageTrigger
         damage: 50
       behaviors:
@@ -45,7 +51,7 @@
 
 - type: entity
   name: chemical payload
-  parent: [ BasePayload, BaseMedicalScienceContraband ]
+  parent: BasePayload
   id: ChemicalPayload
   description: A chemical payload. Has space to store two beakers. In combination with a trigger and a case, this can be used to initiate chemical reactions.
   components:
@@ -81,7 +87,7 @@
 
 - type: entity
   name: flash payload
-  parent: [ BasePayload, BaseSecurityScienceCommandContraband ]
+  parent: BasePayload
   id: FlashPayload
   description: A single-use flash payload.
   components:

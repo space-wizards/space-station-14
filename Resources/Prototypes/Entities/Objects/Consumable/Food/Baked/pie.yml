@@ -16,13 +16,11 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents: #Most of these are this with slight variations, not worth changing until we have the rest of the reagents
         - ReagentId: Nutriment
-          Quantity: 30
+          Quantity: 11
         - ReagentId: Vitamin
-          Quantity: 14
-        - ReagentId: Sugar
           Quantity: 5
   - type: Food #All pies here made with a pie tin; unless you're some kind of savage, you're probably not destroying this when you eat or slice the pie!
     trash:
@@ -49,14 +47,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 7
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7.5
+          Quantity: 1.2
         - ReagentId: Vitamin
-          Quantity: 3.5
-        - ReagentId: Sugar
-          Quantity: 1.25
+          Quantity: 1
   - type: Tag
     tags:
     - Pie
@@ -513,17 +509,6 @@
       - sweet
   - type: Sprite
     state: grape
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Sugar
-          Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -561,10 +546,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 26
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
+          Quantity: 15
         - ReagentId: Theobromine
           Quantity: 2
 # Tastes like tart, dark chocolate.

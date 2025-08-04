@@ -313,7 +313,6 @@
     tags:
     - WhitelistChameleon
     - FireHelmet
-    - CorgiWearable
   - type: HideLayerClothing
     layers:
       Hair: HEAD
@@ -509,8 +508,7 @@
     action: ActionToggleJusticeHelm
     mustEquip: false
   - type: ItemTogglePointLight
-  - type: ToggleableVisuals
-    spriteLayer: light
+  - type: ToggleableLightVisuals
     clothingVisuals:
       head:
       - state: on-equipped-HELMET
@@ -558,13 +556,11 @@
       Hair: HEAD
 
 - type: entity
-  parent: BaseAction
   id: ActionToggleJusticeHelm
   name: Toggle Justice Helm
   description: Toggles the justice helm on and off.
   components:
-  - type: Action
+  - type: InstantAction
     useDelay: 1
     itemIconStyle: BigItem
-  - type: InstantAction
     event: !type:ToggleActionEvent

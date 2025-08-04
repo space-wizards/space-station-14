@@ -109,12 +109,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 11
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 1
         - ReagentId: TableSalt
-          Quantity: 2
+          Quantity: 1
 # Tastes like nachos.
 
 - type: entity
@@ -135,12 +137,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 3
         - ReagentId: TableSalt
-          Quantity: 2
+          Quantity: 1
 # Tastes like nachos, cheese.
 
 - type: entity
@@ -162,10 +166,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
+          Quantity: 8
         - ReagentId: CapsaicinOil
           Quantity: 7
         - ReagentId: Vitamin
@@ -249,16 +253,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 55
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 40
+          Quantity: 6
         - ReagentId: CarpoToxin
           Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: CapsaicinOil
-          Quantity: 4
   - type: Tag
     tags:
     - CubanCarp
@@ -361,12 +361,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
         - ReagentId: Protein
-          Quantity: 20
+          Quantity: 10
         - ReagentId: BbqSauce
           Quantity: 10
   - type: Tag
@@ -563,15 +563,11 @@
     - type: SolutionContainerManager
       solutions:
         food:
-          maxVol: 35
+          maxVol: 15
           reagents:
           - ReagentId: Nutriment
-            Quantity: 20
-          - ReagentId: Protein
-            Quantity: 5
+            Quantity: 8
           - ReagentId: CapsaicinOil
-            Quantity: 6
-          - ReagentId: Vitamin
             Quantity: 6
     - type: Tag
       tags:

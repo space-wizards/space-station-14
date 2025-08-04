@@ -14,11 +14,11 @@
     - state: welder_flame
       visible: false
       shader: unshaded
-      map: ["enum.ToggleableVisuals.Layer"]
+      map: ["enum.ToggleVisuals.Layer"]
   - type: GenericVisualizer
     visuals:
-      enum.ToggleableVisuals.Enabled:
-        enum.ToggleableVisuals.Layer:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
           True: { visible: true }
           False: { visible: false }
   - type: Item
@@ -59,7 +59,7 @@
     components:
     - type: DisarmMalus
       malus: 0.6
-  - type: ToggleableVisuals
+  - type: ToggleableLightVisuals
     spriteLayer: flame
     inhandVisuals:
       left:

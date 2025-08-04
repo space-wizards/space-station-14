@@ -274,11 +274,13 @@ namespace Content.Client.Voting.UI
     }
 
     [UsedImplicitly, AnyCommand]
-    public sealed class VoteMenuCommand : LocalizedCommands
+    public sealed class VoteMenuCommand : IConsoleCommand
     {
-        public override string Command => "votemenu";
+        public string Command => "votemenu";
+        public string Description => Loc.GetString("ui-vote-menu-command-description");
+        public string Help => Loc.GetString("ui-vote-menu-command-help-text");
 
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             new VoteCallMenu().OpenCentered();
         }

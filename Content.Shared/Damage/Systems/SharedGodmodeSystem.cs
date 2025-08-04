@@ -3,7 +3,7 @@ using Content.Shared.Damage.Events;
 using Content.Shared.Destructible;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Slippery;
-using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffect;
 
 namespace Content.Shared.Damage.Systems;
 

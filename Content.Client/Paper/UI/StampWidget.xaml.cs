@@ -12,8 +12,6 @@ namespace Content.Client.Paper.UI;
 [GenerateTypedNameReferences]
 public sealed partial class StampWidget : PanelContainer
 {
-    private static readonly ProtoId<ShaderPrototype> PaperStamp = "PaperStamp";
-
     private StyleBoxTexture _borderTexture;
     private ShaderInstance? _stampShader;
 
@@ -44,7 +42,7 @@ public sealed partial class StampWidget : PanelContainer
         PanelOverride = _borderTexture;
 
         var prototypes = IoCManager.Resolve<IPrototypeManager>();
-        _stampShader = prototypes.Index(PaperStamp).InstanceUnique();
+        _stampShader = prototypes.Index<ShaderPrototype>("PaperStamp").InstanceUnique();
     }
 
     protected override void Draw(DrawingHandleScreen handle)

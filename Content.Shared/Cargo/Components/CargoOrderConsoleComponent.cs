@@ -104,10 +104,10 @@ public sealed partial class CargoOrderConsoleComponent : Component
     public static readonly ProtoId<RadioChannelPrototype> BaseAnnouncementChannel = "Supply";
 
     /// <summary>
-    /// The behaviour of the cargo console regarding orders
+    /// If set to true, restricts this console from ordering and has it print slips instead
     /// </summary>
     [DataField]
-    public CargoOrderConsoleMode Mode = CargoOrderConsoleMode.DirectOrder;
+    public bool SlipPrinter;
 
     /// <summary>
     /// The time at which the console will be able to print a slip again.
@@ -144,26 +144,6 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan DenySoundDelay = TimeSpan.FromSeconds(2);
-}
-
-/// <summary>
-/// The behaviour of the cargo order console
-/// </summary>
-[Serializable, NetSerializable]
-public enum CargoOrderConsoleMode : byte
-{
-    /// <summary>
-    /// Place orders directly
-    /// </summary>
-    DirectOrder,
-    /// <summary>
-    /// Print a slip to be inserted into a DirectOrder console
-    /// </summary>
-    PrintSlip,
-    /// <summary>
-    /// Transfers the order to the primary account
-    /// </summary>
-    SendToPrimary,
 }
 
 /// <summary>

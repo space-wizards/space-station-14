@@ -73,14 +73,12 @@
     - localdelete
     - fullstatereset
     - dumpentities
-    - showaccessreaders
 
 - Flags: MAPPING
   Commands:
     - mapping
     - toggleautosave
     - toggledecals
-    - showaccessreaders
 
 - Flags: QUERY
   Commands:

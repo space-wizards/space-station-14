@@ -360,7 +360,7 @@
           shouldHave: false
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
-      - !type:ModifyStatusEffect
+      - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: NitrousOxide
@@ -368,7 +368,8 @@
         - !type:OrganType
           type: Slime
           shouldHave: false
-        effectProto: StatusEffectForcedSleeping
+        key: ForcedSleep
+        component: ForcedSleeping
         time: 3
         type: Add
       - !type:HealthChange
@@ -402,13 +403,14 @@
         damage:
           types:
             Cellular: 1
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectSeeingRainbow
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
         type: Add
-        time: 15
+        time: 100
         refresh: false
       - !type:Drunk
-        boozePower: 15
+        boozePower: 100
       - !type:PopupMessage
         type: Local
         messages: [ "frezon-lungs-cold" ]
@@ -438,12 +440,13 @@
         damage:
           types:
             Cellular: 0.5
-      - !type:ModifyStatusEffect
+      - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Frezon
           min: 1
-        effectProto: StatusEffectSeeingRainbow
+        key: SeeingRainbows
+        component: SeeingRainbows
         type: Add
         time: 500
         refresh: false

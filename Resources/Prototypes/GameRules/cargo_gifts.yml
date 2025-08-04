@@ -63,9 +63,9 @@
     description: cargo-gift-pizza-large
     dest: cargo-gift-dest-bar
     gifts:
-      FoodPizza: 4              # 16 pizzas
+      FoodPizzaLarge: 1              # 16 pizzas
       FoodBarSupply: 1
-      FoodSoftdrinks: 2         # 32 sodas
+      FoodSoftdrinksLarge: 1
 
 - type: entity
   id: GiftsEngineering
@@ -196,7 +196,6 @@
       ArmorySmg: 1
       ArmoryShotgun: 1
       ArmoryLaser: 1
-      ArmoryRifle: 1
 
 - type: entity
   id: GiftsSecurityRiot

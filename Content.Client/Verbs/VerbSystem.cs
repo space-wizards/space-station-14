@@ -225,7 +225,7 @@ namespace Content.Client.Verbs
                 // is this a client exclusive (gui) verb?
                 ExecuteVerb(verb, user, GetEntity(target));
             else
-                RaisePredictiveEvent(new ExecuteVerbEvent(target, verb));
+                EntityManager.RaisePredictiveEvent(new ExecuteVerbEvent(target, verb));
         }
 
         private void HandleVerbResponse(VerbsResponseEvent msg)

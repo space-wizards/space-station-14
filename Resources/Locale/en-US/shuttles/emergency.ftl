@@ -1,17 +1,14 @@
 # Commands
 ## Delay shuttle round end
-cmd-delayroundend-desc = Stops the timer that ends the round when the emergency shuttle exits hyperspace.
-cmd-delayroundend-help = Usage: delayroundend
+emergency-shuttle-command-round-desc = Stops the timer that ends the round when the emergency shuttle exits hyperspace.
 emergency-shuttle-command-round-yes = Round delayed.
 emergency-shuttle-command-round-no = Unable to delay round end.
 
 ## Dock emergency shuttle
-cmd-dockemergencyshuttle-desc = Calls the emergency shuttle and docks it to the station... if it can.
-cmd-dockemergencyshuttle-help = Usage: dockemergencyshuttle
+emergency-shuttle-command-dock-desc = Calls the emergency shuttle and docks it to the station... if it can.
 
 ## Launch emergency shuttle
-cmd-launchemergencyshuttle-desc = Early launches the emergency shuttle if possible.
-cmd-launchemergencyshuttle-help = Usage: launchemergencyshuttle
+emergency-shuttle-command-launch-desc = Early launches the emergency shuttle if possible.
 
 # Emergency shuttle
 emergency-shuttle-left = The Emergency Shuttle has left the station. Estimate {$transitTime} seconds until the shuttle arrives at CentComm.

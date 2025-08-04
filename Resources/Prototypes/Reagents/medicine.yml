@@ -83,8 +83,9 @@
         key: Jitter
         time: 3.0
         type: Remove
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        component: Drowsiness
         time: 1.5
         type: Add
         refresh: false
@@ -173,6 +174,7 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: medicine
   color: "#0091ff"
+  worksOnTheDead: true
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: -5
@@ -182,6 +184,8 @@
   metabolisms:
     Medicine:
       effects:
+        - !type:ModifyBloodLevel
+          amount: 4
         - !type:HealthChange
           conditions:
           - !type:Temperature
@@ -190,10 +194,7 @@
           damage:
           # todo scale with temp like SS13
             groups:
-              Airloss: -6
-              Brute: -4
-              Burn: -6
-              Toxin: -4
+              Airloss: -10
 
 - type: reagent
   id: Doxarubixadone
@@ -315,13 +316,6 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:AdjustReagent
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Histamine
-          min: 45
-        reagent: Histamine
-        amount: -5
       - !type:HealthChange
         conditions:
           # they gotta be in crit first
@@ -749,8 +743,8 @@
         key: KnockedDown
         time: 3.0
         type: Remove
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectSeeingRainbow
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
         time: 15.0
         type: Remove
 
@@ -922,8 +916,8 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+      - !type:GenericStatusEffect
+        key: Drowsiness
         time: 10
         type: Remove
       - !type:ResetNarcolepsy
@@ -947,8 +941,8 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+      - !type:GenericStatusEffect
+        key: Drowsiness
         time: 10
         type: Remove
       - !type:ResetNarcolepsy
@@ -1091,7 +1085,6 @@
   name: reagent-name-holywater
   group: Medicine
   desc: reagent-desc-holywater
-  evaporationSpeed: 0.3
   physicalDesc: reagent-physical-desc-holy
   flavor: holy
   color: "#91C3F7"
@@ -1286,6 +1279,25 @@
             Caustic: -1.5
 
 - type: reagent
+  id: Traumoxadone
+  name: reagent-name-traumoxadone
+  group: Medicine
+  desc: reagent-desc-traumoxadone
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: medicine
+  color: "#69304D"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:Temperature
+          max: 213.0
+        damage:
+          Brute: -4
+
+- type: reagent
   id : Mannitol # currently this is just a way to create psicodine
   name: reagent-name-mannitol
   group: Medicine
@@ -1323,11 +1335,12 @@
         damage:
           types:
             Poison: 2
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectSeeingRainbow
+      - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
           min: 30
+        key: SeeingRainbows
+        component: SeeingRainbows
         type: Add
         time: 8
         refresh: false
@@ -1388,8 +1401,9 @@
         emote: Yawn
         showInChat: true
         probability: 0.1
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        component: Drowsiness
         time: 4
         type: Add
         refresh: false
@@ -1397,8 +1411,8 @@
         key: Jitter
         time: 4.0
         type: Remove
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectSeeingRainbow
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
         time: 10.0
         type: Remove
       - !type:AdjustReagent
@@ -1425,3 +1439,27 @@
       - !type:AdjustReagent
         reagent: MindbreakerToxin
         amount: -3.0
+
+- type: reagent
+  id: Stelloxadone
+  name: reagent-name-stelloxadone
+  group: Medicine
+  desc: reagent-desc-stelloxadone
+  physicalDesc: reagent-physical-desc-murky
+  flavor: medicine
+  color: "#FFC683"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:Temperature
+          max: 213.0
+        damage:
+          groups:
+            Brute: 3
+            Genetic: 1
+          types:
+            Poison: -6
+            Radiation: -3

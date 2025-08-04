@@ -103,7 +103,7 @@ namespace Content.IntegrationTests.Tests.Construction
             var protoMan = server.ResolveDependency<IPrototypeManager>();
             var compFact = server.ResolveDependency<IComponentFactory>();
 
-            var name = compFact.GetComponentName<ConstructionComponent>();
+            var name = compFact.GetComponentName(typeof(ConstructionComponent));
             Assert.Multiple(() =>
             {
                 foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())

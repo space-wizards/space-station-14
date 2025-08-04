@@ -1,7 +1,6 @@
 - type: entity
-  id: hydroponicsSoil
   name: soil
-  description: A mix of organic matter and minerals creating a soil to grow your plant in space. Seems to be dry.
+  id: hydroponicsSoil
   placement:
     mode: SnapgridCenter
   components:
@@ -56,20 +55,3 @@
         solution: soil
   - type: Appearance
   - type: PlantHolderVisuals
-
-- type: entity
-  parent: hydroponicsSoil
-  id: FungalSoil
-  name: fungal soil
-  description: A mix of organic matter and fungal root creating a soil to grow your plant in space. Seems to be dry.
-  components:
-  - type: Construction
-    graph: Soil
-    node: fungalSoil
-  - type: Sprite
-    sprite: Structures/Hydroponics/misc.rsi
-    state: fungal_soil
-    noRot: true
-  - type: PlantHolder
-    waterLevel: 0
-    nutritionLevel: 0

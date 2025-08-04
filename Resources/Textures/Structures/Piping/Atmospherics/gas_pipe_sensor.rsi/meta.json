@@ -10,29 +10,15 @@
         {
             "name": "icon"
         },
-        {
-            "name": "base",
-            "directions": 4
+	{
+            "name": "base"
         },
-        {
+	{
             "name": "blank"
         },
         {
             "name": "lights",
-            "directions": 4,
             "delays": [
-                [
-                    1.0,
-                    0.25
-                ],
-                [
-                    1.0,
-                    0.25
-                ],
-                [
-                    1.0,
-                    0.25
-                ],
                 [
                     1.0,
                     0.25

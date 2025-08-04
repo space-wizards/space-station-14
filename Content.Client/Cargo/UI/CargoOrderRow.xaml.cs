@@ -14,15 +14,5 @@ namespace Content.Client.Cargo.UI
         {
             RobustXamlLoader.Load(this);
         }
-
-        public void SetApproveVisible(bool visible)
-        {
-            Approve.Visible = visible;
-
-            if (visible)
-                Cancel.AddStyleClass("OpenLeft");
-            else
-                Cancel.RemoveStyleClass("OpenLeft");
-        }
     }
 }

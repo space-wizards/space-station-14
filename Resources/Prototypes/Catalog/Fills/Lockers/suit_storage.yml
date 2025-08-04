@@ -95,10 +95,12 @@
   parent: SuitStorageBase
   suffix: Station Engineer
   components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillEngineerHardsuit
+  - type: StorageFill
+    contents:
+        - id: OxygenTankFilled
+        - id: ClothingShoesBootsMag
+        - id: ClothingOuterHardsuitEngineering
+        - id: ClothingMaskBreath
   - type: AccessReader
     access: [["Engineering"]]
 
@@ -108,10 +110,11 @@
   parent: SuitStorageBase
   suffix: Atmospheric Technician
   components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillAtmosphericsHardsuit
+  - type: StorageFill
+    contents:
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitAtmos
+        - id: ClothingMaskBreath
   - type: AccessReader
     access: [["Atmospherics"]]
 

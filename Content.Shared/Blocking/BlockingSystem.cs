@@ -31,7 +31,6 @@ public sealed partial class BlockingSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
 
     public override void Initialize()
     {
@@ -97,7 +96,7 @@ public sealed partial class BlockingSystem : EntitySystem
         if (!handQuery.TryGetComponent(args.Performer, out var hands))
             return;
 
-        var shields = _handsSystem.EnumerateHeld((args.Performer, hands)).ToArray();
+        var shields = _handsSystem.EnumerateHeld(args.Performer, hands).ToArray();
 
         foreach (var shield in shields)
         {
@@ -166,7 +165,7 @@ public sealed partial class BlockingSystem : EntitySystem
         }
 
         //Don't allow someone to block if someone else is on the same tile
-        var playerTileRef = _turf.GetTileRef(xform.Coordinates);
+        var playerTileRef = xform.Coordinates.GetTileRef();
         if (playerTileRef != null)
         {
             var intersecting = _lookup.GetLocalEntitiesIntersecting(playerTileRef.Value, 0f);
@@ -277,7 +276,7 @@ public sealed partial class BlockingSystem : EntitySystem
         if (!handQuery.TryGetComponent(user, out var hands))
             return;
 
-        var shields = _handsSystem.EnumerateHeld((user, hands)).ToArray();
+        var shields = _handsSystem.EnumerateHeld(user, hands).ToArray();
 
         foreach (var shield in shields)
         {

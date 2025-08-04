@@ -1,7 +1,6 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceNetwork;
 using Content.Shared.Interaction;
-using Content.Shared.Lock;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
@@ -11,7 +10,6 @@ public sealed class SignalSwitchSystem : EntitySystem
 {
     [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly LockSystem _lock = default!;
 
     public override void Initialize()
     {
@@ -29,9 +27,6 @@ public sealed class SignalSwitchSystem : EntitySystem
     private void OnActivated(EntityUid uid, SignalSwitchComponent comp, ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
-            return;
-
-        if (_lock.IsLocked(uid))
             return;
 
         comp.State = !comp.State;

@@ -118,8 +118,6 @@
     steps: 6
     zeroVisible: true
   - type: Appearance
-  - type: StaticPrice
-    price: 5000
 
 - type: entity
   name: Drozd
@@ -145,16 +143,15 @@
       minAngle: 21
       maxAngle: 32
       fireRate: 6
-      burstFireRate: 18
+      burstFireRate: 12
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
-      selectedMode: Burst
       availableModes:
       - Burst
       - FullAuto
       - SemiAuto
       shotsPerBurst: 3
-      burstCooldown: 0.375
+      burstCooldown: 0.25
     - type: ItemSlots
       slots:
         gun_magazine:
@@ -176,7 +173,7 @@
               - CartridgePistol
     - type: MagazineVisuals
       magState: mag
-      steps: 5
+      steps: 1
       zeroVisible: true
     - type: Appearance
 

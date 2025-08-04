@@ -1,23 +1,20 @@
-- type: entity
-  parent: BaseAction
+﻿- type: entity
   id: ActionFireball
   name: Fireball
   description: Fires an explosive fireball towards the clicked location.
   components:
   - type: Magic
-  - type: Action
+  - type: WorldTargetAction
     useDelay: 15
     itemIconStyle: BigAction
+    checkCanAccess: false
     raiseOnUser: true
+    range: 60
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/fireball.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: fireball
-  - type: TargetAction
-    range: 60
-    checkCanAccess: false
-  - type: WorldTargetAction
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
   - type: SpeakOnAction
@@ -28,19 +25,43 @@
       3: ActionFireballIII
 
 - type: entity
-  parent: ActionFireball
   id: ActionFireballII
+  parent: ActionFireball
   name: Fireball II
   description: Fires a fireball, but faster!
   components:
-  - type: Action
-    useDelay: 10
+  - type: WorldTargetAction
+    itemIconStyle: BigAction
+    checkCanAccess: false
+    raiseOnUser: true
+    range: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/fireball.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: fireball
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileFireball
+  - type: SpeakOnAction
+    sentence: action-speech-spell-fireball
 
 - type: entity
-  parent: ActionFireball
   id: ActionFireballIII
+  parent: ActionFireball
   name: Fireball III
   description: The fastest fireball in the west!
   components:
-  - type: Action
-    useDelay: 8
+    - type: WorldTargetAction
+      itemIconStyle: BigAction
+      checkCanAccess: false
+      raiseOnUser: true
+      range: 60
+      sound: !type:SoundPathSpecifier
+        path: /Audio/Magic/fireball.ogg
+      icon:
+        sprite: Objects/Magic/magicactions.rsi
+        state: fireball
+      event: !type:ProjectileSpellEvent
+        prototype: ProjectileFireball
+    - type: SpeakOnAction
+      sentence: action-speech-spell-fireball

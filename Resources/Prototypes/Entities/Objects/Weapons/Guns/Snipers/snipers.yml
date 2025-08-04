@@ -47,14 +47,12 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
   - type: GunRequiresWield
-  - type: StaticPrice
-    price: 500
 
 - type: entity
   name: Hristov
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperHristov
-  description: For when you absolutely, positively need to make someone regret their life choices from a safe distance. Uses .60 anti-materiel ammo.
+  description: A portable anti-materiel rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-materiel ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
@@ -81,8 +79,6 @@
   - type: EyeCursorOffset
     maxOffset: 3
     pvsIncrease: 0.3
-  - type: StaticPrice
-    price: 3500
 
 - type: entity
   name: musket

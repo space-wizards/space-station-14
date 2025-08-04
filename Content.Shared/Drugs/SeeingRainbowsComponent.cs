@@ -3,8 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Drugs;
 
 /// <summary>
-///  Adds a shader to the client that scales with the effect duration.
-///  Use only in conjunction with <see cref="StatusEffectComponent"/>, on the status effect entity.
+///     Exists for use as a status effect. Adds a shader to the client that scales with the effect duration.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class SeeingRainbowsStatusEffectComponent : Component;
+public sealed partial class SeeingRainbowsComponent : Component { }

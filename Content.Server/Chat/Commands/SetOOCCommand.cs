@@ -7,21 +7,22 @@ using Robust.Shared.Console;
 namespace Content.Server.Chat.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class SetOOCCommand : LocalizedCommands
+public sealed class SetOOCCommand : IConsoleCommand
 {
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-
-    public override string Command => "setooc";
-
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    public string Command => "setooc";
+    public string Description => Loc.GetString("set-ooc-command-description");
+    public string Help => Loc.GetString("set-ooc-command-help");
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
+        var cfg = IoCManager.Resolve<IConfigurationManager>();
+
         if (args.Length > 1)
         {
-            shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 0), ("upper", 1)));
+            shell.WriteError(Loc.GetString("set-ooc-command-too-many-arguments-error"));
             return;
         }
 
-        var ooc = _configManager.GetCVar(CCVars.OocEnabled);
+        var ooc = cfg.GetCVar(CCVars.OocEnabled);
 
         if (args.Length == 0)
         {
@@ -30,12 +31,12 @@ public sealed class SetOOCCommand : LocalizedCommands
 
         if (args.Length == 1 && !bool.TryParse(args[0], out ooc))
         {
-            shell.WriteError(Loc.GetString("shell-invalid-bool"));
+            shell.WriteError(Loc.GetString("set-ooc-command-invalid-argument-error"));
             return;
         }
 
-        _configManager.SetCVar(CCVars.OocEnabled, ooc);
+        cfg.SetCVar(CCVars.OocEnabled, ooc);
 
-        shell.WriteLine(Loc.GetString(ooc ? "cmd-setooc-ooc-enabled" : "cmd-setooc-ooc-disabled"));
+        shell.WriteLine(Loc.GetString(ooc ? "set-ooc-command-ooc-enabled" : "set-ooc-command-ooc-disabled"));
     }
 }

@@ -58,7 +58,9 @@ namespace Content.Server.Construction.Conditions
             if (!entityManager.System<SharedMapSystem>().TryGetTileRef(transform.GridUid.Value, grid, indices, out var tile))
                 return !HasEntity;
 
-            foreach (var ent in lookup.GetEntitiesInTile(tile, flags: LookupFlags.Approximate | LookupFlags.Static))
+            var entities = tile.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static, lookup);
+
+            foreach (var ent in entities)
             {
                 if (entityManager.HasComponent(ent, type))
                     return HasEntity;

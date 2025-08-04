@@ -8,7 +8,7 @@ namespace Content.Client.Strip
     public sealed class StrippingMenu : DefaultWindow
     {
         public LayoutContainer InventoryContainer = new();
-        public LayoutContainer HandsContainer = new();
+        public BoxContainer HandsContainer = new() { Orientation = LayoutOrientation.Horizontal };
         public BoxContainer SnareContainer = new();
         public bool Dirty = true;
 

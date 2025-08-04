@@ -142,15 +142,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     public void UpdateEyeOffset(Entity<EyeComponent> eye)
     {
-        var evAttempt = new GetEyeOffsetAttemptEvent();
-        RaiseLocalEvent(eye, ref evAttempt);
-
-        if (evAttempt.Cancelled)
-        {
-            _eye.SetOffset(eye, Vector2.Zero, eye);
-            return;
-        }
-
         var ev = new GetEyeOffsetEvent();
         RaiseLocalEvent(eye, ref ev);
 
@@ -164,15 +155,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
     {
         if (!Resolve(uid, ref contentEye) || !Resolve(uid, ref eye))
             return;
-
-        var evAttempt = new GetEyePvsScaleAttemptEvent();
-        RaiseLocalEvent(uid, ref evAttempt);
-
-        if (evAttempt.Cancelled)
-        {
-            _eye.SetPvsScale((uid, eye), 1);
-            return;
-        }
 
         var ev = new GetEyePvsScaleEvent();
         RaiseLocalEvent(uid, ref ev);

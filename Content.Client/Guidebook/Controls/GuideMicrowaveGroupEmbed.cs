@@ -15,16 +15,12 @@ namespace Content.Client.Guidebook.Controls;
 [UsedImplicitly]
 public sealed partial class GuideMicrowaveGroupEmbed : BoxContainer, IDocumentTag
 {
-    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-
-    private readonly ISawmill _sawmill;
 
     public GuideMicrowaveGroupEmbed()
     {
         Orientation = LayoutOrientation.Vertical;
         IoCManager.InjectDependencies(this);
-        _sawmill = _logManager.GetSawmill("guidebook.microwave_group");
         MouseFilter = MouseFilterMode.Stop;
     }
 
@@ -38,7 +34,7 @@ public sealed partial class GuideMicrowaveGroupEmbed : BoxContainer, IDocumentTa
         control = null;
         if (!args.TryGetValue("Group", out var group))
         {
-            _sawmill.Error("Microwave group embed tag is missing group argument");
+            Logger.Error("Microwave group embed tag is missing group argument");
             return false;
         }
 

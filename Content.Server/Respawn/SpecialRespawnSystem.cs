@@ -17,6 +17,7 @@ namespace Content.Server.Respawn;
 public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -107,7 +108,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
             foreach (var tile in _map.GetTilesIntersecting(entityGridUid.Value, grid, circle))
             {
-                if (_turf.IsSpace(tile)
+                if (tile.IsSpace(_tileDefinitionManager)
                     || _turf.IsTileBlocked(tile, CollisionGroup.MobMask)
                     || !_atmosphere.IsTileMixtureProbablySafe(entityGridUid, entityMapUid.Value,
                         _map.TileIndicesFor((entityGridUid.Value, grid), mapPos)))
@@ -178,7 +179,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
             foreach (var newTileRef in _map.GetTilesIntersecting(targetGrid, grid, circle))
             {
-                if (_turf.IsSpace(newTileRef) || _turf.IsTileBlocked(newTileRef, CollisionGroup.MobMask) || !_atmosphere.IsTileMixtureProbablySafe(targetGrid, targetMap, mapTarget))
+                if (newTileRef.IsSpace(_tileDefinitionManager) || _turf.IsTileBlocked(newTileRef, CollisionGroup.MobMask) || !_atmosphere.IsTileMixtureProbablySafe(targetGrid, targetMap, mapTarget))
                     continue;
 
                 found = true;

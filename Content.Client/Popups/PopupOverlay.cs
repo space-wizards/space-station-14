@@ -16,8 +16,6 @@ namespace Content.Client.Popups;
 /// </summary>
 public sealed class PopupOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
-
     private readonly IConfigurationManager _configManager;
     private readonly IEntityManager _entManager;
     private readonly IPlayerManager _playerMgr;
@@ -50,7 +48,7 @@ public sealed class PopupOverlay : Overlay
         _popup = popup;
         _controller = controller;
 
-        _shader = protoManager.Index(UnshadedShader).Instance();
+        _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)

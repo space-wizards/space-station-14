@@ -142,8 +142,6 @@
   - type: SiliconLawProvider
     laws: AntimovLawset
     lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
-  - type: StaticPrice
-    price: 10000
 
 - type: entity
   id: NutimovCircuitBoard

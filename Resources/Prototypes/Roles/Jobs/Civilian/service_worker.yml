@@ -27,14 +27,3 @@
   #storage:
     #back:
     #- Stuff
-
-- type: chameleonOutfit
-  id: ServiceWorkerChameleonOutfit
-  job: ServiceWorker
-  equipment:
-    head: ClothingHeadHatBowlerHat
-    eyes: ClothingEyesGlassesSunglasses
-    mask: ClothingMaskGas
-    neck: ClothingNeckScarfStripedBrown
-    outerClothing: ClothingOuterVest
-    gloves: ClothingHandsGlovesColorBlack

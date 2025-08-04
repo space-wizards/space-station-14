@@ -223,14 +223,13 @@ public sealed partial class LatheMenu : DefaultWindow
     /// Populates the build queue list with all queued items
     /// </summary>
     /// <param name="queue"></param>
-    public void PopulateQueueList(IReadOnlyCollection<ProtoId<LatheRecipePrototype>> queue)
+    public void PopulateQueueList(List<LatheRecipePrototype> queue)
     {
         QueueList.DisposeAllChildren();
 
         var idx = 1;
-        foreach (var recipeProto in queue)
+        foreach (var recipe in queue)
         {
-            var recipe = _prototypeManager.Index(recipeProto);
             var queuedRecipeBox = new BoxContainer();
             queuedRecipeBox.Orientation = BoxContainer.LayoutOrientation.Horizontal;
 
@@ -244,13 +243,11 @@ public sealed partial class LatheMenu : DefaultWindow
         }
     }
 
-    public void SetQueueInfo(ProtoId<LatheRecipePrototype>? recipeProto)
+    public void SetQueueInfo(LatheRecipePrototype? recipe)
     {
-        FabricatingContainer.Visible = recipeProto != null;
-        if (recipeProto == null)
+        FabricatingContainer.Visible = recipe != null;
+        if (recipe == null)
             return;
-
-        var recipe = _prototypeManager.Index(recipeProto.Value);
 
         FabricatingDisplayContainer.Children.Clear();
         FabricatingDisplayContainer.AddChild(GetRecipeDisplayControl(recipe));

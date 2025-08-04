@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.Examine;
-using Content.Client.Hands.Systems;
 using Content.Client.Strip;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
@@ -35,7 +34,6 @@ namespace Content.Client.Inventory
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
         private readonly ExamineSystem _examine;
-        private readonly HandsSystem _hands;
         private readonly InventorySystem _inv;
         private readonly SharedCuffableSystem _cuffable;
         private readonly StrippableSystem _strippable;
@@ -52,22 +50,9 @@ namespace Content.Client.Inventory
         [ViewVariables]
         private readonly EntityUid _virtualHiddenEntity;
 
-        /// <summary>
-        /// The current amount of added hand buttons.
-        /// </summary>
-        [ViewVariables]
-        private int _handCount;
-
-        /// <summary>
-        /// The current shape of the inventory, needed to calculate the window size.
-        /// </summary>
-        [ViewVariables]
-        private Vector2i _inventoryDimensions;
-
         public StrippableBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
             _examine = EntMan.System<ExamineSystem>();
-            _hands = EntMan.System<HandsSystem>();
             _inv = EntMan.System<InventorySystem>();
             _cuffable = EntMan.System<SharedCuffableSystem>();
             _strippable = EntMan.System<StrippableSystem>();
@@ -108,8 +93,6 @@ namespace Content.Client.Inventory
                 return;
 
             _strippingMenu.ClearButtons();
-            _handCount = 0;
-            _inventoryDimensions = Vector2i.Zero;
 
             if (EntMan.TryGetComponent<InventoryComponent>(Owner, out var inv))
             {
@@ -123,28 +106,28 @@ namespace Content.Client.Inventory
             {
                 // good ol hands shit code. there is a GuiHands comparer that does the same thing... but these are hands
                 // and not gui hands... which are different...
-                foreach (var (id, hand) in handsComp.Hands)
+                foreach (var hand in handsComp.Hands.Values)
                 {
                     if (hand.Location != HandLocation.Right)
                         continue;
 
-                    AddHandButton((Owner, handsComp), id, hand);
+                    AddHandButton(hand);
                 }
 
-                foreach (var (id, hand) in handsComp.Hands)
+                foreach (var hand in handsComp.Hands.Values)
                 {
                     if (hand.Location != HandLocation.Middle)
                         continue;
 
-                    AddHandButton((Owner, handsComp), id, hand);
+                    AddHandButton(hand);
                 }
 
-                foreach (var (id, hand) in handsComp.Hands)
+                foreach (var hand in handsComp.Hands.Values)
                 {
                     if (hand.Location != HandLocation.Left)
                         continue;
 
-                    AddHandButton((Owner, handsComp), id, hand);
+                    AddHandButton(hand);
                 }
             }
 
@@ -169,35 +152,26 @@ namespace Content.Client.Inventory
             // TODO allow windows to resize based on content's desired size
 
             // for now: shit-code
-            // calculate the window size manually
-            // +20 horizontally and vertically from the ContentsContainer margin
-            // +16 vertically from the BoxContainer margin
-            // +27 vertically from the window header
-            var horizontalMenuSize = Math.Max(200, Math.Max(_handCount, _inventoryDimensions.X + 1) * (SlotControl.DefaultButtonSize + ButtonSeparation) + 20);
-            var verticalMenuSize = Math.Max(200, (_inventoryDimensions.Y + (_handCount > 0 ? 2 : 1)) * (SlotControl.DefaultButtonSize + ButtonSeparation) + 53);
-            if (snare?.IsEnsnared == true)
-                verticalMenuSize += 20;
-            _strippingMenu.SetSize = new Vector2(horizontalMenuSize, verticalMenuSize);
+            // this breaks for drones (too many hands, lots of empty vertical space), and looks shit for monkeys and the like.
+            // but the window is realizable, so eh.
+            _strippingMenu.SetSize = new Vector2(220, snare?.IsEnsnared == true ? 550 : 530);
         }
 
-        private void AddHandButton(Entity<HandsComponent> ent, string handId, Hand hand)
+        private void AddHandButton(Hand hand)
         {
-            var button = new HandButton(handId, hand.Location);
+            var button = new HandButton(hand.Name, hand.Location);
 
             button.Pressed += SlotPressed;
 
-            var heldEntity = _hands.GetHeldItem(ent.AsNullable(), handId);
-            if (EntMan.TryGetComponent<VirtualItemComponent>(heldEntity, out var virt))
+            if (EntMan.TryGetComponent<VirtualItemComponent>(hand.HeldEntity, out var virt))
             {
                 button.Blocked = true;
                 if (EntMan.TryGetComponent<CuffableComponent>(Owner, out var cuff) && _cuffable.GetAllCuffs(cuff).Contains(virt.BlockingEntity))
                     button.BlockedRect.MouseFilter = MouseFilterMode.Ignore;
             }
 
-            UpdateEntityIcon(button, heldEntity);
+            UpdateEntityIcon(button, hand.HeldEntity);
             _strippingMenu!.HandsContainer.AddChild(button);
-            LayoutContainer.SetPosition(button, new Vector2i(_handCount, 0) * (SlotControl.DefaultButtonSize + ButtonSeparation));
-            _handCount++;
         }
 
         private void SlotPressed(GUIBoundKeyEventArgs ev, SlotControl slot)
@@ -246,10 +220,6 @@ namespace Content.Client.Inventory
             UpdateEntityIcon(button, entity);
 
             LayoutContainer.SetPosition(button, slotDef.StrippingWindowPos * (SlotControl.DefaultButtonSize + ButtonSeparation));
-            if (slotDef.StrippingWindowPos.X > _inventoryDimensions.X)
-                _inventoryDimensions = new Vector2i(slotDef.StrippingWindowPos.X, _inventoryDimensions.Y);
-            if (slotDef.StrippingWindowPos.Y > _inventoryDimensions.Y)
-                _inventoryDimensions = new Vector2i(_inventoryDimensions.X, slotDef.StrippingWindowPos.Y);
         }
 
         private void UpdateEntityIcon(SlotControl button, EntityUid? entity)

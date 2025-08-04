@@ -4,8 +4,8 @@ using Content.Shared.Mapping;
 using Content.Shared.Maps;
 using Robust.Client.Placement;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using static Robust.Shared.Utility.SpriteSpecifier;
 
 namespace Content.Client.Mapping;
 
@@ -14,10 +14,16 @@ public sealed partial class MappingSystem : EntitySystem
     [Dependency] private readonly IPlacementManager _placementMan = default!;
     [Dependency] private readonly ITileDefinitionManager _tileMan = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
 
-    public static readonly EntProtoId SpawnAction = "BaseMappingSpawnAction";
-    public static readonly EntProtoId EraserAction = "ActionMappingEraser";
+    /// <summary>
+    ///     The icon to use for space tiles.
+    /// </summary>
+    private readonly SpriteSpecifier _spaceIcon = new Texture(new ("Tiles/cropped_parallax.png"));
+
+    /// <summary>
+    ///     The icon to use for entity-eraser.
+    /// </summary>
+    private readonly SpriteSpecifier _deleteIcon = new Texture(new ("Interface/VerbIcons/delete.svg.192dpi.png"));
 
     public override void Initialize()
     {
@@ -32,46 +38,90 @@ public sealed partial class MappingSystem : EntitySystem
     ///     some entity or tile into an action. This is somewhat janky, but it seem to work well enough. Though I'd
     ///     prefer if it were to function more like DecalPlacementSystem.
     /// </summary>
-    private void OnFillActionSlot(FillActionSlotEvent args)
+    private void OnFillActionSlot(FillActionSlotEvent ev)
     {
         if (!_placementMan.IsActive)
             return;
 
-        if (args.Action != null)
+        if (ev.Action != null)
             return;
 
-        if (_placementMan.CurrentPermission is {} permission)
-        {
-            var ev = new StartPlacementActionEvent()
-            {
-                EntityType = permission.EntityType,
-                PlacementOption = permission.PlacementOption,
-            };
+        var actionEvent = new StartPlacementActionEvent();
+        ITileDefinition? tileDef = null;
 
-            var action = Spawn(SpawnAction);
+        if (_placementMan.CurrentPermission != null)
+        {
+            actionEvent.EntityType = _placementMan.CurrentPermission.EntityType;
+            actionEvent.PlacementOption = _placementMan.CurrentPermission.PlacementOption;
+
             if (_placementMan.CurrentPermission.IsTile)
             {
-                if (_tileMan[_placementMan.CurrentPermission.TileType] is not ContentTileDefinition tileDef)
-                    return;
-
-                if (!tileDef.MapAtmosphere && tileDef.Sprite is {} sprite)
-                    _actions.SetIcon(action, new SpriteSpecifier.Texture(sprite));
-                ev.TileId = tileDef.ID;
-                _metaData.SetEntityName(action, Loc.GetString(tileDef.Name));
+                tileDef = _tileMan[_placementMan.CurrentPermission.TileType];
+                actionEvent.TileId = tileDef.ID;
             }
-            else if (permission.EntityType is {} id)
-            {
-                _actions.SetIcon(action, new SpriteSpecifier.EntityPrototype(id));
-                _metaData.SetEntityName(action, id);
-            }
-
-            _actions.SetEvent(action, ev);
-            args.Action = action;
         }
         else if (_placementMan.Eraser)
         {
-            args.Action = Spawn(EraserAction);
+            actionEvent.Eraser = true;
         }
+        else
+            return;
+
+        InstantActionComponent action;
+        string name;
+
+        if (tileDef != null)
+        {
+            if (tileDef is not ContentTileDefinition contentTileDef)
+                return;
+
+            var tileIcon = contentTileDef.MapAtmosphere
+                ? _spaceIcon
+                : new Texture(contentTileDef.Sprite!.Value);
+
+            action = new InstantActionComponent
+            {
+                ClientExclusive = true,
+                CheckCanInteract = false,
+                Event = actionEvent,
+                Icon = tileIcon
+            };
+
+            name = Loc.GetString(tileDef.Name);
+        }
+        else if (actionEvent.Eraser)
+        {
+            action = new InstantActionComponent
+            {
+                ClientExclusive = true,
+                CheckCanInteract = false,
+                Event = actionEvent,
+                Icon = _deleteIcon,
+            };
+
+            name = Loc.GetString("action-name-mapping-erase");
+        }
+        else
+        {
+            if (string.IsNullOrWhiteSpace(actionEvent.EntityType))
+                return;
+
+            action = new InstantActionComponent
+            {
+                ClientExclusive = true,
+                CheckCanInteract = false,
+                Event = actionEvent,
+                Icon = new EntityPrototype(actionEvent.EntityType),
+            };
+
+            name = actionEvent.EntityType;
+        }
+
+        var actionId = Spawn(null);
+        AddComp<Component>(actionId, action);
+        _metaData.SetEntityName(actionId, name);
+
+        ev.Action = actionId;
     }
 
     private void OnStartPlacementAction(StartPlacementActionEvent args)

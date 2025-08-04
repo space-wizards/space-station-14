@@ -17,7 +17,7 @@
     zombificationResistanceCoefficient: 0.35
   - type: GroupExamine
   - type: ClothingSpeedModifier
-    walkModifier: 0.95
+    walkModifier: 1
     sprintModifier: 0.95
 
 - type: entity

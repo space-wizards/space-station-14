@@ -64,10 +64,10 @@ public struct AtmosPipeChunk(Vector2i origin)
 
     /// <summary>
     /// Bitmask look up for atmos pipes, 1 for occupied and 0 for empty.
-    /// Indexed by the net ID, layer and color hexcode of the pipe
+    /// Indexed by the color hexcode of the pipe
     /// </summary>
     [ViewVariables]
-    public Dictionary<AtmosMonitoringConsoleSubnet, ulong> AtmosPipeData = new();
+    public Dictionary<(int, string), ulong> AtmosPipeData = new();
 
     /// <summary>
     /// The last game tick that the chunk was updated
@@ -90,7 +90,7 @@ public struct AtmosDeviceNavMapData
     public NetCoordinates NetCoordinates;
 
     /// <summary>
-    /// The associated pipe network ID
+    /// The associated pipe network ID 
     /// </summary>
     public int NetId = -1;
 
@@ -110,20 +110,9 @@ public struct AtmosDeviceNavMapData
     public Color PipeColor;
 
     /// <summary>
-    /// The pipe layer the entity is on
-    /// </summary>
-    public AtmosPipeLayer PipeLayer;
-
-    /// <summary>
     /// Populate the atmos monitoring console nav map with a single entity
     /// </summary>
-    public AtmosDeviceNavMapData(NetEntity netEntity,
-        NetCoordinates netCoordinates,
-        int netId,
-        ProtoId<NavMapBlipPrototype> navMapBlip,
-        Direction direction,
-        Color pipeColor,
-        AtmosPipeLayer pipeLayer)
+    public AtmosDeviceNavMapData(NetEntity netEntity, NetCoordinates netCoordinates, int netId, ProtoId<NavMapBlipPrototype> navMapBlip, Direction direction, Color pipeColor)
     {
         NetEntity = netEntity;
         NetCoordinates = netCoordinates;
@@ -131,7 +120,6 @@ public struct AtmosDeviceNavMapData
         NavMapBlip = navMapBlip;
         Direction = direction;
         PipeColor = pipeColor;
-        PipeLayer = pipeLayer;
     }
 }
 
@@ -166,7 +154,7 @@ public struct AtmosMonitoringConsoleEntry
     public NetCoordinates Coordinates;
 
     /// <summary>
-    /// The associated pipe network ID
+    /// The associated pipe network ID 
     /// </summary>
     public int NetId = -1;
 
@@ -196,7 +184,7 @@ public struct AtmosMonitoringConsoleEntry
     public float TotalMolData;
 
     /// <summary>
-    /// Mol and percentage for all detected gases
+    /// Mol and percentage for all detected gases 
     /// </summary>
     public Dictionary<Gas, float> GasData = new();
 
@@ -227,16 +215,6 @@ public struct AtmosMonitoringConsoleEntry
         Address = address;
     }
 }
-
-/// <summary>
-/// Used to group atmos pipe chunks into subnets based on their properties and
-/// improve the efficiency of rendering these chunks on the atmos monitoring console.
-/// </summary>
-/// <param name="NetId">The associated network ID.</param>
-/// <param name="PipeLayer">The associated pipe layer.</param>
-/// <param name="HexCode">The color of the pipe.</param>
-[Serializable, NetSerializable]
-public record AtmosMonitoringConsoleSubnet(int NetId, AtmosPipeLayer PipeLayer, string HexCode);
 
 public enum AtmosPipeChunkDataFacing : byte
 {

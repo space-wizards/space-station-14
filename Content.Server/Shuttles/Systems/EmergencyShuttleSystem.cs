@@ -323,7 +323,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     /// </summary>
     public void AnnounceShuttleDock(ShuttleDockResult result, bool extended)
     {
-        var stationShuttleComp = result.Station.Comp;
         var shuttle = result.Station.Comp.EmergencyShuttle;
 
         DebugTools.Assert(shuttle != null);
@@ -332,11 +331,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         {
             _chatSystem.DispatchStationAnnouncement(
                 result.Station,
-                Loc.GetString(stationShuttleComp.FailureAnnouncement),
+                Loc.GetString("emergency-shuttle-good-luck"),
                 playDefaultSound: false);
 
             // TODO: Need filter extensions or something don't blame me.
-            _audio.PlayGlobal(stationShuttleComp.FailureAudio, Filter.Broadcast(), true);
+            _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), true);
             return;
         }
 
@@ -355,10 +354,10 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         var location = FormattedMessage.RemoveMarkupPermissive(
             _navMap.GetNearestBeaconString((shuttle.Value, Transform(shuttle.Value))));
 
-        var extendedText = extended ? Loc.GetString(stationShuttleComp.LaunchExtendedMessage) : "";
+        var extendedText = extended ? Loc.GetString("emergency-shuttle-extended") : "";
         var locKey = result.ResultType == ShuttleDockResultType.NoDock
-            ? stationShuttleComp.NearbyAnnouncement
-            : stationShuttleComp.DockedAnnouncement;
+            ? "emergency-shuttle-nearby"
+            : "emergency-shuttle-docked";
 
         _chatSystem.DispatchStationAnnouncement(
             result.Station,
@@ -391,8 +390,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         // Play announcement audio.
 
         var audioFile = result.ResultType == ShuttleDockResultType.NoDock
-            ? stationShuttleComp.NearbyAudio
-            : stationShuttleComp.DockedAudio;
+            ? "/Audio/Misc/notice1.ogg"
+            : "/Audio/Announcements/shuttle_dock.ogg";
 
         // TODO: Need filter extensions or something don't blame me.
         _audio.PlayGlobal(audioFile, Filter.Broadcast(), true);
