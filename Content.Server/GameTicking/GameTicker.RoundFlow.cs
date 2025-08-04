@@ -79,7 +79,7 @@ namespace Content.Server.GameTicking
         public bool CanUpdateMap()
         {
             return RunLevel == GameRunLevel.PreRoundLobby &&
-                   _roundStartTime - RoundPreloadTime > _gameTiming.CurTime;
+                   RoundStartTime - RoundPreloadTime > _gameTiming.CurTime;
         }
 
         /// <summary>
@@ -438,6 +438,7 @@ namespace Content.Server.GameTicking
             AnnounceRound();
             UpdateInfoText();
             SendRoundStartedDiscordMessage();
+            _discordStatusLink.UpdateStatus();
 
 #if EXCEPTION_TOLERANCE
             }
@@ -673,7 +674,7 @@ namespace Content.Server.GameTicking
                 if (_playerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
                 else
-                    _roundStartTime = _gameTiming.CurTime + LobbyDuration;
+                    RoundStartTime = _gameTiming.CurTime + LobbyDuration;
 
                 SendStatusToAll();
                 UpdateInfoText();
@@ -749,9 +750,9 @@ namespace Content.Server.GameTicking
                 return false;
             }
 
-            _roundStartTime += time;
+            RoundStartTime += time;
 
-            RaiseNetworkEvent(new TickerLobbyCountdownEvent(_roundStartTime, Paused));
+            RaiseNetworkEvent(new TickerLobbyCountdownEvent(RoundStartTime, Paused));
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("game-ticker-delay-start", ("seconds", time.TotalSeconds)));
 
@@ -765,21 +766,21 @@ namespace Content.Server.GameTicking
                 RoundLengthMetric.Inc(frameTime);
             }
 
-            if (_roundStartTime == TimeSpan.Zero ||
+            if (RoundStartTime == TimeSpan.Zero ||
                 RunLevel != GameRunLevel.PreRoundLobby ||
                 Paused ||
-                _roundStartTime - RoundPreloadTime > _gameTiming.CurTime ||
+                RoundStartTime - RoundPreloadTime > _gameTiming.CurTime ||
                 _roundStartCountdownHasNotStartedYetDueToNoPlayers)
             {
                 return;
             }
 
-            if (_roundStartTime < _gameTiming.CurTime)
+            if (RoundStartTime < _gameTiming.CurTime)
             {
                 StartRound();
             }
             // Preload maps so we can start faster
-            else if (_roundStartTime - RoundPreloadTime < _gameTiming.CurTime)
+            else if (RoundStartTime - RoundPreloadTime < _gameTiming.CurTime)
             {
                 LoadMaps();
             }

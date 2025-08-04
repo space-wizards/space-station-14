@@ -82,6 +82,18 @@ public sealed partial class CCVars
         CVarDef.Create("discord.prefix", "!", CVar.SERVERONLY);
 
     /// <summary>
+    ///     The amount in seconds for swapping between statuses. Note that this will be added on top of the amount the messages set themselves.
+    /// </summary>
+    public static readonly CVarDef<int> DiscordStatusSwapBaseDelay
+        = CVarDef.Create("discord.status.swap_base_delay", 10, CVar.SERVERONLY);
+
+    /// <summary>
+    ///     If the Discord integration should set a status on the bot.
+    /// </summary>
+    public static readonly CVarDef<bool> DiscordStatusEnabled
+        = CVarDef.Create("discord.status.enabled", true, CVar.SERVERONLY);
+
+    /// <summary>
     ///     URL of the Discord webhook which will relay watchlist connection notifications. If left empty, disables the webhook.
     /// </summary>
     public static readonly CVarDef<string> DiscordWatchlistConnectionWebhook =
