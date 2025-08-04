@@ -19,10 +19,6 @@
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-absinthe
     icon: 
@@ -42,14 +38,10 @@
 
 - type: entity
   id: RRCardMetabolizeAle
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-ale
     icon: 
@@ -69,14 +61,10 @@
 
 - type: entity
   id: RRCardMetabolizeBeer
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-beer
     icon: 
@@ -96,14 +84,10 @@
 
 - type: entity
   id: RRCardMetabolizeBlueCuracao
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-bluecuracao
     icon: 
@@ -123,14 +107,10 @@
 
 - type: entity
   id: RRCardMetabolizeCognac
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-cognac
     icon: 
@@ -150,7 +130,7 @@
 
 - type: entity
   id: RRCardMetabolizeDeadRum
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
@@ -177,14 +157,10 @@
 
 - type: entity
   id: RRCardMetabolizeGin
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-gin
     icon: 
@@ -204,14 +180,10 @@
 
 - type: entity
   id: RRCardMetabolizeCoffeeLiqueur
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-coffeeliqueur
     icon: 
@@ -231,14 +203,10 @@
 
 - type: entity
   id: RRCardMetabolizeMelonLiquor
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-melonliquor
     icon: 
@@ -258,14 +226,10 @@
 
 - type: entity
   id: RRCardMetabolizeNTCahors
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-ntcahors
     icon: 
@@ -285,14 +249,10 @@
 
 - type: entity
   id: RRCardMetabolizePoisonWine
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-poisonwine
     icon: 
@@ -312,14 +272,10 @@
 
 - type: entity
   id: RRCardMetabolizeRum
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-rum
     icon: 
@@ -339,14 +295,10 @@
 
 - type: entity
   id: RRCardMetabolizeSake
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-sake
     icon: 
@@ -366,14 +318,10 @@
 
 - type: entity
   id: RRCardMetabolizeTequila
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-tequila
     icon: 
@@ -393,14 +341,10 @@
 
 - type: entity
   id: RRCardMetabolizeVermouth
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-vermouth
     icon: 
@@ -420,14 +364,10 @@
 
 - type: entity
   id: RRCardMetabolizeVodka
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-vodka
     icon: 
@@ -447,14 +387,10 @@
 
 - type: entity
   id: RRCardMetabolizeWhiskey
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-whiskey
     icon: 
@@ -474,14 +410,10 @@
 
 - type: entity
   id: RRCardMetabolizeWine
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
-  - type: RailroadSpawnFlow
-    count:
-      min: 1
-      max: 3
   - type: RailroadCard
     title: rr-wine
     icon: 
@@ -501,7 +433,7 @@
 
 - type: entity
   id: RRCardMetabolizeChampagne
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
@@ -528,7 +460,7 @@
 
 - type: entity
   id: RRCardMetabolizeAcidSpit
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
@@ -555,7 +487,7 @@
 
 - type: entity
   id: RRCardMetabolizeAlienBrainHemorrhage
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
@@ -582,7 +514,7 @@
 
 - type: entity
   id: RRCardMetabolizeAlliesCocktail
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
@@ -609,7 +541,7 @@
 
 - type: entity
   id: RRCardMetabolizeAmasec
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
@@ -636,7 +568,7 @@
 
 - type: entity
   id: RRCardMetabolizeAndalusia
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
@@ -663,7 +595,7 @@
 
 - type: entity
   id: RRCardMetabolizeAntifreeze
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
@@ -690,7 +622,7 @@
 
 - type: entity
   id: RRCardMetabolizeAtomicBomb
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
@@ -717,7 +649,7 @@
 
 - type: entity
   id: RRCardMetabolizeB52
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
@@ -730,16 +662,6 @@
     icon: 
     iconColor: '#ED9f2296' # Difficult
     color: '#398bce' # Rare
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-b52-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: B52
@@ -754,7 +676,7 @@
 
 - type: entity
   id: RRCardMetabolizeBahamaMama
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
@@ -781,7 +703,7 @@
 
 - type: entity
   id: RRCardMetabolizeBananaHonk
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
@@ -808,7 +730,7 @@
 
 - type: entity
   id: RRCardMetabolizeBarefoot
-  parent: MetabolizeDrinkCondition
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   components:
