@@ -72,13 +72,17 @@ namespace Content.Shared.Atmos.EntitySystems
             [ViewVariables]
             public readonly byte[] Opacity;
 
+            [ViewVariables]
+            public readonly byte FireType;
+
             // TODO change fire color based on temps
             // But also: dont dirty on a 0.01 kelvin change in temperatures.
             // Either have a temp tolerance, or map temperature -> byte levels
 
-            public GasOverlayData(byte fireState, byte[] opacity)
+            public GasOverlayData(byte fireState, byte type, byte[] opacity)
             {
                 FireState = fireState;
+                FireType = type;
                 Opacity = opacity;
             }
 

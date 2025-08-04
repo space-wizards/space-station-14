@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.TileReactions;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
@@ -58,6 +59,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly TileFrictionController _tile = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly AtmosphereSystem _atmos = default!;
 
     // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
     // loses & then gains reagents in a single tick.
@@ -303,6 +305,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         base.Update(frameTime);
         foreach (var ent in _deletionQueue)
         {
+            UpdateFlammability(ent, null);
             Del(ent);
         }
 
@@ -325,9 +328,23 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
 
         _deletionQueue.Remove(entity);
+        UpdateFlammability((entity.Owner, entity.Comp), args.Solution);
         UpdateSlip((entity, entity.Comp), args.Solution);
         UpdateSlow(entity, args.Solution);
         UpdateEvaporation(entity, args.Solution);
+    }
+
+    private void UpdateFlammability(Entity<PuddleComponent?> entity, Solution? solution)
+    {
+        if (solution is null)
+        {
+            _atmos.SetPuddleFlammabilityAtTile(entity.Owner, 0);
+            return;
+        }
+
+        var flammability = solution.GetSolutionFlammability(_prototypeManager);
+        _atmos.SetPuddleFlammabilityAtTile(entity.Owner, flammability);
+
     }
 
     private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
