@@ -1,9 +1,11 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Speech.Components.AccentComponents;
 
 /// <summary>
 /// Yarr, matey!
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class PirateAccentComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]

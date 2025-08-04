@@ -1,17 +1,14 @@
 using System.Text;
 using System.Text.RegularExpressions;
-using Content.Shared.Speech;
-using Content.Shared.Speech.Components;
-using Content.Shared.Speech.EntitySystems;
+using Content.Shared.Speech.Components.AccentComponents;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Speech.EntitySystems.AccentSystems;
 
-public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
+// TODO: This does not use AccentSystem<RatvarianLanguageComponent> to allow it to do AccentGetEvent with the "before" argument. Find a way to convert this behavior to be AccentSystem-compatible.
+public sealed class RatvarianLanguageSystem : EntitySystem
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
-
     private static readonly ProtoId<StatusEffectPrototype> RatvarianKey = "RatvarianLanguage";
 
     // This is the word of Ratvar and those who speak it shall abide by His rules:
@@ -41,23 +38,15 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
     public override void Initialize()
     {
         // Activate before other modifications so translation works properly
-        SubscribeLocalEvent<RatvarianLanguageComponent, AccentGetEvent>(OnAccent, before: new[] {typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)});
+        SubscribeLocalEvent<RatvarianLanguageComponent, AccentGetEvent>(OnAccent, before: new[] {typeof(SlurredAccentSystem), typeof(StutteringAccentSystem)});
     }
 
-    public override void DoRatvarian(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null)
+    private void OnAccent(Entity<RatvarianLanguageComponent> entity, ref AccentGetEvent args)
     {
-        if (!Resolve(uid, ref status, false))
-            return;
-
-        _statusEffects.TryAddStatusEffect<RatvarianLanguageComponent>(uid, RatvarianKey, time, refresh, status);
+        args.Message = Accentuate(entity, args.Message);
     }
 
-    private void OnAccent(EntityUid uid, RatvarianLanguageComponent component, AccentGetEvent args)
-    {
-        args.Message = Translate(args.Message);
-    }
-
-    private string Translate(string message)
+    public string Accentuate(Entity<RatvarianLanguageComponent>? entity, string message)
     {
         var ruleTranslation = message;
         var finalMessage = new StringBuilder();

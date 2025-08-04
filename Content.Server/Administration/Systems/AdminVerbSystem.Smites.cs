@@ -13,7 +13,6 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
-using Content.Server.Speech.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
@@ -39,6 +38,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Slippery;
+using Content.Shared.Speech.Components.AccentComponents;
 using Content.Shared.Stunnable;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tools.Systems;
@@ -906,7 +906,7 @@ public sealed partial class AdminVerbSystem
                 EnsureComp<BleatingAccentComponent>(args.Target);
                 EnsureComp<FrenchAccentComponent>(args.Target);
                 EnsureComp<GermanAccentComponent>(args.Target);
-                EnsureComp<Shared.Speech.Components.AccentComponents.LizardAccentComponent>(args.Target);
+                EnsureComp<LizardAccentComponent>(args.Target);
                 EnsureComp<MobsterAccentComponent>(args.Target);
                 EnsureComp<MothAccentComponent>(args.Target);
                 EnsureComp<OwOAccentComponent>(args.Target);
@@ -917,7 +917,7 @@ public sealed partial class AdminVerbSystem
 
                 if (_random.Next(0, 8) == 0)
                 {
-                    EnsureComp<Shared.Speech.Components.AccentComponents.BackwardsAccentComponent>(args.Target); // was asked to make this at a low chance idk
+                    EnsureComp<BackwardsAccentComponent>(args.Target); // was asked to make this at a low chance idk
                 }
             },
             Impact = LogImpact.Extreme,

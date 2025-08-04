@@ -1,9 +1,11 @@
-﻿namespace Content.Shared.Speech.Components.AccentComponents;
+﻿using Robust.Shared.GameStates;
+
+namespace Content.Shared.Speech.Components.AccentComponents;
 
 /// <summary>
 /// Nyehh, my gabagool, see?
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class MobsterAccentComponent : Component
 {
     /// <summary>

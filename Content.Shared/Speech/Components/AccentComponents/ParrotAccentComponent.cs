@@ -1,9 +1,11 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Speech.Components.AccentComponents;
 
 /// <summary>
 /// Makes this entity speak like a parrot in all chat messages it sends. SQUAWK!
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ParrotAccentComponent : Component
 {
     /// <summary>

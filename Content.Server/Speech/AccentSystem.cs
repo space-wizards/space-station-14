@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using Content.Server.Chat.Systems;
 using Content.Shared.Speech;
 
@@ -6,8 +5,6 @@ namespace Content.Server.Speech;
 
 public sealed class AccentSystem : EntitySystem
 {
-    public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?‽])(?![\.!\?‽])", RegexOptions.Compiled);
-
     public override void Initialize()
     {
         SubscribeLocalEvent<TransformSpeechEvent>(AccentHandler);

@@ -1,26 +1,17 @@
 ﻿using System.Text.RegularExpressions;
-using Content.Server.Speech.Components;
-using Content.Shared.Speech;
+using Content.Shared.Speech.Components.AccentComponents;
 using Robust.Shared.Random;
 
-namespace Content.Server.Speech.EntitySystems;
+namespace Content.Shared.Speech.EntitySystems.AccentSystems;
 
-public sealed partial class SkeletonAccentSystem : EntitySystem
+public sealed partial class SkeletonAccentSystem : AccentSystem<SkeletonAccentComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
-    [GeneratedRegex(@"(?<!\w)[^aeiou]one", RegexOptions.IgnoreCase, "en-US")]
-    private static partial Regex BoneRegex();
+    private static readonly Regex BoneRegex = new(@"(?<!\w)[^aeiou]one");
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SkeletonAccentComponent, AccentGetEvent>(OnAccentGet);
-    }
-
-    public string Accentuate(string message, SkeletonAccentComponent component)
+    public override string Accentuate(Entity<SkeletonAccentComponent>? entity, string message)
     {
         // Order:
         // Do character manipulations first
@@ -31,21 +22,16 @@ public sealed partial class SkeletonAccentSystem : EntitySystem
 
         // Character manipulations:
         // At the start of words, any non-vowel + "one" becomes "bone", e.g. tone -> bone ; lonely -> bonely; clone -> clone (remains unchanged).
-        msg = BoneRegex().Replace(msg, "bone");
+        msg = BoneRegex.Replace(msg, "bone");
 
         // apply word replacements
         msg = _replacement.ApplyReplacements(msg, "skeleton");
 
         // Suffix:
-        if (_random.Prob(component.ackChance))
+        if (entity == null || _random.Prob(entity.Value.Comp.AckChance))
         {
             msg += (" " + Loc.GetString("skeleton-suffix")); // e.g. "We only want to socialize. ACK ACK!"
         }
         return msg;
-    }
-
-    private void OnAccentGet(EntityUid uid, SkeletonAccentComponent component, AccentGetEvent args)
-    {
-        args.Message = Accentuate(args.Message, component);
     }
 }

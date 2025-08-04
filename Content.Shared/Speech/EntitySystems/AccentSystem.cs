@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Speech.EntitySystems;
+﻿using System.Text.RegularExpressions;
+
+namespace Content.Shared.Speech.EntitySystems;
 
 /// <summary>
 ///     An abstract entity system inheritor for accent systems.
@@ -6,6 +8,8 @@
 public abstract class AccentSystem<T> : EntitySystem
     where T: Component
 {
+    public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?‽])(?![\.!\?‽])", RegexOptions.Compiled);
+
     public override void Initialize()
     {
         base.Initialize();

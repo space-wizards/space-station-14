@@ -7,9 +7,10 @@ public sealed class OwOAccentSystem : AccentSystem<OwOAccentComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    private static readonly IReadOnlyList<string> Faces = new List<string>{
+    private static readonly List<string> Faces = new()
+    {
         " (•`ω´•)", " ;;w;;", " owo", " UwU", " >w<", " ^w^"
-    }.AsReadOnly();
+    };
 
     private static readonly IReadOnlyDictionary<string, string> SpecialWords = new Dictionary<string, string>()
     {

@@ -1,41 +1,20 @@
 using System.Text;
-using Content.Server.Speech.Components;
 using Content.Shared.Drunk;
-using Content.Shared.Speech;
-using Content.Shared.Speech.EntitySystems;
+using Content.Shared.Speech.Components.AccentComponents;
 using Content.Shared.StatusEffect;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Speech.EntitySystems;
+namespace Content.Shared.Speech.EntitySystems.AccentSystems;
 
-public sealed class SlurredSystem : SharedSlurredSystem
+public sealed class SlurredAccentSystem : AccentSystem<SlurredAccentComponent>
 {
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private static readonly ProtoId<StatusEffectPrototype> SlurKey = "SlurredSpeech";
-
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<SlurredAccentComponent, AccentGetEvent>(OnAccent);
-    }
-
-    public override void DoSlur(EntityUid uid, TimeSpan time, StatusEffectsComponent? status = null)
-    {
-        if (!Resolve(uid, ref status, false))
-            return;
-
-        if (!_statusEffectsSystem.HasStatusEffect(uid, SlurKey, status))
-            _statusEffectsSystem.TryAddStatusEffect<SlurredAccentComponent>(uid, SlurKey, time, true, status);
-        else
-            _statusEffectsSystem.TryAddTime(uid, SlurKey, time, status);
-    }
-
     /// <summary>
-    ///     Slur chance scales with "drunkeness", which is just measured using the time remaining on the status effect.
+    /// Slur chance scales with "drunkeness", which is just measured using the time remaining on the status effect.
     /// </summary>
     private float GetProbabilityScale(EntityUid uid)
     {
@@ -47,15 +26,11 @@ public sealed class SlurredSystem : SharedSlurredSystem
         return Math.Clamp((timeLeft - 80) / 1100, 0f, 1f);
     }
 
-    private void OnAccent(EntityUid uid, SlurredAccentComponent component, AccentGetEvent args)
-    {
-        var scale = GetProbabilityScale(uid);
-        args.Message = Accentuate(args.Message, scale);
-    }
-
-    private string Accentuate(string message, float scale)
+    public override string Accentuate(Entity<SlurredAccentComponent>? entity, string message)
     {
         var sb = new StringBuilder();
+
+        var scale = entity != null ? GetProbabilityScale(entity.Value) : 0.5f;
 
         // This is pretty much ported from TG.
         foreach (var character in message)

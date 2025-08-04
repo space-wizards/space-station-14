@@ -7,9 +7,10 @@ public sealed class BarkAccentSystem : AccentSystem<BarkAccentComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    private static readonly IReadOnlyList<string> Barks = new List<string>{
-        " Woof!", " WOOF", " wof-wof"
-    }.AsReadOnly();
+    private static readonly List<string> Barks = new()
+    {
+        " Woof!", " WOOF", " wof-wof",
+    };
 
     private static readonly IReadOnlyDictionary<string, string> SpecialWords = new Dictionary<string, string>()
     {

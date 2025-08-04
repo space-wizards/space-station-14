@@ -1,19 +1,18 @@
 ﻿using System.Text;
-using Content.Server.Destructible;
-using Content.Server.PowerCell;
 using Content.Shared.Speech.Components;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.Speech;
 using Robust.Shared.Random;
 
-namespace Content.Server.Speech.EntitySystems;
+namespace Content.Shared.Speech.EntitySystems.AccentSystems;
 
+// TODO: This does not use AccentSystem<DamagedSiliconAccentComponent> to allow it to do AccentGetEvent with the "after" argument. Find a way to convert this behavior to be AccentSystem-compatible.
+// TODO: The original version of this system relied on Server-only components. The code must be further refactored to re-enable such functionality, as noted in code comments below.
 public sealed class DamagedSiliconAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
+
+    private static FixedPoint2 _damageAtMaxCorruption = 100f; // TODO: This is a temporary value until the DestructibleComponent is available in Shared.
 
     public override void Initialize()
     {
@@ -32,10 +31,11 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
             {
                 currentChargeLevel = ent.Comp.OverrideChargeLevel.Value;
             }
-            else if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
+            // TODO: Power is not in Shared, so this needs to be handled in a new way to enable this functionality.
+            /*else if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             {
                 currentChargeLevel = battery.CurrentCharge / battery.MaxCharge;
-            }
+            }*/
             currentChargeLevel = Math.Clamp(currentChargeLevel, 0.0f, 1.0f);
             // Corrupt due to low power (drops characters on longer messages)
             args.Message = CorruptPower(args.Message, currentChargeLevel, ent.Comp);
@@ -115,10 +115,12 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
         var damageAtMaxCorruption = ent.Comp.DamageAtMaxCorruption;
         if (damageAtMaxCorruption is null)
         {
-            if (!TryComp<DestructibleComponent>(ent, out var destructible))
+            damageAtMaxCorruption = _damageAtMaxCorruption; // TODO: This is a temporary value until the below functionality is implemented.
+            // TODO: Destructible is not in Shared, so this needs to be handled in a new way to enable this functionality.
+            /*if (!TryComp<DestructibleComponent>(ent, out var destructible))
                 return message;
 
-            damageAtMaxCorruption = _destructibleSystem.DestroyedAt(ent, destructible);
+            damageAtMaxCorruption = _destructibleSystem.DestroyedAt(ent, destructible);*/
         }
 
         // Linear interpolation of character damage probability
