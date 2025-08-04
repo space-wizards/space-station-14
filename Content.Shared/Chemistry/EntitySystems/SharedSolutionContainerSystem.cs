@@ -801,8 +801,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     {
         if (!args.IsInDetailsRange ||
             !CanSeeHiddenSolution(entity, args.Examiner) ||
-            !TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution) ||
-            Openable.IsClosed(entity.Owner, predicted: true))
+            !TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
+            return;
+
+        if (entity.Comp.CantSeeWhenClosed && Openable.IsClosed(entity.Owner, predicted: true))
             return;
 
         var primaryReagent = solution.GetPrimaryReagentId();
