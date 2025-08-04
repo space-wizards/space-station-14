@@ -20,7 +20,6 @@ public sealed class StunSystem : SharedStunSystem
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     #region Starlight
-    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly InputSystem _input = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
@@ -187,20 +186,6 @@ public sealed class StunSystem : SharedStunSystem
         };
     }
     #region Starlight
-    private bool OnUseSecondary(in PointerInputCmdHandler.PointerInputCmdArgs args)
-    {
-        if (args.Session?.AttachedEntity is not { Valid: true } uid)
-            return false;
-
-        if (_input.Predicted)
-            return false;
-
-        if (args.EntityUid != uid || !HasComp<KnockedDownComponent>(uid) || !_combat.IsInCombatMode(uid))
-            return false;
-
-        RaisePredictiveEvent(new ForceStandUpEvent());
-        return true;
-    }
 
     private void OnMovementInput(EntityUid uid, KnockedDownComponent component, MoveEvent args)
     {

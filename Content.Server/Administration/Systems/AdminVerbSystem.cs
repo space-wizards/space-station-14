@@ -17,6 +17,7 @@ using Content.Shared.Configurable;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;

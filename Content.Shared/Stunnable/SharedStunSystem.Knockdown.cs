@@ -44,7 +44,6 @@ public abstract partial class SharedStunSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
 
     private static readonly ProtoId<ItemSizePrototype> MaxItemSize = "Small";
 
@@ -260,12 +259,11 @@ public abstract partial class SharedStunSystem
         if (!stand || !TryStanding(playerEnt))
             CancelKnockdownDoAfter((playerEnt, component));
 
-        ToggleAutoStand(playerEnt, stand);
+        SetAutoStand(playerEnt, stand);
     }
 
     public bool TryStanding(Entity<KnockedDownComponent?, StandingStateComponent?> entity)
     {
-        id = null;
         // If we aren't knocked down or can't be knocked down, then we did technically succeed in standing up
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
             return true;
@@ -334,20 +332,6 @@ public abstract partial class SharedStunSystem
         SetAutoStand(entity.Owner);
         return true;
 
-    }
-
-    private bool CanStand(Entity<KnockedDownComponent> entity)
-    {
-        if (entity.Comp.NextUpdate > GameTiming.CurTime)
-            return false;
-
-        if (!_blocker.CanMove(entity))
-            return false;
-
-        var ev = new StandUpAttemptEvent();
-        RaiseLocalEvent(entity, ref ev);
-
-        return !ev.Cancelled;
     }
 
     private void OnForceStandup(ForceStandUpEvent msg, EntitySessionEventArgs args)

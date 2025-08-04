@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared._Starlight.Weapon.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -454,6 +455,20 @@ public abstract partial class SharedGunSystem : EntitySystem
         Appearance.SetData(uid, AmmoVisuals.Spent, spent);
     }
 
+    #region Starlight
+    public bool IsChamberClosed(EntityUid gunEntity)
+        => Appearance.TryGetData(gunEntity, AmmoVisuals.BoltClosed, out bool boltClosed) && boltClosed;
+
+    protected void SetCartridgeSpent(EntityUid uid, HitScanCartridgeAmmoComponent cartridge, bool spent)
+    {
+        if (cartridge.Spent != spent)
+            DirtyField(uid, cartridge, nameof(CartridgeAmmoComponent.Spent));
+
+        cartridge.Spent = spent;
+        Appearance.SetData(uid, AmmoVisuals.Spent, spent);
+    }
+    #endregion
+
     /// <summary>
     /// Drops a single cartridge / shell
     /// </summary>
@@ -610,6 +625,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Serializable, NetSerializable]
     public sealed class HitscanEvent : EntityEventArgs
     {
+        public ProtoId<HitscanPrototype> Hitscan;
         public List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)> Sprites = new();
     }
 }
