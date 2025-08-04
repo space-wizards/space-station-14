@@ -130,21 +130,54 @@
   suffix: Filled
   parent: LockerMiningSpecialist
   components:
-    - type: StorageFill
-      contents:
-        - id: ClothingUniformJumpsuitMiningSpecialist
-        - id: ClothingMaskGasExplorer
-        - id: ClothingBeltUtilityFilled
-        - id: SurvivalKnife
-        - id: HandheldGPSBasic
-        - id: RadioHandheld
-        - id: RadioHandheldExpedition
-        - id: AppraisalTool
-        - id: ClothingOuterHardsuitSpaceHazard
-        - id: Flare
-        - id: JetpackMiniFilled
-        - id: Pickaxe
-        - id: Shovel
-        - id: OreBag
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillMiningSpecialist
+
+- type: entity
+  id: LockerMiningSpecialistLargeFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerMiningSpecialistLarge
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillMiningSpecialistHardsuitSpaceHazard
+        - !type:NestedSelector
+          tableId: LockerFillMiningSpecialist
+
+- type: entity
+  id: LockerMiningSpecialistLargeFilled
+  suffix: Filled
+  parent: LockerMiningSpecialistLarge
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillMiningSpecialist
+
+- type: entityTable
+  id: LockerFillMiningSpecialist
+  table: !type:AllSelector
+    children:
+    - id: ClothingBeltUtilityFilled
+    - id: SurvivalKnife
+    - id: HandheldGPSBasic
+    - id: RadioHandheld
+    - id: RadioHandheldExpedition
+    - id: AppraisalTool
+    - id: JetpackMiniFilled
+    - id: Flare
+      amount: 3
+    - id: Pickaxe
+    - id: Shovel
+    - id: OreBag
 
 #DOTS - create large locker variant for mining specialist, as well as update their locker to have a fill
