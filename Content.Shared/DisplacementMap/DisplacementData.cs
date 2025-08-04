@@ -2,7 +2,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.DisplacementMap;
 
-[DataDefinition, Serializable, NetSerializable]
+[DataDefinition, NetSerializable, Serializable] // Moffstation - Made serializable and net serializable
 public sealed partial class DisplacementData
 {
     /// <summary>

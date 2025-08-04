@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.DisplacementMap; // Moffstation - Added a method to set displacement maps
 using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
@@ -304,4 +305,18 @@ public partial class InventorySystem : EntitySystem
             return false;
         }
     }
+
+    // Moffstation - Start - Allow the ability to set displacements on an inventory
+    /// <summary>
+    /// Sets the base displacements for this entity's inventory component.
+    /// </summary>
+    public void SetDisplacements(Entity<InventoryComponent?> entity,
+        Dictionary<string, DisplacementData> newDisplacements)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+        entity.Comp.Displacements = newDisplacements;
+        Dirty(entity);
+    }
+    // Moffstation - End
 }

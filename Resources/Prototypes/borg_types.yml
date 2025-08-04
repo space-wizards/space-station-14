@@ -21,6 +21,14 @@
 
   # Visual
   inventoryTemplateId: borgShort
+  # Moffstation - Start - Add neck slots and displacements
+  inventoryDisplacements:
+    neck:
+      sizeMaps:
+        32:
+          sprite: _Moffstation/Mobs/Silicon/Displacements/generic.rsi
+          state: neck
+  # Moffstation - End
   spriteBodyState: robot
   spriteHasMindState: robot_e
   spriteNoMindState: robot_e_r
@@ -57,6 +65,14 @@
 
   # Visual
   inventoryTemplateId: borgShort
+  # Moffstation - Start - Add neck slots and displacements
+  inventoryDisplacements:
+    neck:
+      sizeMaps:
+        32:
+          sprite: _Moffstation/Mobs/Silicon/Displacements/engineer.rsi
+          state: neck
+  # Moffstation - End
   spriteBodyState: engineer
   spriteHasMindState: engineer_e
   spriteNoMindState: engineer_e_r
@@ -93,6 +109,14 @@
 
   # Visual
   inventoryTemplateId: borgTall
+  # Moffstation - Start - Add neck slots and displacements
+  inventoryDisplacements:
+    neck:
+      sizeMaps:
+        32:
+          sprite: _Moffstation/Mobs/Silicon/Displacements/mining.rsi
+          state: neck
+  # Moffstation - End
   spriteBodyState: miner
   spriteBodyMovementState: miner_moving
   spriteHasMindState: miner_e
@@ -129,6 +153,14 @@
 
   # Visual
   inventoryTemplateId: borgShort
+  # Moffstation - Start - Add neck slots and displacements
+  inventoryDisplacements:
+    neck:
+      sizeMaps:
+        32:
+          sprite: _Moffstation/Mobs/Silicon/Displacements/janitor.rsi
+          state: neck
+  # Moffstation - End
   spriteBodyState: janitor
   spriteBodyMovementState: janitor_moving
   spriteHasMindState: janitor_e
@@ -175,6 +207,14 @@
 
   # Visual
   inventoryTemplateId: borgDutch
+  # Moffstation - Start - Add neck slots and displacements
+  inventoryDisplacements:
+    neck:
+      sizeMaps:
+        32:
+          sprite: _Moffstation/Mobs/Silicon/Displacements/medical.rsi
+          state: neck
+  # Moffstation - End
   spriteBodyState: medical
   spriteBodyMovementState: medical_moving
   spriteHasMindState: medical_e
@@ -216,7 +256,7 @@
   - Service
 
   # Visual
-  inventoryTemplateId: borgTall
+  inventoryTemplateId: borgHumanoid  # Moffstation - Changed service to use a different inventory template since it's actually just human proportioned
   spriteBodyState: service
   spriteHasMindState: service_e
   spriteNoMindState: service_e_r

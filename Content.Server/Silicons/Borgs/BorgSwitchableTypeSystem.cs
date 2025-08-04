@@ -75,6 +75,7 @@ public sealed class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
         if (TryComp(ent, out InventoryComponent? inventory))
         {
             _inventorySystem.SetTemplateId((ent.Owner, inventory), prototype.InventoryTemplateId);
+            _inventorySystem.SetDisplacements((ent.Owner, inventory), prototype.InventoryDisplacements); // Moffstation - Allow borgs to have displacement maps.
         }
 
         base.SelectBorgModule(ent, borgType);

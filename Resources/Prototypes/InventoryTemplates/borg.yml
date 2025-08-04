@@ -1,3 +1,4 @@
+# Moffstation - Start - Giving Borgs Neck slots
 - type: inventoryTemplate
   id: borg
   slots:
@@ -8,6 +9,14 @@
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0.015625, -0.09375
+# Moffstation - Start - Giving Borgs Neck slots
+  - name: neck
+    slotTexture: neck
+    slotFlags: NECK
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,1
+    displayName: Neck
+# Moffstation - End
 
 - type: inventoryTemplate
   id: borgShort
@@ -19,6 +28,14 @@
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0.015625, -0.1875
+# Moffstation - Start - Giving Borgs Neck slots
+  - name: neck
+    slotTexture: neck
+    slotFlags: NECK
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,1
+    displayName: Neck
+# Moffstation - End
 
 - type: inventoryTemplate
   id: borgTall
@@ -29,7 +46,31 @@
     uiWindowPos: 1,0
     strippingWindowPos: 0,0
     displayName: Head
-    offset: 0.015625, 0
+    offset: 0.015625, 0.0
+# Moffstation - Start - Giving Borgs Neck slots
+  - name: neck
+    slotTexture: neck
+    slotFlags: NECK
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,1
+    displayName: Neck
+
+- type: inventoryTemplate
+  id: borgHumanoid
+  slots:
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    uiWindowPos: 1,0
+    strippingWindowPos: 0,0
+    displayName: Head
+  - name: neck
+    slotTexture: neck
+    slotFlags: NECK
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,1
+    displayName: Neck
+# Moffstation - End
 
 # taller than tall
 - type: inventoryTemplate
@@ -42,3 +83,11 @@
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0, 0.09375
+# Moffstation - Start - Giving Borgs Neck slots
+  - name: neck
+    slotTexture: neck
+    slotFlags: NECK
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,1
+    displayName: Neck
+# Moffstation - End

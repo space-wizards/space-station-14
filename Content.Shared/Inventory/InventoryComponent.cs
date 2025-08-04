@@ -1,7 +1,7 @@
 ﻿using Content.Shared.DisplacementMap;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Inventory;
 
@@ -11,7 +11,7 @@ namespace Content.Shared.Inventory;
 public sealed partial class InventoryComponent : Component
 {
     /// <summary>
-    /// The template defining how the inventory layout will look like.
+    /// The template defining how the inventory layout will look.
     /// </summary>
     [DataField, AutoNetworkedField]
     [ViewVariables] // use the API method
