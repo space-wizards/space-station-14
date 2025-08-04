@@ -57,6 +57,6 @@ public sealed class DnaScrambleOnTriggerSystem : EntitySystem
         _identity.QueueIdentityUpdate(target.Value); // manually queue identity update since we don't raise the event
 
         // Can't use PopupClient or PopupPredicted because the trigger might be unpredicted.
-        _popup.PopupEntity(Loc.GetString("scramble-implant-activated-popup"), target.Value, target.Value);
+        _popup.PopupEntity(Loc.GetString("scramble-on-trigger-popup"), target.Value, target.Value);
     }
 }
