@@ -6,6 +6,8 @@ namespace Content.Shared.Anomaly;
 /// Exposes anomaly core-powered item status information via item status control.
 /// Synced to clients to display core status and charges.
 /// </summary>
+/// <seealso cref="AnomalyItemStatusSystem"/>
+/// <seealso cref="AnomalyStatusControl"/>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class AnomalyItemStatusComponent : Component
 {

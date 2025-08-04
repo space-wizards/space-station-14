@@ -1,15 +1,15 @@
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Shared.Explosion;
+using Content.Shared.Trigger.Components;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.Explosion.UI;
+namespace Content.Client.Trigger.UI;
 
 /// <summary>
 /// Displays timer delay information for <see cref="TimerTriggerItemStatusComponent"/>.
 /// </summary>
-/// <seealso cref="TimerTriggerItemStatusSyncSystem"/>
+/// <seealso cref="TimerTriggerItemStatusSystem"/>
 public sealed class TimerTriggerStatusControl : PollingItemStatusControl<TimerTriggerStatusControl.Data>
 {
     private readonly Entity<TimerTriggerItemStatusComponent> _parent;

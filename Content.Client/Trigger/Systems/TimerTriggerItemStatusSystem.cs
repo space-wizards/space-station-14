@@ -1,8 +1,8 @@
-using Content.Client.Explosion.UI;
 using Content.Client.Items;
-using Content.Shared.Explosion;
+using Content.Client.Trigger.UI;
+using Content.Shared.Trigger.Components;
 
-namespace Content.Client.Explosion;
+namespace Content.Client.Trigger.Systems;
 
 /// <summary>
 /// Wires up item status logic for <see cref="TimerTriggerItemStatusComponent"/>.
