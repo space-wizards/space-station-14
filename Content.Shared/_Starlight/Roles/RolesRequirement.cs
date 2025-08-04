@@ -1,22 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Localizations;
-using Content.Shared.Starlight;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System.Linq;
+using Content.Shared._NullLink;
 
 namespace Content.Shared.Roles;
 
 [UsedImplicitly]
 [Serializable, NetSerializable]
-public sealed partial class AnyFlagsRequirement : JobRequirement
+public sealed partial class RolesRequirement : JobRequirement
 {
     [DataField(required: true)]
-    public List<PlayerFlags> Flags = [];
+    public ProtoId<RoleRequirementPrototype> Proto = default!;
 
     public override bool Check(IEntityManager entManager,
         ICommonSession? player,
@@ -25,13 +23,15 @@ public sealed partial class AnyFlagsRequirement : JobRequirement
         IReadOnlyDictionary<string, TimeSpan>? playTimes,
         [NotNullWhen(false)] out FormattedMessage? reason)
     {
+        var requirement = protoManager.Index(Proto);
         reason = new FormattedMessage();
-        if (player is not null && IoCManager.Resolve<ISharedPlayersRoleManager>().HasAnyPlayerFlags(player, Flags))
+        if (player is not null && IoCManager.Resolve<ISharedNullLinkPlayerRolesReqManager>().IsAnyRole(player, requirement.Roles))
             return true;
 
         reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
-            "any-role-required",
-            ("roles", string.Join(", ", Flags.Select(Enum.GetName)))));
+            "roles-req-any-role-required",
+            ("discord", Loc.GetString(requirement.Discord)),
+            ("roles", Loc.GetString(requirement.RolesLoc))));
         return false;
     }
 }

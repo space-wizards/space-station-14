@@ -228,3 +228,26 @@
       interfaces:
         enum.AgentIDCardUiKey.Key:
           type: AgentIDCardBoundUserInterface
+- type: entity
+  parent: IDCardStandard
+  id: AssistantDerelictBorgiIDCard
+  name: assistant ID card
+  suffix: Borgi
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idassistant
+  - type: IdCard
+    jobTitle: job-title-borgi
+    jobIcon: JobIconBorg
+  - type: Tag  # not a chameleon target.
+    tags:
+    - DoorBumpOpener
+  - type: Access
+    tags:
+    - Maintenance
+    - External
+    - Research
+    - Engineering
+    - Atmospherics

@@ -96,6 +96,12 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
+    Sigh:
+      collection: MaleSigh
+    Yawn:
+      collection: MaleYawn
+    Snore:
+      collection: Snores
     Mew:
       collection: FelionoidMews
     Hisses:
@@ -108,6 +114,10 @@
       collection: FelionoidGrowls
     Trill:
       collection: FelionoidTrills
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
 
 - type: emoteSounds
   id: FemaleFelionoid
@@ -124,6 +134,12 @@
       collection: FemaleCoughs
     Crying:
       collection: FemaleCry
+    Sigh:
+      collection: FemaleSigh
+    Yawn:
+      collection: FemaleYawn
+    Snore:
+      collection: Snores
     Whistle:
       collection: Whistles
     Mew:
@@ -138,6 +154,10 @@
       collection: FelionoidGrowls
     Trill:
       collection: FelionoidTrills
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
 
 - type: emoteSounds
   id: MaleCyclorite

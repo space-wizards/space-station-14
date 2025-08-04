@@ -9,3 +9,4 @@ job-name-mailtech = Mail Technician
 job-name-centcomm = CentComm Official
 
 job-name-abductor = Abductor
+job-title-borgi = Borgi

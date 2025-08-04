@@ -10430,5 +10430,70 @@ Entries:
   id: 1435
   time: '2025-08-02T15:13:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1178
+- author: STARLIGHT TEAM
+  changes:
+  - message: Discord integration 2.0
+    type: Tweak
+  id: 1436
+  time: '2025-08-03T13:03:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1159
+- author: STARLIGHT TEAM
+  changes:
+  - message: OOC title display has been updated.
+    type: Tweak
+  id: 1437
+  time: '2025-08-03T13:03:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1159
+- author: walksanatora
+  changes:
+  - message: Derelict borgis can now wash up near the station.
+    type: Add
+  id: 1438
+  time: '2025-08-03T21:55:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/933
+- author: walksanatora
+  changes:
+  - message: Borgimov can now appear in the list of random lawsets given to ionstorm'd
+      borgs
+    type: Add
+  id: 1439
+  time: '2025-08-03T21:55:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/933
+- author: Cerzix
+  changes:
+  - message: New emotes scree, call and squawk to resomi
+    type: Add
+  id: 1440
+  time: '2025-08-03T22:21:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/954
+- author: Cerzix
+  changes:
+  - message: Basic emotes (cough, cry, ...) to resomi and felionoid
+    type: Add
+  id: 1441
+  time: '2025-08-03T22:21:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/954
+- author: Cerzix
+  changes:
+  - message: Icons for felionoid and resomi / bird-specific emotes
+    type: Add
+  id: 1442
+  time: '2025-08-03T22:21:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/954
+- author: Quantum-Cross
+  changes:
+  - message: Add admin tooling to send subtle messages to multiple players via toolshed
+    type: Add
+  id: 1443
+  time: '2025-08-03T22:48:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1066
+- author: Trosling
+  changes:
+  - message: Discord notifications now show the server's Greek letter to differentiate
+      the notifications
+    type: Tweak
+  id: 1444
+  time: '2025-08-03T22:52:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1113
 Order: -1
 
