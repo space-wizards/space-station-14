@@ -2,7 +2,7 @@
 
 - type: entity
   id: RRCardMetabolizeBaseAlcohol
-    parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
   categories:
   - HideSpawnMenu
   abstract: true
@@ -12,16 +12,6 @@
       min: 1
       max: 3
   - type: RailroadCard
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
     
 - type: entity
   id: RRCardMetabolizeAbsinthe
@@ -38,16 +28,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Absinthe
@@ -75,16 +55,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Ale
@@ -112,16 +82,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Beer
@@ -149,16 +109,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: BlueCuracao
@@ -186,16 +136,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Cognac
@@ -223,16 +163,6 @@
     icon: 
     iconColor: '#ED555596' # Hard
     color: '#d9b500' # Legendary: Currently can be only spawned. Don't add in pool
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: DeadRum
@@ -260,16 +190,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Gin
@@ -297,16 +217,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: CoffeeLiqueur
@@ -334,16 +244,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: MelonLiquor
@@ -371,16 +271,6 @@
     icon: 
     iconColor: '#ED555596' # Hard
     color: '#d9b500' # Legendary: Currently can be only spawned. Don't add in pool
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: NTCahors
@@ -408,16 +298,6 @@
     icon: 
     iconColor: '#ED555596' # Hard
     color: '#d9b500' # Legendary: Currently can be only spawned or finded. Don't add in pool
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: PoisonWine
@@ -445,16 +325,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Rum
@@ -482,16 +352,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Sake
@@ -519,16 +379,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Tequila
@@ -556,16 +406,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Vermouth
@@ -593,16 +433,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Vodka
@@ -630,16 +460,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Whiskey
@@ -667,16 +487,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#515151' # Common
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Wine
@@ -704,16 +514,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#8acc4b' # UnCommon
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Champagne
@@ -741,16 +541,6 @@
     icon: 
     iconColor: '#BBCC0096' # Normal
     color: '#8acc4b' # UnCommon
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: AcidSpit
@@ -778,16 +568,6 @@
     icon: 
     iconColor: '#BBCC0096' # Normal
     color: '#8acc4b' # UnCommon
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: AlienBrainHemorrhage
@@ -815,16 +595,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#8acc4b' # UnCommon
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: AlliesCocktail
@@ -852,16 +622,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#8acc4b' # UnCommon
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Amasec
@@ -889,16 +649,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#8acc4b' # UnCommon
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Andalusia
@@ -926,16 +676,6 @@
     icon: 
     iconColor: '#9FED5896' # Easy
     color: '#8acc4b' # UnCommon
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Antifreeze
@@ -963,16 +703,6 @@
     icon: 
     iconColor: '#ED555596' # Hard
     color: '#9146cc' # Myphic
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: AtomicBomb
@@ -1037,16 +767,6 @@
     icon: 
     iconColor: '#ED9f2296' # Difficult
     color: '#398bce' # Rare
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: BahamaMama
@@ -1074,16 +794,6 @@
     icon: 
     iconColor: '#BBCC0096' # Normal
     color: '#8acc4b' # UnCommon
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: BananaHonk
@@ -1111,16 +821,6 @@
     icon: 
     iconColor: '#BBCC0096' # Normal
     color: '#8acc4b' # UnCommon
-    images:
-    - /Textures/_Starlight/Railroading/whiskey.png
-    - /Textures/_Starlight/Railroading/daiquiri.png
-    - /Textures/_Starlight/Railroading/martini.png
-    - /Textures/_Starlight/Railroading/white.png
-    - /Textures/_Starlight/Railroading/margarita.png
-    - /Textures/_Starlight/Railroading/shampagne.png
-    - /Textures/_Starlight/Railroading/glass.png
-    - /Textures/_Starlight/Railroading/shot.png
-    description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Barefoot
