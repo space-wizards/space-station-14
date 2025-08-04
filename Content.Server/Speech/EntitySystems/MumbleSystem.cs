@@ -2,13 +2,11 @@ using Content.Server.Chat.Systems;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.Components.AccentComponents;
-using Content.Shared.Speech.EntitySystems.AccentSystems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech.EntitySystems;
 
-// TODO: Mumbling lowering the volume of emotes needs to be refactored out into being its own component or a dedicated system.
-public sealed class ServerMumbleAccentSystem : MumbleAccentSystem
+public sealed class MumbleSystem : EntitySystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
