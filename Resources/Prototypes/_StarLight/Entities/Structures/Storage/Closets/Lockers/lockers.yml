@@ -100,6 +100,22 @@
     - type: AccessReader
       access: [["Salvage"]]
 
+# Salvage Specialist (Large)
+- type: entity
+  id: LockerSalvageSpecialistLarge
+  parent: LockerLargeBaseSecure
+  name: large salvage specialist's locker
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Structures/Storage/closet-large.rsi
+  - type: EntityStorageVisuals
+    stateBaseClosed: salvage
+    stateDoorOpen: salvage_open
+    stateDoorClosed: salvage_door
+  - type: AccessReader
+    access: [["Salvage"]]
+
 # Mining Specialist
 - type: entity
   id: LockerMiningSpecialist
@@ -115,3 +131,18 @@
     stateDoorClosed: miner_door
   - type: AccessReader
     access: [["Mining"]]
+
+#- type: entity
+#  id: LockerMiningSpecialistLarge
+#  parent: LockerLargeBaseSecure
+#  name: large mining specialist's locker
+#  components:
+#  - type: Appearance
+#  - type: Sprite
+#    sprite: _Starlight/Structures/Storage/closet-large.rsi
+#  - type: EntityStorageVisuals
+#    stateBaseClosed: miner
+#    stateDoorOpen: miner_open
+#    stateDoorClosed: miner_door
+#  - type: AccessReader
+#    access: [["Mining"]]

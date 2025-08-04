@@ -26,6 +26,9 @@
             "name": "wall_extremeheat"
         },
         {
+            "name": "yessmoking"
+        },
+        {
             "name": "direction_mining",
             "directions": 4
         },

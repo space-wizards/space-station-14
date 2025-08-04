@@ -4,7 +4,6 @@
   table: !type:AllSelector
     children:
     - id: BoxFolderClipboard
-    - id:
 
 - type: entityTable
   id: FillSalvageLeadHardsuitSpatio
@@ -91,8 +90,39 @@
         - !type:NestedSelector
           tableId: LockerFillSalvageSpecialist
 
-# Salvage Specialist - location note
-# located in Wizden's Resources/Prototypes/Catalog/Fills/Lockers/cargo.yml
+# Salvage Specialist
+# regular lockers located in Wizden's Resources/Prototypes/Catalog/Fills/Lockers/cargo.yml
+- type: entity
+  id: LockerSalvageSpecialistLargeFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerSalvageSpecialistLarge
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillSalvageSpecialistHardsuitSpatio
+        - !type:NestedSelector
+          tableId: FillSalvageSpecialistHardsuitSpatio
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
+
+- type: entity
+  id: LockerSalvageSpecialistLargeFilled
+  suffix: Filled
+  parent: LockerSalvageSpecialistLarge
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
+        - !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist
 
 #Mining Specialist
 - type: entity
@@ -116,3 +146,5 @@
         - id: Pickaxe
         - id: Shovel
         - id: OreBag
+
+#DOTS - create large locker variant for mining specialist, as well as update their locker to have a fill

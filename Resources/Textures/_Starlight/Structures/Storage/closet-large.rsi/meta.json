@@ -4,7 +4,7 @@
       "x": 32,
       "y": 32
     },
-    "copyright": "Original Sec locker taken from tgstation, Doublesec done by Killer Tamashi",
+    "copyright": "Original Sec locker taken from tgstation, Doublesec done by Killer Tamashi | Double salv/mining by biteless-dot",
     "license": "CC-BY-SA-3.0",
     "states": [
         {
@@ -57,6 +57,24 @@
         },
         {
             "name": "warden_door"
+        },
+        {
+            "name": "miner"
+        },
+        {
+            "name": "miner_door"
+        },
+        {
+            "name": "miner_open"
+        },
+        {
+            "name": "salvage"
+        },
+        {
+            "name": "salvage_door"
+        },
+        {
+            "name": "salvage_open"
         }
     ]
 }
