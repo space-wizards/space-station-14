@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: yuitop
-  changes:
-  - message: Fingerless gloves no more blocking taking the fingerprint.
-    type: Tweak
-  id: 8314
-  time: '2025-04-22T18:15:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31864
 - author: GoldenCan
   changes:
   - message: Heads of Personnel can now fabricate generic command-themed clothes using
@@ -3903,3 +3896,13 @@
   id: 8826
   time: '2025-08-04T19:19:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39374
+- author: TrixxedHeart
+  changes:
+  - message: Added canes to the trinkets loadout tab.
+    type: Add
+  - message: Added offset canes for roleplay flair. They can be crafted in the medical
+      lathe.
+    type: Add
+  id: 8827
+  time: '2025-08-04T23:39:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39272
