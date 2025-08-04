@@ -168,6 +168,7 @@
   - type: SiliconLawProvider
     laws: MothershipCoreLawset # custom laws here
     subverted: true
+  - type: Stripping
   - type: Access
     enabled: true
     tags:
