@@ -6,12 +6,9 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Emp;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Lock;
 using Content.Shared.Prototypes;
-using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Clothing.Systems;
 

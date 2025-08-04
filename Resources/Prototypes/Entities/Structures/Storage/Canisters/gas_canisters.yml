@@ -38,6 +38,8 @@
     - type: ActivatableUI
       key: enum.GasCanisterUiKey.Key
     - type: UIRequiresLock
+      userInterfaceKeys:
+      - enum.GasCanisterUiKey.Key
     - type: UserInterface
       interfaces:
         enum.GasCanisterUiKey.Key:

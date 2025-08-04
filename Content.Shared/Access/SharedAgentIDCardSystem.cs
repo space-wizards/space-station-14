@@ -7,24 +7,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access.Systems
 {
-    public abstract partial class SharedAgentIdCardSystem : EntitySystem
-    {
-         // [Dependency] private readonly LockSystem _lock = default!;
-
-         // public override void Initialize()
-         // {
-         //     base.Initialize();
-         //
-         //     // SubscribeLocalEvent<AgentIDCardComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttemptEvent);
-         // }
-
-         // private void OnActivatableUIOpenAttemptEvent(Entity<AgentIDCardComponent> ent, ref ActivatableUIOpenAttemptEvent args)
-         // {
-         //     if (_lock.IsLocked(ent.Owner))
-         //         args.Cancel();
-         // }
-    }
-
     /// <summary>
     /// Key representing which <see cref="PlayerBoundUserInterface"/> is currently open.
     /// Useful when there are multiple UI for an object. Here it's future-proofing only.
