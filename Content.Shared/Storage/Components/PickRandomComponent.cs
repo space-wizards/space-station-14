@@ -8,11 +8,6 @@ namespace Content.Shared.Storage.Components;
 /// Adds a verb to pick a random item from a container.
 /// Only picks items that match the whitelist.
 /// </summary>
-/// </remarks>
-/// This has to do a lot of whitelist checks and needs to sort the items by uid for prediction reasons,
-/// so this will be quite expensive if you use it a container with many items.
-/// Consider just spawning a random item instead instead of having the container pre-filled.
-/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(PickRandomSystem))]
 public sealed partial class PickRandomComponent : Component
