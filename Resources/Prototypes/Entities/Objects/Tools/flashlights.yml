@@ -24,10 +24,10 @@
         id: blinking
         interpolate: Nearest
         maxDuration: 1.0
-        minValue: 0.1
-        maxValue: 2.0
+        startValue: 0.1
+        endValue: 2.0
         isLooped: true
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: light
     inhandVisuals:
       left:
@@ -36,6 +36,7 @@
       right:
       - state: inhand-right-light
         shader: unshaded
+  - type: ItemTogglePointLight
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ContainerContainer
@@ -91,7 +92,7 @@
   - type: HandheldLight
     addPrefix: false
     wattage: 0.5
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     inhandVisuals:
       left:
       - state: inhand-left-light

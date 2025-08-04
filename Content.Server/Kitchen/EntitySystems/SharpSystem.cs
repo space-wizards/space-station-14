@@ -1,21 +1,20 @@
 ﻿using Content.Server.Body.Systems;
 using Content.Server.Kitchen.Components;
-using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.Body.Components;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Body.Components;
 using Content.Shared.Database;
-using Content.Shared.Interaction;
-using Content.Shared.Nutrition.Components;
-using Content.Shared.Popups;
-using Content.Shared.Storage;
-using Content.Shared.Verbs;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
-using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Kitchen;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Popups;
+using Content.Shared.Storage;
+using Content.Shared.Verbs;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
@@ -136,9 +135,9 @@ public sealed class SharpSystem : EntitySystem
         args.Handled = true;
 
         _adminLogger.Add(LogType.Gib,
-            $"{EntityManager.ToPrettyString(args.User):user} " +
-            $"has butchered {EntityManager.ToPrettyString(args.Target):target} " +
-            $"with {EntityManager.ToPrettyString(args.Used):knife}");
+            $"{ToPrettyString(args.User):user} " +
+            $"has butchered {ToPrettyString(args.Target):target} " +
+            $"with {ToPrettyString(args.Used):knife}");
     }
 
     private void OnGetInteractionVerbs(EntityUid uid, ButcherableComponent component, GetVerbsEvent<InteractionVerb> args)

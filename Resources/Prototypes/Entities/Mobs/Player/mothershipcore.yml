@@ -8,10 +8,9 @@
   parent:
   - BaseMachinePowered
   - BaseMob
-  - StripableInventoryBase
   id: MothershipCore
   name: mothership core
-  description: A sentient machine that can produce xenoborgs. Without this the xenoborgs are doomed.
+  description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
   components:
   - type: Appearance
   - type: WiresVisuals
@@ -100,10 +99,8 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
         requireInputValidation: false
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
-      enum.PowerMonitoringConsoleUiKey.Key:
-        type: PowerMonitoringConsoleBoundUserInterface
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
       enum.LatheUiKey.Key:
         type: LatheBoundUserInterface
       enum.ResearchClientUiKey.Key:
@@ -114,12 +111,12 @@
   - type: StaticPrice
     price: 800
   - type: WarpPoint
-    location: mothership core
+    location: Mothership Core
     follow: true
   - type: VoiceOverride
     nameOverride: MOTHERSHIP CORE
   - type: TypingIndicator
-    proto: robot
+    proto: xenoborg
   - type: Speech
     speechVerb: Robotic
     speechSounds: Xenoborg
@@ -128,7 +125,7 @@
   - type: Vocal
     sounds:
       Unsexed: UnisexSiliconXenoborg
-    screamAction: null
+    wilhelmProbability: 0
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
@@ -156,7 +153,7 @@
   - type: Body
     prototype: MothershipCoreBody
   - type: Hands
-  - type: Puller
+  # - type: Puller # use the conveyor
   - type: Eye
     drawFov: false
   # - type: StationAiOverlay # removed until is no longer buggy
@@ -185,25 +182,11 @@
       - BorgChassis
   - type: IntrinsicUI
     uis:
-      enum.PowerMonitoringConsoleUiKey.Key:
-        toggleAction: ActionMothershipShowPower
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowRadar
   - type: ShowElectrocutionHUD
-  - type: PowerMonitoringConsole
   - type: PowerMonitoringCableNetworks
+  - type: RadarConsole
 
-# TODO: add xenoborg control interface action
-# TODO: add xenoborg camera monitor interface action
-
-- type: entity
-  id: ActionMothershipShowPower
-  name: Power Monitoring Interface
-  description: View a Power Monitoring Interface.
-  components:
-  - type: Action
-    icon:
-      sprite: Structures/Machines/computers.rsi # TODO: custom sprite here
-      state: power_monitor
-    keywords: [ "AI", "console", "interface" ]
-    priority: -6
-  - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.PowerMonitoringConsoleUiKey.Key }
+# TODO: add xenoborg control interface action (part 5)
+# TODO: add xenoborg camera monitor interface action (part 5)
