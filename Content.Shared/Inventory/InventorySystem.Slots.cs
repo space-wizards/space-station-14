@@ -92,6 +92,9 @@ public partial class InventorySystem : EntitySystem
             container.OccludesLight = false;
             ent.Comp.Containers[i] = container;
         }
+
+        var ev = new InventoryTemplateUpdated();
+        RaiseLocalEvent(ent, ref ev);
     }
 
     private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev, EntitySessionEventArgs args)
