@@ -144,7 +144,8 @@
       effects:
       - !type:EvenHealthChange
         damage:
-          Brute: -1.5
+          groups:
+            Brute: -2 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -895,7 +896,6 @@
   color: "#520e30"
   metabolisms:
     Medicine:
-      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         conditions:
@@ -904,15 +904,15 @@
           max: 30
         damage:
           groups:
-            Toxin: -1.5
-            Brute: 0.25
+            Toxin: -3 #Starlight adv. chem nerf revert
+            Brute: 0.5 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 30
         damage:
           groups:
-            Toxin: -0.5
+            Toxin: -1 #Starlight adv. chem nerf revert
             Brute: 3
       - !type:AdjustReagent
         conditions:
@@ -1022,19 +1022,18 @@
   color: "#e0a5b9"
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
       effects:
       - !type:HealthChange
         damage:
           types:
-            Caustic: -0.6 # 6 per u
+            Caustic: -3 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 21
+          min: 16 #Starlight adv. chem nerf revert
         damage:
           types:
-            Heat: 0.2
+            Heat: 2 #Starlight adv. chem nerf revert
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
@@ -1078,19 +1077,18 @@
   color: "#283332"
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
       effects:
       - !type:HealthChange
         damage:
           types:
-            Slash: -0.6 # 6 Per u
+            Slash: -3 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 21
+          min: 12 #Starlight adv. chem nerf revert
         damage:
           types:
-            Cold: 1.5 #15 per u
+            Cold: 3 #Starlight adv. chem nerf revert
 
 - type: reagent
   id: Puncturase
@@ -1102,20 +1100,19 @@
   color: "#b9bf93"
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
       effects:
       - !type:HealthChange
         damage:
           types:
-            Piercing: -0.6 # 6 per u
-            Blunt: 0.05 # 0.5 per u
+            Piercing: -4 #Starlight adv. chem nerf revert
+            Blunt: 0.1 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 21
+          min: 11 #Starlight adv. chem nerf revert
         damage:
           types:
-            Blunt: 1 # 10 per u plus base effect
+            Blunt: 5 #Starlight adv. chem nerf revert
 
 - type: reagent
   id: Bruizine
@@ -1127,19 +1124,18 @@
   color: "#ff3636"
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
       effects:
       - !type:HealthChange
         damage:
           types:
-            Blunt: -0.6 # 6 per u
+            Blunt: -3.5 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 19
+          min: 10.5 #Starlight adv. chem nerf revert
         damage:
           types:
-            Poison: 1.5 # 15 per u
+            Poison: 4 #Starlight adv. chem nerf revert
 
 - type: reagent
   id: Holywater
@@ -1263,13 +1259,12 @@
   color: "#8147ff"
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
       effects:
       # heals shocks and removes shock chems
       - !type:HealthChange
         damage:
           types:
-            Shock: -0.5 # 5 per u
+            Shock: -4 #Starlight adv. chem nerf revert
       - !type:AdjustReagent
         reagent: Licoxide
         amount: -4
@@ -1283,14 +1278,14 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 15.5
+          min: 12 #Starlight adv. chem nerf revert
         damage:
           types:
-            Cold: 0.2 # 2 per u but lethal with cooling OD effect below
+            Cold: 2 #Starlight adv. chem nerf revert
       - !type:AdjustTemperature
         conditions:
         - !type:ReagentThreshold
-          min: 15.5
+          min: 12 #Starlight adv. chem nerf revert
         amount: -30000
       - !type:Jitter
         conditions:

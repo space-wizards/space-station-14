@@ -2439,7 +2439,7 @@
 - type: microwaveMealRecipe
   id: RecipeCottonCake
   name: cotton cake recipe
-  result: FoodCakeCotton
+  result: FoodCottonCake #Starlight moff cake
   time: 5
   group: Cake
   reagents:
