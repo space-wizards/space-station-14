@@ -27,5 +27,4 @@ public sealed partial class SharedVoiceTriggerLockSystem : EntitySystem
 
         Dirty(ent.Owner, triggerComp);
     }
-
 }

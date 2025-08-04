@@ -1,4 +1,4 @@
-using Content.Server.Explosion.EntitySystems;
+﻿using Content.Server.Explosion.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 

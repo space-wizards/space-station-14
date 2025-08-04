@@ -225,8 +225,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
         // This is so that stuff can require further conditions (like power).
-        var shouldCancel = RaiseCanOpenEventChecks(user, uiEntity);
-        if (shouldCancel)
+        if (RaiseCanOpenEventChecks(user, uiEntity))
             return false;
 
         // Give the UI an opportunity to prepare itself if it needs to do anything
