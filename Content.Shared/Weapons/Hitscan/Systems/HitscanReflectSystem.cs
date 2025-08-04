@@ -2,11 +2,14 @@ using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Reflect;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Weapons.Hitscan.Systems;
 
 public sealed class HitscanReflectSystem : EntitySystem
 {
+    [Dependency] private readonly IRobustRandom _random = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -19,7 +22,7 @@ public sealed class HitscanReflectSystem : EntitySystem
         if (hitscan.Comp.ReflectiveType == ReflectType.None)
             return;
 
-        if (hitscan.Comp.CurrentReflections > hitscan.Comp.MaxReflections)
+        if (hitscan.Comp.CurrentReflections >= hitscan.Comp.MaxReflections)
             return;
 
         var ev = new HitScanReflectAttemptEvent(args.Shooter, args.GunUid, hitscan.Comp.ReflectiveType, args.ShotDirection, false);
@@ -27,6 +30,8 @@ public sealed class HitscanReflectSystem : EntitySystem
 
         if (!ev.Reflected)
             return;
+
+        hitscan.Comp.CurrentReflections++;
 
         args.Canceled = true;
 
