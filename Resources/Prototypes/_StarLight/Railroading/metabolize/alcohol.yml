@@ -455,7 +455,7 @@
     title: rr-champagne
     icon: 
     iconColor: '#9FED5896' # Easy
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Champagne
@@ -482,7 +482,7 @@
     title: rr-acidspit
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: AcidSpit
@@ -509,7 +509,7 @@
     title: rr-alienbrainhemorrhage
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: AlienBrainHemorrhage
@@ -536,7 +536,7 @@
     title: rr-alliescocktail
     icon: 
     iconColor: '#9FED5896' # Easy
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: AlliesCocktail
@@ -563,7 +563,7 @@
     title: rr-amasec
     icon: 
     iconColor: '#9FED5896' # Easy
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Amasec
@@ -590,7 +590,7 @@
     title: rr-andalusia
     icon: 
     iconColor: '#9FED5896' # Easy
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Andalusia
@@ -617,7 +617,7 @@
     title: rr-antifreeze
     icon: 
     iconColor: '#9FED5896' # Easy
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Antifreeze
@@ -725,7 +725,7 @@
     title: rr-bananahonk
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: BananaHonk
@@ -752,7 +752,7 @@
     title: rr-barefoot
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Barefoot
@@ -779,7 +779,7 @@
     title: rr-beepskysmash
     icon: 
     iconColor: '#9FED5896' # Easy
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: BeepskySmash
@@ -829,7 +829,7 @@
     title: rr-bloodymary
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: BloodyMary
@@ -856,7 +856,7 @@
     title: rr-booger
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Booger
@@ -933,7 +933,7 @@
     title: rr-coconutrum
     icon: 
     iconColor: '#9FED5896' # Easy
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: CoconutRum
@@ -960,7 +960,7 @@
     title: rr-cosmopolitan
     icon: 
     iconColor: '#9FED5896' # Easy
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Cosmopolitan
@@ -987,7 +987,7 @@
     title: rr-crushdepth
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: CrushDepth
@@ -1014,7 +1014,7 @@
     title: rr-cubalibre
     icon: 
     iconColor: '#9FED5896' # Easy
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: CubaLibre
@@ -1068,7 +1068,7 @@
     title: rr-demonsblood
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: DemonsBlood
@@ -1095,7 +1095,7 @@
     title: rr-devilskiss
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: DevilsKiss
@@ -1176,7 +1176,7 @@
     title: rr-eggnog
     icon: 
     iconColor: '#9FED5896' # Easy
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Eggnog
@@ -1230,7 +1230,7 @@
     title: rr-erikasurprise
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: ErikaSurprise
@@ -1257,7 +1257,7 @@
     title: rr-gargleblaster
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: GargleBlaster
@@ -1330,7 +1330,7 @@
     title: rr-gildlager
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Gildlager
@@ -1407,7 +1407,7 @@
     title: rr-hooch
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Hooch
@@ -1457,7 +1457,7 @@
     title: rr-irishcarbomb
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: IrishCarBomb
@@ -1530,7 +1530,7 @@
     title: rr-jackrose
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: JackRose
@@ -1557,7 +1557,7 @@
     title: rr-junglebird
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
     description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
@@ -1608,7 +1608,7 @@
     title: rr-longislandicedtea
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: LongIslandIcedTea
@@ -1658,7 +1658,7 @@
     title: rr-manhattanproject
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: ManhattanProject
@@ -1754,7 +1754,7 @@
     title: rr-mead
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
   - type: RailroadMetabolizeTask
     reagents:
     - ReagentId: Mead
@@ -1777,7 +1777,7 @@
     title: rr-mojito
     icon: 
     iconColor: '#BBCC0096' # Normal
-    color: '#8acc4b' # UnCommon
+    color: '#518c34' # UnCommon
     description: rr-alcohol-desc
   - type: RailroadMetabolizeTask
     reagents:
