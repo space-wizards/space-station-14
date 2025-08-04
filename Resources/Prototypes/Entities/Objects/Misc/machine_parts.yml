@@ -13,40 +13,13 @@
       count: 1
 
 - type: entity
-  id: CapacitorStockPart
-  name: capacitor
-  parent: BaseStockPart
-  description: A basic capacitor used in the construction of a variety of devices.
-  suffix: Rating 1
-  components:
-    - type: Sprite
-      state: capacitor
-    - type: Tag
-      tags:
-        - CapacitorStockPart
-    - type: Stack
-      stackType: Capacitor
-
-- type: entity
   id: MicroManipulatorStockPart
-  name: manipulator
+  name: modular machine part
   parent: BaseStockPart
-  description: A basic manipulator used in the construction of a variety of devices.
+  description: A basic machine part used in the construction of a variety of devices.
   suffix: Rating 1
   components:
     - type: Sprite
       state: micro_mani
     - type: Stack
       stackType: Manipulator
-
-- type: entity
-  id: MatterBinStockPart
-  name: matter bin
-  parent: BaseStockPart
-  description: A basic matter bin used in the construction of a variety of devices.
-  suffix: Rating 1
-  components:
-    - type: Sprite
-      state: matter_bin
-    - type: Stack
-      stackType: MatterBin
