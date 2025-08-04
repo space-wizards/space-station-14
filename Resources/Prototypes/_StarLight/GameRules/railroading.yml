@@ -18,9 +18,6 @@
 #    - RRCardFoodMelonFruitBowl
 #    - RRCardFoodStew
     - RRCardMetabolizeNicotine
-    - RRCardMetabolizeAbsinthe
-    - RRCardMetabolizeAle
-    - RRCardMetabolizeBeer
 
 - type: entity
   parent: BaseGameRule
@@ -115,3 +112,11 @@
     - RRCardMetabolizeMartini
     - RRCardMetabolizeMead
     - RRCardMetabolizeMojito
+    - RRCardMetabolizeMonkeyBusiness
+    - RRCardMetabolizeMoonshine
+    - RRCardMetabolizePainkiller
+    - RRCardMetabolizePatron
+    - RRCardMetabolizeRedMead
+    - RRCardMetabolizePinaColada
+    - RRCardMetabolizeRadler
+    - RRCardMetabolizeSbiten
