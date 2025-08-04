@@ -795,7 +795,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/help-backwards.png")),
             Act = () =>
             {
-                EnsureComp<BackwardsAccentComponent>(args.Target);
+                EnsureComp<Shared.Speech.Components.AccentComponents.BackwardsAccentComponent>(args.Target);
             },
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", backwardsAccentName, Loc.GetString("admin-smite-speak-backwards-description"))
@@ -906,7 +906,7 @@ public sealed partial class AdminVerbSystem
                 EnsureComp<BleatingAccentComponent>(args.Target);
                 EnsureComp<FrenchAccentComponent>(args.Target);
                 EnsureComp<GermanAccentComponent>(args.Target);
-                EnsureComp<LizardAccentComponent>(args.Target);
+                EnsureComp<Shared.Speech.Components.AccentComponents.LizardAccentComponent>(args.Target);
                 EnsureComp<MobsterAccentComponent>(args.Target);
                 EnsureComp<MothAccentComponent>(args.Target);
                 EnsureComp<OwOAccentComponent>(args.Target);
@@ -917,7 +917,7 @@ public sealed partial class AdminVerbSystem
 
                 if (_random.Next(0, 8) == 0)
                 {
-                    EnsureComp<BackwardsAccentComponent>(args.Target); // was asked to make this at a low chance idk
+                    EnsureComp<Shared.Speech.Components.AccentComponents.BackwardsAccentComponent>(args.Target); // was asked to make this at a low chance idk
                 }
             },
             Impact = LogImpact.Extreme,

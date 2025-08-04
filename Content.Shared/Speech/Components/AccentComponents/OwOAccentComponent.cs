@@ -1,0 +1,11 @@
+﻿namespace Content.Shared.Speech.Components.AccentComponents;
+
+/// <summary>
+/// I am not typing out an example for this one.
+/// </summary>
+[RegisterComponent]
+public sealed partial class OwOAccentComponent : Component
+{
+
+}
+
