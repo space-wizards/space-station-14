@@ -25,13 +25,13 @@
       drainBuffer:
         maxVol: 100
       tank:
-        maxVol: 500
+        maxVol: 200
   - type: SolutionRegeneration
     solution: tank
     generated:
       reagents:
       - ReagentId: Water
-        Quantity: 1
+        Quantity: 0.5
   - type: DrainableSolution
     solution: tank
   - type: ReagentTank
