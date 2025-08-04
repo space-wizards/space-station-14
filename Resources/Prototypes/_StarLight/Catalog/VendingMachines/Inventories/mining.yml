@@ -143,6 +143,16 @@
   conditions:
   - !type:BuyerAccessCondition
 
+#- type: listing
+#  id: VendorMiningExpeditionEncryptionKey
+#  productEntity: EncryptionKeyExpedition
+#  cost:
+#    SalvageTicket: 100
+#  categories:
+#  - MiningEquipment
+#  conditions:
+#  - !type:BuyerAccessCondition
+
 #consumables
 - type: listing
   id: VendorMiningMedkitAdvancedFilled

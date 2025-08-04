@@ -12,7 +12,7 @@
         - EncryptionKeyCommon
     - type: Sprite
       sprite: Clothing/Ears/Headsets/servicesecurity.rsi
-      
+
 - type: entity
   parent: [ ClothingHeadset, BaseLawContraband ]
   id: ClothingHeadsetMagistrate
@@ -77,3 +77,18 @@
   - type: RadioChime
     sound:
       path: /Audio/_Starlight/Effects/Radio/soviet.ogg
+
+- type: entity
+  parent: ClothingHeadsetCargo
+  id: ClothingHeadsetSalvageLead
+  name: salvage lead's headset
+  description: Headset used by the salvage lead.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyExpedition
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/mining.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/mining.rsi

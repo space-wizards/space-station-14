@@ -143,6 +143,16 @@
   conditions:
   - !type:BuyerAccessCondition
 
+#- type: listing
+#  id: VendorSalvageExpeditionEncryptionKey
+#  productEntity: EncryptionKeyExpedition
+#  cost:
+#    SalvageTicket: 100
+#  categories:
+#  - SalvageEquipment
+#  conditions:
+#  - !type:BuyerAccessCondition
+
 #weapons
 - type: listing
   id: VendorSalvageWeaponLaserImmolator
