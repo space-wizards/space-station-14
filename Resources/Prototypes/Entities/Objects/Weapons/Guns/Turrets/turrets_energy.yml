@@ -1,7 +1,8 @@
 - type: entity
+  abstract: true
   parent: [BaseWeaponEnergyTurret, ConstructibleMachine]
-  id: WeaponEnergyTurretStation
-  name: security turret
+  id: WeaponEnergyTurretStationBase
+  name: sentry turret
   description: A high-tech autonomous weapons system designed to keep unauthorized personnel out of sensitive areas.
   components:
   - type: Fixtures
@@ -72,8 +73,6 @@
   - type: NpcFactionMember
     factions:
     - AllHostile
-  - type: AccessReader
-    access: [["Security"]]
   - type: ProjectileBatteryAmmoProvider
     proto: BulletEnergyTurretDisabler
     fireCost: 100
@@ -83,11 +82,6 @@
       fireCost: 100
     - proto: BulletEnergyTurretLaser
       fireCost: 100
-  - type: TurretTargetSettings
-    exemptAccessLevels:
-    - Security
-    - Borg
-    - BasicSilicon
   - type: DeployableTurret
     retractedDamageModifierSetId: Metallic
     deployedDamageModifierSetId: FlimsyMetallic
@@ -140,16 +134,13 @@
     locked: true
     unlockOnClick: false
   - type: LockedWiresPanel
-  - type: Machine
-    board: WeaponEnergyTurretStationMachineCircuitboard
   - type: UseDelay
     delay: 1.2
 
 - type: entity
-  parent: WeaponEnergyTurretStation
+  parent: WeaponEnergyTurretStationBase
   id: WeaponEnergyTurretAI
-  name: AI sentry turret
-  description: A high-tech autonomous weapons system under the direct control of a local artifical intelligence.
+  suffix: AI, Silicon
   components:
   - type: AccessReader
     access: [["StationAi"], ["ResearchDirector"]]
@@ -163,3 +154,38 @@
     receiveFrequencyId: TurretControlAI
     transmitFrequencyId: TurretAI
 
+- type: entity
+  parent: WeaponEnergyTurretStationBase
+  id: WeaponEnergyTurretSecurity
+  suffix: Security
+  components:
+  - type: AccessReader
+    access: [["StationAi"], ["Security"]]
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - Security
+    - Borg
+    - BasicSilicon
+  - type: Machine
+    board: WeaponEnergyTurretSecurityMachineCircuitboard
+  - type: DeviceNetwork
+    receiveFrequencyId: TurretControl
+    transmitFrequencyId: Turret
+
+- type: entity
+  parent: WeaponEnergyTurretStationBase
+  id: WeaponEnergyTurretCommand
+  suffix: Command
+  components:
+  - type: AccessReader
+    access: [["StationAi"], ["Command"]]
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - Command
+    - Borg
+    - BasicSilicon
+  - type: Machine
+    board: WeaponEnergyTurretSecurityMachineCircuitboard
+  - type: DeviceNetwork
+    receiveFrequencyId: TurretControl
+    transmitFrequencyId: Turret

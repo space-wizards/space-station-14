@@ -3,7 +3,7 @@
 
 uniform sampler2D SCREEN_TEXTURE;
 // Sensitivity, in degrees.
-const highp float RedHueRange = 5;
+const highp float RedHueRange = 5.0;
 const highp float MinSaturation = 0.4;
 
 // https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB

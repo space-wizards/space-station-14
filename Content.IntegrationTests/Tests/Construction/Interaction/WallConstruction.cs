@@ -13,10 +13,10 @@ public sealed class WallConstruction : InteractionTest
     {
         await StartConstruction(Wall);
         await InteractUsing(Steel, 2);
-        Assert.That(Hands.ActiveHandEntity, Is.Null);
+        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.Null);
         ClientAssertPrototype(Girder, Target);
         await InteractUsing(Steel, 2);
-        Assert.That(Hands.ActiveHandEntity, Is.Null);
+        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.Null);
         AssertPrototype(WallSolid);
     }
 
