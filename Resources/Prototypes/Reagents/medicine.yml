@@ -161,7 +161,7 @@
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
-          min: 1
+          min: 15
 
 - type: reagent
   id: Cryoxadone
