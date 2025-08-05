@@ -167,6 +167,8 @@
     speedModifier: 2.5 # fast because dragon strong
     useSound:
       path: /Audio/Items/crowbar.ogg
+  - type: NightVision
+    color: "#163247"
 
 - type: entity
   parent: BaseMobDragon

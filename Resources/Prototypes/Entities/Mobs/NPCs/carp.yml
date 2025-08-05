@@ -86,6 +86,8 @@
       interactFailureString: petting-failure-carp
       interactFailureSound:
         path: /Audio/Effects/bite.ogg
+    - type: NightVision
+      color: "#163247"
 
 - type: entity
   parent: BaseMobCarp

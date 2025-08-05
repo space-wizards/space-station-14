@@ -35,7 +35,7 @@ public sealed partial class NightVisionOverlay : Overlay
         _nightVisionShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         _nightVisionShader.SetParameter("tint", new Vector3(0.3f, 0.3f, 0.3f));
         _nightVisionShader.SetParameter("luminance_threshold", 2f);
-        _nightVisionShader.SetParameter("noise_amount", 0.5f);
+        _nightVisionShader.SetParameter("noise_amount", 0.7f);
         handle.UseShader(_nightVisionShader);
         handle.DrawRect(args.WorldBounds, Color.FromHex(_component.Color));
         handle.UseShader(null);
