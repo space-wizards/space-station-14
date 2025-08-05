@@ -9,6 +9,9 @@
     solution: food
   - type: DrainableSolution
     solution: food
+  - type: ExaminableSolution
+    solution: food
+    exactVolume: true
   - type: Sprite
     sprite: Objects/Consumable/Food/condiments.rsi
   - type: Icon

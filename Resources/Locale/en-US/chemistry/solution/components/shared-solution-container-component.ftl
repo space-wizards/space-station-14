@@ -17,6 +17,16 @@ examinable-solution-on-examine-volume-no-max = The contained solution is { $fill
    *[other] { -solution-vague-fill-level(fillLevel: $fillLevel) }.
 }
 
+examinable-solution-on-examine-volume-puddle = The puddle is { $fillLevel ->
+   *[exact] [color=white]{$current}u[/color].
+    [full] overflowing!
+    [mostlyfull] overflowing!
+    [halffull] deep and flowing.
+    [halfempty] very deep.
+    [mostlyempty] pooling together.
+    [empty] forming multiple small pools.
+}
+
 -solution-vague-fill-level =
     { $fillLevel ->
         [full] [color=white]Full[/color]
