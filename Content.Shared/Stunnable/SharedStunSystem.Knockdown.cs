@@ -234,7 +234,7 @@ public abstract partial class SharedStunSystem
     private void ToggleKnockdown(Entity<CrawlerComponent?, KnockedDownComponent?> entity)
     {
         // We resolve here instead of using TryCrawling to be extra sure someone without crawler can't stand up early.
-        if (!Resolve(entity, ref entity.Comp1))
+        if (!Resolve(entity, ref entity.Comp1, false))
             return;
 
         if (!Resolve(entity, ref entity.Comp2, false))
