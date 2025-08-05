@@ -17,7 +17,6 @@ public abstract partial class SharedScalingSystem : EntitySystem
         if (scalingComp.OriginalThresholds == null)
             return;
 
-
         foreach (var threshold in scalingComp.OriginalThresholds)
         {
             var key = threshold.Key;
