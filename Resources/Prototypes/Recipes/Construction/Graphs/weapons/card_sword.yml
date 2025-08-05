@@ -2,13 +2,13 @@
   id: CardSword
   start: start
   graph:
-    - node: start
-      edges:
-        - to: cardSword
-          steps:
-            - material: Cardboard
-              amount: 6
-              doAfter: 3
+  - node: start
+    edges:
+    - to: cardSword
+      steps:
+      - material: Cardboard
+        amount: 6
+        doAfter: 3
 
-    - node: cardSword
-      entity: CardSword
+  - node: cardSword
+    entity: CardSword

@@ -9,7 +9,7 @@
     "states": [
         {
         "name": "full"
-    },
+        },
         {
             "name": "card0",
         "directions": 4

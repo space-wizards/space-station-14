@@ -214,8 +214,8 @@
   targetNode: cardwall
   category: construction-category-structures
   conditions:
-    - !type:TileNotBlocked
-      failIfSpace: false
+  - !type:TileNotBlocked
+    failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false

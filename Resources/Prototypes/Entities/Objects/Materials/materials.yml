@@ -58,7 +58,7 @@
     heldPrefix: cardboard
   - type: FloorTile
     outputs:
-      - Plating
+    - Plating
   - type: SpawnAfterInteract #Nuke after convert to FloorTile
     prototype: CarpetCard
     doAfter: 0.5
