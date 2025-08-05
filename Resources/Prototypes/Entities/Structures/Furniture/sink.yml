@@ -76,16 +76,17 @@
   - type: SolutionContainerManager
     solutions:
       drainBuffer:
-        maxVol: 200
+        maxVol: 100
       tank:
         reagents:
         - ReagentId: Water
-          Quantity: 500
+          Quantity: 200
 
 - type: entity
   name: wide sink
-  id: SinkWide
-  parent: Sink
+  id: SinkWideEmpty
+  parent: SinkEmpty
+  suffix: Empty
   components:
     - type: Sprite
       sprite: Structures/Furniture/sink.rsi
@@ -98,6 +99,27 @@
       maxFillLevels: 1
       fillBaseName: sink_wide-fill-
       solutionName: drainBuffer
+    - type: SolutionContainerManager
+      solutions:
+        drainBuffer:
+          maxVol: 200
+        tank:
+          maxVol: 400
+
+- type: entity
+  name: wide sink
+  id: SinkWide
+  parent: SinkWideEmpty
+  suffix: Water
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drainBuffer:
+        maxVol: 200
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 400
 
 #Stemless Sink
 
@@ -127,4 +149,4 @@
       tank:
         reagents:
         - ReagentId: Water
-          Quantity: 500
+          Quantity: 200
