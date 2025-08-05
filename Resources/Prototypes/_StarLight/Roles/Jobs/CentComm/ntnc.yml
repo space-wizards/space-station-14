@@ -1,11 +1,11 @@
 - type: startingGear
   id: NTNCHardsuitGear
   equipment:
-    jumpsuit: ClothingUniformNTCCFatigues
+    jumpsuit: ClothingUniformNTNCFatigues
     back: ClothingBackpackBlueShield
     shoes: ClothingShoesBootsJackFilled
-    outerClothing: ClothingOuterHardsuitNTCCConsortium
-    id: NTCCCSPDA
+    outerClothing: ClothingOuterHardsuitNTNCConsortium
+    id: NTNCCSPDA
     eyes: ClothingEyesGlassesBlueShield
     ears: ClothingHeadsetAltCentCom
     mask: ClothingMaskGasSecurity
@@ -16,12 +16,12 @@
 - type: startingGear
   id: NTNCTrainerGear
   equipment:
-    jumpsuit: ClothingUniformNTCCFatigues
+    jumpsuit: ClothingUniformNTNCFatigues
     back: ClothingBackpackBlueShield
     shoes: ClothingShoesBootsJackFilled
     head: ClothingHeadHatBeretCommand
-    outerClothing: ClothingOuterHardsuitNTCCConsortium
-    id: NTCCCSPDA
+    outerClothing: ClothingOuterHardsuitNTNCConsortium
+    id: NTNCCSPDA
     eyes: ClothingEyesGlassesBlueShield
     ears: ClothingHeadsetAltCentCom
     mask: ClothingMaskGasSecurity
@@ -32,12 +32,12 @@
 - type: startingGear
   id: NTNCBasicGear
   equipment:
-    jumpsuit: ClothingUniformNTCCFatigues
+    jumpsuit: ClothingUniformNTNCFatigues
     back: ClothingBackpackBlueShield
     shoes: ClothingShoesBootsJackFilled
-    head: ClothingHeadHelmetHardsuitNTCCConsortium
-    outerClothing: ClothingOuterVestNTCC
-    id: NTCCCSPDA
+    head: ClothingHeadHelmetHardsuitNTNCConsortium
+    outerClothing: ClothingOuterVestNTNC
+    id: NTNCCSPDA
     eyes: ClothingEyesGlassesBlueShield
     ears: ClothingHeadsetAltCentCom
     mask: ClothingMaskGasSecurity
@@ -48,11 +48,11 @@
 - type: startingGear
   id: NTNCMedicGear
   equipment:
-    jumpsuit: ClothingUniformNTCCFatigues
+    jumpsuit: ClothingUniformNTNCFatigues
     back: ClothingBackpackDuffelBlueShield
     shoes: ClothingShoesBootsJackFilled
-    outerClothing: ClothingOuterHardsuitNTCCConsortiumMedic
-    id: NTCCCSPDA
+    outerClothing: ClothingOuterHardsuitNTNCConsortiumMedic
+    id: NTNCCSPDA
     eyes: ClothingEyesGlassesBlueShield
     ears: ClothingHeadsetAltCentCom
     mask: ClothingMaskGasSecurity
