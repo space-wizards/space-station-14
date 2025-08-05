@@ -1,11 +1,11 @@
 - type: job
-  id: NTCCBlueshield
-  name: job-name-ntccblueshield
-  description: job-description-ntccblueshield
+  id: NTNCBlueshield
+  name: job-name-ntncblueshield
+  description: job-description-ntncblueshield
   playTimeTracker: JobConsortiumBlueShield
   setPreference: false
-  startingGear: NTCCBlueShieldGear
-  icon: JobIconNTCCBlueShield
+  startingGear: NTNCBlueShieldGear
+  icon: JobIconNTNCBlueShield
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
@@ -17,14 +17,14 @@
       implants: [ MindShieldImplant, DeathRattleImplantCentcomm, RadioImplantCentcomm ]
 
 - type: startingGear
-  id: NTCCBlueShieldGear
+  id: NTNCBlueShieldGear
   equipment:
-    jumpsuit: ClothingUniformNTCCFatigues
+    jumpsuit: ClothingUniformNTNCFatigues
     back: ClothingBackpackERTLeader
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatBeretBlueShield
-    outerClothing: ClothingOuterVestNTCC
-    id: NTCCCSPDA
+    outerClothing: ClothingOuterVestNTNC
+    id: NTNCCSPDA
     eyes: ClothingEyesGlassesBlueShield
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltBlueShieldWebbingFilled
