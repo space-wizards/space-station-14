@@ -1,0 +1,23 @@
+using Content.Shared.Movement.Systems;
+using Content.Shared.Stunnable;
+
+namespace Content.Shared.Traits.Assorted;
+
+/// <summary>
+/// System that applies movement speed penalties and standing time modifications for the Impaired Mobility trait.
+/// Speed reduction is nullified when holding an item with the MobilityAidComponent, handled by the MobilityAidSystem.
+/// </summary>
+public sealed class ImpairedMobilitySystem : EntitySystem
+{
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<ImpairedMobilityComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeed);
+    }
+
+    private void OnRefreshMovementSpeed(EntityUid uid, ImpairedMobilityComponent component, RefreshMovementSpeedModifiersEvent args)
+    {
+        // Applies the movement penalty for the trait
+        // Mobility aids (any item with the MobilityAidComponent) counter this penalty via MobilityAidSystem
+        args.ModifySpeed(component.SpeedModifier);
+    }
+}

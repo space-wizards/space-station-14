@@ -51,6 +51,11 @@ public sealed class TraitSystem : EntitySystem
             if (traitPrototype.TraitGear == null)
                 continue;
 
+            // Skips ImpairedMobility gear if player also has Blindness trait
+            // This prevents duplicate canes since Blindness already provides a suitable cane
+            if (traitId == "ImpairedMobility" && args.Profile.TraitPreferences.Contains("Blindness"))
+                continue;
+
             if (!TryComp(args.Mob, out HandsComponent? handsComponent))
                 continue;
 
@@ -63,3 +68,4 @@ public sealed class TraitSystem : EntitySystem
         }
     }
 }
+

@@ -10,6 +10,7 @@
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/white_cane.rsi
+  - type: MobilityAid # I'm aware white canes don't realistically help with the mobility this component is used for. But this is a game, and something being realistic does necessarily equal good game design.
   - type: MeleeWeapon
     wideAnimationRotation: 45
     damage:
@@ -24,4 +25,3 @@
         Blunt: 3
   - type: UseDelay
     delay: 1
-
