@@ -5,9 +5,7 @@ shared-solution-container-component-on-examine-main-text = It contains {INDEFINI
     }
 
 examinable-solution-has-recognizable-chemicals = You can recognize {$recognizedString} in the solution.
-examinable-solution-recognized-first = [color={$color}]{$chemical}[/color]
-examinable-solution-recognized-next = , [color={$color}]{$chemical}[/color]
-examinable-solution-recognized-last = {" "}and [color={$color}]{$chemical}[/color]
+examinable-solution-recognized = [color={$color}]{$chemical}[/color]
 
 examinable-solution-on-examine-volume = The contained solution is { $fillLevel ->
     [exact] holding [color=white]{$current}/{$max}u[/color].
@@ -19,12 +17,22 @@ examinable-solution-on-examine-volume-no-max = The contained solution is { $fill
    *[other] { -solution-vague-fill-level(fillLevel: $fillLevel) }.
 }
 
+examinable-solution-on-examine-volume-puddle = The puddle is { $fillLevel ->
+   *[exact] [color=white]{$current}u[/color].
+    [full] overflowing!
+    [mostlyfull] overflowing!
+    [halffull] deep and flowing.
+    [halfempty] very deep.
+    [mostlyempty] pooling together.
+    [empty] forming multiple small pools.
+}
+
 -solution-vague-fill-level =
     { $fillLevel ->
         [full] [color=white]Full[/color]
-        [mostlyfull] [color=white]Mostly Full[/color]
-        [halffull] [color=white]Half Full[/color]
-        [halfempty] [color=white]Half Empty[/color]
-        [mostlyempty] [color=white]Mostly Empty[/color]
+        [mostlyfull] [color=#DFDFDF]Mostly Full[/color]
+        [halffull] [color=#C8C8C8]Half Full[/color]
+        [halfempty] [color=#C8C8C8]Half Empty[/color]
+        [mostlyempty] [color=#A4A4A4]Mostly Empty[/color]
        *[empty] [color=gray]Empty[/color]
     }

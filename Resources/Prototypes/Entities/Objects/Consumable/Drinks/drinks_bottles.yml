@@ -192,6 +192,8 @@
     layers:
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]
+  - type: ExaminableSolution
+    opaque: true
 
 - type: entity
   id: DrinkBottleVisualsAll
@@ -217,6 +219,7 @@
     fillBaseName: fill-
     inHandsMaxFillLevels: 3
     inHandsFillBaseName: -fill-
+  - type: ExaminableSolution
 
 # Large Glass Bottles
 

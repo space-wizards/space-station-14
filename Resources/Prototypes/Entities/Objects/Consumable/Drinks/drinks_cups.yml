@@ -20,6 +20,9 @@
     solution: drink
   - type: DrainableSolution
     solution: drink
+  - type: ExaminableSolution
+    solution: drink
+    opaque: true
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10

@@ -12,6 +12,7 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Localizations;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
@@ -804,9 +805,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             !TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
             return;
 
-        if (entity.Comp.CantSeeWhenClosed && Openable.IsClosed(entity.Owner, predicted: true))
-            return;
-
         var primaryReagent = solution.GetPrimaryReagentId();
 
         // If there's no primary reagent, assume the solution is empty
@@ -844,7 +842,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 .ThenBy(pair => pair.Key.LocalizedName);
 
             // Collect recognizable reagents, like water or beer
-            var recognized = new List<ReagentPrototype>();
+            var recognized = new List<string>();
             foreach (var keyValuePair in sortedReagentPrototypes)
             {
                 var proto = keyValuePair.Key;
@@ -853,37 +851,19 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     continue;
                 }
 
-                recognized.Add(proto);
+                recognized.Add(Loc.GetString("examinable-solution-recognized",
+                                            ("color", proto.SubstanceColor.ToHexNoAlpha()),
+                                            ("chemical", proto.LocalizedName)));
             }
 
             if (recognized.Count == 0)
                 return;
 
-            // Build a message of all recognizable reagents
-            var msg = new StringBuilder();
-            foreach (var reagent in recognized)
-            {
-                string part;
-                if (reagent == recognized[0])
-                {
-                    part = "examinable-solution-recognized-first";
-                }
-                else if (reagent == recognized[^1])
-                {
-                    part = "examinable-solution-recognized-last";
-                }
-                else
-                {
-                    part = "examinable-solution-recognized-next";
-                }
-
-                msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
-                    ("chemical", reagent.LocalizedName)));
-            }
+            var msg = ContentLocalizationManager.FormatList(recognized);
 
             // Finally push the full message
             args.PushMarkup(Loc.GetString(entity.Comp.LocRecognizableReagents,
-                ("recognizedString", msg.ToString())));
+                ("recognizedString", msg)));
         }
     }
 
@@ -996,15 +976,18 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Check if examinable solution requires you to hold the item in hand.
+    ///     Check if an examinable solution is hidden by something.
     /// </summary>
     private bool CanSeeHiddenSolution(Entity<ExaminableSolutionComponent> entity, EntityUid examiner)
     {
         // If not held-only then it's always visible.
-        if (!entity.Comp.HeldOnly)
-            return true;
+        if (entity.Comp.HeldOnly && !Hands.IsHolding(examiner, entity, out _))
+            return false;
 
-        return Hands.IsHolding(examiner, entity, out _);
+        if (entity.Comp.Opaque && Openable.IsClosed(entity.Owner, predicted: true))
+            return false;
+
+        return true;
     }
 
     private void OnMapInit(Entity<SolutionContainerManagerComponent> entity, ref MapInitEvent args)
