@@ -63,7 +63,7 @@ public sealed partial class TriggerSystem
         if (!args.CanInteract || !args.CanAccess || args.Hands == null)
             return;
 
-        if (ent.Comp.DelayOptions == null || ent.Comp.DelayOptions.Count == 1)
+        if (ent.Comp.DelayOptions.Count <= 1)
             return;
 
         var user = args.User;
