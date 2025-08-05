@@ -5,10 +5,9 @@ namespace Content.Shared.Trigger.Systems;
 
 /// <summary>
 /// This is a system covering all trigger interactions involving strapping or unstrapping objects.
-/// It is used by several separated components but they all share this same system.
+/// It is used by several separated components, but they all share this same system.
 /// This method of implementing the trigger system was requested by a maintainer.
 /// </summary>
-
 public sealed partial class TriggerOnStrappedSystem : EntitySystem
 {
     [Dependency] private readonly TriggerSystem _trigger = default!;
