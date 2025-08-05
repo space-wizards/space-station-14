@@ -17,6 +17,7 @@ public sealed partial class SensorInfo : BoxContainer
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
+    private readonly SharedAtmosphereSystem _atmos;
 
     public Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? OnThresholdUpdate;
     public event Action<string, AtmosSensorData>? OnToggleThresholds;
@@ -33,10 +34,9 @@ public sealed partial class SensorInfo : BoxContainer
 
     public SensorInfo(AtmosSensorData data, string address)
     {
-        IoCManager.InjectDependencies(this);
-        var atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();
-
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
+        _atmos = _entMan.System<SharedAtmosphereSystem>();
 
         _data = data;
         _address = address;
@@ -60,7 +60,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             var fractionGas = amount / data.TotalMoles;
 
-            ProtoId<GasPrototype> gasProtoId = atmosphereSystem.GetGas(gas);
+            ProtoId<GasPrototype> gasProtoId = _atmos.GetGas(gas);
             var gasName = _prototypeManager.Index(gasProtoId).Name;
 
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
@@ -113,9 +113,6 @@ public sealed partial class SensorInfo : BoxContainer
 
     public void ChangeData(AtmosSensorData data)
     {
-        IoCManager.InjectDependencies(this);
-        var atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();
-
         _data = data;
 
         SensorAddress.Title = Loc.GetString("air-alarm-ui-window-listing-title", ("address", _address), ("state", data.AlarmState));
@@ -141,7 +138,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             var fractionGas = amount / data.TotalMoles;
 
-            ProtoId<GasPrototype> gasProtoId = atmosphereSystem.GetGas(gas);
+            ProtoId<GasPrototype> gasProtoId = _atmos.GetGas(gas);
             var gasName = _prototypeManager.Index(gasProtoId).Name;
 
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
