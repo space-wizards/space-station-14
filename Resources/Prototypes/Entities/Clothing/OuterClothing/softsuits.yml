@@ -9,12 +9,6 @@
     sprite: Clothing/OuterClothing/Suits/eva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-tail
   - type: Tag
     tags:
     - SuitEVA
@@ -33,12 +27,6 @@
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-tail
   - type: Tag
     tags:
     - SuitEVA
@@ -58,12 +46,6 @@
     sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-tail
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
@@ -95,12 +77,6 @@
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-tail
   - type: Tag
     tags:
     - SuitEVA
@@ -118,12 +94,6 @@
     sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-tail
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
@@ -143,12 +113,6 @@
   - type: Appearance
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
