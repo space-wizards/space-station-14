@@ -87,7 +87,7 @@ public sealed partial class CryoPodComponent : Component
     /// The tool quality needed to eject a body when the pod is locked.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<ToolQualityPrototype> UnlockToolQuality;
+    public ProtoId<ToolQualityPrototype> UnlockToolQuality = "Prying";
 }
 
 [Serializable, NetSerializable]
