@@ -246,7 +246,8 @@ public sealed class LockSystem : EntitySystem
     /// Toggle the lock to locked if unlocked, and unlocked if locked.
     /// </summary>
     /// <param name="uid">Entity to toggle the lock state of.</param>
-    /// <param name="lockComp">Entites lock comp (will be resolved)</param>
+    /// <param name="user">The person trying to toggle the lock</param>
+    /// <param name="lockComp">Entities lock comp (will be resolved)</param>
     public void ToggleLock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
     {
         if (IsLocked((uid, lockComp)))

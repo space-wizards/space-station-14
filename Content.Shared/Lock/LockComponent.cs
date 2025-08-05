@@ -33,6 +33,9 @@ public sealed partial class LockComponent : Component
     [DataField, AutoNetworkedField]
     public bool ShowExamine = true;
 
+    /// <summary>
+    /// If true will show popups related to locking and unlocking. If false will not!
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool ShowPopups = true;
 

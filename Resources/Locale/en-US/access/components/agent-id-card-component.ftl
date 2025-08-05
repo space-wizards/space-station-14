@@ -9,4 +9,4 @@ agent-id-card-current-job = Job:
 agent-id-card-job-icon-label = Job icon:
 agent-id-menu-title = Agent ID Card
 
-agent-id-ui-verb = Change settings
+agent-id-open-ui-verb = Change settings

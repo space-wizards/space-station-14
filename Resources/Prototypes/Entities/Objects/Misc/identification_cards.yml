@@ -599,7 +599,7 @@
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true
-    verbText: agent-id-ui-verb
+    verbText: agent-id-open-ui-verb
   - type: Tag
     tags:
     - DoorBumpOpener

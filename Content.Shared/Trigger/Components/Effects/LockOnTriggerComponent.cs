@@ -6,9 +6,8 @@ namespace Content.Shared.Trigger.Components.Effects;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class LockOnTriggerComponent : BaseXOnTriggerComponent
 {
-
-    [DataField]
-    public Enum LockOnTrigger = LockAction.Toggle;
+    [DataField, AutoNetworkedField]
+    public LockAction LockOnTrigger = LockAction.Toggle;
 }
 
 [Serializable, NetSerializable]
