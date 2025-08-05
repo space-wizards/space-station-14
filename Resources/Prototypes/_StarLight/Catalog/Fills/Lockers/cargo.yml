@@ -11,7 +11,8 @@
     children:
     - id: OxygenTankFilled
     - id: ClothingShoesBootsMag
-    - id: ClothingOuterHardsuitSpatioLead
+#    - id: ClothingOuterHardsuitSpatioLead
+    - id: ClothingOuterHardsuitSpatio
     - id: ClothingMaskGasExplorer
 
 - type: entity
@@ -58,7 +59,8 @@
     children:
     - id: OxygenTankFilled
     - id: ClothingShoesBootsMag
-    - id: ClothingOuterHardsuitSpatioMedic
+#    - id: ClothingOuterHardsuitSpatioMedic
+    - id: ClothingOuterHardsuitSpatio
     - id: ClothingMaskGasExplorer
 
 - type: entity

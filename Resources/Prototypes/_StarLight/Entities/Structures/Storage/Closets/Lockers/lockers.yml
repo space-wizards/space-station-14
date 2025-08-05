@@ -72,7 +72,7 @@
 - type: entity
   id: LockerSalvageLead
   parent: LockerBaseSecure
-  name: salvage lead's equipment
+  name: salvage lead's locker
   components:
     - type: Appearance
     - type: Sprite
@@ -88,7 +88,7 @@
 - type: entity
   id: LockerSalvageMedic
   parent: LockerBaseSecure
-  name: salvage medic's equipment
+  name: salvage medic's locker
   components:
     - type: Appearance
     - type: Sprite
@@ -103,16 +103,16 @@
 # Salvage Lead/Medic Combo Large Locker
 - type: entity
   id: LockerLargeSalvageLeadMedic
-  parent: LockerBaseSecure
-  name: salvage lead and medic's equipment
+  parent: LockerLargeBaseSecure
+  name: large salvage lead and medic's locker
   components:
   - type: Appearance
   - type: Sprite
-    sprite: _Starlight/Structures/Storage/closet.rsi
+    sprite: _Starlight/Structures/Storage/closet-large.rsi
   - type: EntityStorageVisuals
     stateBaseClosed: salvage
-    stateDoorOpen: salvageleadmed_door
-    stateDoorClosed: salvage_door
+    stateDoorOpen: salvage_open
+    stateDoorClosed: salvageleadmed_door
   - type: AccessReader
     access: [["Salvage"]]
 
