@@ -1,0 +1,23 @@
+- type: ghostTheme
+  id: hawk
+  name: Hawk
+  description: Watchful guardian.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/hawk.rsi
+      state: hawk
+    color: "#ffffff"
+  requirement: PatronReq
+
+- type: ghostTheme
+  id: WizdenCarp
+  name: Wizden Carp
+  description: Almost magical.
+  colorizeable: true
+  spriteSpecifier:
+    sprite:
+      sprite: Mobs/Aliens/Carps/space.rsi
+      state: alive
+    color: "#ffffff"
+  requirement: WizdenPatronReq
+  

@@ -1,0 +1,74 @@
+- type: entity
+  name: marriage axe 
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband, BaseStringInstrument]
+  id: MarriageAxe
+  description: A charming subtle instrument of chaos—perfect for when diplomacy fails. Screams like a banshee, cuts like a demon, and turns people into regrettable memories. Handle with enthusiasm.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/marriage_axe.rsi
+    layers:
+    - state: marriage
+    - state: marriage_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/_Starlight/Weapons/marriage_hum.ogg
+      params:
+        pitch: 0.8
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/_Starlight/Weapons/marriage_swing.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnHitNoDamage:
+      path: /Audio/_Starlight/Weapons/marriage_swing.ogg
+      params:
+        variation: 0.250
+        volume: -10
+    activatedSoundOnSwing:
+      path: /Audio/_Starlight/Weapons/marriage_swing.ogg
+      params:
+        variation: 0.125
+    activatedDamage:
+      types:
+        Slash: 25
+        Heat: 25
+        Structural: 240
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Melee/marriage_axe-inhands.rsi
+  - type: MultiHandedItem
+  - type: Tool
+    qualities:
+      - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: ToolTileCompatible
+  - type: HeldSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: Prying
+  - type: UseDelay
+    delay: 1
+  - type: Instrument
+    program: 6
+    bank: 1
+    allowPercussion: true
+  - type: Reflect
+    reflectProb: 0.75 # surpise get tasered
+    spread: 75
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    attackRate: 0.8
+    autoAttack: true
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+      params:
+        pitch: 0.8
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+      params:
+        pitch: 0.8

@@ -47,6 +47,7 @@
   configuration:
     entity: MobCarpMagic
     forced: true
+    duration: 120 #STARLIGHT
     inventory: None
     transferName: true
     transferDamage: true
@@ -62,6 +63,7 @@
   configuration:
     entity: MobSkeletonPerson
     forced: true
+    duration: 120 #STARLIGHT
     inventory: Drop
     transferName: true
     transferDamage: true
@@ -77,6 +79,7 @@
   configuration:
     entity: MobMonkey
     forced: true
+    duration: 120 #STARLIGHT
     inventory: None
     transferName: true
     transferDamage: true
@@ -168,6 +171,17 @@
     inventory: Drop
     cooldown: 160
 
+- type: polymorph
+  id: SmartCorgiMorph
+  configuration:
+    entity: MobCorgiSmart
+    forced: false
+    inventory: Drop
+    transferName: true
+    revertOnCrit: false
+    revertOnDeath: false
+    allowRepeatedMorphs: false
+
 # this is the monkey polymorph for artifact.
 - type: polymorph
   id: ArtifactMonkey
@@ -199,7 +213,6 @@
     entity: MobLizard
     forced: true
     transferName: true
-    transferHumanoidAppearance: true
     inventory: None
     revertOnDeath: true
     revertOnCrit: true
@@ -211,7 +224,6 @@
     entity: MobLuminousPerson
     forced: true
     transferName: true
-    transferHumanoidAppearance: true
     inventory: None
     revertOnDeath: true
     revertOnCrit: true
@@ -253,7 +265,7 @@
     entity: MobBat
     revertOnDeath: true
     revertOnCrit: true
-    
+
 # Temporary Jaunt
 # Don't make permanent jaunts until action system can be reworked to allow do afters and cooldown pausing
 - type: polymorph

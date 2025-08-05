@@ -157,9 +157,30 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         // Show the silicon has been subverted.
         component.Subverted = true;
 
+        #region Starlight: Add the new channel to the silicon.
+        var emag = args.emagComp;
+        if (emag != null)
+        {
+            if (TryComp(uid, out ActiveRadioComponent? activeRadio))
+            {
+                activeRadio.Channels.UnionWith(emag.ChannelAdd.Select(item => item.Id.ToString()).ToHashSet());
+            }
+            if (TryComp(uid, out IntrinsicRadioTransmitterComponent? transmitter))
+            {
+                transmitter.Channels.UnionWith(emag.ChannelAdd.Select(item => item.Id.ToString()).ToHashSet());
+            }
+            var lawset = emag.Lawset;
+            if (lawset != null)
+            {
+                component.Lawset = GetLawset(lawset.Value);
+                return;
+            }
+        }
+        #endregion
+
         // Add the first emag law before the others
         component.Lawset?.Laws.RemoveAt(0);
-        
+
         component.Lawset?.Laws.Insert(0, new SiliconLaw
         {
             LawString = Loc.GetString("law-emag-custom", ("name", Name(args.user)), ("title", Loc.GetString(component.Lawset.ObeysTo))),
@@ -273,7 +294,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         };
         foreach (var law in proto.Laws)
         {
-            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
+            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law).ShallowClone());
         }
         laws.ObeysTo = proto.ObeysTo;
 

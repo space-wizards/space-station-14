@@ -12,7 +12,7 @@ public sealed partial class DropOperator : HTNOperator
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
-        if (!blackboard.TryGetValue(NPCBlackboard.ActiveHand, out Hand? activeHand, _entManager))
+        if (!blackboard.TryGetValue(NPCBlackboard.ActiveHand, out string? activeHand, _entManager))
         {
             return HTNOperatorStatus.Finished;
         }

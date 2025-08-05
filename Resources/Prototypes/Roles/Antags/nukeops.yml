@@ -6,10 +6,10 @@
   objective: roles-antag-nuclear-operative-objective
   requirements:
   - !type:OverallPlaytimeRequirement
-    time: 43200 # 12h
+    time: 86400 # 24h STARLIGHT
   - !type:DepartmentTimeRequirement
     department: Security
-    time: 21600 # 6h
+    time: 21600 # 6h STARLIGHT
   guides: [ NuclearOperatives ]
   previewStartingGear: SyndicateOperativeGearFull
 
@@ -21,16 +21,16 @@
   objective: roles-antag-nuclear-operative-agent-objective
   requirements:
   - !type:OverallPlaytimeRequirement
-    time: 43200 # 12h
+    time: 86400 # 24h STARLIGHT
   - !type:RoleTimeRequirement
     role: JobChemist
-    time: 21600 # 6h
-  - !type:DepartmentTimeRequirement
-    department: Medical
-    time: 28800 # 8h
+    time: 21600 # 6h STARLIGHT
+  - !type:RoleTimeRequirement
+    role: JobSurgeon
+    time: 10800 # 3h STARLIGHT
   - !type:DepartmentTimeRequirement
     department: Security
-    time: 21600 # 6h
+    time: 10800 # 3h STARLIGHT
   guides: [ NuclearOperatives ]
   previewStartingGear: SyndicateOperativeMedicFull
 
@@ -42,13 +42,13 @@
   objective: roles-antag-nuclear-operative-commander-objective
   requirements:
   - !type:OverallPlaytimeRequirement
-    time: 86400 # 24h
+    time: 86400 # 24h STARLIGHT
   - !type:DepartmentTimeRequirement
     department: Security
-    time: 43200 # 12h
+    time: 43200 # 12h STARLIGHT
   - !type:DepartmentTimeRequirement
     department: Command
-    time: 14400 # 4h
+    time: 21600 # 6h STARLIGHT
   # should be changed to nukie playtime when thats tracked (wyci)
   guides: [ NuclearOperatives ]
   previewStartingGear: SyndicateCommanderGearFull

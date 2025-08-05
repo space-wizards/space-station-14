@@ -11,6 +11,12 @@
   maleFirstNames: names_vulp_first_male
   femaleFirstNames: names_vulp_first_female
   customName: true
+  minHeight: 0.9
+  defaultHeight: 1
+  maxHeight: 1.2
+  standardSize: 170
+  standardWeight: 75
+  standardDensity: 110
 
 - type: speciesBaseSprites
   id: MobVulpkaninSprites

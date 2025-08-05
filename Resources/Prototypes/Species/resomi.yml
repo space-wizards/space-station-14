@@ -17,6 +17,9 @@
   oldAge: 257
   maxAge: 430
   customName: true # Starlight
+  standardSize: 150
+  standardWeight: 40
+  standardDensity: 17
 
 - type: speciesBaseSprites
   id: MobResomiSprites

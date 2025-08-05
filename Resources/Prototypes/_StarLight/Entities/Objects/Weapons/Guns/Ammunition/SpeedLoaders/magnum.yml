@@ -19,8 +19,12 @@
 - type: entity
   id: SpeedLoaderMagnumImprovised
   name: "speed loader (.45 magnum)"
-  parent: BaseSpeedLoaderMagnum
+  parent: [BaseItem, BaseMinorContraband]
   components:
+  - type: Tag
+    tags:
+      - SpeedLoaderMagnum
+  - type: SpeedLoader
   - type: BallisticAmmoProvider
     proto: null
     whitelist:
@@ -28,10 +32,10 @@
         - CartridgeMagnum
         - CartridgeMagnumImprovised
     capacity: 4
-  - type: MagazineVisuals
-    magState: base
-    steps: 5
-    zeroVisible: false
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/improvised_magnum_speed_loader.rsi
     layers:
@@ -42,6 +46,47 @@
       - state: base-tip-4
         map: [ "enum.GunVisualLayers.Tip" ]
         color: "#717171"
+  - type: MagazineVisuals
+    magState: base
+    steps: 5
+    zeroVisible: false
+  - type: Appearance
   - type: Construction
     graph: ImprovisedMagnumSpeedLoaderGraph
+    node: shell
+
+- type: entity
+  id: SpeedLoaderMagnumLeverImprovised
+  name: "speed loader (.30 /.45 magnum)"
+  parent: [BaseSpeedLoaderShotgun, BaseMinorContraband]
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+    whitelist:
+      tags:
+        - CartridgeMagnum
+        - CartridgeMagnumImprovised
+        - CartridgeLightRifle
+        - CartridgeLightRifleImprovised
+    capacity: 8
+  - type: MagazineVisuals
+    magState: base
+    steps: 9
+    zeroVisible: false
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,0
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/improvised_lever_action_speed_loader.rsi
+    layers:
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: base-8
+        map: [ "enum.GunVisualLayers.Mag" ]
+      - state: base-tip-8
+        map: [ "enum.GunVisualLayers.Tip" ]
+        color: "#717171"
+  - type: Construction
+    graph: SpeedLoaderMagnumLeverImprovisedGraph
     node: shell

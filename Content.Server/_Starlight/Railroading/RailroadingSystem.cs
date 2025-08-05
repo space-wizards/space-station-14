@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Server._Starlight.Objectives.Events;
+﻿using Content.Server._Starlight.Objectives.Events;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.EUI;
@@ -9,13 +8,9 @@ using Content.Shared._Starlight.Railroading.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Database;
-using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
-using Content.Shared.Objectives;
-using Discord;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Server._Starlight.Railroading;
 
@@ -67,8 +62,8 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
                     ("Color", card.Comp1.Color),
                     ("IconColor", card.Comp1.IconColor),
                     ("Icon", card.Comp1.Icon),
-                    ("Title", card.Comp1.Title),
-                    ("Desc", card.Comp1.Description),
+                    ("Title", Loc.GetString(card.Comp1.Title)),
+                    ("Desc", Loc.GetString(card.Comp1.Description)),
                 ];
                 args.PushMarkup(Loc.GetString("railroading-card-examined", @params));
             }
@@ -80,7 +75,7 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
                         ("Color", item.Comp1.Color),
                         ("IconColor", item.Comp1.IconColor),
                         ("Icon", item.Comp1.Icon),
-                        ("Title", item.Comp1.Title)
+                        ("Title", Loc.GetString(item.Comp1.Title))
                     ];
                     args.PushMarkup(Loc.GetString("railroading-issued-card", @params));
                 }
