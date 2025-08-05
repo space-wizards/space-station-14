@@ -18,8 +18,8 @@ public sealed partial class ImpairedMobilityComponent : Component
     public float SpeedModifier = 0.5f;
 
     /// <summary>
-    /// The doAfter modifier when getting up after falling (1.5f is 50% slower)
+    /// The doAfter modifier when getting up after falling (1.35f is 35% slower)
     /// </summary>
     [DataField("standUpTimeModifier")]
-    public float StandUpTimeModifier = 1.5f;
+    public float StandUpTimeModifier = 1.35f;
 }
