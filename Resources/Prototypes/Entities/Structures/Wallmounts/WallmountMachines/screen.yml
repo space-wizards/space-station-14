@@ -14,6 +14,17 @@
     sprite: Structures/Wallmounts/screen.rsi
     state: screen
     noRot: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: ExtensionCableReceiver

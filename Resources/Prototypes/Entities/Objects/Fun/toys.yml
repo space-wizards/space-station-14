@@ -892,7 +892,7 @@
   - type: StepTrigger
     intersectRatio: 0.2
     requiredTriggeredSpeed: 2
-  - type: TriggerOnStepTrigger
+  - type: TriggerOnStepTrigger # for payloads
   - type: Appearance
   - type: CollisionWake
     enabled: false
