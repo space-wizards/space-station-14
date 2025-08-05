@@ -10,7 +10,7 @@ namespace Content.Shared.Medical.Cryogenics;
 
 /// <summary>
 /// Component for medical cryo pods.
-/// Handles trasferring reagents from a beaker slot into an inserted mob, as well as exposing them to connected atmos pipes.
+/// Handles transferring reagents from a beaker slot into an inserted mob, as well as exposing them to connected atmos pipes.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState, AutoGenerateComponentPause]
@@ -28,7 +28,7 @@ public sealed partial class CryoPodComponent : Component
     public string PortName = "port";
 
     /// <summary>
-    /// Specifies the name of the slot that holds beaker with medicine.
+    /// Specifies the name of the slot that holds the beaker with medicine.
     /// </summary>
     [DataField]
     public string SolutionContainerName = "beakerSlot";

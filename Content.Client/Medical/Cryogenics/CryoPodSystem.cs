@@ -1,7 +1,5 @@
 ﻿using System.Numerics;
-using Content.Shared.Emag.Systems;
 using Content.Shared.Medical.Cryogenics;
-using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Medical.Cryogenics;
