@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Southbridge
-  changes:
-  - message: Solar Panels can now be randomly damaged or unfinished at the beginning
-      of the round.
-    type: Add
-  id: 8317
-  time: '2025-04-22T19:46:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36825
 - author: Kickguy223
   changes:
   - message: Reduced the price of firelock electronics to half the price of the input
@@ -3907,3 +3899,11 @@
   id: 8829
   time: '2025-08-05T03:26:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39388
+- author: Luxeator
+  changes:
+  - message: Fixed error upon exploding buckled mobs (and other near instantaneous
+      changes)
+    type: Fix
+  id: 8830
+  time: '2025-08-05T23:15:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39410
