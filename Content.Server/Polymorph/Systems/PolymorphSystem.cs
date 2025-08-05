@@ -179,7 +179,8 @@ public sealed partial class PolymorphSystem : EntitySystem
     {
         // If they're morphed, check their current config to see if they can be
         // morphed again
-        if (TryComp<PolymorphedEntityComponent>(uid, out var currentPoly)
+        if (!configuration.IgnoreAllowRepeatedMorphs
+            && TryComp<PolymorphedEntityComponent>(uid, out var currentPoly)
             && !currentPoly.Configuration.AllowRepeatedMorphs)
             return null;
 
