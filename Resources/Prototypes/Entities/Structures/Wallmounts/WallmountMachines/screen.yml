@@ -9,6 +9,7 @@
     textOffset: 0,3
     timerOffset: 0,-4
     rows: 2
+  - type: Appearance
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/screen.rsi

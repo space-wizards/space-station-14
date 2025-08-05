@@ -666,6 +666,7 @@
     title: comms-console-announcement-title-station
   - type: DeviceNetwork
     transmitFrequencyId: ShuttleTimer
+    deviceNetId: Wireless
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: UserInterface
