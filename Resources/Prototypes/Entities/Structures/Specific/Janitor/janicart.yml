@@ -267,7 +267,6 @@
           reagents:
             - ReagentId: Water
               Quantity: 600 # 3 quarters full at roundstart to make it more appealing
-    
     - type: MixableSolution
       solution: bucket
     - type: DrainableSolution
