@@ -20,13 +20,11 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
-using Content.Shared.Tools;
 using Content.Shared.Tools.Systems;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Medical.Cryogenics;
@@ -55,8 +53,6 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
     private EntityQuery<ItemSlotsComponent> _itemSlotsQuery;
     private EntityQuery<FitsInDispenserComponent> _dispenserQuery;
     private EntityQuery<SolutionContainerManagerComponent> _solutionContainerQuery;
-
-    private static readonly ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
 
     public override void Initialize()
     {
@@ -97,7 +93,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
             cryoPod.NextInjectionTime += cryoPod.BeakerTransferTime;
             Dirty(uid, cryoPod);
 
-            if (!_itemSlotsQuery.TryGetComponent(uid, out var itemSlotsComponent))
+            if (!_itemSlotsQuery.TryComp(uid, out var itemSlotsComponent))
                 continue;
 
             var container = _itemSlots.GetItemOrNull(uid, cryoPod.SolutionContainerName, itemSlotsComponent);
@@ -105,11 +101,11 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
             if (container != null
                 && container.Value.Valid
                 && patient != null
-                && _dispenserQuery.TryGetComponent(container, out var fitsInDispenserComponent)
-                && _solutionContainerQuery.TryGetComponent(container, out var solutionContainerManagerComponent)
+                && _dispenserQuery.TryComp(container, out var fitsInDispenserComponent)
+                && _solutionContainerQuery.TryComp(container, out var solutionContainerManagerComponent)
                 && _solutionContainer.TryGetFitsInDispenser((container.Value, fitsInDispenserComponent, solutionContainerManagerComponent),
                     out var containerSolution, out _)
-                && _bloodstreamQuery.TryGetComponent(patient, out var bloodstream))
+                && _bloodstreamQuery.TryComp(patient, out var bloodstream))
             {
                 var solutionToInject = _solutionContainer.SplitSolution(containerSolution.Value, cryoPod.BeakerTransferAmount);
                 _bloodstream.TryAddToChemicals((patient.Value, bloodstream), solutionToInject);
@@ -161,7 +157,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         if (args.Handled || !ent.Comp.Locked || ent.Comp.BodyContainer.ContainedEntity == null)
             return;
 
-        args.Handled = _tool.UseTool(args.Used, args.User, ent.Owner, ent.Comp.PryDelay, PryingQuality, new CryoPodPryFinished());
+        args.Handled = _tool.UseTool(args.Used, args.User, ent.Owner, ent.Comp.PryDelay, ent.Comp.UnlockToolQuality, new CryoPodPryFinished());
     }
 
     private void OnCryoPodPryFinished(EntityUid uid, CryoPodComponent cryoPodComponent, CryoPodPryFinished args)

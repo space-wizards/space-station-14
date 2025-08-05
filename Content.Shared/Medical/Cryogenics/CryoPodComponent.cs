@@ -1,6 +1,8 @@
 using Content.Shared.FixedPoint;
+using Content.Shared.Tools;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -38,12 +40,15 @@ public sealed partial class CryoPodComponent : Component
     [DataField]
     public TimeSpan BeakerTransferTime = TimeSpan.FromSeconds(1);
 
+    /// <summary>
+    /// The timestamp for the next injection.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
-    public TimeSpan? NextInjectionTime;
+    public TimeSpan NextInjectionTime = TimeSpan.Zero;
 
     /// <summary>
-    /// How many units to transfer per tick from the beaker to the mob?
+    /// How many units to transfer per injection from the beaker to the mob?
     /// </summary>
     [DataField]
     public FixedPoint2 BeakerTransferAmount = 1;
@@ -77,6 +82,12 @@ public sealed partial class CryoPodComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool PermaLocked;
+
+    /// <summary>
+    /// The tool quality needed to eject a body when the pod is locked.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ProtoId<ToolQualityPrototype> UnlockToolQuality;
 }
 
 [Serializable, NetSerializable]
