@@ -9,7 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Mobs.Components;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(MobThresholdSystem), typeof(SharedScalingSystem))]
+[Access(typeof(MobThresholdSystem), typeof(SharedScalingSystem))] // STARLIGHT
 public sealed partial class MobThresholdsComponent : Component
 {
     [DataField("thresholds", required: true)]
