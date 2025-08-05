@@ -30,7 +30,7 @@ public abstract partial class SharedScalingSystem : EntitySystem
             if (scalingPercent < 0.0 - scalingComp.MaximumHealthScaling)
                 scalingPercent = 0.0 - scalingComp.MaximumHealthScaling;
 
-            var scalingValue = key * scalingPercent;
+            FixedPoint2 scalingValue = key.Double() * scalingPercent;
 
             FixedPoint2 scaledKey = key + scalingValue;
 
