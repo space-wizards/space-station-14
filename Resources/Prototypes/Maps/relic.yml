@@ -2,6 +2,8 @@
   id: Relic
   mapName: 'Relic'
   mapPath: /Maps/relic.yml
+  maxRandomOffset: 0
+  randomRotation: false
   minPlayers: 10
   maxPlayers: 50
   stations:
@@ -24,9 +26,6 @@
             trade: !type:GridSpawnGroup
               minCount: 0
               maxCount: 0
-              # addComponents:
-                # - type: ProtectedGrid
-                # - type: TradeStation
               paths:
                 - /Maps/Shuttles/trading_outpost.yml
         - type: StationJobs
