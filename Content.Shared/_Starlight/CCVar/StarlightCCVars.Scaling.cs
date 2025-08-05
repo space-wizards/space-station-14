@@ -35,14 +35,12 @@ public sealed partial class StarlightCCVars
     /// If population is above, targets are scaled UP.
     /// </summary>
     public static readonly CVarDef<int> ScalingPopulationBase =
-        CVarDef.Create("scaling.population_base", 5, CVar.SERVERONLY);
+        CVarDef.Create("scaling.population_base", 10, CVar.SERVERONLY);
 
     /// <summary>
-    /// Determines how much, if at all, antags using the AntagMonsterScaling component have their crit treshold scaled with population.
-    /// Reactivity to this CVar is individual to the monsters, and adjustable via the component.
-    /// This value is EXPONENTIAL, with crit treshold increasing by (Weight)^(Pop above Base).
-    /// Therefore, be careful with large adjustments.
+    /// Determines how large a portion of the mob's base thresholds are used in the scaling calculations.
+    /// Put simply, this decides how large a percentage of mobs' healthpools get added (or removed) per player outside baseline.
     /// </summary>
     public static readonly CVarDef<double> ScalingHealthWeight =
-        CVarDef.Create("scaling.health_weight", 2.0, CVar.SERVERONLY);
+        CVarDef.Create("scaling.health_weight", 0.05, CVar.SERVERONLY);
 }

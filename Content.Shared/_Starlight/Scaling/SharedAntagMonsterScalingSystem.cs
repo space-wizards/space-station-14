@@ -13,7 +13,6 @@ public abstract partial class SharedScalingSystem : EntitySystem
         Dictionary<EntityUid, double> cachedPopulations,
         double universalHealthWeight)
     {
-        thresholdsComp.Thresholds.Clear();
 
         if (scalingComp.OriginalThresholds == null)
             return;
@@ -22,18 +21,23 @@ public abstract partial class SharedScalingSystem : EntitySystem
         {
             var key = threshold.Key;
 
-            double scalingValue;
-            if (cachedPopulations[station] < 0)
-            {
-                scalingValue = Math.Pow(universalHealthWeight, Math.Abs(cachedPopulations[station]));
-            }
-            else
-            {
-                scalingValue = Math.Pow(universalHealthWeight, cachedPopulations[station]);
-            }
+            double scalingPercent = cachedPopulations[station] * universalHealthWeight;
 
-            FixedPoint2 scaledKey = key + (scalingValue * scalingComp.HealthScalingAdjustment);
-            thresholdsComp.Thresholds.Add(scaledKey, threshold.Value);
+            if (scalingPercent > scalingComp.MaximumHealthScaling)
+                scalingPercent = scalingComp.MaximumHealthScaling;
+
+            if (scalingPercent < scalingComp.MaximumHealthScaling)
+                scalingPercent = 0.0 - scalingComp.MaximumHealthScaling;
+
+            double scalingValue = ((double)threshold.Value) * scalingPercent;
+
+            FixedPoint2 scaledKey = key + scalingValue;
+
+            if (key != scaledKey)
+            {
+                thresholdsComp.Thresholds.Remove(key);
+                thresholdsComp.Thresholds.Add(scaledKey, threshold.Value);
+            }
         }
     }
 }

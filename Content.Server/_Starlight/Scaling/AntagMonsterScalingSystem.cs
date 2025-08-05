@@ -10,6 +10,8 @@ using Content.Shared.StationRecords;
 using Content.Server.Station.Systems;
 using Robust.Shared.Utility;
 using Content.Shared._Starlight.Scaling;
+using Content.Server.Ghost.Roles.Events;
+using Content.Shared.Mobs;
 
 namespace Content.Server._Starlight.Scaling;
 
@@ -20,31 +22,38 @@ public sealed class ScalingSystem : SharedScalingSystem
     [Dependency] private readonly StationRecordsSystem _recordsSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
+    private readonly Dictionary<EntityUid, double> _cachedPopulations = new();
+
     double _universalHealthWeight;
     int _populationBase;
     double _securityWeight;
     double _salvageWeight;
     double _centcomWeight;
-
-    private readonly Dictionary<EntityUid, double> _cachedPopulations = new();
+    
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<AntagMonsterScalingComponent, ComponentInit>(OnMobStartup);
+        SubscribeLocalEvent<AntagMonsterScalingComponent, MapInitEvent>(OnMobStartup);
 
-        _universalHealthWeight = _cfg.GetCVar(StarlightCCVars.ScalingHealthWeight);
-        _populationBase = _cfg.GetCVar(StarlightCCVars.ScalingPopulationBase);
-        _securityWeight = _cfg.GetCVar(StarlightCCVars.ScalingSecurityWeight);
-        _salvageWeight = _cfg.GetCVar(StarlightCCVars.ScalingSalvageWeight);
-        _centcomWeight = _cfg.GetCVar(StarlightCCVars.ScalingCentcomWeight);
+        _cfg.OnValueChanged(StarlightCCVars.ScalingHealthWeight, UpdateUniversalHealthWeight, true);
     }
 
-    private void OnMobStartup(EntityUid mob, AntagMonsterScalingComponent scalingComp, ref ComponentInit args)
+    private void UpdateUniversalHealthWeight(double universalHealthWeight)
+    {
+        _universalHealthWeight = universalHealthWeight;
+    }
+
+    private void OnMobStartup(EntityUid mob, AntagMonsterScalingComponent scalingComp, ref MapInitEvent args)
     {
         if (!TryComp(mob, out MobThresholdsComponent? thresholdsComp))
             return;
 
-        scalingComp.OriginalThresholds ??= thresholdsComp.Thresholds;
+        scalingComp.OriginalThresholds = new();
+
+        foreach (var threshold in thresholdsComp.Thresholds)
+        {
+            scalingComp.OriginalThresholds.Add(threshold.Key, threshold.Value);
+        }
 
         var nullableStation = _stationSystem.GetStationInMap(Transform(mob).MapID);
         if (nullableStation == null)
@@ -64,6 +73,11 @@ public sealed class ScalingSystem : SharedScalingSystem
 
     private void UpdatePopulation(EntityUid station)
     {
+        _populationBase = _cfg.GetCVar(StarlightCCVars.ScalingPopulationBase);
+        _securityWeight = _cfg.GetCVar(StarlightCCVars.ScalingSecurityWeight);
+        _salvageWeight = _cfg.GetCVar(StarlightCCVars.ScalingSalvageWeight);
+        _centcomWeight = _cfg.GetCVar(StarlightCCVars.ScalingCentcomWeight);
+
         double updatedPopulation = 0;
 
         var crewMembers = _recordsSystem.GetRecordsOfType<GeneralStationRecord>(station);

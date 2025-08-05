@@ -7,13 +7,10 @@ namespace Content.Shared._Starlight.Scaling.Components;
 public sealed partial class AntagMonsterScalingComponent : Component
 {
     /// <summary>
-    /// Determines how much the health scaling affects this monster.
-    /// This value is LINEAR, meaning the final health calculation is multiplied
-    /// by this value.
-    /// 0.0 means its health is unaffected.
+    /// Indicates the highest percentage health increase (or decrease) allowed for this creature.
     /// </summary>
     [DataField(required: true)]
-    public double HealthScalingAdjustment = 0.0;
+    public double MaximumHealthScaling = 0.50;
 
     [DataField]
     public bool IsScaled = false;
