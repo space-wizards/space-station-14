@@ -9,7 +9,6 @@ using Content.Server.Preferences.Managers;
 using Content.Server.Station.Events;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
-using Content.Shared.Ghost.Roles;
 using Content.Shared.Job;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -202,17 +201,6 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         }
 
         return RoleRequirementStatics.TryJobRequirementsMet(jobProto, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
-    }
-
-    public bool IsGhostRoleAllowed(ICommonSession player, ProtoId<GhostRolePrototype> ghostRoleProto)
-    {
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
-            return true;
-
-        if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
-            playTimes = new Dictionary<string, TimeSpan>();
-
-        return RoleRequirementStatics.TryGhostRoleRequirementsMet(ghostRoleProto, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
     }
 
     public HashSet<ProtoId<JobPrototype>> GetDisallowedJobs(ICommonSession player)

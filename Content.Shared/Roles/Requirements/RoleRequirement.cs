@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Ghost.Roles;
 using Content.Shared.Job;
 using Content.Shared.Preferences;
 using Robust.Shared.Prototypes;
@@ -20,24 +19,6 @@ public static class RoleRequirementStatics
     {
         return TryRequirementsMet(
             entManager.System<SharedRoleSystem>().GetJobRequirement(job),
-            playTimes,
-            out reason,
-            entManager,
-            protoManager,
-            profile
-        );
-    }
-
-    public static bool TryGhostRoleRequirementsMet(
-        ProtoId<GhostRolePrototype> ghostRole,
-        IReadOnlyDictionary<string, TimeSpan> playTimes,
-        [NotNullWhen(false)] out FormattedMessage? reason,
-        IEntityManager entManager,
-        IPrototypeManager protoManager,
-        HumanoidCharacterProfile? profile)
-    {
-        return TryRequirementsMet(
-            entManager.System<SharedRoleSystem>().GetGhostRoleRequirement(ghostRole),
             playTimes,
             out reason,
             entManager,

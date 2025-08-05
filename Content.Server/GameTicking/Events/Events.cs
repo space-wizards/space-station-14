@@ -1,6 +1,4 @@
-﻿using Content.Shared.Ghost.Roles;
-using Content.Shared.Job;
-using Content.Shared.Roles;
+﻿using Content.Shared.Job;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -11,13 +9,5 @@ public struct IsJobAllowedEvent(ICommonSession player, ProtoId<JobPrototype> job
 {
     public readonly ICommonSession Player = player;
     public readonly ProtoId<JobPrototype> Job = job;
-    public bool Cancelled = cancelled;
-}
-
-[ByRefEvent]
-public struct IsGhostRoleAllowedEvent(ICommonSession player, ProtoId<GhostRolePrototype> ghostRole, bool cancelled = false)
-{
-    public readonly ICommonSession Player = player;
-    public readonly ProtoId<GhostRolePrototype> GhostRole = ghostRole;
     public bool Cancelled = cancelled;
 }

@@ -5,8 +5,6 @@ using Content.Shared.Antag;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
-using Content.Shared.Ghost.Roles;
-using Content.Shared.Job;
 using Content.Shared.Job;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Requirements;
@@ -683,15 +681,6 @@ public abstract class SharedRoleSystem : EntitySystem
             return req;
 
         return _prototypes.Index(antag).Requirements;
-    }
-
-    // TODO ROLES Change to readonly.
-    public HashSet<RoleRequirement>? GetGhostRoleRequirement(ProtoId<GhostRolePrototype> ghostRole)
-    {
-        if (_requirementOverride != null && _requirementOverride.GhostRoles.TryGetValue(ghostRole, out var req))
-            return req;
-
-        return _prototypes.Index(ghostRole).Requirements;
     }
 
     /// <summary>
