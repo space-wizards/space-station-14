@@ -87,7 +87,6 @@
         whitelist:
           components:
             - FitsInDispenser
-  - type: ItemToggle
   - type: HealthAnalyzer
     scanDelay: 0
   - type: UserInterface
