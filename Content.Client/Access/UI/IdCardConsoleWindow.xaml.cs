@@ -101,6 +101,7 @@ namespace Content.Client.Access.UI
             }
         }
 
+        /// <param name="enabled">If true, every individual access button will be pressed. If false, each will be depressed.</param>
         private void SetAllAccess(bool enabled)
         {
             foreach (var button in _accessButtons.ButtonsList.Values)
