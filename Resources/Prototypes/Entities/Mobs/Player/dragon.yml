@@ -91,7 +91,7 @@
       0: Alive
       450: Critical
       500: Dead
-  - type: AntagMonsterScaling
+  - type: AntagMonsterScaling # Starlight
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.7
