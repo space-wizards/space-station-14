@@ -5,7 +5,6 @@ using Content.Client.RoundEnd;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Job;
-using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;

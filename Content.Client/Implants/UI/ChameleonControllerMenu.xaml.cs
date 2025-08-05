@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Numerics;
-using Content.Client.Jobs;
-using Content.Client.Roles;
+using Content.Client.Job;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Implants;
