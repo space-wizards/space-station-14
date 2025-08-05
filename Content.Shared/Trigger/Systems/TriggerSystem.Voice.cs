@@ -30,9 +30,14 @@ public sealed partial class TriggerSystem
         if (!args.IsInDetailsRange || !component.ShowExamine)
             return;
 
-        args.PushText(string.IsNullOrWhiteSpace(component.KeyPhrase)
-            ? Loc.GetString("trigger-voice-uninitialized")
-            : Loc.GetString("trigger-on-voice-examine", ("keyphrase", component.KeyPhrase)));
+        if (component.InspectUninitializedLoc != null && string.IsNullOrWhiteSpace(component.KeyPhrase))
+        {
+            args.PushText(Loc.GetString(component.InspectUninitializedLoc));
+        }
+        else if (component.InspectInitializedLoc != null && !string.IsNullOrWhiteSpace(component.KeyPhrase))
+        {
+            args.PushText(Loc.GetString(component.InspectInitializedLoc.Value, ("keyphrase", component.KeyPhrase)));
+        }
     }
 
     private void OnListen(Entity<TriggerOnVoiceComponent> ent, ref ListenEvent args)

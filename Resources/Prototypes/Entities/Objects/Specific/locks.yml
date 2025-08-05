@@ -13,11 +13,12 @@
     lockingSound: null
     lockTime: 0
     unlockTime: 0
-    showPopups: false
   - type: TriggerOnVoice
     listenRange: 2 # more fun
     startRecordingVerb: voice-trigger-lock-verb-record
     recordingVerbMessage: voice-trigger-lock-verb-message
+    inspectUninitializedLoc: voice-trigger-lock-on-uninitialized
+    inspectInitializedLoc: voice-trigger-lock-on-examine
   - type: LockOnTrigger
   - type: ActiveListener
   - type: VoiceTriggerLock

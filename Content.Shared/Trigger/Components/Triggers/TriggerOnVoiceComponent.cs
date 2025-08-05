@@ -80,4 +80,16 @@ public sealed partial class TriggerOnVoiceComponent : BaseTriggerOnXComponent
     /// </summary>
     [DataField]
     public LocId ClearRecordingVerb = "trigger-on-voice-clear";
+
+    /// <summary>
+    /// The loc string that is shown when inspecting an uninitialized voice trigger.
+    /// </summary>
+    [DataField]
+    public LocId? InspectUninitializedLoc = "trigger-on-voice-uninitialized";
+
+    /// <summary>
+    /// The loc string to use when inspecting voice trigger. Will also include the triggering phrase
+    /// </summary>
+    [DataField]
+    public LocId? InspectInitializedLoc = "trigger-on-voice-examine";
 }
