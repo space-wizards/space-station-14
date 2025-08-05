@@ -1113,12 +1113,12 @@
     - state: service
     - state: icon-clown-adv
   - type: ItemBorgModule
-    items:
-    - HoloprojectorClownBorg
-    - BorgLauncherCreamPie
-    - ClownRecorder
-    - PushHorn
-    - BikeHornInstrument
+    hands:
+    - item: HoloprojectorClownBorg
+    - item: BorgLauncherCreamPie
+    - item: ClownRecorder
+    - item: PushHorn
+    - item: BikeHornInstrument
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-clowning-module }
 
@@ -1481,7 +1481,7 @@
     - state: xenoborg_stealth
     - state: icon-xenoborg-cloak2
   - type: ItemBorgModule
-    items:
+    hands:
     - SuperCloakingDevice
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye2-module }
