@@ -7,6 +7,7 @@
   - CargoTechnician
   - Quartermaster
   - SalvageSpecialist
+  editorHidden: true
 
 - type: department
   id: Civilian
@@ -32,6 +33,7 @@
   - Visitor
   - Zookeeper
   - ServiceWorker
+  editorHidden: true
 
 - type: department
   id: CentralCommand
@@ -75,6 +77,7 @@
   - DeathSquad
   primary: false
   weight: 100
+  editorHidden: true
 
 - type: department
   id: Engineering
@@ -86,6 +89,7 @@
   - ChiefEngineer
   - StationEngineer
   - TechnicalAssistant
+  editorHidden: true
 
 - type: department
   id: Medical
@@ -99,6 +103,7 @@
   - MedicalIntern
   - Psychologist
   - Paramedic
+  editorHidden: true
 
 - type: department
   id: Security
@@ -112,6 +117,7 @@
   - SecurityOfficer
   - Detective
   - Warden
+  editorHidden: true
 
 - type: department
   id: Science
@@ -122,6 +128,7 @@
   - ResearchDirector
   - Scientist
   - ResearchAssistant
+  editorHidden: true
 
 - type: department
   id: Silicon
@@ -131,6 +138,7 @@
   roles:
   - Borg
   - StationAi
+  editorHidden: true
 
 - type: department
   id: Specific
@@ -144,3 +152,4 @@
   - Zookeeper
   - Psychologist
   primary: false
+  editorHidden: true

@@ -1,0 +1,111 @@
+# - type: entity
+#   parent: BaseProgramDisk
+#   id: ProgramDisketCommunications
+#   name: дискета
+#   suffix: WH40K, коммуникаций
+#   description: дискета с программой консоли связи.
+#   components:
+#     - type: ComputerDisk
+#       programPrototype: CommunicationsConsoleDiskPrototype
+#       persistState: true
+#     - type: Sprite
+#       sprite: _WH40K/Objects/Misc/modular_disks.rsi
+#       state: comm
+
+# - type: entity
+#   parent: BaseProgramDisk
+#   id: ProgramDisketIDCard
+#   name: дискета
+#   suffix: WH40K, ID карт
+#   description: дискета с программой консоли ID карт.
+#   components:
+#     - type: ComputerDisk
+#       programPrototype: IDCardComputerPrototype
+#       persistState: true
+#     - type: Sprite
+#       sprite: _WH40K/Objects/Misc/modular_disks.rsi
+#       state: id
+
+# - type: entity
+#   parent: BaseProgramDisk
+#   id: ProgramDisketCamera
+#   name: дискета
+#   suffix: WH40K, камер
+#   description: дискета с программой консоли камер.
+#   components:
+#     - type: ComputerDisk
+#       programPrototype: CameraPrototype
+#       persistState: true
+#     - type: Sprite
+#       sprite: _WH40K/Objects/Misc/modular_disks.rsi
+#       state: camera
+
+# - type: entity
+#   parent: BaseProgramDisk
+#   id: ProgramDisketMass
+#   name: дискета
+#   suffix: WH40K, массы
+#   description: дискета с программой радара.
+#   components:
+#     - type: ComputerDisk
+#       programPrototype: RadarMassPrototype
+#       persistState: true
+#     - type: Sprite
+#       sprite: _WH40K/Objects/Misc/modular_disks.rsi
+#       state: mass
+
+# - type: entity
+#   parent: BaseProgramDisk
+#   id: ProgramDisketMed
+#   name: дискета
+#   suffix: WH40K, мониторинг экипажа
+#   description: дискета с программой консоли мониторинга экипажа.
+#   components:
+#     - type: ComputerDisk
+#       programPrototype: CrewMonitorDiskPrototype
+#       persistState: true
+#     - type: Sprite
+#       sprite: _WH40K/Objects/Misc/modular_disks.rsi
+#       state: med
+
+# - type: entity
+#   parent: BaseProgramDisk
+#   id: ProgramDisketOrder
+#   name: дискета
+#   suffix: WH40K, заказа
+#   description: дискета с программой консоли заказа.
+#   components:
+#     - type: ComputerDisk
+#       programPrototype: OrderPrototype
+#       persistState: true
+#     - type: Sprite
+#       sprite: _WH40K/Objects/Misc/modular_disks.rsi
+#       state: order
+
+# - type: entity
+#   parent: BaseProgramDisk
+#   id: ProgramDisketPower
+#   name: дискета
+#   suffix: WH40K, питания
+#   description: дискета с программой консоли питания.
+#   components:
+#     - type: ComputerDisk
+#       programPrototype: PowerPrototype
+#       persistState: true
+#     - type: Sprite
+#       sprite: _WH40K/Objects/Misc/modular_disks.rsi
+#       state: power
+
+# - type: entity
+#   parent: BaseProgramDisk
+#   id: ProgramDisketResearch
+#   name: дискета
+#   suffix: WH40K, изучения
+#   description: дискета с программой консоли изучения.
+#   components:
+#     - type: ComputerDisk
+#       programPrototype: ResearchPrototype
+#       persistState: true
+#     - type: Sprite
+#       sprite: _WH40K/Objects/Misc/modular_disks.rsi
+#       state: research

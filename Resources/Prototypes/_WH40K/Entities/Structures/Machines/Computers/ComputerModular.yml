@@ -1,0 +1,219 @@
+# - type: entity
+#   id: ShuttleComputerModular
+#   parent: [BaseComputer, BaseMachinePowered]
+#   name: терминал управления
+#   description: Терминал, используемый для управления кораблём и поддержания связи.
+#   suffix: WH40K
+#   placement:
+#     mode: AlignTileAny
+#   components:
+#   - type: SpriteFade
+#   - type: Sprite
+#     sprite: _WH40K/Structures/Machines/modular_computer.rsi
+#     drawdepth: Mobs
+#     offset: 0,0.4
+#     layers:
+#     - state: base
+#     - state: panel
+#       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+#       visible: false
+#     - state: unshaded
+#       shader: unshaded
+#       map: ["enum.PowerDeviceVisualLayers.Powered"]
+#       visible: false
+#     - state: inserting
+#       visible: false
+#       map: ["enum.MaterialStorageVisualLayers.Inserting"]
+#     - state: generating
+#       visible: false
+#       shader: unshaded
+#       map: ["enum.AnomalyGeneratorVisualLayers.Base"]
+#   - type: Transform
+#     anchored: true
+#   - type: LitOnPowered
+#   - type: ApcPowerReceiver
+#     powerLoad: 400
+#   - type: ExtensionCableReceiver
+#   - type: AmbientSound
+#     range: 5
+#     volume: -10
+#     sound:
+#       path: /Audio/Ambience/Objects/emf_buzz.ogg
+#   - type: Physics
+#     bodyType: Static
+#   - type: Computer
+#     board: BaseComputerModularCircuitBoard
+#   - type: PointLight
+#     radius: 5
+#     energy: 1.6
+#     color: "#339b1c"
+#   - type: MaterialStorage
+#     whitelist:
+#       tags:
+#         - Sheet
+#   - type: Repairable
+#     fuelCost: 10
+#     doAfterDelay: 5
+#   - type: WiresPanel
+#   - type: Destructible
+#     thresholds:
+#     - trigger:
+#         !type:DamageTrigger
+#         damage: 500
+#       behaviors:
+#       - !type:DoActsBehavior
+#         acts: ["Breakage"]
+#   - type: Appearance
+#   - type: GenericVisualizer
+#     visuals:
+#       enum.PowerDeviceVisuals.Powered:
+#         enum.PowerDeviceVisualLayers.Powered:
+#           True: { visible: true }
+#           False: { visible: false }
+#       enum.AnomalyGeneratorVisuals.Generating:
+#         enum.AnomalyGeneratorVisualLayers.Base:
+#           True: { visible: true }
+#           False: { visible: false }
+#   - type: WiresVisuals
+#   - type: ModularComputer
+#   - type: ItemSlots
+#     slots:
+#       modularComputerDiskSlot:
+#         name: Program disk
+#         insertSound:
+#           path: /Audio/Machines/terminal_insert_disc.ogg
+#         ejectSound:
+#           path: /Audio/Machines/terminal_insert_disc.ogg
+#         whitelist:
+#           tags:
+#             - ComputerDisk
+#   - type: ContainerContainer
+#     containers:
+#       board: !type:Container
+#         showEnts: False
+#         occludes: True
+#         ents: []
+#       modularComputerDiskSlot: !type:ContainerSlot
+#         showEnts: False
+#         occludes: True
+#         ent: null
+#   - type: Fixtures
+#     fixtures:
+#       fix1:
+#         shape:
+#           !type:PhysShapeAabb
+#           bounds: "-1.5,-0.5,1.5,0.6"
+#         density: 190
+#         mask:
+#         - MachineMask
+#         layer:
+#           - MachineLayer
+
+# - type: entity
+#   id: AdMechComputerModular
+#   parent: [BaseComputer, BaseMachinePowered]
+#   name: терминал
+#   description: Терминал, используемый для технических работ.
+#   suffix: WH40K
+#   placement:
+#     mode: AlignTileAny
+#   components:
+#   - type: Sprite
+#     sprite: _WH40K/Structures/Machines/admech_modular_computer.rsi
+#     offset: 0.5,0
+#     layers:
+#     - state: base
+#     - state: panel
+#       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+#       visible: false
+#     - state: unshaded
+#       shader: unshaded
+#       map: ["enum.PowerDeviceVisualLayers.Powered"]
+#       visible: false
+#     - state: inserting
+#       visible: false
+#       map: ["enum.MaterialStorageVisualLayers.Inserting"]
+#     - state: generating
+#       visible: false
+#       shader: unshaded
+#       map: ["enum.AnomalyGeneratorVisualLayers.Base"]
+#   - type: Transform
+#     anchored: true
+#   - type: Fixtures
+#     fixtures:
+#       fix1:
+#         shape:
+#           !type:PhysShapeAabb
+#           bounds: "-0.3,-0.2,1.1,0.4"
+#         density: 190
+#         mask:
+#         - MachineMask
+#         layer:
+#           - MachineLayer
+#   - type: LitOnPowered
+#   - type: ApcPowerReceiver
+#     powerLoad: 400
+#   - type: ExtensionCableReceiver
+#   - type: AmbientSound
+#     range: 5
+#     volume: -10
+#     sound:
+#       path: /Audio/Ambience/Objects/emf_buzz.ogg
+#   - type: Physics
+#     bodyType: Static
+#   - type: Computer
+#     board: BaseComputerModularCircuitBoard
+#   - type: PointLight
+#     radius: 5
+#     energy: 1.6
+#     color: "#339b1c"
+#   - type: MaterialStorage
+#     whitelist:
+#       tags:
+#         - Sheet
+#   - type: Repairable
+#     fuelCost: 10
+#     doAfterDelay: 5
+#   - type: WiresPanel
+#   - type: Destructible
+#     thresholds:
+#     - trigger:
+#         !type:DamageTrigger
+#         damage: 500
+#       behaviors:
+#       - !type:DoActsBehavior
+#         acts: ["Breakage"]
+#   - type: Appearance
+#   - type: GenericVisualizer
+#     visuals:
+#       enum.PowerDeviceVisuals.Powered:
+#         enum.PowerDeviceVisualLayers.Powered:
+#           True: { visible: true }
+#           False: { visible: false }
+#       enum.AnomalyGeneratorVisuals.Generating:
+#         enum.AnomalyGeneratorVisualLayers.Base:
+#           True: { visible: true }
+#           False: { visible: false }
+#   - type: WiresVisuals
+#   - type: ModularComputer
+#   - type: ItemSlots
+#     slots:
+#       modularComputerDiskSlot:
+#         name: Program disk
+#         insertSound:
+#           path: /Audio/Machines/terminal_insert_disc.ogg
+#         ejectSound:
+#           path: /Audio/Machines/terminal_insert_disc.ogg
+#         whitelist:
+#           tags:
+#             - ComputerDisk
+#   - type: ContainerContainer
+#     containers:
+#       board: !type:Container
+#         showEnts: False
+#         occludes: True
+#         ents: []
+#       modularComputerDiskSlot: !type:ContainerSlot
+#         showEnts: False
+#         occludes: True
+#         ent: null

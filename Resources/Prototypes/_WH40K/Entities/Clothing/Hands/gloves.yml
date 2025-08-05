@@ -1,0 +1,56 @@
+- type: entity
+  parent: ClothingHandsGlovesColorBlack
+  id: ClothingHandsGlovesCombatVoidsman
+  name: боевые перчатки
+  description: Боевые перчатки флота.
+  suffix: WH40K, войдсмены
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Hands/Gloves/v_sergeant.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Hands/Gloves/v_sergeant.rsi
+  - type: Insulated
+
+- type: entity
+  parent: ClothingHandsGlovesColorBlack
+  id: ClothingHandsGlovesCombatCommissar
+  name: перчатки комиссара
+  description: Крайне удобны для одновременного удержания болт-пистолета и пиломеча в одних руках.
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Hands/Gloves/commissar.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Hands/Gloves/commissar.rsi
+  - type: Insulated
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesTechpriest
+  name: перчатки техножреца
+  description: Изолированные перчатки для работы.
+  suffix: WH40K, АдМехи
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Hands/Gloves/techpriest.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Hands/Gloves/techpriest.rsi
+  # - type: GloveHeatResistance
+  #   heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-regal-black
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesBloodPact
+  name: перчатки бладпакта
+  description: боевые перчатки
+  suffix: WH40K, Бладпакт
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Hands/Gloves/black_heresy.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Hands/Gloves/black_heresy.rsi

@@ -1,0 +1,53 @@
+- type: entity
+  id: BaseMagazineCombatShotgun
+  name: ammo drum (.50 shells)
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - MagazineCombatShotgun
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - ShellShotgun
+    capacity: 8
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi
+    scale: 0.8, 0.8
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazineCombatShotgun
+  name: барабан дробовика (.50 дробь)
+  parent: BaseMagazineCombatShotgun
+  suffix: WH40K
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgun
+
+- type: entity
+  id: MagazineCombatShotgunEmpty
+  name: барабан дробовика (.50 дробь)
+  suffix: empty, WH40K
+  parent: BaseMagazineCombatShotgun
+  components:
+  - type: BallisticAmmoProvider
+    proto: null

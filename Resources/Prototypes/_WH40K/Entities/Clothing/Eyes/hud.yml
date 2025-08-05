@@ -1,0 +1,22 @@
+- type: entity
+  parent: [ClothingEyesBase]
+  id: ClothingEyesHudTechPriest
+  name: визор техножреца
+  description: Filler
+  suffix: WH40K, адмехи
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Eyes/hud.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Eyes/hud.rsi
+    clothingVisuals:
+      eyes:
+      - state: equipped-EYES
+      - state: equipped-eyes-unshaded
+        shader: unshaded
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+    - Inorganic

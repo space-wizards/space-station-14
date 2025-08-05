@@ -1,0 +1,11 @@
+- type: explosion
+  id: Plasma
+  damagePerIntensity:
+    types:
+      Heat: 25
+      Brute: 10
+  lightColor: Blue
+  fireColor: Blue
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+

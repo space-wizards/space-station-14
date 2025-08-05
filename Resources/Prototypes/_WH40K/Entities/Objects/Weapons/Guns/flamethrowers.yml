@@ -1,0 +1,54 @@
+# - type: entity
+#   id: FlameThrowerGun
+#   parent: BaseWeaponRifle
+#   name: "огнемёт"
+#   description: "Неважно, кто стоит перед тобой - мерзкий ксенос или падший еретик - огнемёт поможет тебе минимизировать срок его жизни."
+#   suffix: WH40K
+#   components:
+#   - type: Sprite
+#     sprite: _WH40K/Objects/Weapons/flamethrower.rsi
+#     layers:
+#     - state: base
+#       map: ["enum.GunVisualLayers.Base"]
+#     - state: mag-0
+#       map: ["enum.GunVisualLayers.Mag"]
+#   - type: Clothing
+#     sprite: _WH40K/Objects/Weapons/flamethrower.rsi
+#   - type: Gun
+#     fireRate: 15
+#     minAngle: 0
+#     maxAngle: 45
+#     selectedMode: FullAuto
+#     resetOnHandSelected: true
+#     availableModes:
+#     - FullAuto
+#     soundGunshot:
+#       path: /Audio/_WH40K/Weapons/flamethrower.ogg
+#       params:
+#         volume: 3
+#   - type: ItemSlots
+#     slots:
+#       gun_magazine:
+#         name: "баллон с прометием для огнемётов"
+#         startingItem: FlameThrowerTank
+#         insertSound: /Audio/Effects/squeak1.ogg
+#         ejectSound: /Audio/Effects/squeak3.ogg
+#         priority: 2
+#         whitelist:
+#           tags:
+#             - FlameThrowerFuelTank
+#   - type: ContainerContainer
+#     containers:
+#       gun_magazine: !type:ContainerSlot
+#       gun_chamber: !type:ContainerSlot
+#   - type: MagazineVisuals
+#     magState: mag
+#     steps: 1
+#     zeroVisible: true
+#   - type: Appearance
+#   - type: Ammo
+#     muzzleFlash: FlamethrowerFlashEffect
+#   - type: Item
+#     size: Huge
+#     shape:
+#     - 0,0,5,6

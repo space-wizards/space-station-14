@@ -1,0 +1,100 @@
+- type: entity
+  name: болтер
+  id: WeaponRifleBolter
+  parent: BaseWeaponRifle
+  description: Одно из самых разрушительных видов оружия Империума, стреляющее взрывающимися мини-ракетами - болтами. Данный экземпляр был модифицирован для комфортного использования обычными людьми, что не могло не сказаться на его скорострельности.
+  suffix: WH40K
+  components:
+  - type: Gun
+    fireRate: 2
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/_WH40K/Weapons/Guns/Gunshots/bolter.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineBolter
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineBolter75
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeBolter
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeBolter75
+  - type: Item
+    sprite: _WH40K/Objects/Weapons/Guns/Bolters/bolter.rsi
+    size: Huge
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Bolters/bolter.rsi
+    scale: 0.9,0.9
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Appearance
+
+- type: entity
+  parent: BaseWeaponPistol
+  id: WeaponPistolBolter
+  name: болт-пистолет
+  description: Даже неавтоматическая пистолетная версия болтера всё равно поражает разрушительной мощью - снаряды уничтожают врагов всё так же эффективно, а использовать его теперь можно и одной рукой!
+  suffix: WH40K
+  components: 
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Bolters/pistol.rsi
+    scale: 0.9,0.9
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    sprite: _WH40K/Objects/Weapons/Guns/Bolters/pistol.rsi
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
+  - type: Gun
+    fireRate: 1.5
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/_WH40K/Weapons/Guns/Gunshots/bolterpistol.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineBolterPistol
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineBolterPistol75
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeBolter
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeBolter75
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance

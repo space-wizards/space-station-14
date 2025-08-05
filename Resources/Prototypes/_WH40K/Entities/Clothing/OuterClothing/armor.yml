@@ -1,0 +1,140 @@
+- type: entity
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  id: ClothingOuterArmorSeniorOfficerArmoredJacket
+  name: китель старшего офицера
+  description: Китель старшего офицера флота - удобный и крепкий, идеальный символ вашей власти.
+  suffix: WH40K, флот
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/captain.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/captain.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
+        Caustic: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: HeldSpeedModifier
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+  - type: GroupExamine
+
+- type: entity
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  id: ClothingOuterArmorJuniorOfficerArmoredJacket
+  name: китель младшего офицера
+  description: Именно этот прекрасный костюм даётся младшим офицерам флота - достойная награда за вашу службу, не правда ли?
+  suffix: WH40K, флот
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/captain.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/captain.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.7
+        Caustic: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: HeldSpeedModifier
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+  - type: GroupExamine
+
+- type: entity
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  id: ClothingOuterArmorCommissar
+  name: шинель комиссара
+  description: Комиссарская шинель - вот он, символ НАСТОЯЩЕЙ власти на поле боя.
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/commissar.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/commissar.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.55
+        Heat: 0.55
+        Caustic: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: HeldSpeedModifier
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+  - type: GroupExamine
+
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterArmorFlakVest
+  name: противоосколочный жилет
+  description: Достаточно крепкая и лёгкая броня, используемая в основной имперской гвардией.
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/flakvest.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/flakvest.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.7
+        Heat: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterArmorAdvancedFlakVest
+  name: панцирная броня
+  description: Крепкая броня, почти полностью покрывающее тело и дающая хорошую защиту от большинства видов повреждений.
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/flakvestadv.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/flakvestadv.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.4
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+
+- type: entity
+  parent: ClothingOuterArmorFlakVest
+  id: ClothingOuterArmorBloodpact
+  name: броня бладпакта
+  description: Достаточно крепкая и лёгкая броня.
+  suffix: WH40K, Бладпакт
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/heresy_armor.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/heresy_armor.rsi

@@ -1,0 +1,14 @@
+- type: entity
+  parent: Airlock
+  id: AirlockNecron
+  name: шлюз некронов
+  description: Странно выглядащая дверь, от которой веет чем-то за гранью человеческого понимания. Вам не хочется трогать это.
+  suffix: WH40K, Некроны
+  components:
+  - type: Sprite
+    sprite: _WH40K/Structures/Doors/Airlocks/necron.rsi
+  - type: Wires
+    layoutId: AirlockSecurity
+    # snapCardinals: false
+  - type: Airlock
+    animatePanel: false

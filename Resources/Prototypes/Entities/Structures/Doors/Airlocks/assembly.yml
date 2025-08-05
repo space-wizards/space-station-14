@@ -5,7 +5,7 @@
   suffix: Atmospherics
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/atmospherics.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -14,7 +14,7 @@
   suffix: Atmospherics, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/atmospherics.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Cargo
@@ -24,7 +24,7 @@
   suffix: Cargo
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/cargo.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -33,7 +33,7 @@
   suffix: Cargo, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/cargo.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Clockwork
@@ -68,7 +68,7 @@
   suffix: Command
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/command.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -77,7 +77,7 @@
   suffix: Command, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/command.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Engineering
@@ -87,7 +87,7 @@
   suffix: Engineering
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/engineering.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -96,7 +96,7 @@
   suffix: Engineering, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/engineering.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #External
@@ -106,7 +106,7 @@
   suffix: External
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/external.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -115,7 +115,7 @@
   suffix: External, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/external.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Public (Glass Airlock)
@@ -125,7 +125,7 @@
   suffix: Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Freezer
@@ -135,7 +135,7 @@
   suffix: Freezer
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/freezer.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Hydroponics
@@ -145,7 +145,7 @@
   suffix: Hydroponics
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/hydroponics.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -154,7 +154,7 @@
   suffix: Hydroponics, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/hydroponics.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Maintenance
@@ -164,7 +164,7 @@
   suffix: Maintenance
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -173,7 +173,7 @@
   suffix: Maintenance, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/maint.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Medical
@@ -183,7 +183,7 @@
   suffix: Medical
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/medical.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -192,7 +192,7 @@
   suffix: Medical, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/medical.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Salvage
@@ -202,7 +202,7 @@
   suffix: Salvage
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/salvage.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -211,7 +211,7 @@
   suffix: Salvage, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/salvage.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Science
@@ -221,7 +221,7 @@
   suffix: Science
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/science.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -230,7 +230,7 @@
   suffix: Science, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/science.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Security
@@ -240,7 +240,7 @@
   suffix: Security
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/security.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -249,7 +249,7 @@
   suffix: Security, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/security.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Shuttle
@@ -278,7 +278,7 @@
   suffix: Virology
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/virology.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -287,7 +287,7 @@
   suffix: Virology, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/virology.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #CentralCommand
@@ -297,7 +297,7 @@
   suffix: CentralCommand
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/centcomm.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -306,7 +306,7 @@
   suffix: CentralCommand, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/centcomm.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Mining
@@ -316,7 +316,7 @@
   suffix: Mining
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -325,7 +325,7 @@
   suffix: Mining, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #Syndicate
@@ -335,7 +335,7 @@
   suffix: Syndicate
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/syndicate.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -344,7 +344,7 @@
   suffix: Syndicate, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/syndicate.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #ShuttleSyndicate
@@ -354,7 +354,7 @@
   suffix: ShuttleSyndicate
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/shuttle_syndicate.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
     state: "assembly"
 
 - type: entity
@@ -363,7 +363,7 @@
   suffix: ShuttleSyndicate, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/shuttle_syndicate.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
     state: "assembly"
 
 #High Security

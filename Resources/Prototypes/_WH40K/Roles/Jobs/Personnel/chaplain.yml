@@ -1,0 +1,20 @@
+- type: job
+  id: ChaplainWH40K
+  name: job-name-chaplain
+  description: job-description-chaplain
+  playTimeTracker: JobChaplainWH40K
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Personnel
+      time: 14400 # 4 hours
+  startingGear: ChaplainGear
+  icon: "JobIconChaplain"
+  supervisors: job-supervisors-rd
+  access:
+  - Chapel
+  - Research
+  - Maintenance
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: BibleUser

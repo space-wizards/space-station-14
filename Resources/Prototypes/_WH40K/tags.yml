@@ -1,0 +1,56 @@
+- type: Tag
+  id: LasgunPowerCell
+
+- type: Tag
+  id: LonglasPowerCell
+
+- type: Tag
+  id: PlasmPowerCellGun
+
+- type: Tag
+  id: PlasmPowerCellPistol
+
+- type: Tag
+  id: MeltPowerCell
+
+- type: Tag
+  id: MagazineCombatShotgun
+
+- type: Tag
+  id: CartridgeBolter75
+
+- type: Tag
+  id: MagazineBolterPistol75
+
+- type: Tag
+  id: MagazineBolter75
+
+- type: Tag
+  id: Cartridge308
+
+- type: Tag
+  id: MagazineRad
+
+- type: Tag
+  id: CartridgeLightAutogun
+
+- type: Tag
+  id: CartridgeHeavyAutogun
+
+- type: Tag
+  id: CartridgeStubPistol
+
+- type: Tag
+  id: MagazineLightAutogun
+
+- type: Tag
+  id: MagazineHeavyAutogun
+
+- type: Tag
+  id: MagazineStubPistol
+
+- type: Tag
+  id: FlameThrowerFuelTank
+
+- type: Tag
+  id: BigGunUser

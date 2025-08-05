@@ -1,0 +1,33 @@
+- type: entity
+  parent: [ClothingBeltBase, ClothingSlotBase]
+  id: WHClothingBeltSheath
+  name: ножны для сабли
+  description: Предназначены для силового меча Империума!
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Belt/sheath_for_power_saber.rsi
+    state: sheath
+  - type: Clothing
+    sprite: _WH40K/Clothing/Belt/sheath_for_power_saber.rsi
+  - type: Item
+    size: Ginormous
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - CaptainSabre
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - CaptainSabre
+  - type: Appearance
+

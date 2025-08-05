@@ -90,10 +90,12 @@
   parent: BaseLatheLube
   name: autolathe
   description: It produces basic items using metal and glass. Has the ability to process blueprints to print new recipes.
+  suffix: WH40K
   components:
   - type: Sprite
-    sprite: Structures/Machines/autolathe.rsi
+    sprite: _WH40K/Structures/Machines/autolathe.rsi
     snapCardinals: true
+    offset: 0.5,0
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
@@ -163,9 +165,11 @@
   parent: BaseLatheLube
   name: protolathe
   description: Converts raw materials into advanced items.
+  suffix: WH40K
   components:
   - type: Sprite
-    sprite: Structures/Machines/protolathe.rsi
+    sprite: _WH40K/Structures/Machines/protolathe.rsi
+    offset: 0,0.5
     snapCardinals: true
     layers:
     - state: icon
@@ -179,6 +183,17 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
     board: ProtolatheMachineCircuitboard
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-0.5,1.5,1.5"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+          - MachineLayer
   - type: MaterialStorage
     whitelist:
       tags:
@@ -189,6 +204,7 @@
   - type: Lathe
     idleState: icon
     runningState: building
+    producingSound: /Audio/_WH40K/Machines/protolathe.ogg
     unlitIdleState: unlit
     unlitRunningState: unlit-building
     staticPacks:
@@ -584,9 +600,11 @@
   id: OreProcessor
   name: ore processor
   description: It produces sheets and ingots using ores.
+  suffix: WH40K
   components:
     - type: Sprite
-      sprite: Structures/Machines/ore_processor.rsi
+      sprite: _WH40K/Structures/Machines/ore_processor.rsi
+      offset: 0.5,0.5
       layers:
         - state: icon
           map: ["enum.LatheVisualLayers.IsRunning"]
@@ -599,7 +617,20 @@
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
       board: OreProcessorMachineCircuitboard
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,1.5,1.5"
+          density: 190
+          mask:
+          - MachineMask
+          layer:
+            - MachineLayer
     - type: MaterialStorage
+      insertionTime: 00.9
+      insertingSound: /Audio/_WH40K/Machines/vkl.ogg
       ignoreColor: true
       whitelist:
         tags:
@@ -608,6 +639,7 @@
       idleState: icon
       runningState: building
       defaultProductionAmount: 10
+      producingSound: /Audio/_WH40K/Machines/MCRW.ogg
       staticPacks:
       - OreSmelting
       - RGlassSmelting

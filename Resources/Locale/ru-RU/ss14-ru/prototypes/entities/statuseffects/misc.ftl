@@ -1,0 +1,14 @@
+ent-StatusEffectBase = { "" }
+    .desc = { "" }
+ent-MobStatusEffectBase = { ent-StatusEffectBase }
+    .desc = { ent-StatusEffectBase.desc }
+ent-MobStandStatusEffectBase = { ent-StatusEffectBase }
+    .desc = { ent-StatusEffectBase.desc }
+ent-StatusEffectForcedSleeping = принудительный сон
+    .desc = { ent-MobStatusEffectBase.desc }
+ent-StatusEffectSSDSleeping = принудительный сон
+    .desc = { ent-MobStatusEffectBase.desc }
+ent-StatusEffectDrowsiness = сонливость
+    .desc = { ent-MobStatusEffectBase.desc }
+ent-StatusEffectSeeingRainbow = галлюцинации
+    .desc = { ent-MobStatusEffectBase.desc }

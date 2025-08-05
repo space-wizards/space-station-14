@@ -1,0 +1,76 @@
+- type: entity
+  name: Боевой Молот
+  parent: BaseItem
+  id: WHHammerImperial
+  description: Тяжёлый, крепкий, на удивление НЕ силовой молот. Многие считают его символом праведного гнева и правосудия.
+  suffix: WH40K
+  components:
+  - type: Tag
+    tags:
+    - FireAxe
+  - type: Execution
+    doAfterDuration: 4.0
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Melee/hammer_imperial.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    swingLeft: true
+    attackRate: 1.3333
+    damage:
+      types:
+        Blunt: 30
+        Structural: 50
+    angle: 100
+    soundHit:
+      collection: MetalThud
+  # - type: DamageOtherOnHit
+  #   meleeDamageMultiplier: 1.5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
+        Structural: 40
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    sprite: _WH40K/Objects/Weapons/Melee/hammer_imperial.rsi
+    quickEquip: false
+    slots:
+    - back
+  - type: UseDelay
+    delay: 1
+  - type: StealTarget
+    stealGroup: FireAxe
+  - type: IgniteOnMeleeHit
+    fireStacks: -4
+  # Shitmed Change
+
+- type: entity
+  name: Боевой топор Омниссии
+  parent: BaseItem
+  id: WHOmnissianAxe
+  description: Тяжёлый и крепкий.
+  suffix: WH40K
+  components:
+  - type: Execution
+    doAfterDuration: 4.0
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Melee/omnissia_axe/omnisiahaxe_battle.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    swingLeft: true
+    attackRate: 1.3333
+    damage:
+      types:
+        Blunt: 20
+    angle: 100
+    soundHit:
+      collection: MetalThud
+  # - type: DamageOtherOnHit
+  #   meleeDamageMultiplier: 1.5
+  - type: Item
+    size: Ginormous
+    sprite: _WH40K/Objects/Weapons/Melee/omnissia_axe/omnissiahaxe_inhand.rsi

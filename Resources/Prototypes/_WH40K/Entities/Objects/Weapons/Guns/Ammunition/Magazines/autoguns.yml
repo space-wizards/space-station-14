@@ -1,0 +1,44 @@
+- type: entity
+  id: MagazineLightAutogun
+  name: "магазин (8,25 мм удлинённый)"
+  parent: BaseMagazineLightRifle
+  components:
+  - type: Tag
+    tags:
+      - MagazineLightAutogun
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightAutogun
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeLightAutogun
+      
+- type: entity
+  id: MagazineHeavyAutogun
+  name: "магазин (12 мм удлинённый)"
+  parent: BaseMagazineRifle
+  components:
+  - type: Tag
+    tags:
+      - MagazineHeavyAutogun
+  - type: BallisticAmmoProvider
+    proto: CartridgeHeavyAutogun
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeHeavyAutogun
+        
+- type: entity
+  id: MagazineStubPistol
+  name: "магазин (6,2 мм укороченный)"
+  parent: BaseMagazinePistol
+  components:
+  - type: Tag
+    tags:
+      - MagazineStubPistol
+  - type: BallisticAmmoProvider
+    proto: CartridgeStubPistol
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeStubPistol

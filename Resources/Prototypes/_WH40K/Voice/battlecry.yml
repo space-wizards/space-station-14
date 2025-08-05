@@ -1,0 +1,60 @@
+- type: emote
+  id: Battlecry
+  name: боевой клич
+  category: Vocal
+  icon: Interface/Emotes/scream.png
+  whitelist:
+    components:
+    - Vocal
+  chatMessages: ["издаёт боевой клич"]
+  chatTriggers:
+    - издаёт клич
+    - орёт
+    - воодушевляет
+
+- type: soundCollection
+  id: MaleBattlecry
+  files: 
+    - /Audio/_WH40K/Voice/Battlecry/male1.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male2.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male3.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male4.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male5.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male6.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male7.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male8.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male9.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male10.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male11.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male12.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male13.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male14.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male15.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male17.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male18.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male19.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male20.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male21.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male22.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male23.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male24.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male25.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male26.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male27.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male28.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male29.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male30.ogg
+    - /Audio/_WH40K/Voice/Battlecry/male31.ogg
+    
+- type: soundCollection
+  id: FemaleBattlecry
+  files:
+    - /Audio/_WH40K/Voice/Battlecry/fem1.ogg
+    - /Audio/_WH40K/Voice/Battlecry/fem2.ogg
+    - /Audio/_WH40K/Voice/Battlecry/fem3.ogg
+    - /Audio/_WH40K/Voice/Battlecry/fem4.ogg
+    - /Audio/_WH40K/Voice/Battlecry/fem5.ogg
+    - /Audio/_WH40K/Voice/Battlecry/fem6.ogg
+    - /Audio/_WH40K/Voice/Battlecry/fem7.ogg
+    - /Audio/_WH40K/Voice/Battlecry/fem8.ogg
+    - /Audio/_WH40K/Voice/Battlecry/fem9.ogg

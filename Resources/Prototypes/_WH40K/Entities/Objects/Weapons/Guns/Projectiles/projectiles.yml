@@ -1,0 +1,183 @@
+- type: entity
+  id: WHBulletPlasmaPistol
+  name: Снаряд плазмы
+  parent: BaseBulletTrigger
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser
+      shader: unshaded
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Plasma
+    maxIntensity: 3 # max 30 per tile
+    intensitySlope: 1
+    totalIntensity: 4 # 60 total damage to distribute over tiles
+    maxTileBreak: 1
+  - type: TimedDespawn
+    lifetime: 0.65 # Примерно 17 тайлов
+  - type: PointLight
+    radius: 3.5
+    color: Blue
+    energy: 0.5
+
+- type: entity
+  id: WHBulletPlasmaRifle
+  name: Снаряд плазмы
+  parent: BaseBulletTrigger
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser
+      shader: unshaded
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Plasma
+    maxIntensity: 3 # max 30 per tile
+    intensitySlope: 1
+    totalIntensity: 4 # 60 total damage to distribute over tiles
+    maxTileBreak: 1
+  - type: TimedDespawn
+    lifetime: 1.3 # Примерно 34 тайлов
+  - type: PointLight
+    radius: 3.5
+    color: Blue
+    energy: 0.5
+
+- type: entity
+  id: BulletBolter
+  name: пуля болтера
+  parent: BaseBulletTrigger
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 60
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 0.5
+    intensitySlope: 0.5
+    totalIntensity: 0.5
+    maxTileBreak: 0
+
+- type: entity
+  id: FlamethrowerFlashEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 0.4
+  - type: Sprite
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: _WH40K/Objects/Weapons/Guns/Ammunition/Projectiles/flame.rsi
+      state: flash
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer
+
+# - type: entity
+#   parent: BaseItem
+#   id: PromethiumBullet
+#   name: "Горящий Прометий"
+#   description: "Если вы его видите, то вероятнее всего вы уже пахните как шашлык medium rare прожарки"
+#   components:
+#     - type: PointLight
+#       color: "#FFA600"
+#       radius: 5
+#       energy: 5
+#     - type: Ammo
+#       muzzleFlash: FlamethrowerFlashEffect
+#     - type: Sprite
+#       noRot: false
+#       rotation: -90
+#       sprite: _WH40K/Objects/Weapons/Guns/Ammunition/Projectiles/flame.rsi
+#       layers:
+#         - state: base
+#           shader: unshaded
+#     - type: FireUnderBullet
+#       pickedUp: true
+#       releaseSpeed: 1
+#       releaseTemp: 1500
+#       releaseGas:
+#         volume: 0.5
+#         moles:
+#           - 0.1     # oxygen
+#           - 0     # nitrogen
+#           - 0     # carbon dioxide
+#           - 0     # plasma
+#           - 0     # tritium
+#           - 0     # vapor
+#           - 0     # ammonia
+#           - 0  # n2o
+#           - 0     # frezon
+#           - 0.4          # ***
+#         temperature: 293.15
+#     - type: FlyBySound
+#     - type: Clickable
+#     - type: Physics
+#       bodyType: Dynamic
+#       linearDamping: 0.1
+#       angularDamping: 25
+#     - type: Fixtures
+#       fixtures:
+#         projectile:
+#           shape:
+#             !type:PhysShapeAabb
+#             bounds: "-0.1,-0.1,0.1,0.1"
+#           hard: false
+#           mask:
+#           - Impassable
+#           - BulletImpassable
+#         fly-by: &flybyfixture
+#           shape: !type:PhysShapeCircle
+#             radius: 1.5
+#           layer:
+#           - Impassable
+#           - MidImpassable
+#           - HighImpassable
+#           - LowImpassable
+#           hard: False
+#     - type: Projectile
+#       impactEffect: BulletImpactEffect
+#       damage:
+#         types:
+#           Heat: 3
+#     - type: IgniteOnCollide
+#       fireStacks: 1
+#       count: 10
+
+- type: entity
+  id: BulletRadCarabin
+  name: bullet uranium
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  suffix: WH40K, АдМехи
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: uranium
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 7
+        Radiation: 15
+  - type: PointLight
+    enabled: true
+    color: "#38c24f"
+    radius: 3.0
+    energy: 7.0
+  - type: RadiationSource
+    intensity: 6
+    slope: 0.3
+

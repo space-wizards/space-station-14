@@ -1,0 +1,65 @@
+- type: playTimeTracker
+  id: JobFirstAssistant
+
+- type: playTimeTracker
+  id: JobMagos
+
+- type: playTimeTracker
+  id: JobLexmechanic
+
+- type: playTimeTracker
+  id: JobExplorator
+
+- type: playTimeTracker
+  id: JobGenetor
+
+- type: playTimeTracker
+  id: JobEnginseer
+
+- type: playTimeTracker
+  id: JobNovice
+
+- type: playTimeTracker
+  id: JobHeadOfficer
+
+- type: playTimeTracker
+  id: JobGunnerySergeant
+
+- type: playTimeTracker
+  id: JobSergeant
+
+- type: playTimeTracker
+  id: JobVoidsman
+
+- type: playTimeTracker
+  id: JobRecruit
+
+- type: playTimeTracker
+  id: JobBartenderWH40K
+
+- type: playTimeTracker
+  id: JobCaptainWH40K
+
+- type: playTimeTracker
+  id: JobChaplainWH40K
+
+- type: playTimeTracker
+  id: JobChefWH40K
+
+- type: playTimeTracker
+  id: JobChemistWH40K
+
+- type: playTimeTracker
+  id: JobJanitorWH40K
+
+- type: playTimeTracker
+  id: JobMedicalDoctorWH40K
+
+- type: playTimeTracker
+  id: JobMedicalInternWH40K
+
+- type: playTimeTracker
+  id: JobParamedicWH40K
+
+- type: playTimeTracker
+  id: JobPassengerWH40K

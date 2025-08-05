@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by endr_animet",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "window0",
+      "directions": 4
+    },
+    {
+      "name": "window1",
+      "directions": 4
+    },
+    {
+      "name": "window2",
+      "directions": 4
+    },
+    {
+      "name": "window3",
+      "directions": 4
+    },
+    {
+      "name": "window4",
+      "directions": 4
+    },
+    {
+      "name": "window5",
+      "directions": 4
+    },
+    {
+      "name": "window6",
+      "directions": 4
+    },
+    {
+      "name": "window7",
+      "directions": 4
+    }
+  ]
+}

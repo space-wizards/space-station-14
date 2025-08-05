@@ -1,0 +1,15 @@
+- type: entity
+  id: WallNecron
+  name: стена некронов
+  parent: BaseWall
+  suffix: WH40K, Некроны
+  components:
+  - type: Sprite
+    sprite: _WH40K/Structures/Walls/necron.rsi
+    state: full
+  - type: Icon
+    sprite: _WH40K/Structures/Walls/necron.rsi
+    state: full
+  - type: IconSmooth
+    key: walls
+    base: solid

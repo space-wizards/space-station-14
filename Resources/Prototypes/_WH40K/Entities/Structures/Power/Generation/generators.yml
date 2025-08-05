@@ -1,0 +1,173 @@
+- type: entity
+  parent: BaseGenerator
+  id: GeneratorPlasma
+  name: Привод «Юпитер»
+  description: Термоядерное пламя в их сердце слабее, чем у других представителей серии, они гораздо более надежны и способны пережить непоправимый урон без потери производительности.
+  suffix: WH40K, 250kW
+  components:
+  - type: SpriteFade
+  - type: PowerSupplier
+    supplyRate: 250000
+  - type: Sprite
+    sprite: _WH40K/Structures/Power/Generation/plasma_generator.rsi
+    drawdepth: Mobs
+    state: base
+  - type: PowerMonitoringDevice
+    sprite: _WH40K/Structures/Power/Generation/plasma_generator.rsi
+    state: base
+  # - type: AmbientSound
+  #   range: 5
+  #   volume: 5
+  #   sound:
+  #     path: /Audio/_EE/Supermatter/calm.ogg
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-1.5,1.5,0.1"
+        density: 2000
+        layer:
+        - WallLayer
+  - type: PointLight
+    radius: 5
+    energy: 1.6
+    color: "#bfecdf"
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              GeneratorPlasmaLiteDamaged:
+                min: 1
+                max: 1
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
+- type: entity
+  parent: GeneratorPlasma
+  id: GeneratorPlasmaLiteDamaged
+  name: Повреждённый привод «Юпитер»
+  description: Термоядерное пламя в их сердце слабее, чем у других представителей серии, они гораздо более надежны и способны пережить непоправимый урон без потери производительности.
+  suffix: WH40K, 250kW, слабо повреждённый
+  components:
+  - type: Sprite
+    state: lite
+  - type: PowerMonitoringDevice
+    state: lite
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              GeneratorPlasmaDamaged:
+                min: 1
+                max: 1
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
+- type: entity
+  parent: GeneratorPlasma
+  id: GeneratorPlasmaDamaged
+  name: Повреждённый привод «Юпитер»
+  description: Термоядерное пламя в их сердце слабее, чем у других представителей серии, они гораздо более надежны и способны пережить непоправимый урон без потери производительности.
+  suffix: WH40K, 250kW, средне повреждённый
+  components:
+  - type: Sprite
+    state: medium
+  - type: PowerMonitoringDevice
+    state: medium
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              GeneratorPlasmaHardDamaged:
+                min: 1
+                max: 1
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
+- type: entity
+  parent: GeneratorPlasma
+  id: GeneratorPlasmaHardDamaged
+  name: Повреждённый привод «Юпитер»
+  description: Термоядерное пламя в их сердце слабее, чем у других представителей серии, они гораздо более надежны и способны пережить непоправимый урон без потери производительности.
+  suffix: WH40K, 250kW, сильно повреждённый
+  components:
+  - type: Sprite
+    state: hard
+  - type: PowerMonitoringDevice
+    state: hard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:ExplodeBehavior
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
+      - !type:SpawnGasBehavior
+        gasMixture:
+          volume: 1000
+          moles:
+            - 0 # oxygen
+            - 0 # nitrogen
+            - 340.5701689 # carbon dioxide
+          temperature: 10273.15
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 5
+    totalIntensity: 5000000

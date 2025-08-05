@@ -1,0 +1,16 @@
+- type: job
+  id: JanitorWH40K
+  name: job-name-janitor
+  description: job-description-janitor
+  playTimeTracker: JobJanitorWH40K
+  startingGear: JanitorGear
+  icon: "JobIconJanitor"
+  supervisors: job-supervisors-hop
+  access:
+  - Service
+  - Janitor
+  - Maintenance
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: GarbageDay
+    prototype: WeaponRevolverInspector

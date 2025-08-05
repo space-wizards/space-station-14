@@ -1,0 +1,37 @@
+- type: job
+  id: HeadOfficer
+  name: job-name-head-officer
+  description: job-description-head-officer
+  playTimeTracker: JobHeadOfficer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Voidsmen
+      time: 216000 # 60 hrs
+  weight: 10
+  startingGear: HoSGear
+  icon: "JobIconHeadOfficer"
+  requireAdminNotify: true
+  supervisors: job-supervisors-captain
+  canBeAntag: false
+  access:
+  - HeadOfSecurity
+  - Command
+  #- Brig  # Delta V: Removed
+  - Security
+  - Armory
+  - Maintenance
+  - Service
+  - External
+  - Detective
+  - Cryogenics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+  # afterLoadoutSpecial:
+  # - !type:ModifyEnvirosuitSpecial
+  #   charges: 8
+  # - !type:ModifyEnvirohelmSpecial
+  #   powerCell: PowerCellHigh

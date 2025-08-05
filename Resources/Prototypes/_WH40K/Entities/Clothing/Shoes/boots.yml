@@ -1,0 +1,73 @@
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingShoesAnkleBoots
+  name: берцы флота
+  description: Прочные флотские берцы.
+  suffix: WH40K, войдсмены
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Shoes/Boots/combatboots.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Shoes/Boots/combatboots.rsi
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.5
+
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingShoesCommissarBoots
+  name: сапоги комиссара
+  description: Тяжёлые сапоги, принадлежащие самому комиссару. Мы лёд под ногами комиссара...
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Shoes/Boots/commissar.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Shoes/Boots/commissar.rsi
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.4
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsworkTechpriest
+  name: рабочие ботинки
+  description: Рабочие ботинки без каких либо дополнений.
+  suffix: WH40K, АдМехи
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Shoes/Boots/workboots.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Shoes/Boots/workboots.rsi
+  - type: Matchbox
+
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingShoesArmoredWorkbootsTechpriest
+  name: бронированные рабочие ботинки
+  description: Рабочие сапоги оснащённые бронёй для работ в не самых благоприятных условиях.
+  suffix: WH40K, АдМехи
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Shoes/Boots/armored_workboots.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Shoes/Boots/armored_workboots.rsi
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.4
+  - type: Armor
+    modifiers:
+      coefficients:
+        Piercing: 0.95
+        Blunt: 0.95
+        Slash: 0.95
+        Heat: 0.99
+
+- type: entity
+  parent: ClothingShoesBootsworkTechpriest
+  id: ClothingShoesBootsBloodPact
+  name: ботинки бладпакта
+  description: Ботинки без каких либо дополнений.
+  suffix: WH40K, Бладпакт
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Shoes/Boots/heresyboots.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Shoes/Boots/heresyboots.rsi

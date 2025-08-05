@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by endr_animet",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "display"
+    },
+    {
+      "name": "icon"
+    },
+    {
+      "name": "printing",
+      "delays": [[0.25, 0.25, 0.25, 0.25]]
+    },
+    {
+      "name": "unshaded",
+      "delays": [[0.5, 0.5, 0.5, 0.5]]
+    }
+  ]
+}

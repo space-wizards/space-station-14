@@ -40,6 +40,8 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+    Battlecry:
+      collection: MaleBattlecry
 
 - type: emoteSounds
   id: FemaleHuman
@@ -82,6 +84,9 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    Battlecry:
+      collection: FemaleBattlecry
+
 
 - type: emoteSounds
   id: MaleReptilian

@@ -1,0 +1,28 @@
+- type: job
+  id: Sergeant
+  name: job-name-sergeant
+  description: job-description-sergeant
+  playTimeTracker: JobSergeant
+  setPreference: true
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Voidsmen
+      time: 216000 # 60 hrs
+  startingGear: SecurityOfficerGear
+  icon: "JobIconSergeant"
+  supervisors: job-supervisors-hos
+  canBeAntag: false
+  access:
+  - Security
+  #- Brig # Delta V: Removed
+  - Maintenance
+  - Service
+  - External
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  # afterLoadoutSpecial:
+  # - !type:ModifyEnvirosuitSpecial
+  #   charges: 6
+  # - !type:ModifyEnvirohelmSpecial
+  #   powerCell: PowerCellHigh

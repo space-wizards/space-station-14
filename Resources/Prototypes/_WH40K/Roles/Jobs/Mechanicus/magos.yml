@@ -1,0 +1,56 @@
+- type: job
+  id: Magos
+  name: job-name-magos
+  description: job-description-magos
+  playTimeTracker: JobMagos
+  requirements:
+    # - !type:CharacterTraitRequirement
+    #   inverted: true
+    #   traits:
+    #     - Foreigner
+    #     - ForeignerLight
+    - !type:DepartmentTimeRequirement
+      department: Mechanicus
+      time: 216000 # 60 hrs
+  weight: 10
+  startingGear: MagosGear
+  icon: "JobIconMagos"
+  requireAdminNotify: true
+  supervisors: job-supervisors-captain
+  canBeAntag: false
+  access:
+  - Maintenance
+  - Engineering
+  - Command
+  - External
+  - ChiefEngineer
+  - Atmospherics
+  - Research
+  - ResearchDirector
+  - Cargo
+  - Salvage
+  - Cryogenics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+  # afterLoadoutSpecial:
+  # - !type:ModifyEnvirosuitSpecial
+  #   charges: 8
+  # - !type:ModifyEnvirohelmSpecial
+  #   powerCell: PowerCellPotato
+
+- type: startingGear
+  id: MagosGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTechpriest
+    back: ClothingBackpackTechpriest
+    shoes: ClothingShoesBootsworkTechpriest
+    belt: ClothingBeltUtilityEngineering
+    gloves: ClothingHandsGlovesTechpriest
+    mask: ClothingGasTechPriest
+    eyes: ClothingEyesHudTechPriest
+    outerClothing: ClothingOuterHardsuitTechpriestMarsMagos
+    id: PassengerPDA

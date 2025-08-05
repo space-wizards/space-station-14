@@ -1,0 +1,14 @@
+ent-BaseMagazineGrenade = картридж гранат
+    .desc = { ent-BaseItem.desc }
+ent-MagazineGrenadeEmpty = картридж гранат
+    .desc = { ent-BaseMagazineGrenade.desc }
+ent-MagazineGrenadeFrag = картридж осколочных гранат
+    .desc = { ent-BaseMagazineGrenade.desc }
+ent-MagazineGrenadeEMP = картридж ЭМИ гранат
+    .desc = { ent-BaseMagazineGrenade.desc }
+ent-MagazineGrenadeFlash = картридж светошумовых гранат
+    .desc = { ent-BaseMagazineGrenade.desc }
+ent-MagazineGrenadeBlast = картридж фугасных гранат
+    .desc = { ent-BaseMagazineGrenade.desc }
+ent-MagazineGrenadeBaton = картридж шоковых гранат
+    .desc = { ent-BaseMagazineGrenade.desc }

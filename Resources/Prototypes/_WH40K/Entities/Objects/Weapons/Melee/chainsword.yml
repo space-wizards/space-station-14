@@ -1,0 +1,51 @@
+# - type: entity
+#   name: пиломеч
+#   parent: BaseItem
+#   id: Chainsword
+#   description: Врррррууум
+#   suffix: WH40K
+#   components:
+#   - type: Sprite
+#     sprite: _WH40K/Objects/Weapons/Melee/chainsword.rsi
+#     layers:
+#     - state: off-icon
+#       map: [ "enum.ToggleVisuals.Layer" ]
+#   - type: MeleeWeapon
+#     autoAttack: true
+#     angle: 0
+#     wideAnimationRotation: -135
+#     attackRate: 0.5
+#     range: 1.6
+#     damage:
+#       types:
+#         Blunt: 3
+#     soundHit:
+#       path: /Audio/Weapons/chainsaw.ogg
+#       params:
+#         volume: -3
+#   - type: ItemToggle
+#     soundActivate:
+#       path: /Audio/Weapons/chainsaw.ogg
+#       params:
+#         volume: -3
+#     soundDeactivate:
+#       path: /Audio/Machines/button.ogg
+#       params:
+#         variation: 0.250
+#   - type: IncreaseDamageOnWield
+#     damage:
+#       types:
+#         Slash: 10
+#   - type: ItemToggleDamageOtherOnHit
+#   - type: DamageOtherOnHit
+#   - type: UseDelay
+#   - type: Item
+#     heldPrefix: off
+#     size: Normal
+#   - type: Appearance
+#   - type: GenericVisualizer
+#     visuals:
+#       enum.ToggleVisuals.Toggled:
+#         enum.ToggleVisuals.Layer:
+#           True: {state: on-icon}
+#           False: {state: off-icon}

@@ -1,0 +1,43 @@
+- type: entity
+  id: MagazineBolter
+  name: магазин болтера (.75 болт)
+  parent: BaseMagazineHeavyRifle
+  suffix: WH40K
+  components:
+  - type: Tag
+    tags:
+      - MagazineBolter75
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    proto: CartridgeBolter
+    capacity: 20
+    whitelist:
+      tags:
+        - CartridgeBolter75
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Ammunition/Magazine/Bolter/bolter.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+      
+- type: entity
+  id: MagazineBolterPistol
+  parent: MagazineBolter
+  name: пистолетный магазин болтера (.75 болт)
+  suffix: WH40K
+  components:
+  - type: Tag
+    tags:
+      - MagazineBolterPistol75
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    proto: CartridgeBolter
+    capacity: 9
+    whitelist:
+      tags:
+        - CartridgeBolter75
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Ammunition/Magazine/Bolter/pistol.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]

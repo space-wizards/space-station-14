@@ -1,0 +1,23 @@
+- type: job
+  id: Novice
+  name: job-name-novice
+  description: job-description-novice
+  playTimeTracker: JobNovice
+  startingGear: NoviceGear
+  icon: "JobIconNovice"
+  supervisors: job-supervisors-engineering
+  canBeAntag: true # DeltaV - Can be antagonist
+  access:
+  - Maintenance
+  - Engineering
+  - External
+
+- type: startingGear
+  id: NoviceGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTechpriest
+    back: ClothingBackpackTechpriest
+    shoes: ClothingShoesBootsworkTechpriest
+    belt: ClothingBeltUtilityEngineering
+    neck: ClothingNeckRobeTechpriestMars
+    id: PassengerPDA

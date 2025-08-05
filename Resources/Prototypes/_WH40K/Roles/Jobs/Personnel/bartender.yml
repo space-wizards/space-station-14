@@ -1,0 +1,19 @@
+- type: job
+  id: BartenderWH40K
+  name: job-name-bartender
+  description: job-description-bartender
+  playTimeTracker: JobBartenderWH40K
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Personnel
+      time: 3600 #DeltaV
+  startingGear: BartenderGear
+  icon: "JobIconBartender"
+  supervisors: job-supervisors-hop
+  access:
+  - Service
+  - Maintenance
+  - Bar
+  extendedAccess:
+  - Kitchen
+  - Hydroponics

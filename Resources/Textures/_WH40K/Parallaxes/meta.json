@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "taked at Warhammer-IS12",
+  "size": {
+    "x": 736,
+    "y": 736
+  },
+  "states": [
+    {
+      "name": "red"
+    }
+    {
+      "name": "brown"
+    }
+    {
+      "name": "blue"
+    }
+    {
+      "name": "space"
+    }
+    {
+      "name": "purple",
+      "delays": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    }
+  ]
+}

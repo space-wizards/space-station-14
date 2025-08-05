@@ -1,0 +1,12 @@
+job-name-first-assistant = первый помощник
+job-name-enginseer = технопровидец
+job-name-explorator = эксплоратор
+job-name-genetor = генетор
+job-name-lexmechanic = лексмеханик
+job-name-magos = магос
+job-name-novice = послушник
+job-name-gunnery-sergeant = сержант-оружейник
+job-name-head-officer = старший офицер
+job-name-recruit = рекрут
+job-name-sergeant = сержант
+job-name-voidsman = войдсман

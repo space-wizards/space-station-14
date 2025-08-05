@@ -1,0 +1,7 @@
+- type: radioChannel
+  id: Hive
+  name: Улей
+  keycode: 'у'
+  frequency: 1845
+  color: "#E0FFFF"
+  longRange: true

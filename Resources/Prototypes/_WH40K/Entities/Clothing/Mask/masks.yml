@@ -1,0 +1,63 @@
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskGasTechPriest
+  name: респиратор
+  description: Стандартный респиратор, защищающий только дыхательные пути.
+  suffix: WH40K, АдМехи
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _WH40K/Clothing/Mask/breath.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Mask/breath.rsi
+  - type: HideLayerClothing
+    slots:
+    - Snout
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.9
+        Piercing: 0.95
+        Heat: 0.9
+        Radiation: 0.95
+
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingGasTechPriest
+  name: противогаз
+  description: Противогаз оснащённый визором.
+  suffix: WH40K, АдМехи
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Mask/gas.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Mask/gas.rsi
+    clothingVisuals:
+      mask:
+      - state: equipped-MASK
+      - state: equipped-mask-unshaded
+        shader: unshaded
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    hideOnToggle: true
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
+        Radiation: 0.95

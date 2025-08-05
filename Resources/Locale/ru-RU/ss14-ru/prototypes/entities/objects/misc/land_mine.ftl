@@ -1,0 +1,17 @@
+ent-BaseLandMine = { "" }
+    .desc = { "" }
+ent-LandMineKickUnarmed = кикающая мина
+    .desc = { ent-BaseLandMine.desc }
+ent-LandMineKick = кикающая мина
+    .desc = { ent-BaseLandMine.desc }
+    .suffix = активирован
+ent-LandMineModularUnarmed = модульная мина
+    .desc = Этот плохиш может скрывать в себе множество опасностей. Или велосипедный клаксон.
+ent-LandMineModular = модульная мина
+    .desc = Этот плохиш может скрывать в себе множество опасностей. Или велосипедный клаксон.
+    .suffix = активирован
+ent-LandMineExplosiveUnarmed = взрывная мина
+    .desc = { ent-BaseLandMine.desc }
+ent-LandMineExplosive = взрывная мина
+    .desc = { ent-BaseLandMine.desc }
+    .suffix = активирован

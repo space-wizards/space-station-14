@@ -1,0 +1,28 @@
+- type: job
+  id: Voidsman
+  name: job-name-voidsman
+  description: job-description-voidsman
+  playTimeTracker: JobVoidsman
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Voidsmen
+      time: 36000 # 10 hours
+  startingGear: SecurityOfficerGear
+  icon: "JobIconVoidsman"
+  supervisors: job-supervisors-hos
+  canBeAntag: false
+  access:
+  - Security
+  #- Brig # Delta V: Removed
+  - Maintenance
+  - Service
+  - External
+  - Cryogenics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  # afterLoadoutSpecial:
+  # - !type:ModifyEnvirosuitSpecial
+  #   charges: 6
+  # - !type:ModifyEnvirohelmSpecial
+  #   powerCell: PowerCellHigh

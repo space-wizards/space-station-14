@@ -1,0 +1,55 @@
+- type: department
+  id: Personnel
+  name: Personnel
+  description: department-Personnel-description
+  color: "#ADFF2F"
+  weight: -10
+  roles:
+  - FirstAssistant
+  - ChaplainWH40K
+  - BartenderWH40K
+  - ChefWH40K
+  - ChemistWH40K
+  - MedicalDoctorWH40K
+  - MedicalInternWH40K
+  - ParamedicWH40K
+  - JanitorWH40K
+  - Passenger
+
+- type: department
+  id: Governance
+  name: Governance
+  description: department-Governance-description
+  color: "#334E6D"
+  roles:
+  - CaptainWH40K
+  - FirstAssistant
+  - HeadOfficer
+  - Magos
+  weight: 100
+
+- type: department
+  id: Mechanicus
+  name: Mechanicus
+  description: department-Mechanicus-description
+  color: "#800000"
+  roles:
+  - Magos
+  - Explorator
+  - Lexmechanic
+  - Genetor
+  - Enginseer
+  - Novice
+
+- type: department
+  id: Voidsmen
+  name: Voidsmen
+  description: department-Voidsmen-description
+  color: "#2F4F4F"
+  roles:
+  - HeadOfficer
+  - GunnerySergeant
+  - Sergeant
+  - Voidsman
+  - Recruit
+  weight: 20

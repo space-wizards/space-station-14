@@ -1,0 +1,185 @@
+#Voidsmans
+
+#офицер
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetHardsuitVoidsmanStandard
+  name: шлем войдсмена
+  description: Шлем стандартного скафандра войдсмена.
+  suffix: WH40K, войдсмены
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Hardsuits/voidsman.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Head/Hardsuits/voidsman.rsi
+  - type: PointLight
+    color: "#ffeead"
+  - type: PressureProtection
+    highPressureMultiplier: 0.50
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.90
+        Heat: 0.90
+
+#смотритель
+- type: entity
+  parent: [ClothingHeadSuitWithLightBase, ClothingHeadEVAHelmetBase]
+  id: ClothingHeadHelmetHardsuitVoidsmanOfficer
+  name: шлем офицера войдсмена
+  description: Шлем офицерской модификации скафандра войдсмена.
+  suffix: WH40K, войдсмены
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Hardsuits/v_officer.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Head/Hardsuits/v_officer.rsi
+  - type: PointLight
+    color: "#ffeead"
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.80
+        Piercing: 0.80
+        Heat: 0.80
+
+#ГСБ
+- type: entity
+  parent: [ClothingHeadSuitWithLightBase, ClothingHeadEVAHelmetBase]
+  id: ClothingHeadHelmetHardsuitVoidsmanSergeant
+  name: шлем сержанта войдсмена
+  description: Шлем сержантской модификации скафандра войдсмена.
+  suffix: WH40K, войдсмены
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Hardsuits/v_sergeant.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Head/Hardsuits/v_sergeant.rsi
+  - type: PointLight
+    color: "#ffeead"
+  - type: PressureProtection
+    highPressureMultiplier: 0.40
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85
+  - type: FlashImmunity # Counterpoint: the HoS can't see
+  - type: EyeProtection # They're blind as hell
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitVoidsmanSergeant
+  id: ClothingHeadHelmetHardsuitVoidsmanGrenadier
+  name: шлем гренадёра войдсмена
+  description: Шлем гренадёрской модификации скафандра войдсмена.
+  suffix: WH40K, войдсмены
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Hardsuits/v_grenadier.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Head/Hardsuits/v_grenadier.rsi
+  - type: Item
+    size: Small
+    storedRotation: -90
+
+#Техножречество
+
+#инж
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitTechpriest
+  name: шлем скафандра техножреца
+  description: Шлем скафандра для техножрецов, что ещё слишком слабо оснащены бионикой.
+  suffix: WH40K, АдМехи
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Hardsuits/techpriest.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Head/Hardsuits/techpriest.rsi
+  - type: PointLight
+    color: "#ffdbad"
+  - type: PressureProtection
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
+
+#СИ
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitTechpriestMarsMagos
+  name: капюшон магоса
+  description: Шлем скафандра магоса с капюшоном робы.
+  suffix: WH40K, АдМехи
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Hoods/hood-magos_mars.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Head/Hoods/hood-magos_mars.rsi
+  - type: PointLight
+    color: "#ffdbad"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: FireProtection
+    reduction: 0.2
+
+#РХБЗЗ
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetTechpriestMarsSkitarii
+  name: капюшон робы скитарийца
+  description: Священное одеяние.
+  suffix: WH40K, АдМехи
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Hoods/hood-skitarii_mars.rsi
+  - type: PointLight
+    color: "#ffdbad"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  parent: [ClothingHeadSuitWithLightBase, ClothingHeadEVAHelmetBase]
+  id: ClothingHeadHelmetTechpriestMarsSkitariiAvangard
+  name: шлем скитарийца
+  description: Священное одеяние.
+  suffix: WH40K, АдМехи
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Hardsuits/vanguard_skitarii.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Head/Hardsuits/vanguard_skitarii.rsi
+  - type: PointLight
+    color: "#ffeead"
+  - type: PressureProtection
+    highPressureMultiplier: 0.50
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.90
+        Heat: 0.90

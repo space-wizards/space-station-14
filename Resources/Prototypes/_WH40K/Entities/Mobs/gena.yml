@@ -1,0 +1,88 @@
+- type: entity
+  name: Гена
+  id: GenaWH40
+  parent: SimpleSpaceMobBase
+  description: Гена шкаф 2,5
+  components:
+  - type: Insulated
+  - type: CombatMode
+  - type: InputMover
+  - type: MobMover
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: Hands
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _WH40K/Mobs/gena.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: base
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.75
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      250: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      150: 0.5
+  - type: Bloodstream
+    bloodReagent: Blood
+    bloodMaxVolume: 650
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+     path: /Audio/Weapons/punch3.ogg
+    animation: WeaponArcFist
+    damage:
+      types:
+        Blunt: 20
+  - type: DamageStateVisuals
+    # rotate: true
+    states:
+      Alive:
+        Base: base
+      Dead:
+        Base: dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 5
+  - type: Puller
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: -150
+    currentTemperature: 310.15
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: NoSlip
+  - type: Perishable
+    molsPerSecondPerUnitMass: 0.0005
+  - type: Stamina
+    decay: 6
+    cooldown: 1
+    critThreshold: 400

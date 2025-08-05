@@ -1,0 +1,10 @@
+- type: soundCollection
+  id: DefaultDeathgasp
+  files:
+  - /Audio/_WH40K/Voice/Deathgasp/commmissar_die_1.ogg
+  - /Audio/_WH40K/Voice/Deathgasp/commmissar_die_3.ogg
+  - /Audio/_WH40K/Voice/Deathgasp/commmissar_die_4.ogg
+  - /Audio/_WH40K/Voice/Deathgasp/guard_die_1.ogg
+  - /Audio/_WH40K/Voice/Deathgasp/guard_die_4.ogg
+  - /Audio/_WH40K/Voice/Deathgasp/guard_die_6.ogg
+  - /Audio/_WH40K/Voice/Deathgasp/sturnn_die_1.ogg

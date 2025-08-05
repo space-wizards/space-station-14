@@ -1,0 +1,108 @@
+# Добавить крики.
+- type: entity
+  id: MobZoanthrope
+  name: зоантроп
+  description: Крайне опасная тварь, использующая свои пси-силы для уничтожения врагов.
+  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  suffix: WH40K, Тираниды
+  components:
+  - type: TypingIndicator
+    proto: alien
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: Speech
+    speechSounds: Zoanthrope
+    speechVerb: LargeMob
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _WH40K/Mobs/zoanthrope.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: base
+    scale: 1.2, 1.2
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.70
+        density: 80
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: base
+      Dead:
+        Base: dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      400: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 5
+  - type: HitscanBatteryAmmoProvider
+    proto: ZoanthropeLighting
+    fireCost: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 50
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: Gun
+    fireRate: 1
+    useKey: false
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot: /Audio/Effects/tesla_collapse.ogg
+  - type: CombatMode
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Dead
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: ZoanthropeDeath
+      params:
+        variation: 0.125
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Hive
+  - type: ActiveRadio
+    channels:
+    - Hive
+  - type: Puller
+    needsHands: false
+
+- type: speechSounds
+  id: Zoanthrope
+  saySound:
+    path: /Audio/_WH40K/Voice/Tyranid/zoanthropespeech.ogg
+  askSound:
+    path: /Audio/_WH40K/Voice/Tyranid/zoanthropespeech.ogg
+  exclaimSound:
+    path: /Audio/_WH40K/Voice/Tyranid/zoanthropespeech.ogg
+
+- type: soundCollection
+  id: ZoanthropeDeath
+  files:
+    - /Audio/_WH40K/Voice/Tyranid/tyscream1.ogg
+    - /Audio/_WH40K/Voice/Tyranid/tyscream2.ogg
+    - /Audio/_WH40K/Voice/Tyranid/tyscream3.ogg
+    - /Audio/_WH40K/Voice/Tyranid/tyscream4.ogg
+    - /Audio/_WH40K/Voice/Tyranid/tyscream5.ogg
+    - /Audio/_WH40K/Voice/Tyranid/tyscream6.ogg
+    - /Audio/_WH40K/Voice/Tyranid/tyscream7.ogg

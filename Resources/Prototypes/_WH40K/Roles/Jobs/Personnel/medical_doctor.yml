@@ -1,0 +1,22 @@
+- type: job
+  id: MedicalDoctorWH40K
+  name: job-name-doctor
+  description: job-description-doctor
+  playTimeTracker: JobMedicalDoctorWH40K
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Personnel
+      time: 14400 #4 hrs
+  #  - !type:RoleTimeRequirement # DeltaV - No Medical Doctor time requirement
+  #    role: MedicalInternWH40K
+  #    time: 14400 #4 hrs
+  startingGear: DoctorGear
+  icon: "JobIconMedicalDoctor"
+  supervisors: job-supervisors-cmo
+  access:
+  - Medical
+  - Maintenance
+  extendedAccess:
+  - Chemistry
+  - Paramedic # DeltaV - Add Paramedic access
+

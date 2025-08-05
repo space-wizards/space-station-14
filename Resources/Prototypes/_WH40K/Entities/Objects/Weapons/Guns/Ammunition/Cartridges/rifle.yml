@@ -1,0 +1,24 @@
+- type: entity
+  id: CartridgeRadCarabin
+  name: "радиоактивный патрон (.308)"
+  parent: BaseCartridge
+  suffix: WH40K, АдМехи
+  components:
+  - type: Tag
+    tags:
+      - Cartridge308
+  - type: CartridgeAmmo
+    proto: BulletRadCarabin
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#65fe08"
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: RadiationSource
+    intensity: 0.01
+    slope: 1.5

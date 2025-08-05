@@ -1,0 +1,17 @@
+- type: job
+  id: MedicalInternWH40K
+  name: job-name-intern
+  description: job-description-intern
+  playTimeTracker: JobMedicalInternWH40K
+  requirements:
+    # - !type:DepartmentTimeRequirement # DeltaV - Removes time limit
+    #   department: Medical
+    #   time: 54000 # 15 hrs
+    #   inverted: true # stop playing intern if you're good at med!
+  startingGear: MedicalInternGear
+  icon: "JobIconMedicalIntern"
+  supervisors: job-supervisors-medicine
+  canBeAntag: true # DeltaV - Can be antagonist
+  access:
+  - Medical
+  - Maintenance

@@ -1,0 +1,56 @@
+- type: job
+  id: FirstAssistant
+  name: job-name-first-assistant
+  description: job-description-first-assistant
+  playTimeTracker: JobFirstAssistant
+  # requirements:
+  #   - !type:CharacterTraitRequirement
+  #     inverted: true
+  #     traits:
+  #       - Foreigner
+  #       - ForeignerLight
+  weight: 10 # DeltaV - Changed HoP weight from 20 to 10 due to them not being more important than other Heads
+  startingGear: HoPGear
+  icon: "JobIconFirstAssistant"
+  requireAdminNotify: true
+  supervisors: job-supervisors-captain
+  canBeAntag: false
+  access:
+  - Command
+  - HeadOfPersonnel
+  - Bar
+  - Service
+  - Maintenance
+  - Janitor
+  - Theatre
+  - Kitchen
+#  - Chapel
+  - Hydroponics
+  - External
+  - Cryogenics
+  # I mean they'll give themselves the rest of the access levels *anyways*.
+  # As of 15/03/23 they can't do that so here's MOST of the rest of the access levels.
+  # Head level access that isn't their own was deliberately left out, get AA from the captain instead.
+  # Delta V - fuck all of this HoP is a service role
+#  - Chemistry
+#  - Engineering
+#  - Research
+#  - Detective
+#  - Salvage
+#  - Security # NoooOoOo!! My HoPcurity!1
+#  - Brig
+  - Lawyer
+  - Cargo
+#  - Atmospherics
+#  - Medical
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+  # afterLoadoutSpecial:
+  # - !type:ModifyEnvirosuitSpecial
+  #   charges: 8
+  # - !type:ModifyEnvirohelmSpecial
+  #   powerCell: PowerCellHigh

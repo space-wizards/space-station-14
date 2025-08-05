@@ -1,0 +1,104 @@
+- type: entity
+  id: MobGenestealer
+  name: генокрад
+  description: Перед вами находится одно из наиболее смертоносных существ роя тиранидов - генокрады, чьи острые когти и безумные рефлексы стали причиной гибели множества людей.
+  parent: SimpleSpaceMobBase
+  suffix: WH40K, Тираниды
+  components:
+  - type: TypingIndicator
+    proto: alien
+  - type: Speech
+    speechSounds: Genestealer
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Tool
+    speedModifier: 1.5
+    qualities:
+      - Prying
+  - type: Prying
+    pryPowered: !type:Bool
+        true
+    force: !type:Bool
+      true
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _WH40K/Mobs/genestealer.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: base
+    scale: 1.3, 1.3
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.75
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: base
+      Dead:
+        Base: dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 5.8
+  - type: CombatMode
+  - type: MeleeWeapon
+    hidden: true
+    altDisarm: false
+    attackRate: 1.7
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      collection: GenestealerAttack
+    damage:
+      types:
+        Piercing: 5
+        Slash: 30
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Hive
+  - type: ActiveRadio
+    channels:
+    - Hive
+  - type: Puller
+    needsHands: false
+  - type: Tag
+    tags:
+      - FootstepSound
+      - DoorBumpOpener
+
+- type: speechSounds
+  id: Genestealer
+  saySound:
+    path: /Audio/_WH40K/Voice/Tyranid/genestealerspeech.ogg
+  askSound:
+    path: /Audio/_WH40K/Voice/Tyranid/genestealerspeech.ogg
+  exclaimSound:
+    path: /Audio/_WH40K/Voice/Tyranid/genestealerspeech.ogg
+
+- type: soundCollection
+  id: GenestealerAttack
+  files:
+    - /Audio/_WH40K/Voice/Tyranid/genestealerattack1.ogg
+    - /Audio/_WH40K/Voice/Tyranid/genestealerattack2.ogg

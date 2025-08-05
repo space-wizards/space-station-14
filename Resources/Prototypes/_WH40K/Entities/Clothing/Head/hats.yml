@@ -1,0 +1,30 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCommissar
+  name: фуражка комиссара
+  description: Идеальный головной убор для выкриков в духе 'ВПЕРЁД, СОБАКИ!'
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Hats/commissar.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Head/Hats/commissar.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadOfficer
+  name: фуражка офицера
+  description: Самая обыкновенная фуражка, принадлежащая кому-то из офицеров.
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Hats/officer.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Head/Hats/officer.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    

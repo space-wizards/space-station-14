@@ -1,0 +1,147 @@
+- type: entity
+  name: автоган "Агрипинаа"
+  parent: BaseWeaponRifle
+  id: WeaponLightAutogun
+  description: Простое и практичное оружие, прекрасно подходящее для снаряжения регулярной армии. Использует патроны калибра 8,25 мм удлинённый.
+  suffix: WH40K
+  components:
+  - type: Item
+    size: Huge
+    sprite: _WH40K/Objects/Weapons/Guns/Autoguns/autogun_in-hand.rsi
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Autoguns/autogun.rsi
+    scale: 0.85,0.85
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _WH40K/Objects/Weapons/Guns/Autoguns/autogun_in-hand.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_WH40K/Weapons/Guns/Gunshots/stubber_fire_1.wav
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLightAutogun
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLightAutogun
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightAutogun
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightAutogun
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  name: автоган "Армагеддон"
+  parent: BaseWeaponRifle
+  id: WeaponHeavyAutogun
+  description: Версия автогана, использующая патроны несколько большего калибра, чем "Агриппина". Всё так же прост в сборке и обращении! Использует патроны калибра 12 мм удлинённый.
+  suffix: WH40K
+  components:
+  - type: Clothing
+    sprite: _WH40K/Objects/Weapons/Guns/Autoguns/autogun2_in-hand.rsi
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Autoguns/autogun2.rsi
+    scale: 0.85,0.85
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Huge
+    sprite: _WH40K/Objects/Weapons/Guns/Autoguns/autogun2_in-hand.rsi
+  - type: Gun
+    fireRate: 5
+    soundGunshot:
+      path: /Audio/_WH40K/Weapons/Guns/Gunshots/stubber_fire_2.wav
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineHeavyAutogun
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineHeavyAutogun
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeHeavyAutogun
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeHeavyAutogun
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  name: стаб-пистолет
+  parent: BaseWeaponPistol
+  id: WeaponPistolStub
+  description: Самый обыкновенный стаб-пистолет - дешёвый, но всё ещё способный спасти вашу жизнь. Использует патроны калибра 6,2 мм укороченный.
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Autoguns/stabpistol.rsi
+    scale: 0.85,0.85
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _WH40K/Objects/Weapons/Guns/Autoguns/stabpistol.rsi
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineStubPistol
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineStubPistol
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeStubPistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeStubPistol
+  - type: Gun
+    fireRate: 5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_WH40K/Weapons/Guns/Gunshots/stubber_fire_3.wav

@@ -1,0 +1,30 @@
+- type: job
+  id: Enginseer
+  name: job-name-enginseer
+  description: job-description-enginseer
+  playTimeTracker: JobEnginseer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Mechanicus
+      time: 14400 #4 hrs
+  startingGear: EnginseerGear
+  icon: "JobIconEnginseer"
+  supervisors: job-supervisors-ce
+  access:
+  - Maintenance
+  - Engineering
+  - External
+  - Atmospherics
+
+- type: startingGear
+  id: EnginseerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTechpriest
+    back: ClothingBackpackTechpriest
+    shoes: ClothingShoesBootsworkTechpriest
+    belt: ClothingBeltUtilityEngineering
+    neck: ClothingNeckRobeTechpriestMars
+    gloves: ClothingHandsGlovesTechpriest
+    eyes: ClothingEyesHudTechPriest
+    outerClothing: ClothingOuterHardsuitTechpriest
+    id: PassengerPDA

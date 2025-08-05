@@ -1,0 +1,25 @@
+- type: job
+  id: ParamedicWH40K
+  name: job-name-paramedic
+  description: job-description-paramedic
+  playTimeTracker: JobParamedicWH40K
+  requirements:
+    # - !type:RoleTimeRequirement # DeltaV - No Medical Doctor time requirement
+    #   role: JobMedicalDoctorWH40K
+    #   time: 14400 #4 hrs
+     - !type:DepartmentTimeRequirement # DeltaV - Medical dept time requirement
+       department: Personnel
+       time: 28800 # DeltaV - 8 hours
+    # - !type:OverallPlaytimeRequirement # DeltaV - No playtime requirement
+    #   time: 54000 # 15 hrs
+  startingGear: ParamedicGear
+  icon: "JobIconParamedic"
+  supervisors: job-supervisors-cmo
+  access:
+  - Medical
+  - Maintenance
+  - External
+  - Paramedic # DeltaV - Add Paramedic access
+  extendedAccess:
+  - Chemistry
+

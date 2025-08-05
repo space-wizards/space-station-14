@@ -1,0 +1,10 @@
+- type: entity
+  id: DirtReinforcedWindow
+  name: reinforced window
+  parent: ReinforcedWindow
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: _WH40K/Structures/Windows/dirt_reinforced_window.rsi
+  - type: Icon
+    sprite: _WH40K/Structures/Windows/dirt_reinforced_window.rsi

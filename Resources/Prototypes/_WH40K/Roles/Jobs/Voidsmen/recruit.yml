@@ -1,0 +1,24 @@
+- type: job
+  id: Recruit
+  name: job-name-recruit
+  description: job-description-recruit
+  playTimeTracker: JobRecruit
+  startingGear: SecurityCadetGear
+  icon: "JobIconRecruit"
+  supervisors: job-supervisors-security
+  canBeAntag: false
+  access:
+  - Security
+  #- Brig # Delta V: Removed
+  - Maintenance
+  - Service
+  - External
+  - Cryogenics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  # afterLoadoutSpecial:
+  # - !type:ModifyEnvirosuitSpecial
+  #   charges: 6
+  # - !type:ModifyEnvirohelmSpecial
+  #   powerCell: PowerCellHigh

@@ -1,0 +1,38 @@
+- type: entity
+  id: CartridgeLightAutogun
+  name: патрон (8,25 мм удлинённый)
+  parent: BaseCartridgeLightRifle
+  suffix: WH40K
+  components:
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+  - type: Tag
+    tags:
+    - Cartridge
+    - CartridgeLightAutogun
+    
+- type: entity
+  id: CartridgeHeavyAutogun
+  name: патрон (12 мм удлинённый)
+  parent: BaseCartridgeHeavyRifle
+  suffix: WH40K
+  components:
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+  - type: Tag
+    tags:
+    - Cartridge
+    - CartridgeHeavyAutogun
+    
+- type: entity
+  id: CartridgeStubPistol
+  name: патрон (6,2 мм укороченный)
+  parent: BaseCartridgePistol
+  suffix: WH40K
+  components: 
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+  - type: Tag
+    tags:
+    - Cartridge
+    - CartridgeStubPistol

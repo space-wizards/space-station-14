@@ -1,0 +1,51 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-4.0",
+    "copyright": "By endr_animet",
+    "states": [
+        {
+            "name": "server"
+
+        },
+        {
+            "name": "server_o"
+
+        },
+        {
+            "name": "variant-research",
+            "delays": [
+              [
+                0.1,
+                0.1,
+                0.1,
+                0.1
+              ]
+            ]
+        },
+        {
+            "name": "inserting",
+            "delays": [
+              [
+                0.1,
+                0.1,
+                0.1
+              ]
+            ]
+        },
+        {
+            "name": "candle",
+            "delays": [
+              [
+                0.1,
+                0.1,
+                0.1,
+                0.1
+              ]
+            ]
+        }
+    ]
+}

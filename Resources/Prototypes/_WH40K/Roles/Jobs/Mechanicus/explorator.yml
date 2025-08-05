@@ -1,0 +1,32 @@
+- type: job
+  id: Explorator
+  name: job-name-explorator
+  description: job-description-explorator
+  playTimeTracker: JobExplorator
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Mechanicus
+      time: 21600 # 6 hrs
+  icon: "JobIconExplorator"
+  startingGear: ExploratorGear
+  supervisors: job-supervisors-qm
+  access:
+  - Cargo
+  - Salvage
+  - Maintenance
+  - External
+  - Engineering
+
+- type: startingGear
+  id: ExploratorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTechpriest
+    back: ClothingBackpackTechpriest
+    shoes: ClothingShoesBootsworkTechpriest
+    belt: ClothingBeltUtilityEngineering
+    neck: ClothingNeckRobeGenetorTechpriestMars
+    gloves: ClothingHandsGlovesTechpriest
+    eyes: ClothingEyesHudTechPriest
+    outerClothing: ClothingOuterHardsuitTechpriest
+    mask: ClothingMaskGasTechPriest
+    id: PassengerPDA

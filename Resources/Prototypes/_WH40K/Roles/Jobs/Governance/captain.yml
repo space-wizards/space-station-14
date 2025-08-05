@@ -1,0 +1,32 @@
+- type: job
+  id: CaptainWH40K
+  name: job-name-captain
+  description: job-description-captain
+  playTimeTracker: JobCaptainWH40K
+  # requirements:
+  #   - !type:CharacterTraitRequirement
+  #     inverted: true
+  #     traits:
+  #       - Foreigner
+  #       - ForeignerLight
+  #       - Pacifist
+  weight: 20
+  startingGear: CaptainGear
+  icon: "JobIconCaptain"
+  requireAdminNotify: true
+  joinNotifyCrew: true
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+  # afterLoadoutSpecial:
+  # - !type:ModifyEnvirosuitSpecial
+  #   charges: 8
+  # - !type:ModifyEnvirohelmSpecial
+  #   powerCell: PowerCellHigh

@@ -15,7 +15,7 @@
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/external.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Standard/basic.rsi #WH40K-Changes
   - type: Wires
     layoutId: AirlockExternal
   - type: Paintable
@@ -31,7 +31,7 @@
   - type: Occluder
     enabled: false
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/external.rsi
+    sprite: _WH40K/Structures/Doors/Airlocks/Glass/basic.rsi #WH40K-Changes
   - type: Fixtures
     fixtures:
       fix1:

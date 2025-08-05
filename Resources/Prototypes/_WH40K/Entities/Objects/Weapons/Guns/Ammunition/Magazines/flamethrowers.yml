@@ -1,0 +1,30 @@
+# - type: entity
+#   id: FlameThrowerTank
+#   name: "баллон с прометием"
+#   description: "Баллон с сжиженным прометием. Был сделан специально для огнемётов"
+#   parent: BaseMagazinePistol
+#   suffix: WH40K
+#   components:
+#   - type: Tag
+#     tags:
+#     - FlameThrowerFuelTank
+#   - type: Ammo
+#     muzzleFlash: FlamethrowerFlashEffect
+#   - type: BasicEntityAmmoProvider
+#     proto: PromethiumBullet
+#     capacity: 300
+#   - type: Sprite
+#     sprite: _WH40K/Objects/Weapons/Guns/Ammunition/flamethrowerCanister.rsi
+#     layers:
+#     - state: base
+#       map: ["enum.GunVisualLayers.Base"]
+#     - state: mag-1
+#       map: ["enum.GunVisualLayers.Mag"]
+#   - type: MagazineVisuals
+#     magState: mag
+#     steps: 5
+#     zeroVisible: false
+#   - type: Item
+#     size: Huge
+#     shape:
+#     - 0,0,5,5

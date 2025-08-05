@@ -1,0 +1,48 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By endr_animet",
+
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "FirstAssistant"
+        },
+        {
+            "name": "HeadOfficer"
+        },
+        {
+            "name": "Magos"
+        },
+        {
+            "name": "Explorator"
+        },
+        {
+            "name": "Lexmechanic"
+        },
+        {
+            "name": "Genetor"
+        },
+        {
+            "name": "Enginseer"
+        },
+        {
+            "name": "Novice"
+        },
+        {
+            "name": "GunnerySergeant"
+        },
+        {
+            "name": "Sergeant"
+        },
+        {
+            "name": "Voidsman"
+        },
+        {
+            "name": "Recruit"
+        }
+    ]
+}

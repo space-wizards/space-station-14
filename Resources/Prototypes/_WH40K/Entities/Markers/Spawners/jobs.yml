@@ -1,0 +1,311 @@
+# Civilian
+
+- type: entity
+  id: SpawnPointPassengerWH40K
+  parent: SpawnPointJobBase
+  name: passenger
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: PassengerWH40K
+  - type: Sprite
+    layers:
+      - state: green
+      - state: passenger
+
+- type: entity
+  id: SpawnPointNovice
+  parent: SpawnPointJobBase
+  name: novice
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: Novice
+  - type: Sprite
+    sprite: _WH40K/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: novice
+
+- type: entity
+  id: SpawnPointMedicalInternWH40K
+  parent: SpawnPointJobBase
+  name: medical intern
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: MedicalInternWH40K
+  - type: Sprite
+    layers:
+      - state: green
+      - state: medicalintern
+
+- type: entity
+  id: SpawnPointRecruit
+  parent: SpawnPointJobBase
+  name: recruit
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: Recruit
+  - type: Sprite
+    sprite: _WH40K/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: recruit
+
+- type: entity
+  id: SpawnPointBartenderWH40K
+  parent: SpawnPointJobBase
+  name: bartender
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: BartenderWH40K
+  - type: Sprite
+    layers:
+      - state: green
+      - state: bartender
+
+- type: entity
+  id: SpawnPointChefWH40K
+  parent: SpawnPointJobBase
+  name: chef
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: ChefWH40K
+  - type: Sprite
+    layers:
+      - state: green
+      - state: chef
+
+- type: entity
+  id: SpawnPointChaplainWH40K
+  parent: SpawnPointJobBase
+  name: chaplain
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: ChaplainWH40K
+  - type: Sprite
+    layers:
+      - state: green
+      - state: chaplain
+
+- type: entity
+  id: SpawnPointJanitorWH40K
+  parent: SpawnPointJobBase
+  name: janitorWH40K
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: JanitorWH40K
+  - type: Sprite
+    layers:
+      - state: green
+      - state: janitor
+
+# Command
+
+- type: entity
+  id: SpawnPointCaptainWH40K
+  parent: SpawnPointJobBase
+  name: captain
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: CaptainWH40K
+  - type: Sprite
+    layers:
+      - state: green
+      - state: captain
+
+- type: entity
+  id: SpawnPointFirstAssistant
+  parent: SpawnPointJobBase
+  name: first assistant
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: FirstAssistant
+  - type: Sprite
+    sprite: _WH40K/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: first_assistant
+
+# Engineering
+
+- type: entity
+  id: SpawnPointMagos
+  parent: SpawnPointJobBase
+  name: magos
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: Magos
+  - type: Sprite
+    sprite: _WH40K/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: magos
+
+- type: entity
+  id: SpawnPointLexmechanic
+  parent: SpawnPointJobBase
+  name: lexmechanic
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: Lexmechanic
+  - type: Sprite
+    sprite: _WH40K/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: lexmechanic
+
+- type: entity
+  id: SpawnPointStationEnginseer
+  parent: SpawnPointJobBase
+  name: enginseer
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: Enginseer
+  - type: Sprite
+    sprite: _WH40K/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: enginseer
+
+- type: entity
+  id: SpawnPointGenetor
+  parent: SpawnPointJobBase
+  name: genetor
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: Genetor
+  - type: Sprite
+    sprite: _WH40K/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: genetor
+
+- type: entity
+  id: SpawnPointExplorator
+  parent: SpawnPointJobBase
+  name: explorator
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: Explorator
+  - type: Sprite
+    sprite: _WH40K/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: genetor
+    # layers:
+      # - state: green
+      # - sprite: DeltaV/Markers/jobs.rsi
+      #   state: salvagespecialist
+
+# Medical
+
+- type: entity
+  id: SpawnPointMedicalDoctorWH40K
+  parent: SpawnPointJobBase
+  name: medicaldoctor
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: MedicalDoctorWH40K
+  - type: Sprite
+    layers:
+      - state: green
+      - state: doctor
+
+- type: entity
+  id: SpawnPointParamedicWH40K
+  parent: SpawnPointJobBase
+  name: paramedic
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: ParamedicWH40K
+  - type: Sprite
+    layers:
+      - state: green
+      - state: paramedic
+
+- type: entity
+  id: SpawnPointChemistWH40K
+  parent: SpawnPointJobBase
+  name: chemist
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: ChemistWH40K
+  - type: Sprite
+    layers:
+      - state: green
+      - state: chemist
+
+# Security
+
+- type: entity
+  id: SpawnPointHeadOfficer
+  parent: SpawnPointJobBase
+  name: head officer
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: HeadOfficer
+  - type: Sprite
+    sprite: _WH40K/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: head_officer
+
+- type: entity
+  id: SpawnPointGunnerySergeant
+  parent: SpawnPointJobBase
+  name: gunnery sergeant
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: GunnerySergeant
+  - type: Sprite
+    sprite: _WH40K/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: gunnery_sergeant
+
+- type: entity
+  id: SpawnPointSergeant
+  parent: SpawnPointJobBase
+  name: sergeant
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: Sergeant
+  - type: Sprite
+    sprite: _WH40K/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: sergeant
+
+- type: entity
+  id: SpawnPointVoidsman
+  parent: SpawnPointJobBase
+  name: voidsman
+  suffix: WH40K
+  components:
+  - type: SpawnPoint
+    job_id: Voidsman
+  - type: Sprite
+    sprite: _WH40K/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: voidsman

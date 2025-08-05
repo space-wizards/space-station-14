@@ -1,9 +1,20 @@
 - type: soundCollection
   id: RoundEnd
   files:
-  - /Audio/Announcements/RoundEnd/apc_destroyed.ogg
-  - /Audio/Announcements/RoundEnd/disappointed.ogg
-  - /Audio/Announcements/RoundEnd/notevenpaidforthis.ogg
+  # - /Audio/Announcements/RoundEnd/apc_destroyed.ogg
+  # - /Audio/Announcements/RoundEnd/disappointed.ogg
+  # - /Audio/Announcements/RoundEnd/notevenpaidforthis.ogg
+  - /Audio/_WH40K/Announcements/RoundEnd/endraund1.ogg
+  - /Audio/_WH40K/Announcements/RoundEnd/endraund2.ogg
+  - /Audio/_WH40K/Announcements/RoundEnd/endraund3.ogg
+  - /Audio/_WH40K/Announcements/RoundEnd/endraund4.ogg
+  - /Audio/_WH40K/Announcements/RoundEnd/endraund5.ogg
+  - /Audio/_WH40K/Announcements/RoundEnd/endraund6.ogg
+  - /Audio/_WH40K/Announcements/RoundEnd/endraund7.ogg
+  - /Audio/_WH40K/Announcements/RoundEnd/endraund8.ogg
+  - /Audio/_WH40K/Announcements/RoundEnd/endraund9.ogg
+  - /Audio/_WH40K/Announcements/RoundEnd/endraund10.ogg
+  - /Audio/_WH40K/Announcements/RoundEnd/endraund11.ogg
 
 - type: soundCollection
   id: PowerOn

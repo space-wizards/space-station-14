@@ -1,0 +1,19 @@
+- type: entity
+  id: CartridgeBolter
+  name: патрон (.75 болт)
+  parent: BaseCartridge
+  suffix: WH40K
+  components:
+  - type: Tag
+    tags:
+      - CartridgeBolter75
+      - Cartridge
+  - type: CartridgeAmmo
+    proto: BulletBolter
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals

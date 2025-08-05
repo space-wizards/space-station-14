@@ -1,0 +1,15 @@
+- type: tile
+  name: "некронская плитка"
+  id: NecronFloor
+  sprite: /Textures/_WH40K/Tiles/necron.png
+  variants: 2
+  placementVariants:
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemSteel
+  heatCapacity: 10000

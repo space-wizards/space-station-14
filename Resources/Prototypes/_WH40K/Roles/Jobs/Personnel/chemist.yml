@@ -1,0 +1,16 @@
+- type: job
+  id: ChemistWH40K
+  name: job-name-chemist
+  description: job-description-chemist
+  playTimeTracker: JobChemistWH40K
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Personnel
+      time: 28800 # DeltaV - 8 hours
+  startingGear: ChemistGear
+  icon: "JobIconChemist"
+  supervisors: job-supervisors-cmo
+  access:
+  - Medical
+  - Chemistry
+  - Maintenance

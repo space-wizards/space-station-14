@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by endr_animet based at https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "camera"
+    },
+    {
+      "name": "comm"
+    },
+    {
+      "name": "id"
+    },
+    {
+      "name": "mass"
+    },
+    {
+      "name": "med"
+    },
+    {
+      "name": "order"
+    },
+    {
+      "name": "power"
+    },
+    {
+      "name": "research"
+    }
+  ]
+}

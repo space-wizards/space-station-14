@@ -1,0 +1,111 @@
+- type: entity
+  name: Силовая Сабля
+  parent: BaseSword
+  id: WHPowerSaberImperial
+  description: Высококачественная, благородная офицерская силовая сабля, выполненная из дорогих материалов. Её энергетическое поле позволяет лезвию прорезать плоть, кости и большинство защитных доспехов.
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Melee/power_sword_imperial.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: .8
+    range: 1.75
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+    damage:
+      types:
+        Slash: 20
+        Heat: 20
+    angle: 80
+  # - type: DamageOtherOnHit
+  #   staminaCost: 5
+  # - type: EmbeddableProjectile
+  # - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225
+  - type: Reflect
+    reflectProb: .1
+    spread: 90
+  - type: Item
+    size: Normal
+    sprite: _WH40K/Objects/Weapons/Melee/power_sword_imperial.rsi
+  - type: Tag
+    tags:
+    - CaptainSabre
+  - type: DisarmMalus
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-inanimate
+    weight: 0.0002
+  - type: PirateAccent
+
+- type: entity
+  name: силовая булава
+  parent: BaseItem
+  id: WHPowerMaceImperial
+  description: filler
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Melee/mace.rsi
+    layers:
+    - state: mace_off
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: ItemToggle
+    soundActivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundDeactivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.250
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Shock: 10
+  # - type: ItemToggleDamageOtherOnHit
+  - type: Stunbaton
+    energyPerUse: 20
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.1
+    range: 1.6
+    damage:
+      types:
+        Blunt: 18
+    animation: WeaponArcThrust
+  # - type: DamageOtherOnHit
+  #   meleeDamageMultiplier: 1.5
+  # - type: StaminaDamageOnHit
+  #   damage: 20
+  #   sound: /Audio/Weapons/egloves.ogg
+  # - type: StaminaDamageOnCollide
+  #   damage: 20
+  #   sound: /Audio/Weapons/egloves.ogg
+  - type: Battery
+    maxCharge: 800
+    startingCharge: 800
+  - type: UseDelay
+  - type: Item
+    heldPrefix: off
+    size: Normal
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/stunprod.rsi
+    quickEquip: false
+    slots:
+    - belt
+  - type: DisarmMalus
+    malus: 0.225
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: {state: mace_on}
+          False: {state: mace_off}

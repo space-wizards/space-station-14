@@ -1,0 +1,71 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCommandUniform
+  name: форма флота
+  description: Самая обыкновенная флотская униформа - строго и без изысков.
+  suffix: WH40K, флот
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/command.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/command.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitVoidsman
+  name: униформа войдсменов
+  description: Строгий тёмный комбинезон флота - самая необходимая вещь для службы в рядах войдсменов.
+  suffix: WH40K, войдсмены
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/voidsman.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/voidsman.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCommissar
+  name: униформа комиссара
+  description: Униформа боевого командира Астра Милитарум - комиссара. От неё пахнет ужасом врагов и подчинённых.
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/commissar.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/commissar.rsi
+
+- type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformJumpsuitGuardsman
+  name: униформа гвардейца
+  description: Униформа, выдающаяся членам регулярной армии империума - имперской гвардии.
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/guardsman.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/guardsman.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTechpriest
+  name: комбинезон техножреца
+  description: Комбинезон, выдающийся всем техножрецам, что ещё имеют гуманоидную форму тела.
+  suffix: WH40K, АдМехи
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/techpriest.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/techpriest.rsi
+
+- type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformJumpsuitBloodPact
+  name: униформа бладпакта
+  description: Обычная униформа
+  suffix: WH40K, Бладпакт
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/heresy.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/heresy.rsi

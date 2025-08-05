@@ -1,18 +1,52 @@
 - type: soundCollection
   id: LobbyMusic
   files:
-    - /Audio/Lobby/thunderdome.ogg
-    - /Audio/Lobby/absconditus.ogg
-    - /Audio/Lobby/space_asshole.ogg
-    - /Audio/Lobby/the_wizard.ogg
-    - /Audio/Lobby/endless_space.ogg
-    - /Audio/Lobby/singuloose.ogg
-    - /Audio/Lobby/comet_haley.ogg
-    - /Audio/Lobby/title2.ogg
-    - /Audio/Lobby/title3.ogg
-    - /Audio/Lobby/mod.flip-flap.ogg
-    - /Audio/Lobby/Spac_Stac.ogg
-    - /Audio/Lobby/pwmur.ogg
-    - /Audio/Lobby/lasers_rip_apart_the_bulkhead.ogg
-    - /Audio/Lobby/every_light_is_blinking_at_once.ogg
-    - /Audio/Lobby/atomicamnesiammx.ogg
+    # - /Audio/Lobby/thunderdome.ogg
+    # - /Audio/Lobby/absconditus.ogg
+    # - /Audio/Lobby/space_asshole.ogg
+    # - /Audio/Lobby/the_wizard.ogg
+    # - /Audio/Lobby/endless_space.ogg
+    # - /Audio/Lobby/singuloose.ogg
+    # - /Audio/Lobby/comet_haley.ogg
+    # - /Audio/Lobby/title2.ogg
+    # - /Audio/Lobby/title3.ogg
+    # - /Audio/Lobby/mod.flip-flap.ogg
+    # - /Audio/Lobby/Spac_Stac.ogg
+    # - /Audio/Lobby/pwmur.ogg
+    # - /Audio/Lobby/lasers_rip_apart_the_bulkhead.ogg
+    # - /Audio/Lobby/every_light_is_blinking_at_once.ogg
+    # - /Audio/Lobby/atomicamnesiammx.ogg
+    - /Audio/_WH40K/Lobby/1.ogg
+    - /Audio/_WH40K/Lobby/2.ogg
+    - /Audio/_WH40K/Lobby/3.ogg
+    - /Audio/_WH40K/Lobby/4.ogg
+    - /Audio/_WH40K/Lobby/5.ogg
+    - /Audio/_WH40K/Lobby/6.ogg
+    - /Audio/_WH40K/Lobby/7.ogg
+    - /Audio/_WH40K/Lobby/8.ogg
+    - /Audio/_WH40K/Lobby/9.ogg
+    - /Audio/_WH40K/Lobby/10.ogg
+    - /Audio/_WH40K/Lobby/11.ogg
+    - /Audio/_WH40K/Lobby/12.ogg
+    - /Audio/_WH40K/Lobby/13.ogg
+    - /Audio/_WH40K/Lobby/14.ogg
+    - /Audio/_WH40K/Lobby/15.ogg
+    - /Audio/_WH40K/Lobby/16.ogg
+    - /Audio/_WH40K/Lobby/17.ogg
+    - /Audio/_WH40K/Lobby/18.ogg
+    - /Audio/_WH40K/Lobby/bfi.ogg
+    - /Audio/_WH40K/Lobby/bfi3.ogg
+    - /Audio/_WH40K/Lobby/Cheditor1.ogg
+    - /Audio/_WH40K/Lobby/Cheditor2.ogg
+    - /Audio/_WH40K/Lobby/Cheditor3.ogg
+    - /Audio/_WH40K/Lobby/dow.ogg
+    - /Audio/_WH40K/Lobby/dp.ogg
+    - /Audio/_WH40K/Lobby/Editor_SoB.ogg
+    - /Audio/_WH40K/Lobby/Inq_Menu.ogg
+    - /Audio/_WH40K/Lobby/menu_am.ogg
+    - /Audio/_WH40K/Lobby/Menu_IG.ogg
+    - /Audio/_WH40K/Lobby/Menu_Nec.ogg
+    - /Audio/_WH40K/Lobby/Menu_SM.ogg
+    - /Audio/_WH40K/Lobby/SM_Outpost.ogg
+    - /Audio/_WH40K/Lobby/umchant.ogg
+    - /Audio/_WH40K/Lobby/wbchant.ogg

@@ -1,0 +1,30 @@
+- type: job
+  id: GunnerySergeant
+  name: job-name-gunnery-sergeant
+  description: job-description-gunnery-sergeant
+  playTimeTracker: JobGunnerySergeant
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Voidsmen
+      time: 216000 # 60 hrs
+  startingGear: WardenGear
+  icon: "JobIconGunnerySergeant"
+  supervisors: job-supervisors-hos
+  canBeAntag: false
+  access:
+  - Security
+  #- Brig # Delta V: Removed
+  - Armory
+  - Maintenance
+  - Service
+  - External
+  - Detective
+  - Cryogenics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  # afterLoadoutSpecial:
+  # - !type:ModifyEnvirosuitSpecial
+  #   charges: 6
+  # - !type:ModifyEnvirohelmSpecial
+  #   powerCell: PowerCellHigh

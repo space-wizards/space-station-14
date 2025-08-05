@@ -1,0 +1,206 @@
+- type: entity
+  parent: BaseItem
+  id: WeaponLaserWH40KEnergy
+  abstract: true
+  components:
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 3
+    selectedMode: SemiAuto
+    availableModes:
+    - FullAuto
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_WH40K/Weapons/Guns/Gunshots/lasgunpew.ogg
+  - type: MagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: LasgunPowerCell
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+            - LasgunPowerCell
+  - type: Appearance
+  - type: StaticPrice
+    price: 500
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/lasgun.rsi
+    scale: 0.85,0.85
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/lasgun_in-hands.rsi
+    size: Huge
+    shape:
+    - 0,0,4,1
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+
+- type: entity
+  name: лазган
+  parent: [WeaponLaserWH40KEnergy, BaseGunWieldable]
+  id: WeaponLaserLasgun
+  description: Стандартная противопехотная лазерная винтовка, массово используемая силами Империума.
+  suffix: WH40K
+  components:
+  - type: Clothing
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/lasgun_in-hands.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+
+- type: entity
+  name: лонглаз
+  parent: [WeaponLaserWH40KEnergy, BaseGunWieldable]
+  id: WeaponLaserLonglas
+  description: Модифицированный вариант обычного лазгана, обладающий всеми атрибутами снайперской винтовки, однако, ставший более дорогим в изготовлении и требующим немалые умственные способности для правильного использования.
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/longlas.rsi
+    scale: 0.85,0.85
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/longlas_in-hands.rsi
+    size: Huge
+    shape:
+    - 0,0,4,1
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  # - type: Telescope
+  - type: GunRequiresWield
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: LonglasPowerCell
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+            - LonglasPowerCell
+  - type: Clothing
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/longlas_in-hands.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+
+- type: entity
+  name: плазма-пистолет
+  parent: WeaponLaserWH40KEnergy
+  id: WeaponLaserPlasmaPistol
+  description: Уменьшенная версия плазменной винтовки, не смотря на размер не потерял в мощности, чего не скажешь о размере его топливного бака. Прекрасное личное оружие офицеров по всему империуму.
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/plasmapistol.rsi
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_WH40K/Weapons/Guns/Gunshots/plasmapist.wav
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: PlasmPistolPowerCell
+        whitelist:
+          tags:
+            - PlasmPowerCellPistol
+  - type: Item
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/plasmapistol.rsi
+    size: Small
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    slots:
+    - Belt
+
+- type: entity
+  name: плазма-винтовка
+  parent: [WeaponLaserPlasmaPistol, BaseGunWieldable]
+  id: WeaponLaserPlasmagun
+  description: Пожалуй, самое известное и эффективное оружие Империума, встречающееся во всех его войсках.
+  suffix: WH40K
+  components:
+  - type: Item
+    size: Huge
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/plasmagun_in-hands.rsi
+  - type: GunRequiresWield
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/plasmagun.rsi
+  - type: Clothing
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/plasmagun_in-hands.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_WH40K/Weapons/Guns/Gunshots/plasmagun.wav
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: PlasmGunPowerCell
+        whitelist:
+          tags:
+            - PlasmPowerCellGun
+
+- type: entity
+  name: мельта-винтовка
+  parent: [WeaponLaserWH40KEnergy, BaseGunWieldable]
+  id: WeaponLaserMeltagun
+  description: Оружие, использующее реакцию термоядерного синтеза для уничтожения противника. Крайне смертоносно.
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/meltagun.rsi
+  - type: GunRequiresWield
+  - type: Gun
+    fireRate: 0.5
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_WH40K/Weapons/Guns/Gunshots/meltagun.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MeltPowerCell
+        whitelist:
+          tags:
+            - MeltPowerCell
+  - type: Clothing
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/meltagun_in-hands.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: Item
+    sprite: _WH40K/Objects/Weapons/Battery/meltagun_in-hands.rsi

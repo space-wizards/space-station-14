@@ -1,0 +1,14 @@
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagTechpriest
+  name: магнитные сапоги
+  description: Магнитные сапоги, используемые во время деятельности вне корабля, чтобы оставаться надёжно прикреплённым к поверхности.
+  suffix: WH40K, АдМехи
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Shoes/Boots/magboots.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Shoes/Boots/magboots.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.95

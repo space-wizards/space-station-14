@@ -1,0 +1,136 @@
+# - type: entity
+#   id: IDCardComputerPrototype
+#   name: ID card
+#   categories: [HideSpawnMenu]
+#   components:
+#   - type: AccessReader
+#     access: [["Command"]]
+#   - type: IdCardConsole
+#     privilegedIdSlot:
+#       name: id-card-console-privileged-id
+#       ejectSound: /Audio/Machines/id_swipe.ogg
+#       insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+#       ejectOnBreak: true
+#       swap: false
+#       whitelist:
+#         components:
+#         - IdCard
+#     targetIdSlot:
+#       name: id-card-console-target-id
+#       ejectSound: /Audio/Machines/id_swipe.ogg
+#       insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+#       ejectOnBreak: true
+#       swap: false
+#       whitelist:
+#         components:
+#         - IdCard
+#   - type: ActivatableUI
+#     key: enum.IdCardConsoleUiKey.Key
+#   - type: UserInterface
+#     interfaces:
+#       enum.IdCardConsoleUiKey.Key:
+#         type: IdCardConsoleBoundUserInterface
+#       enum.WiresUiKey.Key:
+#         type: WiresBoundUserInterface
+#   - type: CrewManifestViewer
+#     ownerKey: enum.IdCardConsoleUiKey.Key
+
+# - type: entity
+#   id: RadarMassPrototype
+#   name: radar
+#   categories: [HideSpawnMenu]
+#   components:
+#   - type: RadarConsole
+#   - type: ActivatableUI
+#     key: enum.RadarConsoleUiKey.Key
+#   - type: UserInterface
+#     interfaces:
+#         enum.RadarConsoleUiKey.Key:
+#           type: RadarConsoleBoundUserInterface
+#         enum.WiresUiKey.Key:
+#           type: WiresBoundUserInterface
+
+# - type: entity
+#   id: ResearchPrototype
+#   name: Research
+#   categories: [HideSpawnMenu]
+#   components:
+#   - type: ResearchClient
+#   - type: ResearchConsole
+#   - type: ActiveRadio
+#     channels:
+#     - Science
+#   - type: TechnologyDatabase
+#   - type: ActivatableUI
+#     key: enum.ResearchConsoleUiKey.Key
+#   - type: UserInterface
+#     interfaces:
+#       enum.ResearchConsoleUiKey.Key:
+#         type: ResearchConsoleBoundUserInterface
+#       enum.ResearchClientUiKey.Key:
+#         type: ResearchClientBoundUserInterface
+#       enum.WiresUiKey.Key:
+#         type: WiresBoundUserInterface
+
+# - type: entity
+#   id: PowerPrototype
+#   name: Power
+#   categories: [HideSpawnMenu]
+#   components:
+#   - type: PowerMonitoringConsole
+#   - type: PowerMonitoringCableNetworks
+#   - type: NodeContainer
+#     examinable: true
+#     nodes:
+#       hv:
+#         !type:CableDeviceNode
+#         nodeGroupID: HVPower
+#   - type: ActivatableUI
+#     singleUser: true
+#     key: enum.PowerMonitoringConsoleUiKey.Key
+#   - type: UserInterface
+#     interfaces:
+#       enum.PowerMonitoringConsoleUiKey.Key:
+#         type: PowerMonitoringConsoleBoundUserInterface
+#       enum.WiresUiKey.Key:
+#         type: WiresBoundUserInterface
+
+# - type: entity
+#   id: OrderPrototype
+#   name: Order
+#   categories: [HideSpawnMenu]
+#   components:
+#   - type: CargoOrderConsole
+#   - type: BankClient
+#   - type: ActiveRadio
+#     channels:
+#     - Supply
+#   - type: ActivatableUI
+#     key: enum.CargoConsoleUiKey.Orders
+#   - type: UserInterface
+#     interfaces:
+#       enum.CargoConsoleUiKey.Orders:
+#         type: CargoOrderConsoleBoundUserInterface
+#       enum.WiresUiKey.Key:
+#         type: WiresBoundUserInterface
+
+# - type: entity
+#   id: CameraPrototype
+#   name: Camera
+#   categories: [HideSpawnMenu]
+#   components:
+#   - type: DeviceNetwork
+#     deviceNetId: Wired
+#     receiveFrequencyId: SurveillanceCamera
+#     transmitFrequencyId: SurveillanceCamera
+#   - type: WiredNetworkConnection
+#   - type: DeviceNetworkRequiresPower
+#   - type: SurveillanceCameraMonitor
+#   - type: ActivatableUI
+#     key: enum.SurveillanceCameraMonitorUiKey.Key
+#   - type: UserInterface
+#     interfaces:
+#         enum.SurveillanceCameraMonitorUiKey.Key:
+#           type: SurveillanceCameraMonitorBoundUserInterface
+#         enum.WiresUiKey.Key:
+#           type: WiresBoundUserInterface

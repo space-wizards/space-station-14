@@ -1,0 +1,10 @@
+- type: job
+  id: PassengerWH40K
+  name: job-name-passenger
+  description: job-description-passenger
+  playTimeTracker: JobPassengerWH40K
+  startingGear: PassengerGear
+  icon: "JobIconPassenger"
+  supervisors: job-supervisors-everyone
+  access:
+  - Maintenance

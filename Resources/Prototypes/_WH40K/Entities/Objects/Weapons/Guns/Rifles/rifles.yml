@@ -1,0 +1,58 @@
+- type: entity
+  name: радиевый карабин
+  parent: BaseWeaponRifle
+  id: WeaponRifleRadCarabin
+  description: На вид может напомнить старомодое ружьё средневековья, но части выдают в нём современное оружие. Использует чрезвычано радиоактивные снаряды калибра .308 винтовочные.
+  suffix: WH40K, АдМехи
+  components:
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Rifles/rad_carbine.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _WH40K/Objects/Weapons/Guns/Rifles/rad_carbine_in-hands.rsi
+  - type: Gun
+    fireRate: 3.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineRadCarabin
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineRad
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeRadCarabin
+        priority: 1
+        whitelist:
+          tags:
+            - Cartridge308
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: RadiationSource
+    intensity: 0.01
+    slope: 1
+  - type: Item
+    sprite: _WH40K/Objects/Weapons/Guns/Rifles/rad_carbine_in-hands.rsi
+    size: Large
+  # - type: Tag
+  #   tags:
+  #     - BigGunUser
+  - type: BigGun
+

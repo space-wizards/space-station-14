@@ -1,0 +1,19 @@
+- type: job
+  id: ChefWH40K
+  name: job-name-chef
+  description: job-description-chef
+  playTimeTracker: JobChefWH40K
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Personnel
+      time: 3600 #DeltaV 1 hour
+  startingGear: ChefGear
+  icon: "JobIconChef"
+  supervisors: job-supervisors-hop
+  access:
+  - Service
+  - Maintenance
+  - Kitchen
+  - Hydroponics
+  extendedAccess:
+  - Bar #Nyano - Summary: After this line, Professional Che is a component to be added. Very important.
