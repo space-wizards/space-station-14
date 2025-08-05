@@ -1,7 +1,13 @@
-# Moffstation - Start - Giving Borgs Neck slots
+# generic borg
 - type: inventoryTemplate
   id: borg
   slots:
+  - name: neck
+    slotTexture: neck
+    slotFlags: NECK
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,1
+    displayName: Neck
   - name: head
     slotTexture: head
     slotFlags: HEAD
@@ -9,18 +15,17 @@
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0.015625, -0.09375
-# Moffstation - Start - Giving Borgs Neck slots
+
+# janitor and engineering borg
+- type: inventoryTemplate
+  id: borgShort
+  slots:
   - name: neck
     slotTexture: neck
     slotFlags: NECK
     uiWindowPos: 0,2
     strippingWindowPos: 0,1
     displayName: Neck
-# Moffstation - End
-
-- type: inventoryTemplate
-  id: borgShort
-  slots:
   - name: head
     slotTexture: head
     slotFlags: HEAD
@@ -28,18 +33,17 @@
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0.015625, -0.1875
-# Moffstation - Start - Giving Borgs Neck slots
+
+# salvage borg
+- type: inventoryTemplate
+  id: borgTall
+  slots:
   - name: neck
     slotTexture: neck
     slotFlags: NECK
     uiWindowPos: 0,2
     strippingWindowPos: 0,1
     displayName: Neck
-# Moffstation - End
-
-- type: inventoryTemplate
-  id: borgTall
-  slots:
   - name: head
     slotTexture: head
     slotFlags: HEAD
@@ -47,35 +51,34 @@
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0.015625, 0.0
-# Moffstation - Start - Giving Borgs Neck slots
+
+# service borg
+- type: inventoryTemplate
+  id: borgHumanoid
+  slots:
   - name: neck
     slotTexture: neck
     slotFlags: NECK
     uiWindowPos: 0,2
     strippingWindowPos: 0,1
     displayName: Neck
-
-- type: inventoryTemplate
-  id: borgHumanoid
-  slots:
   - name: head
     slotTexture: head
     slotFlags: HEAD
     uiWindowPos: 1,0
     strippingWindowPos: 0,0
     displayName: Head
+
+# taller than tall, mediborg
+- type: inventoryTemplate
+  id: borgDutch
+  slots:
   - name: neck
     slotTexture: neck
     slotFlags: NECK
     uiWindowPos: 0,2
     strippingWindowPos: 0,1
     displayName: Neck
-# Moffstation - End
-
-# taller than tall
-- type: inventoryTemplate
-  id: borgDutch
-  slots:
   - name: head
     slotTexture: head
     slotFlags: HEAD
@@ -83,11 +86,3 @@
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0, 0.09375
-# Moffstation - Start - Giving Borgs Neck slots
-  - name: neck
-    slotTexture: neck
-    slotFlags: NECK
-    uiWindowPos: 0,2
-    strippingWindowPos: 0,1
-    displayName: Neck
-# Moffstation - End
