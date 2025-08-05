@@ -38,7 +38,7 @@ public sealed partial class ScrubberControl : BoxContainer
     {
 
         IoCManager.InjectDependencies(this);
-        var _atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();
+        var atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();
 
         RobustXamlLoader.Load(this);
 
@@ -105,7 +105,7 @@ public sealed partial class ScrubberControl : BoxContainer
 
         foreach (var value in allGases)
         {
-            ProtoId<GasPrototype> gasProtoId = _atmosphereSystem.GetGas(value);
+            ProtoId<GasPrototype> gasProtoId = atmosphereSystem.GetGas(value);
             var gasName = _prototypeManager.Index(gasProtoId).Name;
 
             var gasButton = new Button
