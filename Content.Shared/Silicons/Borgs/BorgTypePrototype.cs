@@ -1,4 +1,4 @@
-﻿using Content.Shared.DisplacementMap; // Moffstation - Adding field for DisplacementMaps
+﻿using Content.Shared.DisplacementMap;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Radio;
@@ -63,13 +63,11 @@ public sealed partial class BorgTypePrototype : IPrototype
     [DataField]
     public ProtoId<InventoryTemplatePrototype> InventoryTemplateId { get; set; } = "borgShort";
 
-    // Moffstation - Start - Giving borgs displacement maps
     /// <summary>
     /// The displacement maps for the borgs. These should be compatible with the borg inventory templates.
     /// </summary>
     [DataField]
     public Dictionary<string, DisplacementData> InventoryDisplacements { get; set; } = new();
-    // Moffstation - End
 
     /// <summary>
     /// Radio channels that this borg will gain access to from this module.
