@@ -149,3 +149,14 @@ rr-caipirinha = Caipirinha
 
 rr-moscowmule = Moscow Mule
 rr-moscowmule-desc = A moss-covered cow — mule? What? These cocktail names are wild. I’ve gotta try one of those.
+
+rr-mimeosa = Mimeosa
+rr-mimosa = Mimosa
+rr-mayojito = Mayojito
+rr-deathintheafternoon = Death In The Afternoon
+rr-empress75 = Empress 75
+rr-espressomartini = Espresso Martini
+rr-daiquiri = Daiquiri
+rr-thesunalsorises = The Sun Also Rises
+rr-whiskeysour = Whiskey Sour
+rr-bacchusblessing = Bacchus's Blessing
