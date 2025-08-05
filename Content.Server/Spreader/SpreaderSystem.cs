@@ -321,10 +321,10 @@ public sealed class SpreaderSystem : EntitySystem
         var anchored = _map.GetAnchoredEntitiesEnumerator(ent, grid, tile);
         while (anchored.MoveNext(out var entity))
         {
-            if (entity == uid)
+            if (entity == uid) // Starlight-edit
                 continue;
             DebugTools.Assert(Transform(entity.Value).Anchored);
-            if (_query.HasComponent(entity.Value) && !TerminatingOrDeleted(entity.Value))
+            if (_query.HasComponent(entity.Value) && !TerminatingOrDeleted(entity.Value)) // Starlight-edit
                 EnsureComp<ActiveEdgeSpreaderComponent>(entity.Value);
         }
 
@@ -332,13 +332,13 @@ public sealed class SpreaderSystem : EntitySystem
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
             var direction = (AtmosDirection) (1 << i);
-            var adjacentTile = tile.Offset(direction.ToDirection());
+            var adjacentTile = tile.Offset(direction.ToDirection()); // Starlight-edit
             anchored = _map.GetAnchoredEntitiesEnumerator(ent, grid, adjacentTile);
 
             while (anchored.MoveNext(out var entity))
             {
                 DebugTools.Assert(Transform(entity.Value).Anchored);
-                if (_query.HasComponent(entity.Value) && !TerminatingOrDeleted(entity.Value))
+                if (_query.HasComponent(entity.Value) && !TerminatingOrDeleted(entity.Value)) // Starlight-edit
                     EnsureComp<ActiveEdgeSpreaderComponent>(entity.Value);
             }
         }
