@@ -17,19 +17,20 @@ public abstract partial class SharedScalingSystem : EntitySystem
         if (scalingComp.OriginalThresholds == null)
             return;
 
+
         foreach (var threshold in scalingComp.OriginalThresholds)
         {
             var key = threshold.Key;
 
-            double scalingPercent = cachedPopulations[station] * universalHealthWeight;
+            var scalingPercent = cachedPopulations[station] * universalHealthWeight;
 
             if (scalingPercent > scalingComp.MaximumHealthScaling)
                 scalingPercent = scalingComp.MaximumHealthScaling;
 
-            if (scalingPercent < scalingComp.MaximumHealthScaling)
+            if (scalingPercent < 0.0 - scalingComp.MaximumHealthScaling)
                 scalingPercent = 0.0 - scalingComp.MaximumHealthScaling;
 
-            double scalingValue = ((double)threshold.Value) * scalingPercent;
+            var scalingValue = key * scalingPercent;
 
             FixedPoint2 scaledKey = key + scalingValue;
 
