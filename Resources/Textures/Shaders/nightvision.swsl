@@ -14,7 +14,7 @@ void fragment() {
     highp vec4 color = zTextureSpec(SCREEN_TEXTURE, FRAGCOORD.xy * SCREEN_PIXEL_SIZE);
 
     // convert color to grayscale using luminance
-    highp float grey = dot(color.rgb, vec3(0.298, 0.5882, 0.1137));
+    highp float grey = zGrayscale(color.rgb);
 
     // calculate local threshold
     highp float threshold = grey * luminance_threshold;
