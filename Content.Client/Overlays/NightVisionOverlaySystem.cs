@@ -11,11 +11,6 @@ public sealed partial class NightVisionOverlaySystem : EquipmentHudSystem<NightV
 
     private NightVisionOverlay? _overlay;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
-
     protected override void UpdateInternal(RefreshEquipmentHudEvent<NightVisionComponent> component)
     {
         base.UpdateInternal(component);
