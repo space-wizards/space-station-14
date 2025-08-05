@@ -254,12 +254,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 33
+        maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 17
+          Quantity: 18
+        - ReagentId: Protein
+          Quantity: 18
         - ReagentId: Vitamin
-          Quantity: 9
+          Quantity: 6
   - type: Sprite
     state: bigbite
   - type: Tag
@@ -339,14 +341,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 26
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 7
         - ReagentId: Vitamin
           Quantity: 7
         - ReagentId: Protein
-          Quantity: 1
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -375,10 +377,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 5
         - ReagentId: Protein
           Quantity: 7
         - ReagentId: Vitamin
@@ -486,16 +488,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 65
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 31
         - ReagentId: Protein
-          Quantity: 6
+          Quantity: 15
         - ReagentId: CapsaicinOil
           Quantity: 3
         - ReagentId: Vitamin
-          Quantity: 6
+          Quantity: 8
+        - ReagentId: Sulfur # What you get for eating something with a flare in it
+          Quantity: 5 
   - type: Tag
     tags:
     - Meat
@@ -515,14 +519,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 15
         - ReagentId: Protein
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -583,16 +585,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 25
+        - ReagentId: Protein
+          Quantity: 5
         - ReagentId: CapsaicinOil
           Quantity: 5
         - ReagentId: Blackpepper
           Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 12
   - type: Tag
     tags:
     - Meat
@@ -641,10 +645,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 5
         - ReagentId: Protein
           Quantity: 6
         - ReagentId: Vitamin
@@ -668,14 +672,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 5
         - ReagentId: Protein
-          Quantity: 7
+          Quantity: 8
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 3
   - type: Tag
     tags:
     - Meat
@@ -698,16 +702,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 30 
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 11
         - ReagentId: Protein
-          Quantity: 7
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
         - ReagentId: BbqSauce
-          Quantity: 1
+          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -782,10 +786,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 6
         - ReagentId: Protein
           Quantity: 6
         - ReagentId: Vitamin
@@ -837,14 +841,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Protein
-          Quantity: 6
+          Quantity: 13
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 5
 # Tastes like bun, redditors.
 
 - type: entity
@@ -921,10 +923,8 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 8
         - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
           Quantity: 3
 # Tastes like bun, tofu.
 

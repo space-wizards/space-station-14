@@ -100,6 +100,8 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   name: echis
@@ -184,6 +186,8 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   name: mk 58

@@ -161,6 +161,7 @@
 
 - type: entity
   id: ProjectilePolyboltBase
+  abstract: true
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
@@ -175,6 +176,8 @@
         Poison: 5
   - type: TriggerOnCollide
     fixtureID: projectile
+  - type: PolymorphOnTrigger
+    targetUser: true
 
 - type: entity
   id: ProjectilePolyboltCarp
@@ -185,8 +188,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardForcedCarp
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -199,8 +202,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardForcedMonkey
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -218,8 +221,8 @@
       color: brown
   - type: PolymorphOnTrigger
     polymorph: WizardWallDoor
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Airlock
       - Firelock
@@ -269,8 +272,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardForcedCluwne
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -299,7 +302,7 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: BreadMorph
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
