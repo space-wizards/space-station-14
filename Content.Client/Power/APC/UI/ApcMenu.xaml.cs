@@ -3,6 +3,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Client.GameObjects;
 using Robust.Shared.IoC;
 using System;
+using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Shared.APC;
 using Robust.Client.Graphics;
