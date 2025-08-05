@@ -84,8 +84,13 @@
     messageSet: SpookySpeakerMessagesGeneric
     speakChance: 0.2
   - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Common
   - type: ActiveRadio
     channels:
+    - Binary
     - Common
   - type: DoAfter
   - type: Electrified
@@ -106,6 +111,9 @@
     price: 100
   - type: Appearance
   - type: WiresVisuals
+  - type: Tag
+    tags:
+    - SiliconEmotes
 
 - type: entity
   id: VendingMachineWallmount
