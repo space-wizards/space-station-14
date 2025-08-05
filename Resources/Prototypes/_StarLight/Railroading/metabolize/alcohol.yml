@@ -1788,8 +1788,8 @@
       state: icon_empty
   - type: RailroadDonationReward
     amount:
-      min: 5
-      max: 15
+      min: 10
+      max: 25
 
 - type: entity
   id: RRCardMetabolizeMonkeyBusiness
@@ -1977,4 +1977,381 @@
   - type: RailroadDonationReward
     amount:
       min: 10
+      max: 15
+
+- type: entity
+  id: RRCardMetabolizeScrewdriverCocktail
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadCard
+    title: rr-screwdrivercocktail
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: ScrewdriverCocktail
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/screwdriverglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 10
+      max: 15
+
+- type: entity
+  id: RRCardMetabolizeCogChamp
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-cogchamp
+    icon: 
+    iconColor: '#BBCC0096' # Normal
+    color: '#518c34' # UnCommon
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: CogChamp
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/cogchamp.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 10
+      max: 25
+
+- type: entity
+  id: RRCardMetabolizeSilencer
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 1
+  - type: RailroadCard
+    title: rr-silencer
+    icon: 
+    iconColor: '#ED9f2296' # Difficult
+    color: '#398bce' # Rare
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Silencer
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/silencerglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 50
+      max: 100
+      
+- type: entity
+  id: RRCardMetabolizeSnowWhite
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-snowwhite
+    icon: 
+    iconColor: '#BBCC0096' # Normal
+    color: '#518c34' # UnCommon
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: SnowWhite
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/snowwhite.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 10
+      max: 25
+
+- type: entity
+  id: RRCardMetabolizeSuiDream
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 1
+  - type: RailroadCard
+    title: rr-suidream
+    icon: 
+    iconColor: '#ED9f2296' # Difficult
+    color: '#398bce' # Rare
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: SuiDream
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/sdreamglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 50
+      max: 100
+
+- type: entity
+  id: RRCardMetabolizeSyndicateBomb
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadCard
+    title: rr-syndicatebomb
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: SyndicateBomb
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/syndicatebomb.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
+      max: 15
+
+- type: entity
+  id: RRCardMetabolizeTequilaSunrise
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadCard
+    title: rr-tequilasunrise
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: TequilaSunrise
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/tequillasunriseglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
+      max: 15
+
+- type: entity
+  id: RRCardMetabolizeTheMartinez
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-themartinez
+    icon: 
+    iconColor: '#BBCC0096' # Normal
+    color: '#518c34' # UnCommon
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: TheMartinez
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/the_martinez.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 10
+      max: 25
+
+- type: entity
+  id: RRCardMetabolizeThreeMileIsland
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 1
+  - type: RailroadCard
+    title: rr-threemileisland
+    icon: 
+    iconColor: '#ED9f2296' # Difficult
+    color: '#398bce' # Rare
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: ThreeMileIsland
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/threemileislandglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 50
+      max: 100
+
+- type: entity
+  id: RRCardMetabolizeToxinsSpecial
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 2
+  - type: RailroadCard
+    title: rr-toxinsspecial
+    icon: 
+    iconColor: '#BBCC0096' # Normal
+    color: '#518c34' # UnCommon
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: ToxinsSpecial
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/toxinsspecialglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 10
+      max: 25
+
+- type: entity
+  id: RRCardMetabolizeVampiro
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadSpawnFlow
+    count:
+      min: 1
+      max: 1
+  - type: RailroadCard
+    title: rr-vampiro
+    icon: 
+    iconColor: '#ED9f2296' # Difficult
+    color: '#398bce' # Rare
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Vampiro
+      Quantity: 10
+    icon:
+      sprite: Objects/Consumable/Drinks/vampiro.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 50
+      max: 100
+
+- type: entity
+  id: RRCardMetabolizeVodkaMartini
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadCard
+    title: rr-vodkamartini
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: VodkaMartini
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/martiniglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
+      max: 15
+
+- type: entity
+  id: RRCardMetabolizeVodkaTonic
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadCard
+    title: rr-vodkatonic
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: VodkaTonic
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/vodkatonicglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
+      max: 15
+
+- type: entity
+  id: RRCardMetabolizeWhiskeyCola
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadCard
+    title: rr-whiskeycola
+    icon: 
+    iconColor: '#9FED5896' # Easy
+    color: '#515151' # Common
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: WhiskeyCola
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/whiskeycolaglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
+      max: 15
+
+- type: entity
+  id: RRCardMetabolizeWhiskeySoda
+  parent: [ MetabolizeDrinkCondition, RRCardMetabolizeBaseAlcohol ]
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: RailroadCard
+    title: rr-whiskeysoda
+    icon: 
+    iconColor: '#9FED5896'
+    color: '#515151'
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: WhiskeySoda
+      Quantity: 30 # One Glass
+    icon:
+      sprite: Objects/Consumable/Drinks/whiskeysodaglass.rsi
+      state: icon_empty
+  - type: RailroadDonationReward
+    amount:
+      min: 5
       max: 15
