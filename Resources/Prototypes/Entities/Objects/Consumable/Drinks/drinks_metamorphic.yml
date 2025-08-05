@@ -31,15 +31,11 @@
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
-  - type: ExaminableSolution
-    solution: drink
   - type: Tag
     tags:
     - DrinkCup # Do these tags
     - DrinkGlass # even do anything?
   - type: TransformableContainer
-  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase or DrinkVisualsFillOverlay is added
-    solution: drink
 
 - type: entity
   parent: DrinkGlass

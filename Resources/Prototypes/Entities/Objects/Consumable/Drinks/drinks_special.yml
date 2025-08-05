@@ -134,6 +134,9 @@
         maxVol: 100
   - type: FitsInDispenser
     solution: drink
+  - type: ExaminableSolution
+    heldOnly: true
+    exactVolume: true
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker.rsi
     state: icon
@@ -147,8 +150,6 @@
     mixOnInteract: false
     reactionTypes:
     - Shake
-  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase
-    solution: drink
 
 - type: entity
   parent: [DrinkBaseMaterialMetal, DrinkBase]
@@ -160,22 +161,21 @@
     solutions:
       drink:
         maxVol: 20 # might be too much
-  - type: Item
-    size: Tiny
   - type: SolutionTransfer
     canChangeTransferAmount: true
     minTransferAmount: 1
     maxTransferAmount: 20
   - type: FitsInDispenser
     solution: drink
+  - type: ExaminableSolution
+    heldOnly: true
+    exactVolume: true
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jigger.rsi
     state: icon
   - type: PhysicalComposition
     materialComposition:
       Steel: 20
-  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase
-    solution: drink
 
 - type: entity
   parent: [DrinkBaseMaterialStrongMetal, DrinkBase, DrinkVisualsFill]

@@ -38,10 +38,6 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: icon-
-  - type: ExaminableSolution # If you can see the fill levels, you can see the unit count
-    solution: drink
-  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase or DrinkVisualsFill is added as a base
-    solution: drink
 
 ## Misc Cups
 
@@ -120,8 +116,6 @@
     - DrinkCup
     - WhitelistChameleon
   - type: Appearance
-  - type: ExaminableSolution # If you can see the fill levels, you can see the unit count
-    solution: drink
   - type: TrashOnSolutionEmpty
     solution: drink
   - type: Clothing
@@ -129,8 +123,6 @@
     - HEAD
     quickEquip: false
     sprite: Clothing/Head/Hats/party_water_cup.rsi
-  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase or DrinkVisualsFill is added as a base
-    solution: drink
 
 # Mugs
 - type: entity

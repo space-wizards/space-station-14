@@ -1,22 +1,40 @@
 - type: entity
+  abstract: true
   parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ] # todo Should use DrinkVisualAll, but sprite has no inhand
-  id: DrinkSpaceGlue
-  name: space glue tube
-  description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
+  id: BaseSqueezeBottle
   components:
   - type: Openable
     sound:
       collection: packetOpenSounds
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/glue-tube.rsi
     layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: fill6
-        map: [ "enum.SolutionContainerLayers.Fill" ] # already has liquid, so no visible: false
-      - state: icon-front
-        map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: Glue
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill6
+      map: [ "enum.SolutionContainerLayers.Fill" ] # already has liquid, so no visible: false
+    - state: icon-front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: ExaminableSolution # Remove when DrinkVisualAll is added
+    opaque: false
+    heldOnly: false
+
+- type: entity
+  parent: BaseSqueezeBottle
+  id: DrinkSpaceGlue
+  name: space glue tube
+  description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glue-tube.rsi
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -24,33 +42,19 @@
         reagents:
         - ReagentId: SpaceGlue
           Quantity: 30
-  - type: SolutionContainerVisuals
-    maxFillLevels: 6
-    fillBaseName: fill
   - type: Tag
     tags:
       - DrinkSpaceGlue
-  - type: TrashOnSolutionEmpty
-    solution: drink
+  - type: Glue
 
 - type: entity
-  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ] # Should use DrinkVisualAll, but sprite has no inhand
+  parent: BaseSqueezeBottle
   id: DrinkSpaceLube
   name: space lube tube
   description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
   components:
-  - type: Openable
-    sound:
-      collection: packetOpenSounds
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lube-tube.rsi
-    layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: fill6
-        map: [ "enum.SolutionContainerLayers.Fill" ] # already has liquid, so no visible: false
-      - state: icon-front
-        map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -58,12 +62,7 @@
         reagents:
         - ReagentId: SpaceLube
           Quantity: 30
-  - type: SolutionContainerVisuals
-    maxFillLevels: 6
-    fillBaseName: fill
   - type: Lube
-  - type: TrashOnSolutionEmpty
-    solution: drink
 
 # Find your nearest clown and give them a gift :o)
 - type: entity

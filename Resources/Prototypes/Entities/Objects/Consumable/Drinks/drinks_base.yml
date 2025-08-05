@@ -1,6 +1,6 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\
 
-# A drink is an easily and freely accessible solution like cups, teapots, cans, flasks, bottles, or beakers.
+# Inheritors are an easily and freely accessible solution like cups, teapots, cans, flasks, bottles, or beakers.
 - type: entity
   abstract: true
   parent: BaseItem
@@ -26,10 +26,12 @@
     solution: drink
   - type: DrainableSolution
     solution: drink
-  - type: InjectableSolution # Injectors (syringe) will fallback to RefillableSolution. This adds support for hyposprays and injector anomalies.
+  - type: InjectableSolution # Injectors (syringe) will fallback to RefillableSolution. This adds support for hyposprays and liquid anomalies.
     solution: drink
-#  - type: SolutionItemStatus todo Currently always shows the reagent count. Should show vague fill levels without ExaminableSolution
-#    solution: drink
+  - type: ExaminableSolution
+    solution: drink
+  - type: SolutionItemStatus
+    solution: drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -101,6 +103,9 @@
     layers:
     - state: icon
       map: ["enum.OpenableVisuals.Layer"]
+  - type: ExaminableSolution
+    opaque: true # If you can't see the fill levels on the sprite, we can assume it's opaque
+    heldOnly: true # If it's opaque, you probably can't see through the open lid from a distance
 
 # Basic visualizer for an entity with fill levels
 - type: entity
@@ -119,10 +124,6 @@
     fillBaseName: fill-
     inHandsMaxFillLevels: 3
     inHandsFillBaseName: -fill-
-  - type: ExaminableSolution # If you can see the fill levels, you can see the unit count
-    solution: drink
-  - type: SolutionItemStatus # Remove when comp is uncommented on DrinkBase
-    solution: drink
 
 # Layered visualizer for an entity with fill levels
 - type: entity
@@ -171,6 +172,9 @@
     - state: fill-1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
+  - type: ExaminableSolution
+    opaque: false # If you can see the fill levels it's not opaque
+    heldOnly: false
 
 # Visualizer for an openable entity with fill levels, already filled
 - type: entity
