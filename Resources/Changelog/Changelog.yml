@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Numerous cargo orders have been made cheaper.
-    type: Tweak
-  id: 8316
-  time: '2025-04-22T18:38:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32375
 - author: Southbridge
   changes:
   - message: Solar Panels can now be randomly damaged or unfinished at the beginning
@@ -3906,3 +3899,11 @@
   id: 8828
   time: '2025-08-05T00:34:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39296
+- author: perryprog
+  changes:
+  - message: Players no longer have the ability to cycle a timer in the verb menu
+      on a cyborg.
+    type: Fix
+  id: 8829
+  time: '2025-08-05T03:26:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39388
