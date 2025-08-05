@@ -9,7 +9,7 @@ public sealed partial class AntagMonsterScalingComponent : Component
     /// <summary>
     /// Indicates the highest percentage health increase (or decrease) allowed for this creature.
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public double MaximumHealthScaling = 0.50;
 
     [DataField]
