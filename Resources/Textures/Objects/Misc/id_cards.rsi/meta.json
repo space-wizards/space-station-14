@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e idcluwne made by brainfood1183 (github) for ss14, idbrigmedic made by PuroSlavKing (Github), pirate made by brainfood1183 (github), idadmin made by Arimah (github), idvisitor by IProduceWidgets (Github), idintern-service by spanky-spanky (Github) | service icons darkened by frobnic8 (Discord and Github), wizard and idwizard by ScarKy0 | idboxer and idlawyer recoloured by K-Dynamic (github) | idquartermaster modified by K-Dynamic (github)",
+    "copyright": "Taken and modified from /tg/station 13 at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e | idcluwne by brainfood1183 (github) for ss14 | idbrigmedic made by PuroSlavKing (Github) | pirate by brainfood1183 (github) | idadmin by Arimah (github) | idvisitor by IProduceWidgets (Github) | idintern-service by spanky-spanky (Github) | service icons darkened by frobnic8 (Discord and Github) | wizard and idwizard by ScarKy0 | idboxer and idlawyer recoloured by K-Dynamic (github) | idquartermaster modified by K-Dynamic (github) | syndie renamed to idsyndie and modified by K-Dynamic (github), black, idnukie, idnukiecorpsman, black-inhand-left and black-inhand-right by K-Dynamic (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -209,7 +209,16 @@
             "name": "silver"
         },
         {
-            "name": "syndie"
+            "name": "black"
+        },
+        {
+            "name": "idsyndie"
+        },
+        {
+            "name": "idnukie"
+        },
+        {
+            "name": "idnukiecorpsman"
         },
         {
             "name": "idcluwne"
@@ -278,6 +287,14 @@
         },
         {
             "name": "green-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "black-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "black-inhand-right",
             "directions": 4
         }
     ]

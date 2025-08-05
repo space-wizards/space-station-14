@@ -613,14 +613,30 @@
         type: ChameleonBoundUserInterface
 
 - type: entity
-  name: passenger ID card
-  parent: AgentIDCard
-  id: NukieAgentIDCard
-  suffix: Nukie
+  parent: [ IDCardStandard, BaseSyndicateContraband ]
+  id: NukieIDCard
+  name: nuclear operative ID card
   components:
+  - type: Sprite
+    layers:
+    - state: black
+    - state: idnukie
   - type: Access
     tags:
-    - Maintenance
+    - SyndicateAgent
+    - NuclearOperative
+
+- type: entity
+  parent: [ IDCardStandard, BaseSyndicateContraband ]
+  id: NukieCorpsmanIDCard
+  name: nuclear operative corpsman ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: black
+    - state: idnukiecorpsman
+  - type: Access
+    tags:
     - SyndicateAgent
     - NuclearOperative
 
@@ -643,7 +659,8 @@
   components:
   - type: Sprite
     layers:
-    - state: syndie
+    - state: black
+    - state: idsyndie
   - type: Access
     tags:
     - NuclearOperative
