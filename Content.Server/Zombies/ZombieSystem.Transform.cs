@@ -7,7 +7,6 @@ using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Server.Inventory;
 using Content.Server.Mind;
-using Content.Server.Mind.Commands;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
@@ -215,7 +214,7 @@ public sealed partial class ZombieSystem
         _popup.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
 
         //Make it sentient if it's an animal or something
-        MakeSentientCommand.MakeSentient(target, EntityManager);
+        _mind.MakeSentient(target);
 
         //Make the zombie not die in the cold. Good for space zombies
         if (TryComp<TemperatureComponent>(target, out var tempComp))

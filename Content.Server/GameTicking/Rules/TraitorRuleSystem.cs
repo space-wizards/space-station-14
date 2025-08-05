@@ -125,8 +125,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (traitorRole is not null)
         {
             Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Add traitor briefing components");
-            AddComp<RoleBriefingComponent>(traitorRole.Value.Owner);
-            Comp<RoleBriefingComponent>(traitorRole.Value.Owner).Briefing = briefing;
+            EnsureComp<RoleBriefingComponent>(traitorRole.Value.Owner, out var briefingComp);
+            briefingComp.Briefing = briefing;
         }
         else
         {

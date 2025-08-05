@@ -63,7 +63,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
         _audio.PlayPvs(comp.Sound, target);
 
         _damageable.TryChangeDamage(target, comp.StunDamage, false, true, null, origin: uid);
-        _stun.TryParalyze(target, comp.StunTime, refresh: false);
+        _stun.TryAddParalyzeDuration(target, comp.StunTime);
 
         // short cooldown to prevent instant stunlocking
         _useDelay.SetLength((uid, useDelay), comp.Cooldown, id: comp.DelayId);

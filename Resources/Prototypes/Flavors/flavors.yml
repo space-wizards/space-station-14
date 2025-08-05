@@ -1485,6 +1485,11 @@
   description: flavor-complex-artifact-glue
 
 - type: flavor
+  id: motivating
+  flavorType: Base
+  description: flavor-base-motivating
+
+- type: flavor
   id: bilk
   flavorType: Complex
   description: flavor-complex-bilk

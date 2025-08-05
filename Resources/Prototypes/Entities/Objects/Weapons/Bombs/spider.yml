@@ -12,13 +12,12 @@
     sprite: Objects/Weapons/Bombs/spidercharge.rsi
     size: Small
   - type: SpiderCharge
-  - type: OnUseTimerTrigger
+  - type: TriggerOnStuck
+  - type: TimerTrigger
     delay: 10
     delayOptions: [5, 10, 30, 60]
     initialBeepDelay: 0
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
-    startOnStick: true
-  - type: AutomatedTimer
   - type: Sticky
     stickDelay: 5
     stickPopupStart: comp-sticky-start-stick-bomb
@@ -37,6 +36,8 @@
     maxIntensity: 120
     canCreateVacuum: true
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: StickyVisualizer
   - type: Appearance
   - type: GenericVisualizer
@@ -44,4 +45,4 @@
       enum.Trigger.TriggerVisuals.VisualState:
         base:
           Primed: { state: primed }
-          Unprimed: { state: complete }
+          Unprimed: { state: icon }

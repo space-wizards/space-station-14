@@ -44,6 +44,8 @@
   - DiseaseSwab
   - BodyBag
   - WhiteCane
+  - OffsetCane
+  - OffsetCaneWood
 
 - type: latheRecipePack
   id: RollerBedsStatic

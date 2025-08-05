@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 260.2.0
+  engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/26/2025 20:21:37
-  entityCount: 28663
+  time: 07/22/2025 15:47:55
+  entityCount: 28659
 maps:
 - 780
 grids:
@@ -14641,7 +14641,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -139227
+      secondsUntilStateChange: -139282.55
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -61580,28 +61580,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -19.5,-72.5
       parent: 8364
-- proto: CapacitorStockPart
-  entities:
-  - uid: 16363
-    components:
-    - type: Transform
-      pos: -8.441639,-39.39827
-      parent: 8364
-  - uid: 16373
-    components:
-    - type: Transform
-      pos: -8.183451,-39.306458
-      parent: 8364
-  - uid: 21190
-    components:
-    - type: Transform
-      pos: 74.41276,-20.008142
-      parent: 8364
-  - uid: 21198
-    components:
-    - type: Transform
-      pos: 74.631615,-20.414675
-      parent: 8364
 - proto: CaptainIDCard
   entities:
   - uid: 5329
@@ -73122,14 +73100,7 @@ entities:
     - type: Transform
       pos: 51.5,-22.5
       parent: 8364
-- proto: ClothingNeckBling
-  entities:
-  - uid: 5122
-    components:
-    - type: Transform
-      pos: -33.388332,5.487677
-      parent: 8364
-- proto: ClothingNeckHeadphones
+- proto: ClothingMultipleHeadphones
   entities:
   - uid: 5108
     components:
@@ -73145,6 +73116,13 @@ entities:
     components:
     - type: Transform
       pos: 10.566364,49.540405
+      parent: 8364
+- proto: ClothingNeckBling
+  entities:
+  - uid: 5122
+    components:
+    - type: Transform
+      pos: -33.388332,5.487677
       parent: 8364
 - proto: ClothingNeckMantleRD
   entities:
@@ -89319,7 +89297,7 @@ entities:
       pos: 18.5,-13.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -46457.992
+      secondsUntilStateChange: -46513.54
       state: Closing
   - uid: 13388
     components:
@@ -89327,7 +89305,7 @@ entities:
       pos: 18.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -46493.69
+      secondsUntilStateChange: -46549.24
       state: Closing
   - uid: 13389
     components:
@@ -89485,7 +89463,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -133415.53
+      secondsUntilStateChange: -133471.08
       state: Closing
   - uid: 15010
     components:
@@ -132660,13 +132638,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -30.638481,19.375069
       parent: 8364
-- proto: MatterBinStockPart
-  entities:
-  - uid: 16355
-    components:
-    - type: Transform
-      pos: -10.435738,-39.009453
-      parent: 8364
 - proto: Mattress
   entities:
   - uid: 9413
@@ -132843,6 +132814,11 @@ entities:
       parent: 8364
 - proto: MicroManipulatorStockPart
   entities:
+  - uid: 16355
+    components:
+    - type: Transform
+      pos: -10.435738,-39.009453
+      parent: 8364
   - uid: 16356
     components:
     - type: Transform
@@ -132852,6 +132828,16 @@ entities:
     components:
     - type: Transform
       pos: -10.310738,-39.540703
+      parent: 8364
+  - uid: 16363
+    components:
+    - type: Transform
+      pos: -8.441639,-39.39827
+      parent: 8364
+  - uid: 16373
+    components:
+    - type: Transform
+      pos: -8.183451,-39.306458
       parent: 8364
   - uid: 21185
     components:
@@ -132863,6 +132849,16 @@ entities:
     - type: Transform
       rot: 0.0004530529258772731 rad
       pos: 74.7369,-19.349794
+      parent: 8364
+  - uid: 21190
+    components:
+    - type: Transform
+      pos: 74.41276,-20.008142
+      parent: 8364
+  - uid: 21198
+    components:
+    - type: Transform
+      pos: 74.631615,-20.414675
       parent: 8364
 - proto: MicrophoneInstrument
   entities:
@@ -151939,6 +151935,13 @@ entities:
     components:
     - type: Transform
       pos: 80.5,-32.5
+      parent: 8364
+- proto: SpawnMobPollyParrot
+  entities:
+  - uid: 8712
+    components:
+    - type: Transform
+      pos: -6.5,-62.5
       parent: 8364
 - proto: SpawnMobPossumMorty
   entities:
@@ -179757,7 +179760,7 @@ entities:
       - 273
       - 272
       - 4368
-- proto: WeaponEnergyTurretStation
+- proto: WeaponEnergyTurretSecurity
   entities:
   - uid: 203
     components:
@@ -179786,7 +179789,7 @@ entities:
       deviceLists:
       - 258
       - 28663
-- proto: WeaponEnergyTurretStationControlPanel
+- proto: WeaponEnergyTurretSecurityControlPanel
   entities:
   - uid: 258
     components:

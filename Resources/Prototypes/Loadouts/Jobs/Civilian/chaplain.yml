@@ -77,3 +77,34 @@
   id: ChaplainHoodie
   equipment:
     outerClothing: ClothingOuterHoodieChaplain
+
+# Bible/Holy Book
+- type: loadout
+  id: Bible
+  storage:
+    back:
+    - Bible
+
+- type: loadout
+  id: BibleDruid
+  storage:
+    back:
+    - BibleDruid
+
+- type: loadout
+  id: BibleNanoTrasen
+  storage:
+    back:
+    - BibleNanoTrasen
+
+- type: loadout
+  id: BibleSatanic
+  storage:
+    back:
+    - BibleSatanic
+
+- type: loadout
+  id: BibleTanakh
+  storage:
+    back:
+    - BibleTanakh

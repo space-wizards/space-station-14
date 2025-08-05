@@ -1,9 +1,12 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
@@ -20,10 +23,12 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
@@ -31,7 +36,24 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<CryoPodComponent, CanDropTargetEvent>(OnCryoPodCanDropOn);
+        SubscribeLocalEvent<CryoPodComponent, ExaminedEvent>(OnExamined);
         InitializeInsideCryoPod();
+    }
+
+    private void OnExamined(Entity<CryoPodComponent> entity, ref ExaminedEvent args)
+    {
+        var container = _itemSlotsSystem.GetItemOrNull(entity.Owner, entity.Comp.SolutionContainerName);
+        if (args.IsInDetailsRange && container != null && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out _, out var containerSolution))
+        {
+            using (args.PushGroup(nameof(CryoPodComponent)))
+            {
+                args.PushMarkup(Loc.GetString("cryo-pod-examine", ("beaker", Name(container.Value))));
+                if (containerSolution.Volume == 0)
+                {
+                    args.PushMarkup(Loc.GetString("cryo-pod-empty-beaker"));
+                }
+            }
+        }
     }
 
     private void OnCryoPodCanDropOn(EntityUid uid, CryoPodComponent component, ref CanDropTargetEvent args)

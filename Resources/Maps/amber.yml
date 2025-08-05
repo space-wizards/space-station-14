@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 262.0.0
+  engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/10/2025 09:19:53
+  time: 07/22/2025 15:41:03
   entityCount: 24836
 maps:
 - 1
@@ -137207,7 +137207,7 @@ entities:
     - type: Transform
       pos: -51.5,-37.5
       parent: 2
-- proto: SpawnMobParrot
+- proto: SpawnMobPollyParrot
   entities:
   - uid: 16167
     components:

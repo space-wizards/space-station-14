@@ -547,7 +547,7 @@
   name: taser
   parent: [BaseWeaponBatterySmall, BaseSecurityContraband]
   id: WeaponTaser
-  description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
+  description: A low-capacity, energy-based stun gun used by security teams to subdue targets at close range.
   components:
   - type: Tag
     tags:
@@ -578,6 +578,23 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+
+- type: entity
+  name: elite taser
+  parent: [ BaseCentcommContraband, WeaponTaser ]
+  id: WeaponTaserSuper
+  suffix: ADMEME
+  description: A low-capacity, energy-based stun gun used by elite security teams to disable even the toughest of targets.
+  components:
+  - type: Gun
+    fireRate: 0.5
+    soundGunshot:
+      path: /Audio/Effects/tesla_collapse.ogg # The wrath of god...
+      params:
+        volume: -6
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletTaserSuper
+    fireCost: 200
 
 - type: entity
   name: antique laser pistol

@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 261.1.0
+  engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/03/2025 04:03:17
-  entityCount: 26381
+  time: 07/22/2025 14:44:01
+  entityCount: 26380
 maps:
 - 1
 grids:
@@ -14467,7 +14467,7 @@ entities:
       pos: -131.5,-45.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -52449.348
+      secondsUntilStateChange: -52604.145
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -70609,6 +70609,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: -104.5,-22.5
       parent: 2
+  - uid: 6545
+    components:
+    - type: Transform
+      pos: -103.5,-27.5
+      parent: 2
   - uid: 6678
     components:
     - type: Transform
@@ -76498,12 +76503,6 @@ entities:
       - Medical
 - proto: DisposalRouterFlipped
   entities:
-  - uid: 6545
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -103.5,-27.5
-      parent: 2
   - uid: 14320
     components:
     - type: Transform
@@ -106822,13 +106821,6 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#0055CCFF'
-  - uid: 20082
-    components:
-    - type: Transform
-      pos: -120.5,-37.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
   - uid: 20088
     components:
     - type: Transform
@@ -126351,6 +126343,10 @@ entities:
           showEnts: False
           occludes: True
           ent: 8160
+        goldenplunger_slot: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: JanitorServiceLight
   entities:
   - uid: 7134
@@ -128141,6 +128137,11 @@ entities:
     - type: Transform
       pos: -69.5,-24.5
       parent: 2
+    - type: MailingUnit
+      tag: Bar
+    - type: Configuration
+      config:
+        tag: Bar
   - uid: 18699
     components:
     - type: Transform
@@ -144101,7 +144102,7 @@ entities:
     - type: Transform
       pos: -68.5,-26.5
       parent: 2
-- proto: SpawnMobParrot
+- proto: SpawnMobPollyParrot
   entities:
   - uid: 16489
     components:
@@ -168180,7 +168181,7 @@ entities:
       - 25854
       - 25852
       - 25851
-- proto: WeaponEnergyTurretStation
+- proto: WeaponEnergyTurretSecurity
   entities:
   - uid: 4564
     components:
@@ -168222,7 +168223,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 5916
-- proto: WeaponEnergyTurretStationControlPanel
+- proto: WeaponEnergyTurretSecurityControlPanel
   entities:
   - uid: 5916
     components:
@@ -168423,7 +168424,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -252556.08
+      secondsUntilStateChange: -252710.88
       state: Opening
     - type: Airlock
       autoClose: False

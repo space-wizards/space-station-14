@@ -220,9 +220,9 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
                 var gridCentre = Vector2.Transform(gridBody.LocalCenter, curGridToView);
 
-                var distance = gridCentre.Length();
+                var gridDistance = (gridBody.LocalCenter - xform.LocalPosition).Length();
                 var labelText = Loc.GetString("shuttle-console-iff-label", ("name", labelName),
-                    ("distance", $"{distance:0.0}"));
+                    ("distance", $"{gridDistance:0.0}"));
 
                 var mapCoords = _transform.GetWorldPosition(gUid);
                 var coordsText = $"({mapCoords.X:0.0}, {mapCoords.Y:0.0})";

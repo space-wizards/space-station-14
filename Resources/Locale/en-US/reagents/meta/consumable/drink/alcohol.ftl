@@ -95,7 +95,7 @@ reagent-name-banana-honk = Banana Honk
 reagent-desc-banana-honk = A drink from Clown Heaven.
 
 reagent-name-barefoot = barefoot
-reagent-desc-barefoot = Barefoot and pregnant.
+reagent-desc-barefoot = A cassis milkshake, made from cream, fruit juice, and vermouth wine.
 
 reagent-name-beepsky-smash = Beepsky smash
 reagent-desc-beepsky-smash = Deny drinking this and prepare for THE LAW.

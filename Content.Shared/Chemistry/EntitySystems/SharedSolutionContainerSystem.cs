@@ -510,20 +510,20 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     ///     Removes reagent from a container.
     /// </summary>
     /// <param name="targetUid"></param>
-    /// <param name="container">Solution container from which we are removing reagent</param>
+    /// <param name="container">Solution container from which we are removing reagent.</param>
     /// <param name="reagentQuantity">The reagent to remove.</param>
-    /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity)
+    /// <returns>The amount of reagent that was removed.</returns>
+    public FixedPoint2 RemoveReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity)
     {
         var (uid, comp) = soln;
         var solution = comp.Solution;
 
         var quant = solution.RemoveReagent(reagentQuantity);
         if (quant <= FixedPoint2.Zero)
-            return false;
+            return FixedPoint2.Zero;
 
         UpdateChemicals(soln);
-        return true;
+        return quant;
     }
 
     /// <summary>
@@ -533,8 +533,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="container">Solution container from which we are removing reagent</param>
     /// <param name="prototype">The Id of the reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
-    /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, List<ReagentData>? data = null)
+    /// <returns>The amount of reagent that was removed.</returns>
+    public FixedPoint2 RemoveReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, List<ReagentData>? data = null)
     {
         return RemoveReagent(soln, new ReagentQuantity(prototype, quantity, data));
     }
@@ -546,8 +546,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="container">Solution container from which we are removing reagent</param>
     /// <param name="reagentId">The reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
-    /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(Entity<SolutionComponent> soln, ReagentId reagentId, FixedPoint2 quantity)
+    /// <returns>The amount of reagent that was removed.</returns>
+    public FixedPoint2 RemoveReagent(Entity<SolutionComponent> soln, ReagentId reagentId, FixedPoint2 quantity)
     {
         return RemoveReagent(soln, new ReagentQuantity(reagentId, quantity));
     }

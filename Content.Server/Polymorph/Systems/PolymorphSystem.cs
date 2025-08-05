@@ -1,10 +1,7 @@
 using Content.Server.Actions;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
-using Content.Server.Mind.Commands;
 using Content.Server.Polymorph.Components;
-using Content.Shared.Actions;
-using Content.Shared.Actions.Components;
 using Content.Shared.Buckle;
 using Content.Shared.Coordinates;
 using Content.Shared.Damage;
@@ -61,7 +58,6 @@ public sealed partial class PolymorphSystem : EntitySystem
         SubscribeLocalEvent<PolymorphedEntityComponent, DestructionEventArgs>(OnDestruction);
 
         InitializeMap();
-        InitializeTrigger();
     }
 
     public override void Update(float frameTime)
@@ -88,8 +84,6 @@ public sealed partial class PolymorphSystem : EntitySystem
                 Revert((uid, comp));
             }
         }
-
-        UpdateTrigger();
     }
 
     private void OnComponentStartup(Entity<PolymorphableComponent> ent, ref ComponentStartup args)
@@ -210,7 +204,7 @@ public sealed partial class PolymorphSystem : EntitySystem
                 ("child", Identity.Entity(child, EntityManager))),
                 child);
 
-        MakeSentientCommand.MakeSentient(child, EntityManager);
+        _mindSystem.MakeSentient(child);
 
         var polymorphedComp = Factory.GetComponent<PolymorphedEntityComponent>();
         polymorphedComp.Parent = uid;
