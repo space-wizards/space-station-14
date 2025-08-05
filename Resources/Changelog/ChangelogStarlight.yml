@@ -10535,5 +10535,13 @@ Entries:
   id: 1449
   time: '2025-08-05T13:52:24.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1212
+- author: DrSmugleaf
+  changes:
+  - message: Fixed species not being ordered alphabetically in the character customization
+      UI.
+    type: Fix
+  id: 1450
+  time: '2025-08-05T13:58:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1211
 Order: -1
 
