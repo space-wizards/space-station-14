@@ -53,7 +53,7 @@ id = "unknown_server_id"
 
 [events]
 # Controls if the game should run station events. (Meteors, Sleeper Syndicates ETC)
-eneabled = true
+enabled = true
 # Should admins count towards the max players count?
 # Explanation: 9 players, 2 admins. Server list shows 11/10 players. But those 2 admins are subtracted from the max players.
 # So someone who is not an admin can join, since technically the server is at 9/10 players.
