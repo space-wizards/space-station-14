@@ -136,3 +136,16 @@ rr-vodkamartini = Vodka Martini
 rr-vodkatonic = Vodka Tonic
 rr-whiskeycola = Whiskey Cola
 rr-whiskeysoda = Whiskey Soda
+rr-whitegilgamesh = White Gilgamesh
+rr-whiterussian = White Russian
+rr-vodkaredbool = Vodka Red Bool
+rr-xenobasher = Xeno Basher
+rr-irishbool = Irish Bool
+rr-budgetinsulsdrink = Budget Insuls
+rr-watermelonwakeup = Watermelon Wakeup
+rr-rubberneck = Rubberneck
+rr-bluehawaiian = Blue Hawaiian
+rr-caipirinha = Caipirinha
+
+rr-moscowmule = Moscow Mule
+rr-moscowmule-desc = A moss-covered cow — mule? What? These cocktail names are wild. I’ve gotta try one of those.
