@@ -2,7 +2,6 @@ using Content.Shared.Guidebook;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Requirements;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Antag;
 

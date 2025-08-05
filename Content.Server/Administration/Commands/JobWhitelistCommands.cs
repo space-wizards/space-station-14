@@ -3,7 +3,6 @@ using Content.Server.Database;
 using Content.Server.Players.JobWhitelist;
 using Content.Shared.Administration;
 using Content.Shared.Job;
-using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;

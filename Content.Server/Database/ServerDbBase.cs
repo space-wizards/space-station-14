@@ -17,7 +17,6 @@ using Content.Shared.Humanoid.Markings;
 using Content.Shared.Job;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
-using Content.Shared.Roles;
 using Content.Shared.Traits;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;

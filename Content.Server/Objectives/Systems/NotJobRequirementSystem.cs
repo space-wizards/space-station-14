@@ -1,5 +1,4 @@
 using Content.Shared.Job;
-using Content.Shared.Job;
 using Content.Shared.Objectives.Components;
 
 namespace Content.Server.Objectives.Systems;

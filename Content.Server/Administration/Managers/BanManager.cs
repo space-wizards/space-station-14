@@ -12,7 +12,6 @@ using Content.Shared.Database;
 using Content.Shared.Job;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
-using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Collections;

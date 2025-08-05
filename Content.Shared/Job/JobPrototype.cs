@@ -1,6 +1,5 @@
 using Content.Shared.Access;
 using Content.Shared.Guidebook;
-using Content.Shared.Job;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Requirements;

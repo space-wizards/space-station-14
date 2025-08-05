@@ -1,7 +1,6 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.GameTicking;
-using Content.Server.Ghost;
 using Content.Shared.CCVar;
 using Content.Shared.Ghost;
 using Content.Shared.Mind.Components;

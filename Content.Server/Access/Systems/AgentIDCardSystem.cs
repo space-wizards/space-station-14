@@ -7,7 +7,6 @@ using Content.Shared.Interaction;
 using Content.Shared.StatusIcon;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
-using Content.Shared.Roles;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Clothing.Systems;
 using Content.Server.Implants;

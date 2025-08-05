@@ -10,7 +10,6 @@ using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Job;
-using Content.Shared.Roles;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;

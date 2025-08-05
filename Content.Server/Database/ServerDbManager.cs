@@ -11,7 +11,6 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Job;
 using Content.Shared.Preferences;
-using Content.Shared.Roles;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

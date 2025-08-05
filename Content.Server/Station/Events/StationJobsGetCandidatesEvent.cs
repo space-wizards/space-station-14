@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Job;
-using Content.Shared.Roles;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 

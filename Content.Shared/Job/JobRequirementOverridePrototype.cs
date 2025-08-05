@@ -1,6 +1,5 @@
 using Content.Shared.Antag;
 using Content.Shared.Ghost.Roles;
-using Content.Shared.Job;
 using Content.Shared.Roles.Requirements;
 using Robust.Shared.Prototypes;
 

@@ -12,7 +12,6 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Job;
-using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;

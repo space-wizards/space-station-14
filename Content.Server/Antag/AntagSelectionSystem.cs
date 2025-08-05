@@ -12,7 +12,6 @@ using Content.Server.Objectives;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Shuttles.Components;
-using Content.Server.Station.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Antag;
 using Content.Shared.Clothing;

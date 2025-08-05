@@ -1,5 +1,4 @@
 using Content.Shared.Job;
-using Content.Shared.Job;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Store;

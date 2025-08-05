@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using Content.Server.Roles;
-using Content.Shared.Job;
-using Content.Shared.Job;
 using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;

@@ -21,7 +21,6 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
-using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Throwing;

@@ -6,7 +6,6 @@ using Content.Server.Preferences.Managers;
 using Content.Shared.Antag;
 using Content.Shared.Job;
 using Content.Shared.Preferences;
-using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Network;

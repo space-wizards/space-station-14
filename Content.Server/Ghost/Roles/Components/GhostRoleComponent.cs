@@ -1,7 +1,6 @@
 using Content.Server.Ghost.Roles.Raffles;
 using Content.Server.Mind.Commands;
 using Content.Shared.Job;
-using Content.Shared.Roles;
 using Content.Shared.Roles.Requirements;
 using Robust.Shared.Prototypes;
 

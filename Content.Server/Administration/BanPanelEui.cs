@@ -8,7 +8,6 @@ using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Eui;
 using Content.Shared.Job;
-using Content.Shared.Roles;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 

@@ -1,9 +1,7 @@
 using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
-using Robust.Shared.GameObjects;
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Job;
 using Content.Shared.Job;
 
 namespace Content.Server.Objectives.Systems;

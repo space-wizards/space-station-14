@@ -3,7 +3,6 @@ using Content.Server.GameTicking.Events;
 using Content.Server.Station.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Job;
-using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;

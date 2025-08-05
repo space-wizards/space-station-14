@@ -14,7 +14,6 @@ using System.Text;
 using Content.Server.Objectives.Commands;
 using Content.Shared.CCVar;
 using Content.Shared.Job;
-using Content.Shared.Job;
 using Content.Shared.Prototypes;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
