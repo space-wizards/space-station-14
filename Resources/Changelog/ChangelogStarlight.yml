@@ -10528,5 +10528,12 @@ Entries:
   id: 1448
   time: '2025-08-04T22:43:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1071
+- author: AthenaAI
+  changes:
+  - message: Gives Chemist permissions to Brigmedic for ease of access.
+    type: Tweak
+  id: 1449
+  time: '2025-08-05T13:52:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1212
 Order: -1
 
