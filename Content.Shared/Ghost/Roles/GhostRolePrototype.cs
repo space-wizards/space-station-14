@@ -1,3 +1,5 @@
+using Content.Shared.Roles;
+using Content.Shared.Roles.Requirements;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Ghost.Roles;
@@ -42,4 +44,10 @@ public sealed partial class GhostRolePrototype : IPrototype
     /// </summary>
     [DataField(required: true)]
     public string Rules = default!;
+
+    /// <summary>
+    ///     Requirements for the ghost role.
+    /// </summary>
+    [DataField, Access(typeof(SharedRoleSystem), Other = AccessPermissions.None)]
+    public HashSet<RoleRequirement>? Requirements;
 }

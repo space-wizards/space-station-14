@@ -1,5 +1,6 @@
+using Content.Shared.Job;
+using Content.Shared.Job;
 using Content.Shared.Objectives.Components;
-using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.Objectives.Systems;
 

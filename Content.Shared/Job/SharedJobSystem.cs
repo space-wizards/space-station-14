@@ -1,12 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Job;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
+using Content.Shared.Roles;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Roles.Jobs;
+namespace Content.Shared.Job;
 
 /// <summary>
 ///     Handles the job data on mind entities.
@@ -139,9 +141,8 @@ public abstract class SharedJobSystem : EntitySystem
         return true;
     }
 
-    public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
+    public bool MindHasJobWithId(EntityUid? mindId, ProtoId<JobPrototype> prototypeId)
     {
-
         if (mindId is null)
             return false;
 
@@ -172,7 +173,7 @@ public abstract class SharedJobSystem : EntitySystem
         if (mindId is null)
             return false;
 
-        if (_roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role))
+        if (_roles.MindHasRole<Job.JobRoleComponent>(mindId.Value, out var role))
             job = role.Value.Comp1.JobPrototype;
 
         return job is not null;

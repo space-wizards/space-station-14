@@ -7,9 +7,10 @@ using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.Job;
+using Content.Shared.Job;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 

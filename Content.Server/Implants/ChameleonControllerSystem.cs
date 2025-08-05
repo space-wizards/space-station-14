@@ -6,6 +6,7 @@ using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Job;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;

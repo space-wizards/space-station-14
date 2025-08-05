@@ -9,6 +9,7 @@ using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Job;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;

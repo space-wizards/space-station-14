@@ -1,11 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Antag;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost.Roles;
+using Content.Shared.Job;
+using Content.Shared.Job;
 using Content.Shared.Mind;
-using Content.Shared.Roles.Jobs;
+using Content.Shared.Roles.Requirements;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -106,13 +110,13 @@ public abstract class SharedRoleSystem : EntitySystem
     public void MindAddJobRole(EntityUid mindId,
         MindComponent? mind = null,
         bool silent = false,
-        string? jobPrototype = null)
+        ProtoId<JobPrototype>? jobPrototype = null)
     {
         if (!Resolve(mindId, ref mind))
             return;
 
         // Can't have someone get paid for two jobs now, can we
-        if (MindHasRole<JobRoleComponent>((mindId, mind), out var jobRole)
+        if (MindHasRole<Job.JobRoleComponent>((mindId, mind), out var jobRole)
             && jobRole.Value.Comp1.JobPrototype != jobPrototype)
         {
             _adminLogger.Add(LogType.Mind,
@@ -132,7 +136,7 @@ public abstract class SharedRoleSystem : EntitySystem
         EntProtoId protoId,
         MindComponent? mind = null,
         bool silent = false,
-        string? jobPrototype = null)
+        ProtoId<JobPrototype>? jobPrototype = null)
     {
         if (!Resolve(mindId, ref mind))
         {
@@ -158,7 +162,7 @@ public abstract class SharedRoleSystem : EntitySystem
         if (jobPrototype is not null)
         {
             mindRoleComp.JobPrototype = jobPrototype;
-            EnsureComp<JobRoleComponent>(mindRoleId);
+            EnsureComp<Job.JobRoleComponent>(mindRoleId);
             DebugTools.AssertNull(mindRoleComp.AntagPrototype);
             DebugTools.Assert(!mindRoleComp.Antag);
             DebugTools.Assert(!mindRoleComp.ExclusiveAntag);
@@ -664,18 +668,7 @@ public abstract class SharedRoleSystem : EntitySystem
     }
 
     // TODO ROLES Change to readonly.
-    // Passing around a reference to a prototype's hashset makes me uncomfortable because it might be accidentally
-    // mutated.
-    public HashSet<JobRequirement>? GetJobRequirement(JobPrototype job)
-    {
-        if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(job.ID, out var req))
-            return req;
-
-        return job.Requirements;
-    }
-
-    // TODO ROLES Change to readonly.
-    public HashSet<JobRequirement>? GetJobRequirement(ProtoId<JobPrototype> job)
+    public HashSet<RoleRequirement>? GetJobRequirement(ProtoId<JobPrototype> job)
     {
         if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(job, out var req))
             return req;
@@ -684,7 +677,7 @@ public abstract class SharedRoleSystem : EntitySystem
     }
 
     // TODO ROLES Change to readonly.
-    public HashSet<JobRequirement>? GetAntagRequirement(ProtoId<AntagPrototype> antag)
+    public HashSet<RoleRequirement>? GetAntagRequirement(ProtoId<AntagPrototype> antag)
     {
         if (_requirementOverride != null && _requirementOverride.Antags.TryGetValue(antag, out var req))
             return req;
@@ -693,12 +686,12 @@ public abstract class SharedRoleSystem : EntitySystem
     }
 
     // TODO ROLES Change to readonly.
-    public HashSet<JobRequirement>? GetAntagRequirement(AntagPrototype antag)
+    public HashSet<RoleRequirement>? GetGhostRoleRequirement(ProtoId<GhostRolePrototype> ghostRole)
     {
-        if (_requirementOverride != null && _requirementOverride.Antags.TryGetValue(antag.ID, out var req))
+        if (_requirementOverride != null && _requirementOverride.GhostRoles.TryGetValue(ghostRole, out var req))
             return req;
 
-        return antag.Requirements;
+        return _prototypes.Index(ghostRole).Requirements;
     }
 
     /// <summary>

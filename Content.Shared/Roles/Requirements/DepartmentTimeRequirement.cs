@@ -6,11 +6,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Roles;
+namespace Content.Shared.Roles.Requirements;
 
 [UsedImplicitly]
 [Serializable, NetSerializable]
-public sealed partial class DepartmentTimeRequirement : JobRequirement
+public sealed partial class DepartmentTimeRequirement : RoleRequirement
 {
     /// <summary>
     /// Which department needs the required amount of time.

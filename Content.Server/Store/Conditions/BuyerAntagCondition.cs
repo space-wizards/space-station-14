@@ -1,3 +1,4 @@
+using Content.Shared.Antag;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Store;

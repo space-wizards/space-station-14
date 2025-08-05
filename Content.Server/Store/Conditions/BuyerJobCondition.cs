@@ -1,6 +1,7 @@
+using Content.Shared.Job;
+using Content.Shared.Job;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using Content.Shared.Store;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 

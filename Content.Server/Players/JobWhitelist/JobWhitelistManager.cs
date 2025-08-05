@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.CCVar;
+using Content.Shared.Job;
 using Content.Shared.Players.JobWhitelist;
 using Content.Shared.Roles;
 using Robust.Server.Player;

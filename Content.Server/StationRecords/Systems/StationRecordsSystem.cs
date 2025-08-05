@@ -5,6 +5,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Forensics.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
+using Content.Shared.Job;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;

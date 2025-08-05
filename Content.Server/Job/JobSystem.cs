@@ -1,11 +1,14 @@
 ﻿using System.Globalization;
 using Content.Server.Chat.Managers;
+using Content.Server.Roles;
+using Content.Shared.Job;
+using Content.Shared.Job;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
-namespace Content.Server.Roles.Jobs;
+namespace Content.Server.Job;
 
 /// <summary>
 ///     Handles the job data on mind entities.
@@ -57,7 +60,7 @@ public sealed class JobSystem : SharedJobSystem
         _chat.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning", ("jobName", prototype.LocalizedName), ("supervisors", Loc.GetString(prototype.Supervisors))));
     }
 
-    public void MindAddJob(EntityUid mindId, string jobPrototypeId)
+    public void MindAddJob(EntityUid mindId, ProtoId<JobPrototype> jobPrototypeId)
     {
         if (MindHasJobWithId(mindId, jobPrototypeId))
             return;

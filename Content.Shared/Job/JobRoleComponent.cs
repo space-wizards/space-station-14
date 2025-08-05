@@ -1,6 +1,7 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.Roles;
+using Robust.Shared.GameStates;
 
-namespace Content.Shared.Roles.Jobs;
+namespace Content.Shared.Job;
 
 /// <summary>
 ///     Added to mind role entities to mark them as a job role entity.

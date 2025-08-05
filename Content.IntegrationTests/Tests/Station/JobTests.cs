@@ -1,7 +1,8 @@
 using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared.Job;
+using Content.Shared.Job;
 
 namespace Content.IntegrationTests.Tests.Station;
 

@@ -14,13 +14,14 @@ using Content.Shared.NPC.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using Content.Shared.Roles.RoleCodeword;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
 using Content.Server.Codewords;
+using Content.Shared.Job;
+using Content.Shared.Job;
 
 namespace Content.Server.GameTicking.Rules;
 

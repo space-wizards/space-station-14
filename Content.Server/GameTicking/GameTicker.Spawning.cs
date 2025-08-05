@@ -13,13 +13,14 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Job;
+using Content.Shared.Job;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -134,14 +135,14 @@ namespace Content.Server.GameTicking
 
         private void SpawnPlayer(ICommonSession player,
             EntityUid station,
-            string? jobId = null,
+            ProtoId<JobPrototype>? jobId = null,
             bool lateJoin = true,
             bool silent = false)
         {
             var character = GetPlayerProfile(player);
 
             var jobBans = _banManager.GetJobBans(player.UserId);
-            if (jobBans == null || jobId != null && jobBans.Contains(jobId))
+            if (jobBans == null || jobId != null && jobBans.Contains(jobId.Value))
                 return;
 
             if (jobId != null)
@@ -158,7 +159,7 @@ namespace Content.Server.GameTicking
         private void SpawnPlayer(ICommonSession player,
             HumanoidCharacterProfile character,
             EntityUid station,
-            string? jobId = null,
+            ProtoId<JobPrototype>? jobId = null,
             bool lateJoin = true,
             bool silent = false)
         {
@@ -365,7 +366,7 @@ namespace Content.Server.GameTicking
         /// <param name="station">The station they're spawning on</param>
         /// <param name="jobId">An optional job for them to spawn as</param>
         /// <param name="silent">Whether or not the player should be greeted upon joining</param>
-        public void MakeJoinGame(ICommonSession player, EntityUid station, string? jobId = null, bool silent = false)
+        public void MakeJoinGame(ICommonSession player, EntityUid station, ProtoId<JobPrototype>? jobId = null, bool silent = false)
         {
             if (!_playerGameStatuses.ContainsKey(player.UserId))
                 return;

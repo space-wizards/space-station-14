@@ -5,14 +5,14 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Roles;
+namespace Content.Shared.Roles.Requirements;
 
 /// <summary>
 /// Requires the character to be older or younger than a certain age (inclusive)
 /// </summary>
 [UsedImplicitly]
 [Serializable, NetSerializable]
-public sealed partial class AgeRequirement : JobRequirement
+public sealed partial class AgeRequirement : RoleRequirement
 {
     [DataField(required: true)]
     public int RequiredAge;

@@ -6,6 +6,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
+using Content.Shared.Job;
 using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;

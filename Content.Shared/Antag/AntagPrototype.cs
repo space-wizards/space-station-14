@@ -1,8 +1,10 @@
 using Content.Shared.Guidebook;
+using Content.Shared.Roles;
+using Content.Shared.Roles.Requirements;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Roles;
+namespace Content.Shared.Antag;
 
 /// <summary>
 ///     Describes information for a single antag.
@@ -44,7 +46,7 @@ public sealed partial class AntagPrototype : IPrototype
     // TODO ROLE TIMERS
     // Actually check if the requirements are met. Because apparently this is actually unused.
     [DataField, Access(typeof(SharedRoleSystem), Other = AccessPermissions.None)]
-    public HashSet<JobRequirement>? Requirements;
+    public HashSet<RoleRequirement>? Requirements;
 
     /// <summary>
     /// Optional list of guides associated with this antag. If the guides are opened, the first entry in this list

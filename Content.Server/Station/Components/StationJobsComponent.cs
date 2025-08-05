@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Station.Systems;
+using Content.Shared.Job;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Network;

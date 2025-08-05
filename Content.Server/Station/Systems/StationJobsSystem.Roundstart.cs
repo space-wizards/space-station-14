@@ -4,6 +4,7 @@ using Content.Server.Antag;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
+using Content.Shared.Job;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;

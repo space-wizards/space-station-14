@@ -1,3 +1,5 @@
+using Content.Shared.Job;
+using Content.Shared.Job;
 using Content.Shared.Roles;
 using Robust.Shared.Configuration;
 

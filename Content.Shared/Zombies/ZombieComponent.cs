@@ -1,3 +1,4 @@
+using Content.Shared.Antag;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;

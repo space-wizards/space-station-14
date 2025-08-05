@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Net;
 using System.Threading.Tasks;
 using Content.Shared.Database;
+using Content.Shared.Job;
 using Content.Shared.Roles;
 using Robust.Shared.Network;
 using Robust.Shared.Player;

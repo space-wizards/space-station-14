@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Clothing;
 using Content.Shared.Implants;
+using Content.Shared.Job;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;

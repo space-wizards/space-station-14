@@ -1,9 +1,9 @@
 using System.Linq;
+using Content.Shared.Job;
 using Content.Shared.Localizations;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.EffectConditions;
@@ -22,7 +22,7 @@ public sealed partial class JobCondition : EntityEffectCondition
 
         foreach (var roleId in mind.MindRoles)
         {
-            if(!args.EntityManager.HasComponent<JobRoleComponent>(roleId))
+            if(!args.EntityManager.HasComponent<Job.JobRoleComponent>(roleId))
                 continue;
 
             if (!args.EntityManager.TryGetComponent<MindRoleComponent>(roleId, out var mindRole))

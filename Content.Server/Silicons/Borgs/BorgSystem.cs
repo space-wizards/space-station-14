@@ -12,6 +12,7 @@ using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Job;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;

@@ -1,9 +1,11 @@
 using System.Linq;
 using System.Text.RegularExpressions;
+using Content.Shared.Antag;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Job;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Traits;

@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Jobs;
 using Content.Client.Roles;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;

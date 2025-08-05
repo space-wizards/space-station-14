@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using Content.Server.Roles;
+using Content.Shared.Job;
+using Content.Shared.Job;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
 
@@ -18,7 +19,7 @@ public sealed class RoleTests
     {
         await using var pair = await PoolManager.GetServerClient();
 
-        var jobComp = pair.Server.ResolveDependency<IComponentFactory>().GetComponentName<JobRoleComponent>();
+        var jobComp = pair.Server.ResolveDependency<IComponentFactory>().GetComponentName<Shared.Job.JobRoleComponent>();
 
         Assert.Multiple(() =>
         {
@@ -41,7 +42,7 @@ public sealed class RoleTests
     }
 
     /// <summary>
-    /// Check that any prototype with a <see cref="JobRoleComponent"/> also has a properly configured
+    /// Check that any prototype with a <see cref="Shared.Job.JobRoleComponent"/> also has a properly configured
     /// <see cref="MindRoleComponent"/>
     /// </summary>
     [Test]
@@ -53,7 +54,7 @@ public sealed class RoleTests
 
         Assert.Multiple(() =>
         {
-            foreach (var (proto, comp) in pair.GetPrototypesWithComponent<JobRoleComponent>())
+            foreach (var (proto, comp) in pair.GetPrototypesWithComponent<Shared.Job.JobRoleComponent>())
             {
                 if (proto.Components.TryGetComponent(mindCompId, out var mindComp))
                     Assert.That(((MindRoleComponent)mindComp).JobPrototype, Is.Not.Null);

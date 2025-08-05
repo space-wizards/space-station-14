@@ -9,12 +9,15 @@ using Content.Server.Preferences.Managers;
 using Content.Server.Station.Events;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost.Roles;
+using Content.Shared.Job;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Requirements;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -178,7 +181,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     private void OnIsJobAllowed(ref IsJobAllowedEvent ev)
     {
-        if (!IsAllowed(ev.Player, ev.JobId))
+        if (!IsJobAllowed(ev.Player, ev.Job))
             ev.Cancelled = true;
     }
 
@@ -187,10 +190,9 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         ev.Jobs.UnionWith(GetDisallowedJobs(ev.Player));
     }
 
-    public bool IsAllowed(ICommonSession player, string role)
+    public bool IsJobAllowed(ICommonSession player, ProtoId<JobPrototype> jobProto)
     {
-        if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
-            !_cfg.GetCVar(CCVars.GameRoleTimers))
+        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
         if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
@@ -199,7 +201,18 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             playTimes = new Dictionary<string, TimeSpan>();
         }
 
-        return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
+        return RoleRequirementStatics.TryJobRequirementsMet(jobProto, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
+    }
+
+    public bool IsGhostRoleAllowed(ICommonSession player, ProtoId<GhostRolePrototype> ghostRoleProto)
+    {
+        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
+            return true;
+
+        if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
+            playTimes = new Dictionary<string, TimeSpan>();
+
+        return RoleRequirementStatics.TryGhostRoleRequirementsMet(ghostRoleProto, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
     }
 
     public HashSet<ProtoId<JobPrototype>> GetDisallowedJobs(ICommonSession player)
@@ -216,8 +229,8 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
         foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
-            if (JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter))
-                roles.Add(job.ID);
+            if (RoleRequirementStatics.TryJobRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter))
+                roles.Add(job);
         }
 
         return roles;
@@ -238,11 +251,8 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
         for (var i = 0; i < jobs.Count; i++)
         {
-            if (_prototypes.TryIndex(jobs[i], out var job)
-                && JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(userId).SelectedCharacter))
-            {
+            if (RoleRequirementStatics.TryJobRequirementsMet(jobs[i], playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(userId).SelectedCharacter))
                 continue;
-            }
 
             jobs.RemoveSwap(i);
             i--;
