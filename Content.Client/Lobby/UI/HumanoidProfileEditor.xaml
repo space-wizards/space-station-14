@@ -1,8 +1,8 @@
 <BoxContainer xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
-         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
          xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
+         xmlns:profileEditorControls="clr-namespace:Content.Client.Lobby.UI.ProfileEditorControls"
          HorizontalExpand="True">
         <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10" HorizontalExpand="True">
@@ -61,6 +61,12 @@
                                                    ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
                                     <OptionButton Name="SpeciesButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
+                                <!-- Species // Starlight -->
+                                <BoxContainer Name="CCustomSpecieName" HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-customspeciename-label'}" />
+                                    <Control HorizontalExpand="True"/>
+                                    <LineEdit Name="CCustomSpecieNameEdit" MinSize="270 0" HorizontalAlignment="Right" />
+                                </BoxContainer>
                                 <!-- Age -->
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-age-label'}" />
@@ -97,6 +103,27 @@
                                     <OptionButton Name="VoiceButton" HorizontalAlignment="Left" />
                                     <Button Name="VoicePreviewButton" Text="{Loc 'humanoid-profile-editor-voice-play'}" MaxWidth="80" />
                                 </BoxContainer>
+                                <!--Starlight Start-->
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-silicon-voice-label'}" />
+                                    <Control HorizontalExpand="True"/>
+                                    <OptionButton Name="SiliconVoiceButton" HorizontalAlignment="Left" />
+                                    <Button Name="SiliconVoicePreviewButton" Text="{Loc 'humanoid-profile-editor-voice-play'}" MaxWidth="80" />
+                                </BoxContainer>
+                                <!--Starlight End-->
+                            </BoxContainer>
+                            <!-- STARLIGHT - Species Size -->
+                            <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label SetWidth="150" Name="HeightDescribeLabel" Margin="5 0 10 0" />
+                                    <Slider Name="HeightSlider" MinValue="0.5" Value="1" MaxValue="1.5" HorizontalExpand="True" Margin="10 0 5 0" />
+                                    <Button Name="HeightResetButton" Text="{Loc 'humanoid-profile-editor-slider-reset'}" />
+                                </BoxContainer>
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label SetWidth="150" Name="WidthDescribeLabel" Margin="5 0 10 0" />
+                                    <Slider Name="WidthSlider" MinValue="0.5" Value="1" MaxValue="1.5" HorizontalExpand="True" Margin="10 0 5 0" />
+                                    <Button Name="WidthResetButton" Text="{Loc 'humanoid-profile-editor-slider-reset'}" />
+                                </BoxContainer>
                             </BoxContainer>
                             <!-- Skin -->
                             <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
@@ -119,7 +146,6 @@
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical">
                     <!-- Jobs -->
-                    <OptionButton Name="PreferenceUnavailableButton" />
                     <ScrollContainer VerticalExpand="True">
                         <BoxContainer Name="JobList" Orientation="Vertical" />
                     </ScrollContainer>
@@ -142,15 +168,15 @@
                         <humanoid:MarkingPicker Name="Markings" IgnoreCategories="Hair,FacialHair" />
                     </ScrollContainer>
                 </BoxContainer>
+                <!-- Starlight -->
+                <BoxContainer Name="CyberneticsTab" Orientation="Vertical" Margin="10">
+                    <!-- Cybernetics -->
+                    <ScrollContainer VerticalExpand="True">
+                        <humanoid:CyberneticsPicker Name="Cybernetics" />
+                    </ScrollContainer>
+                </BoxContainer>
             </TabContainer>
         </BoxContainer>
         <!-- Right side -->
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
-            <SpriteView Name="SpriteView" Scale="8 8" Margin="4" SizeFlagsStretchRatio="1" />
-            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
-                <Button Name="SpriteRotateLeft" Text="◀" StyleClasses="OpenRight" />
-                <cc:VSeparator Margin="2 0 3 0" />
-                <Button Name="SpriteRotateRight" Text="▶" StyleClasses="OpenLeft" />
-            </BoxContainer>
-        </BoxContainer>
+        <profileEditorControls:ProfilePreview Name="Preview"/>
 </BoxContainer>

@@ -14,3 +14,7 @@ changelog-button-new-entries = Changelog (new!)
 changelog-tab-title-Changelog = Changelog
 changelog-tab-title-ChangelogStarlight = STARLIGHT Changelog
 changelog-tab-title-Admin = Admin
+changelog-tab-title-Maps = Maps
+
+cmd-changelog-desc = Opens the changelog.
+cmd-changelog-help = Usage: changelog

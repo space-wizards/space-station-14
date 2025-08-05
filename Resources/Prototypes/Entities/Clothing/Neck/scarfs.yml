@@ -87,7 +87,7 @@
       sprite: Clothing/Neck/Scarfs/purple.rsi
 
 - type: entity
-  parent: [ ClothingScarfBase, BaseSyndicateContraband ]
+  parent: [ ClothingScarfBase, BaseMajorContraband ]  #SL EDIT, Syndie to Major
   id: ClothingNeckScarfStripedSyndieGreen
   name: striped syndicate green scarf
   description: A stylish striped syndicate green scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
@@ -96,9 +96,11 @@
       sprite: Clothing/Neck/Scarfs/syndiegreen.rsi
     - type: Clothing
       sprite: Clothing/Neck/Scarfs/syndiegreen.rsi
+    - type: StaticPrice
+      price: 500
 
 - type: entity
-  parent: [ ClothingScarfBase, BaseSyndicateContraband ]
+  parent: [ ClothingScarfBase, BaseMajorContraband ] #SL EDIT, Syndie to Major
   id: ClothingNeckScarfStripedSyndieRed
   name: striped syndicate red scarf
   description: A stylish striped syndicate red scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
@@ -107,9 +109,11 @@
       sprite: Clothing/Neck/Scarfs/syndiered.rsi
     - type: Clothing
       sprite: Clothing/Neck/Scarfs/syndiered.rsi
+    - type: StaticPrice
+      price: 500
 
 - type: entity
-  parent: [ ClothingScarfBase, BaseCentcommContraband ]
+  parent: [ ClothingScarfBase, BaseCentcommContraband ] #SL EDIT, Syndie to Major
   id: ClothingNeckScarfStripedCentcom
   name: striped CentComm scarf
   description: A stylish striped centcomm colored scarf. The perfect winter accessory for those with a keen fashion sense, and those who need to do paperwork in the cold.
@@ -152,6 +156,17 @@
     sprite: Clothing/Neck/Scarfs/PrideScarfs/aro.rsi
   - type: Clothing
     sprite: Clothing/Neck/Scarfs/PrideScarfs/aro.rsi
+
+- type: entity
+  parent: ClothingScarfBase
+  id: ClothingNeckScarfStripedAroace
+  name: striped aroace scarf
+  description: A stylish striped aroace scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Scarfs/PrideScarfs/aroace.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Scarfs/PrideScarfs/aroace.rsi
 
 - type: entity
   parent: ClothingScarfBase
@@ -240,3 +255,14 @@
     sprite: Clothing/Neck/Scarfs/PrideScarfs/trans.rsi
   - type: Clothing
     sprite: Clothing/Neck/Scarfs/PrideScarfs/trans.rsi
+
+- type: entity
+  parent: ClothingScarfBase
+  id: ClothingNeckScarfStripedLesbianLong
+  name: long bacon
+  description: Long bacon! Perfect for sharing with your girlfriend!
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Scarfs/PrideScarfs/lesbian-long.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Scarfs/PrideScarfs/lesbian-long.rsi

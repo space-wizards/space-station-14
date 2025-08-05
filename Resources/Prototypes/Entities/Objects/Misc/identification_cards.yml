@@ -30,18 +30,18 @@
 
 - type: entity
   parent: IDCardStandard
-  id: PassengerIDCard
-  name: passenger ID card
+  id: AssistantIDCard
+  name: assistant ID card
   components:
   - type: Sprite
     layers:
     - state: default
-    - state: idpassenger
+    - state: idassistant
   - type: PresetIdCard
-    job: Passenger
+    job: Assistant
 
 - type: entity
-  parent: PassengerIDCard
+  parent: AssistantIDCard
   id: TechnicalAssistantIDCard
   name: technical assistant ID card
   components:
@@ -53,7 +53,7 @@
     - state: idintern-tech
 
 - type: entity
-  parent: PassengerIDCard
+  parent: AssistantIDCard
   id: MedicalInternIDCard
   name: medical intern ID card
   components:
@@ -65,7 +65,7 @@
     - state: idintern-med
 
 - type: entity
-  parent: PassengerIDCard
+  parent: AssistantIDCard
   id: ResearchAssistantIDCard
   name: research assistant ID card
   components:
@@ -77,7 +77,7 @@
     - state: idintern-sci
 
 - type: entity
-  parent: PassengerIDCard
+  parent: AssistantIDCard
   id: SecurityCadetIDCard
   name: security cadet ID card
   components:
@@ -89,7 +89,7 @@
     - state: idintern-cadet
 
 - type: entity
-  parent: PassengerIDCard
+  parent: AssistantIDCard
   id: ServiceWorkerIDCard
   name: service worker ID card
   components:
@@ -569,13 +569,13 @@
     job: DeathSquad
 
 - type: entity
-  name: passenger ID card
+  name: assistant ID card
   parent: IDCardStandard
   id: AgentIDCard
   suffix: Agent
   components:
   - type: PresetIdCard
-    job: Passenger
+    job: Assistant
   - type: Access
     tags:
     - Maintenance
@@ -583,7 +583,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: idpassenger
+    - state: idassistant
   - type: AgentIDCard
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
@@ -593,7 +593,7 @@
     - DoorBumpOpener
   - type: ChameleonClothing
     slot: [idcard]
-    default: PassengerIDCard
+    default: AssistantIDCard
     requireTag: WhitelistChameleonIdCard
   - type: UserInterface
     interfaces:
@@ -603,7 +603,7 @@
         type: ChameleonBoundUserInterface
 
 - type: entity
-  name: passenger ID card
+  name: assistant ID card
   parent: AgentIDCard
   id: NukieAgentIDCard
   suffix: Nukie
@@ -627,7 +627,7 @@
     job: AtmosphericTechnician
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseSyndicateContraband ]
   id: SyndicateIDCard
   name: syndicate ID card
   components:
@@ -640,7 +640,7 @@
     - SyndicateAgent
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseMajorContraband ]
   id: PirateIDCard
   name: pirate ID card
   components:
@@ -713,6 +713,40 @@
     job: Detective
 
 - type: entity
+  parent: IDCardStandard
+  id: PrisonerIDCard
+  name: prisoner ID card
+  description: A generically printed ID card for scummy prisoners.
+  components:
+  - type: Sprite
+    layers:
+    - state: orange
+  - type: Item
+    heldPrefix: orange
+  - type: Access
+    tags:
+    - GenpopEnter
+  - type: GenpopIdCard
+  - type: IdCard
+    jobTitle: job-name-prisoner
+    jobIcon: JobIconPrisoner
+    canMicrowave: false
+  - type: ExpireIdCard
+    expireMessage: genpop-prisoner-id-expire
+    expiredAccess:
+    - GenpopLeave
+  - type: Speech
+    speechVerb: Robotic
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - WhitelistChameleon
+    - WhitelistChameleonIdCard
+    - Recyclable
+  - type: StaticPrice # these are infinitely producible.
+    price: 0
+
+- type: entity
   parent: CentcomIDCard
   id: CBURNIDcard
   name: CBURN ID card
@@ -738,6 +772,7 @@
     - state: idcluwne
   - type: IdCard
     jobTitle: job-title-cluwne
+    jobIcon: JobIconCluwne
   - type: Unremoveable
 
 - type: entity
@@ -795,6 +830,21 @@
 
 - type: entity
   parent: IDCardStandard
+  id: WizardIDCard
+  name: wizard ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: wizard
+    - state: idwizard
+  - type: Access
+    tags:
+    - Wizard
+    - External
+    - Maintenance
+
+- type: entity
+  parent: IDCardStandard
   id: UniversalIDCard
   name: universal ID card
   suffix: Admin
@@ -815,11 +865,21 @@
   - type: Access
     groups:
     - AllAccess
+    - Silicon
     tags:
     - CentralCommand
     - NuclearOperative
     - SyndicateAgent
     - Wizard
+    - Xenoborg
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
+  - type: AgentIDCard
+  - type: ActivatableUI
+    key: enum.AgentIDCardUiKey.Key
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+      enum.AgentIDCardUiKey.Key:
+        type: AgentIDCardBoundUserInterface

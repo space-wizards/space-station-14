@@ -21,7 +21,15 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: BlueShield
   jobName: job-name-blueshield
-  
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconNTCCBlueShield
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: NTCCBlueShield
+  jobName: job-name-ntccblueshield
+
 - type: jobIcon
   parent: JobIcon
   id: JobIconSurgeon
@@ -29,3 +37,99 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: Surgeon
   jobName: job-name-surgeon
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconMailTech
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: MailTech
+  jobName: job-name-mailtech
+  
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCentComm
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: CentComm
+  jobName: job-name-centcomm
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCommander
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: Commander
+  jobName: job-name-Commander
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateAgent
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SyndicateAgent
+  jobName: job-name-SyndicateAgent
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconOperative
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: Operative
+  jobName: job-name-Operative
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicate-Security
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SyndicateSecurity
+  jobName: job-name-Syndicate-Security
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicate-Warden
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SyndicateWarden
+  jobName: job-name-Syndicate-Warden
+  
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicate-Science
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SyndicateScience
+  jobName: job-name-Syndicate-Science
+  
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicate-Chef
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SyndicateChef
+  jobName: job-name-Syndicate-Chef
+  
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicate-Engineer
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SyndicateEngineer
+  jobName: job-name-Syndicate-Engineer
+  
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicate-Cargo
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SyndicateCargo
+  jobName: job-name-Syndicate-Cargo
+  
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicate-Janitor
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SyndicateJanitor
+  jobName: job-name-Syndicate-Janitor

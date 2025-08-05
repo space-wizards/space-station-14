@@ -48,7 +48,7 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockBooze
   name: Booze-O-Mat restock box
-  description: Slot into your Booze-O-Mat to start the party! Not for sale to passengers below the legal age.
+  description: Slot into your Booze-O-Mat to start the party! Not for sale to assistants below the legal age.
   components:
   - type: VendingMachineRestock
     canRestock:
@@ -336,6 +336,7 @@
     - SpaceUpInventory
     - SodaInventory
     - DrGibbInventory
+    - SmiteInventory 
   - type: Sprite
     layers:
     - state: base

@@ -1,0 +1,25 @@
+- type: entity
+  id: BoxFolderNanoTrasenClipboard
+  parent: BoxFolderClipboard
+  name: NanoTrasen clipboard
+  description: A stylish clipboard in NanoTrasen colors.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/nt-clipboard.rsi
+      layers:
+        - state: clipboard
+        - state: clipboard_paper
+          map: ["clipboard_paper"]
+          visible: false
+        - state: clipboard_pen
+          map: ["clipboard_pen"]
+          visible: false
+        - state: clipboard_over
+    - type: Item
+      sprite: _Starlight/Objects/Misc/nt-clipboard.rsi
+    - type: Clothing
+      sprite: _Starlight/Objects/Misc/nt-clipboard.rsi
+    - type: StorageFill
+      contents:
+        - id: Paper
+          amount: 20

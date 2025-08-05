@@ -1,0 +1,34 @@
+<Document>
+  # Shadekin
+
+  <Box>
+    <GuideEntityEmbed Entity="MobShadekin" Caption=""/>
+  </Box>
+  Forced to live in realspace due to their condition, Shadekins are curious creatures of a realm called the Dark, Sadly due to their BlackEye condition they are forced to live and adapt with us.
+  
+  - Receive [color=#ffa500]20% more heat damage[/color] and [color=#1e90ff]25% less cold damage[/color] and [color=#1e90ff]85% less cellular damage[/color].
+  - Receive [color=#ffa500]25% more bloodloss damage[/color] and [color=#ffa500]30% more radiation damage[/color] and [color=#ffa500]25% more shock damage[/color].
+  - They do not breathe and thus require no air.
+  - Flashes stun time are doubled.
+  - Deal [color=red]5[/color] slashing damage with claws.
+
+  ## Empathy / Marish
+  Shadekins language is only one word... "Mar" yet that word carry toughts and emotions, can be felt by those far away.
+
+  [color=yellow]Light Exposure: Dark[/color]
+  - Passive Regeneration is buffed.
+  - Nightvision.
+
+  [color=yellow]Light Exposure: Low[/color]
+  - No Buffs/Nerfs.
+
+  [color=yellow]Light Exposure: Annoying[/color]
+  - Passive Regeneration is disabled.
+
+  [color=yellow]Light Exposure: High[/color]
+  - Heavy Slowdown.
+
+  [color=yellow]Light Exposure:[/color] [color=red]EXTREME[/color]
+  - Get burned [color=red]1[/color] heat damage per second.
+
+</Document>

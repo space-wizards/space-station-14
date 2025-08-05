@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Wit Studio - My friend Nokotan, SS13 Sprites, Conflee, ReamNox, Miracula, Puddleboat, Salthew, Gensy, Polaris TODO from Happyrobot33, Fix copyright after RSI Split",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    }
+  ]
+}

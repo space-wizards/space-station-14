@@ -1,145 +1,247 @@
-# Empty mags
-- type: entity
-  id: BaseMagazineRifle
-  name: "magazine (.20 rifle)"
-  parent: [ BaseItem, BaseRestrictedContraband ]
-  abstract: true
-  components:
-  - type: Tag
-    tags:
-      - MagazineRifle
-  - type: Item
-    size: Small
-  - type: BallisticAmmoProvider
-    mayTransfer: true
-    whitelist:
-      tags:
-        - CartridgeRifle
-    capacity: 25
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: mag
-    steps: 2
-    zeroVisible: false
-  - type: Appearance
-
-# Magazines
-- type: entity
-  id: MagazineRifleSP
-  name: "magazine (.20 rifle SP)"
-  parent: BaseMagazineRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeRifleSP
-  - type: Sprite
-    layers:
-    - state: sp
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineRifleHP
-  name: "magazine (.20 rifle HP)"
-  parent: BaseMagazineRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeRifleHP
-  - type: Sprite
-    layers:
-    - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineRifleFMJ
-  name: "magazine (.20 rifle FMJ)"
-  parent: BaseMagazineRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeRifleFMJ
-  - type: Sprite
-    layers:
-    - state: fmj
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineRifleAP
-  name: "magazine (.20 rifle AP)"
-  parent: BaseMagazineRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeRifleAP
-  - type: Sprite
-    layers:
-    - state: ap
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineRifleEmpty
-  name: "magazine (.20 rifle any)"
-  suffix: empty
-  parent: MagazineRifleSP
-  components:
-  - type: BallisticAmmoProvider
-    proto: null
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-
-- type: entity
-  id: MagazineRifleIncendiary
-  name: "magazine (.20 rifle incendiary)"
-  parent: MagazineRifleSP
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeRifleIncendiary
-  - type: Sprite
-    layers:
-    - state: incendiary
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineRiflePractice
-  name: "magazine (.20 rifle practice)"
-  parent: BaseMagazineRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeRiflePractice
-  - type: Sprite
-    layers:
-    - state: practice
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineRifleUranium
-  name: "magazine (.20 rifle uranium)"
-  parent: BaseMagazineRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeRifleUranium
-  - type: Sprite
-    layers:
-    - state: uranium
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+## Empty mags
+#- type: entity
+#  id: BaseMagazineRifle
+#  name: "magazine (.20 rifle)"
+#  parent: [ BaseItem, BaseSecurityContraband ]
+#  abstract: true
+#  components:
+#  - type: Tag
+#    tags:
+#      - MagazineRifle
+#  - type: Item
+#    size: Small
+#  - type: BallisticAmmoProvider
+#    mayTransfer: true
+#    whitelist:
+#      tags:
+#        - CartridgeRifle
+#    capacity: 25
+#  - type: ContainerContainer
+#    containers:
+#      ballistic-ammo: !type:Container
+#  - type: Sprite
+#    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag.rsi
+#    layers:
+#    - state: base
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-1
+#      map: ["enum.GunVisualLayers.Mag"]
+#  - type: MagazineVisuals
+#    magState: mag
+#    steps: 2
+#    zeroVisible: false
+#  - type: Appearance
+#
+## Magazines
+#- type: entity
+#  id: MagazineRifleSP
+#  name: "magazine (.20 rifle SP)"
+#  parent: BaseMagazineRifle
+#  components:
+#  - type: BallisticAmmoProvider
+#    proto: CartridgeRifleSP
+#  - type: Sprite
+#    layers:
+#    - state: sp
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-1
+#      map: ["enum.GunVisualLayers.Mag"]
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left-mag
+#      - state: inhand-left-stripe
+#        color: "#575EF5"
+#      right:
+#      - state: inhand-right-mag
+#      - state: inhand-right-stripe
+#        color: "#575EF5"
+#
+#- type: entity
+#  id: MagazineRifleHP
+#  name: "magazine (.20 rifle HP)"
+#  parent: BaseMagazineRifle
+#  components:
+#  - type: BallisticAmmoProvider
+#    proto: CartridgeRifleHP
+#  - type: Sprite
+#    layers:
+#    - state: red
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-1
+#      map: ["enum.GunVisualLayers.Mag"]
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left-mag
+#      - state: inhand-left-stripe
+#        color: "#F5514C"
+#      right:
+#      - state: inhand-right-mag
+#      - state: inhand-right-stripe
+#        color: "#F5514C"
+#
+#- type: entity
+#  id: MagazineRifleFMJ
+#  name: "magazine (.20 rifle FMJ)"
+#  parent: BaseMagazineRifle
+#  components:
+#  - type: BallisticAmmoProvider
+#    proto: CartridgeRifleFMJ
+#  - type: Sprite
+#    layers:
+#    - state: fmj
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-1
+#      map: ["enum.GunVisualLayers.Mag"]
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left-mag
+#      - state: inhand-left-stripe
+#        color: "#080706"
+#      right:
+#      - state: inhand-right-mag
+#      - state: inhand-right-stripe
+#        color: "#080706"
+#
+#- type: entity
+#  id: MagazineRifleAP
+#  name: "magazine (.20 rifle AP)"
+#  parent: BaseMagazineRifle
+#  components:
+#  - type: BallisticAmmoProvider
+#    proto: CartridgeRifleAP
+#  - type: Sprite
+#    layers:
+#    - state: ap
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-1
+#      map: ["enum.GunVisualLayers.Mag"]
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left-mag
+#      - state: inhand-left-stripe
+#        color: "#72E374"
+#      right:
+#      - state: inhand-right-mag
+#      - state: inhand-right-stripe
+#        color: "#72E374"
+#
+#- type: entity
+#  id: MagazineRifleEmpty
+#  name: "magazine (.20 rifle any)"
+#  suffix: empty
+#  parent: MagazineRifleSP
+#  components:
+#  - type: BallisticAmmoProvider
+#    proto: null
+#  - type: Sprite
+#    layers:
+#    - state: base
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-1
+#      map: ["enum.GunVisualLayers.Mag"]
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left-mag
+#      right:
+#      - state: inhand-right-mag
+#
+#- type: entity
+#  id: MagazineRifleIncendiary
+#  name: "magazine (.20 rifle incendiary)"
+#  parent: MagazineRifleSP
+#  components:
+#  - type: BallisticAmmoProvider
+#    proto: CartridgeRifleIncendiary
+#  - type: Sprite
+#    layers:
+#    - state: incendiary
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-1
+#      map: ["enum.GunVisualLayers.Mag"]
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left-mag
+#      - state: inhand-left-stripe
+#        color: "#E7EEEE"
+#      right:
+#      - state: inhand-right-mag
+#      - state: inhand-right-stripe
+#        color: "#E7EEEE"
+#        
+#- type: entity
+#  id: MagazineRiflePractice
+#  name: "magazine (.20 rifle practice)"
+#  parent: BaseMagazineRifle
+#  components:
+#  - type: BallisticAmmoProvider
+#    proto: CartridgeRiflePractice
+#  - type: Sprite
+#    layers:
+#    - state: practice
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-1
+#      map: ["enum.GunVisualLayers.Mag"]
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left-mag
+#      - state: inhand-left-stripe
+#        color: "#F08B4B"
+#      right:
+#      - state: inhand-right-mag
+#      - state: inhand-right-stripe
+#        color: "#F08B4B"
+#
+#- type: entity
+#  id: MagazineRifleUranium
+#  name: "magazine (.20 rifle uranium)"
+#  parent: BaseMagazineRifle
+#  components:
+#  - type: BallisticAmmoProvider
+#    proto: CartridgeRifleUranium
+#  - type: Sprite
+#    layers:
+#    - state: uranium
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-1
+#      map: ["enum.GunVisualLayers.Mag"]
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left-mag
+#      - state: inhand-left-stripe
+#        color: "#40F57A"
+#      right:
+#      - state: inhand-right-mag
+#      - state: inhand-right-stripe
+#        color: "#40F57A"
+#
+#- type: entity
+#  id: MagazineRifleRubber
+#  name: "magazine (.20 rifle rubber)"
+#  parent: BaseMagazineRifle
+#  components:
+#  - type: BallisticAmmoProvider
+#    proto: CartridgeRifleRubber
+#  - type: Sprite
+#    layers:
+#    - state: rubber
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-1
+#      map: ["enum.GunVisualLayers.Mag"]
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left-mag
+#      - state: inhand-left-stripe
+#        color: "#28E7DC"
+#      right:
+#      - state: inhand-right-mag
+#      - state: inhand-right-stripe
+#        color: "#28E7DC"

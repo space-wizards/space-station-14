@@ -2,7 +2,9 @@
   id: Dragon
   hostile:
     - NanoTrasen
+    - NanoTrasenSilicon # starlight
     - Syndicate
+    - SyndicateSilicon # starlight
     - DungeonSyndicate
     - DungeonSoviet
     - Xeno
@@ -13,28 +15,38 @@
     - Vampire
     - Changeling
     - AllHostile
+    - Wizard
+    - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: NanoTrasen
   hostile:
-  - SimpleHostile
-  - Syndicate
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Xeno
-  - Zombie
-  - Revolutionary
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
+    - SimpleHostile
+    - Syndicate
+    - SyndicateSilicon # starlight
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Xeno
+    - Zombie
+    - Revolutionary
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Wizard
+    - Xenoborg
+    - Dragon
+    - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: Mouse
   hostile:
-  - PetsNT
-  - Abyss
-  - AllHostile
+    - PetsNT
+    - Abyss
+    - AllHostile
+    - Wizard
 
 - type: npcFaction
   id: Passive
@@ -42,28 +54,41 @@
 - type: npcFaction
   id: PetsNT
   hostile:
-  - Mouse
-  - SimpleHostile
-  - Zombie
-  - Xeno
-  - Abyss
-  - AllHostile
+    - Mouse
+    - SimpleHostile
+    - Zombie
+    - Xeno
+    - Abyss
+    - AllHostile
+    - Wizard
+    - Dragon
+    - HonkHostile
+    - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: SimpleHostile
   hostile:
-  - NanoTrasen
-  - Syndicate
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Passive
-  - PetsNT
-  - Zombie
-  - Revolutionary
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
+    - NanoTrasen
+    - NanoTrasenSilicon # starlight
+    - Syndicate
+    - SyndicateSilicon # starlight
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Passive
+    - PetsNT
+    - Zombie
+    - Revolutionary
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Wizard
+    - Xenoborg
+    - Dragon
+    - Xeno
+    - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: SimpleNeutral
@@ -71,120 +96,199 @@
 - type: npcFaction
   id: Syndicate
   hostile:
-  - NanoTrasen
-  - SimpleHostile
-  - Xeno
-  - PetsNT
-  - Zombie
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
+    - NanoTrasen
+    - NanoTrasenSilicon # starlight
+    - SimpleHostile
+    - Xeno
+    - PetsNT
+    - Zombie
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Wizard
+    - Xenoborg
+    - Dragon
+    - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: Xeno
   hostile:
-  - NanoTrasen
-  - Syndicate
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Passive
-  - PetsNT
-  - Zombie
-  - Revolutionary
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
+    - NanoTrasen
+    - NanoTrasenSilicon # starlight
+    - Syndicate
+    - SyndicateSilicon # starlight
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Passive
+    - PetsNT
+    - Zombie
+    - Revolutionary
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Wizard
+    - Dragon
+    - Xenoborg
+    - Gorilla
 
 - type: npcFaction
   id: Zombie
-  hostile:
-  - NanoTrasen
-  - SimpleNeutral
-  - SimpleHostile
-  - Syndicate
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Passive
-  - PetsNT
-  - Revolutionary
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
+  hostile: # starlight, no silicon roles here as IT HAS NO MEAT, THEREFORE IS NOT FOOD.
+    - NanoTrasen
+    - SimpleNeutral
+    - SimpleHostile
+    - Syndicate
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Passive
+    - PetsNT
+    - Revolutionary
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Wizard
+    - Dragon
+    - Gorilla
+    - Abductor # starlight
 
 - type: npcFaction
   id: Revolutionary
   hostile:
-  - NanoTrasen
-  - Zombie
-  - SimpleHostile
-  - Dragon
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
-  
+    - NanoTrasen
+    - NanoTrasenSilicon # starlight
+    - Zombie
+    - SimpleHostile
+    - Dragon
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Gorilla
+    - Abductor # starlight
+
 - type: npcFaction
   id: Changeling
   hostile:
-  - NanoTrasen
-  - Syndicate
-  - Zombie
-  - Revolutionary
-  - AllHostile
-  
+    - NanoTrasen
+    - NanoTrasenSilicon # starlight
+    - Syndicate
+    - SyndicateSilicon # starlight
+    - Zombie
+    - Revolutionary
+    - AllHostile
+    - Gorilla
+
 - type: npcFaction
   id: Vampire
   hostile:
-  - NanoTrasen
-  - Syndicate
-  - Zombie
-  - Revolutionary
-  - Xeno
-  - Changeling
-  - AllHostile
-  
+    - NanoTrasen
+    - NanoTrasenSilicon # starlight
+    - Syndicate
+    - SyndicateSilicon # starlight
+    - Zombie
+    - Revolutionary
+    - Xeno
+    - Changeling
+    - AllHostile
+    - Gorilla
+
 - type: npcFaction
   id: HonkHostile
   hostile:
-  - NanoTrasen
-  - Syndicate
-  - Passive
-  - PetsNT
-  - Zombie
-  - AllHostile
+    - NanoTrasen
+    - NanoTrasenSilicon # starlight
+    - Syndicate
+    - SyndicateSilicon # starlight
+    - Passive
+    - PetsNT
+    - Zombie
+    - AllHostile
+    - Wizard
+    - Xenoborg
+    - Gorilla
 
 - type: npcFaction
   id: HonkNeutral
   hostile:
-  - SimpleHostile
-  - Syndicate
-  - Xeno
-  - Zombie
-  - AllHostile
-  
+    - SimpleHostile
+    - Syndicate
+    - SyndicateSilicon # starlight
+    - Xeno
+    - Zombie
+    - AllHostile
+    - Gorilla
+    - Abductor # starlight
+
 - type: npcFaction
   id: AllHostile
   hostile:
-  - NanoTrasen
-  - Dragon
-  - Mouse
-  - Passive
-  - PetsNT
-  - SimpleHostile
-  - SimpleNeutral
-  - Syndicate
-  - Xeno
-  - Zombie
-  - Revolutionary
-  - HonkNeutral
-  - HonkHostile
-  - Vampire
-  - Changeling
+    - NanoTrasen
+    - NanoTrasenSilicon # starlight
+    - Dragon
+    - Mouse
+    - Passive
+    - PetsNT
+    - SimpleHostile
+    - SimpleNeutral
+    - Syndicate
+    - SyndicateSilicon # starlight
+    - Xeno
+    - Zombie
+    - Revolutionary
+    - HonkNeutral
+    - HonkHostile
+    - Vampire
+    - Changeling
+    - Wizard
+    - Xenoborg
+    - Gorilla
+    - Abductor # starlight
 
+- type: npcFaction
+  id: Wizard
+  hostile:
+    - NanoTrasen
+    - NanoTrasenSilicon # starlight
+    - Dragon
+    - Mouse
+    - Passive
+    - PetsNT
+    - SimpleHostile
+    - SimpleNeutral
+    - Syndicate
+    - SyndicateSilicon # starlight
+    - Xeno
+    - Zombie
+    - Revolutionary
+    - AllHostile
+    - Xenoborg
+    - Gorilla
+    - Abductor # starlight
+
+- type: npcFaction
+  id: Xenoborg
+  hostile:
+    # they have brains
+    - NanoTrasen
+    - Syndicate
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Zombie
+    - Revolutionary
+    - Wizard
+    # rivalry
+    - Xeno
+    - NanoTrasenSilicon # starlight
+    - SyndicateSilicon # starlight
+    # cause they are hostile to them
+    - SimpleHostile
+    - AllHostile
+    - Abductor # starlight

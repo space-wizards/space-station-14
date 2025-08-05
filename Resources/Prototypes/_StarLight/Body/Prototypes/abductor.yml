@@ -24,6 +24,7 @@
         stomach: OrganAbductorStomach
         liver: OrganAbductorLiver
         kidneys: OrganAbductorKidneys
+        cavity: null
     right arm:
       part: RightArmAbductor
       connections:

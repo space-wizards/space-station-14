@@ -15,6 +15,8 @@
     - type: ActiveEdgeSpreader
     - type: EdgeSpreader
       id: Kudzu
+    - type: SpeedModifierContacts
+      affectAirborne: true
 
 - type: entity
   id: Kudzu
@@ -84,7 +86,7 @@
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
-      ignoreWhitelist:
+      blacklist:
         components:
         - IgnoreKudzu
     - type: Food
@@ -125,7 +127,7 @@
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.8
       sprintSpeedModifier: 0.8
-      ignoreWhitelist:
+      blacklist:
         components:
         - IgnoreKudzu
     - type: RandomSpawner
@@ -238,7 +240,7 @@
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.3
       sprintSpeedModifier: 0.3
-      ignoreWhitelist:
+      blacklist:
         tags:
         - Flesh
     - type: Food # delightfully devilish !
@@ -247,8 +249,10 @@
       solutions:
         food:
           reagents:
-          - ReagentId: Protein
+          - ReagentId: Razorium
             Quantity: 2
+          - ReagentId: Protein
+            Quantity: 1
     - type: Respirator
       damage:
         types:
@@ -256,6 +260,9 @@
       damageRecovery:
         types:
           Asphyxiation: -0.25
+    - type: Tag
+      tags:
+      - Meat
 
 - type: entity
   name: dark haze

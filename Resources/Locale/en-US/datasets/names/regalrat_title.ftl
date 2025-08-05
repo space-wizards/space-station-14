@@ -1,0 +1,19 @@
+names-regal-rat-title-dataset-1 = King
+names-regal-rat-title-dataset-2 = Lord
+names-regal-rat-title-dataset-3 = Prince
+names-regal-rat-title-dataset-4 = Emperor
+names-regal-rat-title-dataset-5 = Supreme
+names-regal-rat-title-dataset-6 = Overlord
+names-regal-rat-title-dataset-7 = Master
+names-regal-rat-title-dataset-8 = Shogun
+names-regal-rat-title-dataset-9 = Bojar
+names-regal-rat-title-dataset-10 = Tsar
+## Starlight
+names-regal-rat-title-dataset-11 = Monarch
+## Starlight
+names-regal-rat-title-dataset-12 = Baron
+names-regal-rat-title-dataset-13 = President
+names-regal-rat-title-dataset-14 = Mayor
+names-regal-rat-title-dataset-15 = Boss
+names-regal-rat-title-dataset-16 = Prophet
+names-regal-rat-title-dataset-17 = Cheese

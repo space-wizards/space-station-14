@@ -1,6 +1,7 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Server._Starlight.Medical.Limbs;
 using Content.Server.Administration.Components;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
@@ -18,6 +19,9 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Content.Shared.Construction.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -25,6 +29,7 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Electrocution;
 using Content.Shared.Hands.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Stacks;
@@ -38,6 +43,8 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.Overlays; // 🌟Starlight🌟
+using Content.Shared.Contraband; // 🌟Starlight🌟
 
 namespace Content.Server.Administration.Systems;
 
@@ -57,9 +64,14 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly GunSystem _gun = default!;
 
+    //🌟Starlight🌟 start
+    [Dependency] private readonly LimbSystem _limbSystem = default!;
+    [Dependency] private readonly StarlightEntitySystem _entitySystem = default!;
+    //🌟Starlight🌟 end
+
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
-        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+        if (!TryComp(args.User, out ActorComponent? actor))
             return;
 
         var player = actor.PlayerSession;
@@ -67,31 +79,29 @@ public sealed partial class AdminVerbSystem
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Admin))
             return;
 
-        if (_adminManager.HasAdminFlag(player, AdminFlags.Admin))
+        if (TryComp<DoorBoltComponent>(args.Target, out var bolts))
         {
-            if (TryComp<DoorBoltComponent>(args.Target, out var bolts))
+            Verb bolt = new()
             {
-                Verb bolt = new()
+                Text = bolts.BoltsDown ? "Unbolt" : "Bolt",
+                Category = VerbCategory.Tricks,
+                Icon = bolts.BoltsDown
+                    ? new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/unbolt.png"))
+                    : new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/bolt.png")),
+                Act = () =>
                 {
-                    Text = bolts.BoltsDown ? "Unbolt" : "Bolt",
-                    Category = VerbCategory.Tricks,
-                    Icon = bolts.BoltsDown
-                        ? new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/unbolt.png"))
-                        : new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/bolt.png")),
-                    Act = () =>
-                    {
-                        _door.SetBoltsDown((args.Target, bolts), !bolts.BoltsDown);
-                    },
-                    Impact = LogImpact.Medium,
-                    Message = Loc.GetString(bolts.BoltsDown
-                        ? "admin-trick-unbolt-description"
-                        : "admin-trick-bolt-description"),
-                    Priority = (int) (bolts.BoltsDown ? TricksVerbPriorities.Unbolt : TricksVerbPriorities.Bolt),
-                };
-                args.Verbs.Add(bolt);
-            }
+                    _door.SetBoltsDown((args.Target, bolts), !bolts.BoltsDown);
+                },
+                Impact = LogImpact.Medium,
+                Message = Loc.GetString(bolts.BoltsDown
+                    ? "admin-trick-unbolt-description"
+                    : "admin-trick-bolt-description"),
+                Priority = (int) (bolts.BoltsDown ? TricksVerbPriorities.Unbolt : TricksVerbPriorities.Bolt),
+            };
+            args.Verbs.Add(bolt);
+        }
             
-            if (TryComp<ElectrifiedComponent>(args.Target, out var electrified) && HasComp<DoorComponent>(args.Target))
+        if (TryComp<ElectrifiedComponent>(args.Target, out var electrified) && HasComp<DoorComponent>(args.Target))
             {
                 Verb electrify = new()
                 {
@@ -111,319 +121,319 @@ public sealed partial class AdminVerbSystem
                 args.Verbs.Add(electrify);
             }
 
-            if (TryComp<AirlockComponent>(args.Target, out var airlockComp))
+
+        if (TryComp<AirlockComponent>(args.Target, out var airlockComp))
+        {
+            Verb emergencyAccess = new()
             {
-                Verb emergencyAccess = new()
-                {
-                    Text = airlockComp.EmergencyAccess ? "Emergency Access Off" : "Emergency Access On",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/emergency_access.png")),
-                    Act = () =>
-                    {
-                        _airlockSystem.SetEmergencyAccess((args.Target, airlockComp), !airlockComp.EmergencyAccess);
-                    },
-                    Impact = LogImpact.Medium,
-                    Message = Loc.GetString(airlockComp.EmergencyAccess
-                        ? "admin-trick-emergency-access-off-description"
-                        : "admin-trick-emergency-access-on-description"),
-                    Priority = (int) (airlockComp.EmergencyAccess ? TricksVerbPriorities.EmergencyAccessOff : TricksVerbPriorities.EmergencyAccessOn),
-                };
-                args.Verbs.Add(emergencyAccess);
-            }
-
-            if (HasComp<DamageableComponent>(args.Target))
-            {
-                Verb rejuvenate = new()
-                {
-                    Text = "Rejuvenate",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/rejuvenate.png")),
-                    Act = () =>
-                    {
-                        _rejuvenate.PerformRejuvenate(args.Target);
-                    },
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-rejuvenate-description"),
-                    Priority = (int) TricksVerbPriorities.Rejuvenate,
-                };
-                args.Verbs.Add(rejuvenate);
-            }
-
-            if (!HasComp<GodmodeComponent>(args.Target))
-            {
-                Verb makeIndestructible = new()
-                {
-                    Text = "Make Indestructible",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/plus.svg.192dpi.png")),
-                    Act = () =>
-                    {
-                        _sharedGodmodeSystem.EnableGodmode(args.Target);
-                    },
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-make-indestructible-description"),
-                    Priority = (int) TricksVerbPriorities.MakeIndestructible,
-                };
-                args.Verbs.Add(makeIndestructible);
-            }
-            else
-            {
-                Verb makeVulnerable = new()
-                {
-                    Text = "Make Vulnerable",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/plus.svg.192dpi.png")),
-                    Act = () =>
-                    {
-                        _sharedGodmodeSystem.DisableGodmode(args.Target);
-                    },
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-make-vulnerable-description"),
-                    Priority = (int) TricksVerbPriorities.MakeVulnerable,
-                };
-                args.Verbs.Add(makeVulnerable);
-            }
-
-            if (TryComp<BatteryComponent>(args.Target, out var battery))
-            {
-                Verb refillBattery = new()
-                {
-                    Text = "Refill Battery",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/fill_battery.png")),
-                    Act = () =>
-                    {
-                        _batterySystem.SetCharge(args.Target, battery.MaxCharge, battery);
-                    },
-                    Impact = LogImpact.Medium,
-                    Message = Loc.GetString("admin-trick-refill-battery-description"),
-                    Priority = (int) TricksVerbPriorities.RefillBattery,
-                };
-                args.Verbs.Add(refillBattery);
-
-                Verb drainBattery = new()
-                {
-                    Text = "Drain Battery",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/drain_battery.png")),
-                    Act = () =>
-                    {
-                        _batterySystem.SetCharge(args.Target, 0, battery);
-                    },
-                    Impact = LogImpact.Medium,
-                    Message = Loc.GetString("admin-trick-drain-battery-description"),
-                    Priority = (int) TricksVerbPriorities.DrainBattery,
-                };
-                args.Verbs.Add(drainBattery);
-
-                Verb infiniteBattery = new()
-                {
-                    Text = "Infinite Battery",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/infinite_battery.png")),
-                    Act = () =>
-                    {
-                        var recharger = EnsureComp<BatterySelfRechargerComponent>(args.Target);
-                        recharger.AutoRecharge = true;
-                        recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
-                        recharger.AutoRechargePause = false; // No delay.
-                    },
-                    Impact = LogImpact.Medium,
-                    Message = Loc.GetString("admin-trick-infinite-battery-object-description"),
-                    Priority = (int) TricksVerbPriorities.InfiniteBattery,
-                };
-                args.Verbs.Add(infiniteBattery);
-            }
-
-            if (TryComp<AnchorableComponent>(args.Target, out var anchor))
-            {
-                Verb blockUnanchor = new()
-                {
-                    Text = "Block Unanchoring",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/anchor.svg.192dpi.png")),
-                    Act = () =>
-                    {
-                        RemComp(args.Target, anchor);
-                    },
-                    Impact = LogImpact.Medium,
-                    Message = Loc.GetString("admin-trick-block-unanchoring-description"),
-                    Priority = (int) TricksVerbPriorities.BlockUnanchoring,
-                };
-                args.Verbs.Add(blockUnanchor);
-            }
-
-            if (TryComp<GasTankComponent>(args.Target, out var tank))
-            {
-                Verb refillInternalsO2 = new()
-                {
-                    Text = "Refill Internals Oxygen",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/oxygen.rsi"), "icon"),
-                    Act = () =>
-                    {
-                        RefillGasTank(args.Target, Gas.Oxygen, tank);
-                    },
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-internals-refill-oxygen-description"),
-                    Priority = (int) TricksVerbPriorities.RefillOxygen,
-                };
-                args.Verbs.Add(refillInternalsO2);
-
-                Verb refillInternalsN2 = new()
-                {
-                    Text = "Refill Internals Nitrogen",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/red.rsi"), "icon"),
-                    Act = () =>
-                    {
-                        RefillGasTank(args.Target, Gas.Nitrogen, tank);
-                    },
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-internals-refill-nitrogen-description"),
-                    Priority = (int) TricksVerbPriorities.RefillNitrogen,
-                };
-                args.Verbs.Add(refillInternalsN2);
-
-                Verb refillInternalsPlasma = new()
-                {
-                    Text = "Refill Internals Plasma",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/plasma.rsi"), "icon"),
-                    Act = () =>
-                    {
-                        RefillGasTank(args.Target, Gas.Plasma, tank);
-                    },
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-internals-refill-plasma-description"),
-                    Priority = (int) TricksVerbPriorities.RefillPlasma,
-                };
-                args.Verbs.Add(refillInternalsPlasma);
-            }
-
-            if (HasComp<InventoryComponent>(args.Target))
-            {
-                Verb refillInternalsO2 = new()
-                {
-                    Text = "Refill Internals Oxygen",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/oxygen.rsi"), "icon"),
-                    Act = () => RefillEquippedTanks(args.User, Gas.Oxygen),
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-internals-refill-oxygen-description"),
-                    Priority = (int) TricksVerbPriorities.RefillOxygen,
-                };
-                args.Verbs.Add(refillInternalsO2);
-
-                Verb refillInternalsN2 = new()
-                {
-                    Text = "Refill Internals Nitrogen",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/red.rsi"), "icon"),
-                    Act = () =>RefillEquippedTanks(args.User, Gas.Nitrogen),
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-internals-refill-nitrogen-description"),
-                    Priority = (int) TricksVerbPriorities.RefillNitrogen,
-                };
-                args.Verbs.Add(refillInternalsN2);
-
-                Verb refillInternalsPlasma = new()
-                {
-                    Text = "Refill Internals Plasma",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/plasma.rsi"), "icon"),
-                    Act = () => RefillEquippedTanks(args.User, Gas.Plasma),
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-internals-refill-plasma-description"),
-                    Priority = (int) TricksVerbPriorities.RefillPlasma,
-                };
-                args.Verbs.Add(refillInternalsPlasma);
-            }
-
-            Verb sendToTestArena = new()
-            {
-                Text = "Send to test arena",
+                Text = airlockComp.EmergencyAccess ? "Emergency Access Off" : "Emergency Access On",
                 Category = VerbCategory.Tricks,
-                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
-
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/emergency_access.png")),
                 Act = () =>
                 {
-                    var (mapUid, gridUid) = _adminTestArenaSystem.AssertArenaLoaded(player);
-                    _transformSystem.SetCoordinates(args.Target, new EntityCoordinates(gridUid ?? mapUid, Vector2.One));
+                    _airlockSystem.SetEmergencyAccess((args.Target, airlockComp), !airlockComp.EmergencyAccess);
                 },
                 Impact = LogImpact.Medium,
-                Message = Loc.GetString("admin-trick-send-to-test-arena-description"),
-                Priority = (int) TricksVerbPriorities.SendToTestArena,
+                Message = Loc.GetString(airlockComp.EmergencyAccess
+                    ? "admin-trick-emergency-access-off-description"
+                    : "admin-trick-emergency-access-on-description"),
+                Priority = (int)(airlockComp.EmergencyAccess ? TricksVerbPriorities.EmergencyAccessOff : TricksVerbPriorities.EmergencyAccessOn),
             };
-            args.Verbs.Add(sendToTestArena);
+            args.Verbs.Add(emergencyAccess);
+        }
 
-            var activeId = FindActiveId(args.Target);
-
-            if (activeId is not null)
+        if (HasComp<DamageableComponent>(args.Target))
+        {
+            Verb rejuvenate = new()
             {
-                Verb grantAllAccess = new()
+                Text = "Rejuvenate",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/rejuvenate.png")),
+                Act = () =>
                 {
-                    Text = "Grant All Access",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/id_cards.rsi"), "centcom"),
-                    Act = () =>
-                    {
-                        GiveAllAccess(activeId.Value);
-                    },
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-grant-all-access-description"),
-                    Priority = (int) TricksVerbPriorities.GrantAllAccess,
-                };
-                args.Verbs.Add(grantAllAccess);
+                    _rejuvenate.PerformRejuvenate(args.Target);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-rejuvenate-description"),
+                Priority = (int)TricksVerbPriorities.Rejuvenate,
+            };
+            args.Verbs.Add(rejuvenate);
+        }
 
-                Verb revokeAllAccess = new()
-                {
-                    Text = "Revoke All Access",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/id_cards.rsi"), "default"),
-                    Act = () =>
-                    {
-                        RevokeAllAccess(activeId.Value);
-                    },
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-revoke-all-access-description"),
-                    Priority = (int) TricksVerbPriorities.RevokeAllAccess,
-                };
-                args.Verbs.Add(revokeAllAccess);
-            }
-
-            if (HasComp<AccessComponent>(args.Target))
+        if (!HasComp<GodmodeComponent>(args.Target))
+        {
+            Verb makeIndestructible = new()
             {
-                Verb grantAllAccess = new()
+                Text = "Make Indestructible",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/plus.svg.192dpi.png")),
+                Act = () =>
                 {
-                    Text = "Grant All Access",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/id_cards.rsi"), "centcom"),
-                    Act = () =>
-                    {
-                        GiveAllAccess(args.Target);
-                    },
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-grant-all-access-description"),
-                    Priority = (int) TricksVerbPriorities.GrantAllAccess,
-                };
-                args.Verbs.Add(grantAllAccess);
+                    _sharedGodmodeSystem.EnableGodmode(args.Target);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-make-indestructible-description"),
+                Priority = (int)TricksVerbPriorities.MakeIndestructible,
+            };
+            args.Verbs.Add(makeIndestructible);
+        }
+        else
+        {
+            Verb makeVulnerable = new()
+            {
+                Text = "Make Vulnerable",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/plus.svg.192dpi.png")),
+                Act = () =>
+                {
+                    _sharedGodmodeSystem.DisableGodmode(args.Target);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-make-vulnerable-description"),
+                Priority = (int)TricksVerbPriorities.MakeVulnerable,
+            };
+            args.Verbs.Add(makeVulnerable);
+        }
 
-                Verb revokeAllAccess = new()
+        if (TryComp<BatteryComponent>(args.Target, out var battery))
+        {
+            Verb refillBattery = new()
+            {
+                Text = "Refill Battery",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/fill_battery.png")),
+                Act = () =>
                 {
-                    Text = "Revoke All Access",
-                    Category = VerbCategory.Tricks,
-                    Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/id_cards.rsi"), "default"),
-                    Act = () =>
-                    {
-                        RevokeAllAccess(args.Target);
-                    },
-                    Impact = LogImpact.Extreme,
-                    Message = Loc.GetString("admin-trick-revoke-all-access-description"),
-                    Priority = (int) TricksVerbPriorities.RevokeAllAccess,
-                };
-                args.Verbs.Add(revokeAllAccess);
-            }
+                    _batterySystem.SetCharge(args.Target, battery.MaxCharge, battery);
+                },
+                Impact = LogImpact.Medium,
+                Message = Loc.GetString("admin-trick-refill-battery-description"),
+                Priority = (int)TricksVerbPriorities.RefillBattery,
+            };
+            args.Verbs.Add(refillBattery);
+
+            Verb drainBattery = new()
+            {
+                Text = "Drain Battery",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/drain_battery.png")),
+                Act = () =>
+                {
+                    _batterySystem.SetCharge(args.Target, 0, battery);
+                },
+                Impact = LogImpact.Medium,
+                Message = Loc.GetString("admin-trick-drain-battery-description"),
+                Priority = (int)TricksVerbPriorities.DrainBattery,
+            };
+            args.Verbs.Add(drainBattery);
+
+            Verb infiniteBattery = new()
+            {
+                Text = "Infinite Battery",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/infinite_battery.png")),
+                Act = () =>
+                {
+                    var recharger = EnsureComp<BatterySelfRechargerComponent>(args.Target);
+                    recharger.AutoRecharge = true;
+                    recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
+                    recharger.AutoRechargePause = false; // No delay.
+                },
+                Impact = LogImpact.Medium,
+                Message = Loc.GetString("admin-trick-infinite-battery-object-description"),
+                Priority = (int)TricksVerbPriorities.InfiniteBattery,
+            };
+            args.Verbs.Add(infiniteBattery);
+        }
+
+        if (TryComp<AnchorableComponent>(args.Target, out var anchor))
+        {
+            Verb blockUnanchor = new()
+            {
+                Text = "Block Unanchoring",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/anchor.svg.192dpi.png")),
+                Act = () =>
+                {
+                    RemComp(args.Target, anchor);
+                },
+                Impact = LogImpact.Medium,
+                Message = Loc.GetString("admin-trick-block-unanchoring-description"),
+                Priority = (int)TricksVerbPriorities.BlockUnanchoring,
+            };
+            args.Verbs.Add(blockUnanchor);
+        }
+
+        if (TryComp<GasTankComponent>(args.Target, out var tank))
+        {
+            Verb refillInternalsO2 = new()
+            {
+                Text = "Refill Internals Oxygen",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/oxygen.rsi"), "icon"),
+                Act = () =>
+                {
+                    RefillGasTank(args.Target, Gas.Oxygen, tank);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-internals-refill-oxygen-description"),
+                Priority = (int)TricksVerbPriorities.RefillOxygen,
+            };
+            args.Verbs.Add(refillInternalsO2);
+
+            Verb refillInternalsN2 = new()
+            {
+                Text = "Refill Internals Nitrogen",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/red.rsi"), "icon"),
+                Act = () =>
+                {
+                    RefillGasTank(args.Target, Gas.Nitrogen, tank);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-internals-refill-nitrogen-description"),
+                Priority = (int)TricksVerbPriorities.RefillNitrogen,
+            };
+            args.Verbs.Add(refillInternalsN2);
+
+            Verb refillInternalsPlasma = new()
+            {
+                Text = "Refill Internals Plasma",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/plasma.rsi"), "icon"),
+                Act = () =>
+                {
+                    RefillGasTank(args.Target, Gas.Plasma, tank);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-internals-refill-plasma-description"),
+                Priority = (int)TricksVerbPriorities.RefillPlasma,
+            };
+            args.Verbs.Add(refillInternalsPlasma);
+        }
+
+        if (HasComp<InventoryComponent>(args.Target))
+        {
+            Verb refillInternalsO2 = new()
+            {
+                Text = "Refill Internals Oxygen",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/oxygen.rsi"), "icon"),
+                Act = () => RefillEquippedTanks(args.User, Gas.Oxygen),
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-internals-refill-oxygen-description"),
+                Priority = (int)TricksVerbPriorities.RefillOxygen,
+            };
+            args.Verbs.Add(refillInternalsO2);
+
+            Verb refillInternalsN2 = new()
+            {
+                Text = "Refill Internals Nitrogen",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/red.rsi"), "icon"),
+                Act = () => RefillEquippedTanks(args.User, Gas.Nitrogen),
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-internals-refill-nitrogen-description"),
+                Priority = (int)TricksVerbPriorities.RefillNitrogen,
+            };
+            args.Verbs.Add(refillInternalsN2);
+
+            Verb refillInternalsPlasma = new()
+            {
+                Text = "Refill Internals Plasma",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/plasma.rsi"), "icon"),
+                Act = () => RefillEquippedTanks(args.User, Gas.Plasma),
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-internals-refill-plasma-description"),
+                Priority = (int)TricksVerbPriorities.RefillPlasma,
+            };
+            args.Verbs.Add(refillInternalsPlasma);
+        }
+
+        Verb sendToTestArena = new()
+        {
+            Text = "Send to test arena",
+            Category = VerbCategory.Tricks,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
+
+            Act = () =>
+            {
+                var (mapUid, gridUid) = _adminTestArenaSystem.AssertArenaLoaded(player);
+                _transformSystem.SetCoordinates(args.Target, new EntityCoordinates(gridUid ?? mapUid, Vector2.One));
+            },
+            Impact = LogImpact.Medium,
+            Message = Loc.GetString("admin-trick-send-to-test-arena-description"),
+            Priority = (int)TricksVerbPriorities.SendToTestArena,
+        };
+        args.Verbs.Add(sendToTestArena);
+
+        var activeId = FindActiveId(args.Target);
+
+        if (activeId is not null)
+        {
+            Verb grantAllAccess = new()
+            {
+                Text = "Grant All Access",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/id_cards.rsi"), "centcom"),
+                Act = () =>
+                {
+                    GiveAllAccess(activeId.Value);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-grant-all-access-description"),
+                Priority = (int)TricksVerbPriorities.GrantAllAccess,
+            };
+            args.Verbs.Add(grantAllAccess);
+
+            Verb revokeAllAccess = new()
+            {
+                Text = "Revoke All Access",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/id_cards.rsi"), "default"),
+                Act = () =>
+                {
+                    RevokeAllAccess(activeId.Value);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-revoke-all-access-description"),
+                Priority = (int)TricksVerbPriorities.RevokeAllAccess,
+            };
+            args.Verbs.Add(revokeAllAccess);
+        }
+
+        if (HasComp<AccessComponent>(args.Target))
+        {
+            Verb grantAllAccess = new()
+            {
+                Text = "Grant All Access",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/id_cards.rsi"), "centcom"),
+                Act = () =>
+                {
+                    GiveAllAccess(args.Target);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-grant-all-access-description"),
+                Priority = (int)TricksVerbPriorities.GrantAllAccess,
+            };
+            args.Verbs.Add(grantAllAccess);
+
+            Verb revokeAllAccess = new()
+            {
+                Text = "Revoke All Access",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/id_cards.rsi"), "default"),
+                Act = () =>
+                {
+                    RevokeAllAccess(args.Target);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-revoke-all-access-description"),
+                Priority = (int)TricksVerbPriorities.RevokeAllAccess,
+            };
+            args.Verbs.Add(revokeAllAccess);
         }
 
         if (TryComp<StackComponent>(args.Target, out var stack))
@@ -659,7 +669,7 @@ public sealed partial class AdminVerbSystem
         {
             if (_adminManager.HasAdminFlag(player, AdminFlags.Mapping))
             {
-                if (_mapManager.IsMapPaused(map.MapId))
+                if (_map.IsPaused(map.MapId))
                 {
                     Verb unpauseMap = new()
                     {
@@ -668,7 +678,7 @@ public sealed partial class AdminVerbSystem
                         Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/play.png")),
                         Act = () =>
                         {
-                            _mapManager.SetMapPaused(map.MapId, false);
+                            _map.SetPaused(map.MapId, false);
                         },
                         Impact = LogImpact.Extreme,
                         Message = Loc.GetString("admin-trick-unpause-map-description"),
@@ -685,7 +695,7 @@ public sealed partial class AdminVerbSystem
                         Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/pause.png")),
                         Act = () =>
                         {
-                            _mapManager.SetMapPaused(map.MapId, true);
+                            _map.SetPaused(map.MapId, true);
                         },
                         Impact = LogImpact.Extreme,
                         Message = Loc.GetString("admin-trick-pause-map-description"),
@@ -753,10 +763,93 @@ public sealed partial class AdminVerbSystem
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-set-bullet-amount-description"),
-                Priority = (int) TricksVerbPriorities.SetBulletAmount,
+                Priority = (int)TricksVerbPriorities.SetBulletAmount,
             };
             args.Verbs.Add(setCapacity);
         }
+
+        // 🌟Starlight🌟 start 
+        // Add toggle overlays verb
+        Verb toggleOverlays = new()
+        {
+            Text = "Toggle All Overlays",
+            Category = VerbCategory.Tricks,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/_Starlight/Interface/AdminActions/ToggleOverlays.png")),
+            Act = () =>
+            {
+                // List of overlay components to toggle
+                var overlaysPresent = false;
+                overlaysPresent |= TryComp<ShowHealthBarsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowHealthIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowJobIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowMindShieldIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowSyndicateIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowCriminalRecordIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowContrabandDetailsComponent>(args.Target, out _);
+
+                if (overlaysPresent)
+                {
+                    RemComp<ShowHealthBarsComponent>(args.Target);
+                    RemComp<ShowHealthIconsComponent>(args.Target);
+                    RemComp<ShowJobIconsComponent>(args.Target);
+                    RemComp<ShowMindShieldIconsComponent>(args.Target);
+                    RemComp<ShowSyndicateIconsComponent>(args.Target);
+                    RemComp<ShowCriminalRecordIconsComponent>(args.Target);
+                    RemComp<ShowContrabandDetailsComponent>(args.Target);
+                }
+                else
+                {
+                    var showHealthBars = EnsureComp<ShowHealthBarsComponent>(args.Target);
+                    showHealthBars.DamageContainers.Add("Biological");
+                    showHealthBars.HealthStatusIcon = "HealthIcon";
+
+                    var showHealthIcons = EnsureComp<ShowHealthIconsComponent>(args.Target);
+                    showHealthIcons.DamageContainers.Add("Biological");
+
+                    EnsureComp<ShowJobIconsComponent>(args.Target);
+                    EnsureComp<ShowMindShieldIconsComponent>(args.Target);
+                    EnsureComp<ShowSyndicateIconsComponent>(args.Target);
+                    EnsureComp<ShowCriminalRecordIconsComponent>(args.Target);
+                    EnsureComp<ShowContrabandDetailsComponent>(args.Target);
+                }
+            },
+            Impact = LogImpact.Medium,
+            Message = Loc.GetString("admin-trick-toggle-overlays-description"),
+            Priority = (int)TricksVerbPriorities.ToggleOverlays,
+        };
+        args.Verbs.Add(toggleOverlays);
+
+        // Reaper arm verb
+        if (TryComp<BodyComponent>(args.Target, out var bodyComp))
+        {
+            Verb reaperArm = new()
+            {
+                Text = "Replace the right hand with a Reaper arm.",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/_Starlight/Mobs/Species/Cyberlimbs/parts.rsi"), "r_silver_arm"),
+                Act = () =>
+                {
+                    var torso = _bodySystem.GetBodyChildrenOfType(args.Target, BodyPartType.Torso).FirstOrDefault();
+                    var rightArm = _bodySystem.GetBodyChildrenOfType(args.Target, BodyPartType.Arm).FirstOrDefault(part => part.Component.Symmetry == BodyPartSymmetry.Right);
+                    if (torso == default || rightArm == default)
+                        return;
+
+                    if (_entitySystem.TryEntity<TransformComponent, HumanoidAppearanceComponent, BodyComponent>(args.Target, out var body)
+                    && _entitySystem.TryEntity<TransformComponent, MetaDataComponent, BodyPartComponent>(rightArm.Id, out var partEnt))
+                    {
+                        _limbSystem.Amputatate(body, partEnt);
+                        var reaper = Spawn("RightArmCyberReaper", body.Comp1.Coordinates);
+                        if (_entitySystem.TryEntity<BodyPartComponent>(reaper, out var reaperEnt))
+                            _limbSystem.AttachLimb((body.Owner, body.Comp2), "right arm", torso, reaperEnt);
+                    }
+                },
+                Impact = LogImpact.Medium,
+                Message = "Replace the right hand with a Reaper arm.",
+                Priority = (int)TricksVerbPriorities.SetBulletAmount,
+            };
+            args.Verbs.Add(reaperArm);
+        }
+        // 🌟Starlight🌟 end
     }
 
     private void RefillEquippedTanks(EntityUid target, Gas gasType)
@@ -844,7 +937,7 @@ public sealed partial class AdminVerbSystem
         }
         else if (TryComp<HandsComponent>(target, out var hands))
         {
-            foreach (var held in _handsSystem.EnumerateHeld(target, hands))
+            foreach (var held in _handsSystem.EnumerateHeld((target, hands)))
             {
                 if (HasComp<AccessComponent>(held))
                 {
@@ -904,5 +997,6 @@ public sealed partial class AdminVerbSystem
         SnapJoints = -29,
         MakeMinigun = -30,
         SetBulletAmount = -31,
+        ToggleOverlays = -32, // #🌟Starlight🌟
     }
 }

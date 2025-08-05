@@ -11,3 +11,103 @@
   - type: Fiber
     fiberMaterial: fibers-black-nitrile
   - type: FingerprintMask
+
+- type: entity
+  parent: [ClothingHandsButcherable, BaseSecurityContraband]
+  id: ClothingHandsGlovesSecurityRed
+  name: Red Security Gloves
+  description: Black gloves, but slightly red! The detective will LOVE you if you wear these.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Hands/Gloves/securityglovesred.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Hands/Gloves/securityglovesred.rsi
+  - type: Fiber
+    fiberMaterial: fibers-red-and-black-woven
+  - type: FingerprintMask
+
+- type: entity
+  parent: [ClothingHandsButcherable, BaseSecurityContraband]
+  id: ClothingHandsGlovesSecurityFingerlessRed
+  name: Fingerless Red Security Gloves
+  description: Black gloves, but slightly red! The detective will HATE you if you wear these.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Hands/Gloves/securityglovesfingerlessred.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Hands/Gloves/securityglovesfingerlessred.rsi
+  - type: Fiber
+    fiberMaterial: fibers-red-and-black-woven
+
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsCatPaws
+  name: cat paws gloves
+  description: Extra soft cat paws, especially made for the most stern assistants.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Hands/Gloves/paws.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Hands/Gloves/paws.rsi
+  - type: MeleeWeapon #Taken from the felionoid attack information :)
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    attackRate: 2
+    damage:
+      types:
+        Slash: 3
+
+- type: entity
+  parent: ClothingHandsCatPaws
+  id: ClothingHandsCatPawsWhite
+  components:
+  - type: Sprite
+    state: white
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: white-equipped-HAND
+  - type: Fiber
+    fiberColor: fibers-white
+
+- type: entity
+  parent: ClothingHandsCatPaws
+  id: ClothingHandsCatPawsBrown
+  components:
+  - type: Sprite
+    state: brown
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: brown-equipped-HAND
+  - type: Fiber
+    fiberColor: fibers-brown
+
+- type: entity
+  parent: ClothingHandsCatPaws
+  id: ClothingHandsCatPawsBlack
+  components:
+  - type: Sprite
+    state: black
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: black-equipped-HAND
+  - type: Fiber
+    fiberColor: fibers-black
+
+- type: entity
+  parent: ClothingHandsCatPaws
+  id: ClothingHandsCatPawsBlackWhite
+  components:
+  - type: Sprite
+    state: black_white
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: black_white-equipped-HAND
+  - type: Fiber
+    fiberColor: fibers-grey

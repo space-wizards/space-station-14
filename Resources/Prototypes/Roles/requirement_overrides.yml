@@ -204,7 +204,7 @@
       time: 0
     - !type:RoleTimeRequirement
       role: JobPassenger
-      time: 600 # 10 minutes as Passenger
+      time: 600 # 10 minutes as Assistant
     CargoTechnician:
     - !type:OverallPlaytimeRequirement
       time: 0

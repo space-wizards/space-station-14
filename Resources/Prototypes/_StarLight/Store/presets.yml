@@ -34,3 +34,25 @@
     - BuildToken
     balance:
       BuildToken: 0
+
+# USSP Uplink
+- type: entity
+  id: StorePresetUSSP
+  abstract: true
+  components:
+  - type: Store
+    name: store-preset-name-uplink
+    categories:
+    - RevUplinkWeaponry
+    - RevUplinkPassive
+    - RevUplinkWearables
+    - RevUplinkImplants
+    - RevUplinkShuttle
+    - RevUplinkDeception
+    - RevUplinkPointless
+    currencyWhitelist:
+    - Telebond
+    - Conversion
+    balance:
+      Telebond: 0
+      Conversion: 0

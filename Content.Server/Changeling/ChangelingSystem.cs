@@ -15,6 +15,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Store.Components;
+using Content.Shared.Forensics.Components;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
@@ -92,7 +93,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speed = default!;
-    [Dependency] private readonly StaminaSystem _stamina = default!;
+    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
     [Dependency] private readonly GravitySystem _gravity = default!;
     [Dependency] private readonly BlindableSystem _blindable = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
@@ -138,26 +139,22 @@ public sealed partial class ChangelingSystem : EntitySystem
         {
             var uid = comp.Owner;
 
-            if (_timing.CurTime < comp.UpdateTimer)
-                continue;
+            if (_timing.CurTime >= comp.ChemicalNextUpdateTime)
+            {
+                comp.ChemicalNextUpdateTime = _timing.CurTime + comp.ChemicalUpdateCooldown;
+                UpdateChemicals(uid, comp);
+                UpdateAbilities(uid, comp); //probably overkill since I dont think chemicals affect abilities but whatever, im cleaning up shitcode
+            }
 
-            comp.UpdateTimer = _timing.CurTime + TimeSpan.FromSeconds(comp.UpdateCooldown);
-
-            Cycle(uid, comp);
+            if (_timing.CurTime >= comp.BiomassNextUpdateTime)
+            {
+                comp.BiomassNextUpdateTime = _timing.CurTime + comp.BiomassUpdateCooldown;
+                //subtract biomass
+                comp.Biomass -= comp.BiomassDrain;
+                UpdateBiomass(uid, comp);
+                UpdateAbilities(uid, comp);
+            }
         }
-    }
-    public void Cycle(EntityUid uid, ChangelingComponent comp)
-    {
-        UpdateChemicals(uid, comp);
-
-        comp.BiomassUpdateTimer += 1;
-        if (comp.BiomassUpdateTimer >= comp.BiomassUpdateCooldown)
-        {
-            comp.BiomassUpdateTimer = 0;
-            UpdateBiomass(uid, comp);
-        }
-
-        UpdateAbilities(uid, comp);
     }
 
     private void UpdateChemicals(EntityUid uid, ChangelingComponent comp, float? amount = null)
@@ -176,23 +173,22 @@ public sealed partial class ChangelingSystem : EntitySystem
         Dirty(uid, comp);
         _alerts.ShowAlert(uid, "ChangelingBiomass");
 
-        var random = (int) _rand.Next(1, 3);
+        var random = _rand.Prob(0.5f);
 
         if (comp.Biomass <= 0)
+        {
             // game over, man
             _damage.TryChangeDamage(uid, new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 50), true);
-
-        if (comp.Biomass <= comp.MaxBiomass / 10)
+        }
+        else if (comp.Biomass <= comp.MaxBiomass * comp.BiomassDeficitVomitPercent)
         {
             // THE FUNNY ITCH IS REAL!!
             comp.BonusChemicalRegen = 3f;
             _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-high"), uid, uid, PopupType.LargeCaution);
-            _jitter.DoJitter(uid, TimeSpan.FromSeconds(comp.BiomassUpdateCooldown), true, amplitude: 5, frequency: 10);
-        }
-        else if (comp.Biomass <= comp.MaxBiomass / 3)
-        {
+            _jitter.DoJitter(uid, comp.BiomassUpdateCooldown, true, amplitude: 5, frequency: 10);
+
             // vomit blood
-            if (random == 1)
+            if (random)
             {
                 if (TryComp<StatusEffectsComponent>(uid, out var status))
                     _stun.TrySlowdown(uid, TimeSpan.FromSeconds(1.5f), true, 0.5f, 0.5f, status);
@@ -207,18 +203,19 @@ public sealed partial class ChangelingSystem : EntitySystem
 
                 _popup.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
             }
-
+        }
+        else if (comp.Biomass <= comp.MaxBiomass * comp.BiomassDeficitJitterPercent)
+        {
             // the funny itch is not real
-            if (random == 3)
+            _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-medium"), uid, uid, PopupType.MediumCaution);
+            if (random)
             {
-                _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-medium"), uid, uid, PopupType.MediumCaution);
                 _jitter.DoJitter(uid, TimeSpan.FromSeconds(.5f), true, amplitude: 5, frequency: 10);
             }
         }
-        else if (comp.Biomass <= comp.MaxBiomass / 2 && random == 3)
+        else if (comp.Biomass <= comp.MaxBiomass * comp.BiomassDeficitWarningPercent) //always do this every update
         {
-            if (random == 1)
-                _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-low"), uid, uid, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-low"), uid, uid, PopupType.SmallCaution);
         }
         else comp.BonusChemicalRegen = 0f;
     }
@@ -425,7 +422,8 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         if (!TryComp<HumanoidAppearanceComponent>(target, out var appearance)
         || !TryComp<MetaDataComponent>(target, out var metadata)
-        || !TryComp<DnaComponent>(target, out var dna)
+        || !TryComp<DnaComponent>(target, out var dna) 
+        || dna.DNA == null
         || !TryComp<FingerprintComponent>(target, out var fingerprint))
             return false;
 
@@ -617,8 +615,8 @@ public sealed partial class ChangelingSystem : EntitySystem
             _actions.AddAction(uid, actionId);
 
         // making sure things are right in this world
-        comp.Chemicals = comp.MaxChemicals;
-        comp.Biomass = comp.MaxBiomass;
+        comp.ChemicalNextUpdateTime = _timing.CurTime + comp.ChemicalUpdateCooldown;
+        comp.BiomassNextUpdateTime = _timing.CurTime + comp.BiomassUpdateCooldown;
 
         // show alerts
         UpdateChemicals(uid, comp, 0);

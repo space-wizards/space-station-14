@@ -64,23 +64,15 @@ public sealed partial class LatheMenu : DefaultWindow
 
         if (_entityManager.TryGetComponent<LatheComponent>(Entity, out var latheComponent))
         {
-            if (!latheComponent.DynamicRecipes.Any())
+            if (!latheComponent.DynamicPacks.Any())
             {
                 ServerListButton.Visible = false;
             }
+
+            AmountLineEdit.SetText(latheComponent.DefaultProductionAmount.ToString());
         }
 
         MaterialsList.SetOwner(Entity);
-    }
-
-    protected override void Opened()
-    {
-        base.Opened();
-
-        if (_entityManager.TryGetComponent<LatheComponent>(Entity, out var latheComp))
-        {
-            AmountLineEdit.SetText(latheComp.DefaultProductionAmount.ToString());
-        }
     }
 
     /// <summary>
@@ -94,8 +86,17 @@ public sealed partial class LatheMenu : DefaultWindow
             if (!_prototypeManager.TryIndex(recipe, out var proto))
                 continue;
 
-            if (CurrentCategory != null && proto.Category != CurrentCategory)
-                continue;
+            // Category filtering
+            if (CurrentCategory != null)
+            {
+                if (proto.Categories.Count <= 0)
+                    continue;
+
+                var validRecipe = proto.Categories.Any(category => category == CurrentCategory);
+
+                if (!validRecipe)
+                    continue;
+            }
 
             if (SearchBar.Text.Trim().Length != 0)
             {
@@ -110,6 +111,8 @@ public sealed partial class LatheMenu : DefaultWindow
 
         if (!int.TryParse(AmountLineEdit.Text, out var quantity) || quantity <= 0)
             quantity = 1;
+
+        RecipeCount.Text = Loc.GetString("lathe-menu-recipe-count", ("count", recipesToShow.Count));
 
         var sortedRecipesToShow = recipesToShow.OrderBy(_lathe.GetRecipeName);
         RecipeList.Children.Clear();
@@ -179,18 +182,22 @@ public sealed partial class LatheMenu : DefaultWindow
 
     public void UpdateCategories()
     {
+        // Get categories from recipes
         var currentCategories = new List<ProtoId<LatheCategoryPrototype>>();
         foreach (var recipeId in Recipes)
         {
             var recipe = _prototypeManager.Index(recipeId);
 
-            if (recipe.Category == null)
+            if (recipe.Categories.Count <= 0)
                 continue;
 
-            if (currentCategories.Contains(recipe.Category.Value))
-                continue;
+            foreach (var category in recipe.Categories)
+            {
+                if (currentCategories.Contains(category))
+                    continue;
 
-            currentCategories.Add(recipe.Category.Value);
+                currentCategories.Add(category);
+            }
         }
 
         if (Categories != null && (Categories.Count == currentCategories.Count || !Categories.All(currentCategories.Contains)))
@@ -216,13 +223,14 @@ public sealed partial class LatheMenu : DefaultWindow
     /// Populates the build queue list with all queued items
     /// </summary>
     /// <param name="queue"></param>
-    public void PopulateQueueList(List<LatheRecipePrototype> queue)
+    public void PopulateQueueList(IReadOnlyCollection<ProtoId<LatheRecipePrototype>> queue)
     {
         QueueList.DisposeAllChildren();
 
         var idx = 1;
-        foreach (var recipe in queue)
+        foreach (var recipeProto in queue)
         {
+            var recipe = _prototypeManager.Index(recipeProto);
             var queuedRecipeBox = new BoxContainer();
             queuedRecipeBox.Orientation = BoxContainer.LayoutOrientation.Horizontal;
 
@@ -236,11 +244,13 @@ public sealed partial class LatheMenu : DefaultWindow
         }
     }
 
-    public void SetQueueInfo(LatheRecipePrototype? recipe)
+    public void SetQueueInfo(ProtoId<LatheRecipePrototype>? recipeProto)
     {
-        FabricatingContainer.Visible = recipe != null;
-        if (recipe == null)
+        FabricatingContainer.Visible = recipeProto != null;
+        if (recipeProto == null)
             return;
+
+        var recipe = _prototypeManager.Index(recipeProto.Value);
 
         FabricatingDisplayContainer.Children.Clear();
         FabricatingDisplayContainer.AddChild(GetRecipeDisplayControl(recipe));

@@ -36,7 +36,7 @@
     delay: 12.0
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakHopElite
   name: elite hop's cloak
   description: An elite hop's cloak made from the latest composite glowing fabric, ensuring you stand out and are easier to target. Live bright, hop hard, and pray your team knows how to catch!
@@ -53,7 +53,7 @@
     price: 2000
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingCloakCmoElite
   name: elite chief medical officer's cloak
   description: An elite chief medical officer's cloak made from the latest composite glowing fabric. Not recommended for breaking cancer diagnoses to patients.
@@ -70,7 +70,7 @@
     price: 2000
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent:  [ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakHosElite
   name: elite head of security's cloak
   description: An elite head of security's cloak crafted from the latest composite glowing fabric. Only for a true paladin.
@@ -87,7 +87,7 @@
     price: 2000
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakCeElite
   name: elite chief engineer's cloak
   description: Chief engineer's cloak made from the latest composite glowing fabric, ensuring you stand out. The brightest cloak—so everyone knows where all the station's light went.
@@ -104,7 +104,7 @@
     price: 2000
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent:  [ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakRdElite
   name: elite research director's cloak
   description: Research Director's cloak made from the latest composite glowing fabric, ensuring you stand out. Make sure to tell everyone you invented it.
@@ -121,7 +121,7 @@
     price: 2000
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakQmElite
   name: elite quartermaster's cloak
   description: Quartermaster's cloak made from the latest composite glowing fabric, of course, you doesn't want to sell it.
@@ -138,7 +138,7 @@
     price: 2000
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
   id: ClothingNeckCloakBsoElite
   name: Elite Blueshield Officer's cloak
   description: An elite Blueshield Officer's cloak crafted from the latest composite glowing fabric. Any true BlueShield is not afraid of shining in the dark!
@@ -152,12 +152,35 @@
     energy: 4
     color: "#84BEF4"
   - type: StaticPrice
-    price: 2000    
+    price: 2000
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakBsoCape
+  name: Blueshield Officer's Formal Cloak
+  description: An incredibly large coat, owned only by the most experienced blueshields. It's said the sleeves have never been worn.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/bso_formal.rsi
+  - type: Clothing
+    slots:
+      - neck
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckOldMantle
+  name: old wrap
+  description: A tattered fabric wrap, faded over the years. Smells faintly of cigars.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Mantles/oldmantle.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Neck/Mantles/oldmantle.rsi
 
 # Fashion-O-Mat, not obtainable any other way, unless mapped
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseCentcommContraband ]
   id: ClothingNeckCloakCentcomBlack
   name: special operations officer cloak
   description: The NanoTrasen logo embroidered in gold speaks for itself.
@@ -166,7 +189,7 @@
     sprite: _Starlight/Clothing/Neck/Cloaks/centcom_officer_black.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseCentcommContraband ]
   id: ClothingNeckCloakCentcomAdmiral
   name: admiral's cape
   description: A vibrant green cape with gold stitching, worn by Nanotrasen Navy Admirals.
@@ -175,7 +198,7 @@
     sprite: _Starlight/Clothing/Neck/Cloaks/admiral.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseCentcommContraband ]
   id: ClothingNeckMantleERTLeader
   name: ERT leader's mantle
   description: Extraordinary decorative drape over the shoulders.
@@ -197,3 +220,40 @@
     sprite: _Starlight/Clothing/Neck/Ties/disco.rsi
 
 # Fashion-O-Mat-END
+
+
+# ## USSP
+
+- type: entity
+  parent: [BaseItem, ClothingNeckBase, ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSovietContraband]
+  id: ClothingNeckCloakCommissar
+  name: Commissar overcoat
+  description: Rumor has it entire regiments of aides exist solely to press seams, polish buttons, and remind the Commissar which coat goes over which.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/commissar.rsi
+  - type: Clothing
+    slots:
+    - outerClothing
+    - neck
+    sprite: _Starlight/Clothing/Neck/Cloaks/commissar.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: HeldSpeedModifier
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+  - type: GroupExamine
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.7
+        Caustic: 0.9
+        Radiation: 0.85
+  - type: Item
+    size: Huge
+  - type: StaticPrice
+    price: 5000

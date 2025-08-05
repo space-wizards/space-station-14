@@ -45,7 +45,7 @@ public sealed class StorageInteractionTest : InteractionTest
         Assert.That(IsUiOpen(StorageComponent.StorageUiKey.Key), Is.True);
 
         // Pick up a PDA
-        var pda = await PlaceInHands("PassengerPDA");
+        var pda = await PlaceInHands("AssistantPDA");
         var sPda = ToServer(pda);
         Assert.That(sys.IsEntityInContainer(sPda), Is.True);
         Assert.That(sys.TryGetContainingContainer((sPda, null), out var container));
@@ -81,7 +81,7 @@ public sealed class StorageInteractionTest : InteractionTest
     {
         var uid = ToClient(target);
         var hotbar = GetWidget<HotbarGui>();
-        var storageContainer  = GetControlFromField<Control>(nameof(HotbarGui.StorageContainer), hotbar);
+        var storageContainer  = GetControlFromField<Control>(nameof(HotbarGui.SingleStorageContainer), hotbar);
         return GetControlFromChildren<ItemGridPiece>(c => c.Entity == uid, storageContainer);
     }
 }

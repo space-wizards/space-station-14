@@ -1,5 +1,6 @@
+#BSO Hardsuit
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitBlueshield
   categories: [ HideSpawnMenu ]
   name: blueshield officer's hardsuit helmet
@@ -21,3 +22,217 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
+#NTREP Hardsuit
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitNtrep
+  categories: [ HideSpawnMenu ]
+  name: Nanotrasen representative's hardsuit helmet
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntrep.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntrep.rsi
+  - type: PointLight
+    color: "#adeeff"
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 10000
+#Clown Battlesuit
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetBattlesuitClown
+  name: clown battlesuit helmet
+  description: Armored battlesuit helmet for silly needs.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/clown_bs_helmet.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/clown_bs_helmet.rsi
+  - type: PointLight
+    color: "#ffa1e3"
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+#Mercenary Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitMercenary
+  name: mercenary hardsuit helmet
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/Head/Hardsuits/mercenary.rsi
+    - type: Clothing
+      sprite: _Starlight/Clothing/Head/Hardsuits/mercenary.rsi
+    - type: PressureProtection
+      highPressureMultiplier: 0.45
+      lowPressureMultiplier: 10000
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.9
+          Slash: 0.9
+          Piercing: 0.9
+          Heat: 0.9
+#Space Hazard Suit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitSpaceHazard
+  name: space hazard helmet
+  description: Keeps the cold sulfuric embrace of space out.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/spacehazard.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/spacehazard.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.6
+
+- type: entity
+  parent: [ BaseCentcommContraband, ClothingHeadHelmetHardsuitSyndie ]
+  id: ClothingHeadHelmetHardsuitNTCCConsortium
+  name: nt cc consortium hardsuit helmet
+  description: A protective hardsuit helmet worn by NT-CC Consortium Officers.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntcc_hardsuit_helmet.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntcc_hardsuit_helmet.rsi
+  - type: PointLight
+    color: "#addbff"
+  - type: Pierceable
+    level: HardenedMetal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  parent: ClothingHeadHardsuitBase #[ ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitInfiltration
+  categories: [ HideSpawnMenu ]
+  name: syndicate infiltration hardsuit helmet
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/infiltrationsyndie.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/infiltrationsyndie.rsi
+  #- type: PointLight
+    #color: "#880808"
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 10000
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8  
+        
+# USSP
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase, BaseSovietContraband]
+  id: ClothingHeadHelmetHardsuitSovietMarine
+  name: SSF marine hardsuit helmet
+  description: From the soviet dieselpunk world.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/sovietmarine_helmet.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/sovietmarine_helmet.rsi
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET-unshaded
+        shader: unshaded
+      head-vox:
+      - state: on-equipped-HELMET-unshaded-vox
+        shader: unshaded
+      head-resomi:
+      - state: on-equipped-HELMET-unshaded-resomi
+        shader: unshaded
+      head-felionoid:
+      - state: on-equipped-HELMET-unshaded-felionoid
+        shader: unshaded
+      head-cyclorite:
+      - state: on-equipped-HELMET-unshaded-cyclorite
+        shader: unshaded
+      head-vulpkanin:
+      - state: on-equipped-HELMET-unshaded-vulpkanin
+        shader: unshaded
+  - type: PointLight
+    color: green
+    radius: 6
+    energy: 5
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+        
+##ntcc-medics
+        
+- type: entity
+  parent: [ BaseCentcommContraband, ClothingHeadHelmetHardsuitSyndie ]
+  id: ClothingHeadHelmetHardsuitNTCCConsortiumMedic
+  name: nt cc consortium medic hardsuit helmet
+  description: A protective hardsuit helmet worn by NT-CC Consortium medical personnel.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntcc_med_hardsuit_helmet.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntcc_med_hardsuit_helmet.rsi
+  - type: PointLight
+    color: "#addbff"
+  - type: Pierceable
+    level: HardenedMetal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.9
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitLuxmax
+  categories: [ HideSpawnMenu ]
+  name: QM's luxury maxim hardsuit helmet
+  description: This thing is made of solid gold, its a wonder you can keep your head up with it on.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/luxmax.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/luxmax.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: PointLight
+    radius: 7
+    energy: 3

@@ -5,10 +5,12 @@
   description: A square piece of metal standing on four metal legs.
   abstract: true
   components:
+  - type: Animateable
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: PlaceableSurface
+  - type: MixedFixtures
   - type: Fixtures
     fixtures:
       fix1:
@@ -28,6 +30,13 @@
     key: state
     base: state_
   - type: Climbable
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
+    whitelist:
+      components:
+        - KnockedDown
+        - Climbing
   - type: Bonkable
     bonkDamage:
       types:
@@ -39,6 +48,7 @@
   - type: Tag
     tags:
     - ForceFixRotations
+    - Table
 
 - type: entity
   id: CounterBase

@@ -5,3 +5,6 @@
   setPreference: true
   objective: roles-antag-changeling-description
   guides: [ Changelings ]
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 10800 # 3h

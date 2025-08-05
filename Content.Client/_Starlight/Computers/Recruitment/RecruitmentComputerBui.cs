@@ -72,7 +72,7 @@ public sealed class RecruitmentComputerBui(EntityUid owner, Enum uiKey) : BoundU
                     .Bind(x => SelectStation(x.Key))
                 .SetItems(_gameTicker.StationNames.ToList()))
             .Grid(5, x => x
-                .HorizontalExp()
+                .WithHorizontalExp()
                 .AddChildren(Table(jobsDict, departments)))));
 
         _window.OnClose += Close;
@@ -92,7 +92,7 @@ public sealed class RecruitmentComputerBui(EntityUid owner, Enum uiKey) : BoundU
     }.Concat(InnerTable(x.Roles.Where(x=> x.Id != "StationAi").Select(r => jobs[r.Id]).OrderByDescending(x => x.Weight))));
 
     private IEnumerable<Control> InnerTable(IEnumerable<JobPrototype> jobs)
-    => jobs.SelectMany(x => new Control[5]
+    => jobs.Where(x=>x.Hidden == false).SelectMany(x => new Control[5] // 🌟Starlight🌟
     {
         new RichTextLabel { Text = $"[font size=10]{Loc.GetString(x.Name)}[/font]", HorizontalExpand = true},
         new TextureRect {

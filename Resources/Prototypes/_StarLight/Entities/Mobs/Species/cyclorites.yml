@@ -8,7 +8,8 @@
   - type: Icon
     sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
     state: cyclorite
-  - type: CycloritesVision
+  - type: CycloriteVision
+  - type: NightVision
   - type: Thirst
   - type: Butcherable
     butcheringType: Spike
@@ -20,17 +21,29 @@
     hideLayersOnEquip:
     - Hair
     - Snout
-  - type: MovementSpeedModifier
-    speciesSprintSpeedModifier: 0.85
-    speciesWalkSpeedModifier: 1.00
   - type: Body
     prototype: Cyclorite
     requiredLegs: 2
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 222 # 120%
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: MobThresholds
     thresholds:
       0: Alive
       120: Critical
       240: Dead
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Cyclorite
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -44,8 +57,9 @@
     attackRate: 0.5
     damage:
       types:
-        Blunt: 10
-  - type: Sprite 
+        Blunt: 13
+        Structural: 10
+  - type: Sprite
     scale: 1.08, 1.08
   - type: Bloodstream
     bloodReagent: CopperBlood
@@ -97,17 +111,17 @@
         sizeMaps:
           32:
             sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
-            state: neck     
+            state: neck
       belt:
         sizeMaps:
           32:
             sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
-            state: belt      
+            state: belt
       outerClothing:
         sizeMaps:
           32:
             sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
-            state: outer          
+            state: outer
 
 - type: entity
   parent: BaseSpeciesDummy

@@ -62,6 +62,8 @@
   components:
   - type: Sprite
     state: "l_leg"
+  - type: MovementBodyPart
+    maxDensity: 155
 
 - type: entity
   id: RightLegDiona
@@ -73,6 +75,8 @@
   - type: BodyPart
     partType: Leg
     symmetry: Right
+  - type: MovementBodyPart
+    maxDensity: 155
 
 - type: entity
   id: LeftFootDiona

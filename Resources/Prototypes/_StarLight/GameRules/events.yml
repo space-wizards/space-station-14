@@ -6,10 +6,10 @@
     earliestStart: 15
     weight: 7.5
     minimumPlayers: 10
-    duration: 1
+    duration: null
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/ShuttleEvent/abductor_shuttle.yml
+    gridPath: /Maps/_Starlight/Shuttles/ShuttleEvent/abductor_shuttle.yml
   - type: AntagObjectives
     objectives:
     - AbductObjective
@@ -40,7 +40,7 @@
           - CanPilot
       - type: NpcFactionMember
         factions:
-        - SimpleHostile
+        - Abductor
       mindRoles:
       - MindRoleLoneAbductor
     - spawnerPrototype: AbductorAgentSpawner
@@ -65,7 +65,7 @@
           - CanPilot
       - type: NpcFactionMember
         factions:
-        - SimpleHostile
+        - Abductor
       mindRoles:
       - MindRoleLoneAbductor
       
@@ -76,7 +76,7 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/Signaleer.yml
+    gridPath: /Maps/_Starlight/Shuttles/Signaleer.yml
     
 - type: entity
   parent: BaseGameRule
@@ -84,7 +84,7 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/LancePirates.yml
+    gridPath: /Maps/_Starlight/Shuttles/LancePirates.yml
     
 - type: entity
   parent: BaseGameRule
@@ -92,7 +92,7 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/VoxATS.yml
+    gridPath: /Maps/_Starlight/Shuttles/VoxATS.yml
 
   #Pig's ERT Shuttle
 - type: entity
@@ -101,4 +101,94 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/ERTShuttle.yml
+    gridPath: /Maps/_Starlight/Shuttles/ERTShuttle.yml
+
+    #Pig's DS Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: DeathsquadShuttleSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/DSshuttle.yml
+    
+    #Pig's RadioTower
+- type: entity
+  parent: BaseGameRule
+  id: RadioTowerSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/Radiotower.yml
+
+      #Pig's CBURN Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: CBURNShuttleSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/CBURN.yml
+
+# Karma's Quantum Ark Shuttles
+- type: entity
+  parent: BaseGameRule
+  id: QuantumArkDerelictEvent
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/quantum_ark_event.yml
+
+- type: entity
+  parent: BaseGameRule
+  id: QuantumArkSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/quantum_ark.yml
+
+# Karma's SS Ana
+- type: entity
+  parent: BaseGameRule
+  id: AnaSpawn
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/ss_ana.yml
+
+# vlorgan's Admeme Experimental botany shuttle
+- type: entity
+  parent: BaseGameRule
+  id: ExperimentalBotanyShuttle
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/NT-Experimental-Botany-shuttle.yml
+      
+# Karma's Syndie Research Outpost      
+- type: entity
+  parent: BaseGameRule
+  id: SyndieResearchOutpostEvent
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      mapPath: /Maps/_Starlight/EventMaps/research_outpost_map.yml
+
+# Roundender-less events table for survival
+- type: entityTable
+  id: BasicAntagEventsTableNoRoundenders
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: ClosetSkeleton
+    - id: DragonSpawn
+    - id: KingRatMigration
+    - id: NinjaSpawn
+    - id: ParadoxCloneSpawn
+    - id: RevenantSpawn
+    - id: SleeperAgents
+#    - id: ZombieOutbreak
+    - id: LoneOpsSpawn
+    - id: DerelictCyborgSpawn
+    - id: WizardSpawn
+
+    - id: AbductorsSpawn # Starlight

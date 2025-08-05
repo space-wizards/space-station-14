@@ -6,8 +6,8 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Objects/Fun/toys.rsi
-          state: plushie_h
+        - sprite: Objects/Fun/Plushies/bee.rsi
+          state: icon
     - type: RandomSpawner
       rarePrototypes:
         - FoamBlade
@@ -51,7 +51,7 @@
       prototypes:
         - ToyAi
         - ToyNuke
-        - ToyFigurinePassenger
+        - ToyFigurineAssistant
         - ToyGriffin
         - ToyHonk
         - ToyIan
@@ -88,7 +88,7 @@
       - ToyFigurineNukieCommander
       rareChance: 0.05
       prototypes:
-      - ToyFigurinePassenger
+      - ToyFigurineAssistant
       - ToyFigurineClown
       - ToyFigurineMime
       - ToyFigurineMusician
@@ -101,7 +101,7 @@
       - ToyFigurineLawyer
       - ToyFigurineCargoTech
       - ToyFigurineSalvage
-      - ToyFigurineQuartermaster   
+      - ToyFigurineQuartermaster
       - ToyFigurineChiefEngineer
       - ToyFigurineAtmosTech
       - ToyFigurineEngineer
@@ -122,7 +122,6 @@
       - ToyFigurineFootsoldier
       - ToyFigurineWizardFake
       - ToyFigurineSlime
-      - ToyFigurineGreytider
       - ToyFigurineWizard
       - ToyGriffin
       - ToyOwlman

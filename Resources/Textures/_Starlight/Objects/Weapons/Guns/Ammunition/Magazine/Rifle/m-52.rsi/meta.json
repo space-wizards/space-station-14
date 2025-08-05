@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taked from RU Paradise station, updated by Rinary for new ammo types and mag states",
+    "copyright": "Taked from RU Paradise station, updated by Rinary for new ammo types and mag states, inhands by TiniestShark (github)",
     "states": [
         {
             "name": "base"
@@ -51,6 +51,22 @@
         },
         {
             "name": "mag-6"
+        },
+        {
+            "name": "inhand-left-mag",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-stripe",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-mag",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-stripe",
+            "directions": 4
         }
     ]
 }

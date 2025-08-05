@@ -1,0 +1,336 @@
+# Super Synth
+- type: loadout
+  id: SuperSynthesizerInstrument
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMusician
+      time: 72000 # 20 hours of being the biggest musician on the station
+  storage:
+    back:
+    - SuperSynthesizerInstrument
+
+# Meow mrrp ## shut up
+- type: loadout
+  id: ClothingUnderSocksCoder
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
+  storage:
+    back:
+    - ClothingUnderSocksCoder
+
+- type: loadout
+  id: ClothingShoesHighheelBoots
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
+  storage:
+    back:
+    - ClothingShoesHighheelBoots
+
+- type: loadout
+  id: ClothingShoesHighheelShoes
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
+  storage:
+    back:
+    - ClothingShoesHighheelShoesAesthetic
+
+- type: loadout
+  id: ClothWrap
+  storage:
+    back:
+    - ClothingClothWrap
+
+- type: loadout
+  id: ClothingUniformJumpskirtElegantMaid
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
+  storage:
+    back:
+    - ClothingUniformJumpskirtElegantMaid
+
+- type: loadout
+  id: ClothingHeadHatCatEars
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
+  storage:
+    back:
+    - ClothingHeadHatCatEars
+
+- type: loadout
+  id: RolliePack
+  storage:
+    back:
+      - CigPackRollie
+
+- type: loadout
+  id: GoldRing
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - GoldRing
+
+- type: loadout
+  id: SilverRing
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - SilverRing
+
+- type: loadout
+  id: Matchbox
+  storage:
+    back:
+      - Matchbox
+
+- type: loadout
+  id: FancyPen
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobLibrarian
+        time: 3600 # 1 hour of reading books (a fate worse than death)
+  storage:
+    back:
+      - LuxuryPen
+
+- type: loadout
+  id: HonkImplant
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobClown
+        time: 72000 # 20 hours of honk
+  storage:
+    back:
+      - BikeHornImplanter
+
+- type: loadout
+  id: TromboneImplant
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobClown
+        time: 72000 # 20 hours of honk
+  storage:
+    back:
+      - SadTromboneImplanter
+
+- type: loadout
+  id: NewtonsCradle
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobHeadOfPersonnel
+        time: 36000 # 10 hours of papers please
+  equipment:
+    back: NewtonCradle
+
+- type: loadout
+  id: POrb
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - PonderingOrb
+
+- type: loadout
+  id: BBall
+  storage:
+    back:
+      - Basketball
+
+- type: loadout
+  id: RubberQuack
+  storage:
+    back:
+      - ToyRubberDuck
+
+- type: loadout
+  id: GatchaBox
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - MysteryFigureBox
+
+- type: loadout
+  id: WristWatch
+  storage:
+    back:
+      - Wristwatch
+
+- type: loadout
+  id: ZippoLighter
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
+  storage:
+    back:
+      - FlippoLighter
+
+- type: loadout
+  id: MedChecker
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:DepartmentTimeRequirement
+        department: Medical
+        time: 72000 # 20hrs of treating patients as Dr. House
+  storage:
+    back:
+      - HandheldHealthAnalyzer
+
+- type: loadout
+  id: ChanceSack
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobLibrarian
+        time: 3600 # 1 hour of reading books (a fate worse than death)
+  storage:
+    back:
+      - DiceBag
+
+- type: loadout
+  id: StationMap
+  storage:
+    back:
+      - HandheldStationMap
+
+- type: loadout
+  id: YaharJar
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobCaptain
+        time: 72000 # 20 hours of being chased by nukies
+  storage:
+    back:
+      - BottleShip
+
+- type: loadout
+  id: PaperFolder1
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderRed
+
+- type: loadout
+  id: PaperFolder2
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderBlue
+
+- type: loadout
+  id: PaperFolder3
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderYellow
+
+- type: loadout
+  id: PaperFolder4
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderWhite
+
+- type: loadout
+  id: PaperFolder5
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderGrey
+
+- type: loadout
+  id: PaperFolder6
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderBlack
+
+- type: loadout
+  id: PaperFolder7
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderGreen
+
+- type: loadout
+  id: PaperClipboard
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - BoxFolderClipboard

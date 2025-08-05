@@ -3,12 +3,40 @@
   id: SpawnMobClownCorgi
   parent: MarkerBase
   components:
-  - type: Sprite
-    layers:
-      - state: green
-      - sprite: _Starlight/Mobs/Pets/corgi.rsi
-        state: clown_ian_dead
-      - state: ai
-  - type: ConditionalSpawner
-    prototypes:
-      - MobCorgiClownIan
+    - type: Sprite
+      layers:
+        - state: green
+        - sprite: _Starlight/Mobs/Pets/corgi.rsi
+          state: clown_ian_dead
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobCorgiClownIan
+
+- type: entity
+  name: smart subwoofer borgi spawner
+  id: SpawnSmartSubwoofer
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - SmartSubwooferBorgiChassis
+
+- type: entity
+  name: Cargorilla Spawner
+  id: SpawnMobCargorilla
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - sprite: Mobs/Animals/gorilla.rsi
+          state: cargo_crawling
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobCargorilla

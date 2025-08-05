@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: names_shadekin
+  values:
+    prefix: names-shadekin-dataset-
+    count: 49

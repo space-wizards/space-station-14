@@ -2,7 +2,7 @@
 
 - type: listing
   id: ClothingOuterHardsuitBasicSet
-  productEntity: ClothingOuterHardsuitBasic
+  productEntity: ClothingOuterHardsuitEVA
   cost:
     BuildToken: 1
   categories:

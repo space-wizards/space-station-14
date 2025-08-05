@@ -1,0 +1,88 @@
+- type: entity
+  id: Jump
+  name: Jump
+  description: You jumps at the selected direction.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 30
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Starlight/Actions/resomi.rsi
+      state: jump
+  - type: TargetAction
+    checkCanAccess: false
+    range: 20
+  - type: ActivationOnJump
+  - type: WorldTargetAction
+    event: !type:JumpActionEvent
+      sound:
+        path: /Audio/_Starlight/Effects/Jump/resomi.ogg
+
+- type: entity
+  parent: Jump
+  id: JumpResomi
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WorldTargetAction
+    event: !type:JumpActionEvent
+      distance: 10
+      sound:
+        path: /Audio/_Starlight/Effects/Jump/resomi.ogg
+
+- type: entity
+  parent: Jump
+  id: JumpMoth
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 1
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Starlight/Actions/resomi.rsi
+      state: jump
+  - type: LimitedCharges
+    maxCharges: 3
+  - type: AutoRecharge
+    rechargeDuration: 30
+  - type: WorldTargetAction
+    event: !type:JumpActionEvent
+      distance: 4.5
+      speed: 4.5 # Equal to movement speed.
+      sound:
+        path: /Audio/_Starlight/Effects/Jump/moth.ogg
+
+- type: entity
+  parent: Jump
+  id: JumpCat
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 15
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Starlight/Actions/resomi.rsi
+      state: jump
+  - type: WorldTargetAction
+    event: !type:JumpActionEvent
+      distance: 2
+      #sound: The Silent Hunter.
+
+- type: entity
+  parent: Jump
+  id: JumpJet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 3
+    itemIconStyle: BigAction
+    icon:
+      sprite: _Starlight/Actions/resomi.rsi
+      state: jump
+  - type: WorldTargetAction
+    event: !type:JetJumpActionEvent
+      distance: 10
+      fromGrid: false
+      toPointer: false
+      sound:
+        path: /Audio/_Starlight/Effects/Jump/jetpack.ogg

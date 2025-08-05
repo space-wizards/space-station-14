@@ -1,0 +1,22 @@
+- type: entity
+  parent: [BaseItem, BaseCentcommContraband]
+  id: AccessOveriderUnlimited
+  suffix: Unlimited
+  name: authentication overrider
+  description: A modified access configurator, specialized for ERT breach and clear operations on NT stations
+  components:
+  - type: Emag
+    emagType: Access
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/AccessOverider.rsi
+    state: icon
+  - type: Item
+    sprite: _Starlight/Objects/Tools/AccessOverider.rsi
+
+- type: entity
+  parent: AccessOveriderUnlimited
+  id: AccessOverider
+  suffix: Limited
+  components:
+  - type: LimitedCharges
+

@@ -5,6 +5,7 @@
     jumpsuit: ClothingUniformJumpsuitSoviet
     belt: ClothingSovietBelt
     shoes: ClothingShoesBootsCowboyBlack
+    id: SovietIdCard
   storage:
     belt:
     - RadioHandheld
@@ -28,6 +29,8 @@
 - type: startingGear
   id: SovietComradeGearSawn
   parent: SovietComradeGear
+  equipment:
+    belt: ClothingSovietBandolier
   inhand:
   - WeaponShotgunSawn
 #pistol

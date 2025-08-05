@@ -2,9 +2,10 @@
   id: Cargo
   name: department-Cargo
   description: department-Cargo-description
-  color: "#A46106"
+  color: "#b48b57"
   roles:
   - CargoTechnician
+  - MailTech
   - Quartermaster
   - SalvageSpecialist
   - MiningSpecialist
@@ -13,7 +14,7 @@
   id: Civilian
   name: department-Civilian
   description: department-Civilian-description
-  color: "#9FED58"
+  color: "#2cdb2c"
   weight: -10
   roles:
   - Bartender
@@ -27,7 +28,7 @@
   - Librarian
   - Mime
   - Musician
-  - Passenger
+  - Assistant
   - Reporter
   - Visitor
   - Zookeeper
@@ -37,7 +38,7 @@
   id: CentralCommand
   name: department-CentralCommand
   description: department-CentralCommand-description
-  color: "#0c344d"
+  color: "#2681a5"
   roles:
   - CentralCommandOfficial
   - CBURN
@@ -48,6 +49,7 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
+  - NTCCBlueshield ## Starlight Addition
   editorHidden: true
   weight: 120
 
@@ -55,7 +57,7 @@
   id: Command
   name: department-Command
   description: department-Command-description
-  color: "#334E6D"
+  color: "#fcdf03"
   roles:
   - Captain
   - ChiefEngineer
@@ -82,7 +84,7 @@
   id: Engineering
   name: department-Engineering
   description: department-Engineering-description
-  color: "#EFB341"
+  color: "#ff733c"
   roles:
   - AtmosphericTechnician
   - ChiefEngineer
@@ -93,7 +95,7 @@
   id: Medical
   name: department-Medical
   description: department-Medical-description
-  color: "#52B4E9"
+  color: "#57b8f0"
   roles:
   - Chemist
   - ChiefMedicalOfficer
@@ -107,7 +109,7 @@
   id: Security
   name: department-Security
   description: department-Security-description
-  color: "#DE3A3A"
+  color: "#ff4242"
   weight: 20
   roles:
   - HeadOfSecurity
@@ -121,7 +123,7 @@
   id: Science
   name: department-Science
   description: department-Science-description
-  color: "#D381C9"
+  color: "#cd7ccd"
   roles:
   - ResearchDirector
   - Scientist
@@ -132,20 +134,7 @@
   id: Silicon
   name: department-Silicon
   description: department-Silicon-description
-  color: "#D381C9"
+  color: "#00a2ff"
   roles:
   - Borg
   - StationAi
-
-- type: department
-  id: Specific
-  name: department-Specific
-  description: department-Specific-description
-  color: "#9FED58"
-  weight: 10
-  roles:
-  - Boxer
-  - Reporter
-  - Zookeeper
-  - Psychologist
-  primary: false

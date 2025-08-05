@@ -1,0 +1,25 @@
+- type: entity
+  parent: GasFilter
+  id: GasFilterInline
+  name: inline gas filter
+  description: Filters gases from a pipenet without splitting it in two.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Structures/Piping/Atmospherics/inlinegasfilter.rsi
+    - type: GasFilter
+      inlet: pipe
+      outlet: pipe
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: Longitudinal
+        filter:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: West
+    - type: Flippable
+      mirrorEntity: GasFilterInline
+    - type: Construction
+      node: inline_filter

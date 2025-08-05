@@ -1,4 +1,5 @@
 using Content.Shared.DoAfter;
+using Content.Shared.Hands.Components; //starlight
 using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -70,6 +71,20 @@ namespace Content.Shared.Strip.Components
     /// </remarks>
     [ByRefEvent]
     public sealed class BeforeGettingStrippedEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
+
+    //starlight start
+    [ByRefEvent]
+    public sealed class StripAttemptEvent(Entity<HandsComponent?> user,
+        EntityUid target,
+        EntityUid item,
+        string slot) : CancellableEntityEventArgs
+        {
+        public Entity<HandsComponent?> User = user;
+        public EntityUid Target = target;
+        public EntityUid Item = item;
+        public string Slot = slot;
+        }
+    //starlight end
 
     /// <summary>
     ///     Organizes the behavior of DoAfters for <see cref="StrippableSystem">.

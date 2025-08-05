@@ -9,9 +9,10 @@
   parent: BaseItem
   id: NTCredit
   name: credit
-  description: You gotta have real money.
+  description: You gotta have real money. Can be used in place of Spesos, at a 1:1 conversion rate.
   components:
   - type: NTCash
+  - type: Cash
   - type: Item
     shape:
     - 0,0,1,0
@@ -59,39 +60,9 @@
     - cash_10001
     - cash_30000
     - cash_60000
-    layerCountStates:
-    - 1
-    - 2
-    - 5
-    - 7
-    - 10
-    - 11
-    - 30
-    - 40
-    - 50
-    - 51  
-    - 70  
-    - 90  
-    - 100 
-    - 101 
-    - 133 
-    - 166 
-    - 200 
-    - 201 
-    - 300 
-    - 400 
-    - 500 
-    - 501 
-    - 700 
-    - 900 
-    - 1000
-    - 1001
-    - 3000
-    - 6000
-    - 10000
-    - 10001
-    - 30000
-    - 60000
+    layerFunction: Threshold
+  - type: StackLayerThreshold
+    thresholds: [1, 2, 5, 7, 10, 11, 30, 40, 50, 51, 70, 90, 100, 101, 133, 166, 200, 201, 300, 400, 500, 501, 700, 900, 1000, 1001, 3000, 6000, 10000, 10001, 30000, 60000]
   - type: Sprite
     sprite: _Starlight/Objects/Economy/cash.rsi
     state: cash_1
@@ -124,7 +95,7 @@
 
 - type: stack
   id: NTCredit
-  name: credit
+  name: stack-credit
   icon: { sprite: /Textures/_Starlight/Objects/Economy/cash.rsi, state: cash_1 }
   spawn: NTCredit
 

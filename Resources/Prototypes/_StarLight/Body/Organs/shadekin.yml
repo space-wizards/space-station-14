@@ -1,0 +1,95 @@
+- type: entity
+  id: OrganShadekinBrain
+  parent: OrganHumanBrain
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Shadekin/organs.rsi
+    state: brain
+
+- type: entity
+  id: OrganShadekinEyes
+  parent: OrganHumanEyes
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Shadekin/organs.rsi
+    layers:
+      - state: eyes
+  - type: FunctionalOrgan
+    comps: 
+    - type: NightVision
+  - type: OrganVisualization
+    layer: Eyes
+    prototype: MobShadekinEyes
+
+- type: entity
+  id: OrganShadekinTongue
+  parent: OrganHumanTongue
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Shadekin/organs.rsi
+    state: tongue
+
+
+- type: entity
+  id: OrganShadekinAppendix
+  parent: OrganHumanAppendix
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Shadekin/organs.rsi
+    layers:
+      - state: appendix
+
+
+- type: entity
+  id: OrganShadekinHeart
+  parent: OrganHumanHeart
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Shadekin/organs.rsi
+    state: heart
+
+- type: entity
+  id: OrganShadekinStomach
+  parent: OrganHumanStomach
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Shadekin/organs.rsi
+    state: stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 40
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+
+- type: entity
+  id: OrganShadekinLiver
+  parent: OrganHumanLiver
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Shadekin/organs.rsi
+    state: liver
+
+- type: entity
+  id: OrganShadekinKidneys
+  parent: OrganHumanKidneys
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Shadekin/organs.rsi
+    layers:
+      - state: kidneys
+
+- type: entity
+  id: OrganShadekinCore
+  parent: BaseItem
+  name: shadekin core
+  description: A core of a shadekin, a mysterious and powerful organ that seems to be the source of their energy.
+  components:
+  - type: Organ
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Shadekin/organs.rsi
+    layers:
+      - state: core

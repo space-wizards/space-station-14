@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -9,6 +10,17 @@ namespace Content.Server.Bible.Components
     [RegisterComponent]
     public sealed partial class SummonableComponent : Component
     {
+        /// <summary>
+        /// Default sound to play when entity is summoned.
+        /// </summary>
+        private static readonly ProtoId<SoundCollectionPrototype> DefaultSummonSound = new("Summon");
+
+        /// <summary>
+        /// Sound to play when entity is summoned.
+        /// </summary>
+        [DataField]
+        public SoundSpecifier SummonSound = new SoundCollectionSpecifier(DefaultSummonSound, AudioParams.Default.WithVolume(-4f));
+
         /// <summary>
         /// Used for a special item only the Chaplain can summon. Usually a mob, but supports regular items too.
         /// </summary>

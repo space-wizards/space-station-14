@@ -17,8 +17,10 @@ namespace Content.IntegrationTests.Tests.Station;
 [TestOf(typeof(StationJobsSystem))]
 public sealed class StationJobsTest
 {
+    private const string StationMapId = "FooStation";
+
     [TestPrototypes]
-    private const string Prototypes = @"
+    private const string Prototypes = $@"
 - type: playTimeTracker
   id: PlayTimeDummyAssistant
 
@@ -35,13 +37,13 @@ public sealed class StationJobsTest
   id: PlayTimeDummyChaplain
 
 - type: gameMap
-  id: FooStation
+  id: {StationMapId}
   minPlayers: 0
-  mapName: FooStation
+  mapName: {StationMapId}
   mapPath: /Maps/Test/empty.yml
   stations:
     Station:
-      mapNameTemplate: FooStation
+      mapNameTemplate: {StationMapId}
       stationProto: StandardNanotrasenStation
       components:
         - type: StationJobs
@@ -87,7 +89,7 @@ public sealed class StationJobsTest
         var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-        var fooStationProto = prototypeManager.Index<GameMapPrototype>("FooStation");
+        var fooStationProto = prototypeManager.Index<GameMapPrototype>(StationMapId);
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
         var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
         var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
@@ -98,25 +100,35 @@ public sealed class StationJobsTest
         {
             for (var i = 0; i < StationCount; i++)
             {
-                stations.Add(stationSystem.InitializeNewStation(fooStationProto.Stations["Station"], null, $"Foo {StationCount}"));
+                stations.Add(stationSystem.InitializeNewStation(fooStationProto.Stations["Station"],
+                    null,
+                    $"Foo {StationCount}"));
             }
         });
 
+        var jobPrioritiesA = new Dictionary<ProtoId<JobPrototype>, JobPriority>()
+        {
+            { "TAssistant", JobPriority.Medium },
+            { "TClown", JobPriority.Low },
+            { "TMime", JobPriority.High },
+        };
+        var jobPrioritiesB = new Dictionary<ProtoId<JobPrototype>, JobPriority>()
+        {
+            { "TCaptain", JobPriority.High },
+        };
+
+        var tideSessions = await pair.AddDummyPlayers(jobPrioritiesA, PlayerCount);
+        var capSessions = await pair.AddDummyPlayers(jobPrioritiesB, CaptainCount);
+        var allSessions = tideSessions.Concat(capSessions).ToList();
+        var allNetIds = allSessions.Select(s => s.UserId).ToHashSet();
+
         await server.WaitAssertion(() =>
         {
-            var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>()
-                .AddJob("TAssistant", JobPriority.Medium, PlayerCount)
-                .AddPreference("TClown", JobPriority.Low)
-                .AddPreference("TMime", JobPriority.High)
-                .WithPlayers(
-                    new Dictionary<NetUserId, HumanoidCharacterProfile>()
-                    .AddJob("TCaptain", JobPriority.High, CaptainCount)
-                );
-            Assert.That(fakePlayers, Is.Not.Empty);
+            Assert.That(allSessions, Is.Not.Empty);
 
             var start = new Stopwatch();
             start.Start();
-            var assigned = stationJobs.AssignJobs(fakePlayers, stations);
+            var assigned = stationJobs.AssignJobs(allNetIds, stations);
             Assert.That(assigned, Is.Not.Empty);
             var time = start.Elapsed.TotalMilliseconds;
             logmill.Info($"Took {time} ms to distribute {TotalPlayers} players.");
@@ -161,7 +173,7 @@ public sealed class StationJobsTest
         var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-        var fooStationProto = prototypeManager.Index<GameMapPrototype>("FooStation");
+        var fooStationProto = prototypeManager.Index<GameMapPrototype>(StationMapId);
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
         var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
         var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
@@ -246,33 +258,5 @@ public sealed class StationJobsTest
             });
         });
         await pair.CleanReturnAsync();
-    }
-}
-
-internal static class JobExtensions
-{
-    public static Dictionary<NetUserId, HumanoidCharacterProfile> AddJob(
-        this Dictionary<NetUserId, HumanoidCharacterProfile> inp, string jobId, JobPriority prio = JobPriority.Medium,
-        int amount = 1)
-    {
-        for (var i = 0; i < amount; i++)
-        {
-            inp.Add(new NetUserId(Guid.NewGuid()), HumanoidCharacterProfile.Random().WithJobPriority(jobId, prio));
-        }
-
-        return inp;
-    }
-
-    public static Dictionary<NetUserId, HumanoidCharacterProfile> AddPreference(
-        this Dictionary<NetUserId, HumanoidCharacterProfile> inp, string jobId, JobPriority prio = JobPriority.Medium)
-    {
-        return inp.ToDictionary(x => x.Key, x => x.Value.WithJobPriority(jobId, prio));
-    }
-
-    public static Dictionary<NetUserId, HumanoidCharacterProfile> WithPlayers(
-        this Dictionary<NetUserId, HumanoidCharacterProfile> inp,
-        Dictionary<NetUserId, HumanoidCharacterProfile> second)
-    {
-        return new[] { inp, second }.SelectMany(x => x).ToDictionary(x => x.Key, x => x.Value);
     }
 }

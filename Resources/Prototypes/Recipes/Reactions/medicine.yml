@@ -561,7 +561,7 @@
   id: Opporozidone
   minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
   reactants:
-    Cognizine: 
+    Cognizine:
       amount: 1
     Plasma:
       amount: 2
@@ -575,24 +575,26 @@
   impact: Medium
   minTemp: 370
   reactants:
-    Blood:
-      amount: 3
-    Omnizine:
-      amount: 1
+    Blood: # Starlight, Reduced blood requirement for math-related reasons
+      amount: 2
+    Diphenhydramine: # Starlight, added in place of omnizine
+      amount: 2
+    Desoxyephedrine: # Starlight, added in place of omnizine
+      amount: 2
     Cryoxadone:
       amount: 2
   products:
-    Necrosol: 2
+    Necrosol: 4 # Starlight, more product due to the amount of the additional reactants
 
 - type: reaction
   id: Aloxadone
   impact: Medium
   reactants:
     Cryoxadone:
-      amount: 1
-    Aloe:
       amount: 2
-    Sigynate:
+    Aloe:
+      amount: 1
+    Leporazine:
       amount: 2
   products:
       Aloxadone: 4

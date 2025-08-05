@@ -1,0 +1,11 @@
+#Soviet EVA Helmet
+- type: entity
+  parent: [ ClothingHeadEVAHelmetBase, BaseSovietContraband ]
+  id: ClothingHeadHelmetSovietEVA
+  name: soviet EVA helmet
+  description: A sturdy EVA helmet with a red star emblazoned on the front. Glory to the workers of space!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/soviet_eva_helm.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/soviet_eva_helm.rsi

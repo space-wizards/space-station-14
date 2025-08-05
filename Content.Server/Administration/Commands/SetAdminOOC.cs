@@ -6,13 +6,14 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.NameColor)]
-    internal sealed class SetAdminOOC : IConsoleCommand
+    internal sealed class SetAdminOOC : LocalizedCommands
     {
-        public string Command => "setadminooc";
-        public string Description => Loc.GetString("set-admin-ooc-command-description", ("command", Command));
-        public string Help => Loc.GetString("set-admin-ooc-command-help-text", ("command", Command));
+        [Dependency] private readonly IServerDbManager _dbManager = default!;
+        [Dependency] private readonly IServerPreferencesManager _preferenceManager = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "setadminooc";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player == null)
             {
@@ -34,13 +35,19 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
+            var luminance = (0.2126f * color.Value.R) + (0.7152f * color.Value.G) + (0.0722f * color.Value.B);
+
+            if (luminance is < 0.2f or > 0.8f)
+            {
+                shell.WriteError("The color is too close to black or white — pick a more contrasting shade.");
+                return;
+            }
+
             var userId = shell.Player.UserId;
             // Save the DB
-            var dbMan = IoCManager.Resolve<IServerDbManager>();
-            dbMan.SaveAdminOOCColorAsync(userId, color.Value);
+            _dbManager.SaveAdminOOCColorAsync(userId, color.Value);
             // Update the cached preference
-            var prefManager = IoCManager.Resolve<IServerPreferencesManager>();
-            var prefs = prefManager.GetPreferences(userId);
+            var prefs = _preferenceManager.GetPreferences(userId);
             prefs.AdminOOCColor = color.Value;
         }
     }

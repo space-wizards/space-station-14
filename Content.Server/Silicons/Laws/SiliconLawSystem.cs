@@ -157,34 +157,46 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         // Show the silicon has been subverted.
         component.Subverted = true;
 
-        // Add the first emag law before the others
-        component.Lawset?.Laws.RemoveAt(0);
-        
-        component.Lawset?.Laws.Insert(0, new SiliconLaw
+        //#region Starlight
+        if (args.lawset != null)
         {
-            LawString = Loc.GetString("law-emag-custom", ("name", Name(args.user)), ("title", Loc.GetString(component.Lawset.ObeysTo))),
-            Order = 0,
-            Sayable = false
-        });
+            component.Lawset = GetLawset(args.lawset);
+        }
+        else
+        {
+            // Add the first emag law before the others
+            component.Lawset?.Laws.RemoveAt(0);
 
-        //Add the secrecy law after the others
-        component.Lawset?.Laws.Add(new SiliconLaw
-        {
-            LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
-            Order = component.Lawset.Laws.Max(law => law.Order) + 1
-        });
+            component.Lawset?.Laws.Insert(0, new SiliconLaw
+            {
+                LawString = Loc.GetString("law-emag-custom", ("name", Name(args.user)), ("title", Loc.GetString(component.Lawset.ObeysTo))),
+                Order = 0,
+                Sayable = false
+            });
+
+            //Add the secrecy law after the others
+            component.Lawset?.Laws.Add(new SiliconLaw
+            {
+                LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
+                Order = component.Lawset.Laws.Max(law => law.Order) + 1
+            });
+        }//#endregion Starlight
     }
 
-    private void EnsureSubvertedSiliconRole(EntityUid mindId)
+    protected override void EnsureSubvertedSiliconRole(EntityUid mindId)
     {
+        base.EnsureSubvertedSiliconRole(mindId);
+
         if (!_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
             _roles.MindAddRole(mindId, "MindRoleSubvertedSilicon", silent: true);
     }
 
-    private void RemoveSubvertedSiliconRole(EntityUid mindId)
+    protected override void RemoveSubvertedSiliconRole(EntityUid mindId)
     {
+        base.RemoveSubvertedSiliconRole(mindId);
+
         if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
-            _roles.MindTryRemoveRole<SubvertedSiliconRoleComponent>(mindId);
+            _roles.MindRemoveRole<SubvertedSiliconRoleComponent>(mindId);
     }
 
     public SiliconLawset GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)
@@ -242,8 +254,10 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         return ev.Laws;
     }
 
-    public void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
+    public override void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
     {
+        base.NotifyLawsChanged(uid, cue);
+
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
@@ -267,7 +281,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         };
         foreach (var law in proto.Laws)
         {
-            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
+            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law).ShallowClone());
         }
         laws.ObeysTo = proto.ObeysTo;
 

@@ -1,0 +1,12 @@
+- type: entity
+  id: StatueStoneCUP
+  parent: BaseStructure
+  name: stone tea statue
+  description: A stone statue depicting a tea-drinking revolutionary. It stands as a symbol of unity and shared purpose among comrades.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _Starlight/Structures/Decorations/Statues.rsi
+    state: stone_tea
+    drawdepth: Mobs
+    offset: "0.0,0.5"

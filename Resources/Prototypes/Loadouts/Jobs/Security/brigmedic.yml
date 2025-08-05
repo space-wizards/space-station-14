@@ -86,3 +86,13 @@
   id: CorpsmanCoat
   equipment:
     outerClothing: ClothingOuterCoatCorpsman #Starlight
+
+- type: loadout
+  id: BrigmedicGlasses
+  equipment:
+    eyes: ClothingEyesGlassesBrigmedic
+
+- type: loadout
+  id: BrigmedicHud
+  equipment:
+    eyes: ClothingEyesHudBrigmedic

@@ -8,7 +8,7 @@
     sprite: Clothing/Head/Welding/welding.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Head/Welding/welding.rsi
   - type: Item
@@ -25,8 +25,8 @@
   - type: WeldingMask
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: {state: icon}
           False: {state: icon-up}
   - type: PhysicalComposition
@@ -59,7 +59,7 @@
     sprite: Clothing/Head/Welding/flame_welding_mask.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Head/Welding/flame_welding_mask.rsi
   - type: Tag
@@ -77,7 +77,7 @@
     sprite: Clothing/Head/Welding/blue_flame_welding_mask.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Head/Welding/blue_flame_welding_mask.rsi
   - type: Tag
@@ -95,7 +95,7 @@
     sprite: Clothing/Head/Welding/paintedwelding.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Head/Welding/paintedwelding.rsi
   - type: Tag
@@ -108,7 +108,8 @@
   name: Adjust Welding Mask
   description: Covers or reveals your face.
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 1
     itemIconStyle: BigItem
+  - type: InstantAction
     event: !type:ToggleActionEvent

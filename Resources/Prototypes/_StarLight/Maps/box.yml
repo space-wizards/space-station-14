@@ -4,7 +4,7 @@
   mapPath: /Maps/_Starlight/Stations/Box.yml
   minPlayers: 50
   stations:
-    Boxstation:
+    StarlightBox:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -43,7 +43,7 @@
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 5, 5 ]
             ResearchAssistant: [ 4, 4 ]
-            Roboticist: [ 1, 1 ]
+            Roboticist: [ 2, 2 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
@@ -55,8 +55,10 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 6, 6 ]
             CargoTechnician: [ 3, 3 ]
+            MailTech: [ 1, 2 ]
+            MiningSpecialist: [ 3, 3 ]
             #civilian
-            Passenger: [ -1, -1 ]
+            Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]

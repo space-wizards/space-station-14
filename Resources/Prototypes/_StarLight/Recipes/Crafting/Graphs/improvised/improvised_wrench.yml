@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: ImprovisedWrenchGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tool
+      steps:
+      - material: Steel
+        amount: 3
+        doAfter: 10
+  - node: tool
+    entity: UnfinishedImprovisedWrench

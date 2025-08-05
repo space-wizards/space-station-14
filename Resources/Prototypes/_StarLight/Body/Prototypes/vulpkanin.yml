@@ -20,11 +20,12 @@
       - right leg
       - left leg
       organs:
-        heart: OrganAnimalHeart
+        heart: OrganVulpkaninHeart
         lungs: OrganHumanLungs
         stomach: OrganVulpkaninStomach
         liver: OrganAnimalLiver
         kidneys: OrganHumanKidneys
+        cavity: null
     right arm:
       part: RightArmVulpkanin
       connections:

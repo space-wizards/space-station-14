@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "taken from the game",
+  "copyright": "taken from the game, Abductor ID by Walksanator",
   "size": {
     "x": 32,
     "y": 32
@@ -13,20 +13,41 @@
     {
       "name": "gold"
     },
-	{
-	  "name": "silver"
-	},
-	{
-	  "name": "idmagistrate"
-	},
-	{
-	  "name": "idiaa"
-	},
-	{
-	  "name": "idblueshield"
-	},
+    {
+      "name": "silver"
+    },
+    {
+      "name": "idmagistrate"
+    },
+    {
+      "name": "idiaa"
+    },
+    {
+      "name": "idblueshield"
+    },
     {
       "name": "idstationminer"
+    },
+    {
+      "name": "idmailtech"
+    },
+    {
+      "name": "sovietid"
+    },
+    {
+      "name": "syndi"
+    },
+    {
+      "name": "idcommander"
+    },
+    {
+      "name": "idsyndiagent"
+    },
+    {
+      "name": "idoperative"
+    },
+    {
+      "name": "abductor"
     }
   ]
 }

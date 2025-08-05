@@ -1,11 +1,13 @@
+using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Procedural;
 
-[Prototype("salvageDifficulty")]
+[Prototype]
 public sealed partial class SalvageDifficultyPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = string.Empty;
+    [IdDataField] public string ID { get; private set; } = string.Empty;
 
     /// <summary>
     /// Color to be used in UI.
@@ -36,4 +38,12 @@ public sealed partial class SalvageDifficultyPrototype : IPrototype
 
     [DataField("recommendedPlayers", required: true)]
     public int RecommendedPlayers;
+
+    // Starlight Start
+
+    [DataField]
+    public TimeSpan Delay = TimeSpan.Zero;
+
+    [DataField]
+    public float Probability = 1;
 }

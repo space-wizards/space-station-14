@@ -10,8 +10,8 @@
     ClothingHeadHatSecsoft: 3
     ClothingHeadBandRed: 3
     ClothingMaskNeckGaiterRed: 3
-    ClothingHandsGlovesColorBlack: 3
-    ClothingHandsGlovesFingerless: 3
+    ClothingHandsGlovesSecurityRed: 3
+    ClothingHandsGlovesSecurityFingerlessRed: 3
     ClothingUniformJumpskirtSec: 3
     ClothingUniformJumpsuitSecGrey: 3
     ClothingUniformJumpskirtSecGrey: 3
@@ -19,11 +19,21 @@
     ClothingHeadsetSecurity: 3
     ClothingOuterWinterSec: 2
     ClothingOuterArmorBasic: 2
-    ClothingNeckScarfStripedRed: 3
     ClothingOuterArmorBasicSlim: 2
+    ClothingOuterArmorPlate: 2
+    ClothingOuterArmorStab: 2
+    ClothingOuterArmorHeatAbsorb: 2
+    ClothingHeadHelmetPlate: 2
+    ClothingHeadHelmetStabproof: 2
+    ClothingHeadHelmetHeatAbsorbent: 2
+    ClothingNeckScarfStripedRed: 3
     ClothingEyesBlindfold: 1
     ClothingShoesBootsCombat: 1
     ClothingShoesBootsWinterSec: 2
     ClothingHeadHelmetJustice: 1
   contrabandInventory:
     ClothingMaskClownSecurity: 1
+    ClothingMaskMimeSecurity: 1
+    ToyFigurineSecurity: 1
+    ToyFigurineWarden: 1
+    ToyFigurineHeadOfSecurity: 1

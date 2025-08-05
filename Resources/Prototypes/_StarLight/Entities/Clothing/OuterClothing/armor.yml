@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingOuterArmorBasic, BaseCommandContraband]
+  parent: [ClothingOuterArmorBase, BaseCommandContraband]
   id: ClothingOuterArmorBlueShield
   name: blueshield officer's bulletproof vest
   description: Much better than a standard type-1 security vest. Don't lose it, you will NOT get a replacement.
@@ -21,9 +21,9 @@
     damageCoefficient: 0.80
   - type: Item
     size: Normal
-    
+
 - type: entity
-  parent: ClothingOuterArmorBasic
+  parent: [ ClothingOuterArmorBasic, BaseMajorContraband ]
   id: ClothingOuterArmorAbductor
   name: agent vest
   components:
@@ -81,3 +81,214 @@
           staminaModifier: 0.5
         - type: ExplosionResistance
           damageCoefficient: 0.5
+
+- type: entity
+  parent: [ClothingOuterArmorBase, BaseSecurityContraband]
+  id: ClothingOuterArmorPlate
+  name: plate carrier
+  description: A standard Type II armored vest that provides good protection against bullets and lasers with the help of a plate inserted in the back and front, but not much else.
+  components:
+  - type: Pierceable
+    level: Metal
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/platecarrier.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/platecarrier.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.55
+        Heat: 0.85
+  - type: ExplosionResistance
+    damageCoefficient: 0.85
+
+- type: entity
+  parent: [ClothingOuterArmorBase, BaseSecurityContraband]
+  id: ClothingOuterArmorStab
+  name: stabproof vest
+  description: Contrary to it's name, it's just a Type II armored vest that provides good protection against stabs and punches, but not much else.
+  components:
+  - type: Pierceable
+    level: Metal
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/stabvest.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/stabvest.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.55
+        Slash: 0.55
+        Piercing: 0.85
+        Heat: 0.85
+
+- type: entity
+  parent: [ClothingOuterArmorBase, BaseSecurityContraband]
+  id: ClothingOuterArmorHeatAbsorb
+  name: heat absorbent vest
+  description: Advanced vest designed to absorb heat rather than reflect it, but still has some reflective properties itself. Not good against bullets or blunt impacts due to the fragile material.
+  components:
+  - type: Pierceable
+    level: Metal
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/heatabsorbent.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/heatabsorbent.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.55
+
+- type: entity
+  parent: [ClothingOuterArmorForged, BaseMinorContraband]
+  id: ClothingOuterArmorMakeshift
+  name: makeshift vest
+  description: Might catch a bullet. Might.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/makeshift.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/makeshift.rsi
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.80
+        Piercing: 0.90
+        Heat: 0.95
+  - type: ClothingSpeedModifier
+    walkModifier: 0.90
+    sprintModifier: 0.90
+  - type: ExplosionResistance
+    damageCoefficient: 0.95
+  - type: Construction
+    graph: ClothingOuterArmorMakeshiftGraph
+    node: vest
+
+- type: entity
+  parent: [ClothingOuterArmorForged, BaseMinorContraband]
+  id: ClothingOuterArmorImprovised
+  name: improvised vest
+  description: Interlocking metal plates ensure you're decently protected against stabs, but not much else.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/improvised.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/improvised.rsi
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.70
+        Piercing: 0.85
+        Heat: 0.90
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: ExplosionResistance
+    damageCoefficient: 0.95
+
+- type: entity
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseMinorContraband] #BaseSecurityContraband overwrites BaseMinorContraband, annoyingly enough.
+  id: ClothingOuterArmorForged
+  name: forged vest
+  description: A product of high-quality tidesmithing, the additional leather padding and the swap for plasteel over steel ensures the armor is lightweight and effective.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/forged.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/forged.rsi
+  - type: Pierceable
+    level: Metal
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.65
+        Piercing: 0.70
+        Heat: 0.85
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+
+- type: entity
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseMajorContraband]
+  id: ClothingOuterArmorPaladin
+  name: paladin suit
+  description: Be the paladin you want to be! Swing swords in maints at the terrified security officer! Battle MONSTERS that are totally not vent creatures! Get shot by lasers and die-! Wait what?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/paladin.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/paladin.rsi
+  - type: Pierceable
+    level: Metal
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.70
+        Slash: 0.50
+        Piercing: 0.55
+        Heat: 0.85
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: ExplosionResistance
+    damageCoefficient: 0.85
+
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseCentcommContraband]
+  id: ClothingOuterVestWebEliteCentcomm
+  name: central command web vest
+  description: A synthetic armor vest redesignated for use by the Corporate Consortium, webbing and heat resistant fibers included.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Vests/cc_webvest.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Vests/cc_webvest.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 0.1
+    coolingCoefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.7
+        Heat: 0.3
+        Radiation: 0.5
+        Caustic: 0.5
+    staminaModifier: 0.35
+    ingoreKnockdown: true
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: FireProtection
+    reduction: 0.85
+    
+- type: entity
+  parent: [ClothingOuterArmorBase, BaseCentcommContraband]
+  id: ClothingOuterVestNTCC
+  name: nt cc consortium officer's vest
+  description: Much better than a standard type-1 security vest. Don't lose it, you will NOT get a replacement.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Vests/ntcc_vest.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Vests/ntcc_vest.rsi
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.80
+  - type: Item
+    size: Normal

@@ -4,15 +4,57 @@
   <Box>
     <GuideEntityEmbed Entity="MobResomi" Caption=""/>
   </Box>
+  small, upright, raptor-like creatures with four ears.
+  Their thin tail is still strong enough to pull things without needing their hands for assistance.
 
-small, upright, raptor-like creatures with four ears.
+  ## Sounds
+  Resomi make sounds akin to common bird noises found on Earth, such as chirping and squawking.
 
-  - Night Vision.
-  - Flash duration longer(x2).
-  - Lower Health.
-  - Can't use large guns like Rifles, HMG, LMG, Launchers, Battery Guns.
-  - Can't be nukeop or lone op.
-  - Can jump.
-  - Can run through tables.
+  ## Nexus Technological Hivemind
+  Due to a implant that all Resomi are given at birth, they have a neural connection to the Nexus.
+  This allows them to communicate with others of their species over a technological network.
+  Use the [color=orange]+n[/color] prefix in chat to send a message to all Resomi anonymously.
 
+  ## Age and names
+  Resomi are hatched from eggs, and enter eligibility for CC and NT employment at the age of [color=yellow]23[/color] standard galactic years.  
+  Resomi can live up to [color=yellow]430[/color] years old.
+  Their names are usually nicknames as most other species have trouble pronouncing their native names.
+  Resomi station identities will list their nickname first, followed by their pack name. For example, [color=yellow]Tashira, Darkfeathers Pack[/color].
+  Some Resomi forego this system and go by other nicknames or names.
+
+  ## Nightvision
+  Resomi have a innate nightvision given to them by their eyes.
+  This allows them to see in pure darkness farther than any normal handheld lightsource would provide.
+  They will have normal vision when wearing any equipment that provides flash immunity.
+  Using HUD variants allows you to keep your innate vision, at the cost of losing flash immunity.
+  You can configure if you start with glasses or HUD in the loadouts for all relevant roles.
+  <Box>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesSecurity" Scale="5" Caption="Security Glasses\nNo Nightvision\nHas flash immunity"/>
+    <GuideEntityEmbed Entity="ClothingEyesHudSecurity" Scale="5" Caption="Security Hud\nNightvision\nNo flash immunity"/>
+  </Box>
+  ## Flash Duration
+  Due to their eyes being more sensitive to light, Resomi will be stunned for a longer duration when flashed.
+  Flashes will take [color=yellow]2[/color] times as long as normal for other species, lasting up to [color=#ffa500]10[/color] seconds in the case of a localized flash.
+  
+  ## Health
+  Resomi have lower health due to their small stature, falling into a critical state at [color=#ffa500]85[/color] points of damage and dying at [color=#ffa500]170[/color] points of damage.
+  Resomi also prefer colder temperatures compared to humans, being roughly akin to Moths.
+  
+  ## Claw attack
+  Resomi are able to slash at others with their claws.
+  These attacks deal [color=red]5[/color] points of Slash damage with a hit rate that is the same as humans fists attack.
+  
+  ## Weapon Knockback
+  Resomi are very lightweight, and as such take so much knockback from large caliber weapons that they get pushed around.
+  Resomi also will receive [color=yellow]Stun Damage[/color] from large caliber weapons for each shot.
+  In general, the weapons that will give you knockback are [color=yellow]Rifles, Sniper Rifles, Shotguns, LMGs, HMGs, and Grenade Launchers.[/color]
+  Look out especially on Rocket launchers, as since they are recoil-less, you will actually get [color=red]pulled forward with the rocket[/color] for a short distance.
+  The safest weapons to use that will give you no knockback are [color=green]Pistols and SMGs[/color].
+  No slips can help mitigate some of the knockback from firing weapons, but not all of it!
+  Also keep in mind that any stamina resistance you have DOES work to reduce the stamina damage from these weapons.
+
+  ## Jumping
+  Resomi are able to jump, allowing them to move around station hallways quickly, and to jump ahead of others in a chase.
+  This ability has a cooldown of [color=yellow]30[/color] seconds between uses.
+  If the Resomi is dragging anything and trys to jump, the object will hold them back accordingly, leading to most of the time the Resomi jumping in place.
 </Document>

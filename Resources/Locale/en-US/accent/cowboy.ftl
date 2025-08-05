@@ -88,13 +88,13 @@ accent-cowboy-replacement-29 = partner
 accent-cowboy-words-30 = goodbye
 accent-cowboy-replacement-30 = so long
 
-accent-cowboy-words-31 = greytide
-accent-cowboy-replacement-31 = varmints
+accent-cowboy-words-31 = assist
+accent-cowboy-replacement-31 = harm
 
-accent-cowboy-words-32 = greytider
+accent-cowboy-words-32 = assistent
 accent-cowboy-replacement-32 = varmint
 
-accent-cowboy-words-33 = greytiders
+accent-cowboy-words-33 = assistents
 accent-cowboy-replacement-33 = varmints
 
 accent-cowboy-words-34 = group
@@ -178,10 +178,10 @@ accent-cowboy-replacement-59 = partner
 accent-cowboy-words-60 = party
 accent-cowboy-replacement-60 = shindig
 
-accent-cowboy-words-61 = passenger
+accent-cowboy-words-61 = assistant
 accent-cowboy-replacement-61 = greenhorn
 
-accent-cowboy-words-62 = passengers
+accent-cowboy-words-62 = assistants
 accent-cowboy-replacement-62 = greenhorns
 
 accent-cowboy-words-63 = planning

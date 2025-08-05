@@ -1,8 +1,8 @@
 - type: entity
   parent: [UnsensoredClothingUniformBase, BaseSovietContraband]
   id: ClothingUniformJumpsuitSoviet
-  name: soviet uniform
-  description: Uniform for elite Soviet comrades, completely uncomfortable and cheaply made.
+  name: old war uniform
+  description: Relics of war, many of which have laid the foundation of the USSP. Wearing this may cause unsolicited war stories.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/soviet.rsi
@@ -10,7 +10,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/soviet.rsi
 
 - type: entity
-  parent: UnsensoredClothingUniformBase
+  parent: [ UnsensoredClothingUniformBase, BaseMajorContraband ]
   id: ClothingUniformJumpsuitAbductor
   name: abductor uniform
   components:
@@ -27,7 +27,7 @@
   - type: VentCrawClothing
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: MagistrateUniformSuit
   name: Magistrate's Jumpsuit
   components:
@@ -37,7 +37,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/magistrate.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitNtrep
   name: nt representive suit
   description: That suit that is better not to see.
@@ -48,7 +48,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrep.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitNtrepFormal
   name: nt representive formal suit
   description: That suit that is better not to see.
@@ -81,6 +81,17 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/eliteblueshield.rsi
 
 - type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitBlueShieldCaptain
+  name: Blueshield Officer's shirt
+  description: A classic suit in theme with a blueshield. 
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshieldshirt.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshieldshirt.rsi
+
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMiningSpecialist
   name: mining specialist's jumpsuit
@@ -101,7 +112,18 @@
   - type: Sprite
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi 
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCentcommContraband]
+  id: ClothingUniformNTCCFatigues
+  name: NTCC Fatigues
+  description: NT-CC Consortium Fatigues. Very airy.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/ntcc_fatigues.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/ntcc_fatigues.rsi
 
 # Fashion-O-Mat, not obtainable any other way, unless mapped
 
@@ -316,3 +338,38 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/formal_blueshield.rsi
 
 # Fashion-O-Mat END
+
+# USSP
+- type: entity
+  parent: [ UnsensoredClothingUniformBase, BaseSovietContraband ]
+  id: ClothingUniformJumpsuitSovietAdmiral
+  name: soviet admiral jumpsuit
+  description: They are one phone call away from ruining your life.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sovietadmiral.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sovietadmiral.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTrackSuit
+  name: black tracksuit
+  description: Tider? Nyet, gopnik.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/track_suit.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/track_suit.rsi
+
+- type: entity
+  parent: [ UnsensoredClothingUniformBase, BaseSovietContraband ]
+  id: ClothingUniformJumpsuitSovietFatigues
+  name: SSF marine combat fatigues
+  description: Not one step back.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sovietuniform.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sovietuniform.rsi
+

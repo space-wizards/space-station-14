@@ -11,3 +11,12 @@
         - id: ClothingShoesBootsMagBSO
   - type: AccessReader
     access: [["BlueShield"]]
+  
+- type: entity
+  id: SuitStorageBlueShieldBluespaced
+  suffix: BlueShield, Bluespaced
+  parent: SuitStorageBlueShield
+  components:
+  - type: TriggerOnSpawn
+  - type: SpawnOnTrigger
+    proto: EffectFlashBluespace

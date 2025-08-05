@@ -165,6 +165,7 @@
           - HitscanBatteryAmmoProvider
           - ProjectileBatteryAmmoProvider
           - Stunbaton
+          - PowerCell # 🌟Starlight🌟
 
 - type: entity
   parent: BaseItemRecharger

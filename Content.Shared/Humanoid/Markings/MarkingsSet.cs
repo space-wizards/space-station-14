@@ -152,7 +152,7 @@ public sealed partial class MarkingSet
 
         var toRemove = new List<(MarkingCategories category, string id)>();
         var speciesProto = prototypeManager.Index<SpeciesPrototype>(species);
-        var onlyWhitelisted = prototypeManager.Index<MarkingPointsPrototype>(speciesProto.MarkingPoints).OnlyWhitelisted;
+        var onlyWhitelisted = prototypeManager.Index(speciesProto.MarkingPoints).OnlyWhitelisted;
 
         foreach (var (category, list) in Markings)
         {
@@ -294,7 +294,7 @@ public sealed partial class MarkingSet
                             eyeColor,
                             this
                         );
-                    var marking = new Marking(points.DefaultMarkings[index], colors);
+                    var marking = new Marking(points.DefaultMarkings[index], colors, false); //starlight
 
                     AddBack(category, marking);
                 }

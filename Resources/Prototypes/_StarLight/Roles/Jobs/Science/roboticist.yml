@@ -20,9 +20,6 @@
 - type: startingGear
   id: RoboticistGear
   equipment:
-    outerClothing: ClothingOuterCoatRobo
     id: RoboticistPDA
-    gloves: ClothingHandsGlovesRobohands
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetRobotics
-    eyes: ClothingEyesWeldingGoggles

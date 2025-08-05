@@ -1,0 +1,36 @@
+- type: startingGear
+  id: SSFMarineGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSovietFatigues
+    back: ClothingBackpackDuffelMarineLoadout
+    shoes: ClothingShoesBootsCombatFilled
+    eyes: ClothingEyesHudSovietMarine
+    gloves: ClothingHandsMercGlovesCombat
+    outerClothing: ClothingOuterHardsuitSovietMarine
+    id: SovietIdCard
+    ears: ClothingHeadsetAltSoviet
+    belt: ClothingBeltSovietMarineWebbingLoadout
+    pocket1: GrenadeShrapnel
+    pocket2: CigPackSoviet
+    suitstorage: JetpackSSFMarineFilled
+  inhand:
+  - WeaponRifleAk
+
+- type: startingGear
+  id: SSFAdmiralGear
+  equipment:
+    head: ClothingHeadHatSovietAdmiralHat
+    jumpsuit: ClothingUniformJumpsuitSovietAdmiral
+    neck: ClothingSovietMedals
+    back: ClothingSatchelLeatherSovietOfficialLoadout
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesHudSovietMarine
+    mask: CigarGold
+    gloves: ClothingHandsGlovesBlackNitrile
+    id: SovietIdCard
+    ears: ClothingHeadsetAltSoviet
+    belt: ClothingBeltSheathFilled
+    pocket1: WeaponPistolAPS
+    pocket2: SovietDeskFlag
+  inhand:
+  - d6Dice

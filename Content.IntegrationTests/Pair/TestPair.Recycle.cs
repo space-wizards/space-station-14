@@ -13,6 +13,7 @@ using Robust.Server.Player;
 using Robust.Shared.Exceptions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Pair;
 
@@ -84,16 +85,33 @@ public sealed partial class TestPair : IAsyncDisposable
 
         var returnTime = Watch.Elapsed;
         await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: PoolManager took {returnTime.TotalMilliseconds} ms to put pair {Id} back into the pool");
+        State = PairState.Ready;
     }
 
     private async Task ResetModifiedPreferences()
     {
+        if (Player == null)
+            return;
+        await Server.WaitIdleAsync();
         var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
-        foreach (var user in _modifiedProfiles)
+
+        var prefs = prefMan.GetPreferences(Player.UserId);
+
+        foreach(var slot in prefs.Characters.Keys)
         {
-            await Server.WaitPost(() => prefMan.SetProfile(user, 0, new HumanoidCharacterProfile()).Wait());
+            if (slot == 0)
+                continue;
+            await Server.WaitPost(() =>
+            {
+                prefMan.DeleteProfile(Player.UserId, slot).Wait();
+            });
         }
-        _modifiedProfiles.Clear();
+
+        await Server.WaitPost(() =>
+        {
+            prefMan.SetProfile(Player.UserId, 0, new HumanoidCharacterProfile().AsEnabled()).Wait();
+            prefMan.SetJobPriorities(Player.UserId, new () { { SharedGameTicker.FallbackOverflowJob, JobPriority.High } }).Wait();
+        });
     }
 
     public async ValueTask CleanReturnAsync()
@@ -103,8 +121,16 @@ public sealed partial class TestPair : IAsyncDisposable
 
         await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: Return of pair {Id} started");
         State = PairState.CleanDisposed;
-        await OnCleanDispose();
-        State = PairState.Ready;
+        try
+        {
+            await OnCleanDispose();
+        }
+        catch (Exception e)
+        {
+            await _testOut.WriteLineAsync($"Exception raised in OnCleanDispose\n{e}");
+            throw;
+        }
+        DebugTools.Assert(State is PairState.Dead or PairState.Ready);
         PoolManager.NoCheckReturn(this);
         ClearContext();
     }

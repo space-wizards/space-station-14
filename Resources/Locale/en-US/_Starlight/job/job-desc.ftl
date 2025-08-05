@@ -4,4 +4,6 @@ job-description-ntrep = You are an auditor sent by Central Command to make sure 
 job-description-iaa = You are a servant of the people, defend, condemn the citizens of your station!
 job-description-blueshield = Your primary job is to protect the heads. Remember, you are not a security officer.
 job-description-miningspec = Stay station side and enrich the station with materials using your salvage magnet and ore processors
+job-description-mailtech = Deliver letters and packages to the crew of the station to make cargo money.
 job-description-surgeon = Heal people, cripple enemies, and replace limbs and organs!
+job-description-ntccblueshield = Your primary job is to protect your charged Nanotrasen-Central Command Consortium officials, this overrules anything else.

@@ -21,7 +21,7 @@ namespace Content.Server._Starlight.Medical.Limbs;
 public sealed partial class LimbSystem : SharedLimbSystem
 {
     private static MethodInfo? s_raiseLocalEventRefMethod;
-    static LimbSystem() 
+    static LimbSystem()
         => s_raiseLocalEventRefMethod = typeof(LimbSystem)
             .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
             .Where(m => m.Name == nameof(RaiseLocalEvent)
@@ -60,17 +60,36 @@ public sealed partial class LimbSystem : SharedLimbSystem
                     foreach (var containedEnt in child.ContainedEntities)
                     {
                         if (TryComp(containedEnt, out BodyPartComponent? innerPart)
-                            && innerPart.PartType == BodyPartType.Hand)
-                            _hands.AddHand(body, slotFullId, limb.Comp.Symmetry == BodyPartSymmetry.Left ? HandLocation.Left : HandLocation.Right);
+                            && innerPart.PartType == BodyPartType.Hand
+                            && TryComp<HandsComponent>(body, out var hands))
+                        {
+                            _hands.AddHand((body, hands), slotFullId, limb.Comp.Symmetry == BodyPartSymmetry.Left ? HandLocation.Left : HandLocation.Right);
+                            AddLimbVisual(body, (containedEnt, innerPart));
+                        }
                     }
                 }
                 break;
             case BodyPartType.Hand:
-                _hands.AddHand(body, BodySystem.GetPartSlotContainerId(slot), limb.Comp.Symmetry == BodyPartSymmetry.Left ? HandLocation.Left : HandLocation.Right);
+                if (TryComp<HandsComponent>(body, out var hands2))
+                    _hands.AddHand((body, hands2), BodySystem.GetPartSlotContainerId(slot), limb.Comp.Symmetry == BodyPartSymmetry.Left ? HandLocation.Left : HandLocation.Right);
                 break;
             case BodyPartType.Leg:
                 if (limb.Comp.Children.Keys.Count == 0)
                     _body.TryCreatePartSlot(limb, limb.Comp.Symmetry == BodyPartSymmetry.Left ? "left foot" : "right foot", BodyPartType.Foot, out var slotId);
+
+                foreach (var slotId in limb.Comp.Children.Keys)
+                {
+                    if (slotId is null) continue;
+                    var slotFullId = BodySystem.GetPartSlotContainerId(slotId);
+                    var child = _containers.GetContainer(limb, slotFullId);
+
+                    foreach (var containedEnt in child.ContainedEntities)
+                    {
+                        if (TryComp(containedEnt, out BodyPartComponent? innerPart)
+                            && innerPart.PartType == BodyPartType.Foot)
+                            AddLimbVisual(body, (containedEnt, innerPart));
+                    }
+                }
                 break;
             case BodyPartType.Foot:
                 break;
@@ -118,15 +137,16 @@ public sealed partial class LimbSystem : SharedLimbSystem
                     foreach (var containedEnt in child.ContainedEntities)
                     {
                         if (TryComp(containedEnt, out BodyPartComponent? innerPart)
-                            && innerPart.PartType == BodyPartType.Hand)
-                            _hands.RemoveHand(body, BodySystem.GetPartSlotContainerId(limbSlotId));
+                            && innerPart.PartType == BodyPartType.Hand
+                            && TryComp<HandsComponent>(body, out var hands))
+                            _hands.RemoveHand((body, hands), BodySystem.GetPartSlotContainerId(limbSlotId));
                     }
                 }
                 break;
             case BodyPartType.Hand:
                 var parentSlot = _body.GetParentPartAndSlotOrNull(limb);
-                if (parentSlot is not null)
-                    _hands.RemoveHand(body, BodySystem.GetPartSlotContainerId(parentSlot.Value.Slot));
+                if (parentSlot is not null && TryComp<HandsComponent>(body, out var hands2))
+                    _hands.RemoveHand((body, hands2), BodySystem.GetPartSlotContainerId(parentSlot.Value.Slot));
                 break;
             case BodyPartType.Leg:
             case BodyPartType.Foot:

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "pen_ntr is a resprited version of pen_centcom by PuroSlavKing (Github - https://github.com/space-wizards/space-station-14/pull/15415/files)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pen_ntr"
+    },
+    {
+      "name": "pen_ntr-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_ntr-inhand-right",
+      "directions": 4
+    }
+  ]
+}

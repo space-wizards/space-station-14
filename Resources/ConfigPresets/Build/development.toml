@@ -5,12 +5,18 @@ lobbyenabled = false
 map = "Dev"
 role_timers = false
 
+[events]
+enabled = false
+
 [ghost]
 role_time = 0.5
 quick_lottery = true
 
 [gateway]
 generator_enabled = false
+
+[movement]
+mob_pushing = true
 
 [physics]
 # Makes mapping annoying
@@ -25,9 +31,14 @@ expedition_cooldown = 30.0
 [shuttle]
 grid_fill = false
 auto_call_time = 0
-emergency = false
+emergency = true
 arrivals = false
 preload_grids = false
 
 [admin]
 see_own_notes = true
+
+[ic]
+random_characters = false
+random_species_weights = ""
+ssd_sleep_time = 3600

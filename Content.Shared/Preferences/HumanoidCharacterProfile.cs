@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
+using Content.Shared.Starlight.CCVar; // Starlight
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
@@ -25,22 +26,15 @@ namespace Content.Shared.Preferences
     [Serializable, NetSerializable]
     public sealed partial class HumanoidCharacterProfile : ICharacterProfile
     {
-        private static readonly Regex RestrictedNameRegex = new(@"[^A-Za-z0-9 '\-]");
+        private static readonly Regex RestrictedNameRegex = new(@"[^A-Za-z0-9 '\-,]"); //Starlight edit, allow commas
+        private static readonly Regex RestrictedCustomSpecieNameRegex = new(@"[^A-Za-z0-9 '\-,]|\B\s+|\s+\B"); //Starlight
         private static readonly Regex ICNameCaseRegex = new(@"^(?<word>\w)|\b(?<word>\w)(?=\w*$)");
-
-        public const int MaxNameLength = 32;
-        public const int MaxDescLength = 512;
 
         /// <summary>
         /// Job preferences for initial spawn.
         /// </summary>
         [DataField]
-        private Dictionary<ProtoId<JobPrototype>, JobPriority> _jobPriorities = new()
-        {
-            {
-                SharedGameTicker.FallbackOverflowJob, JobPriority.High
-            }
-        };
+        private HashSet<ProtoId<JobPrototype>> _jobPreferences = new() { SharedGameTicker.FallbackOverflowJob };
 
         /// <summary>
         /// Antags we have opted in to.
@@ -53,6 +47,12 @@ namespace Content.Shared.Preferences
         /// </summary>
         [DataField]
         private HashSet<ProtoId<TraitPrototype>> _traitPreferences = new();
+
+        /// <summary>
+        /// Is this character enabled? (Should it be considered for round start selection?)
+        /// </summary>
+        [DataField]
+        public bool Enabled;
 
         /// <summary>
         /// <see cref="_loadouts"/>
@@ -68,6 +68,13 @@ namespace Content.Shared.Preferences
         [DataField]
         public string Voice { get; set; } = "";
 
+        [DataField]
+        public string SiliconVoice { get; set; } = ""; // 🌟Starlight🌟
+
+        // Starlight
+        [DataField]
+        public List<string> Cybernetics = [];
+
         /// <summary>
         /// Detailed text that can appear for the character if <see cref="CCVars.FlavorText"/> is enabled.
         /// </summary>
@@ -79,6 +86,9 @@ namespace Content.Shared.Preferences
         /// </summary>
         [DataField]
         public ProtoId<SpeciesPrototype> Species { get; set; } = SharedHumanoidAppearanceSystem.DefaultSpecies;
+
+        [DataField] // Starlight
+        public string CustomSpecieName { get; set; } = "";
 
         [DataField]
         public int Age { get; set; } = 18;
@@ -107,9 +117,9 @@ namespace Content.Shared.Preferences
         public SpawnPriorityPreference SpawnPriority { get; private set; } = SpawnPriorityPreference.None;
 
         /// <summary>
-        /// <see cref="_jobPriorities"/>
+        /// <see cref="_jobPreferences"/>
         /// </summary>
-        public IReadOnlyDictionary<ProtoId<JobPrototype>, JobPriority> JobPriorities => _jobPriorities;
+        public IReadOnlySet<ProtoId<JobPrototype>> JobPreferences => _jobPreferences;
 
         /// <summary>
         /// <see cref="_antagPreferences"/>
@@ -121,75 +131,63 @@ namespace Content.Shared.Preferences
         /// </summary>
         public IReadOnlySet<ProtoId<TraitPrototype>> TraitPreferences => _traitPreferences;
 
-        /// <summary>
-        /// If we're unable to get one of our preferred jobs do we spawn as a fallback job or do we stay in lobby.
-        /// </summary>
-        [DataField]
-        public PreferenceUnavailableMode PreferenceUnavailable { get; private set; } =
-            PreferenceUnavailableMode.SpawnAsOverflow;
-
         public HumanoidCharacterProfile(
             string name,
             string voice,
+            string siliconVoice, // 🌟Starlight🌟
             string flavortext,
             string species,
+            string customspeciename, // Starlight
             int age,
             Sex sex,
             Gender gender,
             HumanoidCharacterAppearance appearance,
             SpawnPriorityPreference spawnPriority,
-            Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities,
-            PreferenceUnavailableMode preferenceUnavailable,
+            HashSet<ProtoId<JobPrototype>> jobPreferences,
             HashSet<ProtoId<AntagPrototype>> antagPreferences,
             HashSet<ProtoId<TraitPrototype>> traitPreferences,
-            Dictionary<string, RoleLoadout> loadouts)
+            Dictionary<string, RoleLoadout> loadouts,
+            List<string> cybernetics, // Starlight
+            bool enabled)
         {
             Name = name;
             Voice = voice;
+            SiliconVoice = siliconVoice; // 🌟Starlight🌟
             FlavorText = flavortext;
             Species = species;
+            CustomSpecieName = customspeciename; // Starlight
             Age = age;
             Sex = sex;
             Gender = gender;
             Appearance = appearance;
             SpawnPriority = spawnPriority;
-            _jobPriorities = jobPriorities;
-            PreferenceUnavailable = preferenceUnavailable;
+            _jobPreferences = jobPreferences;
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
             _loadouts = loadouts;
-
-            var hasHighPrority = false;
-            foreach (var (key, value) in _jobPriorities)
-            {
-                if (value == JobPriority.Never)
-                    _jobPriorities.Remove(key);
-                else if (value != JobPriority.High)
-                    continue;
-
-                if (hasHighPrority)
-                    _jobPriorities[key] = JobPriority.Medium;
-
-                hasHighPrority = true;
-            }
+            Cybernetics = cybernetics; // Starlight
+            Enabled = enabled;
         }
 
         /// <summary>Copy constructor</summary>
         public HumanoidCharacterProfile(HumanoidCharacterProfile other)
             : this(other.Name,
                 other.Voice,
+                other.SiliconVoice, // 🌟Starlight🌟
                 other.FlavorText,
                 other.Species,
+                other.CustomSpecieName, // Starlight
                 other.Age,
                 other.Sex,
                 other.Gender,
                 other.Appearance.Clone(),
                 other.SpawnPriority,
-                new Dictionary<ProtoId<JobPrototype>, JobPriority>(other.JobPriorities),
-                other.PreferenceUnavailable,
+                new HashSet<ProtoId<JobPrototype>>(other.JobPreferences),
                 new HashSet<ProtoId<AntagPrototype>>(other.AntagPreferences),
                 new HashSet<ProtoId<TraitPrototype>>(other.TraitPreferences),
-                new Dictionary<string, RoleLoadout>(other.Loadouts))
+                new Dictionary<string, RoleLoadout>(other.Loadouts),
+                other.Cybernetics, // Starlight
+                other.Enabled)
         {
         }
 
@@ -207,11 +205,14 @@ namespace Content.Shared.Preferences
         /// </summary>
         /// <param name="species">The species to use in this default profile. The default species is <see cref="SharedHumanoidAppearanceSystem.DefaultSpecies"/>.</param>
         /// <returns>Humanoid character profile with default settings.</returns>
-        public static HumanoidCharacterProfile DefaultWithSpecies(string species = SharedHumanoidAppearanceSystem.DefaultSpecies)
+        public static HumanoidCharacterProfile DefaultWithSpecies(string? species = null)
         {
+            species ??= SharedHumanoidAppearanceSystem.DefaultSpecies;
+
             return new()
             {
                 Species = species,
+                Appearance = HumanoidCharacterAppearance.DefaultWithSpecies(species),
             };
         }
 
@@ -230,17 +231,23 @@ namespace Content.Shared.Preferences
             return RandomWithSpecies(species);
         }
 
-        public static HumanoidCharacterProfile RandomWithSpecies(string species = SharedHumanoidAppearanceSystem.DefaultSpecies)
+        public static HumanoidCharacterProfile RandomWithSpecies(string? species = null)
         {
+            species ??= SharedHumanoidAppearanceSystem.DefaultSpecies;
+
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var sex = Sex.Unsexed;
             var age = 18;
+            var width = 1f; //starlight
+            var height = 1f; //starlight
             if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
             {
                 sex = random.Pick(speciesPrototype.Sexes);
                 age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
+                width = random.NextFloat(speciesPrototype.MinWidth, speciesPrototype.MaxWidth); //starlight
+                height = random.NextFloat(speciesPrototype.MinHeight, speciesPrototype.MaxHeight); //starlight
             }
 
             var gender = Gender.Epicene;
@@ -257,6 +264,8 @@ namespace Content.Shared.Preferences
 
             var name = GetName(species, gender);
 
+            var customspeciename = ""; // Starlight
+
             return new HumanoidCharacterProfile()
             {
                 Name = name,
@@ -264,6 +273,7 @@ namespace Content.Shared.Preferences
                 Age = age,
                 Gender = gender,
                 Species = species,
+                CustomSpecieName = customspeciename, // Starlight
                 Appearance = HumanoidCharacterAppearance.Random(species, sex),
             };
         }
@@ -297,10 +307,22 @@ namespace Content.Shared.Preferences
         {
             return new(this) { Voice = id };
         }
+
+        // 🌟Starlight🌟
+        public HumanoidCharacterProfile WithSiliconVoice(string id)
+        {
+            return new(this) { SiliconVoice = id };
+        }
         public HumanoidCharacterProfile WithSpecies(string species)
         {
             return new(this) { Species = species };
         }
+        // Starlight - Start
+        public HumanoidCharacterProfile WithCustomSpecieName(string customspeciename)
+        {
+            return new(this) { CustomSpecieName = customspeciename };
+        }
+        // Starlight - End
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {
             return new(this) { Appearance = appearance };
@@ -311,69 +333,42 @@ namespace Content.Shared.Preferences
             return new(this) { SpawnPriority = spawnPriority };
         }
 
-        public HumanoidCharacterProfile WithJobPriorities(IEnumerable<KeyValuePair<ProtoId<JobPrototype>, JobPriority>> jobPriorities)
+        public HumanoidCharacterProfile WithJobPreferences(IEnumerable<ProtoId<JobPrototype>> jobPreferences)
         {
-            var dictionary = new Dictionary<ProtoId<JobPrototype>, JobPriority>(jobPriorities);
-            var hasHighPrority = false;
-
-            foreach (var (key, value) in dictionary)
-            {
-                if (value == JobPriority.Never)
-                    dictionary.Remove(key);
-                else if (value != JobPriority.High)
-                    continue;
-
-                if (hasHighPrority)
-                    dictionary[key] = JobPriority.Medium;
-
-                hasHighPrority = true;
-            }
-
             return new(this)
             {
-                _jobPriorities = dictionary
+                _jobPreferences = new HashSet<ProtoId<JobPrototype>>(jobPreferences),
             };
         }
 
-        public HumanoidCharacterProfile WithJobPriority(ProtoId<JobPrototype> jobId, JobPriority priority)
+        public HumanoidCharacterProfile WithJob(ProtoId<JobPrototype> jobId, bool include = true)
         {
-            var dictionary = new Dictionary<ProtoId<JobPrototype>, JobPriority>(_jobPriorities);
-            if (priority == JobPriority.Never)
+            var jobPreferences = new HashSet<ProtoId<JobPrototype>>(_jobPreferences);
+            if (include)
             {
-                dictionary.Remove(jobId);
-            }
-            else if (priority == JobPriority.High)
-            {
-                // There can only ever be one high priority job.
-                foreach (var (job, value) in dictionary)
-                {
-                    if (value == JobPriority.High)
-                        dictionary[job] = JobPriority.Medium;
-                }
-
-                dictionary[jobId] = priority;
+                jobPreferences.Add(jobId);
             }
             else
             {
-                dictionary[jobId] = priority;
+                jobPreferences.Remove(jobId);
             }
 
             return new(this)
             {
-                _jobPriorities = dictionary,
+                _jobPreferences = jobPreferences,
             };
         }
 
-        public HumanoidCharacterProfile WithPreferenceUnavailable(PreferenceUnavailableMode mode)
+        public HumanoidCharacterProfile WithoutJob(ProtoId<JobPrototype> jobId)
         {
-            return new(this) { PreferenceUnavailable = mode };
+            return WithJob(jobId, false);
         }
 
         public HumanoidCharacterProfile WithAntagPreferences(IEnumerable<ProtoId<AntagPrototype>> antagPreferences)
         {
             return new(this)
             {
-                _antagPreferences = new (antagPreferences),
+                _antagPreferences = new(antagPreferences),
             };
         }
 
@@ -392,6 +387,13 @@ namespace Content.Shared.Preferences
             return new(this)
             {
                 _antagPreferences = list,
+            };
+        }
+
+        // Starlight
+        public HumanoidCharacterProfile WithCybernetics(List<string> cybernetics) {
+            return new (this){
+                Cybernetics = cybernetics,
             };
         }
 
@@ -454,6 +456,11 @@ namespace Content.Shared.Preferences
             };
         }
 
+        public HumanoidCharacterProfile AsEnabled(bool enabled = true)
+        {
+            return new(this) { Enabled = enabled };
+        }
+
         public string Summary =>
             Loc.GetString(
                 "humanoid-character-profile-summary",
@@ -470,13 +477,15 @@ namespace Content.Shared.Preferences
             if (Sex != other.Sex) return false;
             if (Gender != other.Gender) return false;
             if (Species != other.Species) return false;
-            if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
+            if (CustomSpecieName != other.CustomSpecieName) return false; // Starlight
+            if (Cybernetics != other.Cybernetics) return false; // Starlight
             if (SpawnPriority != other.SpawnPriority) return false;
-            if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
+            if (!_jobPreferences.SequenceEqual(other._jobPreferences)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
             if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
+            if (Enabled != other.Enabled) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
         }
 
@@ -515,13 +524,14 @@ namespace Content.Shared.Preferences
             };
 
             string name;
+            var maxNameLength = configManager.GetCVar(CCVars.MaxNameLength);
             if (string.IsNullOrEmpty(Name))
             {
                 name = GetName(Species, gender);
             }
-            else if (Name.Length > MaxNameLength)
+            else if (Name.Length > maxNameLength)
             {
-                name = Name[..MaxNameLength];
+                name = Name[..maxNameLength];
             }
             else
             {
@@ -546,10 +556,46 @@ namespace Content.Shared.Preferences
                 name = GetName(Species, gender);
             }
 
-            string flavortext;
-            if (FlavorText.Length > MaxDescLength)
+            // Starlight - Start
+            var customspeciename =
+            !speciesPrototype.CustomName
+            || string.IsNullOrWhiteSpace(CustomSpecieName)
+                ? ""
+                : CustomSpecieName.Length > maxNameLength
+                    ? CustomSpecieName[..maxNameLength]
+                    : CustomSpecieName;
+
+            if (!string.IsNullOrWhiteSpace(CustomSpecieName) && configManager.GetCVar(StarlightCCVars.RestrictedCustomSpecieNames))
             {
-                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..MaxDescLength];
+                customspeciename = RestrictedCustomSpecieNameRegex.Replace(customspeciename, string.Empty);
+
+                var speciesPrototypes = prototypeManager.EnumeratePrototypes<SpeciesPrototype>();
+                foreach (var specieNames in speciesPrototypes)
+                {
+                    if (Loc.GetString(specieNames.Name).ToLower() == customspeciename.ToLower())
+                    {
+                        customspeciename = "";
+                        break;
+                    }
+                }
+            }
+
+            var allCybernetics = CyberneticImplant.GetAllCybernetics(prototypeManager);
+            var installedCybernetics = allCybernetics.Where(p => Cybernetics.Contains(p.ID))
+                                       .Where(p => p.Type == CyberneticImplantType.Limb)
+                                       .ToList();
+            if (installedCybernetics.Select(p => p.Cost).Sum() <= speciesPrototype.RoundstartCyberwareCapacity){
+                Cybernetics = installedCybernetics.Select(p => p.ID).ToList();
+            } else {
+                Cybernetics = [];
+            }
+            // Starlight - End
+
+            string flavortext;
+            var maxFlavorTextLength = configManager.GetCVar(CCVars.MaxFlavorTextLength);
+            if (FlavorText.Length > maxFlavorTextLength)
+            {
+                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..maxFlavorTextLength];
             }
             else
             {
@@ -557,13 +603,6 @@ namespace Content.Shared.Preferences
             }
 
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, Sex);
-
-            var prefsUnavailableMode = PreferenceUnavailable switch
-            {
-                PreferenceUnavailableMode.StayInLobby => PreferenceUnavailableMode.StayInLobby,
-                PreferenceUnavailableMode.SpawnAsOverflow => PreferenceUnavailableMode.SpawnAsOverflow,
-                _ => PreferenceUnavailableMode.StayInLobby // Invalid enum values.
-            };
 
             var spawnPriority = SpawnPriority switch
             {
@@ -573,26 +612,9 @@ namespace Content.Shared.Preferences
                 _ => SpawnPriorityPreference.None // Invalid enum values.
             };
 
-            var priorities = new Dictionary<ProtoId<JobPrototype>, JobPriority>(JobPriorities
-                .Where(p => prototypeManager.TryIndex<JobPrototype>(p.Key, out var job) && job.SetPreference && p.Value switch
-                {
-                    JobPriority.Never => false, // Drop never since that's assumed default.
-                    JobPriority.Low => true,
-                    JobPriority.Medium => true,
-                    JobPriority.High => true,
-                    _ => false
-                }));
-
-            var hasHighPrio = false;
-            foreach (var (key, value) in priorities)
-            {
-                if (value != JobPriority.High)
-                    continue;
-
-                if (hasHighPrio)
-                    priorities[key] = JobPriority.Medium;
-                hasHighPrio = true;
-            }
+            var jobs = new HashSet<ProtoId<JobPrototype>>(JobPreferences
+                .Where(p => prototypeManager.TryIndex(p, out var job)
+                            && job is { SetPreference: true, Hidden: false }));
 
             var antags = AntagPreferences
                 .Where(id => prototypeManager.TryIndex(id, out var antag) && antag.SetPreference)
@@ -603,6 +625,7 @@ namespace Content.Shared.Preferences
                          .ToList();
 
             Name = name;
+            CustomSpecieName = customspeciename; // Starlight
             FlavorText = flavortext;
             Age = age;
             Sex = sex;
@@ -610,14 +633,7 @@ namespace Content.Shared.Preferences
             Appearance = appearance;
             SpawnPriority = spawnPriority;
 
-            _jobPriorities.Clear();
-
-            foreach (var (job, priority) in priorities)
-            {
-                _jobPriorities.Add(job, priority);
-            }
-
-            PreferenceUnavailable = prefsUnavailableMode;
+            _jobPreferences = new HashSet<ProtoId<JobPrototype>>(jobs);
 
             _antagPreferences.Clear();
             _antagPreferences.UnionWith(antags);
@@ -707,19 +723,21 @@ namespace Content.Shared.Preferences
         public override int GetHashCode()
         {
             var hashCode = new HashCode();
-            hashCode.Add(_jobPriorities);
+            hashCode.Add(_jobPreferences);
             hashCode.Add(_antagPreferences);
             hashCode.Add(_traitPreferences);
             hashCode.Add(_loadouts);
             hashCode.Add(Name);
             hashCode.Add(FlavorText);
             hashCode.Add(Species);
+            hashCode.Add(CustomSpecieName); // Starlight
             hashCode.Add(Age);
             hashCode.Add((int)Sex);
             hashCode.Add((int)Gender);
             hashCode.Add(Appearance);
             hashCode.Add((int)SpawnPriority);
-            hashCode.Add((int)PreferenceUnavailable);
+            hashCode.Add(Enabled);
+            hashCode.Add(Cybernetics); // Starlight
             return hashCode.ToHashCode();
         }
 

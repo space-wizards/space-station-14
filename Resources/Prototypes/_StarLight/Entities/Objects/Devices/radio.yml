@@ -1,0 +1,26 @@
+- type: entity
+  name: expedition radio
+  description: A handy expedition radio.
+  parent: [ RadioHandheld, BaseCargoContraband ]
+  id: RadioHandheldExpedition
+  components:
+  - type: TelecomExempt
+  - type: RadioMicrophone
+    broadcastChannel: Expedition
+  - type: RadioSpeaker
+    channels:
+    - Expedition
+  - type: Speech
+    speechVerb: Robotic
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/expeditionhandy.rsi
+    layers:
+    - state: walkietalkie
+    - state: walkietalkie-on
+    state: walkietalkie
+  - type: Item
+    sprite: _Starlight/Objects/Devices/expeditionhandy.rsi
+    heldPrefix: walkietalkie
+  - type: Tag
+    tags:
+    - Radio

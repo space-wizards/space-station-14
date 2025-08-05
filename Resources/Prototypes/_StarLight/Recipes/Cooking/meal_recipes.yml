@@ -1,0 +1,61 @@
+﻿- type: microwaveMealRecipe
+  id: RecipeDreamingCake
+  name: Dreaming cake Recipe
+  result: FoodResomiCake
+  time: 25
+  reagents:
+    Sugar: 5
+  solids:
+    LeftHandResomi: 1
+    RightHandResomi: 1
+    FoodCakePlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBakedVulpkanin
+  name: baked vulpkanin recipe
+  result: FoodBakedVulpkaninPlate
+  time: 15
+  reagents:
+    TableSalt: 2
+    Blackpepper: 2
+  solids:
+    FoodPlate: 1
+    FoodMeat: 1
+    FoodApple: 1
+    HeadVulpkanin: 1
+    
+- type: microwaveMealRecipe
+  id: RecipeFoodFriedfelionoid
+  name: kentucky fried felionoid recipe
+  result: FoodFriedfelionoid
+  time: 10
+  reagents:
+    Egg: 5
+    Flour: 10
+    Water: 5
+  solids:
+    LeftLegFelionoid: 1
+    RightLegFelionoid: 1
+    
+- type: microwaveMealRecipe
+  id: RecipeFoodCookedlizard
+  name: Volcanic explosion recipe
+  result: FoodCookedLizardPlate
+  time: 20
+  reagents:
+    Ketchup: 3
+    Blackpepper: 2
+  solids:
+    FoodPlate: 1
+    FoodOrange: 1
+    RightHandReptilian: 1
+    FoodCabbage: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothCake
+  name: cotton cake recipe
+  result: FoodCottonCake
+  time: 15
+  group: Cake
+  solids: 
+    FoodMothBatter: 1

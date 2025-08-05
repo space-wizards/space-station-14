@@ -1,6 +1,6 @@
 - type: entity
   name: prototype of the jaws of life
-  parent: JawsOfLife
+  parent: [ JawsOfLife, BaseEngineeringContraband ]
   id: PrototypeJawsOfLife
   description: Early version, not as effective.
   components:

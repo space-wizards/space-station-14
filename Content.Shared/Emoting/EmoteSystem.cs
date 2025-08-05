@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Emoting;
+﻿using Robust.Shared.Timing;
+
+namespace Content.Shared.Emoting;
 
 public sealed class EmoteSystem : EntitySystem
 {

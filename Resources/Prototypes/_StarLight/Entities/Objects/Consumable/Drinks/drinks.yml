@@ -1,0 +1,15 @@
+- type: entity
+  parent: DrinkGlass
+  id: DrinkDraganSpecialGlass
+  suffix: dragan special
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: DraganSpecial
+          Quantity: 30
+  - type: Icon
+    sprite: _Starlight/Objects/Consumable/Drinks/dragan_special.rsi
+    state: icon

@@ -38,7 +38,6 @@
       - PosterContrabandSyndicateRecruitment
       - PosterContrabandClown
       - PosterContrabandSmoke
-      - PosterContrabandGreyTide
       - PosterContrabandMissingGloves
       - PosterContrabandHackingGuide
       - PosterContrabandRIPBadger
@@ -93,6 +92,15 @@
       - PosterContrabandWaffleCorp
       - PosterContrabandMissingSpacepen
       - PosterContrabandYoutoolpia
+      - PosterContrabandDoCauseCancer
+      - PosterContrabandLnuGlorf
+      - PosterContrabandRobustVox
+      - PosterContrabandRobirdVox
+      - PosterContrabandForumPost
+      - PosterContrabandHaveYouSeenHimJohnToe
+      - PosterContrabandIlluminatePropaganda
+      - PosterContrabandHolyInsuls
+      - PosterContrabandFentsAndCo
     chance: 1
 
 - type: entity
@@ -148,7 +156,6 @@
       - PosterLegitJustAWeekAway
       - PosterLegitSecWatch
       - PosterLegitVacation
-      - PosterLegitPeriodicTable
       - PosterLegitRenault
       - PosterLegitNTTGC
       - PosterLegitSafetyMothDelam
@@ -161,4 +168,18 @@
       - PosterLegitCalendar
       - PosterLegitCleanHands
       - PosterLegitEyeChart
+      - PosterLegitTyrone
+      - PosterLegitHelio
+      #region Starlight
+      - PosterLegitSkillIssue
+      - PosterLegitShoeless
+      - PosterLegitDoNotCauseCancer
+      - PosterLegitRenaissanceFair
+      - PosterLegitKillEmAll
+      - PosterLegitHaveYouSeenHimJuanToe
+      - PosterLegitMaxCap
+      - PosterLegitRipleyCertified
+      - PosterLegitKillersClinic
+      - PosterlegitLawPoster
+      #endregion Starlight
     chance: 1

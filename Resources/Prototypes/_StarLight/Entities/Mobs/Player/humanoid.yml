@@ -1,0 +1,92 @@
+## NTCC Default Settings
+
+- type: randomHumanoidSettings
+  id: EventHumanoidNTCC
+  parent: EventHumanoidMindShielded
+  components:
+  - type: AutoImplant
+    implants:
+    - DeathRattleImplantCentcomm
+    - RadioImplantCentcomm
+
+## NTCC Blueshield
+
+- type: entity
+  name: NT-CC Consortium Blueshield
+  id: RandomHumanoidNTCCConsortiumBlueshieldSpawner
+  components:
+    - type: Sprite
+      sprite: _Starlight/Markers/jobs.rsi
+      state: obs
+    - type: RandomHumanoidSpawner
+      settings: NTCCConsortiumBlueshield
+
+- type: randomHumanoidSettings
+  id: NTCCConsortiumBlueshield
+  parent: EventHumanoidNTCC
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ntcc-consortium-officer-name
+      description: ghost-role-information-ntcc-consortium-officer-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: default
+      job: NTCCBlueshield
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 72000 # 20h
+      - !type:RoleTimeRequirement
+        role: JobSecurityOfficer
+        time: 18000 # 5h
+    - type: Loadout
+      prototypes: [ NTCCBlueShieldGear ]
+      roleLoadout: [ RoleSurvivalStandard ]
+    - type: RandomMetadata
+      nameSegments:
+        - NamesMilitaryFirstLeader
+        - NamesMilitaryLast
+      nameFormat: name-format-ert
+
+# USSP
+- type: entity
+  id: RandomHumanoidSpawnerSSFMarine
+  name: SSF Marine Soldier
+  suffix: Admeme
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/OuterClothing/Hardsuits/sovietmarine.rsi
+      state: icon
+    - type: RandomMetadata
+      nameSegments:
+        - NamesSovietMarinesFirst
+        - NamesSovietMarinesLast
+      nameFormat: name-format-ert
+    - type: RandomHumanoidSpawner
+      settings: SSFMarine
+
+- type: randomHumanoidSettings
+  id: SSFMarine
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-soviet-marine-name
+      description: ghost-role-information-soviet-marine-desc
+      rules: ghost-role-information-soviet-marine-rules
+      raffle:
+        settings: default
+      mindRoles:
+      - MindRoleGhostRoleFamiliar
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 72000 # 20h
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 36000 # 10h
+    - type: Loadout
+      prototypes: [ SSFMarineGear ]
+    - type: RandomMetadata
+      nameSegments:
+        - NamesSovietMarinesFirst
+        - NamesSovietMarinesLast
+      nameFormat: name-format-ert

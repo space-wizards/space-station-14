@@ -5,7 +5,7 @@
   minPlayers: 0
   maxPlayers: 35
   stations:
-    Omega:
+    StarlightOmega:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -55,8 +55,10 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 5, 5 ]
             CargoTechnician: [ 2, 2 ]
+            MailTech: [ 1, 2 ]
+            MiningSpecialist: [ 2, 3 ]
             #civilian
-            Passenger: [ -1, -1 ]
+            Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]

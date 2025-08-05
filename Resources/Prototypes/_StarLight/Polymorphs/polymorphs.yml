@@ -1,0 +1,15 @@
+- type: polymorph
+  id: AdmemeForcedJohnToe
+  configuration:
+    entity: MobJohnToe
+    forced: true
+    inventory: Transfer
+    allowRepeatedMorphs: true
+    transferName: false
+    transferDamage: true
+    revertOnCrit: false
+    revertOnDeath: false
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg

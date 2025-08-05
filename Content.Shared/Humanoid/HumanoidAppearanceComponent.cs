@@ -1,6 +1,9 @@
+using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Starlight.TextToSpeech;
+using Content.Shared.Inventory;
+using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -32,6 +35,9 @@ public sealed partial class HumanoidAppearanceComponent : Component
     [DataField, AutoNetworkedField]
     public int Age = 18;
 
+    [DataField, AutoNetworkedField] // Starlight
+    public string CustomSpecieName = "";
+
     /// <summary>
     ///     Any custom base layers this humanoid might have. See:
     ///     limb transplants (potentially), robotic arms, etc.
@@ -61,17 +67,24 @@ public sealed partial class HumanoidAppearanceComponent : Component
     public Color SkinColor { get; set; } = Color.FromHex("#C0967F");
 
     /// <summary>
-    ///     Visual layers currently hidden. This will affect the base sprite
-    ///     on this humanoid layer, and any markings that sit above it.
+    ///     A map of the visual layers currently hidden to the equipment
+    ///     slots that are currently hiding them. This will affect the base
+    ///     sprite on this humanoid layer, and any markings that sit above it.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<HumanoidVisualLayers> HiddenLayers = new();
+    public Dictionary<HumanoidVisualLayers, SlotFlags> HiddenLayers = new();
 
     [DataField, AutoNetworkedField]
     public Sex Sex = Sex.Male;
 
     [DataField, AutoNetworkedField]
     public Color EyeColor = Color.Brown;
+    [DataField, AutoNetworkedField]
+    public float Width = 1f; // starlight
+    [DataField, AutoNetworkedField]
+    public float Height = 1f; // starlight
+    [DataField, AutoNetworkedField]
+    public bool EyeGlowing = false; //starlight
 
     /// <summary>
     ///     Hair color of this humanoid. Used to avoid looping through all markings
@@ -90,6 +103,22 @@ public sealed partial class HumanoidAppearanceComponent : Component
     /// </summary>
     [DataField]
     public HashSet<HumanoidVisualLayers> HideLayersOnEquip = [HumanoidVisualLayers.Hair];
+
+    /// <summary>
+    ///     Which markings the humanoid defaults to when nudity is toggled off.
+    /// </summary>
+    [DataField]
+    public ProtoId<MarkingPrototype>? UndergarmentTop = new ProtoId<MarkingPrototype>("UndergarmentTopTanktop");
+
+    [DataField]
+    public ProtoId<MarkingPrototype>? UndergarmentBottom = new ProtoId<MarkingPrototype>("UndergarmentBottomBoxers");
+
+    /// <summary>
+    /// The profile that this entity was originally spawned with.
+    /// If null, the entity was not spawned with a profile.
+    /// </summary>
+    public HumanoidCharacterProfile? BaseProfile;
+    
     public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
     {
         {Sex.Male, "Voljin"},
@@ -98,6 +127,12 @@ public sealed partial class HumanoidAppearanceComponent : Component
     };
     [DataField("voice", customTypeSerializer: typeof(PrototypeIdSerializer<VoicePrototype>))]
     public string? Voice { get; set; }
+
+    /// <summary>
+    ///     The displacement maps that will be applied to specific layers of the humanoid.
+    /// </summary>
+    [DataField]
+    public Dictionary<HumanoidVisualLayers, DisplacementData> MarkingsDisplacement = new();
 }
 
 [DataDefinition]

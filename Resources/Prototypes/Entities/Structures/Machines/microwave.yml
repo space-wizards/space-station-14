@@ -4,7 +4,7 @@
   name: microwave
   description: It's magic.
   components:
-  - type: Microwave
+  - type: CookingDevice # Starlight-edit: from Microwave to CookingDevice
     capacity: 10
   - type: Appearance
   - type: GenericVisualizer
@@ -77,6 +77,12 @@
       visible: false
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -113,8 +119,9 @@
   name: donk co. microwave
   description: So advanced, it can cook donk-pockets in a mere 2.5 seconds!
   components:
-  - type: Microwave
+  - type: CookingDevice # Starlight-edit: from Microwave to CookingDevice
     cookTimeMultiplier: 0.5
+    baseHeatMultiplier: 200
     capacity: 10
     canMicrowaveIdsSafely: false
     explosionChance: 0.3

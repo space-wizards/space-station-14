@@ -40,6 +40,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         SubscribeLocalEvent<AbductorHumanObservationConsoleComponent, BeforeActivatableUIOpenEvent>(OnBeforeActivatableUIOpen);
         SubscribeLocalEvent<AbductorHumanObservationConsoleComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttemptEvent);
 
+        SubscribeLocalEvent<AbductorComponent, GetVisMaskEvent>(OnAbductorGetVis);
+
         Subs.BuiEvents<AbductorHumanObservationConsoleComponent>(AbductorCameraConsoleUIKey.Key, subs => subs.Event<AbductorBeaconChosenBuiMsg>(OnAbductorBeaconChosenBuiMsg));
         InitializeActions();
         InitializeGizmo();
@@ -50,6 +52,11 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         base.Initialize();
     }
 
+    private void OnAbductorGetVis(Entity<AbductorComponent> ent, ref GetVisMaskEvent args)
+    {
+        args.VisibilityMask |= (int)VisibilityFlags.Abductor;
+    }
+
     private void OnAbductorBeaconChosenBuiMsg(Entity<AbductorHumanObservationConsoleComponent> ent, ref AbductorBeaconChosenBuiMsg args)
     {
         OnCameraExit(args.Actor);
@@ -58,20 +65,21 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             var beacon = _entityManager.GetEntity(args.Beacon.NetEnt);
             var eye = SpawnAtPosition(ent.Comp.RemoteEntityProto, Transform(beacon).Coordinates);
             ent.Comp.RemoteEntity = GetNetEntity(eye);
-            
+
             if (TryComp<HandsComponent>(args.Actor, out var handsComponent))
             {
-                foreach (var hand in _hands.EnumerateHands(args.Actor, handsComponent))
+                var handy = (args.Actor, handsComponent);
+                foreach (var hand in _hands.EnumerateHands(handy))
                 {
-                    if (hand.HeldEntity == null)
-                        continue;
-                    
-                    if (HasComp<UnremoveableComponent>(hand.HeldEntity))
+                    if (_hands.HandIsEmpty(handy, hand))
                         continue;
 
-                    _hands.DoDrop(args.Actor, hand, true, handsComponent);
+                    if (HasComp<UnremoveableComponent>(_hands.GetHeldItem(handy, hand)))
+                        continue;
+
+                    _hands.DoDrop(handy, hand, true);
                 }
-                
+
                 if (_virtualItem.TrySpawnVirtualItemInHand(ent.Owner, args.Actor, out var virtItem1))
                 {
                     EnsureComp<UnremoveableComponent>(virtItem1.Value);
@@ -89,7 +97,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
             if (TryComp(args.Actor, out EyeComponent? eyeComp))
             {
-                _eye.SetVisibilityMask(args.Actor, eyeComp.VisibilityMask | (int)VisibilityFlags.Abductor, eyeComp);
+                _eye.RefreshVisibilityMask(args.Actor);
                 _eye.SetTarget(args.Actor, eye, eyeComp);
                 _eye.SetDrawFov(args.Actor, false);
 
@@ -115,16 +123,16 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     {
         AbductorScientistComponent? scientistComp = null;
         AbductorAgentComponent? agentComp = null;
-        
+
         if (TryComp<RelayInputMoverComponent>(actor, out var comp) && TryComp<AbductorScientistComponent>(actor, out scientistComp) || TryComp<AbductorAgentComponent>(actor, out agentComp))
         {
             EntityUid? console = null;
-            
+
             if (scientistComp != null && scientistComp.Console.HasValue)
                 console = scientistComp.Console.Value;
             else if (agentComp != null && agentComp.Console.HasValue)
                 console = agentComp.Console.Value;
-            
+
             if (console == null || comp == null)
                 return;
 
@@ -138,6 +146,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 if (HasComp<StationAiOverlayComponent>(actor))
                     RemComp<StationAiOverlayComponent>(actor);
 
+                _eye.SetTarget(actor, null);
                 _eye.SetVisibilityMask(actor, eyeComp.VisibilityMask ^ (int)VisibilityFlags.Abductor, eyeComp);
                 _eye.SetDrawFov(actor, true);
             }
@@ -155,15 +164,15 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     private void OnBeforeActivatableUIOpen(Entity<AbductorHumanObservationConsoleComponent> ent, ref BeforeActivatableUIOpenEvent args)
     {
         AbductorAgentComponent? agentComp = null;
-        
+
         if (!TryComp<AbductorScientistComponent>(args.User, out var scientistComp) && !TryComp<AbductorAgentComponent>(args.User, out agentComp))
             return;
-            
+
         if (scientistComp != null)
             scientistComp.Console = ent.Owner;
         else if (agentComp != null)
             agentComp.Console = ent.Owner;
-        
+
         var stations = _stationSystem.GetStations();
         var result = new Dictionary<int, StationBeacons>();
 

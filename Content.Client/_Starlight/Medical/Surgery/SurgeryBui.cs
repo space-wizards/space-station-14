@@ -1,16 +1,18 @@
+using System.Collections.Generic;
+using Content.Client._Starlight;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Hands.Systems;
-using Content.Client._Starlight;
-using Content.Shared.Starlight.Medical.Surgery;
+using Content.Server.Administration.Systems;
 using Content.Shared.Body.Part;
+using Content.Shared.Starlight.Medical.Surgery;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Control;
-using Robust.Shared.Timing;
 
 namespace Content.Client._Starlight.Medical.Surgery;
 // Based on the RMC14 build.
@@ -23,6 +25,7 @@ public sealed class SurgeryBui : BoundUserInterface
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IGameTiming _game = default!;
 
+    private readonly StarlightEntitySystem _entitySystem;
     private readonly SurgerySystem _system;
     private readonly HandsSystem _hands;
 
@@ -37,8 +40,8 @@ public sealed class SurgeryBui : BoundUserInterface
     {
         _system = _entities.System<SurgerySystem>();
         _hands = _entities.System<HandsSystem>();
+        _entitySystem = _entities.System<StarlightEntitySystem>();
 
-        _system.OnRefresh += UpdateDisabledPanel;
         _hands.OnPlayerItemAdded += OnPlayerItemAdded;
     }
     private void OnPlayerItemAdded(string k1, EntityUid k2)
@@ -46,7 +49,12 @@ public sealed class SurgeryBui : BoundUserInterface
         if (!_game.IsFirstTimePredicted) return;
         RefreshUI();
     }
-    protected override void Open() => UpdateState(State);
+    protected override void Open()
+    {
+        base.Open();
+        UpdateState(State);
+    }
+
     protected override void UpdateState(BoundUserInterfaceState? state)
     {
         if (state is SurgeryBuiState s)
@@ -111,7 +119,7 @@ public sealed class SurgeryBui : BoundUserInterface
 
             foreach (var (surgeryId, suffix, isCompleted) in surgeries)
             {
-                if (_system.GetSingleton(surgeryId) is not { } surgery ||
+                if (!_entitySystem.TryGetSingleton(surgeryId, out var surgery) ||
                     !_entities.TryGetComponent(surgery, out SurgeryComponent? surgeryComp))
                 {
                     continue;
@@ -172,7 +180,7 @@ public sealed class SurgeryBui : BoundUserInterface
             var last = _previousSurgeries[^1];
             _previousSurgeries.RemoveAt(_previousSurgeries.Count - 1);
 
-            if (_system.GetSingleton(last) is not { } previousId ||
+            if (!_entitySystem.TryGetSingleton(last, out var previousId) ||
                 !_entities.TryGetComponent(previousId, out SurgeryComponent? previous))
             {
                 return;
@@ -185,7 +193,7 @@ public sealed class SurgeryBui : BoundUserInterface
     private void AddStep(EntProtoId stepId, NetEntity netPart, EntProtoId surgeryId)
     {
         if (_window == null ||
-            _system.GetSingleton(stepId) is not { } step)
+            !_entitySystem.TryGetSingleton(stepId, out var step))
         {
             return;
         }
@@ -218,7 +226,11 @@ public sealed class SurgeryBui : BoundUserInterface
         {
             foreach (var requirementId in requirementIds)
             {
-                if (_system.GetSingleton(requirementId) is { } requirement && _entities.TryGetComponent(_part, out BodyPartComponent? partComp) && partComp.Body is { } Body && _part is { } Part && _system.IsSurgeryValid(Body, Part, requirementId, surgeryId, out _, out _, out _))
+                if (_entitySystem.TryGetSingleton(requirementId, out var requirement)
+                    && _entities.TryGetComponent(_part, out BodyPartComponent? partComp) 
+                    && partComp.Body is { } Body 
+                    && _part is { } Part 
+                    && _system.IsSurgeryValid(Body, Part, requirementId, surgeryId, out _, out _, out _))
                 {
                     var label = new ChoiceControl();
                     label.Button.OnPressed += _ =>
@@ -261,7 +273,7 @@ public sealed class SurgeryBui : BoundUserInterface
         var surgeries = new List<(Entity<SurgeryComponent> Ent, EntProtoId Id, string Name, bool IsCompleted, Texture?)>();
         foreach (var (surgeryId, suffix, isCompleted) in surgeryIds)
         {
-            if (_system.GetSingleton(surgeryId) is not { } surgery ||
+            if (!_entitySystem.TryGetSingleton(surgeryId, out var surgery)||
                 !_entities.TryGetComponent(surgery, out SurgeryComponent? surgeryComp))
             {
                 continue;
@@ -447,7 +459,6 @@ public sealed class SurgeryBui : BoundUserInterface
 
         if (disposing)
             _window?.Dispose();
-        _system.OnRefresh -= UpdateDisabledPanel;
         _hands.OnPlayerItemAdded -= OnPlayerItemAdded;
     }
 }

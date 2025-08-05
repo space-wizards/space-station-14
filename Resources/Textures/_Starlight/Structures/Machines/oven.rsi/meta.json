@@ -1,0 +1,40 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Paradise Station",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "broken"
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "on"
+        },
+        {
+            "name": "opened"
+        },
+        {
+            "name": "enabled",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+      ]
+    }

@@ -207,6 +207,14 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: JobIconCluwne
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Cluwne
+  jobName: job-name-cluwne
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconCaptain
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
@@ -239,11 +247,11 @@
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconPassenger
+  id: JobIconAssistant
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Passenger
-  jobName: job-name-passenger
+    state: Assistant
+  jobName: job-name-assistant
 
 - type: jobIcon
   parent: JobIcon

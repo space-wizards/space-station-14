@@ -10,3 +10,4 @@
   - type: NoSlip
   - type: MovementAlwaysTouching
   - type: CanMoveInAir
+  - type: MovementSpeedModifier

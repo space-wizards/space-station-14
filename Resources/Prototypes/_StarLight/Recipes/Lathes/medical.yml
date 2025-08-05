@@ -1,7 +1,8 @@
 - type: latheRecipe
   id: ScalpelAdvanced
   result: ScalpelAdvanced
-  category: Surgery
+  categories:
+  - Surgery
   completetime: 3
   materials:
     Steel: 300
@@ -10,7 +11,8 @@
 - type: latheRecipe
   id: RetractorAdvanced
   result: RetractorAdvanced
-  category: Surgery
+  categories:
+  - Surgery
   completetime: 4
   materials:
     Steel: 300
@@ -19,7 +21,8 @@
 - type: latheRecipe
   id: SawAdvanced
   result: SawAdvanced
-  category: Surgery
+  categories:
+  - Surgery
   completetime: 5
   materials:
     Steel: 500
@@ -28,7 +31,8 @@
 - type: latheRecipe
   id: HemostatAdvanced
   result: HemostatAdvanced
-  category: Surgery
+  categories:
+  - Surgery
   completetime: 2
   materials:
     Steel: 300
@@ -37,7 +41,8 @@
 - type: latheRecipe
   id: BoneSetterAdvanced
   result: BoneSetterAdvanced
-  category: Surgery
+  categories:
+  - Surgery
   completetime: 2
   materials:
     Steel: 300
@@ -46,7 +51,8 @@
 - type: latheRecipe
   id: BoneGel
   result: BoneGel
-  category: Surgery
+  categories:
+  - Surgery
   completetime: 2
   materials:
     Plastic: 200
@@ -55,7 +61,8 @@
 - type: latheRecipe
   id: BoneSetter
   result: BoneSetter
-  category: Surgery
+  categories:
+  - Surgery
   completetime: 2
   materials:
     Steel: 200
@@ -65,7 +72,8 @@
 - type: latheRecipe
   id: LeftArmCyber
   result: LeftArmCyber
-  category: Cyberlimbs
+  categories:
+  - Cyberlimbs
   completetime: 3
   materials:
     Plastic: 200
@@ -74,7 +82,8 @@
 - type: latheRecipe
   id: RightArmCyber
   result: RightArmCyber
-  category: Cyberlimbs
+  categories:
+  - Cyberlimbs
   completetime: 3
   materials:
     Plastic: 200
@@ -83,7 +92,8 @@
 - type: latheRecipe
   id: LeftHandCyber
   result: LeftHandCyber
-  category: Cyberlimbs
+  categories:
+  - Cyberlimbs
   completetime: 2
   materials:
     Plastic: 100
@@ -92,7 +102,8 @@
 - type: latheRecipe
   id: RightHandCyber
   result: RightHandCyber
-  category: Cyberlimbs
+  categories:
+  - Cyberlimbs
   completetime: 2
   materials:
     Plastic: 100
@@ -101,7 +112,8 @@
 - type: latheRecipe
   id: LeftLegCyber
   result: LeftLegCyber
-  category: Cyberlimbs
+  categories:
+  - Cyberlimbs
   completetime: 3
   materials:
     Plastic: 200
@@ -110,7 +122,8 @@
 - type: latheRecipe
   id: RightLegCyber
   result: RightLegCyber
-  category: Cyberlimbs
+  categories:
+  - Cyberlimbs
   completetime: 3
   materials:
     Plastic: 200
@@ -119,7 +132,8 @@
 - type: latheRecipe
   id: LeftFootCyber
   result: LeftFootCyber
-  category: Cyberlimbs
+  categories:
+  - Cyberlimbs
   completetime: 2
   materials:
     Plastic: 100
@@ -128,7 +142,8 @@
 - type: latheRecipe
   id: RightFootCyber
   result: RightFootCyber
-  category: Cyberlimbs
+  categories:
+  - Cyberlimbs
   completetime: 2
   materials:
     Plastic: 100
@@ -137,7 +152,8 @@
 - type: latheRecipe
   id: LeftArmCyberReaper
   result: LeftArmCyberReaper
-  category: Cyberlimbs
+  categories:
+  - Cyberlimbs
   completetime: 10
   materials:
     Plastic: 550
@@ -148,7 +164,8 @@
 - type: latheRecipe
   id: RightArmCyberReaper
   result: RightArmCyberReaper
-  category: Cyberlimbs
+  categories:
+  - Cyberlimbs
   completetime: 10
   materials:
     Plastic: 550
@@ -159,7 +176,8 @@
 - type: latheRecipe
   id: LeftArmCyberMechwright
   result: LeftArmCyberMechwright
-  category: Cyberlimbs
+  categories:
+  - Cyberlimbs
   completetime: 10
   materials:
     Plastic: 450
@@ -170,7 +188,8 @@
 - type: latheRecipe
   id: RightArmCyberMechwright
   result: RightArmCyberMechwright
-  category: Cyberlimbs
+  categories:
+  - Cyberlimbs
   completetime: 10
   materials:
     Plastic: 450
@@ -184,7 +203,8 @@
 - type: latheRecipe
   id: EyeImplantWelding
   result: EyeImplantWelding
-  category: Implants
+  categories:
+  - Implants
   completetime: 3
   materials:
     Plastic: 100
@@ -195,7 +215,8 @@
 - type: latheRecipe
   id: EyeImplantMedical
   result: EyeImplantMedical
-  category: Implants
+  categories:
+  - Implants
   completetime: 4
   materials:
     Steel: 200
@@ -205,7 +226,8 @@
 - type: latheRecipe
   id: EyeImplantSecurity
   result: EyeImplantSecurity
-  category: Implants
+  categories:
+  - Implants
   completetime: 4
   materials:
     Steel: 200
@@ -213,9 +235,10 @@
     Glass: 150
 
 - type: latheRecipe
-  id: EyeImplantNightVision
-  result: EyeImplantNightVision
-  category: Implants
+  id: CyberEyeNightVision
+  result: CyberEyeNightVision
+  categories:
+  - Implants
   completetime: 5
   materials:
     Plastic: 100
@@ -224,9 +247,10 @@
     Glass: 100
 
 - type: latheRecipe
-  id: EyeImplantThermal
-  result: EyeImplantThermal
-  category: Implants
+  id: CyberEyeThermal
+  result: CyberEyeThermal
+  categories:
+  - Implants
   completetime: 10
   materials:
     Plastic: 200
@@ -240,7 +264,8 @@
 - type: latheRecipe
   id: AutoMenderBrute
   result: AutoMenderBrute
-  category: Tools
+  categories:
+  - Tools
   completetime: 4
   materials:
     Plastic: 200
@@ -250,7 +275,8 @@
 - type: latheRecipe
   id: AutoMenderBurn
   result: AutoMenderBurn
-  category: Tools
+  categories:
+  - Tools
   completetime: 4
   materials:
     Plastic: 200

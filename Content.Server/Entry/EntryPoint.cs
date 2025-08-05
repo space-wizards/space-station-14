@@ -6,6 +6,7 @@ using Content.Server.Afk;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
+using Content.Server.Discord.DiscordLink;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Server.GhostKick;
@@ -35,6 +36,8 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Server._NullLink;
+using Content.Server._NullLink.Core;
 
 namespace Content.Server.Entry
 {
@@ -122,6 +125,7 @@ namespace Content.Server.Entry
 
                 //🌟Starlight🌟
                 IoCManager.Resolve<ITTSManager>().Initialize();
+                IoCManager.Resolve<IActorRouter>().Initialize(); // nulllink 
                 IoCManager.Resolve<HolidaySystem>().Initialize();
             }
         }
@@ -153,6 +157,10 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IPlayerRolesManager>().Initialize();
                 IoCManager.Resolve<IAfkManager>().Initialize();
                 IoCManager.Resolve<RulesManager>().Initialize();
+
+                IoCManager.Resolve<DiscordLink>().Initialize();
+                IoCManager.Resolve<DiscordChatLink>().Initialize();
+
                 _euiManager.Initialize();
 
                 IoCManager.Resolve<IGameMapManager>().Initialize();
@@ -160,6 +168,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IBanManager>().Initialize();
                 IoCManager.Resolve<IConnectionManager>().PostInit();
                 IoCManager.Resolve<MultiServerKickManager>().Initialize();
+                IoCManager.Resolve<CVarControlManager>().Initialize();
             }
         }
 
@@ -190,6 +199,9 @@ namespace Content.Server.Entry
             _playTimeTracking?.Shutdown();
             _dbManager?.Shutdown();
             IoCManager.Resolve<ServerApi>().Shutdown();
+            IoCManager.Resolve<DiscordLink>().Shutdown();
+            IoCManager.Resolve<DiscordChatLink>().Shutdown();
+            IoCManager.Resolve<IActorRouter>().Shutdown(); // nulllink 
         }
 
         private static void LoadConfigPresets(IConfigurationManager cfg, IResourceManager res, ISawmill sawmill)
@@ -223,6 +235,7 @@ namespace Content.Server.Entry
             Load(CCVars.ConfigPresetDebug, "debug");
 #endif
 
+#pragma warning disable CS8321
             void Load(CVarDef<bool> cVar, string name)
             {
                 var path = $"{ConfigPresetsDirBuild}{name}.toml";
@@ -232,6 +245,7 @@ namespace Content.Server.Entry
                     sawmill.Info("Loaded config preset: {Preset}", path);
                 }
             }
+#pragma warning restore CS8321
         }
     }
 }

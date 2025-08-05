@@ -1,6 +1,6 @@
 - type: entity
   name: wonderprod
-  parent: BaseItem
+  parent: [ BaseItem, BaseMajorContraband ]
   id: Wonderprod
   description: Universal tool of the abductor agent.
   components:

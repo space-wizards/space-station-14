@@ -1,0 +1,5 @@
+- type: stack
+  id: WizCoin
+  name: stack-wizcoin
+  icon: _Starlight/Objects/Specific/wizcoin.rsi
+  spawn: WizCoin1

@@ -1,21 +1,21 @@
 - type: entity
   name: double stun baton
-  parent: Stunbaton
+  parent: [ Stunbaton, BaseSecurityContraband ]
   id: DoubleStunbaton
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Melee/doublestunbaton.rsi
     layers:
     - state: stunbaton_off
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
       
 - type: entity
   name: purple stun baton
-  parent: Stunbaton
+  parent: [ Stunbaton, BaseSecurityContraband ]
   id: PurpleStunbaton
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Melee/purplestunbaton.rsi
     layers:
     - state: stunbaton_off
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]

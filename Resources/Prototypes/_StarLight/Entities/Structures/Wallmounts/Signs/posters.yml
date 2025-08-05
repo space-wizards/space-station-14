@@ -2,38 +2,258 @@
   parent: PosterBase
   id: PosterLegitCalendar
   name: "NT Brand Calendar"
-  description: " An outdated calendar bearing NanoTrasen's branding."
+  description: "An outdated calendar bearing NanoTrasen's branding."
   components:
   - type: Sprite
-    sprite: _Starlight/Structures/Wallmounts/signs.rsi
+    sprite: _Starlight/Structures/Wallmounts/posters/calendar.rsi
     state: calendar
     
 - type: entity
   parent: PosterBase
   id: PosterLegitCleanHands
   name: "Clean Hands"
-  description: " Wash your hands. Or else."
+  description: "Wash your hands. Or else."
   components:
   - type: Sprite
-    sprite: _Starlight/Structures/Wallmounts/signs.rsi
+    sprite: _Starlight/Structures/Wallmounts/posters/cleanhands.rsi
     state: cleanhands
     
 - type: entity
   parent: PosterBase
   id: PosterLegitEyeChart
-  name: "A chart for eye exams."
-  description: " Is that third letter a P or an F?"
+  name: "A chart for eye exams"
+  description: "Is that third letter a P or an F?"
   components:
   - type: Sprite
-    sprite: _Starlight/Structures/Wallmounts/signs.rsi
+    sprite: _Starlight/Structures/Wallmounts/posters/eyechart.rsi
     state: eyechart
     
 - type: entity
   parent: PosterBase
   id: PosterContrabandYoutoolpia
   name: "Youtoolpia"
-  description: " A dream that went up in plasma fire."
+  description: "A dream that went up in plasma fire."
   components:
   - type: Sprite
-    sprite: _Starlight/Structures/Wallmounts/signs.rsi
+    sprite: _Starlight/Structures/Wallmounts/posters/youtoolpia.rsi
     state: youtoolpia
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSkillIssue
+  name: "'SKILL ISSUE'"
+  description: "Clearly, some TERRIBLE paperwork was done here."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/skillissue.rsi
+    state: skillissue
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitShoeless
+  name: "Is YOUR Captain Shoeless?"
+  description: "A poster informing crew about the Lokir Doctrine."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/shoeless.rsi
+    state: shoeless
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitDoNotCauseCancer
+  name: "Coords Do Not Cause Cancer"
+  description: "A poster proving to the crew that coords in fact, don't cause cancer."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/coordsdont.rsi
+    state: coordsdont
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandDoCauseCancer
+  name: "Coords Do Cause Cancer"
+  description: "A poster proving to the crew that coords in fact, do cause cancer."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/coordsdo.rsi
+    state: coordsdo
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandLnuGlorf
+  name: "Lnu-Glorf! Commemorative Plaque"
+  description: " A plaque commemorating, that incident..."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/lnuglorf.rsi
+    state: lnuglorf
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitRenaissanceFair
+  name: "Abby's Renaissance Fair"
+  description: "A poster promoting the renaissance fair, it looks battered and worn."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/renaissancefair.rsi
+    state: renaissancefair
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandRobustVox
+  name: "Robust Voxes Do Drugs"
+  description: "A poster depicting a Vox huffing frezon."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/robust.rsi
+    state: robust
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandRobirdVox
+  name: "Robird Voxes Do Crime"
+  description: "A poster vandalised to look like a Blueshield Officer, signed by Jack D.?"
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/robird.rsi
+    state: robird
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitKillEmAll
+  name: "Kill Em All Advert"
+  description: "A poster of the Head of Security shooting a hole through an assistant, particularly violent."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/killemall.rsi
+    state: killemall
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandForumPost
+  name: "'Know What They Took From You'"
+  description: "A framed image of a post from the NT forums, clearly very angry - signed by John Toe?"
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/forumpost.rsi
+    state: forumpost
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandHaveYouSeenHimJohnToe
+  name: "Have You Seen Him?"
+  description: "What seems like a bounty poster for John Toe. Yeah, right."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/johntoewatned.rsi
+    state: johntoewanted
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitHaveYouSeenHimJuanToe
+  name: "Have You Seen Him?"
+  description: "What seems like a bounty poster for Juan Toe. Who the hell is Juan Toe?"
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/juantoewanted.rsi
+    state: juantoewanted
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandFlukiesCall
+  name: "Have A Flukie Problem?"
+  description: "If you have a flukie problem, call 1-800-LAKE-NOW!"
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/flukies.rsi
+    state: flukies
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandHaveYouSeenDisMan
+  name: "Have You Seen Dis Man?"
+  description: "A poster asking you, have you seen dis man?"
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/haveuseendisman.rsi
+    state: haveuseendisman
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitMaxCap
+  name: "To Max, Or Not To Max"
+  description: "A poster seemingly referencing a chemical phenomena called the Roman Limit."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/maxcap.rsi
+    state: maxcap
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandHolyInsuls
+  name: "Insuls From God"
+  description: "'Do you have time to talk about our lord and saviour, The Lord of the Tide? Talk to Percy for a free copy of the Maints Bible - and complimentary pair of insuls.'"
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/insulsfromheaven.rsi
+    state: insulsfromheaven
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandDaysSinceFluke
+  name: "Days Since Last Fluke"
+  description: "A board meant to disincentivise workplace accidents."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/dayssincefluke.rsi
+    state: dayssincefluke
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandIlluminatePropaganda
+  name: "Illuminate Space Propaganda"
+  description: "A poster meant to invoke strong feelings of pride among bird people."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/illuminate.rsi
+    state: illuminate
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitRipleyCertified
+  name: "Ripley Certified"
+  description: "By god, he's forkli- I mean, Ripley certified..."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/ripleycertified.rsi
+    state: ripleycertified
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitKillersClinic
+  name: "Killer's Clinic"
+  description: "A clinic, for killers? Apparently, you get complimentary music played while you're treated."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/killersclinic.rsi
+    state: killersclinic
+
+- type: entity
+  parent: PosterBase
+  id: PosterlegitLawPoster
+  name: "Legal Advice Advert"
+  description: "A poster advertising the eponimous Butcher A. Hemmel law firm, great for beating murder charges!"
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/lawadvert.rsi
+    state: lawadvert
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandFentsAndCo
+  name: "Fents & Co Shuttleworks"
+  description: "A poster shaped like a shuttle with the name of some totally illegal company on it, how odd."
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/posters/fents.rsi
+    state: fents

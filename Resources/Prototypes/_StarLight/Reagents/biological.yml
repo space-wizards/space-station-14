@@ -8,4 +8,14 @@
   color: "#d600bd"
   recognizable: true
   physicalDesc: reagent-physical-desc-abductor
-  slippery: false
+
+- type: reagent
+  parent: Blood
+  id: AvaliBlood
+  name: reagent-name-avali-blood
+  group: Biological
+  desc: reagent-desc-avali-blood
+  flavor: beer
+  color: "#6C3BAA"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-avali

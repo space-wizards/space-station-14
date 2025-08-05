@@ -4,3 +4,55 @@
   components:
   - type: Contraband
     severity: Soviet
+
+#Advanced Cyberlimbs
+- type: entity
+  id: BaseAdvancedCyberlimbContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: AdvancedCyberlimbs
+
+- type: entity
+  id: BaseSalvageContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ SalvageSpecialist, MiningSpecialist ]
+
+- type: entity
+  id: BaseSecuritySalvageContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security ]
+    allowedJobs: [ SalvageSpecialist, MiningSpecialist ]
+
+- type: entity
+  id: BaseEngineeringSalvageContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Engineering ]
+    allowedJobs: [ SalvageSpecialist, MiningSpecialist ]
+
+# This might look really stupid but it's sadly necessary as conflicting base contra groups tend to be mutually exclusive...
+- type: entity
+  id: BaseEngineeringSecuritySalvageContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Engineering, Security ]
+    allowedJobs: [SalvageSpecialist, MiningSpecialist]
+
+- type: entity
+  id: BaseLawContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Law ]

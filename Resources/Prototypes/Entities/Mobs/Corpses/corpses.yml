@@ -14,7 +14,7 @@
       - BotanistGear
       - ChefGear
       - ChaplainGear
-      - PassengerGear
+      - AssistantGear
 
 - type: entity
   parent: SalvageHumanCorpse

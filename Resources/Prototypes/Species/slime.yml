@@ -8,6 +8,7 @@
   markingLimits: MobSlimeMarkingLimits
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
+  customName: true # Starlight
 
 - type: speciesBaseSprites
   id: MobSlimeSprites
@@ -15,8 +16,10 @@
     Head: MobSlimeHead
     Hair: MobSlimeMarkingAlfa
     FacialHair: MobSlimeMarkingFollowSkin
+    UndergarmentTop: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobSlimeTorso
-    Eyes: MobHumanoidEyes
+    Eyes: MobHumanoidAnyMarking # Starlight
     LArm: MobSlimeLArm
     RArm: MobSlimeRArm
     LHand: MobSlimeLHand
@@ -29,6 +32,10 @@
 - type: markingPoints
   id: MobSlimeMarkingLimits
   points:
+    Eyes: # Starlight
+      points: 1
+      required: true
+      defaultMarkings: [ SlimeEyesDefault ]
     Hair:
       points: 1
       required: false
@@ -36,7 +43,7 @@
       points: 1
       required: false
     Chest:
-      points: 1
+      points: 2 #imp
       required: false
     Legs:
       points: 4
@@ -47,12 +54,12 @@
 
 - type: humanoidBaseSprite
   id: MobSlimeMarkingAlfa
-  layerAlpha: 0.5
+  layerAlpha: 0.65 # Starlight
 
 - type: humanoidBaseSprite
   id: MobSlimeMarkingFollowSkin
   markingsMatchSkin: true
-  layerAlpha: 0.5
+  layerAlpha: 0.75 # Starlight
 
 - type: humanoidBaseSprite
   id: MobSlimeHead

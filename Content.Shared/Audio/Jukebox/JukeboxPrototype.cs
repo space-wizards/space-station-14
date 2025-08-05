@@ -10,7 +10,7 @@ namespace Content.Shared.Audio.Jukebox;
 public sealed partial class JukeboxPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = string.Empty;
+    public string ID { get; private set; } = string.Empty;
 
     /// <summary>
     /// User friendly name to use in UI.

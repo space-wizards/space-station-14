@@ -25,6 +25,7 @@
         stomach: OrganReptilianStomach
         liver:  OrganHumanLiver
         kidneys: OrganHumanKidneys
+        cavity: null
     right arm:
       part: RightArmFelionoid
       connections:

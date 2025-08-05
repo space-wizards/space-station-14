@@ -306,7 +306,7 @@
 
 - type: entity
   id: BedsheetSyndie
-  parent: BedsheetBase
+  parent: [ BedsheetBase, BaseMajorContraband ]  #SL EDIT, Syndie to Major
   name: syndicate bedsheet
   description: It has a syndicate emblem and it has an aura of evil.
   components:
@@ -318,7 +318,8 @@
 - type: entity
   id: BedsheetUSA
   parent: BedsheetBase
-  name: USA bedsheet
+  name: usa bedsheet
+  description: Glory to the American Territories! In memory of the United States.  #SL EDIT, description for lore
   components:
   - type: Sprite
     state: sheetUSA

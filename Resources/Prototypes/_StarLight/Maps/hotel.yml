@@ -2,10 +2,10 @@
   id: StarlightHotel
   mapName: 'Hotel'
   mapPath: /Maps/_Starlight/Stations/Hotel.yml
-  minPlayers: 15
+  minPlayers: 7
   maxPlayers: 55
   stations:
-    Hotel:
+    StarlightHotel:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -54,8 +54,10 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 6, 6 ]
             CargoTechnician: [ 6, 8 ]
+            MailTech: [ 1, 2 ]
+            MiningSpecialist: [ 3, 3 ]
             #civilian
-            Passenger: [ -1, -1 ]
+            Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 2, 2 ]

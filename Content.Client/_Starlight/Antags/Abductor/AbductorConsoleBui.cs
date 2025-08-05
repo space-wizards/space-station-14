@@ -29,7 +29,12 @@ public sealed class AbductorConsoleBui : BoundUserInterface
     {
 
     }
-    protected override void Open() => UpdateState(State);
+    protected override void Open()
+    {
+        base.Open();
+        UpdateState(State);
+    }
+
     protected override void UpdateState(BoundUserInterfaceState? state)
     {
         if (state is AbductorConsoleBuiState s)

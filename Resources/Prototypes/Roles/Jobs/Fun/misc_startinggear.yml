@@ -11,8 +11,8 @@
     outerClothing: ClothingOuterCoatGentle
     gloves: ClothingHandsGlovesFingerless
     shoes: ClothingShoesBootsJack
-    id: PassengerPDA
-    ears: ClothingHeadsetGrey
+    id: AssistantPDA
+    ears: ClothingHeadsetAssistant
   storage:
     back:
     - BoxSurvival
@@ -103,6 +103,18 @@
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
     id: PunPunIDCard
 
+- type: startingGear
+  id: MobPollyGear
+  equipment:
+    ears: ClothingHeadsetEngineering
+
+# Emotional Support Scurret
+
+- type: startingGear
+  id: EmotionalSupportScurretGear
+  equipment:
+    id: ScurretPDA
+
 # DeathMatch Gear
 
 - type: startingGear
@@ -110,7 +122,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorWhite
     shoes: ClothingShoesBootsJack
-    ears: ClothingHeadsetGrey
+    ears: ClothingHeadsetAssistant
     gloves: ClothingHandsGlovesFingerless
   inhand:
     - WeaponMeleeToolboxRobust
@@ -119,14 +131,20 @@
 - type: startingGear
   id: MobAghostGear
   equipment:
-    back: ClothingBackpackSatchelHolding
+    back: ClothingBackpackSatchelAdmin
     id: AdminPDA
+    belt: ClothingBeltChiefEngineerFilled #starlight start 
   storage:
     back:
-    - GasAnalyzer
-    - trayScanner
     - AccessConfiguratorUniversal
-    - Multitool
+    - AnomalyScanner
+    - RubberStampCAD
+    - RubberStampCED
+    - RubberStampCMD
+    - RubberStampCRD
+    - RubberStampCCD
+    - RubberStampCSD
+    - RubberStampCDD #starlight end
 
 #Gladiator with spear
 - type: startingGear
@@ -159,9 +177,9 @@
     pocket1: BikeHorn
     pocket2: ClownRecorder
 
-# Passenger but without the ID, bag, or headset
+# Assistant but without the ID, bag, or headset
 - type: startingGear
-  id: LimitedPassengerGear
+  id: LimitedAssistantGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
     shoes: ClothingShoesColorBlack

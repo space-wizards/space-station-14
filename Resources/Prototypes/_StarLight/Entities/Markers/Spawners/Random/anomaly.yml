@@ -1,0 +1,16 @@
+﻿- type: entity
+  id: RandomFleshAnomalySpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Specific/anomaly.rsi
+          state: anom5
+    - type: RandomSpawner
+      prototypes:
+      - AnomalyFlesh
+      rarePrototypes:
+      - AnomalyClown
+      rareChance: 0.20 # 1 in 5 chance of spawning clown instead of flesh
+      offset: 0.15

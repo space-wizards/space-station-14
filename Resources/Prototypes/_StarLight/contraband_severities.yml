@@ -1,3 +1,7 @@
 - type: contrabandSeverity
   id: Soviet
   examineText: contraband-examine-text-soviet
+
+- type: contrabandSeverity
+  id: AdvancedCyberlimbs
+  examineText: contraband-examine-text-advancedcyberlimbs

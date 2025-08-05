@@ -13,8 +13,6 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    
     protected const string ChamberSlot = "gun_chamber";
 
     protected virtual void InitializeChamberMagazine()
@@ -44,10 +42,10 @@ public abstract partial class SharedGunSystem
     {
         if (component.SelectedPrefix == null && component.AvailablePrefixes.Count > 1)
         {
-            component.SelectedPrefix = _random.Pick(component.AvailablePrefixes);
+            component.SelectedPrefix = Random.Pick(component.AvailablePrefixes);
             Dirty(uid, component);
         }
-        
+
         // Appearance data doesn't get serialized and want to make sure this is correct on spawn (regardless of MapInit) so.
         if (component.BoltClosed != null)
         {
@@ -87,7 +85,7 @@ public abstract partial class SharedGunSystem
     /// </summary>
     private void OnChamberActivationVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<ActivationVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null || !component.CanRack)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || args.Hands == null || component.BoltClosed == null || !component.CanRack)
             return;
 
         args.Verbs.Add(new ActivationVerb()
@@ -140,7 +138,7 @@ public abstract partial class SharedGunSystem
     /// </summary>
     private void OnChamberInteractionVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || args.Hands == null || component.BoltClosed == null)
             return;
 
         args.Verbs.Add(new InteractionVerb()
@@ -193,7 +191,7 @@ public abstract partial class SharedGunSystem
                     // The problem is client will dump the cartridge on the ground and the new server state
                     // won't correspond due to randomness so looks weird
                     // but we also need to always take it from the chamber or else ammocount won't be correct.
-                    TransformSystem.DetachParentToNull(chambered.Value, Transform(chambered.Value));
+                    TransformSystem.DetachEntity(chambered.Value, Transform(chambered.Value));
                 }
 
                 UpdateAmmoCount(uid);

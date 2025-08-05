@@ -1,0 +1,12 @@
+- type: polymorph
+  id: RampagingGorilla
+  configuration:
+    entity: MobGorillaRampaging
+    forced: true
+    transferName: true
+    transferHumanoidAppearance: false
+    inventory: Drop
+    transferDamage: true
+    revertOnDeath: true
+    revertOnCrit: false
+    polymorphSound: /Audio/_Starlight/Voice/gorilla.ogg

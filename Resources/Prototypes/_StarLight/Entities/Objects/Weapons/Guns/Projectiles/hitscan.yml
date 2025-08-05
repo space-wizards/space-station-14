@@ -97,6 +97,24 @@
   pierceChance: 0.40
   derivation: 0.05
   ricochetChance: 0.30
+  staminaDamage: 4
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: sp
+
+- type: hitscan
+  id: BulletMagnumTraceImprovised
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 15
+      Blunt: 15
+  armorPenetration: -0.35
+  pierceChance: 0.25
+  derivation: 0.05
+  ricochetChance: 0.30
+  staminaDamage: 5
   bullet:
     sprite:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -108,6 +126,7 @@
   damage:
     types:
       Piercing: 46 #+ 30%
+  staminaDamage: 10    
   armorPenetration: -1
   pierceChance: 0.03
   derivation: 0.05
@@ -119,7 +138,7 @@
   damage:
     types:
       Piercing: 28 #- 20%
-  armorPenetration: 0.35
+  armorPenetration: 0.25
   pierceChance: 0.69
   derivation: 0.05
   ricochetChance: 0.80
@@ -180,7 +199,7 @@
   parent: BulletTrace
   damage:
     types:
-      Piercing: 21 #- 40%
+      Piercing: 25 #- 30%
   armorPenetration: 0.69
   pierceChance: 0.81
   derivation: 0.05
@@ -203,6 +222,24 @@
   pierceChance: 0.40
   derivation: 0.2
   ricochetChance: 0.30
+  staminaDamage: 2
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: sp
+
+- type: hitscan
+  id: BulletPistolTraceImprovised
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 7
+      Blunt: 7
+  armorPenetration: -0.30
+  pierceChance: 0.25
+  derivation: 0.2
+  ricochetChance: 0.10
+  staminaDamage: 3
   bullet:
     sprite:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -215,6 +252,7 @@
     types:
       Piercing: 20 #+ 30%
   armorPenetration: -1
+  staminaDamage: 5
   pierceChance: 0.03
   derivation: 0.2
   ricochetChance: 0.15
@@ -225,7 +263,7 @@
   damage:
     types:
       Piercing: 12 #- 20%
-  armorPenetration: 0.35
+  armorPenetration: 0.25
   pierceChance: 0.69
   derivation: 0.2
   ricochetChance: 0.80
@@ -286,7 +324,7 @@
   parent: BulletTrace
   damage:
     types:
-      Piercing: 9 #- 40%
+      Piercing: 11 #- 30%
   armorPenetration: 0.69
   pierceChance: 0.81
   derivation: 0.2
@@ -298,7 +336,7 @@
       state: ap
       
 - type: hitscan
-  id: BulletPistolTrace40NrSP
+  id: BulletPistolTrace40SP
   parent: BulletTrace
   staminaDamage: 15
   damage:
@@ -314,7 +352,7 @@
   ricochetChance: 0.20
   
 - type: hitscan
-  id: BulletPistolTrace40NrHP
+  id: BulletPistolTrace40HP
   parent: BulletTrace
   staminaDamage: 20
   damage:
@@ -330,7 +368,7 @@
   ricochetChance: 0.10
   
 - type: hitscan
-  id: BulletPistolTrace40NrFMJ
+  id: BulletPistolTrace40FMJ
   parent: BulletTrace
   staminaDamage: 13
   damage:
@@ -340,14 +378,14 @@
     sprite:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
       state: fmj
-  armorPenetration: 0.25
+  armorPenetration: 0.15
   pierceChance: 0.55
   derivation: 0.15
   ricochetChance: 0.70
   pierceLevel: Wood
   
 - type: hitscan
-  id: BulletPistolTrace40NrAP
+  id: BulletPistolTrace40AP
   parent: BulletTrace
   staminaDamage: 10
   damage:
@@ -405,7 +443,26 @@
     types:
       Piercing: 19
   armorPenetration: -0.25
+  staminaDamage: 2
   pierceChance: 0.40
+  derivation: 0.05
+  ricochetChance: 0.30
+  pierceLevel: Metal
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: sp
+
+- type: hitscan
+  id: BulletLightRifleTraceImprovised
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 7
+      Blunt: 7
+  armorPenetration: -0.35
+  staminaDamage: 3
+  pierceChance: 0.20
   derivation: 0.05
   ricochetChance: 0.30
   pierceLevel: Metal
@@ -422,6 +479,7 @@
       Piercing: 25 #+ 30%
   pierceLevel: Wood
   armorPenetration: -1
+  staminaDamage: 6
   pierceChance: 0.03
   derivation: 0.05
   ricochetChance: 0.15
@@ -432,7 +490,7 @@
   damage:
     types:
       Piercing: 15 #- 20%
-  armorPenetration: 0.35
+  armorPenetration: 0.25
   pierceChance: 0.69
   derivation: 0.05
   ricochetChance: 0.80
@@ -447,7 +505,7 @@
   parent: BulletTrace
   damage:
     types:
-      Piercing: 11 #- 40%
+      Piercing: 13 #- 40%
   armorPenetration: 0.69
   pierceChance: 0.81
   derivation: 0.05
@@ -515,6 +573,7 @@
   armorPenetration: -0.25
   pierceChance: 0.40
   ricochetChance: 0.30
+  staminaDamage: 2
   pierceLevel: Wood
   bullet:
     sprite:
@@ -528,6 +587,7 @@
     types:
       Piercing: 22 #+ 30%
   armorPenetration: -1
+  staminaDamage: 5
   pierceChance: 0.03
   ricochetChance: 0.15
 
@@ -537,7 +597,7 @@
   damage:
     types:
       Piercing: 14 #- 20%
-  armorPenetration: 0.35
+  armorPenetration: 0.25
   pierceChance: 0.69
   ricochetChance: 0.80
   pierceLevel: Metal
@@ -551,7 +611,7 @@
   parent: BulletTrace
   damage:
     types:
-      Piercing: 10 #- 40%
+      Piercing: 12 #- 30%
   armorPenetration: 0.69
   pierceChance: 0.81
   ricochetChance: 0.48
@@ -728,35 +788,67 @@
       state: heavylaser
   collisionMask: 64 #BulletImpassable
   reflective: Energy
-  
+
 - type: hitscan
-  id: LaserBolt
-  name: laser bolt
-  parent: EnergyTrace
+  id: LaserTrace
+  abstract: true
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_laser
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_laser
+  reflective: Energy
+
+- type: hitscan
+  id: RedLaserBeam
+  name: laser beam
+  parent: LaserTrace
   damage:
     types:
       Heat: 20
 
 - type: hitscan
-  id: DestroyBolt
-  name: destroying bolt
-  parent: EnergyTrace
+  id: DestroyBeam
+  name: destroying beam
+  parent: LaserTrace
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_blue
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_blue
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_blue
   damage:
     types:
       Heat: 50
       
 - type: hitscan
-  id: DisablerBolt
-  name: disabler bolt
+  id: DisablerBoltPractice
+  name: disabler bolt practice
   parent: EnergyTrace
+  collisionMask: 64 #BulletImpassable
   bullet:
     sprite:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
       state: omnilaser
+
+- type: hitscan
+  id: DisablerBolt
+  name: disabler bolt
+  parent: DisablerBoltPractice
   staminaDamage: 25
-  damage:
-    types:
-      Heat: 5
+
+- type: hitscan
+  id: DisablerBoltSmg
+  name: disabler bolt smg
+  parent: DisablerBolt
+  staminaDamage: 15
       
 - type: hitscan
   id: TaserBolt
@@ -772,7 +864,7 @@
   maxLength: 5
   damage:
     types:
-      Heat: 5
+      Heat: 0
       
 - type: hitscan
   id: AdvancedTaserBolt
@@ -855,3 +947,34 @@
   damage:
     types:
       Poison: 10
+
+- type: entity
+  id: ProjectilePolyboltJohnToe
+  parent: ProjectilePolyboltBase
+  name: john toe polybolt
+  description: Nooo, I don't wanna be john toe!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PolymorphOnTrigger
+    polymorph: AdmemeForcedJohnToe
+  - type: TriggerOnCollide
+    fixtureID: projectile
+  - type: TriggerWhitelist
+    whitelist:
+      components:
+      - Body
+
+- type: hitscan
+  id: PointDefenseBeam
+  name: Point Defense beam
+  parent: LaserTrace
+  maxLength: 25
+  muzzleFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: pd_muzzle
+  travelFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: pd_trace
+  impactFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: pd_impact

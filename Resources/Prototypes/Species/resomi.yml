@@ -6,11 +6,20 @@
   sprites: MobResomiSprites
   defaultSkinTone: "#faf7f7"
   markingLimits: MobResomiMarkingLimits
-  maleFirstNames: names_resomi_male
-  femaleFirstNames: names_resomi_female
-  naming: First
+  maleFirstNames: names_resomi_first
+  femaleFirstNames: names_resomi_first
+  lastNames: names_resomi_packs
+  naming: FirstLast
   dollPrototype: MobResomiDummy
   skinColoration: Hues
+  minAge: 23
+  youngAge: 103
+  oldAge: 257
+  maxAge: 430
+  customName: true # Starlight
+  standardSize: 150
+  standardWeight: 40
+  standardDensity: 17
 
 - type: speciesBaseSprites
   id: MobResomiSprites

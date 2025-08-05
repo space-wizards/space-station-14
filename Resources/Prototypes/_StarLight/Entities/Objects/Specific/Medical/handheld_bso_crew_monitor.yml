@@ -1,0 +1,37 @@
+- type: entity
+  name: CommandFriend™ X-02
+  parent: [ BaseHandheldComputer, BaseCommandContraband ]
+  id: HandheldBSOCrewMonitor
+  description: Does not monitor the competence levels of command members.
+  components:
+#  - type: Tag
+#    tags:
+#      - BSOBeltEquip
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/handheld_bso_crewmonitor.rsi
+    state: scanner
+  - type: ActivatableUI
+    key: enum.CrewMonitoringUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.CrewMonitoringUIKey.Key:
+        type: BSOCrewMonitoringBoundUserInterface
+  - type: CrewMonitoringConsole
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CrewMonitor
+  - type: WirelessNetworkConnection
+    range: 500
+
+- type: entity
+  id: HandheldBSOCrewMonitorEmpty
+  parent: HandheldBSOCrewMonitor
+  suffix: Empty
+  components:
+#  - type: Tag
+#    tags:
+#      - BSOBeltEquip
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

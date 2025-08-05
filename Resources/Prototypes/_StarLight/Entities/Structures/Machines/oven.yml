@@ -1,0 +1,98 @@
+- type: entity
+  id: KitchenOven
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
+  name: oven
+  description: It's a huge magic.
+  components:
+  - type: CookingDevice
+    capacity: 10
+    deviceType: Oven
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.VisualState:
+        enum.MicrowaveVisualizerLayers.Base:
+          Idle: { state: "base" }
+          Broken: { state: "broken" }
+          Cooking: { state: "base" }
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          Idle: { state: "on" }
+          Broken: { state: "on" }
+          Cooking: { state: "enabled" }
+        enum.MicrowaveVisualizerLayers.Opened:
+          Opened: { visible: true }
+          Closed: { visible: false }
+      enum.PowerDeviceVisuals.Powered:
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ActivatableUI
+    key: enum.MicrowaveUiKey.Key
+  - type: DeviceLinkSink
+    ports:
+    - On
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: UserInterface
+    interfaces:
+      enum.MicrowaveUiKey.Key:
+        type: MicrowaveBoundUserInterface
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.40"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/oven.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+    layers:
+    - state: base
+      map: ["enum.MicrowaveVisualizerLayers.Base"]
+    - state: on
+      shader: unshaded
+      map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+    - state: opened
+      visible: false
+      map: ["enum.MicrowaveVisualizerLayers.Opened"]
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    totalIntensity: 5
+    intensitySlope: 5
+    canCreateVacuum: false
+    deleteAfterExplosion: false
+  - type: ApcPowerReceiver
+    powerLoad: 400
+  - type: Machine
+    board: OvenMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      microwave_entity_container: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - microwave_entity_container
+  - type: GuideHelp
+    guides:
+    - Chef
+    - FoodRecipes

@@ -29,4 +29,12 @@ public sealed partial class PolymorphedEntityComponent : Component
 
     [DataField]
     public EntityUid? Action;
+
+    //#region Starlight
+    /// <summary>
+    /// if the old parent body allready had the Uncryoable component meaning it should not be removed when de-polymorphing them
+    /// <see cref="UncryoableComponent"/>
+    /// </summary>
+    public bool HadUncryoable = false;
+    //#endregion Starlight
 }

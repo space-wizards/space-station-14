@@ -15,7 +15,7 @@
         Quantity: 30
 
 - type: entity
-  id: EyeImplantNightVision
+  id: CyberEyeNightVision
   name: NightVision cyber eyes
   description: Enables you to see in the dark.
   parent: [OrganCyber, BaseOrganEyes]
@@ -31,7 +31,7 @@
     prototype: CyberEyesNightVision
 
 - type: entity
-  id: EyeImplantThermal
+  id: CyberEyeThermal
   name: ThermalVision cyber eyes
   description: Enables you to see in the dark and detect warm objects through walls.
   parent: [OrganCyber, BaseOrganEyes]

@@ -10,8 +10,7 @@
     issuer: objective-issuer-vampire
   - type: RoleRequirement
     roles:
-      mindRoles:
-      - VampireRole
+    - VampireRole
       
 - type: entity
   abstract: true
@@ -152,7 +151,9 @@
   - type: TargetObjective
     title: objective-condition-kill-person-title
   - type: PickRandomPerson
-  
+  - type: KillPersonCondition
+    requireMaroon: true
+
 # Drain
 
 - type: entity

@@ -3,40 +3,122 @@
   id: AirlockNtrepGlassLocked
   suffix: Ntrep, Locked
   components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsNtrep ]
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronicsNtrep]
 
 - type: entity
   parent: AirlockMaint
   id: AirlockMaintNtrepLocked
   suffix: Ntrep, Locked
   components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsNtrep ]
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronicsNtrep]
 
 - type: entity
   parent: AirlockCommand
   id: AirlockNrepLocked
   suffix: Ntrep, Locked
   components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsNtrep ]
-      
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronicsNtrep]
+
 - type: entity
   parent: AirlockGlassShuttleSyndicate
   id: AirlockExternalGlassShuttleGamma
   suffix: External, Gamma, Glass, Docking
   components:
-  - type: PriorityDock
-    tag: DockGamma
-    
+    - type: PriorityDock
+      tag: DockGamma
+
 - type: entity
   parent: AirlockShuttleSyndicate
   id: AirlockExternalShuttleGamma
   suffix: External, Gamma, Glass, Docking
   components:
-  - type: PriorityDock
-    tag: DockGamma
+    - type: PriorityDock
+      tag: DockGamma
+
+- type: entity
+  parent: AirlockExternalGlassShuttleEmergencyLocked
+  id: AirlockExternalGlassShuttleEscapeLocked
+  suffix: External, Escape 3x4 Destination, Glass, Docking, Locked
+  components:
+    - type: PriorityDock
+      tag: DockEscape
+
+# syndicate locked variants of every airlock used in shadow borgi ops cause my god this evac pod is massive
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockCommandLockedSyndicate
+  suffix: Syndicate, Locked
+  components:
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronicsSyndicateAgent]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockCommandGlassLockedSyndicate
+  suffix: Syndicate, Locked
+  components:
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronicsSyndicateAgent]
+
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockSecurityGlassLockedSyndicate
+  suffix: Syndicate, Locked
+  components:
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronicsSyndicateAgent]
+
+- type: entity
+  parent: AirlockMedicalGlass
+  id: AirlockMedicalGlassLockedSyndicate
+  suffix: Syndicate, Locked
+  components:
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronicsSyndicateAgent]
+
+- type: entity
+  parent: AirlockChemistry
+  id: AirlockChemistryLockedSyndicate
+  suffix: Syndicate, Locked
+  components:
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronicsSyndicateAgent]
+
+- type: entity
+  parent: AirlockEngineering
+  id: AirlockEngineeringLockedSyndicate
+  suffix: Syndicate, Locked
+  components:
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronicsSyndicateAgent]
+
+- type: entity
+  parent: AirlockEngineeringGlass
+  id: AirlockEngineeringGlassLockedSyndicate
+  suffix: Syndicate, Locked
+  components:
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronicsSyndicateAgent]
+
+- type: entity
+  parent: AirlockHydroponics
+  id: AirlockHydroponicsLockedSyndicate
+  suffix: Syndicate, Locked
+  components:
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronicsSyndicateAgent]

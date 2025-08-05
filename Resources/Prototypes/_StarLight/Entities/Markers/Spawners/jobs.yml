@@ -79,6 +79,20 @@
       - state: salvagespecialist
 
 - type: entity
+  id: SpawnPointmailtech
+  parent: SpawnPointJobBase
+  name: mailtech
+  components:
+  - type: SpawnPoint
+    job_id: MailTech
+  - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: mailtech
+      - state: jobicon
+
+- type: entity
   id: SpawnPointSurgeon
   parent: SpawnPointJobBase
   name: surgeon

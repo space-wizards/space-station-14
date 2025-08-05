@@ -1,6 +1,6 @@
 - type: entity
   name: abductor's welding tool
-  parent: Welder
+  parent: [ Welder, BaseMajorContraband ]
   id: WelderAbductor
   description: "An experimental welder capable of self-fuel generation and less harmful to the eyes."
   components:

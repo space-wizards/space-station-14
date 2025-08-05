@@ -1,0 +1,106 @@
+- type: entity
+  name: telebond
+  parent: [BaseItem, BaseSovietContraband]
+  id: Telebond
+  suffix: 20 TB
+  description: Outdated tickets printed with a microcrystalline pattern, used to summon supplies via an old radio uplink, the old way. "DO NOT EAT!" — Boris
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/USSP/telebond.rsi
+    state: telebond
+  - type: Item
+    sprite: _Starlight/Objects/Specific/USSP/telebond.rsi
+    size: Tiny
+  - type: Stack
+    count: 20
+    stackType: Telebond
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      Telebond: 1
+  - type: Food
+    solution: food
+    delay: 2
+    forceFeedDelay: 2
+    useSound:
+      collection: eating
+  - type: FlavorProfile
+    flavors:
+    - paper
+    - metallic
+    - chemical
+  - type: BadFood
+  - type: ContextMenuFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 16
+        reagents:
+        - ReagentId: Razorium
+          Quantity: 2
+        - ReagentId: Ephedrine
+          Quantity: 3
+        - ReagentId: Silicon
+          Quantity: 4
+        - ReagentId: Vodka
+          Quantity: 5
+        - ReagentId: Tazinide
+          Quantity: 2
+
+- type: entity
+  parent: Telebond
+  id: Telebond1
+  suffix: 1 TB
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: Telebond
+  id: Telebond5
+  suffix: 5 TB
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: Telebond
+  id: Telebond10
+  suffix: 10 TB
+  components:
+  - type: Stack
+    count: 10
+
+# Uplinks
+- type: entity
+  parent: [BaseUplinkRadio, StorePresetUSSP, BaseSovietContraband]
+  id: BaseRevUplinkRadio
+  name: Svyaz-UZL radio
+  description: Soviet comm-link node radio in broad use by USSP forces. This one has been modified for SKB agents and their assets. Unauthorized use is strongly discouraged, because we will find you.
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/ussp-radio.rsi
+    layers:
+    - state: ussp-radio
+  - type: Item
+    sprite: _Starlight/Objects/Devices/ussp-radio.rsi
+    heldPrefix: ussp-radio-inhand-left
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      Telebond: 0
+
+# - type: entity
+#   parent: [BaseRevUplinkRadio, StorePresetUSSP]
+#   id: USSPUplinkRadioPreset
+#   tags:
+#   - SubdermalImplant

@@ -1,0 +1,27 @@
+﻿# requires that the player kill someone only once
+# disables social objectives and is disabled by social objectives
+- type: entity
+  abstract: true
+  parent: BaseTargetObjective
+  id: BaseTeachALessonObjective
+  components:
+    - type: Objective
+      unique: false
+      icon:
+        sprite: Objects/Weapons/Melee/baseball_bat.rsi
+        state: icon
+    - type: ObjectiveBlacklistRequirement
+      blacklist:
+        components:
+          - SocialObjective
+    - type: TeachALessonCondition
+
+- type: entity
+  abstract: true
+  parent: EscapeShuttleObjective
+  id: BaseStoryObjective
+  components:
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+        - EscapeShuttleCondition

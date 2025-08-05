@@ -1,6 +1,6 @@
 - type: entity
   name: magistrate stamp
-  parent: RubberStampBase
+  parent: [ RubberStampBase, BaseCommandContraband ]
   id: RubberStampMagistrate
   suffix: DO NOT MAP
   components:
@@ -14,7 +14,7 @@
     
 - type: entity
   name: NT representative's rubber stamp
-  parent: RubberStampBase
+  parent: [ RubberStampBase, BaseCommandContraband ]
   id: RubberStampNtrep
   suffix: DO NOT MAP
   components:
@@ -28,7 +28,7 @@
     
 - type: entity
   name: internal affairs agent's rubber stamp
-  parent: RubberStampBase
+  parent: [ RubberStampBase, BaseLawContraband ]
   id: RubberStampIAA
   suffix: DO NOT MAP
   components:
@@ -39,3 +39,149 @@
     - type: Sprite
       sprite: _Starlight/Objects/Misc/stamps.rsi
       state: stamp-iaa
+
+- type: entity
+  name: Blueshield Officer's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampBSO
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: "Blueshield Officer"
+    stampedColor: "#004281"
+    stampState: "paper_stamp-bso"
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/stamps.rsi
+    state: stamp-bso
+    
+- type: entity
+  name: Brigmedic's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampBrigmedic
+  suffix: DO NOT MAP
+  components:
+    - type: Stamp
+      stampedName: "Brigmedic"
+      stampedColor: "#ae2e33"
+      stampState: "paper_stamp-brigmedic"
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/stamps.rsi
+      state: stamp-brigmedic
+
+- type: entity
+  name: Central Administration Division rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCAD
+  categories: [ DoNotMap ]
+  components:
+  - type: Stamp
+    stampedName: "Central Administration Division"
+    stampedColor: "#1155CC"
+    stampState: "paper_stamp-cap"
+  - type: Sprite
+    state: stamp-cap
+
+- type: entity
+  name: Central Cargo Division rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCCD
+  categories: [ DoNotMap ]
+  components:
+  - type: Stamp
+    stampedName: "Central Cargo Division"
+    stampedColor: "#B45F06"
+    stampState: "paper_stamp-qm"
+  - type: Sprite
+    state: stamp-detective
+
+- type: entity
+  name: Central Engineering Division rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCED
+  categories: [ DoNotMap ]
+  components:
+  - type: Stamp
+    stampedName: "Central Engineering Division"
+    stampedColor: "#FEFF38"
+    stampState: "paper_stamp-ntrep"
+  - type: Sprite
+    state: stamp-ce
+
+- type: entity
+  name: Central Intelligence Division rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCID
+  categories: [ DoNotMap ]
+  components:
+  - type: Stamp
+    stampedName: "Central Intelligence Division"
+    stampedColor: "#660089"
+    stampState: "paper_stamp-rd"
+  - type: Sprite
+    state: stamp-rd
+
+- type: entity
+  name: Central Medical Division rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCMD
+  categories: [ DoNotMap ]
+  components:
+  - type: Stamp
+    stampedName: "Central Medical Division"
+    stampedColor: "#0AAFC3"
+    stampState: "paper_stamp-cmo"
+  - type: Sprite
+    state: stamp-cmo
+
+- type: entity
+  name: Central Research Division rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCRD
+  categories: [ DoNotMap ]
+  components:
+  - type: Stamp
+    stampedName: "Central Research Division"
+    stampedColor: "#9900FF"
+    stampState: "paper_stamp-rd"
+  - type: Sprite
+    state: stamp-wizard
+
+- type: entity
+  name: Central Domestic Division rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCDD
+  categories: [ DoNotMap ]
+  components:
+  - type: Stamp
+    stampedName: "Central Domestic Division"
+    stampedColor: "#6AA84F"
+    stampState: "paper_stamp-centcom"
+  - type: Sprite
+    state: stamp-centcom
+
+- type: entity
+  name: Central Special Operations Division rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCSOD
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: "Central Special Operations Division"
+    stampedColor: "#741B47"
+    stampState: "paper_stamp-magistrate"
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/stamps.rsi
+    state: stamp-magistrate
+
+- type: entity
+  name: Central Security Division rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCSD
+  categories: [ DoNotMap ]
+  components:
+  - type: Stamp
+    stampedName: "Central Security Division"
+    stampedColor: "#cc0000"
+    stampState: "paper_stamp-hos"
+  - type: Sprite
+    state: stamp-hos

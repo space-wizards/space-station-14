@@ -33,9 +33,9 @@ store-currency-display-blood-essence = Blood Essence
 store-category-vampirepowers = Powers
 store-category-vampirepassives = Passives
 
-#Powers
+# Powers
 
-#Passives
+# Passives
 vampire-passive-unholystrength = Unholy Strength
 vampire-passive-unholystrength-description = Infuse your upper body muscles with essence, granting you claws and increased strength. Effect: 10 Slash per hit
 
@@ -45,7 +45,7 @@ vampire-passive-supernaturalstrength-description = Increase your upper body musc
 vampire-passive-deathsembrace = Deaths Embrace
 vampire-passive-deathsembrace-description = Embrace death and it shall pass you over. Effect: Heal when in a coffin, automatically return to your coffin upon death for 100 blood essence.
 
-#Mutation menu
+# Mutation menu
 
 vampire-mutation-menu-ui-window-name = Mutation menu
 
@@ -53,48 +53,44 @@ vampire-mutation-none-info = Nothing selected
 
 vampire-mutation-hemomancer-info = 
     Hemomancer
-    
     Focuses on blood magic and manipulating the blood around him.
-    
     Abilities:
-    
-    - Screech
     - Blood Steal
+      - Requires 200 Essence to be usable
+    - Screech
+      - Requires 300 Essence to be usable
 
 vampire-mutation-umbrae-info = 
     Shadow
-    
     Focuses on darkness, stealth, mobility.
-    
     Abilities:
-    
     - Glare
+      - Requires 200 Essence to be usable
     - Cloak of Darkness
+      - Requires 300 Essence to be usable
     
 vampire-mutation-gargantua-info = 
     Gargantua
-    
     Focuses on melee damage and resilience.
-    
     Abilities:
-    
     - Unholy Strength
+      - Requires 200 Essence to be usable
     - Supernatural Strength
+      - Requires 300 Essence to be usable
 
 vampire-mutation-bestia-info = 
     Bestia
-    
     Focuses on turning and collecting trophies.
-    
     Abilities:
-    
     - Bat Form
+      - Requires 200 Essence to be usable
     - Mouse Form
+      - Requires 300 Essence to be usable
     
 ## Objectives
 
 objective-condition-drain-title = Drain { $count } blood.
-objective-condition-drain-description = I must drink { $count } of blood. It is necessary for my survival and further evolution.
+objective-condition-drain-description = I must drink { $count } blood. It is necessary for my survival and further evolution.
 ent-VampireSurviveObjective = Survive
     .desc = I have to survive, whatever it takes.
 ent-VampireEscapeObjective = Fly off the station alive and free.

@@ -6,3 +6,30 @@
   components:
   - type: Flatpack
     entity: PrinterDoc
+    
+- type: entity
+  parent: BaseFlatpack
+  id: KitchenOvenFlatpack
+  name: oven flatpack
+  description: A flatpack used for constructing an oven.
+  components:
+  - type: Flatpack
+    entity: KitchenOven
+
+- type: entity
+  parent: BaseFlatpack
+  id: MailTrolleyFlatpack
+  name: mail trolley flatpack
+  description: A flatpack used for constructing an mail trolley.
+  components:
+  - type: Flatpack
+    entity: MailTrolley
+
+- type: entity
+  parent: BaseFlatpack
+  id: KitchenStoveFlatpack
+  name: stove flatpack
+  description: A flatpack used for constructing an stove.
+  components:
+  - type: Flatpack
+    entity: KitchenStove

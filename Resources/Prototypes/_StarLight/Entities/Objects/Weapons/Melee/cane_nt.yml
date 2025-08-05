@@ -1,6 +1,6 @@
 - type: entity
   name: fancy cane
-  parent: BaseItem
+  parent: [ BaseItem, BaseCommandContraband ]
   id: CaneNT
   description: A cane with special engraving on it. It seems well suited for fending off assailants...
   components:
@@ -8,7 +8,7 @@
     sprite: _Starlight/Objects/Weapons/Melee/cane_nt.rsi
     layers:
     - state: cane-nt
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Stunbaton
     energyPerUse: 25
   - type: ItemToggle
@@ -56,8 +56,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-     enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+     enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: {state: cane-nt-active}
           False: {state: cane-nt}
   - type: Riggable

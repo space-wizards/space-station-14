@@ -14,12 +14,14 @@ using Content.Server.Objectives.Components;
 using Content.Server.Light.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Eye.Blinding.Components;
-using Content.Server.Flash.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Damage.Components;
 using Content.Server.Radio.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Flash.Components;
+using Content.Shared.Mindshield.Components;
+using Content.Shared.Mindshield.FakeMindShield;
 
 namespace Content.Server.Changeling;
 
@@ -62,6 +64,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, ActionLesserFormEvent>(OnLesserForm);
         SubscribeLocalEvent<ChangelingComponent, ActionSpacesuitEvent>(OnSpacesuit);
         SubscribeLocalEvent<ChangelingComponent, ActionHivemindAccessEvent>(OnHivemindAccess);
+        SubscribeLocalEvent<ChangelingComponent, FakeMindShieldToggleEvent>(OnFakeMindShieldToggle);
     }
 
     #region Basic Abilities
@@ -217,7 +220,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             return;
 
         comp.Chemicals = 0f;
-        
+
         ToggleChameleonSkin(uid, comp, false);
 
         if (_mobState.IsAlive(uid))
@@ -234,7 +237,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             _mobState.ChangeMobState(uid, MobState.Dead);
 
         comp.IsInStasis = true;
-        
+
         args.Handled = true;
     }
     private void OnExitStasis(EntityUid uid, ChangelingComponent comp, ref ExitStasisEvent args)
@@ -265,7 +268,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("changeling-stasis-exit"), uid, uid);
 
         comp.IsInStasis = false;
-        
+
         args.Handled = true;
     }
 
@@ -337,7 +340,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         DoScreech(uid, comp);
 
         var power = comp.ShriekPower;
-        _flash.FlashArea(uid, uid, power, power * 2f * 1000f);
+        _flash.FlashArea(uid, uid, power, TimeSpan.FromMilliseconds(power * 2f * 1000f));
 
         var lookup = _lookup.GetEntitiesInRange(uid, power);
         var lights = GetEntityQuery<PoweredLightComponent>();
@@ -474,7 +477,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         else return;
         PlayMeatySound(uid, comp);
     }
-    
+
     private void OnAugmentedEyesight(EntityUid uid, ChangelingComponent comp, ref ActionAugmentedEyesightEvent args)
     {
         if (!TryUseAbility(uid, comp, args))
@@ -489,7 +492,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         EnsureComp<FlashImmunityComponent>(uid);
         _popup.PopupEntity(Loc.GetString("changeling-passive-activate"), uid, uid);
     }
-    
+
     private void OnBiodegrade(EntityUid uid, ChangelingComponent comp, ref ActionBiodegradeEvent args)
     {
         if (!TryUseAbility(uid, comp, args))
@@ -517,7 +520,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         }
         _puddle.TrySplashSpillAt(uid, Transform(uid).Coordinates, soln, out _);
     }
-    
+
     private void OnChameleonSkin(EntityUid uid, ChangelingComponent comp, ref ActionChameleonSkinEvent args)
     {
         if (!TryUseAbility(uid, comp, args))
@@ -528,7 +531,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         else
             ToggleChameleonSkin(uid, comp, true);
     }
-            
+
     public void ToggleChameleonSkin(EntityUid uid, ChangelingComponent comp, bool toState)
     {
         if (!toState)
@@ -547,7 +550,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             comp.StealthEnabled = true;
         }
     }
-    
+
     private void OnEphedrineOverdose(EntityUid uid, ChangelingComponent comp, ref ActionEphedrineOverdoseEvent args)
     {
         if (!TryUseAbility(uid, comp, args))
@@ -568,7 +571,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             return;
         }
     }
-    
+
     // john space made me do this
     private void OnHealUltraSwag(EntityUid uid, ChangelingComponent comp, ref ActionFleshmendEvent args)
     {
@@ -641,5 +644,10 @@ public sealed partial class ChangelingSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("changeling-hivemind-start"), uid, uid);
     }
 
+
+    public void OnFakeMindShieldToggle(EntityUid uid, ChangelingComponent comp, FakeMindShieldToggleEvent toggleEvent)
+    {
+        EnsureComp<FakeMindShieldComponent>(uid);
+    }
     #endregion
 }

@@ -1,0 +1,5 @@
+- type: entity
+  save: false
+  name: John Toe
+  parent: BaseMobHuman
+  id: MobJohnToe

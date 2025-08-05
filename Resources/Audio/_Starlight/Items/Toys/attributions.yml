@@ -27,3 +27,13 @@
   license: "CC0-1.0"
   copyright: "Original sound by Radio TV Solutions"
   source: "https://www.youtube.com/watch?v=yaHrneT9BfU"
+    
+- files: ["panda_noise1.ogg"]
+  license: "CC0-1.0"
+  copyright: "None"
+  source: "https://www.youtube.com/watch?v=YRmGZIENeq4"
+    
+- files: ["panda_noise2.ogg"]
+  license: "CC0-1.0"
+  copyright: "None"
+  source: "https://www.youtube.com/watch?v=YRmGZIENeq4"

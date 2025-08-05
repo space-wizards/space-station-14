@@ -81,7 +81,9 @@ public sealed partial class AudioTab : Control
         Control.AddOptionCheckBox(CCVars.EventMusicEnabled, EventMusicCheckBox);
         Control.AddOptionCheckBox(CCVars.AdminSoundsEnabled, AdminSoundsCheckBox);
         Control.AddOptionCheckBox(CCVars.BwoinkSoundEnabled, BwoinkSoundCheckBox);
+        Control.AddOptionCheckBox(StarlightCCVars.RadioChimeMuted, RadioChimeMuteCheckBox);
         Control.AddOptionCheckBox(StarlightCCVars.TTSClientEnabled, TtsClientCheckBox);
+        Control.AddOptionCheckBox(StarlightCCVars.TTSRadioQueueEnabled, TtsRadioQueueCheckBox);
 
         Control.Initialize();
     }

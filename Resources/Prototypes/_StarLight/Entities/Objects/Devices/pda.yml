@@ -53,7 +53,7 @@
   - type: Pda
     id: NanoTrasenRepresentativeIDCard
     penSlot:
-      startingItem: Pen
+      startingItem: PenNTR
       priority: -1
       whitelist:
         tags:
@@ -112,6 +112,14 @@
   - type: Icon
     sprite: _Starlight/Objects/Devices/pda.rsi
     state: pda-blueshield
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
 
 - type: entity
   parent: BasePDA
@@ -141,3 +149,105 @@
     - NotekeeperCartridge
     - NewsReaderCartridge
     - AstroNavCartridge
+
+- type: entity
+  parent: BasePDA
+  id: MailPDA
+  name: mail PDA
+  description: watch out for papercuts.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/pda.rsi
+  - type: Pda
+    id: MailTechIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-mailtech
+  - type: PdaBorderColor
+    borderColor: "#e39751"
+    accentVColor: "#6ec8fa"
+  - type: Icon
+    sprite: _Starlight/Objects/Devices/pda.rsi
+    state: pda-mailtech
+
+- type: entity
+  parent: BasePDA
+  id: CommanderPDA
+  name: commander PDA
+  description: Screw captiancy, LETS GET THAT FUKKIN DISK
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Devices/pda.rsi
+    - type: Pda
+      id: CommanderIDCard
+    - type: Appearance
+      appearanceDataInit:
+        enum.PdaVisuals.PdaType:
+          !type:String
+          pda-commander
+    - type: PdaBorderColor
+      borderColor: "#891417"
+      accentVColor: "#FFD700"
+    - type: Icon
+      sprite: _Starlight/Objects/Devices/pda.rsi
+      state: pda-commander
+
+- type: entity
+  parent: BasePDA
+  id: NTCCBlueShieldPDA
+  name: consortium officer's PDA
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/pda.rsi
+  - type: Pda
+    id: NTCCBlueShieldIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-blueshield
+  - type: Icon
+    sprite: _Starlight/Objects/Devices/pda.rsi
+    state: pda-blueshield
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
+      - WantedListCartridge
+      - LogProbeCartridge
+      - AstroNavCartridge
+
+- type: entity
+  parent: BasePDA
+  id: NTCCCSPDA
+  name: nt cc consortium officer's PDA
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/pda.rsi
+  - type: Pda
+    id: NTCCBlueShieldIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-ntcc-cs
+  - type: Icon
+    sprite: _Starlight/Objects/Devices/pda.rsi
+    state: pda-ntcc-cs
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
+      - WantedListCartridge
+      - LogProbeCartridge
+      - AstroNavCartridge

@@ -30,10 +30,14 @@ public sealed partial class RoleTimeRequirement : JobRequirement
         ICommonSession? player,
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
-        IReadOnlyDictionary<string, TimeSpan> playTimes,
+        IReadOnlyDictionary<string, TimeSpan>? playTimes,
         [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = new FormattedMessage();
+
+        // If playTimes is null, we're not going to check against playtime requirements
+        if (playTimes == null)
+            return true;
 
         string proto = Role;
         //🌟Starlight🌟 start

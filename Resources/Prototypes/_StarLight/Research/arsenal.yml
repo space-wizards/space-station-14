@@ -1,4 +1,59 @@
 # Tier 2
+- type: technology
+  id: Paddy
+  name: research-technology-paddy
+  icon:
+    sprite: Objects/Specific/Mech/Mechs/Basic/paddy.rsi
+    state: base
+  discipline: Arsenal
+  tier: 2
+  cost: 8500
+  recipeUnlocks:
+  - PaddyUpgradeKit
+  technologyPrerequisites:
+  - Ripley2
+  radioChannels:
+  - Security
+
+- type: technology
+  id: Gygax
+  name: research-technology-gygax
+  icon:
+    sprite: Objects/Specific/Mech/Mechs/Basic/gygax.rsi
+    state: base
+  discipline: Arsenal
+  tier: 2
+  cost: 11600
+  recipeUnlocks:
+  - GygaxHarness
+  - GygaxArmor
+  - GygaxHead
+  - GygaxLArm
+  - GygaxLLeg
+  - GygaxRArm
+  - GygaxRLeg
+  - GygaxCentralElectronics
+  - GygaxPeripheralsElectronics
+  - GygaxTargetingElectronics
+  - WeaponMechCombatUltraRifle
+  technologyPrerequisites:
+  - Paddy
+  radioChannels:
+  - Security
+
+- type: technology
+  id: EnergyBarriers
+  name: research-technology-energy_barriers
+  icon: 
+    sprite: Objects/Tools/EnergyDome/reinhardt.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 5400
+  recipeUnlocks:
+  - EnergyDomeTurtle
+  radioChannels:
+  - Security
 
 - type: technology
   id: ArmorPenetrationMunitions
@@ -12,14 +67,18 @@
   recipeUnlocks:
   - SpeedLoaderMagnumAP
   - MagazinePistolAP
+  - MagazinePistol40AP
   - MagazineRifleAP
   - MagazineLightRifleAP
   - MagazineBoxMagnumAP
   - MagazineBoxPistolAP
+  - MagazineBoxPistol40AP
   - MagazineBoxRifleAP
   - MagazineBoxLightRifleAP
   - LightRifleHeavyMagazineAP
   - MagazinePistolSubMachineGunAP
+  radioChannels:
+  - Security
   
 - type: technology
   id: IonWeaponry
@@ -29,11 +88,58 @@
     state: icon
   discipline: Arsenal
   tier: 2
-  cost: 8000
+  cost: 8200
   recipeUnlocks:
   - WeaponIonRifle
   - WeaponIonCarbine
+  radioChannels:
+  - Security
   
+# Tier 3
+
+- type: technology
+  id: ExplosiveMechAmmunition
+  name: research-technology-explosive-mech-ammunition
+  icon:
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+    state: mecha_missilerack
+  discipline: Arsenal
+  tier: 3
+  cost: 15400
+  recipeUnlocks:
+  - WeaponMechCombatMissileRack8
+  technologyPrerequisites:
+  - ExplosiveTechnology
+  radioChannels:
+  - Security
+  
+- type: technology
+  id: Durand
+  name: research-technology-durand
+  icon:
+    sprite: Objects/Specific/Mech/Mechs/Basic/durand.rsi
+    state: base
+  discipline: Arsenal
+  tier: 3
+  cost: 16600
+  recipeUnlocks:
+  - DurandHarness
+  - DurandArmor
+  - DurandHead
+  - DurandLArm
+  - DurandLLeg
+  - DurandRArm
+  - DurandRLeg
+  - DurandCentralElectronics
+  - DurandPeripheralsElectronics
+  - DurandTargetingElectronics
+  - WeaponMechCombatShotgun
+  - WeaponMechCombatShotgunIncendiary
+  technologyPrerequisites:
+  - Gygax
+  radioChannels:
+  - Security
+
  # Tier 4 
 
 - type: technology
@@ -47,4 +153,6 @@
   cost: 30000
   recipeUnlocks:
   - WeaponDecloner
+  radioChannels:
+  - Security
   

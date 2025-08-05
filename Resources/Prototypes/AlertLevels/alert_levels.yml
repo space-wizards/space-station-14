@@ -70,3 +70,15 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+    omega: # begin starlight
+      announcement: alert-level-omega-announcement
+      selectable: false
+      sound:
+        path: /Audio/_Starlight/Misc/omega.ogg
+        params:
+          volume: -2
+      disableSelection: true
+      color: '#454545'
+      emergencyLightColor: '#454545'
+      forceEnableEmergencyLights: true
+      shuttleTime: 1200 # end starlight

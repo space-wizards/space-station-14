@@ -1,6 +1,6 @@
 #Basic Helmet (Abductor Helmet)
 - type: entity
-  parent: ClothingHeadHelmetBase
+  parent: [ ClothingHeadHelmetBase, BaseMajorContraband ]
   id: ClothingHeadHelmetAbductor
   name: helmet
   components:
@@ -28,7 +28,7 @@
     
 #Basic Helmet (Security Helmet Reskin)
 - type: entity
-  parent: [ClothingHeadHelmetBase, BaseRestrictedContraband]
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
   id: ClothingHeadHelmetDredd
   name: helmet
   description: I AM THE LAW!
@@ -41,3 +41,225 @@
     tags:
     - WhitelistChameleon
     - SecurityHelmet
+
+- type: entity
+  parent: [ClothingHeadBase, BaseSecurityContraband, BaseToggleClothing]
+  id: ClothingHeadHelmetBulletProof
+  name: bulletproof helmet
+  description: Protects the face against bullets, can flip up and down.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/bulletproof.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/bulletproof.rsi
+  - type: Item
+    storedRotation: 0  
+  - type: ItemToggle # Welding mask starts in an activated state
+    activated: true
+  - type: Appearance
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.80
+  - type: ToggleClothing
+    action: ActionToggleWeldingMask
+  - type: WeldingMask  
+  - type: HideLayerClothing
+    slots:
+    - Snout
+    hideOnToggle: true
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: {state: icon}
+          False: {state: icon-up}
+  - type: ComponentToggler
+    components:
+    - type: IngestionBlocker
+    - type: FlashImmunity
+    - type: IdentityBlocker
+
+- type: entity
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
+  id: ClothingHeadHelmetReflective
+  name: reflective helmet
+  description: A shiny helmet for your equally shiny vest.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/reflect.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/reflect.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.80
+  - type: Reflect
+    reflectProb: 0.2
+    reflects:
+      - Energy  
+  - type: Tag
+    tags:
+    - SecurityHelmet
+
+- type: entity
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
+  id: ClothingHeadHelmetPlate
+  name: plate helmet
+  description: A modified security helmet with a ceramic plate insert, which means less padding for blunt hits.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/plate.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/plate.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.93
+        Slash: 0.93
+        Piercing: 0.87
+        Heat: 0.93
+  - type: Tag
+    tags:
+    - SecurityHelmet
+
+- type: entity
+  parent:  [ClothingHeadHelmetBase, BaseSecurityContraband ]
+  id: ClothingHeadHelmetStabproof
+  name: stabproof helmet
+  description: The most "comfortable" security helmet, as rated by officers. Will take a blow to the head nicely, but a bullet'll go right through it.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/stabproof.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/stabproof.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.87
+        Slash: 0.87
+        Piercing: 0.93
+        Heat: 0.93
+  - type: Tag
+    tags:
+    - SecurityHelmet
+
+- type: entity
+  parent: [ ClothingHeadHelmetBase, BaseSecurityContraband ]
+  id: ClothingHeadHelmetHeatAbsorbent
+  name: heat absorbent helmet
+  description: Advanced helmet best paired with the vest for pure style, has minor reflective properties and can absorb heat fairly well.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/heatabsorbent.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/heatabsorbent.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.93
+        Slash: 0.93
+        Piercing: 0.93
+        Heat: 0.87
+  - type: Tag
+    tags:
+    - SecurityHelmet
+
+- type: entity
+  parent: [ClothingHeadHelmetBase, BaseMinorContraband]
+  id: ClothingHeadHelmetMakeshift
+  name: makeshift helmet
+  description: Cobbled together steel held together with lv cables in the vauge shape of a helmet. Barely does anything.
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.97
+        Slash: 0.96
+        Piercing: 0.97
+        Heat: 0.98
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/makeshift.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/makeshift.rsi
+  - type: Construction
+    graph: ClothingHeadHelmetMakeshiftGraph
+    node: helmet
+
+- type: entity
+  parent: [ClothingHeadHelmetBase, BaseMinorContraband]
+  id: ClothingHeadHelmetImprovised
+  name: improvised helmet
+  description: Interlocking steel plates provides some decent protection, but is still barely better than nothing.
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.93
+        Piercing: 0.95
+        Heat: 0.96
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/improvised.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/improvised.rsi
+
+- type: entity
+  parent: [ClothingHeadHelmetBase, BaseMinorContraband]
+  id: ClothingHeadHelmetForged
+  name: forged helmet
+  description: A high-quality helmet made by some of the best Tidersmiths, it is finally worthwhile to have it on your head.
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.92
+        Slash: 0.90
+        Piercing: 0.92
+        Heat: 0.94
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/forged.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/forged.rsi
+
+- type: entity
+  parent: [ClothingHeadHelmetBase, BaseMajorContraband]
+  id: ClothingHeadHelmetPaladin
+  name: paladin helmet
+  description: No true paladin can go without their helmet!
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.88
+        Piercing: 0.90
+        Heat: 0.92
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/paladin.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/paladin.rsi
+    
+- type: entity
+  parent: ClothingHeadHelmetERTLeader
+  id: ClothingHeadHelmetNTCCConsortium
+  name: nt cc consortium helmet
+  description: An in-atmosphere helmet worn by NT-CC Consortium Officers.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/ntcc_helmet.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/ntcc_helmet.rsi
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD

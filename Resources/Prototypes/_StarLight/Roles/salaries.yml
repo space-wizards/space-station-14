@@ -16,6 +16,7 @@
     Paramedic: 50
     MedicalDoctor: 58
     MedicalIntern: 23
+    Surgeon: 90
 
     AtmosphericTechnician: 90
     StationEngineer: 54
@@ -40,6 +41,7 @@
     Mime: 30
     Clown: 30
     ServiceWorker: 23
+    Assistant: 15
 
     Scientist: 65
     Roboticist: 56
@@ -48,6 +50,7 @@
     SalvageSpecialist: 60
     MiningSpecialist: 60
     CargoTechnician: 45
+    MailTech: 55
 
     Lawyer: 55
     IAA: 76

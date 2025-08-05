@@ -27,7 +27,6 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 {
     [Dependency] private readonly IGameTiming _time = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
 
@@ -37,7 +36,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
     public void InitializeOrgans()
     {
-        foreach (var specif in _prototypes.EnumeratePrototypes<DamageTypePrototype>())
+        foreach (var specif in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
             _passiveHealing.DamageDict.Add(specif.ID, -3);
         _stopwatch.Start();
     }
@@ -80,7 +79,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 if (_time.CurTime - victim.LastActivation < TimeSpan.FromSeconds(60))
                     return;
                 victim.LastActivation = _time.CurTime;
-                var gravity = SpawnAttachedTo("AdminInstantEffectGravityWell", Transform(uid).Coordinates);
+                var gravity = SpawnAttachedTo("AbductorGravityGlandGravityWell", Transform(uid).Coordinates);
                 _xformSys.SetParent(gravity, uid);
                 break;
             case AbductorOrganType.Egg:

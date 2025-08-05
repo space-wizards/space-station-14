@@ -18,6 +18,14 @@
   id: Detective
   name: id-card-access-level-detective
 
+- type: accessLevel
+  id: GenpopEnter
+  name: id-card-access-level-genpop-enter
+
+- type: accessLevel
+  id: GenpopLeave
+  name: id-card-access-level-genpop-leave
+
 - type: accessGroup
   id: Security
   tags:

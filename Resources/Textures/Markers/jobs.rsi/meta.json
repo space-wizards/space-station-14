@@ -14,6 +14,9 @@
       "name": "jobicon"
     },
     {
+        "name": "assistant"
+    },
+    {
       "name": "ai"
     },
     {
@@ -144,9 +147,6 @@
     },
     {
       "name": "paramedic"
-    },
-    {
-      "name": "passenger"
     },
     {
       "name": "prisoner"

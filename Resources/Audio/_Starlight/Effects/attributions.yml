@@ -7,3 +7,35 @@
   license: "CC-BY-SA-3.0"
   copyright: 'by ParadiseSS13'
   source: "https://github.com/ParadiseSS13/Paradise/commit/4ec5d79e97bc88bdca8c89c1da9378a798e18350"
+
+- files: ["avali_scream"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Taken from Steam mod / Starbound. Made by Steam user: https://steamcommunity.com/id/wonky2 with permission."
+  source: "https://steamcommunity.com/sharedfiles/filedetails/?id=3001955034"
+
+- files: ["sov_choir"]
+  license: "CC-BY-4.0"
+  copyright: 'JustAdler'
+  source: "https://github.com/ss14Starlight/space-station-14"
+
+- files: ["yip.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from 'Video Game Squeak' by freesound user 'Breviceps'. The original audio was converted from WAV to OGG format"
+  source: "https://freesound.org/people/Breviceps/sounds/468442/"
+
+- files:
+    - whine_1.ogg
+    - whine_2.ogg
+    - whine_3.ogg
+    - whine_4.ogg
+    - whine_5.ogg
+    - whine_6.ogg
+    - whine_7.ogg
+    - whine_8.ogg
+    - whine_9.ogg
+    - whine_10.ogg
+    - whine_11.ogg
+    - whine_12.ogg
+  copyright: "Created by fujiwaranao"
+  license: "CC-BY-NC-SA-4.0"
+  source: "https://github.com/space-wizards/space-station-14/pull/27578"

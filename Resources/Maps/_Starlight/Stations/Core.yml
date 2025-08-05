@@ -11739,7 +11739,7 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: BecomesStation
-      id: Core
+      id: StarlightCore
   - uid: 4
     components:
     - type: MetaData
@@ -129850,7 +129850,7 @@ entities:
     - type: Transform
       pos: 56.5,7.5
       parent: 2
-- proto: SpawnPointPassenger
+- proto: SpawnPointAssistant
   entities:
   - uid: 18271
     components:
@@ -136092,7 +136092,7 @@ entities:
     - type: Transform
       pos: -34.63432,-43.333965
       parent: 2
-- proto: ToyFigurinePassenger
+- proto: ToyFigurineAssistant
   entities:
   - uid: 19173
     components:

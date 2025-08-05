@@ -20,10 +20,10 @@
       - right leg
       - left leg
       organs:
-        heart: OrganHumanHeart
+        heart: OrganVoxHeart
         lungs: OrganVoxLungs
-        stomach: OrganHumanStomach
-        liver: OrganHumanLiver
+        stomach: OrganVoxStomach
+        liver: OrganVoxLiver
         kidneys: OrganHumanKidneys
         cavity: null
     right arm:

@@ -22,6 +22,7 @@
     - Vulpkanin
     - Felionoid #🌟Starlight🌟
     - Resomi #🌟Starlight🌟
+    - Avali #🌟Starlight🌟
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
@@ -29,6 +30,13 @@
   - !type:SpeciesLoadoutEffect
     species:
     - Vox
+
+- type: loadoutEffectGroup #🌟Starlight🌟
+  id: NonBreather
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Shadekin
 
 # Basic
 - type: loadout
@@ -49,6 +57,16 @@
     back:
     - BoxSurvivalNitrogen
 
+# NonBreathers, ie. Shadekin 🌟Starlight🌟
+- type: loadout
+  id: EmergencyNonBreather
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NonBreather
+  storage:
+    back:
+    - BoxSurvivalNonBreather
+
 # Clown
 - type: loadout
   id: EmergencyOxygenClown
@@ -68,12 +86,39 @@
     back:
     - BoxHugNitrogen
 
+- type: loadout #🌟Starlight🌟
+  id: EmergencyNonBreatherClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NonBreather
+  storage:
+    back:
+    - BoxHugNonBreather
+
 # Mime
+- type: loadoutEffectGroup
+  id: OxygenBreatherMime
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Reptilian
+
+- type: loadoutEffectGroup
+  id: OxygenBreatherMimeMoth
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Moth
+
 - type: loadout
   id: EmergencyOxygenMime
   effects:
   - !type:GroupLoadoutEffect
-    proto: OxygenBreather
+    proto: OxygenBreatherMime
   storage:
     back:
     - BoxMime
@@ -87,6 +132,23 @@
     back:
     - BoxMimeNitrogen
 
+- type: loadout
+  id: EmergencySpeciesMothMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherMimeMoth
+  storage:
+    back:
+    - BoxMimeMoth
+
+- type: loadout #🌟Starlight🌟
+  id: EmergencyNonBreatherMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NonBreather
+  storage:
+    back:
+      - BoxMimeNonBreather
 
 # Engineering / Extended
 - type: loadout
@@ -107,6 +169,15 @@
     back:
     - BoxSurvivalEngineeringNitrogen
 
+- type: loadout #🌟Starlight🌟
+  id: EmergencyNonBreatherExtended
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NonBreather
+  storage:
+    back:
+    - BoxSurvivalEngineeringNonBreather
+
 # Medical
 - type: loadout
   id: EmergencyOxygenMedical
@@ -125,6 +196,15 @@
   storage:
     back:
     - BoxSurvivalMedicalNitrogen
+
+- type: loadout #🌟Starlight🌟
+  id: EmergencyNonBreatherMedical
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NonBreather
+  storage:
+    back:
+    - BoxSurvivalMedicalNonBreather
 
 # Security
 - type: loadout
@@ -145,6 +225,15 @@
     back:
     - BoxSurvivalSecurityNitrogen
 
+- type: loadout #🌟Starlight🌟
+  id: EmergencyNonbreatherSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NonBreather
+  storage:
+    back:
+    - BoxSurvivalSecurityNonBreather
+
 # Syndicate
 - type: loadout
   id: EmergencyOxygenSyndicate
@@ -163,6 +252,15 @@
   storage:
     back:
     - BoxSurvivalSyndicateNitrogen
+
+- type: loadout #🌟Starlight🌟
+  id: EmergencyNonBreatherSyndicate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NonBreather
+  storage:
+    back:
+    - BoxSurvivalNonBreatherSyndicate
 
 # Pre-equipped species gear
 

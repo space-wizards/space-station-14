@@ -1,0 +1,174 @@
+- type: entity
+  save: false
+  name: Urist McAvali
+  parent: [ BaseMobSpeciesOrganic, BaseSpeciesPickupable ]
+  id: BaseMobAvali
+  abstract: true
+  components:
+    - type: Tag
+      tags:
+        - CanPilot
+        - FootstepSound
+        - DoorBumpOpener
+        - AnomalyHost
+        - Avali
+    - type: Absorbable
+    - type: HumanoidAppearance
+      species: Avali
+    - type: Hunger # on 2x more
+      thresholds:
+        Overfed: 250
+        Okay: 200
+        Peckish: 150
+        Starving: 100
+        Dead: 0
+      baseDecayRate: 0.03
+    - type: Thirst
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+      state: full
+    - type: Body
+      prototype: Avali
+      requiredLegs: 2
+    - type: Inventory
+      speciesId: avali
+      displacements:
+        jumpsuit:
+          sizeMaps:
+            32:
+              sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+              state: jumpsuit
+        shoes: # DM only for colored shoes!
+          sizeMaps:
+            32:
+              sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+              state: shoes
+        head:
+          sizeMaps:
+            32:
+              sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+              state: head
+        hand:
+          sizeMaps:
+            32:
+              sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+              state: hand
+        back:
+          sizeMaps:
+            32:
+              sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+              state: back
+    - type: Butcherable
+      butcheringType: Spike
+      spawned:
+        - id: FoodMeatChicken
+          amount: 3
+    - type: Speech
+      speechVerb: Parrot # RMC did it right.
+      speechSounds: MaleAvali
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        90: Critical
+        180: Dead
+    - type: TemperatureSpeed
+      thresholds:
+        250: 0.9
+        230: 0.8
+        223: 0.6
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 95 #tiny
+          restitution: 0.0
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: Vocal
+      sounds:
+        Male: MaleAvali
+        Female: FemaleAvali
+        Unsexed: MaleAvali
+    - type: MovementSpeedModifier
+      weightlessAcceleration: 1.6 # Avalis are specifically built to fly in low-g environments
+      weightlessFriction: 1
+      weightlessModifier: 1
+    - type: Damageable
+      damageContainer: Biological
+      damageModifierSet: Avali
+    - type: DamageVisuals
+      damageOverlayGroups:
+        Brute:
+          sprite: Mobs/Effects/brute_damage.rsi
+          color: "#6C3BAA"
+    - type: Bloodstream
+      bloodReagent: AvaliBlood
+    - type: MeleeWeapon
+      soundHit:
+        path: /Audio/Weapons/pierce.ogg
+      angle: 30
+      animation: WeaponArcClaw
+      damage:
+        types:
+          Slash: 6.25
+    - type: Temperature
+      heatDamageThreshold: 310
+      coldDamageThreshold: 223
+      currentTemperature: 261
+      specificHeat: 48
+    - type: ThermalRegulator
+      metabolismHeat: 400 # icebirb go brrr
+      radiatedHeat: 100
+      implicitHeatRegulation: 1500
+      sweatHeatRegulation: 2000
+      shiveringHeatRegulation: 2000
+      normalBodyTemperature: 261
+      thermalRegulationTemperatureThreshold: 1
+    - type: Stasis
+      enterStasisAction: ActionStasisEnter
+      exitStasisAction: ActionStasisExit
+
+# Chirp!
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobAvaliDummy
+  categories: [ HideSpawnMenu ]
+  description: A dummy avali meant to be used in character setup.
+  components:
+    - type: HumanoidAppearance
+      species: Avali
+    - type: Inventory
+      speciesId: Avali
+      displacements:
+        jumpsuit:
+          sizeMaps:
+            32:
+              sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+              state: jumpsuit
+        shoes: # DM only for colored shoes!
+          sizeMaps:
+            32:
+              sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+              state: shoes
+        head:
+          sizeMaps:
+            32:
+              sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+              state: head
+        hand:
+          sizeMaps:
+            32:
+              sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+              state: hand
+        back:
+          sizeMaps:
+            32:
+              sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+              state: back
+
+# Chirp!

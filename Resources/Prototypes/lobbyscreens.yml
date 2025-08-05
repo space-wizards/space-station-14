@@ -11,10 +11,6 @@
   background: /Textures/LobbyScreens/ssxiv.webp
 
 - type: lobbyBackground
-  id: Susstation
-  background: /Textures/LobbyScreens/susstation.webp
-
-- type: lobbyBackground
   id: SkellyVsTheRev
   background: /Textures/LobbyScreens/skellyvstherev.webp
 

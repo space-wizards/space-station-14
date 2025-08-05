@@ -11,9 +11,19 @@
     state: icon
     noRot: false
   - type: ImmovableRod
+    minSpeed: 35
+    maxSpeed: 35
+    randomizeVelocity: false
+    shouldGib: false
+    damage:
+      types:
+        Blunt: 175 # Damage is applied twice
+        Piercing: 25
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
+  - type: TileFrictionModifier
+    modifier: 0
   - type: PointLight
     radius: 3
     color: red
@@ -32,6 +42,9 @@
   - type: WarpPoint
     follow: true
     location: immovable rod
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: ImmovableRodDespawn
@@ -47,8 +60,14 @@
   suffix: Slow
   components:
   - type: ImmovableRod
-    minSpeed: 1
-    maxSpeed: 5
+    minSpeed: 35
+    maxSpeed: 35
+    randomizeVelocity: false
+    shouldGib: false
+    damage:
+      types:
+        Blunt: 175
+        Piercing: 25
 
 - type: entity
   parent: ImmovableRodDespawn
@@ -58,6 +77,14 @@
   - type: ImmovableRod
     destroyTiles: false
     hitSoundProbability: 1.0
+    minSpeed: 35
+    maxSpeed: 35
+    randomizeVelocity: false
+    shouldGib: false
+    damage:
+      types:
+        Blunt: 175
+        Piercing: 25
 
 # For Wizard Polymorph
 - type: entity
@@ -66,34 +93,35 @@
   suffix: Wizard
   components:
   - type: ImmovableRod
-    minSpeed: 35
+    maxSpeed: 25
     destroyTiles: false
     randomizeVelocity: false
     shouldGib: false
     damage:
       types:
-        Blunt: 200
+        Blunt: 190
   - type: MovementIgnoreGravity
     gravityState: true
   - type: InputMover
   - type: MovementSpeedModifier
-    weightlessAcceleration: 5
-    weightlessModifier: 2
-    weightlessFriction: 0
-    friction: 0
-    frictionNoInput: 0
+    baseWeightlessAcceleration: 5
+    baseWeightlessModifier: 2
+    baseWeightlessFriction: 0
+    baseFriction: 0
+    offGridFriction: 0
   - type: CanMoveInAir
   - type: MovementAlwaysTouching
   - type: NoSlip
 
 - type: entity
   parent: ImmovableRodKeepTiles
-  id: ImmovableRodKeepTilesStill
+  id: ImmovableRodKeepTilesStill #for some GOD FORSAKEN REASON, the event draws from THIS one.
   suffix: Keep Tiles, Still
   components:
   - type: ImmovableRod
     randomizeVelocity: false
-    maxSpeed: 0
+    minSpeed: 35
+    maxSpeed: 35 
 
 - type: entity
   parent: ImmovableRodKeepTilesStill
@@ -114,7 +142,7 @@
   description: SHARK TORNADO!
   components:
   - type: Sprite
-    sprite: Objects/Fun/sharkplush.rsi
+    sprite: Objects/Fun/Plushies/shark.rsi
     state: blue
     rotation: 90
     noRot: false
@@ -185,6 +213,6 @@
   description: WEH!
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: plushie_lizard
+    sprite: Objects/Fun/Plushies/lizard.rsi
+    state: icon
     noRot: false

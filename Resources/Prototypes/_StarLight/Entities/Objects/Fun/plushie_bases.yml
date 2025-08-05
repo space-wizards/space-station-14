@@ -1,0 +1,178 @@
+- type: entity
+  parent: BasePlushie
+  id: BasePlushieVocalizer
+  abstract: true
+  components:
+    - type: Vocalizer
+      minVocalizeInterval: 120
+      maxVocalizeInterval: 240
+
+- type: entity
+  parent: BasePlushieVocalizer
+  id: BaseResomiPlushie
+  abstract: true
+  components:
+  - type: EmitSoundOnUse
+    sound:
+      collection: ResomiChirp
+  - type: EmitSoundOnLand
+    sound:
+      collection: ResomiChirp
+  - type: EmitSoundOnActivate
+    sound:
+      collection: ResomiChirp
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Resomi/resomi_scream.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: ResomiChirp
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: ResomiChirp
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Resomi/resomi_scream.ogg
+
+- type: entity
+  parent: BasePlushieVocalizer
+  id: BaseVulpkaninPlushie
+  abstract: true
+  components:
+  - type: EmitSoundOnUse
+    sound:
+      collection: Bark
+  - type: EmitSoundOnLand
+    sound:
+      collection: Bark
+  - type: EmitSoundOnActivate
+    sound:
+      collection: Bark
+  - type: EmitSoundOnCollide
+    sound:
+      collection: Bark
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: Bark
+  - type: EmitSoundOnThrow
+    sound:
+      path: /Audio/_Starlight/Effects/howl.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: Growl
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Effects/yip.ogg
+
+- type: entity
+  parent: BasePlushieVocalizer
+  id: BaseMothPlushie
+  abstract: true
+  components:
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Moth/moth_scream.ogg
+
+- type: entity
+  parent: BasePlushieVocalizer
+  id: BaseLizardPlushie
+  abstract: true
+  components:
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+
+- type: entity
+  parent: BasePlushieVocalizer
+  id: BaseShadekinPlushie
+  abstract: true
+  components:
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Voice/Shadekin/mar.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Voice/Shadekin/mar.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Voice/Shadekin/mar.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Voice/Shadekin/mar.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Voice/Shadekin/wurble.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      collection: FelionoidScreams
+
+- type: entity
+  parent: BasePlushieVocalizer
+  id: BaseBorgPlushie
+  abstract: true
+  components:
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Effects/chime.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Machines/warning_buzzer.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Effects/Cargo/ping.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Effects/Cargo/buzz_sigh.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Effects/Cargo/buzz_two.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Machines/warning_buzzer.ogg
+  - type: Tool
+    qualities:
+      - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg

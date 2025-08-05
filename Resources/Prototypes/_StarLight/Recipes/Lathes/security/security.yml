@@ -1,3 +1,14 @@
+## EnergyDome
+
+- type: latheRecipe
+  id: EnergyDomeTurtle
+  result: EnergyDomeTurtle
+  completetime: 12
+  materials:
+    Steel: 1000
+    Plastic: 500
+    Silver: 150
+
 ## Weapons
 
 - type: latheRecipe
@@ -39,3 +50,30 @@
     Silver: 2500
     Gold: 1000
     Diamond: 1000
+
+#Cybernetics
+- type: latheRecipe
+  id: LeftArmCyberBulwark
+  result: LeftArmCyberBulwark
+  categories:
+  - Cyberlimbs
+  completetime: 10
+  materials:
+    Plastic: 450
+    Steel: 450
+    Silver: 100
+    Glass: 100
+    Plasma: 100
+
+- type: latheRecipe
+  id: RightArmCyberBulwark
+  result: RightArmCyberBulwark
+  categories:
+  - Cyberlimbs
+  completetime: 10
+  materials:
+    Plastic: 450
+    Steel: 450
+    Silver: 100
+    Glass: 100
+    Plasma: 100

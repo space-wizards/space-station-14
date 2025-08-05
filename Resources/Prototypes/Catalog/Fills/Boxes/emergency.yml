@@ -38,6 +38,23 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
+- type: entity #🌟Starlight🌟
+  parent: BoxSurvival
+  id: BoxSurvivalNonBreather
+  description: It's a box with survival supplies for those with no need to breathe.
+  suffix: Nonbreather
+  components:
+  - type: StorageFill
+    contents:
+    - id: EmergencyMedipen
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+    - id: Flare
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: shadekin
+
 - type: entity
   parent: BoxCardboard
   id: BoxSurvivalEngineering
@@ -77,6 +94,25 @@
     - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+- type: entity #🌟Starlight🌟
+  parent: BoxSurvivalEngineering
+  id: BoxSurvivalEngineeringNonBreather
+  description: It's a box with survival supplies for those with no need to breathe. This one is labelled to contain double rations.
+  suffix: Extended Nonbreather
+  components:
+  - type: StorageFill
+    contents:
+    - id: EmergencyMedipen
+    - id: FoodSnackNutribrick
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+    - id: DrinkWaterBottleFull
+    - id: Flare
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: shadekin
 
 - type: entity
 
@@ -119,8 +155,26 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
-- type: entity
+- type: entity #🌟Starlight🌟
+  parent: BoxSurvivalSecurity
+  id: BoxSurvivalSecurityNonBreather
+  description: It's a box with survival supplies for those with no need to breathe. This one is labelled to contain double rations.
+  suffix: Security Nonbreather
+  components:
+  - type: StorageFill
+    contents:
+    - id: EmergencyMedipen
+    - id: FoodSnackNutribrick
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+    - id: DrinkWaterBottleFull
+    - id: Flare
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: shadekin
 
+- type: entity
   parent: BoxCardboard
   id: BoxSurvivalMedical
   name: survival box
@@ -159,6 +213,25 @@
     - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+- type: entity #🌟Starlight🌟
+  parent: BoxSurvivalMedical
+  id: BoxSurvivalMedicalNonBreather
+  description: It's a box with survival supplies for those with no need to breathe. This one is labelled to contain double rations.
+  suffix: Medical Nonbreather
+  components:
+  - type: StorageFill
+    contents:
+    - id: EmergencyMedipen
+    - id: FoodSnackNutribrick
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+    - id: DrinkWaterBottleFull
+    - id: Flare
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: shadekin
 
 - type: entity
   parent: BoxCardboard
@@ -201,6 +274,23 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
+- type: entity #🌟Starlight🌟
+  parent: BoxHug
+  id: BoxHugNonBreather
+  description: A special box for sensitive people who don't need to breathe.
+  suffix: Emergency (Nonbreather)
+  components:
+  - type: StorageFill
+    contents:
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+  - type: Sprite
+    layers:
+    - state: box_hug
+    - state: shadekin
+
 - type: entity
   parent: BoxSurvival
   id: BoxMime
@@ -234,6 +324,36 @@
     - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+- type: entity
+  parent: BoxSurvival
+  id: BoxMimeMoth
+  suffix: Mime, Emergency moth
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodBreadBaguetteCotton
+    - id: DrinkWaterBottleFull
+
+- type: entity #🌟Starlight🌟
+  parent: BoxSurvival
+  id: BoxMimeNonBreather
+  suffix: Mime, Emergency (Nonbreather)
+  components:
+  - type: StorageFill
+    contents:
+    - id: EmergencyMedipen
+    - id: FoodBreadBaguette
+    - id: DrinkWaterBottleFull
+    - id: Flare
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: shadekin
 
 - type: entity
   parent: BoxCardboard
@@ -272,3 +392,20 @@
     - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+- type: entity #🌟Starlight🌟
+  parent: BoxSurvivalSyndicate
+  id: BoxSurvivalNonBreatherSyndicate
+  suffix: Syndicate Nonbreather
+  components:
+  - type: StorageFill
+    contents:
+    - id: EmergencyMedipen
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: FoodSnackNutribrick
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: shadekin

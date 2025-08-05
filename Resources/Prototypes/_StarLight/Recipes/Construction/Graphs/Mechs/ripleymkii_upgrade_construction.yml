@@ -1,0 +1,15 @@
+- type: constructionGraph
+  id: RipleyMKIIUpgrade
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: ripleymkii
+      steps:
+      - tag: RipleyMKIIUpgradeKit
+        name: construction-graph-tag-exosuit-upgrade-kit
+        doAfter: 5
+  - node: ripleymkii
+    actions:
+    - !type:TransformMech
+      mechPrototype: MechRipley2

@@ -7,6 +7,7 @@
     - alertType: ChangelingBiomass
     - category: Health
     - category: Stamina
+    - alertType: Shadekin # Starlight
     - alertType: ChangelingChemicals
     - alertType: SuitPower
     - category: Internals
@@ -26,7 +27,9 @@
     - category: Hunger
     - category: Thirst
     - alertType: Magboots
+    - alertType: Rooted
     - alertType: Pacified
+    - alertType: Stealthy
 
 - type: entity
   id: AlertSpriteView
@@ -136,6 +139,7 @@
     state: walking
   name: alerts-walking-name
   description: alerts-walking-desc
+  clientHandled: true
 
 - type: alert
   id: Stun
@@ -144,6 +148,15 @@
     state: stunbaton_off
   name: alerts-stunned-name
   description: alerts-stunned-desc
+
+- type: alert
+  id: Knockdown
+  clickEvent: !type:KnockedDownAlertEvent
+  icons:
+  - sprite: /Textures/Interface/Alerts/stunnable.rsi
+    state: knocked-down
+  name: alerts-knockdown-name
+  description: alerts-knockdown-desc
 
 - type: alert
   id: Handcuffed
@@ -437,6 +450,19 @@
     state: icon
   name: alerts-pacified-name
   description: alerts-pacified-desc
+
+- type: alert
+  id: Stealthy
+  clickEvent: !type:ToggleThievingEvent
+  icons:
+  - sprite: /Textures/Interface/Alerts/stealthy.rsi
+    state: stealthy-off
+  - sprite: /Textures/Interface/Alerts/stealthy.rsi
+    state: stealthy-on
+  name: alerts-stealthy-name
+  description: alerts-stealthy-desc
+  minSeverity: 0
+  maxSeverity: 1
 
 - type: alert
   id: Adrenaline

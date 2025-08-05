@@ -69,7 +69,7 @@ entities:
       pos: 0.53697205,0.547603
       parent: 1
     - type: BecomesStation
-      id: Amber
+      id: StarlightAmber
     - type: MapGrid
       chunks:
         -1,-1:
@@ -114676,7 +114676,7 @@ entities:
     - type: Transform
       pos: -29.5,-26.5
       parent: 2
-- proto: SpawnPointPassenger
+- proto: SpawnPointAssistant
   entities:
   - uid: 16388
     components:

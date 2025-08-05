@@ -1,4 +1,6 @@
 using Content.Shared.Starlight.Antags.Abductor;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Starlight.Medical.Surgery;
 using Content.Shared.DoAfter;
@@ -12,6 +14,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 {
     
     [Dependency] private readonly SharedBodySystem _body = default!;
+    [Dependency] private readonly ISharedAdminLogManager _admin = default!;
     
     public void InitializeExtractor()
     {
@@ -42,16 +45,18 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             BreakOnDamage = true,
             DistanceThreshold = 1f
         };
+        _admin.Add(LogType.InteractUsing, LogImpact.Low, $"{ToPrettyString(user)} trying to use extractor {ToPrettyString(ent.Owner)} for extracting heart from {ToPrettyString(target)}.");
         _doAfter.TryStartDoAfter(doAfter);
     }
     
     private void OnExtractDoAfter(Entity<AbductorExtractorComponent> ent, ref AbductorExtractDoAfterEvent args)
     {
-        if (args.Target is null) return;
+        if (args.Target == null || args.User == null) return;
         
         if (!_body.TryGetBodyOrganEntityComps<OrganHeartComponent>(args.Target.Value, out var hearts))
             return;
         
+        _admin.Add(LogType.InteractUsing, LogImpact.Low, $"Heart successfully extracted from {ToPrettyString(args.Target.Value)} using {ToPrettyString(ent.Owner)} by {ToPrettyString(args.User)}");
         foreach (var heart in hearts)
             _body.RemoveOrgan(heart, _entityManager.GetComponent<OrganComponent>(heart));
     }

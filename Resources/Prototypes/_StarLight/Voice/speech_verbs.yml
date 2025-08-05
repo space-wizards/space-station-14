@@ -1,0 +1,17 @@
+- type: speechVerb
+  id: Felionoid
+  name: chat-speech-verb-name-felionoid
+  speechVerbStrings:
+  - chat-speech-verb-felionoid-1
+  - chat-speech-verb-felionoid-2
+  - chat-speech-verb-felionoid-3
+  - chat-speech-verb-felionoid-4
+  
+- type: speechVerb
+  id: Vulpkanin
+  name: chat-speech-verb-name-vulpkanin
+  speechVerbStrings:
+  - chat-speech-verb-vulpkanin-1
+  - chat-speech-verb-vulpkanin-2
+  - chat-speech-verb-vulpkanin-3
+  - chat-speech-verb-vulpkanin-4

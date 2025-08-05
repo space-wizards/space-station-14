@@ -1,3 +1,43 @@
 - type: lobbyBackground
   id: Positivity
   background: /Textures/_Starlight/LobbyScreens/positivity.webp
+
+- type: lobbyBackground
+  id: IPCsaster
+  background: /Textures/_Starlight/LobbyScreens/IPCsaster.webp
+
+- type: lobbyBackground
+  id: Reflection
+  background: /Textures/_Starlight/LobbyScreens/reflection.webp
+
+- type: lobbyBackground
+  id: TriesteNT
+  background: /Textures/_Starlight/LobbyScreens/trieste-nt.webp
+
+- type: lobbyBackground
+  id: LingKiller
+  background: /Textures/_Starlight/LobbyScreens/thelingkiller.webp
+
+- type: lobbyBackground
+  id: NTOsprey
+  background: /Textures/_Starlight/LobbyScreens/ntosprey.webp
+
+- type: lobbyBackground
+  id: FriendsForever
+  background: /Textures/_Starlight/LobbyScreens/friendsforever.webp
+
+- type: lobbyBackground
+  id: AgainstTheXeno
+  background: /Textures/_Starlight/LobbyScreens/againstthexeno.webp
+
+- type: lobbyBackground
+  id: SOCOMOperation
+  background: /Textures/_Starlight/LobbyScreens/operation.webp
+
+- type: lobbyBackground
+  id: BombDefusalBorg
+  background: /Textures/_Starlight/LobbyScreens/bombdefusalborg.webp
+
+- type: lobbyBackground
+  id: Turncoats
+  background: /Textures/_Starlight/LobbyScreens/turncoats.webp

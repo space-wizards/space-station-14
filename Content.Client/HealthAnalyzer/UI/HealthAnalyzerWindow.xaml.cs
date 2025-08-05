@@ -86,7 +86,8 @@ namespace Content.Client.HealthAnalyzer.UI
             SpeciesLabel.Text =
                 _entityManager.TryGetComponent<HumanoidAppearanceComponent>(target.Value,
                     out var humanoidAppearanceComponent)
-                    ? Loc.GetString(_prototypes.Index<SpeciesPrototype>(humanoidAppearanceComponent.Species).Name)
+                    ? humanoidAppearanceComponent.CustomSpecieName + " (" + Loc.GetString(_prototypes.Index(humanoidAppearanceComponent.Species).Name) + ")" ?? // Starlight
+                      Loc.GetString(_prototypes.Index(humanoidAppearanceComponent.Species).Name) // Starlight
                     : Loc.GetString("health-analyzer-window-entity-unknown-species-text");
 
             // Basic Diagnostic

@@ -4,14 +4,7 @@
   text: "/ServerInfo/Guidebook/StarlightSOP/sop-intro.xml"
   children:
     - general-sop
-    - command-sop
-    - security-sop-intro
-    - legal-sop-intro
-    - engineering-sop-intro
-    - medical-sop-intro
-    - cargo-sop-intro
-    - science-sop-intro
-    - nano-trasen-employee-sop-intro
+    - departmental-sop
 
 - type: guideEntry
   id: general-sop
@@ -26,6 +19,19 @@
     - nanotrasen-staff-handling-policies
 
 
+- type: guideEntry
+  id: departmental-sop
+  name: guide-entry-sl-departmental-sop-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/departmental-sop-intro.xml"
+  priority: 2
+  children:
+    - command-sop
+    - security-sop-intro
+    - legal-sop-intro
+    - engineering-sop-intro
+    - cargo-sop-intro
+    - science-sop-intro
+    - nano-trasen-employee-sop-intro
 
 - type: guideEntry
   id: alert-levels
@@ -233,7 +239,56 @@
   name: guide-entry-sl-security-sop-intro
   text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/security-sop-intro.xml"
   priority: 3
+  children:
+  - security-sop-cadet
+  - security-sop-securityofficer
+  - security-sop-detective
+  - security-sop-brigmedic
+  - security-sop-warden
+  - security-sop-headofsecurity
+  - security-sop-prisonertreatment
 
+- type: guideEntry
+  id: security-sop-cadet
+  name: guide-entry-sl-security-sop-cadet
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Cadet.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-securityofficer
+  name: guide-entry-sl-security-sop-securityofficer
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/SecurityOfficer.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-detective
+  name: guide-entry-sl-security-sop-detective
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Detective.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-brigmedic
+  name: guide-entry-sl-security-sop-brigmedic
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Brigmedic.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-warden
+  name: guide-entry-sl-security-sop-warden
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Warden.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-headofsecurity
+  name: guide-entry-sl-security-sop-headofsecurity
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/HeadOfSecurity.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-prisonertreatment
+  name: guide-entry-sl-security-sop-prisonertreatment
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/PrisonerTreatment.xml"
+  priority: 4
 
 
 - type: guideEntry
@@ -249,13 +304,52 @@
   name: guide-entry-sl-engineering-sop-intro
   text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-intro.xml"
   priority: 5
+  children:
+      - engineering-sop-power-generation
+      - engineering-sop-station-damage
+      - engineering-sop-chief-engineer
+      - engineering-sop-station-engineer
+      - engineering-sop-atmos-tech
+      - engineering-sop-technical-assistant
 
+- type: guideEntry
+  id: engineering-sop-power-generation
+  name: guide-entry-sl-engineering-sop-power-generation
+  text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-power-generation.xml"
+  priority: 1
 
 
 - type: guideEntry
-  id: medical-sop-intro
-  name: guide-entry-sl-medical-sop-intro
-  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/medical-sop-intro.xml"
+  id: engineering-sop-station-damage
+  name: guide-entry-sl-engineering-sop-station-damage
+  text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-station-damage.xml"
+  priority: 2
+
+- type: guideEntry
+  id: engineering-sop-chief-engineer
+  name: guide-entry-sl-engineering-sop-chief-engineer
+  text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-chief-engineer.xml"
+  priority: 3
+
+
+- type: guideEntry
+  id: engineering-sop-station-engineer
+  name: guide-entry-sl-engineering-sop-station-engineer
+  text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-station-engineer.xml"
+  priority: 4
+
+
+- type: guideEntry
+  id: engineering-sop-atmos-tech
+  name: guide-entry-sl-engineering-sop-atmos-tech
+  text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-atmos-tech.xml"
+  priority: 5
+
+
+- type: guideEntry
+  id: engineering-sop-technical-assistant
+  name: guide-entry-sl-engineering-sop-technical-assistant
+  text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-technical-assistant.xml"
   priority: 6
 
 
@@ -265,6 +359,78 @@
   name: guide-entry-sl-cargo-sop-intro
   text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/cargo-sop-intro.xml"
   priority: 7
+  children:
+    - cargo-sop-cargotechnician
+    - cargo-sop-miningspecialist
+    - cargo-sop-salvagespecialist
+    - cargo-sop-quartermaster
+    - cargo-sop-handlingorders
+
+- type: guideEntry
+  id: cargo-sop-cargotechnician
+  name: guide-entry-sl-cargo-sop-cargotechnician
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/CargoTechnician.xml"
+  priority: 1
+
+- type: guideEntry
+  id: cargo-sop-miningspecialist
+  name: guide-entry-sl-cargo-sop-miningspecialist
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/MiningSpecialist.xml"
+  priority: 2
+
+- type: guideEntry
+  id: cargo-sop-salvagespecialist
+  name: guide-entry-sl-cargo-sop-salvagespecialist
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/SalvageSpecialist.xml"
+  priority: 3
+
+- type: guideEntry
+  id: cargo-sop-quartermaster
+  name: guide-entry-sl-cargo-sop-quartermaster
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/Quartermaster.xml"
+  priority: 4
+
+- type: guideEntry
+  id: cargo-sop-handlingorders
+  name: guide-entry-sl-cargo-sop-handlingorders
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/HandlingOrders.xml"
+  priority: 5
+  children:
+    - cargo-sop-handlingorders-engineering
+    - cargo-sop-handlingorders-security
+    - cargo-sop-handlingorders-science
+    - cargo-sop-handlingorders-medical
+    - cargo-sop-handlingorders-service
+
+- type: guideEntry
+  id: cargo-sop-handlingorders-engineering
+  name: guide-entry-sl-cargo-sop-handlingorders-engineering
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/EngineeringOrders.xml"
+  priority: 1
+
+- type: guideEntry
+  id: cargo-sop-handlingorders-security
+  name: guide-entry-sl-cargo-sop-handlingorders-security
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/SecurityOrders.xml"
+  priority: 2
+
+- type: guideEntry
+  id: cargo-sop-handlingorders-science
+  name: guide-entry-sl-cargo-sop-handlingorders-science
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/ScienceOrders.xml"
+  priority: 3
+
+- type: guideEntry
+  id: cargo-sop-handlingorders-medical
+  name: guide-entry-sl-cargo-sop-handlingorders-medical
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/MedicalOrders.xml"
+  priority: 4
+
+- type: guideEntry
+  id: cargo-sop-handlingorders-service
+  name: guide-entry-sl-cargo-sop-handlingorders-service
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/ServiceOrders.xml"
+  priority: 5
 
 
 
@@ -281,3 +447,44 @@
   name: guide-entry-sl-nano-trasen-employee-sop-intro
   text: "/ServerInfo/Guidebook/StarlightSOP/NanoTrasenEmployeeSOP/nano-trasen-employee-sop-intro.xml"
   priority: 9
+  children:
+      - nano-trasen-employee-sop-safety-protocol
+      - nano-trasen-employee-sop-nt-rep
+      - nano-trasen-employee-sop-bso
+      - nano-trasen-employee-sop-magistrate
+      - nano-trasen-employee-sop-iaa
+  
+  
+- type: guideEntry
+  id: nano-trasen-employee-sop-safety-protocol
+  name: guide-entry-sl-nano-trasen-employee-sop-safety-protocol
+  text: "/ServerInfo/Guidebook/StarlightSOP/NanoTrasenEmployeeSOP/nano-trasen-employee-sop-safety-protocol.xml"
+  priority: 1
+  
+  
+- type: guideEntry
+  id: nano-trasen-employee-sop-nt-rep
+  name: guide-entry-sl-nano-trasen-employee-sop-nt-rep
+  text: "/ServerInfo/Guidebook/StarlightSOP/NanoTrasenEmployeeSOP/nano-trasen-employee-sop-nt-rep.xml"
+  priority: 2
+  
+  
+- type: guideEntry
+  id: nano-trasen-employee-sop-bso
+  name: guide-entry-sl-nano-trasen-employee-sop-bso
+  text: "/ServerInfo/Guidebook/StarlightSOP/NanoTrasenEmployeeSOP/nano-trasen-employee-sop-bso.xml"
+  priority: 3
+  
+  
+- type: guideEntry
+  id: nano-trasen-employee-sop-magistrate
+  name: guide-entry-sl-nano-trasen-employee-sop-magistrate
+  text: "/ServerInfo/Guidebook/StarlightSOP/NanoTrasenEmployeeSOP/nano-trasen-employee-sop-magistrate.xml"
+  priority: 4
+  
+  
+- type: guideEntry
+  id: nano-trasen-employee-sop-iaa
+  name: guide-entry-sl-nano-trasen-employee-sop-iaa
+  text: "/ServerInfo/Guidebook/StarlightSOP/NanoTrasenEmployeeSOP/nano-trasen-employee-sop-iaa.xml"
+  priority: 5

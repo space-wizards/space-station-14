@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by BORT and JustAdler for https://github.com/ss14Starlight/space-station-14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "banner0"
+    },
+    {
+      "name": "banner1"
+    },
+    {
+      "name": "banner2"
+    },
+    {
+      "name": "banner3"
+    },
+    {
+      "name": "banner4"
+    },
+    {
+      "name": "banner5"
+    }
+  ]
+}

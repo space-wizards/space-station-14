@@ -14,7 +14,7 @@
     - AnomalyPyroclastic
     - AnomalyGravity
     - AnomalyElectricity
-    - AnomalyFlesh
+    - RandomFleshAnomalySpawner # Starlight edit, don't dilute the pool with a flesh anomaly variant
     - AnomalyBluespace
     - AnomalyIce
     - RandomRockAnomalySpawner
@@ -31,6 +31,7 @@
 
 - type: entity
   id: RandomRockAnomalySpawner
+  name: random rock anomaly spawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -41,14 +42,18 @@
   - type: RandomSpawner
     prototypes:
     - AnomalyRockIron
+    - AnomalyRockCoal
     - AnomalyRockSilver
+    - AnomalyRockGold
     - AnomalyRockQuartz
     - AnomalyRockUranium
+    - AnomalyRockBananium
     chance: 1
     offset: 0.15
 
 - type: entity
   id: RandomAnomalyInjectorSpawner
+  name: random anomaly injector spawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -70,4 +75,3 @@
     - AnomalyTrapRock
     #- AnomalyTrapSanta
     chance: 1
-  

@@ -30,7 +30,6 @@
 - type: startingGear
   id: BrigmedicGear
   equipment:
-    eyes: ClothingEyesGlassesBrigmedic
     ears: ClothingHeadsetBrigmedic
     neck: ClothingNeckTieRed
     pocket2: HandheldBrigmedicCrewMonitor

@@ -10,6 +10,7 @@
     - !type:RoleTimeRequirement
       role: JobDetective
       time: 3600 # 1 hr
+  weight: 5
   startingGear: WardenGear
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos
@@ -24,6 +25,8 @@
   - Detective
   - Cryogenics
   - Brigmedic
+  - GenpopEnter #starlight
+  - GenpopLeave #starlight
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -31,12 +34,25 @@
 - type: startingGear
   id: WardenGear
   equipment:
-    eyes: ClothingEyesGlassesSecurity
     id: WardenPDA
-    ears: ClothingHeadsetSecurity
-    pocket1: WeaponPistolSP8
+    ears: ClothingHeadsetSecurityWarden
+    pocket1: WeaponPistolDP
   storage:
     back:
     - Flash
-    - MagazinePistol40Nr
-    - MagazinePistol40Nr
+    - MagazinePistol40SP
+    - MagazinePistol40SP
+
+- type: chameleonOutfit
+  id: WardenChameleonOutfit
+  job: Warden
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatWarden
+    mask: ClothingMaskGasSecurity
+    outerClothing: ClothingOuterCoatWarden
+    jumpsuit: ClothingUniformJumpsuitWarden
+    neck: Dinkystar
+    belt: ClothingBeltSecurity
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsJack

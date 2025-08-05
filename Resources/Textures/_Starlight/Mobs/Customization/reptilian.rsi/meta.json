@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Dragon wings from cosmatic-drift-14 by Github KittenColony / Discord kittencolony (297865728374210561), dragonwings_membrane by github Kadeo64",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "body_dragonwings",
+      "directions": 4
+    },
+    {
+      "name": "body_dragonwings_membrane",
+      "directions": 4
+    }
+  ]
+}

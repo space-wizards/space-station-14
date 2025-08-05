@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"license": "CC-BY-NC-SA-3.0",
+	"copyright": "Made by Killer Tamashi (Discord)",
+	"size": {
+		"x": 64,
+		"y": 64
+	},
+	"states": [
+		{
+			"name": "nanite-building",
+            "delays": [
+              [
+                0.3,
+                0.3,
+                0.3,
+                0.3,
+                0.3,
+                0.3,
+                0.3,
+                0.3,
+                0.4
+              ]
+            ]
+		},
+		{
+			"name": "nanite-deconstructing",
+            "delays": [
+              [
+                0.3,
+                0.3,
+                0.3,
+                0.3,
+                0.3,
+                0.3,
+                0.3,
+                0.3,
+                0.4
+              ]
+            ]
+		},
+    {
+			"name": "shell"
+		}
+	]
+}

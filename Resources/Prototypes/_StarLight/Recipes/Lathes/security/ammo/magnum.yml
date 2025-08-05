@@ -1,7 +1,8 @@
 - type: latheRecipe
   id: CartridgeMagnumRubber
   result: CartridgeMagnumRubber
-  category: Ammo
+  categories:
+  - Ammo
   completetime: 2
   materials:
     Plastic: 5
@@ -74,7 +75,8 @@
 - type: latheRecipe
   id: MagazineBoxMagnumRubber
   result: MagazineBoxMagnumRubber
-  category: Ammo
+  categories:
+  - Ammo
   completetime: 5
   materials:
     Steel: 350

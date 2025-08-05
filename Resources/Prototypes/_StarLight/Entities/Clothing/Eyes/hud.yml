@@ -1,0 +1,130 @@
+- type: entity
+  parent: [ ClothingEyesBase, BaseCommandContraband ]
+  id: ClothingEyesHudBlueShield
+  name: blueshield officer's hud
+  description: A Innovative heads-up display that scans the humanoids in view and provides accurate data about their ID status, security records, and medical information.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Hud/blueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Hud/blueshield.rsi
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: ShowCriminalRecordIcons
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
+  - type: Tag
+    tags:
+    - HudMedical
+  - type: EyeProtection
+    protectionTime: 5
+
+- type: entity
+  parent: [ ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband ]
+  id: ClothingEyesHudBrigmedic
+  name: brigmedic hud
+  description: Tamashi-upgraded HUDs. Yes. Brigmedic ones.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Hud/brigmedichud.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Hud/brigmedichud.rsi
+  - type: EyeProtection
+    protectionTime: 5
+  - type: ShowHealthBars
+  - type: SolutionScanner
+  - type: Construction
+    graph: GlassesSecHUD
+    node: glassesSec
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: IdentityBlocker
+    coverage: EYES
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudSkills
+  name: skills hud
+  description: Visor with a built-in skills HUD, showing the employment history of nearby NT crew members.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Hud/hudskill.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Hud/hudskill.rsi
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: ShowCriminalRecordIcons
+  - type: EyeProtection
+    protectionTime: 5
+
+- type: entity
+  parent: [ ClothingEyesBase, BaseCentcommContraband ]
+  id: ClothingEyesHudCentComm
+  name: centcomm officer's hud
+  description: A Innovative heads-up display that scans the humanoids in view and provides accurate data about their ID status, security records, and medical information.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Hud/centcomm.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Hud/centcomm.rsi
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: ShowCriminalRecordIcons
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
+  - type: Tag
+    tags:
+    - HudMedical
+  - type: EyeProtection
+    protectionTime: 5
+
+#USSP
+- type: entity
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSovietContraband]
+  id: ClothingEyesHudSovietMarine
+  name: SSF marine goggles
+  description: The iconic soviet goggles, in use broadly by the soviet forces throughout.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Soviet/marine_goggles.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Soviet/marine_goggles.rsi
+    clothingVisuals:
+      eyes:
+      - state: equipped-EYES
+      - state: equipped-EYES-unshaded
+        shader: unshaded
+      eyes-vox:
+      - state: equipped-EYES-vox
+      - state: equipped-EYES-unshaded-vox
+        shader: unshaded
+      eyes-resomi:
+      - state: equipped-EYES-resomi
+      - state: equipped-EYES-unshaded-resomi
+        shader: unshaded
+      eyes-cyclorite:
+      - state: equipped-EYES-cyclorite
+      - state: equipped-EYES-unshaded-cyclorite
+        shader: unshaded
+  #- type: ShowSovietIcons  need faction
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: EyeProtection
+    protectionTime: 5
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: FlashImmunity
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.95

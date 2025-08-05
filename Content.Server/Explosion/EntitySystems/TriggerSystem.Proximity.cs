@@ -9,7 +9,6 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class TriggerSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private void InitializeProximity()
@@ -36,7 +35,7 @@ public sealed partial class TriggerSystem
         // Re-check for contacts as we cleared them.
         else if (TryComp<PhysicsComponent>(uid, out var body))
         {
-            _broadphase.RegenerateContacts(uid, body);
+            _broadphase.RegenerateContacts((uid, body));
         }
     }
 
@@ -82,7 +81,7 @@ public sealed partial class TriggerSystem
 
     private void SetProximityAppearance(EntityUid uid, TriggerOnProximityComponent component)
     {
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        if (TryComp(uid, out AppearanceComponent? appearance))
         {
             _appearance.SetData(uid, ProximityTriggerVisualState.State, component.Enabled ? ProximityTriggerVisuals.Inactive : ProximityTriggerVisuals.Off, appearance);
         }
@@ -92,7 +91,7 @@ public sealed partial class TriggerSystem
     {
         DebugTools.Assert(component.Enabled);
 
-        var curTime = _timing.CurTime;
+        var curTime = _gameTiming.CurTime;
 
         if (!component.Repeating)
         {
@@ -107,7 +106,7 @@ public sealed partial class TriggerSystem
         // Queue a visual update for when the animation is complete.
         component.NextVisualUpdate = curTime + component.AnimationDuration;
 
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        if (TryComp(uid, out AppearanceComponent? appearance))
         {
             _appearance.SetData(uid, ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active, appearance);
         }
@@ -117,7 +116,7 @@ public sealed partial class TriggerSystem
 
     private void UpdateProximity()
     {
-        var curTime = _timing.CurTime;
+        var curTime = _gameTiming.CurTime;
 
         var query = EntityQueryEnumerator<TriggerOnProximityComponent>();
         while (query.MoveNext(out var uid, out var trigger))

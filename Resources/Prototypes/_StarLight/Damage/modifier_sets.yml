@@ -5,9 +5,67 @@
     Heat: 1.5
 
 - type: damageModifierSet
+  id: Avali # Not as good as thick fur like the vulps, but still rather insulating.
+  coefficients:
+    Cold: 0.6
+    Heat: 1.4
+
+- type: damageModifierSet
   id: TerrorSpider
   coefficients:
-    Blunt: 0.4 
+    Blunt: 0.4
     Slash: 1.1
     Piercing: 0.9
     Heat: 1.6
+
+- type: damageModifierSet
+  id: Cyclorite
+  coefficients:
+    Blunt: 0.85 # Have you ever tried to punch a rock?
+    Slash: 0.75
+
+- type: damageModifierSet
+  id: Shadekin
+  coefficients:
+    Asphyxiation: 0
+    Cold: 0.75
+    Heat: 1.2
+    Cellular: 0.25
+    Bloodloss: 1.35
+    Shock: 1.25
+    Radiation: 1.3
+
+- type: damageModifierSet
+  id: Gorilla
+  coefficients:
+    Asphyxiation: 1.5
+    Heat: 1.5
+    Cellular: 0
+    Poison: 1.5
+
+- type: damageModifierSet
+  id: GorillaRampaging
+  coefficients:
+    Blunt: 1.25
+    Cellular: 0
+    Poison: 1.5
+
+- type: damageModifierSet
+  id: DragonResistances
+  flatReductions:
+    Piercing: 4
+  coefficients:
+    Piercing: 0.3
+    Slash: 2
+    Heat: 0.5
+    Bloodloss: 0
+
+- type: damageModifierSet
+  id: DragonCarpResistances
+  flatReductions:
+    Piercing: 2.5
+  coefficients:
+    Piercing: 0.5
+    Slash: 2
+    Heat: 0.75
+    Bloodloss: 0

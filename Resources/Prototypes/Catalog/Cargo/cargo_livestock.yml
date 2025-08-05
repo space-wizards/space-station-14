@@ -109,16 +109,6 @@
   group: market
 
 - type: cargoProduct
-  id: LivestockGorilla
-  icon:
-    sprite: Mobs/Animals/gorilla.rsi
-    state: icon
-  product: CrateNPCGorilla
-  cost: 1100
-  category: cargoproduct-category-name-livestock
-  group: market
-
-- type: cargoProduct
   id: LivestockMonkeyCube
   icon:
     sprite: Objects/Misc/monkeycube.rsi
@@ -151,7 +141,7 @@
 - type: cargoProduct
   id: LivestockParrot
   icon:
-    sprite: Mobs/Animals/parrot.rsi
+    sprite: Mobs/Animals/parrot/parrot.rsi
     state: parrot
   product: CrateNPCParrot
   cost: 3000

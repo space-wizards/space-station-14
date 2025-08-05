@@ -214,9 +214,23 @@
     Poison:
       effects:
       - !type:HealthChange
+        conditions: #Starlight
+        - !type:OrganType
+          type: Avali
+          shouldHave: false
         damage:
           types:
             Caustic: 1
+    Medicine: #Starlight
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+        damage:
+          types:
+            Asphyxiation: -1
     Gas:
       effects:
       - !type:HealthChange

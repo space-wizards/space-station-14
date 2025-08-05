@@ -1,0 +1,36 @@
+- type: constructionGraph
+  id: ClaymoreForgedGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: sword
+      steps:
+      - tag: BladePlasteel
+        icon:
+          sprite: _Starlight/Objects/Misc/plasteel_blade.rsi
+          state: icon
+        name: crafting-menu-name-PB
+      - tag: CrayonGreen
+        icon:
+          sprite: Objects/Fun/crayons.rsi
+          state: green
+        name: crafting-menu-name-CGREN
+      - tag: CrayonYellow
+        icon:
+          sprite: Objects/Fun/crayons.rsi
+          state: yellow
+        name: crafting-menu-name-CYELO
+      - material: Plasteel
+        amount: 15
+        doAfter: 25
+      - material: Cloth
+        amount: 8
+        doAfter: 5
+      - tag: HiltPlasteel
+        icon:
+          sprite: _Starlight/Objects/Misc/plasteel_hilt.rsi
+          state: icon
+        name: crafting-menu-name-PH
+  - node: sword
+    entity: UnfinishedClaymoreForged

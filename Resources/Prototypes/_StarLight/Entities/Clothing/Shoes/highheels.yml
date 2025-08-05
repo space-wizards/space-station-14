@@ -1,0 +1,39 @@
+
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesHighheelShoes
+  name: high-heels
+  description: Snazy shoes for when you want to be stylish and noticed.
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 6
+  - type: Sprite
+    sprite: _Starlight/Clothing/Shoes/Boots/highheelshoes.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Shoes/Boots/highheelshoes.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHighHeels
+      params:
+        volume: -6
+        variation: 0.09
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesHighheelShoesAesthetic
+  name: high-heels
+  description: Snazy shoes for when you want to be stylish and noticed.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Shoes/Boots/highheelshoes.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Shoes/Boots/highheelshoes.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHighHeels
+      params:
+        volume: -6
+        variation: 0.09

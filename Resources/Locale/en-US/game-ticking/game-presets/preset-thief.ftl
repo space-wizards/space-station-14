@@ -10,7 +10,7 @@ thief-role-greeting-animal =
     Steal things that you like.
 
 thief-role-greeting-equipment =
-    You have a toolbox of thieves'
+    You have a satchel of thieves'
     tools and chameleon thieves' gloves.
     Choose your starting equipment,
     and do your work stealthily.

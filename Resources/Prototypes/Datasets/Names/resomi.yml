@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: names_resomi_first
+  values:
+    prefix: names-resomi-first-dataset-
+    count: 276
+
+- type: localizedDataset
+  id: names_resomi_packs
+  values:
+    prefix: names-resomi-packs-dataset-
+    count: 14

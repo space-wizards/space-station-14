@@ -1,0 +1,143 @@
+- type: entity
+  id: MailSyndicateSpamLetter
+  name: Reasons to choose The Syndicate!
+  description: An advertisement for the Syndicate. Wont fit in a fax somehow.
+  parent: [ Paper, BaseSyndicateContraband ]
+  components:
+    - type: Paper
+      content: delivery-spam-reasons-to-join-syndicate
+    - type: AntagOnSign
+      chance: 0.25
+      antags:
+        - antag: Traitor
+          targetComponent: TraitorRule
+
+- type: entity
+  id: MailSpamDontYouWantMore
+  name: Don't You Want More?
+  description: An inciting paper that smells faintly of welding fuel and desire. Wont fit in a fax somehow.
+  parent: [ Paper, BaseMajorContraband ]
+  components:
+    - type: Paper
+      content: deliver-spam-dont-you-want-more
+    - type: AntagOnSign
+      chance: .5
+      antags:
+        - antag: Traitor # gotta be a traitor for the traitor objectives
+          targetComponent: TraitorRule
+        - antag: Thief # gotta be a thief for the thief objectives
+          targetComponent: ThiefRule
+    - type: ObjectiveOnSign
+      objectives:
+        # thief collection objectives
+        - HeadCloakStealCollectionObjective
+        - HeadBedsheetStealCollectionObjective
+        - StampStealCollectionObjective
+        - DoorRemoteStealCollectionObjective
+        - TechnologyDiskStealCollectionObjective
+        - MailStealCollectionObjective
+        - FigurineStealCollectionObjective
+        - IDCardsStealCollectionObjective
+        - LAMPStealCollectionObjective
+        # thief item objectives
+        - ForensicScannerStealObjective
+        - FlippoEngravedLighterStealObjective
+        - ClothingHeadHatWardenStealObjective
+        - WantedListCartridgeStealObjective
+        - ClothingOuterHardsuitVoidParamedStealObjective
+        - MedicalTechFabCircuitboardStealObjective
+        - ClothingHeadsetAltMedicalStealObjective
+        - FireAxeStealObjective
+        - AmePartFlatpackStealObjective
+        - ExpeditionsCircuitboardStealObjective
+        - CargoShuttleCircuitboardStealObjective
+        - ClothingEyesHudBeerStealObjective
+        - BibleStealObjective
+        - ClothingNeckGoldmedalStealObjective
+        - ClothingNeckClownmedalStealObjective
+        # thief structure objectives
+        - NuclearBombStealObjective
+        - FaxMachineCaptainStealObjective
+        - ChemDispenserStealObjective
+        - XenoArtifactStealObjective
+        - FreezerHeaterStealObjective
+        - TegStealObjective
+        - BoozeDispenserStealObjective
+        - AltarNanotrasenStealObjective
+        - PlantRDStealObjective
+        - ToiletGoldenStealObjective
+        # thief pet steal objecives
+        - IanStealObjective
+        - BingusStealObjective
+        - McGriffStealObjective
+        - WalterStealObjective
+        - MortyStealObjective
+        - RenaultStealObjective
+        - ShivaStealObjective
+        - TropicoStealObjective
+        # thief escape objective
+        - EscapeThiefShuttleObjective
+        # traitor steal objectives
+        - CaptainIDStealObjective
+        - CMOHyposprayStealObjective
+        - CMOCrewMonitorStealObjective
+        - RDHardsuitStealObjective
+        - NukeDiskStealObjective
+        - MagbootsStealObjective
+        - RDDiplomaStealObjective
+        - CMOLicenseStealObjective
+        # no ian meat because you are a pacifist and need them alive
+        - ClipboardStealObjective #QM's digiboard
+        - CaptainGunStealObjective
+        - CaptainJetpackStealObjective
+        - HandTeleporterStealObjective
+        - EnergyShotgunStealObjective
+
+#USSP
+- type: entity
+  id: MailSovietSpamLetter100
+  name: Workers' rights!
+  suffix: 100%
+  description: A propaganda pamphlet that smells of burnt matches. It's so thick it won't fit in the fax.
+  parent: [ Paper, BaseSovietContraband ]
+  components:
+    - type: Paper
+      content: delivery-spam-join-soviets
+      editingDisabled: true
+    - type: AntagOnSign
+      chance: 1
+      antags:
+        - antag: Revolutionary
+          targetComponent: RevolutionaryRule
+
+- type: entity
+  id: MailSovietSpamLetter50
+  name: Workers' rights!
+  suffix: 50%
+  description: A propaganda pamphlet that smells of burnt matches. It's so thick it won't fit in the fax.
+  parent: [ Paper, BaseSovietContraband ]
+  components:
+    - type: Paper
+      content: delivery-spam-join-soviets
+      editingDisabled: true
+    - type: AntagOnSign
+      chance: 0.5
+      antags:
+        - antag: Revolutionary
+          targetComponent: RevolutionaryRule
+
+- type: entity
+  id: MailSovietSpamLetter25
+  name: Workers' rights!
+  suffix: 25%
+  description: A propaganda pamphlet that smells of burnt matches. It's so thick it won't fit in the fax.
+  parent: [ Paper, BaseSovietContraband ]
+  components:
+    - type: Paper
+      content: delivery-spam-join-soviets
+      editingDisabled: true
+    - type: AntagOnSign
+      chance: 0.25
+      antags:
+        - antag: Revolutionary
+          targetComponent: RevolutionaryRule

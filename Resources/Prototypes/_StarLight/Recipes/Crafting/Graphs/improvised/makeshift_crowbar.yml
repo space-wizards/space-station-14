@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: MakeshiftCrowbarGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tool
+      steps:
+      - tag: Toolbox
+        icon:
+          sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
+          state: icon
+        name: crafting-menu-name-ETX
+        doAfter: 8
+  - node: tool
+    entity: CrowbarMakeshift

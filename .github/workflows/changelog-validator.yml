@@ -1,0 +1,39 @@
+name: Changelog Validator
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  validate-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        #with:
+        #  ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          pip install pyyaml PyGithub
+
+      - name: Validate Changelog
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python ./Tools/_Starlight/validate_changelog.py
+          if [ $? -eq 0 ]; then
+            echo "::notice::Changelog validation passed"
+          else
+            echo "::error::Changelog validation failed"
+            exit 1
+          fi

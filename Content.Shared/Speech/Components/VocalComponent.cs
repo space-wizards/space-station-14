@@ -19,9 +19,9 @@ public sealed partial class VocalComponent : Component
     ///     Emote sounds prototype id for each sex (not gender).
     ///     Entities without <see cref="HumanoidComponent"/> considered to be <see cref="Sex.Unsexed"/>.
     /// </summary>
-    [DataField("sounds", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<Sex, EmoteSoundsPrototype>))]
+    [DataField]
     [AutoNetworkedField]
-    public Dictionary<Sex, string>? Sounds;
+    public Dictionary<Sex, ProtoId<EmoteSoundsPrototype>>? Sounds;
 
     [DataField("screamId", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     [AutoNetworkedField]
@@ -37,7 +37,7 @@ public sealed partial class VocalComponent : Component
 
     [DataField("screamAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     [AutoNetworkedField]
-    public string ScreamAction = "ActionScream";
+    public string? ScreamAction = "ActionScream";
 
     [DataField("screamActionEntity")]
     [AutoNetworkedField]
@@ -49,5 +49,16 @@ public sealed partial class VocalComponent : Component
     /// </summary>
     [ViewVariables]
     [AutoNetworkedField]
-    public EmoteSoundsPrototype? EmoteSounds = null;
+    public ProtoId<EmoteSoundsPrototype>? EmoteSounds = null;
+
+    //starlight start
+    [ViewVariables(VVAccess.ReadOnly)]
+    [AutoNetworkedField]
+    //have to use string as for some reason emote prototypes are not serializable even though im telling it not to serialize
+    public Dictionary<string, TimeSpan> LastEmoteTime = new Dictionary<string, TimeSpan>();
+
+    [AutoNetworkedField]
+    [DataField]
+    public TimeSpan EmoteCooldown = TimeSpan.FromSeconds(1.5f);
+    //starlight end
 }

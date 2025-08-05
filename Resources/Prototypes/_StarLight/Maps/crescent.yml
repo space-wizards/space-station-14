@@ -5,7 +5,7 @@
   minPlayers: 40
   maxPlayers: 95
   stations:
-    Crescent:
+    StarlightCrescent:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -56,9 +56,10 @@
             #supply
             Quartermaster: [ 1, 1 ] 
             SalvageSpecialist: [ 4, 4 ] 
-            CargoTechnician: [ 5, 5 ] 
+            CargoTechnician: [ 5, 5 ]
+            MailTech: [ 1, 2 ]
             #civilian
-            Passenger: [ -1, -1 ]
+            Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ] 
             Mime: [ 1, 1 ] 
             Musician: [ 1, 1 ] 

@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: BladePlasteelGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: blade
+      steps:
+      - material: Plasteel
+        amount: 6
+        doAfter: 15
+  - node: blade
+    entity: BladePlasteel

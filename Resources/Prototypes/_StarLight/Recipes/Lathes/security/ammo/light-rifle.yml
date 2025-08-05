@@ -1,7 +1,8 @@
 - type: latheRecipe
   id: CartridgeLightRifleRubber
   result: CartridgeLightRifleRubber
-  category: Ammo
+  categories:
+  - Ammo
   completetime: 2
   materials:
     Plastic: 10
@@ -129,7 +130,8 @@
 - type: latheRecipe
   id: MagazineBoxLightRifleRubber
   result: MagazineBoxLightRifleRubber
-  category: Ammo
+  categories:
+  - Ammo
   completetime: 5
   materials:
     Steel: 350

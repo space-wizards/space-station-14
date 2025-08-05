@@ -1,0 +1,15 @@
+- type: soundCollection
+  id: armor_ricochet
+  files:
+    - /Audio/_Starlight/Armor/Ricochet/ricochet1_1.ogg
+    - /Audio/_Starlight/Armor/Ricochet/ricochet2_2.ogg
+    - /Audio/_Starlight/Armor/Ricochet/ricochet3_3.ogg
+    - /Audio/_Starlight/Armor/Ricochet/ricochet4_4.ogg
+
+- type: soundCollection
+  id: armor_ricochet_cyborg
+  files:
+    - /Audio/_Starlight/Armor/Ricochet/Cyborg/ricochet1b.ogg
+    - /Audio/_Starlight/Armor/Ricochet/Cyborg/ricochet2b.ogg
+    - /Audio/_Starlight/Armor/Ricochet/Cyborg/ricochet3b.ogg
+    - /Audio/_Starlight/Armor/Ricochet/Cyborg/ricochet4b.ogg

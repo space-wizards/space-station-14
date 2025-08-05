@@ -13,3 +13,13 @@
   id: NanoTrasenRepresentativeJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtNtrep
+
+- type: loadout
+  id: NanoTrasenRepresentativeGlasses
+  equipment:
+    eyes: ClothingEyesSunGlassesHudSkill
+
+- type: loadout
+  id: NanoTrasenRepresentativeHud
+  equipment:
+    eyes: ClothingEyesHudSkills

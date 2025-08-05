@@ -1,73 +1,173 @@
 # ALPHABETIZE
-  
+
 - type: Tag
   id: Arachnid
-  
+
+
+- type: Tag
+  id: Avali
+
+- type: Tag
+  id: AvianFood
+
+- type: Tag
+  id: BladePlasteel
+
+- type: Tag
+  id: BladeSteel
+
 - type: Tag
   id: CantInteract
-  
+
 - type: Tag
   id: CartridgeBattery
-  
+
 - type: Tag
-  id: CartridgePistolSP8
-  
+  id: CartridgePistolDP
+
+- type: Tag
+  id: CartridgePistolImprovised
+
+- type: Tag
+  id: CartridgeMagnumImprovised
+
+- type: Tag
+  id: CartridgeLightRifleImprovised
+
+- type: Tag
+  id: CentcommVibroblade
+
+- type: Tag
+  id: ClownKudzu
+
 - type: Tag
   id: Diona
-  
+
 - type: Tag
   id: DockGamma
-  
+
 - type: Tag
   id: ElderArena
-  
+
+- type: Tag
+  id: EmergencyWelder
+
+- type: Tag
+  id: Felionoid
+
+- type: Tag
+  id: HiltPlasteel
+
+- type: Tag
+  id: HiltWood
+
+- type: Tag
+  id: ImprovisedMultitool
+
+- type: Tag
+  id: ImprovisedWrench
+
+- type: Tag
+  id: ImprovisedWirecutter
+
+- type: Tag
+  id: ImprovisedScrewdriver
+
+- type: Tag
+  id: ImprovisedCrowbar
+
 - type: Tag
   id: LightRifleHeavy
 
 - type: Tag
   id: MagazineBattery
-  
+
 - type: Tag
-  id: MagazinePistolSP8
-  
+  id: MagazineMagnumSubMachineGun
+
+- type: Tag
+  id: MagazinePistolDP
+
+- type: Tag
+  id: MagazinePistolImprovised
+
 - type: Tag
   id: MagazineRifleM52
-  
+
+- type: Tag
+  id: MagazineSMGPPSH
+
 - type: Tag
   id: MagazineSMGUzi
-  
+
+- type: Tag
+  id: MagazineSMGImprovised
+
 - type: Tag
   id: MedCyberEyes
-  
+
+- type: Tag
+  id: MicroManipulatorStockPart
+
+- type: Tag
+  id: ModularBarrel
+
 - type: Tag
   id: OmniCyberEyes
-  
+
+- type: Tag
+  id: OvenMachineBoard
+
+- type: Tag
+  id: StoveMachineBoard
+
+- type: Tag
+  id: Patch
+
+- type: Tag
+  id: PatchPack
+
 - type: Tag
   id: PowerCellTiny
-  
+
+- type: Tag
+  id: PrototypeVibroblade
+
+- type: Tag
+  id: Resomi
+
 - type: Tag
   id: SecCyberEyes
 
 - type: Tag
   id: ShipWreck
-  
+
 - type: Tag
   id: ShowWires
 
 - type: Tag
   id: SovietDungeon
-  
+
+- type: Tag
+  id: SovietWarehouse
+
+- type: Tag
+  id: SwordForged
+
+- type: Tag
+  id: SpeedLoaderMagnumImprovised
+
+- type: Tag
+  id: ShellShotgunImprovised
+
 - type: Tag
   id: SpeedLoaderShotgun
-  
+
 - type: Tag
   id: SyndieDungeon
 
 - type: Tag
-  id: Resomi
-  
+  id: Table
+
 - type: Tag
-  id: Patch
-  
-- type: Tag
-  id: PatchPack
+  id: DockEscape

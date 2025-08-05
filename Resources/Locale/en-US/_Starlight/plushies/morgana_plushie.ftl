@@ -1,0 +1,9 @@
+plushie-morgana-1 = Hey hey!
+plushie-morgana-2 = Kindness is effortless, hatred takes commitment.
+plushie-morgana-3 = We all deserve a second chance.
+plushie-morgana-4 = I believe in ya.
+plushie-morgana-5 = Be kind. Be good. Stay safe.
+plushie-morgana-6 = Lets find ya a home.
+plushie-morgana-7 = Even darkness is our ally.
+plushie-morgana-8 = Our happy little family will stand, together.
+plushie-morgana-9 = Uppies!

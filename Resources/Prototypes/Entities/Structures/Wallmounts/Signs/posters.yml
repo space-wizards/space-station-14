@@ -11,6 +11,15 @@
     snapCardinals: true
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 5
@@ -112,15 +121,6 @@
   components:
   - type: Sprite
     state: poster7_contraband
-
-- type: entity
-  parent: PosterBase
-  id: PosterContrabandGreyTide
-  name: "Grey Tide"
-  description: "A rebellious poster symbolizing passenger solidarity."
-  components:
-  - type: Sprite
-    state: poster8_contraband
 
 - type: entity
   parent: PosterBase
@@ -549,8 +549,8 @@
 - type: entity
   parent: PosterBase
   id: PosterContrabandCybersun600
-  name: "Cybersun: 600 Years Commemorative Poster"
-  description: "An artistic poster commemorating 600 years of continual business for Cybersun Industries."
+  name: "Cybersun: 500 Years Commemorative Poster"
+  description: "An artistic poster commemorating 500 years of continual business for Cybersun Industries."
   components:
     - type: Sprite
       state: poster58_contraband
@@ -599,6 +599,33 @@
   components:
     - type: Sprite
       state: poster63_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandExoAcid
+  name: "Exomorph Warning: Acid Spit!"
+  description: "This poster warns you about an exomorph's acidic spit. Not that such exomorphs are real... Right?"
+  components:
+  - type: Sprite
+    state: poster64_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandExoRun
+  name: "Exomorph Warning: Run Away!"
+  description: "This poster warns you about an athletic exomorph capable of dragging away anyone who gets caught; so don't get caught!"
+  components:
+  - type: Sprite
+    state: poster65_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandExoChomp
+  name: "Exomorph Warning: Dangerous Bites!"
+  description: "This poster warns you about the lethal bites exomorphs can have. Don't become an alien snack!"
+  components:
+  - type: Sprite
+    state: poster66_contraband
 
 # Legit
 - type: entity
@@ -857,7 +884,7 @@
   parent: PosterBase
   id: PosterLegitEnlist
   name: "Enlist"
-  description: "Enlist in the Nanotrasen Deathsquadron reserves today!"
+  description: "Enlist in the NanoTrasen Special Forces today!" #starlight
   components:
   - type: Sprite
     state: poster29_legit
@@ -1078,6 +1105,23 @@
   - type: Sprite
     state: poster53_legit
 
+- type: entity
+  parent: PosterBase
+  id: PosterLegitTyrone
+  name: "Tyrone's Guide to Space"
+  description: "A poster advertising online schooling about space. The classes listed seem to cover things from the basic usage of station equipment to complicated subjects like creating pipebombs or covering entire hallways in spacelube. A disclaimer reads \"It's never THAT bad, and at the end you might even get a tortilla.\""
+  components:
+  - type: Sprite
+    state: poster54_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitHelio
+  name: Helio Logistics ad
+  description: "A poster advertising Helio Logistics and their adorable mascot. The slogan reads 'Come rain or shine, we deliver on time.'"
+  components:
+  - type: Sprite
+    state: poster55_legit
 
 #maps
 

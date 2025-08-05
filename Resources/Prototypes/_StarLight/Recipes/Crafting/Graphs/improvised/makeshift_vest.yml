@@ -1,0 +1,15 @@
+- type: constructionGraph
+  id: ClothingOuterArmorMakeshiftGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: vest
+      steps:
+      - material: Steel
+        amount: 6
+        doAfter: 10
+      - material: Cable
+        amount: 5
+  - node: vest
+    entity: ClothingOuterArmorMakeshift

@@ -7,7 +7,7 @@
     - !type:DepartmentTimeRequirement
       department: Engineering
       time: 54000 # 15 hrs
-  weight: -1
+  weight: 0 # Starlight
   startingGear: AtmosphericTechnicianGear
   icon: "JobIconAtmosphericTechnician"
   supervisors: job-supervisors-ce
@@ -16,6 +16,10 @@
   - Engineering
   - External
   - Atmospherics
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: FirefighterDay
+    prototype: FireAxe
 
 - type: startingGear
   id: AtmosphericTechnicianGear
@@ -27,3 +31,13 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: AtmosphericTechnicianChameleonOutfit
+  job: AtmosphericTechnician
+  equipment:
+    head: ClothingHeadHelmetAtmosFire
+    mask: ClothingMaskGasAtmos
+    neck: ClothingNeckScarfStripedLightBlue
+    outerClothing: ClothingOuterSuitAtmosFire
+    gloves: ClothingHandsGlovesColorYellow

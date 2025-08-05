@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/commit/ab4abf318f293a701754656dd4e9261eb70f8824#diff-9ab5c8a5e47ab7cfaeadd859a23e32b05de1fe839e99ea767fd7e340b6385d67",
+    "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/commit/ab4abf318f293a701754656dd4e9261eb70f8824#diff-9ab5c8a5e47ab7cfaeadd859a23e32b05de1fe839e99ea767fd7e340b6385d67, in-hands modified by SeamLesss (github) from Objects/Misc/qm_clipboard.rsi/inhand-(left/right)",
     "states": [
         {
             "name": "scanner",
@@ -16,6 +16,14 @@
                     0.4
                 ]
             ]
+        },
+        {
+            "name": "scanner-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "scanner-inhand-right",
+            "directions": 4
         },
         {
             "name": "icon",

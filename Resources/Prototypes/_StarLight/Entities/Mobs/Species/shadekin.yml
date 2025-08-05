@@ -1,0 +1,151 @@
+- type: entity
+  save: false
+  name: Urist McShadow
+  parent: [MobBloodstream, MobAtmosStandard, MobFlammable, BaseMobSpecies]
+  id: BaseMobShadekin
+  abstract: true
+  components:
+    - type: Shadekin
+    - type: Absorbable
+    - type: Hunger
+    - type: Thirst
+    - type: HumanoidAppearance
+      species: Shadekin
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Shadekin/parts.rsi
+      state: full
+    - type: Body
+      prototype: Shadekin
+      requiredLegs: 2
+    - type: Speech
+      allowedEmotes: ["Mar", "Wurble", "Hisses", "Growl", "Purr"]
+    - type: Vocal
+      sounds:
+        Male: MaleShadekin
+        Female: FemaleShadekin
+        Unsexed: MaleShadekin
+    - type: MeleeWeapon
+      soundHit:
+        collection: AlienClaw
+      angle: 30
+      animation: WeaponArcClaw
+      damage:
+        types:
+          Slash: 5
+    - type: FlashModifier
+      modifier: 2
+    - type: Damageable
+      damageContainer: Biological
+      damageModifierSet: Shadekin
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
+      reactions:
+        - reagents: [Water, SpaceCleaner]
+          methods: [Touch]
+          effects:
+            - !type:WashCreamPieReaction
+            - !type:Emote
+              emote: Hisses
+              showInChat: false
+    - type: Bloodstream
+      bloodlossDamage:
+        types:
+          Bloodloss: 1
+      bloodlossHealDamage:
+        types:
+          Bloodloss: -0.25
+    - type: Flammable
+      damage:
+        types:
+          Heat: 1.5
+    - type: TypingIndicator
+      proto: alien
+    - type: PassiveDamage
+      allowedStates:
+        - Alive
+      damageCap: 20
+      damage:
+        groups:
+          Brute: -0.07
+          Burn: -0.07
+    - type: Destructible
+      thresholds:
+        - trigger: !type:DamageTypeTrigger
+            damageType: Blunt
+            damage: 400
+          behaviors:
+            - !type:GibBehavior {}
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShadekinShadow:
+                  min: 1
+                  max: 1
+        - trigger: !type:DamageTypeTrigger
+            damageType: Heat
+            damage: 1500
+          behaviors:
+            - !type:SpawnEntitiesBehavior
+              spawnInContainer: true
+              spawn:
+                Ash:
+                  min: 1
+                  max: 1
+                ShadekinShadow:
+                  min: 1
+                  max: 1
+            - !type:BurnBodyBehavior {}
+
+    # BaseMobSpeciesOrganic // Because we dont want respirator to be used.
+    - type: Barotrauma
+      damage:
+        types:
+          Blunt: 0.85 #per second, scales with pressure and other constants.
+          Heat: 0.1
+    - type: Fingerprint
+    - type: Blindable
+    - type: DarkenedVision
+    # Other
+    - type: Temperature
+      heatDamageThreshold: 325
+      coldDamageThreshold: 260
+      currentTemperature: 310.15
+      specificHeat: 42
+      coldDamage:
+        types:
+          Cold: 0.1 #per second, scales with temperature & other constants
+      heatDamage:
+        types:
+          Heat: 1.5 #per second, scales with temperature & other constants
+    - type: TemperatureSpeed
+      thresholds:
+        293: 0.8
+        280: 0.6
+        260: 0.4
+    - type: ThermalRegulator
+      metabolismHeat: 800
+      radiatedHeat: 100
+      implicitHeatRegulation: 500
+      sweatHeatRegulation: 2000
+      shiveringHeatRegulation: 2000
+      normalBodyTemperature: 310.15
+      thermalRegulationTemperatureThreshold: 2
+    - type: Perishable
+    - type: Butcherable
+      butcheringType: Spike # TODO human.
+      spawned:
+        - id: FoodMeat
+          amount: 5
+    - type: FireVisuals
+      alternateState: Standing
+
+- type: entity
+  save: false
+  parent: BaseSpeciesDummy
+  id: MobShadekinDummy
+  categories: [HideSpawnMenu]
+  description: A dummy shadekin meant to be used in character setup.
+  components:
+    - type: HumanoidAppearance
+      species: Shadekin

@@ -57,6 +57,8 @@ admin-smite-ghostkick-name = Ghost Kick
 admin-smite-nyanify-name = Cat Ears
 admin-smite-kill-sign-name = Kill Sign
 admin-smite-pacify-name = Pacify
+admin-smite-omni-accent-name = Omni-Accent
+admin-smite-crawler-name = Crawler
 
 ## Smite descriptions
 
@@ -101,6 +103,8 @@ admin-smite-super-bonk-lite-description= Slams them on every single table on the
 admin-smite-terminate-description = Creates a Terminator ghost role with the sole objective of killing them.
 admin-smite-super-slip-description = Slips them really, really hard.
 admin-smite-pacify-description = Makes the target a pacifist.
+admin-smite-omni-accent-description = Makes the target speak with almost every accent available.
+admin-smite-crawler-description = Makes the target fall down and be unable to stand up. Remove their hands too for added effect!
 
 ## Tricks descriptions
 
@@ -137,3 +141,5 @@ admin-trick-pause-map-description = Pause the selected map. Note this doesn't en
 admin-trick-snap-joints-description = Remove all physics joints from an object. Unfortunately does not snap every bone in their body.
 admin-trick-minigun-fire-description = Makes the targetted gun fire like a minigun (very fast).
 admin-trick-set-bullet-amount-description = Quickly set the amount of unspawned bullets in a gun.
+## 🌟Starlight🌟
+admin-trick-toggle-overlays-description = Toggle all overlays on target.

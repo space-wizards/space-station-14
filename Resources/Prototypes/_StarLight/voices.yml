@@ -1,11 +1,4 @@
 - type: voice
-  id: acorn
-  name: tts-voice-name-acorn
-  sex: Male
-  silicon: false
-  voice: 0
-
-- type: voice
   id: geraltofrivia
   name: tts-voice-name-geraltofrivia
   sex: Male

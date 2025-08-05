@@ -18,9 +18,9 @@
   - type: GhostRole
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-freeagent-rules
+    rules: ghost-role-information-antagonist-rules
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -91,6 +91,12 @@
     - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 43200 # 12h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 21600 # 6h STARLIGHT
   - type: GhostRoleMobSpawner
     prototype: MobHumanNukeOp
   - type: Sprite
@@ -130,6 +136,12 @@
     rules: ghost-role-information-loneop-rules
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 43200 # 12h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 21600 # 6h STARLIGHT
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -148,6 +160,15 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 86400 # 24h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 43200 # 12h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 14400 # 4h STARLIGHT
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -160,6 +181,18 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 43200 # 12h STARLIGHT
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 21600 # 6h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 28800 # 8h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 21600 # 6h STARLIGHT
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -172,6 +205,7 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    #inherits requirments from lone op
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -213,6 +247,26 @@
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
+  id: SpawnPointGhostParadoxClone
+  components:
+  - type: GhostRole
+    name: ghost-role-information-paradox-clone-name
+    description: ghost-role-information-paradox-clone-description
+    rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: default
+  - type: Sprite
+    layers:
+    - sprite: Markers/jobs.rsi
+      state: green
+    - sprite: Mobs/Aliens/paradox_clone.rsi
+      state: preview
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
   id: SpawnPointGhostDerelictCyborg
   components:
   - type: GhostRole
@@ -227,3 +281,27 @@
     - state: green
     - sprite: Mobs/Silicon/chassis.rsi
       state: derelict_icon
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostWizard
+  name: ghost role spawn point
+  suffix: wizard
+  components:
+  - type: GhostRole
+    name: ghost-role-information-wizard-name
+    description: ghost-role-information-wizard-desc
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 90000 # 25h
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Clothing/Head/Hats/wizardhat.rsi
+      state: icon

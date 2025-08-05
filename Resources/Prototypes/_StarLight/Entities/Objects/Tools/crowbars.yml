@@ -1,0 +1,57 @@
+- type: entity
+  name: makeshift crowbar
+  parent: BaseItem
+  id: CrowbarMakeshift
+  description: Barely better than nothing. Could be made into something greater with a welder, though..
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg  
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+    state: base
+  - type: Item
+    sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 8
+  - type: Tool
+    qualities:
+    - Prying
+  - type: ToolTileCompatible
+    delay: 4
+  - type: Prying
+    speedModifier: 0.25
+  - type: ToolRefinable
+    refineResult:
+    - id: CrowbarWrenchMakeshift
+  - type: Construction
+    graph: MakeshiftCrowbarGraph
+    node: tool
+  - type: Tag
+    tags:
+      - Crowbar
+
+- type: entity
+  name: improvised crowbar
+  parent: CrowbarMakeshift
+  id: CrowbarImprovised
+  description: A few pieces of metal welded together and sharpened at the edges. Not the best tool, but it'll do.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_crowbar.rsi
+    state: icon
+  - type: Item
+    sprite: _Starlight/Objects/Tools/improvised_crowbar.rsi
+    storedSprite:
+      sprite: _Starlight/Objects/Tools/improvised_crowbar.rsi
+      state: storage
+  - type: ToolTileCompatible
+    delay: 2
+  - type: Prying
+    speedModifier: 0.50
+  - type: Tag
+    tags:
+      - ImprovisedCrowbar

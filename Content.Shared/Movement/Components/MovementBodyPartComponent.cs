@@ -1,4 +1,6 @@
-using Robust.Shared.GameStates;
+﻿using Robust.Shared.GameStates;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Movement.Components;
 
@@ -13,4 +15,11 @@ public sealed partial class MovementBodyPartComponent : Component
 
     [DataField("acceleration")]
     public float Acceleration = MovementSpeedModifierComponent.DefaultAcceleration;
+
+    // 🌟Starlight🌟 Start
+    /// <summary>
+    /// The density this leg can effectively move, it’s a temporary solution until we implement proper weight calculations for all body parts.
+    /// </summary>
+    [DataField]
+    public float MaxDensity = 92.5f;
 }

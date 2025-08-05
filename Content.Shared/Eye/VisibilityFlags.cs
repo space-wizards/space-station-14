@@ -6,9 +6,11 @@ namespace Content.Shared.Eye
     [FlagsFor(typeof(VisibilityMaskLayer))]
     public enum VisibilityFlags : int
     {
-        None   = 0,
+        None = 0,
         Normal = 1 << 0,
-        Ghost  = 1 << 1,
-        Abductor  = 1 << 2,
+        Ghost = 1 << 1,
+        Abductor = 1 << 2,
+        Subfloor = 1 << 3,
+        NullSpace = 1 << 4, // Starlight
     }
 }

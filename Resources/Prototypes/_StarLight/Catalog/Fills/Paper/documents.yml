@@ -58,7 +58,7 @@
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentInternalAffairsAgentsReport
-  name: Internal Investigation Report
+  name: Internal investigation report
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
@@ -76,7 +76,7 @@
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentObjectInvestigationReport
-  name: Report on object Investigation
+  name: Report on object investigation
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
@@ -100,12 +100,22 @@
     - type: Paper
       content: doc-text-printer-disposal-report
       
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentArrestReport
+  name: Arrest report
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-arrest-report
+
 # Statements
 
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentStatementAppointmentInterimChapter
-  name: Statement of Appointment to the Interim Chapter
+  name: Statement of appointment to the interim chapter
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
@@ -114,7 +124,7 @@
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentEmploymentStatement
-  name: Statement of Employment
+  name: Statement of employment
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
@@ -123,7 +133,7 @@
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentResignationStatement
-  name: Statement of Resignation
+  name: Statement of resignation
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
@@ -257,7 +267,24 @@
     - type: Paper
       content: doc-text-printer-request-modernization
       
-# Complaintst
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestERT
+  name: Request for ERT
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-request-ert
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentProductOrder
+  name: Product order
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-product-order
+# Complaints
 
 - type: entity
   parent: PrintedDocument
@@ -286,16 +313,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
-      content: doc-text-printer-permission-equipment
-      
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentPermissionToTravelInCaseOfThreat
-  name: Permission to travel in case of threat
-  categories: [ HideSpawnMenu ]
-  components:
-    - type: Paper
-      content: doc-text-printer-permission-to-travel-in-case-of-threat
+      content: doc-text-printer-permission-equipment    
       
 - type: entity
   parent: PrintedDocument
@@ -317,15 +335,6 @@
       
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentPrescriptionDrugAuthorization
-  name: Prescription Drug Authorization
-  categories: [ HideSpawnMenu ]
-  components:
-    - type: Paper
-      content: doc-text-printer-prescription-drug-authorization
-      
-- type: entity
-  parent: PrintedDocument
   id: PrintedDocumentPermissionDisposeBody
   name: Authorization to dispose of the body
   categories: [ HideSpawnMenu ]
@@ -341,6 +350,15 @@
   components:
     - type: Paper
       content: doc-text-printer-construction-permit
+     
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentSurgeryConsentPermit
+  name: Surgery consent permit
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-surgery-consent-permit
       
 # OrdersAndInstructions
 
@@ -398,13 +416,21 @@
     - type: Paper
       content: doc-text-printer-medical-intervention-order
 
-# Orders
-
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentProductOrder
-  name: Product order
+  id: PrintedDocumentExecutionDNROrder
+  name: Execution & DNR order
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
-      content: doc-text-printer-product-order
+      content: doc-text-printer-execution-dnr-order
+
+- type: entity
+  id: BoxFolderClipboardFilled
+  suffix: Filled
+  parent: BoxFolderClipboard
+  components:
+  - type: StorageFill
+    contents:
+      - id: Paper
+        amount: 24

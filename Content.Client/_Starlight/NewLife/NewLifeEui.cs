@@ -27,12 +27,6 @@ public sealed class NewLifeEui : BaseEui
     public NewLifeEui()
     {
         _window = new NewLifeWindow(_preferencesManager);
-
-        _window.SelectCharacter += slot =>
-        {
-            _preferencesManager.SelectCharacter(slot);
-            _window.ReloadCharacterPickers();
-        };
     }
 
     public override void Opened()
@@ -53,6 +47,6 @@ public sealed class NewLifeEui : BaseEui
 
         if (state is not NewLifeEuiState newLifeEuiState)
             return;
-        _window.ReloadCharacterPickers(newLifeEuiState.UsedSlots);
+        _window.ReloadUI(newLifeEuiState.UsedSlots, newLifeEuiState.RemainingLives, newLifeEuiState.MaxLives);
     }
 }

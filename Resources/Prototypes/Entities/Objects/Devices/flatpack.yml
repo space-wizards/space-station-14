@@ -83,8 +83,8 @@
     - state: singularity-generator
   - type: GuideHelp
     guides:
-      - SingularityEngine
-      - Power
+    - SingularityEngine
+    - Power
 
 - type: entity
   parent: BaseFlatpack
@@ -231,6 +231,7 @@
     layers:
     - state: fax-machine
   - type: Flatpack
+    allowUnpackOnTables: true
     entity: FaxMachineBase
 
 - type: entity
@@ -250,3 +251,44 @@
   components:
   - type: Flatpack
     entity: ComputerCrewMonitoring
+
+- type: entity
+  parent: BaseFlatpack
+  id: MicrowaveFlatpack
+  name: microwave flatpack
+  description: A flatpack used for constructing a microwave.
+  components:
+  - type: Sprite
+    layers:
+    - state: microwave
+  - type: Flatpack
+    allowUnpackOnTables: true
+    entity: KitchenMicrowave
+    
+- type: entity
+  parent: BaseFlatpack
+  id: SyndicateMicrowaveFlatpack
+  name: microwave flatpack
+  description: A flatpack used for constructing a microwave.
+  components:
+  - type: Sprite
+    layers:
+    - state: microwave
+  - type: Flatpack
+    allowUnpackOnTables: true
+
+- type: entity
+  parent: BaseFlatpack
+  id: HydroponicsTrayFlatpack
+  name: hydroponics tray flatpack
+  description: A flatpack used for constructing a hydroponics tray.
+  components:
+  - type: Flatpack
+    entity: hydroponicsTray
+  - type: Sprite
+    layers:
+    - state: hydroponics-tray
+  - type: GuideHelp
+    guides:
+    - Botany
+    - Chemicals

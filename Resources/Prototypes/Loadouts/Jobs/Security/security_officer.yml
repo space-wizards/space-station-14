@@ -30,6 +30,21 @@
     head: ClothingHeadHelmetBasic
 
 - type: loadout
+  id: SecurityHelmetPlate
+  equipment:
+    head: ClothingHeadHelmetPlate
+
+- type: loadout
+  id: SecurityHelmetStabproof
+  equipment:
+    head: ClothingHeadHelmetStabproof
+
+- type: loadout
+  id: SecurityHelmetHeatAbsorbent
+  equipment:
+    head: ClothingHeadHelmetHeatAbsorbent
+
+- type: loadout
   id: SecurityHat
   equipment:
     head: ClothingHeadHatSecsoft
@@ -125,6 +140,21 @@
     outerClothing: ClothingOuterArmorBasicSlim
 
 - type: loadout
+  id: ArmorVestPlate
+  equipment:
+    outerClothing: ClothingOuterArmorPlate
+
+- type: loadout
+  id: ArmorVestStab
+  equipment:
+    outerClothing: ClothingOuterArmorStab
+
+- type: loadout
+  id: ArmorVestHeatAbsorb
+  equipment:
+    outerClothing: ClothingOuterArmorHeatAbsorb
+
+- type: loadout
   id: SecurityOfficerWintercoat
   equipment:
     outerClothing: ClothingOuterWinterSec
@@ -170,11 +200,11 @@
     - Dinkystar
 
 - type: loadout
-  id: SecurityDominator
+  id: SecurityGlasses
   equipment:
-    pocket1: WeaponDominator
-    
+    eyes: ClothingEyesGlassesSecurity
+
 - type: loadout
-  id: SecurityTaser
+  id: SecurityHud
   equipment:
-    pocket1: WeaponAdvancedTaser
+    eyes: ClothingEyesHudSecurity

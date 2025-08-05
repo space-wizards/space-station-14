@@ -16,8 +16,10 @@ reagent-desc-robust-harvest = A highly effective fertilizer with a limited poten
 reagent-name-weed-killer = weed killer
 reagent-desc-weed-killer = A mixture that targets weeds. Very effective against kudzu. While useful it slowly poisons plants with toxins, be careful when using it.
 
+# Starlight Start
 reagent-name-ammonia = ammonia
-reagent-desc-ammonia = An effective fertilizer, it gives your plants some nutrients.
+reagent-desc-ammonia = An effective fertilizer, it gives your plants some nutrients. Mildy effective at treating airloss in Avali.
+# Starlight End
 
 reagent-name-diethylamine = diethylamine
 reagent-desc-diethylamine = A very potent fertilizer, treats plants with nutrients, eliminates pests, and sometimes it can even speed up growth.

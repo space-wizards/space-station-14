@@ -18,7 +18,7 @@ This is a mostly arbitrary choice. You can safely leave this on "None" and you w
 ## Jobs
 You can set your job preferences in the lobby. While these don't [color=#a4885c]guarantee[/color] your position, someone who wants the job will be [color=#a4885c]randomly[/color] selected at the start of the round.
 You are given a chance at being chosen for your high priority job first, then your medium priorities, then your low priorities.
-You also given an option to automatically be a passenger or to be sent back to the lobby if you don't get chosen for any of your preferred jobs.
+You also given an option to automatically be a assistant or to be sent back to the lobby if you don't get chosen for any of your preferred jobs.
 
 Some jobs are locked until you've played long enough as other entry level jobs.
 
@@ -44,7 +44,7 @@ Plenty of people patiently wait for their turn to be antagonists, so [color=#a48
 Speech traits alter your speech, sometimes to an extreme degree.
 
 They include:
-- Accentless (disables the accent of your selected species)
+- No native accent (disables the accent of your selected species) <!-- 🌟Starlight🌟 -->
 - Cowboy accent (word replacement, partner)
 - Frontal lisp ("s" is replaced with "th")
 - Italian accent (Mamma-mia, word replacement)

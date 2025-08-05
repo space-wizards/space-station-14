@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Numerics;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 using Content.Client.Animations;
 using Content.Client.DisplacementMap;
 using Content.Client.Gameplay;
@@ -11,7 +8,6 @@ using Content.Shared._Starlight.Effects;
 using Content.Shared._Starlight.Weapon.Components;
 using Content.Shared.Camera;
 using Content.Shared.CombatMode;
-using Content.Shared.DisplacementMap;
 using Content.Shared.Mech.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -31,19 +27,14 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using static Content.Shared.Fax.AdminFaxEuiMsg;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
-using Content.Shared.Pinpointer;
 using Robust.Shared.Configuration;
 using Content.Shared.Starlight.CCVar;
-using Content.Shared.Starlight.TextToSpeech;
-using Robust.Shared.ContentPack;
-using Robust.Shared.Log;
-using System.Linq;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
+// There’ve been so many radical changes here that you can basically consider the entire file as being under the Starlight folder now.
 public sealed partial class GunSystem : SharedGunSystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -57,10 +48,11 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly DisplacementMapSystem _displacement = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
-    [ValidatePrototypeId<EntityPrototype>]
-    public const string HitscanProto = "HitscanEffect";
+    public static readonly EntProtoId HitscanProto = "HitscanEffect";
     public const string ImpactProto = "ImpactEffect";
     private DisplacementEffect _displacementEffect = null!;
     private bool _tracesEnabled = true;
@@ -179,7 +171,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (!TryComp<SpriteComponent>(target, out var sprite))
             return;
 
-        if (Deleted(coords.EntityId))
+        if (!TryComp(coords.EntityId, out TransformComponent? relativeXform))
             return;
 
         if (!sprite!.AllLayers.TryFirstOrDefault(x => (x.ActualRsi ?? x.Rsi) != null && x.RsiState != null, out var layer))
@@ -190,38 +182,44 @@ public sealed partial class GunSystem : SharedGunSystem
 
         var ent = Spawn(ImpactProto, coords);
         var spriteComp = Comp<SpriteComponent>(ent);
+
         var xform = Transform(ent);
-        xform.LocalRotation = angle;
-        spriteComp.LayerSetRSI("unshaded", (layer!.ActualRsi ?? layer.Rsi)!);
-        spriteComp.LayerSetState("unshaded", layer.RsiState);
+        var targetWorldRot = angle + _xform.GetWorldRotation(relativeXform);
+        var delta = targetWorldRot - _xform.GetWorldRotation(xform);
+        _xform.SetLocalRotationNoLerp(ent, xform.LocalRotation + delta, xform);
+
+        _sprite.LayerSetRsi((ent, spriteComp), "unshaded", (layer!.ActualRsi ?? layer.Rsi)!);
+        _sprite.LayerSetRsiState((ent, spriteComp), "unshaded", layer.RsiState);
         spriteComp["unshaded"].Visible = true;
-        _displacement.TryAddDisplacement(_displacementEffect.Displacement, spriteComp, 0, "unshaded", new HashSet<string>());
+        _displacement.TryAddDisplacement(_displacementEffect.Displacement, (ent, spriteComp), 0, "unshaded", out _);
     }
     private void RenderBullet(NetCoordinates coordinates, Angle angle, ExtendedSpriteSpecifier sprite, float distance, float length, float delay)
     {
         if (sprite.Sprite is not SpriteSpecifier.Rsi rsi)
-        {
-            Logger.Warning("Sprite is not Rsi Type");
             return;
-        }
 
         var coords = GetCoordinates(coordinates);
 
-        if (Deleted(coords.EntityId))
+        if (!TryComp(coords.EntityId, out TransformComponent? relativeXform))
             return;
 
         var ent = Spawn(HitscanProto, coords);
         var spriteComp = Comp<SpriteComponent>(ent);
+        var spriteEnt = (ent, spriteComp);
+
         var xform = Transform(ent);
-        xform.LocalRotation = angle;
+        var targetWorldRot = angle + _xform.GetWorldRotation(relativeXform);
+        var delta = targetWorldRot - _xform.GetWorldRotation(xform);
+        _xform.SetLocalRotationNoLerp(ent, xform.LocalRotation + delta, xform);
+
         spriteComp[EffectLayers.Unshaded].AutoAnimated = false;
-        spriteComp.LayerSetSprite(EffectLayers.Unshaded, rsi);
-        spriteComp.LayerSetState(EffectLayers.Unshaded, rsi.RsiState);
-        spriteComp.Offset = new Vector2(1f, 0f);
-        spriteComp.Rotation = 1.5708f;
         spriteComp[EffectLayers.Unshaded].Visible = true;
-        spriteComp.Color = sprite.SpriteColor;
-        spriteComp.Visible = delay == 0;
+        _sprite.LayerSetSprite(spriteEnt, EffectLayers.Unshaded, rsi);
+        _sprite.LayerSetRsiState(spriteEnt, EffectLayers.Unshaded, rsi.RsiState);
+        _sprite.SetOffset(spriteEnt, new Vector2(1f, 0f));
+        _sprite.SetRotation(spriteEnt, 1.5708f);
+        _sprite.SetColor(spriteEnt, sprite.SpriteColor);
+        _sprite.SetVisible(spriteEnt, delay == 0);
 
         var time = delay + length;
 
@@ -232,13 +230,13 @@ public sealed partial class GunSystem : SharedGunSystem
             Timer.Spawn((int)delay, () =>
             {
                 if (TryComp(ent, out spriteComp))
-                    spriteComp.Visible = true;
+                    _sprite.SetVisible((ent, spriteComp), true);
             });
 
         Timer.Spawn((int)time, () =>
         {
             if (TryComp(ent, out spriteComp))
-                spriteComp.Visible = false;
+                _sprite.SetVisible((ent, spriteComp), false);
         });
 
         var anim = new Animation()
@@ -273,23 +271,28 @@ public sealed partial class GunSystem : SharedGunSystem
 
         var coords = GetCoordinates(coordinates);
 
-        if (Deleted(coords.EntityId))
+        if (!TryComp(coords.EntityId, out TransformComponent? relativeXform))
             return;
 
         var ent = Spawn(HitscanProto, coords);
         var spriteComp = Comp<SpriteComponent>(ent);
+        var spriteEnt = (ent, spriteComp);
+
         var xform = Transform(ent);
-        xform.LocalRotation = angle;
+        var targetWorldRot = angle + _xform.GetWorldRotation(relativeXform);
+        var delta = targetWorldRot - _xform.GetWorldRotation(xform);
+        _xform.SetLocalRotationNoLerp(ent, xform.LocalRotation + delta, xform);
+
         spriteComp[EffectLayers.Unshaded].AutoAnimated = false;
-        spriteComp.LayerSetSprite(EffectLayers.Unshaded, rsi);
-        spriteComp.LayerSetState(EffectLayers.Unshaded, rsi.RsiState);
+        _sprite.LayerSetSprite(spriteEnt, EffectLayers.Unshaded, rsi);
+        _sprite.LayerSetRsiState(spriteEnt, EffectLayers.Unshaded, rsi.RsiState);
         if (travel)
         {
-            spriteComp.Scale = new Vector2(0.05f, 0.5f);
-            spriteComp.Offset = new Vector2(distance * -0.5f, 0f);
+            _sprite.SetScale(spriteEnt, new Vector2(0.05f, 0.5f));
+            _sprite.SetOffset(spriteEnt, new Vector2(distance * -0.5f, 0f));
         }
         else
-            spriteComp.Scale = new Vector2(1f, 0.5f);
+            _sprite.SetScale(spriteEnt, new Vector2(1f, 0.5f));
 
         spriteComp[EffectLayers.Unshaded].Visible = true;
 
@@ -302,7 +305,7 @@ public sealed partial class GunSystem : SharedGunSystem
         Timer.Spawn((int)time, () =>
         {
             if (!Deleted(ent))
-                spriteComp.Visible = false;
+                _sprite.SetVisible(spriteEnt, false);
         });
 
         var anim = new Animation()
@@ -381,7 +384,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down && !gun.BurstActivated)
         {
             if (gun.ShotCounter != 0)
-                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
+                RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
             return;
         }
 
@@ -393,7 +396,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (mousePos.MapId == MapId.Nullspace)
         {
             if (gun.ShotCounter != 0)
-                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
+                RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
 
             return;
         }
@@ -407,7 +410,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         Log.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
-        EntityManager.RaisePredictiveEvent(new RequestShootEvent
+        RaisePredictiveEvent(new RequestShootEvent
         {
             Target = target,
             Coordinates = GetNetCoordinates(coordinates),
@@ -583,7 +586,7 @@ public sealed partial class GunSystem : SharedGunSystem
         _animPlayer.Play(ent, anim, "muzzle-flash");
         if (!TryComp(gunUid, out PointLightComponent? light))
         {
-            light = (PointLightComponent)_factory.GetComponent(typeof(PointLightComponent));
+            light = Factory.GetComponent<PointLightComponent>();
             light.NetSyncEnabled = false;
             AddComp(gunUid, light);
         }

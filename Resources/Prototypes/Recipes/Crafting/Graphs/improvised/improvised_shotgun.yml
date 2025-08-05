@@ -6,21 +6,21 @@
     edges:
     - to: shotgun
       steps:
-      - tag: Pipe
+      - tag: ModularBarrel #Starlight
         icon:
-          sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeStraight
-        name: pipe
+          sprite: _Starlight/Objects/Misc/modular_barrel.rsi
+          state: icon
+        name: crafting-menu-name-MB
       - tag: ModularReceiver
         icon:
           sprite: Objects/Misc/modular_receiver.rsi
           state: icon
-        name: modular receiver
+        name: construction-graph-tag-modular-receiver
       - tag: RifleStock
         icon:
           sprite: Objects/Misc/rifle_stock.rsi
           state: icon
-        name: rifle stock
+        name: construction-graph-tag-rifle-stock
       - material: Cloth
         amount: 3
         doAfter: 10

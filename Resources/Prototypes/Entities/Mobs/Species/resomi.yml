@@ -1,11 +1,12 @@
 - type: entity
   name: Urist McRaptor
-  parent: BaseMobSpeciesOrganic
+  parent: [BaseMobSpeciesOrganic, BaseSpeciesPickupable]
   id: BaseMobResomi
   abstract: true
   components:
   - type: Absorbable
-  - type: ResomiSkill
+  - type: Jump
+    action: JumpResomi
   - type: DamageVisuals
     thresholds: [ 10, 30, 50, 70]
     targetLayers:
@@ -31,6 +32,18 @@
     alternateState: Resomi_burning
   - type: HumanoidAppearance
     species: Resomi
+  - type: Fixtures
+    fixtures: 
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 100
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Hunger
   - type: Puller
     needsHands: false
@@ -48,8 +61,8 @@
       170: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      40: 0.7 
-      55: 0.5
+      51: 0.7  #Basicly 60% and 80% 
+      68: 0.5
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
@@ -59,7 +72,7 @@
       types:
         Slash: 5
   - type: Temperature
-    heatDamageThreshold: 315
+    heatDamageThreshold: 317
     coldDamageThreshold: 230
     currentTemperature: 310.15
     specificHeat: 42
@@ -127,6 +140,11 @@
         sizeMaps:
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
+            state: outerClothing
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
             state: suitStorage
       belt:
         sizeMaps:
@@ -183,6 +201,11 @@
         sizeMaps:
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
+            state: outerClothing
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
             state: suitStorage
       belt:
         sizeMaps:
@@ -194,6 +217,9 @@
       Male: UnisexResomi
       Female: UnisexResomi
       Unsexed: UnisexResomi
+  - type: Speech
+    speechVerb: Resomi
+    allowedEmotes: ['Chirp', 'Hisses', 'Purr', 'Growl']
   - type: Tag
     tags:
     - CanPilot
@@ -261,6 +287,11 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: mask
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
+            state: outerClothing
       suitstorage:
         sizeMaps:
           32:
@@ -317,6 +348,11 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: mask
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
+            state: outerClothing
       suitstorage:
         sizeMaps:
           32:

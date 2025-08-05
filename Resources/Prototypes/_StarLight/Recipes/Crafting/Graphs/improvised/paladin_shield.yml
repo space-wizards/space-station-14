@@ -1,0 +1,22 @@
+- type: constructionGraph
+  id: PaladinShieldGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: shield
+      steps:
+      - material: MetalRod
+        amount: 8
+      - material: Steel
+        amount: 10
+        doAfter: 15
+      - material: Plasteel
+        amount: 8
+        doAfter: 15
+      - material: Plastic
+        amount: 4
+      - material: Cloth
+        amount: 5
+  - node: shield
+    entity: UnfinishedPaladinShield

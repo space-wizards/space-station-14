@@ -1,0 +1,127 @@
+- type: entity
+  parent: BaseItem
+  id: UnfinishedForgedShotgun
+  name: assembled forged shotgun
+  description: Just needs the welding to keep everything in place.
+  components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
+    state: ishotgunstep2
+  - type: ToolRefinable
+    refineResult:
+    - id: WeaponShotgunForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedShotgunGraph
+    node: shotgun
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedPistolForged
+  name: forged pistol parts
+  description: Some assembly may be reqiured. Needs welding.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/forged_pistol.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: WeaponPistolForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedPistolGraph
+    node: shotgun
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedRevolverForged
+  name: forged revolver parts
+  description: Some assembly may be reqiured. Needs welding.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/forged_revolver.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: WeaponRevolverForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedRevolverGraph
+    node: shotgun
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedSubMachineGunForged
+  name: forged SMG parts
+  description: Some assembly may be reqiured. Needs welding.
+  components:
+  - type: Item
+    size: Large
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/SMGs/forged_smg.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: WeaponSubMachineGunForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedSMGGraph
+    node: shotgun
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedSniperForged
+  name: forged sniper parts
+  description: Some assembly may be reqiured. Needs welding.
+  components:
+  - type: Item
+    size: Large
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Snipers/forged_rifle.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: WeaponSniperForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedSniperGraph
+    node: shotgun
+
+- type: entity
+  parent: BaseItem
+  id: ModularBarrel
+  name: modular barrel
+  description: A vital component in guncrafting.
+  components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/modular_barrel.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - Metal
+    - ModularBarrel
+  - type: Construction
+    graph: ModularBarrelGraph
+    node: shotgun

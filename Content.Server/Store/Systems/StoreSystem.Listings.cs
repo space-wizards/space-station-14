@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
@@ -36,6 +37,10 @@ public sealed partial class StoreSystem
         }
 
         component.FullListingsCatalog = newState;
+        
+        // STARLIGHT: Check if a rift has been destroyed and update the listing accordingly
+        // This ensures the rift listing remains unavailable even after reopening the uplink
+        _revSupplyRift.CheckRiftDestroyedAndUpdateListing(component);
     }
 
     /// <summary>
@@ -115,26 +120,71 @@ public sealed partial class StoreSystem
             if (!ListingHasCategory(listing, categories))
                 continue;
 
+            // Starlight Start: Reset the unavailable flag before checking conditions
+            listing.Unavailable = false;
+
             if (listing.Conditions != null)
             {
-                var args = new ListingConditionArgs(buyer, storeEntity, listing, EntityManager);
-                var conditionsMet = true;
-
+                var args = new ListingConditionArgs(GetBuyerMind(buyer), storeEntity, listing, EntityManager);
+                bool hasStockLimitedCondition = false;
+                bool allConditionsMet = true;
+                
+                // First pass: check if this listing has a StockLimitedListingCondition
+                foreach (var condition in listing.Conditions)
+                {
+                    if (condition is Content.Shared.Store.Conditions.StockLimitedListingCondition)
+                    {
+                        hasStockLimitedCondition = true;
+                        break;
+                    }
+                }
+                
+                // Second pass: check all conditions
                 foreach (var condition in listing.Conditions)
                 {
                     if (!condition.Condition(args))
                     {
-                        conditionsMet = false;
-                        break;
+                        // If this is a StockLimitedListingCondition, we want to show the item but mark it as unavailable
+                        if (condition is Content.Shared.Store.Conditions.StockLimitedListingCondition)
+                        {
+                            listing.Unavailable = true;
+                        }
+                        else if (!hasStockLimitedCondition)
+                        {
+                            // For other conditions, if they return false and this isn't a stock-limited item,
+                            // we skip this listing entirely
+                            allConditionsMet = false;
+                            break;
+                        }
                     }
                 }
-
-                if (!conditionsMet)
-                    continue;
+                
+                // Skip this listing if conditions aren't met and it's not a stock-limited item
+                if (!allConditionsMet && !hasStockLimitedCondition)
+                {
+                    goto NextListing;
+                }
             }
 
             yield return listing;
+            
+            NextListing:
+            continue;
+            // Starlight End
         }
+    }
+
+    /// <summary>
+    /// Returns the entity's mind entity, if it has one, to be used for listing conditions.
+    /// If it doesn't have one, or is a mind entity already, it returns itself.
+    /// </summary>
+    /// <param name="buyer">The buying entity.</param>
+    public EntityUid GetBuyerMind(EntityUid buyer)
+    {
+        if (!HasComp<MindComponent>(buyer) && _mind.TryGetMind(buyer, out var buyerMind, out var _))
+            return buyerMind;
+
+        return buyer;
     }
 
     /// <summary>

@@ -6,10 +6,16 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 62000 # 20 hrs
+      time: 72000 # 20 hrs
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 62000 # 20 hrs
+      time: 72000 # 20 hrs
+    - !type:AnyFlagsRequirement
+      flags:
+      - Staff
+      - Mentor
+      - ExtRoles
+      - Retiree
   startingGear: BlueShieldGear
   icon: JobIconBlueShield
   supervisors: job-supervisors-centcom
@@ -45,15 +51,14 @@
   id: BlueShieldGear
   equipment:
     shoes: ClothingShoesBootsCombatFilled
-    eyes: ClothingEyesGlassesBlueShield
     head: ClothingHeadHatBeretBlueShield
-    outerClothing: ClothingOuterArmorBlueShield
     id: BlueShieldPDA
-    ears: ClothingHeadsetAltCommand
+    ears: ClothingHeadsetAltBSO # Starlight
     belt: ClothingBeltBlueShieldWebbingFilled
     gloves: ClothingHandsGlovesCombat
+    pocket1: WeaponMultiphaseGun
+    pocket2: HandheldBSOCrewMonitor
   storage:
     back:
-    - WeaponMultiphaseGun
     - Flash
     - ClothingMaskGasBSO

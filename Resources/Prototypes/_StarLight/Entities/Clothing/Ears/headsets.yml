@@ -1,7 +1,7 @@
 - type: entity
-  parent: ClothingHeadset
+  parent: [ ClothingHeadset, BaseLawContraband ]
   id: ClothingHeadsetIAA
-  name: iaa headset
+  name: Internal Affairs Agent Headset
   description: A headset for internal affairs agent to hear the captain's last words.
   components:
     - type: ContainerFill
@@ -14,9 +14,9 @@
       sprite: Clothing/Ears/Headsets/servicesecurity.rsi
       
 - type: entity
-  parent: ClothingHeadset
+  parent: [ ClothingHeadset, BaseLawContraband ]
   id: ClothingHeadsetMagistrate
-  name: magistrate headset
+  name: Magistrate headset
   description: A headset for internal affairs agent to hear the captain's last words.
   components:
     - type: ContainerFill
@@ -28,3 +28,52 @@
         - EncryptionKeyCommand
     - type: Sprite
       sprite: Clothing/Ears/Headsets/servicesecurity.rsi
+
+- type: entity
+  parent: [ ClothingHeadset, BaseMajorContraband ]
+  id: ClothingHeadsetAssistantNinja
+  name: stolen headset
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/service.rsi
+  - type: RadioChime
+    sound:
+      path: /Audio/_Starlight/Effects/Radio/ninja.ogg
+
+- type: entity
+  parent: [ ClothingHeadset, BaseSecurityContraband ]
+  id: ClothingHeadsetSecurityWarden
+  name: warden's headset
+  description: This is used by your elite warden.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/security.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/security.rsi
+  - type: RadioChime
+    sound:
+      path: /Audio/_Starlight/Effects/Radio/warden.ogg
+
+- type: entity
+  parent: [ ClothingHeadsetAlt, BaseSovietContraband ]
+  id: ClothingHeadsetAltSoviet
+  name: SSF marine over-ear headset
+  description: Priyom.
+  components:
+  - type: Headset
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySoviet
+  - type: Sprite
+    sprite: _Starlight/Clothing/Ears/Headsets/soviet_headset.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Ears/Headsets/soviet_headset.rsi
+  - type: RadioChime
+    sound:
+      path: /Audio/_Starlight/Effects/Radio/soviet.ogg

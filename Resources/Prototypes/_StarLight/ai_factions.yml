@@ -1,49 +1,158 @@
 - type: npcFaction
   id: Abyss
   hostile:
-  - DungeonSoviet
-  - DungeonSyndicate
-  - Dragon
-  - NanoTrasen
-  - Mouse
-  - PetsNT
-  - SimpleHostile
-  - Syndicate
-  - Xeno
-  - Zombie
-  - Revolutionary
-  - Vampire
-  - Changeling
-  - AllHostile
+    - DungeonSoviet
+    - DungeonSyndicate
+    - Dragon
+    - NanoTrasen
+    - NanoTrasenSilicon
+    - Mouse
+    - PetsNT
+    - SimpleHostile
+    - Syndicate
+    - SyndicateSilicon
+    - Xeno
+    - Zombie
+    - Revolutionary
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Gorilla
+    - Abductor
 
 - type: npcFaction
   id: DungeonSoviet
   hostile:
-  - NanoTrasen
-  - SimpleHostile
-  - Xeno
-  - PetsNT
-  - Syndicate
-  - DungeonSyndicate
-  - Zombie
-  - Revolutionary
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
+    - NanoTrasen
+    - NanoTrasenSilicon
+    - SimpleHostile
+    - Xeno
+    - PetsNT
+    - Syndicate
+    - SyndicateSilicon
+    - DungeonSyndicate
+    - Zombie
+    - Revolutionary
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Gorilla
+    - Abductor
 
 - type: npcFaction
   id: DungeonSyndicate
   hostile:
-  - NanoTrasen
+    - NanoTrasen
+    - NanoTrasenSilicon
+    - SimpleHostile
+    - Xeno
+    - PetsNT
+    - Syndicate
+    - SyndicateSilicon
+    - DungeonSoviet
+    - Zombie
+    - Revolutionary
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Gorilla
+    - Abductor
+
+- type: npcFaction
+  id: Gorilla
+  hostile:
+    - NanoTrasen
+    - NanoTrasenSilicon
+    - Dragon
+    - PetsNT
+    - SimpleHostile
+    - Syndicate
+    - SyndicateSilicon
+    - Xeno
+    - Zombie
+    - Revolutionary
+    - HonkNeutral
+    - HonkHostile
+    - Vampire
+    - Changeling
+    - Wizard
+    - Abyss
+    - DungeonSoviet
+    - DungeonSyndicate
+    - Abductor
+
+- type: npcFaction
+  id: NanoTrasenSilicon # purely making this so zombies STOP ATTACKING FUCKING SILICONS
+  hostile:
   - SimpleHostile
-  - Xeno
-  - PetsNT
   - Syndicate
+  - SyndicateSilicon
+  - DungeonSyndicate
   - DungeonSoviet
+  - Xeno
+  - Revolutionary
+  - Abyss
+  - Vampire
+  - Changeling
+  - AllHostile
+  - Wizard
+  - Xenoborg
+  - Dragon
+  - Gorilla
+  - Abductor
+
+- type: npcFaction
+  id: SyndicateSilicon # Again, zombies fuck you.
+  hostile:
+    - NanoTrasen
+    - NanoTrasenSilicon
+    - SimpleHostile
+    - Xeno
+    - PetsNT
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Wizard
+    - Xenoborg
+    - Dragon
+    - Gorilla
+    - Abductor
+
+- type: npcFaction
+  id: Abductor
+  hostile: # SimpleHostile with additions so that it gets attacked by mobs
+  - NanoTrasen
+  - NanoTrasenSilicon # starlight
+  - Syndicate
+  - SyndicateSilicon # starlight
+  - DungeonSyndicate
+  - DungeonSoviet
+  - Passive
+  - PetsNT
   - Zombie
   - Revolutionary
   - Abyss
   - Vampire
   - Changeling
   - AllHostile
+  - Wizard
+  - Xenoborg
+  - Dragon
+  - Xeno
+  - Gorilla
+  # New
+  - Dragon
+  - SimpleHostile
+
+- type: npcFaction
+  id: PointDefenseTarget
+
+- type: npcFaction
+  id: PointDefenseWeapon
+  hostile:
+  - PointDefenseTarget

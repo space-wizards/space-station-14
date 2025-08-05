@@ -1,0 +1,12 @@
+- type: entity
+  name: kasane teto night bag
+  parent: ClothingBackpackDuffel
+  id: TP14BoxDarkPerformer
+  description: Darkness is this one's friend on the stage.
+  components:
+  - type: StorageFill
+    contents:
+      - id: TP14ClothingShoesBootsDarkPerformer
+      - id: TP14ClothingUniformJumpskirtDarkPerformer
+      - id: ClothingHeadHatHairflower
+      - id: FoodBreadBaguette

@@ -3,6 +3,7 @@
   files:
     - /Audio/Lobby/thunderdome.ogg
     - /Audio/Lobby/space_asshole.ogg
+    # - /Audio/Lobby/the_wizard.ogg Starlight-edit: does not fall under the definition of "suitable" music
     - /Audio/Lobby/endless_space.ogg
     - /Audio/Lobby/singuloose.ogg
     - /Audio/Lobby/comet_haley.ogg
@@ -14,3 +15,12 @@
     - /Audio/Lobby/lasers_rip_apart_the_bulkhead.ogg
     - /Audio/Lobby/every_light_is_blinking_at_once.ogg
     - /Audio/Lobby/atomicamnesiammx.ogg
+    - /Audio/Lobby/skubstep.ogg
+    # Starlight
+    - /Audio/_Starlight/Music/Lobby/cosmonaut.ogg
+    - /Audio/_Starlight/Music/Lobby/breacher.ogg
+    - /Audio/_Starlight/Music/Lobby/Resistance.ogg
+    - /Audio/_Starlight/Music/Lobby/echoes-in-the-deep.ogg
+    - /Audio/_Starlight/Music/Lobby/timefracture.ogg
+    - /Audio/_Starlight/Music/Lobby/762_treastise.ogg
+    - /Audio/_Starlight/Music/Lobby/hull_rupture.ogg

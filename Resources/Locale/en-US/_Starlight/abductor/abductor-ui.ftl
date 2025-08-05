@@ -33,6 +33,7 @@ abductors-ui-shop-ClothingHeadHelmetAbductor = Helmet
 abductors-ui-shop-AbductorGizmo = Gizmo
 abductors-ui-shop-AbductorExtractor = Extractor
 abductors-ui-shop-MedkitCombat = Combat medical kit
+abductors-ui-shop-VendingMachineRestockAbductorDispenser = alien dispenser restock
 
 # Ghost role, objectives, etc.
 

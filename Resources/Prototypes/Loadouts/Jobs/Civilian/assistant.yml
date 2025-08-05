@@ -1,0 +1,119 @@
+# Assistants Time
+- type: loadoutEffectGroup
+  id: HonoredAssistant
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 36000 #10 hrs, silly reward for people who play Assistant a lot
+
+# Head of Assistants (for grey mantle)
+- type: loadoutEffectGroup
+  id: MasterGrey
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 72000 #20 hrs, fun mantle for the most experienced assistants
+
+# Mask
+- type: loadout
+  id: AssistantFace
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    mask: ClothingMaskGas
+
+# Jumpsuit
+- type: loadout
+  id: BasicJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAssistant
+
+- type: loadout
+  id: BasicJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtAssistant
+
+- type: loadout
+  id: RainbowJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformColorRainbow
+
+- type: loadout
+  id: RainbowJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorRainbow
+
+- type: loadout
+  id: AncientJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAncient
+
+# Neck
+- type: loadout
+  id: Mantle
+  equipment:
+    neck: ClothingNeckMantle
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+
+- type: startingGear
+  id: Mantle
+  equipment:
+    neck: ClothingNeckMantle
+
+# Back
+- type: loadout
+  id: CommonBackpack
+  equipment:
+    back: ClothingBackpack
+
+- type: loadout
+  id: CommonSatchel
+  equipment:
+    back: ClothingBackpackSatchel
+
+- type: loadout
+  id: CommonDuffel
+  equipment:
+    back: ClothingBackpackDuffel
+
+# Gloves
+- type: loadout
+  id: AssistantGloves
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    gloves: ClothingHandsGlovesFingerlessInsulated
+
+# Outerclothing
+- type: loadout
+  id: AssistantWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterCoat
+
+# Feet
+- type: loadout
+  id: BlackShoes
+  equipment:
+    shoes: ClothingShoesColorBlack
+
+- type: loadout
+  id: WinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinter

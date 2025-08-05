@@ -102,6 +102,7 @@
     categories:
     - SLPlushies
     - SLSpecies
+    - SLCrew
 
 - type: entity
   parent: SLVendingMachine
@@ -193,5 +194,31 @@
     - SalvageEquipment
     - SalvageWeapons
     - SalvageConsumeables
+    - SalvageMercenaryEquipment
     currencyWhitelist:
     - SalvageTicket
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineAbductorDispenser
+  name: alien dispenser
+  description: Dispenses something weird.
+  components:
+    - type: VendingMachine
+      pack: AbductorGlandInventory
+      offState: icon
+      brokenState: icon
+      normalState: icon
+      denyState: icon
+      ejectDelay: 2
+      forceRandom: RandomOrganDubious
+    - type: Sprite
+      sprite: _Starlight/Structures/abductor_dispencer.rsi
+      layers:
+      - state: "icon"
+        map: ["enum.VendingMachineVisualLayers.Base"]
+      - state: "unshaded"
+        map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: AbductorDispencer

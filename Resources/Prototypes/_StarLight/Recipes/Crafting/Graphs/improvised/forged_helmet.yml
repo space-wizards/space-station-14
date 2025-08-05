@@ -1,0 +1,21 @@
+- type: constructionGraph
+  id: ClothingHeadHelmetForgedGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: helmet
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 7
+      - material: Plasteel
+        amount: 3
+        doAfter: 8
+      - material: Plastic
+        amount: 2
+      - material: Cloth
+        amount: 4
+        doAfter: 6
+  - node: helmet
+    entity: UnfinishedClothingHeadHelmetForged

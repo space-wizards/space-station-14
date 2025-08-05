@@ -5,7 +5,7 @@
   minPlayers: 35
   maxPlayers: 70
   stations:
-    Marathon:
+    StarlightMarathon:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -56,8 +56,10 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 6, 6 ]
             CargoTechnician: [ 3, 3 ]
+            MailTech: [ 1, 2 ]
+            MiningSpecialist: [ 3, 3 ]
             #civilian
-            Passenger: [ -1, -1 ]
+            Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]

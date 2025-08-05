@@ -122,7 +122,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: PassengerPDA
+      - id: AssistantPDA
         amount: 4
   - type: Sprite
     layers:
@@ -137,7 +137,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: PassengerIDCard
+      - id: AssistantIDCard
         amount: 4
   - type: Sprite
     layers:
@@ -148,11 +148,11 @@
   name: headset box
   parent: BoxCardboard
   id: BoxHeadset
-  description: A box of spare passenger headsets.
+  description: A box of spare assistant headsets.
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadsetGrey
+      - id: ClothingHeadsetAssistant
         amount: 4
   - type: Sprite
     layers:
@@ -188,7 +188,7 @@
       - id: FoodCondimentPacketKetchup
   - type: Sprite
     layers:
-      - state: box_olive
+      - state: box
       - state: writing
 
 - type: entity
@@ -229,6 +229,7 @@
     contents:
       - id: ClothingShoesBootsPerformer
       - id: ClothingUniformJumpskirtPerformer
+      - id: ClothingHeadPerformerWig
       - id: FoodMealMemoryleek
         amount: 2
 
@@ -270,9 +271,9 @@
       - state: trashbag
 
 - type: entity
-  name: passenger encryption key box
+  name: assistant encryption key box
   parent: BoxCardboard
-  id: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeyAssistant
   description: A box of spare encryption keys.
   components:
   - type: StorageFill
@@ -290,7 +291,7 @@
 
 - type: entity
   name: cargo encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: BoxEncryptionKeyAssistant
   id: BoxEncryptionKeyCargo
   components:
   - type: StorageFill
@@ -300,7 +301,7 @@
 
 - type: entity
   name: engineering encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: BoxEncryptionKeyAssistant
   id: BoxEncryptionKeyEngineering
   components:
   - type: StorageFill
@@ -310,7 +311,7 @@
 
 - type: entity
   name: med-sci encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: BoxEncryptionKeyAssistant
   id: BoxEncryptionKeyMedicalScience
   components:
   - type: StorageFill
@@ -320,7 +321,7 @@
 
 - type: entity
   name: medical encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: BoxEncryptionKeyAssistant
   id: BoxEncryptionKeyMedical
   components:
   - type: StorageFill
@@ -330,7 +331,7 @@
 
 - type: entity
   name: robotech encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: BoxEncryptionKeyAssistant
   id: BoxEncryptionKeyRobo
   components:
   - type: StorageFill
@@ -340,7 +341,7 @@
 
 - type: entity
   name: science encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: BoxEncryptionKeyAssistant
   id: BoxEncryptionKeyScience
   components:
   - type: StorageFill
@@ -350,7 +351,7 @@
 
 - type: entity
   name: security encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: BoxEncryptionKeyAssistant
   id: BoxEncryptionKeySecurity
   components:
   - type: StorageFill
@@ -360,7 +361,7 @@
 
 - type: entity
   name: service encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: BoxEncryptionKeyAssistant
   id: BoxEncryptionKeyService
   components:
   - type: StorageFill
@@ -370,7 +371,7 @@
 
 - type: entity
   name: syndicate encryption key box
-  parent: [BoxEncryptionKeyPassenger, BaseSyndicateContraband]
+  parent: [BoxEncryptionKeyAssistant, BaseSyndicateContraband]
   id: BoxEncryptionKeySyndie
   description: Two syndicate encryption keys for the price of one. Miniaturized for ease of use.
   components:
@@ -476,3 +477,20 @@
     contents:
       - id: Envelope
         amount: 9
+
+- type: entity
+  name: utensil box
+  parent: BoxCardboard
+  id: BoxUtensil
+  description: A box filled with forks and spoons.
+  components:
+  - type: Sprite
+    layers:
+      - state: box
+      - state: utensils
+  - type: StorageFill
+    contents:
+      - id: Fork
+        amount: 2
+      - id: Spoon
+        amount: 2

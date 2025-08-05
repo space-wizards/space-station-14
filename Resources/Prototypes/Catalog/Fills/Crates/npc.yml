@@ -133,16 +133,6 @@
         amount: 2
 
 - type: entity
-  id: CrateNPCGorilla
-  parent: CrateLivestock
-  name: gorilla crate
-  description: A crate containing a single gorilla.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MobGorilla
-
-- type: entity
   id: CrateNPCMonkeyCube
   parent: CrateGenericSteel
   name: monkey cube crate

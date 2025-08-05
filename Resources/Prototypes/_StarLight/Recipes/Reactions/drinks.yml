@@ -1,0 +1,13 @@
+- type: reaction
+  id: DraganSpecial
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    BacchusBlessing:
+      amount: 1
+    WhiteRussian:
+      amount: 1
+    AmmoniaBlood:
+      amount: 1
+  products:
+    DraganSpecial: 3

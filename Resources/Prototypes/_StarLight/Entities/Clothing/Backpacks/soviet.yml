@@ -1,0 +1,104 @@
+- type: entity
+  parent: [ClothingBackpackDuffel, BaseSovietContraband]
+  id: ClothingBackpackDuffelSSF
+  name: SSF duffel bag
+  description: Bulky olive-drab bag stamped with a faded SSF insignia.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Duffels/soviet_marine_duffel.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Storage
+    grid:
+    - 0,0,8,4
+
+- type: entity
+  id: ClothingBackpackDuffelSovietEVABundle
+  name: soviet EVA bundle
+  parent: ClothingBackpackDuffelSSF
+  description: Contains a soviet EVA suit and helmet, along with emergency oxygen and nitrogen tanks. For the workers of space!
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSovietEVA
+      - id: ClothingHeadHelmetSovietEVA
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+
+- type: entity
+  id: ClothingBackpackDuffelZaporozhianBundle
+  name: Zaporozhian sich bundle
+  parent: ClothingBackpackDuffelSSF
+  description: Cossacks- have gone to space, and have earned respect within the union.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitCossack
+      - id: ClothingUniformJumpsuitCossack
+      - id: ClothingUniformJumpsuitCossack
+      - id: ClothingHeadHatHetmanHat
+      - id: BladedFlatcapGrey
+      - id: BladedFlatcapBrown
+      - id: ClothingShoesBootsSalvage
+      - id: ClothingShoesBootsSalvage
+      - id: ClothingShoesBootsSalvage
+      - id: HydroponicsToolHatchet
+      - id: HydroponicsToolHatchet
+      - id: WheatBushel
+      - id: WheatBushel
+      - id: MeatwheatBushel
+      - id: MeatwheatBushel
+      - id: ClothingHeadHatStrawHat
+
+- type: entity
+  id: ClothingBackpackDuffelMarineHardsuitBundle
+  name: SSF marine hardsuit bundle
+  parent: ClothingBackpackDuffelSSF
+  description: Contains the USSP's elite marine hardsuit.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSovietMarine
+      - id: ClothingHandsGlovesCombat
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+
+- type: entity
+  id: ClothingBackpackDuffelMarineLoadout
+  name: SSF duffel bag
+  parent: ClothingBackpackDuffelSSF
+  description: Bulky olive-drab bag stamped with a faded SSF insignia.
+  components:
+  - type: StorageFill
+    contents:
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+      - id: BoxMRE
+      - id: FoodTinMRE
+      - id: FoodTinBeans
+      - id: DrinkVodkizineBottleFull
+      - id: WeaponPistolMakarov
+      - id: ToolDebug
+      - id: WelderIndustrial
+      - id: Multitool
+
+- type: entity
+  id: ClothingSatchelLeatherSovietOfficialLoadout
+  name: leather satchel
+  parent: ClothingBackpackSatchelLeather
+  suffix: USSP official
+  description: A trend-setting satchel from a bygone era.
+  components:
+  - type: StorageFill
+    contents:
+      - id: Finka
+      - id: PenExploding
+      - id: BoxFolderBase
+      - id: BoxFolderClipboard
+      - id: BodyBagFolded
+      - id: DrinkVodkizineBottleFull
+      - id: Flash
+      - id: CigarGoldCase
+      - id: FlippoEngravedLighter
+      - id: MagazinePistolSP
+

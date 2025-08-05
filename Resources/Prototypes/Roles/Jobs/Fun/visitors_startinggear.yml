@@ -194,7 +194,7 @@
     neck: ClothingNeckCloakQm
     id: VisitorPDA
     back: ClothingBackpackCargo
-    ears: ClothingHeadsetRD
+    ears: ClothingHeadsetQM
     outerClothing: ClothingOuterWinterQM
     pocket1: WeaponDisabler
     pocket2: AppraisalTool
@@ -351,7 +351,7 @@
     id: VisitorPDA
     belt: ClothingBeltSecurityFilled
     back: ClothingBackpackSatchelSecurity
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetSecurityWarden
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterWinterWarden
     pocket1: WeaponDisabler
@@ -859,7 +859,7 @@
     eyes: ClothingEyesHudMedical
     pocket1: RegenerativeMesh
     pocket2: PillCanisterBicaridine
-  inhand: 
+  inhand:
   - ScalpelAdvanced
   - MedicatedSuture
 
@@ -1888,7 +1888,7 @@
     id: VisitorPDA
     back: ClothingBackpackMerc
     belt: ClothingBeltMercWebbing
-    ears: ClothingHeadsetGrey
+    ears: ClothingHeadsetAssistant
     outerClothing: ClothingOuterVestWebMerc
     pocket1: WeaponLaserSvalinn
     pocket2: RadioHandheld
@@ -1900,4 +1900,6 @@
     shoes: ClothingShoesBootsSalvage
     head: ClothingHeadHatGreyFlatcap
     id: VisitorPDA
-    back: ClothingBackpack
+    back: ClothingBackpackSatchelLeather
+    pocket1: HydroponicsToolHatchet
+    pocket2: WheatBushel

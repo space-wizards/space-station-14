@@ -1,0 +1,10 @@
+- type: entity
+  id: CigPackSoviet
+  parent: CigPackBase
+  name: Gerat's sandworm packet
+  description: For when a sandworm has managed to eat your nuclear MRV supply.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Consumable/Smokeables/Cigarettes/Packs/soviet.rsi
+  - type: Item
+    sprite: _Starlight/Objects/Consumable/Smokeables/Cigarettes/Packs/soviet.rsi

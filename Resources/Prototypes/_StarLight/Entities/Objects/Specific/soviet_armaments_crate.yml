@@ -1,0 +1,37 @@
+- type: entity
+  id: CrateSovietArmaments
+  parent: [CrateGeneric, BaseSovietContraband]
+  name: SKB armaments crate
+  description: The red tide is here.
+  components:
+  - type: Icon
+    sprite: _Starlight/Structures/Storage/USSP/revolutionary.rsi
+  - type: Sprite
+    sprite: _Starlight/Structures/Storage/USSP/revolutionary.rsi
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Effects/teleport_arrival.ogg
+  - type: EntityStorage
+    isCollidable: true
+    showContents: false
+    occludesLight: true
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:GroupSelector
+        children:
+        - id: WeaponSniperMosin
+          weight: 8
+        - id: WeaponPistolMakarov
+          weight: 6
+        - id: SpearUranium
+          weight: 3
+        - id: MedkitFilled
+          weight: 5
+        - id: ClothingOuterSovietCoat
+          weight: 6
+        - id: WeaponRifleAk
+          weight: 1
+        - id: EmagCommie
+          weight: 3
+        rolls: !type:ConstantNumberSelector
+          value: 1

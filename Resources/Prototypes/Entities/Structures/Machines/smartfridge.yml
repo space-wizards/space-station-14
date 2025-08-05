@@ -5,8 +5,11 @@
   description: A refrigerated storage unit for keeping items cold and fresh.
   components:
   - type: StationAiWhitelist
-  - type: Advertise
-    pack: SmartFridgeAds
+  - type: Vocalizer
+    hideChat: true
+  - type: VocalizerRequiresPower
+  - type: DatasetVocalizer
+    dataset: SmartFridgeAds
   - type: Speech
   - type: Appearance
   - type: Sprite
@@ -64,6 +67,15 @@
   - type: InteractionOutline
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100

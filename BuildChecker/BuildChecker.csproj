@@ -12,12 +12,12 @@ You want to handle the Build, Clean and Rebuild tasks to prevent missing task er
 If you want to learn more about these kinds of things, check out Microsoft's official documentation about MSBuild:
 https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild
 -->
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Python>python3</Python>
     <Python Condition="'$(OS)'=='Windows_NT' Or '$(OS)'=='Windows'">py -3</Python>
     <ProjectGuid>{C899FCA4-7037-4E49-ABC2-44DE72487110}</ProjectGuid>
-    <TargetFrameworkMoniker>.NETFramework, Version=v4.7.2</TargetFrameworkMoniker>
+    <TargetFramework>net4.7.2</TargetFramework>
     <RestorePackages>false</RestorePackages>
   </PropertyGroup>
   <PropertyGroup>

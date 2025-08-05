@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseRestrictedContraband]
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
   id: ClothingEyesGlassesBrigmedic
   name: brigmedic glasses
   description: Tamashi-upgraded glasses. Yes. Brigmedic ones.
@@ -9,6 +9,7 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/brigmedicglasses.rsi
   - type: FlashImmunity
+  - type: SolutionScanner
   - type: EyeProtection
     protectionTime: 5
   - type: ShowHealthBars
@@ -21,12 +22,12 @@
     - WhitelistChameleon
   - type: IdentityBlocker
     coverage: EYES
-    
+
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesSunGlassesHudSkill
   name: skills sunglasses
-  description: Sunglusses with a build-in skills HUD, showing the employment history of nearby NT crew members.
+  description: Sunglasses with a build-in skills HUD, showing the employment history of nearby NT crew members.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Eyes/Glasses/sunhudskill.rsi
@@ -38,7 +39,7 @@
   - type: ShowCriminalRecordIcons
   - type: EyeProtection
     protectionTime: 5
-    
+
 - type: entity
   parent: [ClothingEyesBase, BaseCommandContraband]
   id: ClothingEyesGlassesBlueShield
@@ -64,3 +65,64 @@
     - HudMedical
   - type: EyeProtection
     protectionTime: 5
+
+- type: entity
+  parent: [ClothingEyesBase, BaseCentcommContraband]
+  id: ClothingEyesGlassesCentComm
+  name: centcomm officer's glasses
+  description: The innovative green lenses hide your eyes from light flashes and have a built-in visor.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Glasses/centcomm.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Glasses/centcomm.rsi
+  - type: FlashImmunity
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: ShowCriminalRecordIcons
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
+  - type: Tag
+    tags:
+    - HudMedical
+  - type: EyeProtection
+    protectionTime: 5
+
+# USSP
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesSKBGlasses
+  name: cheap sunglasses
+  description: A pair of black sunglasses. Doesn't block light well, more of an accessory than something useful.
+  suffix: SKB
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: ShowMindShieldIcons
+
+# Shadekin
+
+- type: entity
+  parent: [ClothingEyesBase, BaseMajorContraband]
+  id: ClothingEyesGlassesNullSpace
+  name: nullspace goggles
+  description: An unusual pair of goggles developed during a time of inhumane experimentation involving Shadekin. They are designed to allow the wearer to peer into NullSpace.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Glasses/nullspacegoogles.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Glasses/nullspacegoogles.rsi
+  - type: ShowNullSpace

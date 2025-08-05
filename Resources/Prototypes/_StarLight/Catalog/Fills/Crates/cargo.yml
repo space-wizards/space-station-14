@@ -1,0 +1,23 @@
+- type: entity
+  id: CrateMailBags
+  parent: CrateGenericSteel
+  name: Mailbag Crate
+  description: Contains two mail bags incase you lost the ones we gave you already.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MailBag
+        amount: 2
+
+- type: entity
+  id: CrateEmergencySpaceHazard
+  parent: CrateGenericSteel
+  name: space hazard suit crate
+  description: For all your disasterous shifts.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterHardsuitSpaceHazard
+    - id: ClothingMaskBreath
+    - id: OxygenTankFilled
+    - id: NitrogenTankFilled

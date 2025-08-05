@@ -2,10 +2,12 @@
   id: JobRoboticist
   groups:
   - RoboticistHead
+  - RoboticistGoggles
   - RoboticistJumpsuit
+  - RoboticistGloves
   - RoboticistOuterClothing
   - RoboticistBackpack
-  - ScientistShoes
+  - RoboticistShoes
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -14,6 +16,7 @@
   id: JobMagistrate
   groups:
   - CommonBackpack
+  - MagistrateShoes
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -21,15 +24,27 @@
 - type: roleLoadout
   id: JobSurgeon
   groups:
-  - Survival
+  - GroupTankHarness
+  - MedicalDoctorHead
+  - MedicalMask
+  - MedicalDoctorJumpsuit
+  - MedicalGloves
+  - MedicalBackpack
+  - MedicalDoctorOuterClothing
+  - MedicalShoes
+  - MedicalDoctorPDA
+  - MedicalEyewear
+  - SurvivalMedical
   - Trinkets
-  - GroupSpeciesBreathTool
+  - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
   id: JobNanoTrasenRepresentative
   groups:
   - NanoTrasenRepresentativeJumpsuit
+  - NanoTrasenRepresentativeEyewear
   - CommonBackpack
+  - NanotrasenRepresentativeShoes
   - Trinkets
   - Survival
   - GroupSpeciesBreathTool
@@ -40,6 +55,7 @@
   - LawyerNeck
   - LawyerJumpsuit
   - CommonBackpack
+  - LawyerShoes
   - Trinkets
   - Survival
   - GroupSpeciesBreathTool
@@ -49,6 +65,9 @@
   groups:
   - BlueShieldJumpsuit
   - BlueShieldBackpack
+  - BlueShieldOuterclothing
+  - BlueShieldNeck
+  - BlueShieldEyewear
   - Trinkets
   - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity
@@ -64,3 +83,35 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobMailTech
+  groups:
+  - GroupTankHarness
+  - CargoTechnicianHead
+  - CargoTechnicianJumpsuit
+  - CargoTechnicianBackpack
+  - CargoTechnicianOuterClothing
+  - CargoTechnicianShoes
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobBrigmedic
+  groups:
+    - BrigmedicHead
+    - BrigmedicJumpsuit
+    - BrigmedicBackpack
+    - BrigmedicOuterClothing
+    - BrigmedicBelt
+    - BrigmedicGloves
+    - BrigmedicEyewear
+    - SecurityShoes
+    - SecurityNonLethalWeapon
+    - SecuritySidearm
+    - SurvivalSecurity
+    - Trinkets
+    - SecurityStar
+    - GroupSpeciesBreathToolSecurity

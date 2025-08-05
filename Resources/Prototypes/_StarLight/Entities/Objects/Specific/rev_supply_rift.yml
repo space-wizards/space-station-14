@@ -1,0 +1,51 @@
+- type: entity
+  id: RevSupplyRift
+  name: SKB armaments rift
+  description: (!) A shady rift that coughs up Soviet stuff. This exposes them! If it's destroyed, commies won't be able to open another!
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: RevSupplyRift
+  - type: DragonRift
+    spawn: CrateSovietArmaments
+    spawnCooldown: 35  # Spawn a crate every 35 seconds
+    spawnAccumulator: 35  # Spawn a crate immediately upon creation
+  - type: RevolutionaryRift
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+  - type: Sprite
+    layers:
+    - sprite: Structures/Specific/carp_rift.rsi
+      state: icon
+      color: "#ff5555"  # Red color to distinguish from regular carp rifts
+      shader: unshaded
+  - type: InteractionOutline
+  - type: Clickable
+  - type: PointLight
+    enabled: true
+    color: "#b53636"  # Darker red light
+    radius: 10.0
+    energy: 5.0
+    netsync: false
+  - type: NavMapBeacon
+    color: "#ff0000"
+    text: supply rift
+    enabled: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg

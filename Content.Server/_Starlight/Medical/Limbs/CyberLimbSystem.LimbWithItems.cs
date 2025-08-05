@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared._Starlight.Medical.Limbs;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Hands.Components;
 using Content.Shared.Humanoid;
@@ -19,6 +20,20 @@ public sealed partial class CyberLimbSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<LimbWithItemsComponent, ComponentInit>(OnLimbWithItemsInit);
         SubscribeLocalEvent<LimbWithItemsComponent, ToggleLimbEvent>(OnLimbToggle);
+        SubscribeLocalEvent<BodyComponent, LimbRemovedEvent<LimbWithItemsComponent>>(LimbWithItemsRemoved);
+
+    }
+
+    private void LimbWithItemsRemoved(Entity<BodyComponent> ent, ref LimbRemovedEvent<LimbWithItemsComponent> args)
+    {
+        if (args.Comp.Toggled)
+        {
+            var toggleLimbEvent = new ToggleLimbEvent()
+            {
+                Performer = ent.Owner,
+            };
+            OnLimbToggle((args.Limb, args.Comp), ref toggleLimbEvent);
+        }
     }
 
     private void OnLimbToggle(Entity<LimbWithItemsComponent> ent, ref ToggleLimbEvent args)
@@ -31,8 +46,8 @@ public sealed partial class CyberLimbSystem : EntitySystem
             {
                 var handId = $"{ent.Owner}_{item}";
                 var hands = EnsureComp<HandsComponent>(args.Performer);
-                _hands.AddHand(args.Performer, handId, HandLocation.Functional, hands);
-                _hands.DoPickup(args.Performer, hands.Hands[handId], item, hands);
+                _hands.AddHand((args.Performer, hands), handId, HandLocation.Functional);
+                _hands.DoPickup(args.Performer, handId, item, hands);
                 EnsureComp<UnremoveableComponent>(item);
             }
         }
@@ -45,13 +60,13 @@ public sealed partial class CyberLimbSystem : EntitySystem
                 RemComp<UnremoveableComponent>(item);
                 var hands = EnsureComp<HandsComponent>(args.Performer);
                 _container.Insert(_slEnt.Entity<TransformComponent, MetaDataComponent, PhysicsComponent>(item), container, force: true);
-                _hands.RemoveHand(args.Performer, handId, hands);
+                _hands.RemoveHand(args.Performer, handId);
             }
         }
 
         if (_slEnt.TryEntity<BaseLayerIdComponent, BaseLayerIdToggledComponent, BodyPartComponent>(ent.Owner, out var limb, false)
             && _slEnt.TryEntity<HumanoidAppearanceComponent>(args.Performer, out var performer, false))
-            _limb.ToggleLimbVisual(performer.Value, limb.Value, ent.Comp.Toggled);
+            _limb.ToggleLimbVisual(performer, limb, ent.Comp.Toggled);
 
         _audio.PlayPvs(ent.Comp.Sound, args.Performer);
 

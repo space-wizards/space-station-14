@@ -1,0 +1,83 @@
+﻿- type: entity
+  parent: BookBase
+  id: BookConspiracies
+  name: "What They Don't Want You To Know"
+  description: Frantic writings are scribbled across multiple pages. Should you really be reading this?
+  components:
+    - type: Sprite
+      layers:
+        - state: paper
+        - state: cover_old
+          color: "#6e5334"
+        - state: overlay_blood
+        - state: decor_spine
+          color: "#624a2e"
+        - state: detail_rivets
+          color: "#888b8d"
+        - state: icon_text2
+          color: "#362828"
+    - type: Paper
+      content: book-text-conspiracies
+      
+- type: entity
+  parent: BookBase
+  id: BookMoreConspiracies
+  name: "What Else They Don't Want You To Know"
+  description: Frantic writings are scribbled across multiple pages. Should you really be reading this?
+  components:
+    - type: Sprite
+      layers:
+        - state: paper
+        - state: cover_old
+          color: "#6e5334"
+        - state: overlay_blood
+        - state: decor_spine
+          color: "#624a2e"
+        - state: detail_rivets
+          color: "#888b8d"
+        - state: icon_text3
+          color: "#362828"
+    - type: Paper
+      content: book-text-more-conspiracies
+
+- type: entity
+  parent: BookBase
+  id: BookClownMimeWar
+  name: "History of the Clown-Mime Intergalactic War"
+  description: Frantic writings are scribbled across multiple pages. Most of the text is covered in handwritten question marks.
+  components:
+    - type: Sprite
+      layers:
+        - state: paper
+        - state: cover_base
+          color: "#000000"
+        - state: decor_bottom
+          color: "#ffffff"
+        - state: icon_scmmd
+        - state: icon_banana
+        - state: decor_spine
+          color: "#ff69b4"
+    - type: Paper
+      content: book-text-clown-mime-war
+      
+- type: entity
+  parent: BookBase
+  id: BookMarsIncident
+  name: "History from the 22nd Century: The Mars Incident"
+  description: Frantic writings are scribbled across multiple pages. Most of the text is covered in handwritten question marks.
+  components:
+    - type: Sprite
+      layers:
+        - state: paper
+        - state: cover_old
+          color: "#000000"
+        - state: decor_wingette
+          color: "#bf4526"
+        - state: icon_text
+          color: "#ffffff"
+        - state: icon_planet
+          color: "#bf4526"
+        - state: detail_bookmark
+          color: "#cc0000"
+    - type: Paper
+      content: book-text-mars-incident

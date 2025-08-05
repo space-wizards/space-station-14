@@ -10,8 +10,8 @@ namespace Content.Shared.Store;
 ///     Mainly used for antags, such as traitors, nukies, and revenants
 ///     This is separate to the cargo ordering system.
 /// </summary>
-[Prototype("currency")]
-[DataDefinition, Serializable, NetSerializable]
+[Prototype]
+[DataDefinition]
 public sealed partial class CurrencyPrototype : IPrototype
 {
     [ViewVariables]

@@ -6,6 +6,8 @@
   name: revenant
   description: A spooky ghostie.
   components:
+  - type: Emag
+    emagType: All
   - type: ThermalVision
   - type: Input
     context: "ghost"
@@ -73,11 +75,10 @@
     - StolenEssence
   - type: RandomMetadata
     nameSegments:
-    - The
-    - RevenantType
-    - of
-    - RevenantAdjective
-    - RevenantTheme
+    - NamesRevenantType
+    - NamesRevenantAdjective
+    - NamesRevenantTheme
+    nameFormat: name-format-revenant
   - type: Speech
     speechVerb: Ghost
   - type: Reactive

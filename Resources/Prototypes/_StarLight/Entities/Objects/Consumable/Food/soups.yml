@@ -1,0 +1,31 @@
+﻿- type: entity
+  name: Moth Soup
+  parent: FoodBowlBase
+  id: FoodSoupMothBowl
+  description: A black-market delicacy shunned for its cruel nature
+  components:
+    - type: FlavorProfile
+      flavors:
+        - fiber
+        - beer
+        - bread
+    - type: Sprite
+      sprite: _Starlight/Objects/Consumable/Food/bowl.rsi
+      layers:
+        - state: bowl
+        - state: MothSoup
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 5
+            - ReagentId: Vitamin
+              Quantity: 5
+            - ReagentId: Fiber
+              Quantity: 10
+    - type: Tag
+      tags:
+      - Soup
+      - Meat

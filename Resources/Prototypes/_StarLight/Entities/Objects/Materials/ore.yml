@@ -38,7 +38,7 @@
 #stack
 - type: stack
   id: AbyssiumOre
-  name: abyssium ore
+  name: stack-abyssium-ore
   icon: { sprite: _Starlight/Objects/Materials/ore.rsi, state: abyssium }
   spawn: AbyssiumOre1
   maxCount: 10

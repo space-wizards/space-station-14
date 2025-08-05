@@ -9,14 +9,14 @@
   cost:
     Telecrystal: 12
   categories:
-  - UplinkJob
+    - UplinkJob
   conditions:
-  - !type:BuyerJobCondition
-    whitelist:
-    - AtmosphericTechnician
-    
+    - !type:BuyerJobCondition
+      whitelist:
+        - AtmosphericTechnician
+
 # Weapons
-    
+
 - type: listing
   id: uplinkWeaponMiniEnergyCrossbow
   name: uplink-mini-energy-crossbow-name
@@ -28,7 +28,7 @@
   cost:
     Telecrystal: 12
   categories:
-  - UplinkWeaponry
+    - UplinkWeaponry
   conditions:
     - !type:ListingLimitedStockCondition
       stock: 1
@@ -36,26 +36,30 @@
       blacklist:
         tags:
           - NukeOpsUplink
-          
+
 - type: listing
   id: uplinkWeaponShotgunMinotaur
   name: uplink-minotaur-name
   description: uplink-minotaur-desc
   productEntity: ClothingBackpackDuffelSyndicateFilledMinotaurShotgun
-  icon: { sprite: /Textures/_Starlight/Objects/Weapons/Guns/Shotguns/minotaur.rsi, state: icon }
+  icon:
+    {
+      sprite: /Textures/_Starlight/Objects/Weapons/Guns/Shotguns/minotaur.rsi,
+      state: icon,
+    }
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 15
   cost:
     Telecrystal: 20
   categories:
-  - UplinkWeaponry
+    - UplinkWeaponry
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
         tags:
           - NukeOpsUplink
-          
+
 - type: listing
   id: uplinkWeaponPistolDeagle
   name: uplink-deagle-name
@@ -67,8 +71,8 @@
   cost:
     Telecrystal: 8
   categories:
-  - UplinkWeaponry
-  
+    - UplinkWeaponry
+
 - type: listing
   id: uplinkWeaponPistolStechkin
   name: uplink-stechkin-name
@@ -80,46 +84,189 @@
   cost:
     Telecrystal: 6
   categories:
-  - UplinkWeaponry
-  
+    - UplinkWeaponry
+
 # Ammo
 
 - type: listing
   id: UplinkPistolMagnumMagazine
   name: uplink-pistol-magnum-magazine-name
   description: uplink-pistol-magnum-magazine-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi, state: sp }
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi,
+      state: sp,
+    }
   productEntity: MagazineMagnum
   cost:
     Telecrystal: 1
   categories:
-  - UplinkAmmo
-
+    - UplinkAmmo
 
 # Cybernetics
 
 - type: listing
-  id: UplinkEyeImplantNightVision
+  id: UplinkCyberEyeNightVision
   name: uplink-nightvision-eyes
   description: uplink-nightvision-eyes-desc
-  icon: { sprite: /Textures/_Starlight/Objects/Specific/Medical/implants.rsi, state: eyes_night }
-  productEntity: EyeImplantNightVision
+  icon:
+    {
+      sprite: /Textures/_Starlight/Objects/Specific/Medical/implants.rsi,
+      state: eyes_night,
+    }
+  productEntity: CyberEyeNightVision
   discountDownTo:
     Telecrystal: 2
   cost:
     Telecrystal: 4
   categories:
-  - UplinkCybernetics
+    - UplinkCybernetics
 
 - type: listing
-  id: UplinkEyeImplantThermal
+  id: UplinkCyberEyeThermal
   name: uplink-thermalvision-eyes
   description: uplink-thermalvision-eyes-desc
-  icon: { sprite: /Textures/_Starlight/Objects/Specific/Medical/implants.rsi, state: eyes_thermal }
-  productEntity: EyeImplantThermal
+  icon:
+    {
+      sprite: /Textures/_Starlight/Objects/Specific/Medical/implants.rsi,
+      state: eyes_thermal,
+    }
+  productEntity: CyberEyeThermal
   discountDownTo:
     Telecrystal: 4
   cost:
     Telecrystal: 8
   categories:
-  - UplinkCybernetics
+    - UplinkCybernetics
+
+- type: listing
+  id: UplinkMantisBladeArm
+  name: uplink-mantis-blade-arms-name
+  description: uplink-mantis-blade-arms-desc
+  icon:
+    {
+      sprite: /Textures/_Starlight/Objects/Weapons/Melee/cybermantisblade.rsi,
+      state: cybermantisblade,
+    }
+  productEntity: ClothingBackpackDufelSyndicateFilledMantisBladeArms
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 12
+  cost:
+    Telecrystal: 15
+  categories:
+    - UplinkCybernetics
+
+- type: listing
+  id: UplinkEnergyDomeSyndie
+  name: uplink-energy-dome-name
+  description: uplink-energy-dome-desc
+  productEntity: EnergyDomeGeneratorPersonalSyndie
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkWearables
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+# Implants
+- type: listing
+  id: UplinkMagillitisSerumImplant
+  name: uplink-magillitis-serum-implanter-name
+  description: uplink-magillitis-serum-implanter-desc
+  icon: { sprite: _Starlight/Actions/implants.rsi, state: gorilla_rampage }
+  productEntity: MagillitisSerumImplanter
+  discountDownTo:
+    Telecrystal: 4
+  cost:
+    Telecrystal: 6
+  categories:
+    - UplinkJob
+  conditions:
+    - !type:BuyerJobCondition
+      whitelist:
+        - ResearchAssistant
+        - Scientist
+        - ResearchDirector
+
+# Wearables
+- type: listing
+  id: UplinkHardsuitInfiltration
+  name: uplink-hardsuit-infiltration-name
+  description: uplink-hardsuit-infiltration-desc
+  icon: { sprite: /Textures/_Starlight/Clothing/OuterClothing/Hardsuits/infiltrationsyndie.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledInfiltration
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 5
+  cost:
+    Telecrystal: 10
+  categories:
+  - UplinkWearables
+
+- type: listing
+  id: UplinkSyndicateBorgi
+  name: uplink-syndicate-borgi-name
+  description: uplink-syndicate-borgi-desc
+  icon: { sprite:  Objects/Fun/Balloons/corgi.rsi, state: icon }
+  productEntity: BaseSyndicateBorgiChassis
+  cost:
+    Telecrystal: 20
+  categories:
+    - UplinkAllies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: UplinkSyndicateBorgiKitted
+  name: uplink-syndicate-borgi-kitted-name
+  description: uplink-syndicate-borgi-kitted-desc
+  icon: { sprite:  Objects/Fun/Balloons/corgi.rsi, state: icon }
+  productEntity: SyndiBorgiKit1
+  cost:
+    Telecrystal: 60
+  categories:
+    - UplinkAllies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkSyndicateBorgiSpeed
+  name: uplink-syndicate-borgi-speed-name
+  description: uplink-syndicate-borgi-speed-desc
+  icon: { sprite:  Objects/Fun/Balloons/corgi.rsi, state: icon }
+  productEntity: SyndiBorgiKit2
+  cost:
+    Telecrystal: 50
+  categories:
+    - UplinkAllies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+#Dunnow about upstream. but we L O V E our stealth traitors.
+- type: listing
+  id: UplinkgClothingThievingGloves
+  name: uplink-clothing-chameleon-thieving-gloves-name
+  description: uplink-clothing-chameleon-thieving-gloves-desc
+  productEntity: ClothingHandsChameleonThief
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkWearables

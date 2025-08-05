@@ -28,3 +28,55 @@
           groups:
             Burn: -4
             Brute: -4
+
+- type: reagent
+  id: Amoxla
+  name: reagent-name-amoxla
+  group: Medicine
+  desc: reagent-desc-amoxla
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
+  color: "#51c38c"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+        damage:
+          types:
+            Asphyxiation: -3.5
+            Bloodloss: -3
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: HeartbreakerToxin
+          min: 1
+        reagent: HeartbreakerToxin
+        amount: -3
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 25
+        damage:
+          types:
+            Asphyxiation: 5
+            Cold: 3
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: false
+        damage:
+          types:
+            Poison: 1.5 #Ammonia is toxic injected directly into bloodstream
+            Asphyxiation: 1 
+            Bloodloss: 0.5
+      - !type:ModifyBloodLevel
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+        amount: 3

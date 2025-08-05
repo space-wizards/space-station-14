@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Server.Body.Systems;
 using Content.Shared.Starlight.Medical.Surgery;
 using Content.Shared.Starlight.Medical.Surgery.Effects.Step;
 using Content.Shared.Starlight.Medical.Surgery.Events;
@@ -9,20 +8,12 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
-using Content.Shared.Eye.Blinding.Components;
-using Content.Shared.Hands.Components;
-using Content.Shared.Speech.Muting;
-using Robust.Shared.Prototypes;
 using Content.Shared.Humanoid;
-using Content.Shared.Starlight;
-using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Starlight.Antags.Abductor;
-using Content.Shared.VentCraw;
-using Content.Shared.Interaction.Components;
+using Content.Shared.Traits.Assorted;
 using Microsoft.CodeAnalysis;
-using Content.Shared._Starlight.Medical.Body;
 using Content.Server._Starlight.Medical.Limbs;
 using Content.Server.Administration.Systems;
+
 
 namespace Content.Server.Starlight.Medical.Surgery;
 // Based on the RMC14.
@@ -58,12 +49,12 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
 
     private void OnStepAttachComplete(Entity<SurgeryStepAttachLimbEffectComponent> ent, ref SurgeryStepEvent args)
     {
-        if (GetSingleton(args.SurgeryProto) is not { } surgery
+        if (!_entity.TryGetSingleton(args.SurgeryProto, out var surgery)
             || !TryComp<SurgeryLimbSlotConditionComponent>(surgery, out var slotComp))
             return;
 
         OnStepAttachLimbComplete(ent, slotComp.Slot, ref args);
-        if (slotComp.Slot != "head")
+        if (slotComp.Slot != "head" && args.IsCancelled)
             OnStepAttachItemComplete(ent, slotComp.Slot, ref args);
     }
 
@@ -98,14 +89,15 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
 
         var part = args.Part;
         var body = args.Body;
-        _delayAccumulator = 0;
-        _delayQueue.Enqueue(() =>
-        {
-            if (!_body.InsertOrgan(part, organId, ent.Comp.Slot, bodyPart, organComp)) return;
 
-            var ev = new SurgeryOrganImplantationCompleted(body, part, organId);
-            RaiseLocalEvent(organId, ref ev);
-        });
+        if (!_body.InsertOrgan(part, organId, ent.Comp.Slot, bodyPart, organComp))
+        {
+            args.IsCancelled = true;
+            return;
+        }
+
+        var ev = new SurgeryOrganImplantationCompleted(body, part, organId);
+        RaiseLocalEvent(organId, ref ev);
     }
     private void OnStepOrganExtractComplete(Entity<SurgeryStepOrganExtractComponent> ent, ref SurgeryStepEvent args)
     {
@@ -142,8 +134,14 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     }
 
     private void OnStepEmoteEffectComplete(Entity<SurgeryStepEmoteEffectComponent> ent, ref SurgeryStepEvent args)
-        => _chat.TryEmoteWithChat(args.Body, ent.Comp.Emote);
+    {
         
+        if (!HasComp<PainNumbnessComponent>(args.Body))
+        {
+             _chat.TryEmoteWithChat(args.Body, ent.Comp.Emote);
+        }
+    }
+
     private void OnStepSpawnComplete(Entity<SurgeryStepSpawnEffectComponent> ent, ref SurgeryStepEvent args)
     {
         if (TryComp(args.Body, out TransformComponent? xform))
@@ -170,7 +168,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     {
         if (_entity.TryEntity<TransformComponent, HumanoidAppearanceComponent, BodyComponent>(args.Body, out var body) 
             && _entity.TryEntity<TransformComponent, MetaDataComponent, BodyPartComponent>(args.Part, out var limb))
-            _limbSystem.Amputatate(body.Value, limb.Value);
+            _limbSystem.Amputatate(body, limb);
     }
 
     private void CustomLimbRemoved(Entity<CustomLimbMarkerComponent> ent, ref ComponentRemove args)

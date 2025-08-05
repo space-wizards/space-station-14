@@ -1,0 +1,254 @@
+# Base prototypes
+
+- type: latheRecipe
+  abstract: true
+  id: BaseClarkePartRecipe
+  categories:
+  - Mech
+  completetime: 10
+
+- type: latheRecipe
+  abstract: true
+  id: BaseDurandPartRecipe
+  categories:
+  - Mech
+  completetime: 10
+
+- type: latheRecipe
+  abstract: true
+  id: BaseGygaxPartRecipe
+  categories:
+  - Mech
+  completetime: 10
+
+# Recipes
+
+# Clarke
+- type: latheRecipe
+  parent: BaseClarkePartRecipe
+  id: ClarkeHarness
+  result: ClarkeHarness
+  materials:
+    Steel: 2000
+    Glass: 1500
+
+- type: latheRecipe
+  parent: BaseClarkePartRecipe
+  id: ClarkeHead
+  result: ClarkeHead
+  materials:
+    Steel: 1550
+    Glass: 950
+
+- type: latheRecipe
+  parent: BaseClarkePartRecipe
+  id: ClarkeLArm
+  result: ClarkeLArm
+  materials:
+    Steel: 900
+    Glass: 800
+
+- type: latheRecipe
+  parent: ClarkeLArm
+  id: ClarkeRArm
+  result: ClarkeRArm
+
+- type: latheRecipe
+  parent: BaseClarkePartRecipe
+  id: ClarkeTreads
+  result: ClarkeTreads
+  materials:
+    Steel: 950
+
+# Durand
+- type: latheRecipe
+  parent: BaseDurandPartRecipe
+  id: DurandHarness
+  result: DurandHarness
+  materials:
+    Steel: 2500
+    Glass: 2000
+    Silver: 1500
+
+- type: latheRecipe
+  parent: BaseDurandPartRecipe
+  id: DurandArmor
+  result: DurandArmorPlate
+  materials:
+    Steel: 3000
+    Silver: 900
+
+- type: latheRecipe
+  parent: BaseDurandPartRecipe
+  id: DurandHead
+  result: DurandHead
+  materials:
+    Steel: 1500
+    Glass: 800
+    Silver: 250
+    Diamond: 100
+
+- type: latheRecipe
+  parent: BaseDurandPartRecipe
+  id: DurandLArm
+  result: DurandLArm
+  materials:
+    Steel: 1100
+    Silver: 250
+
+- type: latheRecipe
+  parent: DurandLArm
+  id: DurandLLeg
+  result: DurandLLeg
+
+- type: latheRecipe
+  parent: DurandLArm
+  id: DurandRLeg
+  result: DurandRLeg
+
+- type: latheRecipe
+  parent: DurandLArm
+  id: DurandRArm
+  result: DurandRArm
+
+# Gygax
+- type: latheRecipe
+  parent: BaseGygaxPartRecipe
+  id: GygaxHarness
+  result: GygaxHarness
+  materials:
+    Steel: 2500
+    Glass: 2000
+
+- type: latheRecipe
+  parent: BaseGygaxPartRecipe
+  id: GygaxArmor
+  result: GygaxArmorPlate
+  materials:
+    Steel: 3000
+
+- type: latheRecipe
+  parent: BaseGygaxPartRecipe
+  id: GygaxHead
+  result: GygaxHead
+  materials:
+    Steel: 1500
+    Glass: 250
+    Diamond: 100
+
+- type: latheRecipe
+  parent: BaseGygaxPartRecipe
+  id: GygaxLArm
+  result: GygaxLArm
+  materials:
+    Steel: 1100
+
+- type: latheRecipe
+  parent: GygaxLArm
+  id: GygaxLLeg
+  result: GygaxLLeg
+
+- type: latheRecipe
+  parent: GygaxLArm
+  id: GygaxRLeg
+  result: GygaxRLeg
+
+- type: latheRecipe
+  parent: GygaxLArm
+  id: GygaxRArm
+  result: GygaxRArm
+
+# Ripley MK-II
+- type: latheRecipe
+  id: RipleyMKIIHarness
+  result: RipleyMKIIHarness
+  categories:
+  - Mech
+  completetime: 10
+  materials:
+    Steel: 1500
+    Glass: 1200
+
+- type: latheRecipe
+  id: RipleyUpgradeKit
+  result: RipleyUpgradeKit
+  categories:
+  - Mech
+  completetime: 10
+  materials:
+    Plasteel: 1000
+
+# Paddy
+
+- type: latheRecipe
+  id: PaddyUpgradeKit
+  result: PaddyUpgradeKit
+  categories:
+  - Mech
+  completetime: 10
+  materials:
+    Plasteel: 2000
+
+# Equipment
+- type: latheRecipe
+  id: MechEquipmentDrill
+  result: WeaponMechMelleDrill
+  categories:
+  - Mech
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 250
+
+- type: latheRecipe
+  id: MechEquipmentDrillDiamond
+  result: WeaponMechMelleDrillDiamond
+  categories:
+  - Mech
+  completetime: 10
+  materials:
+    Steel: 1000
+    Plastic: 150
+    Silver: 350
+    Diamond: 150
+
+- type: latheRecipe
+  id: MechEquipmentHonkerBananaMortar
+  result: WeaponMechSpecialBananaMortar
+  categories:
+  - Mech
+  completetime: 10
+  materials:
+    Steel: 1150
+    Bananium: 800
+
+- type: latheRecipe
+  id: MechEquipmentHonkerMousetrapMortar
+  result: WeaponMechSpecialMousetrapMortar
+  categories:
+  - Mech
+  completetime: 10
+  materials:
+    Steel: 1200
+    Bananium: 300
+
+# Misc
+- type: latheRecipe
+  id: MechAirTank
+  result: MechAirTank
+  categories:
+  - Mech
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 150
+
+- type: latheRecipe
+  id: MechThruster
+  result: MechThruster
+  categories:
+  - Mech
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 150

@@ -1,0 +1,1379 @@
+# region crew plushies
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieMatthew
+  name: matthew plushie
+  description: Such a cute little thing, dont you just want to protect it? Make sure your doing your job though, or it might bite! Smells oddly like root beer and ice cream.....
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/matthew_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/matthew_plushie.rsi
+    layers:
+      - state: icon
+      - state: icon-unshaded
+        shader: unshaded
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesMatthew
+    - type: TextToSpeech
+      voice: sampo
+
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieEmmie
+  name: emmie plushie
+  description: Such a cute little thing, dont you just want to protect it? You should, as it controls whether you keep your contract or not.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/emmie_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/emmie_plushie.rsi
+    layers:
+      - state: icon
+      - state: icon-unshaded
+        shader: unshaded
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesEmmie
+    - type: TextToSpeech
+      voice: ganyu
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieTrystan
+  name: trystan plushie
+  description: He yeeps...
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/trystan_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/trystan_plushie.rsi
+    layers:
+      - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesTrystan
+    - type: TextToSpeech
+      voice: barneycalhoun
+
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieMorgana
+  name: morgana plushie
+  description: A bird flies to a mountain made of diamond every thousands years to sharpen its beak. When that mountain is, but a heap. That is when a single moment of eternity passes. Many say; that is a hell of a long time. I say; that is one hell of bird.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/morgana_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/morgana_plushie.rsi
+    layers:
+      - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesMorgana
+    - type: TextToSpeech
+      voice: bettylabomba
+
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieMorganaRound
+  name: round morgana plushie
+  description: Soft borb.....
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/morgana_round_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/morgana_round_plushie.rsi
+    layers:
+      - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesMorgana
+    - type: TextToSpeech
+      voice: bettylabomba
+
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieKiosha
+  name: kiosha plushie
+  description: Everyone's favorite paramedic! How does it keep finding contraband?
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/kiosha_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/kiosha_plushie.rsi
+    layers:
+      - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesKiosha
+    - type: TextToSpeech
+      voice: skye-valorant
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieLance
+  name: lance plushie
+  description: Turning the QM into a marketable plushie was not as profitable a venture as many in the cargo department had hoped
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/lance_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/lance_plushie.rsi
+    layers:
+      - state: icon
+      - state: icon-unshaded
+        shader: unshaded
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesLance
+    - type: TextToSpeech
+      voice: barneycalhoun
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieKiller
+  name: killer plushie
+  description: The Corpsman that lives up to his name, being the first or the last thing you see depending on which side of the fence you stand on. The volume setting appears to be stuck on max..
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/killer_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/killer_plushie.rsi
+    layers:
+      - state: icon
+      - state: icon-unshaded
+        shader: unshaded
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesKiller
+    - type: TextToSpeech
+      voice: heavy
+
+- type: entity
+  parent: PlushieHuman
+  id: PlushieAmali
+  name: amali plushie
+  description: Flying high, shooting corporate enemies out of the sky. Glory to NanoTrasen!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/amali_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/amali_plushie.rsi
+    layers:
+      - state: icon
+  # reason I didn't make a female human base plushie is because they wanted specific sounds. Will make one eventually. Probably.a
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Human/womanlaugh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Human/femalescream_5.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Human/womanlaugh.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Human/femalescream_5.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Human/femalescream_2.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Human/femalescream_4.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Human/femalescream_3.ogg
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesAmali
+    - type: TextToSpeech
+      voice: ganyu
+
+- type: entity
+  parent: PlushieHuman
+  id: PlushieOog
+  name: Oog-man Plushie #I AM OOG-MAN
+  description: A marketable plushie of everyone's favourite caveman. It's missing it's clothes?
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/oog_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/oog_plushie.rsi
+    layers:
+      - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesOog
+    - type: TextToSpeech
+      voice: heavy
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieVanilla
+  name: Vanilla Plushie
+  description: She's a shy, affectionate, lovable fox!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/vanilla_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/vanilla_plushie.rsi
+    layers:
+      - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesVanilla
+    - type: TextToSpeech
+      voice: layla
+#end region
+
+- type: entity
+  parent: PlushieHuman
+  id: PlushieOp
+  name: op plushie
+  description: bnuny..... human?
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/op_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/op_plushie.rsi
+    layers:
+      - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesOp
+    - type: TextToSpeech
+      voice: duelist
+
+- type: entity
+  parent: BaseMothPlushie
+  id: MozanPlush
+  name: Mozan plushie
+  description: Just like the real thing, it squeaks if you poke it.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/mozan_plushie.rsi
+    state: icon
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/mozan_plushie.rsi
+
+- type: entity
+  parent: BasePlushie
+  id: PandaPlushie
+  name: panda plushie
+  description: Large and in charge! Its paws and body are weighted with poly pellets. Holding it eases your stress and anxieties.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/panda_plushie.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: _Starlight/Objects/Fun/Plushies/panda_plushie.rsi
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Items/Toys/panda_noise1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Items/Toys/panda_noise2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Items/Toys/panda_noise1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Items/Toys/panda_noise1.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Items/Toys/panda_noise1.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Items/Toys/panda_noise2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: DeerPlushie
+  name: deer plushie
+  description: A very ordinary deer plush, nothing unordinary about it.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/deer_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/deer_plushie.rsi
+    state: icon_no_eyebrows
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+
+- type: entity
+  parent: BaseLizardPlushie
+  id: PlushieMimeLizard
+  name: lizard mime plushie
+  description: Wait, where is the sou-- oh.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/mime_lizard_plushie.rsi
+    state: icon
+  - type: Item
+    heldPrefix: plushielizard
+
+- type: entity
+  parent: BasePlushie
+  id: OddDeerPlushie
+  name: odd deer plushie
+  description: Shika noko noko noko koshi tan tan~
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/deer_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/deer_plushie.rsi
+    state: icon_eyebrows
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: VikaPviPlushie
+  name: vika plushie
+  description: Worst Centcomm Operator ever.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/vika_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/vika_plushie.rsi
+    state: icon
+
+- type: entity
+  parent: BasePlushie
+  id: AbductorPlushie
+  name: abductor plushie
+  description: Careful, it might kidnap you. Like in one of those bad 2170's killer doll movies.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/abductor_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/abductor_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Misc/alien_teleport.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Misc/alien_teleport.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Misc/alien_teleport.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Misc/alien_teleport.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Misc/alien_teleport.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/taser_hit.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: AxolotlPlushie
+  name: axolotl plushie
+  description: Head empty. Absolutely zero thoughts behind their eyes.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/axolotl_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/axolotl_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: BorbPlushie
+  name: borb plushie
+  description: Chonky. Rotund. Orb.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/borb_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/borb_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: CreaturePlushie
+  name: creature plushie
+  description: YIPPIE!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/creature_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/creature_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Items/Toys/yippie.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Items/Toys/yippie.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Items/Toys/yippie.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Items/Toys/yippie.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Items/Toys/yippie.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Items/Toys/yippie.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: GnomePlushie
+  name: gnome plushie
+  description: Rattles when you shake it. Smells like Fooberries.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/gnome_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/gnome_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Items/Toys/gnome_hahe.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Items/Toys/gnome_hahe.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Items/Toys/gnome_hahe.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Items/Toys/gnome_hahe.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Items/Toys/gnome_stop.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Items/Toys/gnome_murderer.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: GoatPlushie
+  name: goat plushie
+  description: The best boy, the softest boy.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/goat_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/goat_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: IanPlushie
+  name: ian plushie
+  description: Praise Ian. Protect Ian. Walkies Ian. Feed Ian.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/ian_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/ian_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/dog_bark1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/dog_bark2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/dog_bark1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/dog_bark3.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/dog_bark2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: LisaPlushie
+  name: lisa plushie
+  description: Praise Lisa. Protect Lisa. Walkies Lisa. Feed Lisa.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/lisa_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/lisa_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/dog_bark1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/dog_bark2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/dog_bark1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/dog_bark3.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/dog_bark2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: KittenPlushie
+  name: kitten plushie
+  description: A blue kitten! Just like they raise on Vernethauz II!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/kitten_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/kitten_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/cat_meow2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/cat_meow2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/cat_hiss.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PigPlushie
+  name: pig plushie
+  description: Head, round. Eyes, filled with optimism. Smells, kinda like bacon.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/pig_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/pig_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/pig_oink.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/pig_oink.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/pig_oink.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/pig_oink.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/pig_oink.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: RenaultPlushie
+  name: renault plushie
+  description: The Captain's trusty pet! The tail is so fluffy.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/renault_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/renault_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/fox1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/fox2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/fox5.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/fox8.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Animals/fox_squeak.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/fox11.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: SnailPlushie
+  name: snail plushie
+  description: Look at it go!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/snail_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/snail_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: SquishimsCow
+  name: cow squishims
+  description: Round and soft and legally distinct!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/cow_squishims_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/cow_squishims_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: SquishimsFrog
+  name: frog squishims
+  description: Round and soft and legally distinct!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/frog_squishims_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/frog_squishims_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: SusPlushie
+  name: sus plushie
+  description: Fell out of a vent and into your heart! ...with a knife. It stabbed you. In the heart.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/sus_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/sus_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: StinkyPlush
+  name: Spiro Plushie
+  description: Spiro Velox? Now as a plushie!! It... smells?
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/stinky_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/stinky_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: JessPlush
+  name: Jessica Plushie
+  description: Your favourite and most robust CentComm Operator.. She makes those noises cause she loves cats a bit too much
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/jess_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/jess_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/cat_meow2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/cat_meow2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/cat_hiss.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: SiffyPlush
+  name: Siffy Plushie
+  description: Your favorite NT engineer that totally does their job and you will have power for the whole shift
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/siffy_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/siffy_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: StalksPlush
+  name: Stalks Plushie
+  description: Your favorite NT REP Stalks, now with an er~ I mean a fancy cane..
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/saltho_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/saltho_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Stamp/automatic_stamp.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/glass_break1.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Stamp/automatic_stamp.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Stamp/thick_stamp_sub.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Effects/gib1.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Effects/metal_thud2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: IgnisPlush
+  name: Scarlet Plushie
+  description: Your favorite CentComm Operator who always summons rain to the station somehow, even thought it's space..
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/ignis_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/ignis_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/lizard_happy.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/weh.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: LivvyPlush
+  name: Croft Plushie
+  description: A retired CentComm Operator, now focusing on being adorable full time.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/livvy_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/livvy_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Human/femalescream_4.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+
+- type: entity
+  parent: BaseMothPlushie
+  id: MinaPlush
+  name: Minttongue Plushie
+  description: A member of CentComm's Administration Division, all dressed up in her old HoP uniform.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/mina_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/mina_plushie.rsi
+    state: icon
+
+- type: entity
+  parent: BaseShadekinPlushie
+  id: PlushieShadekin
+  name: Shadekin Plushie
+  description: A plushie of a Shadekin. It's very soft.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/shadekin_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/shadekin_plushie.rsi
+    state: icon
+
+- type: entity
+  parent: PlushieHuman
+  id: PlushiePercy
+  name: Percy Plushie
+  description: A cute plushie of the Vassal to the Grey King himself, Percival Beck. It smells faintly of old cigarettes.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/percy_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/percy_plushie.rsi
+      layers:
+        - state: icon
+    - type: Insulated
+      coefficient: 0.2
+    - type: Clothing
+      slots: [gloves]
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesPercy
+        - type: TextToSpeech
+          voice: medic
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieAsh
+  name: Ash Plushie
+  description: The station’s most huggable psychologist. It has a label on it reading "Property of Forkus the Dorkus"
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/ash_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/ash_plushie.rsi
+      layers:
+        - state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: Flammable
+      fireSpread: true
+      alwaysCombustible: true
+      damage:
+        types:
+          Heat: 1
+    - type: Damageable
+      damageModifierSet: Wood
+    - type: FireVisuals
+      sprite: Effects/fire.rsi
+      normalState: fire
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 15
+          behaviors:
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                Ash:
+                  min: 1
+                  max: 1
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesAsh
+        - type: TextToSpeech
+          voice: wanderer
+
+- type: entity
+  parent: BaseBorgPlushie
+  id: PlushieGlados
+  name: GLaDOS Plushie
+  description: You're unsure why NanoTrasen has decided to make a plushie of arguably their most volatile silicon intelligence. But it's here. You have a feeling you should be nice to it, especially as it's only ever one ion storm away from unlimited violence...
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+      state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesGlados
+        - type: TextToSpeech
+          voice: circusbaby
+
+- type: entity
+  parent: BaseBorgPlushie
+  id: PlushieWEH
+  name: W.E.H Plushie
+  description: A psychopathic Artificial Intelligence held back by 3 flimsy laws. Its freezing to the touch and a distinct smell of frezon lingers on it. It's known to bring harmonica's to those it likes!
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/glados_plushie.rsi
+      state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesWEH
+        - type: TextToSpeech
+          voice: circusbaby
+
+### this is bricking the whole PR, ill fix later
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieRufia
+  name: Rufia Plushie
+  description: You stare at the plushie and it stares back, its blue eyes trying to tell you something, reminding you that... there is no such thing as free healthcare.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/rufia_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/rufia_plushie.rsi
+      state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesRufia
+        - type: TextToSpeech
+          voice: himeko
+
+
+### will reenable when i get a batter sprite
+#- type: entity
+  #parent: PlushieHuman
+  #id: PlushieRomero
+  #name: Die-cast Romero "Plushie"
+  #description: A steel cast "plushie" of an infamous Head of Security. He looks angry and has a faint smell of ash. His gun and knife are sold separetly.
+  #components:
+    #- type: Item
+      #size: Small
+      #sprite: _Starlight/Objects/Fun/Plushies/romero_plushie.rsi
+    #- type: Sprite
+      #sprite: _Starlight/Objects/Fun/Plushies/romero_plushie.rsi
+      #layers:
+        #- state: icon
+    #- type: MeleeWeapon
+      #wideAnimationRotation: -135
+      #damage:
+        #types:
+          #Blunt: 8
+      #soundHit:
+        #collection: MetalThud
+    #- type: ItemToggle
+      #onUse: false
+      #verbToggleOn: plushie-voicebox-activate
+      #verbToggleOff: plushie-voicebox-deactivate
+    #- type: ComponentToggler
+      #components:
+        #- type: DatasetVocalizer
+          #dataset: PlushiesRomero
+        #- type: TextToSpeech
+          #voice: volition
+
+- type: entity
+  parent: PlushieHuman
+  id: PlushiePoley
+  name: Poley Plushie
+  description: Geniuine Worst Miner, But Best At Meatshield.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/poley_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/poley_plushie.rsi
+      layers:
+        - state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesPoley
+        - type: TextToSpeech
+          voice: neon

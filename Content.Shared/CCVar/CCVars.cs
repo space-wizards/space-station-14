@@ -1,3 +1,5 @@
+using Content.Shared.Administration;
+using Content.Shared.CCVar.CVarAccess;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 
@@ -13,6 +15,16 @@ namespace Content.Shared.CCVar;
 public sealed partial class CCVars : CVars
 {
     // Only debug stuff lives here.
+
+#if DEBUG
+    [CVarControl(AdminFlags.Debug)]
+    public static readonly CVarDef<string> DebugTestCVar =
+        CVarDef.Create("debug.test_cvar", "default", CVar.SERVER);
+
+    [CVarControl(AdminFlags.Debug)]
+    public static readonly CVarDef<float> DebugTestCVar2 =
+        CVarDef.Create("debug.test_cvar2", 123.42069f, CVar.SERVER);
+#endif
 
     /// <summary>
     /// A simple toggle to test <c>OptionsVisualizerComponent</c>.

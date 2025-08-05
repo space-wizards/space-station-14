@@ -1,6 +1,6 @@
 - type: entity
   name: silencer
-  parent: BaseItem
+  parent: [ BaseItem, BaseMajorContraband ]
   id: Silencer
   description: Tool for silencing humans.
   components:
