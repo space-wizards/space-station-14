@@ -30,7 +30,7 @@ public sealed partial class SensorInfo : BoxContainer
     public SensorInfo(AtmosSensorData data, string address)
     {
         IoCManager.InjectDependencies(this);
-        var _atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();
+        var atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();
 
         RobustXamlLoader.Load(this);
 
@@ -55,7 +55,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             var fractionGas = amount / data.TotalMoles;
 
-            ProtoId<GasPrototype> gasProtoId = _atmosphereSystem.GetGas(gas);
+            ProtoId<GasPrototype> gasProtoId = atmosphereSystem.GetGas(gas);
             var gasName = _prototypeManager.Index(gasProtoId).Name;
 
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
@@ -104,7 +104,7 @@ public sealed partial class SensorInfo : BoxContainer
     public void ChangeData(AtmosSensorData data)
     {
         IoCManager.InjectDependencies(this);
-        var _atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();
+        var atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();
 
         SensorAddress.Title = Loc.GetString("air-alarm-ui-window-listing-title", ("address", _address), ("state", data.AlarmState));
 
@@ -129,7 +129,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             var fractionGas = amount / data.TotalMoles;
 
-            ProtoId<GasPrototype> gasProtoId = _atmosphereSystem.GetGas(gas);
+            ProtoId<GasPrototype> gasProtoId = atmosphereSystem.GetGas(gas);
             var gasName = _prototypeManager.Index(gasProtoId).Name;
 
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
