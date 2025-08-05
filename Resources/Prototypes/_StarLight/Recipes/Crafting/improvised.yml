@@ -517,3 +517,13 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-PVTH
+
+- type: construction
+  name: crafting-menu-name-IRS
+  id: SpeedLoaderMagnumLeverImprovised
+  graph: SpeedLoaderMagnumLeverImprovisedGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: crafting-menu-text-IRS

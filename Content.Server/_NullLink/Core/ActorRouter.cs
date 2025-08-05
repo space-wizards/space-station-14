@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices.JavaScript;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices.JavaScript;
 using System.Threading.Tasks;
 using Content.Server._NullLink.Helpers;
 using Content.Shared.CCVar;
@@ -25,10 +26,19 @@ public sealed partial class ActorRouter : IActorRouter, IDisposable
 
     public bool Enabled { get; private set; }
     public Task Connection => OrleansClientHolder.Connection;
+    public event Action OnConnected = () => { };
+    private Action? _onConnectedProxy;
 
     public void Initialize()
     {
         _sawmill = Logger.GetSawmill("actor-router");
+
+        _onConnectedProxy ??= () =>
+        {
+            _sawmill.Info("Connected to Orleans cluster.");
+            OnConnected.Invoke();
+        };
+        OrleansClientHolder.OnConnected += _onConnectedProxy;
 
         _cfg.OnValueChanged(NullLinkCCVars.ClusterConnectionString, OnConnStringChanged, true);
         _cfg.OnValueChanged(NullLinkCCVars.Enabled, OnEnabledChanged, true);
@@ -36,9 +46,13 @@ public sealed partial class ActorRouter : IActorRouter, IDisposable
         _cfg.OnValueChanged(NullLinkCCVars.Project, x => _project = x, true);
         _cfg.OnValueChanged(NullLinkCCVars.Server, x => _server = x, true);
     }
-    public ValueTask Shutdown() => OrleansClientHolder.Shutdown();
+    public ValueTask Shutdown()
+    {
+        OrleansClientHolder.OnConnected -= _onConnectedProxy;
+        return OrleansClientHolder.Shutdown();
+    }
 
-    public bool TryGetServerGrain(out IServerGrain? serverGrain)
+    public bool TryGetServerGrain([NotNullWhen(true)] out IServerGrain? serverGrain)
     {
         if (!string.IsNullOrEmpty(_project)
             && !string.IsNullOrEmpty(_server)
