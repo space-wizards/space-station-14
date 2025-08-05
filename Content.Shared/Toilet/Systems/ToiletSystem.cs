@@ -11,7 +11,7 @@ namespace Content.Shared.Toilet.Systems;
 
 /// <summary>
 /// Handles sprite changes for both toilet seat up and down as well as for lid
-/// open and closed. Handles interactions with hidden stash
+/// open and closed.
 /// </summary>
 public sealed class ToiletSystem : EntitySystem
 {
@@ -46,11 +46,6 @@ public sealed class ToiletSystem : EntitySystem
         UpdateAppearance(ent);
     }
 
-    public bool CanToggle(EntityUid uid)
-    {
-        return TryComp<StrapComponent>(uid, out var strap) && strap.BuckledEntities.Count == 0;
-    }
-
     private void OnToggleSeatVerb(Entity<ToiletComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || args.Hands == null || !CanToggle(ent))
@@ -83,6 +78,20 @@ public sealed class ToiletSystem : EntitySystem
         ToggleToiletSeat(ent.AsNullable(), args.User);
     }
 
+    private void UpdateAppearance(Entity<ToiletComponent> ent)
+    {
+        _appearance.SetData(ent,
+            ToiletVisuals.SeatVisualState,
+            ent.Comp.ToggleSeat ? SeatVisualState.SeatUp : SeatVisualState.SeatDown);
+    }
+
+
+    /// <summary>
+    /// Toggles a toilet's seat. Yup. Doesn't check if anyone is on the seat.
+    /// </summary>
+    /// <param name="ent">The toilet being seat-toggled.</param>
+    /// <param name="user">The user doing the toggling; used for predicted audio.</param>
+    /// <seealso cref="CanToggle" />
     public void ToggleToiletSeat(Entity<ToiletComponent?> ent, EntityUid? user = null)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -95,10 +104,13 @@ public sealed class ToiletSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void UpdateAppearance(Entity<ToiletComponent> ent)
+    /// <summary>
+    /// Whether or not a toilet seat can be toggled without phasing through
+    /// someone's back. (That is, no one is seated on it.)
+    /// </summary>
+    /// <seealso cref="ToggleToiletSeat" />
+    public bool CanToggle(EntityUid uid)
     {
-        _appearance.SetData(ent,
-            ToiletVisuals.SeatVisualState,
-            ent.Comp.ToggleSeat ? SeatVisualState.SeatUp : SeatVisualState.SeatDown);
+        return TryComp<StrapComponent>(uid, out var strap) && strap.BuckledEntities.Count == 0;
     }
 }

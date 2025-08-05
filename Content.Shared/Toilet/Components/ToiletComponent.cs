@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Toilet.Components;
 
 /// <summary>
-/// Toilets that can be flushed, seats toggled up and down, items hidden in cistern.
+/// Seats that can toggled up and down with visuals to match.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ToiletComponent : Component
