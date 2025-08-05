@@ -1,8 +1,7 @@
-using Content.Shared.Examine;
+﻿using Content.Shared.Examine;
 using Content.Shared.Ghost;
-using Content.Shared.Warps;
 
-namespace Content.Server.Warps;
+namespace Content.Shared.Warps;
 
 public sealed class WarpPointSystem : EntitySystem
 {
