@@ -1482,6 +1482,6 @@
     - state: icon-xenoborg-cloak2
   - type: ItemBorgModule
     hands:
-    - SuperCloakingDevice
+    - item: SuperCloakingDevice
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye2-module }
