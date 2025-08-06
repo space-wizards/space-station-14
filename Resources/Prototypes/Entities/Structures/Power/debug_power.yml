@@ -127,7 +127,7 @@
 - type: entity
   parent: BaseSMES
   id: DebugSMES
-  suffix: DEBUG, empty
+  suffix: DEBUG, Empty
   components:
   - type: Tag
     tags:
@@ -135,8 +135,8 @@
 
 - type: entity
   parent: BaseSMES
-  id: DebugSMESInfinite
-  suffix: DEBUG, infinite
+  id: DebugSMESRecharging
+  suffix: DEBUG, AutoRecharge
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
@@ -148,7 +148,7 @@
 - type: entity
   parent: BaseSubstation
   id: DebugSubstation
-  suffix: DEBUG, empty
+  suffix: DEBUG, Empty
   components:
   - type: Tag
     tags:
@@ -156,8 +156,8 @@
 
 - type: entity
   parent: BaseSubstation
-  id: DebugSubstationInfinite
-  suffix: DEBUG, infinite
+  id: DebugSubstationRecharging
+  suffix: DEBUG, AutoRecharge
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
@@ -169,7 +169,7 @@
 - type: entity
   parent: BaseSubstationWall
   id: DebugSubstationWall
-  suffix: DEBUG, empty
+  suffix: DEBUG, Empty
   components:
   - type: Tag
     tags:
@@ -177,8 +177,8 @@
 
 - type: entity
   parent: BaseSubstationWall
-  id: DebugSubstationWallInfinite
-  suffix: DEBUG, infinite
+  id: DebugSubstationWallRecharging
+  suffix: DEBUG, AutoRecharge
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
@@ -190,7 +190,7 @@
 - type: entity
   parent: BaseAPC
   id: DebugAPC
-  suffix: DEBUG, empty
+  suffix: DEBUG, Empty
   components:
   - type: Tag
     tags:
@@ -198,8 +198,8 @@
 
 - type: entity
   parent: BaseAPC
-  id: DebugAPCInfinite
-  suffix: DEBUG, infinite
+  id: DebugAPCRecharging
+  suffix: DEBUG, AutoRecharge
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
