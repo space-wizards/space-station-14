@@ -7,6 +7,7 @@ using Content.Shared.Turrets;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.Silicons.StationAi;
@@ -17,6 +18,8 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
+    private readonly ProtoId<ChatNotificationPrototype> _turretIsAttackingChatNotificationPrototype = "TurretIsAttacking";
+    private readonly ProtoId<ChatNotificationPrototype> _aiWireSnippedChatNotificationPrototype = "AiWireSnipped";
 
     public override void Initialize()
     {
@@ -68,7 +71,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         foreach (var ai in ais)
         {
-            var ev = new ChatNotificationEvent("TurretIsAttacking", ent);
+            var ev = new ChatNotificationEvent(_turretIsAttackingChatNotificationPrototype, ent);
 
             if (TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork))
                 ev.SourceNameOverride = Loc.GetString("station-ai-turret-component-name", ("name", Name(ent)), ("address", deviceNetwork.Address));
@@ -113,7 +116,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
             if (!StationAiCanDetectWireSnipping(ai))
                 continue;
 
-            var ev = new ChatNotificationEvent("AiWireSnipped", uid);
+            var ev = new ChatNotificationEvent(_aiWireSnippedChatNotificationPrototype, uid);
 
             var tile = Maps.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
             ev.SourceNameOverride = tile.ToString();

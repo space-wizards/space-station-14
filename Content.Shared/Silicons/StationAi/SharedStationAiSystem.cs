@@ -70,6 +70,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     private EntityQuery<MapGridComponent> _gridQuery;
 
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
+    private readonly ProtoId<ChatNotificationPrototype> _downloadChatNotificationPrototype = "IntellicardDownload";
 
     private const float MaxVisionMultiplier = 5f;
 
@@ -97,7 +98,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiHolderComponent, MapInitEvent>(OnHolderMapInit);
         SubscribeLocalEvent<StationAiHolderComponent, EntInsertedIntoContainerMessage>(OnHolderConInsert);
         SubscribeLocalEvent<StationAiHolderComponent, EntRemovedFromContainerMessage>(OnHolderConRemove);
-        SubscribeLocalEvent<StationAiHolderComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<StationAiHolderComponent, IntellicardDoAfterEvent>(OnIntellicardDoAfter);
 
         SubscribeLocalEvent<StationAiCoreComponent, EntInsertedIntoContainerMessage>(OnAiInsert);
         SubscribeLocalEvent<StationAiCoreComponent, EntRemovedFromContainerMessage>(OnAiRemove);
@@ -221,7 +222,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     }
 
 
-    private void OnDoAfter(Entity<StationAiHolderComponent> ent, ref DoAfterEvent args)
+    private void OnIntellicardDoAfter(Entity<StationAiHolderComponent> ent, ref IntellicardDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
@@ -276,24 +277,24 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         if (cardHasAi && coreHasAi)
         {
-            _popup.PopupClient(Loc.GetString("-core-occupied"), args.User, args.User, PopupType.Medium);
+            _popup.PopupClient(Loc.GetString("intellicard-core-occupied"), args.User, args.User, PopupType.Medium);
             args.Handled = true;
             return;
         }
         if (!cardHasAi && !coreHasAi)
         {
-            _popup.PopupClient(Loc.GetString("-core-empty"), args.User, args.User, PopupType.Medium);
+            _popup.PopupClient(Loc.GetString("intellicard-core-empty"), args.User, args.User, PopupType.Medium);
             args.Handled = true;
             return;
         }
 
         if (TryGetHeld((args.Target.Value, targetHolder), out var held))
         {
-            var ev = new ChatNotificationEvent("Download", args.Used, args.User);
+            var ev = new ChatNotificationEvent(_downloadChatNotificationPrototype, args.Used, args.User);
             RaiseLocalEvent(held, ref ev);
         }
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, cardHasAi ? intelliComp.UploadTime : intelliComp.DownloadTime, new DoAfterEvent(), args.Target, ent.Owner)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, cardHasAi ? intelliComp.UploadTime : intelliComp.DownloadTime, new IntellicardDoAfterEvent(), args.Target, ent.Owner)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -570,7 +571,7 @@ public sealed partial class JumpToCoreEvent : InstantActionEvent
 }
 
 [Serializable, NetSerializable]
-public sealed partial class DoAfterEvent : SimpleDoAfterEvent;
+public sealed partial class IntellicardDoAfterEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
 public enum StationAiVisualState : byte
