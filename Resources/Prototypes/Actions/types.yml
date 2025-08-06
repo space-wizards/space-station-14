@@ -433,7 +433,7 @@
   description: Use your agile legs to leap a short distance. Be careful not to bump into anything!
   components:
   - type: Action
-    useDelay: 10
+    useDelay: 12
     icon:
       sprite: Interface/Actions/jump.rsi
       state: icon
