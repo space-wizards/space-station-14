@@ -10,6 +10,7 @@ namespace Content.Shared.Traits.Assorted;
 /// Handles <see cref="ImpairedMobilityComponent"/>
 /// </summary>
 public sealed class ImpairedMobilitySystem : EntitySystem
+{
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     public override void Initialize()
     {
@@ -34,12 +35,13 @@ public sealed class ImpairedMobilitySystem : EntitySystem
     }
 
     /// Checks if the entity is holding any non-wielded mobility aids.
-private bool HasMobilityAid(Entity<HandsComponent?> entity)
+    private bool HasMobilityAid(Entity<HandsComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp, false))
             return false;
 
         foreach (var held in _hands.EnumerateHeld(entity))
+        {
             if (!HasComp<MobilityAidComponent>(held))
                 continue;
 
