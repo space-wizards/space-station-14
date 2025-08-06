@@ -34,6 +34,8 @@
     solution: drink
   - type: DrainableSolution
     solution: drink
+  - type: ExaminableSolution
+    solution: drink
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
@@ -78,8 +80,6 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 25
-  - type: ExaminableSolution
-    solution: drink
   - type: FitsInDispenser
     solution: drink
   - type: Tag

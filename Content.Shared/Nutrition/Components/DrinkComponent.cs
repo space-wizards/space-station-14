@@ -25,9 +25,6 @@ public sealed partial class DrinkComponent : Component
     [DataField, AutoNetworkedField]
     public float Delay = 1;
 
-    [DataField, AutoNetworkedField]
-    public bool Examinable = true;
-
     /// <summary>
     /// If true, trying to drink when empty will not handle the event.
     /// This means other systems such as equipping on use can run.

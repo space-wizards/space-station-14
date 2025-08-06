@@ -208,6 +208,7 @@
     solution: puddle
   - type: ExaminableSolution
     solution: puddle
+    locVolume: "examinable-solution-on-examine-volume-puddle"
   - type: DrawableSolution
     solution: puddle
   - type: BadDrink
