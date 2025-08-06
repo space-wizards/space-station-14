@@ -35,12 +35,6 @@ public sealed partial class ExaminableSolutionComponent : Component
     public bool ExaminableWhileClosed = true;
 
     /// <summary>
-    ///     Examine text for when the solution is empty.
-    /// </summary>
-    [DataField]
-    public LocId LocEmptyVolume = "shared-solution-container-component-on-examine-empty-container";
-
-    /// <summary>
     ///     Examine text for the amount of solution.
     /// </summary>
     /// <seealso cref="ExaminedVolumeDisplay"/>

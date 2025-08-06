@@ -1,4 +1,3 @@
-shared-solution-container-component-on-examine-empty-container = [color=gray]Contains no chemicals.[/color]
 shared-solution-container-component-on-examine-main-text = It contains {INDEFINITE($desc)} [color={$color}]{$desc}[/color] { $chemCount ->
     [1] chemical.
    *[other] mixture of chemicals.

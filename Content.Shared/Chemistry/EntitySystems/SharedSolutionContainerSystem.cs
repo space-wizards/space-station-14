@@ -811,7 +811,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (string.IsNullOrEmpty(primaryReagent?.Prototype) ||
             !PrototypeManager.Resolve<ReagentPrototype>(primaryReagent.Value.Prototype, out var primary))
         {
-            args.PushMarkup(Loc.GetString(entity.Comp.LocEmptyVolume));
+            args.PushMarkup(Loc.GetString(entity.Comp.LocVolume, ("fillLevel", ExaminedVolumeDisplay.Empty)));
             return;
         }
 
