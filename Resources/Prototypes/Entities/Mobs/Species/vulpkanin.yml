@@ -34,7 +34,7 @@
     animation: WeaponArcClaw
     damage: # Slightly increased damage to 6 total instead of 5.
       types:
-        Piercing: 3
+        Piercing: 2
         Slash: 3
   - type: Temperature # Similiar to moth values, but do make sense for Vulpkanin.
     heatDamageThreshold: 320
@@ -51,7 +51,6 @@
   - type: TemperatureProtection
     heatingCoefficient: 1.2
     coolingCoefficient: 0.50
-  - type: Sharp
   - type: SolutionScanner
   - type: Sprite # Drawlayers. Top to bottom in order I believe.
     netsync: false
