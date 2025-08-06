@@ -38,8 +38,8 @@ namespace Content.Shared.Stacks
             SubscribeLocalEvent<StackComponent, ComponentStartup>(OnStackStarted);
             SubscribeLocalEvent<StackComponent, ExaminedEvent>(OnStackExamined);
             SubscribeLocalEvent<StackComponent, InteractUsingEvent>(OnStackInteractUsing);
-            SubscribeLocalEvent<StackComponent, BeforeEatenEvent>(OnBeforeEaten);
-            SubscribeLocalEvent<StackComponent, EatenEvent>(OnEaten);
+            SubscribeLocalEvent<StackComponent, BeforeIngestedEvent>(OnBeforeEaten);
+            SubscribeLocalEvent<StackComponent, IngestedEvent>(OnEaten);
 
             _vvm.GetTypeHandler<StackComponent>()
                 .AddPath(nameof(StackComponent.Count), (_, comp) => comp.Count, SetCount);
@@ -393,7 +393,7 @@ namespace Content.Shared.Stacks
             );
         }
 
-        private void OnBeforeEaten(Entity<StackComponent> eaten, ref BeforeEatenEvent args)
+        private void OnBeforeEaten(Entity<StackComponent> eaten, ref BeforeIngestedEvent args)
         {
             if (args.Cancelled)
                 return;
@@ -422,7 +422,7 @@ namespace Content.Shared.Stacks
             args.Cancelled = true;
         }
 
-        private void OnEaten(Entity<StackComponent> eaten, ref EatenEvent args)
+        private void OnEaten(Entity<StackComponent> eaten, ref IngestedEvent args)
         {
             if (!Use(eaten, 1))
                 return;

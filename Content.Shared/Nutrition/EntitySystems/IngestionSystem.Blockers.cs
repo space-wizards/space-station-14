@@ -32,7 +32,7 @@ public sealed partial class IngestionSystem
         SubscribeLocalEvent<DrainableSolutionComponent, IsDigestibleEvent>(OnDrainableIsDigestible);
         SubscribeLocalEvent<PuddleComponent, IsDigestibleEvent>(OnPuddleIsDigestible);
 
-        SubscribeLocalEvent<PillComponent, BeforeEatenEvent>(OnPillBeforeEaten);
+        SubscribeLocalEvent<PillComponent, BeforeIngestedEvent>(OnPillBeforeEaten);
     }
 
     private void OnUnremovableIngestion(Entity<UnremoveableComponent> entity, ref IngestibleEvent args)
@@ -146,7 +146,7 @@ public sealed partial class IngestionSystem
     /// <remarks>
     /// I mean you have to eat the *whole* pill no?
     /// </remarks>
-    private void OnPillBeforeEaten(Entity<PillComponent> ent, ref BeforeEatenEvent args)
+    private void OnPillBeforeEaten(Entity<PillComponent> ent, ref BeforeIngestedEvent args)
     {
         if (args.Cancelled || args.Solution is not { } sol)
             return;

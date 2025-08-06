@@ -358,6 +358,22 @@ public sealed partial class IngestionSystem
         return true;
     }
 
+    /// <summary>
+    /// Returns the most accurate edible prototype for an entity if one exists.
+    /// </summary>
+    /// <param name="entity">entity who's edible prototype we want</param>
+    /// <returns>The best matching prototype if one exists.</returns>
+    public ProtoId<EdiblePrototype>? GetEdibleType(Entity<EdibleComponent?> entity)
+    {
+        if (Resolve(entity, ref entity.Comp, false))
+            return entity.Comp.Edible;
+
+        var ev = new GetEdibleTypeEvent();
+        RaiseLocalEvent(entity, ref ev);
+
+        return ev.Type;
+    }
+
     public string GetEdibleNoun(Entity<EdibleComponent?> entity)
     {
         if (Resolve(entity, ref entity.Comp, false))

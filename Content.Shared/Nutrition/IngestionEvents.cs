@@ -104,7 +104,7 @@ public sealed partial class EatingDoAfterEvent : SimpleDoAfterEvent;
 /// <param name="Max">The maximum amount we can transfer.</param>
 /// <param name="Solution">The solution we are transferring.</param>
 [ByRefEvent]
-public record struct BeforeEatenEvent(FixedPoint2 Min, FixedPoint2 Max, Solution? Solution)
+public record struct BeforeIngestedEvent(FixedPoint2 Min, FixedPoint2 Max, Solution? Solution)
 {
     // How much we would like to transfer, gets clamped by Min and Max.
     public FixedPoint2 Transfer;
@@ -131,6 +131,9 @@ public record struct BeforeEatenEvent(FixedPoint2 Min, FixedPoint2 Max, Solution
     }
 }
 
+[ByRefEvent]
+public record struct IngestingEvent(EntityUid Food, Solution Split, bool ForceFed);
+
 /// <summary>
 /// Raised on an entity when it is being made to be eaten.
 /// </summary>
@@ -139,7 +142,7 @@ public record struct BeforeEatenEvent(FixedPoint2 Min, FixedPoint2 Max, Solution
 /// <param name="Split">The solution we're currently eating.</param>
 /// <param name="ForceFed">Whether we're being fed by someone else, checkec enough I might as well pass it.</param>
 [ByRefEvent]
-public record struct EatenEvent(EntityUid User, EntityUid Target, Solution Split, bool ForceFed)
+public record struct IngestedEvent(EntityUid User, EntityUid Target, Solution Split, bool ForceFed)
 {
     // Should we refill the solution now that we've eaten it?
     // This bool basically only exists because of stackable system.

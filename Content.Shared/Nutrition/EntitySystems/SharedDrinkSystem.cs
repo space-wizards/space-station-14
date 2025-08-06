@@ -37,8 +37,8 @@ public abstract partial class SharedDrinkSystem : EntitySystem
 
         SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
 
-        SubscribeLocalEvent<DrinkComponent, BeforeEatenEvent>(OnBeforeDrinkEaten);
-        SubscribeLocalEvent<DrinkComponent, EatenEvent>(OnDrinkEaten);
+        SubscribeLocalEvent<DrinkComponent, BeforeIngestedEvent>(OnBeforeDrinkEaten);
+        SubscribeLocalEvent<DrinkComponent, IngestedEvent>(OnDrinkEaten);
 
         SubscribeLocalEvent<DrinkComponent, EdibleEvent>(OnDrink);
 
@@ -107,7 +107,7 @@ public abstract partial class SharedDrinkSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void OnBeforeDrinkEaten(Entity<DrinkComponent> food, ref BeforeEatenEvent args)
+    private void OnBeforeDrinkEaten(Entity<DrinkComponent> food, ref BeforeIngestedEvent args)
     {
         if (args.Cancelled)
             return;
@@ -116,7 +116,7 @@ public abstract partial class SharedDrinkSystem : EntitySystem
         args.Transfer = food.Comp.TransferAmount;
     }
 
-    private void OnDrinkEaten(Entity<DrinkComponent> entity, ref EatenEvent args)
+    private void OnDrinkEaten(Entity<DrinkComponent> entity, ref IngestedEvent args)
     {
         if (args.Handled)
             return;

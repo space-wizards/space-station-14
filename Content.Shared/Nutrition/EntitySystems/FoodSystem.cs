@@ -43,8 +43,8 @@ public sealed class FoodSystem : EntitySystem
 
         SubscribeLocalEvent<FoodComponent, GetVerbsEvent<AlternativeVerb>>(AddEatVerb);
 
-        SubscribeLocalEvent<FoodComponent, BeforeEatenEvent>(OnBeforeFoodEaten);
-        SubscribeLocalEvent<FoodComponent, EatenEvent>(OnFoodEaten);
+        SubscribeLocalEvent<FoodComponent, BeforeIngestedEvent>(OnBeforeFoodEaten);
+        SubscribeLocalEvent<FoodComponent, IngestedEvent>(OnFoodEaten);
         SubscribeLocalEvent<FoodComponent, FullyEatenEvent>(OnFoodFullyEaten);
 
         SubscribeLocalEvent<FoodComponent, GetUtensilsEvent>(OnGetUtensils);
@@ -93,7 +93,7 @@ public sealed class FoodSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void OnBeforeFoodEaten(Entity<FoodComponent> food, ref BeforeEatenEvent args)
+    private void OnBeforeFoodEaten(Entity<FoodComponent> food, ref BeforeIngestedEvent args)
     {
         if (args.Cancelled || args.Solution is not { } solution)
             return;
@@ -102,7 +102,7 @@ public sealed class FoodSystem : EntitySystem
         args.Transfer = food.Comp.TransferAmount ?? solution.Volume;
     }
 
-    private void OnFoodEaten(Entity<FoodComponent> entity, ref EatenEvent args)
+    private void OnFoodEaten(Entity<FoodComponent> entity, ref IngestedEvent args)
     {
         if (args.Handled)
             return;

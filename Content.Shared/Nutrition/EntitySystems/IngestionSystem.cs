@@ -72,8 +72,8 @@ public sealed partial class IngestionSystem : EntitySystem
         SubscribeLocalEvent<EdibleComponent, AfterInteractEvent>(OnEdibleInteract, after: new[] { typeof(ToolOpenableSystem) });
 
         // Generic Eating Handlers
-        SubscribeLocalEvent<EdibleComponent, BeforeEatenEvent>(OnBeforeEaten);
-        SubscribeLocalEvent<EdibleComponent, EatenEvent>(OnEdibleEaten);
+        SubscribeLocalEvent<EdibleComponent, BeforeIngestedEvent>(OnBeforeIngested);
+        SubscribeLocalEvent<EdibleComponent, IngestedEvent>(OnEdibleIngested);
         SubscribeLocalEvent<EdibleComponent, FullyEatenEvent>(OnFullyEaten);
 
         // Body Component eating handler
@@ -343,8 +343,9 @@ public sealed partial class IngestionSystem : EntitySystem
             return;
         }
 
-        var beforeEv = new BeforeEatenEvent(FixedPoint2.Zero, highestAvailable, solution.Value.Comp.Solution);
+        var beforeEv = new BeforeIngestedEvent(FixedPoint2.Zero, highestAvailable, solution.Value.Comp.Solution);
         RaiseLocalEvent(food, ref beforeEv);
+        RaiseLocalEvent(entity, ref beforeEv);
 
         if (beforeEv.Cancelled || beforeEv.Min > beforeEv.Max)
         {
@@ -361,14 +362,18 @@ public sealed partial class IngestionSystem : EntitySystem
 
         var split = _solutionContainer.SplitSolution(solution.Value, transfer);
 
+        var ingestEv = new IngestingEvent(food, split, forceFed);
+        RaiseLocalEvent(entity, ref ingestEv);
+
+        _reaction.DoEntityReaction(entity, split, ReactionMethod.Ingestion);
+
         // Everything is good to go item has been successfuly eaten
-        var afterEv = new EatenEvent(args.User, entity, split, forceFed);
+        var afterEv = new IngestedEvent(args.User, entity, split, forceFed);
         RaiseLocalEvent(food, ref afterEv);
 
         if (afterEv.Refresh)
             _solutionContainer.TryAddSolution(solution.Value, split);
 
-        _reaction.DoEntityReaction(entity, split, ReactionMethod.Ingestion);
         _stomach.TryTransferSolution(stomachToUse.Value.Owner, split, stomachToUse);
 
         if (!afterEv.Destroy)
@@ -424,7 +429,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
     #endregion
 
-    private void OnBeforeEaten(Entity<EdibleComponent> food, ref BeforeEatenEvent args)
+    private void OnBeforeIngested(Entity<EdibleComponent> food, ref BeforeIngestedEvent args)
     {
         if (args.Cancelled || args.Solution is not { } solution)
             return;
@@ -433,7 +438,7 @@ public sealed partial class IngestionSystem : EntitySystem
         args.Transfer = food.Comp.TransferAmount ?? solution.Volume;
     }
 
-    private void OnEdibleEaten(Entity<EdibleComponent> entity, ref EatenEvent args)
+    private void OnEdibleIngested(Entity<EdibleComponent> entity, ref IngestedEvent args)
     {
         // This is a lot but there wasn't really a way to separate this from the EdibleComponent otherwise I would've moved it.
 
