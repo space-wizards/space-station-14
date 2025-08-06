@@ -57,7 +57,7 @@
   desc: reagent-desc-lye
   flavor: alkaline
   physicalDesc: reagent-physical-desc-alkaline
-  color: "#ce5519"
+  color: "#e5420b"
   metabolisms:
     Poison:
       effects:
