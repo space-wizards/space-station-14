@@ -42,8 +42,10 @@
     closeable: true
     closeSound:
       collection: bottleCloseSounds
-  - type: Drink
+  - type: Edible
+    edible: Drink
     solution: beaker
+    destroyOnEmpty: false
   - type: SolutionContainerManager
     solutions:
       beaker:
