@@ -30,7 +30,7 @@ public sealed partial class AnomalyScannerScreenComponent : Component
     /// The position of the top-left of the severity bar in pixels.
     /// </summary>
     [DataField(readOnly: true)]
-    public Vector2i Offset =  new Vector2i(12, 17);
+    public Vector2i Offset = new Vector2i(12, 17);
 
     /// <summary>
     /// The width and height of the severity bar in pixels.
