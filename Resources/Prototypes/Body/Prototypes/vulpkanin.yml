@@ -20,7 +20,7 @@
       organs:
         heart: OrganHumanHeart
         lungs: OrganHumanLungs
-        stomach: OrganVulpkaninStomach
+        stomach: OrganHumanStomach
         liver: OrganAnimalLiver
         kidneys: OrganHumanKidneys
     right arm:
