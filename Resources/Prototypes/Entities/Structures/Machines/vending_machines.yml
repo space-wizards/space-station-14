@@ -86,11 +86,9 @@
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
-    - Binary
     - Common
   - type: ActiveRadio
     channels:
-    - Binary
     - Common
   - type: DoAfter
   - type: Electrified
@@ -179,6 +177,133 @@
     usesApcPower: true
   - type: Rotatable
 
+# Vending Machine Radio channels
+
+- type: entity
+  id: VendingMachineService
+  parent: VendingMachine
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Service
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Service
+
+- type: entity
+  id: VendingMachineSecurity
+  parent: VendingMachine
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Security
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Security
+
+- type: entity
+  id: VendingMachineMedical
+  parent: VendingMachine
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Medical
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Medical
+
+- type: entity
+  id: VendingMachineEngineering
+  parent: VendingMachine
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Engineering
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Engineering
+
+- type: entity
+  id: VendingMachineCommand
+  parent: VendingMachine
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Command
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Command
+
+- type: entity
+  id: VendingMachineScience
+  parent: VendingMachine
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Science
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Science
+
+- type: entity
+  id: VendingMachineCargo
+  parent: VendingMachine
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Supply
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Supply
+
+- type: entity
+  id: VendingMachineCentCom
+  parent: VendingMachine
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - CentCom
+  - type: ActiveRadio
+    channels:
+    - Common
+    - CentCom
+
+- type: entity
+  id: VendingMachineSyndicate
+  parent: VendingMachine
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate #Only syndie radio so it doesn't start snitching
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+
+    
 # Vending machines
 
 - type: entity
