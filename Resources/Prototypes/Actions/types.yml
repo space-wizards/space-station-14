@@ -420,12 +420,26 @@
   components:
   - type: Action
     useDelay: 8
-    icon: 
+    icon:
       sprite: Interface/Actions/jump.rsi
       state: icon
   - type: InstantAction
     event: !type:GravityJumpEvent {}
-    
+
+- type: entity
+  parent: BaseAction
+  id: ActionVulpkaninGravityJump
+  name: Leap
+  description: Use your agile legs to leap a short distance.
+  components:
+  - type: Action
+    useDelay: 10
+    icon:
+      sprite: Interface/Actions/jump.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:GravityJumpEvent {}
+
 - type: entity
   parent: BaseToggleAction
   id: ActionToggleRootable
