@@ -11,6 +11,13 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
+    private const float MaxHueDegrees = 360f;
+    private const float GreenHueDegrees = 110f;
+    private const float RedHueDegrees = 0f;
+    private const float GreenHue = GreenHueDegrees / MaxHueDegrees;
+    private const float RedHue = RedHueDegrees / MaxHueDegrees;
+
+
     // Just an array to initialize the pixels of a new OwnedTexture
     private static readonly Rgba32[] EmptyTexture = new Rgba32[32*32];
 
@@ -61,10 +68,9 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
 
         // Calculate the bar color
         // Hue "angle" of two colors to interpolate between depending on severity
-        const float greenHue = 110f / 360f;
-        const float redHue = 0f;
+
         // Just a lerp from greenHue at severity = 0.5 to redHue at 1.0
-        var hue = Math.Clamp(2*greenHue * (1 - severity), redHue, greenHue);
+        var hue = Math.Clamp(2*GreenHue * (1 - severity), RedHue, GreenHue);
         var color = new Rgba32(Color.FromHsv((hue, 1, 1, 1)).RGBA);
 
         var transparent = new Rgba32(0, 0, 0, 255);
