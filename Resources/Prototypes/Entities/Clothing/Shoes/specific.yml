@@ -287,3 +287,15 @@
       collection: FootstepSkates
       params:
         variation: 0.08
+
+- type: entity
+  parent: [ClothingShoesBaseButcherable, BaseSyndicateContraband]
+  id: ClothingShoesKudzu
+  name: kudzu stompers
+  description: "Move swiftly through Kudzu, become one with the plants."
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/kudzustompers.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/kudzustompers.rsi
+  - type: IgnoreKudzu

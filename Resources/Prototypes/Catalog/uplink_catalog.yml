@@ -1971,6 +1971,23 @@
     - Botanist
 
 - type: listing
+  id: uplinkKudzuStompers
+  name: uplink-kudzu-stompers-name
+  description: uplink-kudzu-stompers-desc
+  productEntity: ClothingShoesKudzu
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Botanist
+
+- type: listing
   id: uplinkRiggedBoxingGlovesPassenger
   name: uplink-rigged-boxing-gloves-name
   description: uplink-rigged-boxing-gloves-desc
