@@ -5,7 +5,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.DeltaV.FeedbackPopup;
+namespace Content.Client.FeedbackPopup;
 
 /// <summary>
 /// Displays one feedback section

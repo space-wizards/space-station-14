@@ -1,6 +1,6 @@
 ﻿using Content.Shared.FeedbackSystem;
 
-namespace Content.Client.DeltaV.FeedbackPopup;
+namespace Content.Client.FeedbackPopup;
 
 /// <summary>
 /// This handles getting feedback popup messages from the server and making a popup in the client.
