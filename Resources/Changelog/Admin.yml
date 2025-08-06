@@ -1308,5 +1308,12 @@ Entries:
   id: 159
   time: '2025-08-06T15:09:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39421
+- author: slarticodefast
+  changes:
+  - message: Added the "scale:multiplyvector" toolshed command.
+    type: Add
+  id: 160
+  time: '2025-08-06T17:23:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39424
 Name: Admin
 Order: 2
