@@ -79,7 +79,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
         {
             for (var x = 0; x < ent.Comp.Size.X; x++)
             {
-                ent.Comp.BarBuf[y*10 + x]  = x < barLength ? color : transparent;
+                ent.Comp.BarBuf[y*ent.Comp.Size.X + x]  = x < barLength ? color : transparent;
             }
         }
 
