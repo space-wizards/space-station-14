@@ -17,7 +17,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
-using Content.Shared._RMC14.Marines.Roles.Ranks;
 
 namespace Content.Shared.Paper;
 
@@ -463,13 +462,6 @@ public sealed class PaperSystem : EntitySystem
         
         // Get name from identity or fallback to entity name
         name = MetaData(identityEntity).EntityName;
-        
-        // Get rank from RankComponent
-        if (TryComp<RankComponent>(player, out var rankComp))
-        {
-            var rankSystem = EntityManager.System<SharedRankSystem>();
-            rank = rankSystem.GetRankString(player, isShort: true) ?? string.Empty;
-        }
         
         // Get role from mind system
         if (TryComp<MindContainerComponent>(player, out var mindContainer) &&
