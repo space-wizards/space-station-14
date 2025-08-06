@@ -1,66 +1,21 @@
-using Content.Server.Cuffs;
-using Content.Server.Forensics;
-using Content.Server.Humanoid;
-using Content.Server.Implants.Components;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
-using Content.Shared.Cuffs.Components;
-using Content.Shared.Forensics;
-using Content.Shared.Forensics.Components;
-using Content.Shared.Humanoid;
 using Content.Shared.Implants;
-using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Preferences;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Map;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Random;
-using System.Numerics;
-using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Movement.Pulling.Systems;
-using Content.Server.IdentityManagement;
-using Content.Shared.DetailExaminable;
 using Content.Shared.Store.Components;
-using Robust.Shared.Collections;
-using Robust.Shared.Map.Components;
 
 namespace Content.Server.Implants;
 
 public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
-    [Dependency] private readonly CuffableSystem _cuffable = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly StoreSystem _store = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
-    [Dependency] private readonly PullingSystem _pullingSystem = default!;
-    [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly IdentitySystem _identity = default!;
-
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-    private HashSet<Entity<MapGridComponent>> _targetGrids = [];
-
     public override void Initialize()
     {
         base.Initialize();
 
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
-
-        SubscribeLocalEvent<SubdermalImplantComponent, UseFreedomImplantEvent>(OnFreedomImplant);
         SubscribeLocalEvent<StoreComponent, ImplantRelayEvent<AfterInteractUsingEvent>>(OnStoreRelay);
-        SubscribeLocalEvent<SubdermalImplantComponent, ActivateImplantEvent>(OnActivateImplantEvent);
-        SubscribeLocalEvent<SubdermalImplantComponent, UseScramImplantEvent>(OnScramImplant);
-        SubscribeLocalEvent<SubdermalImplantComponent, UseDnaScramblerImplantEvent>(OnDnaScramblerImplant);
-
     }
 
     private void OnStoreRelay(EntityUid uid, StoreComponent store, ImplantRelayEvent<AfterInteractUsingEvent> implantRelay)

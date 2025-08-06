@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -31,6 +32,8 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         SubscribeLocalEvent<StatusEffectContainerComponent, ComponentShutdown>(OnStatusContainerShutdown);
         SubscribeLocalEvent<StatusEffectContainerComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
         SubscribeLocalEvent<StatusEffectContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
+
+        SubscribeLocalEvent<RejuvenateRemovedStatusEffectComponent, StatusEffectRelayedEvent<RejuvenateEvent>>(OnRejuvenate);
 
         _containerQuery = GetEntityQuery<StatusEffectContainerComponent>();
         _effectQuery = GetEntityQuery<StatusEffectComponent>();
@@ -66,6 +69,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
             _container.EnsureContainer<Container>(ent, StatusEffectContainerComponent.ContainerId);
         // We show the contents of the container to allow status effects to have visible sprites.
         ent.Comp.ActiveStatusEffects.ShowContents = true;
+        ent.Comp.ActiveStatusEffects.OccludesLight = false;
     }
 
     private void OnStatusContainerShutdown(Entity<StatusEffectContainerComponent> ent, ref ComponentShutdown args)
@@ -113,6 +117,12 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         // to another. That might be good to have for polymorphs or something.
         statusComp.AppliedTo = null;
         Dirty(args.Entity, statusComp);
+    }
+
+    private void OnRejuvenate(Entity<RejuvenateRemovedStatusEffectComponent> ent,
+        ref StatusEffectRelayedEvent<RejuvenateEvent> args)
+    {
+        PredictedQueueDel(ent.Owner);
     }
 
     private void SetStatusEffectTime(EntityUid effect, TimeSpan? duration)
