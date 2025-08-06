@@ -1822,6 +1822,26 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #endregion
 
+        #region Basic Gameplay Metrics
+
+        public async Task<int> RecordGameplayMetric(string serverName, JsonDocument metricDataa)
+        {
+            await using var db = await GetDb();
+
+            var entry = new BasicGameplayMetrics
+            {
+                CreatedAt = DateTime.UtcNow,
+                ServerName = serverName,
+                MetricData = metricDataa,
+            };
+            db.DbContext.BasicGameplayMetrics.Add(entry);
+            await db.DbContext.SaveChangesAsync();
+
+            return entry.Id;
+        }
+
+        #endregion
+
         public abstract Task SendNotification(DatabaseNotification notification);
 
         // SQLite returns DateTime as Kind=Unspecified, Npgsql actually knows for sure it's Kind=Utc.
