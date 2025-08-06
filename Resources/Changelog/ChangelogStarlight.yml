@@ -10543,5 +10543,12 @@ Entries:
   id: 1450
   time: '2025-08-05T13:58:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1211
+- author: neurovermi
+  changes:
+  - message: Entering medbay no longer causes your client to die.
+    type: Fix
+  id: 1451
+  time: '2025-08-06T10:24:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1233
 Order: -1
 
