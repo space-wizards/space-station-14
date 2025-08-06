@@ -208,7 +208,7 @@
     - Security
 
 - type: entity
-  id: VendingMachineMedical
+  id: VendingMachineMedicalRadio
   parent: VendingMachine
   components:
   - type: IntrinsicRadioReceiver
