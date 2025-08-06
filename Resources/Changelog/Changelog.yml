@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: AgentSmithRadio
-  changes:
-  - message: New food crates are now available for purchase from the automated trade
-      station!
-    type: Add
-  - message: You can no longer use Sweetie's Pistachios to fulfill cargo's generic
-      fruit bounty.
-    type: Remove
-  id: 8321
-  time: '2025-04-23T05:37:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33286
 - author: SaphireLattice
   changes:
   - message: Steel sheets no longer have unintuitively wasteful plating placement
@@ -3905,3 +3894,11 @@
   id: 8833
   time: '2025-08-06T16:58:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37363
+- author: slarticodefast
+  changes:
+  - message: Fixed inventory sprites flickering when hovering over the slot with an
+      item.
+    type: Fix
+  id: 8834
+  time: '2025-08-06T20:14:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39379
