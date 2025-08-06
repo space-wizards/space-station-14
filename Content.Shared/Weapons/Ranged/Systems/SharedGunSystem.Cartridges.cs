@@ -36,18 +36,16 @@ public abstract partial class SharedGunSystem
         _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-projectile"));
     }
 
-    private DamageSpecifier? GetProjectileDamage(string proto)
+    private DamageSpecifier? GetProjectileDamage(EntProtoId proto)
     {
-        if (!ProtoManager.TryIndex<EntityPrototype>(proto, out var entityProto))
+        if (!ProtoManager.TryIndex(proto, out var entityProto))
             return null;
 
-        if (!entityProto.Components.TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
+        if (!entityProto.TryGetComponent<ProjectileComponent>(out var projectile, Factory))
             return null;
 
-        var p = (ProjectileComponent) projectile.Component;
-
-        if (!p.Damage.Empty)
-            return p.Damage * Damageable.UniversalProjectileDamageModifier;
+        if (!projectile.Damage.Empty)
+            return projectile.Damage * Damageable.UniversalProjectileDamageModifier;
 
         return null;
     }
