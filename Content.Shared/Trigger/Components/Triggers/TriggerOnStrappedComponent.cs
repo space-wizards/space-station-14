@@ -3,9 +3,9 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
-/// Triggers when the component parent is strapped.
+/// Triggers when something is strapped to the entity.
 /// This is intended to be used on objects like chairs or beds.
-/// The parent object should be the object "containing" the strap so to speak.
+/// The user is the entity strapped to the component owner.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnStrappedComponent : BaseTriggerOnXComponent;
