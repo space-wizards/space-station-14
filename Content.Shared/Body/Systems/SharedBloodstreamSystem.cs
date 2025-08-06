@@ -14,6 +14,7 @@ using Content.Shared.Forensics.Components;
 using Content.Shared.HealthExaminable;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Audio.Systems;
@@ -222,7 +223,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         // TODO: Replace with RandomPredicted once the engine PR is merged
         // Use both the receiver and the damage causing entity for the seed so that we have different results for multiple attacks in the same tick
-        var seed = HashCode.Combine((int)_timing.CurTick.Value, GetNetEntity(ent).Id, GetNetEntity(args.Origin)?.Id ?? 0);
+        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id, GetNetEntity(args.Origin)?.Id ?? 0 });
         var rand = new System.Random(seed);
         var prob = Math.Clamp(totalFloat / 25, 0, 1);
         if (totalFloat > 0 && rand.Prob(prob))
