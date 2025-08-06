@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 265.0.0
+  engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/01/2025 09:46:27
-  entityCount: 25505
+  time: 08/06/2025 20:18:45
+  entityCount: 25508
 maps:
 - 943
 grids:
@@ -59793,13 +59793,6 @@ entities:
     - type: Transform
       pos: -24.626627,-28.84173
       parent: 60
-- proto: CigarGoldCase
-  entities:
-  - uid: 18445
-    components:
-    - type: Transform
-      pos: 5.5158696,-7.3988457
-      parent: 60
 - proto: CigPackGreen
   entities:
   - uid: 12874
@@ -114152,7 +114145,7 @@ entities:
   - uid: 21383
     components:
     - type: Transform
-      pos: 6.0860467,-7.551071
+      pos: 6.267164,-7.070167
       parent: 60
 - proto: MaterialDurathread
   entities:
@@ -115197,11 +115190,6 @@ entities:
       parent: 60
 - proto: PaintingHelloWorld
   entities:
-  - uid: 21403
-    components:
-    - type: Transform
-      pos: -113.5,20.5
-      parent: 60
   - uid: 21750
     components:
     - type: Transform
@@ -116874,11 +116862,6 @@ entities:
     - type: Transform
       pos: -4.5,-43.5
       parent: 60
-  - uid: 7195
-    components:
-    - type: Transform
-      pos: 2.5,-7.5
-      parent: 60
   - uid: 12365
     components:
     - type: Transform
@@ -117311,10 +117294,10 @@ entities:
     - type: Transform
       pos: -40.522816,2.2133622
       parent: 60
-  - uid: 23084
+  - uid: 16150
     components:
     - type: Transform
-      pos: -113.5,19.5
+      pos: -114.5,19.5
       parent: 60
   - uid: 23085
     components:
@@ -138083,11 +138066,6 @@ entities:
     - type: Transform
       pos: 6.5,-7.5
       parent: 60
-  - uid: 18447
-    components:
-    - type: Transform
-      pos: 5.5,-7.5
-      parent: 60
   - uid: 18450
     components:
     - type: Transform
@@ -156535,6 +156513,74 @@ entities:
       parent: 60
     - type: Physics
       canCollide: False
+- proto: WeaponEnergyTurretAI
+  entities:
+  - uid: 16096
+    components:
+    - type: Transform
+      pos: -115.5,21.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 7195
+  - uid: 16131
+    components:
+    - type: Transform
+      pos: -107.5,21.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 7195
+  - uid: 16132
+    components:
+    - type: Transform
+      pos: -107.5,30.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 7195
+  - uid: 16145
+    components:
+    - type: Transform
+      pos: -115.5,30.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 7195
+- proto: WeaponEnergyTurretAIControlPanel
+  entities:
+  - uid: 7195
+    components:
+    - type: Transform
+      pos: -113.5,20.5
+      parent: 60
+    - type: DeviceList
+      devices:
+      - 16096
+      - 16131
+      - 16132
+      - 16145
+- proto: WeaponEnergyTurretCommand
+  entities:
+  - uid: 16095
+    components:
+    - type: Transform
+      pos: 5.5,-7.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 15900
+- proto: WeaponEnergyTurretCommandControlPanel
+  entities:
+  - uid: 15900
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,-7.5
+      parent: 60
+    - type: DeviceList
+      devices:
+      - 16095
 - proto: WeaponEnergyTurretSecurity
   entities:
   - uid: 1506
