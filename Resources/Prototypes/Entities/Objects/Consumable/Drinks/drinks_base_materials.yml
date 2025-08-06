@@ -124,7 +124,7 @@
   components:
   - type: Damageable
     damageContainer: Inorganic
-#    damageModifierSet: Cardboard TODO
+    damageModifierSet: Card
   - type: Destructible
     thresholds:
     - trigger: # Overkill threshold
