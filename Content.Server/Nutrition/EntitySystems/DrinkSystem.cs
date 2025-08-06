@@ -248,10 +248,10 @@ public sealed class DrinkSystem : SharedDrinkSystem
 
         _forensics.TransferDna(entity, args.Target.Value);
 
+        _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
+
         if (drained.Volume == 0)
             return;
-
-        _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
 
         _stomach.TryTransferSolution(firstStomach.Value.Owner, drained, firstStomach.Value.Comp1);
 
