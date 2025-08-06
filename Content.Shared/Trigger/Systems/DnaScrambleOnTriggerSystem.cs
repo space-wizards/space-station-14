@@ -49,7 +49,7 @@ public sealed class DnaScrambleOnTriggerSystem : EntitySystem
         _humanoidAppearance.LoadProfile(target.Value, newProfile, humanoid);
         _metaData.SetEntityName(target.Value, newProfile.Name, raiseEvents: false); // raising events would update ID card, station record, etc.
 
-        // If the entity has the respecive components, then scramble the dna and fingerprint strings.
+        // If the entity has the respective components, then scramble the dna and fingerprint strings.
         _forensics.RandomizeDNA(target.Value);
         _forensics.RandomizeFingerprint(target.Value);
 
