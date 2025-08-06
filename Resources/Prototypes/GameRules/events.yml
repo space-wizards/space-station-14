@@ -23,7 +23,7 @@
     - id: SlimesSpawn
     - id: SolarFlare
     - id: SnakeSpawn
-#    - id: SpiderClownSpawn - Ronstation - modification. No.
+    - id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
 
