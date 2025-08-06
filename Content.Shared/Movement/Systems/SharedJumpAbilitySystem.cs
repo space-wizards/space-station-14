@@ -68,6 +68,9 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         if (_gravity.IsWeightless(args.Performer))
             return;
 
+        if (HasComp<KnockedDownComponent>(args.Performer))
+            return;
+
         var xform = Transform(args.Performer);
         var throwing = xform.LocalRotation.ToWorldVec() * entity.Comp.JumpDistance;
         var direction = xform.Coordinates.Offset(throwing); // to make the character jump in the direction he's looking
