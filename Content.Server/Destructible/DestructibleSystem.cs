@@ -16,6 +16,7 @@ using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Trigger.Systems;
 using JetBrains.Annotations;
 using Robust.Server.Audio;
@@ -43,6 +44,8 @@ namespace Content.Server.Destructible
         [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
         [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] public readonly IAdminLogManager _adminLogger = default!;
+
+        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
 
         public override void Initialize()
         {
@@ -150,6 +153,49 @@ namespace Content.Server.Destructible
                 }
             }
             return damageNeeded;
+        }
+
+        /// <summary>
+        /// Takes the damage on one entity and scales it proportionally to
+        /// another entity, based on each's dead or destruction thresholds.
+        /// </summary>
+        /// <param name="original">The entity whose current damage is used.</param>
+        /// <param name="target">The entity whose thresholds are used for scaling.</param>
+        /// <param name="damage">
+        /// The scaled damage. Null if either entity didn't have a well-defined
+        /// "break" point.
+        /// </param>
+        public bool GetScaledDamage(Entity<DamageableComponent?> original,
+            EntityUid target,
+            [NotNullWhen(true)] out DamageSpecifier? damage)
+        {
+            damage = null;
+
+            // If we can't damage the target entity not much we can do
+            if (!Resolve(original, ref original.Comp, logMissing: false))
+                return false;
+
+            // Get our best guesses for what "dead/destroyed" means for each
+            if (GetDeadOrDestroyedThreshold(original) is not { } originalMax
+                || GetDeadOrDestroyedThreshold(target) is not { } targetMax)
+                return false;
+
+            damage = original.Comp.Damage / originalMax * targetMax;
+            return true;
+        }
+
+        private FixedPoint2? GetDeadOrDestroyedThreshold(EntityUid uid)
+        {
+            // Prioritize mob thresholds
+            if (_mobThreshold.TryGetDeadThreshold(uid, out var deadThreshold))
+                return deadThreshold;
+
+            // If its MaxValue treat it the same as being undefined.
+            if (TryGetDestroyedAt(uid, out var destroyedAt)
+                && destroyedAt != FixedPoint2.MaxValue)
+                return destroyedAt;
+
+            return null;
         }
     }
 
