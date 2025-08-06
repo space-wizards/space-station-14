@@ -5,6 +5,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
 using Robust.Shared.Utility;
 using Content.Client.Paper.UI;
+using Robust.Client.Graphics;
 
 namespace Content.Client.UserInterface.RichText;
 
@@ -23,6 +24,11 @@ public sealed class FormTagHandler : IMarkupTagHandler
     private static int _formCounter = 0;
     private static readonly Dictionary<string, int> _formPositions = new();
     private static string _lastText = "";
+    
+    /// <summary>
+    /// Font line height set by PaperWindow to ensure buttons match text height
+    /// </summary>
+    public static float FontLineHeight { get; set; } = 16.0f; // Default fallback
 
     private static int GetFormIndex(MarkupNode node)
     {
@@ -106,10 +112,12 @@ public sealed class FormTagHandler : IMarkupTagHandler
     {
         var btn = new Button
         {
-            Text = Loc.GetString("paper-form-fill-button"),
-            MinSize = new Vector2(50, 28),
-            MaxSize = new Vector2(50, 28),
-            Margin = new Thickness(4, 2, 4, 2)
+            Text = "Fill",
+            MinSize = new Vector2(32, FontLineHeight + 2),
+            MaxSize = new Vector2(32, FontLineHeight + 2),
+            Margin = new Thickness(1, 0, 1, 0),
+            StyleClasses = { "ButtonSquare" },
+            TextAlign = Label.AlignMode.Center
         };
 
         var formIndex = GetFormIndex(node);

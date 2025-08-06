@@ -8,6 +8,7 @@ using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 using Robust.Client.UserInterface.RichText;
@@ -40,6 +41,9 @@ namespace Content.Client.Paper.UI
         // If paper limits the size in one or both axes, it'll affect whether
         // we're able to resize this UI or not. Default to everything enabled:
         private DragMode _allowedResizeModes = ~DragMode.None;
+        
+        // Store original margin to restore when switching modes
+        private Thickness _originalContentMargin;
 
         private readonly Type[] _allowedTags = new Type[] {
             typeof(BoldItalicTag),
@@ -53,7 +57,8 @@ namespace Content.Client.Paper.UI
             typeof(SignatureTagHandler),
             typeof(LogoTag),
             typeof(SyndieLogoTag),
-            typeof(CCLogoTag)
+            typeof(CCLogoTag),
+            typeof(CheckTagHandler)
         };
 
         public event Action<string>? OnSaved;
@@ -183,9 +188,10 @@ namespace Content.Client.Paper.UI
                 _paperContentLineScale = visuals.ContentImageNumLines;
             }
 
-            PaperContent.Margin = new Thickness(
+            _originalContentMargin = new Thickness(
                     visuals.ContentMargin.Left, visuals.ContentMargin.Top,
                     visuals.ContentMargin.Right, visuals.ContentMargin.Bottom);
+            PaperContent.Margin = _originalContentMargin;
 
             if (visuals.MaxWritableArea != null)
             {
@@ -230,6 +236,11 @@ namespace Content.Client.Paper.UI
             if (WrittenTextLabel.TryGetStyleProperty<Font>("font", out var font))
             {
                 float fontLineHeight = font.GetLineHeight(1.0f);
+                
+                // Set the font line height in tag handlers so buttons match text height
+                FormTagHandler.FontLineHeight = fontLineHeight;
+                SignatureTagHandler.FontLineHeight = fontLineHeight;
+                CheckTagHandler.FontLineHeight = fontLineHeight;
 
                 // Position the background texture so font baseline aligns with texture lines
                 _paperContentTex.ExpandMarginTop = font.GetDescent(UIScale);
@@ -271,6 +282,9 @@ namespace Content.Client.Paper.UI
 
             if (isEditing)
             {
+                // Reset margin to original when editing (no tag buttons visible)
+                PaperContent.Margin = _originalContentMargin;
+                    
                 // Initialize the text input field with server content if it's currently empty
                 // This allows editing existing documents while preserving any text the user has already typed
                 var shouldCopy = Input.TextLength == 0 && state.Text.Length > 0;
@@ -287,17 +301,24 @@ namespace Content.Client.Paper.UI
                 return;
             }
 
-            // Reset form and signature counters before processing to ensure consistent indexing
+            // Reset form, signature, and check counters before processing to ensure consistent indexing
             // This is crucial because the tag handlers maintain state between renders
             FormTagHandler.SetFormText(state.Text);
             FormTagHandler.ResetFormCounter();
             SignatureTagHandler.ResetSignatureCounter();
+            CheckTagHandler.ResetCheckCounter();
 
             // Display text with markup processing (forms, signatures, colors, etc.)
             // The markup system converts [form] and [signature] tags into interactive buttons
             var fm = new FormattedMessage();
             fm.AddMarkupPermissive(state.Text);
             WrittenTextLabel.SetMessage(fm, _allowedTags, DefaultTextColor);
+            
+            // Add extra bottom margin based on tag count to prevent cutoff (only in read mode)
+            var tagCount = CountTags(state.Text);
+            var extraBottomMargin = tagCount * 3.0f; // 3 pixels per tag for extra height
+            PaperContent.Margin = new Thickness(_originalContentMargin.Left, _originalContentMargin.Top, 
+                _originalContentMargin.Right, _originalContentMargin.Bottom + extraBottomMargin);
 
             // Add stamps that have been applied to this paper
             // Clear existing stamps first, then add all current ones
@@ -388,6 +409,11 @@ namespace Content.Client.Paper.UI
         /// <param name="formIndex">Zero-based index of which [form] tag to replace</param>
         public void OpenFormDialog(int formIndex)
         {
+            // Find and highlight the form button
+            var formButton = FindFormButton(formIndex);
+            if (formButton != null)
+                formButton.ModulateSelfOverride = Color.LightBlue;
+                
             // Create the popup dialog structure
             var popup = new Popup();
             var vbox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, Margin = new Thickness(10) };
@@ -407,11 +433,17 @@ namespace Content.Client.Paper.UI
                     var newText = ReplaceNthFormTag(_currentRawText, formIndex, edit.Text);
                     OnSaved?.Invoke(newText);
                 }
+                if (formButton != null)
+                    formButton.ModulateSelfOverride = null;
                 popup.Close();
             };
 
             // Handle Cancel button - just close without saving
-            cancel.OnPressed += _ => popup.Close();
+            cancel.OnPressed += _ => {
+                if (formButton != null)
+                    formButton.ModulateSelfOverride = null;
+                popup.Close();
+            };
 
             // Handle Enter key in text field - same as OK button
             edit.OnTextEntered += _ =>
@@ -442,6 +474,191 @@ namespace Content.Client.Paper.UI
         public void SendSignatureRequest(int signatureIndex)
         {
             OnSignatureRequested?.Invoke(signatureIndex);
+        }
+
+        /// <summary>
+        /// Finds a form button by index for visual feedback.
+        /// </summary>
+        private Button? FindFormButton(int formIndex)
+        {
+            return FindButtonRecursive(WrittenTextLabel, "Fill", formIndex);
+        }
+        
+        /// <summary>
+        /// Finds a check button by index for visual feedback.
+        /// </summary>
+        private Button? FindCheckButton(int checkIndex)
+        {
+            return FindCheckButtonRecursive(WrittenTextLabel, checkIndex);
+        }
+        
+        /// <summary>
+        /// Finds check buttons (which can have different text: ☐, ✔, ✖).
+        /// </summary>
+        private Button? FindCheckButtonRecursive(Control control, int targetIndex)
+        {
+            var currentIndex = 0;
+            return FindCheckButtonRecursiveHelper(control, targetIndex, ref currentIndex);
+        }
+        
+        private Button? FindCheckButtonRecursiveHelper(Control control, int targetIndex, ref int currentIndex)
+        {
+            if (control is Button btn && (btn.Text == "☐" || btn.Text == "✔" || btn.Text == "✖"))
+            {
+                if (currentIndex == targetIndex)
+                    return btn;
+                currentIndex++;
+            }
+            
+            foreach (Control child in control.Children)
+            {
+                var result = FindCheckButtonRecursiveHelper(child, targetIndex, ref currentIndex);
+                if (result != null)
+                    return result;
+            }
+            
+            return null;
+        }
+        
+        /// <summary>
+        /// Recursively searches for a button with specific text and index.
+        /// </summary>
+        private Button? FindButtonRecursive(Control control, string buttonText, int targetIndex)
+        {
+            var currentIndex = 0;
+            return FindButtonRecursiveHelper(control, buttonText, targetIndex, ref currentIndex);
+        }
+        
+        private Button? FindButtonRecursiveHelper(Control control, string buttonText, int targetIndex, ref int currentIndex)
+        {
+            if (control is Button btn && btn.Text == buttonText)
+            {
+                if (currentIndex == targetIndex)
+                    return btn;
+                currentIndex++;
+            }
+            
+            foreach (Control child in control.Children)
+            {
+                var result = FindButtonRecursiveHelper(child, buttonText, targetIndex, ref currentIndex);
+                if (result != null)
+                    return result;
+            }
+            
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the current text for tag handlers to access.
+        /// </summary>
+        /// <returns>Current raw text content</returns>
+        public string GetCurrentText()
+        {
+            return _currentRawText;
+        }
+
+        /// <summary>
+        /// Saves text content for tag handlers to use.
+        /// </summary>
+        /// <param name="text">Text to save</param>
+        public void SaveText(string text)
+        {
+            OnSaved?.Invoke(text);
+        }
+
+        private Popup? _activeCheckPopup;
+        private Button? _activeCheckButton;
+        
+        /// <summary>
+        /// Opens a modal dialog allowing the user to select a check state.
+        /// </summary>
+        /// <param name="checkIndex">Zero-based index of which [check] tag to replace</param>
+        public void OpenCheckDialog(int checkIndex)
+        {
+            // Close any existing check popup
+            if (_activeCheckPopup != null)
+            {
+                if (_activeCheckButton != null)
+                    _activeCheckButton.ModulateSelfOverride = null;
+                _activeCheckPopup.Close();
+            }
+            
+            // Find and highlight the check button
+            var checkButton = FindCheckButton(checkIndex);
+            if (checkButton != null)
+                checkButton.ModulateSelfOverride = Color.LightBlue;
+            _activeCheckButton = checkButton;
+            
+            var popup = new Popup();
+            _activeCheckPopup = popup;
+            var vbox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, Margin = new Thickness(10) };
+            var hbox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
+            
+            var blankBtn = new Button { Text = "☐ Blank", MinWidth = 80 };
+            var checkBtn = new Button { Text = "✔ Check", MinWidth = 80 };
+            var crossBtn = new Button { Text = "✖ Cross", MinWidth = 80 };
+            
+            blankBtn.OnPressed += _ => {
+                var newText = ReplaceNthCheckTag(_currentRawText, checkIndex, "☐");
+                OnSaved?.Invoke(newText);
+                CloseCheckDialog();
+            };
+            
+            checkBtn.OnPressed += _ => {
+                var newText = ReplaceNthCheckTag(_currentRawText, checkIndex, "✔");
+                OnSaved?.Invoke(newText);
+                CloseCheckDialog();
+            };
+            
+            crossBtn.OnPressed += _ => {
+                var newText = ReplaceNthCheckTag(_currentRawText, checkIndex, "✖");
+                OnSaved?.Invoke(newText);
+                CloseCheckDialog();
+            };
+            
+            hbox.AddChild(blankBtn);
+            hbox.AddChild(checkBtn);
+            hbox.AddChild(crossBtn);
+            vbox.AddChild(hbox);
+            popup.AddChild(vbox);
+            AddChild(popup);
+            popup.Open();
+        }
+        
+        private void CloseCheckDialog()
+        {
+            if (_activeCheckButton != null)
+                _activeCheckButton.ModulateSelfOverride = null;
+            if (_activeCheckPopup != null)
+                _activeCheckPopup.Close();
+            _activeCheckButton = null;
+            _activeCheckPopup = null;
+        }
+        
+        /// <summary>
+        /// Replaces the nth occurrence of [check] tag with replacement symbol.
+        /// </summary>
+        private static string ReplaceNthCheckTag(string text, int index, string replacement)
+        {
+            const string checkTag = "[check]";
+            var currentIndex = 0;
+            var pos = 0;
+
+            while (pos < text.Length)
+            {
+                var foundPos = text.IndexOf(checkTag, pos);
+                if (foundPos == -1) break;
+
+                if (currentIndex == index)
+                {
+                    return text.Substring(0, foundPos) + replacement + text.Substring(foundPos + checkTag.Length);
+                }
+
+                currentIndex++;
+                pos = foundPos + checkTag.Length;
+            }
+
+            return text;
         }
 
         /// <summary>
@@ -514,6 +731,32 @@ namespace Content.Client.Paper.UI
 
             // Index not found, return original text unchanged
             return text;
+        }
+        
+        /// <summary>
+        /// Counts the total number of interactive tags that create taller buttons.
+        /// </summary>
+        private static int CountTags(string text)
+        {
+            var formCount = CountOccurrences(text, "[form]");
+            var signatureCount = CountOccurrences(text, "[signature]");
+            var checkCount = CountOccurrences(text, "[check]");
+            return formCount + signatureCount + checkCount;
+        }
+        
+        /// <summary>
+        /// Counts occurrences of a substring in text.
+        /// </summary>
+        private static int CountOccurrences(string text, string substring)
+        {
+            var count = 0;
+            var pos = 0;
+            while ((pos = text.IndexOf(substring, pos)) != -1)
+            {
+                count++;
+                pos += substring.Length;
+            }
+            return count;
         }
     }
 }
