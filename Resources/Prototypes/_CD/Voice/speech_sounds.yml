@@ -1,0 +1,8 @@
+- type: speechSounds
+  id: Moth #squeaksqueaksqueaksqueak
+  saySound:
+    path: /Audio/_CD/Voice/Talk/moth.ogg
+  askSound:
+    path: /Audio/_CD/Voice/Talk/moth_ask.ogg
+  exclaimSound:
+    path: /Audio/_CD/Voice/Talk/moth_exclaim.ogg

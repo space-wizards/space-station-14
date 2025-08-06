@@ -1,0 +1,19 @@
+- type: trait
+  id: VeryLightweightDrunk
+  name: cd-trait-very-lightweight-name
+  description: cd-trait-very-lightweight-desc
+  category: DrinkingSkill
+  cost: 1
+  components:
+    - type: LightweightDrunk
+      boozeStrengthMultiplier: 4
+
+- type: trait
+  id: HeavyweightDrunk
+  name: cd-trait-heavyweight-name
+  description: cd-trait-heavyweight-desc
+  category: DrinkingSkill
+  cost: 1
+  components:
+    - type: LightweightDrunk
+      boozeStrengthMultiplier: 0.5

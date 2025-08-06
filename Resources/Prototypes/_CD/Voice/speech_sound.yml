@@ -1,0 +1,17 @@
+- type: speechSounds
+  id: MaleAvali
+  saySound:
+    path: /Audio/_CD/Voice/Talk/avali_1.ogg
+  askSound:
+    path: /Audio/_CD/Voice/Talk/avali_1_ask.ogg
+  exclaimSound:
+    path: /Audio/_CD/Voice/Talk/avali_1_exclaim.ogg
+
+- type: speechSounds
+  id: FemaleAvali
+  saySound:
+    path: /Audio/_CD/Voice/Talk/avali_2.ogg
+  askSound:
+    path: /Audio/_CD/Voice/Talk/avali_2_ask.ogg
+  exclaimSound:
+    path: /Audio/_CD/Voice/Talk/avali_2_exclaim.ogg

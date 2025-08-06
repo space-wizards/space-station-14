@@ -18,6 +18,7 @@
     - Human
     - Moth
     - Reptilian
+    - Avali #Latestation <-- the owner of the PR and the station(i think)
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox

@@ -1,0 +1,4 @@
+- type: traitCategory
+  id: DrinkingSkill
+  name: cd-trait-category-drinking-skill
+  maxTraitPoints: 1
