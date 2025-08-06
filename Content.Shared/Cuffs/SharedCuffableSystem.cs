@@ -21,7 +21,6 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
@@ -46,7 +45,6 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _move = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -58,13 +56,9 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
 
-        private EntityQuery<HandcuffComponent> _cuffQuery;
-
         public override void Initialize()
         {
             base.Initialize();
-
-            _cuffQuery = GetEntityQuery<HandcuffComponent>();
 
             SubscribeLocalEvent<CuffableComponent, HandCountChangedEvent>(OnHandCountChanged);
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
@@ -95,9 +89,6 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
             SubscribeLocalEvent<HandcuffComponent, AddCuffDoAfterEvent>(OnAddCuffDoAfter);
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
-            SubscribeLocalEvent<CuffableComponent, GetStandUpTimeEvent>(OnCuffableStandupArgs);
-            SubscribeLocalEvent<CuffableComponent, KnockedDownRefreshEvent>(OnCuffableKnockdownRefresh);
-            SubscribeLocalEvent<CuffableComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         }
 
         private void CheckInteract(Entity<CuffableComponent> ent, ref InteractionAttemptEvent args)
@@ -375,9 +366,6 @@ namespace Content.Shared.Cuffs
                     _adminLog.Add(LogType.Action, LogImpact.High,
                         $"{ToPrettyString(user):player} has cuffed {ToPrettyString(target):player}");
                 }
-
-                if (!MathHelper.CloseTo(component.MovementMod, 1f))
-                    _move.RefreshMovementSpeedModifiers(target);
             }
             else
             {
@@ -430,72 +418,6 @@ namespace Content.Shared.Cuffs
             {
                 UpdateCuffState(ent.Owner, ent.Comp);
             }
-        }
-
-        /// <summary>
-        ///     Takes longer to stand up when cuffed
-        /// </summary>
-        private void OnCuffableStandupArgs(Entity<CuffableComponent> ent, ref GetStandUpTimeEvent time)
-        {
-            if (!HasComp<KnockedDownComponent>(ent) || !IsCuffed(ent))
-                return;
-
-            var cuffs = GetAllCuffs(ent.Comp);
-            var mod = 1f;
-
-            if (cuffs.Count == 0)
-                return;
-
-            foreach (var cuff in cuffs)
-            {
-                if (!_cuffQuery.TryComp(cuff, out var comp))
-                    continue;
-
-                // Get the worst modifier
-                mod = Math.Max(mod, comp.StandupMod);
-            }
-
-            time.DoAfterTime *= mod;
-        }
-
-        private void OnCuffableKnockdownRefresh(Entity<CuffableComponent> ent, ref KnockedDownRefreshEvent args)
-        {
-            var cuffs = GetAllCuffs(ent.Comp);
-            var mod = 1f;
-
-            if (cuffs.Count == 0)
-                return;
-
-            foreach (var cuff in cuffs)
-            {
-                if (!_cuffQuery.TryComp(cuff, out var comp))
-                    continue;
-
-                // Get the worst modifier
-                mod = Math.Min(mod, comp.KnockedMovementMod);
-            }
-
-            args.SpeedModifier *= mod;
-        }
-
-        private void OnRefreshMovementSpeedModifiers(Entity<CuffableComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
-        {
-            var cuffs = GetAllCuffs(ent.Comp);
-            var mod = 1f;
-
-            if (cuffs.Count == 0)
-                return;
-
-            foreach (var cuff in cuffs)
-            {
-                if (!_cuffQuery.TryComp(cuff, out var comp))
-                    continue;
-
-                // Get the worst modifier
-                mod = Math.Min(mod, comp.MovementMod);
-            }
-
-            args.ModifySpeed(mod);
         }
 
         /// <summary>
@@ -813,9 +735,6 @@ namespace Content.Shared.Cuffs
                 RaiseLocalEvent(target, ref eventArgs);
                 shoved = true;
             }
-
-            if (!MathHelper.CloseTo(cuff.MovementMod, 1f))
-                _move.RefreshMovementSpeedModifiers(target);
 
             if (cuffable.CuffedHandCount == 0)
             {
