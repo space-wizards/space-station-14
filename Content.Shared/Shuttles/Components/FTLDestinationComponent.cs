@@ -29,4 +29,11 @@ public sealed partial class FTLDestinationComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public bool RequireCoordinateDisk = false;
+
+    /// <summary>
+    /// If true, this will prevent FTL jumps that are made from this destination
+    /// and are to this destination. (That is, short distance hops.)
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool DisallowCoordinateFTLJumps;
 }
