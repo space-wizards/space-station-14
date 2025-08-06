@@ -1,8 +1,8 @@
 ﻿- type: feedbackPopup
-  id: ExampleFeedbackPopup
+  id: FeedbackPopupFeedbackPopup
   popupOrigin: wizden
   title: "Feedback on the new feedback popup system"
   description:
   - "This is a new system to get feedback on features. It will give popups at the end (and potentially middle) of the round!"
   - "Please give any thoughts you have on this by going to the form below. You will use your ss14 username and password!"
-  responseLink: "https://google.com"
+  responseLink: "https://forum.spacestation14.com/t/feedback-popup-feedback/22858"
