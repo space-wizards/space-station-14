@@ -2,6 +2,8 @@ drink-component-on-use-is-empty = {CAPITALIZE(THE($owner))} is empty!
 drink-component-on-examine-is-opened = [color=yellow]Opened[/color]
 drink-component-on-examine-is-sealed = The seal is intact.
 drink-component-on-examine-is-unsealed = The seal is broken.
+drink-component-on-examine-is-unsealed-no-cork = The seal is broken, and the cork is gone.
+drink-component-on-examine-is-unsealed-crown-cap = The seal is broken, and the crown cap is bent.
 drink-component-try-use-drink-not-open = Open {$owner} first!
 drink-component-try-use-drink-is-empty = {CAPITALIZE(THE($entity))} is empty!
 drink-component-try-use-drink-cannot-drink = You can't drink anything!

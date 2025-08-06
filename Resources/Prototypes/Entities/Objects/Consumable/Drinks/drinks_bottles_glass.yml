@@ -149,7 +149,7 @@
   - type: Openable
     closeable: false # Champagne corks are fat. Not worth the effort.
   - type: Sealable
-    examineTextUnsealed: drink-component-on-examine-is-unsealed-no-cork # tell the player why it can't close
+    examineTextUnsealed: "drink-component-on-examine-is-unsealed-no-cork" # tell the player why it can't close
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
@@ -431,7 +431,7 @@
   - type: Openable
     closeable: false # sprite is just a beer bottle, but this should be removed when there's a more appropriate sprite
   - type: Sealable
-    examineTextUnsealed: drink-component-on-examine-is-unsealed-crown-cap # tell the player why it can't close
+    examineTextUnsealed: "drink-component-on-examine-is-unsealed-crown-cap" # tell the player why it can't close
   - type: Tag
     tags:
     - Beer
@@ -457,7 +457,7 @@
   - type: Openable
     closeable: false # sprite is just a beer bottle, but this should be removed when there's a more appropriate sprite
   - type: Sealable
-    examineTextUnsealed: drink-component-on-examine-is-unsealed-crown-cap # tell the player why it can't close
+    examineTextUnsealed: "drink-component-on-examine-is-unsealed-crown-cap" # tell the player why it can't close
 
 
 # Small glass bottles
@@ -481,7 +481,7 @@
   - type: Openable
     closeable: false # can't put the cap back on
   - type: Sealable
-    examineTextUnsealed: drink-component-on-examine-is-unsealed-crown-cap # tell the player why it can't close
+    examineTextUnsealed: "drink-component-on-examine-is-unsealed-crown-cap" # tell the player why it can't close
   - type: Tag
     tags:
     - Beer
@@ -505,7 +505,7 @@
   - type: Openable
     closeable: false # can't put the cap back on
   - type: Sealable
-    examineTextUnsealed: drink-component-on-examine-is-unsealed-crown-cap # tell the player why it can't close
+    examineTextUnsealed: "drink-component-on-examine-is-unsealed-crown-cap" # tell the player why it can't close
 
 - type: entity
   parent: [DrinkVisualsOpenable, DrinkBottleGlassSmallBaseFull]

@@ -15,7 +15,8 @@
       types:
         Blunt: 0
   - type: DnaSubstanceTrace
-  - type: Drink
+  - type: Drink # Namesake. You are able to directly drink from this entity.
+    solution: drink
   - type: Spillable
     solution: drink
   - type: MixableSolution
@@ -26,7 +27,7 @@
     solution: drink
   - type: DrainableSolution
     solution: drink
-  - type: InjectableSolution # Injectors (syringe) will fallback to RefillableSolution. This adds support for hyposprays and liquid anomalies.
+  - type: InjectableSolution # Injectors (syringe) will fall back to RefillableSolution. This adds support for hyposprays and liquid anomalies.
     solution: drink
   - type: ExaminableSolution
     solution: drink
@@ -80,6 +81,7 @@
   - type: Sprite
     layers:
     - state: icon_open
+      map: ["enum.OpenableVisuals.Layer"]
   - type: Openable
     opened: true
   - type: Sealable
