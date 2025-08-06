@@ -3,9 +3,9 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
-/// Triggers when the component parent is buckled.
+/// Triggers when the owning entity is buckled.
 /// This is intended to be used on buckle-able entities like mobs.
-/// The parent object should be the entity that is being buckled to something else.
+/// The user is the strap entity (a chair or similar).
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnBuckledComponent : BaseTriggerOnXComponent;
