@@ -1,0 +1,15 @@
+- type: startingGear
+  id: CentcomInspectorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCentcomFormalDress
+    shoes: ClothingShoesBootsJackFilled
+    mask: ClothingMaskGasCentcom
+    outerClothing: ClothingOuterArmorCentcommCarapace
+    gloves: ClothingHandsGlovesCombat
+    id: CentcomPDA
+    ears: ClothingHeadsetCentCom
+    pocket1: WeaponDisabler
+    pocket2: FlashlightSeclite
+    suitstorage: OxygenTankFilled
+  inhand:
+  - BriefcaseCentcomInspector
