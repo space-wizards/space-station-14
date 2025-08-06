@@ -7,6 +7,7 @@ namespace Content.Client.Light.EntitySystems;
 public sealed class LightBulbSystem : SharedLightBulbSystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -25,13 +26,13 @@ public sealed class LightBulbSystem : SharedLightBulbSystem
             switch (state)
             {
                 case LightBulbState.Normal:
-                    SpriteSystem.LayerSetRsiState((uid, args.Sprite), LightBulbVisualLayers.Base, comp.NormalSpriteState);
+                    _sprite.LayerSetRsiState((uid, args.Sprite), LightBulbVisualLayers.Base, comp.NormalSpriteState);
                     break;
                 case LightBulbState.Broken:
-                    SpriteSystem.LayerSetRsiState((uid, args.Sprite), LightBulbVisualLayers.Base, comp.BrokenSpriteState);
+                    _sprite.LayerSetRsiState((uid, args.Sprite), LightBulbVisualLayers.Base, comp.BrokenSpriteState);
                     break;
                 case LightBulbState.Burned:
-                    SpriteSystem.LayerSetRsiState((uid, args.Sprite), LightBulbVisualLayers.Base, comp.BurnedSpriteState);
+                    _sprite.LayerSetRsiState((uid, args.Sprite), LightBulbVisualLayers.Base, comp.BurnedSpriteState);
                     break;
             }
         }
@@ -39,7 +40,7 @@ public sealed class LightBulbSystem : SharedLightBulbSystem
         // also update sprites color
         if (_appearance.TryGetData<Color>(uid, LightBulbVisuals.Color, out var color, args.Component))
         {
-            SpriteSystem.SetColor((uid, args.Sprite), color);
+            _sprite.SetColor((uid, args.Sprite), color);
         }
     }
 }
