@@ -6,6 +6,9 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Speech;
 using Robust.Shared.Console;
+using Content.Server._Starlight.Language; // Starlight
+using Content.Shared._Starlight.Language.Components; // Starlight
+using Content.Shared._Starlight.Language.Systems; // Starlight
 
 namespace Content.Server.Mind.Commands
 {
@@ -56,6 +59,16 @@ namespace Content.Server.Mind.Commands
                 entityManager.EnsureComponent<SpeechComponent>(uid);
                 entityManager.EnsureComponent<EmotingComponent>(uid);
             }
+
+            // Starlight - Start
+            var language = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<LanguageSystem>();
+            var speaker = entityManager.EnsureComponent<LanguageSpeakerComponent>(uid);
+
+            // If the entity already speaks some language (like monkey or robot), we do nothing else.
+            // Otherwise, we give them the fallback language
+            if (speaker.SpokenLanguages.Count == 0)
+                language.AddLanguage(uid, SharedLanguageSystem.FallbackLanguagePrototype);
+            // Starlight - End
 
             entityManager.EnsureComponent<ExaminerComponent>(uid);
         }

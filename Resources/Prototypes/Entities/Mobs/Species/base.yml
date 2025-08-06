@@ -11,6 +11,11 @@
   components:
   - type: Railroadable # 🌟Starlight🌟
   - type: SurgeryTarget # 🌟Starlight🌟
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    understands:
+    - GalacticCommon
   - type: Sprite
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]

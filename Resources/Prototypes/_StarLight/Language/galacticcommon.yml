@@ -1,0 +1,27 @@
+# The "Default Language" for everyone other than Universal.
+- type: language
+  id: GalacticCommon
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 3
+    replacement:
+    - Blah
+    - Blah
+    - Blah
+    - dingle-doingle
+    - dingle
+    - dangle
+    - jibber-jabber
+    - jubber
+    - bleh
+    - zippity
+    - zoop
+    - wibble
+    - wobble
+    - wiggle
+    - yada
+    - meh
+    - neh
+    - nah
+    - wah

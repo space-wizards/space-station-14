@@ -47,6 +47,7 @@
   - type: StunVisuals
   - type: TextToSpeech
   - type: CollectiveMind
+  - type: LanguageSpeaker # Starlight
   - type: CustomLimbVisualizer
     displacements:
       LHand:
