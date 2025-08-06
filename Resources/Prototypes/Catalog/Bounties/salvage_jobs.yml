@@ -1,0 +1,173 @@
+# NOTE: if you add any bounties to this, you need to go to Resources/Prototypes/Entities/Stations/base.yml and adjust the thresholds on BaseStationSalvageJobs.
+# If you don't do this, you won't raise the limit for completing a given rank and may throw off some balance.
+
+# Tier 1
+
+- type: cargoBounty
+  id: BountyTeethSpaceCarp
+  reward: 7500
+  description: bounty-description-tooth-space-carp
+  group: SalvageJobTier1
+  sprite:
+    sprite: Mobs/Aliens/Carps/space.rsi
+    state: icon
+  entries:
+  - name: bounty-item-tooth-space-carp
+    amount: 10
+    whitelist:
+      tags:
+      - ToothSpaceCarp
+
+- type: cargoBounty
+  id: BountySalvageScrap
+  reward: 7500
+  description: bounty-description-salvage-scrap
+  group: SalvageJobTier1
+  sprite:
+    sprite: Objects/Materials/Scrap/generic.rsi
+    state: metal-1
+  entries:
+  - name: bounty-item-scrap
+    amount: 10
+    whitelist:
+      tags:
+      - SalvageScrap
+
+- type: cargoBounty
+  id: BountySalvageOreGold
+  reward: 7500
+  description: bounty-description-salvage-ore-gold
+  group: SalvageJobTier1
+  sprite:
+    sprite: Objects/Materials/ore.rsi
+    state: gold
+  entries:
+  - name: bounty-item-ore-gold
+    amount: 45
+    whitelist:
+      tags:
+      - OreGold
+
+- type: cargoBounty
+  id: BountySalvageOreSilver
+  reward: 7500
+  description: bounty-description-salvage-ore-silver
+  group: SalvageJobTier1
+  sprite:
+    sprite: Objects/Materials/ore.rsi
+    state: silver
+  entries:
+  - name: bounty-item-ore-silver
+    amount: 45
+    whitelist:
+      tags:
+      - OreSilver
+
+# Tier 2
+
+- type: cargoBounty
+  id: BountyTeethSharkminnow
+  reward: 12500
+  description: bounty-description-tooth-sharkminnow
+  group: SalvageJobTier2
+  sprite:
+    sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+    state: icon
+  entries:
+  - name: bounty-item-tooth-sharkminnow
+    amount: 3
+    whitelist:
+      tags:
+      - ToothSharkminnow
+
+- type: cargoBounty
+  id: BountySalvageOrePlasma
+  reward: 12500
+  description: bounty-description-salvage-ore-plasma
+  group: SalvageJobTier2
+  sprite:
+    sprite: Objects/Materials/ore.rsi
+    state: plasma
+  entries:
+  - name: bounty-item-ore-plasma
+    amount: 45
+    whitelist:
+      tags:
+      - OrePlasma
+
+- type: cargoBounty
+  id: BountySalvageOreUranium
+  reward: 12500
+  description: bounty-description-salvage-ore-uranium
+  group: SalvageJobTier2
+  sprite:
+    sprite: Objects/Materials/ore.rsi
+    state: uranium
+  entries:
+  - name: bounty-item-ore-uranium
+    amount: 30
+    whitelist:
+      tags:
+      - OreUranium
+
+- type: cargoBounty
+  id: BountySalvageOreBananium
+  reward: 12500
+  description: bounty-description-salvage-ore-bananium
+  group: SalvageJobTier2
+  sprite:
+    sprite: Objects/Materials/ore.rsi
+    state: bananium
+  entries:
+  - name: bounty-item-ore-bananium
+    amount: 30
+    whitelist:
+      tags:
+      - OreBananium
+
+# Tier 3
+
+- type: cargoBounty
+  id: BountyGoliathPlates
+  reward: 20000
+  description: bounty-description-plates
+  group: SalvageJobTier3
+  sprite:
+    sprite: Mobs/Aliens/Asteroid/goliath.rsi
+    state: goliath
+  entries:
+  - name: bounty-item-plates
+    amount: 6
+    whitelist:
+      tags:
+      - GoliathPlate
+
+- type: cargoBounty
+  id: BountyHivelordRemains
+  reward: 20000
+  description: bounty-description-remains
+  group: SalvageJobTier3
+  sprite:
+    sprite: Mobs/Aliens/Asteroid/hivelord.rsi
+    state: hivelord
+  entries:
+  - name: bounty-item-remains
+    amount: 3
+    whitelist:
+      tags:
+      - HivelordRemains
+
+- type: cargoBounty
+  id: BountySalvageDiamond
+  reward: 20000
+  description: bounty-description-diamond
+  group: SalvageJobTier3
+  sprite:
+    sprite: Objects/Materials/materials.rsi
+    state: diamond
+  entries:
+  - name: bounty-item-diamond
+    amount: 3
+    whitelist:
+      tags:
+      - Diamond

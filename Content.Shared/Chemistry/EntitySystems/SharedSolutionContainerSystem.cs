@@ -1,23 +1,24 @@
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
-using Content.Shared.Verbs;
-using JetBrains.Annotations;
-using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Containers;
+using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Verbs;
+using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -60,14 +61,14 @@ public partial record struct SolutionAccessAttemptEvent(string SolutionName)
 [UsedImplicitly]
 public abstract partial class SharedSolutionContainerSystem : EntitySystem
 {
-    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
-    [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
-    [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
-    [Dependency] protected readonly SharedHandsSystem Hands = default!;
-    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
-    [Dependency] protected readonly INetManager NetManager = default!;
+    [Robust.Shared.IoC.Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Robust.Shared.IoC.Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
+    [Robust.Shared.IoC.Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
+    [Robust.Shared.IoC.Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
+    [Robust.Shared.IoC.Dependency] protected readonly SharedHandsSystem Hands = default!;
+    [Robust.Shared.IoC.Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+    [Robust.Shared.IoC.Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
+    [Robust.Shared.IoC.Dependency] protected readonly INetManager NetManager = default!;
 
     public override void Initialize()
     {
@@ -162,6 +163,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         [NotNullWhen(true)] out Entity<SolutionComponent>? entity,
         bool errorOnMissing = false)
     {
+        // use connected container instead of entity from arguments, if it exists.
+        var ev = new GetConnectedContainerEvent();
+        RaiseLocalEvent(container, ref ev);
+        if (ev.ContainerEntity.HasValue)
+            container = ev.ContainerEntity.Value;
+
         EntityUid uid;
         if (name is null)
             uid = container;
@@ -275,8 +282,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     public FixedPoint2 GetTotalPrototypeQuantity(EntityUid owner, string reagentId)
     {
         var reagentQuantity = FixedPoint2.New(0);
-        if (EntityManager.EntityExists(owner)
-            && EntityManager.TryGetComponent(owner, out SolutionContainerManagerComponent? managerComponent))
+        if (Exists(owner)
+            && TryComp(owner, out SolutionContainerManagerComponent? managerComponent))
         {
             foreach (var (_, soln) in EnumerateSolutions((owner, managerComponent)))
             {
@@ -328,7 +335,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var (uid, comp, appearanceComponent) = soln;
         var solution = comp.Solution;
 
-        if (!EntityManager.EntityExists(uid) || !Resolve(uid, ref appearanceComponent, false))
+        if (!Exists(uid) || !Resolve(uid, ref appearanceComponent, false))
             return;
 
         AppearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
@@ -369,7 +376,21 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     /// Splits a solution without the specified reagent(s).
     /// </summary>
+    [Obsolete("Use SplitSolutionWithout with params ProtoId<ReagentPrototype>")]
     public Solution SplitSolutionWithout(Entity<SolutionComponent> soln, FixedPoint2 quantity, params string[] reagents)
+    {
+        var (uid, comp) = soln;
+        var solution = comp.Solution;
+
+        var splitSol = solution.SplitSolutionWithout(quantity, reagents);
+        UpdateChemicals(soln);
+        return splitSol;
+    }
+
+    /// <summary>
+    /// Splits a solution without the specified reagent(s).
+    /// </summary>
+    public Solution SplitSolutionWithout(Entity<SolutionComponent> soln, FixedPoint2 quantity, params ProtoId<ReagentPrototype>[] reagents)
     {
         var (uid, comp) = soln;
         var solution = comp.Solution;
@@ -489,20 +510,20 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     ///     Removes reagent from a container.
     /// </summary>
     /// <param name="targetUid"></param>
-    /// <param name="container">Solution container from which we are removing reagent</param>
+    /// <param name="container">Solution container from which we are removing reagent.</param>
     /// <param name="reagentQuantity">The reagent to remove.</param>
-    /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity)
+    /// <returns>The amount of reagent that was removed.</returns>
+    public FixedPoint2 RemoveReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity)
     {
         var (uid, comp) = soln;
         var solution = comp.Solution;
 
         var quant = solution.RemoveReagent(reagentQuantity);
         if (quant <= FixedPoint2.Zero)
-            return false;
+            return FixedPoint2.Zero;
 
         UpdateChemicals(soln);
-        return true;
+        return quant;
     }
 
     /// <summary>
@@ -512,8 +533,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="container">Solution container from which we are removing reagent</param>
     /// <param name="prototype">The Id of the reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
-    /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, List<ReagentData>? data = null)
+    /// <returns>The amount of reagent that was removed.</returns>
+    public FixedPoint2 RemoveReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, List<ReagentData>? data = null)
     {
         return RemoveReagent(soln, new ReagentQuantity(prototype, quantity, data));
     }
@@ -525,8 +546,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="container">Solution container from which we are removing reagent</param>
     /// <param name="reagentId">The reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
-    /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(Entity<SolutionComponent> soln, ReagentId reagentId, FixedPoint2 quantity)
+    /// <returns>The amount of reagent that was removed.</returns>
+    public FixedPoint2 RemoveReagent(Entity<SolutionComponent> soln, ReagentId reagentId, FixedPoint2 quantity)
     {
         return RemoveReagent(soln, new ReagentQuantity(reagentId, quantity));
     }
@@ -940,12 +961,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (!entity.Comp.HeldOnly)
             return true;
 
-        if (TryComp(examiner, out HandsComponent? handsComp))
-        {
-            return Hands.IsHolding(examiner, entity, out _, handsComp);
-        }
-
-        return true;
+        return Hands.IsHolding(examiner, entity, out _);
     }
 
     private void OnMapInit(Entity<SolutionContainerManagerComponent> entity, ref MapInitEvent args)

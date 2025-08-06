@@ -4,6 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.Gravity;
 using Content.Shared.Physics;
 using Content.Shared.Movement.Pulling.Events;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -17,10 +18,11 @@ namespace Content.Shared.Throwing
     /// </summary>
     public sealed class ThrownItemSystem : EntitySystem
     {
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
+        [Dependency] private readonly INetManager _netMan = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
@@ -45,7 +47,7 @@ namespace Content.Shared.Throwing
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ref ThrownEvent @event)
         {
-            if (!EntityManager.TryGetComponent(uid, out FixturesComponent? fixturesComponent) ||
+            if (!TryComp(uid, out FixturesComponent? fixturesComponent) ||
                 fixturesComponent.Fixtures.Count != 1 ||
                 !TryComp<PhysicsComponent>(uid, out var body))
             {
@@ -84,7 +86,7 @@ namespace Content.Shared.Throwing
         private void HandlePullStarted(PullStartedMessage message)
         {
             // TODO: this isn't directed so things have to be done the bad way
-            if (EntityManager.TryGetComponent(message.PulledUid, out ThrownItemComponent? thrownItemComponent))
+            if (TryComp(message.PulledUid, out ThrownItemComponent? thrownItemComponent))
                 StopThrow(message.PulledUid, thrownItemComponent);
         }
 
@@ -98,7 +100,7 @@ namespace Content.Shared.Throwing
                     _broadphase.RegenerateContacts((uid, physics));
             }
 
-            if (EntityManager.TryGetComponent(uid, out FixturesComponent? manager))
+            if (TryComp(uid, out FixturesComponent? manager))
             {
                 var fixture = _fixtures.GetFixtureOrNull(uid, ThrowingFixture, manager: manager);
 
@@ -108,8 +110,9 @@ namespace Content.Shared.Throwing
                 }
             }
 
-            EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent { User = thrownItemComponent.Thrower }, true);
-            EntityManager.RemoveComponent<ThrownItemComponent>(uid);
+            var ev = new StopThrowEvent(thrownItemComponent.Thrower);
+            RaiseLocalEvent(uid, ref ev);
+            RemComp<ThrownItemComponent>(uid);
         }
 
         public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent physics, bool playSound)
@@ -145,15 +148,13 @@ namespace Content.Shared.Throwing
         {
             base.Update(frameTime);
 
-            // TODO predicted throwing - remove this check
-            // We don't want to predict landing or stopping, since throwing isn't actually predicted.
-            // If we do, the landing/stop will occur prematurely on the client.
-            if (_gameTiming.InPrediction)
-                return;
-
             var query = EntityQueryEnumerator<ThrownItemComponent, PhysicsComponent>();
             while (query.MoveNext(out var uid, out var thrown, out var physics))
             {
+                // If you remove this check verify slipping for other entities is networked properly.
+                if (_netMan.IsClient && !physics.Predict)
+                    continue;
+
                 if (thrown.LandTime <= _gameTiming.CurTime)
                 {
                     LandComponent(uid, thrown, physics, thrown.PlayLandSound);

@@ -1,5 +1,3 @@
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Emp;
 using Content.Server.Ghost;
 using Content.Shared.Light.Components;
@@ -18,7 +16,6 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
         SubscribeLocalEvent<PoweredLightComponent, MapInitEvent>(OnMapInit);
 
         SubscribeLocalEvent<PoweredLightComponent, GhostBooEvent>(OnGhostBoo);
-        SubscribeLocalEvent<PoweredLightComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
 
         SubscribeLocalEvent<PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
     }
@@ -57,18 +54,6 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
         }
         // need this to update visualizers
         UpdateLight(uid, light);
-    }
-
-    /// <summary>
-    /// Turns the light on or of when receiving a <see cref="DeviceNetworkConstants.CmdSetState"/> command.
-    /// The light is turned on or of according to the <see cref="DeviceNetworkConstants.StateEnabled"/> value
-    /// </summary>
-    private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, DeviceNetworkPacketEvent args)
-    {
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
-
-        SetState(uid, enabled, component);
     }
 
     private void OnEmpPulse(EntityUid uid, PoweredLightComponent component, ref EmpPulseEvent args)

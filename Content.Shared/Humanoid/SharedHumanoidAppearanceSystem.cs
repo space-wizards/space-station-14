@@ -38,9 +38,10 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
+    [Dependency] private readonly GrammarSystem _grammarSystem = default!;
+    [Dependency] private readonly SharedIdentitySystem _identity = default!;
 
-    [ValidatePrototypeId<SpeciesPrototype>]
-    public const string DefaultSpecies = "Human";
+    public static readonly ProtoId<SpeciesPrototype> DefaultSpecies = "Human";
 
     public override void Initialize()
     {
@@ -144,7 +145,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     public void CloneAppearance(EntityUid source, EntityUid target, HumanoidAppearanceComponent? sourceHumanoid = null,
         HumanoidAppearanceComponent? targetHumanoid = null)
     {
-        if (!Resolve(source, ref sourceHumanoid) || !Resolve(target, ref targetHumanoid))
+        if (!Resolve(source, ref sourceHumanoid, false) || !Resolve(target, ref targetHumanoid, false))
             return;
 
         targetHumanoid.Species = sourceHumanoid.Species;
@@ -156,9 +157,11 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
 
         targetHumanoid.Gender = sourceHumanoid.Gender;
-        if (TryComp<GrammarComponent>(target, out var grammar))
-            grammar.Gender = sourceHumanoid.Gender;
 
+        if (TryComp<GrammarComponent>(target, out var grammar))
+            _grammarSystem.SetGender((target, grammar), sourceHumanoid.Gender);
+
+        _identity.QueueIdentityUpdate(target);
         Dirty(target, targetHumanoid);
     }
 
@@ -438,7 +441,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(uid, out var grammar))
         {
-            grammar.Gender = profile.Gender;
+            _grammarSystem.SetGender((uid, grammar), profile.Gender);
         }
 
         humanoid.Age = profile.Age;

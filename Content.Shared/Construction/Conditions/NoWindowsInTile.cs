@@ -17,8 +17,9 @@ namespace Content.Shared.Construction.Conditions
             var entManager = IoCManager.Resolve<IEntityManager>();
             var sysMan = entManager.EntitySysManager;
             var tagSystem = sysMan.GetEntitySystem<TagSystem>();
+            var lookupSys = sysMan.GetEntitySystem<EntityLookupSystem>();
 
-            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Static))
+            foreach (var entity in lookupSys.GetEntitiesIntersecting(location, LookupFlags.Static))
             {
                 if (tagSystem.HasTag(entity, WindowTag))
                     return false;

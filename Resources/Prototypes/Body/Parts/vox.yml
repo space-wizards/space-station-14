@@ -1,197 +1,111 @@
 ﻿# TODO: Add descriptions (many)
 # TODO BODY: Part damage
 - type: entity
-  id: PartVox
-  parent: BaseItem
-  name: "vox body part"
   abstract: true
+  parent: [ BaseItem, BasePart ]
+  id: PartVox
+  name: "vox body part"
   components:
-  - type: Damageable
-    damageContainer: Biological
-  - type: BodyPart
-  - type: ContainerContainer
-    containers:
-      bodypart: !type:Container
-        ents: []
-  - type: StaticPrice
-    price: 100
-  - type: Tag
-    tags:
-      - Trash
+  - type: Sprite
+    sprite: Mobs/Species/Vox/parts.rsi
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: Fat
         Quantity: 3
-      - ReagentId: Blood
+      - ReagentId: AmmoniaBlood
         Quantity: 10
 
 - type: entity
+  parent: [PartVox, BaseTorso]
   id: TorsoVox
   name: "vox torso"
-  parent: PartVox
   components:
-    - type: Sprite
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "torso"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "torso"
-    - type: BodyPart
-      partType: Torso
-    - type: Extractable
-      juiceSolution:
-        reagents:
-        - ReagentId: Fat
-          Quantity: 3
-        - ReagentId: Blood
-          Quantity: 10
+  - type: Sprite
+    state: "torso"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: AmmoniaBlood
+        Quantity: 20
 
 - type: entity
+  parent: [ PartVox, BaseHead ]
   id: HeadVox
   name: "vox head"
-  parent: PartVox
   components:
-    - type: Sprite
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "head"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "head"
-    - type: BodyPart
-      partType: Head
-      vital: true
-    - type: Input
-      context: "ghost"
-    - type: Tag
-      tags:
-        - Head
-    - type: Extractable
-      juiceSolution:
-        reagents:
-        - ReagentId: Fat
-          Quantity: 5
-        - ReagentId: Blood
-          Quantity: 10
+  - type: Sprite
+    state: "head"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: AmmoniaBlood
+        Quantity: 10
 
 - type: entity
+  parent: [ PartVox, BaseLeftArm ]
   id: LeftArmVox
   name: "left vox arm"
-  parent: PartVox
   components:
-    - type: Sprite
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_arm"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_arm"
-    - type: BodyPart
-      partType: Arm
-      symmetry: Left
+  - type: Sprite
+    state: "l_arm"
 
 - type: entity
+  parent: [ PartVox, BaseRightArm ]
   id: RightArmVox
   name: "right vox arm"
-  parent: PartVox
   components:
-    - type: Sprite
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_arm"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_arm"
-    - type: BodyPart
-      partType: Arm
-      symmetry: Right
+  - type: Sprite
+    state: "r_arm"
 
 - type: entity
+  parent: [ PartVox, BaseLeftHand ]
   id: LeftHandVox
   name: "left vox hand"
-  parent: PartVox
   components:
-    - type: Sprite
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_hand"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_hand"
-    - type: BodyPart
-      partType: Hand
-      symmetry: Left
+  - type: Sprite
+    state: "l_hand"
 
 - type: entity
+  parent: [ PartVox, BaseRightHand ]
   id: RightHandVox
   name: "right vox hand"
-  parent: PartVox
   components:
-    - type: Sprite
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_hand"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_hand"
-    - type: BodyPart
-      partType: Hand
-      symmetry: Right
+  - type: Sprite
+    state: "r_hand"
 
 - type: entity
+  parent:  [ PartVox, BaseLeftLeg ]
   id: LeftLegVox
   name: "left vox leg"
-  parent: PartVox
   components:
-    - type: Sprite
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_leg"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_leg"
-    - type: BodyPart
-      partType: Leg
-      symmetry: Left
-    - type: MovementBodyPart
+  - type: Sprite
+    state: "l_leg"
 
 - type: entity
+  parent:  [ PartVox, BaseRightLeg ]
   id: RightLegVox
   name: "right vox leg"
-  parent: PartVox
   components:
-    - type: Sprite
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_leg"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_leg"
-    - type: BodyPart
-      partType: Leg
-      symmetry: Right
-    - type: MovementBodyPart
+  - type: Sprite
+    state: "r_leg"
 
 - type: entity
+  parent: [ PartVox, BaseLeftFoot ]
   id: LeftFootVox
   name: "left vox foot"
-  parent: PartVox
   components:
-    - type: Sprite
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_foot"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_foot"
-    - type: BodyPart
-      partType: Foot
-      symmetry: Left
+  - type: Sprite
+    state: "l_foot"
 
 - type: entity
+  parent: [ PartVox, BaseRightFoot ]
   id: RightFootVox
   name: "right vox foot"
-  parent: PartVox
   components:
-    - type: Sprite
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_foot"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_foot"
-    - type: BodyPart
-      partType: Foot
-      symmetry: Right
+  - type: Sprite
+    state: "r_foot"

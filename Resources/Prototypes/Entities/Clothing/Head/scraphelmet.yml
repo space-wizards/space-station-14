@@ -1,0 +1,85 @@
+# Separate yml file for scrap helmet since it has so many construction steps.
+# Listed from first step of crafting to the final helmet
+
+- type: entity
+  name: wired bucket
+  parent: BaseItem
+  id: WiredBucketBase
+  description: A bucket with attached wiring to better serve as a chinstrap.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/scrap_helmet.rsi
+    state: construction-1
+  - type: Item
+    size: Normal
+    sprite: Clothing/Head/Helmets/scrap_helmet.rsi
+  - type: Construction
+    graph: scraphelmet
+    node: wiredbucket
+
+- type: entity
+  name: sliced bucket
+  parent: BaseItem
+  id: SlicedBucketBase
+  description: A bucket with a vision slit cut into the side.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/scrap_helmet.rsi
+    state: construction-2
+  - type: Item
+    size: Normal
+    sprite: Clothing/Head/Helmets/scrap_helmet.rsi
+  - type: Construction
+    graph: scraphelmet
+    node: slicedbucket
+
+- type: entity
+  name: steel bucket
+  parent: BaseItem
+  id: SteelBucketBase
+  description: A bucket that's had steel welded onto it's exterior. It requires better shaping before it can be worn comfortably.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/scrap_helmet.rsi
+    state: construction-3
+  - type: Item
+    size: Normal
+    sprite: Clothing/Head/Helmets/scrap_helmet.rsi
+  - type: Construction
+    graph: scraphelmet
+    node: steelbucket
+
+# The helmet itself
+- type: entity
+  parent: [ClothingHeadHelmetBase, BaseMajorContraband]
+  id: ClothingHeadHelmetScrap #When we get the tech for it this bad boy needs to be given a vision reduction when equipped. 1-2 tiles less than normal should be good.
+  name: scrap helmet
+  description: A cobbled-together helmet made from cabling, steel, and a bucket.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/scrap_helmet.rsi
+  - type: Item
+    size: Normal
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/scrap_helmet.rsi
+    equipSound: /Audio/Effects/metal_scrape2.ogg
+    unequipSound: /Audio/Effects/metal_scrape1.ogg
+    equipDelay: 3
+    unequipDelay: 3 #shorter on the helmet.
+  - type: IngestionBlocker
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+  - type: Construction
+    graph: scraphelmet
+    node: scraphelmet

@@ -90,6 +90,8 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/oat.rsi
+  - type: Item
+    heldPrefix: produce
   - type: SolutionContainerManager
     solutions:
       food:
@@ -280,7 +282,7 @@
   - type: Extractable
     grindableSolutionName: food
   - type: DamageOnInteract
-    damage: 
+    damage:
       types:
         Heat: 4
         Caustic: 4
@@ -307,7 +309,7 @@
             volume: -5
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: DamageOnHit 
+  - type: DamageOnHit
     damage:
       types:
         Blunt: 5 # The nettle will "wilt" after 5 hits.
@@ -435,6 +437,8 @@
     - Recyclable
     - Trash
     - BananaPeel
+    - WhitelistChameleon
+    - HamsterWearable
   - type: SolutionContainerManager
     solutions:
       food:
@@ -445,12 +449,23 @@
   - type: Extractable
     grindableSolutionName: food
   - type: SpaceGarbage
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    equippedState: peel-equipped-HELMET
+    slots:
+    - HEAD
+    quickEquip: false
 
 - type: entity
   name: baked banana peel
   parent: TrashBananaPeel
   id: TrashBakedBananaPeel
   components:
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    equippedState: baked-peel-equipped-HELMET
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: baked-peel
@@ -479,6 +494,9 @@
   - type: Item
     sprite: Objects/Specific/Hydroponics/mimana.rsi
     heldPrefix: peel
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/mimana.rsi
+    equippedState: equipped-HELMET
   - type: Slippery
     slipSound:
       path: /Audio/Effects/slip.ogg
@@ -497,6 +515,9 @@
     sprite: Objects/Materials/materials.rsi
     heldPrefix: peel
   - type: Slippery
+  - type: Clothing
+    sprite: Objects/Materials/materials.rsi
+    equippedState: peel-equipped-HELMET
 
 - type: entity
   name: carrot
@@ -1068,6 +1089,8 @@
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
+  - type: Item
+    heldPrefix: produce
   - type: Produce
     seedId: apple
   - type: Extractable
@@ -1310,6 +1333,7 @@
   - type: Tag
     tags:
     - Vegetable
+    - Mushroom
 
 # Slices
 
@@ -1621,6 +1645,9 @@
     entries:
       Taco: Lingzhi
       Burger: Lingzhi
+  - type: Tag
+    tags:
+    - Mushroom
 
 - type: entity
   name: ambrosia vulgaris
@@ -1842,6 +1869,9 @@
     entries:
       Taco: FlyAmanita
       Burger: FlyAmanita
+  - type: Tag
+    tags:
+    - Mushroom
 
 - type: entity
   name: gatfruit
@@ -2575,6 +2605,9 @@
     tags:
     - ClothMade
     - CottonBoll
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: CottonBol
 
 - type: entity
   name: pyrotton boll
@@ -2608,6 +2641,9 @@
     - CottonBoll
   - type: Extractable
     grindableSolutionName: food
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: PyrottonBol
 
 - type: entity
   name: cherry
@@ -2658,6 +2694,7 @@
   - type: Item
     sprite: Objects/Specific/Hydroponics/cherry.rsi
     heldPrefix: pit
+    size: Tiny
   - type: Tag
     tags:
     - Recyclable

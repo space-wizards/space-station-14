@@ -75,3 +75,48 @@
     solution: tank
   - type: ExaminableSolution
     solution: tank
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBagPet
+  name: pet bag
+  description: A small bag designed for use by pets and small animals.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Specific/petbag.rsi
+  - type: Storage
+    grid:
+    - 1,0,2,0
+    - 0,1,2,3
+    - 6,0,7,0
+    - 6,1,8,3
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - CorgiWearable
+    - PetOnly
+  - type: Construction
+    graph: ClothingBagPet
+    node: bagPet
+
+- type: entity
+  parent: Clothing
+  id: ClothingBackpackHarmpack
+  name: H.A.R.M.P.A.C.K.
+  description: Now you can reload, punch, and eat a snack - simultaneously.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Specific/harmpack.rsi
+    state: icon
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    slots: BACK
+  - type: ExtraHandsEquipment
+    hands:
+      # middle hands to prevent overlapping inhand sprites
+      # This can be changed once we have per-hand displacement maps
+      extra_hand_1:
+        location: Middle
+      extra_hand_2:
+        location: Middle

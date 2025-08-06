@@ -73,7 +73,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         List<ProtoId<AccessLevelPrototype>>? possibleAccess = null;
         if (component.PrivilegedIdSlot.Item is { Valid: true } item)
         {
-            privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(item).EntityName;
+            privilegedIdName = Comp<MetaDataComponent>(item).EntityName;
             possibleAccess = _accessReader.FindAccessTags(item).ToList();
         }
 
@@ -95,12 +95,12 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         }
         else
         {
-            var targetIdComponent = EntityManager.GetComponent<IdCardComponent>(targetId);
-            var targetAccessComponent = EntityManager.GetComponent<AccessComponent>(targetId);
+            var targetIdComponent = Comp<IdCardComponent>(targetId);
+            var targetAccessComponent = Comp<AccessComponent>(targetId);
 
-            var jobProto = new ProtoId<AccessLevelPrototype>(string.Empty);
+            var jobProto = targetIdComponent.JobPrototype ?? new ProtoId<AccessLevelPrototype>(string.Empty);
             if (TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
-                && keyStorage.Key is {} key
+                && keyStorage.Key is { } key
                 && _record.TryGetRecord<GeneralStationRecord>(key, out var record))
             {
                 jobProto = record.JobPrototype;
@@ -151,6 +151,13 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         }
 
         UpdateStationRecord(uid, targetId, newFullName, newJobTitle, job);
+        if ((!TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
+            || keyStorage.Key is not { } key
+            || !_record.TryGetRecord<GeneralStationRecord>(key, out _))
+            && newJobProto != string.Empty)
+        {
+            Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
+        }
 
         if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
         {

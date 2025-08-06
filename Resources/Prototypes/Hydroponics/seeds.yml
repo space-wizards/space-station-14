@@ -932,8 +932,8 @@
   idealHeat: 298
   chemicals:
     Egg:
-      Min: 1
-      Max: 10
+      Min: 4
+      Max: 12
       PotencyDivisor: 10
 
 - type: seed
