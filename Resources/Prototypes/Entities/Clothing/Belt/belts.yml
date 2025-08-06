@@ -239,7 +239,7 @@
       components:
         - LightReplacer
         - SmokeOnTrigger
-    maxItemSize: Large
+    maxItemSize: Huge
   - type: ItemMapper
     mapLayers:
       bottle:

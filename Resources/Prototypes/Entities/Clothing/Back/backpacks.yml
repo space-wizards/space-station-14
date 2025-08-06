@@ -17,6 +17,9 @@
     grid:
     - 0,0,6,3
     maxItemSize: Huge
+    blacklist:
+      tags:
+        - TrashBag
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
