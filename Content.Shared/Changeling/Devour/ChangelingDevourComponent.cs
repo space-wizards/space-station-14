@@ -46,13 +46,13 @@ public sealed partial class ChangelingDevourComponent : Component
     /// The Sound to use during consumption of a victim
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? ConsumeNoise = new SoundCollectionSpecifier("ChangelingDevourConsume", AudioParams.Default.WithMaxDistance(6));
+    public SoundSpecifier? ConsumeNoise = new SoundCollectionSpecifier("ChangelingDevourConsume", AudioParams.Default.WithMaxDistance(6)); // 6 distance due to the default 15 being hearable all the way across PVS. Changeling is meant to be stealthy. 6 still allows the sound to be hearable, but not across an entire department.
 
     /// <summary>
     /// The Sound to use during the windup before consuming a victim
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? DevourWindupNoise = new SoundCollectionSpecifier("ChangelingDevourWindup", AudioParams.Default.WithMaxDistance(6));
+    public SoundSpecifier? DevourWindupNoise = new SoundCollectionSpecifier("ChangelingDevourWindup", AudioParams.Default.WithMaxDistance(6)); // 6 distance due to the default 15 being hearable all the way across PVS. Changeling is meant to be stealthy. 6 still allows the sound to be hearable, but not across an entire department.
 
     /// <summary>
     /// The time between damage ticks

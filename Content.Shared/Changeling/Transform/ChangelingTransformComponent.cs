@@ -35,7 +35,7 @@ public sealed partial class ChangelingTransformComponent : Component
     /// The noise used when attempting to transform
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? TransformAttemptNoise = new SoundCollectionSpecifier("ChangelingTransformAttempt", AudioParams.Default.WithMaxDistance(6));
+    public SoundSpecifier? TransformAttemptNoise = new SoundCollectionSpecifier("ChangelingTransformAttempt", AudioParams.Default.WithMaxDistance(6)); // 6 distance due to the default 15 being hearable all the way across PVS. Changeling is meant to be stealthy. 6 still allows the sound to be hearable, but not across an entire department.
 
     /// <summary>
     /// The currently active transform in the world
