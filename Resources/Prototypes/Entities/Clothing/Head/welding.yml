@@ -25,8 +25,8 @@
     - Snout
   - type: ImageOverlay
     pathToOverlayImage: "/Textures/weldingTexture.png"
-    additionalOverlayAlpha: 0.7
-    additionalColor: "#A00000"
+    additionalOverlayAlpha: 0.6
+    additionalColor: "#000000"
 
 - type: entity
   parent: WeldingMaskBase
