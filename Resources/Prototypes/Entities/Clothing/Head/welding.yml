@@ -24,7 +24,7 @@
     slots:
     - Snout
   - type: ImageOverlay
-    pathToOverlayImage: "/Textures/weldingTexture.png"
+    pathToOverlayImage: "/Textures/Clothing/Head/Welding/weldingTexture.png"
     additionalOverlayAlpha: 0.6
     additionalColor: "#000000"
 
