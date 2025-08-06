@@ -3,8 +3,8 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
-/// Triggers when the receiving object/entity/thing is examined.
-/// Triggers on the thing being examined, not on the one doing the examining.
+/// Triggers when the owning entity is examined.
+/// The user is the player doing the examination.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnExaminedComponent : BaseTriggerOnXComponent;
