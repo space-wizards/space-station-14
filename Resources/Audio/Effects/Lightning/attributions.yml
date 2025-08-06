@@ -1,5 +1,5 @@
 - files: ["lightningshock.ogg", "lightningbolt.ogg"]
-  license: CC-BY-NC-SA-3.0
+  license: CC-BY-SA-3.0
   copyright: "/tg/station"
   source: "https://github.com/tgstation/tgstation/pull/9701/"
 
