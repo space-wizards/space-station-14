@@ -1,30 +1,4 @@
 ﻿Entries:
-- author: murolem
-  changes:
-  - message: Building orientation on fences, diagonal grilles and the diagonal shuttle
-      wall is now respected.
-    type: Fix
-  id: 8319
-  time: '2025-04-23T01:58:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36488
-- author: kosticia
-  changes:
-  - message: Added analog of donk-pockets for moth - moth-pockets
-    type: Add
-  id: 8320
-  time: '2025-04-23T05:36:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34517
-- author: AgentSmithRadio
-  changes:
-  - message: New food crates are now available for purchase from the automated trade
-      station!
-    type: Add
-  - message: You can no longer use Sweetie's Pistachios to fulfill cargo's generic
-      fruit bounty.
-    type: Remove
-  id: 8321
-  time: '2025-04-23T05:37:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33286
 - author: SaphireLattice
   changes:
   - message: Steel sheets no longer have unintuitively wasteful plating placement
@@ -3906,3 +3880,25 @@
   id: 8831
   time: '2025-08-06T13:00:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38852
+- author: aada
+  changes:
+  - message: You can examine fuel tanks to see how much they're filled.
+    type: Add
+  id: 8832
+  time: '2025-08-06T16:11:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39362
+- author: Tao7891
+  changes:
+  - message: Craftable cardboard structures and equipment.
+    type: Add
+  id: 8833
+  time: '2025-08-06T16:58:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37363
+- author: slarticodefast
+  changes:
+  - message: Fixed inventory sprites flickering when hovering over the slot with an
+      item.
+    type: Fix
+  id: 8834
+  time: '2025-08-06T20:14:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39379
