@@ -7,5 +7,6 @@ namespace Content.Server.Nutrition.Events;
 /// </summary>
 /// <param name="Drink">The drink that is being drank.</param>
 /// <param name="Solution">The solution that will be digested.</param>
+/// <param name="Forced">Whether the target was forced to drink the solution by somebody else.</param>
 [ByRefEvent]
-public readonly record struct BeforeIngestDrinkEvent(EntityUid Drink, Solution Solution);
+public record struct BeforeIngestDrinkEvent(EntityUid Drink, Solution Solution, bool Forced);

@@ -9,14 +9,14 @@ namespace Content.Server.Nutrition.Components;
 public sealed partial class MessyDrinkerComponent : Component
 {
     [DataField]
-    public float SpillChance = 0.25f;
+    public float SpillChance = 0.2f;
 
     /// <summary>
-    /// The amount of solution that is spilled when <see cref="SpillChance"/> fails.
+    /// The amount of solution that is spilled when <see cref="SpillChance"/> procs.
     /// </summary>
     [DataField]
     public FixedPoint2 SpillAmount = 1.0;
 
     [DataField]
-    public LocId? SpillMessagePopup = new LocId("messy-drinker-drink-spill-message");
+    public LocId? SpillMessagePopup;
 }

@@ -21,11 +21,14 @@ public sealed class MessyDrinkerSystem : EntitySystem
 
     private void OnBeforeIngestDrink(Entity<MessyDrinkerComponent> ent, ref BeforeIngestDrinkEvent ev)
     {
-
         if (ev.Solution.Volume <= ent.Comp.SpillAmount)
             return;
 
-        if (_random.NextFloat() > ent.Comp.SpillChance)
+        // Cannot spill if you're being forced to drink.
+        if (ev.Forced)
+            return;
+
+        if (!_random.Prob(ent.Comp.SpillChance))
             return;
 
         if (ent.Comp.SpillMessagePopup != null)
@@ -35,5 +38,4 @@ public sealed class MessyDrinkerSystem : EntitySystem
 
         _puddle.TrySpillAt(ent, split, out _);
     }
-
 }

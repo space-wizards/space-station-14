@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Kickguy223
-  changes:
-  - message: Reduced the price of firelock electronics to half the price of the input
-      materials
-    type: Tweak
-  id: 8318
-  time: '2025-04-22T23:53:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33469
 - author: murolem
   changes:
   - message: Building orientation on fences, diagonal grilles and the diagonal shuttle
@@ -3907,3 +3899,10 @@
   id: 8830
   time: '2025-08-05T23:15:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39410
+- author: ScarKy0, beck-thompson
+  changes:
+  - message: Various canines will now sometimes clumsily spill things they drink.
+    type: Add
+  id: 8831
+  time: '2025-08-06T13:00:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38852
