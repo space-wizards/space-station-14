@@ -137,14 +137,6 @@ public abstract partial class SharedSolutionContainerSystem
 
     #endregion Solution Modifiers
 
-    public float PercentFull(EntityUid uid)
-    {
-        if (!TryGetDrainableSolution(uid, out _, out var solution) || solution.MaxVolume.Equals(FixedPoint2.Zero))
-            return 0;
-
-        return solution.FillFraction * 100;
-    }
-
     #region Static Methods
 
     public static string ToPrettyString(Solution solution)

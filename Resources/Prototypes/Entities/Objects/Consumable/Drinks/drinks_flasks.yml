@@ -16,7 +16,7 @@
   - type: FitsInDispenser
     solution: drink
   - type: ExaminableSolution
-    opaque: true
+    examinableWhileClosed: false
 
 - type: entity
   id: DrinkFlaskVisualsOpenable

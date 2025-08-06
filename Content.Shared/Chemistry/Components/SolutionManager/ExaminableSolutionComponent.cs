@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization;
+﻿using Content.Shared.Nutrition.Components;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components.SolutionManager;
 
@@ -28,10 +29,10 @@ public sealed partial class ExaminableSolutionComponent : Component
     public bool ExactVolume;
 
     /// <summary>
-    ///     If true, the solution can't be examined when this entity is closed.
+    ///     If false, the solution can't be examined when this entity is closed by <see cref="OpenableComponent"/>.
     /// </summary>
     [DataField]
-    public bool Opaque;
+    public bool ExaminableWhileClosed = true;
 
     /// <summary>
     ///     Examine text for when the solution is empty.

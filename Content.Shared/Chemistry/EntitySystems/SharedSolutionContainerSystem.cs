@@ -892,9 +892,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (examiner == null)
             return ExaminedVolumeDisplay.HalfFull;
 
-        if (TryComp<MetaDataComponent>(examiner, out var meta)
-        && meta.EntityName.Length > 0
-        && string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
+        var meta = MetaData(examiner.Value);
+        if (meta.EntityName.Length > 0 &&
+            string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
             return ExaminedVolumeDisplay.HalfFull;
 
         return ExaminedVolumeDisplay.HalfEmpty;
@@ -984,7 +984,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (entity.Comp.HeldOnly && !Hands.IsHolding(examiner, entity, out _))
             return false;
 
-        if (entity.Comp.Opaque && Openable.IsClosed(entity.Owner, predicted: true))
+        if (!entity.Comp.ExaminableWhileClosed && Openable.IsClosed(entity.Owner, predicted: true))
             return false;
 
         return true;

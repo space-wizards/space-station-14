@@ -18,7 +18,7 @@
   - type: PressurizedSolution
     solution: drink
   - type: ExaminableSolution
-    opaque: true
+    examinableWhileClosed: false
   - type: Shakeable
   - type: Sprite
     state: icon

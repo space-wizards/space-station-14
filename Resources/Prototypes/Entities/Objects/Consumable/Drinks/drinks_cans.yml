@@ -48,7 +48,7 @@
     solution: drink
   - type: ExaminableSolution
     solution: drink
-    opaque: true
+    examinableWhileClosed: false
   - type: Appearance
   - type: GenericVisualizer
     visuals:
