@@ -56,6 +56,13 @@
           Quantity: 6
   - type: Item
     heldPrefix: cardboard
+  - type: FloorTile
+    outputs:
+    - Plating
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetCard
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
   parent: MaterialCardboard
