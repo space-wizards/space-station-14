@@ -131,7 +131,8 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
             // liquid color
 
             var liquidColorMsg = new FormattedMessage();
-            liquidColorMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-reagent-color-display", ("color", reagent.SubstanceColor)));
+            var dummyExtendedReagent = new ReagentId(product);
+            liquidColorMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-reagent-color-display", ("color", dummyExtendedReagent.GetColor())));
             liquidColorMsg.Pop();
 
             var liquidColorLabel = new GuidebookRichPrototypeLink();

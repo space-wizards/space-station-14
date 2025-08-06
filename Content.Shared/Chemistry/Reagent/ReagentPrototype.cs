@@ -73,6 +73,7 @@ namespace Content.Shared.Chemistry.Reagent
         public FixedPoint2 FlavorMinimum = FixedPoint2.New(0.1f);
 
         [DataField("color")]
+        [Access(typeof(ReagentId), Friend = AccessPermissions.Read, Other = AccessPermissions.None)]
         public Color SubstanceColor { get; private set; } = Color.White;
 
         /// <summary>

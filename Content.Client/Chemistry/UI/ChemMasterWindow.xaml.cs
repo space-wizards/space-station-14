@@ -265,7 +265,7 @@ namespace Content.Client.Chemistry.UI
                 var reagentId = reagent;
                 _prototypeManager.TryIndex(reagentId.Prototype, out ReagentPrototype? proto);
                 var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-                var reagentColor = proto?.SubstanceColor ?? default(Color);
+                var reagentColor = reagentId.GetColor();
                 reagentList.Add(new (reagentId, name, reagentColor, quantity));
             }
 
@@ -344,7 +344,7 @@ namespace Content.Client.Chemistry.UI
                 {
                     _prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? proto);
                     var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-                    var reagentColor = proto?.SubstanceColor ?? default(Color);
+                    var reagentColor = reagent.Reagent.GetColor();
 
                     control.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagent.Reagent, reagent.Quantity, false, addReagentButtons));
                 }

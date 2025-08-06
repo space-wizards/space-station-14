@@ -4,6 +4,8 @@
   name: sentient slimes core
   description: "The source of incredible, unending gooeyness."
   components:
+    - type: Appearance
+    - type: Organ
     - type: Sprite
       sprite: Mobs/Species/Slime/organs.rsi
       state: brain-slime
@@ -24,6 +26,7 @@
       solutions:
         stomach:
           maxVol: 30.0
+    - type: SlimeGibSplatter
 
 - type: entity
   id: OrganSlimesLungs
@@ -31,6 +34,8 @@
   name: slimes gas sacs
   description: "Collects nitrogen, which slime cells use for maintenance."
   components:
+    - type: Appearance
+    - type: Organ
     - type: Sprite
       sprite: Mobs/Species/Slime/organs.rsi
       layers:
@@ -55,3 +60,4 @@
         Lung:
           maxVol: 100.0
           canReact: false
+    - type: SlimeGibSplatter

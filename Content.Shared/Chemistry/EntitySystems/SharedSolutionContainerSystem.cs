@@ -871,7 +871,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     part = "examinable-solution-recognized-next";
                 }
 
-                msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
+                var dummyExtendedReagent = new ReagentId(reagent.ID);
+                msg.Append(Loc.GetString(part, ("color", dummyExtendedReagent.GetColor().ToHexNoAlpha()),
                     ("chemical", reagent.LocalizedName)));
             }
 
@@ -940,9 +941,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         foreach (var (proto, quantity) in sortedReagentPrototypes)
         {
             msg.PushNewline();
+            var dummyExtendedReagent = new ReagentId(proto.ID);
             msg.AddMarkupOrThrow(Loc.GetString("scannable-solution-chemical"
                 , ("type", proto.LocalizedName)
-                , ("color", proto.SubstanceColor.ToHexNoAlpha())
+                , ("color", dummyExtendedReagent.GetColor().ToHexNoAlpha())
                 , ("amount", quantity)));
         }
 
