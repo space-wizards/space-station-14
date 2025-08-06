@@ -20,6 +20,7 @@
     blacklist:
       tags:
         - TrashBag
+        - TrashBagHolding
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

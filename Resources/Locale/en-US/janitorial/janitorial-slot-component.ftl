@@ -9,4 +9,5 @@ janitorial-trolley-slot-component-slot-name-lightreplacer = Light Replacer
 janitorial-trolley-slot-component-slot-name-spray = Spray
 janitorial-trolley-slot-component-slot-name-bucket = Bucket
 janitorial-trolley-slot-component-slot-name-trashbag = Trash Bag
+janitorial-trolley-slot-component-slot-name-trashbagholding = Trash Bag Holding
 janitorial-trolley-slot-component-slot-name-mop = Mop

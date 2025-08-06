@@ -243,6 +243,11 @@
             tags:
               - TrashBag
           priority: 3 # Higher than drinking priority
+        trashbagholding_slot:
+          name: janitorial-trolley-slot-component-slot-name-trashbagholding
+          whitelist:
+            tags:
+              - TrashBagHolding
     - type: Fixtures
       fixtures:
         fix1:
@@ -317,6 +322,10 @@
           whitelist:
             tags:
               - TrashBag
+        cart_garbageholding:
+          whitelist:
+            tags:
+              - TrashBagHolding
         cart_replacer:
           whitelist:
             components:

@@ -59,6 +59,9 @@
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 5
+  - type: Tag
+    tags:
+    - TrashBagHolding
 
 - type: entity
   parent: TrashBag
