@@ -196,7 +196,7 @@ public partial class SharedBodySystem
         {
             var slot = CreateOrganSlot((ent, ent), organSlotId);
             if (organProto == "null")
-                return;
+                continue; // Ensure the loop properly skips the null entry and processes the remaining organs
             SpawnInContainerOrDrop(organProto, ent, GetOrganContainerId(organSlotId));
 
             if (slot is null)
@@ -214,16 +214,18 @@ public partial class SharedBodySystem
         BodyComponent? body = null,
         BodyPartComponent? rootPart = null)
     {
-        if (!Resolve(id, ref body, logMissing: false)
-            || body.RootContainer.ContainedEntity is null
-            || !Resolve(body.RootContainer.ContainedEntity.Value, ref rootPart))
-        {
+        // Resolve BodyComponent first so we can access RootContainer
+        if (!Resolve(id, ref body, logMissing: false))
             yield break;
-        }
 
-        yield return body.RootContainer;
+        // Validate and retrieve the root part
+        if (GetRootPartOrNull(id, body) is not { } root)
+            yield break;
 
-        foreach (var childContainer in GetPartContainers(body.RootContainer.ContainedEntity.Value, rootPart))
+        // body.RootContainer should not be null after the check
+        yield return body.RootContainer!;
+
+        foreach (var childContainer in GetPartContainers(root.Entity, root.BodyPart))
         {
             yield return childContainer;
         }
@@ -237,20 +239,11 @@ public partial class SharedBodySystem
         BodyComponent? body = null,
         BodyPartComponent? rootPart = null)
     {
-        if (id is null || !Resolve(id.Value, ref body, logMissing: false))
-        {
+        if (id is null || GetRootPartOrNull(id.Value, body) is not { } root)
             yield break;
-        }
 
-        // Safely get the root contained entity, checking for null before proceeding
-        // This prevents a NullReferenceException if the container is empty during state application
-        var rootContainedEntity = body.RootContainer?.ContainedEntity;
-        if (rootContainedEntity is null || !Resolve(rootContainedEntity.Value, ref rootPart, logMissing: false))
-        {
-            yield break;
-        }
-
-        foreach (var child in GetBodyPartChildren(rootContainedEntity.Value, rootPart))
+        // 'root' should be a tuple containing the validated root entity and its BodyPartComponent
+        foreach (var child in GetBodyPartChildren(root.Entity, root.BodyPart))
         {
             yield return child;
         }
@@ -275,20 +268,14 @@ public partial class SharedBodySystem
     /// <summary>
     /// Returns all body part slots for this entity.
     /// </summary>
-    /// <param name="bodyId"></param>
-    /// <param name="body"></param>
-    /// <returns></returns>
     public IEnumerable<BodyPartSlot> GetBodyAllSlots(
         EntityUid bodyId,
         BodyComponent? body = null)
     {
-        if (!Resolve(bodyId, ref body, logMissing: false)
-            || body.RootContainer.ContainedEntity is null)
-        {
+        if (GetRootPartOrNull(bodyId, body) is not { } root)
             yield break;
-        }
 
-        foreach (var slot in GetAllBodyPartSlots(body.RootContainer.ContainedEntity.Value))
+        foreach (var slot in GetAllBodyPartSlots(root.Entity))
         {
             yield return slot;
         }
