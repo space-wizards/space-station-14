@@ -39,7 +39,7 @@ public sealed partial class JumpAbilityComponent : Component
     public float JumpThrowSpeed = 10f;
 
     /// <summary>
-    /// Whether this entity can collide with another entity, leading to it getting stunned.
+    /// Whether this entity can collide with another entity, leading to it getting knocked down.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool CanCollide = false;
