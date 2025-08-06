@@ -14,12 +14,12 @@ public sealed partial class ImpairedMobilityComponent : Component
     /// <summary>
     /// The movement speed modifier applied to the player (0.4 is 40% slower)
     /// </summary>
-    [DataField("speedModifier")]
+    [DataField]
     public float SpeedModifier = 0.4f;
 
     /// <summary>
     /// The doAfter modifier when getting up after falling (1.4 is 40% slower)
     /// </summary>
-    [DataField("standUpTimeModifier")]
+    [DataField]
     public float StandUpTimeModifier = 1.4f;
 }
