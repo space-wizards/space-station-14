@@ -430,7 +430,7 @@
   parent: BaseAction
   id: ActionVulpkaninGravityJump
   name: Leap
-  description: Use your agile legs to leap a short distance.
+  description: Use your agile legs to leap a short distance. Be careful not to bump into anything!
   components:
   - type: Action
     useDelay: 10
