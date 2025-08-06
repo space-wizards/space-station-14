@@ -24,7 +24,7 @@
   - type: TrashOnSolutionEmpty
     solution: drink
   - type: ExaminableSolution # Remove when DrinkVisualAll is added
-    opaque: false
+    examinableWhileClosed: true
     heldOnly: false
 
 - type: entity

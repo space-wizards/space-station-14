@@ -160,7 +160,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20 # might be too much
+        maxVol: 20
   - type: SolutionTransfer
     canChangeTransferAmount: true
     minTransferAmount: 1

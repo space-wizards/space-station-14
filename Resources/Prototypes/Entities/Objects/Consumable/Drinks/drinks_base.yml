@@ -104,7 +104,7 @@
     - state: icon
       map: ["enum.OpenableVisuals.Layer"]
   - type: ExaminableSolution
-    opaque: true # If you can't see the fill levels on the sprite, we can assume it's opaque
+    examinableWhileClosed: false # If you can't see the fill levels on the sprite, we can assume it's opaque
     heldOnly: true # If it's opaque, you probably can't see through the open lid from a distance
 
 # Basic visualizer for an entity with fill levels
@@ -173,7 +173,7 @@
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
   - type: ExaminableSolution
-    opaque: false # If you can see the fill levels it's not opaque
+    examinableWhileClosed: true # If you can see the fill levels it's not opaque
     heldOnly: false
 
 # Visualizer for an openable entity with fill levels, already filled
