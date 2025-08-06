@@ -805,18 +805,19 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             !TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
             return;
 
-        var primaryReagent = solution.GetPrimaryReagentId();
-
-        // If there's no primary reagent, assume the solution is empty
-        if (string.IsNullOrEmpty(primaryReagent?.Prototype) ||
-            !PrototypeManager.Resolve<ReagentPrototype>(primaryReagent.Value.Prototype, out var primary))
-        {
-            args.PushMarkup(Loc.GetString(entity.Comp.LocVolume, ("fillLevel", ExaminedVolumeDisplay.Empty)));
-            return;
-        }
-
         using (args.PushGroup(nameof(ExaminableSolutionComponent)))
         {
+
+            var primaryReagent = solution.GetPrimaryReagentId();
+
+            // If there's no primary reagent, assume the solution is empty and exit early
+            if (string.IsNullOrEmpty(primaryReagent?.Prototype) ||
+                !PrototypeManager.Resolve<ReagentPrototype>(primaryReagent.Value.Prototype, out var primary))
+            {
+                args.PushMarkup(Loc.GetString(entity.Comp.LocVolume, ("fillLevel", ExaminedVolumeDisplay.Empty)));
+                return;
+            }
+
             // Push amount of reagent
 
             args.PushMarkup(Loc.GetString(entity.Comp.LocVolume,
