@@ -462,8 +462,8 @@
   name: hydrated scurret
   description: Wait, what?
   id: CrateFunScurret
-  parent: CratePlastic
-  components: 
+  parent: CrateLivestock
+  components:
   - type: StorageFill
     contents:
     - id: MobEmotionalSupportScurret # How? Why?

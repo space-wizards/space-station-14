@@ -251,3 +251,7 @@ stack-large-black-bishop = black bishop
 stack-large-black-knight = black knight
 stack-large-black-rook = black rook
 stack-large-black-pawn = black pawn
+stack-white-marble-floor = white marble floor
+stack-dark-marble-floor = dark marble floor
+stack-plasma-marble-floor = plasmarble floor
+stack-uranium-marble-floor = uranium marble floor
