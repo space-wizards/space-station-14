@@ -35,4 +35,4 @@ reagent-name-rororium = rororium
 reagent-desc-rororium = A strange substance which fills the cores of the hivelords that roam the mining asteroid. Thought to be the source of their regenerative powers.
 
 reagent-name-lye = lye
-reagent-desc-lye = A golde, alkaline solution used in traditional soap production.
+reagent-desc-lye = A golden, alkaline solution used in traditional soap production.
