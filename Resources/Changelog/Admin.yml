@@ -1301,5 +1301,12 @@ Entries:
   id: 158
   time: '2025-07-31T18:34:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38406
+- author: PJB3005
+  changes:
+  - message: The "scale" console command was replaced with a toolshed command.
+    type: Tweak
+  id: 159
+  time: '2025-08-06T15:09:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39421
 Name: Admin
 Order: 2
