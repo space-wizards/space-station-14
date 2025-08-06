@@ -10550,5 +10550,12 @@ Entries:
   id: 1451
   time: '2025-08-06T10:24:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1233
+- author: Citeria
+  changes:
+  - message: Added attempt to fix the proverbial "medbay rendering error"
+    type: Fix
+  id: 1452
+  time: '2025-08-06T16:56:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1230
 Order: -1
 
