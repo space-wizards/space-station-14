@@ -11,6 +11,9 @@
             "name": "icon"
         },
         {
+            "name": "storage"
+        },
+        {
             "name": "inhand-left",
             "directions": 4
         },
