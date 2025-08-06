@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/04/2025 19:10:49
-  entityCount: 11113
+  time: 08/05/2025 18:20:59
+  entityCount: 11117
 maps:
 - 1
 grids:
@@ -1180,7 +1180,7 @@ entities:
   - uid: 3564
     components:
     - type: MetaData
-      name: Prison
+      name: Prison Station
     - type: Transform
       pos: 150.92255,68.575584
       parent: 1
@@ -3263,7 +3263,7 @@ entities:
       pos: 51.5,22.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -124597.61
+      secondsUntilStateChange: -125241.125
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -5805,6 +5805,13 @@ entities:
     components:
     - type: Transform
       pos: 30.5,-16.5
+      parent: 3564
+- proto: BrigmedicIDCard
+  entities:
+  - uid: 11116
+    components:
+    - type: Transform
+      pos: 30.5,-21.5
       parent: 3564
 - proto: Brutepack1
   entities:
@@ -21603,13 +21610,6 @@ entities:
     - type: Transform
       pos: 59.5,28.5
       parent: 2
-- proto: CMOIDCard
-  entities:
-  - uid: 10614
-    components:
-    - type: Transform
-      pos: 30.5,-21.5
-      parent: 3564
 - proto: ComfyChair
   entities:
   - uid: 2432
@@ -57033,13 +57033,6 @@ entities:
     - type: Transform
       pos: 15.5,-7.5
       parent: 2
-- proto: SpawnPointBrigmedic
-  entities:
-  - uid: 10331
-    components:
-    - type: Transform
-      pos: 25.5,-20.5
-      parent: 3564
 - proto: SpawnPointCaptain
   entities:
   - uid: 6815
@@ -57056,10 +57049,10 @@ entities:
       parent: 2
 - proto: SpawnPointChemist
   entities:
-  - uid: 7383
+  - uid: 10331
     components:
     - type: Transform
-      pos: 30.5,10.5
+      pos: 26.5,11.5
       parent: 2
 - proto: SpawnPointChiefEngineer
   entities:
@@ -57081,6 +57074,41 @@ entities:
     components:
     - type: Transform
       pos: 36.5,1.5
+      parent: 2
+- proto: SpawnPointGhostDerelictCyborg
+  entities:
+  - uid: 1939
+    components:
+    - type: Transform
+      pos: 33.5,45.5
+      parent: 2
+- proto: SpawnPointGhostDragon
+  entities:
+  - uid: 10614
+    components:
+    - type: Transform
+      pos: 9.5,33.5
+      parent: 2
+- proto: SpawnPointGhostParadoxClone
+  entities:
+  - uid: 567
+    components:
+    - type: Transform
+      pos: 14.5,26.5
+      parent: 2
+- proto: SpawnPointGhostRatKing
+  entities:
+  - uid: 11115
+    components:
+    - type: Transform
+      pos: 58.5,59.5
+      parent: 2
+- proto: SpawnPointGhostSpaceNinja
+  entities:
+  - uid: 11114
+    components:
+    - type: Transform
+      pos: 51.5,67.5
       parent: 2
 - proto: SpawnPointHeadOfPersonnel
   entities:
@@ -57144,15 +57172,15 @@ entities:
       parent: 2
 - proto: SpawnPointMedicalDoctor
   entities:
-  - uid: 567
-    components:
-    - type: Transform
-      pos: 10.5,11.5
-      parent: 2
   - uid: 7105
     components:
     - type: Transform
-      pos: 10.5,12.5
+      pos: 15.5,11.5
+      parent: 2
+  - uid: 7383
+    components:
+    - type: Transform
+      pos: 16.5,13.5
       parent: 2
 - proto: SpawnPointMedicalIntern
   entities:
@@ -57175,11 +57203,11 @@ entities:
       parent: 2
 - proto: SpawnPointParamedic
   entities:
-  - uid: 1939
+  - uid: 11117
     components:
     - type: Transform
-      pos: 14.5,14.5
-      parent: 2
+      pos: 25.5,-20.5
+      parent: 3564
 - proto: SpawnPointPassenger
   entities:
   - uid: 33
@@ -69723,7 +69751,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -191104.38
+      secondsUntilStateChange: -191747.89
       state: Opening
     - type: Airlock
       autoClose: False
