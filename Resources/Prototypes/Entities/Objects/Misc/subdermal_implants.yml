@@ -61,17 +61,18 @@
   description: This implant lets the user honk anywhere at any time.
   categories: [ HideSpawnMenu ]
   components:
-    - type: SubdermalImplant
-      implantAction: ActionActivateHonkImplant
-    - type: TriggerImplantAction
-    - type: EmitSoundOnTrigger
-      sound:
-        collection: BikeHorn
-        params:
-          variation: 0.125
-    - type: Tag
-      tags:
-      - BikeHorn
+  - type: SubdermalImplant
+    implantAction: ActionActivateHonkImplant
+  - type: TriggerOnActivateImplant
+  - type: EmitSoundOnTrigger
+    predicted: true
+    sound:
+      collection: BikeHorn
+      params:
+        variation: 0.125
+  - type: Tag
+    tags:
+    - BikeHorn
 
 #Security implants
 
@@ -179,13 +180,13 @@
   description: This implant creates an electromagnetic pulse when activated.
   categories: [ HideSpawnMenu ]
   components:
-    - type: SubdermalImplant
-      implantAction: ActionActivateEmpImplant
-    - type: TriggerImplantAction
-    - type: EmpOnTrigger
-      range: 2.75
-      energyConsumption: 50000
-      disableDuration: 10
+  - type: SubdermalImplant
+    implantAction: ActionActivateEmpImplant
+  - type: TriggerOnActivateImplant
+  - type: EmpOnTrigger
+    range: 2.75
+    energyConsumption: 50000
+    disableDuration: 10
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -194,10 +195,10 @@
   description: This implant randomly teleports the user within a large radius when activated.
   categories: [ HideSpawnMenu ]
   components:
-    - type: SubdermalImplant
-      implantAction: ActionActivateScramImplant
-    - type: TriggerImplantAction
-    - type: ScramImplant
+  - type: SubdermalImplant
+    implantAction: ActionActivateScramImplant
+  - type: TriggerOnActivateImplant
+  - type: ScramImplant
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -238,27 +239,28 @@
   description: This implant detonates the user upon activation or upon death.
   categories: [ HideSpawnMenu ]
   components:
-    - type: SubdermalImplant
-      permanent: true
-      implantAction: ActionActivateMicroBomb
-    - type: TriggerOnMobstateChange
-      mobState:
-      - Dead
-    - type: TriggerImplantAction
-    - type: ExplodeOnTrigger
-    - type: GibOnTrigger
-      deleteItems: true
-    - type: Explosive
-      explosionType: MicroBomb
-      totalIntensity: 120
-      intensitySlope: 5
-      maxIntensity: 30
-      canCreateVacuum: false
-    - type: Tag
-      tags:
-        - SubdermalImplant
-        - HideContextMenu
-        - MicroBomb
+  - type: SubdermalImplant
+    permanent: true
+    implantAction: ActionActivateMicroBomb
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Dead
+  - type: TriggerOnActivateImplant
+  - type: ExplodeOnTrigger
+  - type: GibOnTrigger
+    targetUser: true
+    deleteItems: true
+  - type: Explosive
+    explosionType: MicroBomb
+    totalIntensity: 120
+    intensitySlope: 5
+    maxIntensity: 30
+    canCreateVacuum: false
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
+    - MicroBomb
 
 
 - type: entity
@@ -270,20 +272,24 @@
   components:
     - type: SubdermalImplant
       permanent: true
-    - type: TriggerOnMobstateChange #Chains with OnUseTimerTrigger
+    - type: TriggerOnMobstateChange #activates the timer
       mobState:
       - Dead
       preventSuicide: true
-    - type: OnUseTimerTrigger
+    - type: TimerTrigger
       delay: 7
-      initialBeepDelay: 0
       beepSound:
         path: /Audio/Machines/Nuke/general_beep.ogg
         params:
           volume: -2
     - type: ExplodeOnTrigger
+      keysIn:
+      - timer
     - type: GibOnTrigger
+      targetUser: true
       deleteItems: true
+      keysIn:
+      - timer
     - type: Explosive
       explosionType: Default
       totalIntensity: 3500
@@ -309,11 +315,13 @@
   - type: TriggerOnMobstateChange
     mobState:
     - Dead
-  - type: TriggerImplantAction
+  - type: TriggerOnActivateImplant
   - type: GibOnTrigger
+    targetUser: true
     deleteItems: true
   - type: SpawnOnTrigger
     proto: Acidifier
+    predicted: true
   - type: Tag
     tags:
     - SubdermalImplant
@@ -336,7 +344,8 @@
       mobState:
       - Critical
       - Dead
-    - type: Rattle
+    - type: RattleOnTrigger
+      targetUser: true
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -382,5 +391,5 @@
   description: This implant will inform the Centcomm radio channel should the user fall into critical condition or die.
   categories: [ HideSpawnMenu ]
   components:
-  - type: Rattle
+  - type: RattleOnTrigger
     radioChannel: CentCom
