@@ -350,18 +350,18 @@ public partial class SharedBodySystem
     /// </summary>
     public (EntityUid Entity, BodyPartComponent BodyPart)? GetRootPartOrNull(EntityUid bodyId, BodyComponent? body = null)
     {
-        if (!Resolve(bodyId, ref body, logMissing: false)
-            || body.RootContainer is null
+        if (!Resolve(bodyId, ref body, logMissing: false) // Starlight-edit
+            || body.RootContainer is null // Starlight-edit
             || body.RootContainer.ContainedEntity is null)
         {
             return null;
         }
 
-        var rootEntity = body.RootContainer.ContainedEntity.Value;
-        if (!TryComp<BodyPartComponent>(rootEntity, out var rootPart))
-            return null;
+        var rootEntity = body.RootContainer.ContainedEntity.Value; // Starlight-edit
+        if (!TryComp<BodyPartComponent>(rootEntity, out var rootPart)) // Starlight-edit
+            return null; // Starlight-edit
 
-        return (rootEntity, rootPart);
+        return (rootEntity, rootPart); // Starlight-edit
     }
 
     /// <summary>
