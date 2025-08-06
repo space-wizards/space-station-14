@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseExaminableClothing]
   id: ClothingNeckPinBase
   abstract: true
   name: pin
@@ -22,6 +22,8 @@
     state: lgbt
   - type: Clothing
     equippedPrefix: lgbt
+  - type: ExaminableClothing
+    examineText: clothing-pin-lgbt
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -33,6 +35,8 @@
     state: ally
   - type: Clothing
     equippedPrefix: ally
+  - type: ExaminableClothing
+    examineText: clothing-pin-straight-ally
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -44,6 +48,8 @@
     state: aro
   - type: Clothing
     equippedPrefix: aro
+  - type: ExaminableClothing
+    examineText: clothing-pin-aromantic
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -55,6 +61,8 @@
     state: aroace
   - type: Clothing
     equippedPrefix: aroace
+  - type: ExaminableClothing
+    examineText: clothing-pin-aroace
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -66,6 +74,8 @@
     state: asex
   - type: Clothing
     equippedPrefix: asex
+  - type: ExaminableClothing
+    examineText: clothing-pin-asexual
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -77,6 +87,8 @@
     state: bi
   - type: Clothing
     equippedPrefix: bi
+  - type: ExaminableClothing
+    examineText: clothing-pin-bisexual
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -88,6 +100,8 @@
     state: gay
   - type: Clothing
     equippedPrefix: gay
+  - type: ExaminableClothing
+    examineText: clothing-pin-gay
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -99,6 +113,8 @@
     state: inter
   - type: Clothing
     equippedPrefix: inter
+  - type: ExaminableClothing
+    examineText: clothing-pin-intersex
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -110,6 +126,8 @@
     state: les
   - type: Clothing
     equippedPrefix: les
+  - type: ExaminableClothing
+    examineText: clothing-pin-lesbian
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -121,6 +139,8 @@
     state: non
   - type: Clothing
     equippedPrefix: non
+  - type: ExaminableClothing
+    examineText: clothing-pin-nonbinary
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -132,6 +152,8 @@
     state: pan
   - type: Clothing
     equippedPrefix: pan
+  - type: ExaminableClothing
+    examineText: clothing-pin-pansexual
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -143,6 +165,8 @@
     state: plural
   - type: Clothing
     equippedPrefix: plural
+  - type: ExaminableClothing
+    examineText: clothing-pin-plural
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -154,6 +178,8 @@
     state: omni
   - type: Clothing
     equippedPrefix: omni
+  - type: ExaminableClothing
+    examineText: clothing-pin-omnisexual
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -165,6 +191,8 @@
     state: gender
   - type: Clothing
     equippedPrefix: gender
+  - type: ExaminableClothing
+    examineText: clothing-pin-genderqueer
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -176,6 +204,8 @@
     state: fluid
   - type: Clothing
     equippedPrefix: fluid
+  - type: ExaminableClothing
+    examineText: clothing-pin-genderfluid
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -187,6 +217,8 @@
     state: trans
   - type: Clothing
     equippedPrefix: trans
+  - type: ExaminableClothing
+    examineText: clothing-pin-transgender
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -209,3 +241,5 @@
     state: goldautism
   - type: Clothing
     equippedPrefix: goldautism
+  - type: ExaminableClothing
+    examineText: clothing-pin-autism
