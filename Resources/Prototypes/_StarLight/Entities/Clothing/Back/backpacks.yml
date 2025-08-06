@@ -22,7 +22,7 @@
   name: NTNC backpack
   description: A spacious backpack with lots of pockets, worn by NTNC Officers
   components:
-  - type: Sprite
-    sprite: _Starlight/Clothing/Back/Backpacks/ntnc_bag.rsi
   - type: ExplosionResistance
     damageCoefficient: 0.1
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Backpacks/ntnc_bag.rsi
