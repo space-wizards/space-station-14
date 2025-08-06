@@ -67,6 +67,8 @@
   - type: FitsInDispenser
     solution: drink
 
+# Probably shouldn't be here
+# Also probably shouldn't let you put the cola back in, and should spawn deadly plastic rings after removing the last one
 - type: entity
   parent: BaseStorageItem
   id: DrinkCanPack
@@ -78,22 +80,16 @@
     - state: plastic-thingy
     - state: 6pack1
       map: ["6pack1"]
-      visible: false
     - state: 6pack2
       map: ["6pack2"]
-      visible: false
     - state: 6pack3
       map: ["6pack3"]
-      visible: false
     - state: 6pack4
       map: ["6pack4"]
-      visible: false
     - state: 6pack5
       map: ["6pack5"]
-      visible: false
     - state: 6pack6
       map: ["6pack6"]
-      visible: false
   - type: Item
     size: Normal
   - type: Storage
@@ -135,8 +131,7 @@
   - type: FitsInDispenser
     solution: drink
   - type: ExaminableSolution
-    heldOnly: true
-    exactVolume: true
+    heldOnly: true # Opaque, can't see inside from a distance
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker.rsi
     state: icon
