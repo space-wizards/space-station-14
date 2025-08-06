@@ -71,6 +71,7 @@ public partial class InventorySystem : EntitySystem
         targetComp.FemaleDisplacements = new Dictionary<string, DisplacementData>(source.Comp.FemaleDisplacements);
         targetComp.MaleDisplacements = new Dictionary<string, DisplacementData>(source.Comp.MaleDisplacements);
         SetTemplateId((target, targetComp), source.Comp.TemplateId);
+        Dirty(target, targetComp);
     }
 
     private void OnInit(Entity<InventoryComponent> ent, ref ComponentInit args)
