@@ -182,6 +182,7 @@
 - type: entity
   id: VendingMachineService
   parent: VendingMachine
+  abstract: true
   components:
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -196,6 +197,7 @@
 - type: entity
   id: VendingMachineSecurity
   parent: VendingMachine
+  abstract: true
   components:
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -210,6 +212,7 @@
 - type: entity
   id: VendingMachineMedicalRadio
   parent: VendingMachine
+  abstract: true
   components:
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -224,6 +227,7 @@
 - type: entity
   id: VendingMachineEngineering
   parent: VendingMachine
+  abstract: true
   components:
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -238,6 +242,7 @@
 - type: entity
   id: VendingMachineCommand
   parent: VendingMachine
+  abstract: true
   components:
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -252,6 +257,7 @@
 - type: entity
   id: VendingMachineScience
   parent: VendingMachine
+  abstract: true
   components:
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -266,6 +272,7 @@
 - type: entity
   id: VendingMachineCargo
   parent: VendingMachine
+  abstract: true
   components:
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -280,6 +287,7 @@
 - type: entity
   id: VendingMachineCentCom
   parent: VendingMachine
+  abstract: true
   components:
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -294,6 +302,7 @@
 - type: entity
   id: VendingMachineSyndicate
   parent: VendingMachine
+  abstract: true
   components:
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -307,7 +316,7 @@
 # Vending machines
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineCondiments
   name: condiment station
   description: Slather these thick gooey substances on your food for a full flavor effect.
@@ -366,7 +375,7 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineBooze
   name: Booze-O-Mat
   description: A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one.
@@ -464,7 +473,7 @@
     access: [["HeadOfPersonnel"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineChefvend
   name: ChefVend
   description: An ingredient vendor for all your cheffin needs.
@@ -917,7 +926,7 @@
     color: "#00E645"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineDinnerware
   name: Plasteel Chef's Dinnerware Vendor
   description: A kitchen and restaurant equipment vendor.
@@ -1153,7 +1162,7 @@
     - Antagonists
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineSeedsUnlocked
   name: MegaSeed Servitor
   description: For when you need seeds fast. Hands down the best seed selection on the station!
@@ -1375,7 +1384,7 @@
   - type: RussianAccent
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineTheater
   name: AutoDrobe
   description: A vending machine containing costumes.
@@ -1508,7 +1517,7 @@
     color: "#d4ab33"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineGames
   name: Good Clean Fun
   description: Vends things that the Captain and Head of Personnel are probably not going to appreciate you fiddling with instead of your job...
@@ -1640,7 +1649,7 @@
 # job clothing
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineHydrobe
   name: HyDrobe
   description: A machine with a catchy name. It dispenses botany related clothing and gear.
@@ -1732,7 +1741,7 @@
     access: [["Security"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingBarDrobe
   name: BarDrobe
   description: A stylish vendor to dispense the most stylish bar clothing!
@@ -1760,7 +1769,7 @@
     access: [["Bar"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineChapel
   name: PietyVend
   components:
@@ -1968,7 +1977,7 @@
     access: [["Engineering"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineChefDrobe
   name: ChefDrobe
   description: This vending machine might not dispense meat, but it certainly dispenses chef related clothing.
@@ -2024,7 +2033,7 @@
     access: [["Detective"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineService
   id: VendingMachineJaniDrobe
   name: JaniDrobe
   description: A self cleaning vending machine capable of dispensing clothing for janitors.
