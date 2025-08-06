@@ -1,23 +1,24 @@
 using Content.Shared.Hands;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Hands.Components;
+using Content.Shared.Wieldable.Components;
+using Content.Shared.Wieldable;
 
 namespace Content.Shared.Traits.Assorted;
 
 /// <summary>
-/// Handles MobilityAidComponent functionality. Counteracts the ImpairedMobilityComponent speed penalty when ANY mobility aid is held in-hand.
+/// Handles <see cref="MobilityAidComponent"/>
 /// </summary>
 public sealed class MobilityAidSystem : EntitySystem
 {
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<MobilityAidComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<MobilityAidComponent, GotUnequippedHandEvent>(OnGotUnequippedHand);
-        SubscribeLocalEvent<ImpairedMobilityComponent, RefreshMovementSpeedModifiersEvent>(OnImpairedMobilityRefreshMovementSpeed);
+        SubscribeLocalEvent<MobilityAidComponent, ItemWieldedEvent>(OnMobilityAidWielded);
+        SubscribeLocalEvent<MobilityAidComponent, ItemUnwieldedEvent>(OnMobilityAidUnwielded);
     }
 
     private void OnGotEquippedHand(Entity<MobilityAidComponent> ent, ref GotEquippedHandEvent args)
@@ -30,31 +31,13 @@ public sealed class MobilityAidSystem : EntitySystem
         _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
     }
 
-    private void OnImpairedMobilityRefreshMovementSpeed(EntityUid uid, ImpairedMobilityComponent component, RefreshMovementSpeedModifiersEvent args)
+    private void OnMobilityAidWielded(Entity<MobilityAidComponent> ent, ref ItemWieldedEvent args)
     {
-        // Check if the entity is holding any mobility aid
-        if (HasMobilityAid(uid))
-        {
-            var counterMultiplier = 1.0f / component.SpeedModifier;
-            args.ModifySpeed(counterMultiplier);
-        }
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
     }
 
-    /// <summary>
-    /// Checks if the entity is currently holding any items with MobilityAidComponent
-    /// Returns true if holding 1+ mobility aids, false if holding 0 prevents the effect from speed stacking when holding multiple aids.
-    /// </summary>
-    private bool HasMobilityAid(EntityUid uid)
+    private void OnMobilityAidUnwielded(Entity<MobilityAidComponent> ent, ref ItemUnwieldedEvent args)
     {
-        if (!TryComp<HandsComponent>(uid, out var hands))
-            return false;
-
-        foreach (var held in _handsSystem.EnumerateHeld((uid, hands)))
-        {
-            if (HasComp<MobilityAidComponent>(held))
-                return true;
-        }
-
-        return false;
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
     }
 }
