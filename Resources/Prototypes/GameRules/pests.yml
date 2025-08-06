@@ -35,7 +35,7 @@
       - id: MobMouse
       - id: MobMouse1
       - id: MobMouse2
-    ceil: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
+    ceiling: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
     playerRatio: 17
     floor: 1 # Ronstation - Mice can be annoying so we add some variance into how many they can spawn at lower pops
       #- id: MobMouseCancer DeltaV - No
@@ -60,7 +60,7 @@
       - id: MobMouse1
       - id: MobMouse2
       - id: MobMouseCancer
-    ceil: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
+    ceiling: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
     playerRatio: 17
     floor: 1 # Ronstation - Mice can be annoying so we add some variance into how many they can spawn at lower pops
     specialEntries:
@@ -88,7 +88,7 @@
         weight: 0.008
       - id: MobMoproach
         weight: 0.004
-    ceil: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
+    ceiling: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
     playerRatio: 17
 
 - type: entity
@@ -107,7 +107,7 @@
       - id: MobSnail
       - id: MobSnailSpeed
       - id: MobSnailMoth
-    ceil: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
+    ceiling: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
     playerRatio: 17
 
 - type: entity
@@ -132,5 +132,5 @@
       - id: MobSnailMoth
         weight: 0.08
       # - id: MobSnailInstantDeath DeltaV - No
-    ceil: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
+    ceiling: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
     playerRatio: 17
