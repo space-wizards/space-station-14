@@ -237,15 +237,20 @@ public partial class SharedBodySystem
         BodyComponent? body = null,
         BodyPartComponent? rootPart = null)
     {
-        if (id is null
-            || !Resolve(id.Value, ref body, logMissing: false)
-            || body.RootContainer.ContainedEntity is null
-            || !Resolve(body.RootContainer.ContainedEntity.Value, ref rootPart))
+        if (id is null || !Resolve(id.Value, ref body, logMissing: false))
         {
             yield break;
         }
 
-        foreach (var child in GetBodyPartChildren(body.RootContainer.ContainedEntity.Value, rootPart))
+        // Safely get the root contained entity, checking for null before proceeding
+        // This prevents a NullReferenceException if the container is empty during state application
+        var rootContainedEntity = body.RootContainer?.ContainedEntity;
+        if (rootContainedEntity is null || !Resolve(rootContainedEntity.Value, ref rootPart, logMissing: false))
+        {
+            yield break;
+        }
+
+        foreach (var child in GetBodyPartChildren(rootContainedEntity.Value, rootPart))
         {
             yield return child;
         }
