@@ -375,6 +375,7 @@
           ents: []
         mop_slot: !type:ContainerSlot {}
         trashbag_slot: !type:ContainerSlot {}
+        trashbagholding_slot: !type:ContainerSlot {}
         bucket_slot: !type:ContainerSlot {}
         plunger_slot: !type:ContainerSlot {}
         goldenplunger_slot: !type:ContainerSlot {}
