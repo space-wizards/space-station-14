@@ -16,7 +16,7 @@ public sealed partial class NightVisionComponent : Component
     public float NoiseAmount;
 
     [DataField("tint")]
-    public Vector3 Tint = new();
+    public Vector3 Tint = new(0.3f, 0.3f, 0.3f);
 
 
 }
