@@ -80,7 +80,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
         // Hue "angle" of two colors to interpolate between depending on severity
         // Just a lerp from Green hue at severity = 0.5 to Red hue at 1.0
         var hue = Math.Clamp(2*GreenHue * (1 - severity), RedHue, GreenHue);
-        var color = new Rgba32(Color.FromHsv((hue, 1, 1, 1)).RGBA);
+        var color = new Rgba32(Color.FromHsv((hue, 1f, 1f, 1f)).RGBA);
 
         var transparent = new Rgba32(0, 0, 0, 255);
 
