@@ -28,7 +28,7 @@ public sealed class MessyDrinkerSystem : EntitySystem
         if (ev.Forced)
             return;
 
-        if (_random.NextFloat() > ent.Comp.SpillChance)
+        if (!_random.Prob(ent.Comp.SpillChance))
             return;
 
         if (ent.Comp.SpillMessagePopup != null)
