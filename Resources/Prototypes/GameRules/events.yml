@@ -471,24 +471,25 @@
     table: # DeltaV: EntityTable instead of spawn entries
       id: MobGiantSpiderAngry
 
-# start of modifications
-#- type: entity
-#  id: SpiderClownSpawn
-#  parent: BaseStationEventShortDelay
-#  components:
-#  - type: StationEvent
-#    startAnnouncement: station-event-vent-creatures-start-announcement
-#    startAudio:
-#      path: /Audio/Announcements/attention.ogg
-#    earliestStart: 20
-#    minimumPlayers: 20
-#    weight: 1.5
-#    duration: 60
-#  - type: VentCrittersRule
-#    entries:
-#    - id: MobClownSpider
-#      prob: 0.05
-# end of modifications
+- type: entity
+  id: SpiderClownSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 20
+    minimumPlayers: 20
+    weight: 1.5
+    duration: 60
+  - type: VentCrittersRule
+    table: # DeltaV: EntityTable instead of spawn entries
+      id: MobClownSpider
+    min: 1 # Ronstation - Clownspiders are annoying and so not as many spawn when they are rolled
+    max: 2
+    ceiling: 4
+    floor: 1
 
 - type: entity
   id: ZombieOutbreak
