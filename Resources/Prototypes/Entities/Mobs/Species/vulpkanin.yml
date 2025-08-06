@@ -52,8 +52,9 @@
     heatingCoefficient: 1.2
     coolingCoefficient: 0.50
   - type: SolutionScanner
-  - type: JumpAbility # TODO: Vulps should be getting knocked down on collision with eachother or environment. However, collision prediction is very janky so that is not a good idea right now.
+  - type: JumpAbility
     action: ActionVulpkaninGravityJump
+    canCollide: true
     jumpDistance: 3
     jumpSound:
       path: /Audio/Weapons/punchmiss.ogg

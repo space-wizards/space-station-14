@@ -2,8 +2,10 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
+using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Movement.Systems;
 
@@ -13,6 +15,7 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
     public override void Initialize()
     {
@@ -22,6 +25,9 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         SubscribeLocalEvent<JumpAbilityComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<JumpAbilityComponent, GravityJumpEvent>(OnGravityJump);
+
+        SubscribeLocalEvent<ActiveLeaperComponent, StartCollideEvent>(OnLeaperCollide);
+        SubscribeLocalEvent<ActiveLeaperComponent, LandEvent>(OnLeaperLand);
     }
 
     private void OnInit(Entity<JumpAbilityComponent> entity, ref MapInitEvent args)
@@ -37,6 +43,25 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         _actions.RemoveAction(entity.Owner, entity.Comp.ActionEntity);
     }
 
+    private void OnLeaperCollide(Entity<ActiveLeaperComponent> entity, ref StartCollideEvent args)
+    {
+        if (!HasComp<ActiveLeaperComponent>(entity.Owner))
+            return;
+
+        if (!TryComp<JumpAbilityComponent>(entity.Owner, out var ability))
+            return;
+
+        if (!ability.CanCollide)
+            return;
+
+        _stun.TryKnockdown(entity.Owner, ability.CollideKnockdown, true, force: true);
+    }
+
+    private void OnLeaperLand(Entity<ActiveLeaperComponent> entity, ref LandEvent args)
+    {
+        RemCompDeferred<ActiveLeaperComponent>(entity);
+    }
+
     private void OnGravityJump(Entity<JumpAbilityComponent> entity, ref GravityJumpEvent args)
     {
         if (_gravity.IsWeightless(args.Performer))
@@ -49,6 +74,10 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         _throwing.TryThrow(args.Performer, direction, entity.Comp.JumpThrowSpeed);
 
         _audio.PlayPredicted(entity.Comp.JumpSound, args.Performer, args.Performer);
+
+        if (entity.Comp.CanCollide)
+            EnsureComp<ActiveLeaperComponent>(entity);
+
         args.Handled = true;
     }
 }

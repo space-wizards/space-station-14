@@ -39,6 +39,18 @@ public sealed partial class JumpAbilityComponent : Component
     public float JumpThrowSpeed = 10f;
 
     /// <summary>
+    /// Whether this entity can collide with another entity, leading to it getting stunned.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool CanCollide = false;
+
+    /// <summary>
+    /// The duration of the knockdown in case of a collision from CanCollide.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan CollideKnockdown = TimeSpan.FromSeconds(1.5f);
+
+    /// <summary>
     /// This gets played whenever the jump action is used.
     /// </summary>
     [DataField, AutoNetworkedField]
