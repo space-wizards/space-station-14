@@ -221,7 +221,7 @@
     event: !type:ToggleClothingEvent
 
 - type: entity
-  parent: BaseAction
+  parent: BaseMentalAction
   id: ActionCombatModeToggle
   name: "[color=red]Combat Mode[/color]"
   description: Enter combat mode
@@ -330,6 +330,7 @@
   components:
   - type: Action
     icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
+    useDelay: 1
 
 - type: entity
   parent: BaseAction
@@ -368,6 +369,7 @@
     iconOn: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
     itemIconStyle: NoItem
     useDelay: 1 # emote spam
+    checkCanInteract: false
 
 - type: entity
   parent: BaseAction
@@ -400,10 +402,24 @@
     itemIconStyle: BigAction
 
 - type: entity
+  parent: BaseAction
+  id: ActionGravityJump
+  name: Jump
+  description: Activating the advanced propulsion system, you propel yourself a short distance in the direction of your gaze.
+  components:
+  - type: Action
+    useDelay: 8
+    icon: 
+      sprite: Interface/Actions/jump.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:GravityJumpEvent {}
+    
+- type: entity
   parent: BaseToggleAction
   id: ActionToggleRootable
-  name: action-name-toggle-rootable
-  description: action-description-toggle-rootable
+  name: Rootable
+  description: Begin or stop being rooted to the floor.
   components:
   - type: Action
     icon: Interface/Actions/rooting.png
