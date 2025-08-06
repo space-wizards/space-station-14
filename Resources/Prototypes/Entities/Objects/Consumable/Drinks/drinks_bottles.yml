@@ -193,7 +193,7 @@
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]
   - type: ExaminableSolution
-    opaque: true
+    examinableWhileClosed: false # If you can't see fill levels, it's probably opaque
 
 - type: entity
   id: DrinkBottleVisualsAll

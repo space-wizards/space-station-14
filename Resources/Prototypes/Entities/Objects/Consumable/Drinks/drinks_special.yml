@@ -44,7 +44,7 @@
   - type: ExaminableSolution
     solution: drink
     heldOnly: true
-    opaque: true
+    examinableWhileClosed: false
 
 - type: entity
   parent: DrinkGlassBase

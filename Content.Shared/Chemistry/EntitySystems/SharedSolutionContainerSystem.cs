@@ -805,18 +805,19 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             !TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
             return;
 
-        var primaryReagent = solution.GetPrimaryReagentId();
-
-        // If there's no primary reagent, assume the solution is empty
-        if (string.IsNullOrEmpty(primaryReagent?.Prototype) ||
-            !PrototypeManager.Resolve<ReagentPrototype>(primaryReagent.Value.Prototype, out var primary))
-        {
-            args.PushMarkup(Loc.GetString(entity.Comp.LocEmptyVolume));
-            return;
-        }
-
         using (args.PushGroup(nameof(ExaminableSolutionComponent)))
         {
+
+            var primaryReagent = solution.GetPrimaryReagentId();
+
+            // If there's no primary reagent, assume the solution is empty and exit early
+            if (string.IsNullOrEmpty(primaryReagent?.Prototype) ||
+                !PrototypeManager.Resolve<ReagentPrototype>(primaryReagent.Value.Prototype, out var primary))
+            {
+                args.PushMarkup(Loc.GetString(entity.Comp.LocVolume, ("fillLevel", ExaminedVolumeDisplay.Empty)));
+                return;
+            }
+
             // Push amount of reagent
 
             args.PushMarkup(Loc.GetString(entity.Comp.LocVolume,
@@ -892,9 +893,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (examiner == null)
             return ExaminedVolumeDisplay.HalfFull;
 
-        if (TryComp<MetaDataComponent>(examiner, out var meta)
-        && meta.EntityName.Length > 0
-        && string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
+        var meta = MetaData(examiner.Value);
+        if (meta.EntityName.Length > 0 &&
+            string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
             return ExaminedVolumeDisplay.HalfFull;
 
         return ExaminedVolumeDisplay.HalfEmpty;
@@ -984,7 +985,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (entity.Comp.HeldOnly && !Hands.IsHolding(examiner, entity, out _))
             return false;
 
-        if (entity.Comp.Opaque && Openable.IsClosed(entity.Owner, predicted: true))
+        if (!entity.Comp.ExaminableWhileClosed && Openable.IsClosed(entity.Owner, predicted: true))
             return false;
 
         return true;
