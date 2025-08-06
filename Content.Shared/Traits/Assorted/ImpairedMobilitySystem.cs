@@ -18,8 +18,8 @@ public sealed class ImpairedMobilitySystem : EntitySystem
         SubscribeLocalEvent<ImpairedMobilityComponent, GetStandUpTimeEvent>(OnGetStandUpTime);
     }
 
-    /// Handles movement speed for entities with impaired mobility.
-    /// Applies a speed penalty, but counteracts it if the entity is holding a non-wielded mobility aid.
+    // Handles movement speed for entities with impaired mobility.
+    // Applies a speed penalty, but counteracts it if the entity is holding a non-wielded mobility aid.
     private void OnRefreshMovementSpeed(EntityUid uid, ImpairedMobilityComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         if (HasMobilityAid(uid))
@@ -28,13 +28,13 @@ public sealed class ImpairedMobilitySystem : EntitySystem
         args.ModifySpeed(component.SpeedModifier);
     }
 
-    /// Increases the time it takes for entities to stand up from being knocked down.
+    // Increases the time it takes for entities to stand up from being knocked down.
     private void OnGetStandUpTime(EntityUid uid, ImpairedMobilityComponent component, ref GetStandUpTimeEvent args)
     {
         args.DoAfterTime *= component.StandUpTimeModifier;
     }
 
-    /// Checks if the entity is holding any non-wielded mobility aids.
+    // Checks if the entity is holding any non-wielded mobility aids.
     private bool HasMobilityAid(Entity<HandsComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp, false))
@@ -45,6 +45,7 @@ public sealed class ImpairedMobilitySystem : EntitySystem
             if (!HasComp<MobilityAidComponent>(held))
                 continue;
 
+            // Makes sure it's not wielded yet
             if (TryComp<WieldableComponent>(held, out var wieldable) && wieldable.Wielded)
                 continue;
 
