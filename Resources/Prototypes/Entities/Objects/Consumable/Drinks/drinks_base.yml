@@ -15,8 +15,10 @@
       types:
         Blunt: 0
   - type: DnaSubstanceTrace
-  - type: Drink # Namesake. You are able to directly drink from this entity.
+  - type: Edible
+    edible: Drink # Namesake. This entity is a sort of cup you can drink directly from.
     solution: drink
+    destroyOnEmpty: false
   - type: Spillable
     solution: drink
   - type: MixableSolution
