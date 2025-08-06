@@ -111,6 +111,7 @@
   - Fixtures
   - Speech
   - TypingIndicator
+  - ScaleVisuals # for dwarf height
   eventComponents:
   # these need special treatment in the event subscription
   - Inventory # arachnid pockets and diona feet
