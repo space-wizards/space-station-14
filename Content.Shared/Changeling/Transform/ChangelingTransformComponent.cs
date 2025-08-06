@@ -35,7 +35,7 @@ public sealed partial class ChangelingTransformComponent : Component
     /// The noise used when attempting to transform
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? TransformAttemptNoise = new SoundCollectionSpecifier("ChangelingTransformAttempt", AudioParams.Default.WithVolume(-5));
+    public SoundSpecifier? TransformAttemptNoise = new SoundCollectionSpecifier("ChangelingTransformAttempt", AudioParams.Default.WithMaxDistance(6));
 
     /// <summary>
     /// The currently active transform in the world

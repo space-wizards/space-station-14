@@ -46,13 +46,13 @@ public sealed partial class ChangelingDevourComponent : Component
     /// The Sound to use during consumption of a victim
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? ConsumeNoise = new SoundCollectionSpecifier("ChangelingDevourConsume", AudioParams.Default.WithVolume(-5));
+    public SoundSpecifier? ConsumeNoise = new SoundCollectionSpecifier("ChangelingDevourConsume", AudioParams.Default.WithMaxDistance(6));
 
     /// <summary>
     /// The Sound to use during the windup before consuming a victim
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? DevourWindupNoise = new SoundCollectionSpecifier("ChangelingDevourWindup", AudioParams.Default.WithVolume(-5));
+    public SoundSpecifier? DevourWindupNoise = new SoundCollectionSpecifier("ChangelingDevourWindup", AudioParams.Default.WithMaxDistance(6));
 
     /// <summary>
     /// The time between damage ticks
