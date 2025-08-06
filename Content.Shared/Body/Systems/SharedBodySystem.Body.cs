@@ -196,7 +196,7 @@ public partial class SharedBodySystem
         {
             var slot = CreateOrganSlot((ent, ent), organSlotId);
             if (organProto == "null")
-                continue; // Ensure the loop properly skips the null entry and processes the remaining organs
+                continue; // Ensure the loop properly skips the null entry and processes the remaining organs : Starlight-edit
             SpawnInContainerOrDrop(organProto, ent, GetOrganContainerId(organSlotId));
 
             if (slot is null)
@@ -214,6 +214,7 @@ public partial class SharedBodySystem
         BodyComponent? body = null,
         BodyPartComponent? rootPart = null)
     {
+        // Starlight-edit start
         // Resolve BodyComponent first so we can access RootContainer
         if (!Resolve(id, ref body, logMissing: false))
             yield break;
@@ -225,7 +226,7 @@ public partial class SharedBodySystem
         // body.RootContainer should not be null after the check
         yield return body.RootContainer!;
 
-        foreach (var childContainer in GetPartContainers(root.Entity, root.BodyPart))
+        foreach (var childContainer in GetPartContainers(root.Entity, root.BodyPart)) // Starlight-edit end
         {
             yield return childContainer;
         }
@@ -239,11 +240,11 @@ public partial class SharedBodySystem
         BodyComponent? body = null,
         BodyPartComponent? rootPart = null)
     {
-        if (id is null || GetRootPartOrNull(id.Value, body) is not { } root)
+        if (id is null || GetRootPartOrNull(id.Value, body) is not { } root) // Starlight-edit
             yield break;
 
         // 'root' should be a tuple containing the validated root entity and its BodyPartComponent
-        foreach (var child in GetBodyPartChildren(root.Entity, root.BodyPart))
+        foreach (var child in GetBodyPartChildren(root.Entity, root.BodyPart)) // Starlight-edit
         {
             yield return child;
         }
@@ -272,10 +273,10 @@ public partial class SharedBodySystem
         EntityUid bodyId,
         BodyComponent? body = null)
     {
-        if (GetRootPartOrNull(bodyId, body) is not { } root)
+        if (GetRootPartOrNull(bodyId, body) is not { } root) // Starlight-edit
             yield break;
 
-        foreach (var slot in GetAllBodyPartSlots(root.Entity))
+        foreach (var slot in GetAllBodyPartSlots(root.Entity)) // Starlight-edit
         {
             yield return slot;
         }
