@@ -28,7 +28,7 @@ public abstract class SharedEmpSystem : EntitySystem
     {
     }
 
-    private void OnExamine(EntityUid uid, EmpDisabledComponent component, ExaminedEvent args)
+    private void OnExamine(Entity<EmpDisabledComponent> ent, ref ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("emp-disabled-comp-on-examine"));
     }
