@@ -2,6 +2,8 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
+using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -19,17 +21,19 @@ namespace Content.Shared.Light.EntitySystems;
 public abstract class SharedPoweredLightSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
-    [Dependency] private   readonly DamageOnInteractSystem _damageOnInteractSystem = default!;
-    [Dependency] private   readonly SharedAmbientSoundSystem _ambientSystem = default!;
-    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private   readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly DamageOnInteractSystem _damageOnInteractSystem = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private   readonly SharedLightBulbSystem _bulbSystem = default!;
-    [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private   readonly SharedPowerReceiverSystem _receiver = default!;
-    [Dependency] private   readonly SharedPointLightSystem _pointLight = default!;
-    [Dependency] private   readonly SharedStorageSystem _storage = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedLightBulbSystem _bulbSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+    [Dependency] private readonly SharedStorageSystem _storage = default!;
+    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
+
 
     private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
     public const string LightBulbContainer = "light_bulb";
@@ -40,14 +44,16 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         SubscribeLocalEvent<PoweredLightComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<PoweredLightComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PoweredLightComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
     }
 
-    protected virtual void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
+    private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
     {
         light.LightBulbContainer = ContainerSystem.EnsureContainer<ContainerSlot>(uid, LightBulbContainer);
+        _deviceLink.EnsureSinkPorts(uid, light.OnPort, light.OffPort, light.TogglePort);
     }
 
     private void OnInteractUsing(EntityUid uid, PoweredLightComponent component, InteractUsingEvent args)
@@ -70,7 +76,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
 
         var userUid = args.User;
         //removing a broken/burned bulb, so allow instant removal
-        if(TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
+        if (TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
         {
             args.Handled = EjectBulb(uid, userUid, light) != null;
             return;
@@ -84,6 +90,16 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         });
 
         args.Handled = true;
+    }
+
+    private void OnSignalReceived(Entity<PoweredLightComponent> ent, ref SignalReceivedEvent args)
+    {
+        if (args.Port == ent.Comp.OffPort)
+            SetState(ent, false, ent.Comp);
+        else if (args.Port == ent.Comp.OnPort)
+            SetState(ent, true, ent.Comp);
+        else if (args.Port == ent.Comp.TogglePort)
+            ToggleLight(ent, ent.Comp);
     }
 
     /// <summary>
@@ -100,7 +116,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
             return false;
 
         // check if bulb fits
-        if (!EntityManager.TryGetComponent(bulbUid, out LightBulbComponent? lightBulb))
+        if (!TryComp<LightBulbComponent>(bulbUid, out var lightBulb))
             return false;
 
         if (lightBulb.Type != light.BulbType)
@@ -228,7 +244,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
 
         // check if light has bulb
         var bulbUid = GetBulb(uid, light);
-        if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
+        if (bulbUid == null || !TryComp<LightBulbComponent>(bulbUid.Value, out var lightBulb))
         {
             SetLight(uid, false, light: light);
             powerReceiver.Load = 0;
@@ -302,7 +318,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         light.IsBlinking = isNowBlinking;
         Dirty(uid, light);
 
-        if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
         _appearance.SetData(uid, PoweredLightVisuals.Blinking, isNowBlinking, appearance);
@@ -328,11 +344,11 @@ public abstract class SharedPoweredLightSystem : EntitySystem
             if (color != null)
                 _pointLight.SetColor(uid, color.Value, pointLight);
             if (radius != null)
-                _pointLight.SetRadius(uid, (float) radius, pointLight);
+                _pointLight.SetRadius(uid, (float)radius, pointLight);
             if (energy != null)
-                _pointLight.SetEnergy(uid, (float) energy, pointLight);
+                _pointLight.SetEnergy(uid, (float)energy, pointLight);
             if (softness != null)
-                _pointLight.SetSoftness(uid, (float) softness, pointLight);
+                _pointLight.SetSoftness(uid, (float)softness, pointLight);
         }
 
         // light bulbs burn your hands!
@@ -355,6 +371,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
             return;
 
         light.On = state;
+        Dirty(uid, light);
         UpdateLight(uid, light);
     }
 
