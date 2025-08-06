@@ -74,9 +74,12 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     /// <param name="ent">the changeling</param>
     public void CleanupChangelingNullspaceIdentities(Entity<ChangelingIdentityComponent> ent)
     {
+        if (_net.IsClient)
+            return;
+
         foreach (var consumedIdentity in ent.Comp.ConsumedIdentities)
         {
-            PredictedQueueDel(consumedIdentity);
+            QueueDel(consumedIdentity);
         }
     }
 
