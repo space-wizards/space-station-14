@@ -1,4 +1,4 @@
-﻿# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+﻿# Modifications ported by Ronstation from Starlight, Starlight changes licensed as MIT.
 - type: entity
   id: TegCenter
   name: thermo-electric generator
@@ -128,14 +128,18 @@
           shader: unshaded
           map: [ "enum.TegVisualLayers.CirculatorLight" ]
     
-    # Ronstation - start of modifications
+    #region Starlight
     - type: AtmosPipeLayers
-#      spriteLayersRsiPaths:
-#        enum.PipeVisualLayers.Pipe:
-#          Primary: Structures/Piping/Atmospherics/pipe.rsi
-#          Secondary: Structures/Piping/Atmospherics/pipe_alt1.rsi
-#          Tertiary: Structures/Piping/Atmospherics/pipe_alt2.rsi
-    # Ronstation - end of modifications
+      spriteLayersRsiPaths:
+        enum.TegVisualLayers.CirculatorBase:
+          Primary: Structures/Power/Generation/teg.rsi
+          Secondary: _Starlight/Structures/Power/Generation/tegalt1.rsi
+          Tertiary: _Starlight/Structures/Power/Generation/tegalt2.rsi
+        enum.TegVisualLayers.CirculatorLight:
+          Primary: Structures/Power/Generation/teg.rsi
+          Secondary: _Starlight/Structures/Power/Generation/tegalt1.rsi
+          Tertiary: _Starlight/Structures/Power/Generation/tegalt2.rsi
+    #endregion Starlight
 
     - type: GenericVisualizer
       visuals:
