@@ -16,7 +16,10 @@
     canChangeTransferAmount: true
   - type: SolutionItemStatus
     solution: drink
-  - type: Drink
+  - type: Edible
+    edible: Drink
+    solution: drink
+    destroyOnEmpty: false
   - type: Sprite
     state: icon
   - type: MeleeWeapon
@@ -32,6 +35,8 @@
   - type: RefillableSolution
     solution: drink
   - type: DrainableSolution
+    solution: drink
+  - type: ExaminableSolution
     solution: drink
   - type: UserInterface
     interfaces:
@@ -77,8 +82,6 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 25
-  - type: ExaminableSolution
-    solution: drink
   - type: FitsInDispenser
     solution: drink
   - type: Tag

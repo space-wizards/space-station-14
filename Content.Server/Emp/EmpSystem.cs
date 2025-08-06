@@ -2,8 +2,6 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Radio;
 using Content.Server.SurveillanceCamera;
 using Content.Shared.Emp;
-using Content.Shared.Examine;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Server.Emp;
@@ -11,14 +9,12 @@ namespace Content.Server.Emp;
 public sealed class EmpSystem : SharedEmpSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
 
     public const string EmpPulseEffectPrototype = "EffectEmpPulse";
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<EmpDisabledComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<EmpDisabledComponent, RadioSendAttemptEvent>(OnRadioSendAttempt);
         SubscribeLocalEvent<EmpDisabledComponent, RadioReceiveAttemptEvent>(OnRadioReceiveAttempt);
@@ -77,15 +73,15 @@ public sealed class EmpSystem : SharedEmpSystem
     {
         var ev = new EmpPulseEvent(energyConsumption, false, false, TimeSpan.FromSeconds(duration));
         RaiseLocalEvent(uid, ref ev);
+
         if (ev.Affected)
-        {
             Spawn(EmpDisabledEffectPrototype, Transform(uid).Coordinates);
-        }
-        if (ev.Disabled)
-        {
-            var disabled = EnsureComp<EmpDisabledComponent>(uid);
-            disabled.DisabledUntil = Timing.CurTime + TimeSpan.FromSeconds(duration);
-        }
+
+        if (!ev.Disabled)
+            return;
+
+        var disabled = EnsureComp<EmpDisabledComponent>(uid);
+        disabled.DisabledUntil = Timing.CurTime + TimeSpan.FromSeconds(duration);
     }
 
     public override void Update(float frameTime)
@@ -102,11 +98,6 @@ public sealed class EmpSystem : SharedEmpSystem
                 RaiseLocalEvent(uid, ref ev);
             }
         }
-    }
-
-    private void OnExamine(EntityUid uid, EmpDisabledComponent component, ExaminedEvent args)
-    {
-        args.PushMarkup(Loc.GetString("emp-disabled-comp-on-examine"));
     }
 
     private void OnRadioSendAttempt(EntityUid uid, EmpDisabledComponent component, ref RadioSendAttemptEvent args)
@@ -133,9 +124,7 @@ public sealed class EmpSystem : SharedEmpSystem
 /// <summary>
 /// Raised on an entity before <see cref="EmpPulseEvent"/>. Cancel this to prevent the emp event being raised.
 /// </summary>
-public sealed partial class EmpAttemptEvent : CancellableEntityEventArgs
-{
-}
+public sealed partial class EmpAttemptEvent : CancellableEntityEventArgs;
 
 [ByRefEvent]
 public record struct EmpPulseEvent(float EnergyConsumption, bool Affected, bool Disabled, TimeSpan Duration);
