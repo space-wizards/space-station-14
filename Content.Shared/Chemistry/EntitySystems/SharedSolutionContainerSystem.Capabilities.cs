@@ -137,6 +137,7 @@ public abstract partial class SharedSolutionContainerSystem
 
     #endregion Solution Modifiers
 
+    /// <returns>A value between 0 and 100 inclusive.</returns>
     public float PercentFull(EntityUid uid)
     {
         if (!TryGetDrainableSolution(uid, out _, out var solution))
