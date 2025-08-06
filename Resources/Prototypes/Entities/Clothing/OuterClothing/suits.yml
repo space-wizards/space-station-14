@@ -8,14 +8,6 @@
     sprite: Clothing/OuterClothing/Suits/bombsuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/bombsuit.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-reptilian-tail
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-vox
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
@@ -61,14 +53,6 @@
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/fire.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-reptilian-tail
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-vox
   - type: PressureProtection
     highPressureMultiplier: 0.04
   - type: TemperatureProtection
@@ -103,14 +87,6 @@
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-reptilian-tail
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-vox
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -155,14 +131,6 @@
         Radiation: 0.01
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-reptilian-tail
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-vox
   - type: GroupExamine
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodRad
@@ -186,14 +154,6 @@
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-reptilian-tail
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-vox
   # hardsuit stuff
   - type: PressureProtection
     highPressureMultiplier: 0.6
@@ -342,14 +302,6 @@
     size: Normal
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-reptilian-tail
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-vox
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodCarp
   - type: ContainerContainer

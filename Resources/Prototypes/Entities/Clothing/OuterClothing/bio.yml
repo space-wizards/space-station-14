@@ -9,14 +9,6 @@
     sprite: Clothing/OuterClothing/Bio/general.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/general.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-reptilian-tail
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-vox
   - type: HideLayerClothing
     slots:
       - Tail

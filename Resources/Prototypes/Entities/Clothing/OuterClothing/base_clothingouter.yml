@@ -108,21 +108,6 @@
 # SlotBlocker blocked until UI change
 #  - type: SlotBlock
 #    slots: [innerclothing, feet]
-  - type: Clothing
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-reptilian-tail
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-vox
-      outerClothing-dog:
-      - state: equipped-OUTERCLOTHING-dog
-      outerClothing-monkey:
-      - state: equipped-OUTERCLOTHING-monkey
-      outerClothing-scurret:
-      - state: equipped-OUTERCLOTHING-scurret
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -173,21 +158,6 @@
 # SlotBlocker blocked until UI change
 #  - type: SlotBlock
 #    slots: [innerclothing, feet]
-  - type: Clothing
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-      outerClothing-reptilian:
-      - state: equipped-OUTERCLOTHING
-      - state: equipped-OUTERCLOTHING-reptilian-tail
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-vox
-      outerClothing-dog:
-      - state: equipped-OUTERCLOTHING-dog
-      outerClothing-monkey:
-      - state: equipped-OUTERCLOTHING-monkey
-      outerClothing-scurret:
-      - state: equipped-OUTERCLOTHING-scurret
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
