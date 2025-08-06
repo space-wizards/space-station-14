@@ -1,22 +1,22 @@
 using System.Linq;
-using Content.Server.Storage.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 
-namespace Content.Server.Storage.EntitySystems;
+namespace Content.Shared.Storage.EntitySystems;
 
-// TODO: move this to shared for verb prediction if/when storage is in shared
 public sealed class PickRandomSystem : EntitySystem
 {
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -50,12 +50,19 @@ public sealed class PickRandomSystem : EntitySystem
 
     private void TryPick(EntityUid uid, PickRandomComponent comp, StorageComponent storage, EntityUid user)
     {
+        // It's hard to predict picking a random entity from a container since the contained entity list will have a different order on the server and client.
+        // One idea might be to sort them by NetEntity ID, but that is expensive if there are a lot of entities.
+        // Another option would be to make this client authorative.
+        if (_net.IsClient)
+            return;
+
         var entities = storage.Container.ContainedEntities.Where(item => _whitelistSystem.IsWhitelistPassOrNull(comp.Whitelist, item)).ToArray();
 
-        if (!entities.Any())
+        if (entities.Length == 0)
             return;
 
         var picked = _random.Pick(entities);
+
         // if it fails to go into a hand of the user, will be on the storage
         _container.AttachParentToContainerOrGrid((picked, Transform(picked)));
 
