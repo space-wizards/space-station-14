@@ -105,3 +105,9 @@
   values:
     prefix: plushie-poley-
     count: 6
+
+- type: localizedDataset
+  id: PlushiesRedwoods
+  values:
+    prefix: plushie-redwoods-
+    count: 6
