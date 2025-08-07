@@ -8,7 +8,6 @@
   - vvread
   - vvwrite
   - vvinvoke
-  - scale
   - spin
 
 - Flags: DEBUG
