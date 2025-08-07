@@ -74,11 +74,16 @@ public sealed class MoverController : SharedMoverController
         return true;
     }
 
-    private void InsertMover(Entity<InputMoverComponent> source)
+    private void InsertMover(Entity<InputMoverComponent, MetaDataComponent> source)
     {
+        // Don't insert if we're 1) paused and 2) don't have PhysicsComp.IgnoredPaused
+        if (source.Comp2.EntityPaused
+            && !(PhysicsQuery.TryComp(source, out var phys) && phys.IgnorePaused))
+            return;
+
         if (RelayTargetQuery.TryComp(source, out var relay)
             && MoverQuery.TryComp(relay.Source, out var relayMover))
-            InsertMover((relay.Source, relayMover));
+            InsertMover((relay.Source, relayMover, MetaData(relay.Source)));
 
         // Already added
         if (!_moverAdded.Add(source.Owner))
@@ -93,12 +98,12 @@ public sealed class MoverController : SharedMoverController
 
         _moverAdded.Clear();
         _movers.Clear();
-        var inputQueryEnumerator = AllEntityQuery<InputMoverComponent>();
+        var inputQueryEnumerator = AllEntityQuery<InputMoverComponent, MetaDataComponent>();
 
         // Need to order mob movement so that movers don't run before their relays.
-        while (inputQueryEnumerator.MoveNext(out var uid, out var mover))
+        while (inputQueryEnumerator.MoveNext(out var uid, out var mover, out var meta))
         {
-            InsertMover((uid, mover));
+            InsertMover((uid, mover, meta));
         }
 
         foreach (var mover in _movers)
