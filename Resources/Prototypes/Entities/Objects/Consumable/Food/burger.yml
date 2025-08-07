@@ -95,8 +95,6 @@
     flavors:
       - bun
       - meaty
-  - type: Food
-    transferAmount: 5
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
   - type: SolutionContainerManager
