@@ -10643,5 +10643,19 @@ Entries:
   id: 1464
   time: '2025-08-07T20:13:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1064
+- author: Rinary, Darkrell
+  changes:
+  - message: Now Railroading system works with reagents.
+    type: Tweak
+  id: 1465
+  time: '2025-08-07T20:29:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1206
+- author: Rinary, Darkrell
+  changes:
+  - message: Added new task in railroading, task is offering you a little smoke.
+    type: Add
+  id: 1466
+  time: '2025-08-07T20:29:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1206
 Order: -1
 
