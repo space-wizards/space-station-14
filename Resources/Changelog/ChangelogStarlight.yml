@@ -10607,5 +10607,19 @@ Entries:
   id: 1459
   time: '2025-08-07T20:02:24.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1216
+- author: Trep_Maul
+  changes:
+  - message: Max Cap radius and intensity adjusted down.
+    type: Tweak
+  id: 1460
+  time: '2025-08-07T20:08:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1011
+- author: Trep_Maul
+  changes:
+  - message: Max Cap can't break tiles anymore.
+    type: Tweak
+  id: 1461
+  time: '2025-08-07T20:08:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1011
 Order: -1
 
