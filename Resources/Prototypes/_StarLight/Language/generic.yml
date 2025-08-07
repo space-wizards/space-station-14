@@ -7,13 +7,12 @@
 
 - type: language
   id: RobotTalk
-  isVisibleLanguage: true
   speech:
     fontId: Monospace
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
-    maxSyllables: 10 # Crazy
+    maxSyllables: 10
     replacement:
     - 0
     - 1

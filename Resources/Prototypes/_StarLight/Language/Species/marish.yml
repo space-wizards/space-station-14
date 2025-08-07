@@ -3,14 +3,14 @@
   id: Marish
   speech:
     color: "#be3cc5"
-    # fontId: Lymphatic #* FONTS NOT ALREADY HERE ARE NOT BEING ADDED
+    fontId: Lymphatic
     empathySpeech: false
     speechVerbOverrides:
     - chat-speech-verb-marish
   obfuscation:
     !type:SyllableObfuscation
-    minSyllables: 2
-    maxSyllables: 5
+    minSyllables: 1
+    maxSyllables: 2
     replacement:
     - mar
     - mwrrr
@@ -18,20 +18,3 @@
     - aarrr
     - wrurrl
     - mmar
-    - mwar
-    - mlar
-    - mlwar
-    - mwaarr
-    - mAaAr
-    - lmwar
-    - wlurrl
-    - wlmwar
-    - arrmaw
-    - mwAlwar
-    - wrlurll
-    - wlarrul
-    - wlAmur
-    - AlwuRm
-    - mrrrAw
-    - wurlMur
-    - uuRlmmr

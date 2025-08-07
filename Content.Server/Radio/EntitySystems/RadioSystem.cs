@@ -289,7 +289,6 @@ public sealed class RadioSystem : EntitySystem
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
             ("channel", $"\\[{channel.LocalizedName}\\]"),
             ("name", $"[icon src=\"{iconId}\" tooltip=\"{jobName}\"] {name}"),
-            ("name", name),
             ("message", message));
     }
     // Starlight - End

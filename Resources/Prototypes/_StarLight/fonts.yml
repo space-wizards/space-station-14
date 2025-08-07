@@ -5,3 +5,7 @@
 - type: font
   id: Icon
   path: /Fonts/_Starlight/GameIcons/game-icons.ttf
+
+- type: font
+  id: Lymphatic
+  path: /Fonts/_Starlight/Lymphatic.ttf
