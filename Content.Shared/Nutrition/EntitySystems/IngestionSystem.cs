@@ -466,7 +466,10 @@ public sealed partial class IngestionSystem : EntitySystem
         }
         else
         {
-            _popup.PopupClient(Loc.GetString(edible.Message, ("food", entity.Owner), ("flavors", flavors)), args.User, args.User);
+            _popup.PopupPredicted(Loc.GetString(edible.Message, ("food", entity.Owner), ("flavors", flavors)),
+                Loc.GetString(edible.OtherMessage),
+                args.User,
+                args.User);
 
             // log successful voluntary eating
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(entity):food}");
