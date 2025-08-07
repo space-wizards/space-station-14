@@ -1,16 +1,16 @@
 using System.Linq;
 using Content.Server.Hands.Systems;
-using Content.Server._StarlightTraits.Language;
+using Content.Server._Starlight.Language;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
-using Content.Shared._StarlightTraits.Language;
-using Content.Shared._StarlightTraits.Language.Components;
-using Content.Shared._StarlightTraits.Language.Components.Translators;
+using Content.Shared._Starlight.Language;
+using Content.Shared._Starlight.Language.Components;
+using Content.Shared._Starlight.Language.Components.Translators;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server._StarlightTraits.Assorted;
+namespace Content.Server._Starlight.Traits.Assorted;
 
 
 public sealed partial class ForeignerTraitSystem : EntitySystem

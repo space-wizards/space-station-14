@@ -46,6 +46,7 @@ using Content.Shared._Starlight.Language.Events;
 using Content.Shared._Starlight.Language;
 using Content.Shared._Starlight.Language.Systems;
 using Content.Server._Starlight.Language;
+using Content.Shared.Chat;
 // Starlight - End
 
 using TemperatureCondition = Content.Shared.EntityEffects.EffectConditions.Temperature; // disambiguate the namespace
@@ -761,8 +762,8 @@ public sealed class EntityEffectSystem : EntitySystem
 
         // Starlight - Sart
         // Make sure the entity knows at least fallback.
-        var speaker = entityManager.EnsureComponent<LanguageSpeakerComponent>(uid);
-        var knowledge = entityManager.EnsureComponent<LanguageKnowledgeComponent>(uid);
+        var speaker = EnsureComp<LanguageSpeakerComponent>(uid);
+        var knowledge = EnsureComp<LanguageKnowledgeComponent>(uid);
         var fallback = SharedLanguageSystem.FallbackLanguagePrototype;
 
         if (!knowledge.UnderstoodLanguages.Contains(fallback))

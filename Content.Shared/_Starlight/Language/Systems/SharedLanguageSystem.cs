@@ -29,8 +29,6 @@ public abstract class SharedLanguageSystem : EntitySystem
     public override void Initialize()
     {
         Universal = _prototype.Index<LanguagePrototype>("Universal");
-         // Initialize the Psychomantic prototype
-        Psychomantic = _prototype.Index<LanguagePrototype>(PsychomanticPrototype);
     }
 
     public LanguagePrototype? GetLanguagePrototype(ProtoId<LanguagePrototype> id)

@@ -198,7 +198,7 @@ public sealed partial class TTSSystem : EntitySystem
         else
             voice = proto.Voice;
 
-        if (args.ObfuscatedMessage != null)
+        if (args.IsWhisper)
         {
             HandleWhisper(uid, args.Message, voice);
             return;
