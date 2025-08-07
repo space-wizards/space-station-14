@@ -854,7 +854,6 @@
         damage:
           groups:
             Toxin: -1.5
-            Brute: 0.25
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -862,7 +861,7 @@
         damage:
           groups:
             Toxin: -0.5
-            Brute: 3
+            Brute: 1.5
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
@@ -971,19 +970,19 @@
   color: "#e0a5b9"
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
           types:
-            Caustic: -0.6 # 6 per u
+            Caustic: -1.5 # 6 per u
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 21
+          min: 16
         damage:
           types:
-            Heat: 0.2
+            Heat: 0.5 # 2 per u
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
@@ -1027,19 +1026,19 @@
   color: "#283332"
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
           types:
-            Slash: -0.6 # 6 Per u
+            Slash: -2 # 8 Per u
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 21
+          min: 18
         damage:
           types:
-            Cold: 1.5 #15 per u
+            Caustic: 1.25 # 5 per u
 
 - type: reagent
   id: Puncturase
@@ -1051,20 +1050,20 @@
   color: "#b9bf93"
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
           types:
-            Piercing: -0.6 # 6 per u
-            Blunt: 0.05 # 0.5 per u
+            Piercing: -2 # 8 per u
+            Cellular: 0.09 # 0.36 per u, 5.4 for 15u
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 21
+          min: 17
         damage:
           types:
-            Blunt: 1 # 10 per u plus base effect
+            Blunt: 1 # 4 per u
 
 - type: reagent
   id: Bruizine
@@ -1076,19 +1075,22 @@
   color: "#ff3636"
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
           types:
-            Blunt: -0.6 # 6 per u
+            Blunt: -2 # 8 per u
+            Heat: 0.2 # 0.8 per u
+      - !type:SatiateThirst
+        factor: -0.25
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 19
+          min: 16
         damage:
           types:
-            Poison: 1.5 # 15 per u
+            Cold: 1 #4 per u
 
 - type: reagent
   id: Holywater
@@ -1183,13 +1185,13 @@
   color: "#8147ff"
   metabolisms:
     Medicine:
-      metabolismRate: 0.1
+      metabolismRate: 0.2
       effects:
       # heals shocks and removes shock chems
       - !type:HealthChange
         damage:
           types:
-            Shock: -0.5 # 5 per u
+            Shock: -1.4 # 7 per u
       - !type:AdjustReagent
         reagent: Licoxide
         amount: -4
@@ -1203,14 +1205,14 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 15.5
+          min: 12
         damage:
           types:
-            Cold: 0.2 # 2 per u but lethal with cooling OD effect below
+            Cold: 0.4 # 2 per u but lethal with cooling OD effect below
       - !type:AdjustTemperature
         conditions:
         - !type:ReagentThreshold
-          min: 15.5
+          min: 12
         amount: -30000
       - !type:Jitter
         conditions:
