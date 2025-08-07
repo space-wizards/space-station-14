@@ -156535,6 +156535,74 @@ entities:
       parent: 60
     - type: Physics
       canCollide: False
+- proto: WeaponEnergyTurretAI
+  entities:
+  - uid: 16096
+    components:
+    - type: Transform
+      pos: -115.5,21.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 7195
+  - uid: 16131
+    components:
+    - type: Transform
+      pos: -107.5,21.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 7195
+  - uid: 16132
+    components:
+    - type: Transform
+      pos: -107.5,30.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 7195
+  - uid: 16145
+    components:
+    - type: Transform
+      pos: -115.5,30.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 7195
+- proto: WeaponEnergyTurretAIControlPanel
+  entities:
+  - uid: 7195
+    components:
+    - type: Transform
+      pos: -113.5,20.5
+      parent: 60
+    - type: DeviceList
+      devices:
+      - 16096
+      - 16131
+      - 16132
+      - 16145
+- proto: WeaponEnergyTurretCommand
+  entities:
+  - uid: 16095
+    components:
+    - type: Transform
+      pos: 5.5,-7.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 15900
+- proto: WeaponEnergyTurretCommandControlPanel
+  entities:
+  - uid: 15900
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,-7.5
+      parent: 60
+    - type: DeviceList
+      devices:
+      - 16095
 - proto: WeaponEnergyTurretSecurity
   entities:
   - uid: 1506
