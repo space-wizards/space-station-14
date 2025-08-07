@@ -102,7 +102,7 @@
   - type: ReplacementAccent
     accent: genericAggressive
   - type: Speech
-    speechVerbs: LargeMob
+    speechVerb: LargeMob
     speechSounds: Bear
   - type: Vocal
     sounds:

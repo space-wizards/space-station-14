@@ -2056,7 +2056,7 @@
         layer:
         - MobLayer
   - type: Speech
-    speechVerbs: Reptilian
+    speechVerb: Reptilian
     speechSounds: Lizard
   - type: ReplacementAccent
     accent: kangaroo # somehow works
