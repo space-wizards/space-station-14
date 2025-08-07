@@ -1335,11 +1335,11 @@
   name: loadout-group-reporter-jumpsuit
   loadouts:
   - ReporterJumpsuit
-  - ReporterJumpskirt # Moffstaion - Adding Reporter Clothes
+  - ReporterJumpskirt 
   - JournalistJumpsuit
-  - JournalistJumpskirt # Moffstaion - Adding Reporter Clothes
-  - MeteorologistJumpsuit # Moffstaion - Adding Reporter Clothes
-  - MeteorologistJumpskirt # Moffstaion - Adding Reporter Clothes
+  - JournalistJumpskirt 
+  - MeteorologistJumpsuit 
+  - MeteorologistJumpskirt
 
 - type: loadoutGroup
   id: PsychologistJumpsuit
