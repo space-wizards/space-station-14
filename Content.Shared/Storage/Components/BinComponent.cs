@@ -3,6 +3,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Storage.Components;
 
@@ -25,6 +26,18 @@ public sealed partial class BinComponent : Component
     /// </summary>
     [DataField]
     public string ContainerId = "bin-container";
+
+    /// <summary>
+    /// Icon for insertion
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? InsertIcon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/in.svg.192dpi.png"));
+
+    /// <summary>
+    /// Icon for removal.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? RemoveIcon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/eject.svg.192dpi.png"));
 
     /// <summary>
     /// A list representing the order in which
