@@ -18,7 +18,7 @@ public sealed partial class ActorRouter : IActorRouter, IDisposable
 {
     public bool TryGetGrain<TGrainInterface>(
             Guid primaryKey,
-            out TGrainInterface? grain,
+            [NotNullWhen(true)] out TGrainInterface? grain,
             string? grainClassNamePrefix = null)
             where TGrainInterface : IGrainWithGuidKey
     {
@@ -34,7 +34,7 @@ public sealed partial class ActorRouter : IActorRouter, IDisposable
 
     public bool TryGetGrain<TGrainInterface>(
             int primaryKey,
-            out TGrainInterface? grain,
+            [NotNullWhen(true)] out TGrainInterface? grain,
             string? grainClassNamePrefix = null)
             where TGrainInterface : IGrainWithIntegerKey
     {
@@ -64,7 +64,7 @@ public sealed partial class ActorRouter : IActorRouter, IDisposable
         return false;
     }
 
-    public bool TryCreateObjectReference<TGrainObserverInterface>(IGrainObserver obj, out TGrainObserverInterface? objectReference) 
+    public bool TryCreateObjectReference<TGrainObserverInterface>(IGrainObserver obj, [NotNullWhen(true)] out TGrainObserverInterface? objectReference) 
         where TGrainObserverInterface : IGrainObserver
     {
         if (OrleansClientHolder.Client is { } client)
