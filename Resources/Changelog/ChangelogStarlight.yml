@@ -10600,5 +10600,12 @@ Entries:
   id: 1458
   time: '2025-08-07T19:51:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1232
+- author: Rinary
+  changes:
+  - message: Fixed bug, when you can't do surgery on entity with medical masks.
+    type: Fix
+  id: 1459
+  time: '2025-08-07T20:02:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1216
 Order: -1
 
