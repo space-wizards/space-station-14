@@ -1379,6 +1379,81 @@
           voice: neon
 
 - type: entity
+  parent: BasePlushie
+  id: PlushieGalio #Weh!
+  name: tiny galio plushie
+  description: A galio you can carry with you to feel silly wherever you go!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/galio_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/galio_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/lizard_happy.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/lizard_happy.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: FootstepClown
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: _Starlight/Objects/Fun/Plushies/galio_plushie.rsi
+    slots:
+    - HEAD
+  - type: Speech
+    speechVerb: Reptilian # for pais (In the secret stash)
+  - type: Tag
+    tags:
+    - ClothMade
+    - Payload
+    - PlushieLizard
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: LizardPlushie
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesGalio
+      - type: TextToSpeech
+        voice: batman
+
+- type: entity
   parent: BaseVulpkaninPlushie
   id: PlushieRedwoods
   name: Redwoods Plushie
