@@ -18,3 +18,5 @@ changeling-devour-consume-complete-others = { CAPITALIZE(POSS-ADJ($user)) } unca
 
 changeling-transform-attempt-self = Our bones snap, muscles tear, one flesh becomes another.
 changeling-transform-attempt-others = { CAPITALIZE(POSS-ADJ($user)) } bones snap, muscles tear, body shifts into another.
+
+changeling-paused-map-name = Changeling identity storage map
