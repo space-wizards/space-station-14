@@ -10571,5 +10571,12 @@ Entries:
   id: 1454
   time: '2025-08-07T18:13:21.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1219
+- author: RoadTrain
+  changes:
+  - message: Adds several NTNC preset outfits, for use in admemes.
+    type: Add
+  id: 1455
+  time: '2025-08-07T19:42:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1079
 Order: -1
 
