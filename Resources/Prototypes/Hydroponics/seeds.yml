@@ -1294,9 +1294,9 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
-    Desoxyephedrine:
+    Ephedrine:
       Min: 1
-      Max: 10
+      Max: 5
       PotencyDivisor: 10
     Vitamin:
       Min: 1
@@ -1334,8 +1334,12 @@
       PotencyDivisor: 20
     Desoxyephedrine:
       Min: 1
-      Max: 10
+      Max: 8
       PotencyDivisor: 10
+    Haloperidol:
+      Min: 1
+      Max: 8
+      PotencyDivisor: 15
 
 - type: seed
   id: galaxythistle

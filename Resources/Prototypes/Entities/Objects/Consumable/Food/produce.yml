@@ -1676,8 +1676,8 @@
           Quantity: 5
         - ReagentId: Nutriment
           Quantity: 2
-        - ReagentId: Desoxyephedrine
-          Quantity: 10
+        - ReagentId: Ephedrine
+          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 2
   - type: Sprite
@@ -1722,7 +1722,9 @@
         - ReagentId: Nutriment
           Quantity: 2
         - ReagentId: Desoxyephedrine
-          Quantity: 10
+          Quantity: 8
+        - ReagentId: Haloperidol
+          Quantity: 8
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
   - type: Item
