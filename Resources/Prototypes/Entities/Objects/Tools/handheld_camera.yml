@@ -1,6 +1,6 @@
 - type: entity
-  id: SurveillanceWirelessCameraHandheld
   parent: BaseItem
+  id: SurveillanceWirelessCameraHandheld
   name: wireless camera
   description: A camera. It's watching you. Kinda.
   suffix: Handheld
@@ -36,13 +36,3 @@
   - type: SurveillanceCamera
     setupAvailableNetworks:
     - SurveillanceCameraEntertainment
-
-- type: latheRecipe
-  parent: BaseBigToolRecipe
-  id: SurveillanceWirelessCameraHandheld
-  result: SurveillanceWirelessCameraHandheld
-
-- type: latheRecipePack
-  id: WirelessCameraHandheld
-  recipes:
-  - SurveillanceWirelessCameraHandheld
