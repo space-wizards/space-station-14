@@ -21,6 +21,12 @@ namespace Content.Shared.Crayon
         [DataField("color")]
         public Color Color;
 
+        /// <summary>
+        /// Rotation of the resulting decal
+        /// </summary>
+        [DataField("rotation")]
+        public float Rotation;
+
         [Serializable, NetSerializable]
         public enum CrayonUiKey : byte
         {
@@ -54,6 +60,16 @@ namespace Content.Shared.Crayon
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class CrayonRotationMessage : BoundUserInterfaceMessage
+    {
+        public readonly float Rotation;
+        public CrayonRotationMessage(float rotation)
+        {
+            Rotation = rotation;
+        }
+    }
+
     /// <summary>
     /// Server to CLIENT. Notifies the BUI that a decal with given ID has been drawn.
     /// Allows the client UI to advance forward in the client-only ephemeral queue,
@@ -80,13 +96,15 @@ namespace Content.Shared.Crayon
         public readonly string State;
         public readonly int Charges;
         public readonly int Capacity;
+        public readonly float Rotation;
 
-        public CrayonComponentState(Color color, string state, int charges, int capacity)
+        public CrayonComponentState(Color color, string state, int charges, int capacity, float rotation)
         {
             Color = color;
             State = state;
             Charges = charges;
             Capacity = capacity;
+            Rotation = rotation;
         }
     }
 
@@ -102,12 +120,14 @@ namespace Content.Shared.Crayon
         /// </summary>
         public bool SelectableColor;
         public Color Color;
+        public float Rotation;
 
-        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color)
+        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color, float rotation)
         {
             Selected = selected;
             SelectableColor = selectableColor;
             Color = color;
+            Rotation = rotation;
         }
     }
 }

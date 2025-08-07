@@ -4,6 +4,9 @@
             SetSize="450 500">
     <BoxContainer Orientation="Vertical">
         <ColorSelectorSliders Name="ColorSelector" Visible="False" />
+        <BoxContainer Name="SpinBoxContainer" Orientation="Horizontal">
+            <Label Text="{Loc 'crayon-window-rotation'}" Margin="0 0 0 1" />
+        </BoxContainer>
         <LineEdit Name="Search" Margin="0 0 0 8" PlaceHolder="{Loc 'crayon-window-placeholder'}" />
         <ScrollContainer VerticalExpand="True">
             <BoxContainer Name="Grids" Orientation="Vertical">

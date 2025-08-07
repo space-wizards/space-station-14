@@ -23,6 +23,7 @@ namespace Content.Client.Crayon.UI
             base.Open();
             _menu = this.CreateWindowCenteredLeft<CrayonWindow>();
             _menu.OnColorSelected += SelectColor;
+            _menu.OnRotationSelected += SelectRotation;
             _menu.OnSelected += Select;
             PopulateCrayons();
         }
@@ -68,6 +69,11 @@ namespace Content.Client.Crayon.UI
         public void SelectColor(Color color)
         {
             SendMessage(new CrayonColorMessage(color));
+        }
+
+        public void SelectRotation(float rotation)
+        {
+            SendMessage(new CrayonRotationMessage(float.DegreesToRadians(rotation)));
         }
     }
 }

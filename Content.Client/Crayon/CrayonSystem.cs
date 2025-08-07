@@ -29,6 +29,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         component.SelectedState = state.State;
         component.Charges = state.Charges;
         component.Capacity = state.Capacity;
+        component.Rotation = state.Rotation;
 
         component.UIUpdateNeeded = true;
     }
@@ -59,6 +60,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
             _parent.UIUpdateNeeded = false;
             _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("crayon-drawing-label",
                 ("color",_parent.Color),
+                ("rotation",_parent.Rotation),
                 ("state",_parent.SelectedState),
                 ("charges", _parent.Charges),
                 ("capacity",_parent.Capacity)));

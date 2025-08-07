@@ -28,8 +28,12 @@ namespace Content.Client.Crayon.UI
         private string? _autoSelected;
         private string? _selected;
         private Color _color;
+        private float _rotation;
+
+        private FloatSpinBox RotationSpinBox;
 
         public event Action<Color>? OnColorSelected;
+        public event Action<float>? OnRotationSelected;
         public event Action<string>? OnSelected;
 
         public CrayonWindow()
@@ -38,8 +42,15 @@ namespace Content.Client.Crayon.UI
             IoCManager.InjectDependencies(this);
             _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
 
+            RotationSpinBox = new FloatSpinBox(90.0f, 0)
+            {
+                HorizontalExpand = true,
+            };
+            SpinBoxContainer.AddChild(RotationSpinBox);
+
             Search.OnTextChanged += SearchChanged;
             ColorSelector.OnColorChanged += SelectColor;
+            RotationSpinBox.OnValueChanged += SelectRotation;
         }
 
         private void SelectColor(Color color)
@@ -48,6 +59,12 @@ namespace Content.Client.Crayon.UI
 
             OnColorSelected?.Invoke(color);
             RefreshList();
+        }
+
+        private void SelectRotation(FloatSpinBox.FloatSpinBoxEventArgs args)
+        {
+            _rotation = args.Value;
+            OnRotationSelected?.Invoke(args.Value);
         }
 
         private void RefreshList()
@@ -150,6 +167,8 @@ namespace Content.Client.Crayon.UI
             _selected = state.Selected;
             ColorSelector.Visible = state.SelectableColor;
             _color = state.Color;
+            _rotation = float.RadiansToDegrees(state.Rotation);
+            RotationSpinBox.Value = _rotation;
 
             if (ColorSelector.Visible)
             {
