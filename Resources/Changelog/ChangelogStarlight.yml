@@ -10845,5 +10845,19 @@ Entries:
   id: 1492
   time: '2025-08-07T22:37:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1251
+- author: TheRealSlimRedwoods
+  changes:
+  - message: Transformed Redwoods into a marketable plushie.
+    type: Add
+  id: 1493
+  time: '2025-08-07T22:52:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1245
+- author: TheRealSlimRedwoods
+  changes:
+  - message: Removed depression.
+    type: Remove
+  id: 1494
+  time: '2025-08-07T22:52:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1245
 Order: -1
 
