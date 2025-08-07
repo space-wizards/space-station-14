@@ -1,3 +1,4 @@
+using Content.Shared.Climbing.Events;
 using Content.Shared.Hands.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
@@ -26,6 +27,7 @@ public sealed class StandingStateSystem : EntitySystem
         SubscribeLocalEvent<StandingStateComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         SubscribeLocalEvent<StandingStateComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionModifiers);
         SubscribeLocalEvent<StandingStateComponent, TileFrictionEvent>(OnTileFriction);
+        SubscribeLocalEvent<StandingStateComponent, EndClimbEvent>(OnEndClimb);
     }
 
     private void OnMobTargetCollide(Entity<StandingStateComponent> ent, ref AttemptMobTargetCollideEvent args)
@@ -63,6 +65,14 @@ public sealed class StandingStateSystem : EntitySystem
     {
         if (!entity.Comp.Standing)
             args.Modifier *= entity.Comp.FrictionModifier;
+    }
+
+    private void OnEndClimb(Entity<StandingStateComponent> entity, ref EndClimbEvent args)
+    {
+        if (entity.Comp.Standing)
+            return;
+
+        ChangeLayers(entity);
     }
 
     public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
@@ -118,17 +128,7 @@ public sealed class StandingStateSystem : EntitySystem
         _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Horizontal, appearance);
 
         // Change collision masks to allow going under certain entities like flaps and tables
-        if (TryComp(uid, out FixturesComponent? fixtureComponent))
-        {
-            foreach (var (key, fixture) in fixtureComponent.Fixtures)
-            {
-                if ((fixture.CollisionMask & StandingCollisionLayer) == 0 || !fixture.Hard)
-                    continue;
-
-                standingState.ChangedFixtures.Add(key);
-                _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: fixtureComponent);
-            }
-        }
+        ChangeLayers((uid, standingState));
 
         // check if component was just added or streamed to client
         // if true, no need to play sound - mob was down before player could seen that
@@ -173,17 +173,41 @@ public sealed class StandingStateSystem : EntitySystem
 
         _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Vertical, appearance);
 
-        if (TryComp(uid, out FixturesComponent? fixtureComponent))
-        {
-            foreach (var key in standingState.ChangedFixtures)
-            {
-                if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture) && fixture.Hard)
-                    _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask | StandingCollisionLayer, fixtureComponent);
-            }
-        }
-        standingState.ChangedFixtures.Clear();
+        RevertLayers((uid, standingState));
 
         return true;
+    }
+
+    private void ChangeLayers(Entity<StandingStateComponent, FixturesComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp2, false))
+            return;
+
+        foreach (var (key, fixture) in entity.Comp2.Fixtures)
+        {
+            if ((fixture.CollisionMask & StandingCollisionLayer) == 0 || !fixture.Hard)
+                continue;
+
+            entity.Comp1.ChangedFixtures.Add(key);
+            _physics.SetCollisionMask(entity, key, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: entity.Comp2);
+        }
+    }
+
+    private void RevertLayers(Entity<StandingStateComponent, FixturesComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp2, false))
+        {
+            entity.Comp1.ChangedFixtures.Clear();
+            return;
+        }
+
+        foreach (var key in entity.Comp1.ChangedFixtures)
+        {
+            if (entity.Comp2.Fixtures.TryGetValue(key, out var fixture) && fixture.Hard)
+                _physics.SetCollisionMask(entity, key, fixture, fixture.CollisionMask | StandingCollisionLayer, entity.Comp2);
+        }
+
+        entity.Comp1.ChangedFixtures.Clear();
     }
 }
 
