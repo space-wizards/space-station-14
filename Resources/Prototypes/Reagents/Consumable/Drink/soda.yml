@@ -69,10 +69,10 @@
   metabolisms:
     Poison:
       effects:
-        - !type:HealthChange
-          conditions:
-          - !type:ReagentThreshold
-            min: 2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 2
           probability: 0.0002
           damage:
             types:
