@@ -34,7 +34,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
 
     private void OnComponentInit(Entity<AnomalyScannerScreenComponent> ent, ref ComponentInit args)
     {
-        if(!_sprite.TryGetLayer(ent.Owner, "icon", out var layer, true))
+        if(!_sprite.TryGetLayer(ent.Owner, AnomalyScannerVisualLayers.Base, out var layer, true))
             return;
 
         // Allocate the OwnedTexture
