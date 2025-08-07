@@ -37,5 +37,6 @@ public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSou
         var cache = dependencies.Resolve<GeneratedParallaxCache>();
         cache.Unload(Identifier);
     }
+	public float Slowness { get; private set; }
 }
 
