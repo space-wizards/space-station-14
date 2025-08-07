@@ -16,6 +16,11 @@ public sealed class AnimalVocalizationSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
+    /// <summary>
+    /// Char used to generate a random-length string
+    /// </summary>
+    private const char RandomStringChar = 'a';
+
     public override void Initialize()
     {
         base.Initialize();
@@ -49,14 +54,14 @@ public sealed class AnimalVocalizationSystem : EntitySystem
 
         // now just use a random-length string
         // random because monkeys can then go OO! or OOOK! or AAAAAAAH!
-        args.Message = GenerateRandomString(entity.Comp.MinRandomStringLength, entity.Comp.MaxRandomStringLength, entity.Comp.RandomStringChar);
+        args.Message = GenerateRandomString(entity.Comp.MinRandomStringLength, entity.Comp.MaxRandomStringLength);
         args.Handled = true;
     }
 
-    private string GenerateRandomString(int minLength, int maxLength, char useChar)
+    private string GenerateRandomString(int minLength, int maxLength)
     {
         var length = _random.Next(minLength, maxLength);
 
-        return new string(useChar, length);
+        return new string(RandomStringChar, length);
     }
 }

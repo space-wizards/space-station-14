@@ -17,8 +17,4 @@ public sealed partial class AnimalVocalizerComponent : Component
     /// </summary>
     [DataField]
     public int MaxRandomStringLength = 8;
-
-
-    [DataField]
-    public char RandomStringChar = 'a';
 }
