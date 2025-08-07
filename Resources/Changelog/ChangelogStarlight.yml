@@ -10680,5 +10680,12 @@ Entries:
   id: 1469
   time: '2025-08-07T20:43:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1210
+- author: Citeria
+  changes:
+  - message: Fixed error upon exploding buckled mobs
+    type: Fix
+  id: 1470
+  time: '2025-08-07T20:47:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1227
 Order: -1
 
