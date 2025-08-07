@@ -3,7 +3,7 @@ using Content.Shared.Verbs;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class TriggerSystem : EntitySystem
+public sealed partial class TriggerSystem
 {
     private void InitializeCondition()
     {

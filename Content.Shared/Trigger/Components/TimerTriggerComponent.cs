@@ -58,6 +58,16 @@ public sealed partial class TimerTriggerComponent : Component
     public TimeSpan NextBeep = TimeSpan.Zero;
 
     /// <summary>
+    /// Initial beep delay.
+    /// Defaults to a single BeepInterval if null.
+    /// </summary>
+    /// <remarks>
+    /// Not networked because it's only used server side.
+    /// </remarks>
+    [DataField]
+    public TimeSpan? InitialBeepDelay;
+
+    /// <summary>
     /// The time between beeps.
     /// </summary>
     [DataField, AutoNetworkedField]

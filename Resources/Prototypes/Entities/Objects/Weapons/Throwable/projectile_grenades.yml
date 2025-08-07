@@ -68,6 +68,7 @@
     predicted: true
   - type: TriggerOnUse
   - type: TimerTrigger
+    initialBeepDelay: 0
     beepInterval: 2
     delay: 3.5
   - type: TimerTriggerVisuals
@@ -94,6 +95,7 @@
       path: "/Audio/Effects/beep1.ogg"
       params:
         volume: 5
+    initialBeepDelay: 0
     beepInterval: 2
     delay: 3.5
   - type: EmitSoundOnTrigger
@@ -124,6 +126,7 @@
       path: "/Audio/Effects/beep1.ogg"
       params:
         volume: 5
+    initialBeepDelay: 0
     beepInterval: 2
     delay: 3.5
   - type: EmitSoundOnTrigger

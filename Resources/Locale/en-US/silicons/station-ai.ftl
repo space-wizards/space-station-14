@@ -3,6 +3,7 @@ ai-wire-snipped = Wire has been cut at {$coords}.
 wire-name-ai-vision-light = AIV
 wire-name-ai-act-light = AIA
 station-ai-takeover = AI takeover
+station-ai-eye-name = AI eye - {$name}
 
 # Radial actions
 ai-open = Open actions

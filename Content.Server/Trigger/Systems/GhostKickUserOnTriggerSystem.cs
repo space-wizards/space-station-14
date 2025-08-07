@@ -13,10 +13,10 @@ public sealed class GhostKickUserOnTriggerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GhostKickOnTriggerComponent, TriggerEvent>(HandleMineTriggered);
+        SubscribeLocalEvent<GhostKickOnTriggerComponent, TriggerEvent>(OnTrigger);
     }
 
-    private void HandleMineTriggered(Entity<GhostKickOnTriggerComponent> ent, ref TriggerEvent args)
+    private void OnTrigger(Entity<GhostKickOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;

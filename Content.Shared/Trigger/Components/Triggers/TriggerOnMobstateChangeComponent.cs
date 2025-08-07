@@ -5,7 +5,7 @@ namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
 /// Triggers when this entity's mob state changes.
-/// The user is the entity that caused the state change.
+/// The user is the entity that caused the state change or the owner depending on the settings.
 /// If added to an implant it will trigger when the implanted entity's mob state changes.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
@@ -22,4 +22,14 @@ public sealed partial class TriggerOnMobstateChangeComponent : BaseTriggerOnXCom
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool PreventSuicide = false;
+
+    /// <summary>
+    /// If false, the trigger user will be the entity that caused the mobstate to change.
+    /// If true, the trigger user will the entity that changed its mob state.
+    /// </summary>
+    /// <summary>
+    /// Set this to true for implants that apply an effect on the implanted entity.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool TargetMobstateEntity = true;
 }
