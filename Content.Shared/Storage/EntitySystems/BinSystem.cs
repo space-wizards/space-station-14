@@ -178,11 +178,7 @@ public sealed class BinSystem : EntitySystem
         if (entity.Comp.Items.Count == 0)
             return false;
 
-        var remove = entity.Comp.Items.Last();
-        if (!_container.Remove(remove, entity.Comp.ItemContainer))
-            return false;
-
-        toRemove = remove;
+        toRemove = entity.Comp.Items.Last();
         return true;
     }
 
@@ -196,6 +192,9 @@ public sealed class BinSystem : EntitySystem
     public bool TryRemoveFromBin(Entity<BinComponent> entity, [NotNullWhen(true)] out EntityUid? removed, EntityUid? user = null)
     {
         if (!TryGetLastItem(entity, out removed))
+            return false;
+
+        if (!_container.Remove(removed.Value, entity.Comp.ItemContainer))
             return false;
 
         if (user != null)
