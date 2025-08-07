@@ -2,7 +2,7 @@
 using Content.Server.GameTicking.Events;
 using Content.Server.Station.Events;
 using Content.Shared.CCVar;
-using Content.Shared.Roles;
+using Content.Shared.Job;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -53,7 +53,7 @@ public sealed class JobWhitelistSystem : EntitySystem
 
     private void OnIsJobAllowed(ref IsJobAllowedEvent ev)
     {
-        if (!_manager.IsAllowed(ev.Player, ev.JobId))
+        if (!_manager.IsAllowed(ev.Player, ev.Job))
             ev.Cancelled = true;
     }
 

@@ -7,11 +7,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Roles;
+namespace Content.Shared.Roles.Requirements;
 
 [UsedImplicitly]
 [Serializable, NetSerializable]
-public sealed partial class OverallPlaytimeRequirement : JobRequirement
+public sealed partial class OverallPlaytimeRequirement : RoleRequirement
 {
     /// <inheritdoc cref="DepartmentTimeRequirement.Time"/>
     [DataField(required: true)]

@@ -1,3 +1,4 @@
+using Content.Shared.Job;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;

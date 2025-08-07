@@ -1,5 +1,5 @@
 using Content.Server.Spawners.EntitySystems;
-using Content.Shared.Roles;
+using Content.Shared.Job;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Spawners.Components;

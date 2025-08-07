@@ -1,5 +1,5 @@
 using Content.Shared.Eui;
-using Content.Shared.Roles;
+using Content.Shared.Roles.Requirements;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ghost.Roles
@@ -16,7 +16,7 @@ namespace Content.Shared.Ghost.Roles
         // Actually make use of / enforce this requirement?
         // Why is this even here.
         // Move to ghost role prototype & respect CCvars.GameRoleTimerOverride
-        public HashSet<JobRequirement>? Requirements { get; set; }
+        public HashSet<RoleRequirement>? Requirements { get; set; }
 
         /// <inheritdoc cref="GhostRoleKind"/>
         public GhostRoleKind Kind { get; set; }

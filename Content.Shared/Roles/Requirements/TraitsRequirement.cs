@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Traits;
 using JetBrains.Annotations;
@@ -8,14 +7,14 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Roles;
+namespace Content.Shared.Roles.Requirements;
 
 /// <summary>
 /// Requires a character to have, or not have, certain traits
 /// </summary>
 [UsedImplicitly]
 [Serializable, NetSerializable]
-public sealed partial class TraitsRequirement : JobRequirement
+public sealed partial class TraitsRequirement : RoleRequirement
 {
     [DataField(required: true)]
     public HashSet<ProtoId<TraitPrototype>> Traits = new();

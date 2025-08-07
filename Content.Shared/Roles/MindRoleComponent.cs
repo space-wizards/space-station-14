@@ -1,3 +1,5 @@
+using Content.Shared.Antag;
+using Content.Shared.Job;
 using Content.Shared.Mind;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;

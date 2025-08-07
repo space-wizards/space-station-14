@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using System.Text;
-using Content.Server.Administration.Managers;
+﻿using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.Roles;
+using Content.Shared.Job;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;

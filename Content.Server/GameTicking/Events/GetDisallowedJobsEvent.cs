@@ -1,4 +1,4 @@
-﻿using Content.Shared.Roles;
+﻿using Content.Shared.Job;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 

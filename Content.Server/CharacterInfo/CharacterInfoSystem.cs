@@ -1,6 +1,6 @@
-﻿using Content.Server.Mind;
+﻿using Content.Server.Job;
+using Content.Server.Mind;
 using Content.Server.Roles;
-using Content.Server.Roles.Jobs;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
 using Content.Shared.Objectives.Components;

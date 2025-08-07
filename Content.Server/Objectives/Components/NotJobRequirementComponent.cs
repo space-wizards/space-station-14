@@ -1,6 +1,5 @@
 using Content.Server.Objectives.Systems;
-using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
+using Content.Shared.Job;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 /// <summary>

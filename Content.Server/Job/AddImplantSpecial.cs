@@ -1,9 +1,9 @@
 ﻿using Content.Shared.Implants;
-using Content.Shared.Roles;
+using Content.Shared.Job;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Jobs;
+namespace Content.Server.Job;
 
 /// <summary>
 /// Adds implants on spawn to the entity

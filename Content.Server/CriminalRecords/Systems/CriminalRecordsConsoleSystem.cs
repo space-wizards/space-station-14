@@ -14,7 +14,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Security.Components;
 using System.Linq;
-using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.CriminalRecords.Systems;
 

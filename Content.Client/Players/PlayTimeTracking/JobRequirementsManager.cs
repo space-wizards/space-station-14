@@ -1,11 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Client.Lobby;
 using Content.Shared.CCVar;
+using Content.Shared.Job;
 using Content.Shared.Players;
 using Content.Shared.Players.JobWhitelist;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Requirements;
 using Robust.Client;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
@@ -116,7 +117,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         return CheckRoleRequirements(reqs, profile, out reason);
     }
 
-    public bool CheckRoleRequirements(HashSet<JobRequirement>? requirements, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool CheckRoleRequirements(HashSet<RoleRequirement>? requirements, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 

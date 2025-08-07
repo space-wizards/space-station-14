@@ -1,8 +1,8 @@
 ﻿using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.Job;
 using Content.Shared.Players;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -42,7 +42,7 @@ namespace Content.Server.Roles
             }
 
             if (_jobs.MindHasJobWithId(mind, args[1]))
-                _roles.MindRemoveRole<JobRoleComponent>(mind.Value);
+                _roles.MindRemoveRole<Shared.Job.JobRoleComponent>(mind.Value);
         }
     }
 }

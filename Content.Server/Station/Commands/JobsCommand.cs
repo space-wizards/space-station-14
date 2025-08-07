@@ -2,11 +2,9 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
-using Content.Shared.Roles;
+using Content.Shared.Job;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
-using Robust.Shared.Toolshed.Syntax;
-using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Server.Station.Commands;
 

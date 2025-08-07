@@ -1,7 +1,7 @@
-using Content.Shared.Roles;
+using Content.Shared.Job;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Jobs;
+namespace Content.Server.Job;
 
 public sealed partial class RemoveComponentSpecial : JobSpecial
 {

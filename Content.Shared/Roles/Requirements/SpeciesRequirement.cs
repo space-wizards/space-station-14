@@ -7,14 +7,14 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Roles;
+namespace Content.Shared.Roles.Requirements;
 
 /// <summary>
 /// Requires the character to be or not be on the list of specified species
 /// </summary>
 [UsedImplicitly]
 [Serializable, NetSerializable]
-public sealed partial class SpeciesRequirement : JobRequirement
+public sealed partial class SpeciesRequirement : RoleRequirement
 {
     [DataField(required: true)]
     public HashSet<ProtoId<SpeciesPrototype>> Species = new();

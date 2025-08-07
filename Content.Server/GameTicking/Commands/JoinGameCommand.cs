@@ -3,7 +3,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
-using Content.Shared.Roles;
+using Content.Shared.Job;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
@@ -78,7 +78,7 @@ namespace Content.Server.GameTicking.Commands
                     _adminManager.DeAdmin(player);
                 }
 
-                ticker.MakeJoinGame(player, station, id);
+                ticker.MakeJoinGame(player, station, jobPrototype);
                 return;
             }
 

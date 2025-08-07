@@ -1,25 +1,44 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Job;
 using Content.Shared.Preferences;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Roles;
+namespace Content.Shared.Roles.Requirements;
 
-public static class JobRequirements
+public static class RoleRequirementStatics
 {
-    public static bool TryRequirementsMet(
-        JobPrototype job,
+    public static bool TryJobRequirementsMet(
+        ProtoId<JobPrototype> job,
         IReadOnlyDictionary<string, TimeSpan> playTimes,
         [NotNullWhen(false)] out FormattedMessage? reason,
         IEntityManager entManager,
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile)
     {
-        var sys = entManager.System<SharedRoleSystem>();
-        var requirements = sys.GetJobRequirement(job);
+        return TryRequirementsMet(
+            entManager.System<SharedRoleSystem>().GetJobRequirement(job),
+            playTimes,
+            out reason,
+            entManager,
+            protoManager,
+            profile
+        );
+    }
+
+    public static bool TryRequirementsMet(
+        HashSet<RoleRequirement>? requirements,
+        IReadOnlyDictionary<string, TimeSpan> playTimes,
+        out FormattedMessage? reason,
+        IEntityManager entManager,
+        IPrototypeManager protoManager,
+        HumanoidCharacterProfile? profile
+    )
+    {
         reason = null;
-        if (requirements == null)
+
+        if (requirements is null)
             return true;
 
         foreach (var requirement in requirements)
@@ -37,7 +56,7 @@ public static class JobRequirements
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
 [Serializable, NetSerializable]
-public abstract partial class JobRequirement
+public abstract partial class RoleRequirement
 {
     [DataField]
     public bool Inverted;

@@ -5,6 +5,7 @@ using Content.Shared.Clothing;
 using Content.Shared.Hands.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
+using Content.Shared.Job;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
