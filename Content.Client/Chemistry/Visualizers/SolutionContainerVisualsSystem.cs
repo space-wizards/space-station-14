@@ -145,36 +145,19 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         _itemSystem.VisualsChanged(uid);
     }
 
-    private void OnGetHeldVisuals(EntityUid uid, SolutionContainerVisualsComponent component, GetInhandVisualsEvent args)
+    private void OnGetHeldVisuals(Entity<SolutionContainerVisualsComponent> ent, ref GetInhandVisualsEvent args)
     {
-        if (component.InHandsFillBaseName == null)
+        if (ent.Comp.InHandsFillBaseName == null)
             return;
 
-        if (!TryComp(uid, out AppearanceComponent? appearance))
+        if (!TryComp<ItemComponent>(ent, out var item))
             return;
 
-        if (!TryComp<ItemComponent>(uid, out var item))
-            return;
+        var inhandPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
+        var layerKeyPrefix = inhandPrefix + args.Location.ToString().ToLowerInvariant() + ent.Comp.InHandsFillBaseName;
 
-        if (!AppearanceSystem.TryGetData<float>(uid, SolutionContainerVisuals.FillFraction, out var fraction, appearance))
-            return;
-
-        var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, component.InHandsMaxFillLevels + 1);
-
-        if (closestFillSprite > 0)
-        {
-            var layer = new PrototypeLayerData();
-
-            var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
-            var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName + closestFillSprite;
-
-            layer.State = key;
-
-            if (component.ChangeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, appearance))
-                layer.Color = color;
-
-            args.Layers.Add((key, layer));
-        }
+        if (GetVisualsLayer(ent, layerKeyPrefix, ent.Comp.InHandsMaxFillLevels) is { } layer)
+            args.Layers.Add(layer);
     }
 
     private void OnGetClothingVisuals(Entity<SolutionContainerVisualsComponent> ent, ref GetEquipmentVisualsEvent args)
@@ -182,35 +165,51 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         if (ent.Comp.EquippedFillBaseName == null)
             return;
 
-        if (!TryComp<AppearanceComponent>(ent, out var appearance))
-            return;
-
         if (!TryComp<ClothingComponent>(ent, out var clothing))
             return;
 
-        if (!AppearanceSystem.TryGetData<float>(ent, SolutionContainerVisuals.FillFraction, out var fraction, appearance))
-            return;
+        var equippedPrefix = clothing.EquippedPrefix == null
+            ? $"equipped-{args.Slot}"
+            : $" {clothing.EquippedPrefix}-equipped-{args.Slot}";
+        var layerKeyPrefix = equippedPrefix + ent.Comp.EquippedFillBaseName;
 
-        var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, ent.Comp.EquippedMaxFillLevels + 1);
+        if (GetVisualsLayer(ent, layerKeyPrefix, ent.Comp.EquippedMaxFillLevels) is { } layer)
+            args.Layers.Add(layer);
+    }
 
-        if (closestFillSprite > 0)
-        {
-            var layer = new PrototypeLayerData();
+    private (string Key, PrototypeLayerData Layer)? GetVisualsLayer(Entity<SolutionContainerVisualsComponent> ent,
+        string layerKeyPrefix,
+        int maxFillLevels)
+    {
+        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+            return null;
 
-            var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $" {clothing.EquippedPrefix}-equipped-{args.Slot}";
-            var key = equippedPrefix + ent.Comp.EquippedFillBaseName + closestFillSprite;
+        if (!AppearanceSystem.TryGetData<float>(ent,
+                SolutionContainerVisuals.FillFraction,
+                out var fraction,
+                appearance))
+            return null;
 
-            // Make sure the sprite state is valid so we don't show a big red error message
-            // This saves us from having to make fill level sprites for every possible slot the item could be in (including pockets).
-            if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(key, out _))
-                return;
+        var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, maxFillLevels + 1);
+        if (closestFillSprite <= 0)
+            return null;
 
-            layer.State = key;
+        var layer = new PrototypeLayerData();
+        var key = layerKeyPrefix + closestFillSprite;
 
-            if (ent.Comp.ChangeColor && AppearanceSystem.TryGetData<Color>(ent, SolutionContainerVisuals.Color, out var color, appearance))
-                layer.Color = color;
+        // Make sure the sprite state is valid so we don't show a big red error message
+        // This saves us from having to make fill level sprites for every possible slot the item could be in (including pockets).
+        if (!TryComp<SpriteComponent>(ent, out var sprite)
+            || sprite.BaseRSI?.TryGetState(key, out _) != true)
+            return null;
 
-            args.Layers.Add((key, layer));
-        }
+        layer.State = key;
+
+        if (ent.Comp.ChangeColor
+            && AppearanceSystem.TryGetData<Color>(ent, SolutionContainerVisuals.Color, out var color, appearance))
+            layer.Color = color;
+
+        return (key, layer);
+
     }
 }
