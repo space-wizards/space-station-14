@@ -41,8 +41,8 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
         SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnLocalPlayerDetached);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
-        SubscribeLocalEvent<CrayonComponent, UnequippedHandEvent>(OnUnequippedHand);
         SubscribeLocalEvent<CrayonComponent, HandDeselectedEvent>(OnHandDeselected);
+        SubscribeLocalEvent<CrayonComponent, GotUnequippedHandEvent>(OnUnequip);
         SubscribeLocalEvent<CrayonComponent, ComponentShutdown>(OnComponentShutdown);
     }
 
@@ -111,30 +111,30 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private void OnLocalPlayerDetached(LocalPlayerDetachedEvent args)
     {
-        OnClose();
+        RemoveOverlay();
     }
 
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent args)
     {
-        OnClose();
+        RemoveOverlay();
     }
 
     private void OnHandDeselected(EntityUid uid, CrayonComponent component, ref HandDeselectedEvent args)
     {
-        _overlay.RemoveOverlay<CrayonDecalGhostOverlay>();
+        RemoveOverlay();
     }
 
-    private void OnUnequippedHand(EntityUid uid, CrayonComponent component, ref UnequippedHandEvent args)
+    private void OnUnequip(EntityUid uid, CrayonComponent component, ref GotUnequippedHandEvent args)
     {
-        _overlay.RemoveOverlay<CrayonDecalGhostOverlay>();
+        if(args.Unequipped==uid) RemoveOverlay();
     }
 
     private void OnComponentShutdown(EntityUid uid, CrayonComponent component, ComponentShutdown args)
     {
-        OnClose();
+        RemoveOverlay();
     }
 
-    private void OnClose()
+    private void RemoveOverlay()
     {
         _overlay.RemoveOverlay<CrayonDecalGhostOverlay>();
     }

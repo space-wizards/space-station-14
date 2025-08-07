@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Content.Client.Stylesheets;
 using Content.Shared.Crayon;
@@ -28,10 +29,10 @@ namespace Content.Client.Crayon.UI
         private string? _autoSelected;
         private string? _selected;
         private Color _color;
-        private float _rotation;
+        private string _rotation;
         private bool _preview;
 
-        private FloatSpinBox RotationSpinBox;
+        // private FloatSpinBox RotationSpinBox;
 
         public event Action<Color>? OnColorSelected;
         public event Action<float>? OnRotationSelected;
@@ -44,15 +45,25 @@ namespace Content.Client.Crayon.UI
             IoCManager.InjectDependencies(this);
             _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
 
-            RotationSpinBox = new FloatSpinBox(90.0f, 0)
-            {
-                HorizontalExpand = true,
-            };
-            SpinBoxContainer.AddChild(RotationSpinBox);
+            _rotation = "0";
 
+            // RotationSpinBox = new FloatSpinBox(90.0f, 0)
+            // {
+            //     HorizontalExpand = true,
+            // };
+            // SpinBoxContainer.AddChild(RotationSpinBox);
+
+            foreach (var element in RotationContainer.Children)
+            {
+                if (element is not Button button)
+                    continue;
+                button.OnPressed += RotationButtonPressed;
+            }
+
+            RotationValue.OnTextChanged += SelectRotation;
             Search.OnTextChanged += SearchChanged;
             ColorSelector.OnColorChanged += SelectColor;
-            RotationSpinBox.OnValueChanged += SelectRotation;
+            // RotationSpinBox.OnValueChanged += SelectRotation;
             PreviewCheckbox.OnToggled += TogglePreview;
         }
 
@@ -64,10 +75,43 @@ namespace Content.Client.Crayon.UI
             RefreshList();
         }
 
-        private void SelectRotation(FloatSpinBox.FloatSpinBoxEventArgs args)
+        private void SelectRotation(LineEdit.LineEditEventArgs args)
         {
-            _rotation = args.Value;
-            OnRotationSelected?.Invoke(args.Value);
+            var text = args.Text.Replace("+", "");
+
+            var numPart = new string(text.Where(char.IsDigit).ToArray());
+            if (string.IsNullOrEmpty(numPart) || !float.TryParse(numPart, out var value))
+            {
+                _rotation = "0";
+                RotationValue.Text = _rotation;
+                OnRotationSelected?.Invoke(0);
+                return;
+            }
+
+            if (numPart.Length > 6)
+            {
+                RotationValue.Text = _rotation;
+                return;
+            }
+
+            if (text.Count(c => c == '-') % 2 == 1)
+                value = -Math.Abs(value);
+
+            _rotation = value.ToString(CultureInfo.CurrentCulture);
+            RotationValue.Text = _rotation;
+            OnRotationSelected?.Invoke(value);
+        }
+
+        private void RotationButtonPressed(ButtonEventArgs args)
+        {
+            if (args.Button is not Button btn)
+                return;
+            if (!float.TryParse(btn.Text?.Replace("+",""), out var value)) // realistically this should never fail i just like to be safe
+                return;
+            var finalVal = float.Clamp(float.Parse(_rotation) + value, -999999, 999999);
+            _rotation = finalVal.ToString(CultureInfo.CurrentCulture);
+            RotationValue.Text = _rotation;
+            OnRotationSelected?.Invoke(finalVal);
         }
 
         private void TogglePreview(ButtonToggledEventArgs args)
@@ -176,8 +220,12 @@ namespace Content.Client.Crayon.UI
             _selected = state.Selected;
             ColorSelector.Visible = state.SelectableColor;
             _color = state.Color;
-            _rotation = float.RadiansToDegrees(state.Rotation);
-            RotationSpinBox.Value = _rotation;
+            var rotationValue = float.RadiansToDegrees(state.Rotation);
+            if (MathF.Abs(rotationValue - MathF.Round(rotationValue)) < 0.0001f)
+                rotationValue = MathF.Round(rotationValue);
+            _rotation = rotationValue.ToString(CultureInfo.CurrentCulture);
+            // RotationSpinBox.Value = _rotation;
+            RotationValue.Text = _rotation;
             _preview = state.PreviewEnabled;
             PreviewCheckbox.Pressed = _preview;
 
