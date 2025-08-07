@@ -439,14 +439,14 @@
   - type: Destructible
     thresholds:
     - trigger:
-      !type:DamageTrigger
-      damage: 100
+        !type:DamageTrigger
+        damage: 100
       behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
-      !type:DamageTrigger
-      damage: 10
+        !type:DamageTrigger
+        damage: 10
       behaviors:
       - !type:DoActsBehavior
          acts: [ "Destruction" ]
@@ -469,14 +469,14 @@
   - type: Destructible
     thresholds:
     - trigger:
-      !type:DamageTrigger
-      damage: 100
+        !type:DamageTrigger
+        damage: 100
       behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
-      !type:DamageTrigger
-      damage: 10
+        !type:DamageTrigger
+        damage: 10
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -499,14 +499,14 @@
   - type: Destructible
     thresholds:
     - trigger:
-      !type:DamageTrigger
-      damage: 100
+        !type:DamageTrigger
+        damage: 100
       behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
-      !type:DamageTrigger
-      damage: 10
+        !type:DamageTrigger
+        damage: 10
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
