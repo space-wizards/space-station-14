@@ -1,7 +1,6 @@
 using Content.Shared.Alert;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
-using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
@@ -540,6 +539,10 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         targetComp.BloodHealedSoundThreshold = source.Comp.BloodHealedSoundThreshold;
         targetComp.ChemicalMaxVolume = source.Comp.ChemicalMaxVolume;
         targetComp.BloodMaxVolume = source.Comp.BloodMaxVolume;
+        if (targetComp.BloodSolution != null)
+            SolutionContainer.SetCapacity(targetComp.BloodSolution.Value, targetComp.BloodMaxVolume);
+        if (targetComp.ChemicalSolution != null)
+            SolutionContainer.SetCapacity(targetComp.ChemicalSolution.Value, targetComp.ChemicalMaxVolume);
 
         ChangeBloodReagent(target, source.Comp.BloodReagent);
         _metabolizer.UpdateMetabolicMultiplier(target);
