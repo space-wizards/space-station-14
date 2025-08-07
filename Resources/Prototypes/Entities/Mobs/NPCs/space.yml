@@ -166,7 +166,7 @@
     sounds:
       Unsexed: Kangaroo
   - type: Speech
-    speechVerbs: LargeMob
+    speechVerb: LargeMob
     speechSounds: Kangaroo
   - type: ReplacementAccent
     accent: kangaroo
