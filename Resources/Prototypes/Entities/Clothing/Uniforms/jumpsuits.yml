@@ -962,6 +962,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/journalist.rsi
 
 - type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpsuitMeteorologist
+  name: meteorologist suit
+  description: For having completed a degree in confidently pointing at a green-screen.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/meteorologist.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/meteorologist.rsi
+    
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMonasticRobeDark
   name: dark monastic robe

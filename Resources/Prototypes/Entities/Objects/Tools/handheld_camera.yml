@@ -12,11 +12,11 @@
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: Sprite
-    sprite: _Moffstation/Objects/Tools/handheld_camera.rsi
+    sprite: Objects/Tools/handheld_camera.rsi
     state: icon
   - type: Item
     size: Huge
-    sprite: _Moffstation/Objects/Tools/handheld_camera.rsi
+    sprite: Objects/Tools/handheld_camera.rsi
   - type: SurveillanceCameraMicrophone
     blacklist:
       components:
