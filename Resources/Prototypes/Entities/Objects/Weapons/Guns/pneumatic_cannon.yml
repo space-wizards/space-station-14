@@ -94,7 +94,6 @@
     container: storagebase
   - type: Item
     size: Large
-    storedRotation: -180
   - type: Clothing
     sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
     quickEquip: false
