@@ -1,8 +1,8 @@
 ﻿# Base item for large pieces (regular tabletop ones are exploitable)
 - type: entity
-  id: BaseLargeTabletopPiece
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: BaseLargeTabletopPiece
   suffix: Large
   components:
   - type: Sprite
@@ -10,68 +10,60 @@
 
 # White chess pieces
 - type: entity
+  parent: BaseLargeTabletopPiece
   id: LargeWhiteKing
   name: white king
   description: The white king, it can move one square in any direction. If the no piece can move and this piece is threatened, then black wins; however, if it is not under threat and no piece can move then the game ends in a stalemate.
-  parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: w_king
 
 - type: entity
+  parent: BaseLargeTabletopPiece
   id: LargeWhiteQueen
   name: white queen
   description: The white queen, it can move any amount of tiles in any direction. The most powerful piece on the board, it can be tempting to always promote a pawn to a queen, but this can lead to a stalemate if not handled carefully. Worth 9 points.
-  parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: w_queen
-  - type: Stack
-    stackType: LargeWhiteQueen
 
 - type: entity
+  parent: BaseLargeTabletopPiece
   id: LargeWhiteRook
   name: white rook
   description: The white rook, it can move any amount of tiles orthogonally. If neither the king nor the rook of the same colour have moved, and there are no pieces inbetween them, then the rook can be moved one square towards the king and the king is moved to where the rook previously was; this is called castling. Worth 5 points.
-  parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: w_rook
-  - type: Stack
-    stackType: LargeWhiteRook
 
 - type: entity
+  parent: BaseLargeTabletopPiece
   id: LargeWhiteBishop
   name: white bishop
   description: The white bishop, it can move any amount of tiles diagonally. Each colour has one bishop per square colour, this can be useful for quickly figuring out if a move can be threatened without visualising it fully. Worth 3 points.
-  parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: w_bishop
-  - type: Stack
-    stackType: LargeWhiteBishop
 
 - type: entity
+  parent: BaseLargeTabletopPiece
   id: LargeWhiteKnight
   name: white knight
   description: The white knight (or horsie), It moves moves in an L (three tiles in a direction, then one tile paralell). It is the only piece that can move over other pieces. Worth 3 points.
-  parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: w_knight
-  - type: Stack
-    stackType: LargeWhiteKnight
 
 - type: entity
+  parent: BaseLargeTabletopPiece
   id: LargeWhitePawn
   name: white pawn
   description: The white pawn, it moves one tile toward the opposing side of the board, but can move two if it has not moved yet in the game. It cannot take a piece by moving straight into it like the other pieces, but has to be diagonally adjacent. If it reaches the opposite side of the board, it can be promoted to a knight, bishop, rook or queen. Worth 1 point.
-  parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -81,68 +73,60 @@
 
 # Black chess pieces
 - type: entity
+  parent: BaseLargeTabletopPiece
   id: LargeBlackKing
   name: black king
   description: The black king, it can move one square in any direction. If the no piece can move and this piece is threatened, then black wins; however, if it is not under threat and no piece can move then the game ends in a stalemate.
-  parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: b_king
 
 - type: entity
+  parent: BaseLargeTabletopPiece
   id: LargeBlackQueen
   name: black queen
   description: The black queen, it can move any amount of tiles in any direction. The most powerful piece on the board, it can be tempting to always promote a pawn to a queen, but this can lead to a stalemate if not handled carefully. Worth 9 points.
-  parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: b_queen
-  - type: Stack
-    stackType: LargeBlackQueen
 
 - type: entity
+  parent: BaseLargeTabletopPiece
   id: LargeBlackRook
   name: black rook
   description: The black rook, it can move any amount of tiles orthogonally. If neither the king nor the rook of the same colour have moved, and there are no pieces inbetween them, then the rook can be moved one square towards the king and the king is moved to where the rook previously was; this is called castling. Worth 5 points.
-  parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: b_rook
-  - type: Stack
-    stackType: LargeBlackRook
 
 - type: entity
+  parent: BaseLargeTabletopPiece
   id: LargeBlackBishop
   name: black bishop
   description: The black bishop, it can move any amount of tiles diagonally. Each colour has one bishop per square colour, this can be useful for quickly figuring out if a move can be threatened without visualising it fully. Worth 3 points.
-  parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: b_bishop
-  - type: Stack
-    stackType: LargeBlackBishop
 
 - type: entity
+  parent: BaseLargeTabletopPiece
   id: LargeBlackKnight
   name: black knight
   description: The black knight (or horsie), it moves moves in an L (three tiles in a direction, then one tile paralell). It is the only piece that can move over other pieces. Worth 3 points.
-  parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: b_knight
-  - type: Stack
-    stackType: LargeBlackKnight
 
 - type: entity
+  parent: BaseLargeTabletopPiece
   id: LargeBlackPawn
   name: black pawn
   description: The black pawn, it moves one tile toward the opposing side of the board, but can move two if it has not moved yet in the game. It cannot take a piece by moving straight into it like the other pieces, but has to be diagonally adjacent. If it reaches the opposite side of the board, it can be promoted to a knight, bishop, rook or queen. Worth 1 point. # contemplated explaining en passant but thats a bit far imo
-  parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -150,83 +134,19 @@
   - type: Stack
     stackType: LargeBlackPawn
 
-# Stacks
+# Stacks 
 
 - type: entity
-  id: LargeWhiteQueen2
-  parent: LargeWhiteQueen
-  suffix: Large, 2
-  components:
-  - type: Stack
-    count: 2
-
-- type: entity
-  id: LargeWhiteBishop4
-  parent: LargeWhiteBishop
-  suffix: Large, 4
-  components:
-  - type: Stack
-    count: 4
-
-- type: entity
-  id: LargeWhiteKnight4
-  parent: LargeWhiteKnight
-  suffix: Large, 4
-  components:
-  - type: Stack
-    count: 4
-
-- type: entity
-  id: LargeWhiteRook4
-  parent: LargeWhiteRook
-  suffix: Large, 4
-  components:
-  - type: Stack
-    count: 4
-
-- type: entity
-  id: LargeWhitePawn8
   parent: LargeWhitePawn
+  id: LargeWhitePawn8
   suffix: Large, 8
   components:
   - type: Stack
     count: 8
 
 - type: entity
-  id: LargeBlackQueen2
-  parent: LargeBlackQueen
-  suffix: Large, 2
-  components:
-  - type: Stack
-    count: 2
-
-- type: entity
-  id: LargeBlackBishop4
-  parent: LargeBlackBishop
-  suffix: Large, 4
-  components:
-  - type: Stack
-    count: 4
-
-- type: entity
-  id: LargeBlackKnight4
-  parent: LargeBlackKnight
-  suffix: Large, 4
-  components:
-  - type: Stack
-    count: 4
-
-- type: entity
-  id: LargeBlackRook4
-  parent: LargeBlackRook
-  suffix: Large, 4
-  components:
-  - type: Stack
-    count: 4
-
-- type: entity
-  id: LargeBlackPawn8
   parent: LargeBlackPawn
+  id: LargeBlackPawn8
   suffix: Large, 8
   components:
   - type: Stack

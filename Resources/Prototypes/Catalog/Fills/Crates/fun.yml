@@ -477,51 +477,86 @@
     - id: ClothingNeckMantleQM
     - id: ClothingHeadsetCargo
 
-- type: entity
-  name: big chess set
-  description: Perfect for any high profile chess game. Takes up a 4x4 area.
-  id: CrateFunBigChess
-  parent: CratePlastic
-  components:
-  - type: StorageFill
-    contents:
-      - id: FloorCarpetItemBoardChecker32
-      - id: LargeBlackKing
-        amount: 1
-      - id: LargeBlackQueen2
-      - id: LargeBlackBishop4
-      - id: LargeBlackKnight4
-      - id: LargeBlackRook4
-      - id: LargeBlackPawn8
-      - id: LargeWhiteKing
-        amount: 1
-      - id: LargeWhiteQueen2
-      - id: LargeWhiteBishop4
-      - id: LargeWhiteKnight4
-      - id: LargeWhiteRook4
-      - id: LargeWhitePawn8
+- type: entityTable
+  id: ChessPeicesTable
+  table: !type:AllSelector
+    children:
+    - !type:EntSelector
+      id: LargeBlackKing
+    - !type:EntSelector
+      id: LargeBlackQueen
+    - !type:EntSelector
+      id: LargeBlackBishop
+      amount: !type:ConstantNumberSelector
+        value: 2 
+    - !type:EntSelector
+      id: LargeBlackKnight
+      amount: !type:ConstantNumberSelector
+        value: 2
+    - !type:EntSelector
+      id: LargeBlackRook
+      amount: !type:ConstantNumberSelector
+        value: 2
+    - !type:EntSelector
+      id: LargeBlackPawn8
+    - !type:EntSelector
+      id: LargeWhiteKing
+    - !type:EntSelector
+      id: LargeWhiteQueen
+    - !type:EntSelector
+      id: LargeWhiteBishop
+      amount: !type:ConstantNumberSelector
+        value: 2 
+    - !type:EntSelector
+      id: LargeWhiteKnight
+      amount: !type:ConstantNumberSelector
+        value: 2
+    - !type:EntSelector
+      id: LargeWhiteRook
+      amount: !type:ConstantNumberSelector
+        value: 2
+    - !type:EntSelector
+      id: LargeWhitePawn8
+
+- type: entityTable
+  id: BiggerChessBoardTable
+  table: !type:AllSelector
+    children:
+    - !type:EntSelector
+      id: FloorCarpetItemBoardBlack32
+    - !type:EntSelector
+      id: FloorCarpetItemBoardWhite32
+    - !type:NestedSelector
+      tableId: ChessPeicesTable
+
+- type: entityTable
+  id: BigChessBoardTable
+  table: !type:AllSelector
+    children:
+    - !type:EntSelector
+      id: FloorCarpetItemBoardChecker32
+    - !type:NestedSelector
+      tableId: ChessPeicesTable
 
 - type: entity
+  parent: CratePlastic
+  id: CrateFunBigChess
+  name: big chess set
+  description: Perfect for any high profile chess game. Takes up a 4x4 area.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: BigChessBoardTable
+
+- type: entity
+  parent: CratePlastic
+  id: CrateFunBiggerChess
   name: bigger chess set
   description: Perfect for any really high profile chess game. Takes up an 8x8 area.
-  id: CrateFunBiggerChess
-  parent: CratePlastic
   components:
-  - type: StorageFill
-    contents:
-      - id: FloorCarpetItemBoardBlack32
-      - id: FloorCarpetItemBoardWhite32
-      - id: LargeBlackKing
-        amount: 1
-      - id: LargeBlackQueen2
-      - id: LargeBlackBishop4
-      - id: LargeBlackKnight4
-      - id: LargeBlackRook4
-      - id: LargeBlackPawn8
-      - id: LargeWhiteKing
-        amount: 1
-      - id: LargeWhiteQueen2
-      - id: LargeWhiteBishop4
-      - id: LargeWhiteKnight4
-      - id: LargeWhiteRook4
-      - id: LargeWhitePawn8
+  - type: EntityTableContainerFill
+    containers: 
+      entity_storage: !type:NestedSelector
+        tableId: BiggerChessBoardTable
+
