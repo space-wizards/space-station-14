@@ -309,7 +309,8 @@
     - traitorling
   name: secret-title
   description: secret-description
-  showInVote: false
+  showInVote: true #Starlight
+  minPlayers: 50 #Starlight
   rules:
     - Changeling
     - Traitor
