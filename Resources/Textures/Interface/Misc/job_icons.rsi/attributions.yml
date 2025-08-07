@@ -1,0 +1,191 @@
+# Original source files first, icons that have been
+# replaced with completely different versions will push
+# out the attribution of the former file.
+
+- files:
+  - Admin.png
+  - AtmosphericTechnician.png
+  - Bartender.png
+  - Botanist.png
+  - Captain.png
+  - CargoTechnician.png
+  - Chaplain.png
+  - Chef.png
+  - Chemist.png
+  - ChiefEngineer.png
+  - ChiefMedicalOfficer.png
+  - Clown.png
+  - Detective.png
+  - Geneticist.png
+  - HeadOfPersonnel.png
+  - HeadOfSecurity.png
+  - Janitor.png
+  - Lawyer.png
+  - Librarian.png
+  - MedicalDoctor.png
+  - Mime.png
+  - MindShield.png
+  - Nanotrasen.png
+  - NoId.png
+  - Passenger.png
+  - Prisoner.png
+  - Roboticist.png
+  - SecurityOfficer.png
+  - ShaftMiner.png
+  - StationAi.png
+  - StationEngineer.png
+  - Unknown.png
+  - Virologist.png
+  - Warden.png
+  license: "CC-BY-SA-3.0"
+  copyright: "Ikarrus and /tg/station - https://github.com/tgstation/tgstation/blob/ce6beb8a4d61235d9a597a7126c407160ed674ea/icons/mob/huds/hud.dmi"
+  source: "https://github.com/HoofedEar/space-station-14/commit/f95c5b79213528e44caf80182359830a6a80a2e6"
+
+- files:
+  - Musician.png
+  license: "CC-BY-SA-3.0"
+  copyright: "HoofedEar"
+  source: "https://github.com/space-wizards/space-station-14/pull/6825"
+
+- files:
+  - MedicalIntern.png
+  - TechnicalAssistant.png
+  - SecurityCadet.png
+  license: "CC-BY-SA-3.0"
+  copyright: "mirrorcult"
+  source: "https://github.com/space-wizards/space-station-14/pull/8006"
+
+- files:
+  - Reporter.png
+  - Psychologist.png
+  license: "CC-BY-SA-3.0"
+  copyright: "Emisse"
+  source: "https://github.com/space-wizards/space-station-14/pull/8865"
+
+- files:
+  - Boxer.png
+  license: "CC-BY-SA-3.0"
+  copyright: "Elijahrane ported from Nyano https://github.com/Nyanotrasen/Nyanotrasen/pull/3"
+  source: "https://github.com/space-wizards/space-station-14/pull/9080"
+
+- files:
+  - ResearchAssistant.png
+  license: "CC-BY-SA-3.0"
+  copyright: "EmoGarbage404"
+  source: "https://github.com/space-wizards/space-station-14/pull/13774"
+
+- files:
+  - ResearchDirector.png
+  - Scientist.png
+  license: "CC-BY-SA-3.0"
+  copyright: "EmoGarbage404"
+  source: "https://github.com/space-wizards/space-station-14/pull/13775"
+
+- files:
+  - Brigmedic.png
+  license: "CC-BY-SA-3.0"
+  copyright: "PuroSlavKing"
+  source: "https://github.com/space-wizards/space-station-14/pull/15319"
+
+- files:
+  - Paramedic.png
+  license: "CC-BY-SA-3.0"
+  copyright: "MagnusCrowe"
+  source: "https://github.com/space-wizards/space-station-14/pull/15439"
+
+- files:
+  - Zombie.png
+  license: "CC-BY-SA-3.0"
+  copyright: "RamZ"
+  source: "https://github.com/space-wizards/space-station-14/pull/17529"
+
+- files:
+  - SeniorEngineer.png
+  - SeniorOfficer.png
+  - SeniorPhysician.png
+  - SeniorResearcher.png
+  license: "CC-BY-SA-3.0"
+  copyright: "Nairodian"
+  source: "https://github.com/space-wizards/space-station-14/pull/18181"
+
+- files:
+  - Zookeeper.png
+  license: "CC-BY-SA-3.0"
+  copyright: "lzk228, netwy"
+  source: https://github.com/space-wizards/space-station-14/pull/18973
+
+- files:
+  - Borg.png
+  license: "CC-BY-SA-3.0"
+  copyright: "EmoGarbage404"
+  source: https://github.com/space-wizards/space-station-14/pull/18136
+
+- files:
+  - Revolutionary.png
+  - HeadRevolutionary.png
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "coolmankid12345 based on icons from /tg/station (goonstation r4407 icons/mob/mob.dmi)"
+  source: https://github.com/space-wizards/space-station-14/pull/18477
+
+- files:
+  - Syndicate.png
+  license: "CC-BY-SA-3.0"
+  copyright: "IntegerTempest"
+  source: "https://github.com/space-wizards/space-station-14/pull/21260"
+
+- files:
+  - Visitor.png
+  license: "CC-BY-SA-3.0"
+  copyright: "SlamBamActionman"
+  source: "https://github.com/space-wizards/space-station-14/pull/23972"
+
+- files:
+  - InitialInfected.png
+  license: "CC-BY-SA-3.0"
+  copyright: "Killerqu00"
+  source: "https://github.com/space-wizards/space-station-14/pull/25934"
+
+- files:
+  - Admin.png
+  license: "CC-BY-SA-3.0"
+  copyright: "TsjipTsjip - recolored from MedicalIntern.png"
+  source: "https://github.com/space-wizards/space-station-14/pull/25934"
+
+- files:
+  - ServiceWorker.png
+  license: "CC-BY-SA-3.0"
+  copyright: "spanky-spanky"
+  source: "https://github.com/space-wizards/space-station-14/pull/33361"
+
+- files:
+  - ParadoxClone.png
+  license: "CC-BY-SA-3.0"
+  copyright: "/tg/station - Shadyyy66, 1bw0kopy, MrMelbert, JohnFulpWilard, jlsnow301"
+  source: "https://github.com/tgstation/tgstation/commit/214174874cf5e287e2c9d951d5c1b6186ceafa80"
+
+- files:
+  - Cluwne.png
+  license: "CC-BY-SA-3.0"
+  copyright: "recolored Clown.png - SlamBamActionman"
+  source: "https://github.com/space-wizards/space-station-14/pull/37834"
+
+- files:
+  - QuarterMaster.png
+  license: "CC-BY-SA-3.0"
+  copyright: "K-Dynamic"
+  source: "https://github.com/space-wizards/space-station-14/pull/39259"
+
+# Color adjustments to icons.
+# Recoloring an icon without significantly changing it from the original
+# will push out former recolorings.
+
+- files:
+  - Bartender.png
+  - Botanist.png
+  - Chef.png
+  - Reporter.png
+  - ServiceWorker.png
+  - Zookeeper.png
+  license: "CC-BY-SA-3.0"
+  copyright: "recoloring by frobnic8 and Erskin Cherry"
+  source: "https://github.com/space-wizards/space-station-14/pull/34270"
