@@ -835,7 +835,7 @@
     - cotton
   - type: Sprite
     state: croissant-cotton
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
     tags:
@@ -884,15 +884,11 @@
           Quantity: 3
 
 - type: entity
-  parent: FoodBakedBase
+  parent: FoodBakedGrilledCheeseSandwich
   id: FoodBakedGrilledCheeseSandwichCotton
   name: cotton grilled cheese sandwich
   description: Cotton bread slightly burnt in butter, with melted cheese. Moths find it difficult to resist this combination.
   components:
-  - type: Item
-    size: Small
-    shape:
-    - 0,0,1,0
   - type: FlavorProfile
     flavors:
     - cheesy
@@ -901,7 +897,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
     state: grilled-cheese-cotton
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
     tags:

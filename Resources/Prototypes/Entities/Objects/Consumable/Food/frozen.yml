@@ -20,9 +20,9 @@
 # Ice-cream
 
 - type: entity
-  name: ice-cream sandwich
   parent: FoodFrozenBase
   id: FoodFrozenSandwich
+  name: ice-cream sandwich
   description: Portable ice-cream in its own packaging.
   components:
   - type: Item
@@ -32,8 +32,8 @@
     state: sandwich
 
 - type: entity
-  name: strawberry ice-cream sandwich
   parent: FoodFrozenBase
+  name: strawberry ice-cream sandwich
   id: FoodFrozenSandwichStrawberry
   description: Portable ice-cream in its own packaging of the strawberry variety.
   components:
@@ -62,9 +62,9 @@
     state: spacefreezy
 
 - type: entity
-  name: cornuto
   parent: FoodFrozenBase
   id: FoodFrozenCornuto
+  name: strawberry ice-cream sandwich
   description: A Neapolitan vanilla and chocolate ice-cream cone. It menaces with a sprinkling of caramelized nuts.
   components:
   - type: Item
@@ -272,9 +272,9 @@
 # Trash
 
 - type: entity
-  name: paper cone
   parent: BaseItem
   id: FoodFrozenSnowconeTrash
+  name: paper cone
   description: A crumpled paper cone used for an icy treat. Worthless.
   components:
   - type: Item

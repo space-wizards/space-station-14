@@ -10,7 +10,6 @@
   components:
   - type: Item
     size: Normal
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/breakfast.rsi
   - type: SolutionContainerManager

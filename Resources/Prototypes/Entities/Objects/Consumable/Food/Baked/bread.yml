@@ -11,7 +11,6 @@
   - type: FlavorProfile
     flavors:
       - bread
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bread.rsi
   - type: Tag
@@ -133,7 +132,7 @@
     flavors:
     - cotton
     - bread
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: Sprite
     layers:
@@ -717,7 +716,7 @@
     state: baguette-cotton
   - type: SliceableFood
     slice: FoodBreadBaguetteCottonSlice
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
     tags:
@@ -773,9 +772,9 @@
           Quantity: 0.1
 
 - type: entity
-  name: cotton crostini
   parent: FoodBreadBaguetteSlice
   id: FoodBreadBaguetteCottonSlice
+  name: cotton crostini
   description: Bon az-zetite!
   components:
   - type: Sprite

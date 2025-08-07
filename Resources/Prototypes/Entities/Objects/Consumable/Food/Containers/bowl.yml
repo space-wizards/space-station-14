@@ -23,10 +23,10 @@
       visible: false
   - type: MixableSolution
     solution: food
-  - type: Drink
+  - type: Edible
+    edible: Drink
     solution: food
-    useSound:
-      path: /Audio/Items/drink.ogg
+    destroyOnEmpty: false
   - type: DamageOnLand
     damage:
       types:
