@@ -73,7 +73,7 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
             LawString = LawString,
             Order = Order,
             LawIdentifierOverride = LawIdentifierOverride,
-            Sayable = Sayable
+            Sayable = Sayable //starlight
         };
     }
 }
