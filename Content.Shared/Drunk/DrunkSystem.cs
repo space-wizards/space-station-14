@@ -1,4 +1,4 @@
-using Content.Shared.Speech.EntitySystems;
+using Content.Shared.Speech.Components.AccentComponents;
 using Content.Shared.StatusEffect;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Prototypes;
@@ -8,9 +8,9 @@ namespace Content.Shared.Drunk;
 public abstract class SharedDrunkSystem : EntitySystem
 {
     public static readonly ProtoId<StatusEffectPrototype> DrunkKey = "Drunk";
+    private static readonly ProtoId<StatusEffectPrototype> SlurKey = "SlurredSpeech";
 
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
-    [Dependency] private readonly SharedSlurredSystem _slurredSystem = default!;
 
     public void TryApplyDrunkenness(EntityUid uid, float boozePower, bool applySlur = true,
         StatusEffectsComponent? status = null)
@@ -23,7 +23,7 @@ public abstract class SharedDrunkSystem : EntitySystem
 
         if (applySlur)
         {
-            _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
+            ApplySlurredSpeech(uid, TimeSpan.FromSeconds(boozePower), status);
         }
 
         if (!_statusEffectsSystem.HasStatusEffect(uid, DrunkKey, status))
@@ -45,4 +45,14 @@ public abstract class SharedDrunkSystem : EntitySystem
         _statusEffectsSystem.TryRemoveTime(uid, DrunkKey, TimeSpan.FromSeconds(timeRemoved));
     }
 
+    public void ApplySlurredSpeech(EntityUid uid, TimeSpan time, StatusEffectsComponent? status = null)
+    {
+        if (!Resolve(uid, ref status, false))
+            return;
+
+        if (!_statusEffectsSystem.HasStatusEffect(uid, SlurKey, status))
+            _statusEffectsSystem.TryAddStatusEffect<SlurredAccentComponent>(uid, SlurKey, time, true, status);
+        else
+            _statusEffectsSystem.TryAddTime(uid, SlurKey, time, status);
+    }
 }

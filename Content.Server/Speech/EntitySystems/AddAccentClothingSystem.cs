@@ -1,5 +1,6 @@
 using Content.Server.Speech.Components;
 using Content.Shared.Clothing;
+using Content.Shared.Speech.Components;
 
 namespace Content.Server.Speech.EntitySystems;
 
