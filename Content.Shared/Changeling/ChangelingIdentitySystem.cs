@@ -173,7 +173,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
             return;
 
         var mapUid = _map.CreateMap(out var newMapId);
-        _metaSystem.SetEntityName(mapUid, "Changeling identity storage map");
+        _metaSystem.SetEntityName(mapUid, Loc.GetString("changeling-paused-map-name"));
         PausedMapId = newMapId;
         _map.SetPaused(mapUid, true);
     }

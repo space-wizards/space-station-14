@@ -169,7 +169,7 @@ public abstract class SharedCryostorageSystem : EntitySystem
             return;
 
         var mapUid = _map.CreateMap();
-        _meta.SetEntityName(mapUid, "Cryosleeper body storage map");
+        _meta.SetEntityName(mapUid, Loc.GetString("cryostorage-paused-map-name"));
         _map.SetPaused(mapUid, true);
         PausedMap = mapUid;
     }

@@ -32,7 +32,7 @@ public sealed partial class PolymorphSystem
             return;
 
         var mapUid = _map.CreateMap();
-        _metaData.SetEntityName(mapUid, "Polymorph body storage map");
+        _metaData.SetEntityName(mapUid, Loc.GetString("polymorph-paused-map-name"));
         _map.SetPaused(mapUid, true);
         PausedMap = mapUid;
     }
