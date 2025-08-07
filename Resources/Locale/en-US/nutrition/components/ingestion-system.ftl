@@ -25,24 +25,13 @@ ingestion-verb-drink = Drink
 
 # Edible Component
 
-edible-nom = {$user ->
-                    [true] Nom. {$flavors}
-                    *[false] Nom.
-                    }
-
-edible-slurp = {$user ->
-                    [true] Slurp. {$flavors}
-                    *[false] Slurp.
-                    }
-edible-swallow = {$user ->
-                    [true] You swallow { THE($food) }.
-                    *[false] Gulp.
-                    }
-
-edible-gulp =   {$user ->
-                    [true] Gulp. {$flavors}
-                    *[false] Gulp.
-                    }
+edible-nom = Nom. {$flavors}
+edible-nom-other = Nom.
+edible-slurp = Slurp. {$flavors}
+edible-slurp-other = Slurp.
+edible-swallow = You swallow { THE($food) }
+edible-gulp = Gulp. {$flavors}
+edible-gulp-other = Gulp.
 
 edible-has-used-storage = You cannot {$verb} { THE($food) } with an item stored inside.
 

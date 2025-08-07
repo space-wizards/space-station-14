@@ -1,31 +1,4 @@
 ﻿Entries:
-- author: SaphireLattice
-  changes:
-  - message: Steel sheets no longer have unintuitively wasteful plating placement
-      that can be done with steel tiles instead
-    type: Remove
-  id: 8322
-  time: '2025-04-23T11:08:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33443
-- author: ArchRBX
-  changes:
-  - message: pAI's can now install a variety of useful software through their new
-      Software Catalog.
-    type: Add
-  - message: pAI's no longer start with a Station Map or MIDI Player, and must purchase
-      these through the shop.
-    type: Tweak
-  id: 8323
-  time: '2025-04-23T23:55:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36857
-- author: NoElkaTheGod
-  changes:
-  - message: Toysword now actually looks almost like the real thing, as advertised
-      in the description
-    type: Tweak
-  id: 8324
-  time: '2025-04-24T01:21:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34199
 - author: Pronana
   changes:
   - message: Moths can now eat pills
@@ -3902,3 +3875,27 @@
   id: 8834
   time: '2025-08-06T20:14:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39379
+- author: Thinbug0
+  changes:
+  - message: New onion mutation, Bloonions! floating balloon-like onions.
+    type: Add
+  id: 8835
+  time: '2025-08-07T01:51:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33375
+- author: Kittygyat
+  changes:
+  - message: Made baseball bats 1x4 instead of 2x2
+    type: Tweak
+  - message: New baseball bat inventory icon sprites
+    type: Add
+  id: 8836
+  time: '2025-08-07T03:03:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38392
+- author: lolman360
+  changes:
+  - message: Fixed certain items (like pickaxes) failing to insert into containers
+      that have enough space to store them, sometimes.
+    type: Fix
+  id: 8837
+  time: '2025-08-07T16:01:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38896

@@ -22,7 +22,6 @@ using Content.Shared.Tools.EntitySystems;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.EntitySystems;
@@ -458,7 +457,7 @@ public sealed partial class IngestionSystem : EntitySystem
         {
             var targetName = Identity.Entity(args.Target, EntityManager);
             var userName = Identity.Entity(args.User, EntityManager);
-            _popup.PopupEntity(Loc.GetString("edible-force-feed-success", ("user", userName), ("verb", edible.Verb), ("flavors", flavors)), args.Target, args.Target);
+            _popup.PopupEntity(Loc.GetString("edible-force-feed-success", ("user", userName), ("verb", edible.Verb), ("flavors", flavors)), entity, entity);
 
             _popup.PopupClient(Loc.GetString("edible-force-feed-success-user", ("target", targetName), ("verb", edible.Verb)), args.User, args.User);
 
@@ -467,8 +466,10 @@ public sealed partial class IngestionSystem : EntitySystem
         }
         else
         {
-            _popup.PopupClient(Loc.GetString(edible.Message, ("user", true), ("food", entity.Owner), ("flavors", flavors)), args.User, args.User);
-            _popup.PopupEntity(Loc.GetString(edible.Message, ("user", false)), args.User, Filter.PvsExcept(args.User), true);
+            _popup.PopupPredicted(Loc.GetString(edible.Message, ("food", entity.Owner), ("flavors", flavors)),
+                Loc.GetString(edible.OtherMessage),
+                args.User,
+                args.User);
 
             // log successful voluntary eating
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(entity):food}");
