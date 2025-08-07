@@ -671,21 +671,21 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module }
 
 # medical modules
-- type: entity
-  id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
-  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
-  name: diagnosis cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: medical
-    - state: icon-diagnosis
-  - type: ItemBorgModule
-    items:
-    - HandheldHealthAnalyzerUnpowered
-    - ClothingNeckStethoscope
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
+# - type: entity
+#   id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
+#   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+#   name: diagnosis cyborg module
+#   components:
+#   - type: Sprite
+#     layers:
+#     - state: medical
+#     - state: icon-diagnosis
+#   - type: ItemBorgModule
+#     items:
+#     - HandheldHealthAnalyzerUnpowered
+#     - ClothingNeckStethoscope
+#   - type: BorgModuleIcon
+#     icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
 
 - type: entity
   id: BorgModuleTopicals
@@ -721,6 +721,7 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - DefibrillatorOneHandedUnpowered
+    - ClothingNeckStethoscope
     - BorgFireExtinguisher
     - BorgHandheldGPSBasic
     - HandLabeler
@@ -761,6 +762,8 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - BorgHypo
+    - AutoMenderBrute
+    - AutoMenderBurn
     - Syringe
     - BorgDropper
     - BorgBeaker
