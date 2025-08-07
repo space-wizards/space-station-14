@@ -61,6 +61,12 @@ public sealed partial class SpeechOverrideInfo
     public bool RequireSpeech = true;
 
     /// <summary>
+    ///     If true, requires the entity to have usable hands and be able to interact (not be cuffed, etc).
+    /// </summary>
+    [DataField]
+    public bool RequireHands = false;
+
+    /// <summary>
     ///     If not null, all messages in this language will be forced to be spoken in this chat type.
     /// </summary>
     [DataField]

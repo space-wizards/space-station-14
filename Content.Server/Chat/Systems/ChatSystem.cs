@@ -38,7 +38,8 @@ using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 using Content.Shared.Speech; // Starlight
 using Content.Server._Starlight.Language; // Starlight
-using Content.Shared._Starlight.Language; // Starlight
+using Content.Shared._Starlight.Language;
+using Content.Shared.Popups; // Starlight
 
 namespace Content.Server.Chat.Systems;
 
@@ -68,6 +69,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly SharedCollectiveMindSystem _collectiveMind = default!;
     [Dependency] private readonly SpeechSystem _speechSystem = default!; //Starlight
     [Dependency] private readonly LanguageSystem _language = default!; // Starlight
+    [Dependency] private readonly SharedPopupSystem _popups = default!; // Starlight
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -921,20 +923,28 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// </summary>
     private void SendInVoiceRange(ChatChannel channel, string name, string message, string wrappedMessage, string obfuscated, string obfuscatedWrappedMessage, EntityUid source, ChatTransmitRange range, NetUserId? author = null, LanguagePrototype? languageOverride = null) // Starlight
     {
-        var language = languageOverride ?? _language.GetLanguage(source); // Starlight
+        // Starlight - Start
+        var ignoreLanguage = channel.IsExcemptFromLanguages();
+        var language = languageOverride ?? _language.GetLanguage(source);
+        if (!ignoreLanguage && language.SpeechOverride.RequireHands && !_actionBlocker.CanInteract(source, null))
+        {
+            _popups.PopupEntity(Loc.GetString("chat-manager-language-requires-hands"), source, PopupType.Medium);
+            return;
+        }
+        // Starlight - End
         foreach (var (session, data) in GetRecipients(source, VoiceRange))
         {
             var entRange = MessageRangeCheck(session, data, range);
             if (entRange == MessageRangeCheckResult.Disallowed)
                 continue;
             var entHideChat = entRange == MessageRangeCheckResult.HideChat;
-           // Starlight - start
+            // Starlight - start
             if (session.AttachedEntity is not { Valid: true } playerEntity)
                 continue;
             EntityUid listener = session.AttachedEntity.Value;
 
             // If the channel does not support languages, or the entity can understand the message, send the original message, otherwise send the obfuscated version
-            if (channel == ChatChannel.LOOC || channel == ChatChannel.Emotes || _language.CanUnderstand(listener, language.ID))
+            if (ignoreLanguage || _language.CanUnderstand(listener, language.ID))
                 _chatManager.ChatMessageToOne(channel, message, wrappedMessage, source, entHideChat, session.Channel, author: author);
             else
                 _chatManager.ChatMessageToOne(channel, obfuscated, obfuscatedWrappedMessage, source, entHideChat, session.Channel, author: author);
