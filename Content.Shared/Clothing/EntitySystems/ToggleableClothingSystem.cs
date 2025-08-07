@@ -296,7 +296,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         }
 
         if (_actionContainer.EnsureAction(uid, ref component.ActionEntity, out var action, component.Action))
-            _actionsSystem.SetEntityIcon(component.ActionEntity.Value, component.ClothingUid, action);
+            _actionsSystem.SetEntityIcon((component.ActionEntity.Value, action), component.ClothingUid);
     }
 }
 

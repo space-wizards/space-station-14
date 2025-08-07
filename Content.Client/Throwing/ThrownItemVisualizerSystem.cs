@@ -11,6 +11,7 @@ namespace Content.Client.Throwing;
 public sealed class ThrownItemVisualizerSystem : EntitySystem
 {
     [Dependency] private readonly AnimationPlayerSystem _anim = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private const string AnimationKey = "thrown-item";
 
@@ -46,7 +47,7 @@ public sealed class ThrownItemVisualizerSystem : EntitySystem
             return;
 
         if (TryComp<SpriteComponent>(uid, out var sprite) && component.OriginalScale != null)
-            sprite.Scale = component.OriginalScale.Value;
+            _sprite.SetScale((uid, sprite), component.OriginalScale.Value);
 
         _anim.Stop(uid, AnimationKey);
     }
@@ -60,7 +61,7 @@ public sealed class ThrownItemVisualizerSystem : EntitySystem
             return null;
 
         var scale = ent.Comp2.Scale;
-        var lenFloat = (float) length.TotalSeconds;
+        var lenFloat = (float)length.TotalSeconds;
 
         // TODO use like actual easings here
         return new Animation

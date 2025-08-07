@@ -2,6 +2,7 @@ using Content.Shared.Audio;
 using Content.Shared.Construction.Components;
 using Content.Shared.Explosion;
 using Content.Shared.Eye;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
@@ -83,6 +84,10 @@ namespace Content.Shared.SubFloor
 
         private void OnInteractionAttempt(EntityUid uid, SubFloorHideComponent component, ref GettingInteractedWithAttemptEvent args)
         {
+            // Allow admins (e.g., mappers/aghosts) to twiddle with stuff under subfloors
+            if (HasComp<BypassInteractionChecksComponent>(args.Uid))
+                return;
+
             // No interactions with entities hidden under floor tiles.
             if (component.BlockInteractions && component.IsUnderCover)
                 args.Cancelled = true;
@@ -92,13 +97,13 @@ namespace Content.Shared.SubFloor
         {
             UpdateFloorCover(uid, component);
             UpdateAppearance(uid, component);
-            EntityManager.EnsureComponent<CollideOnAnchorComponent>(uid);
+            EnsureComp<CollideOnAnchorComponent>(uid);
         }
 
         private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, ComponentShutdown _)
         {
             // If component is being deleted don't need to worry about updating any component stuff because it won't matter very shortly.
-            if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+            if (Comp<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
                 return;
 
             // Regardless of whether we're on a subfloor or not, unhide.
@@ -122,13 +127,16 @@ namespace Content.Shared.SubFloor
 
         private void OnTileChanged(ref TileChangedEvent args)
         {
-            if (args.OldTile.IsEmpty)
-                return; // Nothing is anchored here anyways.
+            foreach (var change in args.Changes)
+            {
+                if (change.OldTile.IsEmpty)
+                    continue; // Nothing is anchored here anyways.
 
-            if (args.NewTile.Tile.IsEmpty)
-                return; // Anything that was here will be unanchored anyways.
+                if (change.NewTile.IsEmpty)
+                    continue; // Anything that was here will be unanchored anyways.
 
-            UpdateTile(args.NewTile.GridUid, args.Entity.Comp, args.NewTile.GridIndices);
+                UpdateTile(args.Entity, args.Entity.Comp, change.GridIndices);
+            }
         }
 
         /// <summary>
@@ -222,6 +230,7 @@ namespace Content.Shared.SubFloor
         ScannerRevealed,
     }
 
+    [Serializable, NetSerializable]
     public enum SubfloorLayers : byte
     {
         FirstLayer

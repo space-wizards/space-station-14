@@ -5,18 +5,19 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
+using Content.Client.UserInterface.ControlExtensions;
 
 namespace Content.Client.Guidebook.RichText;
 
 [UsedImplicitly]
-public sealed class TextLinkTag : IMarkupTag
+public sealed class TextLinkTag : IMarkupTagHandler
 {
+    public static Color LinkColor => Color.CornflowerBlue;
+
     public string Name => "textlink";
 
-    public Control? Control;
-
     /// <inheritdoc/>
-    public bool TryGetControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
+    public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
         if (!node.Value.TryGetString(out var text)
             || !node.Attributes.TryGetValue("link", out var linkParameter)
@@ -30,37 +31,29 @@ public sealed class TextLinkTag : IMarkupTag
         label.Text = text;
 
         label.MouseFilter = Control.MouseFilterMode.Stop;
-        label.FontColorOverride = Color.CornflowerBlue;
+        label.FontColorOverride = LinkColor;
         label.DefaultCursorShape = Control.CursorShape.Hand;
 
         label.OnMouseEntered += _ => label.FontColorOverride = Color.LightSkyBlue;
         label.OnMouseExited += _ => label.FontColorOverride = Color.CornflowerBlue;
-        label.OnKeyBindDown += args => OnKeybindDown(args, link);
+        label.OnKeyBindDown += args => OnKeybindDown(args, link, label);
 
         control = label;
-        Control = label;
         return true;
     }
 
-    private void OnKeybindDown(GUIBoundKeyEventArgs args, string link)
+    private void OnKeybindDown(GUIBoundKeyEventArgs args, string link, Control? control)
     {
         if (args.Function != EngineKeyFunctions.UIClick)
             return;
 
-        if (Control == null)
+        if (control == null)
             return;
 
-        var current = Control;
-        while (current != null)
-        {
-            current = current.Parent;
-
-            if (current is not ILinkClickHandler handler)
-                continue;
+        if (control.TryGetParentHandler<ILinkClickHandler>(out var handler))
             handler.HandleClick(link);
-            return;
-        }
-        Logger.Warning($"Warning! No valid ILinkClickHandler found.");
+        else
+            Logger.Warning("Warning! No valid ILinkClickHandler found.");
     }
 }
 
