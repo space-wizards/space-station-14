@@ -10716,5 +10716,12 @@ Entries:
   id: 1474
   time: '2025-08-07T21:04:55.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1091
+- author: CawsForConcern
+  changes:
+  - message: Added Silica Station
+    type: Add
+  id: 1475
+  time: '2025-08-07T21:09:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1070
 Order: -1
 
