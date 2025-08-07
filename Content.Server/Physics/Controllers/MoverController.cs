@@ -2,17 +2,14 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
-using Content.Shared.Friction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Prometheus;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
-using DroneConsoleComponent = Content.Server.Shuttles.DroneConsoleComponent;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
-using Robust.Shared.Map.Components;
+using DroneConsoleComponent = Content.Server.Shuttles.DroneConsoleComponent;
 
 namespace Content.Server.Physics.Controllers;
 
@@ -20,31 +17,88 @@ public sealed class MoverController : SharedMoverController
 {
     private static readonly Gauge ActiveMoverGauge = Metrics.CreateGauge(
         "physics_active_mover_count",
-        "Active amount of InputMovers being processed by MoverController");
+        "Amount of ActiveInputMovers being processed by MoverController");
 
     [Dependency] private readonly ThrusterSystem _thruster = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     private Dictionary<EntityUid, (ShuttleComponent, List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>)> _shuttlePilots = new();
 
-
-    private HashSet<EntityUid> _moverAdded = new();
-    private List<Entity<InputMoverComponent>> _movers = new();
     private EntityQuery<DroneConsoleComponent> _droneQuery;
-    private EntityQuery<PilotComponent> _pilotQuery;
     private EntityQuery<ShuttleComponent> _shuttleQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<ActiveInputMoverComponent, EntityPausedEvent>(OnEntityPaused);
+        SubscribeLocalEvent<InputMoverComponent, EntityUnpausedEvent>(OnEntityUnpaused);
+
         SubscribeLocalEvent<RelayInputMoverComponent, PlayerAttachedEvent>(OnRelayPlayerAttached);
         SubscribeLocalEvent<RelayInputMoverComponent, PlayerDetachedEvent>(OnRelayPlayerDetached);
         SubscribeLocalEvent<InputMoverComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<InputMoverComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
         _droneQuery = GetEntityQuery<DroneConsoleComponent>();
-        _pilotQuery = GetEntityQuery<PilotComponent>();
         _shuttleQuery = GetEntityQuery<ShuttleComponent>();
+    }
+
+    private void OnEntityPaused(Entity<ActiveInputMoverComponent> ent, ref EntityPausedEvent args)
+    {
+        // Become unactive [sic] if we don't have PhysicsComp.IgnorePaused
+        if (PhysicsQuery.TryComp(ent, out var phys) && phys.IgnorePaused)
+            return;
+        RemCompDeferred<ActiveInputMoverComponent>(ent);
+    }
+
+    private void OnEntityUnpaused(Entity<InputMoverComponent> ent, ref EntityUnpausedEvent args)
+    {
+        UpdateMoverStatus((ent, ent.Comp));
+    }
+
+    protected override void OnMoverStartup(EntityUid uid, InputMoverComponent component, ComponentStartup args)
+    {
+        base.OnMoverStartup(uid, component, args);
+        UpdateMoverStatus((uid, component));
+    }
+
+    protected override void OnTargetRelayShutdown(Entity<MovementRelayTargetComponent> ent, ref ComponentShutdown args)
+    {
+        base.OnTargetRelayShutdown(ent, ref args);
+        UpdateMoverStatus(ent.Owner);
+    }
+
+    protected override void UpdateMoverStatus(Entity<InputMoverComponent?, MovementRelayTargetComponent?> ent)
+    {
+        // Track that we aren't in a loop of movement relayers
+        HashSet<EntityUid> seen = [];
+        while (true)
+        {
+            if (!MoverQuery.Resolve(ent, ref ent.Comp1, logMissing: false))
+            {
+                RemCompDeferred<ActiveInputMoverComponent>(ent);
+                break;
+            }
+
+            var meta = MetaData(ent);
+            if (Terminating(ent, meta))
+                break;
+
+            if (!meta.EntityPaused
+                || PhysicsQuery.TryComp(ent, out var phys) && phys.IgnorePaused)
+                EnsureComp<ActiveInputMoverComponent>(ent);
+
+            // If we're a relay target, make sure our drivers are InputMovers
+            if (RelayTargetQuery.Resolve(ent, ref ent.Comp2, logMissing: false)
+                && Exists(ent.Comp2.Source)
+                && !seen.Contains(ent.Comp2.Source))
+            {
+                ent = ent.Comp2.Source;
+                seen.Add(ent);
+                continue;
+            }
+
+            break;
+        }
     }
 
     private void OnRelayPlayerAttached(Entity<RelayInputMoverComponent> entity, ref PlayerAttachedEvent args)
@@ -74,44 +128,19 @@ public sealed class MoverController : SharedMoverController
         return true;
     }
 
-    private void InsertMover(Entity<InputMoverComponent, MetaDataComponent> source)
-    {
-        // Don't insert if we're 1) paused and 2) don't have PhysicsComp.IgnoredPaused
-        if (source.Comp2.EntityPaused
-            && !(PhysicsQuery.TryComp(source, out var phys) && phys.IgnorePaused))
-            return;
-
-        if (RelayTargetQuery.TryComp(source, out var relay)
-            && MoverQuery.TryComp(relay.Source, out var relayMover))
-            InsertMover((relay.Source, relayMover, MetaData(relay.Source)));
-
-        // Already added
-        if (!_moverAdded.Add(source.Owner))
-            return;
-
-        _movers.Add(source);
-    }
-
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
     {
         base.UpdateBeforeSolve(prediction, frameTime);
 
-        _moverAdded.Clear();
-        _movers.Clear();
-        var inputQueryEnumerator = AllEntityQuery<InputMoverComponent, MetaDataComponent>();
+        var inputQueryEnumerator = AllEntityQuery<ActiveInputMoverComponent, InputMoverComponent>();
 
-        // Need to order mob movement so that movers don't run before their relays.
-        while (inputQueryEnumerator.MoveNext(out var uid, out var mover, out var meta))
+        var count = 0;
+        while (inputQueryEnumerator.MoveNext(out var uid, out _, out var moverComp))
         {
-            InsertMover((uid, mover, meta));
+            count++;
+            HandleMobMovement((uid, moverComp), frameTime);
         }
-
-        foreach (var mover in _movers)
-        {
-            HandleMobMovement(mover, frameTime);
-        }
-
-        ActiveMoverGauge.Set(_movers.Count);
+        ActiveMoverGauge.Set(count);
 
         HandleShuttleMovement(frameTime);
     }
@@ -161,7 +190,7 @@ public sealed class MoverController : SharedMoverController
 
     protected override void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state)
     {
-        if (!_pilotQuery.TryComp(uid, out var pilot) || pilot.Console == null)
+        if (!PilotQuery.TryComp(uid, out var pilot) || pilot.Console == null)
             return;
 
         ResetSubtick(pilot);
@@ -317,7 +346,7 @@ public sealed class MoverController : SharedMoverController
             if (Paused(shuttleUid) || CanPilot(shuttleUid) || !PhysicsQuery.TryComp(shuttleUid, out var body))
                 continue;
 
-            var shuttleNorthAngle = _xformSystem.GetWorldRotation(shuttleUid, XformQuery);
+            var shuttleNorthAngle = TransformSystem.GetWorldRotation(shuttleUid, XformQuery);
 
             // Collate movement linear and angular inputs together
             var linearInput = Vector2.Zero;

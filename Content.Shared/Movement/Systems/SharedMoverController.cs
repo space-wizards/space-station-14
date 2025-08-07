@@ -58,6 +58,7 @@ public abstract partial class SharedMoverController : VirtualController
     protected EntityQuery<MovementSpeedModifierComponent> ModifierQuery;
     protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
     protected EntityQuery<PhysicsComponent> PhysicsQuery;
+    protected EntityQuery<PilotComponent> PilotQuery;
     protected EntityQuery<PreventPilotComponent> PreventPilotQuery;
     protected EntityQuery<RelayInputMoverComponent> RelayQuery;
     protected EntityQuery<PullableComponent> PullableQuery;
@@ -96,9 +97,11 @@ public abstract partial class SharedMoverController : VirtualController
         MapGridQuery = GetEntityQuery<MapGridComponent>();
         MapQuery = GetEntityQuery<MapComponent>();
         FTLQuery = GetEntityQuery<FTLComponent>();
+        PilotQuery = GetEntityQuery<PilotComponent>();
         PreventPilotQuery = GetEntityQuery<PreventPilotComponent>();
 
         SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
+        SubscribeLocalEvent<InputMoverComponent, ComponentStartup>(OnMoverStartup);
 
         InitializeInput();
         InitializeRelay();
@@ -106,6 +109,11 @@ public abstract partial class SharedMoverController : VirtualController
         Subs.CVar(_configManager, CCVars.MinFriction, value => _minDamping = value, true);
         Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
         Subs.CVar(_configManager, CCVars.OffgridFriction, value => _offGridDamping = value, true);
+    }
+
+    protected virtual void OnMoverStartup(EntityUid uid, InputMoverComponent component, ComponentStartup args)
+    {
+       _blocker.UpdateCanMove(uid, component);
     }
 
     public override void Shutdown()
