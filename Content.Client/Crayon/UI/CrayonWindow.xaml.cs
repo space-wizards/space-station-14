@@ -29,12 +29,14 @@ namespace Content.Client.Crayon.UI
         private string? _selected;
         private Color _color;
         private float _rotation;
+        private bool _preview;
 
         private FloatSpinBox RotationSpinBox;
 
         public event Action<Color>? OnColorSelected;
         public event Action<float>? OnRotationSelected;
         public event Action<string>? OnSelected;
+        public event Action<bool>? OnPreviewToggled;
 
         public CrayonWindow()
         {
@@ -51,6 +53,7 @@ namespace Content.Client.Crayon.UI
             Search.OnTextChanged += SearchChanged;
             ColorSelector.OnColorChanged += SelectColor;
             RotationSpinBox.OnValueChanged += SelectRotation;
+            PreviewCheckbox.OnToggled += TogglePreview;
         }
 
         private void SelectColor(Color color)
@@ -65,6 +68,12 @@ namespace Content.Client.Crayon.UI
         {
             _rotation = args.Value;
             OnRotationSelected?.Invoke(args.Value);
+        }
+
+        private void TogglePreview(ButtonToggledEventArgs args)
+        {
+            _preview = args.Pressed;
+            OnPreviewToggled?.Invoke(args.Pressed);
         }
 
         private void RefreshList()
@@ -119,7 +128,7 @@ namespace Content.Client.Crayon.UI
                         Name = name,
                         ToolTip = name,
                         Modulate = _color,
-                        Scale = new System.Numerics.Vector2(2, 2)
+                        Scale = new System.Numerics.Vector2(2, 2),
                     };
                     button.OnPressed += ButtonOnPressed;
 
@@ -169,6 +178,8 @@ namespace Content.Client.Crayon.UI
             _color = state.Color;
             _rotation = float.RadiansToDegrees(state.Rotation);
             RotationSpinBox.Value = _rotation;
+            _preview = state.PreviewEnabled;
+            PreviewCheckbox.Pressed = _preview;
 
             if (ColorSelector.Visible)
             {
