@@ -42,14 +42,31 @@ rr-alcohol-desc = I think alcohol addiction is not that scary. I can always ask 
 # Alcohol names
 
 rr-absinthe = Absinthe
+rr-absinthe-desc = They say it makes you see things. I say bring it on. Let's see how deep the green fairy's rabbit hole goes.
+
 rr-ale = Ale
+rr-ale-desc = Old-timey adventurers drank this stuff after slaying dragons. I just need it after meetings.
+
 rr-beer = Beer
+rr-beer-desc = Ah, the universal solvent for bad days and good company. One cold beer coming right up.
+
 rr-bluecuracao = Blue Curaçao
+rr-bluecuracao-desc = It's blue. Like the ocean. Or a bad mood. But it tastes like vacation. Weird magic in a bottle.
+
 rr-cognac = Cognac
+rr-cognac-desc = Is it still called "sophisticated" if I drink it in a hoodie? Asking for a friend.
+
 rr-deadrum = Dead Rum
+
 rr-gin = Gin
+rr-gin-desc = I'm not sure if it's gin from a bottle. Although? Maybe I should try drinking it, and it will appear and I can make three wishes?
+
 rr-coffeeliqueur = Coffee Liqueur
+rr-coffeeliqueur-desc = Coffee? Good. Alcohol? Good. Together? Probably illegal somewhere.
+
 rr-melonliquor = Melon Liquor
+rr-melonliquor = It's green, it's sweet, and suspiciously cheerful. Like a party in Shrek's minibar.
+
 rr-ntcahors = Neotheology Cahors Whine
 rr-poisonwine = Poison Wine
 rr-rum = Rum
