@@ -10687,5 +10687,12 @@ Entries:
   id: 1470
   time: '2025-08-07T20:47:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1227
+- author: walksanatora
+  changes:
+  - message: TEG now interacts with pipe layers.
+    type: Add
+  id: 1471
+  time: '2025-08-07T20:49:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1195
 Order: -1
 
