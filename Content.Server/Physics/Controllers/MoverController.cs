@@ -27,6 +27,13 @@ public sealed class MoverController : SharedMoverController
 
     private Dictionary<EntityUid, (ShuttleComponent, List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>)> _shuttlePilots = new();
 
+
+    private HashSet<EntityUid> _moverAdded = new();
+    private List<Entity<InputMoverComponent>> _movers = new();
+    private EntityQuery<DroneConsoleComponent> _droneQuery;
+    private EntityQuery<PilotComponent> _pilotQuery;
+    private EntityQuery<ShuttleComponent> _shuttleQuery;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -34,6 +41,10 @@ public sealed class MoverController : SharedMoverController
         SubscribeLocalEvent<RelayInputMoverComponent, PlayerDetachedEvent>(OnRelayPlayerDetached);
         SubscribeLocalEvent<InputMoverComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<InputMoverComponent, PlayerDetachedEvent>(OnPlayerDetached);
+
+        _droneQuery = GetEntityQuery<DroneConsoleComponent>();
+        _pilotQuery = GetEntityQuery<PilotComponent>();
+        _shuttleQuery = GetEntityQuery<ShuttleComponent>();
     }
 
     private void OnRelayPlayerAttached(Entity<RelayInputMoverComponent> entity, ref PlayerAttachedEvent args)
@@ -63,18 +74,11 @@ public sealed class MoverController : SharedMoverController
         return true;
     }
 
-    private HashSet<EntityUid> _moverAdded = new();
-    private List<Entity<InputMoverComponent>> _movers = new();
-
     private void InsertMover(Entity<InputMoverComponent> source)
     {
-        if (TryComp(source, out MovementRelayTargetComponent? relay))
-        {
-            if (TryComp(relay.Source, out InputMoverComponent? relayMover))
-            {
-                InsertMover((relay.Source, relayMover));
-            }
-        }
+        if (RelayTargetQuery.TryComp(source, out var relay)
+            && MoverQuery.TryComp(relay.Source, out var relayMover))
+            InsertMover((relay.Source, relayMover));
 
         // Already added
         if (!_moverAdded.Add(source.Owner))
@@ -152,7 +156,7 @@ public sealed class MoverController : SharedMoverController
 
     protected override void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state)
     {
-        if (!TryComp<PilotComponent>(uid, out var pilot) || pilot.Console == null)
+        if (!_pilotQuery.TryComp(uid, out var pilot) || pilot.Console == null)
             return;
 
         ResetSubtick(pilot);
@@ -263,27 +267,25 @@ public sealed class MoverController : SharedMoverController
 
         // We just mark off their movement and the shuttle itself does its own movement
         var activePilotQuery = EntityQueryEnumerator<PilotComponent, InputMoverComponent>();
-        var shuttleQuery = GetEntityQuery<ShuttleComponent>();
         while (activePilotQuery.MoveNext(out var uid, out var pilot, out var mover))
         {
             var consoleEnt = pilot.Console;
 
             // TODO: This is terrible. Just make a new mover and also make it remote piloting + device networks
-            if (TryComp<DroneConsoleComponent>(consoleEnt, out var cargoConsole))
-            {
+            if (_droneQuery.TryComp(consoleEnt, out var cargoConsole))
                 consoleEnt = cargoConsole.Entity;
-            }
 
-            if (!TryComp(consoleEnt, out TransformComponent? xform)) continue;
+            if (!XformQuery.TryComp(consoleEnt, out var xform))
+                continue;
 
             var gridId = xform.GridUid;
             // This tries to see if the grid is a shuttle and if the console should work.
-            if (!TryComp<MapGridComponent>(gridId, out var _) ||
-                !shuttleQuery.TryGetComponent(gridId, out var shuttleComponent) ||
+            if (!MapGridQuery.HasComp(gridId) ||
+                !_shuttleQuery.TryGetComponent(gridId, out var shuttleComponent) ||
                 !shuttleComponent.Enabled)
                 continue;
 
-            if (!newPilots.TryGetValue(gridId!.Value, out var pilots))
+            if (!newPilots.TryGetValue(gridId.Value, out var pilots))
             {
                 pilots = (shuttleComponent, new List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>());
                 newPilots[gridId.Value] = pilots;
@@ -305,13 +307,12 @@ public sealed class MoverController : SharedMoverController
 
         // Collate all of the linear / angular velocites for a shuttle
         // then do the movement input once for it.
-        var xformQuery = GetEntityQuery<TransformComponent>();
         foreach (var (shuttleUid, (shuttle, pilots)) in _shuttlePilots)
         {
-            if (Paused(shuttleUid) || CanPilot(shuttleUid) || !TryComp<PhysicsComponent>(shuttleUid, out var body))
+            if (Paused(shuttleUid) || CanPilot(shuttleUid) || !PhysicsQuery.TryComp(shuttleUid, out var body))
                 continue;
 
-            var shuttleNorthAngle = _xformSystem.GetWorldRotation(shuttleUid, xformQuery);
+            var shuttleNorthAngle = _xformSystem.GetWorldRotation(shuttleUid, XformQuery);
 
             // Collate movement linear and angular inputs together
             var linearInput = Vector2.Zero;
@@ -321,7 +322,7 @@ public sealed class MoverController : SharedMoverController
             var brakeCount = 0;
             var angularCount = 0;
 
-            foreach (var (pilotUid, pilot, _, consoleXform) in pilots)
+            foreach (var (_, pilot, _, consoleXform) in pilots)
             {
                 var (strafe, rotation, brakes) = GetPilotVelocityInput(pilot);
 
@@ -571,9 +572,9 @@ public sealed class MoverController : SharedMoverController
 
     private bool CanPilot(EntityUid shuttleUid)
     {
-        return TryComp<FTLComponent>(shuttleUid, out var ftl)
+        return FTLQuery.TryComp(shuttleUid, out var ftl)
         && (ftl.State & (FTLState.Starting | FTLState.Travelling | FTLState.Arriving)) != 0x0
-            || HasComp<PreventPilotComponent>(shuttleUid);
+            || PreventPilotQuery.HasComp(shuttleUid);
     }
 
 }
