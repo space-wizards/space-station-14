@@ -223,7 +223,7 @@ public sealed partial class BorgSystem
             component.ProvidedItems.Add(handId, item);
         }
 
-        //STARLIGHT
+        //STARLIGHT start
         for (var i = 0; i < component.FreeHands; i++)
         {
             var handId = $"{uid}-free{component.HandCounter}";
@@ -231,6 +231,7 @@ public sealed partial class BorgSystem
             _hands.AddHand((chassis, hands), handId, HandLocation.Middle);
             component.ProvidedFreeHands.Add(handId);
         }
+        //STARLIGHT end
 
         component.ItemsCreated = true;
     }
@@ -251,11 +252,12 @@ public sealed partial class BorgSystem
                 _hands.RemoveHand(chassis, hand);
             }
             component.ProvidedItems.Clear();
-
+        //STARLIGHT start
             foreach (var handId in component.ProvidedFreeHands)
             {
                 _hands.RemoveHand(chassis, handId);
             }
+        //STARLIGHT end
             return;
         }
 
@@ -270,22 +272,13 @@ public sealed partial class BorgSystem
         }
         component.ProvidedItems.Clear();
 
-        //STARLIGHT
-        // foreach (var (handId, item) in component.ProvidedHands)
-        // {
-        //     if (LifeStage(item) <= EntityLifeStage.MapInitialized)
-        //     {
-        //         RemComp<UnremoveableComponent>(item);
-        //         _container.Insert(item, component.ProvidedContainer);
-        //     }
-        //     _hands.RemoveHand(chassis, handId);
-        // }
+        //STARLIGHT start
         foreach (var handId in component.ProvidedFreeHands)
         {
             _hands.RemoveHand(chassis, handId);
         }
         component.ProvidedFreeHands.Clear();
-
+        //STARLIGHT end
     }
 
     /// <summary>
