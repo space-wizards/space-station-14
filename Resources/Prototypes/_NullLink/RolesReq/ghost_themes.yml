@@ -1,0 +1,44 @@
+- type: roleRequirementPrototype
+  id: TesterReq
+  roles:
+  - 1275161200115712071 # AlfaTester
+  - 1294130153651306516 # BetaTester
+  discord: roles-req-discord-starlight
+  rolesLoc: roles-req-tester-roles
+
+- type: roleRequirementPrototype
+  id: MentorRolesReq
+  roles:
+  - 1294132218918207639 # Mentor
+  discord: roles-req-discord-starlight
+  rolesLoc: roles-req-mentor-roles
+
+- type: roleRequirementPrototype
+  id: GoldEventWinnerReq
+  roles:
+  - 1294132398128107624 # GoldEventWinner
+  discord: roles-req-discord-starlight
+  rolesLoc: roles-req-gold-event-winner
+
+- type: roleRequirementPrototype
+  id: StaffRolesReq
+  roles:
+  - 1294130614508716155 # Staff
+  discord: roles-req-discord-starlight
+  rolesLoc: roles-req-staff-roles
+
+- type: roleRequirementPrototype
+  id: PatronReq
+  roles:
+  - 1381351437665308894 # Patron
+  discord: roles-req-discord-starlight
+  rolesLoc: roles-req-patron-roles
+
+- type: roleRequirementPrototype
+  id: WizdenPatronReq
+  roles:
+  - 714117719623991306 # Fancy Patron
+  - 714115816819392512 # Patron
+  discord: roles-req-discord-wizden
+  rolesLoc: roles-req-patron-roles
+  

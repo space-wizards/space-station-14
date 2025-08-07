@@ -7,6 +7,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Wires;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes; // Starlight
+using Content.Shared.Emag.Components; //Starlight
 
 namespace Content.Shared.Silicons.Laws;
 
@@ -61,16 +62,12 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
                 RemComp<BorgTransponderComponent>(uid);
             }
 
-
-            if (args.EmagComponent.Lawset != null)
-                proto = _prototype.Index<SiliconLawsetPrototype>(args.EmagComponent.Lawset);
-
             if (args.EmagComponent.Components != null)
                 _entMan.AddComponents(uid, args.EmagComponent.Components);
         }
         //#endregion Starlight
 
-            var ev = new SiliconEmaggedEvent(args.UserUid, proto); // Starlight
+        var ev = new SiliconEmaggedEvent(args.UserUid, args.EmagComponent); // Starlight
         RaiseLocalEvent(uid, ref ev);
 
         component.OwnerName = Name(args.UserUid);
@@ -101,4 +98,4 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record struct SiliconEmaggedEvent(EntityUid user, SiliconLawsetPrototype? lawset);
+public record struct SiliconEmaggedEvent(EntityUid user, EmagComponent? emagComp);

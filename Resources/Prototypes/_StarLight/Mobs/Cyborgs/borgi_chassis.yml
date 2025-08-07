@@ -238,6 +238,27 @@
         sprite: Mobs/Pets/corgi.rsi
         state: corgi
       name: borgi
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: CyborgControl
+      transmitFrequencyId: RoboticsConsole
+      savableAddress: false
+    - type: AutomatedTimer
+    - type: ExplodeOnTrigger #bad borgis get exploded.
+    - type: Explosive
+      explosionType: Minibomb
+      deleteAfterExplosion: false # let damage threshold gib the borgi
+      totalIntensity: 200
+      intensitySlope: 100
+      maxIntensity: 60
+      canCreateVacuum: false # its for killing the borg not the station
+    - type: OnUseTimerTrigger
+      delay: 10
+      examinable: false
+      beepSound: # it is LITERALLY a minibomb in their chassis.
+        path: /Audio/Effects/minibombcountdown.ogg
+        params:
+          volume: 12
     - type: IonStormTarget
     - type: Access
       enabled: false
@@ -245,13 +266,46 @@
       - Borg
 
 - type: entity
+  parent: BaseBorgiChassis
+  id: DerelictBorgiChassis
+  name: derelict borgi
+  description: even after all these years. still loves chasing it's tail.
+  components:
+    - type: ContainerFill
+      containers:
+        borg_brain:
+          - PositronicBrain
+        borg_module:
+          - BorgModuleTool
+          - BorgModuleFireExtinguisher
+        ears: 
+          - ClothingHeadsetAssistant
+        head: 
+          - ClothingHeadHelmetEVALarge
+        outerClothing: 
+          - ClothingOuterHardsuitEVA
+        mask:
+          - ClothingMaskBreath
+        suitstorage:
+          - OxygenTankFilled
+        id:
+          - BorgiClearPDA
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHigh
+    - type: StartIonStormed
+      ionStormAmount: 3
+    - type: IonStormTarget
+      chance: 1.0 # just like derelicts. it catches EVERY ionstorm.
+
+- type: entity
   parent: BaseStationBorgiChassis
   id: StationBorgiChassis
-  name: Borgi
-  description: A unusually smart dog, loves stating it's laws.
   components:
-  - type: ReplacementAccent
-    accent: dog
+    - type: ReplacementAccent
+      accent: dog
 
 - type: entity
   parent: BaseStationBorgiChassis

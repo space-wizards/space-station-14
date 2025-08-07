@@ -196,13 +196,13 @@
 
 - type: entity
   parent: BasePDA
-  id: NTCCBlueShieldPDA
-  name: consortium officer's PDA
+  id: NTNCBlueShieldPDA
+  name: naval officer's PDA
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Devices/pda.rsi
   - type: Pda
-    id: NTCCBlueShieldIDCard
+    id: NTNCBlueShieldIDCard
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -225,21 +225,21 @@
 
 - type: entity
   parent: BasePDA
-  id: NTCCCSPDA
-  name: nt cc consortium officer's PDA
+  id: NTNCCSPDA
+  name: nt nc naval officer's PDA
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Devices/pda.rsi
   - type: Pda
-    id: NTCCBlueShieldIDCard
+    id: NTNCBlueShieldIDCard
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
-       pda-ntcc-cs
+       pda-ntnc-cs
   - type: Icon
     sprite: _Starlight/Objects/Devices/pda.rsi
-    state: pda-ntcc-cs
+    state: pda-ntnc-cs
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     preinstalled:
@@ -251,3 +251,14 @@
       - WantedListCartridge
       - LogProbeCartridge
       - AstroNavCartridge
+
+- type: entity
+  parent: ClearPDA
+  id: BorgiClearPDA
+  suffix: Borgi
+  components:
+  - type: Pda
+    id: AssistantDerelictBorgiIDCard
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener
