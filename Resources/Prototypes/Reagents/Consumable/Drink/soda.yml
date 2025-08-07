@@ -66,6 +66,17 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  metabolisms:
+    Poison:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:ReagentThreshold
+            min: 2
+          probability: 0.0002
+          damage:
+            types:
+              Blunt: 1000
 
 - type: reagent
   id: EnergyDrink
