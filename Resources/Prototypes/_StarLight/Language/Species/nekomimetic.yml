@@ -2,7 +2,7 @@
   id: Nekomimetic
   speech:
     color: "#df57aaee"
-    fontId: Manga
+    fontId: Mangat
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
