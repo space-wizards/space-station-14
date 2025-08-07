@@ -855,7 +855,6 @@
           min: 30
         damage:
           groups:
-            Toxin: -0.5
             Brute: 1.5
       - !type:AdjustReagent
         conditions:
@@ -1052,11 +1051,11 @@
         damage:
           types:
             Piercing: -2 # 8 per u
-            Cellular: 0.08 # 0.32 per u, 4.8 for 15u
+            Cellular: 0.06 # 0.24 per u, 3.6 for 15u
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 14
+          min: 15.5
         damage:
           types:
             Blunt: 1 # 4 per u
