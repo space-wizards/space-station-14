@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SaphireLattice
-  changes:
-  - message: Steel sheets no longer have unintuitively wasteful plating placement
-      that can be done with steel tiles instead
-    type: Remove
-  id: 8322
-  time: '2025-04-23T11:08:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33443
 - author: ArchRBX
   changes:
   - message: pAI's can now install a variety of useful software through their new
@@ -3902,3 +3894,10 @@
   id: 8834
   time: '2025-08-06T20:14:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39379
+- author: Thinbug0
+  changes:
+  - message: New onion mutation, Bloonions! floating balloon-like onions.
+    type: Add
+  id: 8835
+  time: '2025-08-07T01:51:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33375
