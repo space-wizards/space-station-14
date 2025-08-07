@@ -15,8 +15,7 @@ public sealed partial class ImageOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-    public readonly List<(ShaderInstance, ImageShaderValues)> TupleOfImageShaders = new();
-
+    public readonly List<(ShaderInstance Instance, ImageShaderValues ShaderValue)> ImageShaders = new();
     public ImageOverlay()
     {
         IoCManager.InjectDependencies(this);
@@ -24,7 +23,7 @@ public sealed partial class ImageOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        foreach (var (shaderInstance, shaderValues) in TupleOfImageShaders)
+        foreach (var (shaderInstance, shaderValues) in ImageShaders)
         {
             var handle = args.WorldHandle;
 
