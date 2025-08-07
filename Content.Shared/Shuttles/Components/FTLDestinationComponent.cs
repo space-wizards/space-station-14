@@ -31,8 +31,8 @@ public sealed partial class FTLDestinationComponent : Component
     public bool RequireCoordinateDisk = false;
 
     /// <summary>
-    /// If true, this will prevent FTL jumps that are made from this destination
-    /// and are to this destination. (That is, short distance hops.)
+    /// If true, this will prevent sub-map FTL jumps. That is, it prevents FTL
+    /// jumping to this map if you are already in that map.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool DisallowCoordinateFTLJumps;
