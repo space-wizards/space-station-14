@@ -2,6 +2,7 @@ using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Overlays;
 
@@ -27,7 +28,7 @@ public sealed partial class ImageOverlay : Overlay
         {
             var handle = args.WorldHandle;
 
-            shaderInstance.SetParameter("OverlayTexture", _resourceCache.GetTexture(shaderValues.ResPath));
+            shaderInstance.SetParameter("OverlayTexture", _resourceCache.GetTexture(shaderValues.PathToOverlayImage));
             shaderInstance.SetParameter("AdditionalColor", shaderValues.AdditionalColorOverlay);
 
             handle.UseShader(shaderInstance);
@@ -39,6 +40,6 @@ public sealed partial class ImageOverlay : Overlay
 
 public struct ImageShaderValues()
 {
-    public string ResPath = "";
+    public ResPath PathToOverlayImage = default!;
     public Color AdditionalColorOverlay = new(0, 0, 0, 0);
 }

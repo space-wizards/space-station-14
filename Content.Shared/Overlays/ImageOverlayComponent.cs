@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Overlays;
 
@@ -12,7 +13,7 @@ public sealed partial class ImageOverlayComponent : Component
     /// Path to image overlayed on the screen.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public string ResPath = "";
+    public ResPath PathToOverlayImage = default!;
 
     /// <summary>
     /// The additional Color that can be overlayed over whole screen.

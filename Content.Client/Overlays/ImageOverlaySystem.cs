@@ -34,7 +34,7 @@ public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlay
         {
             var values = new ImageShaderValues
             {
-                ResPath = comp.ResPath,
+                PathToOverlayImage = comp.PathToOverlayImage,
                 AdditionalColorOverlay = comp.AdditionalColorOverlay
             };
             _overlay.TupleOfImageShaders.Add((_prototypeManager.Index(ImageShader).InstanceUnique(), values));
