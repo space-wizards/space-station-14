@@ -17,7 +17,7 @@
   category: Quirks
   special:
   - !type:AddComponentSpecial
-    component:
+    components:
     - type: LightweightDrunk
       boozeStrengthMultiplier: 2
 
@@ -28,5 +28,5 @@
   category: Quirks
   special:
   - !type:AddComponentSpecial
-    component:
+    components:
     - type: Snoring
