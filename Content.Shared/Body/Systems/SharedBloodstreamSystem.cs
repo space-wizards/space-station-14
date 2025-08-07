@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Drunk;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.FixedPoint;
@@ -509,5 +510,28 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         bloodData.Add(dnaData);
 
         return bloodData;
+    }
+
+    public void CopyComponent(Entity<BloodstreamComponent?> source, EntityUid target)
+    {
+        if (!Resolve(source, ref source.Comp))
+            return;
+
+        var targetComp = EnsureComp<BloodstreamComponent>(target);
+        targetComp.BleedReductionAmount = source.Comp.BleedReductionAmount;
+        targetComp.MaxBleedAmount = source.Comp.MaxBleedAmount;
+        targetComp.BloodlossThreshold = source.Comp.BloodlossThreshold;
+        targetComp.BloodlossDamage = new DamageSpecifier(source.Comp.BloodlossDamage);
+        targetComp.BloodlossHealDamage = new DamageSpecifier(source.Comp.BloodlossHealDamage);
+        targetComp.BloodRefreshAmount = source.Comp.BloodRefreshAmount;
+        targetComp.BleedPuddleThreshold = source.Comp.BleedPuddleThreshold;
+        targetComp.DamageBleedModifiers = source.Comp.DamageBleedModifiers;
+        targetComp.InstantBloodSound = source.Comp.InstantBloodSound;
+        targetComp.BloodHealedSound = source.Comp.BloodHealedSound;
+        targetComp.BloodHealedSoundThreshold = source.Comp.BloodHealedSoundThreshold;
+
+        ChangeBloodReagent(target, source.Comp.BloodReagent);
+
+        Dirty(target, targetComp);
     }
 }

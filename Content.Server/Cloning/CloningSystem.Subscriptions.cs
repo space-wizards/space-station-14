@@ -1,5 +1,7 @@
 using Content.Server.Forensics;
 using Content.Server.Speech.EntitySystems;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -32,6 +34,7 @@ public sealed partial class CloningSystem
     [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly VocalSystem _vocal = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
 
     public override void Initialize()
     {
@@ -54,6 +57,7 @@ public sealed partial class CloningSystem
         SubscribeLocalEvent<StorageComponent, CloningEvent>(OnCloneStorage);
         SubscribeLocalEvent<InventoryComponent, CloningEvent>(OnCloneInventory);
         SubscribeLocalEvent<MovementSpeedModifierComponent, CloningEvent>(OnCloneInventory);
+        SubscribeLocalEvent<BloodstreamComponent, CloningEvent>(OnCloneBloodstream);
     }
 
     private void OnCloneItemStack(Entity<StackComponent> ent, ref CloningItemEvent args)
@@ -126,5 +130,13 @@ public sealed partial class CloningSystem
             return;
 
         _movementSpeedModifier.CopyComponent(ent.AsNullable(), args.CloneUid);
+    }
+
+    private void OnCloneBloodstream(Entity<BloodstreamComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        _bloodstream.CopyComponent(ent.AsNullable(), args.CloneUid);
     }
 }
