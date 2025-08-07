@@ -1,0 +1,44 @@
+- type: entity
+  id: BaseBorgModulePaperwork
+  parent: BaseBorgModule
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - BorgModuleCommand
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#616161"
+      - state: base-module-inhand-left
+        color: "#067aa8"
+      - state: base-stripes-inhand-left
+        color: "#ffffff"
+      right:
+      - state: base-icon-inhand-right
+        color: "#616161"
+      - state: base-module-inhand-right
+        color: "#067aa8"
+      - state: base-stripes-inhand-right
+        color: "#ffffff"
+
+- type: entity
+  id: BorgModulePaperwork
+  parent: [ BaseBorgModulePaperwork, BaseProviderBorgModule ]
+  name: paperwork cyborg module
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: command
+    - state: icon-paperwork
+  - type: ItemBorgModule
+    freeHands: 5
+    items:
+    - LuxuryPen
+    - RubberStampApproved
+    - RubberStampDenied
+    - HandLabeler
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }

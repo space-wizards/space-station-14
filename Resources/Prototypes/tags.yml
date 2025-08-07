@@ -363,7 +363,7 @@
 
 - type: Tag
   id: CluwneBeastWearable
-  
+
 - type: Tag
   id: Cola
 
@@ -712,7 +712,7 @@
 
 - type: Tag
   id: GrenadeFlashBang
-  
+
 - type: Tag
   id: GygaxArmor
 
@@ -919,7 +919,7 @@
 
 - type: Tag
   id: LightBulb
-  
+
 - type: Tag
   id: Lighters
 
@@ -1368,7 +1368,7 @@
 
 - type: Tag
   id: IndustrialMech
-  
+
 - type: Tag
   id: IgnoreMelee
 

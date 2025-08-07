@@ -1,0 +1,8 @@
+- type: entity
+  id: BorgChassisPurrfus
+  parent: BorgChassisSelectable
+  name: purrfus cyborg
+  components:
+  - type: TextToSpeech
+  - type: BorgSwitchableType
+    selectedBorgType: purrfus

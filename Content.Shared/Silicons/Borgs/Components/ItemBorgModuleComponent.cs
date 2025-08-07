@@ -29,6 +29,18 @@ public sealed partial class ItemBorgModuleComponent : Component
     public int HandCounter;
 
     /// <summary>
+    /// The number of free hands to add to a borg module (Starlight)
+    /// </summary>
+    [DataField]
+    public int FreeHands = 0;
+
+    /// <summary>
+    /// List of provided free hand IDs (Starlight)
+    /// </summary>
+    [DataField]
+    public List<string> ProvidedFreeHands = new();
+
+    /// <summary>
     /// Whether or not the items have been created and stored in <see cref="ProvidedContainer"/>
     /// </summary>
     [DataField("itemsCrated")]

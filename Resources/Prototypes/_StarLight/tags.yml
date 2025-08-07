@@ -17,6 +17,9 @@
   id: BladeSteel
 
 - type: Tag
+  id: BorgModuleCommand
+
+- type: Tag
   id: CantInteract
 
 - type: Tag
