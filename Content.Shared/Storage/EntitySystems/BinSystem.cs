@@ -58,11 +58,11 @@ public sealed class BinSystem : EntitySystem
         foreach (var id in entity.Comp.InitialContents)
         {
             var ent = Spawn(id, xform.Coordinates);
-            if (!TryInsertIntoBin(entity, ent))
-            {
-                Log.Error($"Entity {ToPrettyString(ent)} was unable to be initialized into bin {ToPrettyString(entity)}");
-                return;
-            }
+            if (TryInsertIntoBin(entity, ent))
+                continue;
+
+            Log.Error($"Entity {ToPrettyString(ent)} was unable to be initialized into bin {ToPrettyString(entity)}");
+            return;
         }
     }
 
@@ -190,7 +190,6 @@ public sealed class BinSystem : EntitySystem
             return false;
 
         removed = remove;
-        entity.Comp.Items.Remove(remove);
         Dirty(entity);
 
         if (user != null)
