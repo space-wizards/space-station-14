@@ -10666,5 +10666,12 @@ Entries:
   id: 1467
   time: '2025-08-07T20:31:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1224
+- author: Quini98
+  changes:
+  - message: Added Lottery Shuttle (Admeme)
+    type: Add
+  id: 1468
+  time: '2025-08-07T20:33:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1248
 Order: -1
 
