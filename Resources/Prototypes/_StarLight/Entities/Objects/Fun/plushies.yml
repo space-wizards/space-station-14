@@ -1377,7 +1377,6 @@
           dataset: PlushiesPoley
         - type: TextToSpeech
           voice: neon
-
 - type: entity
   parent: BasePlushie
   id: PlushieGalio #Weh!
