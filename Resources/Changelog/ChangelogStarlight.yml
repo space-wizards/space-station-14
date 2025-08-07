@@ -10837,5 +10837,13 @@ Entries:
   id: 1491
   time: '2025-08-07T22:35:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1254
+- author: RoadTrain
+  changes:
+  - message: Fixes the Sayable component, which resulted in law 0 being sayable until
+      emagged.
+    type: Fix
+  id: 1492
+  time: '2025-08-07T22:37:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1251
 Order: -1
 
