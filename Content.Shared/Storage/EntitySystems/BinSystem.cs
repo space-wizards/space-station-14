@@ -72,6 +72,7 @@ public sealed class BinSystem : EntitySystem
             return;
 
         ent.Comp.Items.Add(args.Entity);
+        Dirty(ent);
     }
 
     private void OnEntRemoved(Entity<BinComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -80,6 +81,7 @@ public sealed class BinSystem : EntitySystem
             return;
 
         ent.Comp.Items.Remove(args.Entity);
+        Dirty(ent);
     }
 
     private void OnInteractHand(Entity<BinComponent> entity, ref InteractHandEvent args)
@@ -100,12 +102,22 @@ public sealed class BinSystem : EntitySystem
             return;
 
         var user = args.User;
-        if (args.Using == null)
+        if (args.Using != null && CanInsertIntoBin(entity, args.Using.Value))
         {
-            var subject = entity.Comp.Items.LastOrDefault();
+            var used = args.Using.Value;
             AlternativeVerb verb = new()
             {
-
+                Act = () => TryInsertIntoBin(entity, used, user),
+                Icon = entity.Comp.InsertIcon,
+                Text = Loc.GetString("place-item-verb-text", ("subject", used)),
+                Priority = 2
+            };
+            args.Verbs.Add(verb);
+        }
+        else if (TryGetLastItem(entity, out var subject))
+        {
+            AlternativeVerb verb = new()
+            {
                 Act = () =>
                 {
                     if (TryRemoveFromBin(entity, out var toGrab, user))
@@ -113,21 +125,6 @@ public sealed class BinSystem : EntitySystem
                 },
                 Icon = entity.Comp.RemoveIcon,
                 Text = Loc.GetString("take-item-verb-text", ("subject", subject)),
-                Priority = 2
-            };
-            args.Verbs.Add(verb);
-        }
-        else if (CanInsertIntoBin(entity, args.Using.Value))
-        {
-            var used = args.Using.Value;
-            AlternativeVerb verb = new()
-            {
-                Act = () =>
-                {
-                    TryInsertIntoBin(entity, used, user);
-                },
-                Icon = entity.Comp.InsertIcon,
-                Text = Loc.GetString("place-item-verb-text", ("subject", used)),
                 Priority = 2
             };
             args.Verbs.Add(verb);
@@ -148,7 +145,7 @@ public sealed class BinSystem : EntitySystem
         if (entity.Comp.Items.Count >= entity.Comp.MaxItems)
             return false;
 
-        return !_whitelistSystem.IsWhitelistFail(entity.Comp.Whitelist, toInsert);
+        return _whitelistSystem.IsWhitelistPassOrNull(entity.Comp.Whitelist, toInsert);
     }
 
     /// <summary>
@@ -164,11 +161,28 @@ public sealed class BinSystem : EntitySystem
             return false;
 
         _container.Insert(toInsert, entity.Comp.ItemContainer);
-        Dirty(entity);
 
         if (user != null)
-            _admin.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into bin {ToPrettyString(entity)}.");
+        {
+            _admin.Add(LogType.Pickup,
+                LogImpact.Low,
+                $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into bin {ToPrettyString(entity)}.");
+        }
 
+        return true;
+    }
+
+    private bool TryGetLastItem(Entity<BinComponent> entity, [NotNullWhen(true)] out EntityUid? toRemove)
+    {
+        toRemove = null;
+        if (entity.Comp.Items.Count == 0)
+            return false;
+
+        var remove = entity.Comp.Items.Last();
+        if (!_container.Remove(remove, entity.Comp.ItemContainer))
+            return false;
+
+        toRemove = remove;
         return true;
     }
 
@@ -179,21 +193,19 @@ public sealed class BinSystem : EntitySystem
     /// <param name="removed">Item we removed.</param>
     /// <param name="user">Entity that is trying to remove from the bin.</param>
     /// <returns>Returns false if removal was successful.</returns>
-    public bool TryRemoveFromBin(Entity<BinComponent> entity, [NotNullWhen(true)]out EntityUid? removed, EntityUid? user = null)
+    public bool TryRemoveFromBin(Entity<BinComponent> entity, [NotNullWhen(true)] out EntityUid? removed, EntityUid? user = null)
     {
-        removed = null;
-        if (entity.Comp.Items.Count == 0)
+        if (!TryGetLastItem(entity, out removed))
             return false;
-
-        var remove = entity.Comp.Items.LastOrDefault();
-        if (!_container.Remove(remove, entity.Comp.ItemContainer))
-            return false;
-
-        removed = remove;
-        Dirty(entity);
 
         if (user != null)
-            _admin.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(user):player} removed {ToPrettyString(remove)} from bin {ToPrettyString(entity)}.");
+        {
+            _admin.Add(
+                LogType.Pickup,
+                LogImpact.Low,
+                $"{ToPrettyString(user):player} removed {ToPrettyString(removed)} from bin {ToPrettyString(entity)}.");
+        }
+
         return true;
     }
 }
