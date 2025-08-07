@@ -45,19 +45,31 @@
 #    stock: 3
 #  - !type:BuyerAccessCondition
 
+#- type: listing
+#  id: VendorMiningClothingOuterHardsuitLuxury
+#  productEntity: ClothingOuterHardsuitLuxury
+#  cost:
+#    SalvageTicket: 150
+#  categories:
+#  - MiningEquipment
+#  conditions:
+#  - !type:BuyerAccessCondition
+
 - type: listing
-  id: VendorMiningClothingOuterHardsuitLuxury
-  productEntity: ClothingOuterHardsuitLuxury
+  id: VendorMiningClothingOuterHardsuitMAHS
+  productEntity: ClothingOuterHardsuitMAHS
   cost:
-    SalvageTicket: 150
+    SalvageTicket: 1400
   categories:
   - MiningEquipment
   conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
   - !type:BuyerAccessCondition
 
 - type: listing
-  id: VendorMiningClothingOuterHardsuitSalvage
-  productEntity: ClothingOuterHardsuitSalvage
+  id: VendorMiningClothingOuterHardsuitMining
+  productEntity: ClothingOuterHardsuitMining
   cost:
     SalvageTicket: 250
   categories:

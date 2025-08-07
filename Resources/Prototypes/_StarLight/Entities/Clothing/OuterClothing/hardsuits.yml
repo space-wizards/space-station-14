@@ -103,7 +103,7 @@
   parent: [ ClothingOuterHardsuitBase, BaseSalvageContraband ]
   id: ClothingOuterHardsuitMercenary
   name: mercenary hardsuit
-  description: It's a hardsuit. It could stop a bullet. It's sealed with top of the line duct tape. 
+  description: It's a hardsuit. It could stop a bullet. It's sealed with top of the line duct tape.
   components:
     - type: Sprite
       sprite: _Starlight/Clothing/OuterClothing/Hardsuits/mercenary.rsi
@@ -250,8 +250,8 @@
             - PowerCell
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitInfiltration
-    
-    
+
+
 #CCNT Consortium medics
 - type: entity
   parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieMedic ] #sl Change
@@ -354,3 +354,99 @@
     sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLuxmax
+
+#Mining Specialist MAHS - DOTS why does jetpack inhand appear when holding this?
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseSalvageContraband ]
+  id: ClothingOuterHardsuitMAHS
+  name: miner's assistive hardsuit
+  description: A jetpack-equipped hardsuit designed for mining operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/maxim.rsi # DOTS Still need a sprite for this
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/maxim.rsi # DOTS still need a sprite for this
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.7
+        Radiation: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMAHS
+  - type: Jump
+    action: JumpJet
+    isEquipment: true
+  - type: UserInterface
+    interfaces:
+      enum.SharedGasTankUiKey.Key:
+        type: GasTankBoundUserInterface
+  - type: UseDelay
+    delays:
+      gasTank:
+        length: 1.0
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 13 minutes of thrust
+      volume: 5
+      temperature: 293.15
+      moles:
+      - 1.025689525 # oxygen
+      - 1.025689525 # nitrogen
+  - type: Jetpack
+    moleUsage: 0.00085
+
+#Mining Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseCargoContraband]
+  id: ClothingOuterHardsuitMining
+  name: mining hardsuit
+  description: A special suit that protects against hazardous, low pressure environments encountered during space mining.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/mining.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/mining.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.2
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.75
+        Piercing: 0.75
+        Heat: 0.7
+        Radiation: 0.3
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.80
+    sprintModifier: 0.80
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMining
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
