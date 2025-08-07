@@ -1,10 +1,8 @@
-# Spoken by Shadowkins.
 - type: language
   id: Marish
   speech:
     color: "#be3cc5"
     fontId: Lymphatic
-    empathySpeech: false
     speechVerbOverrides:
     - chat-speech-verb-marish
   obfuscation:

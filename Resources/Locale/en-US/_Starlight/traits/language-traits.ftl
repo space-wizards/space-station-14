@@ -11,6 +11,4 @@ trait-language-foreigner-desc =
     You have a translator to help you with your understanding and speaking, make sure to keep it charged.
 
 trait-language-signlanguage-name = Sign Language
-trait-language-signlanguage-desc =
-    The use of body language, hand signs, and other forms of dexterous movements to get your point across.
-    If you are mute for any reason, you can still communicate with sign language.
+trait-language-signlanguage-desc = A sign language commonly used for those who are deaf or mute. Especially popular with spacers, due to practicality in airless environments.

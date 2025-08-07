@@ -6,7 +6,7 @@
     - "*incomprehensible*" # Never actually used.
 
 - type: language
-  id: RobotTalk
+  id: Machine
   speech:
     fontId: Monospace
   obfuscation:

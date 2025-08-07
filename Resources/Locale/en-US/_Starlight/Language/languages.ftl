@@ -2,10 +2,31 @@ language-Universal-name = Universal
 language-Universal-description = What are you?
 
 language-GalacticCommon-name = Galactic common
-language-GalacticCommon-description = Originally a carefully crafted fusion of various Human and Skrell dialects, Galactic Common is the most commonly spoken language in the Sector, and incorporates influences from nearly every known sapient species.
+language-GalacticCommon-description = The common galactic tongue, engineered for cross-species communication. Every spacer there is knows this!
+
+language-Sign-name = Galactic Sign Language
+language-Sign-description = A sign language commonly used for those who are deaf or mute. Especially popular with spacers, due to practicality in airless environments.
 
 language-SolCommon-name = Sol Common
 language-SolCommon-description = An artifical language designed by the Trans-Solar Federation for ease of use and concise communication.
 
 language-Marish-name = Marish
-language-Marish-description =  An inherently empathetic language, conveying emotions with a single word; spoken effortlessly by Shadekins, though nearly impossible to learn or replicate.
+language-Marish-description = Where shadekin have a language rooted in empathy, there are still subtle tones and syllables that are as delicate as the emotions that shadekin normally communicate with.
+
+language-Machine-name = Encoded Audio Language
+language-Machine-description = An efficient language of encoded tones developed by synthetics and cyborgs.
+
+language-Bubblish-name = Bubblish
+language-Bubblish-description = The language of slimes. It's a mixture of bubbling noises and pops. Very difficult to speak without mechanical aid for humans.
+
+language-Canilunzt-name = Canilunzt
+language-Canilunzt-description = The guttural language spoken and utilized by the inhabitants of Vazzend system, composed of growls, barks, yaps, and heavy utilization of ears and tail movements. Vulpkanin speak this language with ease.
+
+language-Moffic-name = Moffic
+language-Moffic-description = The language of the Mothpeople borders on complete unintelligibility.
+
+language-Nekomimetic-name = Nekomimetic
+language-Nekomimetic-description = To the casual observer, this language is an incomprehensible mess of broken Japanese. To the felionoid, it's somehow comprehensible.
+
+language-Draconic-name = Draconic
+language-Draconic-description = The common language of lizard-people, composed of sibilant hisses and rattles.
