@@ -1430,3 +1430,42 @@
       - !type:AdjustReagent
         reagent: MindbreakerToxin
         amount: -3.0
+        
+- type: reagent
+  id: Cryolysin
+  name: Cryolysin
+  group: Medicine
+  desc: "An experimental antithermal agent that disrupts the body's ability to retain heat, accelerating hypothermic conditions and neutralizing heat burns throughout the body."
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: medicine
+  color: "#8a24a6"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: -3
+            Cold: 1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 14
+        damage:
+          types:
+            Cold: 5
+      - !type:AdjustReagent
+        reagent: Leporazine
+        amount: -0.5
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          max: 2000
+        amount: -200000 # thermal energy, not temperature!
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "leporazine-effect-temperature-adjusting" ]
+        probability: 0.2
+
+        

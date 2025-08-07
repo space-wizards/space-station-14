@@ -629,3 +629,15 @@
       amount: 1
   products:
     Haloperidol: 5
+
+- type: reaction
+  id: Cryolysin
+  reactants:
+    Sigynate:
+      amount: 1
+    Pyrazine:
+      amount: 2
+    Epinephrine:
+      amount: 1
+  products:
+    Cryolysin: 4
