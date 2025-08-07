@@ -3,26 +3,21 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Overlays;
 
 /// <summary>
-/// Adds a rectangular shader when wearing an entity with this component.
+/// Adds a image basedd shader when wearing an entity with this component.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ImageOverlayComponent : Component
 {
     /// <summary>
-    /// The alpha inside the rectangle.
+    /// Path to image overlayed on the screen.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public string PathToOverlayImage = "";
+    public string ResPath = "";
 
     /// <summary>
-    /// The alpha inside the rectangle.
+    /// The additional Color that can be overlayed over whole screen.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float AdditionalOverlayAlpha = 0f;
-
-    /// <summary>
-    /// Color of the shader being applied.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public Color AdditionalColor = Color.Black;
+    public Color AdditionalColorOverlay = new(0,0,0,0);
 }
+

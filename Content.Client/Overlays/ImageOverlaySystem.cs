@@ -28,17 +28,16 @@ public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlay
     {
         base.UpdateInternal(component);
 
-        _overlay.ImageShaders.Clear();
+        _overlay.TupleOfImageShaders.Clear();
 
         foreach (var comp in component.Components)
         {
             var values = new ImageShaderValues
             {
-                PathToOverlayImage = comp.PathToOverlayImage,
-                AdditionalOverlayAlpha = comp.AdditionalOverlayAlpha,
-                AdditionalColor = comp.AdditionalColor
+                ResPath = comp.ResPath,
+                AdditionalColorOverlay = comp.AdditionalColorOverlay
             };
-            _overlay.ImageShaders.Add((_prototypeManager.Index(ImageShader).InstanceUnique(), values));
+            _overlay.TupleOfImageShaders.Add((_prototypeManager.Index(ImageShader).InstanceUnique(), values));
         }
 
         _overlayMan.AddOverlay(_overlay);
@@ -48,7 +47,7 @@ public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlay
     {
         base.DeactivateInternal();
 
-        _overlay.ImageShaders.Clear();
+        _overlay.TupleOfImageShaders.Clear();
 
         _overlayMan.RemoveOverlay(_overlay);
     }

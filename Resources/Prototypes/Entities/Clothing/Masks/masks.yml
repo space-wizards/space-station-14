@@ -722,9 +722,8 @@
     tags:
     - WhitelistChameleon
   - type: ImageOverlay
-    pathToOverlayImage: "/Textures/Clothing/Head/Welding/weldingTexture.png"
-    additionalOverlayAlpha: 0.3
-    additionalColor: "#000000"
+    resPath: "/Textures/Clothing/Head/Welding/weldingTexture.png"
+    additionalColorOverlay: "#00000050"
 
 # Entity tables
 - type: entityTable

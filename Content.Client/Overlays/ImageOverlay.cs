@@ -11,13 +11,11 @@ namespace Content.Client.Overlays;
 /// </summary>
 public sealed partial class ImageOverlay : Overlay
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-    public readonly List<(ShaderInstance, ImageShaderValues)> ImageShaders = new();
+    public readonly List<(ShaderInstance, ImageShaderValues)> TupleOfImageShaders = new();
 
     public ImageOverlay()
     {
@@ -26,27 +24,14 @@ public sealed partial class ImageOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var playerEntity = _playerManager.LocalSession?.AttachedEntity;
-
-        if (playerEntity == null)
-            return;
-
-        // TODO check if needed
-        if (!_entityManager.TryGetComponent<EyeComponent>(playerEntity, out var eye))
-            return;
-
-        foreach (var (shader, values) in ImageShaders)
+        foreach (var (shaderInstance, shaderValues) in TupleOfImageShaders)
         {
             var handle = args.WorldHandle;
 
-            var texture = _resourceCache.GetTexture(values.PathToOverlayImage);
-            shader.SetParameter("OverlayTexture", texture);
+            shaderInstance.SetParameter("OverlayTexture", _resourceCache.GetTexture(shaderValues.ResPath));
+            shaderInstance.SetParameter("AdditionalColor", shaderValues.AdditionalColorOverlay);
 
-            Color color = values.AdditionalColor;
-            color.A = values.AdditionalOverlayAlpha;
-            shader.SetParameter("AdditionalColor", color);
-
-            handle.UseShader(shader);
+            handle.UseShader(shaderInstance);
             handle.DrawRect(args.WorldBounds, Color.White);
             handle.UseShader(null);
         }
@@ -55,7 +40,6 @@ public sealed partial class ImageOverlay : Overlay
 
 public struct ImageShaderValues()
 {
-    public string PathToOverlayImage = "";
-    public float AdditionalOverlayAlpha = 0;
-    public Color AdditionalColor = Color.Black;
+    public string ResPath = "";
+    public Color AdditionalColorOverlay = new(0, 0, 0, 0);
 }

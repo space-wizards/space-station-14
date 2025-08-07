@@ -24,9 +24,8 @@
     slots:
     - Snout
   - type: ImageOverlay
-    pathToOverlayImage: "/Textures/Clothing/Head/Welding/weldingTexture.png"
-    additionalOverlayAlpha: 0.6
-    additionalColor: "#000000"
+    resPath: "/Textures/Clothing/Head/Welding/weldingTexture.png"
+    additionalColorOverlay: "#000000A0"
 
 - type: entity
   parent: WeldingMaskBase
