@@ -161,7 +161,7 @@
   rules:
   # - DummyNonAntagChance 🌟Starlight🌟
   - Traitor
-  - SubGamemodesRule
+  - SubGamemodesRuleNoChangelings #Starlight
   - BasicStationEventScheduler
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
