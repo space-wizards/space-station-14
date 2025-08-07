@@ -20,6 +20,7 @@ using Content.Server.Spreader;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Server.Traits.Assorted;
+using Content.Server.Vocalization.Components;
 using Content.Server.Zombies;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -749,6 +750,7 @@ public sealed class EntityEffectSystem : EntitySystem
         // Let affected entities speak normally to make this effect different from, say, the "random sentience" event
         // This also works on entities that already have a mind
         // We call this before the mind check to allow things like player-controlled mice to be able to benefit from the effect
+        RemComp<AnimalVocalizerComponent>(uid);
         RemComp<ReplacementAccentComponent>(uid);
         RemComp<MonkeyAccentComponent>(uid);
 
