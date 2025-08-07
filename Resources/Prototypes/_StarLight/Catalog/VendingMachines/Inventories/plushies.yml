@@ -554,6 +554,17 @@
       stock: 1
 
 - type: listing
+  id: VendorPlushieGalio
+  productEntity: PlushieGalio
+  cost:
+    NTCredit: 20
+  categories:
+  - SLCrew
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
   id: VendorPlushieRedwoods
   productEntity: PlushieRedwoods
   cost:
