@@ -423,7 +423,7 @@ namespace Content.Shared.Stacks
                 return;
 
             // We haven't eaten the whole stack yet or are unable to eat it completely.
-            if (eaten.Comp.Count > 0 || eaten.Comp.Lingering)
+            if (eaten.Comp.Count > 0)
             {
                 args.Refresh = true;
                 return;
