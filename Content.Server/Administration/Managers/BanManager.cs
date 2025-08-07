@@ -336,6 +336,12 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     }
     #endregion
 
+    /// <summary>
+    /// Checks if any roles on the list are banned for the specified player.
+    /// </summary>
+    /// <param name="player">The player.</param>
+    /// <param name="roles">A string list of role prototype IDs, with job/antag prefix.</param>
+    /// <returns>True if any of the roles are banned.</returns>>
     public bool IsRoleBanned(ICommonSession player, List<string> roles)
     {
         var bans = GetRoleBans(player.UserId);
@@ -345,13 +351,25 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
         foreach (var role in roles)
         {
-            if (bans.Contains(role))
+            var roleId = role;
+            if (_prototypeManager.TryIndex<JobPrototype>(role, out _ ))
+                roleId = JobPrefix + role;
+            else if (_prototypeManager.TryIndex<AntagPrototype>(role, out _ ))
+                roleId = AntagPrefix + role;
+
+            if (bans.Contains(roleId))
                 return true;
         }
 
         return false;
     }
 
+    /// <summary>
+    /// Checks if any roles on the list are banned for the specified player.
+    /// </summary>
+    /// <param name="player">The player.</param>
+    /// <param name="prototypes">A list of antag prototype IDs.</param>
+    /// <returns>True if any of the roles are banned.</returns>>
     public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> prototypes)
     {
         var list = new List<string>();

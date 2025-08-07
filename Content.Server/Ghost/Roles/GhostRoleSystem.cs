@@ -58,9 +58,6 @@ public sealed class GhostRoleSystem : EntitySystem
     private uint _nextRoleIdentifier;
     private bool _needsUpdateGhostRoleCount = true;
 
-    private const string JobPrefix = "Job:";
-    private const string AntagPrefix = "Antag:";
-
     private readonly Dictionary<uint, Entity<GhostRoleComponent>> _ghostRoles = new();
     private readonly Dictionary<uint, Entity<GhostRoleRaffleComponent>> _ghostRoleRaffles = new();
 
@@ -511,17 +508,16 @@ public sealed class GhostRoleSystem : EntitySystem
                     continue;
 
                 if (comp.JobPrototype is not null)
-                    list.Add(JobPrefix + comp.JobPrototype);
-
-                if (comp.AntagPrototype is not null)
-                    list.Add(AntagPrefix + comp.AntagPrototype);
+                    list.Add(comp.JobPrototype);
+                else if (comp.AntagPrototype is not null)
+                    list.Add(comp.AntagPrototype);
             }
 
             return list;
         }
 
         if(roleEnt.Comp.JobProto is not null)
-            list.Add(JobPrefix + roleEnt.Comp.JobProto);
+            list.Add(roleEnt.Comp.JobProto);
 
         // If there is no mind, check the mindRole prototypes
         foreach (var proto in roleEnt.Comp.MindRoles)
@@ -532,10 +528,9 @@ public sealed class GhostRoleSystem : EntitySystem
             var roleComp = (MindRoleComponent)comp;
 
             if (roleComp.AntagPrototype is not null)
-                list.Add(AntagPrefix + roleComp.AntagPrototype);
-
-            if (roleComp.JobPrototype is not null)
-                list.Add(JobPrefix + roleComp.JobPrototype);
+                list.Add(roleComp.AntagPrototype);
+            else if (roleComp.JobPrototype is not null)
+                list.Add(roleComp.JobPrototype);
         }
 
         return list;

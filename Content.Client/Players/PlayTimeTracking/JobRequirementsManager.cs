@@ -97,7 +97,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     /// </summary>
     public bool IsAllowed(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
-        var list = new List<string>{JobPrefix + job.ID};
+        var list = new List<string>{job.ID};
         return IsAllowed(list, profile, out reason);
     }
 
@@ -106,7 +106,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     /// </summary>
     public bool IsAllowed(AntagPrototype antag, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
-        var list = new List<string>{AntagPrefix + antag.ID};
+        var list = new List<string>{antag.ID};
         return IsAllowed(list, profile, out reason);
     }
 
@@ -120,20 +120,23 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
 
         foreach (var proto in prototypes)
         {
+            var prefixedProto = proto;
+
+            JobPrototype? job = null;
+            AntagPrototype? antag = null;
+
+            // Forcing types for sorting
+            if (_prototypes.TryIndex<JobPrototype>(proto, out job))
+                prefixedProto = JobPrefix + proto;
+            else if (_prototypes.TryIndex<AntagPrototype>(proto, out antag))
+                prefixedProto = AntagPrefix + proto;
+
             // Check the player's bans
-            if (_roleBans.Contains(proto))
+            if (_roleBans.Contains(prefixedProto))
             {
                 reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
                 return false;
             }
-            JobPrototype? job = null;
-            AntagPrototype? antag = null;
-
-            // Slightly cursed, but the prefixes need to be removed for the next part. And at least we know the types.
-            if (proto.StartsWith(JobPrefix, StringComparison.Ordinal))
-                _prototypes.TryIndex<JobPrototype>(proto[JobPrefix.Length..], out job);
-            else if (proto.StartsWith(AntagPrefix, StringComparison.Ordinal))
-                _prototypes.TryIndex<AntagPrototype>(proto[AntagPrefix.Length..], out antag);
 
             //TODO antagPrototype whitelist check?
             if (job is not null && !CheckWhitelist(job, out reason))
