@@ -107,7 +107,13 @@
     count: 6
 
 - type: localizedDataset
+  id: PlushiesGalio
+  values:
+    prefix: plushie-galio-
+    count: 7
+
+- type: localizedDataset
   id: PlushiesRedwoods
   values:
     prefix: plushie-redwoods-
-    count: 6
+    count: 8
