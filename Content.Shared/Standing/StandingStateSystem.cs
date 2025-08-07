@@ -122,7 +122,7 @@ public sealed class StandingStateSystem : EntitySystem
         {
             foreach (var (key, fixture) in fixtureComponent.Fixtures)
             {
-                if ((fixture.CollisionMask & StandingCollisionLayer) == 0)
+                if ((fixture.CollisionMask & StandingCollisionLayer) == 0 || !fixture.Hard)
                     continue;
 
                 standingState.ChangedFixtures.Add(key);
@@ -177,7 +177,7 @@ public sealed class StandingStateSystem : EntitySystem
         {
             foreach (var key in standingState.ChangedFixtures)
             {
-                if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
+                if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture) && fixture.Hard)
                     _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask | StandingCollisionLayer, fixtureComponent);
             }
         }
