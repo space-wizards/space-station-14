@@ -1,4 +1,5 @@
 using Content.Shared.Chat;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Starlight.Language;
@@ -8,6 +9,15 @@ public sealed partial class LanguagePrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    [DataField("icon")]
+    public ProtoId<JobIconPrototype> Icon = "LanguageIconUnknown";
+
+    [DataField("iconUnderstood")]
+    public bool IconVisibleIfUnderstood = true;
+
+    [DataField("iconNotUnderstood")]
+    public bool IconVisibleIfNotUnderstood = true;
 
     /// <summary>
     ///     Obfuscation method used by this language. By default, uses <see cref="ObfuscationMethod.Default"/>.

@@ -48,6 +48,17 @@ public abstract class SharedLanguageSystem : EntitySystem
         return builder.ToString();
     }
 
+    public bool GetLanguageIcon(LanguagePrototype language, bool obfuscated)
+    {
+        if (!obfuscated && language.IconVisibleIfUnderstood)
+            return true;
+
+        if (obfuscated && language.IconVisibleIfNotUnderstood)
+            return true;
+
+        return false;
+    }
+
     /// <summary>
     ///     Generates a stable pseudo-random number in the range (min, max) (inclusively) for the given seed.
     ///     One seed always corresponds to one number, however the resulting number also depends on the current round number.

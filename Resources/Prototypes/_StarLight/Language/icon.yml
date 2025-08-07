@@ -1,0 +1,23 @@
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconUnknown
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: unknown
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconMachine
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: machine
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconGalCom
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: galcom
+  allowSelection: false

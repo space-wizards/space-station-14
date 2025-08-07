@@ -1,0 +1,50 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/ui/chat/language.dmi",
+    "size": {
+        "x": 16,
+        "y": 16
+    },
+    "states": [
+        {
+            "name": "unknown"
+        },
+        {
+            "name": "animal"
+        },
+        {
+            "name": "codespeak"
+        },
+        {
+            "name": "fish"
+        },
+        {
+            "name": "galcom"
+        },
+        {
+            "name": "lizard"
+        },
+        {
+            "name": "machine"
+        },
+        {
+            "name": "moth"
+        },
+        {
+            "name": "neko"
+        },
+        {
+            "name": "plant"
+        },
+        {
+            "name": "slime"
+        },
+        {
+            "name": "solcom"
+        },
+        {
+            "name": "xeno"
+        }
+    ]
+}

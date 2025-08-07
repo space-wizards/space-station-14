@@ -1,6 +1,8 @@
 # The "Default Language" for everyone other than Universal.
 - type: language
   id: GalacticCommon
+  icon: LanguageIconGalCom
+  iconUnderstood: false
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1

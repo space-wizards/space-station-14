@@ -7,6 +7,7 @@
 
 - type: language
   id: Machine
+  icon: LanguageIconMachine
   speech:
     fontId: Monospace
   obfuscation:
@@ -19,6 +20,8 @@
 
 - type: language
   id: Sign
+  iconUnderstood: false
+  iconNotUnderstood: false
   speech:
     allowRadio: false
     requireSpeech: false
