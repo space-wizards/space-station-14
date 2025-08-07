@@ -10528,5 +10528,41 @@ Entries:
   id: 1448
   time: '2025-08-04T22:43:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1071
+- author: AthenaAI
+  changes:
+  - message: Gives Chemist permissions to Brigmedic for ease of access.
+    type: Tweak
+  id: 1449
+  time: '2025-08-05T13:52:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1212
+- author: DrSmugleaf
+  changes:
+  - message: Fixed species not being ordered alphabetically in the character customization
+      UI.
+    type: Fix
+  id: 1450
+  time: '2025-08-05T13:58:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1211
+- author: neurovermi
+  changes:
+  - message: Entering medbay no longer causes your client to die.
+    type: Fix
+  id: 1451
+  time: '2025-08-06T10:24:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1233
+- author: Citeria
+  changes:
+  - message: Added attempt to fix the proverbial "medbay rendering error"
+    type: Fix
+  id: 1452
+  time: '2025-08-06T16:56:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1230
+- author: RoadTrain
+  changes:
+  - message: fix migration.yml
+    type: Fix
+  id: 1453
+  time: '2025-08-07T12:46:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1241
 Order: -1
 
