@@ -10829,5 +10829,13 @@ Entries:
   id: 1490
   time: '2025-08-07T22:32:24.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1147
+- author: walksanatora
+  changes:
+  - message: Spacing cut into a quarter of what it once was. reverting wizden spacing
+      dammage buff.
+    type: Tweak
+  id: 1491
+  time: '2025-08-07T22:35:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1254
 Order: -1
 
