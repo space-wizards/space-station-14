@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: NoElkaTheGod
-  changes:
-  - message: Toysword now actually looks almost like the real thing, as advertised
-      in the description
-    type: Tweak
-  id: 8324
-  time: '2025-04-24T01:21:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34199
 - author: Pronana
   changes:
   - message: Moths can now eat pills
@@ -3899,3 +3891,11 @@
   id: 8836
   time: '2025-08-07T03:03:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38392
+- author: lolman360
+  changes:
+  - message: Fixed certain items (like pickaxes) failing to insert into containers
+      that have enough space to store them, sometimes.
+    type: Fix
+  id: 8837
+  time: '2025-08-07T16:01:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38896
