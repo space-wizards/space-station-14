@@ -1,0 +1,14 @@
+<Document>
+# Medical Bay
+
+<GuideEntityEmbed Entity="SignMedical" Caption="Medical Bay"/>
+
+1. For medical crew safety, the medical bay must not be placed on all access unless [color=#ff0000]Code Red[/color] is called.
+
+2. The medical bay must be kept neat and tidy for patient health.
+
+3. Chemicals should be kept in a stored locker or location and closed when not in use.
+
+4. Defibrillators should be kept in their cabinets when not in use and should be charged whenever possible.
+- 1. It is recommended that spare batteries be kept next to defibrillator cabinets.
+</Document>

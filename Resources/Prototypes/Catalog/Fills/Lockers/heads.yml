@@ -24,6 +24,7 @@
     - id: PlushieLance #starlight
     - id: RadioHandheldExpedition #starlight
     - id: ClothingOuterHardsuitLuxmax #starlight
+    - id: SalvageShuttleConsoleCircuitboard #starlight
 
 - type: entity
   id: LockerQuarterMasterFilled

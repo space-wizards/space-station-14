@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server._NullLink.Core;
 using Content.Server._NullLink.PlayerData;
+using Orleans;
 using Starlight.NullLink;
 using Starlight.NullLink.Event;
 
@@ -24,6 +25,7 @@ public sealed partial class NullLinkEventBusManager : IEventBusObserver, INullLi
     public void Initialize()
     {
         _sawmill = _logManager.GetSawmill("NullLink event bus");
+        _actors.OnConnected += OnNullLinkConnected;
         _resubscribeTimer = new Timer(
             async _ => await Resubscribe(),
             null,
@@ -31,9 +33,11 @@ public sealed partial class NullLinkEventBusManager : IEventBusObserver, INullLi
             period: _grainDelay);
     }
 
+
     public void Shutdown()
     {
         _resubscribeTimer?.Dispose();
+        _actors.OnConnected -= OnNullLinkConnected;
 
         if (!_actors.Enabled
             || !_actors.TryGetServerGrain(out var serverGrain)
@@ -67,13 +71,13 @@ public sealed partial class NullLinkEventBusManager : IEventBusObserver, INullLi
         _eventQueue.Enqueue(baseEvent);
         return ValueTask.CompletedTask;
     }
+    private void OnNullLinkConnected() => _ = Resubscribe();
 
     private async ValueTask Resubscribe()
     {
         if (!_actors.Enabled)
             return;
 
-        await _actors.Connection;
         if (!_actors.TryGetServerGrain(out var serverGrain))
         {
             _sawmill.Log(LogLevel.Warning, "Failed to get server grain for resubscription.");
