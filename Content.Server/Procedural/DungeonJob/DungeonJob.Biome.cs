@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Content.Server.Parallax;
 using Content.Shared.Maps;
-using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
+using Content.Shared.Decals;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -48,7 +48,7 @@ public sealed partial class DungeonJob
             {
                 foreach (var decal in decals)
                 {
-                    _decals.TryAddDecal(decal.ID, new EntityCoordinates(_gridUid, decal.Position), out _);
+                    _decals.TryAddDecal(new Decal(decal.ID), new EntityCoordinates(_gridUid, decal.Position), out _);
                 }
             }
 

@@ -109,7 +109,7 @@ namespace Content.Server.Decals.Commands
                 }
             }
 
-            if (_entManager.System<DecalSystem>().TryAddDecal(args[0], coordinates, out var uid, color, rotation, zIndex))
+            if (_entManager.System<DecalSystem>().TryAddDecal(new Decal(args[0]).WithColor(color).WithRotation(rotation.GetValueOrDefault()).WithZIndex(zIndex), coordinates, out var uid))
             {
                 shell.WriteLine($"Successfully created decal {uid}.");
             }
