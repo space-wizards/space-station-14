@@ -1,5 +1,6 @@
 - type: language
   id: SolCommon
+  icon: LanguageIconSolCom
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1

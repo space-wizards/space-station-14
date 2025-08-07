@@ -1,5 +1,6 @@
 - type: language
   id: Nekomimetic
+  icon: LanguageIconNeko
   speech:
     color: "#df57aaee"
     fontId: Mangat

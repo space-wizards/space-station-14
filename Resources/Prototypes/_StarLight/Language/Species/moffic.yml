@@ -1,5 +1,6 @@
 - type: language
   id: Moffic
+  icon: LanguageIconMoth
   speech:
     color: "#c7df2edd"
     fontId: Copperplate

@@ -1,5 +1,6 @@
 - type: language
   id: Bubblish
+  icon: LanguageIconSlime
   speech:
     color: "#00a3e2dd"
     fontId: RubikBubbles
