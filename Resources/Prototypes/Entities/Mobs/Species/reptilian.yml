@@ -5,6 +5,13 @@
   id: BaseMobReptilian
   abstract: true
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Draconic
+    understands:
+    - GalacticCommon
+    - Draconic
   - type: Absorbable
   - type: HumanoidAppearance
     species: Reptilian

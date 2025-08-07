@@ -4,6 +4,13 @@
   id: BaseMobSlimePerson
   abstract: true
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Bubblish
+    understands:
+    - GalacticCommon
+    - Bubblish
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:

@@ -5,6 +5,13 @@
   id: BaseMobMoth
   abstract: true
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Moffic
+    understands:
+    - GalacticCommon
+    - Moffic
   - type: Jump
     action: JumpMoth
   - type: Absorbable

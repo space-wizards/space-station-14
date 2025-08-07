@@ -3,6 +3,13 @@
   id: BaseMobVox
   abstract: true
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - VoxPidgin
+    understands:
+    - GalacticCommon
+    - VoxPidgin
   - type: Absorbable
   - type: Hunger
   - type: Thirst
