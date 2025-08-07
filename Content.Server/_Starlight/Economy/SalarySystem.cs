@@ -1,4 +1,6 @@
-﻿using Content.Server.Administration.Managers;
+﻿using System.Linq;
+using Content.Server._NullLink.PlayerData;
+using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
@@ -9,6 +11,7 @@ using Content.Server.Roles;
 using Content.Server.Stack;
 using Content.Server.Starlight;
 using Content.Server.Station.Components;
+using Content.Shared._NullLink;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
@@ -37,6 +40,7 @@ namespace Content.Shared.Starlight.Economy;
 public sealed partial class SalarySystem : SharedSalarySystem
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly INullLinkPlayerManager _nullLinkRoles = default!;
     [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -85,7 +89,7 @@ public sealed partial class SalarySystem : SharedSalarySystem
                     {
                         if (_salaries.Jobs.TryGetValue(role.Prototype, out var salary))
                         {
-                            var amount = CalculateSalaryWithBonuses(salary, query.Current.Data.Flags);
+                            var amount = CalculateSalaryWithBonuses(salary, query.Current.Session);
 
                             query.Current.Data.Balance += amount;
                             var message = Loc.GetString("economy-chat-salary-message", ("amount", amount), ("sender", "NanoTrasen"));
@@ -100,33 +104,16 @@ public sealed partial class SalarySystem : SharedSalarySystem
         }
     }
 
-    private int CalculateSalaryWithBonuses(int baseSalary, PlayerFlags flags)
+    private int CalculateSalaryWithBonuses(int baseSalary, ICommonSession session)
     {
         var bonusMultiplier = 1.0;
 
-        if (flags.HasFlag(PlayerFlags.Staff))
-            bonusMultiplier += 0.5;
+        if (!_nullLinkRoles.TryGetPlayerData(session.UserId, out var playerData))
+            return baseSalary;
 
-        if (flags.HasFlag(PlayerFlags.Mentor))
-            bonusMultiplier += 0.45;
-
-        if (flags.HasFlag(PlayerFlags.Retiree))
-            bonusMultiplier += 0.30;
-
-        if (flags.HasFlag(PlayerFlags.AlfaTester))
-            bonusMultiplier += 0.30;
-
-        if (flags.HasFlag(PlayerFlags.BetaTester))
-            bonusMultiplier += 0.15;
-
-        if (flags.HasFlag(PlayerFlags.CopperEventWinner))
-            bonusMultiplier += 0.10;
-
-        if (flags.HasFlag(PlayerFlags.SilverEventWinner))
-            bonusMultiplier += 0.20;
-
-        if (flags.HasFlag(PlayerFlags.GoldEventWinner))
-            bonusMultiplier += 0.30;
+        foreach (var bonus in _prototypes.EnumeratePrototypes<SalaryRoleBonusPrototype>())
+            if(bonus.Roles.Any(playerData.Roles.Contains))
+                bonusMultiplier += bonus.Multiplayer;
 
         return (int)Math.Ceiling(baseSalary * bonusMultiplier);
     }

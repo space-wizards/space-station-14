@@ -219,7 +219,8 @@ public sealed partial class SleepingSystem : EntitySystem
     /// </summary>
     private void OnDamageChanged(Entity<SleepingComponent> ent, ref DamageChangedEvent args)
     {
-        if (!args.DamageIncreased || args.DamageDelta == null)
+        // Starlight - prevent wakeup during initial entity replication
+        if (!args.DamageIncreased || args.DamageDelta == null || _gameTiming.ApplyingState)
             return;
 
         if (args.DamageDelta.GetTotal() >= ent.Comp.WakeThreshold)

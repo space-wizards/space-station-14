@@ -1,0 +1,41 @@
+- type: ghostTheme
+  id: None
+  name: Default
+  description: Just a regular boring guy.
+  colorizeable: true
+  spriteSpecifier:
+    sprite:
+      sprite: Mobs/Ghosts/ghost_human.rsi
+      state: animated
+    color: "#ffffff"
+
+- type: ghostTheme
+  id: Mellow
+  name: Mellow
+  description: a mellow ghost.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-mellow
+    color: "#ffffff"
+    
+- type: ghostTheme
+  id: Blazeit
+  name: Blazeit
+  description: a blazeit ghost.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-blazeit
+    color: "#ffffff"
+    
+- type: ghostTheme
+  id: Funkypurp
+  name: Funkypurp
+  description: a funkypurp ghost.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-funkypurp
+    color: "#ffffff"
+

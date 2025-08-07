@@ -23,16 +23,16 @@
   id: CartridgeBattery
 
 - type: Tag
-  id: CartridgePistolDP
-
-- type: Tag
-  id: CartridgePistolImprovised
+  id: CartridgeLightRifleImprovised
 
 - type: Tag
   id: CartridgeMagnumImprovised
 
 - type: Tag
-  id: CartridgeLightRifleImprovised
+  id: CartridgePistolDP
+
+- type: Tag
+  id: CartridgePistolImprovised
 
 - type: Tag
   id: CentcommVibroblade
@@ -42,6 +42,9 @@
 
 - type: Tag
   id: Diona
+
+- type: Tag
+  id: DockEscape
 
 - type: Tag
   id: DockGamma
@@ -66,18 +69,20 @@
 
 - type: Tag
   id: ImprovisedMultitool
+  
+  id: ImprovisedCrowbar
 
 - type: Tag
-  id: ImprovisedWrench
-
-- type: Tag
-  id: ImprovisedWirecutter
+  id: ImprovisedMultitool
 
 - type: Tag
   id: ImprovisedScrewdriver
 
 - type: Tag
-  id: ImprovisedCrowbar
+  id: ImprovisedWirecutter
+
+- type: Tag
+  id: ImprovisedWrench
 
 - type: Tag
   id: LightRifleHeavy
@@ -98,13 +103,13 @@
   id: MagazineRifleM52
 
 - type: Tag
+  id: MagazineSMGImprovised
+
+- type: Tag
   id: MagazineSMGPPSH
 
 - type: Tag
   id: MagazineSMGUzi
-
-- type: Tag
-  id: MagazineSMGImprovised
 
 - type: Tag
   id: MedCyberEyes
@@ -120,9 +125,6 @@
 
 - type: Tag
   id: OvenMachineBoard
-
-- type: Tag
-  id: StoveMachineBoard
 
 - type: Tag
   id: Patch
@@ -143,6 +145,9 @@
   id: SecCyberEyes
 
 - type: Tag
+  id: ShellShotgunImprovised
+
+- type: Tag
   id: ShipWreck
 
 - type: Tag
@@ -155,22 +160,22 @@
   id: SovietWarehouse
 
 - type: Tag
-  id: SwordForged
-
-- type: Tag
   id: SpeedLoaderMagnumImprovised
 
 - type: Tag
-  id: ShellShotgunImprovised
+  id: SpeedLoaderShotgun
 
 - type: Tag
-  id: SpeedLoaderShotgun
+  id: StoveMachineBoard
+
+- type: Tag
+  id: SurgeryCompatibleArmor
+
+- type: Tag
+  id: SwordForged
 
 - type: Tag
   id: SyndieDungeon
 
 - type: Tag
   id: Table
-
-- type: Tag
-  id: DockEscape
