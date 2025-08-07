@@ -1,6 +1,5 @@
 using Content.Client.Resources;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 

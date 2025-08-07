@@ -7,7 +7,7 @@ namespace Content.Client.Overlays;
 
 
 /// <summary>
-/// Adds a rectangular shader when wearing a welding mask or similar.
+/// Adds image overlay when wearing item with ImageOverlayComponent
 /// </summary>
 public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlayComponent>
 {
