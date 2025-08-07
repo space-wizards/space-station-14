@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from paradise",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "morph",
+      "directions": 4,
+      "delays": [
+        [
+          0.6,
+          0.6,
+          0.6
+        ],
+        [
+          0.6,
+          0.6,
+          0.6
+        ],
+        [
+          0.6,
+          0.6,
+          0.6
+        ],
+        [
+          0.6,
+          0.6,
+          0.6
+        ]
+      ]
+    }
+  ]
+}

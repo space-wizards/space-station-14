@@ -126,6 +126,8 @@
       totalIntensity: 4000.0
       intensitySlope: 3
       maxIntensity: 400
+    - type: StaticPrice
+      price: 10000 # Good luck!
 
 - type: entity
   parent: SyndicateBomb

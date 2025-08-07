@@ -12,7 +12,9 @@
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
     maxItemSize: Normal
-    # TODO: Fill this out more.
+    # Don't add more than absolutely needed to this whitelist!
+    # Utility belts shouldn't just be free extra storage.
+    # This is only intended for basic engineering equipment.
     whitelist:
       tags:
         - Powerdrill
@@ -32,9 +34,18 @@
         - JawsOfLife
         - GPS
         - WeldingMask
+        - RemoteSignaller
+
+        #Starlight
+        - ImprovisedCrowbar
+        - ImprovisedScrewdriver
+        - ImprovisedWirecutter
+        - ImprovisedWrench
+        - ImprovisedMultitool
       components:
         - StationMap
         - SprayPainter
+        - SprayPainterAmmo
         - NetworkConfigurator
         - RCD
         - RCDAmmo
@@ -54,10 +65,16 @@
         whitelist:
           tags:
           - Wirecutter
+
+          #Starlight
+          - ImprovisedWirecutter
       crowbar:
         whitelist:
           tags:
           - Crowbar
+
+          #Starlight
+          - ImprovisedCrowbar
       crowbar_red:
         whitelist:
           tags:
@@ -70,16 +87,29 @@
         whitelist:
           tags:
           - Screwdriver
+
+          #Starlight
+          - ImprovisedScrewdriver
       wrench:
         whitelist:
           tags:
           - Wrench
+
+          #Starlight
+          - ImprovisedWrench
       multitool:
         whitelist:
           tags:
             - Multitool
+
+            #Starlight
+            - ImprovisedMultitool
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: Tag
+    tags:
+    - UtilityBelt
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -112,9 +142,20 @@
         - HolofanProjector
         - Multitool
         - AppraisalTool
+        - GPS
+        - WeldingMask
+        - RemoteSignaller
+        
+        #Starlight
+        - ImprovisedCrowbar
+        - ImprovisedScrewdriver
+        - ImprovisedWirecutter
+        - ImprovisedWrench
+        - ImprovisedMultitool
       components:
         - StationMap
         - SprayPainter
+        - SprayPainterAmmo
         - NetworkConfigurator
         - RCD
         - RCDAmmo
@@ -135,10 +176,16 @@
         whitelist:
           tags:
           - Wirecutter
+          
+          #Starlight
+          - ImprovisedWirecutter
       crowbar:
         whitelist:
           tags:
           - Crowbar
+
+          #Starlight
+          - ImprovisedCrowbar
       crowbar_red:
         whitelist:
           tags:
@@ -151,14 +198,23 @@
         whitelist:
           tags:
           - Screwdriver
+          
+          #Starlight
+          - ImprovisedScrewdriver
       multitool:
         whitelist:
           tags:
             - Multitool
+            
+            #Starlight
+            - ImprovisedMultitool
       wrench:
         whitelist:
           tags:
           - Wrench
+          
+          #Starlight
+          - ImprovisedWrench
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
 
@@ -225,6 +281,7 @@
         - WetFloorSign
         - HolosignProjector
         - Plunger
+        - WireBrush
       components:
         - LightReplacer
         - SmokeOnTrigger
@@ -618,6 +675,8 @@
         - Gun
         - BallisticAmmoProvider
         - CartridgeAmmo
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: ClothingBeltSecurity
@@ -676,6 +735,8 @@
     sprite: Clothing/Belt/militarywebbing.rsi
   - type: ExplosionResistance
     damageCoefficient: 0.1
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: ClothingBeltMilitaryWebbing

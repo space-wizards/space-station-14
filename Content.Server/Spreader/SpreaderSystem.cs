@@ -23,6 +23,7 @@ public sealed class SpreaderSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     /// <summary>
     /// Cached maximum number of updates per spreader prototype. This is applied per-grid.
@@ -246,7 +247,7 @@ public sealed class SpreaderSystem : EntitySystem
             if (!_map.TryGetTileRef(neighborEnt, neighborGrid, neighborPos, out var tileRef) || tileRef.Tile.IsEmpty)
                 continue;
 
-            if (spreaderPrototype.PreventSpreadOnSpaced && tileRef.Tile.IsSpace())
+            if (spreaderPrototype.PreventSpreadOnSpaced && _turf.IsSpace(tileRef))
                 continue;
 
             var directionEnumerator = _map.GetAnchoredEntitiesEnumerator(neighborEnt, neighborGrid, neighborPos);
@@ -316,26 +317,28 @@ public sealed class SpreaderSystem : EntitySystem
             (ent, tile) = position.Value;
         }
 
+        // Reactivate spreaders on the same tile
         var anchored = _map.GetAnchoredEntitiesEnumerator(ent, grid, tile);
         while (anchored.MoveNext(out var entity))
         {
-            if (entity == ent)
+            if (entity == uid) // Starlight-edit
                 continue;
             DebugTools.Assert(Transform(entity.Value).Anchored);
-            if (_query.HasComponent(ent) && !TerminatingOrDeleted(entity.Value))
+            if (_query.HasComponent(entity.Value) && !TerminatingOrDeleted(entity.Value)) // Starlight-edit
                 EnsureComp<ActiveEdgeSpreaderComponent>(entity.Value);
         }
 
+        // Reactivate spreaders on adjacent tiles
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
             var direction = (AtmosDirection) (1 << i);
-            var adjacentTile = SharedMapSystem.GetDirection(tile, direction.ToDirection());
+            var adjacentTile = tile.Offset(direction.ToDirection()); // Starlight-edit
             anchored = _map.GetAnchoredEntitiesEnumerator(ent, grid, adjacentTile);
 
             while (anchored.MoveNext(out var entity))
             {
                 DebugTools.Assert(Transform(entity.Value).Anchored);
-                if (_query.HasComponent(ent) && !TerminatingOrDeleted(entity.Value))
+                if (_query.HasComponent(entity.Value) && !TerminatingOrDeleted(entity.Value)) // Starlight-edit
                     EnsureComp<ActiveEdgeSpreaderComponent>(entity.Value);
             }
         }
