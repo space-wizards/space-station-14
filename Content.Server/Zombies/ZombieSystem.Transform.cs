@@ -39,6 +39,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.NPC.Prototypes;
+using Content.Shared.StatusEffectNew;
 
 namespace Content.Server.Zombies;
 
@@ -64,6 +65,7 @@ public sealed partial class ZombieSystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
@@ -126,7 +128,13 @@ public sealed partial class ZombieSystem
         //This is needed for stupid entities that fuck up combat mode component
         //in an attempt to make an entity not attack. This is the easiest way to do it.
         var combat = EnsureComp<CombatModeComponent>(target);
-        RemComp<PacifiedComponent>(target);
+        if (_statusEffect.TryEffectsWithComp<PacifiedStatusEffectComponent>(target, out var pacifyEffects))
+        {
+            foreach (var effect in pacifyEffects)
+            {
+                QueueDel(effect);
+            }
+        }
         _combat.SetCanDisarm(target, false, combat);
         _combat.SetInCombatMode(target, true, combat);
 

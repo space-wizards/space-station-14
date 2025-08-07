@@ -1,33 +1,169 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions;
-using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.CombatMode.Pacification;
 
 public sealed class PacificationSystem : EntitySystem
 {
-    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly INetManager _net = default!;
+
+    //This data was previously stored in PacifiedComponent, determining when to show the popup to the player.
+    //After refactoring to a status effect, it would be too difficult to store this data in all pacification effect components
+    //(of which there may be many) and calculate the next popup time based on all of them.
+    //And, in fact, there is no point in serializing and storing this data in the component,
+    //since its only purpose is to prevent spam on the client. Therefore,
+    //I decided that storing this data in the system is acceptable for this task.
+    #region Data
+
+    /// <summary>
+    /// When attempting attack against the same entity multiple times,
+    /// don't spam popups every frame and instead have a cooldown.
+    /// </summary>
+    public TimeSpan PopupCooldown = TimeSpan.FromSeconds(3.0);
+
+    /// <summary>
+    /// Time at which the next popup can be shown.
+    /// </summary>
+    public TimeSpan? NextPopupTime;
+
+    /// <summary>
+    /// The last entity attacked, used for popup purposes (avoid spam)
+    /// </summary>
+    public EntityUid? LastAttackedEntity;
+
+    #endregion
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<PacifiedComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<PacifiedComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<PacifiedComponent, BeforeThrowEvent>(OnBeforeThrow);
-        SubscribeLocalEvent<PacifiedComponent, AttackAttemptEvent>(OnAttackAttempt);
-        SubscribeLocalEvent<PacifiedComponent, ShotAttemptedEvent>(OnShootAttempt);
+
+        SubscribeLocalEvent<PacifiedStatusEffectComponent, StatusEffectAppliedEvent>(OnEffectApplied);
+        SubscribeLocalEvent<PacifiedStatusEffectComponent, StatusEffectRemovedEvent>(OnEffectRemoved);
+
+        SubscribeLocalEvent<PacifiedStatusEffectComponent, StatusEffectRelayedEvent<BeforeThrowEvent>>(OnBeforeThrow);
+        SubscribeLocalEvent<PacifiedStatusEffectComponent, StatusEffectRelayedEvent<AttackAttemptEvent>>(OnAttackAttempt);
+        SubscribeLocalEvent<PacifiedStatusEffectComponent, StatusEffectRelayedEvent<ShotAttemptedEvent>>(OnShootAttempt);
+
         SubscribeLocalEvent<PacifismDangerousAttackComponent, AttemptPacifiedAttackEvent>(OnPacifiedDangerousAttack);
+    }
+
+    private void OnEffectApplied(Entity<PacifiedStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
+    {
+        UpdatePacifiedSettings(args.Target);
+    }
+
+    private void OnEffectRemoved(Entity<PacifiedStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
+    {
+        UpdatePacifiedSettings(args.Target);
+    }
+
+    private void UpdatePacifiedSettings(EntityUid target)
+    {
+        if (!TryComp<CombatModeComponent>(target, out var combatMode))
+            return;
+
+        if (_statusEffect.TryEffectsWithComp<PacifiedStatusEffectComponent>(target, out var effects))
+        {
+            var disallowDisarm = false;
+            var disallowAllCombat = false;
+            foreach (var effect in effects)
+            {
+                if (effect.Comp1.DisallowDisarm)
+                    disallowDisarm = true;
+
+                if (effect.Comp1.DisallowAllCombat)
+                    disallowAllCombat = true;
+            }
+
+            if (combatMode.CanDisarm != null)
+                _combatSystem.SetCanDisarm(target, !disallowDisarm);
+
+            _combatSystem.SetInCombatMode(target, !disallowAllCombat, combatMode);
+            _actionsSystem.SetEnabled(combatMode.CombatToggleActionEntity, !disallowAllCombat);
+        }
+        else
+        {
+            if (combatMode.CanDisarm != null)
+                _combatSystem.SetCanDisarm(target, true, combatMode);
+
+            _actionsSystem.SetEnabled(combatMode.CombatToggleActionEntity, true);
+        }
+    }
+
+    private void OnBeforeThrow(Entity<PacifiedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<BeforeThrowEvent> args)
+    {
+        var thrownItem = args.Args.ItemUid;
+        var itemName = Identity.Entity(thrownItem, EntityManager);
+
+        // Raise an AttemptPacifiedThrow event and rely on other systems to check
+        // whether the candidate item is OK to throw:
+        var ev = new AttemptPacifiedThrowEvent(thrownItem, args.Args.PlayerUid);
+        RaiseLocalEvent(thrownItem, ref ev);
+        if (!ev.Cancelled)
+            return;
+
+        //C# disallows editing this after it has been passed by reference, so 3 line instead 1 line
+        var throwArgs = args.Args;
+        throwArgs.Cancelled = true;
+        args.Args = throwArgs;
+
+        // Tell the player why they can’t throw stuff:
+        var cannotThrowMessage = ev.CancelReasonMessageId ?? "pacified-cannot-throw";
+        _popup.PopupEntity(Loc.GetString(cannotThrowMessage, ("projectile", itemName)), args.Args.PlayerUid, args.Args.PlayerUid);
+    }
+
+    private void OnAttackAttempt(Entity<PacifiedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<AttackAttemptEvent> args)
+    {
+        if (ent.Comp.DisallowAllCombat || args.Args.Disarm && ent.Comp.DisallowDisarm)
+        {
+            args.Args.Cancel();
+            return;
+        }
+
+        // If it's a disarm, let it go through (unless we disallow them, which is handled earlier)
+        if (args.Args.Disarm)
+            return;
+
+        // Allow attacking with no target. This should be fine.
+        // If it's a wide swing, that will be handled with a later AttackAttemptEvent raise.
+        if (args.Args.Target == null)
+            return;
+
+        // If we would do zero damage, it should be fine.
+        if (args.Args.Weapon != null && args.Args.Weapon.Value.Comp.Damage.GetTotal() == FixedPoint2.Zero)
+            return;
+
+        if (PacifiedCanAttack(args.Args.Uid, args.Args.Target.Value, out var reason))
+            return;
+
+        ShowPopup(args.Args.Target.Value, reason);
+        args.Args.Cancel();
+    }
+
+    private void OnShootAttempt(Entity<PacifiedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<ShotAttemptedEvent> args)
+    {
+        if (HasComp<PacifismAllowedGunComponent>(args.Args.Used))
+            return;
+
+        // Disallow firing guns in all cases.
+        ShowPopup(args.Args.Used, "pacified-cannot-fire-gun");
+        args.Args.Cancel();
     }
 
     private bool PacifiedCanAttack(EntityUid user, EntityUid target, [NotNullWhen(false)] out string? reason)
@@ -46,104 +182,22 @@ public sealed class PacificationSystem : EntitySystem
         return true;
     }
 
-    private void ShowPopup(Entity<PacifiedComponent> user, EntityUid target, string reason)
+    private void ShowPopup(EntityUid popupTarget, string reason)
     {
+        if (_net.IsServer)
+            return;
+
+        var player = _player.LocalEntity;
+
         // Popup logic.
         // Cooldown is needed because the input events for melee/shooting etc. will fire continuously
-        if (target == user.Comp.LastAttackedEntity
-            && !(_timing.CurTime > user.Comp.NextPopupTime))
+        if (popupTarget == LastAttackedEntity && !(_timing.CurTime > NextPopupTime))
             return;
 
-        var targetName = Identity.Entity(target, EntityManager);
-        _popup.PopupClient(Loc.GetString(reason, ("entity", targetName)), user, user);
-        user.Comp.NextPopupTime = _timing.CurTime + user.Comp.PopupCooldown;
-        user.Comp.LastAttackedEntity = target;
-    }
-
-    private void OnShootAttempt(Entity<PacifiedComponent> ent, ref ShotAttemptedEvent args)
-    {
-        if (HasComp<PacifismAllowedGunComponent>(args.Used))
-            return;
-
-        // Disallow firing guns in all cases.
-        ShowPopup(ent, args.Used, "pacified-cannot-fire-gun");
-        args.Cancel();
-    }
-
-    private void OnAttackAttempt(EntityUid uid, PacifiedComponent component, AttackAttemptEvent args)
-    {
-        if (component.DisallowAllCombat || args.Disarm && component.DisallowDisarm)
-        {
-            args.Cancel();
-            return;
-        }
-
-        // If it's a disarm, let it go through (unless we disallow them, which is handled earlier)
-        if (args.Disarm)
-            return;
-
-        // Allow attacking with no target. This should be fine.
-        // If it's a wide swing, that will be handled with a later AttackAttemptEvent raise.
-        if (args.Target == null)
-            return;
-
-        // If we would do zero damage, it should be fine.
-        if (args.Weapon != null && args.Weapon.Value.Comp.Damage.GetTotal() == FixedPoint2.Zero)
-            return;
-
-        if (PacifiedCanAttack(uid, args.Target.Value, out var reason))
-            return;
-
-        ShowPopup((uid, component), args.Target.Value, reason);
-        args.Cancel();
-    }
-
-    private void OnStartup(EntityUid uid, PacifiedComponent component, ComponentStartup args)
-    {
-        if (!TryComp<CombatModeComponent>(uid, out var combatMode))
-            return;
-
-        if (component.DisallowDisarm && combatMode.CanDisarm != null)
-            _combatSystem.SetCanDisarm(uid, false, combatMode);
-
-        if (component.DisallowAllCombat)
-        {
-            _combatSystem.SetInCombatMode(uid, false, combatMode);
-            _actionsSystem.SetEnabled(combatMode.CombatToggleActionEntity, false);
-        }
-
-        _alertsSystem.ShowAlert(uid, component.PacifiedAlert);
-    }
-
-    private void OnShutdown(EntityUid uid, PacifiedComponent component, ComponentShutdown args)
-    {
-        if (!TryComp<CombatModeComponent>(uid, out var combatMode))
-            return;
-
-        if (combatMode.CanDisarm != null)
-            _combatSystem.SetCanDisarm(uid, true, combatMode);
-
-        _actionsSystem.SetEnabled(combatMode.CombatToggleActionEntity, true);
-        _alertsSystem.ClearAlert(uid, component.PacifiedAlert);
-    }
-
-    private void OnBeforeThrow(Entity<PacifiedComponent> ent, ref BeforeThrowEvent args)
-    {
-        var thrownItem = args.ItemUid;
-        var itemName = Identity.Entity(thrownItem, EntityManager);
-
-        // Raise an AttemptPacifiedThrow event and rely on other systems to check
-        // whether the candidate item is OK to throw:
-        var ev = new AttemptPacifiedThrowEvent(thrownItem, ent);
-        RaiseLocalEvent(thrownItem, ref ev);
-        if (!ev.Cancelled)
-            return;
-
-        args.Cancelled = true;
-
-        // Tell the player why they can’t throw stuff:
-        var cannotThrowMessage = ev.CancelReasonMessageId ?? "pacified-cannot-throw";
-        _popup.PopupEntity(Loc.GetString(cannotThrowMessage, ("projectile", itemName)), ent, ent);
+        var targetName = Identity.Entity(popupTarget, EntityManager);
+        _popup.PopupClient(Loc.GetString(reason, ("entity", targetName)), player);
+        NextPopupTime = _timing.CurTime + PopupCooldown;
+        LastAttackedEntity = popupTarget;
     }
 
     private void OnPacifiedDangerousAttack(Entity<PacifismDangerousAttackComponent> ent, ref AttemptPacifiedAttackEvent args)

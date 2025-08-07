@@ -47,6 +47,12 @@ public sealed class TraitSystem : EntitySystem
             // Add all components required by the prototype
             EntityManager.AddComponents(args.Mob, traitPrototype.Components, false);
 
+            // Add all job specials required by the prototype
+            foreach (var special in traitPrototype.Special)
+            {
+                special.AfterEquip(args.Mob);
+            }
+
             // Add item required by the trait
             if (traitPrototype.TraitGear == null)
                 continue;

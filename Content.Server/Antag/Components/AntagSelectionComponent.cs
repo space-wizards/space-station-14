@@ -162,6 +162,12 @@ public partial struct AntagSelectionDefinition()
     public ComponentRegistry Components = new();
 
     /// <summary>
+    /// Adds permanent status effects to the entity
+    /// </summary>
+    [DataField]
+    public HashSet<EntProtoId> StatusEffects = new();
+
+    /// <summary>
     /// Components added to the player's mind.
     /// Do NOT use this to add role-type components. Add those as MindRoles instead
     /// </summary>
