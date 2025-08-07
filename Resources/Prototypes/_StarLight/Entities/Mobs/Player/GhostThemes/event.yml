@@ -1,0 +1,10 @@
+- type: ghostTheme
+  id: King
+  name: King
+  description: The Majestic King.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-king
+    color: "#ffffff"
+  requirement: GoldEventWinnerReq

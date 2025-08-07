@@ -58,8 +58,6 @@ public sealed partial class HubSystem : EntitySystem
             const int MaxRetries = 3;
             const int BackoffMs = 5000;
 
-            await _actors.Connection;
-
             for (var attempt = 1; attempt <= MaxRetries; attempt++)
             {
                 try
@@ -70,7 +68,7 @@ public sealed partial class HubSystem : EntitySystem
                         continue;
                     }
 
-                    await serverGrain!.UpdateServer(new()
+                    await serverGrain.UpdateServer(new()
                     {
                         Title = _hostname,
                         ConnectionString = _connectionString,

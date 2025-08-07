@@ -185,6 +185,18 @@
     - type: TegCirculator
     - type: StealTarget
       stealGroup: Teg
+    #region Starlight
+    - type: AtmosPipeLayers
+      spriteLayersRsiPaths:
+        enum.TegVisualLayers.CirculatorBase:
+          Primary: Structures/Power/Generation/teg.rsi
+          Secondary: _Starlight/Structures/Power/Generation/tegalt1.rsi
+          Tertiary: _Starlight/Structures/Power/Generation/tegalt2.rsi
+        enum.TegVisualLayers.CirculatorLight:
+          Primary: Structures/Power/Generation/teg.rsi
+          Secondary: _Starlight/Structures/Power/Generation/tegalt1.rsi
+          Tertiary: _Starlight/Structures/Power/Generation/tegalt2.rsi
+    #endregion Starlight
 
 - # Spawned by the client-side circulator examine code to indicate the inlet/outlet direction.
   type: entity

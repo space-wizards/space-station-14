@@ -48,6 +48,9 @@ command-description-stationevent-lsprobtheoretical =
     Given a BasicStationEventScheduler prototype, player count, and round time, lists the probability of different station events occuring based on the specified number of players and round time.
 command-description-stationevent-prob =
     Given a BasicStationEventScheduler prototype and an event prototype, returns the probability of a single station event occuring out of the entire pool with current conditions.
+### Starlight (upstream #39080)
+command-description-subtlemessage =
+    Sends a subtle message to all the input entities.
 command-description-admins-active =
     Returns a list of active admins.
 command-description-admins-all =

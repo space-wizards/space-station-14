@@ -28,3 +28,9 @@ rr-stew = Stew
 rr-stew-desc = Space makes a lot of ordinary things feel exotic. Just try not to think about how it was cooked in a microwave.
 
 
+# Metabolize
+
+rail-metabolize-task = Metabolize {INDEFINITE($Target)} {$Target}
+
+rr-smoke = Smokeables
+rr-smoking-desc = I can always quit, I’m not addicted.
