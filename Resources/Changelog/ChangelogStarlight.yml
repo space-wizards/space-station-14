@@ -10673,5 +10673,12 @@ Entries:
   id: 1468
   time: '2025-08-07T20:33:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1248
+- author: DrSmugleaf
+  changes:
+  - message: Fixed vulp tail tip and vulp tail fox tip being unable to wag.
+    type: Fix
+  id: 1469
+  time: '2025-08-07T20:43:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1210
 Order: -1
 
