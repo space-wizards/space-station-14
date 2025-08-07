@@ -51,8 +51,6 @@ namespace Content.Client.Lobby.UI
         private readonly JobRequirementsManager _requirements;
         private readonly LobbyUIController _controller;
 
-        public const string AntagPrefix = "Antag:";
-
         private readonly SpriteSystem _sprite;
 
         // CCvar.
@@ -662,11 +660,8 @@ namespace Content.Client.Lobby.UI
                 selector.Setup(items, title, 250, description, guides: antag.Guides);
                 selector.Select(Profile?.AntagPreferences.Contains(antag.ID) == true ? 0 : 1);
 
-                var prototypes = string.IsNullOrEmpty(antag.ID)
-                    ? new List<string>()
-                    : new List<string> { AntagPrefix + antag.ID };
                 if (!_requirements.IsAllowed(
-                        prototypes,
+                        antag,
                         (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter,
                         out var reason))
                 {

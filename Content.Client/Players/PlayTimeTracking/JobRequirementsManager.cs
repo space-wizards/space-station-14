@@ -102,6 +102,15 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     }
 
     /// <summary>
+    /// Check the antag prototype against the current player, for requirements and bans
+    /// </summary>
+    public bool IsAllowed(AntagPrototype antag, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    {
+        var list = new List<string>{AntagPrefix + antag.ID};
+        return IsAllowed(list, profile, out reason);
+    }
+
+    /// <summary>
     /// Check each job/antag prototype against the current player, for requirements and bans
     /// The prototypes MUST start with the job/antag prefix
     /// </summary>
