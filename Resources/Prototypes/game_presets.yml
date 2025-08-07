@@ -313,6 +313,6 @@
   rules:
     - Changeling
     - Traitor
-    - SubGamemodesRule
+    - SubGamemodesRuleNoChangelings
     - BasicStationEventScheduler
     - BasicRoundstartVariation
