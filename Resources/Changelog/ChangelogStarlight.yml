@@ -10628,5 +10628,20 @@ Entries:
   id: 1462
   time: '2025-08-07T20:10:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/970
+- author: walksanatora
+  changes:
+  - message: Station AIs can now shunt into borg(i)s with AI interfaces in them
+    type: Add
+  id: 1463
+  time: '2025-08-07T20:13:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1064
+- author: walksanatora
+  changes:
+  - message: Robotics can now create AI interfaces and shove them in chassis to let
+      the AI controll them.
+    type: Add
+  id: 1464
+  time: '2025-08-07T20:13:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1064
 Order: -1
 
