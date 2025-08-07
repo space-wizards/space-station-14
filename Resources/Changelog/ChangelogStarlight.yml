@@ -10621,5 +10621,12 @@ Entries:
   id: 1461
   time: '2025-08-07T20:08:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1011
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added the Pitbull Marksman Rifle for Nuclear Operatives
+    type: Add
+  id: 1462
+  time: '2025-08-07T20:10:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/970
 Order: -1
 
