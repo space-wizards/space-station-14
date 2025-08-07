@@ -1,0 +1,11 @@
+<Document>
+# Medical Doctor
+
+<GuideEntityEmbed Entity="ToyFigurineMedicalDoctor" Caption="Medical Doctor"/>
+
+1. Medical Doctors report directly to the Chief Medical Officer.
+
+2. Medical Doctors should wear sterile gloves when dealing with patients and either scrubs or a doctor's coat to differentiate them from other crew members.
+
+3. Medical Doctors are permitted to observe Surgeons and Chemists in their official duties, as long as no patients require treatment.
+</Document>
