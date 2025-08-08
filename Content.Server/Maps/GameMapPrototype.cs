@@ -14,7 +14,7 @@ namespace Content.Server.Maps;
 /// Forks should not directly edit existing parts of this class.
 /// Make a new partial for your fancy new feature, it'll save you time later.
 /// </remarks>
-[Prototype("gameMap"), PublicAPI]
+[Prototype, PublicAPI]
 [DebuggerDisplay("GameMapPrototype [{ID} - {MapName}]")]
 public sealed partial class GameMapPrototype : IPrototype
 {

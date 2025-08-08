@@ -4,7 +4,7 @@
       "x": 32,
       "y": 32
     },
-    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/05ec94e46349c35e29ca91e5e97d0c88ae26ad44/icons/mob/species/human/human_face.dmi ,resprited by Alekshhh, a modified by potato1234x, uneven and tailed is drawn by Ubaser, doublebun_long by Emisse, longbundled and bob5 sprited by github:DreamlyJack(624946166152298517), pulato.png made by DreamlyJack for SS14",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/05ec94e46349c35e29ca91e5e97d0c88ae26ad44/icons/mob/species/human/human_face.dmi ,resprited by Alekshhh, a modified by potato1234x, uneven and tailed is drawn by Ubaser, doublebun_long by Emisse, longbundled and bob5 sprited by github:DreamlyJack(624946166152298517), pulato.png made by DreamlyJack, b.png and b_alt.png modified and sprited by KingFroozy (github), long_with_bangs shaped and longbow by Futuristic (and Pyvik) for SS14",
     "license": "CC-BY-SA-3.0",
     "states": [
       {
@@ -29,6 +29,10 @@
       },
       {
         "name": "b",
+        "directions": 4
+      },
+      {
+        "name": "b_alt",
         "directions": 4
       },
       {
@@ -688,10 +692,6 @@
         "directions": 4
       },
       {
-        "name": "shoulderlengthovereye",
-        "directions": 4
-      },
-      {
         "name": "thinning",
         "directions": 4
       },
@@ -801,6 +801,10 @@
       },
       {
         "name": "longbow",
+        "directions": 4
+      },
+      {
+        "name": "longwithbangs",
         "directions": 4
       }
     ]

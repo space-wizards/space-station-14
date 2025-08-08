@@ -19,6 +19,8 @@
         Slash: 0.95
         Heat: 0.90
     priceMultiplier: 0
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.55
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
@@ -31,6 +33,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - Recyclable
     - WhitelistChameleon
   - type: StaticPrice
     price: 50
@@ -781,7 +784,7 @@
 
 ##############################################################
 - type: entity
-  parent: [ClothingOuterWinterWarden, BaseSyndicateContraband]
+  parent: [ BaseSyndicateContraband, ClothingOuterWinterWarden ]
   id: ClothingOuterWinterSyndieCapArmored
   name: syndicate's armored winter coat
   description: "The syndicate's armored winter coat is made of durable fabric, with gilded patterns, and coarse wool."

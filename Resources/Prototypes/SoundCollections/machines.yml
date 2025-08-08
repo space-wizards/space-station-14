@@ -1,0 +1,39 @@
+- type: soundCollection
+  id: PrinterPrint
+  files:
+  - /Audio/Machines/printer.ogg
+
+- type: soundCollection
+  id: CargoPing
+  files:
+  - /Audio/Effects/Cargo/ping.ogg
+
+- type: soundCollection
+  id: CargoError
+  files:
+  - /Audio/Effects/Cargo/buzz_sigh.ogg
+
+- type: soundCollection
+  id: CargoToggleLimit
+  files:
+  - /Audio/Machines/quickbeep.ogg
+
+- type: soundCollection
+  id: CargoBeep
+  files:
+  - /Audio/Effects/Cargo/beep.ogg
+
+- type: soundCollection
+  id: VendingDispense
+  files:
+  - /Audio/Machines/machine_vend.ogg
+
+- type: soundCollection
+  id: VendingDeny
+  files:
+  - /Audio/Machines/custom_deny.ogg
+
+- type: soundCollection
+  id: MachineInsert
+  files:
+  - /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
