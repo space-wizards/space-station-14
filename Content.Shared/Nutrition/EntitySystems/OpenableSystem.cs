@@ -104,7 +104,7 @@ public sealed partial class OpenableSystem : EntitySystem
                 Text = Loc.GetString(comp.CloseVerbText),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/close.svg.192dpi.png")),
                 Act = () => TryClose(args.Target, comp, args.User),
-                Priority = 2
+                Priority = 3
             };
         }
         else
