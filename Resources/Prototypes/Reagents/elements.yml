@@ -63,6 +63,11 @@
       effects:
       - !type:HealthChange
         conditions:
+        # start harmony change
+        - !type:OrganType
+          type: Avali
+          shouldHave: false
+        # start harmony change
         - !type:OrganType
           type: Arachnid
           shouldHave: false
@@ -77,6 +82,14 @@
           type: Arachnid
           shouldHave: true
         amount: 0.4
+        # start harmony change
+      - !type:ModifyBloodLevel
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+        amount: 0.4
+        # end harmony change
 
 - type: reagent
   id: Fluorine
@@ -160,10 +173,25 @@
         damage:
           types:
             Poison: 0.1
+            # start harmony change
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+        damage:
+          types:
+            Poison: 0.1
+    # end harmony change
     Medicine:
       effects:
       - !type:ModifyBloodLevel
         conditions:
+        # start harmony change
+        - !type:OrganType
+          type: Avali
+          shouldHave: false
+        # end harmony change
         - !type:OrganType
           type: Arachnid
           shouldHave: false

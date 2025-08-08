@@ -1,0 +1,14 @@
+- type: entity
+  parent: OrganHumanStomach
+  id: OrganAvaliStomach
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [Avali]
+
+- type: entity
+  parent: OrganHumanHeart
+  id: OrganAvaliHeart
+  components:
+  - type: Metabolizer
+    updateInterval: 0.7 #Matches Arachnids but in reverse
+    metabolizerTypes: [Avali]
