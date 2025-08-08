@@ -36,9 +36,11 @@ public sealed partial class ItemBorgModuleComponent : Component
     public int FreeHands = 0;
 
     /// <summary>
-    /// List of provided free hand IDs
+    /// List of provided free hand IDs and stored items
+    /// Upon RemoveProvidedItems stores up-to-date Item IDs, upon ProvideItems stores up-to-date hand IDs.
     /// </summary>
-    public List<string> ProvidedFreeHands = new();
+    public Dictionary<string, EntityUid?> ProvidedFreeHands = new();
+
     //STARLIGHT end
 
     /// <summary>
