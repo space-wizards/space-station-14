@@ -6,6 +6,8 @@
     snap:
     - Wallmount
   components:
+  - type: Physics
+    canCollide: false
   - type: Clickable
   - type: WallMount
   - type: InteractionOutline
