@@ -6,7 +6,7 @@ using Content.Shared.Whitelist;
 namespace Content.Server.Mind.Filters;
 
 /// <summary>
-/// A mind filter that removes minds if you have an objective targeting them matching a whitelist.
+/// A mind filter that removes minds if you have an objective targeting them matching a blacklist.
 /// </summary>
 /// <remarks>
 /// Used to prevent assigning multiple kill objectives for the same person.
