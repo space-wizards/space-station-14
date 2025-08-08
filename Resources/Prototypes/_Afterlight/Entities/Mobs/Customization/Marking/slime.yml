@@ -3,6 +3,10 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ SlimePerson ]
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
   sprites:
   - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
     state: squishy_fox
@@ -30,6 +34,10 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ SlimePerson ]
+  emotes:
+    - emotePrototype: Meow
+    - emotePrototype: Mew
+    - emotePrototype: Trill
   sprites:
   - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
     state: gummy_cat
@@ -57,6 +65,10 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ SlimePerson ]
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
   sprites:
   - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
     state: vulpish
@@ -66,6 +78,10 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ SlimePerson ]
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
   sprites:
   - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
     state: waggable_mass
@@ -75,6 +91,10 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ SlimePerson ]
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
   sprites:
   - sprite: _Afterlight/Mobs/Customization/SlimePerson/tail.rsi
     state: waggable_mass_wagging
@@ -111,6 +131,10 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [ SlimePerson ]
+  emotes:
+    - emotePrototype: Yip
+    - emotePrototype: Whine
+    - emotePrototype: Bark
   sprites:
   - sprite: _Afterlight/Mobs/Customization/SlimePerson/ears.rsi
     state: foxlike
