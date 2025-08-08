@@ -11,3 +11,27 @@
   id: FloorTileSilver
   name: stack-silver-floor-tile
   spawn: FloorTileItemSilver
+
+- type: stack
+  id: FloorTileWhiteMarble
+  name: stack-white-marble-floor
+  spawn: FloorTileItemWhiteMarble
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkMarble
+  name: stack-dark-marble-floor
+  spawn: FloorTileItemDarkMarble
+  maxCount: 30
+
+- type: stack
+  id: FloorTilePlasmaMarble
+  name: stack-plasma-marble-floor
+  spawn: FloorTileItemPlasmaMarble
+  maxCount: 30
+
+- type: stack
+  id: FloorTileUraniumMarble
+  name: stack-uranium-marble-floor
+  spawn: FloorTileItemUraniumMarble
+  maxCount: 30
