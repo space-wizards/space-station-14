@@ -4,6 +4,9 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Mind;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Silicons.Laws;
+using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Containers;
 
 
@@ -14,6 +17,8 @@ public sealed class StationAIShuntSystem : EntitySystem
 
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedSiliconLawSystem _siliconLaw = default!;
 
     public override void Initialize()
     {
@@ -50,6 +55,15 @@ public sealed class StationAIShuntSystem : EntitySystem
         shunt.ReturnAction = _actionSystem.AddAction(target, shuntable.UnshuntAction.Id);
         shuntable.Inhabited = target;
 
+        if (TryComp<SiliconLawProviderComponent>(uid, out var coreLaws))
+        {
+            var getLaws = new GetSiliconLawsEvent(target);
+            RaiseLocalEvent(target, ref getLaws);
+            shunt.OldLawset = getLaws.Laws;
+
+            _siliconLaw.SetLawset(target, coreLaws.Lawset);
+        }
+
         EnsureComp<UncryoableComponent>(uid);
 
         ev.Handled = true;
@@ -84,8 +98,23 @@ public sealed class StationAIShuntSystem : EntitySystem
         }
 
         _actionSystem.RemoveAction(new Entity<ActionComponent?>(shunt.ReturnAction.Value, act));
-        _mindSystem.TransferTo(mindId, shunt.Return);
-        RemComp<UncryoableComponent>(shunt.Return.Value);
+        var target = shunt.Return.Value;
+        _mindSystem.TransferTo(mindId, target);
+        RemComp<UncryoableComponent>(target);
+
+
+
+        if (TryComp<StationAiCoreComponent>(target, out var core) &&
+            core.RemoteEntity.HasValue
+            )
+        {
+            _transform.SetMapCoordinates(core.RemoteEntity.Value,
+                _transform.ToMapCoordinates(Transform(uid).Coordinates)
+            );
+        }
+
+        _siliconLaw.SetLawset(uid, shunt.OldLawset);
+
         shunt.ReturnAction = null;
         shunt.Return = null;
         shuntable.Inhabited = null;
