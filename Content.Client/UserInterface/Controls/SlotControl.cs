@@ -21,7 +21,8 @@ namespace Content.Client.UserInterface.Controls
         public TextureButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
-        private EntityPrototypeView SpriteView { get; }
+        private SpriteView SpriteView { get; }
+        private EntityPrototypeView ProtoView { get; }
 
         public EntityUid? Entity => SpriteView.Entity;
 
@@ -137,8 +138,15 @@ namespace Content.Client.UserInterface.Controls
             ButtonRect.OnKeyBindDown += OnButtonPressed;
             ButtonRect.OnKeyBindUp += OnButtonUnpressed;
 
-            AddChild(SpriteView = new EntityPrototypeView
+            AddChild(SpriteView = new SpriteView
             {
+                Scale = new Vector2(2, 2),
+                SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
+                OverrideDirection = Direction.South
+            });
+            AddChild(ProtoView = new EntityPrototypeView
+            {
+                Visible = false,
                 Scale = new Vector2(2, 2),
                 SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
@@ -214,17 +222,20 @@ namespace Content.Client.UserInterface.Controls
         public void SetEntity(EntityUid? ent)
         {
             SpriteView.SetEntity(ent);
+            SpriteView.Visible = true;
+            ProtoView.Visible = false;
             UpdateButtonTexture();
         }
 
         public void SetPrototype(EntProtoId? proto, bool fade)
         {
-            SpriteView.SetPrototype(null); // we might have SetEntity
-            SpriteView.SetPrototype(proto);
+            ProtoView.SetPrototype(proto);
+            SpriteView.Visible = false;
+            ProtoView.Visible = true;
 
             UpdateButtonTexture();
 
-            if (SpriteView.Entity is not { } ent || !fade)
+            if (ProtoView.Entity is not { } ent || !fade)
                 return;
 
             var sprites = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
