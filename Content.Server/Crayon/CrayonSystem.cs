@@ -112,7 +112,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
         _uiSystem.TryToggleUi(uid, SharedCrayonComponent.CrayonUiKey.Key, args.User);
 
-        _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color, component.Rotation, component.PreviewEnabled, component.PreviewVisible, component.OpaqueGhost));
+        SetUIState(uid, component);
         args.Handled = true;
     }
 
@@ -151,24 +151,21 @@ public sealed class CrayonSystem : SharedCrayonSystem
             component.PreviewEnabled = args.State;
             Dirty(uid, component);
         }
-        else
-        {
-            _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color, component.Rotation, component.PreviewEnabled, component.PreviewVisible, component.OpaqueGhost));
-        }
+        else SetUIState(uid, component);
     }
 
     private void OnBoundUIOpened(EntityUid uid, CrayonComponent component, ref BoundUIOpenedEvent args)
     {
         component.OpaqueGhost = false;
         Dirty(uid, component);
-        _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color, component.Rotation, component.PreviewEnabled, component.PreviewVisible, component.OpaqueGhost));
+        SetUIState(uid, component);
     }
 
     private void OnBoundUIClosed(EntityUid uid, CrayonComponent component, ref BoundUIClosedEvent args)
     {
         component.OpaqueGhost = true;
         Dirty(uid, component);
-        _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color, component.Rotation, component.PreviewEnabled, component.PreviewVisible, component.OpaqueGhost));
+        SetUIState(uid, component);
     }
 
     private void OnHandSelected(EntityUid uid, CrayonComponent component, ref HandSelectedEvent args)
@@ -195,11 +192,16 @@ public sealed class CrayonSystem : SharedCrayonSystem
         SetPreviewVisible(uid, component, false);
     }
 
+    private void SetUIState(EntityUid uid, CrayonComponent component)
+    {
+        _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color, component.Rotation, component.PreviewEnabled, component.PreviewVisible, component.OpaqueGhost));
+    }
+
     private void SetPreviewVisible(EntityUid uid, CrayonComponent component, bool visible)
     {
         component.PreviewVisible = visible;
         Dirty(uid, component);
-        _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color, component.Rotation, component.PreviewEnabled, component.PreviewVisible, component.OpaqueGhost));
+        SetUIState(uid, component);
     }
 
     private void OnCrayonInit(EntityUid uid, CrayonComponent component, ComponentInit args)
