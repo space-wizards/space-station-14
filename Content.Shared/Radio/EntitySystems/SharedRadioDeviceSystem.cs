@@ -20,31 +20,8 @@ public abstract class SharedRadioDeviceSystem : EntitySystem
     }
 
 
-    public void SetMicrophoneEnabled(EntityUid uid, EntityUid? user, bool enabled, bool quiet = false, RadioMicrophoneComponent? component = null)
-    {
-        if (!Resolve(uid, ref component, false))
-            return;
+    public abstract void SetMicrophoneEnabled(EntityUid uid, EntityUid? user, bool enabled, bool quiet = false, RadioMicrophoneComponent? component = null);
 
-        var tryEnable = new TryEnableMicrophoneEvent(enabled, component.Enabled);
-        RaiseLocalEvent(uid, ref tryEnable);
-        if (tryEnable.Cancelled)
-            return;
-
-        component.Enabled = enabled;
-
-        if (!quiet && user != null)
-        {
-            var state = Loc.GetString(component.Enabled ? "handheld-radio-component-on-state" : "handheld-radio-component-off-state");
-            var message = Loc.GetString("handheld-radio-component-on-use", ("radioState", state));
-            _popup.PopupEntity(message, user.Value, user.Value);
-        }
-
-        _appearance.SetData(uid, RadioDeviceVisuals.Broadcasting, component.Enabled);
-        if (component.Enabled)
-            EnsureComp<ActiveListenerComponent>(uid).Range = component.ListenRange;
-        else
-            RemCompDeferred<ActiveListenerComponent>(uid);
-    }
 
     public void ToggleRadioSpeaker(EntityUid uid, EntityUid user, bool quiet = false, RadioSpeakerComponent? component = null)
     {
@@ -77,16 +54,3 @@ public abstract class SharedRadioDeviceSystem : EntitySystem
     #endregion
 }
 
-[ByRefEvent]
-public sealed class TryEnableMicrophoneEvent(bool enable, bool enabled) : CancellableEntityEventArgs
-{
-    /// <summary>
-    /// what state the microphone is trying to be set to
-    /// </summary>
-    public bool Enable = enable;
-
-    /// <summary>
-    /// the current enable state of the microphone.
-    /// </summary>
-    public bool Enabled = enabled;
-}

@@ -21,4 +21,6 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
         if (_ui.TryGetOpenUi<IntercomBoundUserInterface>(ent.Owner, IntercomUiKey.Key, out var bui))
             bui.Update(ent);
     }
+
+    public override void SetMicrophoneEnabled(EntityUid uid, EntityUid? user, bool enabled, bool quiet = false, RadioMicrophoneComponent? component = null) { }
 }

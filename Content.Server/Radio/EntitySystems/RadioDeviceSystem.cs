@@ -22,6 +22,7 @@ namespace Content.Server.Radio.EntitySystems;
 public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
@@ -39,7 +40,6 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
         SubscribeLocalEvent<RadioMicrophoneComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<RadioMicrophoneComponent, ListenAttemptEvent>(OnAttemptListen);
         SubscribeLocalEvent<RadioMicrophoneComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<RadioMicrophoneComponent, TryEnableMicrophoneEvent>(OnTryEnableMicrophone);
 
         SubscribeLocalEvent<RadioSpeakerComponent, ComponentInit>(OnSpeakerInit);
         SubscribeLocalEvent<RadioSpeakerComponent, ActivateInWorldEvent>(OnActivateSpeaker);
@@ -107,11 +107,31 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
         SetMicrophoneEnabled(uid, null, false, true, component);
     }
 
-    private void OnTryEnableMicrophone(Entity<RadioMicrophoneComponent> ent, ref TryEnableMicrophoneEvent ev)
+
+    public override void SetMicrophoneEnabled(EntityUid uid, EntityUid? user, bool enabled, bool quiet = false, RadioMicrophoneComponent? component = null)
     {
-        if (ent.Comp.PowerRequired && !this.IsPowered(ent.Owner, EntityManager))
-            ev.Cancel();
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        if (component.PowerRequired && !this.IsPowered(uid, EntityManager))
+            return;
+
+        component.Enabled = enabled;
+
+        if (!quiet && user != null)
+        {
+            var state = Loc.GetString(component.Enabled ? "handheld-radio-component-on-state" : "handheld-radio-component-off-state");
+            var message = Loc.GetString("handheld-radio-component-on-use", ("radioState", state));
+            _popup.PopupEntity(message, user.Value, user.Value);
+        }
+
+        _appearance.SetData(uid, RadioDeviceVisuals.Broadcasting, component.Enabled);
+        if (component.Enabled)
+            EnsureComp<ActiveListenerComponent>(uid).Range = component.ListenRange;
+        else
+            RemCompDeferred<ActiveListenerComponent>(uid);
     }
+
     #endregion
 
     private void OnExamine(EntityUid uid, RadioMicrophoneComponent component, ExaminedEvent args)
