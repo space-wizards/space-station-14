@@ -336,3 +336,30 @@
         - ItemMask
         restitution: 0.3
         friction: 0.2
+
+- type: entity
+  name: box cutter
+  parent: BaseKnife
+  id: BoxCutter
+  description: A knife with a tiny blade. Useful for cutting open mail, and in a pinch, butchering space carps.
+  components:
+  - type: Tag
+    tags:
+    - Knife
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/box_cutter.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 5
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Tiny
+    sprite: Objects/Weapons/Melee/box_cutter.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+
