@@ -14,7 +14,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'LV'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_hotel.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency.yml
         - type: StationJobs
           availableJobs:
             #service
