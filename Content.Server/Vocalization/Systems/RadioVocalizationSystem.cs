@@ -1,5 +1,5 @@
 using Content.Server.Chat.Systems;
-using Content.Server.Radio.Components;
+using Content.Shared.Radio.Components;
 using Content.Server.Vocalization.Components;
 using Content.Shared.Chat;
 using Content.Shared.Inventory;
@@ -42,9 +42,9 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
     /// Selects a random radio channel from all ActiveRadio entities in a given entity's inventory
     /// If no channels are found, this returns false and sets channel to an empty string
     /// </summary>
-    private bool TryPickRandomRadioChannel(EntityUid entity, out string channel)
+    private bool TryPickRandomRadioChannel(EntityUid entity, out ProtoId<RadioChannelPrototype> channel)
     {
-        HashSet<string> potentialChannels = [];
+        HashSet<ProtoId<RadioChannelPrototype>> potentialChannels = [];
 
         // we don't have to check if this entity has an inventory. GetHandOrInventoryEntities will not yield anything
         // if an entity has no inventory or inventory slots

@@ -3,7 +3,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Radio.Components;
+using Content.Shared.Radio.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Power;
@@ -11,18 +11,17 @@ using Content.Shared.Radio;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Content.Shared.Chat;
-using Content.Shared.Radio.Components;
 using Robust.Shared.Prototypes;
+using Content.Shared.Radio.EntitySystems;
 
 namespace Content.Server.Radio.EntitySystems;
 
 /// <summary>
 ///     This system handles radio speakers and microphones (which together form a hand-held radio).
 /// </summary>
-public sealed class RadioDeviceSystem : EntitySystem
+public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
@@ -40,6 +39,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         SubscribeLocalEvent<RadioMicrophoneComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<RadioMicrophoneComponent, ListenAttemptEvent>(OnAttemptListen);
         SubscribeLocalEvent<RadioMicrophoneComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<RadioMicrophoneComponent, TryEnableMicrophoneEvent>(OnTryEnableMicrophone);
 
         SubscribeLocalEvent<RadioSpeakerComponent, ComponentInit>(OnSpeakerInit);
         SubscribeLocalEvent<RadioSpeakerComponent, ActivateInWorldEvent>(OnActivateSpeaker);
@@ -100,15 +100,6 @@ public sealed class RadioDeviceSystem : EntitySystem
         ToggleRadioSpeaker(uid, args.User, args.Handled, component);
         args.Handled = true;
     }
-
-    public void ToggleRadioMicrophone(EntityUid uid, EntityUid user, bool quiet = false, RadioMicrophoneComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        SetMicrophoneEnabled(uid, user, !component.Enabled, quiet, component);
-    }
-
     private void OnPowerChanged(EntityUid uid, RadioMicrophoneComponent component, ref PowerChangedEvent args)
     {
         if (args.Powered)
@@ -116,57 +107,10 @@ public sealed class RadioDeviceSystem : EntitySystem
         SetMicrophoneEnabled(uid, null, false, true, component);
     }
 
-    public void SetMicrophoneEnabled(EntityUid uid, EntityUid? user, bool enabled, bool quiet = false, RadioMicrophoneComponent? component = null)
+    private void OnTryEnableMicrophone(Entity<RadioMicrophoneComponent> ent, ref TryEnableMicrophoneEvent ev)
     {
-        if (!Resolve(uid, ref component, false))
-            return;
-
-        if (component.PowerRequired && !this.IsPowered(uid, EntityManager))
-            return;
-
-        component.Enabled = enabled;
-
-        if (!quiet && user != null)
-        {
-            var state = Loc.GetString(component.Enabled ? "handheld-radio-component-on-state" : "handheld-radio-component-off-state");
-            var message = Loc.GetString("handheld-radio-component-on-use", ("radioState", state));
-            _popup.PopupEntity(message, user.Value, user.Value);
-        }
-
-        _appearance.SetData(uid, RadioDeviceVisuals.Broadcasting, component.Enabled);
-        if (component.Enabled)
-            EnsureComp<ActiveListenerComponent>(uid).Range = component.ListenRange;
-        else
-            RemCompDeferred<ActiveListenerComponent>(uid);
-    }
-
-    public void ToggleRadioSpeaker(EntityUid uid, EntityUid user, bool quiet = false, RadioSpeakerComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        SetSpeakerEnabled(uid, user, !component.Enabled, quiet, component);
-    }
-
-    public void SetSpeakerEnabled(EntityUid uid, EntityUid? user, bool enabled, bool quiet = false, RadioSpeakerComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        component.Enabled = enabled;
-
-        if (!quiet && user != null)
-        {
-            var state = Loc.GetString(component.Enabled ? "handheld-radio-component-on-state" : "handheld-radio-component-off-state");
-            var message = Loc.GetString("handheld-radio-component-on-use", ("radioState", state));
-            _popup.PopupEntity(message, user.Value, user.Value);
-        }
-
-        _appearance.SetData(uid, RadioDeviceVisuals.Speaker, component.Enabled);
-        if (component.Enabled)
-            EnsureComp<ActiveRadioComponent>(uid).Channels.UnionWith(component.Channels);
-        else
-            RemCompDeferred<ActiveRadioComponent>(uid);
+        if (ent.Comp.PowerRequired && !this.IsPowered(ent.Owner, EntityManager))
+            ev.Cancel();
     }
     #endregion
 
@@ -277,9 +221,9 @@ public sealed class RadioDeviceSystem : EntitySystem
         }
 
         if (TryComp<RadioMicrophoneComponent>(ent, out var mic))
-            mic.BroadcastChannel = channel;
+            mic.BroadcastChannel = channel.Value;
         if (TryComp<RadioSpeakerComponent>(ent, out var speaker))
-            speaker.Channels = new() { channel };
+            speaker.Channels = new() { channel.Value };
         Dirty(ent);
     }
 }
