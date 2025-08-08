@@ -25,7 +25,7 @@
       enum.HolidayVisuals.Holiday:
         christmas:
           festive: { visible: true }
-          none: { visible: false }
+          base: { visible: false }
   - type: AmbientSound
     volume: -6
     range: 5

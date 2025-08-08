@@ -21,7 +21,7 @@ public abstract class SharedHolidaySystem : EntitySystem
     protected readonly List<HolidayPrototype> CurrentHolidays = new(); // Should this be a HashSet?
 
     /// Key used by <see cref="HolidayVisuals.Holiday"/> when there's no celebrations.
-    protected const string NoHolidayKey = "none";
+    protected const string NoHolidayKey = "base";
 
     // CCvar.
     protected bool _enabled;
