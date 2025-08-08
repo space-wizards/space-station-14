@@ -213,6 +213,7 @@
   metabolisms:
     Poison:
       effects:
+      - !type:HealthChange
         # start harmony change
         conditions:
         - !type:OrganType
