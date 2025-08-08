@@ -4,6 +4,13 @@
   id: BaseMobResomi
   abstract: true
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Scratch
+    understands:
+    - GalacticCommon
+    - Scratch
   - type: Absorbable
   - type: Jump
     action: JumpResomi

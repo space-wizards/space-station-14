@@ -1102,11 +1102,15 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (_language.GetLanguageIcon(language, obfuscated ?? false))
             namestring = $"[icon src=\"{language.Icon}\" tooltip=\"{language.Name}\"] {entityName}";
 
+        var fonttype = language.SpeechOverride.FontId ?? speech.FontId;
+        if ((language.SpeechOverride.ObfuscationFont ?? false) && (!obfuscated ?? false))
+            fonttype = speech.FontId;
+
         return Loc.GetString(wrapId,
             ("color", color),
             ("entityName", namestring),
             ("verb", Loc.GetString(verbId)),
-            ("fontType", language.SpeechOverride.FontId ?? speech.FontId),
+            ("fontType", fonttype),
             ("fontSize", language.SpeechOverride.FontSize ?? speech.FontSize),
             ("message", message));
     }

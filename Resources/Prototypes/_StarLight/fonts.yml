@@ -21,3 +21,7 @@
 - type: font
   id: Mangat
   path: /Fonts/_Starlight/Mangat.ttf
+
+- type: font
+  id: Scratch
+  path: /Fonts/_Starlight/Scratch.ttf

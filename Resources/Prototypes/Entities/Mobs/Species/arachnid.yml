@@ -5,6 +5,13 @@
   id: BaseMobArachnid
   abstract: true
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Chittin
+    understands:
+    - GalacticCommon
+    - Chittin
   - type: Absorbable
   - type: Body
     prototype: Arachnid

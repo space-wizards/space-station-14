@@ -1,0 +1,27 @@
+- type: language
+  id: Ancestor
+  icon: LanguageIconAnimal
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 8
+    replacement:
+    - o
+    - k
+
+- type: language
+  id: Mouse
+  icon: LanguageIconAnimal
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 2
+    maxSyllables: 3
+    replacement:
+    - squ
+    - eak
+    - pi
+    - ep
+    - chuu
+    - ee
+    - fwi
+    - he

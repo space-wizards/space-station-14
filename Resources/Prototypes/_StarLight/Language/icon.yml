@@ -104,8 +104,39 @@
 
 - type: jobIcon
   parent: JobIcon
-  id: LanguageIconCodeScurret
+  id: LanguageIconScurret
   icon:
     sprite: /Textures/_Starlight/Interface/language_icon.rsi
     state: survivor
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconAvali
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: avali
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconTerrum
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: golem
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconBrain
+  icon:
+    sprite: brain
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconChittin
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: buzz
   allowSelection: false

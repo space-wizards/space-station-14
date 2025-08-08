@@ -1,6 +1,6 @@
 - type: language
   id: ScurretSign
-  icon: LanguageIconCodeScurret
+  icon: LanguageIconScurret
   speech:
     allowRadio: false
     requireSpeech: false

@@ -5,6 +5,13 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Sylvan
+    understands:
+    - GalacticCommon
+    - Sylvan
   - type: Absorbable
   - type: Tag
     tags:

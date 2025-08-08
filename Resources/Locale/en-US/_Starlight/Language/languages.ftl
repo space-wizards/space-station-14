@@ -32,4 +32,19 @@ language-Draconic-name = Draconic
 language-Draconic-description = The common language of lizard-people, composed of sibilant hisses and rattles.
 
 language-ScurretSign-name = Scurret Sign
-language-ScurretSign-description =  Wawa! The secret Sign making you able to understand your fellows scurret!
+language-ScurretSign-description = Wawa! The secret Sign making you able to understand your fellows scurret!
+
+language-Ancestor-name = Ancestor
+language-Ancestor-description = The proto-language primarily utilized by monkeys and apes.
+
+language-Mouse-name = Mouse
+language-Mouse-description = Squeeek!
+
+language-Scratch-name = Scratch
+language-Scratch-description = WIP
+
+language-Terrum-name = Terrum
+language-Terrum-description = Sounds similar to old-earth Hebrew.
+
+language-Chittin-name = Chittin
+language-Chittin-description = The noise made by rubbing its antennae together is actually a complex form of communication.

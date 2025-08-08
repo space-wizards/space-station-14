@@ -5,6 +5,13 @@
   id: BaseMobShadekin
   abstract: true
   components:
+    - type: LanguageKnowledge
+      speaks:
+      - GalacticCommon
+      - Marish
+      understands:
+      - GalacticCommon
+      - Marish
     - type: Shadekin
     - type: Absorbable
     - type: Hunger

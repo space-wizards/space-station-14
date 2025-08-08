@@ -33,6 +33,17 @@ public abstract partial class ObfuscationMethod
 }
 
 /// <summary>
+///  Does not obfuscate, this is used for languages that focus on the font instead of actual Obfuscation.
+/// </summary>
+public partial class NoObfuscation : ObfuscationMethod
+{
+    internal override void Obfuscate(StringBuilder builder, string message, SharedLanguageSystem context)
+    {
+        builder.Append(message);
+    }
+}
+
+/// <summary>
 ///     The most primitive method of obfuscation - replaces the entire message with one random replacement phrase.
 ///     Similar to ReplacementAccent. Base for all replacement-based obfuscation methods.
 /// </summary>
