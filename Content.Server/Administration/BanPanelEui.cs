@@ -131,8 +131,12 @@ public sealed class BanPanelEui : BaseEui
                 }
                 else
                 {
-                    //TODO: Notify the user too
                     _sawmill.Warning($"{Player.Name} ({Player.UserId}) tried to issue a role ban with an invalid id: '{role}'");
+
+                    // Keep the window open in case of failure, to indicate that the ban was not placed
+                    //TODO: Notify the admin properly about what failed and why
+                    return;
+
                 }
                 //TODO: Phase out string-typed roles, take/pass indexed prototypes. Then we can eventually handle/accept prototype overlaps
             }
