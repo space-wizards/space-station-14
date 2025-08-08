@@ -372,21 +372,21 @@ namespace Content.Shared.Damage
             var highestType = new List<string>();
             var highestValue = FixedPoint2.Zero;
 
-            foreach (var (damageGroupId, damageAmount) in damagePerGroup)  //go trough each group
+            foreach (var (damageGroupId, damageAmount) in damagePerGroup)  //go through each group
             {
                 var group = _prototypeManager.Index<DamageGroupPrototype>(damageGroupId);  //get group
-                foreach (var type in group.DamageTypes) //go trough each type inside that group
+                foreach (var type in group.DamageTypes) //go through each type inside that group
                 {
-                    if (damage.DamageDict.TryGetValue(type, out var damageValue) && damageValue > 0)  //get value and make sure it isnt 0
+                    if (damage.DamageDict.TryGetValue(type, out var damageValue) && damageValue > 0)  //get value and make sure it isn't 0
                     {
-                        if (damageValue > highestValue)  //if its higher, clear the list and add the value
+                        if (damageValue > highestValue)  //if it's higher, clear the list and add the value
                         {
                             highestType.Clear();
                             highestType.Add(type);
 
                             highestValue = damageValue;
                         }
-                        else if (damageValue == highestValue)  //if its the same, add it to the list
+                        else if (damageValue == highestValue)  //if it's the same, add it to the list
                         {
                             highestType.Add(type);
                         }

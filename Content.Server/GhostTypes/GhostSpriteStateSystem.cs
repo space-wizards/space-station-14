@@ -1,7 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Mind;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.GhostTypes;
 
@@ -16,7 +15,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(ent, out var appearance))
             return;
 
-        var highestType = new List<string>();
+        var highestType = new List<string>();  //set up damage list and try to find the entity damage
         if (TryComp<DamageableComponent>(mind.CurrentEntity, out var damageComp))
         {
             highestType = _damageable.GetHighestDamageTypes(damageComp.DamagePerGroup, damageComp.Damage);
@@ -30,31 +29,27 @@ public sealed class GhostSpriteStateSystem : EntitySystem
 
         if (highestType.Count == 0)
             return;
-        highestType.Sort();
+
+        highestType.Sort();  //sort if alphabetically
 
         string spriteState;
-        if (highestType is ["Blunt", "Heat", "Piercing"])
+        if (highestType is ["Blunt", "Heat", "Piercing"])  //special case for explosions
         {
-            var number = _random.Next(1, 4);
-            spriteState = "explosion" + number;
+            spriteState = "explosion" + _random.Next(1, 4);  //Chooses between 3 possible sprites
         }
-        else if ( highestType.Count == 1)
+        else
         {
             if (highestType[0] == "Blunt"
                 || highestType[0] == "Slash"
-                || highestType[0] == "Pierce")
+                || highestType[0] == "Piercing")
             {
-                var number = _random.Next(1, 4);
-                spriteState = highestType[0] + number;
+                spriteState = highestType[0] + _random.Next(1, 4); //Chooses between 3 possible sprites
             }
             else
             {
-                spriteState = highestType[0];
+                spriteState = highestType[_random.Next(0, highestType.Count)]; //Uses the 1 possible sprite
             }
         }
-        else // if it doesn't fall into any specific category, choose randomly
-            spriteState = highestType[_random.Next(0, highestType.Count - 1)];
-
         _appearance.SetData(ent, GhostVisuals.Damage, (state.Prefix + spriteState).ToLower(), appearance);
     }
 }

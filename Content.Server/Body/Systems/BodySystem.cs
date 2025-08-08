@@ -107,7 +107,7 @@ public sealed class BodySystem : SharedBodySystem
     )
     {
         var beforeEvent = new BeforeBodyDestructionEvent();
-        RaiseLocalEvent(bodyId, ref beforeEvent);
+        RaiseLocalEvent(bodyId, ref beforeEvent);  //Stores the body damages inside of the entity MindComponent
 
         if (!Resolve(bodyId, ref body, logMissing: false)
             || TerminatingOrDeleted(bodyId)

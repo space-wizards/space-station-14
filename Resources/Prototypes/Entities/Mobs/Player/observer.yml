@@ -51,15 +51,15 @@
     visuals:
       enum.GhostVisuals.Damage:
         ghostVariant:
-          ghost_blunt1: { state: ghost_blunt1 } #wawa tis is icki gotta make it less icki
+          ghost_blunt1: { state: ghost_blunt1 } #this is an icki way of doing this u.u -Thinbug
           ghost_blunt2: { state: ghost_blunt2 }
           ghost_blunt3: { state: ghost_blunt3 }
           ghost_slash1: { state: ghost_slash1 }
           ghost_slash2: { state: ghost_slash2 }
           ghost_slash3: { state: ghost_slash3 }
-          ghost_pierce1: { state: ghost_pierce1 }
-          ghost_pierce2: { state: ghost_pierce2 }
-          ghost_pierce3: { state: ghost_pierce3 }
+          ghost_piercing1: { state: ghost_piercing1 }
+          ghost_piercing2: { state: ghost_piercing2 }
+          ghost_piercing3: { state: ghost_piercing3 }
           ghost_heat: { state: ghost_heat }
           ghost_cold: { state: ghost_cold }
           ghost_shock: { state: ghost_shock }
@@ -70,7 +70,6 @@
           ghost_explosion1: { state: ghost_explosion1 }
           ghost_explosion2: { state: ghost_explosion2 }
           ghost_explosion3: { state: ghost_explosion3 }
-          ghost_bloodloss: { state: animated }
   - type: ContentEye
     maxZoom: 1.44,1.44
   - type: Eye
