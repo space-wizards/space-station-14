@@ -14,7 +14,7 @@ namespace Content.Server.Mind.Filters;
 public sealed partial class TargetObjectiveMindFilter : MindFilter
 {
     /// <summary>
-    /// A whitelist to check objectives against to remove a mind.
+    /// A blacklist to check objectives against, for removing a mind.
     /// If null then any objective targeting it will remove minds.
     /// </summary>
     [DataField]
