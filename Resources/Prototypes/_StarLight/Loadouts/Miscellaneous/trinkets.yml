@@ -44,7 +44,7 @@
         time: 144000 # 40hr
   storage:
     back:
-    - ClothingShoesHighheelShoesAesthetic
+    - ClothingShoesHighheelShoes
   groupBy: "cat maid"
 
 - type: loadout
