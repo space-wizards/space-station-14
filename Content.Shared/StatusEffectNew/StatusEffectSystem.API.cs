@@ -30,7 +30,7 @@ public sealed partial class StatusEffectsSystem
 
         // We check to make sure time is greater than zero here because sometimes you want to use TryAddStatusEffect to remove duration instead...
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
-            return duration > TimeSpan.Zero && TryAddStatusEffect(target, effectProto, out statusEffect, duration);
+            return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
         AddStatusEffectTime(statusEffect.Value, duration);
 
@@ -67,7 +67,7 @@ public sealed partial class StatusEffectsSystem
         }
 
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
-            return duration > TimeSpan.Zero && TryAddStatusEffect(target, effectProto, out statusEffect, duration);
+            return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
         SetStatusEffectTime(statusEffect.Value, duration);
 
@@ -103,7 +103,7 @@ public sealed partial class StatusEffectsSystem
         }
 
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
-            return duration > TimeSpan.Zero && TryAddStatusEffect(target, effectProto, out statusEffect, duration);
+            return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
         UpdateStatusEffectTime(statusEffect.Value, duration);
 
