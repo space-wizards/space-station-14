@@ -307,8 +307,8 @@
   alias:
     - lingtraitor
     - traitorling
-  name: secret-title
-  description: secret-description
+  name: traitorling-title
+  description: traitorling-description
   showInVote: true #Starlight
   minPlayers: 50 #Starlight
   rules:
@@ -316,4 +316,19 @@
     - Traitor
     - SubGamemodesRuleNoChangelings #Starlight
     - BasicStationEventScheduler
+    - BasicRoundstartVariation
+
+#Starlight EventLight Gamemode for Event Usage 
+- type: gamePreset
+  id: EventLight
+  alias:
+    - eventlight
+    - eventlite
+    - eventdiet
+  name: eventlight-title
+  description: eventlight-description
+  showInVote: false
+  rules:
+    - SpaceTrafficControlEventScheduler
+    - ThiefGamerule
     - BasicRoundstartVariation
