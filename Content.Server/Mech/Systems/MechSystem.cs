@@ -100,10 +100,6 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
         SubscribeLocalEvent<MechComponent, MechMaintenanceUiMessage>(OnMaintenanceMessage);
 
-        SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechCanMoveEvent);
-        SubscribeLocalEvent<MechComponent, ShotAttemptedEvent>(OnShootAttempt);
-        SubscribeLocalEvent<MechComponent, CanRepairEvent>(CanRepaire);
-
         SubscribeLocalEvent<MechPilotComponent, ToolUserAttemptUseEvent>(OnToolUseAttempt);
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
         SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
@@ -236,29 +232,6 @@ public sealed partial class MechSystem : SharedMechSystem
         UpdateAppearance(uid, component);
     }
 
-    private void OnMechCanMoveEvent(EntityUid uid, MechComponent component, UpdateCanMoveEvent args)
-    {
-        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0 || component.MaintenanceMode)
-            args.Cancel();
-    }
-
-    private void OnShootAttempt(EntityUid uid, MechComponent component, ref ShotAttemptedEvent args)
-    {
-        if (!component.MaintenanceMode)
-            return;
-
-        args.Cancel();
-    }
-
-    private void CanRepaire(EntityUid uid, MechComponent component, ref CanRepairEvent args)
-    {
-        if (!component.MaintenanceMode)
-        {
-            args.Cancel();
-            args.Message = "You need to turn on maintenance mode first!";
-        }
-    }
-
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
     {
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
@@ -382,6 +355,8 @@ public sealed partial class MechSystem : SharedMechSystem
     private void OnMaintenanceMessage(EntityUid uid, MechComponent component, MechMaintenanceUiMessage args)
     {
         component.MaintenanceMode = args.Toggle;
+        
+        Dirty(uid, component); // Starlight-edit: Update Maintenance State
 
         _actionBlocker.UpdateCanMove(uid);
     }

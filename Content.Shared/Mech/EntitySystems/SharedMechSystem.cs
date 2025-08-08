@@ -64,10 +64,42 @@ public abstract partial class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechPilotComponent, GetMeleeWeaponEvent>(OnGetMeleeWeapon);
         SubscribeLocalEvent<MechPilotComponent, CanAttackFromContainerEvent>(OnCanAttackFromContainer);
         SubscribeLocalEvent<MechPilotComponent, AttackAttemptEvent>(OnAttackAttempt);
-        SubscribeLocalEvent<MechPilotComponent, EntGotRemovedFromContainerMessage>(OnPilotRemoved); //Starlight
+        SubscribeLocalEvent<MechPilotComponent, EntGotRemovedFromContainerMessage>(OnPilotRemoved); // Starlight-edit
+        
+        SubscribeLocalEvent<MechComponent, ShotAttemptedEvent>(OnShootAttempt); // Starlight-edit: Moved from server side, broken
+        SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechCanMoveEvent); // Starlight-edit: Moved from server side, broken
+        SubscribeLocalEvent<MechComponent, CanRepairEvent>(OnRepairAttempt); // Starlight-edit: Moved from server side, broken
 
         InitializeRelay();
     }
+    
+    // Starlight-start: Attempt events
+    
+    private void OnMechCanMoveEvent(EntityUid uid, MechComponent component, UpdateCanMoveEvent args)
+    {
+        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0 || component.MaintenanceMode)
+            args.Cancel();
+    }
+    
+    private void OnShootAttempt(EntityUid uid, MechComponent component, ref ShotAttemptedEvent args)
+    {
+        if (!component.MaintenanceMode)
+            return;
+        
+        _popup.PopupCursor("Turn off maintenance mode first!", args.User, PopupType.MediumCaution); // Starlight: I think we need translation strings?
+        args.Cancel();
+    }
+    
+    private void OnRepairAttempt(EntityUid uid, MechComponent component, ref CanRepairEvent args)
+    {
+        if (!component.MaintenanceMode)
+        {
+            args.Cancel();
+            args.Message = "You need to turn on maintenance mode first!";
+        }
+    }
+    
+    // Starlight-end
 
     private void OnToggleEquipmentAction(EntityUid uid, MechComponent component, MechToggleEquipmentEvent args)
     {
@@ -476,9 +508,7 @@ public abstract partial class SharedMechSystem : EntitySystem
             return false;
 
         if (HasComp<NoRotateOnMoveComponent>(uid))
-        {
             RemComp<NoRotateOnMoveComponent>(uid);
-        }
 
         var pilot = component.PilotSlot.ContainedEntity.Value;
 
