@@ -174,7 +174,7 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
-## Renamed replacement of Wizden black salvage doors #DOTS - add to migration.yml?
+## Renamed replacement of Wizden black salvage doors
 - type: entity
   parent: AirlockRetroSalvageMining
   id: AirlockRetroSalvageMiningLocked

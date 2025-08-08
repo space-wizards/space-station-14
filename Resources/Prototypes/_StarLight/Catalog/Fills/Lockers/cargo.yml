@@ -4,6 +4,7 @@
   table: !type:AllSelector
     children:
     - id: BoxFolderClipboard
+    - id: RubberStampSalvageLead
 
 - type: entityTable
   id: FillSalvageLeadHardsuitSpatio

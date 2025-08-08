@@ -11,7 +11,7 @@
   - type: Sprite
     sprite: _Starlight/Objects/Misc/stamps.rsi
     state: stamp-magistrate
-    
+
 - type: entity
   name: NT representative's rubber stamp
   parent: [ RubberStampBase, BaseCommandContraband ]
@@ -25,7 +25,7 @@
   - type: Sprite
     sprite: _Starlight/Objects/Misc/stamps.rsi
     state: stamp-ntrep
-    
+
 - type: entity
   name: internal affairs agent's rubber stamp
   parent: [ RubberStampBase, BaseLawContraband ]
@@ -53,7 +53,7 @@
   - type: Sprite
     sprite: _Starlight/Objects/Misc/stamps.rsi
     state: stamp-bso
-    
+
 - type: entity
   name: Brigmedic's rubber stamp
   parent: RubberStampBase
@@ -185,3 +185,17 @@
     stampState: "paper_stamp-hos"
   - type: Sprite
     state: stamp-hos
+
+- type: entity
+  name: Salvage Lead's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampSalvageLead
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: "Salvage Lead"
+    stampedColor: "#846433"
+    stampState: "paper_stamp-salvagelead"
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/stamps.rsi
+    state: stamp-salvagelead
