@@ -1,5 +1,6 @@
-using Content.Shared.Shuttles.Components;
 using Content.Server.Polymorph.Components;
+using Content.Shared.Destructible;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
@@ -31,10 +32,9 @@ public sealed class SpaceGarbageSystem : EntitySystem
         if (ourXform.GridUid == otherXform.GridUid)
             return;
 
-        // Do not delete polymorphed entities (e.g., players polymorphed into items like bread)
-        if (HasComp<PolymorphedEntityComponent>(uid))
+        // Fire a destruction attempt so other systems (e.g., Godmode/Indestructible/Polymorph) can cancel.
+        // This also allows polymorph to revert if needed when destruction proceeds.
+        if (!EntityManager.System<SharedDestructibleSystem>().DestroyEntity(uid))
             return;
-
-        QueueDel(uid);
     }
 }
