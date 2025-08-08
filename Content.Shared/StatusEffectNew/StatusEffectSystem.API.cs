@@ -60,7 +60,7 @@ public sealed partial class StatusEffectsSystem
         TimeSpan? duration = null
     )
     {
-        if (duration == TimeSpan.Zero)
+        if (duration <= TimeSpan.Zero)
         {
             statusEffect = null;
             return false;
