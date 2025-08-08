@@ -19,9 +19,7 @@ public abstract class SharedRadioDeviceSystem : EntitySystem
         SetMicrophoneEnabled(uid, user, !component.Enabled, quiet, component);
     }
 
-
     public abstract void SetMicrophoneEnabled(EntityUid uid, EntityUid? user, bool enabled, bool quiet = false, RadioMicrophoneComponent? component = null);
-
 
     public void ToggleRadioSpeaker(EntityUid uid, EntityUid user, bool quiet = false, RadioSpeakerComponent? component = null)
     {
