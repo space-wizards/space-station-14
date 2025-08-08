@@ -37,14 +37,15 @@ public sealed class GhostRoleRadioBoundUserInterface(EntityUid owner, Enum uiKey
             // For each prototype we find we want to create a button that uses the name of the ghost role
             // as the hover tooltip, and the icon is taken from either the ghost role entityprototype
             // or the indicated icon entityprototype.
-            if (!_prototypeManager.TryIndex(ghostRoleProtoId, out var ghostRoleProto))
+            if (!_prototypeManager.Resolve(ghostRoleProtoId, out var ghostRoleProto))
                 continue;
 
             var option = new RadialMenuActionOption<ProtoId<GhostRolePrototype>>(SendGhostRoleRadioMessage, ghostRoleProtoId)
             {
                 ToolTip = Loc.GetString(ghostRoleProto.Name),
                 // pick the icon if it exists, otherwise fallback to the ghost role's entity
-                IconSpecifier = _prototypeManager.TryIndex(ghostRoleProto.IconPrototype, out var iconProto)
+                IconSpecifier = ghostRoleProto.IconPrototype != null
+                                && _prototypeManager.Resolve(ghostRoleProto.IconPrototype, out var iconProto)
                     ? RadialMenuIconSpecifier.With(iconProto)
                     : RadialMenuIconSpecifier.With(ghostRoleProto.EntityPrototype)
             };
