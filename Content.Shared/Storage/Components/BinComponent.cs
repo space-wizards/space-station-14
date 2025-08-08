@@ -40,18 +40,6 @@ public sealed partial class BinComponent : Component
     public SpriteSpecifier? RemoveIcon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/eject.svg.192dpi.png"));
 
     /// <summary>
-    /// A list representing the order in which
-    /// all the entities are stored in the bin.
-    /// </summary>
-    /// <remarks>
-    /// The only reason this isn't a stack is so that
-    /// i can handle entities being deleted and removed
-    /// out of order by other systems
-    /// </remarks>
-    [DataField, AutoNetworkedField]
-    public List<EntityUid> Items = new();
-
-    /// <summary>
     /// The items that start in the bin. Sorted in order.
     /// </summary>
     [DataField]

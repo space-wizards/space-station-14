@@ -30,8 +30,6 @@ public sealed class BinSystem : EntitySystem
     {
         SubscribeLocalEvent<BinComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BinComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<BinComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
-        SubscribeLocalEvent<BinComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
         SubscribeLocalEvent<BinComponent, InteractHandEvent>(OnInteractHand, before: new[] { typeof(SharedItemSystem) });
         SubscribeLocalEvent<BinComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<BinComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
@@ -40,7 +38,7 @@ public sealed class BinSystem : EntitySystem
 
     private void OnExamined(Entity<BinComponent> entity, ref ExaminedEvent args)
     {
-        args.PushText(Loc.GetString("bin-component-on-examine-text", ("count", entity.Comp.Items.Count)));
+        args.PushText(Loc.GetString("bin-component-on-examine-text", ("count", entity.Comp.ItemContainer.Count)));
     }
 
     private void OnStartup(Entity<BinComponent> entity, ref ComponentStartup args)
@@ -64,24 +62,6 @@ public sealed class BinSystem : EntitySystem
             Log.Error($"Entity {ToPrettyString(ent)} was unable to be initialized into bin {ToPrettyString(entity)}");
             return;
         }
-    }
-
-    private void OnEntInserted(Entity<BinComponent> ent, ref EntInsertedIntoContainerMessage args)
-    {
-        if (args.Container.ID != ent.Comp.ContainerId)
-            return;
-
-        ent.Comp.Items.Add(args.Entity);
-        Dirty(ent);
-    }
-
-    private void OnEntRemoved(Entity<BinComponent> ent, ref EntRemovedFromContainerMessage args)
-    {
-        if (args.Container.ID != ent.Comp.ContainerId)
-            return;
-
-        ent.Comp.Items.Remove(args.Entity);
-        Dirty(ent);
     }
 
     private void OnInteractHand(Entity<BinComponent> entity, ref InteractHandEvent args)
@@ -114,7 +94,7 @@ public sealed class BinSystem : EntitySystem
             };
             args.Verbs.Add(verb);
         }
-        else if (TryGetLastItem(entity, out var subject))
+        else if (entity.Comp.ItemContainer.ContainedEntities.LastOrDefault() is var subject)
         {
             AlternativeVerb verb = new()
             {
@@ -142,7 +122,7 @@ public sealed class BinSystem : EntitySystem
 
     public bool CanInsertIntoBin(Entity<BinComponent> entity, EntityUid toInsert)
     {
-        if (entity.Comp.Items.Count >= entity.Comp.MaxItems)
+        if (entity.Comp.ItemContainer.Count >= entity.Comp.MaxItems)
             return false;
 
         return _whitelistSystem.IsWhitelistPassOrNull(entity.Comp.Whitelist, toInsert);
@@ -172,16 +152,6 @@ public sealed class BinSystem : EntitySystem
         return true;
     }
 
-    private bool TryGetLastItem(Entity<BinComponent> entity, [NotNullWhen(true)] out EntityUid? toRemove)
-    {
-        toRemove = null;
-        if (entity.Comp.Items.Count == 0)
-            return false;
-
-        toRemove = entity.Comp.Items.Last();
-        return true;
-    }
-
     /// <summary>
     /// Tries to remove an entity from the top of the bin.
     /// </summary>
@@ -191,7 +161,9 @@ public sealed class BinSystem : EntitySystem
     /// <returns>Returns false if removal was successful.</returns>
     public bool TryRemoveFromBin(Entity<BinComponent> entity, [NotNullWhen(true)] out EntityUid? removed, EntityUid? user = null)
     {
-        if (!TryGetLastItem(entity, out removed))
+        removed = entity.Comp.ItemContainer.ContainedEntities.LastOrDefault();
+
+        if (removed == null)
             return false;
 
         if (!_container.Remove(removed.Value, entity.Comp.ItemContainer))
