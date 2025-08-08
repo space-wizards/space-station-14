@@ -1,4 +1,6 @@
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Changeling;
 using Content.Shared.Changeling.Transform;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -9,6 +11,8 @@ namespace Content.Client.Changeling.Transform;
 public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private SimpleRadialMenu? _menu;
+    private static readonly Color SelectedOptionBackground = StyleNano.ButtonColorGoodDefault.WithAlpha(128);
+    private static readonly Color SelectedOptionHoverBackground = StyleNano.ButtonColorGoodHovered.WithAlpha(128);
 
     protected override void Open()
     {
@@ -29,15 +33,20 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
         if (state is not ChangelingTransformBoundUserInterfaceState current)
             return;
 
-        var models = ConvertToButtons(current);
+        EntMan.TryGetComponent<ChangelingIdentityComponent>(Owner, out var identityComponent);
+        var models = ConvertToButtons(current, identityComponent?.CurrentIdentity);
 
         _menu.SetButtons(models);
     }
 
-    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(ChangelingTransformBoundUserInterfaceState current)
+    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(
+        ChangelingTransformBoundUserInterfaceState current,
+        EntityUid? currentIdentity
+    )
     {
+        var identities = current.Identites;
         var buttons = new List<RadialMenuOptionBase>();
-        foreach (var identity in current.Identites)
+        foreach (var identity in identities)
         {
             var identityUid = EntMan.GetEntity(identity);
 
@@ -49,7 +58,9 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             var option = new RadialMenuActionOption<NetEntity>(SendIdentitySelect, identity)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(identityUid),
-                ToolTip = identityName
+                ToolTip = identityName,
+                BackgroundColor = currentIdentity == identityUid ? SelectedOptionBackground : null,
+                HoverBackgroundColor = currentIdentity == identityUid ? SelectedOptionHoverBackground : null
             };
             buttons.Add(option);
         }
