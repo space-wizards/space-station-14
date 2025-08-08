@@ -57,11 +57,11 @@ guide-entry-sl-non-crew-policies = Non-crew Policies
 guide-entry-sl-docking-and-visitors = Docking and Visitors
 guide-entry-sl-vessels = Vessels
 
-guide-entry-sl-nanotrasen-staff-handling-policies = Nontrasen Staff Handling Policies
+guide-entry-sl-nanotrasen-staff-handling-policies = NanoTrasen Staff Handling Policies
 guide-entry-sl-hiring-transfer-policies = Hiring / Transfer
 guide-entry-sl-firing-demotion-policies = Firing / Demotion
 guide-entry-sl-cause-for-demotion = Causes for Demotion and Dismissal
-guide-entry-sl-vote-of-no-confidence = Vote of No Confidence
+guide-entry-sl-vote-of-no-confidence = Vote Of No Confidence
 guide-entry-sl-money-accounts-and-space-credits = Money Accounts and Space Credits
 
 guide-entry-sl-security-sop-intro = Security
@@ -76,21 +76,44 @@ guide-entry-sl-security-sop-prisonertreatment = Prisoner Treatment
 guide-entry-sl-legal-sop-intro = Legal
 
 guide-entry-sl-engineering-sop-intro = Engineering
+guide-entry-sl-engineering-sop-genproc-intro = General Procedures
 guide-entry-sl-engineering-sop-power-generation = Power Generation
 guide-entry-sl-engineering-sop-station-damage = Station Damage
+guide-entry-sl-engineering-sop-staff-intro = Staff Procedures
 guide-entry-sl-engineering-sop-chief-engineer = Chief Engineer
 guide-entry-sl-engineering-sop-station-engineer = Station Engineer
 guide-entry-sl-engineering-sop-atmos-tech = Atmospheric Technician
 guide-entry-sl-engineering-sop-technical-assistant = Technical Assistant
 
 guide-entry-sl-medical-sop-intro = Medical
+guide-entry-sl-medical-sop-genproc-intro = General Procedures
+guide-entry-sl-medical-sop-contrabandchemicals = Contraband Chemicals
+guide-entry-sl-medical-sop-chemsminorcontraband = Minor Contraband
+guide-entry-sl-medical-sop-chemsmajorcontraband = Major Contraband
+guide-entry-sl-medical-sop-chemssyndicatecontraband = Syndicate Contraband
+guide-entry-sl-medical-sop-medicalbay = Medical Bay
+guide-entry-sl-medical-sop-patientcare = Patient Care
+guide-entry-sl-medical-sop-deceasedpatientcare = Deceased Patient Care
+guide-entry-sl-medical-sop-violetalertprotocol = Violet Alert Protocol
+guide-entry-sl-medical-sop-staff-intro = Staff Procedures
+guide-entry-sl-medical-sop-chiefmedicalofficer = Chief Medical Officer
+guide-entry-sl-medical-sop-surgeon = Surgeon
+guide-entry-sl-medical-sop-medicaldoctor = Medical Doctor
+guide-entry-sl-medical-sop-medicalintern = Medical Intern
+guide-entry-sl-medical-sop-paramedic = Paramedic
+guide-entry-sl-medical-sop-psychologist = Psychologist
+guide-entry-sl-medical-sop-chemist = Chemist
 
 guide-entry-sl-cargo-sop-intro = Cargo
+guide-entry-sl-cargo-sop-genproc-intro = General Procedures
 guide-entry-sl-cargo-sop-cargotechnician = Cargo Technician
+guide-entry-sl-cargo-sop-mailtechnician = Mail Technician
 guide-entry-sl-cargo-sop-miningspecialist = Mining Specialist
 guide-entry-sl-cargo-sop-salvagespecialist = SalvageSpecialist
-guide-entry-sl-cargo-sop-quartermaster = Quartermaster (QM)
+guide-entry-sl-cargo-sop-quartermaster = Quartermaster
+guide-entry-sl-cargo-sop-staff-intro = Staff Procedures
 guide-entry-sl-cargo-sop-handlingorders = Handling Orders
+guide-entry-sl-cargo-sop-preapprovedmaterials = Pre-Approved Materials
 guide-entry-sl-cargo-sop-handlingorders-engineering = Engineering Orders
 guide-entry-sl-cargo-sop-handlingorders-security = Security Orders
 guide-entry-sl-cargo-sop-handlingorders-science = Science Orders
@@ -100,9 +123,15 @@ guide-entry-sl-cargo-sop-handlingorders-service = Service Orders
 guide-entry-sl-science-sop-intro = Science
 
 guide-entry-sl-nano-trasen-employee-sop-intro = NanoTrasen Employee
+guide-entry-sl-nano-trasen-employee-sop-genproc-intro = General Procedures
 guide-entry-sl-nano-trasen-employee-sop-safety-protocol = Safety Protocol
+guide-entry-sl-nano-trasen-employee-sop-staff-intro = Staff Procedures
 guide-entry-sl-nano-trasen-employee-sop-nt-rep = NanoTrasen Representative
 guide-entry-sl-nano-trasen-employee-sop-bso = BlueShield Officer
 guide-entry-sl-nano-trasen-employee-sop-magistrate = Magistrate
 guide-entry-sl-nano-trasen-employee-sop-iaa = Internal Affairs Agent
 
+guide-entry-sl-service-sop-intro = Service
+guide-entry-sl-service-sop-genproc-intro = General Procedures
+guide-entry-sl-service-sop-staff-intro = Staff Procedures
+guide-entry-sl-service-sop-headofpersonnel = Head of Personnel

@@ -113,6 +113,8 @@
     sprite: _Starlight/Clothing/Head/Hardsuits/ntnc_hardsuit_helmet.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Head/Hardsuits/ntnc_hardsuit_helmet.rsi
+  - type: Item
+    size: Small
   - type: PointLight
     color: "#addbff"
   - type: Pierceable
