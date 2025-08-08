@@ -45,4 +45,13 @@
     state: corner_convex
     drawdepth: FloorTiles
 
+- type: entity
+  id: IronsandStepConcaveCorner
+  parent: IronsandStep
+  name: ironsand step concave corner
+  components:
+  - type: Sprite
+    sprite: Structures/ironsand_steps.rsi
+    state: corner_concave
+    drawdepth: FloorTiles
 
