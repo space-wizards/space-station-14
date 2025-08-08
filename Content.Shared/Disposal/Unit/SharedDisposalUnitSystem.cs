@@ -30,6 +30,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -62,6 +63,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     [Dependency] private   readonly SharedMapSystem _map = default!;
 
     protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
+    protected static TimeSpan DisposalSoundDelay = TimeSpan.FromSeconds(0.1);
 
     // Percentage
     public const float PressurePerSecond = 0.05f;
@@ -484,7 +486,10 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         EntityUid? user = null,
         bool doInsert = false)
     {
-        Audio.PlayPredicted(component.InsertSound, uid, user: user);
+        if (GameTiming.CurTime > component.LastInsertion + DisposalSoundDelay)
+            Audio.PlayPredicted(component.InsertSound, uid, user: user);
+
+        component.LastInsertion = GameTiming.CurTime;
         if (doInsert && !Containers.Insert(inserted, component.Container))
             return;
 

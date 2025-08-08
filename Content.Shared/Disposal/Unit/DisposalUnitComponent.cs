@@ -82,6 +82,12 @@ public sealed partial class DisposalUnitComponent : Component
     [DataField, AutoNetworkedField]
     public TimeSpan LastExitAttempt;
 
+    /// <summary>
+    /// Last time an item was inserted into this disposal unit.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan LastInsertion;
+
     [DataField]
     public bool AutomaticEngage = true;
 
