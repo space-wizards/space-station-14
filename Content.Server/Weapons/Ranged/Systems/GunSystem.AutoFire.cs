@@ -31,7 +31,7 @@ public sealed partial class GunSystem
             }
             else if (gun.BurstActivated)
             {
-                var parent = _transform.GetParentUid(uid);
+                var parent = TransformSystem.GetParentUid(uid);
                 if (HasComp<DamageableComponent>(parent))
                     AttemptShoot(parent, uid, gun, gun.ShootCoordinates ?? new EntityCoordinates(uid, gun.DefaultDirection));
                 else

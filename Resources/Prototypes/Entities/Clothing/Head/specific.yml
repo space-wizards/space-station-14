@@ -38,7 +38,7 @@
   - type: Storage
     showVerb: false
     grid:
-    - 0,0,6,3
+    - 0,0,3,2
     maxItemSize: Small
     blacklist:
       tags:
