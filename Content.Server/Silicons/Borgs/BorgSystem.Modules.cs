@@ -215,7 +215,7 @@ public sealed partial class BorgSystem
                 continue;
             }
 
-            var handId = $"{uid}-item{component.HandCounter}";
+            var handId = $"{uid}-free{component.HandCounter}";
             component.HandCounter++;
             _hands.AddHand((chassis, hands), handId, HandLocation.Middle);
             _hands.DoPickup(chassis, handId, item, hands);
@@ -252,12 +252,12 @@ public sealed partial class BorgSystem
                 _hands.RemoveHand(chassis, hand);
             }
             component.ProvidedItems.Clear();
-        //STARLIGHT start
+            //STARLIGHT start
             foreach (var handId in component.ProvidedFreeHands)
             {
                 _hands.RemoveHand(chassis, handId);
             }
-        //STARLIGHT end
+            //STARLIGHT end
             return;
         }
 

@@ -38,7 +38,6 @@ public sealed partial class ItemBorgModuleComponent : Component
     /// <summary>
     /// List of provided free hand IDs
     /// </summary>
-    [DataField]
     public List<string> ProvidedFreeHands = new();
     //STARLIGHT end
 
