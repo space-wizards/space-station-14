@@ -285,7 +285,7 @@ entities:
       - 228
       - 224
       - 298
-- proto: AirlockMiningGlassLocked
+- proto: AirlockRetroSalvageGlassLocked
   entities:
   - uid: 1
     components:
