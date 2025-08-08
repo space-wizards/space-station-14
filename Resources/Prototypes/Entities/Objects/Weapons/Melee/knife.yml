@@ -360,4 +360,12 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/change_drill.ogg
+      params:
+        volume: -4
+        maxDistance: 2
+  - type: UseDelay
+    delay: 1.5
 
