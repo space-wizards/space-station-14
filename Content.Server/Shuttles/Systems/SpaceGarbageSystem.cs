@@ -1,4 +1,5 @@
 using Content.Shared.Shuttles.Components;
+using Content.Server.Polymorph.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
@@ -28,6 +29,10 @@ public sealed class SpaceGarbageSystem : EntitySystem
         var otherXform = _xformQuery.GetComponent(args.OtherEntity);
 
         if (ourXform.GridUid == otherXform.GridUid)
+            return;
+
+        // Do not delete polymorphed entities (e.g., players polymorphed into items like bread)
+        if (HasComp<PolymorphedEntityComponent>(uid))
             return;
 
         QueueDel(uid);
