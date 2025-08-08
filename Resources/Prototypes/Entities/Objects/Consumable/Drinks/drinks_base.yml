@@ -91,7 +91,7 @@
 
 ## Bases for visuals
 
-# Basic visualizer for an openable entity, usually paired with BaseDrinkOpenable
+# Basic visualizer for an openable entity. Requires DrinkBaseOpenable
 - type: entity
   abstract: true
   id: DrinkVisualsOpenable
@@ -129,7 +129,7 @@
     inHandsMaxFillLevels: 3
     inHandsFillBaseName: -fill-
 
-# Layered visualizer for an entity with fill levels
+# Layered visualizer for an entity with fill levels, and an overlay over the fill levels
 - type: entity
   abstract: true
   parent: DrinkVisualsFill
@@ -157,7 +157,7 @@
     - state: fill-5 # this will need to be different with a different maxFillLevels
       map: ["enum.SolutionContainerLayers.Fill"]
 
-# Visualizer for an openable entity with fill levels
+# Visualizer for an openable entity with fill levels. Requires DrinkBaseOpenable
 - type: entity
   abstract: true
   parent: [DrinkVisualsOpenable, DrinkVisualsFill]
@@ -180,7 +180,7 @@
     examinableWhileClosed: true # If you can see the fill levels it's not opaque
     heldOnly: false
 
-# Visualizer for an openable entity with fill levels, already filled
+# Visualizer for an openable entity with fill levels, already filled. Requires DrinkBaseOpenable
 - type: entity
   abstract: true
   parent: DrinkVisualsAll
