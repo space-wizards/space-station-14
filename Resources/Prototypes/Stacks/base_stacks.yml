@@ -1,0 +1,8 @@
+# Base sizes for stacks in one convenient place
+
+# Used by tiles
+- type: stack
+  abstract: true
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steel }
+  id: BaseTileStack
+  maxCount: 30

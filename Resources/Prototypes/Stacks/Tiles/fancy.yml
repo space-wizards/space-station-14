@@ -1,0 +1,13 @@
+# expensive looking tiles
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileGold
+  name: stack-gold-floor
+  spawn: FloorTileItemGold
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSilver
+  name: stack-silver-floor-tile
+  spawn: FloorTileItemSilver
