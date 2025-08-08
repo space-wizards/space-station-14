@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pronana
-  changes:
-  - message: Moths can now eat pills
-    type: Tweak
-  id: 8325
-  time: '2025-04-24T02:28:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35609
 - author: Coolsurf6
   changes:
   - message: Updated more contraband items for Syndicate and Security.
@@ -3899,3 +3892,11 @@
   id: 8837
   time: '2025-08-07T16:01:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38896
+- author: chromiumboy
+  changes:
+  - message: The station AI will receive chat notifications when its sentry turrets
+      start firing upon hostile targets.
+    type: Add
+  id: 8838
+  time: '2025-08-08T18:56:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35277
