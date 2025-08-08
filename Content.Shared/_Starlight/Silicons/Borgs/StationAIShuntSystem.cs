@@ -3,6 +3,7 @@ using Content.Shared._Starlight.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Mind;
+using Content.Shared.Radio.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
@@ -19,7 +20,7 @@ public sealed class StationAIShuntSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedSiliconLawSystem _siliconLaw = default!;
-
+    [Dependency] private readonly SharedContainerSystem _contaienr = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -102,9 +103,8 @@ public sealed class StationAIShuntSystem : EntitySystem
         _mindSystem.TransferTo(mindId, target);
         RemComp<UncryoableComponent>(target);
 
-
-
-        if (TryComp<StationAiCoreComponent>(target, out var core) &&
+        var aiCore = Transform(target).ParentUid;
+        if (TryComp<StationAiCoreComponent>(aiCore, out var core) &&
             core.RemoteEntity.HasValue
             )
         {
