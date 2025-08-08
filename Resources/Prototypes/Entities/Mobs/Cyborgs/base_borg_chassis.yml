@@ -6,6 +6,8 @@
   save: false
   abstract: true
   components:
+  - type: MindContainer
+    showExamineInfo: true
   - type: Reactive
     groups:
       Acidic: [Touch]
@@ -234,6 +236,7 @@
     - DoorBumpOpener
     - FootstepSound
     - CanPilot
+    - PlayableSilicon
     - SiliconEmotes
     - Unimplantable
   - type: Emoting

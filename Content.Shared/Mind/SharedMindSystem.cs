@@ -16,9 +16,11 @@ using Content.Shared.Players;
 using Content.Shared.Speech;
 
 using Content.Shared.Whitelist;
+using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Mind;
@@ -33,6 +35,7 @@ public abstract partial class SharedMindSystem : EntitySystem
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
@@ -174,16 +177,56 @@ public abstract partial class SharedMindSystem : EntitySystem
         // 4. Alive + No User ID: Entity was never controlled by a player
         // 5. Alive + No Session: Player disconnected while alive (SSD)
 
-        if (dead && hasUserId == null)
-            args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
-        else if (dead && !hasActiveSession)
-            args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
-        else if (dead)
-            args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
-        else if (hasUserId == null)
-            args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
-        else if (!hasActiveSession)
-            args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
+        if (_tag.HasTag(uid, new ProtoId<TagPrototype>("PlayableSilicon")))
+        {
+            switch (dead)
+            {
+                case true when hasUserId == null:
+                    args.PushMarkup(
+                        $"[color=mediumpurple]{Loc.GetString("comp-mind-ai-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
+                    break;
+                case true when !hasActiveSession:
+                    args.PushMarkup(
+                        $"[color=yellow]{Loc.GetString("comp-mind-ai-examined-dead-and-ssd", ("ent", uid))}[/color]");
+                    break;
+                case true:
+                    args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-ai-examined-dead", ("ent", uid))}[/color]");
+                    break;
+                default:
+                {
+                    if (hasUserId == null)
+                        args.PushMarkup(
+                            $"[color=mediumpurple]{Loc.GetString("comp-mind-ai-examined-catatonic", ("ent", uid))}[/color]");
+
+                    else if (!hasActiveSession)
+                        args.PushMarkup(
+                            $"[color=yellow]{Loc.GetString("comp-mind-ai-examined-ssd", ("ent", uid))}[/color]");
+                    break;
+                }
+            }
+        } else {
+            switch (dead)
+            {
+                case true when hasUserId == null:
+                    args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
+                    break;
+                case true when !hasActiveSession:
+                    args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
+                    break;
+                case true:
+                    args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
+                    break;
+                default:
+                {
+                    if (hasUserId == null)
+                        args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
+
+                    else if (!hasActiveSession)
+                        args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
+                    break;
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -350,10 +393,17 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// <param name="ghostCheckOverride">
     ///     If true, skips ghost check for Visiting Entity
     /// </param>
+    /// <param name="createGhost">
+    ///     If true, creates a ghost if the entity is null.
+    /// </param>
     /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="entity"/> is already controlled by another player.
     /// </exception>
-    public virtual void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true, MindComponent? mind = null)
+    public virtual void TransferTo(EntityUid mindId,
+        EntityUid? entity,
+        bool ghostCheckOverride = false,
+        bool createGhost = true,
+        MindComponent? mind = null)
     {
     }
 
