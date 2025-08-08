@@ -1,42 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Numerous cargo orders have been made cheaper.
-    type: Tweak
-  id: 8316
-  time: '2025-04-22T18:38:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32375
-- author: Southbridge
-  changes:
-  - message: Solar Panels can now be randomly damaged or unfinished at the beginning
-      of the round.
-    type: Add
-  id: 8317
-  time: '2025-04-22T19:46:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36825
-- author: Kickguy223
-  changes:
-  - message: Reduced the price of firelock electronics to half the price of the input
-      materials
-    type: Tweak
-  id: 8318
-  time: '2025-04-22T23:53:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33469
-- author: murolem
-  changes:
-  - message: Building orientation on fences, diagonal grilles and the diagonal shuttle
-      wall is now respected.
-    type: Fix
-  id: 8319
-  time: '2025-04-23T01:58:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36488
-- author: kosticia
-  changes:
-  - message: Added analog of donk-pockets for moth - moth-pockets
-    type: Add
-  id: 8320
-  time: '2025-04-23T05:36:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34517
 - author: AgentSmithRadio
   changes:
   - message: New food crates are now available for purchase from the automated trade
@@ -3906,3 +3868,40 @@
   id: 8828
   time: '2025-08-05T00:34:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39296
+- author: perryprog
+  changes:
+  - message: Players no longer have the ability to cycle a timer in the verb menu
+      on a cyborg.
+    type: Fix
+  id: 8829
+  time: '2025-08-05T03:26:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39388
+- author: Luxeator
+  changes:
+  - message: Fixed error upon exploding buckled mobs (and other near instantaneous
+      changes)
+    type: Fix
+  id: 8830
+  time: '2025-08-05T23:15:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39410
+- author: ScarKy0, beck-thompson
+  changes:
+  - message: Various canines will now sometimes clumsily spill things they drink.
+    type: Add
+  id: 8831
+  time: '2025-08-06T13:00:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38852
+- author: aada
+  changes:
+  - message: You can examine fuel tanks to see how much they're filled.
+    type: Add
+  id: 8832
+  time: '2025-08-06T16:11:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39362
+- author: Tao7891
+  changes:
+  - message: Craftable cardboard structures and equipment.
+    type: Add
+  id: 8833
+  time: '2025-08-06T16:58:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37363
