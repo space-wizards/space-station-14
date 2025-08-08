@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared._Starlight.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.Follower;
+using Content.Shared.Follower.Components;
 using Content.Shared.Mind;
 using Content.Shared.Radio.Components;
 using Content.Shared.Silicons.Borgs.Components;
@@ -20,7 +22,7 @@ public sealed class StationAIShuntSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedSiliconLawSystem _siliconLaw = default!;
-    [Dependency] private readonly SharedContainerSystem _contaienr = default!;
+    [Dependency] private readonly FollowerSystem _follower = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -67,6 +69,17 @@ public sealed class StationAIShuntSystem : EntitySystem
 
         EnsureComp<UncryoableComponent>(uid);
 
+        var core = Transform(uid).ParentUid;
+        if (TryComp<StationAiCoreComponent>(core, out var coreComp) &&
+            TryComp<FollowedComponent>(coreComp.RemoteEntity, out var followed)
+        )
+        {
+            foreach (var follower in followed.Following)
+            {
+                _follower.StartFollowingEntity(follower, target);
+            }
+        }
+
         ev.Handled = true;
     }
 
@@ -111,6 +124,14 @@ public sealed class StationAIShuntSystem : EntitySystem
             _transform.SetMapCoordinates(core.RemoteEntity.Value,
                 _transform.ToMapCoordinates(Transform(uid).Coordinates)
             );
+
+            if (TryComp<FollowedComponent>(uid, out var followed))
+            {
+                foreach (var follower in followed.Following)
+                {
+                    _follower.StartFollowingEntity(follower, core.RemoteEntity.Value);
+                }
+            }
         }
 
         _siliconLaw.SetLawset(uid, shunt.OldLawset);
