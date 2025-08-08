@@ -30,3 +30,6 @@ language-Nekomimetic-description = To the casual observer, this language is an i
 
 language-Draconic-name = Draconic
 language-Draconic-description = The common language of lizard-people, composed of sibilant hisses and rattles.
+
+language-ScurretSign-name = Scurret Sign
+language-ScurretSign-description =  Wawa! The secret Sign making you able to understand your fellows scurret!

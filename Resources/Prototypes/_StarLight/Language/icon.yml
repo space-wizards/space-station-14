@@ -101,3 +101,11 @@
     sprite: /Textures/_Starlight/Interface/language_icon.rsi
     state: codespeak
   allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconCodeScurret
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: survivor
+  allowSelection: false
