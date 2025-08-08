@@ -1,12 +1,12 @@
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.StatusEffect;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Eye.Blinding.Systems;
 
 public sealed class TemporaryBlindnessSystem : EntitySystem
 {
-    [ValidatePrototypeId<StatusEffectPrototype>]
-    public const string BlindingStatusEffect = "TemporaryBlindness";
+    public static readonly ProtoId<StatusEffectPrototype> BlindingStatusEffect = "TemporaryBlindness";
 
     [Dependency] private readonly BlindableSystem _blindableSystem = default!;
 
