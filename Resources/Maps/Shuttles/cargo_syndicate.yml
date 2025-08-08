@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 264.0.0
+  engineVersion: 265.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/14/2025 17:39:12
-  entityCount: 194
+  time: 08/08/2025 02:50:07
+  entityCount: 198
 maps: []
 grids:
 - 1
@@ -50,8 +50,7 @@ entities:
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
-    - type: Shuttle
-      dampingModifier: 0.25
+    - type: CargoShuttle
     - type: GridPathfinding
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
@@ -137,35 +136,29 @@ entities:
       data:
         tiles:
           0,0:
-            0: 239
+            0: 193
           0,-1:
-            0: 65535
-          1,0:
-            0: 255
-          2,0:
-            0: 255
-          3,0:
-            0: 255
-          0,-2:
-            0: 57344
-          1,-2:
-            0: 61440
+            0: 52929
           1,-1:
-            0: 65535
-          2,-2:
-            0: 61440
+            0: 65534
+          1,0:
+            0: 78
+          2,0:
+            0: 27
           2,-1:
-            0: 65535
-          3,-2:
-            0: 61440
+            0: 49083
+          3,0:
+            0: 65
           3,-1:
-            0: 65535
-          4,0:
-            0: 17
-          4,-2:
+            0: 13105
+          0,-2:
+            0: 49152
+          1,-2:
+            0: 16384
+          2,-2:
             0: 4096
-          4,-1:
-            0: 4369
+          3,-2:
+            0: 16384
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
@@ -652,6 +645,32 @@ entities:
       rot: 3.141592653589793 rad
       pos: 8.5,-2.5
       parent: 1
+- proto: Catwalk
+  entities:
+  - uid: 195
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 1.5,-1.5
+      parent: 1
+  - uid: 196
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,-1.5
+      parent: 1
+  - uid: 197
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,-0.5
+      parent: 1
+  - uid: 198
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,-2.5
+      parent: 1
 - proto: ChairPilotSeat
   entities:
   - uid: 116
@@ -688,10 +707,13 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 13.5,-0.5
       parent: 1
-- proto: ComputerShuttleCargo
+- proto: ComputerShuttle
   entities:
   - uid: 34
     components:
+    - type: MetaData
+      desc: pretend its red
+      name: Syndicate shuttle console
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 13.5,-1.5
@@ -1081,7 +1103,7 @@ entities:
       name: bridge blast door control
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 12.039636,0.26498932
+      pos: 12.5,0.5
       parent: 1
     - type: DeviceLinkSource
       linkedPorts:
@@ -1124,7 +1146,7 @@ entities:
       name: Bridge Bolt Control
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 12.476158,0.26498932
+      pos: 12.5,0.5
       parent: 1
 - proto: SignSpace
   entities:
