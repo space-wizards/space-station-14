@@ -354,8 +354,6 @@
     damage:
       types:
         Slash: 5
-    soundHit:
-      path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: Tiny
     sprite: Objects/Weapons/Melee/box_cutter.rsi
