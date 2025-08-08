@@ -5,6 +5,7 @@
   recipes:
   - AppraisalTool
   - Pickaxe
+  - BoxCutter
 
 - type: latheRecipePack
   id: CargoBoardsStatic
