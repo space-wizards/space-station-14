@@ -213,11 +213,11 @@
 
 - type: entity
   parent: FloorCarpetItemBoardChecker
-  id: FloorCarpetItemBoardChecker32
-  suffix: Checkered Board 32
+  id: FloorCarpetItemBoardChecker16
+  suffix: Checkered Board 16
   components:
     - type: Stack
-      count: 32
+      count: 16
 
 - type: entity
   parent: FloorCarpetItemBoardWhite

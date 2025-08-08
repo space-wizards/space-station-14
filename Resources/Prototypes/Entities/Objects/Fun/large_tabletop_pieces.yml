@@ -134,6 +134,56 @@
   - type: Stack
     stackType: LargeBlackPawn
 
+# Checkers
+
+- type: entity
+  parent: BaseLargeTabletopPiece
+  id: LargeWhiteChecker
+  name: white checker
+  description: Can move diagonally toward the opponents side. If there is an enemy piece diagonally and an empty space on the other side of it then this piece can jump over and take the other piece in the process. Jumps can be chained. If a piece gets to the other side of the board, it is promoted to a king piece.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/checker_pieces.rsi
+    state: w_checker_piece
+  - type: Stack
+    stackType: LargeWhiteChecker
+
+- type: entity
+  parent: BaseLargeTabletopPiece
+  id: LargeWhiteCheckerKing
+  name: white checker king
+  description: Can move diagonally, forwards or back. If there is an enemy piece diagonally and an empty space on the other side of it then this piece can jump over and take the other piece in the process. Jumps can be chained.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/checker_pieces.rsi
+    state: w_checker_crown
+  - type: Stack
+    stackType: LargeWhiteCheckerKing
+
+- type: entity
+  parent: BaseLargeTabletopPiece
+  id: LargeBlackChecker
+  name: black checker
+  description: Can move diagonally toward the opponents side. If there is an enemy piece diagonally and an empty space on the other side of it then this piece can jump over and take the other piece in the process. Jumps can be chained. If a piece gets to the other side of the board, it is promoted to a king piece.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/checker_pieces.rsi
+    state: b_checker_piece
+  - type: Stack
+    stackType: LargeBlackChecker
+
+- type: entity
+  parent: BaseLargeTabletopPiece
+  id: LargeBlackCheckerKing
+  name: black checker king
+  description: Can move diagonally, forwards or back. If there is an enemy piece diagonally and an empty space on the other side of it then this piece can jump over and take the other piece in the process. Jumps can be chained.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/checker_pieces.rsi
+    state: b_checker_crown
+  - type: Stack
+    stackType: LargeBlackCheckerKing
+
 # Stacks 
 
 - type: entity
@@ -151,3 +201,35 @@
   components:
   - type: Stack
     count: 8
+
+- type: entity
+  parent: LargeBlackChecker
+  id: LargeBlackChecker12
+  suffix: Large, 12
+  components:
+  - type: Stack
+    count: 12
+
+- type: entity
+  parent: LargeBlackCheckerKing
+  id: LargeBlackCheckerKing12
+  suffix: Large, 12
+  components:
+  - type: Stack
+    count: 12
+
+- type: entity
+  parent: LargeWhiteChecker
+  id: LargeWhiteChecker12
+  suffix: Large, 12
+  components:
+  - type: Stack
+    count: 12
+
+- type: entity
+  parent: LargeWhiteCheckerKing
+  id: LargeWhiteCheckerKing12
+  suffix: Large, 12
+  components:
+  - type: Stack
+    count: 12

@@ -245,3 +245,7 @@ stack-plasma-marble-floor = plasmarble floor
 stack-uranium-marble-floor = uranium marble floor
 stack-large-white-pawn = white pawn
 stack-large-black-pawn = black pawn
+stack-large-white-checker = white checker
+stack-large-white-checker-king = white checker king
+stack-large-black-checker = black checker
+stack-large-black-checker-king = black checker king

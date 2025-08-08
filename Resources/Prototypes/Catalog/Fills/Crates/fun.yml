@@ -534,7 +534,7 @@
   table: !type:AllSelector
     children:
     - !type:EntSelector
-      id: FloorCarpetItemBoardChecker32
+      id: FloorCarpetItemBoardChecker16
     - !type:NestedSelector
       tableId: ChessPeicesTable
 
@@ -560,3 +560,57 @@
       entity_storage: !type:NestedSelector
         tableId: BiggerChessBoardTable
 
+- type: entityTable
+  id: CheckersTable
+  table: !type:AllSelector
+    children:
+    - !type:EntSelector
+      id: LargeBlackChecker12
+    - !type:EntSelector
+      id: LargeBlackCheckerKing12
+    - !type:EntSelector
+      id: LargeWhiteChecker12
+    - !type:EntSelector
+      id: LargeWhiteCheckerKing12
+
+- type: entityTable
+  id: BigCheckersBoardTable
+  table: !type:AllSelector
+    children:
+    - !type:EntSelector
+      id: FloorCarpetItemBoardChecker16
+    - !type:NestedSelector
+      tableId: CheckersTable
+
+- type: entityTable
+  id: BiggerCheckersBoardTable
+  table: !type:AllSelector
+    children:
+    - !type:EntSelector
+      id: FloorCarpetItemBoardBlack32
+    - !type:EntSelector
+      id: FloorCarpetItemBoardWhite32
+    - !type:NestedSelector
+      tableId: CheckersTable
+
+- type: entity
+  parent: CratePlastic
+  id: CrateFunBigCheckers
+  name: big checkers set
+  description: Perfect for any high profile checkers game. Takes up a 4x4 area.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: BigCheckersBoardTable
+
+- type: entity
+  parent: CratePlastic
+  id: CrateFunBiggerCheckers
+  name: bigger checkers set
+  description: Perfect for any really high profile checkers game. Takes up an 8x8 area.
+  components:
+  - type: EntityTableContainerFill
+    containers: 
+      entity_storage: !type:NestedSelector
+        tableId: BiggerCheckersBoardTable

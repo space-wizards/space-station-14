@@ -11,3 +11,28 @@
   spawn: LargeBlackPawn
   maxCount: 8
 
+#checkers
+- type: stack
+  id: LargeBlackChecker
+  name: stack-large-black-checker
+  spawn: LargeBlackChecker
+  maxCount: 12
+
+- type: stack
+  id: LargeBlackCheckerKing
+  name: stack-large-black-checker-king
+  spawn: LargeBlackCheckerKing
+  maxCount: 12
+
+- type: stack
+  id: LargeWhiteChecker
+  name: stack-large-white-checker
+  spawn: LargeWhiteChecker
+  maxCount: 12
+
+- type: stack
+  id: LargeWhiteCheckerKing
+  name: stack-large-white-checker-king
+  spawn: LargeWhiteCheckerKing
+  maxCount: 12
+

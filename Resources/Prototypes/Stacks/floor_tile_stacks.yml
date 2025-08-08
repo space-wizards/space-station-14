@@ -712,5 +712,5 @@
   id: FloorCarpetBoardChecker
   name: stack-board-checker-tile
   spawn: FloorCarpetItemBoardChecker
-  maxCount: 32
+  maxCount: 30
  
