@@ -104,9 +104,6 @@ public sealed class MovementModStatusSystem : EntitySystem
         float sprintSpeedModifier
     )
     {
-        if (duration == TimeSpan.Zero)
-            return false;
-
         return _status.TryAddStatusEffectDuration(uid, effectProtoId, out var status, duration)
                && TryUpdateMovementStatus(uid, status!.Value, walkSpeedModifier, sprintSpeedModifier);
     }
@@ -148,9 +145,6 @@ public sealed class MovementModStatusSystem : EntitySystem
         float sprintSpeedModifier
     )
     {
-        if (duration <= TimeSpan.Zero)
-            return false;
-
         return _status.TryUpdateStatusEffectDuration(uid, effectProtoId, out var status, duration)
                && TryUpdateMovementStatus(uid, status!.Value, walkSpeedModifier, sprintSpeedModifier);
     }
@@ -207,7 +201,7 @@ public sealed class MovementModStatusSystem : EntitySystem
         float friction
     )
     {
-        return TryAddFrictionModDuration(uid,duration, friction, friction);
+        return TryAddFrictionModDuration(uid, duration, friction, friction);
     }
 
     /// <summary>
@@ -226,10 +220,6 @@ public sealed class MovementModStatusSystem : EntitySystem
         float acceleration
     )
     {
-        // We don't also check the friction and acceleration, as one may want to update them later but still have the status effect running.
-        if (duration == TimeSpan.Zero)
-            return false;
-
         return _status.TryAddStatusEffectDuration(uid, StatusEffectFriction, out var status, duration)
                && TrySetFrictionStatus(status.Value, friction, acceleration, uid);
     }
@@ -260,9 +250,6 @@ public sealed class MovementModStatusSystem : EntitySystem
         float acceleration
     )
     {
-        if (duration <= TimeSpan.Zero)
-            return false;
-
         return _status.TryUpdateStatusEffectDuration(uid, StatusEffectFriction, out var status, duration)
                && TrySetFrictionStatus(status.Value, friction, acceleration, uid);
     }
