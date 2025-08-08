@@ -75,6 +75,7 @@
     solution: tank
   - type: ExaminableSolution
     solution: tank
+    exactVolume: true
 
 - type: entity
   parent: ClothingBackpack
