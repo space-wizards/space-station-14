@@ -709,3 +709,6 @@ SignCryo: SignHyperSleep
 SignDirectionalCryo: SignDirectionalHyperSleep
 DefaultStationBeaconCryosleep: DefaultStationBeaconHypersleep
 HolopadGeneralCryosleep: HolopadGeneralHypersleep
+
+# 2025-08-01
+FoodDonutJellySlugcat: FoodDonutJellyScurret
