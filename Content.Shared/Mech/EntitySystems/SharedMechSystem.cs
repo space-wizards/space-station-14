@@ -13,7 +13,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Events; // Starlight-edit
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Repairable; // Starlight-edit
@@ -69,20 +68,12 @@ public abstract partial class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechPilotComponent, EntGotRemovedFromContainerMessage>(OnPilotRemoved); // Starlight-edit
         
         SubscribeLocalEvent<MechComponent, ShotAttemptedEvent>(OnShootAttempt); // Starlight-edit: Moved from server side, broken
-        SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechCanMoveEvent); // Starlight-edit: Moved from server side, broken
         SubscribeLocalEvent<MechComponent, CanRepairEvent>(OnRepairAttempt); // Starlight-edit: Moved from server side, broken
 
         InitializeRelay();
     }
     
     // Starlight-start: Attempt events
-    
-    private void OnMechCanMoveEvent(EntityUid uid, MechComponent component, UpdateCanMoveEvent args)
-    {
-        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0 || component.MaintenanceMode)
-            args.Cancel();
-    }
-    
     private void OnShootAttempt(EntityUid uid, MechComponent component, ref ShotAttemptedEvent args)
     {
         if (!component.MaintenanceMode)
