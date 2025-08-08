@@ -1,0 +1,46 @@
+# Purrfus borg
+- type: borgType
+  id: purrfus
+
+  # Description
+  dummyPrototype: BorgChassisPurrfus
+
+  # Functional
+  extraModuleCount: 1
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+    - BorgModulePurrfus
+
+  defaultModules:
+  - BorgModulePaperwork
+
+  radioChannels:
+  - Common
+  - Command
+  - Science
+  - Law
+
+  addComponents:
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: Storage
+    clickInsert: true
+    openOnActivate: false
+    showVerb: true
+    grid:
+    - 0,0,2,2
+    maxItemSize: Huge
+
+  # Visual
+  inventoryTemplateId: borgTall
+  spriteBodyState: purrfus
+  spriteHasMindState: purrfus_e
+  spriteNoMindState: purrfus_e_r
+  spriteToggleLightState: purrfus_l
+
+  # Pet
+  petSuccessString: petting-success-generic-cyborg
+  petFailureString: petting-failure-generic-cyborg

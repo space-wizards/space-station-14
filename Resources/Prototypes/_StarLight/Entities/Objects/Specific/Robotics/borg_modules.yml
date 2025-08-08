@@ -1,11 +1,11 @@
 - type: entity
-  id: BaseBorgModulePaperwork
+  id: BaseBorgModulePurrfus
   parent: BaseBorgModule
   abstract: true
   components:
   - type: Tag
     tags:
-    - BorgModuleCommand
+    - BorgModulePurrfus
   - type: Item
     inhandVisuals:
       left:
@@ -25,7 +25,7 @@
 
 - type: entity
   id: BorgModulePaperwork
-  parent: [ BaseBorgModulePaperwork, BaseProviderBorgModule ]
+  parent: [ BaseBorgModulePurrfus, BaseProviderBorgModule ]
   name: paperwork cyborg module
   components:
   - type: Sprite
@@ -34,7 +34,7 @@
     - state: command
     - state: icon-paperwork
   - type: ItemBorgModule
-    freeHands: 5
+    freeHands: 1
     items:
     - LuxuryPen
     - RubberStampApproved
