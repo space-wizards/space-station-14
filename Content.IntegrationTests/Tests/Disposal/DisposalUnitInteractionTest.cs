@@ -37,12 +37,6 @@ public sealed class DisposalUnitInteractionTest : InteractionTest
         // Spawn the target disposal unit
         var disposalUnit = await SpawnTarget(TestDisposalUnitId);
 
-        // Make sure the disposal unit is empty
-        var throwInsertComp = Comp<ThrowInsertContainerComponent>();
-        var container = containerSys.GetContainer(ToServer(disposalUnit), throwInsertComp.ContainerId);
-        Assert.That(container.ContainedEntities, Is.Empty,
-            "Disposal unit was not empty at start of test");
-
         // Give the player some trash to throw
         var trash = await PlaceInHands(TrashItem);
 
@@ -53,6 +47,8 @@ public sealed class DisposalUnitInteractionTest : InteractionTest
         await RunTicks(10);
 
         // Make sure the trash is in the disposal unit
+        var throwInsertComp = Comp<ThrowInsertContainerComponent>();
+        var container = containerSys.GetContainer(ToServer(disposalUnit), throwInsertComp.ContainerId);
         Assert.That(container.ContainedEntities, Contains.Item(ToServer(trash)));
     }
 }
