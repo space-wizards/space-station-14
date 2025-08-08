@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Coolsurf6
-  changes:
-  - message: Updated more contraband items for Syndicate and Security.
-    type: Tweak
-  id: 8326
-  time: '2025-04-24T02:57:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35102
 - author: Beck Thompson
   changes:
   - message: You can how hide items inside cake by using a knife! Eating a cake with
@@ -3900,3 +3893,11 @@
   id: 8838
   time: '2025-08-08T18:56:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35277
+- author: K-Dynamic
+  changes:
+  - message: Captain and Head of Personnel starts with administration glasses and
+      hud respectively.
+    type: Add
+  id: 8839
+  time: '2025-08-08T19:00:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35531
