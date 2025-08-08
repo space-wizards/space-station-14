@@ -202,6 +202,13 @@
         - JawsOfLife
         - GPS
         - WeldingMask
+                
+        #Starlight
+        - ImprovisedCrowbar
+        - ImprovisedScrewdriver
+        - ImprovisedWirecutter
+        - ImprovisedWrench
+        - ImprovisedMultitool
       components:
         - SprayPainter
         - NetworkConfigurator
@@ -240,10 +247,16 @@
         whitelist:
           tags:
           - Wirecutter
+          
+          #Starlight
+          - ImprovisedWirecutter
       crowbar:
         whitelist:
           tags:
           - Crowbar
+
+          #Starlight
+          - ImprovisedCrowbar
       crowbar_red:
         whitelist:
           tags:
@@ -256,14 +269,23 @@
         whitelist:
           tags:
           - Screwdriver
+
+          #Starlight
+          - ImprovisedScrewdriver
       wrench:
         whitelist:
           tags:
           - Wrench
+          
+          #Starlight
+          - ImprovisedWrench
       multitool:
         whitelist:
           tags:
             - Multitool
+
+            #Starlight
+            - ImprovisedMultitool
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
   - type: StaticPrice

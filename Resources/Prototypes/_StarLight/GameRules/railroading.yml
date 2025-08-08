@@ -13,9 +13,10 @@
     cards:
 #    - RRCardFoodSashimi
 #    - RRCardFoodApplePie
-    - RRCardFoodDumplings
-    - RRCardFoodHerbSalad
-    - RRCardFoodMelonFruitBowl
+#    - RRCardFoodDumplings
+#    - RRCardFoodHerbSalad
+    - RRCardMetabolizeNicotine
+#    - RRCardFoodMelonFruitBowl
 #    - RRCardFoodStew
 
 - type: entity
@@ -37,3 +38,4 @@
     - RRCardFoodHerbSalad
     - RRCardFoodMelonFruitBowl
     - RRCardFoodStew
+    - RRCardMetabolizeNicotine

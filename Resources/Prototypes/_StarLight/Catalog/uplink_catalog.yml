@@ -61,6 +61,29 @@
           - NukeOpsUplink
 
 - type: listing
+  id: uplinkWeaponRiflePitpull
+  name: uplink-pitbull-bundle-name
+  description: uplink-pitbull-bundle-desc
+  icon:
+    { 
+     sprite: /Textures/_Starlight/Objects/Weapons/Guns/Rifles/pitbull.rsi,
+     state: icon 
+    }
+  productEntity: ClothingBackpackDuffelSyndicateFilledBullpup
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 15
+  cost:
+    Telecrystal: 20
+  categories:
+   - UplinkWeaponry
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+          
+- type: listing
   id: UplinkMarriage
   name: uplink-marriage-axe-name
   description: uplink-marriage-axe-desc
@@ -121,6 +144,19 @@
   categories:
     - UplinkAmmo
 
+
+# For the Pitbull
+- type: listing
+  id: UplinkMagazineMagnumRifle
+  name: uplink-rifle-magazine-pitbull-name
+  description: uplink-rifle-magazine-pitbull-desc
+  icon: 
+    { 
+     sprite: /Textures/_Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_rifle_mag.rsi, 
+     state: mag-1 
+    }
+  productEntity: MagazineMagnumRifleSP
+
 - type: listing
   id: UplinkShotgunBreachingMagazine
   name: uplink-breaching-magazine-name
@@ -135,6 +171,11 @@
     Telecrystal: 2
   categories:
     - UplinkAmmo
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
 
 # Cybernetics
 

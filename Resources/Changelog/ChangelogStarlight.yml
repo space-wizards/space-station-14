@@ -10036,18 +10036,47 @@ Entries:
   id: 1382
   time: '2025-08-01T16:02:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1174
+- author: PubliclyExecutedPig
+  changes:
+  - message: Fixed dragons being wayyy too powerful
+    type: Fix
+  id: 1383
+  time: '2025-08-02T13:53:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1177
+- author: PubliclyExecutedPig
+  changes:
+  - message: Buffed carp a little to encourage actual strategy instead of just running
+      in
+    type: Tweak
+  id: 1384
+  time: '2025-08-02T13:53:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1177
+- author: stickycheZ101
+  changes:
+  - message: added a plushie for galio the silly
+    type: Add
+  id: 1385
+  time: '2025-08-07T20:51:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1167
+- author: stickycheZ101
+  changes:
+  - message: added a plushie for romero
+    type: Add
+  id: 1386
+  time: '2025-08-07T20:51:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1167
 - author: neurovermi
   changes:
   - message: Restore deleted mech weapon code.
     type: Fix
-  id: 1383
+  id: 1476
   time: '2025-08-02T13:21:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1187
 - author: Trosling
   changes:
   - message: Made it possible to equip the LR-30 to the back and suit storage slots
     type: Tweak
-  id: 1384
+  id: 1477
   time: '2025-08-02T13:28:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1190
 - author: walksanatora
@@ -10055,7 +10084,7 @@ Entries:
   - message: bodies can no longer be automatically cryoslept when their brain is surgically
       removed.
     type: Tweak
-  id: 1385
+  id: 1478
   time: '2025-08-02T13:43:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1129
 - author: walksanatora
@@ -10063,7 +10092,7 @@ Entries:
   - message: Surgically putting a tongue into someone's mouth now lets them speak
       again.
     type: Fix
-  id: 1386
+  id: 1479
   time: '2025-08-02T13:43:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1129
 - author: walksanatora
@@ -10557,5 +10586,300 @@ Entries:
   id: 1452
   time: '2025-08-06T16:56:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1230
+- author: RoadTrain
+  changes:
+  - message: fix migration.yml
+    type: Fix
+  id: 1453
+  time: '2025-08-07T12:46:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1241
+- author: STARLIGHT TEAM
+  changes:
+  - message: The hub reconnects as soon as possible.
+    type: Fix
+  id: 1454
+  time: '2025-08-07T18:13:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1219
+- author: RoadTrain
+  changes:
+  - message: Adds several NTNC preset outfits, for use in admemes.
+    type: Add
+  id: 1455
+  time: '2025-08-07T19:42:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1079
+- author: AthenaAI
+  changes:
+  - message: the utility toolbelt to allow storage of the improvised tools.
+    type: Tweak
+  id: 1456
+  time: '2025-08-07T19:51:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1232
+- author: AthenaAI
+  changes:
+  - message: the chief engineer's toolbelt to allow storage of the improvised tools
+      as well as the GPS, welder mask and remote signaler.
+    type: Tweak
+  id: 1457
+  time: '2025-08-07T19:51:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1232
+- author: AthenaAI
+  changes:
+  - message: the soviet tool belt  to allow storage of the improvised tools.
+    type: Tweak
+  id: 1458
+  time: '2025-08-07T19:51:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1232
+- author: Rinary
+  changes:
+  - message: Fixed bug, when you can't do surgery on entity with medical masks.
+    type: Fix
+  id: 1459
+  time: '2025-08-07T20:02:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1216
+- author: Trep_Maul
+  changes:
+  - message: Max Cap radius and intensity adjusted down.
+    type: Tweak
+  id: 1460
+  time: '2025-08-07T20:08:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1011
+- author: Trep_Maul
+  changes:
+  - message: Max Cap can't break tiles anymore.
+    type: Tweak
+  id: 1461
+  time: '2025-08-07T20:08:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1011
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added the Pitbull Marksman Rifle for Nuclear Operatives
+    type: Add
+  id: 1462
+  time: '2025-08-07T20:10:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/970
+- author: walksanatora
+  changes:
+  - message: Station AIs can now shunt into borg(i)s with AI interfaces in them
+    type: Add
+  id: 1463
+  time: '2025-08-07T20:13:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1064
+- author: walksanatora
+  changes:
+  - message: Robotics can now create AI interfaces and shove them in chassis to let
+      the AI controll them.
+    type: Add
+  id: 1464
+  time: '2025-08-07T20:13:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1064
+- author: Rinary, Darkrell
+  changes:
+  - message: Now Railroading system works with reagents.
+    type: Tweak
+  id: 1465
+  time: '2025-08-07T20:29:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1206
+- author: Rinary, Darkrell
+  changes:
+  - message: Added new task in railroading, task is offering you a little smoke.
+    type: Add
+  id: 1466
+  time: '2025-08-07T20:29:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1206
+- author: Citeria
+  changes:
+  - message: Fixed an issue where kudzu would not regrow into cleared spaces or after
+      adjacent walls were removed, making it permanently dormant. Kudzu will now correctly
+      reactivate and spread as intended. The kudzu spreads. Glory to the kudzu
+    type: Fix
+  id: 1467
+  time: '2025-08-07T20:31:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1224
+- author: Quini98
+  changes:
+  - message: Added Lottery Shuttle (Admeme)
+    type: Add
+  id: 1468
+  time: '2025-08-07T20:33:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1248
+- author: DrSmugleaf
+  changes:
+  - message: Fixed vulp tail tip and vulp tail fox tip being unable to wag.
+    type: Fix
+  id: 1469
+  time: '2025-08-07T20:43:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1210
+- author: Citeria
+  changes:
+  - message: Fixed error upon exploding buckled mobs
+    type: Fix
+  id: 1470
+  time: '2025-08-07T20:47:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1227
+- author: walksanatora
+  changes:
+  - message: TEG now interacts with pipe layers.
+    type: Add
+  id: 1471
+  time: '2025-08-07T20:49:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1195
+- author: walksanatora
+  changes:
+  - message: Salvage shuttle console. now salvage's little ship can be remote controlled
+    type: Add
+  id: 1472
+  time: '2025-08-07T21:04:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1091
+- author: walksanatora
+  changes:
+  - message: Salvage shuttle console board in QM's locker
+    type: Add
+  id: 1473
+  time: '2025-08-07T21:04:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1091
+- author: walksanatora
+  changes:
+  - message: thieves now have a chance to have to steal the salvage shuttle console
+      board
+    type: Add
+  id: 1474
+  time: '2025-08-07T21:04:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1091
+- author: CawsForConcern
+  changes:
+  - message: Added Silica Station
+    type: Add
+  id: 1475
+  time: '2025-08-07T21:09:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1070
+- author: CommanderAlex365
+  changes:
+  - message: Alphabetized species order in guidebook
+    type: Tweak
+  id: 1480
+  time: '2025-08-07T22:24:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1252
+- author: Quini98
+  changes:
+  - message: Service SOP
+    type: Add
+  id: 1481
+  time: '2025-08-07T22:32:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1147
+- author: Quini98
+  changes:
+  - message: Command SOP
+    type: Tweak
+  id: 1482
+  time: '2025-08-07T22:32:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1147
+- author: Quini98
+  changes:
+  - message: Cargo SOP
+    type: Tweak
+  id: 1483
+  time: '2025-08-07T22:32:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1147
+- author: Quini98
+  changes:
+  - message: Security SOP
+    type: Tweak
+  id: 1484
+  time: '2025-08-07T22:32:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1147
+- author: Quini98
+  changes:
+  - message: NT SOP
+    type: Tweak
+  id: 1485
+  time: '2025-08-07T22:32:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1147
+- author: Quini98
+  changes:
+  - message: Engineering SOP
+    type: Tweak
+  id: 1486
+  time: '2025-08-07T22:32:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1147
+- author: Quini98
+  changes:
+  - message: Science SOP
+    type: Fix
+  id: 1487
+  time: '2025-08-07T22:32:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1147
+- author: Quini98
+  changes:
+  - message: General SOP
+    type: Tweak
+  id: 1488
+  time: '2025-08-07T22:32:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1147
+- author: Quini98
+  changes:
+  - message: Sub-Categories
+    type: Add
+  id: 1489
+  time: '2025-08-07T22:32:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1147
+- author: Quini98
+  changes:
+  - message: Medical SOP
+    type: Add
+  id: 1490
+  time: '2025-08-07T22:32:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1147
+- author: walksanatora
+  changes:
+  - message: Spacing cut into a quarter of what it once was. reverting wizden spacing
+      dammage buff.
+    type: Tweak
+  id: 1491
+  time: '2025-08-07T22:35:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1254
+- author: RoadTrain
+  changes:
+  - message: Fixes the Sayable component, which resulted in law 0 being sayable until
+      emagged.
+    type: Fix
+  id: 1492
+  time: '2025-08-07T22:37:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1251
+- author: TheRealSlimRedwoods
+  changes:
+  - message: Transformed Redwoods into a marketable plushie.
+    type: Add
+  id: 1493
+  time: '2025-08-07T22:52:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1245
+- author: TheRealSlimRedwoods
+  changes:
+  - message: Removed depression.
+    type: Remove
+  id: 1494
+  time: '2025-08-07T22:52:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1245
+- author: MaxAlpine
+  changes:
+  - message: Adds Silica Station and Prism Station to the default map pool
+    type: Add
+  id: 1495
+  time: '2025-08-07T23:28:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1257
+- author: TheRealSlimRedwoods
+  changes:
+  - message: bub fix (fixed Redwoods Plushie spewing out "redwoods-plushie-8", adding
+      a new line on the 8th string)
+    type: Fix
+  id: 1496
+  time: '2025-08-08T00:32:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1259
+- author: STARLIGHT TEAM, VigersRay, Citeria
+  changes:
+  - message: Fixed a bug where an HP shot against an armored target could heal it.
+    type: Fix
+  id: 1497
+  time: '2025-08-08T14:27:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1264
 Order: -1
 
