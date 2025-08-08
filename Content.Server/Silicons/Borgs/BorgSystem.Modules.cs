@@ -224,12 +224,41 @@ public sealed partial class BorgSystem
         }
 
         //STARLIGHT start
-        for (var i = 0; i < component.FreeHands; i++)
+        if (!component.ItemsCreated)
         {
-            var handId = $"{uid}-free{component.HandCounter}";
-            component.HandCounter++;
-            _hands.AddHand((chassis, hands), handId, HandLocation.Middle);
-            component.ProvidedFreeHands.Add(handId);
+            for (var i = 0; i < component.FreeHands; i++)
+            {
+                var handId = $"{uid}-free{component.HandCounter}";
+                component.HandCounter++;
+                _hands.AddHand((chassis, hands), handId, HandLocation.Middle);
+                component.ProvidedFreeHands.Add(handId, null);
+            }
+        }
+        else
+        {
+            var newHands = new List<string> { };
+            foreach (var storedHand in component.ProvidedFreeHands)
+            {
+                var handId = $"{uid}-free{component.HandCounter}";
+                component.HandCounter++;
+                _hands.AddHand((chassis, hands), handId, HandLocation.Middle);
+                newHands.Add(handId);
+
+                if (storedHand.Value is EntityUid item) // there was an item in this hand
+                {
+                    if (!item.IsValid())
+                    {
+                        Log.Debug($"no items found: {component.ProvidedContainer.ContainedEntities.Count}");
+                        continue;
+                    }
+
+                    _container.Remove(item, component.ProvidedContainer, force: true);
+                    _hands.DoPickup(chassis, handId, item, hands);
+                }
+            }
+
+            component.ProvidedFreeHands.Clear();
+            foreach (var id in newHands) component.ProvidedFreeHands.Add(id, null);
         }
         //STARLIGHT end
 
@@ -253,10 +282,11 @@ public sealed partial class BorgSystem
             }
             component.ProvidedItems.Clear();
             //STARLIGHT start
-            foreach (var handId in component.ProvidedFreeHands)
+            foreach (var storedHand in component.ProvidedFreeHands)
             {
-                _hands.RemoveHand(chassis, handId);
+                _hands.RemoveHand(chassis, storedHand.Key);
             }
+            component.ProvidedFreeHands.Clear();
             //STARLIGHT end
             return;
         }
@@ -273,11 +303,16 @@ public sealed partial class BorgSystem
         component.ProvidedItems.Clear();
 
         //STARLIGHT start
-        foreach (var handId in component.ProvidedFreeHands)
+        foreach (var (handId, _) in component.ProvidedFreeHands)
         {
+            var handContents = _hands.GetHeldItem(chassis, handId);
+            if (handContents is EntityUid item)
+            {
+                _container.Insert(item, component.ProvidedContainer);
+                component.ProvidedFreeHands[handId] = item;
+            }
             _hands.RemoveHand(chassis, handId);
         }
-        component.ProvidedFreeHands.Clear();
         //STARLIGHT end
     }
 
