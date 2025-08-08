@@ -60,11 +60,11 @@ public sealed class RootableSystem : SharedRootableSystem
     /// </summary>
     private void ReactWithEntity(Entity<RootableComponent, BloodstreamComponent> entity, Entity<PuddleComponent> puddleEntity, Solution solution)
     {
-        if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp2.ChemicalSolutionName, ref entity.Comp2.ChemicalSolution, out var chemSolution) || chemSolution.AvailableVolume <= 0)
+        if (!_solutionContainer.ResolveSolution(entity.Owner, entity.Comp2.BloodSolutionName, ref entity.Comp2.BloodSolution, out var bloodSolution) || bloodSolution.AvailableVolume <= 0)
             return;
 
         var availableTransfer = FixedPoint2.Min(solution.Volume, entity.Comp1.TransferRate);
-        var transferAmount = FixedPoint2.Min(availableTransfer, chemSolution.AvailableVolume);
+        var transferAmount = FixedPoint2.Min(availableTransfer, bloodSolution.AvailableVolume);
         var transferSolution = _solutionContainer.SplitSolution(puddleEntity.Comp.Solution!.Value, transferAmount);
 
         _reactive.DoEntityReaction(entity, transferSolution, ReactionMethod.Ingestion);
