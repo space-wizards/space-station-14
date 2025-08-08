@@ -7,12 +7,15 @@ namespace Content.Shared.Stacks;
 [Prototype]
 public sealed partial class StackPrototype : IPrototype, IInheritingPrototype
 {
+    /// <inheritdoc />
     [IdDataField]
     public string ID { get; private set; } = default!;
 
+    /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<StackPrototype>))]
     public string[]? Parents { get; private set; }
 
+    /// <inheritdoc />
     [NeverPushInheritance]
     [AbstractDataField]
     public bool Abstract { get; private set; }

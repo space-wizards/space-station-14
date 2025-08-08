@@ -27,10 +27,3 @@
   abstract: true
   id: BaseVeryLargeStack
   maxCount: 100
-
-# Used by tiles
-- type: stack
-  abstract: true
-  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steel }
-  id: BaseTileStack
-  maxCount: 30
