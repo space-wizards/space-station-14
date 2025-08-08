@@ -117,7 +117,7 @@ public sealed partial class IngestionSystem
 
     private void OnOpenableEdible(Entity<OpenableComponent> ent, ref EdibleEvent args)
     {
-        if (_openable.IsClosed(ent, args.User, ent.Comp))
+        if (_openable.IsClosed(ent, args.User, ent.Comp, predicted: true))
             args.Cancelled = true;
     }
 
