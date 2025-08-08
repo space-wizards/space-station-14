@@ -352,6 +352,7 @@ public sealed partial class IngestionSystem
             },
             Icon = proto.VerbIcon,
             Text = Loc.GetString(proto.VerbName),
+            // Make ingest lower priority than open/close (3) so Alt-Interact prefers toggle when present
             Priority = 2
         };
 
