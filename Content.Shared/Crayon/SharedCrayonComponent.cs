@@ -24,16 +24,16 @@ namespace Content.Shared.Crayon
         /// <summary>
         /// Rotation of the resulting decal
         /// </summary>
-        [DataField("rotation")]
+        [DataField]
         public float Rotation;
 
-        [DataField("previewEnabled")]
+        [DataField]
         public bool PreviewEnabled;
 
-        [DataField("previewVisible")]
+        [DataField]
         public bool PreviewVisible;
 
-        [DataField("opaqueGhost")]
+        [DataField]
         public bool OpaqueGhost;
 
         [Serializable, NetSerializable]
