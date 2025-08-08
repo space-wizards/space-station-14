@@ -35,7 +35,19 @@ public sealed class BinSystem : EntitySystem
 
     private void OnExamined(Entity<BinComponent> entity, ref ExaminedEvent args)
     {
-        args.PushText(Loc.GetString("bin-component-on-examine-text", ("count", entity.Comp.ItemContainer.Count)));
+        if (entity.Comp.ItemContainer.ContainedEntities.LastOrDefault() is {Valid: true} next)
+        {
+            var meta = MetaData(next);
+            // This means we have a contained item
+            args.PushText(Loc.GetString(
+                "bin-component-on-examine-text",
+                ("count", entity.Comp.ItemContainer.Count),
+                ("subject", meta.EntityPrototype?.Name ?? meta.EntityName)));
+
+            return;
+        }
+
+        args.PushText(Loc.GetString("bin-component-on-examine-empty-text"));
     }
 
     private void OnStartup(Entity<BinComponent> entity, ref ComponentStartup args)
@@ -73,7 +85,7 @@ public sealed class BinSystem : EntitySystem
             };
             args.Verbs.Add(verb);
         }
-        else if (entity.Comp.ItemContainer.ContainedEntities.LastOrDefault() is { Valid: true } subject)
+        else if (entity.Comp.ItemContainer.ContainedEntities.LastOrDefault() is { Valid: true } next)
         {
             AlternativeVerb verb = new()
             {
@@ -83,7 +95,7 @@ public sealed class BinSystem : EntitySystem
                         _hands.TryPickupAnyHand(user, toGrab.Value);
                 },
                 Icon = entity.Comp.RemoveIcon,
-                Text = Loc.GetString("take-item-verb-text", ("subject", subject)),
+                Text = Loc.GetString("take-item-verb-text", ("subject", next)),
                 Priority = 2
             };
             args.Verbs.Add(verb);
