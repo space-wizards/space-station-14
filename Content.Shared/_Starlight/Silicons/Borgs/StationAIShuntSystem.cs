@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared._Starlight.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Mind;
@@ -48,7 +49,9 @@ public sealed class StationAIShuntSystem : EntitySystem
         _mindSystem.TransferTo(mindId, target);
         shunt.ReturnAction = _actionSystem.AddAction(target, shuntable.UnshuntAction.Id);
         shuntable.Inhabited = target;
-        
+
+        EnsureComp<UncryoableComponent>(uid);
+
         ev.Handled = true;
     }
 
@@ -65,7 +68,7 @@ public sealed class StationAIShuntSystem : EntitySystem
 
         if (!TryComp<StationAIShuntableComponent>(shunt.Return, out var shuntable))
             return; //trying to return to a body you cant leave from? weird...
-        
+
         if (TryComp<BorgChassisComponent>(uid, out var chassisComp))
         {
             var brain = chassisComp.BrainContainer.ContainedEntity;
@@ -79,12 +82,14 @@ public sealed class StationAIShuntSystem : EntitySystem
             brainShunt.Return = null; //cause we are returning now
             brainShunt.ReturnAction = null;
         }
-        
+
         _actionSystem.RemoveAction(new Entity<ActionComponent?>(shunt.ReturnAction.Value, act));
         _mindSystem.TransferTo(mindId, shunt.Return);
+        RemComp<UncryoableComponent>(shunt.Return.Value);
         shunt.ReturnAction = null;
         shunt.Return = null;
         shuntable.Inhabited = null;
+
     }
 }
 
