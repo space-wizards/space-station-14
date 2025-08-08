@@ -2,28 +2,32 @@
 
 # Service Orders
 
-Bartender
+## Head of Personnel
 <Box>
-    <GuideEntityEmbed Entity="CrateFoodBarSupply"/>
+	<GuideEntityEmbed Entity="CrateServiceBureaucracy"/>
 </Box>
 
-Botanist
+## Bartender
 <Box>
-    <GuideEntityEmbed Entity="VendingMachineRestockSeeds"/>
+	<GuideEntityEmbed Entity="CrateFoodBarSupply"/>
 </Box>
 
-Janitor
+## Botanist
 <Box>
-    <GuideEntityEmbed Entity="JanitorialTrolley"/>
-    <GuideEntityEmbed Entity="CrateServiceJanitorialSupplies"/>
+	<GuideEntityEmbed Entity="VendingMachineRestockSeeds"/>
+</Box>
+<Box>
+	[italic]This does not apply to the exotic seeds crate.[/italic]
 </Box>
 
-Clown/Mime
+## Janitor
 <Box>
-    Any and all orders require QM and HoP stamps for approval
+	<GuideEntityEmbed Entity="JanitorialTrolley"/>
+	<GuideEntityEmbed Entity="CrateServiceJanitorialSupplies"/>
 </Box>
 
-
+## Clown & Mime
+<Box>
+	Any and all orders require QM and HoP stamps for approval.
+</Box>
 </Document>
-
-
