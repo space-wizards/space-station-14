@@ -493,8 +493,10 @@ public sealed class GhostRoleSystem : EntitySystem
     /// <summary>
     /// Collect all role prototypes on the Ghostrole
     /// </summary>
+    /// TODO: Phase out string-typed roles, take/pass indexed prototypes
     private List<string> GetPrototypes(Entity<GhostRoleComponent> roleEnt)
     {
+
         var list = new List<string>();
 
         // If there is a mind already, check its mind roles.
@@ -527,10 +529,10 @@ public sealed class GhostRoleSystem : EntitySystem
                 continue;
             var roleComp = (MindRoleComponent)comp;
 
-            if (roleComp.AntagPrototype is not null)
-                list.Add(roleComp.AntagPrototype);
-            else if (roleComp.JobPrototype is not null)
+            if (roleComp.JobPrototype is not null)
                 list.Add(roleComp.JobPrototype);
+            else if (roleComp.AntagPrototype is not null)
+                list.Add(roleComp.AntagPrototype);
             else
                 Log.Debug($"Mind role '{proto}' of '{roleEnt.Comp.RoleName}' has neither a job or antag prototype specified");
         }

@@ -239,10 +239,15 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
     public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
-        if (!_prototypeManager.TryIndex<JobPrototype>(role, out var job) && !_prototypeManager.TryIndex<AntagPrototype>(role, out var antag))
-        {
+        // TODO: Phase out string-typed roles, take/pass indexed prototypes
+
+        _prototypeManager.TryIndex<JobPrototype>(role, out var job);
+        _prototypeManager.TryIndex<AntagPrototype>(role, out var antag);
+
+        if(job is null && antag is null)
             throw new ArgumentException($"Invalid role '{role}'", nameof(role));
-        }
+        else if (job is not null && antag is not null)
+            throw new ArgumentException($"Prototype '{role}' exists both as a job and as an antagonist.", nameof(role));
 
         //TODO: create an integration test that screams if a jobPrototype and antagPrototype have the same ID
         role = job is not null ? string.Concat(JobPrefix, role) : string.Concat(AntagPrefix, role);

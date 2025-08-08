@@ -203,6 +203,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     /// <param name="player">The player.</param>
     /// <param name="role">A job or antag prototype ID</param>
     /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
+    /// TODO: Phase out string-typed roles, take/pass indexed prototypes
     public bool IsAllowed(ICommonSession player, string role)
     {
         JobPrototype? job;
