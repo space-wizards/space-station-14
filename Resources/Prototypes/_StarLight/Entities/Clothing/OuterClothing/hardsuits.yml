@@ -355,17 +355,17 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLuxmax
 
-#Mining Specialist MAHS - DOTS why does jetpack inhand appear when holding this?
+#Mining Specialist MAHS
 - type: entity
   parent: [ ClothingOuterHardsuitBase, BaseSalvageMiningContraband ]
-  id: ClothingOuterHardsuitMAHS
-  name: miner's assistive hardsuit
+  id: ClothingOuterHardsuitAdvancedMining
+  name: advanced mining hardsuit
   description: A jetpack-equipped hardsuit designed for mining operations.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/maxim.rsi # DOTS Still need a sprite for this
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/advmining.rsi # DOTS Still need a sprite for this
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/maxim.rsi # DOTS still need a sprite for this
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/advmining.rsi # DOTS still need a sprite for this
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -388,7 +388,7 @@
     heatingCoefficient: 0.001
     coolingCoefficient: 0.001
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitMAHS
+    clothingPrototype: ClothingHeadHelmetHardsuitAdvancedMining
   - type: Jump
     action: JumpJet
     isEquipment: true
