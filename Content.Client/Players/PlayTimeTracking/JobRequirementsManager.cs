@@ -130,6 +130,8 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
                 prefixedProto = JobPrefix + proto;
             else if (_prototypes.TryIndex<AntagPrototype>(proto, out antag))
                 prefixedProto = AntagPrefix + proto;
+            else
+                _sawmill.Error($"Role prototype '{proto}' could not be indexed as either a Job or an Antag");
 
             // Check the player's bans
             if (_roleBans.Contains(prefixedProto))

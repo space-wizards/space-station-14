@@ -531,6 +531,8 @@ public sealed class GhostRoleSystem : EntitySystem
                 list.Add(roleComp.AntagPrototype);
             else if (roleComp.JobPrototype is not null)
                 list.Add(roleComp.JobPrototype);
+            else
+                Log.Error($"Role prototype '{proto}' could not be indexed as either a Job or an Antag");
         }
 
         return list;
