@@ -91,6 +91,7 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, RemoveBatteryEvent>(OnRemoveBattery);
         SubscribeLocalEvent<MechComponent, RemoveGasTankEvent>(OnRemoveGasTank);
         SubscribeLocalEvent<MechComponent, ChargeChangedEvent>(OnChargeChanged);
+        SubscribeLocalEvent<MechBatteryComponent, ChargeChangedEvent>(OnBatteryChargeChanged); // Starlight-edit
         SubscribeLocalEvent<MechComponent, MechEntryEvent>(OnMechEntry);
         SubscribeLocalEvent<MechComponent, MechExitEvent>(OnMechExit);
 
@@ -211,19 +212,43 @@ public sealed partial class MechSystem : SharedMechSystem
 
         Dirty(uid, mechThrusters);
     }
+    
+    // Starlight-start: Correct UI/Charge update
 
-    private void OnChargeChanged(Entity<MechComponent> ent, ref ChargeChangedEvent args)
+    private void OnChargeChanged(EntityUid uid, MechComponent component, ref ChargeChangedEvent args)
     {
-        if (args.Charge == 0 && ent.Comp.Light)
-            ToggleLight(ent.Owner, ent.Comp);
+        if (args.Charge == 0 && component.Light)
+            ToggleLight(uid, component);
 
-        ent.Comp.Energy = args.Charge;
-        ent.Comp.MaxEnergy = args.MaxCharge;
+        component.Energy = args.Charge;
+        component.MaxEnergy = args.MaxCharge;
 
-        UpdateCanMove(ent.Owner, ent.Comp); // Starlight-edit: fix movement block
+        UpdateCanMove(uid, component); // Starlight-edit: fix movement block
+        UpdateUserInterface(uid, component);
 
-        Dirty(ent.Owner, ent.Comp);
+        Dirty(uid, component);
     }
+    
+    private void OnBatteryChargeChanged(EntityUid uid, MechBatteryComponent component, ref ChargeChangedEvent args)
+    {
+        if (!TryComp<MechComponent>(component.Mech, out var mechComp))
+            return;
+        
+        var mech = component.Mech;
+        
+        if (args.Charge == 0 && mechComp.Light)
+            ToggleLight(mech, mechComp);
+
+        mechComp.Energy = args.Charge;
+        mechComp.MaxEnergy = args.MaxCharge;
+
+        UpdateCanMove(mech, mechComp);
+        UpdateUserInterface(mech, mechComp);
+
+        Dirty(mech, mechComp);
+    }
+    
+    // Starlight-end
 
     public void ToggleLight(EntityUid uid, MechComponent component)
     {
@@ -339,6 +364,15 @@ public sealed partial class MechSystem : SharedMechSystem
         // TODO: this should just be damage and battery
         component.Integrity = component.MaxIntegrity;
         component.Energy = component.MaxEnergy;
+        
+        
+        // Starlight-start: Correct Charge/UI Update
+        if (component.BatterySlot.ContainedEntity != null)
+        {
+            var mechBattery = EnsureComp<MechBatteryComponent>(component.BatterySlot.ContainedEntity.Value);
+            mechBattery.Mech = uid;
+        }
+        // Starlight-end
 
         UpdateCanMove(uid, component); // Starlight-edit: fix movement block
         Dirty(uid, component);
@@ -589,6 +623,9 @@ public sealed partial class MechSystem : SharedMechSystem
 
         if (!Resolve(toInsert, ref battery, false))
             return;
+        
+        var mechBattery = EnsureComp<MechBatteryComponent>(toInsert); // Starlight-edit: Correct Charge/UI Update
+        mechBattery.Mech = uid; // Starlight-edit: Correct Charge/UI Update
 
         _container.Insert(toInsert, component.BatterySlot);
         component.Energy = battery.CurrentCharge;
@@ -602,8 +639,10 @@ public sealed partial class MechSystem : SharedMechSystem
 
     public void RemoveBattery(EntityUid uid, MechComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component) || component.BatterySlot.ContainedEntity == null ) // Starlight-edit: Correct Charge/UI Update
             return;
+        
+        RemComp<MechBatteryComponent>(component.BatterySlot.ContainedEntity.Value); // Starlight-edit: Correct Charge/UI Update
 
         _container.EmptyContainer(component.BatterySlot);
         component.Energy = 0;
