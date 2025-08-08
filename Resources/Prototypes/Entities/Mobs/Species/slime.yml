@@ -125,6 +125,7 @@
             state: jumpsuit-female
   - type: ShowThirstIcons # starlight
   - type: SolutionScanner # starlight
+  - type: Wagging # starlight
 
 - type: entity
   parent: MobHumanDummy

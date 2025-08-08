@@ -1,0 +1,90 @@
+- type: tile
+  id: FloorGlassBronze
+  name: tiles-glass-floor-bronze
+  sprite: /Textures/_Afterlight/Tiles/glass_bronze.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetClockworkGlass1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorGlassPlasma
+  name: tiles-glass-floor-plasma
+  sprite: /Textures/_Afterlight/Tiles/glass_plasma.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetPGlass1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorGlassPlasmaReinforced
+  name: tiles-glass-floor-plasma-reinforced
+  sprite: /Textures/_Afterlight/Tiles/glass_plasma_reinforced.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetRPGlass1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorGlassUranium
+  name: tiles-glass-floor-uranium
+  sprite: /Textures/_Afterlight/Tiles/glass_uranium.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetUGlass1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorGlassUraniumReinforced
+  name: tiles-glass-floor-uranium-reinforced
+  sprite: /Textures/_Afterlight/Tiles/glass_uranium_reinforced.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetRUGlass1
+  heatCapacity: 10000
+

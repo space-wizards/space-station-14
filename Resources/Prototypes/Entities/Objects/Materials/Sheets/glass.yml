@@ -141,7 +141,7 @@
       map: ["base"]
   - type: Item
     heldPrefix: rglass
-  - type: FloorTile
+  - type: FloorTile # starlight
     outputs:
     - FloorRGlass
   - type: Construction
@@ -230,6 +230,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: pglass
+  - type: FloorTile # starlight
+    outputs:
+    - FloorGlassPlasma
   - type: Construction
     graph: Glass
     node: SheetPGlass
@@ -305,6 +308,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: rpglass
+  - type: FloorTile # starlight
+    outputs:
+    - FloorGlassPlasmaReinforced
   - type: Construction
     graph: Glass
     node: SheetRPGlass
@@ -369,6 +375,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: uglass
+  - type: FloorTile # starlight
+    outputs:
+    - FloorGlassUranium
   - type: Construction
     graph: Glass
     node: SheetUGlass
@@ -443,6 +452,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: ruglass
+  - type: FloorTile # starlight
+    outputs:
+    - FloorGlassUraniumReinforced
   - type: Construction
     graph: Glass
     node: SheetRUGlass
@@ -498,6 +510,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: cglass
+  - type: FloorTile # starlight
+    outputs:
+    - FloorGlassBronze
   - type: Construction
     graph: Glass
     node: SheetClockworkGlass
