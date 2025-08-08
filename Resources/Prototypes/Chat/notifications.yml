@@ -10,7 +10,7 @@
   message: station-ai-turret-component-is-attacking-warning
   color: Orange
   sound: /Audio/Misc/notice2.ogg
-  nextDelay: 12
+  nextDelay: 14
   notifyBySource: true
 
 - type: chatNotification
