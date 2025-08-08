@@ -21,9 +21,6 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
     private void OnComponentInit(Entity<BloodstreamComponent> entity, ref ComponentInit args)
     {
         if (!SolutionContainer.EnsureSolution(entity.Owner,
-                entity.Comp.ChemicalSolutionName,
-                out var chemicalSolution) ||
-            !SolutionContainer.EnsureSolution(entity.Owner,
                 entity.Comp.BloodSolutionName,
                 out var bloodSolution) ||
             !SolutionContainer.EnsureSolution(entity.Owner,

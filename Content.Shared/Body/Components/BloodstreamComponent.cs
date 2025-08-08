@@ -20,7 +20,6 @@ namespace Content.Shared.Body.Components;
 [Access(typeof(SharedBloodstreamSystem))]
 public sealed partial class BloodstreamComponent : Component
 {
-    public const string DefaultChemicalsSolutionName = "chemicals";
     public const string DefaultBloodSolutionName = "bloodstream";
     public const string DefaultBloodTemporarySolutionName = "bloodstreamTemporary";
 
@@ -139,17 +138,18 @@ public sealed partial class BloodstreamComponent : Component
     // TODO probably damage bleed thresholds.
 
     /// <summary>
-    /// Max volume of internal chemical solution storage
-    /// </summary>
-    [DataField]
-    public FixedPoint2 ChemicalMaxVolume = FixedPoint2.New(250);
-
-    /// <summary>
-    /// Max volume of internal blood storage,
+    /// Normal volume of internal blood storage,
     /// and starting level of blood.
     /// </summary>
     [DataField]
-    public FixedPoint2 BloodMaxVolume = FixedPoint2.New(300);
+    public FixedPoint2 BloodReferenceVolume = FixedPoint2.New(300);
+
+    /// <summary>
+    /// Factor which multiplied with <see cref="BloodReferenceVolume"/>
+    /// gives maximum volume for bloodstream.
+    /// </summary>
+    [DataField]
+    public float BloodMaxFactor = 2f;
 
     /// <summary>
     /// Which reagent is considered this entities 'blood'?
@@ -167,12 +167,6 @@ public sealed partial class BloodstreamComponent : Component
     public string BloodSolutionName = DefaultBloodSolutionName;
 
     /// <summary>
-    /// Name/Key that <see cref="ChemicalSolution"/> is indexed by.
-    /// </summary>
-    [DataField]
-    public string ChemicalSolutionName = DefaultChemicalsSolutionName;
-
-    /// <summary>
     /// Name/Key that <see cref="TemporarySolution"/> is indexed by.
     /// </summary>
     [DataField]
@@ -183,12 +177,6 @@ public sealed partial class BloodstreamComponent : Component
     /// </summary>
     [ViewVariables]
     public Entity<SolutionComponent>? BloodSolution;
-
-    /// <summary>
-    /// Internal solution for reagent storage
-    /// </summary>
-    [ViewVariables]
-    public Entity<SolutionComponent>? ChemicalSolution;
 
     /// <summary>
     /// Temporary blood solution.
