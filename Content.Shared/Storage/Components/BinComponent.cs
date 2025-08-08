@@ -40,12 +40,6 @@ public sealed partial class BinComponent : Component
     public SpriteSpecifier? RemoveIcon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/eject.svg.192dpi.png"));
 
     /// <summary>
-    /// The items that start in the bin. Sorted in order.
-    /// </summary>
-    [DataField]
-    public List<EntProtoId> InitialContents = new();
-
-    /// <summary>
     /// A whitelist governing what items can be inserted into the bin.
     /// </summary>
     [DataField, AutoNetworkedField]

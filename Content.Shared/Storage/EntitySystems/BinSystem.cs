@@ -10,7 +10,6 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -19,7 +18,6 @@ namespace Content.Shared.Storage.EntitySystems;
 /// </summary>
 public sealed class BinSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _admin = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -29,7 +27,6 @@ public sealed class BinSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<BinComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<BinComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BinComponent, InteractHandEvent>(OnInteractHand, before: new[] { typeof(SharedItemSystem) });
         SubscribeLocalEvent<BinComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<BinComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
@@ -44,24 +41,6 @@ public sealed class BinSystem : EntitySystem
     private void OnStartup(Entity<BinComponent> entity, ref ComponentStartup args)
     {
         entity.Comp.ItemContainer = _container.EnsureContainer<Container>(entity, entity.Comp.ContainerId);
-    }
-
-    private void OnMapInit(Entity<BinComponent> entity, ref MapInitEvent args)
-    {
-        // don't spawn on the client.
-        if (_net.IsClient)
-            return;
-
-        var xform = Transform(entity);
-        foreach (var id in entity.Comp.InitialContents)
-        {
-            var ent = Spawn(id, xform.Coordinates);
-            if (TryInsertIntoBin(entity, ent))
-                continue;
-
-            Log.Error($"Entity {ToPrettyString(ent)} was unable to be initialized into bin {ToPrettyString(entity)}");
-            return;
-        }
     }
 
     private void OnInteractHand(Entity<BinComponent> entity, ref InteractHandEvent args)
@@ -94,7 +73,7 @@ public sealed class BinSystem : EntitySystem
             };
             args.Verbs.Add(verb);
         }
-        else if (entity.Comp.ItemContainer.ContainedEntities.LastOrDefault() is var subject)
+        else if (entity.Comp.ItemContainer.ContainedEntities.LastOrDefault() is { Valid: true } subject)
         {
             AlternativeVerb verb = new()
             {
@@ -161,13 +140,14 @@ public sealed class BinSystem : EntitySystem
     /// <returns>Returns false if removal was successful.</returns>
     public bool TryRemoveFromBin(Entity<BinComponent> entity, [NotNullWhen(true)] out EntityUid? removed, EntityUid? user = null)
     {
-        removed = entity.Comp.ItemContainer.ContainedEntities.LastOrDefault();
-
-        if (removed == null)
+        removed = null;
+        if (entity.Comp.ItemContainer.ContainedEntities.Last() is not { Valid: true } toRemove)
             return false;
 
-        if (!_container.Remove(removed.Value, entity.Comp.ItemContainer))
+        if (!_container.Remove(toRemove, entity.Comp.ItemContainer))
             return false;
+
+        removed = toRemove;
 
         if (user != null)
         {
