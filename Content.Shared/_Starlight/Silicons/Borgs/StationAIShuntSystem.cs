@@ -1,17 +1,15 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared._Starlight.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Follower;
 using Content.Shared.Follower.Components;
 using Content.Shared.Mind;
-using Content.Shared.Radio.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Silicons.StationAi;
-using Robust.Shared.Containers;
-
+using Content.Shared.Verbs;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Starlight.Silicons.Borgs;
 
@@ -28,9 +26,13 @@ public sealed class StationAIShuntSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<StationAIShuntableComponent, AIShuntActionEvent>(OnAttemptShunt);
+
         SubscribeLocalEvent<StationAIShuntComponent, AIUnShuntActionEvent>(OnAttemptUnshunt);
+        SubscribeLocalEvent<StationAIShuntComponent, GetVerbsEvent<AlternativeVerb>>(GetAltVerbs);
+
     }
 
+    #region Actions
     private void OnAttemptShunt(EntityUid uid, StationAIShuntableComponent shuntable, AIShuntActionEvent ev)
     {
         if (ev.Handled)
@@ -139,8 +141,58 @@ public sealed class StationAIShuntSystem : EntitySystem
         shunt.ReturnAction = null;
         shunt.Return = null;
         shuntable.Inhabited = null;
+    }
+    #endregion
+
+    #region Verbs
+    public void GetAltVerbs(EntityUid uid, StationAIShuntComponent comp, GetVerbsEvent<AlternativeVerb> ev)
+    {
+        if (ev.User == ev.Target) //if we are targeting outselves
+        {
+            if (!comp.Return.HasValue)
+                return; //we are in something not inhabited. so obvs we cant shunt out of it.
+            
+            var unshuntVerb = new AlternativeVerb()
+            {
+                Text = Loc.GetString("ai-shunt-out-of"),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/vv.svg.192dpi.png")),
+                Act = () =>
+                {
+                    var shuntEv = new AIUnShuntActionEvent()
+                    {
+                        Performer = uid
+                    };
+                    RaiseLocalEvent(uid, shuntEv);
+                }
+            };
+            ev.Verbs.Add(unshuntVerb);
+            return;
+        }
+
+        if (!HasComp<StationAIShuntableComponent>(ev.User))
+            return; //only shuntable can get the into verb
+
+        if (TryComp<BorgChassisComponent>(uid, out var chassis) && !HasComp<StationAIShuntComponent>(chassis.BrainContainer.ContainedEntity))
+            return; //target borg chassis has no brain with shuntable component.
+
+        var shuntVerb = new AlternativeVerb()
+        {
+            Text = Loc.GetString("ai-shunt-into"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/vv.svg.192dpi.png")),
+            Act = () =>
+            {
+                var shuntEv = new AIShuntActionEvent()
+                {
+                    Target = uid,
+                    Performer = ev.User
+                };
+                RaiseLocalEvent(ev.User, shuntEv);
+            }
+        };
+        ev.Verbs.Add(shuntVerb);
 
     }
+    #endregion
 }
 
 public sealed partial class AIShuntActionEvent : EntityTargetActionEvent
