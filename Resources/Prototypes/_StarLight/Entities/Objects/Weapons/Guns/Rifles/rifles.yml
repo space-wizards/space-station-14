@@ -272,6 +272,7 @@
         name: Chamber
         startingItem: CartridgeMagnumSP
 
+
 - type: entity
   name: Peacemaker
   parent: [ BaseWeaponRifle, BaseSecurityContraband ]
@@ -319,13 +320,4 @@
         priority: 1
         whitelist:
           tags:
-          - CartridgeRifle
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot ""
-      gun_chamber: !type:ContainerSlot ""
-  - type: Appearance
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
 
