@@ -60,7 +60,7 @@
     state: full
   - type: IconSmooth
     key: windows
-    base: ptwindow
+    base: xenoborg
   - type: Airtight
   - type: Fixtures
     fixtures:
