@@ -136,19 +136,11 @@
         reagents:
         - ReagentId: Water
           Quantity: 500
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       bin-container:
-      - DrinkWaterCup
-      - DrinkWaterCup
-      - DrinkWaterCup
-      - DrinkWaterCup
-      - DrinkWaterCup
-      - DrinkWaterCup
-      - DrinkWaterCup
-      - DrinkWaterCup
-      - DrinkWaterCup
-      - DrinkWaterCup
+        id: DrinkWaterCup
+        amount: 10
   - type: ContainerContainer
     containers:
       bin-container: !type:Container

@@ -60,10 +60,9 @@ public sealed class BinSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!TryRemoveFromBin(entity, out var toGrab))
+        if (!TryRemoveFromBin((entity, entity), args.User))
             return;
 
-        _hands.TryPickupAnyHand(args.User, toGrab.Value);
         args.Handled = true;
     }
 
@@ -73,12 +72,12 @@ public sealed class BinSystem : EntitySystem
             return;
 
         var user = args.User;
-        if (args.Using != null && CanInsertIntoBin(entity, args.Using.Value))
+        if (args.Using != null && CanInsertIntoBin((entity, entity), args.Using.Value))
         {
             var used = args.Using.Value;
             AlternativeVerb verb = new()
             {
-                Act = () => TryInsertIntoBin(entity, used, user),
+                Act = () => TryInsertIntoBin((entity, entity), used, user),
                 Icon = entity.Comp.InsertIcon,
                 Text = Loc.GetString("place-item-verb-text", ("subject", used)),
                 Priority = 2
@@ -91,8 +90,7 @@ public sealed class BinSystem : EntitySystem
             {
                 Act = () =>
                 {
-                    if (TryRemoveFromBin(entity, out var toGrab, user))
-                        _hands.TryPickupAnyHand(user, toGrab.Value);
+                    TryRemoveFromBin((entity, entity), user);
                 },
                 Icon = entity.Comp.RemoveIcon,
                 Text = Loc.GetString("take-item-verb-text", ("subject", next)),
@@ -107,12 +105,15 @@ public sealed class BinSystem : EntitySystem
         if (args.Handled || !args.CanReach)
             return;
 
-        if (TryInsertIntoBin(entity, args.Used, args.User))
+        if (TryInsertIntoBin((entity, entity), args.Used, args.User))
             args.Handled = true;
     }
 
-    public bool CanInsertIntoBin(Entity<BinComponent> entity, EntityUid toInsert)
+    public bool CanInsertIntoBin(Entity<BinComponent?> entity, EntityUid toInsert)
     {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return false;
+
         if (entity.Comp.ItemContainer.Count >= entity.Comp.MaxItems)
             return false;
 
@@ -126,9 +127,12 @@ public sealed class BinSystem : EntitySystem
     /// <param name="toInsert">Entity we're trying to insert</param>
     /// <param name="user">Entity who is inserting into the bin if one exists.</param>
     /// <returns>Returns true if insertion was successful.</returns>
-    public bool TryInsertIntoBin(Entity<BinComponent> entity, EntityUid toInsert, EntityUid? user = null)
+    public bool TryInsertIntoBin(Entity<BinComponent?> entity, EntityUid toInsert, EntityUid? user = null)
     {
-        if (!CanInsertIntoBin(entity, toInsert))
+        if (!Resolve(entity, ref entity.Comp, false))
+            return false;
+
+        if (!CanInsertIntoBin((entity, entity), toInsert))
             return false;
 
         _container.Insert(toInsert, entity.Comp.ItemContainer);
@@ -144,15 +148,17 @@ public sealed class BinSystem : EntitySystem
     }
 
     /// <summary>
-    /// Tries to remove an entity from the top of the bin.
+    /// Tries to remove an entity from the top of the bin, returns the removed item.
     /// </summary>
     /// <param name="entity">Entity we're removing an item from.</param>
-    /// <param name="removed">Item we removed.</param>
-    /// <param name="user">Entity that is trying to remove from the bin.</param>
-    /// <returns>Returns false if removal was successful.</returns>
-    public bool TryRemoveFromBin(Entity<BinComponent> entity, [NotNullWhen(true)] out EntityUid? removed, EntityUid? user = null)
+    /// <param name="removed">Entity that was removed from the bin.</param>
+    /// <returns>Returns true if removal was successful.</returns>
+    public bool TryRemoveFromBin(Entity<BinComponent?> entity, [NotNullWhen(true)] out EntityUid? removed)
     {
         removed = null;
+        if (!Resolve(entity, ref entity.Comp, false))
+            return false;
+
         if (entity.Comp.ItemContainer.ContainedEntities.Last() is not { Valid: true } toRemove)
             return false;
 
@@ -160,14 +166,27 @@ public sealed class BinSystem : EntitySystem
             return false;
 
         removed = toRemove;
+        return true;
+    }
 
-        if (user != null)
-        {
-            _admin.Add(
-                LogType.Pickup,
-                LogImpact.Low,
-                $"{ToPrettyString(user):player} removed {ToPrettyString(removed)} from bin {ToPrettyString(entity)}.");
-        }
+    /// <summary>
+    /// Overflow of <see cref="TryRemoveFromBin(Entity{BinComponent?},out EntityUid?)"/> which takes a user, and
+    /// doesn't return an item instead placing it in the user's hand or dropping it on them if their hands are full.
+    /// </summary>
+    /// <param name="entity">Bin the item is being removed from.</param>
+    /// <param name="user">User who is picking up the item.</param>
+    /// <returns>Returns true if removal was successful.</returns>
+    public bool TryRemoveFromBin(Entity<BinComponent?> entity, EntityUid user)
+    {
+        if (!TryRemoveFromBin(entity, out var removed))
+            return false;
+
+        _admin.Add(
+            LogType.Pickup,
+            LogImpact.Low,
+            $"{ToPrettyString(user):player} removed {ToPrettyString(removed)} from bin {ToPrettyString(entity)}.");
+
+        _hands.PickupOrDrop(user, removed.Value, dropNear: true);
 
         return true;
     }

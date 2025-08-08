@@ -43,59 +43,30 @@
   id: PaperBin5
   suffix: 5
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       bin-container:
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
+        id: Paper
+        amount: 5
 
 - type: entity
   parent: PaperBin
   id: PaperBin10
   suffix: 10
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       bin-container:
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
+        id: Paper
+        amount: 10
 
 - type: entity
   parent: PaperBin
   id: PaperBin20
   suffix: 20
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       bin-container:
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
-      - Paper
+        id: Paper
+        amount: 20
