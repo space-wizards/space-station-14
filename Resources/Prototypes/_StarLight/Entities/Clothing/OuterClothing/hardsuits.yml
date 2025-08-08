@@ -357,7 +357,7 @@
 
 #Mining Specialist MAHS - DOTS why does jetpack inhand appear when holding this?
 - type: entity
-  parent: [ ClothingOuterHardsuitBase, BaseSalvageContraband ]
+  parent: [ ClothingOuterHardsuitBase, BaseSalvageMiningContraband ]
   id: ClothingOuterHardsuitMAHS
   name: miner's assistive hardsuit
   description: A jetpack-equipped hardsuit designed for mining operations.
