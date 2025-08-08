@@ -219,6 +219,7 @@
           types:
             Caustic: 1
     Drink:
+      # start harmony change
       effects:
       - !type:ModifyBloodLevel
         conditions:

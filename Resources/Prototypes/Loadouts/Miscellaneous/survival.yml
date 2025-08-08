@@ -18,7 +18,7 @@
     - Human
     - Moth
     - Reptilian
-    - Avali #Latestation <-- the owner of the PR and the station(i think)
+    - Avali #Originally implemented on Cosmic Drift, ported to LateStation and LateStation ported to harmony, now ported to RonStation.
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox

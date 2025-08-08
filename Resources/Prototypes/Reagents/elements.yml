@@ -67,7 +67,7 @@
         - !type:OrganType
           type: Avali
           shouldHave: false
-        # start harmony change
+        # end harmony change
         - !type:OrganType
           type: Arachnid
           shouldHave: false
