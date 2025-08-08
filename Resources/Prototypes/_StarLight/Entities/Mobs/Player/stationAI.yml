@@ -1,0 +1,30 @@
+- type: entity
+  parent: BaseMentalAction
+  id: ActionAIShunt
+  name: Shunt
+  description: Shunt into a borg chassis with a AI interface installed.
+  components:
+  - type: Action
+    icon: { sprite : _Starlight/Interface/Actions/actions_shunt.rsi, state: icon }
+    iconOn: { sprite : _Starlight/Interface/Actions/actions_shunt.rsi, state: icon-on }
+    itemIconStyle: BigAction
+    priority: 1
+  - type: TargetAction
+  - type: EntityTargetAction
+    canTargetSelf: false # no whitelist cause the posibrain has the shunt comp. not the chassis.
+    whitelist: 
+      components:
+        - StationAIShunt
+    event: !type:AIShuntActionEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionAIUnShunt
+  name: UnShunt
+  description: Disengage from the chassis/interface returning to your core.
+  components:
+  - type: Action
+    useDelay: 1
+    icon: { sprite : _Starlight/Interface/Actions/actions_shunt.rsi, state: icon-unshunt }
+  - type: InstantAction
+    event: !type:AIUnShuntActionEvent

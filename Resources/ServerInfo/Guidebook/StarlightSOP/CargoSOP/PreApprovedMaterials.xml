@@ -1,0 +1,17 @@
+<Document>
+# Pre-approved Materials List
+
+This pre-approved materials list does [bold]not[/bold] mean that you must order the item, rather it means that the [italic]item request form[/italic] or department acquisition slip may be omitted.
+
+Consideration to the station's needs and Cargo's budget still applies.
+
+<Box>
+	Basic materials are considered to be:
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="SheetSteel"/>
+	<GuideEntityEmbed Entity="SheetPlastic"/>
+	<GuideEntityEmbed Entity="SheetGlass"/>
+	<GuideEntityEmbed Entity="MaterialCloth"/>
+</Box>
+</Document>
