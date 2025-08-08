@@ -436,6 +436,7 @@
     sprite: Structures/Furniture/Carpets/white_board.rsi
   - type: Icon
     sprite: Structures/Furniture/Carpets/white_board.rsi
+    state: full
   - type: Destructible
     thresholds:
     - trigger:
@@ -448,13 +449,13 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:DoActsBehavior
-         acts: [ "Destruction" ]
-      - !type:SpawnEntitiesBehavior
-        spawn:
-        FloorCarpetItemBoardWhite:
-          min: 1
-          max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            FloorCarpetItemBoardWhite:
+              min: 1
+              max: 1
 
 - type: entity
   id: CarpetBoardBlack
@@ -466,25 +467,26 @@
     sprite: Structures/Furniture/Carpets/black_board.rsi
   - type: Icon
     sprite: Structures/Furniture/Carpets/black_board.rsi
+    state: full
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:SpawnEntitiesBehavior
-        spawn:
-        FloorCarpetItemBoardBlack:
-          min: 1
-          max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            FloorCarpetItemBoardBlack:
+              min: 1
+              max: 1
 
 - type: entity
   id: CarpetBoardChecker
@@ -496,23 +498,24 @@
     sprite: Structures/Furniture/Carpets/checker_board.rsi
   - type: Icon
     sprite: Structures/Furniture/Carpets/checker_board.rsi
+    state: full
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:SpawnEntitiesBehavior
-        spawn:
-        FloorCarpetItemBoardChecker:
-          min: 1
-          max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            FloorCarpetItemBoardChecker:
+              min: 1
+              max: 1
 

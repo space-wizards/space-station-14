@@ -1,57 +1,9 @@
 # chess
 - type: stack
-  id: LargeWhiteQueen
-  name: stack-large-white-queen
-  spawn: LargeWhiteQueen
-  maxCount: 2
-
-- type: stack
-  id: LargeWhiteBishop
-  name: stack-large-white-bishop
-  spawn: LargeWhiteBishop
-  maxCount: 4
-
-- type: stack
-  id: LargeWhiteKnight
-  name: stack-large-white-knight
-  spawn: LargeWhiteKnight
-  maxCount: 4
-
-- type: stack
-  id: LargeWhiteRook
-  name: stack-large-white-rook
-  spawn: LargeWhiteRook
-  maxCount: 4
-
-- type: stack
   id: LargeWhitePawn
   name: stack-large-white-pawn
   spawn: LargeWhitePawn
   maxCount: 8
-
-- type: stack
-  id: LargeBlackQueen
-  name: stack-large-black-queen
-  spawn: LargeBlackQueen
-  maxCount: 2
-
-- type: stack
-  id: LargeBlackBishop
-  name: stack-large-black-bishop
-  spawn: LargeBlackBishop
-  maxCount: 4
-
-- type: stack
-  id: LargeBlackKnight
-  name: stack-large-black-knight
-  spawn: LargeBlackKnight
-  maxCount: 4
-
-- type: stack
-  id: LargeBlackRook
-  name: stack-large-black-rook
-  spawn: LargeBlackRook
-  maxCount: 4
 
 - type: stack
   id: LargeBlackPawn
