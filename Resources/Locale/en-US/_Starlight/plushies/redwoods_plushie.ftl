@@ -5,3 +5,4 @@ plushie-redwoods-4 = What the fuck does CC do even all day?
 plushie-redwoods-5 = Xenos? Where?
 plushie-redwoods-6 = Do I regret being a vulp? No.
 plushie-redwoods-7 = Oh my... so much guns... I can't control myself..!
+plushie-redwoods-8 = What did I say? It's always the FUCKING CLONW!
