@@ -180,7 +180,7 @@ namespace Content.Shared.Stacks
 
         private void OnEaten(Entity<StackComponent> eaten, ref IngestedEvent args)
         {
-            if (!Use(eaten, 1))
+            if (!TryUse(eaten.AsNullable(), 1))
                 return;
 
             // We haven't eaten the whole stack yet or are unable to eat it completely.
