@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/08/2025 23:09:09
-  entityCount: 16285
+  time: 08/08/2025 23:34:18
+  entityCount: 16298
 maps:
 - 1
 grids:
@@ -6784,7 +6784,7 @@ entities:
       pos: 7.5,-88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -106792.3
+      secondsUntilStateChange: -106979.63
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7996,7 +7996,7 @@ entities:
       pos: -11.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -20229.312
+      secondsUntilStateChange: -20416.648
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -91050,6 +91050,68 @@ entities:
     - type: Transform
       pos: -45.5,-40.5
       parent: 2
+- proto: SpawnPointLatejoin
+  entities:
+  - uid: 16287
+    components:
+    - type: Transform
+      pos: 24.5,20.5
+      parent: 2
+  - uid: 16288
+    components:
+    - type: Transform
+      pos: 28.5,26.5
+      parent: 2
+  - uid: 16289
+    components:
+    - type: Transform
+      pos: 26.5,26.5
+      parent: 2
+  - uid: 16290
+    components:
+    - type: Transform
+      pos: 26.5,27.5
+      parent: 2
+  - uid: 16291
+    components:
+    - type: Transform
+      pos: 28.5,27.5
+      parent: 2
+  - uid: 16292
+    components:
+    - type: Transform
+      pos: 24.5,13.5
+      parent: 2
+  - uid: 16293
+    components:
+    - type: Transform
+      pos: 27.5,19.5
+      parent: 2
+  - uid: 16294
+    components:
+    - type: Transform
+      pos: 27.5,18.5
+      parent: 2
+  - uid: 16295
+    components:
+    - type: Transform
+      pos: 27.5,17.5
+      parent: 2
+  - uid: 16296
+    components:
+    - type: Transform
+      pos: 27.5,16.5
+      parent: 2
+  - uid: 16297
+    components:
+    - type: Transform
+      pos: 27.5,15.5
+      parent: 2
+  - uid: 16298
+    components:
+    - type: Transform
+      pos: 27.5,14.5
+      parent: 2
 - proto: SpawnPointLawyer
   entities:
   - uid: 13944
@@ -91177,6 +91239,13 @@ entities:
     components:
     - type: Transform
       pos: 5.5,-13.5
+      parent: 2
+- proto: SpawnPointObserver
+  entities:
+  - uid: 16286
+    components:
+    - type: Transform
+      pos: 0.5,-3.5
       parent: 2
 - proto: SpawnPointParamedic
   entities:
