@@ -1,5 +1,5 @@
-using Content.Shared.Destructible;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Destructible;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
@@ -12,6 +12,7 @@ namespace Content.Server.Shuttles.Systems;
 public sealed class SpaceGarbageSystem : EntitySystem
 {
     [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
+
     private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
@@ -32,9 +33,7 @@ public sealed class SpaceGarbageSystem : EntitySystem
         if (ourXform.GridUid == otherXform.GridUid)
             return;
 
-        // Fire a destruction attempt so other systems (e.g., Godmode/Indestructible/Polymorph) can cancel.
-        // This also allows polymorph to revert if needed when destruction proceeds.
-        if (!_destructible.DestroyEntity(uid))
-            return;
+        _destructible.DestroyEntity(uid);
+        
     }
 }
