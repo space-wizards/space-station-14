@@ -76,6 +76,14 @@
   components:
   - type: KeepAliveCondition
 
+  # requires that the target makes it to centcomm alive
+- type: entity
+  abstract: true
+  parent: BaseSocialObjective
+  id: BaseEscortTargetObjective
+  components:
+  - type: EscortTargetCondition
+
 # requires that the target completes at least 50% of their objectives
 - type: entity
   abstract: true

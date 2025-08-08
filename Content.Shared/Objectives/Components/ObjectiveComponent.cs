@@ -60,6 +60,13 @@ public record struct RequirementCheckEvent(EntityUid MindId, MindComponent Mind,
 public record struct ObjectiveAssignedEvent(EntityUid MindId, MindComponent Mind, bool Cancelled = false);
 
 /// <summary>
+/// Event raised on an objective after other targets have been assigned. <see cref="ObjectiveAssignedEvent"/>.
+/// Use this if you need this objective to roll targets after all others.
+/// </summary>
+[ByRefEvent]
+public record struct ObjectiveAssignedFinalEvent(EntityUid MindId, MindComponent Mind, bool Cancelled = false);
+
+/// <summary>
 /// Event raised on an objective after everything has handled <see cref="ObjectiveAssignedEvent"/>.
 /// Use this to set the objective's title description or icon.
 /// </summary>
