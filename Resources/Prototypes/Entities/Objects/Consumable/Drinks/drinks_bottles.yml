@@ -192,6 +192,8 @@
     layers:
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]
+  - type: ExaminableSolution
+    examinableWhileClosed: false # If you can't see fill levels, it's probably opaque
 
 - type: entity
   id: DrinkBottleVisualsAll
@@ -215,6 +217,9 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: fill-
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
+  - type: ExaminableSolution
 
 # Large Glass Bottles
 
@@ -719,9 +724,6 @@
           Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
-  - type: SolutionContainerVisuals
-    inHandsMaxFillLevels: 2
-    inHandsFillBaseName: -fill-
   - type: Label
     currentLabel: reagent-name-water
   - type: Sealable

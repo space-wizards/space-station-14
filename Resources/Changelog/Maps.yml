@@ -405,4 +405,102 @@
   id: 49
   time: '2025-07-03T18:51:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38689
+- author: qwerltaz
+  changes:
+  - message: On Bagel, redesigned Security to have GenPop.
+    type: Tweak
+  id: 50
+  time: '2025-07-10T18:16:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38829
+- author: WarPigeon
+  changes:
+  - message: The salvage airlock on Bagel should no longer space the cargo bay.
+    type: Fix
+  id: 51
+  time: '2025-07-19T19:40:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38956
+- author: CroilBird
+  changes:
+  - message: Added Polly to Bagel station
+    type: Add
+  id: 52
+  time: '2025-07-23T00:09:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39147
+- author: CroilBird
+  changes:
+  - message: Added Polly to Oasis station
+    type: Add
+  id: 53
+  time: '2025-07-23T00:11:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39146
+- author: CroilBird
+  changes:
+  - message: Added Polly to Exo station
+    type: Add
+  id: 54
+  time: '2025-07-23T00:35:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39145
+- author: CroilBird
+  changes:
+  - message: Added Polly to Fland station
+    type: Add
+  id: 55
+  time: '2025-07-23T00:36:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39144
+- author: CroilBird
+  changes:
+  - message: Added Polly to Packed station
+    type: Add
+  id: 56
+  time: '2025-07-23T00:38:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39143
+- author: CroilBird
+  changes:
+  - message: Added Polly to Marathon station
+    type: Add
+  id: 57
+  time: '2025-07-23T00:41:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39141
+- author: CroilBird
+  changes:
+  - message: Added Polly to Box station
+    type: Add
+  id: 58
+  time: '2025-07-23T00:44:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39140
+- author: CroilBird
+  changes:
+  - message: Added Polly to Amber station
+    type: Add
+  id: 59
+  time: '2025-07-23T00:52:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39139
+- author: CroilBird
+  changes:
+  - message: On Plasma, added Polly to the CE's office.
+    type: Add
+  - message: On Plasma, removed a pipe router that to mail routing problems.
+    type: Fix
+  - message: On Plasma, removed a leftover waste pipe from underneath the science
+      circuit imprinter.
+    type: Fix
+  id: 60
+  time: '2025-07-23T00:53:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39138
+- author: CroilBird
+  changes:
+  - message: Added Polly to Elkridge station
+    type: Add
+  id: 61
+  time: '2025-07-23T00:55:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39150
+- author: SlamBamActionman
+  changes:
+  - message: Exo station has had a major Security department rework, along with the
+      eastern maintenance section of the station, as well as several other minor changes
+      across the station.
+    type: Tweak
+  id: 62
+  time: '2025-07-31T20:28:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39295
 Order: 1
