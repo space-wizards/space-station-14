@@ -20,7 +20,6 @@ using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Mech;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Events;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
@@ -98,8 +97,6 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
         SubscribeLocalEvent<MechComponent, MechMaintenanceUiMessage>(OnMaintenanceMessage);
-        
-        SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechCanMoveEvent);
 
         SubscribeLocalEvent<MechPilotComponent, ToolUserAttemptUseEvent>(OnToolUseAttempt);
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
@@ -141,7 +138,20 @@ public sealed partial class MechSystem : SharedMechSystem
             RaiseLocalEvent(uid, ref ev);
         }
     }
-
+    
+    // Starlight-start: fix movement block
+    
+    private void UpdateCanMove(EntityUid mech, MechComponent? mechComp = null)
+    {
+        if (!Resolve(mech, ref mechComp))
+            return;
+        
+        _actionBlocker.UpdateCanMove(mech);
+        if (mechComp.PilotSlot.ContainedEntity is { } pilot)
+            _actionBlocker.UpdateCanMove(pilot);
+    }
+    
+    // Starlight-end
 
     private void OnToggleLightEvent(EntityUid uid, MechComponent component, ToggleActionEvent args)
     {
@@ -210,7 +220,7 @@ public sealed partial class MechSystem : SharedMechSystem
         ent.Comp.Energy = args.Charge;
         ent.Comp.MaxEnergy = args.MaxCharge;
 
-        _actionBlocker.UpdateCanMove(ent.Owner);
+        UpdateCanMove(ent.Owner, ent.Comp); // Starlight-edit: fix movement block
 
         Dirty(ent.Owner, ent.Comp);
     }
@@ -232,12 +242,6 @@ public sealed partial class MechSystem : SharedMechSystem
 
         UpdateAppearance(uid, component);
     }
-    
-    private void OnMechCanMoveEvent(EntityUid uid, MechComponent component, UpdateCanMoveEvent args)
-    {
-        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0 || component.MaintenanceMode)
-            args.Cancel();
-    }
 
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
     {
@@ -247,7 +251,7 @@ public sealed partial class MechSystem : SharedMechSystem
         if (component.BatterySlot.ContainedEntity == null && TryComp<BatteryComponent>(args.Used, out var battery))
         {
             InsertBattery(uid, args.Used, component, battery);
-            _actionBlocker.UpdateCanMove(uid);
+            UpdateCanMove(uid, component); // Starlight-edit: fix movement block
             return;
         }
         if(component.GasTankSlot.ContainedEntity==null && TryComp<GasTankComponent>(args.Used, out var gasTank))
@@ -288,12 +292,12 @@ public sealed partial class MechSystem : SharedMechSystem
             component.MaxEnergy = battery.MaxCharge;
 
             Dirty(uid, component);
-            _actionBlocker.UpdateCanMove(uid);
+            UpdateCanMove(uid, component); // Starlight-edit: fix movement block
         }
         else if(!(args.Container != component.GasTankSlot || !TryComp<GasTankComponent>(args.Entity, out var gasTank)))
         {
             Dirty(uid, component);
-            _actionBlocker.UpdateCanMove(uid);
+            UpdateCanMove(uid, component); // Starlight-edit: fix movement block
         }
         else
         {
@@ -307,7 +311,7 @@ public sealed partial class MechSystem : SharedMechSystem
             return;
 
         RemoveBattery(uid, component);
-        _actionBlocker.UpdateCanMove(uid);
+        UpdateCanMove(uid, component); // Starlight-edit: fix movement block
 
         args.Handled = true;
     }
@@ -336,7 +340,7 @@ public sealed partial class MechSystem : SharedMechSystem
         component.Integrity = component.MaxIntegrity;
         component.Energy = component.MaxEnergy;
 
-        _actionBlocker.UpdateCanMove(uid);
+        UpdateCanMove(uid, component); // Starlight-edit: fix movement block
         Dirty(uid, component);
     }
 
@@ -365,7 +369,7 @@ public sealed partial class MechSystem : SharedMechSystem
         
         Dirty(uid, component); // Starlight-edit: Update Maintenance State
 
-        _actionBlocker.UpdateCanMove(uid);
+        UpdateCanMove(uid, component); // Starlight-edit: fix movement block
     }
 
     private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
@@ -455,7 +459,7 @@ public sealed partial class MechSystem : SharedMechSystem
                 _hands.DoDrop((args.Args.User, handsComponent), hand);
 
         TryInsert(uid, args.Args.User, component);
-        _actionBlocker.UpdateCanMove(uid);
+        UpdateCanMove(uid, component); // Starlight-edit: fix movement block
 
         _factionSystem.Up(args.Args.User, uid);
 
@@ -539,7 +543,7 @@ public sealed partial class MechSystem : SharedMechSystem
         base.BreakMech(uid, component);
 
         _ui.CloseUi(uid, MechUiKey.Key);
-        _actionBlocker.UpdateCanMove(uid);
+        UpdateCanMove(uid, component); // Starlight-edit: fix movement block
     }
 
     public override bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, MechComponent? component = null)
@@ -564,7 +568,7 @@ public sealed partial class MechSystem : SharedMechSystem
             component.Energy = batteryComp.CurrentCharge;
             Dirty(uid, component);
         }
-        _actionBlocker.UpdateCanMove(uid);
+        UpdateCanMove(uid, component); // Starlight-edit: fix movement block
         return true;
     }
     public void InsertGasTank(EntityUid uid, EntityUid toInsert, MechComponent? component = null, GasTankComponent? gasTank = null)
@@ -576,7 +580,6 @@ public sealed partial class MechSystem : SharedMechSystem
             return;
 
         _container.Insert(toInsert, component.GasTankSlot);
-        _actionBlocker.UpdateCanMove(uid);
         Dirty(uid, component);
     }
     public void InsertBattery(EntityUid uid, EntityUid toInsert, MechComponent? component = null, BatteryComponent? battery = null)
@@ -591,7 +594,7 @@ public sealed partial class MechSystem : SharedMechSystem
         component.Energy = battery.CurrentCharge;
         component.MaxEnergy = battery.MaxCharge;
 
-        _actionBlocker.UpdateCanMove(uid);
+        UpdateCanMove(uid, component); // Starlight-edit: fix movement block
 
         Dirty(uid, component);
         UpdateUserInterface(uid, component);
@@ -606,7 +609,7 @@ public sealed partial class MechSystem : SharedMechSystem
         component.Energy = 0;
         component.MaxEnergy = 0;
 
-        _actionBlocker.UpdateCanMove(uid);
+        UpdateCanMove(uid, component); // Starlight-edit: fix movement block
 
         Dirty(uid, component);
         UpdateUserInterface(uid, component);

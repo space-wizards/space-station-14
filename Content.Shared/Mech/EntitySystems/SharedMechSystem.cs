@@ -14,6 +14,7 @@ using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Movement.Events; // Starlight-edit
 using Content.Shared.Popups;
 using Content.Shared.Repairable; // Starlight-edit
 using Content.Shared.Weapons.Melee;
@@ -67,6 +68,9 @@ public abstract partial class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechPilotComponent, AttackAttemptEvent>(OnAttackAttempt);
         SubscribeLocalEvent<MechPilotComponent, EntGotRemovedFromContainerMessage>(OnPilotRemoved); // Starlight-edit
         
+        SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechMoveEvent); // Starlight-edit: Moved from server side, broken
+        SubscribeLocalEvent<MechPilotComponent, UpdateCanMoveEvent>(OnPilotMoveEvent); // Starlight-edit
+        SubscribeLocalEvent<MechComponent, ChangeDirectionAttemptEvent>(OnMechMoveEvent); // Starlight-edit
         SubscribeLocalEvent<MechComponent, ShotAttemptedEvent>(OnShootAttempt); // Starlight-edit: Moved from server side, broken
         SubscribeLocalEvent<MechComponent, CanRepairEvent>(OnRepairAttempt); // Starlight-edit: Moved from server side, broken
 
@@ -74,6 +78,25 @@ public abstract partial class SharedMechSystem : EntitySystem
     }
     
     // Starlight-start: Attempt events
+    
+    private void OnPilotMoveEvent(EntityUid uid, MechPilotComponent component, UpdateCanMoveEvent args)
+    {
+        if (component.LifeStage > ComponentLifeStage.Running || !TryComp<MechComponent>(component.Mech, out var mech))
+            return;
+
+        if (mech.Broken || mech.Integrity <= 0 || mech.Energy <= 0 || mech.MaintenanceMode)
+            args.Cancel();
+    }
+    
+    private void OnMechMoveEvent(EntityUid uid, MechComponent component, CancellableEntityEventArgs args)
+    {
+        if (component.LifeStage > ComponentLifeStage.Running)
+            return;
+
+        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0 || component.MaintenanceMode)
+            args.Cancel();
+    }
+    
     private void OnShootAttempt(EntityUid uid, MechComponent component, ref ShotAttemptedEvent args)
     {
         if (!component.MaintenanceMode)
