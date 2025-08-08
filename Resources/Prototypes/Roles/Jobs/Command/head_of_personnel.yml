@@ -61,10 +61,8 @@
 - type: startingGear
   id: HoPGear
   equipment:
-    shoes: ClothingShoesColorBrown
     id: HoPPDA
     gloves: ClothingHandsGlovesHop
-    ears: ClothingHeadsetAltCommand
     belt: BoxFolderClipboard
   storage:
     back:
