@@ -111,21 +111,21 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     }
 
     /// <summary>
-    /// Check each job/antag prototype against the current player, for requirements and bans
-    /// The prototypes MUST start with the job/antag prefix
+    /// Check a list of job/antag prototypes against the current player, for requirements and bans.
     /// </summary>
+    /// <returns>Returns True if all prototypes passed.</returns>
     public bool IsAllowed(List<string> prototypes, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
         foreach (var proto in prototypes)
         {
-            var prefixedProto = proto;
-
             JobPrototype? job = null;
             AntagPrototype? antag = null;
 
-            // Forcing types for sorting
+            // The database stores roles with prefixes to distinguish them, so we must add them to the IDs before comparison
+            var prefixedProto = proto;
+            // Forcing index types for sorting
             if (_prototypes.TryIndex<JobPrototype>(proto, out job))
                 prefixedProto = JobPrefix + proto;
             else if (_prototypes.TryIndex<AntagPrototype>(proto, out antag))

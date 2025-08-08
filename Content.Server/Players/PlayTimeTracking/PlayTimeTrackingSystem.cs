@@ -87,6 +87,9 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         trackers.UnionWith(GetTimedRoles(player));
     }
 
+    /// <summary>
+    /// Returns true if the player has an attached mob and it is alive (even if in critical).
+    /// </summary>
     private bool IsPlayerAlive(ICommonSession session)
     {
         var attached = session.AttachedEntity;
@@ -194,6 +197,12 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         ev.Jobs.UnionWith(GetDisallowedJobs(ev.Player));
     }
 
+    /// <summary>
+    /// Checks if the player meets all requirements for a role.
+    /// </summary>
+    /// <param name="player">The player.</param>
+    /// <param name="role">A job or antag prototype ID</param>
+    /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
     public bool IsAllowed(ICommonSession player, string role)
     {
         JobPrototype? job;

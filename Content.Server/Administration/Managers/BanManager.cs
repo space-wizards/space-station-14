@@ -43,6 +43,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     private ISawmill _sawmill = default!;
 
     public const string SawmillId = "admin.bans";
+
     public const string JobPrefix = "Job:";
     public const string AntagPrefix = "Antag:";
 
@@ -337,11 +338,11 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     #endregion
 
     /// <summary>
-    /// Checks if any roles on the list are banned for the specified player.
+    /// Checks if the player is currently banned from any of the listed roles.
     /// </summary>
     /// <param name="player">The player.</param>
-    /// <param name="roles">A string list of role prototype IDs, with job/antag prefix.</param>
-    /// <returns>True if any of the roles are banned.</returns>>
+    /// <param name="roles">A list of antag and/or job prototype IDs.</param>
+    /// <returns>Returns True if an active role ban is found for this player for any of the listed roles.</returns>>
     public bool IsRoleBanned(ICommonSession player, List<string> roles)
     {
         var bans = GetRoleBans(player.UserId);
@@ -352,6 +353,8 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         foreach (var role in roles)
         {
             var roleId = role;
+
+            // The database stores roles with prefixes to distinguish them, so we must add them to the IDs before comparison
             if (_prototypeManager.TryIndex<JobPrototype>(role, out _ ))
                 roleId = JobPrefix + role;
             else if (_prototypeManager.TryIndex<AntagPrototype>(role, out _ ))

@@ -28,19 +28,19 @@ public interface IBanManager
     public HashSet<string>? GetRoleBans(NetUserId playerUserId);
 
     /// <summary>
-    /// Check if the player is currently banned from any of the listed roles
+    /// Checks if the player is currently banned from any of the listed roles.
     /// </summary>
-    /// <param name="player">The player</param>
-    /// <param name="prototypes">A list of antagprototype/jobprototype IDs. They must have an "Antag:" or "Job:" prefix</param>
-    /// <returns>Returns True if an active role ban is found for this player for any of the provided roles</returns>
+    /// <param name="player">The player.</param>
+    /// <param name="prototypes">A list of antag and/or job prototype IDs.</param>
+    /// <returns>Returns True if an active role ban is found for this player for any of the listed roles.</returns>
     public bool IsRoleBanned(ICommonSession player, List<string> prototypes);
 
     /// <summary>
-    /// Check if the player is currently banned from any of the listed roles
+    /// Checks if the player is currently banned from any of the listed roles.
     /// </summary>
-    /// <param name="player">The player</param>
-    /// <param name="prototypes">A list of valid antagprototype IDs</param>
-    /// <returns>Returns True if an active role ban is found for this player for any of the provided roles</returns>
+    /// <param name="player">The player.</param>
+    /// <param name="prototypes">A list of valid antag prototype IDs.</param>
+    /// <returns>Returns True if an active role ban is found for this player for any of the listed roles.</returns>
     public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> prototypes);
     public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
 
