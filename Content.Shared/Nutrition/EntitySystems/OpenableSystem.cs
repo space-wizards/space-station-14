@@ -121,7 +121,7 @@ public sealed partial class OpenableSystem : EntitySystem
 
     private void OnTransferAttempt(Entity<OpenableComponent> ent, ref SolutionTransferAttemptEvent args)
     {
-        if (ent.Comp.Opened)
+        if (!ent.Comp.Opened)
             args.Cancel(Loc.GetString(ent.Comp.ClosedPopup, ("owner", ent.Owner)));
     }
 
