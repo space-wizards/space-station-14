@@ -110,15 +110,28 @@ public partial record struct Hand
     [DataField]
     public HandLocation Location = HandLocation.Middle;
 
+    /// <summary>
+    /// The label to be displayed for this hand when it does not contain an entity
+    /// </summary>
     [DataField]
     public LocId? EmptyLabel;
 
+    /// <summary>
+    /// The prototype ID of a "representative" entity prototype for what this hand could hold, used in the UI.
+    /// It is not map-initted.
+    /// </summary>
     [DataField]
     public EntProtoId? EmptyRepresentative;
 
+    /// <summary>
+    /// What this hand is allowed to hold
+    /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
 
+    /// <summary>
+    /// What this hand is not allowed to hold
+    /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
 
