@@ -5,7 +5,7 @@
   minPlayers: 15
   maxPlayers: 65
   stations:
-    Lobster:
+    Leth:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
