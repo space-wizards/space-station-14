@@ -43,7 +43,9 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     private ISawmill _sawmill = default!;
 
     public const string SawmillId = "admin.bans";
+
     public const string JobPrefix = "Job:";
+    public const string AntagPrefix = "Antag:";
 
     private readonly Dictionary<ICommonSession, List<ServerRoleBanDef>> _cachedRoleBans = new();
     // Cached ban exemption flags are used to handle
@@ -233,16 +235,24 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     #endregion
 
     #region Job Bans
+
     // If you are trying to remove timeOfBan, please don't. It's there because the note system groups role bans by time, reason and banning admin.
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
     public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
-        if (!_prototypeManager.TryIndex(role, out JobPrototype? _))
+        // TODO: Phase out string-typed roles, take/pass indexed prototypes
+
+        if (role.StartsWith(JobPrefix) && !_prototypeManager.HasIndex<JobPrototype>(role.TrimStart(JobPrefix.ToCharArray())))
         {
-            throw new ArgumentException($"Invalid role '{role}'", nameof(role));
+            _sawmill.Error($"Role ban, {role}, started with the job prefix ({JobPrefix}) but did not have a valid prototype!");
+            return;
+        }
+        if (role.StartsWith(AntagPrefix) && !_prototypeManager.HasIndex<AntagPrototype>(role.TrimStart(AntagPrefix.ToCharArray())))
+        {
+            _sawmill.Error($"Role ban, {role}, started with the antag prefix ({AntagPrefix}) but did not have a valid prototype!");
+            return;
         }
 
-        role = string.Concat(JobPrefix, role);
         DateTimeOffset? expires = null;
         if (minutes > 0)
         {
@@ -332,6 +342,54 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             .ToHashSet();
     }
     #endregion
+
+    /// <summary>
+    /// Checks if the player is currently banned from any of the listed roles.
+    /// </summary>
+    /// <param name="player">The player.</param>
+    /// <param name="roles">A list of antag and/or job prototype IDs.</param>
+    /// <returns>Returns True if an active role ban is found for this player for any of the listed roles.</returns>>
+    public bool IsRoleBanned(ICommonSession player, List<string> roles)
+    {
+        var bans = GetRoleBans(player.UserId);
+
+        if (bans is null || bans.Count == 0)
+            return false;
+
+        foreach (var role in roles)
+        {
+            var roleId = role;
+
+            // The database stores roles with prefixes to distinguish them, so we must add them to the IDs before comparison
+            if (_prototypeManager.TryIndex<JobPrototype>(role, out _ ))
+                roleId = JobPrefix + role;
+            else if (_prototypeManager.TryIndex<AntagPrototype>(role, out _ ))
+                roleId = AntagPrefix + role;
+
+            if (bans.Contains(roleId))
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Checks if any roles on the list are banned for the specified player.
+    /// </summary>
+    /// <param name="player">The player.</param>
+    /// <param name="prototypes">A list of antag prototype IDs.</param>
+    /// <returns>True if any of the roles are banned.</returns>>
+    public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> prototypes)
+    {
+        var list = new List<string>();
+
+        foreach (var proto in prototypes)
+        {
+            list.Add(AntagPrefix + proto);
+        }
+
+        return IsRoleBanned(player, list);
+    }
 
     public void SendRoleBans(ICommonSession pSession)
     {

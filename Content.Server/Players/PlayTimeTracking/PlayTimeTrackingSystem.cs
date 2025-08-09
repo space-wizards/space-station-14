@@ -55,6 +55,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
         SubscribeLocalEvent<StationJobsGetCandidatesEvent>(OnStationJobsGetCandidates);
         SubscribeLocalEvent<IsJobAllowedEvent>(OnIsJobAllowed);
+        SubscribeLocalEvent<IsRoleAllowedEvent>(OnIsRoleAllowed);
         SubscribeLocalEvent<GetDisallowedJobsEvent>(OnGetDisallowedJobs);
         _adminManager.OnPermsChanged += AdminPermsChanged;
     }
@@ -86,6 +87,9 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         trackers.UnionWith(GetTimedRoles(player));
     }
 
+    /// <summary>
+    /// Returns true if the player has an attached mob and it is alive (even if in critical).
+    /// </summary>
     private bool IsPlayerAlive(ICommonSession session)
     {
         var attached = session.AttachedEntity;
@@ -182,14 +186,35 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             ev.Cancelled = true;
     }
 
+    private void OnIsRoleAllowed(ref IsRoleAllowedEvent ev)
+    {
+        if (!IsAllowed(ev.Player, ev.RoleId))
+            ev.Cancelled = true;
+    }
+
     private void OnGetDisallowedJobs(ref GetDisallowedJobsEvent ev)
     {
         ev.Jobs.UnionWith(GetDisallowedJobs(ev.Player));
     }
 
+    /// <summary>
+    /// Checks if the player meets all requirements for a role.
+    /// </summary>
+    /// <param name="player">The player.</param>
+    /// <param name="role">A job or antag prototype ID</param>
+    /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
+    /// TODO: Phase out string-typed roles, take/pass indexed prototypes
     public bool IsAllowed(ICommonSession player, string role)
     {
-        if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
+        JobPrototype? job;
+        AntagPrototype? antag;
+
+        // Forcing types for sorting
+        _prototypes.TryIndex<JobPrototype>(role, out job);
+        _prototypes.TryIndex<AntagPrototype>(role, out antag);
+
+        if (job is null &&
+            antag is null ||
             !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
@@ -199,7 +224,13 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             playTimes = new Dictionary<string, TimeSpan>();
         }
 
-        return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
+        HashSet<JobRequirement>? requirements = null;
+        if (job is not null)
+            requirements = _roles.GetJobRequirement(job);
+        else if (antag is not null)
+            requirements = _roles.GetAntagRequirement(antag);
+
+        return JobRequirements.TryRequirementsMet(requirements, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
     }
 
     public HashSet<ProtoId<JobPrototype>> GetDisallowedJobs(ICommonSession player)

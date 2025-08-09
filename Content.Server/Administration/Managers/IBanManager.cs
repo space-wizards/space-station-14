@@ -26,6 +26,22 @@ public interface IBanManager
     /// <param name="reason">Reason for the ban</param>
     public void CreateServerBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, uint? minutes, NoteSeverity severity, string reason);
     public HashSet<string>? GetRoleBans(NetUserId playerUserId);
+
+    /// <summary>
+    /// Checks if the player is currently banned from any of the listed roles.
+    /// </summary>
+    /// <param name="player">The player.</param>
+    /// <param name="prototypes">A list of antag and/or job prototype IDs.</param>
+    /// <returns>Returns True if an active role ban is found for this player for any of the listed roles.</returns>
+    public bool IsRoleBanned(ICommonSession player, List<string> prototypes);
+
+    /// <summary>
+    /// Checks if the player is currently banned from any of the listed roles.
+    /// </summary>
+    /// <param name="player">The player.</param>
+    /// <param name="prototypes">A list of valid antag prototype IDs.</param>
+    /// <returns>Returns True if an active role ban is found for this player for any of the listed roles.</returns>
+    public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> prototypes);
     public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
 
     /// <summary>
@@ -37,6 +53,7 @@ public interface IBanManager
     /// <param name="reason">Reason for the ban</param>
     /// <param name="minutes">Number of minutes to ban for. 0 and null mean permanent</param>
     /// <param name="timeOfBan">Time when the ban was applied, used for grouping role bans</param>
+    /// TODO: Phase out string-typed roles, take/pass indexed prototypes.
     public void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan);
 
     /// <summary>
