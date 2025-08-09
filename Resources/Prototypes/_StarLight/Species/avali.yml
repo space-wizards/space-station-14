@@ -16,6 +16,12 @@
   youngAge: 103
   oldAge: 257
   maxAge: 430
+  minHeight: 0.8
+  defaultHeight: 0.91
+  maxHeight: 1
+  standardSize: 150 # gives a range of 130-150cm and 27-31kg
+  standardWeight: 31
+  standardDensity: 11
   customName: true # Starlight
 
 - type: speciesBaseSprites

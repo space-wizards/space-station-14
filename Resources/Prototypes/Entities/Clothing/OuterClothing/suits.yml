@@ -140,6 +140,7 @@
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
+# TODO - Make infiltration decloak on damage, idk how
 - type: entity
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing, BaseMajorContraband]
   id: ClothingOuterSuitSpaceNinja

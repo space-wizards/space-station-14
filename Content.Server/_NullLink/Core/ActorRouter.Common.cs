@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices.JavaScript;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices.JavaScript;
 using System.Threading.Tasks;
 using Content.Server._NullLink.Helpers;
 using Content.Shared.CCVar;
@@ -17,7 +18,7 @@ public sealed partial class ActorRouter : IActorRouter, IDisposable
 {
     public bool TryGetGrain<TGrainInterface>(
             Guid primaryKey,
-            out TGrainInterface? grain,
+            [NotNullWhen(true)] out TGrainInterface? grain,
             string? grainClassNamePrefix = null)
             where TGrainInterface : IGrainWithGuidKey
     {
@@ -33,7 +34,7 @@ public sealed partial class ActorRouter : IActorRouter, IDisposable
 
     public bool TryGetGrain<TGrainInterface>(
             int primaryKey,
-            out TGrainInterface? grain,
+            [NotNullWhen(true)] out TGrainInterface? grain,
             string? grainClassNamePrefix = null)
             where TGrainInterface : IGrainWithIntegerKey
     {
@@ -49,7 +50,7 @@ public sealed partial class ActorRouter : IActorRouter, IDisposable
 
     public bool TryGetGrain<TGrainInterface>(
             string primaryKey,
-            out TGrainInterface? grain,
+            [NotNullWhen(true)] out TGrainInterface? grain,
             string? grainClassNamePrefix = null)
             where TGrainInterface : IGrainWithStringKey
     {
@@ -63,7 +64,7 @@ public sealed partial class ActorRouter : IActorRouter, IDisposable
         return false;
     }
 
-    public bool TryCreateObjectReference<TGrainObserverInterface>(IGrainObserver obj, out TGrainObserverInterface? objectReference) 
+    public bool TryCreateObjectReference<TGrainObserverInterface>(IGrainObserver obj, [NotNullWhen(true)] out TGrainObserverInterface? objectReference) 
         where TGrainObserverInterface : IGrainObserver
     {
         if (OrleansClientHolder.Client is { } client)

@@ -18,10 +18,6 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-    scale: 1, 0.8
   - type: Body
     prototype: Dwarf
     requiredLegs: 2
