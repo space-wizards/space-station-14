@@ -63,8 +63,6 @@
         damage:
           groups:
             Brute: -0.4
-      - !type:ModifyBloodLevel
-        amount: 1 # weaker than iron but pretty good all things considered
       - !type:SatiateHunger
   pricePerUnit: 3
 
