@@ -51,6 +51,12 @@ namespace Content.Server.Stunnable.Components
         public bool AutoStand = true;
 
         /// <summary>
+        /// Should the knockdown also cause the target to drop items?
+        /// </summary>
+        [DataField]
+        public bool ItemDrop = true;
+
+        /// <summary>
         /// Fixture we track for the collision.
         /// </summary>
         [DataField("fixture")] public string FixtureID = "projectile";
