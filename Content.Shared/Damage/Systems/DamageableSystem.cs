@@ -5,6 +5,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Radiation.Events;
@@ -361,6 +362,38 @@ namespace Content.Shared.Damage
                 component.Damage = newDamage;
                 DamageChanged(uid, component, delta);
             }
+        }
+
+        /// <summary>
+        /// Returns a string list containing the type/s of the highest damage value
+        /// </summary>
+        public  List<string> GetHighestDamageTypes(Dictionary<string, FixedPoint2> damagePerGroup, DamageSpecifier damage)
+        {
+            var highestType = new List<string>();
+            var highestValue = FixedPoint2.Zero;
+
+            foreach (var (damageGroupId, damageAmount) in damagePerGroup)  //go through each group
+            {
+                var group = _prototypeManager.Index<DamageGroupPrototype>(damageGroupId);  //get group
+                foreach (var type in group.DamageTypes) //go through each type inside that group
+                {
+                    if (damage.DamageDict.TryGetValue(type, out var damageValue) && damageValue > 0)  //get value and make sure it isn't 0
+                    {
+                        if (damageValue > highestValue)  //if it's higher, clear the list and add the value
+                        {
+                            highestType.Clear();
+                            highestType.Add(type);
+
+                            highestValue = damageValue;
+                        }
+                        else if (damageValue == highestValue)  //if it's the same, add it to the list
+                        {
+                            highestType.Add(type);
+                        }
+                    }
+                }
+            }
+            return highestType;
         }
     }
 
