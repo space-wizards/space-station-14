@@ -14,13 +14,13 @@ using Content.Server.RoundEnd;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
-using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Localizations;
 using Content.Shared.Shuttles.Components;
@@ -33,10 +33,10 @@ using Robust.Shared.Configuration;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -73,8 +73,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
     private bool _emergencyShuttleEnabled;
 
-    [ValidatePrototypeId<TagPrototype>]
-    private const string DockTag = "DockEmergency";
+    private static readonly ProtoId<TagPrototype> DockTag = "DockEmergency";
 
     public override void Initialize()
     {
@@ -181,7 +180,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return;
         }
 
-        var targetGrid = _station.GetLargestGrid(Comp<StationDataComponent>(station.Value));
+        var targetGrid = _station.GetLargestGrid(station.Value);
         if (targetGrid == null)
             return;
 
@@ -270,7 +269,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return null;
         }
 
-        var targetGrid = _station.GetLargestGrid(Comp<StationDataComponent>(stationUid));
+        var targetGrid = _station.GetLargestGrid(stationUid);
 
         // UHH GOOD LUCK
         if (targetGrid == null)
