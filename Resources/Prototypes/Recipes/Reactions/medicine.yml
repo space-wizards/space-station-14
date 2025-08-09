@@ -411,22 +411,23 @@
 - type: reaction
   id: Lacerinol
   impact: Medium
-  minTemp: 335
+  maxTemp: 315 # Easiest to achieve by heating bicar + hydrogen + oxygen at the same time, or mixing bicar with low-temp hydroxide. Reaction makes mix container hotter, likely into Bruizine range!
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
       amount: 1
-    Benzene:
+    Hydroxide:
       amount: 1
   products:
-    Lacerinol: 2
+    Lacerinol: 1.8
 
 - type: reaction
   id: Puncturase
   impact: Medium
-  minTemp: 325
+  minTemp: 315 # Easiest to achieve by heating hydroxide in a separate beaker and mixing with a normal-temp bicar. Reaction makes mix container cooler, but it can be sneaky! See below.
+  maxTemp: 335
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
-      amount: 1
+      amount: 0.7 # Unless precisely measured, this will cause some razorium byproduct. This will also heat the container, due to how razorium reacts! Lands around the mixing temp range.
     Hydroxide:
       amount: 1
   products:
@@ -435,15 +436,47 @@
 - type: reaction
   id: Bruizine
   impact: Medium
+  minTemp: 335 # Easiest to achieve by blasting hydroxide with heat before mixing.
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
-      amount: 1
-    Lithium:
-      amount: 0.9
-    Sugar:
+      amount: 0.8
+    Hydroxide:
       amount: 1
   products:
-    Bruizine: 2
+    Bruizine: 1.9
+
+- type: reaction
+  id: BicarLacerinol # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Lacerinol:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BicarPuncturase # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Puncturase:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BicarBruizine # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Bruizine:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
 
 - type: reaction
   id: BruizineLacerinol # mixing any two brute medications will make Razorium
