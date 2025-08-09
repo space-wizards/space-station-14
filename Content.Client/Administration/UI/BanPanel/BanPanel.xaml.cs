@@ -159,19 +159,19 @@ public sealed partial class BanPanel : DefaultWindow
         {
             var roles = proto.Roles.Select(x => _protoMan.Index(x))
                              .OrderBy(x => x.ID);
-            CreateRoleGroup(proto.ID, proto.Color, roles);
+            CreateRoleGroup(proto.ID, "Job:", proto.Color, roles);
         }
 
         var antagRoles = _protoMan.EnumeratePrototypes<AntagPrototype>()
                                   .OrderBy(x => x.ID);
-        CreateRoleGroup("Antagonist", Color.Red, antagRoles);
+        CreateRoleGroup("Antagonist", "Antag:", Color.Red, antagRoles);
     }
 
     /// <summary>
     /// Creates a "Role group" which stores information and logic for one "group" of roll bans.
     /// For example, all antags are one group, logi is a group, medical is a group, etc...
     /// </summary>
-    private void CreateRoleGroup<T>(string groupName, Color color, IEnumerable<T> roles) where T : class, IPrototype
+    private void CreateRoleGroup<T>(string groupName, string groupPrefix, Color color, IEnumerable<T> roles) where T : class, IPrototype
     {
         var outerContainer = new BoxContainer
         {
@@ -205,7 +205,7 @@ public sealed partial class BanPanel : DefaultWindow
         // Add the roles themselves
         foreach (var role in roles)
         {
-            AddRoleCheckbox(groupName, role.ID, innerContainer, roleGroupCheckbox);
+            AddRoleCheckbox(groupName, groupPrefix, role.ID, innerContainer, roleGroupCheckbox);
         }
 
         outerContainer.AddChild(innerContainer);
@@ -297,12 +297,12 @@ public sealed partial class BanPanel : DefaultWindow
     /// Adds a checkbutton specifically for one "role" in a "group"
     /// E.g. it would add the Chief Medical Officer "role" into the "Medical" group.
     /// </summary>
-    private void AddRoleCheckbox(string group, string role, GridContainer roleGroupInnerContainer, Button roleGroupCheckbox)
+    private void AddRoleCheckbox(string group, string prefix, string role, GridContainer roleGroupInnerContainer, Button roleGroupCheckbox)
     {
         var roleCheckboxContainer = new BoxContainer();
         var roleCheckButton = new Button
         {
-            Name = $"{role}RoleCheckbox",
+            Name = $"{prefix+role}",
             Text = role,
             ToggleMode = true,
         };
@@ -554,9 +554,9 @@ public sealed partial class BanPanel : DefaultWindow
 
             foreach (var button in _roleCheckboxes.Values.SelectMany(departmentButtons => departmentButtons))
             {
-                if (button is { Pressed: true, Text: not null })
+                if (button is { Pressed: true, Name: not null })
                 {
-                    rolesList.Add(button.Text);
+                    rolesList.Add(button.Name);
                 }
             }
 

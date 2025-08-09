@@ -124,21 +124,7 @@ public sealed class BanPanelEui : BaseEui
             var now = DateTimeOffset.UtcNow;
             foreach (var role in roles)
             {
-                // Do not create the ban if prototype ID exists as neither job nor antag, or as both job and antag.
-                if (_prototypeManager.HasIndex<JobPrototype>(role) ^ _prototypeManager.HasIndex<AntagPrototype>(role))
-                {
-                    _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now);
-                }
-                else
-                {
-                    _sawmill.Warning($"{Player.Name} ({Player.UserId}) tried to issue a role ban with an invalid id: '{role}'");
-
-                    // Keep the window open in case of failure, to indicate that the ban was not placed
-                    //TODO: Notify the admin properly about what failed and why
-                    return;
-
-                }
-                //TODO: Phase out string-typed roles, take/pass indexed prototypes. Then we can eventually handle/accept prototype overlaps
+                _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now);
             }
 
             Close();
