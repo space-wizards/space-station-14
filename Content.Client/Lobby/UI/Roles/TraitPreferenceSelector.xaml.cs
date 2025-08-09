@@ -17,7 +17,15 @@ public sealed partial class TraitPreferenceSelector : Control
         set => Checkbox.Pressed = value;
     }
 
+    public bool AntagDisablePreference
+    {
+        get => CheckboxAntagDisable.Pressed;
+        set => CheckboxAntagDisable.Pressed = value;
+    }
+
     public event Action<bool>? PreferenceChanged;
+
+    public event Action<bool>? AntagDisablePreferenceChanged;
 
     public TraitPreferenceSelector(TraitPrototype trait)
     {
@@ -34,10 +42,17 @@ public sealed partial class TraitPreferenceSelector : Control
         {
             Checkbox.ToolTip = Loc.GetString(desc);
         }
+
+        CheckboxAntagDisable.OnToggled += OnAntagDisableCheckBoxToggled;
     }
 
     private void OnCheckBoxToggled(BaseButton.ButtonToggledEventArgs args)
     {
         PreferenceChanged?.Invoke(Preference);
+    }
+
+    private void OnAntagDisableCheckBoxToggled(BaseButton.ButtonToggledEventArgs args)
+    {
+        AntagDisablePreferenceChanged?.Invoke(AntagDisablePreference);
     }
 }
