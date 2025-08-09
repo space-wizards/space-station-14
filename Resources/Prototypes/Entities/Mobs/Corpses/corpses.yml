@@ -86,3 +86,39 @@
     - CMOGear
     - ChiefEngineerGear
     - QuartermasterGear
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobRandomSyndicateCorpse
+  suffix: Dead, Syndicate
+  components:
+  - type: Loadout
+    prototypes:
+    - SyndicateOperativeGearMonkey
+    - SyndicateOperativeClothing
+    - SyndicateReinforcementThief
+    - SyndicateReinforcementMedic
+    - SyndicateReinforcementSpy
+    - SyndicateOperativeGearCivilian
+    - SyndicateFootsoldierGearRuin
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobRandomPirateCorpse
+  suffix: Dead, Pirate
+  components:
+  - type: Loadout
+    prototypes:
+    - PirateGear
+    - PirateFirstmateGear
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobRandomMercenaryCorpse
+  suffix: Dead, Mercenary
+  components:
+  - type: Loadout
+    prototypes:
+    - MercenaryCommandoGear
+    - MercenaryInsurgentGear
+    - MercenaryGruntGear
