@@ -460,3 +460,11 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Admin
   allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconMagician
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Magician
+  allowSelection: false

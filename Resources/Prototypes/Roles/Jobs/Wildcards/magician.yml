@@ -1,0 +1,24 @@
+- type: job
+  id: Magician
+  name: job-name-magician
+  description: job-description-magician
+  playTimeTracker: JobMagician
+  startingGear: MagicianGear
+  icon: "JobIconMagician"
+  supervisors: job-supervisors-hop
+  access:
+  - Theater
+  - Maintenance
+
+- type: startingGear
+  id: MagicianGear
+  equipment:
+    pocket1: Flare
+    id: MagicianPDA
+    jumpsuit: ClothingUniformJumpsuitMagician
+    head: ClothingHeadHatMagician
+    ears: ClothingHeadsetService
+    belt: WeaponMagiciansWand
+  #storage:
+    #back:
+    #- BoxShotgunFlare

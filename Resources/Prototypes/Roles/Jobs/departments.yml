@@ -32,6 +32,7 @@
   - Visitor
   - Zookeeper
   - ServiceWorker
+  - Magician # event-restricted (?)
 
 - type: department
   id: CentralCommand

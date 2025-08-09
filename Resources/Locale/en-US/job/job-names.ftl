@@ -51,6 +51,9 @@ job-name-zookeeper = Zookeeper
 job-name-visitor = Visitor
 job-name-cluwne = Cluwne
 
+# event-restricted job(?)
+job-name-magician = Stage Magician
+
 # unused jobs
 # these are required for the agent ID job icon tooltips
 # I am keeping them for roleplaying opportunities
@@ -96,6 +99,7 @@ JobHeadOfSecurity = Head of Security
 JobJanitor = Janitor
 JobLawyer = Lawyer
 JobLibrarian = Librarian
+JobMagician = Stage Magician
 JobMedicalDoctor = Medical doctor
 JobMedicalIntern = Medical intern
 JobMime = Mime
