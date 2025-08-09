@@ -1,6 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
 using Content.Server.Maps;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Maps;
@@ -113,5 +116,35 @@ public partial class AtmosphereSystem
             return;
 
         _tile.PryTile(tileRef);
+    }
+
+    /// <summary>
+    ///     Possibly gets the coordinates of an optionally given <see cref="EntityUid"/>,
+    ///     and then an optionally given <see cref="IGasMixtureHolder"/>. If the holder
+    ///     is an entity, then the resulting coordinates will be INSIDE of the entity.
+    /// </summary>
+    // Both args are nullable because this is exposed for use by reactions to get the position of the reaction.
+    public bool TryGetMixtureHolderCoordinates(IGasMixtureHolder? holder, EntityUid? holderEntity, [NotNullWhen(true)] out EntityCoordinates? holderCoordinates)
+    {
+        if (holderEntity != null)
+        {
+            holderCoordinates = new EntityCoordinates(holderEntity.Value, Vector2.Zero);
+            return true;
+        }
+
+        if (holder is PipeNode pipeNode)
+        {
+            holderCoordinates = new EntityCoordinates(pipeNode.Owner, Vector2.Zero);
+            return true;
+        }
+
+        if (holder is TileAtmosphere tileAtmosphere && _mapGridQuery.TryComp(tileAtmosphere.GridIndex, out var mapGridComponent))
+        {
+            holderCoordinates = _mapSystem.GridTileToLocal(tileAtmosphere.GridIndex, mapGridComponent, tileAtmosphere.GridIndices);
+            return true;
+        }
+
+        holderCoordinates = null;
+        return false;
     }
 }

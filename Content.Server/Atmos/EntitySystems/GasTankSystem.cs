@@ -93,9 +93,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 if (comp.Air != null)
-                {
-                    _atmosphereSystem.React(comp.Air, comp);
-                }
+                    _atmosphereSystem.React<GasTankComponent>((uid, comp));
 
                 CheckStatus(gasTank);
 
