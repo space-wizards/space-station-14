@@ -129,8 +129,8 @@
         reagents:
         - ReagentId: GroundBee
           Quantity: 1
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
   - type: Item
     size: Tiny
@@ -813,8 +813,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 1
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
   - type: Item
     size: Tiny
@@ -1396,8 +1396,8 @@
       types:
         Blunt: 3
         Piercing: 3
-  - type: Sliceable
-    slices:
+  - type: Butcherable
+    spawned:
     - id: FoodMeat
       amount: 3
   - type: Puller
@@ -1612,8 +1612,8 @@
           horns_floppy_kobold_ears: Inherit
           horns_double: Inherit
           horns_kobold_ears: Inherit
-  - type: Sliceable
-    slices:
+  - type: Butcherable
+    spawned:
     - id: FoodMeat
       amount: 2
   - type: AlwaysRevolutionaryConvertible
@@ -2451,14 +2451,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: tarantula
-      Critical:
-        Base: tarantula_dead
-      Dead:
-        Base: tarantula_dead
   - type: Sliceable
     slices:
     - id: FoodMeatSpider
@@ -3145,7 +3137,7 @@
     factions:
     - Syndicate
   - type: Access
-    tags: 
+    tags:
     - NuclearOperative
     - SyndicateAgent
   - type: MeleeWeapon
@@ -3713,8 +3705,8 @@
         Base: reindeer_buck_dead
       Dead:
         Base: reindeer_buck_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 4
   - type: Bloodstream

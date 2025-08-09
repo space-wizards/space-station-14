@@ -188,7 +188,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return false;
 
             // Is using knife
-            if (!_tools.HasQuality(used, "Slicing"))
+            if (component.RequiredToolQuality is not null && !_tools.HasQuality(used, component.RequiredToolQuality))
                 return false;
 
             var item = _random.PickAndTake(component.PrototypesToSpawn);

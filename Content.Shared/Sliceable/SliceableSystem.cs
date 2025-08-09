@@ -21,6 +21,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.Network;
+using Content.Shared.Random.Helpers;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Sliceable;
 
@@ -42,7 +44,7 @@ public sealed class SliceableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SliceableComponent, TrySliceEvent>(AfterSlicing);
+        SubscribeLocalEvent<SliceableComponent, TrySliceDoAfterEvent>(AfterSlicing);
         SubscribeLocalEvent<SliceableComponent, GetVerbsEvent<InteractionVerb>>(AddSliceVerb);
         SubscribeLocalEvent<SliceableComponent, InteractUsingEvent>(OnInteraction);
     }
@@ -55,30 +57,31 @@ public sealed class SliceableSystem : EntitySystem
         args.Handled = true;
         if (_tool.HasQuality(args.Used, comp.ToolQuality))
         {
-            OnVerbUsing(uid, args.User, args.Used, comp.SliceTime.Seconds, comp.ToolQuality);
+            CreateDoAfter(uid, args.User, args.Used, comp.SliceTime.Seconds, comp.ToolQuality);
             return;
         }
     }
 
     private void AddSliceVerb(EntityUid uid, SliceableComponent comp, GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanInteract)
+        if (!args.CanInteract || !args.CanAccess)
             return;
 
-        var text = Loc.GetString("slice-verb-name");
+        var verbText = Loc.GetString("slice-verb-name");
         var verbDisabled = false;
         var verbMessage = Loc.GetString("slice-verb-message-default");
         EntityUid tool;
 
-        if (args.Using is { } used)
+        if (args.Using is not null)
         {
+            var used = args.Using.Value;
             if (!TryComp<ToolComponent>(used, out var toolComp))
                 return;
 
             if (!_tool.HasQuality(used, comp.ToolQuality))
             {
                 verbDisabled = true;
-                verbMessage = Loc.GetString("slice-verb-message-tool", ("uid", uid));
+                verbMessage = Loc.GetString("slice-verb-message-tool", ("target", uid));
             }
             tool = used;
         }
@@ -93,7 +96,7 @@ public sealed class SliceableSystem : EntitySystem
 
         if (TryComp<MobStateComponent>(uid, out var mobState))
         {
-            text = Loc.GetString("slice-verb-name-red");
+            verbText = Loc.GetString("slice-verb-name-red");
             if (!_mob.IsDead(uid, mobState))
             {
                 verbDisabled = true;
@@ -103,19 +106,19 @@ public sealed class SliceableSystem : EntitySystem
 
         InteractionVerb verb = new()
         {
-            Text = text,
+            Text = verbText,
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
             Disabled = verbDisabled,
             Message = verbMessage,
             Act = () =>
             {
-                OnVerbUsing(uid, args.User, tool, comp.SliceTime.Seconds, comp.ToolQuality);
+                CreateDoAfter(uid, args.User, tool, comp.SliceTime.Seconds, comp.ToolQuality);
             },
         };
         args.Verbs.Add(verb);
     }
 
-    private void OnVerbUsing(EntityUid uid, EntityUid user, EntityUid used, float time, string qualities)
+    private void CreateDoAfter(EntityUid uid, EntityUid user, EntityUid used, float time, string qualities)
     {
         _tool.UseTool(
             used,
@@ -123,11 +126,14 @@ public sealed class SliceableSystem : EntitySystem
             uid,
             time,
             qualities,
-            new TrySliceEvent());
+            new TrySliceDoAfterEvent());
     }
 
-    private void AfterSlicing(Entity<SliceableComponent> ent, ref TrySliceEvent args)
+    private void AfterSlicing(Entity<SliceableComponent> ent, ref TrySliceDoAfterEvent args)
     {
+        if (args.Handled || args.Cancelled)
+            return;
+
         var hasBody = TryComp<BodyComponent>(ent, out var body);
 
         // only show a big popup when butchering living things.
@@ -141,13 +147,13 @@ public sealed class SliceableSystem : EntitySystem
 
         if (TrySlice(ent))
         {
+            var ev = new SliceEvent();
+            RaiseLocalEvent(ent, ref ev);
+
             if (hasBody)
                 _body.GibBody(ent, body: body);
             else
                 PredictedQueueDel(ent.Owner);
-
-            var ev = new SliceEvent();
-            RaiseLocalEvent(ent, ref ev);
         }
     }
 
@@ -166,15 +172,14 @@ public sealed class SliceableSystem : EntitySystem
             var sliceUid = PredictedSpawnNextToOrDrop(sliceProto, uid);
             _transform.SetLocalRotation(sliceUid, 0);
 
-            // Called only on server because random unpredicted
-            if (!_container.IsEntityOrParentInContainer(sliceUid) && _net.IsServer)
+            if (_net.IsServer && slices.Count != 0 && !_container.IsEntityOrParentInContainer(sliceUid))
             {
                 var randVect = _random.NextVector2(2.0f, 2.5f);
                 _physics.SetLinearVelocity(sliceUid, randVect);
             }
 
             // Fills new slice if comp allows.
-            if (Resolve(uid, ref food) && comp.TransferSolution)
+            if (comp.TransferSolution && Resolve(uid, ref food))
             {
                 if (!_solutionContainer.TryGetSolution(uid, food.Solution, out var soln, out var solution))
                     return false;
@@ -205,10 +210,10 @@ public sealed class SliceableSystem : EntitySystem
 }
 
 /// <summary>
-/// Called for doafter.
+/// Called for the doafter on the entity that slice something via tool with slicing quality.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class TrySliceEvent : SimpleDoAfterEvent;
+public sealed partial class TrySliceDoAfterEvent : SimpleDoAfterEvent;
 
 /// <summary>
 /// Called after slicing of the entity.

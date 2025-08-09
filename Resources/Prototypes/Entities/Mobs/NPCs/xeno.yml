@@ -447,6 +447,7 @@
   - type: Sliceable
     slices:
     - id: FoodMeatSnake
+      amount: 2
   - type: SolutionTransfer
     maxTransferAmount: 1
 

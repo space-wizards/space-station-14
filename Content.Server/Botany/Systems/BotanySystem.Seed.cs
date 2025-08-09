@@ -16,6 +16,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Tools;
 
 namespace Content.Server.Botany.Systems;
 
@@ -31,6 +32,8 @@ public sealed partial class BotanySystem : EntitySystem
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedToolSystem _tools = default!;
+
+    private static readonly ProtoId<ToolQualityPrototype> HarvestTool = "Slicing";
 
     public override void Initialize()
     {
@@ -195,7 +198,7 @@ public sealed partial class BotanySystem : EntitySystem
 
     public bool CanHarvest(SeedData proto, EntityUid? held = null)
     {
-        return !proto.Ligneous || proto.Ligneous && held != null && _tools.HasQuality(held.Value, "Slicing");
+        return !proto.Ligneous || proto.Ligneous && held != null && _tools.HasQuality(held.Value, HarvestTool);
     }
 
     #endregion

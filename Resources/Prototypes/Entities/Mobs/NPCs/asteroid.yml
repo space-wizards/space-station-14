@@ -421,8 +421,8 @@
     reflectProb: 1
     reflects:
     - Energy
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: DiamondOre1
       amount: 1
       maxAmount: 3

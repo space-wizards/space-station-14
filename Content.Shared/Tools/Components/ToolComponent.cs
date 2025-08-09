@@ -2,7 +2,6 @@ using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
-using Content.Shared.Sliceable;
 
 namespace Content.Shared.Tools.Components;
 

@@ -63,7 +63,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadVolcanicSlice
-      amount: 3
+      amount: 5
 
 - type: entity
   name: volcanic slice
@@ -98,7 +98,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakePlainSlice
-      amount: 3
+      amount: 5
   - type: Tag
     tags:
     - Fruit
@@ -143,7 +143,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadCottonSlice
-      amount: 3
+      amount: 5
   - type: Tag
     tags:
     - ClothMade
@@ -205,7 +205,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadCornSlice
-      amount: 3
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -255,7 +255,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadCreamcheeseSlice
-      amount: 3
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -309,7 +309,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadMeatSlice
-      amount: 3
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -371,7 +371,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadMimanaSlice
-      amount: 3
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -428,7 +428,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadPlainSlice
-      amount: 3
+      amount: 5
 
 - type: entity
   name: bread slice
@@ -458,7 +458,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadSausageSlice
-      amount: 3
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -523,7 +523,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadMeatSpiderSlice
-      amount: 3
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -585,7 +585,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadTofuSlice
-      amount: 3
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -638,7 +638,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadMeatXenoSlice
-      amount: 3
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:

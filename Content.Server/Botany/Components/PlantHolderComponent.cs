@@ -139,6 +139,9 @@ public sealed partial class PlantHolderComponent : Component
     [ViewVariables]
     public Entity<SolutionComponent>? SoilSolution = null;
 
+    /// <summary>
+    /// Tool quality that required if plant should be harvested with specified tool.
+    /// </summary>
     [DataField]
     public string HarvestToolQuality = "Slicing";
 }

@@ -2131,6 +2131,8 @@
     slices:
     - id: FoodWatermelonSlice
       amount: 5
+    - id: ClothingHeadHatWatermelon
+      spawnProbability: 0.5
   - type: Tag
     tags:
     - Fruit
@@ -2231,6 +2233,8 @@
     slices:
     - id: FoodHolymelonSlice
       amount: 5
+    - id: ClothingHeadHatHolyWatermelon
+      spawnProbability: 0.5
   - type: Tag
     tags:
     - Fruit
@@ -2520,6 +2524,7 @@
   - type: Sliceable
     slices:
     - id: CarvedPumpkin
+    - id: PumpkinSeeds
   - type: Tag
     tags:
     - Fruit

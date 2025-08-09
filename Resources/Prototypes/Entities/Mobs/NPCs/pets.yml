@@ -855,8 +855,8 @@
     description: ghost-role-information-punpun-description
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
-  - type: Sliceable
-    slices:
+  - type: Butcherable
+    spawned:
     - id: FoodMeat
       amount: 3
     - id: DrinkTequilaBottleFull
