@@ -1,0 +1,34 @@
+- type: entity
+  id: BSACannon
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: Bluespace Artillery
+  description: An high-tech artillery that use new bluespace technologies! DO NOT TOUCH OR YOU WILL BE TERMINATED.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: WiresPanel
+  - type: Machine
+    board: BSAMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: Sprite
+    sprite: Structures/BSA.rsi
+    layers:
+    - state: cannon_east
+    - state: top_east
+      shader: unshaded
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-5.50,-0.75,5.25,1.25"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
