@@ -206,7 +206,6 @@ public static class ServerPackaging
                 }
             }
         }
-        Debugger.Launch();
 
         // Should this be an asset pass?
         // For future archaeologists I just want audio rework to work and need the audio pass so
