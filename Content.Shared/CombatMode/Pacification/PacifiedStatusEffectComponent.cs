@@ -28,8 +28,4 @@ public sealed partial class PacifiedStatusEffectComponent : Component
     /// </summary>
     [DataField]
     public bool DisallowAllCombat;
-
-    // Prevent cheat clients from using this to identify thieves and players that cannot fight back.
-    // This should not matter for prediction reasons since it only blocks user input.
-    public override bool SendOnlyToOwner => true;
 }

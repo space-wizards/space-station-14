@@ -44,13 +44,13 @@ public sealed partial class TraitPrototype : IPrototype
     /// </summary>
     [DataField]
     [Obsolete("Use JobSpecial instead.")]
-    public ComponentRegistry Components { get; private set; } = default!;
+    public ComponentRegistry Components { get; private set; } = new();
 
     /// <summary>
     /// Special effects applied to the player who takes this Trait
     /// </summary>
-    [DataField]
-    public List<JobSpecial> Special { get; private set; } = new();
+    [DataField(serverOnly: true)]
+    public List<JobSpecial> Special { get; private set; } = [];
 
     /// <summary>
     /// Gear that is given to the player, when they pick this trait.

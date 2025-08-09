@@ -1,4 +1,3 @@
-using Content.Shared.Implants;
 using Content.Shared.Roles;
 using Content.Shared.StatusEffectNew;
 using JetBrains.Annotations;
@@ -12,7 +11,7 @@ namespace Content.Server.Jobs;
 [UsedImplicitly]
 public sealed partial class ApplyStatusEffectSpecial : JobSpecial
 {
-    [DataField]
+    [DataField(required: true)]
     public HashSet<EntProtoId> Effects { get; private set; } = new();
 
     public override void AfterEquip(EntityUid mob)
