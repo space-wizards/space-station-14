@@ -21,3 +21,7 @@ wieldable-component-requires = { CAPITALIZE(THE($item))} must be wielded!
 gunwieldbonus-component-examine = This weapon has improved accuracy when wielded.
 
 gunrequireswield-component-examine = This weapon can only be fired when wielded.
+
+gunrequireswield-component-delay-examine = This weapon has a [color={$color}]{ $delay }[/color] second firing delay upon wielding.
+
+
