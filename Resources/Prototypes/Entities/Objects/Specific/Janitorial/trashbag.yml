@@ -39,9 +39,10 @@
     size: Normal
 
 - type: entity
-  name: trash bag
-  id: TrashBagBlue
+  id: TrashBagHolding
   parent: TrashBag
+  name: trash bag of holding
+  description: A trash bag that opens into a localized pocket of bluespace.
   components:
   - type: Sprite
     layers:
@@ -51,19 +52,16 @@
     heldPrefix: blue
   - type: StorageFillVisualizer
     fillBaseName: blue-icon
-
-- type: entity
-  name: spell of all-consuming cleanliness
-  id: BagOfSummoningGarbage
-  parent: TrashBagBlue
-  components:
   - type: Storage
-    maxItemSize: Huge
+    maxItemSize: Large
     grid:
     - 0,0,19,9
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 5
+  - type: Tag
+    tags:
+    - TrashBagHolding
 
 - type: entity
   parent: TrashBag

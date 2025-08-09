@@ -1417,6 +1417,9 @@
 
 - type: Tag
   id: TrashBag
+  
+- type: Tag
+  id: TrashBagHolding
 
 - type: Tag
   id: Truncheon
