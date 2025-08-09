@@ -65,48 +65,125 @@ rr-coffeeliqueur = Coffee Liqueur
 rr-coffeeliqueur-desc = Coffee? Good. Alcohol? Good. Together? Probably illegal somewhere.
 
 rr-melonliquor = Melon Liquor
-rr-melonliquor = It's green, it's sweet, and suspiciously cheerful. Like a party in Shrek's minibar.
+rr-melonliquor-desc = It's green, it's sweet, and suspiciously cheerful. Like a party in Shrek's minibar.
 
 rr-ntcahors = Neotheology Cahors Whine
+rr-ntcahors-desc = Holy wine for unholy hangovers.
+
 rr-poisonwine = Poison Wine
+rr-poisonwine-desc = The taste is killer. Literally.
+
 rr-rum = Rum
+rr-rum-desc = For pirates, poets, and people who confuse the two.
+
 rr-sake = Sake
+rr-sake-desc = Clear, warm, and politely dangerous.
+
 rr-tequila = Tequila
+rr-tequila-desc = Regret in a shot glass — with lime.
+
 rr-vermouth = Vermouth
+rr-vermouth-desc = The unsung hero behind every martini’s swagger.
+
 rr-vodka = Vodka
+rr-vodka-desc = Taste? Optional. Effect? Immediate.
+
 rr-whiskey = Whiskey
+rr-whiskey-desc = Liquid courage with a hint of poor decisions.
+
 rr-wine = Wine
+rr-wine-desc = Because sometimes grapes just need a stronger purpose.
+
 rr-champagne = Champagne
+rr-champagne-desc = It’s not a celebration until this pops, right?
+
 rr-acidspit = Acid Spit
+rr-acidspit-desc = Tangy, bubbly, and probably hazardous to touch. I should try it.
+
 rr-alienbrainhemorrhage = Alien Brain Hemorrhage
+rr-alienbrainhemorrhage-desc = Looks wrong, tastes weird, and somehow… works.
+
 rr-alliescocktail = Allies Cocktail
-rr-aloe = Aloe
+rr-alliescocktail-desc = Nothing bonds people like alcohol and questionable diplomacy.
+
 rr-amasec = Amasec
+rr-amasec-desc = Imperial standard for "I can still shoot straight."
+
 rr-andalusia = Andalusia
+rr-andalusia-desc = Tastes like sunshine, olives, and unapologetic naps.
+
 rr-antifreeze = Antifreeze
+rr-andalusia-desc = Winter-proof my liver.
+
 rr-atomicbomb = Atomic Bomb
+rr-atomicbomb-desc = Guaranteed to split my evening in half.
+
 rr-b52 = B-52
+rr-b52-desc = Layered, flashy, and armed for party duty.
+
 rr-bahamamama = Bahama Mama
+rr-bahamamama-desc = Like a beach holiday… in my bloodstream.
+
 rr-bananahonk = Banana Honk
+rr-bananahonk-desc = Clown-approved. Potassium-rich.
+
 rr-barefoot = Barefoot
+rr-barefoot-desc = Simple, sweet, and no shoes required.
+
 rr-beepskysmash = Beepsky Smash
+rr-beepskysmash-desc = Taste the law. Feel the justice.
+
 rr-blackrussian = Black Russian
+rr-blackrussian-desc = Coffee and vodka — because mornings are overrated.
+
 rr-bloodymary = Bloody Mary
+rr-bloodymary-desc = A salad in a glass, if salads punched back.
+
 rr-booger = Booger
+rr-booger-desc = Suspiciously green, alarmingly tasty.
+
 rr-bravebull = Brave Bull
+rr-bravebull-desc = Bravery in a glass — side effects may include foolishness.
+
 rr-bronx = Bronx
+rr-bronx-desc = Citrus meets gin, and somehow doesn’t file a complaint.
+
 rr-coconutrum = Coconut Rum
+rr-coconutrum-desc = Like drinking a postcard from paradise.
+
 rr-cosmopolitan = Cosmopolitan
+rr-cosmopolitan-desc = Pretty in pink, lethal in practice.
+
 rr-crushdepth = Crush Depth
+rr-crushdepth-desc = Dive deep, surface only when ready.
+
 rr-cubalibre = Cuba Libre
+rr-cubalibre-desc = Freedom tastes like rum and cola.
+
 rr-darkandstormy = Dark & Stormy
+rr-darkandstormy-desc = Thunder in a tumbler.
+
 rr-demonsblood = Demon's Blood
+rr-demonsblood-desc = Spicy, sweet, and slightly sacrilegious.
+
 rr-devilskiss = Devil's Kiss
+rr-devilskiss-desc = One sip and you’ll understand temptation.
+
 rr-doctorsdelight = The Doctor's Delight
+rr-doctorsdelight-desc = Prescribed for "fun deficiency." Take with friends.
+
 rr-driestmartini = Driest Martini
+rr-driestmartini-desc = So dry, it should come with a desert warning.
+
 rr-eggnog = Eggnog
+rr-eggnog-desc = Festive, creamy, and 90% nostalgia.
+
 rr-electricshark = Electric Shark
+rr-electricshark-desc = Bright, zappy, and bites back.
+
 rr-erikasurprise = Erika Surprise
+rr-erikasurprise-desc = Surprise! It’s probably alcohol.
+
 rr-gargleblaster = Pan-Galactic Gargle Blaster
 rr-ginfizz = Gin Fizz
 rr-gintonic = Gin And Tonic
