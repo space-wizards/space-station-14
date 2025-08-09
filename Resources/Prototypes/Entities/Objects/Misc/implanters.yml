@@ -304,8 +304,10 @@
   name: mindshield implanter
   parent: BaseImplantOnlyImplanter
   components:
-    - type: Implanter
-      implant: MindShieldImplant
+  - type: Implanter
+    implantBlacklist:
+    - UnremovableMindShieldImplant
+    implant: MindShieldImplant
 
 # Centcomm implanters
 
@@ -324,3 +326,13 @@
   components:
   - type: Implanter
     implant: DeathRattleImplantCentcomm
+
+- type: entity
+  id: UnremovableMindShieldImplanter
+  suffix: cranial mindshield
+  parent: BaseImplantOnlyImplanter
+  components:
+  - type: Implanter
+    implantBlacklist:
+    - MindShieldImplant
+    implant: UnremovableMindShieldImplant
