@@ -11024,5 +11024,12 @@ Entries:
   id: 1516
   time: '2025-08-09T01:09:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1236
+- author: Gensy
+  changes:
+  - message: Clumsy trait
+    type: Add
+  id: 1517
+  time: '2025-08-09T01:13:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1149
 Order: -1
 
