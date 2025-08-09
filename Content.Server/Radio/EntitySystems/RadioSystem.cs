@@ -154,6 +154,7 @@ public sealed class RadioSystem : EntitySystem
             jobName = Loc.GetString("job-name-borg");
         }
 
+        //starlight if statement edited for AI Shunt
         if (HasComp<StationAiHeldComponent>(messageSource) || (
             TryComp<StationAIShuntComponent>(messageSource, out var aiShunt) && aiShunt.Return.HasValue
         ))
