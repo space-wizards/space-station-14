@@ -40,6 +40,8 @@ namespace Content.Server.Atmos.Reactions
             {
                 energyReleased += (Atmospherics.FireHydrogenEnergyReleased * burnedFuel);
 
+                atmosphereSystem.ActivateTritiumFire(holder, burnedFuel);
+
                 // TODO ATMOS Radiation pulse here!
 
                 // Conservation of mass is important.
