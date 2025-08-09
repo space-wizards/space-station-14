@@ -1,12 +1,18 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/9ddb8cf084e292571d4e9c79745db25befbd82fe. pai-searching-overlay heavily modified. Syndicate variants by fedKotikeD, and potato by Doru991. Golden pai variant is made from ScrapPAIGold by AsnDen",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/9ddb8cf084e292571d4e9c79745db25befbd82fe. pai-searching-overlay heavily modified. Syndicate variants by fedKotikeD, and potato by Doru991, happy, angry, sad overlays taken from tgstation https://github.com/tgstation/tgstation/blob/87b3788cbbcea797949e856cfed8f64d65238592/icons/obj/aicards.dmi. Golden pai variant is made from ScrapPAIGold by AsnDen",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
+    {
+      "name": "pai-sunglasses-overlay"
+    },
+    {
+      "name": "pai-glasses-overlay"
+    },
     {
       "name": "icon-pai-off"
     },
@@ -38,6 +44,45 @@
       ]
     },
     {
+      "name": "pai-happy-overlay",
+      "delays": [
+        [
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "pai-angry-overlay",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "pai-sad-overlay",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
       "name": "syndicate-icon-pai-off"
     },
     {
@@ -58,6 +103,45 @@
         [
           0.8,
           0.8
+        ]
+      ]
+    },
+    {
+      "name": "syndicate-pai-happy-overlay",
+      "delays": [
+        [
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "syndicate-pai-angry-overlay",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "syndicate-pai-sad-overlay",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
         ]
       ]
     },
