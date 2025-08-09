@@ -14,6 +14,8 @@ public sealed partial class SpaceVillainArcadeComponent : SharedSpaceVillainArca
     [ViewVariables]
     public bool OverflowFlag;
 
+    [ViewVariables]
+    public bool InvincFlag;
     /// <summary>
     /// The current session of the SpaceVillain game for this arcade machine.
     /// </summary>
