@@ -1,0 +1,26 @@
+uniform sampler2D SCREEN_TEXTURE;
+uniform mediump float Sharpness;
+uniform highp vec2 viewportSize;
+
+void fragment()
+{
+    highp vec2 uv = UV;
+
+    highp vec2 texelSize = vec2(1.0) / viewportSize;
+
+    highp vec3 center = texture(SCREEN_TEXTURE, uv).rgb;
+    highp vec3 up = texture(SCREEN_TEXTURE, uv + vec2(0.0, texelSize.y)).rgb;
+    highp vec3 down = texture(SCREEN_TEXTURE, uv - vec2(0.0, texelSize.y)).rgb;
+    highp vec3 left = texture(SCREEN_TEXTURE, uv - vec2(texelSize.x, 0.0)).rgb;
+    highp vec3 right = texture(SCREEN_TEXTURE, uv + vec2(texelSize.x, 0.0)).rgb;
+
+    highp vec3 blur = (up + down + left + right) * 0.25;
+    highp vec3 edge = center - blur;
+
+    highp float edgeStrength = length(edge) * 2.0;
+    highp float adaptiveSharp = Sharpness * (1.0 - smoothstep(0.1, 0.5, edgeStrength));
+
+    highp vec3 sharpened = center + edge * adaptiveSharp * 1.5;
+
+    COLOR = vec4(clamp(sharpened, 0.0, 1.0), 1.0);
+}
