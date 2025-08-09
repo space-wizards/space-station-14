@@ -96,6 +96,8 @@ command-description-xenoartifact-unlockAllNodes =
     Unlocks all nodes of artifact.
 command-description-jobboard-completeJob =
     Completes a given salvage job board job for the station.
+command-description-zombify-infect =
+    Make a given entity a zombie. Does not have to be a player.
 command-description-scale-set =
     Sets an entity's sprite size to a certain scale (without changing its fixture).
 command-description-scale-get =
