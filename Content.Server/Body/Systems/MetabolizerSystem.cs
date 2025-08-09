@@ -1,5 +1,6 @@
 using Content.Server.Body.Components;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
@@ -95,7 +96,7 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        private void TryMetabolize(Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent)
+        private void TryMetabolize(Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?, BloodstreamComponent?> ent)
         {
             _organQuery.Resolve(ent, ref ent.Comp2, logMissing: false);
 
@@ -138,6 +139,9 @@ namespace Content.Server.Body.Systems
             var list = solution.Contents.ToArray();
             _random.Shuffle(list);
 
+            TryComp<BloodstreamComponent>(solutionEntityUid.Value, out var bloodstream);
+            TryComp<MobStateComponent>(solutionEntityUid.Value, out var state);
+
             int reagents = 0;
             foreach (var (reagent, quantity) in list)
             {
@@ -159,6 +163,12 @@ namespace Content.Server.Body.Systems
                 if (reagents >= ent.Comp1.MaxReagentsProcessable)
                     return;
 
+                // skips blood
+                if (bloodstream != null
+                    && reagent.Prototype == bloodstream.BloodReagent.Id)
+                {
+                    continue;
+                }
 
                 // loop over all our groups and see which ones apply
                 if (ent.Comp1.MetabolismGroups is null)
@@ -179,11 +189,13 @@ namespace Content.Server.Body.Systems
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
                     // still remove reagents
-                    if (TryComp<MobStateComponent>(solutionEntityUid.Value, out var state))
+                    if (state != null
+                        && !proto.WorksOnTheDead
+                        && _mobStateSystem.IsDead(solutionEntityUid.Value, state))
                     {
-                        if (!proto.WorksOnTheDead && _mobStateSystem.IsDead(solutionEntityUid.Value, state))
-                            continue;
+                        continue;
                     }
+
 
                     var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
                     var args = new EntityEffectReagentArgs(actualEntity, EntityManager, ent, solution, mostToRemove, proto, null, scale);

@@ -21,9 +21,6 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
     private void OnComponentInit(Entity<BloodstreamComponent> entity, ref ComponentInit args)
     {
         if (!SolutionContainer.EnsureSolution(entity.Owner,
-                entity.Comp.ChemicalSolutionName,
-                out var chemicalSolution) ||
-            !SolutionContainer.EnsureSolution(entity.Owner,
                 entity.Comp.BloodSolutionName,
                 out var bloodSolution) ||
             !SolutionContainer.EnsureSolution(entity.Owner,
@@ -31,13 +28,12 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
                 out var tempSolution))
             return;
 
-        chemicalSolution.MaxVolume = entity.Comp.ChemicalMaxVolume;
-        bloodSolution.MaxVolume = entity.Comp.BloodMaxVolume;
+        bloodSolution.MaxVolume = entity.Comp.BloodReferenceVolume * entity.Comp.BloodMaxFactor;
         tempSolution.MaxVolume = entity.Comp.BleedPuddleThreshold * 4; // give some leeway, for chemstream as well
 
         // Fill blood solution with BLOOD
         // The DNA string might not be initialized yet, but the reagent data gets updated in the GenerateDnaEvent subscription
-        bloodSolution.AddReagent(new ReagentId(entity.Comp.BloodReagent, GetEntityBloodData(entity.Owner)), entity.Comp.BloodMaxVolume - bloodSolution.Volume);
+        bloodSolution.AddReagent(new ReagentId(entity.Comp.BloodReagent, GetEntityBloodData(entity.Owner)), entity.Comp.BloodReferenceVolume - bloodSolution.Volume);
     }
 
     // forensics is not predicted yet

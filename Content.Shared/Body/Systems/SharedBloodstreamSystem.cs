@@ -71,10 +71,17 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             if (!SolutionContainer.ResolveSolution(uid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 continue;
 
-            // Adds blood to their blood level if it is below the maximum; Blood regeneration. Must be alive.
-            if (bloodSolution.Volume < bloodSolution.MaxVolume && !_mobStateSystem.IsDead(uid))
+            var bloodLevel = GetBloodLevel(uid);
+
+            // Blood level regulation. Must be alive.
+            if (bloodLevel != 1f && !_mobStateSystem.IsDead(uid))
             {
-                TryModifyBloodLevel((uid, bloodstream), bloodstream.BloodRefreshAmount);
+                var bloodError = bloodstream.BloodReferenceVolume - bloodstream.BloodReferenceVolume * bloodLevel;
+                var bloodRefreshAmount = bloodstream.BloodRefreshAmount;
+
+                bloodError = FixedPoint2.Clamp(bloodError, -bloodRefreshAmount, bloodRefreshAmount);
+
+                TryModifyBloodLevel(uid, bloodError);
             }
 
             // Removes blood from the bloodstream based on bleed amount (bleed rate)
@@ -82,13 +89,13 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             if (bloodstream.BleedAmount > 0)
             {
                 // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
-                TryModifyBloodLevel((uid, bloodstream), -bloodstream.BleedAmount);
+                TryBleedOut(uid, bloodstream.BleedAmount);
                 // Bleed rate is reduced by the bleed reduction amount in the bloodstream component.
                 TryModifyBleedAmount((uid, bloodstream), -bloodstream.BleedReductionAmount);
             }
 
             // deal bloodloss damage if their blood level is below a threshold.
-            var bloodPercentage = GetBloodLevelPercentage((uid, bloodstream));
+            var bloodPercentage = GetBloodLevel(uid);
             if (bloodPercentage < bloodstream.BloodlossThreshold && !_mobStateSystem.IsDead(uid))
             {
                 // bloodloss damage is based on the base value, and modified by how low your blood level is.
@@ -142,9 +149,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         if (args.Entity == entity.Comp.BloodSolution?.Owner)
             entity.Comp.BloodSolution = null;
 
-        if (args.Entity == entity.Comp.ChemicalSolution?.Owner)
-            entity.Comp.ChemicalSolution = null;
-
         if (args.Entity == entity.Comp.TemporarySolution?.Owner)
             entity.Comp.TemporarySolution = null;
     }
@@ -177,7 +181,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     private void OnReactionAttempt(Entity<BloodstreamComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
     {
         if (args.Name != ent.Comp.BloodSolutionName
-            && args.Name != ent.Comp.ChemicalSolutionName
             && args.Name != ent.Comp.BloodTemporarySolutionName)
         {
             return;
@@ -228,7 +231,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         var prob = Math.Clamp(totalFloat / 25, 0, 1);
         if (totalFloat > 0 && rand.Prob(prob))
         {
-            TryModifyBloodLevel(ent.AsNullable(), -total / 5);
+            TryBleedOut(ent.AsNullable(), total / 5);
             _audio.PlayPredicted(ent.Comp.InstantBloodSound, ent, args.Origin);
         }
 
@@ -276,7 +279,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         }
 
         // If the mob's blood level is below the damage threshhold, the pale message is added.
-        if (GetBloodLevelPercentage(ent.AsNullable()) < ent.Comp.BloodlossThreshold)
+        if (GetBloodLevel(ent.AsNullable()) < ent.Comp.BloodlossThreshold)
         {
             args.Message.PushNewline();
             args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-looks-pale", ("target", ent.Owner)));
@@ -298,25 +301,37 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     {
         TryModifyBleedAmount(ent.AsNullable(), -ent.Comp.BleedAmount);
 
-        if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
-            TryModifyBloodLevel(ent.AsNullable(), bloodSolution.AvailableVolume);
-
-        if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.ChemicalSolutionName, ref ent.Comp.ChemicalSolution))
-            SolutionContainer.RemoveAllSolution(ent.Comp.ChemicalSolution.Value);
+        if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution))
+        {
+            SolutionContainer.RemoveAllSolution(ent.Comp.BloodSolution.Value);
+            TryModifyBloodLevel(ent.AsNullable(), ent.Comp.BloodReferenceVolume);
+        }
     }
 
     /// <summary>
     /// Returns the current blood level as a percentage (between 0 and 1).
     /// </summary>
-    public float GetBloodLevelPercentage(Entity<BloodstreamComponent?> ent)
+    public float GetBloodLevel(Entity<BloodstreamComponent?> entity)
     {
-        if (!Resolve(ent, ref ent.Comp)
-            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
+        if (!Resolve(entity, ref entity.Comp)
+            || !SolutionContainer.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution)
+            || entity.Comp.BloodReferenceVolume == 0)
         {
             return 0.0f;
         }
 
-        return bloodSolution.FillFraction;
+        var totalBloodLevel = 0.0f;
+
+        for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
+        {
+            var (reagentId, quantity) = bloodSolution.Contents[i];
+            if (reagentId.Prototype == entity.Comp.BloodReagent)
+            {
+                totalBloodLevel += quantity.Float();
+            }
+        }
+
+        return totalBloodLevel / entity.Comp.BloodReferenceVolume.Float();
     }
 
     /// <summary>
@@ -337,10 +352,10 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     public bool TryAddToChemicals(Entity<BloodstreamComponent?> ent, Solution solution)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
-            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.ChemicalSolutionName, ref ent.Comp.ChemicalSolution))
+            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution))
             return false;
 
-        if (SolutionContainer.TryAddSolution(ent.Comp.ChemicalSolution.Value, solution))
+        if (SolutionContainer.TryAddSolution(ent.Comp.BloodSolution.Value, solution))
             return true;
 
         return false;
@@ -352,15 +367,15 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     public bool FlushChemicals(Entity<BloodstreamComponent?> ent, ProtoId<ReagentPrototype>? excludedReagentID, FixedPoint2 quantity)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
-            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.ChemicalSolutionName, ref ent.Comp.ChemicalSolution, out var chemSolution))
+            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
             return false;
 
-        for (var i = chemSolution.Contents.Count - 1; i >= 0; i--)
+        for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
         {
-            var (reagentId, _) = chemSolution.Contents[i];
+            var (reagentId, _) = bloodSolution.Contents[i];
             if (reagentId.Prototype != excludedReagentID)
             {
-                SolutionContainer.RemoveReagent(ent.Comp.ChemicalSolution.Value, reagentId, quantity);
+                SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, quantity);
             }
         }
 
@@ -373,31 +388,52 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     public bool TryModifyBloodLevel(Entity<BloodstreamComponent?> ent, FixedPoint2 amount)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
-            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution))
+            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
             return false;
 
         if (amount >= 0)
             return SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, amount, null, GetEntityBloodData(ent));
 
-        // Removal is more involved,
-        // since we also wanna handle moving it to the temporary solution
-        // and then spilling it if necessary.
-        var newSol = SolutionContainer.SplitSolution(ent.Comp.BloodSolution.Value, -amount);
+        amount *= -1;
+
+        for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
+        {
+            var (reagentId, quantity) = bloodSolution.Contents[i];
+            if (reagentId.Prototype == ent.Comp.BloodReagent)
+            {
+                var delta = FixedPoint2.Min(amount, quantity);
+                SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, delta);
+                amount -= delta;
+
+                if (amount <= 0)
+                    return true;
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Removes blood by spilling out the bloodstream.
+    /// </summary>
+    public bool TryBleedOut(Entity<BloodstreamComponent?> ent, FixedPoint2 amount)
+    {
+        if (!Resolve(ent, ref ent.Comp, logMissing: false)
+            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution)
+            || amount <= 0)
+        {
+            return false;
+        }
+
+        var leakedBlood = SolutionContainer.SplitSolution(ent.Comp.BloodSolution.Value, amount);
 
         if (!SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodTemporarySolutionName, ref ent.Comp.TemporarySolution, out var tempSolution))
             return true;
 
-        tempSolution.AddSolution(newSol, _prototypeManager);
+        tempSolution.AddSolution(leakedBlood, _prototypeManager);
 
         if (tempSolution.Volume > ent.Comp.BleedPuddleThreshold)
         {
-            // Pass some of the chemstream into the spilled blood.
-            if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.ChemicalSolutionName, ref ent.Comp.ChemicalSolution))
-            {
-                var temp = SolutionContainer.SplitSolution(ent.Comp.ChemicalSolution.Value, tempSolution.Volume / 10);
-                tempSolution.AddSolution(temp, _prototypeManager);
-            }
-
             _puddle.TrySpillAt(ent.Owner, tempSolution, out _, sound: false);
 
             tempSolution.RemoveAllSolution();
@@ -448,13 +484,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             tempSol.MaxVolume += bloodSolution.MaxVolume;
             tempSol.AddSolution(bloodSolution, _prototypeManager);
             SolutionContainer.RemoveAllSolution(ent.Comp.BloodSolution.Value);
-        }
-
-        if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.ChemicalSolutionName, ref ent.Comp.ChemicalSolution, out var chemSolution))
-        {
-            tempSol.MaxVolume += chemSolution.MaxVolume;
-            tempSol.AddSolution(chemSolution, _prototypeManager);
-            SolutionContainer.RemoveAllSolution(ent.Comp.ChemicalSolution.Value);
         }
 
         if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodTemporarySolutionName, ref ent.Comp.TemporarySolution, out var tempSolution))
