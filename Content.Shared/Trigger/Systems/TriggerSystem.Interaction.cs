@@ -1,4 +1,5 @@
-﻿using Content.Shared.Interaction;
+﻿using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Trigger.Components.Triggers;
@@ -10,12 +11,19 @@ public sealed partial class TriggerSystem
 {
     private void InitializeInteraction()
     {
+        SubscribeLocalEvent<TriggerOnExaminedComponent, ExaminedEvent>(OnExamined);
+
         SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<TriggerOnUseComponent, UseInHandEvent>(OnUse);
 
         SubscribeLocalEvent<ItemToggleOnTriggerComponent, TriggerEvent>(HandleItemToggleOnTrigger);
         SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(HandleAnchorOnTrigger);
         SubscribeLocalEvent<UseDelayOnTriggerComponent, TriggerEvent>(HandleUseDelayOnTrigger);
+    }
+
+    private void OnExamined(Entity<TriggerOnExaminedComponent> ent, ref ExaminedEvent args)
+    {
+        Trigger(ent.Owner, args.Examiner, ent.Comp.KeyOut);
     }
 
     private void OnActivate(Entity<TriggerOnActivateComponent> ent, ref ActivateInWorldEvent args)
