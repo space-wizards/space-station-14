@@ -59,23 +59,25 @@ internal sealed class Hub : PanelContainer, IDisposable
 
         // This crap throws a NullRef exception—what the hell, the Try method doesn’t even check for null,
         // and Init is private, so there’s no way to figure out what’s going on in there.
-        try
-        {
-            if (_systemManager.TryGetEntitySystem<HubSystem>(out var hub))
-            {
-                _hub = hub;
-                _hub.OnInitialized += OnHubInitialized;
-                _hub.OnServersRemoved += OnServersRemoved;
-                _hub.OnServerUpdated += OnServerUpdated;
-                _hub.OnServerInfoUpdated += OnServerInfoUpdated;
-            }
-            else
-                _systemManager.SystemLoaded += OnSystemLoaded;
-        }
-        catch (NullReferenceException)
-        {
-            _systemManager.SystemLoaded += OnSystemLoaded;
-        }
+        //try
+        //{
+        //    if (_systemManager.TryGetEntitySystem<HubSystem>(out var hub))
+        //    {
+        //        _hub = hub;
+        //        _hub.OnInitialized += OnHubInitialized;
+        //        _hub.OnServersRemoved += OnServersRemoved;
+        //        _hub.OnServerUpdated += OnServerUpdated;
+        //        _hub.OnServerInfoUpdated += OnServerInfoUpdated;
+        //    }
+        //    else
+        //        _systemManager.SystemLoaded += OnSystemLoaded;
+        //}
+        //catch (NullReferenceException)
+        //{
+        //    _systemManager.SystemLoaded += OnSystemLoaded;
+        //}
+
+        _systemManager.SystemLoaded += OnSystemLoaded;
     }
 
     private void OnSystemLoaded(object? sender, SystemChangedArgs e)

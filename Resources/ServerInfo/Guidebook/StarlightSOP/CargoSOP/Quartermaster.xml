@@ -1,17 +1,17 @@
 <Document>
+# Quartermaster
 
-# Quartermaster (QM)
-
-<GuideEntityEmbed Entity="ToyFigurineQuartermaster" Caption="Quartermaster (QM)"/>
+<GuideEntityEmbed Entity="ToyFigurineQuartermaster" Caption="Quartermaster"/>
 
 1. The Quartermaster is responsible for making sure that every batch of orders approved arrives on station within 15 minutes of approval.
 
 2. It is the Quartermaster's ultimate responsibility to make sure all forms are correct and in order. In case of dire emergencies such as imminent warhead detonation, paperwork may be filled out at a later date.
 
-3. The Quartermaster may not order security equipment without the express permission of the Head of security or the captain. In dire emergencies, paperwork may be filed at a later date.
+3. The Quartermaster may not order security equipment without the express permission of the Head of Security or the Captain. In dire emergencies, paperwork may be filed at a later date.
 
 4. The Quartermaster may authorize non-standard orders, however any misuse of materials or crimes committed involving these orders will also implicate the Quartermaster.
 
-5. The Quartermaster may not go on salvage expeditions. 
+5. The Quartermaster may not go on salvage expeditions. The Quartermaster may choose to deny a salvage expedition should it be too dangerous.
 
+6. The standard Command SOP applies.
 </Document>

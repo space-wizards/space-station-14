@@ -1,0 +1,78 @@
+- type: gameMap
+  id: Prism
+  mapName: 'Prism Station'
+  mapPath: /Maps/_Starlight/Stations/Prism.yml
+  minPlayers: 25
+  maxPlayers: 70
+  stations:
+    Prism:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Prism Station {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'SR'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/_Starlight/Shuttles/emergency_prism.yml
+        - type: StationCargoShuttle
+          path: /Maps/_Starlight/Shuttles/cargo_prism.yml
+        - type: StationJobs
+          availableJobs: 
+            #command
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            ChiefEngineer: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            Quartermaster: [ 1, 1 ]
+            #service
+            Bartender: [ 1, 2]
+            Botanist: [ 1, 2 ]
+            Chef: [ 1, 2 ]
+            Janitor: [ 1, 1] 
+            Chaplain: [ 1, 1 ]
+            Librarian: [ 1, 1 ]
+            Reporter: [ 1, 1 ]
+            ServiceWorker: [ 5, 5 ]
+            #engineering
+            AtmosphericTechnician: [ 2, 2 ]
+            StationEngineer: [ 4, 4 ]
+            TechnicalAssistant: [ 2, 3 ] 
+            #medical 
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 4, 4 ]
+            MedicalIntern: [ 3, 4 ] 
+            Paramedic: [ 2, 2 ]
+            Psychologist: [ 1, 1 ]
+            Surgeon: [ 1, 1 ]
+            #science 
+            Scientist: [ 3, 4 ]
+            ResearchAssistant: [ 2, 3 ] 
+            Roboticist: [ 2, 2 ]
+            #security 
+            Warden: [ 1, 1 ]
+            SecurityOfficer: [ 4, 5 ]
+            Detective: [ 1, 1 ]
+            SecurityCadet: [ 4, 4 ] 
+            Brigmedic: [ 1, 1 ]
+            #supply (4 - 5)
+            SalvageSpecialist: [ 4, 4 ]
+            MiningSpecialist: [ 3, 3 ]
+            CargoTechnician: [ 4, 4 ]
+            MailTech: [ 2, 2 ]
+            #civilian
+            Assistant: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            #silicon (3)
+            StationAi: [ 1, 1 ]
+            Borg: [ 4, 4 ]
+            #law
+            Magistrate: [ 1, 1 ]
+            IAA: [ 2, 2 ]
+            #Representives
+            BlueShield: [ 1, 1 ]
+            NanoTrasenRepresentative: [ 1, 1 ]

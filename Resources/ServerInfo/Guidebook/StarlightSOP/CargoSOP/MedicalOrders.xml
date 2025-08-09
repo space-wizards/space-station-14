@@ -1,23 +1,42 @@
 <Document>
+# Medical orders
 
-    # Medical Orders
+## Basic materials
+### Only for printers & lathes
+<Box>
+	<GuideEntityEmbed Entity="SheetSteel"/>
+	<GuideEntityEmbed Entity="SheetGlass"/>
+	<GuideEntityEmbed Entity="SheetPlastic"/>
+	<GuideEntityEmbed Entity="MaterialCloth"/>
+</Box>
 
-    Basic Materials only for printer/lathes
-    <Box>
-        <GuideEntityEmbed Entity="SheetSteel"/>
-        <GuideEntityEmbed Entity="SheetGlass"/>
-        <GuideEntityEmbed Entity="SheetPlastic"/>
-        <GuideEntityEmbed Entity="MaterialCloth1"/> 
-    </Box>
+## Refill Crates
+<Box>
+	<GuideEntityEmbed Entity="CrateVendingMachineRestockMedicalFilled"/>
+	<GuideEntityEmbed Entity="CrateVendingMachineRestockChemVendFilled"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="CrateChemistryD"/>
+	<GuideEntityEmbed Entity="CrateChemistryP"/>
+	<GuideEntityEmbed Entity="CrateChemistryS"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="CrateMedicalSupplies"/>
+</Box>
 
-    Chemicals
-    <Box>
-        <GuideEntityEmbed Entity="CrateVendingMachineRestockMedicalFilled"/> 
-        <GuideEntityEmbed Entity="CrateChemistryD"/> 
-        <GuideEntityEmbed Entity="CrateChemistryP"/> 
-        <GuideEntityEmbed Entity="CrateChemistryS"/> 
-    </Box>
+## Medical kits
+<Box>
+	<GuideEntityEmbed Entity="MedkitFilled"/>
+	<GuideEntityEmbed Entity="MedkitAdvancedFilled"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="MedkitOxygenFilled"/>
+	<GuideEntityEmbed Entity="MedkitBruteFilled"/>
+</Box>
+<Box>
 
+	<GuideEntityEmbed Entity="MedkitRadiationFilled"/>
+	<GuideEntityEmbed Entity="MedkitToxinFilled"/>
+	<GuideEntityEmbed Entity="MedkitBurnFilled"/>
+</Box>
 </Document>
-
-
