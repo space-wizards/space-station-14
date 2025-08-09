@@ -1,0 +1,1052 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": null,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "357-0"
+    },
+    {
+      "name": "357-1"
+    },
+    {
+      "name": "357-2"
+    },
+    {
+      "name": "357-3"
+    },
+    {
+      "name": "357-4"
+    },
+    {
+      "name": "357-5"
+    },
+    {
+      "name": "357-6"
+    },
+    {
+      "name": "357-7"
+    },
+    {
+      "name": "357"
+    },
+    {
+      "name": "rcd"
+    },
+    {
+      "name": "speedloader_empty"
+    },
+    {
+      "name": "speedloader_empty"
+    },
+    {
+      "name": "T38-0"
+    },
+    {
+      "name": "T38-1"
+    },
+    {
+      "name": "T38-2"
+    },
+    {
+      "name": "T38-3"
+    },
+    {
+      "name": "T38-4"
+    },
+    {
+      "name": "T38-5"
+    },
+    {
+      "name": "T38-6"
+    },
+    {
+      "name": "T38-7"
+    },
+    {
+      "name": "T38"
+    },
+    {
+      "name": "45-10"
+    },
+    {
+      "name": "45-7"
+    },
+    {
+      "name": "45-6"
+    },
+    {
+      "name": "45-5"
+    },
+    {
+      "name": "45-4"
+    },
+    {
+      "name": "45-3"
+    },
+    {
+      "name": "45-2"
+    },
+    {
+      "name": "45-1"
+    },
+    {
+      "name": "45-0"
+    },
+    {
+      "name": "7.63x25m-9"
+    },
+    {
+      "name": "7.63x25m-0"
+    },
+    {
+      "name": "556"
+    },
+    {
+      "name": "9x19p-8"
+    },
+    {
+      "name": "9x19p"
+    },
+    {
+      "name": "9x19p-0"
+    },
+    {
+      "name": "mag9mm"
+    },
+    {
+      "name": "mag9mm-0"
+    },
+    {
+      "name": "5.56s-30"
+    },
+    {
+      "name": "5.56s-0"
+    },
+    {
+      "name": "9mm"
+    },
+    {
+      "name": "empbox"
+    },
+    {
+      "name": "418-0"
+    },
+    {
+      "name": "418-1"
+    },
+    {
+      "name": "418-2"
+    },
+    {
+      "name": "418-3"
+    },
+    {
+      "name": "418-4"
+    },
+    {
+      "name": "418-5"
+    },
+    {
+      "name": "418-6"
+    },
+    {
+      "name": "418-7"
+    },
+    {
+      "name": "418"
+    },
+    {
+      "name": "666-0"
+    },
+    {
+      "name": "666-1"
+    },
+    {
+      "name": "666-2"
+    },
+    {
+      "name": "666-3"
+    },
+    {
+      "name": "666-4"
+    },
+    {
+      "name": "666-5"
+    },
+    {
+      "name": "666-6"
+    },
+    {
+      "name": "666-7"
+    },
+    {
+      "name": "666"
+    },
+    {
+      "name": "MagSpear"
+    },
+    {
+      "name": "MagSpear"
+    },
+    {
+      "name": "10mm-20"
+    },
+    {
+      "name": "10mm-16"
+    },
+    {
+      "name": "10mm-12"
+    },
+    {
+      "name": "10mm-8"
+    },
+    {
+      "name": "10mm-4"
+    },
+    {
+      "name": "10mm-0"
+    },
+    {
+      "name": "12mm"
+    },
+    {
+      "name": "50ae-7"
+    },
+    {
+      "name": "50ae-0"
+    },
+    {
+      "name": "50ae"
+    },
+    {
+      "name": "75-0"
+    },
+    {
+      "name": "75"
+    },
+    {
+      "name": "75-8"
+    },
+    {
+      "name": "a762-50"
+    },
+    {
+      "name": "a762-40"
+    },
+    {
+      "name": "a762-30"
+    },
+    {
+      "name": "a762-20"
+    },
+    {
+      "name": "a762-10"
+    },
+    {
+      "name": "a762-0"
+    },
+    {
+      "name": "38"
+    },
+    {
+      "name": "38-6"
+    },
+    {
+      "name": "38-5"
+    },
+    {
+      "name": "38-4"
+    },
+    {
+      "name": "38-3"
+    },
+    {
+      "name": "38-2"
+    },
+    {
+      "name": "38-1"
+    },
+    {
+      "name": "38-0"
+    },
+    {
+      "name": "a762"
+    },
+    {
+      "name": "dart"
+    },
+    {
+      "name": "darts-5"
+    },
+    {
+      "name": "darts"
+    },
+    {
+      "name": "darts-4"
+    },
+    {
+      "name": "darts-3"
+    },
+    {
+      "name": "darts-2"
+    },
+    {
+      "name": "darts-1"
+    },
+    {
+      "name": "darts-0"
+    },
+    {
+      "name": "fug"
+    },
+    {
+      "name": "syringe-cartridge"
+    },
+    {
+      "name": "syringe-cartridge-flight",
+      "directions": 4
+    },
+    {
+      "name": "c762"
+    },
+    {
+      "name": "c762-0"
+    },
+    {
+      "name": "5.56"
+    },
+    {
+      "name": "5.56-10"
+    },
+    {
+      "name": "5.56-0"
+    },
+    {
+      "name": "9mmt-20"
+    },
+    {
+      "name": "9mmt-16"
+    },
+    {
+      "name": "9mmt-12"
+    },
+    {
+      "name": "9mmt-8"
+    },
+    {
+      "name": "9mmt-4"
+    },
+    {
+      "name": "9mmt-0"
+    },
+    {
+      "name": "9mmt"
+    },
+    {
+      "name": "gshell"
+    },
+    {
+      "name": "gshell-spent",
+      "directions": 8
+    },
+    {
+      "name": "bshell"
+    },
+    {
+      "name": "bshell-spent"
+    },
+    {
+      "name": "blshell"
+    },
+    {
+      "name": "blshell-spent"
+    },
+    {
+      "name": "pshell"
+    },
+    {
+      "name": "pshell-spent"
+    },
+    {
+      "name": "slshell"
+    },
+    {
+      "name": "slshell-spent",
+      "directions": 8
+    },
+    {
+      "name": "stushell"
+    },
+    {
+      "name": "stunshell-spent",
+      "directions": 8
+    },
+    {
+      "name": "fshell"
+    },
+    {
+      "name": "fshell-spent"
+    },
+    {
+      "name": "s-casing"
+    },
+    {
+      "name": "s-casing-spent",
+      "directions": 8
+    },
+    {
+      "name": "r-casing"
+    },
+    {
+      "name": "r-casing-spent",
+      "directions": 8
+    },
+    {
+      "name": "brifle-casing"
+    },
+    {
+      "name": "brifle"
+    },
+    {
+      "name": "colt-mag_7"
+    },
+    {
+      "name": "colt-mag_empty"
+    },
+    {
+      "name": "ptsdbox"
+    },
+    {
+      "name": "antitank-ammobox_4"
+    },
+    {
+      "name": "antitank-ammobox_3"
+    },
+    {
+      "name": "antitank-ammobox_2"
+    },
+    {
+      "name": "antitank-ammobox_1"
+    },
+    {
+      "name": "antitank-ammobox_empty"
+    },
+    {
+      "name": "lcasing"
+    },
+    {
+      "name": "lcasing1"
+    },
+    {
+      "name": "lcasing-spent",
+      "directions": 8
+    },
+    {
+      "name": "rifle-casing"
+    },
+    {
+      "name": "rifle-casing-spent",
+      "directions": 8
+    },
+    {
+      "name": "uzi45"
+    },
+    {
+      "name": "uzi45-16"
+    },
+    {
+      "name": "uzi45-14"
+    },
+    {
+      "name": "uzi45-12"
+    },
+    {
+      "name": "uzi45-10"
+    },
+    {
+      "name": "uzi45-8"
+    },
+    {
+      "name": "uzi45-6"
+    },
+    {
+      "name": "uzi45-4"
+    },
+    {
+      "name": "uzi45-2"
+    },
+    {
+      "name": "uzi45-0"
+    },
+    {
+      "name": "empshell"
+    },
+    {
+      "name": "empshell-spent"
+    },
+    {
+      "name": "empcasing",
+      "directions": 8
+    },
+    {
+      "name": "rifle-18"
+    },
+    {
+      "name": "rifle-15"
+    },
+    {
+      "name": "rifle-12"
+    },
+    {
+      "name": "rifle-9"
+    },
+    {
+      "name": "rifle-6"
+    },
+    {
+      "name": "rifle-3"
+    },
+    {
+      "name": "rifle-0"
+    },
+    {
+      "name": "rifle"
+    },
+    {
+      "name": "bbox"
+    },
+    {
+      "name": "bbox-0"
+    },
+    {
+      "name": "stunbox"
+    },
+    {
+      "name": "stunbox-0"
+    },
+    {
+      "name": "gbox"
+    },
+    {
+      "name": "gbox-0"
+    },
+    {
+      "name": "blbox"
+    },
+    {
+      "name": "blbox-0"
+    },
+    {
+      "name": "bshell-1"
+    },
+    {
+      "name": "bshell-2"
+    },
+    {
+      "name": "bshell-3"
+    },
+    {
+      "name": "bshell1"
+    },
+    {
+      "name": "bshell2"
+    },
+    {
+      "name": "bshell3"
+    },
+    {
+      "name": "bshell4"
+    },
+    {
+      "name": "bshell5"
+    },
+    {
+      "name": "gshell1"
+    },
+    {
+      "name": "gshell2"
+    },
+    {
+      "name": "gshell3"
+    },
+    {
+      "name": "gshell4"
+    },
+    {
+      "name": "gshell5"
+    },
+    {
+      "name": "slshell1"
+    },
+    {
+      "name": "slshell2"
+    },
+    {
+      "name": "slshell3"
+    },
+    {
+      "name": "slshell4"
+    },
+    {
+      "name": "slshell5"
+    },
+    {
+      "name": "stushell1"
+    },
+    {
+      "name": "stushell2"
+    },
+    {
+      "name": "stushell3"
+    },
+    {
+      "name": "stushell4"
+    },
+    {
+      "name": "stushell5"
+    },
+    {
+      "name": "bshell-4"
+    },
+    {
+      "name": "bshell-5"
+    },
+    {
+      "name": "bshell-6"
+    },
+    {
+      "name": "bshell-8"
+    },
+    {
+      "name": "stunshell-1"
+    },
+    {
+      "name": "stunshell-2"
+    },
+    {
+      "name": "stunshell-3"
+    },
+    {
+      "name": "stunshell-4"
+    },
+    {
+      "name": "stunshell-5"
+    },
+    {
+      "name": "stunshell-6"
+    },
+    {
+      "name": "stunshell-7"
+    },
+    {
+      "name": "stunshell-8"
+    },
+    {
+      "name": "gshell-1"
+    },
+    {
+      "name": "gshell-2"
+    },
+    {
+      "name": "gshell-3"
+    },
+    {
+      "name": "gshell-4"
+    },
+    {
+      "name": "gshell-5"
+    },
+    {
+      "name": "gshell-6"
+    },
+    {
+      "name": "gshell-7"
+    },
+    {
+      "name": "gshell-8"
+    },
+    {
+      "name": "slshell-1"
+    },
+    {
+      "name": "slshell-2"
+    },
+    {
+      "name": "slshell-3"
+    },
+    {
+      "name": "slshell-4"
+    },
+    {
+      "name": "slshell-5"
+    },
+    {
+      "name": "slshell-6"
+    },
+    {
+      "name": "slshell-7"
+    },
+    {
+      "name": "slshell-8"
+    },
+    {
+      "name": "rsc"
+    },
+    {
+      "name": "rsc-5"
+    },
+    {
+      "name": "rsc-4"
+    },
+    {
+      "name": "rsc-3"
+    },
+    {
+      "name": "rsc-2"
+    },
+    {
+      "name": "rsc-1"
+    },
+    {
+      "name": "rsc-0"
+    },
+    {
+      "name": "rbox"
+    },
+    {
+      "name": "shellbox"
+    },
+    {
+      "name": "brifle1"
+    },
+    {
+      "name": "brifle2"
+    },
+    {
+      "name": "brifle3"
+    },
+    {
+      "name": "brifle4"
+    },
+    {
+      "name": "brifle5"
+    },
+    {
+      "name": "autorifle"
+    },
+    {
+      "name": "autorifle-0"
+    },
+    {
+      "name": "ersatz"
+    },
+    {
+      "name": "ersatz-0"
+    },
+    {
+      "name": "tinyersatz"
+    },
+    {
+      "name": "tinyersatz-0"
+    },
+    {
+      "name": "akarabiner"
+    },
+    {
+      "name": "akarabiner-0"
+    },
+    {
+      "name": "9mmSMG"
+    },
+    {
+      "name": "9mmSMG-0"
+    },
+    {
+      "name": "mg08"
+    },
+    {
+      "name": "mg08-0"
+    },
+    {
+      "name": "handgunmag-7"
+    },
+    {
+      "name": "handgunmag-6"
+    },
+    {
+      "name": "handgunmag-5"
+    },
+    {
+      "name": "handgunmag-4"
+    },
+    {
+      "name": "handgunmag-3"
+    },
+    {
+      "name": "handgunmag-2"
+    },
+    {
+      "name": "handgunmag-1"
+    },
+    {
+      "name": "handgunmag-0"
+    },
+    {
+      "name": "LMG-mag"
+    },
+    {
+      "name": "LMG-mag_empty"
+    },
+    {
+      "name": "hmg"
+    },
+    {
+      "name": "hmg-0"
+    },
+    {
+      "name": "bclip"
+    },
+    {
+      "name": "blclip-5"
+    },
+    {
+      "name": "bclip-4"
+    },
+    {
+      "name": "bclip-3"
+    },
+    {
+      "name": "bclip-2"
+    },
+    {
+      "name": "bclip-1"
+    },
+    {
+      "name": "45mpclip"
+    },
+    {
+      "name": "riflecasing"
+    },
+    {
+      "name": "rifle-handful1"
+    },
+    {
+      "name": "rifle-handful2"
+    },
+    {
+      "name": "rifle-handful3"
+    },
+    {
+      "name": "rifle-handful4"
+    },
+    {
+      "name": "rifle-handful5"
+    },
+    {
+      "name": "revolver-handful1"
+    },
+    {
+      "name": "revolver-handful2"
+    },
+    {
+      "name": "revolver-handful3"
+    },
+    {
+      "name": "revolver-handful4"
+    },
+    {
+      "name": "revolver-handful5"
+    },
+    {
+      "name": "revolver-handful6"
+    },
+    {
+      "name": "shotgunbox2"
+    },
+    {
+      "name": "shotgunbox1"
+    },
+    {
+      "name": "shotgunbox0"
+    },
+    {
+      "name": "msslugammo"
+    },
+    {
+      "name": "slugammo"
+    },
+    {
+      "name": "beanbagammo"
+    },
+    {
+      "name": "shotgunammo"
+    },
+    {
+      "name": "shotgunbox4"
+    },
+    {
+      "name": "shotgunbox3"
+    },
+    {
+      "name": "flamer"
+    },
+    {
+      "name": "null"
+    },
+    {
+      "name": "autoshotty"
+    },
+    {
+      "name": "autoshotty-6"
+    },
+    {
+      "name": "autoshotty-5"
+    },
+    {
+      "name": "autoshotty-4"
+    },
+    {
+      "name": "autoshotty-3"
+    },
+    {
+      "name": "autoshotty-2"
+    },
+    {
+      "name": "autoshotty-1"
+    },
+    {
+      "name": "autoshotty-0"
+    },
+    {
+      "name": "shoota"
+    },
+    {
+      "name": "shoota-75"
+    },
+    {
+      "name": "shoota-50"
+    },
+    {
+      "name": "shoota-30"
+    },
+    {
+      "name": "shoota-15"
+    },
+    {
+      "name": "shoota-5"
+    },
+    {
+      "name": "shoota-0"
+    },
+    {
+      "name": "slugga"
+    },
+    {
+      "name": "slugga-0"
+    },
+    {
+      "name": "kroot"
+    },
+    {
+      "name": "kroot2"
+    },
+    {
+      "name": "kroot3"
+    },
+    {
+      "name": "krootcasing"
+    },
+    {
+      "name": "kroot4"
+    },
+    {
+      "name": "kroot5"
+    },
+    {
+      "name": "kroot1"
+    },
+    {
+      "name": "auto_grim"
+    },
+    {
+      "name": "autogrim-0"
+    },
+    {
+      "name": "heat_shell"
+    },
+    {
+      "name": "needler"
+    },
+    {
+      "name": "needler-0"
+    },
+    {
+      "name": "krakenersatz"
+    },
+    {
+      "name": "krakenersatz-0"
+    },
+    {
+      "name": "krakentinyersatz"
+    },
+    {
+      "name": "krakentinyersatz-0"
+    },
+    {
+      "name": "stunbox1"
+    },
+    {
+      "name": "beanbox"
+    },
+    {
+      "name": "heavyslugbox"
+    },
+    {
+      "name": "slugbox"
+    },
+    {
+      "name": "shotbox"
+    },
+    {
+      "name": "bolty"
+    },
+    {
+      "name": "bolty-0"
+    },
+    {
+      "name": "boltyp"
+    },
+    {
+      "name": "boltyp-0"
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "5556"
+    },
+    {
+      "name": "5556-0"
+    },
+    {
+      "name": "5556a"
+    },
+    {
+      "name": "5556a-0"
+    }
+  ]
+}
