@@ -15,6 +15,12 @@ namespace Content.Server.Chemistry.Components
         [DataField("pillType"), ViewVariables(VVAccess.ReadWrite)]
         public uint PillType = 0;
 
+        [DataField]
+        public uint PillNumber = 0;
+
+        [DataField]
+        public uint PillDosage = 20;
+
         [DataField("mode"), ViewVariables(VVAccess.ReadWrite)]
         public ChemMasterMode Mode = ChemMasterMode.Transfer;
 
@@ -23,6 +29,9 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("pillDosageLimit", required: true), ViewVariables(VVAccess.ReadWrite)]
         public uint PillDosageLimit;
+
+        [DataField]
+        public uint BottleDosage = 30;
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
