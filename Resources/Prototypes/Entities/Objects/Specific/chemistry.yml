@@ -40,6 +40,8 @@
     solution: beaker
   - type: InjectableSolution
     solution: beaker
+  - type: DumpableSolution
+    solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: SolutionItemStatus
@@ -195,6 +197,8 @@
   - type: DrawableSolution
     solution: beaker
   - type: InjectableSolution
+    solution: beaker
+  - type: DumpableSolution
     solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
