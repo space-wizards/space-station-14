@@ -1,0 +1,45 @@
+<ui:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:parrotmemories="clr-namespace:Content.Client.Administration.UI.ParrotMemories"
+                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                VerticalExpand="True" HorizontalExpand="True"
+                Title="{Loc parrot-memory-title}"
+                SetSize="1000 600">
+    <PanelContainer StyleClasses="BackgroundDark">
+        <BoxContainer Orientation="Vertical">
+            <!-- view checkboxes and refresh button -->
+            <BoxContainer Orientation="Horizontal" Margin="4">
+                <Label Name="MemoryCountLabel" Text="{Loc parrot-memory-loading}" HorizontalExpand="True"></Label>
+                <cc:HSeparator Margin="4 0" />
+                <Button Name="PrevRoundButton" Access="Public" Text="Previous round"></Button>
+                <cc:HSeparator></cc:HSeparator>
+                <LineEdit Name="RoundLineEdit" Access="Public" MinWidth="80"></LineEdit>
+                <Button Name="GoToRoundButton" Access="Public" Text="{Loc parrot-memory-go-to-round}"></Button>
+                <cc:HSeparator></cc:HSeparator>
+                <Button Name="NextRoundButton" Access="Public" Text="Next round"></Button>
+                <cc:HSeparator Margin="4 0" />
+                <Button Name="CurrentRoundButton" Access="Public" Text="{Loc parrot-memory-to-current-round}"></Button>
+                <cc:HSeparator Margin="4 0" />
+                <Button Name="RefreshButton" Access="Public" Text="{Loc parrot-memory-refresh}"></Button>
+            </BoxContainer>
+
+            <!-- filter editor -->
+            <BoxContainer Orientation="Horizontal" Margin="4">
+                <Label Text="{Loc parrot-memory-text-filter}"></Label>
+                <LineEdit Name="FilterLineEdit" Access="Public" HorizontalExpand="True"></LineEdit>
+                <cc:HSeparator Margin="4 0" />
+                <Button Name="ApplyFilterButton" Access="Public" Text="{Loc parrot-memory-apply-filter}"></Button>
+                <cc:HSeparator Margin="4 0" />
+                <Button Name="ClearFilterButton" Access="Public" Text="{Loc parrot-memory-clear-filter}"></Button>
+            </BoxContainer>
+
+            <cc:VSeparator Margin="0 4"></cc:VSeparator>
+            <TabContainer Name="MemoryTabContainer" Access="Public" VerticalExpand="True">
+                <parrotmemories:ParrotMemoryList Name="ActiveMemories" Access="Public"></parrotmemories:ParrotMemoryList>
+                <parrotmemories:ParrotMemoryList Name="BlockedMemories" Access="Public" ShowBlocked="True"></parrotmemories:ParrotMemoryList>
+            </TabContainer>
+            <BoxContainer Orientation="Horizontal" Align="Center">
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</ui:FancyWindow>
