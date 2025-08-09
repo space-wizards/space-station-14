@@ -597,6 +597,20 @@
     stateDoorOpen: mime_open
     stateDoorClosed: mime_door
 
+# Journalist
+- type: entity
+  parent: LockerBaseSecure
+  id: LockerReporter
+  name: reporter's locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: reporter
+    stateDoorOpen: reporter_open
+    stateDoorClosed: reporter_door
+  - type: AccessReader
+    access: [["Service"]]
+    
 # Representative
 - type: entity
   id: LockerRepresentative
