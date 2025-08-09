@@ -8,10 +8,8 @@
     Leth:
       stationProto: StandardNanotrasenStation
       components:
-        - type: StationRandomTransform
-          enableStationRotation: false
         - type: StationNameSetup
-          mapNameTemplate: '{0} Leth Vessel {1}'
+          mapNameTemplate: 'Leth Vessel {0}-{1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'LV'
