@@ -6,4 +6,4 @@
     fontId: Scratch
     obfuscationFont: true
   obfuscation:
-    !type:NoObfuscation
+    !type:RandomObfuscation

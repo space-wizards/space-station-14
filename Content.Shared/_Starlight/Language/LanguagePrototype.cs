@@ -10,12 +10,21 @@ public sealed partial class LanguagePrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = default!;
 
+    /// <summary>
+    /// Icon of the language visible in chat/bubbles.
+    /// </summary>
     [DataField("icon")]
     public ProtoId<JobIconPrototype> Icon = "LanguageIconUnknown";
 
+    /// <summary>
+    /// Show the Icon if understood.
+    /// </summary>
     [DataField("iconUnderstood")]
     public bool IconVisibleIfUnderstood = true;
 
+    /// <summary>
+    /// Show the Icon if not understood.
+    /// </summary>
     [DataField("iconNotUnderstood")]
     public bool IconVisibleIfNotUnderstood = true;
 
@@ -57,6 +66,9 @@ public sealed partial class SpeechOverrideInfo
     [DataField]
     public string? FontId;
 
+    /// <summary>
+    /// Only show the font when we Obfuscate the message (if not understood)
+    /// </summary>
     [DataField]
     public bool? ObfuscationFont = false;
 

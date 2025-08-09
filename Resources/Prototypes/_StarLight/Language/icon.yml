@@ -130,7 +130,8 @@
   parent: JobIcon
   id: LanguageIconBrain
   icon:
-    sprite: brain
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: brain
   allowSelection: false
 
 - type: jobIcon

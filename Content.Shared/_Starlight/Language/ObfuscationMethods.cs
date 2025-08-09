@@ -33,12 +33,20 @@ public abstract partial class ObfuscationMethod
 }
 
 /// <summary>
-///  Does not obfuscate, this is used for languages that focus on the font instead of actual Obfuscation.
+///  Obfuscate the string letters/numbers to random, keeps special characters and spaces.
 /// </summary>
-public partial class NoObfuscation : ObfuscationMethod
+public partial class RandomObfuscation : ObfuscationMethod
 {
     internal override void Obfuscate(StringBuilder builder, string message, SharedLanguageSystem context)
     {
+        const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        message = message.ToUpper();
+
+        for (int i = 0; i < Chars.Length; i++)
+        {
+            message = message.Replace(Chars[i], Chars[context.PseudoRandomNumber(message.GetHashCode() + i, 0, Chars.Length - 1)]);
+        }
+
         builder.Append(message);
     }
 }
@@ -122,74 +130,5 @@ public sealed partial class SyllableObfuscation : ReplacementObfuscation
     private static bool IsPunctuation(char ch)
     {
         return ch is '.' or '!' or '?' or ',' or ':';
-    }
-}
-
-/// <summary>
-///     Obfuscates each sentence in the message by concatenating a number of obfuscation phrases.
-///     The number of phrases in the obfuscated message is proportional to the length of the original message.
-/// </summary>
-public sealed partial class PhraseObfuscation : ReplacementObfuscation
-{
-    [DataField]
-    public int MinPhrases = 1;
-
-    [DataField]
-    public int MaxPhrases = 4;
-
-    /// <summary>
-    ///     A string used to separate individual phrases within one sentence. Default is a space.
-    /// </summary>
-    [DataField]
-    public string Separator = " ";
-
-    /// <summary>
-    ///     A power to which the number of characters in the original message is raised to determine the number of phrases in the result.
-    ///     Default is 1/3, i.e. the cubic root of the original number.
-    /// </summary>
-    /// <remarks>
-    ///     Using the default proportion, you will need at least 27 characters for 2 phrases, at least 64 for 3, at least 125 for 4, etc.
-    ///     Increasing the proportion to 1/4 will result in the numbers changing to 81, 256, 625, etc.
-    /// </remarks>
-    [DataField]
-    public float Proportion = 1f / 3;
-
-    internal override void Obfuscate(StringBuilder builder, string message, SharedLanguageSystem context)
-    {
-        var sentenceBeginIndex = 0;
-        var hashCode = 0;
-
-        for (var i = 0; i < message.Length; i++)
-        {
-            var ch = char.ToLower(message[i]);
-            if (!IsPunctuation(ch) && i != message.Length - 1)
-            {
-                hashCode = hashCode * 31 + ch;
-                continue;
-            }
-
-            var length = i - sentenceBeginIndex;
-            if (length > 0)
-            {
-                var newLength = (int) Math.Clamp(Math.Pow(length, Proportion) - 1, MinPhrases, MaxPhrases);
-
-                for (var j = 0; j < newLength; j++)
-                {
-                    var phraseIdx = context.PseudoRandomNumber(hashCode + j, 0, Replacement.Count - 1);
-                    var phrase = Replacement[phraseIdx];
-                    builder.Append(phrase);
-                    builder.Append(Separator);
-                }
-            }
-            sentenceBeginIndex = i + 1;
-
-            if (IsPunctuation(ch))
-                builder.Append(ch).Append(' '); // TODO: this will turn '...' into '. . . '
-        }
-    }
-
-    private static bool IsPunctuation(char ch)
-    {
-        return ch is '.' or '!' or '?'; // Doesn't include mid-sentence punctuation like the comma
     }
 }

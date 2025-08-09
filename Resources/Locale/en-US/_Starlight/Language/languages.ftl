@@ -48,3 +48,6 @@ language-Terrum-description = Sounds similar to old-earth Hebrew.
 
 language-Chittin-name = Chittin
 language-Chittin-description = The noise made by rubbing its antennae together is actually a complex form of communication.
+
+language-VoxPidgin-name = Vox-Pidgin
+language-VoxPidgin-description = The common tongue of the various Vox ships making up the Shoal. It sounds like chaotic shrieking to everyone else.
