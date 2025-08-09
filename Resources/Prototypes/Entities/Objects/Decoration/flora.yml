@@ -229,6 +229,8 @@
         tree04: ""
         tree05: ""
         tree06: ""
+  - type: TypingIndicator
+    proto: diona
 
 - type: entity
   parent: BaseTreeSnow
