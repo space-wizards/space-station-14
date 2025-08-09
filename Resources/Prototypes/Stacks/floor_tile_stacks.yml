@@ -1,4 +1,4 @@
-﻿- type: stack
+- type: stack
   id: FloorTileDark
   name: stack-dark-tile
   spawn: FloorTileItemDark
