@@ -65,3 +65,6 @@ trait-spanish-desc = Hola señor, donde esta la biblioteca.
 
 trait-painnumbness-name = Numb
 trait-painnumbness-desc = You lack any sense of feeling pain, being unaware of how hurt you may be.
+
+trait-impaired-mobility-name = Impaired Mobility
+trait-impaired-mobility-desc = You have difficulty moving without a mobility aid.
