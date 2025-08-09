@@ -76,7 +76,7 @@ public sealed class StomachSystem : EntitySystem
                 // at, since our update interval may change after the delta
                 // was added.
                 var nextDeltas = deltas
-                    .Select(delta => delta with { Lifetime = delta.Lifetime + stomach.AdjustedUpdateInterval })
+                    .Select(delta => delta with { Lifetime = delta.Lifetime + stomach.UpdateInterval })
                     .ToList();
 
                 // Get the deltas that we can now digest
