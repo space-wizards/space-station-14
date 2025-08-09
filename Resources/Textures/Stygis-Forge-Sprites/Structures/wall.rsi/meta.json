@@ -1,0 +1,2123 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": null,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "0"
+    },
+    {
+      "name": "r_wall"
+    },
+    {
+      "name": "r_wall-1"
+    },
+    {
+      "name": "r_wall-2"
+    },
+    {
+      "name": "r_wall-3"
+    },
+    {
+      "name": "r_wall-4"
+    },
+    {
+      "name": "r_wall-5"
+    },
+    {
+      "name": "r_wall-6"
+    },
+    {
+      "name": "metalfwall_open"
+    },
+    {
+      "name": "metalfwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "metalfwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rwall0"
+    },
+    {
+      "name": "metal0"
+    },
+    {
+      "name": "metal1"
+    },
+    {
+      "name": "metal2"
+    },
+    {
+      "name": "metal3"
+    },
+    {
+      "name": "metal4"
+    },
+    {
+      "name": "metal5"
+    },
+    {
+      "name": "metal6"
+    },
+    {
+      "name": "metal7"
+    },
+    {
+      "name": "metal8"
+    },
+    {
+      "name": "metal9"
+    },
+    {
+      "name": "wall",
+      "directions": 8
+    },
+    {
+      "name": "wall2",
+      "directions": 4
+    },
+    {
+      "name": "wall3",
+      "directions": 4
+    },
+    {
+      "name": "xwall",
+      "directions": 8
+    },
+    {
+      "name": "wall4"
+    },
+    {
+      "name": "W",
+      "directions": 4
+    },
+    {
+      "name": "wall5"
+    },
+    {
+      "name": "wall6"
+    },
+    {
+      "name": "wall7"
+    },
+    {
+      "name": "wall8",
+      "directions": 4
+    },
+    {
+      "name": "W0"
+    },
+    {
+      "name": "WN"
+    },
+    {
+      "name": "snow1"
+    },
+    {
+      "name": "snow2",
+      "directions": 4
+    },
+    {
+      "name": "snow"
+    },
+    {
+      "name": "snow0"
+    },
+    {
+      "name": "snow4",
+      "directions": 4
+    },
+    {
+      "name": "snow8",
+      "directions": 4
+    },
+    {
+      "name": "snow1",
+      "directions": 4
+    },
+    {
+      "name": "snow6"
+    },
+    {
+      "name": "snow9"
+    },
+    {
+      "name": "snow5"
+    },
+    {
+      "name": "snow10"
+    },
+    {
+      "name": "snow3"
+    },
+    {
+      "name": "snow11"
+    },
+    {
+      "name": "snow7"
+    },
+    {
+      "name": "snow12"
+    },
+    {
+      "name": "snow13"
+    },
+    {
+      "name": "snow14"
+    },
+    {
+      "name": "snow15"
+    },
+    {
+      "name": "xwall10"
+    },
+    {
+      "name": "xwall6"
+    },
+    {
+      "name": "xwall9"
+    },
+    {
+      "name": "xwall5"
+    },
+    {
+      "name": "metal10"
+    },
+    {
+      "name": "metal11"
+    },
+    {
+      "name": "metal12"
+    },
+    {
+      "name": "metal13"
+    },
+    {
+      "name": "metal14"
+    },
+    {
+      "name": "metal15"
+    },
+    {
+      "name": "frwall_open"
+    },
+    {
+      "name": "frwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "frwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "riveted"
+    },
+    {
+      "name": "rock"
+    },
+    {
+      "name": "rock_indes1"
+    },
+    {
+      "name": "rock_edge"
+    },
+    {
+      "name": "rock1",
+      "directions": 8
+    },
+    {
+      "name": "rock2",
+      "directions": 8
+    },
+    {
+      "name": "rock3",
+      "directions": 8
+    },
+    {
+      "name": "rock(high)"
+    },
+    {
+      "name": "rock(clown)"
+    },
+    {
+      "name": "rock_Uranium"
+    },
+    {
+      "name": "rock_Iron"
+    },
+    {
+      "name": "rock_Gold"
+    },
+    {
+      "name": "rock_Diamond",
+      "delays": [
+        [
+          6,
+          0.1,
+          0.1,
+          0.1,
+          6,
+          0.1,
+          0.1,
+          0.1,
+          6,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rock_Silver"
+    },
+    {
+      "name": "rock_Plasma"
+    },
+    {
+      "name": "rock_Adamantine"
+    },
+    {
+      "name": "rock_Coal"
+    },
+    {
+      "name": "rock_Clown"
+    },
+    {
+      "name": "rock_Archaeo"
+    },
+    {
+      "name": "rock_Gibtonite"
+    },
+    {
+      "name": "rock_Gibtonite_active",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rock_side_w"
+    },
+    {
+      "name": "rock_side_e"
+    },
+    {
+      "name": "rock_side_n"
+    },
+    {
+      "name": "rock_side_s"
+    },
+    {
+      "name": "rock_corner_nw"
+    },
+    {
+      "name": "rock_corner_ne"
+    },
+    {
+      "name": "rock_corner_sw"
+    },
+    {
+      "name": "rock_corner_se"
+    },
+    {
+      "name": "rwall1"
+    },
+    {
+      "name": "rwall2"
+    },
+    {
+      "name": "rwall3"
+    },
+    {
+      "name": "rwall4"
+    },
+    {
+      "name": "rwall5"
+    },
+    {
+      "name": "rwall6"
+    },
+    {
+      "name": "rwall7"
+    },
+    {
+      "name": "rwall8"
+    },
+    {
+      "name": "rwall9"
+    },
+    {
+      "name": "rwall10"
+    },
+    {
+      "name": "rwall11"
+    },
+    {
+      "name": "rwall12"
+    },
+    {
+      "name": "rwall13"
+    },
+    {
+      "name": "rwall14"
+    },
+    {
+      "name": "rwall15"
+    },
+    {
+      "name": "containment0"
+    },
+    {
+      "name": "containment1"
+    },
+    {
+      "name": "containment2"
+    },
+    {
+      "name": "containment3"
+    },
+    {
+      "name": "containment4"
+    },
+    {
+      "name": "containment5"
+    },
+    {
+      "name": "containment6"
+    },
+    {
+      "name": "containment7"
+    },
+    {
+      "name": "containment8"
+    },
+    {
+      "name": "containment9"
+    },
+    {
+      "name": "containment10"
+    },
+    {
+      "name": "containment11"
+    },
+    {
+      "name": "containment12"
+    },
+    {
+      "name": "containment13"
+    },
+    {
+      "name": "containment14"
+    },
+    {
+      "name": "containment15"
+    },
+    {
+      "name": "rust0"
+    },
+    {
+      "name": "rust15"
+    },
+    {
+      "name": "rust12",
+      "directions": 8
+    },
+    {
+      "name": "rust3",
+      "directions": 8
+    },
+    {
+      "name": "rust2"
+    },
+    {
+      "name": "rust1"
+    },
+    {
+      "name": "rust4"
+    },
+    {
+      "name": "rust8"
+    },
+    {
+      "name": "rust9"
+    },
+    {
+      "name": "rust10"
+    },
+    {
+      "name": "rust6"
+    },
+    {
+      "name": "rust5"
+    },
+    {
+      "name": "rust14"
+    },
+    {
+      "name": "rust7"
+    },
+    {
+      "name": "rust13"
+    },
+    {
+      "name": "rust11"
+    },
+    {
+      "name": "rockvault"
+    },
+    {
+      "name": "sandstonevault"
+    },
+    {
+      "name": "alienvault"
+    },
+    {
+      "name": "cult0"
+    },
+    {
+      "name": "cult-narsie",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "cult1"
+    },
+    {
+      "name": "cult2"
+    },
+    {
+      "name": "cult3"
+    },
+    {
+      "name": "cult4"
+    },
+    {
+      "name": "cult5"
+    },
+    {
+      "name": "cult6"
+    },
+    {
+      "name": "cult7"
+    },
+    {
+      "name": "cult8"
+    },
+    {
+      "name": "cult9"
+    },
+    {
+      "name": "cult10"
+    },
+    {
+      "name": "cult11"
+    },
+    {
+      "name": "cult12"
+    },
+    {
+      "name": "cult13"
+    },
+    {
+      "name": "cult14"
+    },
+    {
+      "name": "cult15"
+    },
+    {
+      "name": "diamondfwall_open"
+    },
+    {
+      "name": "diamondfwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "diamondfwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "goldfwall_open"
+    },
+    {
+      "name": "goldfwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "goldfwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "silverfwall_open"
+    },
+    {
+      "name": "silverfwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "silverfwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "uraniumfwall_open"
+    },
+    {
+      "name": "uraniumfwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "uraniumfwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plasmafwall_open"
+    },
+    {
+      "name": "plasmafwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plasmafwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "clownfwall_open"
+    },
+    {
+      "name": "clownfwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "clownfwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "sandstonefwall_open"
+    },
+    {
+      "name": "sandstonefwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "sandstonefwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "woodfwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "woodfwall_open"
+    },
+    {
+      "name": "woodfwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plasticfwall_open"
+    },
+    {
+      "name": "plasticfwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plasticfwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "diamond0"
+    },
+    {
+      "name": "diamond1"
+    },
+    {
+      "name": "diamond2"
+    },
+    {
+      "name": "diamond3"
+    },
+    {
+      "name": "diamond4"
+    },
+    {
+      "name": "diamond5"
+    },
+    {
+      "name": "diamond6"
+    },
+    {
+      "name": "diamond7"
+    },
+    {
+      "name": "diamond8"
+    },
+    {
+      "name": "diamond9"
+    },
+    {
+      "name": "diamond10"
+    },
+    {
+      "name": "diamond11"
+    },
+    {
+      "name": "diamond12"
+    },
+    {
+      "name": "diamond13"
+    },
+    {
+      "name": "diamond14"
+    },
+    {
+      "name": "diamond15"
+    },
+    {
+      "name": "gold0"
+    },
+    {
+      "name": "gold1"
+    },
+    {
+      "name": "gold2"
+    },
+    {
+      "name": "gold3"
+    },
+    {
+      "name": "gold4"
+    },
+    {
+      "name": "gold5"
+    },
+    {
+      "name": "gold6"
+    },
+    {
+      "name": "gold7"
+    },
+    {
+      "name": "gold8"
+    },
+    {
+      "name": "gold9"
+    },
+    {
+      "name": "gold10"
+    },
+    {
+      "name": "gold11"
+    },
+    {
+      "name": "gold12"
+    },
+    {
+      "name": "gold13"
+    },
+    {
+      "name": "gold14"
+    },
+    {
+      "name": "gold15"
+    },
+    {
+      "name": "plasma0"
+    },
+    {
+      "name": "plasma1"
+    },
+    {
+      "name": "plasma2"
+    },
+    {
+      "name": "plasma3"
+    },
+    {
+      "name": "plasma4"
+    },
+    {
+      "name": "plasma5"
+    },
+    {
+      "name": "plasma6"
+    },
+    {
+      "name": "plasma7"
+    },
+    {
+      "name": "plasma8"
+    },
+    {
+      "name": "plasma9"
+    },
+    {
+      "name": "plasma10"
+    },
+    {
+      "name": "plasma11"
+    },
+    {
+      "name": "plasma12"
+    },
+    {
+      "name": "plasma13"
+    },
+    {
+      "name": "plasma14"
+    },
+    {
+      "name": "plasma15"
+    },
+    {
+      "name": "uranium0"
+    },
+    {
+      "name": "uranium1"
+    },
+    {
+      "name": "uranium2"
+    },
+    {
+      "name": "uranium3"
+    },
+    {
+      "name": "uranium4"
+    },
+    {
+      "name": "uranium5"
+    },
+    {
+      "name": "uranium6"
+    },
+    {
+      "name": "uranium7"
+    },
+    {
+      "name": "uranium8"
+    },
+    {
+      "name": "uranium9"
+    },
+    {
+      "name": "uranium10"
+    },
+    {
+      "name": "uranium11"
+    },
+    {
+      "name": "uranium12"
+    },
+    {
+      "name": "uranium13"
+    },
+    {
+      "name": "uranium14"
+    },
+    {
+      "name": "uranium15"
+    },
+    {
+      "name": "silver0"
+    },
+    {
+      "name": "silver1"
+    },
+    {
+      "name": "silver2"
+    },
+    {
+      "name": "silver3"
+    },
+    {
+      "name": "silver4"
+    },
+    {
+      "name": "silver5"
+    },
+    {
+      "name": "silver6"
+    },
+    {
+      "name": "silver7"
+    },
+    {
+      "name": "silver8"
+    },
+    {
+      "name": "silver9"
+    },
+    {
+      "name": "silver10"
+    },
+    {
+      "name": "silver11"
+    },
+    {
+      "name": "silver12"
+    },
+    {
+      "name": "silver13"
+    },
+    {
+      "name": "silver14"
+    },
+    {
+      "name": "silver15"
+    },
+    {
+      "name": "iron0"
+    },
+    {
+      "name": "iron1"
+    },
+    {
+      "name": "iron2"
+    },
+    {
+      "name": "iron3"
+    },
+    {
+      "name": "iron4"
+    },
+    {
+      "name": "iron5"
+    },
+    {
+      "name": "iron6"
+    },
+    {
+      "name": "iron7"
+    },
+    {
+      "name": "iron8"
+    },
+    {
+      "name": "iron9"
+    },
+    {
+      "name": "iron10"
+    },
+    {
+      "name": "iron11"
+    },
+    {
+      "name": "iron12"
+    },
+    {
+      "name": "iron13"
+    },
+    {
+      "name": "iron14"
+    },
+    {
+      "name": "iron15"
+    },
+    {
+      "name": "sandstone0"
+    },
+    {
+      "name": "sandstone1"
+    },
+    {
+      "name": "sandstone2"
+    },
+    {
+      "name": "sandstone3"
+    },
+    {
+      "name": "sandstone4"
+    },
+    {
+      "name": "sandstone5"
+    },
+    {
+      "name": "sandstone6"
+    },
+    {
+      "name": "sandstone7"
+    },
+    {
+      "name": "sandstone8"
+    },
+    {
+      "name": "sandstone9"
+    },
+    {
+      "name": "sandstone10"
+    },
+    {
+      "name": "sandstone11"
+    },
+    {
+      "name": "sandstone12"
+    },
+    {
+      "name": "sandstone13"
+    },
+    {
+      "name": "sandstone14"
+    },
+    {
+      "name": "sandstone15"
+    },
+    {
+      "name": "clown0"
+    },
+    {
+      "name": "clown1"
+    },
+    {
+      "name": "clown2"
+    },
+    {
+      "name": "clown3"
+    },
+    {
+      "name": "clown4"
+    },
+    {
+      "name": "clown5"
+    },
+    {
+      "name": "clown6"
+    },
+    {
+      "name": "clown7"
+    },
+    {
+      "name": "clown8"
+    },
+    {
+      "name": "clown9"
+    },
+    {
+      "name": "clown10"
+    },
+    {
+      "name": "clown11"
+    },
+    {
+      "name": "clown12"
+    },
+    {
+      "name": "clown13"
+    },
+    {
+      "name": "clown14"
+    },
+    {
+      "name": "clown15"
+    },
+    {
+      "name": "wood0"
+    },
+    {
+      "name": "wood1"
+    },
+    {
+      "name": "wood2"
+    },
+    {
+      "name": "wood3"
+    },
+    {
+      "name": "wood4"
+    },
+    {
+      "name": "wood5"
+    },
+    {
+      "name": "wood6"
+    },
+    {
+      "name": "wood7"
+    },
+    {
+      "name": "wood8"
+    },
+    {
+      "name": "wood9"
+    },
+    {
+      "name": "wood10"
+    },
+    {
+      "name": "wood11"
+    },
+    {
+      "name": "wood12"
+    },
+    {
+      "name": "wood13"
+    },
+    {
+      "name": "wood14"
+    },
+    {
+      "name": "wood15"
+    },
+    {
+      "name": "plastic0"
+    },
+    {
+      "name": "plastic1"
+    },
+    {
+      "name": "plastic2"
+    },
+    {
+      "name": "plastic3"
+    },
+    {
+      "name": "plastic4"
+    },
+    {
+      "name": "plastic5"
+    },
+    {
+      "name": "plastic6"
+    },
+    {
+      "name": "plastic7"
+    },
+    {
+      "name": "plastic8"
+    },
+    {
+      "name": "plastic9"
+    },
+    {
+      "name": "plastic10"
+    },
+    {
+      "name": "plastic11"
+    },
+    {
+      "name": "plastic12"
+    },
+    {
+      "name": "plastic13"
+    },
+    {
+      "name": "plastic14"
+    },
+    {
+      "name": "plastic15"
+    },
+    {
+      "name": "fakewindows",
+      "directions": 8
+    },
+    {
+      "name": "fakewindows2",
+      "directions": 4
+    },
+    {
+      "name": "overlay_archaeo1"
+    },
+    {
+      "name": "overlay_archaeo2"
+    },
+    {
+      "name": "overlay_archaeo3"
+    },
+    {
+      "name": "overlay_excv1_1"
+    },
+    {
+      "name": "overlay_excv1_2"
+    },
+    {
+      "name": "overlay_excv1_3"
+    },
+    {
+      "name": "overlay_excv2_1"
+    },
+    {
+      "name": "overlay_excv2_2"
+    },
+    {
+      "name": "overlay_excv2_3"
+    },
+    {
+      "name": "overlay_excv3_1"
+    },
+    {
+      "name": "overlay_excv3_2"
+    },
+    {
+      "name": "overlay_excv3_3"
+    },
+    {
+      "name": "overlay_excv4_1"
+    },
+    {
+      "name": "overlay_excv4_2"
+    },
+    {
+      "name": "overlay_excv4_3"
+    },
+    {
+      "name": "rock_Phazon"
+    },
+    {
+      "name": "rock_Erebite"
+    },
+    {
+      "name": "rock_Pharosium"
+    },
+    {
+      "name": "rock_Char"
+    },
+    {
+      "name": "rock_Claretine"
+    },
+    {
+      "name": "rock_Bohrum"
+    },
+    {
+      "name": "rock_Syreline"
+    },
+    {
+      "name": "rock_Cytine"
+    },
+    {
+      "name": "rock_Uqill"
+    },
+    {
+      "name": "rock_Telecrystal"
+    },
+    {
+      "name": "rock_Mauxite"
+    },
+    {
+      "name": "rock_Cobryl"
+    },
+    {
+      "name": "rock_Cerenkite"
+    },
+    {
+      "name": "rock_Molitz"
+    },
+    {
+      "name": "supermatter",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "riveted0"
+    },
+    {
+      "name": "riveted1"
+    },
+    {
+      "name": "riveted2"
+    },
+    {
+      "name": "riveted3"
+    },
+    {
+      "name": "riveted4"
+    },
+    {
+      "name": "riveted5"
+    },
+    {
+      "name": "riveted6"
+    },
+    {
+      "name": "riveted7"
+    },
+    {
+      "name": "riveted8"
+    },
+    {
+      "name": "riveted9"
+    },
+    {
+      "name": "riveted10"
+    },
+    {
+      "name": "riveted11"
+    },
+    {
+      "name": "riveted12"
+    },
+    {
+      "name": "riveted13"
+    },
+    {
+      "name": "riveted14"
+    },
+    {
+      "name": "riveted15"
+    },
+    {
+      "name": "brickfwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "brickfwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "brickfwall_open"
+    },
+    {
+      "name": "brick0"
+    },
+    {
+      "name": "brick1"
+    },
+    {
+      "name": "brick2"
+    },
+    {
+      "name": "brick3"
+    },
+    {
+      "name": "brick4"
+    },
+    {
+      "name": "brick5"
+    },
+    {
+      "name": "brick6"
+    },
+    {
+      "name": "brick7"
+    },
+    {
+      "name": "brick8"
+    },
+    {
+      "name": "brick9"
+    },
+    {
+      "name": "brick10"
+    },
+    {
+      "name": "brick11"
+    },
+    {
+      "name": "brick12"
+    },
+    {
+      "name": "brick13"
+    },
+    {
+      "name": "brick14"
+    },
+    {
+      "name": "brick15"
+    },
+    {
+      "name": "supermatter",
+      "delays": [
+        [
+          0.1,
+          0.2,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "concrete0",
+      "directions": 4
+    },
+    {
+      "name": "concrete1",
+      "directions": 4
+    },
+    {
+      "name": "concrete2",
+      "directions": 4
+    },
+    {
+      "name": "concrete3",
+      "directions": 4
+    },
+    {
+      "name": "concrete4",
+      "directions": 4
+    },
+    {
+      "name": "concrete5",
+      "directions": 4
+    },
+    {
+      "name": "concrete6",
+      "directions": 4
+    },
+    {
+      "name": "concrete7",
+      "directions": 4
+    },
+    {
+      "name": "concrete8",
+      "directions": 4
+    },
+    {
+      "name": "concrete9",
+      "directions": 4
+    },
+    {
+      "name": "concrete10",
+      "directions": 4
+    },
+    {
+      "name": "concrete11",
+      "directions": 4
+    },
+    {
+      "name": "concrete12",
+      "directions": 4
+    },
+    {
+      "name": "concrete13",
+      "directions": 4
+    },
+    {
+      "name": "concrete14",
+      "directions": 4
+    },
+    {
+      "name": "concrete15",
+      "directions": 4
+    },
+    {
+      "name": "hull0"
+    },
+    {
+      "name": "rock_side",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cyberspace",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "riveted"
+    },
+    {
+      "name": "riveted"
+    },
+    {
+      "name": "rock_Uranium"
+    },
+    {
+      "name": "rock_Iron"
+    },
+    {
+      "name": "rock_Gold"
+    },
+    {
+      "name": "rock_Diamond"
+    },
+    {
+      "name": "rock_Silver"
+    },
+    {
+      "name": "rock_Plasma"
+    },
+    {
+      "name": "rock_Adamantine"
+    },
+    {
+      "name": "rock_Coal"
+    },
+    {
+      "name": "rock_Clown"
+    },
+    {
+      "name": "rock"
+    },
+    {
+      "name": "r1"
+    },
+    {
+      "name": "r2"
+    },
+    {
+      "name": "r3"
+    },
+    {
+      "name": "fwall_open"
+    },
+    {
+      "name": "fwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "fwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "caves",
+      "directions": 8
+    },
+    {
+      "name": "2,0",
+      "directions": 8
+    },
+    {
+      "name": "3",
+      "directions": 4
+    },
+    {
+      "name": "caves_anim",
+      "directions": 8,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "black"
+    },
+    {
+      "name": "rock_side2",
+      "directions": 4
+    },
+    {
+      "name": "rock_corner_nw"
+    },
+    {
+      "name": "rock_corner_ne"
+    },
+    {
+      "name": "rock_corner_sw"
+    },
+    {
+      "name": "rock_corner_se"
+    },
+    {
+      "name": "vau2",
+      "directions": 8
+    },
+    {
+      "name": "vau4",
+      "directions": 8
+    },
+    {
+      "name": "vau3",
+      "directions": 8
+    },
+    {
+      "name": "dark_side",
+      "directions": 4
+    },
+    {
+      "name": "r_wall-3"
+    },
+    {
+      "name": "r_wall"
+    },
+    {
+      "name": "r_wall-1"
+    },
+    {
+      "name": "r_wall-2"
+    },
+    {
+      "name": "r_wall-4"
+    },
+    {
+      "name": "r_wall-5"
+    },
+    {
+      "name": "r_wall-6"
+    },
+    {
+      "name": "frewall_open"
+    },
+    {
+      "name": "frewall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "frewall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "rewall0"
+    },
+    {
+      "name": "rewall1"
+    },
+    {
+      "name": "rewall2"
+    },
+    {
+      "name": "rewall3"
+    },
+    {
+      "name": "rewall4"
+    },
+    {
+      "name": "rewall5"
+    },
+    {
+      "name": "rewall6"
+    },
+    {
+      "name": "rewall7"
+    },
+    {
+      "name": "rewall8"
+    },
+    {
+      "name": "rewall9"
+    },
+    {
+      "name": "rewall10"
+    },
+    {
+      "name": "rewall11"
+    },
+    {
+      "name": "rewall12"
+    },
+    {
+      "name": "rewall13"
+    },
+    {
+      "name": "rewall14"
+    },
+    {
+      "name": "rewall15"
+    },
+    {
+      "name": "frwallx"
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "2",
+      "directions": 8
+    },
+    {
+      "name": "5"
+    },
+    {
+      "name": "bg",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rock_side3",
+      "directions": 4
+    },
+    {
+      "name": "dark_over",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "techno0"
+    },
+    {
+      "name": "techno1"
+    },
+    {
+      "name": "techno2"
+    },
+    {
+      "name": "techno3"
+    },
+    {
+      "name": "techno4"
+    },
+    {
+      "name": "techno5"
+    },
+    {
+      "name": "techno6"
+    },
+    {
+      "name": "techno7"
+    },
+    {
+      "name": "techno8"
+    },
+    {
+      "name": "techno9"
+    },
+    {
+      "name": "techno10"
+    },
+    {
+      "name": "techno11"
+    },
+    {
+      "name": "techno12"
+    },
+    {
+      "name": "techno13"
+    },
+    {
+      "name": "techno14"
+    },
+    {
+      "name": "techno15"
+    },
+    {
+      "name": "techno16"
+    },
+    {
+      "name": "techno17"
+    },
+    {
+      "name": "techno18"
+    },
+    {
+      "name": "techno19"
+    },
+    {
+      "name": "techno20"
+    },
+    {
+      "name": "techno21"
+    },
+    {
+      "name": "techno22"
+    },
+    {
+      "name": "techno23"
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "grim0"
+    },
+    {
+      "name": "grim1"
+    },
+    {
+      "name": "grim2"
+    },
+    {
+      "name": "grim3"
+    },
+    {
+      "name": "grim4"
+    },
+    {
+      "name": "grim5"
+    },
+    {
+      "name": "grim6"
+    },
+    {
+      "name": "grim7"
+    },
+    {
+      "name": "grim8"
+    },
+    {
+      "name": "grim9"
+    },
+    {
+      "name": "grim10"
+    },
+    {
+      "name": "grim11"
+    },
+    {
+      "name": "grim12"
+    },
+    {
+      "name": "grim13"
+    },
+    {
+      "name": "grim14"
+    },
+    {
+      "name": "grim15"
+    },
+    {
+      "name": "rrwall0"
+    },
+    {
+      "name": "rrwall1"
+    },
+    {
+      "name": "rrwall2"
+    },
+    {
+      "name": "rrwall3",
+      "directions": 4
+    },
+    {
+      "name": "rrwall4"
+    },
+    {
+      "name": "rrwall5"
+    },
+    {
+      "name": "rrwall6"
+    },
+    {
+      "name": "rrwall7"
+    },
+    {
+      "name": "rrwall8"
+    },
+    {
+      "name": "rrwall9"
+    },
+    {
+      "name": "rrwall10"
+    },
+    {
+      "name": "rrwall11"
+    },
+    {
+      "name": "rrwall12",
+      "directions": 4
+    },
+    {
+      "name": "rrwall13"
+    },
+    {
+      "name": "rrwall14"
+    },
+    {
+      "name": "rrwall15"
+    }
+  ]
+}
