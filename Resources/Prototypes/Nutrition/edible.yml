@@ -1,0 +1,50 @@
+﻿# If you add a new prototype, you may want to consider adding it to IngestionSystem.API for other systems to use.
+# But only if other systems/components might want it.
+
+# Food
+
+- type: edible
+  id: Food
+  useSound: !type:SoundCollectionSpecifier
+    params:
+      variation: 0.2
+      volume: -1
+    collection: eating # I think this *should* grab the sound specifier...
+  message: edible-nom
+  otherMessage: edible-nom-other
+  verb: edible-verb-food
+  noun: edible-noun-food
+  verbName: ingestion-verb-food
+  verbIcon: /Textures/Interface/VerbIcons/cutlery.svg.192dpi.png
+
+# Drink
+
+- type: edible
+  id: Drink
+  useSound: !type:SoundPathSpecifier
+    params:
+      variation: 0.25
+      volume: -2
+    path: /Audio/Items/drink.ogg
+  message: edible-slurp
+  otherMessage: edible-slurp-other
+  verb: edible-verb-drink
+  noun: edible-noun-drink
+  verbName: ingestion-verb-drink
+  verbIcon: /Textures/Interface/VerbIcons/drink.svg.192dpi.png
+
+# Pills!
+
+- type: edible
+  id: Pill
+  useSound: !type:SoundPathSpecifier
+    params:
+      variation: 0.2
+      volume: -1
+    path: /Audio/Items/pill.ogg
+  message: edible-swallow
+  otherMessage: edible-gulp-other
+  verb: edible-verb-pill
+  noun: edible-noun-pill
+  verbName: ingestion-verb-food
+  verbIcon: /Textures/Interface/VerbIcons/cutlery.svg.192dpi.png
