@@ -1,4 +1,5 @@
-﻿using Content.Shared.Interaction.Components;
+﻿using Content.Shared.DisplacementMap;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Radio;
 using Content.Shared.Silicons.Borgs.Components;
@@ -61,6 +62,12 @@ public sealed partial class BorgTypePrototype : IPrototype
     /// <seealso cref="InventorySystem.SetTemplateId"/>
     [DataField]
     public ProtoId<InventoryTemplatePrototype> InventoryTemplateId { get; set; } = "borgShort";
+
+    /// <summary>
+    /// The displacement maps for the borgs. These should be compatible with the borg inventory templates.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, DisplacementData> InventoryDisplacements { get; set; } = new();
 
     /// <summary>
     /// Radio channels that this borg will gain access to from this module.

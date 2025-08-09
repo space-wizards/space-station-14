@@ -326,4 +326,16 @@ public partial class InventorySystem : EntitySystem
             return false;
         }
     }
+
+    /// <summary>
+    /// Sets displacement maps for this entity's inventory component.
+    /// </summary>
+    public void SetDisplacements(Entity<InventoryComponent?> entity,
+        Dictionary<string, DisplacementData> newDisplacements)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+        entity.Comp.Displacements = newDisplacements;
+        Dirty(entity);
+    }
 }

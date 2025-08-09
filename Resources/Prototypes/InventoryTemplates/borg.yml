@@ -1,6 +1,13 @@
+# generic borg
 - type: inventoryTemplate
   id: borg
   slots:
+  - name: neck
+    slotTexture: neck
+    slotFlags: NECK
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,1
+    displayName: Neck
   - name: head
     slotTexture: head
     slotFlags: HEAD
@@ -9,9 +16,16 @@
     displayName: Head
     offset: 0.015625, -0.09375
 
+# janitor and engineering borg
 - type: inventoryTemplate
   id: borgShort
   slots:
+  - name: neck
+    slotTexture: neck
+    slotFlags: NECK
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,1
+    displayName: Neck
   - name: head
     slotTexture: head
     slotFlags: HEAD
@@ -20,21 +34,51 @@
     displayName: Head
     offset: 0.015625, -0.1875
 
+# salvage borg
 - type: inventoryTemplate
   id: borgTall
   slots:
+  - name: neck
+    slotTexture: neck
+    slotFlags: NECK
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,1
+    displayName: Neck
   - name: head
     slotTexture: head
     slotFlags: HEAD
     uiWindowPos: 1,0
     strippingWindowPos: 0,0
     displayName: Head
-    offset: 0.015625, 0
+    offset: 0.015625, 0.0
 
-# taller than tall
+# service borg
+- type: inventoryTemplate
+  id: borgHumanoid
+  slots:
+  - name: neck
+    slotTexture: neck
+    slotFlags: NECK
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,1
+    displayName: Neck
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    uiWindowPos: 1,0
+    strippingWindowPos: 0,0
+    displayName: Head
+
+# taller than tall, mediborg
 - type: inventoryTemplate
   id: borgDutch
   slots:
+  - name: neck
+    slotTexture: neck
+    slotFlags: NECK
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,1
+    displayName: Neck
   - name: head
     slotTexture: head
     slotFlags: HEAD

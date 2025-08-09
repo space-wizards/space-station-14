@@ -11,7 +11,7 @@ namespace Content.Shared.Inventory;
 public sealed partial class InventoryComponent : Component
 {
     /// <summary>
-    /// The template defining how the inventory layout will look like.
+    /// The template defining how the inventory layout will look.
     /// </summary>
     [DataField, AutoNetworkedField]
     [ViewVariables] // use the API method

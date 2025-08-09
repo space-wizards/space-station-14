@@ -21,6 +21,12 @@
 
   # Visual
   inventoryTemplateId: borgShort
+  inventoryDisplacements:
+    neck:
+      sizeMaps:
+        32:
+          sprite: Mobs/Silicon/Displacements/generic.rsi
+          state: neck
   spriteBodyState: robot
   spriteHasMindState: robot_e
   spriteNoMindState: robot_e_r
@@ -57,6 +63,12 @@
 
   # Visual
   inventoryTemplateId: borgShort
+  inventoryDisplacements:
+    neck:
+      sizeMaps:
+        32:
+          sprite: Mobs/Silicon/Displacements/engineer.rsi
+          state: neck
   spriteBodyState: engineer
   spriteHasMindState: engineer_e
   spriteNoMindState: engineer_e_r
@@ -93,6 +105,12 @@
 
   # Visual
   inventoryTemplateId: borgTall
+  inventoryDisplacements:
+    neck:
+      sizeMaps:
+        32:
+          sprite: Mobs/Silicon/Displacements/mining.rsi
+          state: neck
   spriteBodyState: miner
   spriteBodyMovementState: miner_moving
   spriteHasMindState: miner_e
@@ -129,6 +147,12 @@
 
   # Visual
   inventoryTemplateId: borgShort
+  inventoryDisplacements:
+    neck:
+      sizeMaps:
+        32:
+          sprite: Mobs/Silicon/Displacements/janitor.rsi
+          state: neck
   spriteBodyState: janitor
   spriteBodyMovementState: janitor_moving
   spriteHasMindState: janitor_e
@@ -175,6 +199,12 @@
 
   # Visual
   inventoryTemplateId: borgDutch
+  inventoryDisplacements:
+    neck:
+      sizeMaps:
+        32:
+          sprite: Mobs/Silicon/Displacements/medical.rsi
+          state: neck
   spriteBodyState: medical
   spriteBodyMovementState: medical_moving
   spriteHasMindState: medical_e
@@ -216,7 +246,7 @@
   - Service
 
   # Visual
-  inventoryTemplateId: borgTall
+  inventoryTemplateId: borgHumanoid
   spriteBodyState: service
   spriteHasMindState: service_e
   spriteNoMindState: service_e_r

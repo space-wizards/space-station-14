@@ -2,7 +2,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.DisplacementMap;
 
-[DataDefinition, Serializable, NetSerializable]
+[DataDefinition, NetSerializable, Serializable]
 public sealed partial class DisplacementData
 {
     /// <summary>
