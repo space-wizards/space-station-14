@@ -8,7 +8,8 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: lung-l
   - type: Instrument
-    program: 121
+    default:
+      program: 121
   - type: Item
     size: Small
 
@@ -22,7 +23,8 @@
     sprite: Objects/Fun/Instruments/otherinstruments.rsi
     state: seashell
   - type: Instrument
-    program: 122
+    default:
+      program: 122
   - type: Item
     size: Small
 
@@ -36,7 +38,8 @@
     sprite: Objects/Fun/Instruments/otherinstruments.rsi
     state: birdtoy
   - type: Instrument
-    program: 123
+    default:
+      program: 123
   - type: Item
     size: Small
     storedRotation: 90
@@ -54,7 +57,8 @@
     sound:
        path: /Audio/Items/ring.ogg
   - type: Instrument
-    program: 124
+    default:
+      program: 124
   - type: Item
     size: Small
   - type: Prayable
@@ -86,7 +90,8 @@
     sprite: Objects/Fun/Instruments/otherinstruments.rsi
     state: helicopter
   - type: Instrument
-    program: 125
+    default:
+      program: 125
   - type: Item
     size: Small
     storedRotation: -90
@@ -101,7 +106,8 @@
     sprite: Objects/Fun/Instruments/otherinstruments.rsi
     state: cannedapplause
   - type: Instrument
-    program: 126
+    default:
+      program: 126
   - type: Item
     size: Tiny
 
@@ -112,7 +118,8 @@
   description: Why do you need to examine this? Is it not self-explanatory?
   components:
   - type: Instrument
-    program: 127
+    default:
+      program: 127
   - type: Sprite
     sprite: Objects/Fun/Instruments/gunpet.rsi
   - type: Item
@@ -130,8 +137,9 @@
   description: An exquisitely decorated bike horn, capable of honking in a variety of notes.
   components:
   - type: Instrument
-    program: 1
-    bank: 1
+    default:
+      program: 1
+      bank: 1
   - type: Sprite
     sprite: Objects/Fun/Instruments/bike_horn.rsi
   - type: Tag

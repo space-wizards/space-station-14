@@ -1,11 +1,15 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using Content.Shared.Instruments;
+using Robust.Shared.Audio.Midi;
 
 namespace Content.Client.Instruments.MidiParser;
 
 public static class MidiParser
 {
+    private const string UnknownChannel = "UNKNOWN CHANNEL";
+
     // Thanks again to http://www.somascape.org/midi/tech/mfile.html
     public static bool TryGetMidiTracks(
         byte[] data,
@@ -138,17 +142,32 @@ public static class MidiParser
                             // Program Change
                             case 0xC0:
                             {
-                                var programNumber = stream.ReadByte();
-                                if (track.ProgramName == null)
+                                var channel = (byte)(lastStatusByte & 0xF);
+
+                                if (!track.Channels.TryGetValue(channel, out var value) || value == UnknownChannel)
                                 {
-                                    if (programNumber < Enum.GetValues<MidiInstrument>().Length)
-                                        track.ProgramName = Loc.GetString($"instruments-component-menu-midi-channel-{((MidiInstrument)programNumber).GetStringRep()}");
+                                    track.Channels[channel] = Loc.GetString($"instruments-component-menu-midi-channel-{((MidiInstrument)stream.ReadByte()).GetStringRep()}");
+
+                                    break;
                                 }
+
+                                stream.Skip(1);
+
+                                break;
+                            }
+
+                            case 0x90: // Note On
+                            {
+                                var channel = (byte)(lastStatusByte & 0xF);
+
+                                track.Channels.TryAdd(channel, UnknownChannel);
+
+                                hasMidiEvent = true;
+                                stream.Skip(2);
                                 break;
                             }
 
                             case 0x80: // Note Off
-                            case 0x90: // Note On
                             case 0xA0: // Polyphonic Key Pressure
                             case 0xB0: // Control Change
                             case 0xE0: // Pitch Bend
@@ -170,10 +189,19 @@ public static class MidiParser
                                 tracks = null;
                                 return false;
                         }
+
                         break;
                 }
             }
 
+            foreach (var channel in track.Channels.Where(channel => channel.Value == UnknownChannel))
+            {
+                // If it's the percussion channel, it doesn't have its program set (because it can only ever be one program in the GM spec).
+                if (channel.Key == RobustMidiEvent.PercussionChannel)
+                    track.Channels[channel.Key] = Loc.GetString("instruments-component-menu-midi-channel-percussion");
+                else
+                    track.Channels[channel.Key] = Loc.GetString($"instruments-component-menu-midi-channel-default");
+            }
 
             if (hasMidiEvent)
                 parsedTracks.Add(track);
