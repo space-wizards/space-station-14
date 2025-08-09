@@ -121,6 +121,7 @@
   - Rootable # diona
   - Sericulture # arachnids
   - MovementSpeedModifier # moths when weightless
+  - Bloodstream # blood reagents
   copyEquipment: null
   copyInternalStorage: false
   copyImplants: false
