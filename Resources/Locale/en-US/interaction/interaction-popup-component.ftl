@@ -108,3 +108,9 @@ petting-failure-tesla = You reach out towards {THE($target)}, but {SUBJECT($targ
 
 petting-success-mail-teleporter = You pet {THE($target)} on {POSS-ADJ($target)} dutiful, cold exterior.
 petting-failure-mail-teleporter = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy sorting mail!
+
+## Verbs
+interaction-popup-verb-pet = Pet
+interaction-popup-verb-hug = Hug
+interaction-popup-verb-knock = Knock
+interaction-popup-verb-ring = Ring
