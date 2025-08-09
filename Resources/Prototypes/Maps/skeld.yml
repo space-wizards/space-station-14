@@ -1,0 +1,68 @@
+- type: gameMap
+  id: Skeld
+  mapName: 'The Skeld'
+  mapPath: /Maps/skeld.yml
+  maxRandomOffset: 0
+  randomRotation: false
+  minPlayers: 25
+  maxPlayers: 65
+  stations:
+    Skeld:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} The Skeld {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14-AMG-US'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_skeld.yml
+        - type: StationJobs
+          availableJobs:
+            #command
+            Captain: [ 1, 1 ]
+            #service
+            HeadOfPersonnel: [ 1, 1 ]
+            Bartender: [ 2, 2 ]
+            Botanist: [ 2, 2 ]
+            Chef: [ 2, 2 ]
+            Janitor: [ 2, 2 ]
+            Chaplain: [ 1, 1 ]
+            Librarian: [ 1, 1 ]
+            ServiceWorker: [ 2, 2 ]
+            #engineering
+            ChiefEngineer: [ 1, 1 ]
+            AtmosphericTechnician: [ 3, 3 ]
+            StationEngineer: [ 3, 3 ]
+            TechnicalAssistant: [ 2, 2 ]
+            #medical
+            ChiefMedicalOfficer: [ 1, 1 ]
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 3, 3 ]
+            Paramedic: [ 2, 2 ]
+            MedicalIntern: [ 2, 2 ]
+            Psychologist: [ 1, 1 ]
+            #science
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 4, 4 ]
+            ResearchAssistant: [ 2, 2 ]
+            #security
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            SecurityOfficer: [ 4, 4 ]
+            Detective: [ 1, 1 ]
+            SecurityCadet: [ 2, 2 ]
+            Lawyer: [ 2, 2 ]
+            #supply
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 3, 3 ]
+            CargoTechnician: [ 3, 3 ]
+            #civilian
+            Passenger: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            Reporter: [ 2, 2 ]
+            #silicon
+            StationAi: [ 1, 1 ]
+            Borg: [ 3, 3 ]
