@@ -629,3 +629,16 @@
       amount: 1
   products:
     Haloperidol: 5
+
+- type: reaction
+  id: Radioxadone
+  minTemp: 550
+  reactants:
+    Doxarubixadone:
+      amount: 1
+    Tritium:
+      amount: 3
+    Plasma:
+      amount: 1
+  products:
+    Radioxadone: 5
