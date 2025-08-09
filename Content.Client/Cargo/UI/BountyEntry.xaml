@@ -27,7 +27,7 @@
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" MinWidth="120">
                         <Button Name="ClaimButton"
-                                Text="Claim"
+                                Text= "{Loc 'bounty-console-claim-button-text'}"
                                 HorizontalExpand="False"
                                 StyleClasses="OpenRight"/>
                         <OptionButton Name="BountyStatusSelector"

@@ -11,6 +11,7 @@ bounty-console-manifest-entry =
     }
 bounty-console-manifest-reward = Reward: ${$reward}
 bounty-console-description-label = [color=gray]{$description}[/color]
+bounty-console-claim-button-text = Claim
 bounty-console-claimed-by-none = None
 bounty-console-claimed-by-unknown = Unknown
 bounty-console-claimed-by = Claimed by: {$claimant}
