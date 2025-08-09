@@ -532,3 +532,13 @@
       amount: 1
   products:
     ArtifactGlue: 2
+
+- type: reaction
+  id: Lye
+  reactants:
+    Water:
+      amount: 1
+    Ash:
+      amount: 1
+  products:
+    Lye: 2
