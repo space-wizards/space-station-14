@@ -1,0 +1,134 @@
+## When adding new drinks also add to random spawner located in Resources/Prototypes/Entities/Markers/Spawners/Random/trash.yml
+
+## When used as the first parent, this base empties out the can and spawns it opened
+#- type: entity
+#  abstract: true
+#  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
+#  id: DrinkBaseCanEmpty
+#  suffix: empty
+#  components:
+#  - type: SolutionContainerManager
+#    solutions:
+#      drink:
+#        maxVol: 30
+#      grindable:
+#        reagents:
+#        - ReagentId: Aluminium
+#          Quantity: 4
+#        - ReagentId: Iron
+#          Quantity: 1
+#  - type: Tag
+#    tags:
+#    - DrinkCan
+#    - Trash
+#
+###
+#
+## created when taking apart an ied
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkColaCan ]
+#  id: DrinkColaCanEmpty
+#  components:
+#  - type: Tag
+#    tags:
+#    - DrinkCan
+#    - Trash
+#    - Cola
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkIcedTeaCan ]
+#  id: DrinkIcedTeaCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkLemonLimeCan ]
+#  id: DrinkLemonLimeCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkLemonLimeCranberryCan ]
+#  id: DrinkLemonLimeCranberryCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkGrapeCan ]
+#  id: DrinkGrapeCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkRootBeerCan ]
+#  id: DrinkRootBeerCanEmpty
+#  components:
+#  - type: Tag
+#    tags:
+#    - DrinkCan
+#    - Trash
+#    - Beer
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkSodaWaterCan ]
+#  id: DrinkSodaWaterCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkSpaceMountainWindCan ]
+#  id: DrinkSpaceMountainWindCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkSpaceUpCan ]
+#  id: DrinkSpaceUpCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkSolDryCan ]
+#  id: DrinkSolDryCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkStarkistCan ]
+#  id: DrinkStarkistCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkTonicWaterCan ]
+#  id: DrinkTonicWaterCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkFourteenLokoCan ]
+#  id: DrinkFourteenLokoCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkChangelingStingCan ]
+#  id: DrinkChangelingStingCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkDrGibbCan ]
+#  id: DrinkDrGibbCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkNukieCan ]
+#  id: DrinkNukieCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkEnergyDrinkCan ]
+#  id: DrinkEnergyDrinkCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkShamblersJuiceCan ]
+#  id: DrinkShamblersJuiceCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkPwrGameCan ]
+#  id: DrinkPwrGameCanEmpty
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkBeerCan ]
+#  id: DrinkBeerCanEmpty
+#  components:
+#  - type: Tag
+#    tags:
+#    - DrinkCan
+#    - Trash
+#    - Beer
+#
+#- type: entity
+#  parent: [ DrinkBaseCanEmpty, DrinkWineCan ]
+#  id: DrinkWineCanEmpty
+#  components:
+#  - type: Tag
+#    tags:
+#    - DrinkCan
+#    - Trash
+#    - Wine
