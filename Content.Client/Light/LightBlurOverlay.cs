@@ -33,6 +33,7 @@ public sealed class LightBlurOverlay : Overlay
 
         if (_blurTarget?.Size != size)
         {
+            _blurTarget?.Dispose();
             _blurTarget = _clyde
                 .CreateRenderTarget(size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "enlarged-light-blur");
         }
