@@ -1,0 +1,49 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'general-station-record-console-add'}"
+               Resizable="False">
+    <BoxContainer Orientation="Vertical">
+        <!-- Name -->
+        <BoxContainer HorizontalExpand="True">
+            <Label Text="{Loc 'general-station-record-console-name-label'}" />
+            <Control HorizontalExpand="true" MinWidth="5" />
+            <LineEdit Name="NameEdit" Access="Public" MinSize="270 0" HorizontalAlignment="Right" />
+        </BoxContainer>
+        <!-- Age -->
+        <BoxContainer HorizontalExpand="True">
+            <Label Text="{Loc 'general-station-record-console-age-label'}" />
+            <Control HorizontalExpand="true" MinWidth="5" />
+            <LineEdit Name="AgeEdit" Access="Public" MinSize="40 0" HorizontalAlignment="Right" />
+        </BoxContainer>
+        <!-- Species -->
+        <BoxContainer HorizontalExpand="True">
+            <Label Text="{Loc 'general-station-record-console-species-label'}" />
+            <Control HorizontalExpand="true" MinWidth="5" />
+            <OptionButton Name="SpeciesEdit" Access="Public" HorizontalAlignment="Right" />
+        </BoxContainer>
+        <!-- Gender -->
+        <BoxContainer HorizontalExpand="True">
+            <Label Text="{Loc 'general-station-record-console-gender-label'}" />
+            <Control HorizontalExpand="true" MinWidth="5" />
+            <OptionButton Name="GenderEdit" Access="Public" HorizontalAlignment="Right" />
+        </BoxContainer>
+        <!-- Job -->
+        <BoxContainer HorizontalExpand="True">
+            <Label Text="{Loc 'general-station-record-console-job-label'}" />
+            <Control HorizontalExpand="true" MinWidth="5" />
+            <OptionButton Name="JobEdit" Access="Public" HorizontalAlignment="Right" />
+        </BoxContainer>
+        <!-- Fingerprint -->
+        <BoxContainer HorizontalExpand="True">
+            <Label Text="{Loc 'general-station-record-console-fingerprint-label'}" />
+            <Control HorizontalExpand="true" MinWidth="5" />
+            <LineEdit Name="FingerprintEdit" Access="Public" MinSize="270 0" HorizontalAlignment="Right" />
+        </BoxContainer>
+        <!-- DNA -->
+        <BoxContainer HorizontalExpand="True">
+            <Label Text="{Loc 'general-station-record-console-dna-label'}" />
+            <Control HorizontalExpand="true" MinWidth="5" />
+            <LineEdit Name="DnaEdit" Access="Public" MinSize="270 0" HorizontalAlignment="Right" />
+        </BoxContainer>
+        <Button Name="SubmitButton" Access="Public" Text="{Loc 'general-station-record-console-add'}" />
+    </BoxContainer>
+</DefaultWindow>
