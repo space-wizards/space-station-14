@@ -2138,7 +2138,7 @@
     - id: FoodWatermelonSlice
       amount: 5
     - id: ClothingHeadHatWatermelon
-      spawnProbability: 0.5
+      prob: 0.5
   - type: Tag
     tags:
     - Fruit
@@ -2240,7 +2240,7 @@
     - id: FoodHolymelonSlice
       amount: 5
     - id: ClothingHeadHatHolyWatermelon
-      spawnProbability: 0.5
+      prob: 0.5
   - type: Tag
     tags:
     - Fruit

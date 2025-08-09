@@ -742,7 +742,7 @@
   - type: Sliceable
     slices:
     - id: FoodPizzaWorldpeasSlice
-    amount: 8
+      amount: 8
   - type: SolutionContainerManager
     solutions:
       food:
