@@ -17,6 +17,6 @@ public sealed class WarpPointSystem : EntitySystem
             return;
 
         var loc = component.Location == null ? "<null>" : $"'{component.Location}'";
-        args.PushText(Loc.GetString("warp-point-component-on-examine-success", ("location", loc)));
+        args.PushText(Loc.GetString("warp-point-component-on-examine-success", ("location", Loc.GetString(loc))));
     }
 }
