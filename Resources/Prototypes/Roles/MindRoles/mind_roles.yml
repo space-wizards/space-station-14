@@ -197,6 +197,14 @@
   - type: MindRole
     antagPrototype: NukeopsCommander
 
+- type: entity
+  parent: MindRoleNukeops
+  id: MindRoleLoneops
+  name: Loneops Operative Role
+  components:
+  - type: MindRole
+    roleType: SoloAntagonist
+
 # Revolutionaries
 - type: entity
   parent: BaseMindRoleAntag
