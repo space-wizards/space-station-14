@@ -170,10 +170,24 @@ public abstract partial class SharedDrinkSystem : EntitySystem
         if (args.Cancelled || args.Solution != null)
             return;
 
-        if (!_solutionContainer.TryGetSolution(drink.Owner, drink.Comp.Solution, out args.Solution) || IsEmpty(drink))
+        if (!_solutionContainer.TryGetSolution(drink.Owner, drink.Comp.Solution, out args.Solution))
         {
             args.Cancelled = true;
+            _popup.PopupClient(Loc.GetString("ingestion-try-use-is-empty", ("entity", drink)), drink, args.User);
+            return;
+        }
 
+        // If the container is closed, prefer the closed message and return early to avoid double popups
+        if (TryComp<OpenableComponent>(drink, out var openable) && !openable.Opened)
+        {
+            args.Cancelled = true;
+            _popup.PopupClient(Loc.GetString(openable.ClosedPopup, ("owner", drink.Owner)), drink, args.User);
+            return;
+        }
+
+        if (IsEmpty(drink))
+        {
+            args.Cancelled = true;
             _popup.PopupClient(Loc.GetString("ingestion-try-use-is-empty", ("entity", drink)), drink, args.User);
             return;
         }
