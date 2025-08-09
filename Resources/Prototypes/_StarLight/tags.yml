@@ -173,9 +173,6 @@
   id: SyndieDungeon
 
 - type: Tag
-  id: DockEscape
-
-- type: Tag
   id: Compy
 
 - type: Tag
