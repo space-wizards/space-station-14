@@ -11010,5 +11010,12 @@ Entries:
   id: 1514
   time: '2025-08-09T00:58:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1260
+- author: KarmaKitsuna and Quantum
+  changes:
+  - message: Added compys
+    type: Add
+  id: 1515
+  time: '2025-08-09T01:00:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/935
 Order: -1
 
