@@ -10925,5 +10925,39 @@ Entries:
   id: 1503
   time: '2025-08-09T00:34:24.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1262
+- author: Conflee
+  changes:
+  - message: Changed how the Traitor Gamemode rolls antags to exclude Changelings,
+      since there is already a Traitorling Gamemode that can roll, it seems unintended.
+      Changelings stole all antag slots, making it so the game only spawned 2 Traitors
+      on average.
+    type: Tweak
+  id: 1504
+  time: '2025-08-09T00:37:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1244
+- author: Conflee
+  changes:
+  - message: Fixed (maybe) the game sometimes spawning two groups of Changelings at
+      once. The old Traitorling Gamemode called SubGamemodesRule which could roll
+      a second set of Lings.
+    type: Fix
+  id: 1505
+  time: '2025-08-09T00:37:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1244
+- author: Conflee
+  changes:
+  - message: Added Traitorling to the Vote Pool as an option, as a medium-chaos option.
+    type: Add
+  id: 1506
+  time: '2025-08-09T00:37:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1244
+- author: Conflee
+  changes:
+  - message: Added EventLight gamemode, does not roll naturally or appear in votes.
+      It's like Greenshift but less boring! Rolls Shuttle Events and Thieves.
+    type: Add
+  id: 1507
+  time: '2025-08-09T00:37:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1244
 Order: -1
 
