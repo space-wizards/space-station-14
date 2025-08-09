@@ -1,0 +1,29 @@
+﻿<Document>
+
+  # Plastic Sheet Production
+
+  <GuideEntityEmbed Entity="SheetPlastic"/>
+
+  Plastic sheets are versatile synthetic materials used in a wide variety of recipes. While not inherently complex to produce, they require high temperatures and multiple reagents to synthesize correctly.
+
+  ## Recipe
+
+  To produce [bold]10 Plastic Sheets[/bold], combine the following in a chemical mixer and heat to at least [bold]374 Kelvin[/bold]:
+
+  — 10 units of [bold]Oil[/bold]
+
+  — 6 units of [bold]Ash[/bold]
+
+  — 4 units of [bold]Sulfuric Acid[/bold]
+
+  ## Components
+
+  <GuideReagentEmbed Reagent="Oil"/>
+  <GuideReagentEmbed Reagent="Ash"/>
+  <GuideReagentEmbed Reagent="SulfuricAcid"/>
+
+  ## Output
+
+  Once complete, Plastic will appear on top of the beaker or ChemMaster. Transfer it to storage or fabrication systems as needed.
+
+</Document>
