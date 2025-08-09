@@ -1,14 +1,19 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Managers;
+using Content.Shared.Chat;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Destructible;
 using Content.Shared.Doors.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Electrocution;
 using Content.Shared.Intellicard;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Mind;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
@@ -27,8 +32,8 @@ using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -58,6 +63,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private readonly   SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly   StationAiVisionSystem _vision = default!;
     [Dependency] private readonly   IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly   SharedSuicideSystem _suicide = default!;
 
     // StationAiHeld is added to anything inside of an AI core.
     // StationAiHolder indicates it can hold an AI positronic brain (e.g. holocard / core).
@@ -105,6 +111,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
+
+        SubscribeLocalEvent<StationAiCoreComponent, BreakageEventArgs>(OnBroken);
     }
 
     private void OnCoreVerbs(Entity<StationAiCoreComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -352,14 +360,34 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         }
         else
         {
-            ClearEye(ent);
+            KillHeldAi(ent);
         }
     }
 
-    private void OnAiMapInit(Entity<StationAiCoreComponent> ent, ref MapInitEvent args)
+    protected virtual void OnAiMapInit(Entity<StationAiCoreComponent> ent, ref MapInitEvent args)
     {
         SetupEye(ent);
         AttachEye(ent);
+    }
+
+    private void OnBroken(Entity<StationAiCoreComponent> ent, ref BreakageEventArgs args)
+    {
+        KillHeldAi(ent);
+    }
+
+    public virtual void KillHeldAi(Entity<StationAiCoreComponent> ent)
+    {
+        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
+            return;
+
+        if (!TryComp<DamageableComponent>(held, out var damageable))
+            return;
+
+        _suicide.ApplyLethalDamage((held, damageable), "Shock");
+        ClearEye(ent);
+
+        if (TryComp<StationAiHolderComponent>(ent, out var holder))
+            UpdateAppearance((ent, holder));
     }
 
     public void SwitchRemoteEntityMode(Entity<StationAiCoreComponent?> entity, bool isRemote)
@@ -467,7 +495,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         return container.ContainedEntities[0];
     }
 
-    private void OnAiInsert(Entity<StationAiCoreComponent> ent, ref EntInsertedIntoContainerMessage args)
+    protected virtual void OnAiInsert(Entity<StationAiCoreComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         if (args.Container.ID != StationAiCoreComponent.Container)
             return;
@@ -484,7 +512,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         AttachEye(ent);
     }
 
-    private void OnAiRemove(Entity<StationAiCoreComponent> ent, ref EntRemovedFromContainerMessage args)
+    protected virtual void OnAiRemove(Entity<StationAiCoreComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         if (_timing.ApplyingState)
             return;
@@ -511,11 +539,15 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!Resolve(entity.Owner, ref entity.Comp, false))
             return;
 
-        // Todo: when AIs can die, add a check to see if the AI is in the 'dead' state
+        // Determine what state the AI holder is in
         var state = StationAiState.Empty;
 
         if (_containers.TryGetContainer(entity.Owner, StationAiHolderComponent.Container, out var container) && container.Count > 0)
-            state = StationAiState.Occupied;
+        {
+            var ai = container.ContainedEntities.First();
+            var aiIsDead = TryComp<MobStateComponent>(ai, out var mobState) && mobState.CurrentState == MobState.Dead;
+            state = aiIsDead ? StationAiState.Dead : StationAiState.Occupied;
+        }
 
         // If the entity is a station AI core, attempt to customize its appearance
         if (TryComp<StationAiCoreComponent>(entity, out var stationAiCore))

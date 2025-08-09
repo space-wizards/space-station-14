@@ -177,6 +177,11 @@
   - type: ContainerComp
     proto: AiHeld
     container: station_ai_mind_slot
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Repairable
+    doAfterDelay: 10
+    allowSelfRepair: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -187,10 +192,29 @@
         sound:
           collection: MetalBreak
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      #- !type:ChangeConstructionNodeBehavior
+      #  node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: ApcPowerReceiver
-    powerLoad: 1000
-    needsPower: false
+    powerLoad: 100
+  - type: ExtensionCableReceiver
+  - type: Battery
+    maxCharge: 200
+    startingCharge: 0
+  - type: ApcPowerReceiverBattery
+    idleLoad: 100
+    batteryRechargeRate: 200
+    batteryRechargeEfficiency: 1
+  - type: Alerts
   - type: StationAiCore
   - type: StationAiVision
   - type: InteractionOutline
@@ -204,7 +228,16 @@
       map: ["enum.StationAiVisualState.Key"]
       shader: unshaded
       visible: false
+    - state: ai_unpowered
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          False: { visible: true }
+          True: { visible: false }
   - type: InteractionPopup
     interactSuccessString: petting-success-station-ai
     interactFailureString: petting-failure-station-ai
@@ -293,6 +326,21 @@
       state: ai_female
   - type: NameIdentifier
     group: StationAi
+  - type: Damageable
+    damageContainer: Silicon
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+    triggersAlerts: false
+    showOverlays: false
+    allowRevives: true
+  - type: Alerts
+
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
