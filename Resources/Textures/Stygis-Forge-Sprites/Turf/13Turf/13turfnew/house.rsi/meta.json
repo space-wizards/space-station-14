@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "house0"
+    },
+    {
+      "name": "house1"
+    },
+    {
+      "name": "house2"
+    },
+    {
+      "name": "house3"
+    },
+    {
+      "name": "house3a"
+    },
+    {
+      "name": "house3b"
+    },
+    {
+      "name": "house4"
+    },
+    {
+      "name": "house5"
+    },
+    {
+      "name": "house6"
+    },
+    {
+      "name": "house7"
+    },
+    {
+      "name": "house8"
+    },
+    {
+      "name": "house9"
+    },
+    {
+      "name": "house10"
+    },
+    {
+      "name": "house11"
+    },
+    {
+      "name": "house12"
+    },
+    {
+      "name": "house12a"
+    },
+    {
+      "name": "house12b"
+    },
+    {
+      "name": "house13"
+    },
+    {
+      "name": "house14"
+    },
+    {
+      "name": "house15"
+    },
+    {
+      "name": "house0-broken"
+    },
+    {
+      "name": "house1-broken"
+    },
+    {
+      "name": "house2-broken"
+    },
+    {
+      "name": "house3-broken"
+    },
+    {
+      "name": "house4-broken"
+    },
+    {
+      "name": "house5-broken"
+    },
+    {
+      "name": "house6-broken"
+    },
+    {
+      "name": "house7-broken"
+    },
+    {
+      "name": "house8-broken"
+    },
+    {
+      "name": "house9-broken"
+    },
+    {
+      "name": "house10-broken"
+    },
+    {
+      "name": "house11-broken"
+    },
+    {
+      "name": "house12-broken"
+    },
+    {
+      "name": "house13-broken"
+    },
+    {
+      "name": "house14-broken"
+    },
+    {
+      "name": "house15-broken"
+    },
+    {
+      "name": "house0-clean"
+    },
+    {
+      "name": "house1-clean"
+    },
+    {
+      "name": "house2-clean"
+    },
+    {
+      "name": "house3-clean"
+    },
+    {
+      "name": "house3a-clean"
+    },
+    {
+      "name": "house3b-clean"
+    },
+    {
+      "name": "house4-clean"
+    },
+    {
+      "name": "house5-clean"
+    },
+    {
+      "name": "house6-clean"
+    },
+    {
+      "name": "house7-clean"
+    },
+    {
+      "name": "house8-clean"
+    },
+    {
+      "name": "house9-clean"
+    },
+    {
+      "name": "house10-clean"
+    },
+    {
+      "name": "house11-clean"
+    },
+    {
+      "name": "house12-clean"
+    },
+    {
+      "name": "house12a-clean"
+    },
+    {
+      "name": "house12b-clean"
+    },
+    {
+      "name": "house13-clean"
+    },
+    {
+      "name": "house14-clean"
+    },
+    {
+      "name": "house15-clean"
+    }
+  ]
+}

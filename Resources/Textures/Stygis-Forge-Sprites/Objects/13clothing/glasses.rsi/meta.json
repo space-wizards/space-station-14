@@ -1,0 +1,158 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "glasses"
+    },
+    {
+      "name": "sun"
+    },
+    {
+      "name": "sun"
+    },
+    {
+      "name": "meson"
+    },
+    {
+      "name": "thermal"
+    },
+    {
+      "name": "material"
+    },
+    {
+      "name": "blindfold"
+    },
+    {
+      "name": "monocle_old"
+    },
+    {
+      "name": "eyepatch"
+    },
+    {
+      "name": "thermoncle"
+    },
+    {
+      "name": "leforge"
+    },
+    {
+      "name": "gglasses"
+    },
+    {
+      "name": "night"
+    },
+    {
+      "name": "healthhud"
+    },
+    {
+      "name": "healthhudpresc"
+    },
+    {
+      "name": "securityhud"
+    },
+    {
+      "name": "sechudpresc"
+    },
+    {
+      "name": "monocle"
+    },
+    {
+      "name": "sunhud"
+    },
+    {
+      "name": "purple"
+    },
+    {
+      "name": "thermalimplants"
+    },
+    {
+      "name": "bigsunglasses"
+    },
+    {
+      "name": "jensenshades"
+    },
+    {
+      "name": "hipster_glasses"
+    },
+    {
+      "name": "welding-g"
+    },
+    {
+      "name": "welding-gup"
+    },
+    {
+      "name": "rwelding-g"
+    },
+    {
+      "name": "rwelding-gup"
+    },
+    {
+      "name": "swatgoggles"
+    },
+    {
+      "name": "3d"
+    },
+    {
+      "name": "degoggles"
+    },
+    {
+      "name": "denight"
+    },
+    {
+      "name": "uzenwa_sissra_1"
+    },
+    {
+      "name": "goggles"
+    },
+    {
+      "name": "sec_hud"
+    },
+    {
+      "name": "sec_flash"
+    },
+    {
+      "name": "eyepatch_r"
+    },
+    {
+      "name": "tajblind"
+    },
+    {
+      "name": "tajblind_sec"
+    },
+    {
+      "name": "tajblind_med"
+    },
+    {
+      "name": "tajblind_meson"
+    },
+    {
+      "name": "hudpatch"
+    },
+    {
+      "name": "hudpatch_r"
+    },
+    {
+      "name": "hudpatch_eye"
+    },
+    {
+      "name": "hudpatch_r_eye"
+    },
+    {
+      "name": "medhud_visor"
+    },
+    {
+      "name": "iggoggles"
+    },
+    {
+      "name": "blacksun"
+    },
+    {
+      "name": "deblacksun"
+    }
+  ]
+}

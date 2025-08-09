@@ -1,0 +1,1158 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "photo"
+    },
+    {
+      "name": "empty"
+    },
+    {
+      "name": "photo2"
+    },
+    {
+      "name": "photo6"
+    },
+    {
+      "name": "pad"
+    },
+    {
+      "name": "padk",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "pado",
+      "delays": [
+        [
+          0.3,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pado2",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pado3",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pads",
+      "delays": [
+        [
+          2.5,
+          0.05,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "padsk"
+    },
+    {
+      "name": "photo2b"
+    },
+    {
+      "name": "photo5"
+    },
+    {
+      "name": "frame"
+    },
+    {
+      "name": "photo_ov"
+    },
+    {
+      "name": "bino"
+    },
+    {
+      "name": "EC",
+      "delays": [
+        [
+          0.1,
+          2.5
+        ]
+      ]
+    },
+    {
+      "name": "throwing0"
+    },
+    {
+      "name": "throwing1"
+    },
+    {
+      "name": "throwing2"
+    },
+    {
+      "name": "throwing3"
+    },
+    {
+      "name": "throwing4"
+    },
+    {
+      "name": "throwing5"
+    },
+    {
+      "name": "throwing6"
+    },
+    {
+      "name": "0candelabrum0"
+    },
+    {
+      "name": "candelabrum0"
+    },
+    {
+      "name": "match"
+    },
+    {
+      "name": "match1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "match_burned"
+    },
+    {
+      "name": "matchbox"
+    },
+    {
+      "name": "matchbox0"
+    },
+    {
+      "name": "match_label2"
+    },
+    {
+      "name": "match_label3"
+    },
+    {
+      "name": "match_label1"
+    },
+    {
+      "name": "matchbox1"
+    },
+    {
+      "name": "matchbox2"
+    },
+    {
+      "name": "matchbox3"
+    },
+    {
+      "name": "matchbox4"
+    },
+    {
+      "name": "matchbox5"
+    },
+    {
+      "name": "matchbox6"
+    },
+    {
+      "name": "matchbox7"
+    },
+    {
+      "name": "matchbox8"
+    },
+    {
+      "name": "report"
+    },
+    {
+      "name": "emptyreport"
+    },
+    {
+      "name": "reportframe"
+    },
+    {
+      "name": "0candelabrum3"
+    },
+    {
+      "name": "0candelabrum2"
+    },
+    {
+      "name": "0candelabrum1"
+    },
+    {
+      "name": "candelabrum3",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "candelabrum2",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "candelabrum1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "flight0"
+    },
+    {
+      "name": "flight1"
+    },
+    {
+      "name": "flightx"
+    },
+    {
+      "name": "guitar"
+    },
+    {
+      "name": "bayan"
+    },
+    {
+      "name": "protball"
+    },
+    {
+      "name": "map2"
+    },
+    {
+      "name": "protball2"
+    },
+    {
+      "name": "trades0"
+    },
+    {
+      "name": "trades_deploying",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.5,
+          0.2,
+          0.2,
+          0.2,
+          0.7
+        ]
+      ]
+    },
+    {
+      "name": "trades_collecting",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.5,
+          0.2,
+          0.2,
+          0.2,
+          0.7
+        ]
+      ]
+    },
+    {
+      "name": "trades1",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "lock1"
+    },
+    {
+      "name": "lock0"
+    },
+    {
+      "name": "telephone0"
+    },
+    {
+      "name": "form"
+    },
+    {
+      "name": "receiver"
+    },
+    {
+      "name": "contract"
+    },
+    {
+      "name": "contract2"
+    },
+    {
+      "name": "contract_burn",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          2.2
+        ]
+      ]
+    },
+    {
+      "name": "telephone1"
+    },
+    {
+      "name": "implant"
+    },
+    {
+      "name": "jail"
+    },
+    {
+      "name": "jail2"
+    },
+    {
+      "name": "key"
+    },
+    {
+      "name": "key2"
+    },
+    {
+      "name": "key3"
+    },
+    {
+      "name": "key4"
+    },
+    {
+      "name": "clipboard00"
+    },
+    {
+      "name": "clipboard10"
+    },
+    {
+      "name": "clipboard11"
+    },
+    {
+      "name": "rhartad"
+    },
+    {
+      "name": "clipboard01"
+    },
+    {
+      "name": "sheet"
+    },
+    {
+      "name": "lock2"
+    },
+    {
+      "name": "fcardholder0"
+    },
+    {
+      "name": "fcardholder1"
+    },
+    {
+      "name": "dictaphone",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "dict_cassete"
+    },
+    {
+      "name": "broken_beer"
+    },
+    {
+      "name": "wrench"
+    },
+    {
+      "name": "screwdriver"
+    },
+    {
+      "name": "welder"
+    },
+    {
+      "name": "welder1",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "ointment"
+    },
+    {
+      "name": "clothbandaid"
+    },
+    {
+      "name": "datadiskp"
+    },
+    {
+      "name": "datadisko"
+    },
+    {
+      "name": "hidecloth"
+    },
+    {
+      "name": "plaster"
+    },
+    {
+      "name": "bandages2"
+    },
+    {
+      "name": "bandages"
+    },
+    {
+      "name": "bandages_low"
+    },
+    {
+      "name": "tile"
+    },
+    {
+      "name": "tile_blood"
+    },
+    {
+      "name": "oldletter_burn",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "map"
+    },
+    {
+      "name": "fire_extinguisher0"
+    },
+    {
+      "name": "fire_extinguisher1"
+    },
+    {
+      "name": "handcuff"
+    },
+    {
+      "name": "legacycuff"
+    },
+    {
+      "name": "bhandcuff"
+    },
+    {
+      "name": "bedbin"
+    },
+    {
+      "name": "paper_bin"
+    },
+    {
+      "name": "paper_bin1"
+    },
+    {
+      "name": "earmuffs",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "nucleardisk",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cutters"
+    },
+    {
+      "name": "bike_horn"
+    },
+    {
+      "name": "banana"
+    },
+    {
+      "name": "banana_peel"
+    },
+    {
+      "name": "zippo"
+    },
+    {
+      "name": "zippoon",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "dreamcatcher"
+    },
+    {
+      "name": "scrap1"
+    },
+    {
+      "name": "scrap2"
+    },
+    {
+      "name": "scrap3"
+    },
+    {
+      "name": "scrap4"
+    },
+    {
+      "name": "scrap5"
+    },
+    {
+      "name": "datadiskgen0",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "datadiskgen1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "datadiskgen2",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "harddisk"
+    },
+    {
+      "name": "datadisk0",
+      "delays": [
+        [
+          0.4,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "book"
+    },
+    {
+      "name": "lighter"
+    },
+    {
+      "name": "lighteron",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "lighter12"
+    },
+    {
+      "name": "lighter12on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "utilitybelt"
+    },
+    {
+      "name": "medbelt"
+    },
+    {
+      "name": "optical_unit"
+    },
+    {
+      "name": "lttr"
+    },
+    {
+      "name": "gavel"
+    },
+    {
+      "name": "platform"
+    },
+    {
+      "name": "pen3"
+    },
+    {
+      "name": "pen"
+    },
+    {
+      "name": "pen2"
+    },
+    {
+      "name": "pickaxep"
+    },
+    {
+      "name": "pickaxe"
+    },
+    {
+      "name": "pickaxea"
+    },
+    {
+      "name": "pickaxec"
+    },
+    {
+      "name": "pickaxenh"
+    },
+    {
+      "name": "c-4small_0"
+    },
+    {
+      "name": "c-4small_1",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "c-4detonator_0"
+    },
+    {
+      "name": "c-4detonator_1"
+    },
+    {
+      "name": "c-4detonator_click",
+      "delays": [
+        [
+          0.1,
+          0.3,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "packageL"
+    },
+    {
+      "name": "c-4large_0"
+    },
+    {
+      "name": "c-4large_1",
+      "delays": [
+        [
+          1,
+          0.2,
+          0.2,
+          0.2,
+          1,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "roll"
+    },
+    {
+      "name": "synthroll"
+    },
+    {
+      "name": "psiport",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cyberport",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "godport"
+    },
+    {
+      "name": "blackzippo"
+    },
+    {
+      "name": "blackzippoon",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "guilt"
+    },
+    {
+      "name": "guilt_signed"
+    },
+    {
+      "name": "neuroimplant"
+    },
+    {
+      "name": "mindslave"
+    },
+    {
+      "name": "hairclipper"
+    },
+    {
+      "name": "hairclipper2"
+    },
+    {
+      "name": "crowbar"
+    },
+    {
+      "name": "chisel"
+    },
+    {
+      "name": "shank"
+    },
+    {
+      "name": "shank_blood"
+    },
+    {
+      "name": "coupon"
+    },
+    {
+      "name": "couponc"
+    },
+    {
+      "name": "mcoupon"
+    },
+    {
+      "name": "mcoupon_used"
+    },
+    {
+      "name": "endshift"
+    },
+    {
+      "name": "camera"
+    },
+    {
+      "name": "dirt"
+    },
+    {
+      "name": "cobweb1",
+      "delays": [
+        [
+          25.5,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2,
+          0.1,
+          0.1,
+          0.1,
+          0.3,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cobweb2",
+      "delays": [
+        [
+          15,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          5,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          15
+        ]
+      ]
+    },
+    {
+      "name": "plasmatv"
+    },
+    {
+      "name": "chemgrenade1"
+    },
+    {
+      "name": "chemgrenade2"
+    },
+    {
+      "name": "chemgrenade3"
+    },
+    {
+      "name": "chemgrenade3active",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "paper_burn",
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "paper_burn2",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          5
+        ]
+      ]
+    },
+    {
+      "name": "newspaper"
+    },
+    {
+      "name": "photo3"
+    },
+    {
+      "name": "photo4"
+    },
+    {
+      "name": "baliset"
+    },
+    {
+      "name": "balalaika"
+    },
+    {
+      "name": "documents"
+    },
+    {
+      "name": "pdocuments"
+    },
+    {
+      "name": "keycard"
+    },
+    {
+      "name": "keycard2"
+    },
+    {
+      "name": "paper3",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "paper4"
+    },
+    {
+      "name": "diary_burn",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          2.2
+        ]
+      ]
+    },
+    {
+      "name": "file_burn",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "bug1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bug0"
+    },
+    {
+      "name": "shovel0"
+    },
+    {
+      "name": "shovel1"
+    },
+    {
+      "name": "shovel2"
+    },
+    {
+      "name": "burned"
+    },
+    {
+      "name": "envelope"
+    },
+    {
+      "name": "sealed_envelope"
+    },
+    {
+      "name": "sealed_envelope_burn",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          2.2
+        ]
+      ]
+    },
+    {
+      "name": "letter"
+    },
+    {
+      "name": "letter_burn",
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          2.2
+        ]
+      ]
+    },
+    {
+      "name": "paper"
+    },
+    {
+      "name": "paper2"
+    },
+    {
+      "name": "envelopedeath"
+    },
+    {
+      "name": "paperdeath"
+    },
+    {
+      "name": "package"
+    },
+    {
+      "name": "package2"
+    },
+    {
+      "name": "package3"
+    },
+    {
+      "name": "package_rh"
+    },
+    {
+      "name": "giftpaper"
+    },
+    {
+      "name": "giftpaper1"
+    },
+    {
+      "name": "giftpaper2"
+    },
+    {
+      "name": "milchip"
+    },
+    {
+      "name": "hair"
+    },
+    {
+      "name": "hair2"
+    },
+    {
+      "name": "field_ration"
+    },
+    {
+      "name": "field_ration_b"
+    },
+    {
+      "name": "field_ration_open"
+    },
+    {
+      "name": "puripill"
+    },
+    {
+      "name": "field_ration5"
+    },
+    {
+      "name": "field_ration4"
+    },
+    {
+      "name": "field_ration3"
+    },
+    {
+      "name": "field_ration2"
+    },
+    {
+      "name": "field_ration1"
+    },
+    {
+      "name": "i2"
+    },
+    {
+      "name": "chips"
+    },
+    {
+      "name": "paper_roll"
+    },
+    {
+      "name": "paperpack"
+    },
+    {
+      "name": "papercut"
+    },
+    {
+      "name": "theadset"
+    }
+  ]
+}

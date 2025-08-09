@@ -1,0 +1,408 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "flashbang"
+    },
+    {
+      "name": "flashbang_active"
+    },
+    {
+      "name": "flashbang"
+    },
+    {
+      "name": "flashbang_active",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "clusterbang"
+    },
+    {
+      "name": "clusterbang_active",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "clusterbang_segment",
+      "directions": 4
+    },
+    {
+      "name": "clusterbang_segment_active",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "banana"
+    },
+    {
+      "name": "banana_active",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "delivery"
+    },
+    {
+      "name": "delivery_active",
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "concussion"
+    },
+    {
+      "name": "concussion_active"
+    },
+    {
+      "name": "emp"
+    },
+    {
+      "name": "emp_active",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "lyemp"
+    },
+    {
+      "name": "lyemp_active",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "grenade"
+    },
+    {
+      "name": "grenade_active",
+      "delays": [
+        [
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "chemg"
+    },
+    {
+      "name": "chemg_ass"
+    },
+    {
+      "name": "chemg_locked"
+    },
+    {
+      "name": "chemg_active",
+      "delays": [
+        [
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "chemg_primed",
+      "delays": [
+        [
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "large_grenade"
+    },
+    {
+      "name": "large_grenade_ass"
+    },
+    {
+      "name": "large_grenade_locked"
+    },
+    {
+      "name": "large_grenade_active",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "large_grenade_primed",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "missile",
+      "directions": 4
+    },
+    {
+      "name": "frggrenade"
+    },
+    {
+      "name": "frggrenade_active"
+    },
+    {
+      "name": "frag"
+    },
+    {
+      "name": "frag_active",
+      "delays": [
+        [
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "fragshell"
+    },
+    {
+      "name": "fragshell_active",
+      "delays": [
+        [
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "warfare_grenade"
+    },
+    {
+      "name": "warfare_grenade_active",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "warfare_grenade"
+    },
+    {
+      "name": "warfare_grenade_active"
+    },
+    {
+      "name": "warfare_grenade"
+    },
+    {
+      "name": "warfare_grenade_active"
+    },
+    {
+      "name": "frag0"
+    },
+    {
+      "name": "frag1"
+    },
+    {
+      "name": "frag2"
+    },
+    {
+      "name": "flashbang2"
+    },
+    {
+      "name": "csmoke"
+    },
+    {
+      "name": "csmoke_active"
+    },
+    {
+      "name": "csmoke2"
+    },
+    {
+      "name": "smoke0"
+    },
+    {
+      "name": "smoke1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "smoke2"
+    },
+    {
+      "name": "mindet"
+    },
+    {
+      "name": "mine",
+      "directions": 4
+    },
+    {
+      "name": "mine1",
+      "directions": 4
+    },
+    {
+      "name": "mdmine",
+      "directions": 4
+    },
+    {
+      "name": "mdmine1",
+      "directions": 4
+    },
+    {
+      "name": "stick0"
+    },
+    {
+      "name": "stick1"
+    },
+    {
+      "name": "improvised"
+    },
+    {
+      "name": "improvised0"
+    },
+    {
+      "name": "improvised1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "emp0"
+    },
+    {
+      "name": "emp1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "emp2"
+    },
+    {
+      "name": "fire_grenade"
+    },
+    {
+      "name": "fire_grenade_active",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "krak_grenade"
+    },
+    {
+      "name": "krak_grenade_active"
+    },
+    {
+      "name": "tau"
+    },
+    {
+      "name": "shell_heat",
+      "directions": 4
+    },
+    {
+      "name": "blight"
+    },
+    {
+      "name": "blight_locked"
+    },
+    {
+      "name": "blight_active",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "blight_primed",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bugnade"
+    },
+    {
+      "name": "bugnade_active",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

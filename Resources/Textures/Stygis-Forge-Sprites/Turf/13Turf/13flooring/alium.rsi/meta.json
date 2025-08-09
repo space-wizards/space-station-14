@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "curvy"
+    },
+    {
+      "name": "curvy0"
+    },
+    {
+      "name": "curvy1"
+    },
+    {
+      "name": "curvy2"
+    },
+    {
+      "name": "curvy3"
+    },
+    {
+      "name": "curvy4"
+    },
+    {
+      "name": "curvy5"
+    },
+    {
+      "name": "curvy6"
+    },
+    {
+      "name": "jaggy"
+    },
+    {
+      "name": "jaggy0"
+    },
+    {
+      "name": "jaggy1"
+    },
+    {
+      "name": "jaggy2"
+    },
+    {
+      "name": "jaggy3"
+    },
+    {
+      "name": "jaggy4"
+    },
+    {
+      "name": "jaggy5"
+    },
+    {
+      "name": "jaggy6"
+    }
+  ]
+}

@@ -1,0 +1,393 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "horribletie"
+    },
+    {
+      "name": "bluecliptie"
+    },
+    {
+      "name": "tie"
+    },
+    {
+      "name": "longtie"
+    },
+    {
+      "name": "stethoscope"
+    },
+    {
+      "name": "stethoscope1"
+    },
+    {
+      "name": "iron"
+    },
+    {
+      "name": "iron_nt"
+    },
+    {
+      "name": "bronze"
+    },
+    {
+      "name": "bronze_nt"
+    },
+    {
+      "name": "silver"
+    },
+    {
+      "name": "silver_nt"
+    },
+    {
+      "name": "gold"
+    },
+    {
+      "name": "gold_nt"
+    },
+    {
+      "name": "red"
+    },
+    {
+      "name": "hydro"
+    },
+    {
+      "name": "med"
+    },
+    {
+      "name": "medgreen"
+    },
+    {
+      "name": "medblueband"
+    },
+    {
+      "name": "rnd"
+    },
+    {
+      "name": "engie"
+    },
+    {
+      "name": "cargo"
+    },
+    {
+      "name": "solblue"
+    },
+    {
+      "name": "whitered"
+    },
+    {
+      "name": "holster"
+    },
+    {
+      "name": "holster_hip"
+    },
+    {
+      "name": "holster_thigh"
+    },
+    {
+      "name": "holster_machete"
+    },
+    {
+      "name": "webbing"
+    },
+    {
+      "name": "webbing_large"
+    },
+    {
+      "name": "vest_brown"
+    },
+    {
+      "name": "vest_black"
+    },
+    {
+      "name": "vest_white"
+    },
+    {
+      "name": "bandolier"
+    },
+    {
+      "name": "unathiharness0"
+    },
+    {
+      "name": "unathiharness1"
+    },
+    {
+      "name": "unathiharness2"
+    },
+    {
+      "name": "holobadge"
+    },
+    {
+      "name": "holobadge-cord"
+    },
+    {
+      "name": "badge"
+    },
+    {
+      "name": "badge_round"
+    },
+    {
+      "name": "locket"
+    },
+    {
+      "name": "necklace"
+    },
+    {
+      "name": "marshalbadge"
+    },
+    {
+      "name": "goldbadge"
+    },
+    {
+      "name": "silverbadge"
+    },
+    {
+      "name": "diabadge"
+    },
+    {
+      "name": "ntbadge"
+    },
+    {
+      "name": "intelbadge"
+    },
+    {
+      "name": "pressbadge"
+    },
+    {
+      "name": "detectivebadge"
+    },
+    {
+      "name": "kneepads"
+    },
+    {
+      "name": "hawaii2"
+    },
+    {
+      "name": "hawaii"
+    },
+    {
+      "name": "hawaii_open"
+    },
+    {
+      "name": "hawaii2_open"
+    },
+    {
+      "name": "det_vest"
+    },
+    {
+      "name": "det_vest_open"
+    },
+    {
+      "name": "tan_jacket_open"
+    },
+    {
+      "name": "tan_jacket"
+    },
+    {
+      "name": "charcoal_jacket"
+    },
+    {
+      "name": "charcoal_jacket_open"
+    },
+    {
+      "name": "navy_jacket"
+    },
+    {
+      "name": "navy_jacket_open"
+    },
+    {
+      "name": "burgundy_jacket"
+    },
+    {
+      "name": "burgundy_jacket_open"
+    },
+    {
+      "name": "checkered_jacket"
+    },
+    {
+      "name": "checkered_jacket_open"
+    },
+    {
+      "name": "whitescarf"
+    },
+    {
+      "name": "locket_open"
+    },
+    {
+      "name": "suspenders"
+    },
+    {
+      "name": "vest"
+    },
+    {
+      "name": "flannelrb"
+    },
+    {
+      "name": "flannelb"
+    },
+    {
+      "name": "flannelr"
+    },
+    {
+      "name": "flanneltb"
+    },
+    {
+      "name": "flannelt"
+    },
+    {
+      "name": "flannel"
+    },
+    {
+      "name": "flannelrtb"
+    },
+    {
+      "name": "flannelrt"
+    },
+    {
+      "name": "thigh_brown"
+    },
+    {
+      "name": "thigh_black"
+    },
+    {
+      "name": "thigh_white"
+    },
+    {
+      "name": "bowtie"
+    },
+    {
+      "name": "bowtie_untied"
+    },
+    {
+      "name": "bowtie_ugly"
+    },
+    {
+      "name": "bowtie_ugly_untied"
+    },
+    {
+      "name": "nt_jacket"
+    },
+    {
+      "name": "nt_jacket_open"
+    },
+    {
+      "name": "ntcliptie"
+    },
+    {
+      "name": "nttunic"
+    },
+    {
+      "name": "nttunicblack"
+    },
+    {
+      "name": "zhongshan"
+    },
+    {
+      "name": "zhongshan_open"
+    },
+    {
+      "name": "tangzhuang"
+    },
+    {
+      "name": "tangzhuang_r"
+    },
+    {
+      "name": "dashiki"
+    },
+    {
+      "name": "dashikired"
+    },
+    {
+      "name": "dashikiblue"
+    },
+    {
+      "name": "thawb"
+    },
+    {
+      "name": "sherwani"
+    },
+    {
+      "name": "qipao"
+    },
+    {
+      "name": "ubacblack"
+    },
+    {
+      "name": "ubacblue"
+    },
+    {
+      "name": "ubactan"
+    },
+    {
+      "name": "ubacgreen"
+    },
+    {
+      "name": "sweater",
+      "directions": 4
+    },
+    {
+      "name": "gruntcape"
+    },
+    {
+      "name": "officercape"
+    },
+    {
+      "name": "commandcape"
+    },
+    {
+      "name": "leadercape"
+    },
+    {
+      "name": "medic_patch"
+    },
+    {
+      "name": "medical_helmet_patch"
+    },
+    {
+      "name": "leader_patch_helm"
+    },
+    {
+      "name": "trenchcloak"
+    },
+    {
+      "name": "brown"
+    },
+    {
+      "name": "gray"
+    },
+    {
+      "name": "hos"
+    },
+    {
+      "name": "bishop"
+    },
+    {
+      "name": "paladin"
+    },
+    {
+      "name": "commander"
+    },
+    {
+      "name": "treasurer"
+    },
+    {
+      "name": "peltfur"
+    },
+    {
+      "name": "peltmountain"
+    },
+    {
+      "name": "ragged"
+    },
+    {
+      "name": "goliath"
+    },
+    {
+      "name": "prince"
+    }
+  ]
+}

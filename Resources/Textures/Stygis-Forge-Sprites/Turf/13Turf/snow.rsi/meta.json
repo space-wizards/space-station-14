@@ -1,0 +1,225 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "snowold"
+    },
+    {
+      "name": "snow_corner",
+      "directions": 8
+    },
+    {
+      "name": "snow_surround",
+      "directions": 4
+    },
+    {
+      "name": "gravsnow"
+    },
+    {
+      "name": "gravsnow_corner",
+      "directions": 8
+    },
+    {
+      "name": "gravsnow_surround",
+      "directions": 4
+    },
+    {
+      "name": "plating"
+    },
+    {
+      "name": "platingdrift",
+      "directions": 4
+    },
+    {
+      "name": "ice"
+    },
+    {
+      "name": "snowwhiteold"
+    },
+    {
+      "name": "snow0old"
+    },
+    {
+      "name": "snow1old"
+    },
+    {
+      "name": "snow2old"
+    },
+    {
+      "name": "snow3old"
+    },
+    {
+      "name": "snow4old"
+    },
+    {
+      "name": "snow5old"
+    },
+    {
+      "name": "snow6old"
+    },
+    {
+      "name": "snow7old"
+    },
+    {
+      "name": "snow8old"
+    },
+    {
+      "name": "snow9old"
+    },
+    {
+      "name": "snow10old"
+    },
+    {
+      "name": "snow11old"
+    },
+    {
+      "name": "snow12old"
+    },
+    {
+      "name": "snowplating"
+    },
+    {
+      "name": "permafrost"
+    },
+    {
+      "name": "snow_",
+      "directions": 8
+    },
+    {
+      "name": "snow_1T",
+      "directions": 8
+    },
+    {
+      "name": "snow_innercorner",
+      "directions": 8
+    },
+    {
+      "name": "snow_outercorner",
+      "directions": 8
+    },
+    {
+      "name": "snow_outercornerT",
+      "directions": 8
+    },
+    {
+      "name": "snow_innercornerT",
+      "directions": 8
+    },
+    {
+      "name": "rock",
+      "directions": 4
+    },
+    {
+      "name": "dirt",
+      "directions": 8
+    },
+    {
+      "name": "barricade_NS"
+    },
+    {
+      "name": "barricade_EW"
+    },
+    {
+      "name": "dirtsnow_18"
+    },
+    {
+      "name": "dirtsnow_23"
+    },
+    {
+      "name": "dirtsnow_22"
+    },
+    {
+      "name": "dirtsnow_21"
+    },
+    {
+      "name": "dirtsnow_20"
+    },
+    {
+      "name": "dirtsnow_19"
+    },
+    {
+      "name": "dirtsnow_17"
+    },
+    {
+      "name": "snow1",
+      "directions": 8
+    },
+    {
+      "name": "snow2"
+    },
+    {
+      "name": "snow3"
+    },
+    {
+      "name": "snow4"
+    },
+    {
+      "name": "snow5"
+    },
+    {
+      "name": "snow6",
+      "directions": 8
+    },
+    {
+      "name": "snow7"
+    },
+    {
+      "name": "snow8"
+    },
+    {
+      "name": "snow9"
+    },
+    {
+      "name": "snow10",
+      "directions": 8
+    },
+    {
+      "name": "snow11"
+    },
+    {
+      "name": "snow12"
+    },
+    {
+      "name": "snow13"
+    },
+    {
+      "name": "snow14"
+    },
+    {
+      "name": "snow15"
+    },
+    {
+      "name": "snow16"
+    },
+    {
+      "name": "snow17"
+    },
+    {
+      "name": "snow18"
+    },
+    {
+      "name": "snow19"
+    },
+    {
+      "name": "snow20"
+    },
+    {
+      "name": "snow21"
+    },
+    {
+      "name": "snow22"
+    },
+    {
+      "name": "snow23"
+    },
+    {
+      "name": "snow24"
+    }
+  ]
+}

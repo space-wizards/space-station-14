@@ -1,0 +1,890 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "orange"
+    },
+    {
+      "name": "blue"
+    },
+    {
+      "name": "pink"
+    },
+    {
+      "name": "orange"
+    },
+    {
+      "name": "yellow"
+    },
+    {
+      "name": "white"
+    },
+    {
+      "name": "grey"
+    },
+    {
+      "name": "child_grey"
+    },
+    {
+      "name": "red"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "jumpsuit"
+    },
+    {
+      "name": "black"
+    },
+    {
+      "name": "captain"
+    },
+    {
+      "name": "barman"
+    },
+    {
+      "name": "janitor"
+    },
+    {
+      "name": "chef"
+    },
+    {
+      "name": "medical"
+    },
+    {
+      "name": "cmo"
+    },
+    {
+      "name": "chaplain"
+    },
+    {
+      "name": "sl_suit"
+    },
+    {
+      "name": "johnny"
+    },
+    {
+      "name": "nazi"
+    },
+    {
+      "name": "lawyer_black"
+    },
+    {
+      "name": "lawyer_red"
+    },
+    {
+      "name": "lawyer_blue"
+    },
+    {
+      "name": "hop"
+    },
+    {
+      "name": "science"
+    },
+    {
+      "name": "genetics"
+    },
+    {
+      "name": "chemistry"
+    },
+    {
+      "name": "virology"
+    },
+    {
+      "name": "atmos"
+    },
+    {
+      "name": "engine"
+    },
+    {
+      "name": "owl"
+    },
+    {
+      "name": "rainbow"
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "psyche",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "director"
+    },
+    {
+      "name": "chiefengineer"
+    },
+    {
+      "name": "ba_suit"
+    },
+    {
+      "name": "hydroponics"
+    },
+    {
+      "name": "green_suit"
+    },
+    {
+      "name": "red_suit"
+    },
+    {
+      "name": "black_suit"
+    },
+    {
+      "name": "teal_suit"
+    },
+    {
+      "name": "overalls"
+    },
+    {
+      "name": "pirate"
+    },
+    {
+      "name": "schoolgirl"
+    },
+    {
+      "name": "mime"
+    },
+    {
+      "name": "soviet"
+    },
+    {
+      "name": "blackskirt"
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "miner"
+    },
+    {
+      "name": "robotics"
+    },
+    {
+      "name": "waiter"
+    },
+    {
+      "name": "chemist_new"
+    },
+    {
+      "name": "genetics_new"
+    },
+    {
+      "name": "scientist_new"
+    },
+    {
+      "name": "virologist_new"
+    },
+    {
+      "name": "nursesuit"
+    },
+    {
+      "name": "kilt"
+    },
+    {
+      "name": "sexyclown"
+    },
+    {
+      "name": "mailman"
+    },
+    {
+      "name": "vice"
+    },
+    {
+      "name": "sexymime"
+    },
+    {
+      "name": "scratch"
+    },
+    {
+      "name": "redcoat"
+    },
+    {
+      "name": "cargotech"
+    },
+    {
+      "name": "qm"
+    },
+    {
+      "name": "lawyer_purp"
+    },
+    {
+      "name": "really_black_suit"
+    },
+    {
+      "name": "jensen"
+    },
+    {
+      "name": "gladiator"
+    },
+    {
+      "name": "security"
+    },
+    {
+      "name": "warden"
+    },
+    {
+      "name": "hos"
+    },
+    {
+      "name": "scrubsblue"
+    },
+    {
+      "name": "scrubsgreen"
+    },
+    {
+      "name": "scrubspurple"
+    },
+    {
+      "name": "scrubsblack"
+    },
+    {
+      "name": "scrubsnavyblue"
+    },
+    {
+      "name": "black_suit_fem"
+    },
+    {
+      "name": "red_pyjamas"
+    },
+    {
+      "name": "blue_pyjamas"
+    },
+    {
+      "name": "hosblueclothes"
+    },
+    {
+      "name": "hosdnavyclothes"
+    },
+    {
+      "name": "hostanclothes"
+    },
+    {
+      "name": "officerblueclothes"
+    },
+    {
+      "name": "officerdnavyclothes"
+    },
+    {
+      "name": "officertanclothes"
+    },
+    {
+      "name": "wardenblueclothes"
+    },
+    {
+      "name": "wardendnavyclothes"
+    },
+    {
+      "name": "wardentanclothes"
+    },
+    {
+      "name": "sundress"
+    },
+    {
+      "name": "golem"
+    },
+    {
+      "name": "redshirt2"
+    },
+    {
+      "name": "internalaffairs"
+    },
+    {
+      "name": "stripper_p"
+    },
+    {
+      "name": "stripper_g"
+    },
+    {
+      "name": "swim_black"
+    },
+    {
+      "name": "swim_blue"
+    },
+    {
+      "name": "swim_green"
+    },
+    {
+      "name": "swim_purp"
+    },
+    {
+      "name": "swim_red"
+    },
+    {
+      "name": "captain_fly"
+    },
+    {
+      "name": "bride_blue"
+    },
+    {
+      "name": "bride_orange"
+    },
+    {
+      "name": "bride_purple"
+    },
+    {
+      "name": "bride_red"
+    },
+    {
+      "name": "dress_cap"
+    },
+    {
+      "name": "dress_green"
+    },
+    {
+      "name": "dress_orange"
+    },
+    {
+      "name": "dress_pink"
+    },
+    {
+      "name": "dress_yellow"
+    },
+    {
+      "name": "tian_dress"
+    },
+    {
+      "name": "dress_hop"
+    },
+    {
+      "name": "mankini"
+    },
+    {
+      "name": "plaid_blue"
+    },
+    {
+      "name": "plaid_purple"
+    },
+    {
+      "name": "plaid_red"
+    },
+    {
+      "name": "dress_rd"
+    },
+    {
+      "name": "dress_saloon"
+    },
+    {
+      "name": "bride_white"
+    },
+    {
+      "name": "dispatch"
+    },
+    {
+      "name": "nurse"
+    },
+    {
+      "name": "orderly"
+    },
+    {
+      "name": "oldman"
+    },
+    {
+      "name": "huresource"
+    },
+    {
+      "name": "officer"
+    },
+    {
+      "name": "centcom"
+    },
+    {
+      "name": "vox-casual-1"
+    },
+    {
+      "name": "vox-casual-2"
+    },
+    {
+      "name": "psysuit"
+    },
+    {
+      "name": "hopwhimsy"
+    },
+    {
+      "name": "warden_corporate"
+    },
+    {
+      "name": "sec_corporate"
+    },
+    {
+      "name": "hos_corporate"
+    },
+    {
+      "name": "detective"
+    },
+    {
+      "name": "detective2"
+    },
+    {
+      "name": "gentlesuit"
+    },
+    {
+      "name": "rdalt"
+    },
+    {
+      "name": "swatunder"
+    },
+    {
+      "name": "psych"
+    },
+    {
+      "name": "psychturtle"
+    },
+    {
+      "name": "ert_uniform"
+    },
+    {
+      "name": "captain_formal"
+    },
+    {
+      "name": "assistant_formal"
+    },
+    {
+      "name": "hos_formal_male"
+    },
+    {
+      "name": "hos_formal_fem"
+    },
+    {
+      "name": "blacksuit"
+    },
+    {
+      "name": "charcoal_suit"
+    },
+    {
+      "name": "navy_suit"
+    },
+    {
+      "name": "burgundy_suit"
+    },
+    {
+      "name": "checkered_suit"
+    },
+    {
+      "name": "tan_suit"
+    },
+    {
+      "name": "jeans"
+    },
+    {
+      "name": "baggy_jeans"
+    },
+    {
+      "name": "jeansclassic"
+    },
+    {
+      "name": "baggy_jeansclassic"
+    },
+    {
+      "name": "jeansmustang"
+    },
+    {
+      "name": "baggy_jeansmustang"
+    },
+    {
+      "name": "jeansblack"
+    },
+    {
+      "name": "baggy_jeansblack"
+    },
+    {
+      "name": "jeansgrey"
+    },
+    {
+      "name": "baggy_jeansgrey"
+    },
+    {
+      "name": "jeansyoungfolks"
+    },
+    {
+      "name": "baggy_jeansyoungfolks"
+    },
+    {
+      "name": "whitepants"
+    },
+    {
+      "name": "baggy_whitepants"
+    },
+    {
+      "name": "blackpants"
+    },
+    {
+      "name": "baggy_blackpants"
+    },
+    {
+      "name": "trackpants"
+    },
+    {
+      "name": "baggy_trackpants"
+    },
+    {
+      "name": "camopants"
+    },
+    {
+      "name": "catacomm"
+    },
+    {
+      "name": "baggy_camopants"
+    },
+    {
+      "name": "jeans_shorts_f"
+    },
+    {
+      "name": "jeansclassic_shorts_f"
+    },
+    {
+      "name": "black_shorts_f"
+    },
+    {
+      "name": "khaki_shorts_f"
+    },
+    {
+      "name": "jeansmustang_shorts_f"
+    },
+    {
+      "name": "jeansyoungfolks_shorts_f"
+    },
+    {
+      "name": "jeans_shorts"
+    },
+    {
+      "name": "jeansclassic_shorts"
+    },
+    {
+      "name": "blackpants_shorts"
+    },
+    {
+      "name": "tanpants_shorts"
+    },
+    {
+      "name": "jeansmustang_shorts"
+    },
+    {
+      "name": "jeansyoungfolks_shorts"
+    },
+    {
+      "name": "skirt_khaki"
+    },
+    {
+      "name": "skirt_short"
+    },
+    {
+      "name": "skirt_swept"
+    },
+    {
+      "name": "greypants_shorts"
+    },
+    {
+      "name": "grey_shorts_f"
+    },
+    {
+      "name": "mai_yang"
+    },
+    {
+      "name": "blue_blazer"
+    },
+    {
+      "name": "blackjumpskirt",
+      "directions": 4
+    },
+    {
+      "name": "sundress_white"
+    },
+    {
+      "name": "roboticsf"
+    },
+    {
+      "name": "detective3"
+    },
+    {
+      "name": "hazard"
+    },
+    {
+      "name": "sterile"
+    },
+    {
+      "name": "pcrc"
+    },
+    {
+      "name": "syndicate"
+    },
+    {
+      "name": "tactifool"
+    },
+    {
+      "name": "combat"
+    },
+    {
+      "name": "frontier"
+    },
+    {
+      "name": "wardt"
+    },
+    {
+      "name": "focal"
+    },
+    {
+      "name": "saare"
+    },
+    {
+      "name": "heph"
+    },
+    {
+      "name": "grayson"
+    },
+    {
+      "name": "gear_harness"
+    },
+    {
+      "name": "mbill"
+    },
+    {
+      "name": "confed"
+    },
+    {
+      "name": "aether"
+    },
+    {
+      "name": "turtleneck"
+    },
+    {
+      "name": "shortjumpskirt",
+      "directions": 4
+    },
+    {
+      "name": "ntguard"
+    },
+    {
+      "name": "bluesuit"
+    },
+    {
+      "name": "dress_fire"
+    },
+    {
+      "name": "trackpantswhite"
+    },
+    {
+      "name": "trackpantsblue"
+    },
+    {
+      "name": "trackpantsgreen"
+    },
+    {
+      "name": "trackpantsred"
+    },
+    {
+      "name": "ntpilot"
+    },
+    {
+      "name": "ntsmock"
+    },
+    {
+      "name": "ntsmockexec"
+    },
+    {
+      "name": "ntwork"
+    },
+    {
+      "name": "ntsuit"
+    },
+    {
+      "name": "abaya"
+    },
+    {
+      "name": "m_utility"
+    },
+    {
+      "name": "m_service"
+    },
+    {
+      "name": "m_dress"
+    },
+    {
+      "name": "hunterhide"
+    },
+    {
+      "name": "wetsuit"
+    },
+    {
+      "name": "pants"
+    },
+    {
+      "name": "baggy_pants"
+    },
+    {
+      "name": "shorts"
+    },
+    {
+      "name": "scrubs"
+    },
+    {
+      "name": "longdress"
+    },
+    {
+      "name": "shortdress"
+    },
+    {
+      "name": "gowndress"
+    },
+    {
+      "name": "magistrate"
+    },
+    {
+      "name": "magistrate_cool"
+    },
+    {
+      "name": "arbiter"
+    },
+    {
+      "name": "magistrate"
+    },
+    {
+      "name": "undertaker"
+    },
+    {
+      "name": "barnyuni"
+    },
+    {
+      "name": "uni-church"
+    },
+    {
+      "name": "heir"
+    },
+    {
+      "name": "ycargo"
+    },
+    {
+      "name": "cadet"
+    },
+    {
+      "name": "urchin"
+    },
+    {
+      "name": "consort"
+    },
+    {
+      "name": "consort"
+    },
+    {
+      "name": "blueuni"
+    },
+    {
+      "name": "reduni"
+    },
+    {
+      "name": "explorer"
+    },
+    {
+      "name": "blue_child_uniform"
+    },
+    {
+      "name": "red_child_uniform"
+    },
+    {
+      "name": "guard_old"
+    },
+    {
+      "name": "jumpsuitdown",
+      "directions": 4
+    },
+    {
+      "name": "lower1",
+      "directions": 4
+    },
+    {
+      "name": "scoutoutfit",
+      "directions": 4
+    },
+    {
+      "name": "skit",
+      "directions": 4
+    },
+    {
+      "name": "krieg"
+    },
+    {
+      "name": "krieg_OLD"
+    },
+    {
+      "name": "kriegissar"
+    },
+    {
+      "name": "guard"
+    },
+    {
+      "name": "orkpants",
+      "directions": 4
+    },
+    {
+      "name": "squighide",
+      "directions": 4
+    },
+    {
+      "name": "ork_clothes"
+    },
+    {
+      "name": "vest"
+    },
+    {
+      "name": "vestg"
+    },
+    {
+      "name": "vestb"
+    },
+    {
+      "name": "vestblred"
+    },
+    {
+      "name": "vestredbl"
+    },
+    {
+      "name": "blackdress"
+    },
+    {
+      "name": "reddress"
+    },
+    {
+      "name": "repentia_nude"
+    },
+    {
+      "name": "rm_uniform",
+      "directions": 4
+    },
+    {
+      "name": "storms"
+    },
+    {
+      "name": "maccabian"
+    },
+    {
+      "name": "maccabians"
+    },
+    {
+      "name": "maccabianm"
+    },
+    {
+      "name": "ScionUndersuit"
+    },
+    {
+      "name": "rtc"
+    }
+  ]
+}

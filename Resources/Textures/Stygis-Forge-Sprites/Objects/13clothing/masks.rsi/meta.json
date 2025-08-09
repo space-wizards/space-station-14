@@ -1,0 +1,456 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "medical"
+    },
+    {
+      "name": "gas_mask"
+    },
+    {
+      "name": "swat"
+    },
+    {
+      "name": "sterile"
+    },
+    {
+      "name": "death"
+    },
+    {
+      "name": "breath"
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "gas_alt"
+    },
+    {
+      "name": "owl"
+    },
+    {
+      "name": "muzzle"
+    },
+    {
+      "name": "cigoff"
+    },
+    {
+      "name": "TannhauserGateCig"
+    },
+    {
+      "name": "cigjer"
+    },
+    {
+      "name": "BrouzoufCig"
+    },
+    {
+      "name": "cigbutt"
+    },
+    {
+      "name": "TannhauserGateCigButt"
+    },
+    {
+      "name": "cigbuttjer"
+    },
+    {
+      "name": "BrourzoufCigButt"
+    },
+    {
+      "name": "cigpro"
+    },
+    {
+      "name": "cigmentol"
+    },
+    {
+      "name": "cigjer"
+    },
+    {
+      "name": "cigoff"
+    },
+    {
+      "name": "cigon",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "cigon",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cigbutt"
+    },
+    {
+      "name": "cigbuttpro"
+    },
+    {
+      "name": "cigbuttmentol"
+    },
+    {
+      "name": "cigbuttjer"
+    },
+    {
+      "name": "cigaroff"
+    },
+    {
+      "name": "cigaron"
+    },
+    {
+      "name": "cigar2off"
+    },
+    {
+      "name": "cigar2on"
+    },
+    {
+      "name": "cigarbutt"
+    },
+    {
+      "name": "plaguedoctor"
+    },
+    {
+      "name": "mime"
+    },
+    {
+      "name": "s-ninja"
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "fake-moustache"
+    },
+    {
+      "name": "spiderman"
+    },
+    {
+      "name": "sexyclown"
+    },
+    {
+      "name": "sexymime"
+    },
+    {
+      "name": "monkeymask"
+    },
+    {
+      "name": "balaclava"
+    },
+    {
+      "name": "balaclava_r"
+    },
+    {
+      "name": "luchador"
+    },
+    {
+      "name": "luchag"
+    },
+    {
+      "name": "luchar"
+    },
+    {
+      "name": "cobpipeon",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cobpipeoff"
+    },
+    {
+      "name": "pipeon",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pipeoff"
+    },
+    {
+      "name": "pig"
+    },
+    {
+      "name": "horsehead"
+    },
+    {
+      "name": "golem"
+    },
+    {
+      "name": "breathdown"
+    },
+    {
+      "name": "tooth-necklace"
+    },
+    {
+      "name": "voxmask"
+    },
+    {
+      "name": "snorkel"
+    },
+    {
+      "name": "swatclava"
+    },
+    {
+      "name": "swatclava_r"
+    },
+    {
+      "name": "mask-armalis"
+    },
+    {
+      "name": "respirator"
+    },
+    {
+      "name": "halfgas"
+    },
+    {
+      "name": "halfgas_up"
+    },
+    {
+      "name": "fullgas"
+    },
+    {
+      "name": "steriledown"
+    },
+    {
+      "name": "catmet"
+    },
+    {
+      "name": "lizmet"
+    },
+    {
+      "name": "skrellmet"
+    },
+    {
+      "name": "manmet"
+    },
+    {
+      "name": "barros"
+    },
+    {
+      "name": "trasen"
+    },
+    {
+      "name": "admiral"
+    },
+    {
+      "name": "turner"
+    },
+    {
+      "name": "spirit_mask",
+      "directions": 4
+    },
+    {
+      "name": "cigarello-on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cigarello"
+    },
+    {
+      "name": "cigarelloMi"
+    },
+    {
+      "name": "cigarelloBe"
+    },
+    {
+      "name": "cigarelloCh"
+    },
+    {
+      "name": "cigarelloGr"
+    },
+    {
+      "name": "cigarelloWm"
+    },
+    {
+      "name": "cigarelloOr"
+    },
+    {
+      "name": "woodbutt"
+    },
+    {
+      "name": "bandred_up"
+    },
+    {
+      "name": "bandred"
+    },
+    {
+      "name": "bandblue_up"
+    },
+    {
+      "name": "bandblue"
+    },
+    {
+      "name": "bandgold_up"
+    },
+    {
+      "name": "bandgold"
+    },
+    {
+      "name": "bandgreen_up"
+    },
+    {
+      "name": "bandgreen"
+    },
+    {
+      "name": "bandskull_up"
+    },
+    {
+      "name": "bandskull"
+    },
+    {
+      "name": "bandblack_up"
+    },
+    {
+      "name": "bandblack"
+    },
+    {
+      "name": "bandbotany"
+    },
+    {
+      "name": "bandbotany_up"
+    },
+    {
+      "name": "bandorange"
+    },
+    {
+      "name": "bandorange_up"
+    },
+    {
+      "name": "bandpurple"
+    },
+    {
+      "name": "bandpurple_up"
+    },
+    {
+      "name": "bandcamo_up"
+    },
+    {
+      "name": "bandcamo"
+    },
+    {
+      "name": "sgmask"
+    },
+    {
+      "name": "undertaker"
+    },
+    {
+      "name": "ballgag"
+    },
+    {
+      "name": "prac_mask"
+    },
+    {
+      "name": "prac_mask"
+    },
+    {
+      "name": "gas_mining"
+    },
+    {
+      "name": "redmask"
+    },
+    {
+      "name": "ig_halfgas"
+    },
+    {
+      "name": "agent_mask"
+    },
+    {
+      "name": "oldkriegmask_OLD"
+    },
+    {
+      "name": "kriegmask_OLD"
+    },
+    {
+      "name": "grenmask_OLD"
+    },
+    {
+      "name": "mkriegmask_OLD"
+    },
+    {
+      "name": "commask_OLD"
+    },
+    {
+      "name": "slaanesh"
+    },
+    {
+      "name": "techpriest"
+    },
+    {
+      "name": "magos"
+    },
+    {
+      "name": "renegade_militia_maskOLD",
+      "directions": 4
+    },
+    {
+      "name": "M_Mask-Icon"
+    },
+    {
+      "name": "M_SMask-Icon"
+    },
+    {
+      "name": "kriegmask"
+    },
+    {
+      "name": "grenmask"
+    },
+    {
+      "name": "commask"
+    },
+    {
+      "name": "Stormtrooper Gasmask"
+    },
+    {
+      "name": "rtm"
+    }
+  ]
+}

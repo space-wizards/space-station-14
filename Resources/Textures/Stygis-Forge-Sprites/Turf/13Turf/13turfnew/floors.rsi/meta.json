@@ -1,0 +1,591 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "maplefloor1"
+    },
+    {
+      "name": "maplefloor2"
+    },
+    {
+      "name": "maplefloor3"
+    },
+    {
+      "name": "maplefloor4"
+    },
+    {
+      "name": "housewood1"
+    },
+    {
+      "name": "housewood2"
+    },
+    {
+      "name": "housewood3"
+    },
+    {
+      "name": "housewood4"
+    },
+    {
+      "name": "housewood1-broken"
+    },
+    {
+      "name": "housewood2-broken"
+    },
+    {
+      "name": "housewood3-broken"
+    },
+    {
+      "name": "housewood4-broken"
+    },
+    {
+      "name": "housewood4-broken"
+    },
+    {
+      "name": "oakfloor1"
+    },
+    {
+      "name": "oakfloor2"
+    },
+    {
+      "name": "oakfloor3"
+    },
+    {
+      "name": "oakfloor4"
+    },
+    {
+      "name": "oakfloor1-broken"
+    },
+    {
+      "name": "oakfloor2-broken"
+    },
+    {
+      "name": "oakfloor3-broken"
+    },
+    {
+      "name": "oakfloor4-broken"
+    },
+    {
+      "name": "grimy"
+    },
+    {
+      "name": "bcircuit"
+    },
+    {
+      "name": "bcircuitoff"
+    },
+    {
+      "name": "gcircuit"
+    },
+    {
+      "name": "gcircuitoff"
+    },
+    {
+      "name": "rcircuit"
+    },
+    {
+      "name": "rcircuitoff"
+    },
+    {
+      "name": "rcircuitanim",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "gcircuitanim",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "darkfull"
+    },
+    {
+      "name": "damaged1"
+    },
+    {
+      "name": "damaged3"
+    },
+    {
+      "name": "damaged2"
+    },
+    {
+      "name": "platingdmg1"
+    },
+    {
+      "name": "platingdmg3"
+    },
+    {
+      "name": "elevatorshaft"
+    },
+    {
+      "name": "vault",
+      "directions": 8
+    },
+    {
+      "name": "cultdamage5"
+    },
+    {
+      "name": "cultdamage6"
+    },
+    {
+      "name": "ironsand1"
+    },
+    {
+      "name": "ironsand2"
+    },
+    {
+      "name": "ironsand3"
+    },
+    {
+      "name": "ironsand4"
+    },
+    {
+      "name": "ironsand5"
+    },
+    {
+      "name": "ironsand6"
+    },
+    {
+      "name": "ironsand7"
+    },
+    {
+      "name": "ironsand8"
+    },
+    {
+      "name": "ironsand9"
+    },
+    {
+      "name": "ironsand10"
+    },
+    {
+      "name": "ironsand11"
+    },
+    {
+      "name": "ironsand12"
+    },
+    {
+      "name": "ironsand13"
+    },
+    {
+      "name": "ironsand14"
+    },
+    {
+      "name": "ironsand15"
+    },
+    {
+      "name": "alienplating"
+    },
+    {
+      "name": "alienpod3",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "alienpod4",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "alienpod8",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "shuttlefloor4"
+    },
+    {
+      "name": "gold",
+      "directions": 4
+    },
+    {
+      "name": "silver"
+    },
+    {
+      "name": "liquidplasma",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "riverwater_motion",
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.3,
+          0.2,
+          0.1,
+          0.2,
+          0.3,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "binary",
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "carpet"
+    },
+    {
+      "name": "torncarpet1"
+    },
+    {
+      "name": "torncarpet2"
+    },
+    {
+      "name": "torncarpet3"
+    },
+    {
+      "name": "torncarpet4"
+    },
+    {
+      "name": "torncarpet5"
+    },
+    {
+      "name": "torncarpet6"
+    },
+    {
+      "name": "torncarpet7"
+    },
+    {
+      "name": "torncarpet8"
+    },
+    {
+      "name": "torncarpet9"
+    },
+    {
+      "name": "torncarpet10"
+    },
+    {
+      "name": "torncarpet11"
+    },
+    {
+      "name": "torncarpet12"
+    },
+    {
+      "name": "torncarpet13"
+    },
+    {
+      "name": "torncarpet14"
+    },
+    {
+      "name": "torncarpet15"
+    },
+    {
+      "name": "torncarpet16"
+    },
+    {
+      "name": "damaged"
+    },
+    {
+      "name": "hdamaged1"
+    },
+    {
+      "name": "housebase"
+    },
+    {
+      "name": "housewood_stage_bottom_left"
+    },
+    {
+      "name": "housewood_stage_bottom"
+    },
+    {
+      "name": "housewood_stage_left"
+    },
+    {
+      "name": "housewood_stage_top_left"
+    },
+    {
+      "name": "housewood_stage_top"
+    },
+    {
+      "name": "housewood_stage_top_right"
+    },
+    {
+      "name": "housewood_stage_right"
+    },
+    {
+      "name": "housewood_stage_bottom_right"
+    },
+    {
+      "name": "unlitdesert"
+    },
+    {
+      "name": "housewastelandcornerbl"
+    },
+    {
+      "name": "housewastelandcornertr"
+    },
+    {
+      "name": "housewastelandcornertl"
+    },
+    {
+      "name": "housewastelandnorth"
+    },
+    {
+      "name": "housewastelandeast"
+    },
+    {
+      "name": "housewastelandwest"
+    },
+    {
+      "name": "housewastelandmorecornerbr"
+    },
+    {
+      "name": "housewastelandmorecornerbl"
+    },
+    {
+      "name": "housewastelandmorecornertr"
+    },
+    {
+      "name": "housewastelandmorecornertl"
+    },
+    {
+      "name": "wood"
+    },
+    {
+      "name": "wood-broken",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "wood-broken2"
+    },
+    {
+      "name": "wood-broken3"
+    },
+    {
+      "name": "wood-broken4"
+    },
+    {
+      "name": "wood-broken5"
+    },
+    {
+      "name": "wood-broken6"
+    },
+    {
+      "name": "wood-broken7"
+    },
+    {
+      "name": "floor_padded"
+    },
+    {
+      "name": "titanium"
+    },
+    {
+      "name": "plastitanium"
+    },
+    {
+      "name": "plastitanium_red"
+    },
+    {
+      "name": "plastitanium_dam1"
+    },
+    {
+      "name": "plastitanium_dam3"
+    },
+    {
+      "name": "plastitanium_dam4"
+    },
+    {
+      "name": "wasteland"
+    },
+    {
+      "name": "wasteland0"
+    },
+    {
+      "name": "wasteland1"
+    },
+    {
+      "name": "wasteland2"
+    },
+    {
+      "name": "wasteland3"
+    },
+    {
+      "name": "wasteland4"
+    },
+    {
+      "name": "wasteland5"
+    },
+    {
+      "name": "wasteland6"
+    },
+    {
+      "name": "wasteland7"
+    },
+    {
+      "name": "wasteland8"
+    },
+    {
+      "name": "wasteland9"
+    },
+    {
+      "name": "wasteland10"
+    },
+    {
+      "name": "wasteland11"
+    },
+    {
+      "name": "wasteland12"
+    },
+    {
+      "name": "wasteland_dug"
+    },
+    {
+      "name": "wood_tile"
+    },
+    {
+      "name": "wood_tile-broken"
+    },
+    {
+      "name": "wood_tile-broken2"
+    },
+    {
+      "name": "wood_tile-broken3"
+    },
+    {
+      "name": "large_wood"
+    },
+    {
+      "name": "large_wood-broken"
+    },
+    {
+      "name": "large_wood-broken2"
+    },
+    {
+      "name": "large_wood-broken3"
+    },
+    {
+      "name": "diagonal_wood"
+    },
+    {
+      "name": "diagonal_wood-broken"
+    },
+    {
+      "name": "diagonal_wood-broken2"
+    },
+    {
+      "name": "diagonal_wood-broken3"
+    },
+    {
+      "name": "housewood1-broken",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "housewood2-broken"
+    },
+    {
+      "name": "housewood3-broken"
+    },
+    {
+      "name": "housewood4-broken"
+    }
+  ]
+}

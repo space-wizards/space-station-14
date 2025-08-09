@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "brown"
+    },
+    {
+      "name": "brown_broken"
+    },
+    {
+      "name": "brown_corners",
+      "directions": 8
+    },
+    {
+      "name": "brown_edges",
+      "directions": 8
+    },
+    {
+      "name": "purple"
+    },
+    {
+      "name": "purple_broken"
+    },
+    {
+      "name": "purple_corners",
+      "directions": 8
+    },
+    {
+      "name": "purple_edges",
+      "directions": 8
+    },
+    {
+      "name": "orange"
+    },
+    {
+      "name": "orange_corners",
+      "directions": 8
+    },
+    {
+      "name": "orange_broken"
+    },
+    {
+      "name": "orange_edges",
+      "directions": 8
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "green_corners",
+      "directions": 8
+    },
+    {
+      "name": "green_broken"
+    },
+    {
+      "name": "green_edges",
+      "directions": 8
+    },
+    {
+      "name": "blue1"
+    },
+    {
+      "name": "blue1_corners",
+      "directions": 8
+    },
+    {
+      "name": "blue1_broken"
+    },
+    {
+      "name": "blue1_edges",
+      "directions": 8
+    },
+    {
+      "name": "blue2"
+    },
+    {
+      "name": "blue2_corners",
+      "directions": 8
+    },
+    {
+      "name": "blue2_broken"
+    },
+    {
+      "name": "blue2_edges",
+      "directions": 8
+    },
+    {
+      "name": "red"
+    },
+    {
+      "name": "red_corners",
+      "directions": 8
+    },
+    {
+      "name": "red_broken"
+    },
+    {
+      "name": "red_edges",
+      "directions": 8
+    }
+  ]
+}

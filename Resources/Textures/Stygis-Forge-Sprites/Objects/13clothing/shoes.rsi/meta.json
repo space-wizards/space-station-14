@@ -1,0 +1,548 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "detective"
+    },
+    {
+      "name": "boots"
+    },
+    {
+      "name": "white"
+    },
+    {
+      "name": "chef"
+    },
+    {
+      "name": "jackboots"
+    },
+    {
+      "name": "swat"
+    },
+    {
+      "name": "wizard"
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "galoshes"
+    },
+    {
+      "name": "red"
+    },
+    {
+      "name": "brown"
+    },
+    {
+      "name": "black"
+    },
+    {
+      "name": "orange"
+    },
+    {
+      "name": "orange1"
+    },
+    {
+      "name": "tourist"
+    },
+    {
+      "name": "magboots-old0"
+    },
+    {
+      "name": "magboots-old1"
+    },
+    {
+      "name": "magboots0"
+    },
+    {
+      "name": "magboots1"
+    },
+    {
+      "name": "s-ninja"
+    },
+    {
+      "name": "blue"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "purple"
+    },
+    {
+      "name": "rain_bow"
+    },
+    {
+      "name": "mime"
+    },
+    {
+      "name": "yellow"
+    },
+    {
+      "name": "cult"
+    },
+    {
+      "name": "secshoes"
+    },
+    {
+      "name": "laceups"
+    },
+    {
+      "name": "slippers_worn"
+    },
+    {
+      "name": "slippers"
+    },
+    {
+      "name": "leather"
+    },
+    {
+      "name": "boots-vox"
+    },
+    {
+      "name": "flippers"
+    },
+    {
+      "name": "boots-armalis"
+    },
+    {
+      "name": "ninja_rig"
+    },
+    {
+      "name": "ninja_rig_sealed"
+    },
+    {
+      "name": "hacker_rig"
+    },
+    {
+      "name": "hacker_rig_sealed"
+    },
+    {
+      "name": "ert_commander_rig"
+    },
+    {
+      "name": "ert_engineer_rig"
+    },
+    {
+      "name": "ert_medical_rig"
+    },
+    {
+      "name": "ert_security_rig"
+    },
+    {
+      "name": "ert_security_rig_sealed"
+    },
+    {
+      "name": "ert_commander_rig_sealed"
+    },
+    {
+      "name": "ert_engineer_rig_sealed"
+    },
+    {
+      "name": "ert_medical_rig_sealed"
+    },
+    {
+      "name": "breacher_rig_cheap"
+    },
+    {
+      "name": "breacher_rig_cheap_sealed"
+    },
+    {
+      "name": "breacher_rig_sealed"
+    },
+    {
+      "name": "breacher_rig"
+    },
+    {
+      "name": "medical_rig"
+    },
+    {
+      "name": "medical_rig_sealed"
+    },
+    {
+      "name": "engineering_rig_sealed"
+    },
+    {
+      "name": "engineering_rig"
+    },
+    {
+      "name": "security_rig_sealed"
+    },
+    {
+      "name": "security_rig"
+    },
+    {
+      "name": "hazard_rig"
+    },
+    {
+      "name": "hazard_rig_sealed"
+    },
+    {
+      "name": "merc_rig_sealed"
+    },
+    {
+      "name": "merc_rig"
+    },
+    {
+      "name": "asset_protection_rig_sealed"
+    },
+    {
+      "name": "asset_protection_rig"
+    },
+    {
+      "name": "eva_rig_sealed"
+    },
+    {
+      "name": "eva_rig"
+    },
+    {
+      "name": "digiboots"
+    },
+    {
+      "name": "workboots"
+    },
+    {
+      "name": "stealth_rig_sealed"
+    },
+    {
+      "name": "stealth_rig"
+    },
+    {
+      "name": "jackboots_knife"
+    },
+    {
+      "name": "digiboots_knife"
+    },
+    {
+      "name": "workboots_knife"
+    },
+    {
+      "name": "science_rig_sealed"
+    },
+    {
+      "name": "science_rig"
+    },
+    {
+      "name": "ert_janitor_rig_sealed"
+    },
+    {
+      "name": "ert_janitor_rig"
+    },
+    {
+      "name": "military_rig_sealed"
+    },
+    {
+      "name": "military_rig"
+    },
+    {
+      "name": "jungle"
+    },
+    {
+      "name": "desert"
+    },
+    {
+      "name": "duty"
+    },
+    {
+      "name": "whitedress"
+    },
+    {
+      "name": "ce_rig"
+    },
+    {
+      "name": "ce_rig_sealed"
+    },
+    {
+      "name": "sportshoe"
+    },
+    {
+      "name": "workbootstoeless"
+    },
+    {
+      "name": "flatswhite"
+    },
+    {
+      "name": "whitehi"
+    },
+    {
+      "name": "redhi"
+    },
+    {
+      "name": "brownhi"
+    },
+    {
+      "name": "blackhi"
+    },
+    {
+      "name": "orangehi"
+    },
+    {
+      "name": "bluehi"
+    },
+    {
+      "name": "greenhi"
+    },
+    {
+      "name": "purplehi"
+    },
+    {
+      "name": "yellowhi"
+    },
+    {
+      "name": "merc_rig_heavy_sealed"
+    },
+    {
+      "name": "merc_rig_heavy"
+    },
+    {
+      "name": "blackcaligae"
+    },
+    {
+      "name": "caligae"
+    },
+    {
+      "name": "whitecaligae"
+    },
+    {
+      "name": "greycaligae"
+    },
+    {
+      "name": "noble-boots"
+    },
+    {
+      "name": "comm-boots"
+    },
+    {
+      "name": "arbiter"
+    },
+    {
+      "name": "undertaker"
+    },
+    {
+      "name": "child_black"
+    },
+    {
+      "name": "prac_boots"
+    },
+    {
+      "name": "timbs"
+    },
+    {
+      "name": "deldboots"
+    },
+    {
+      "name": "eldboots"
+    },
+    {
+      "name": "roman"
+    },
+    {
+      "name": "advmag0"
+    },
+    {
+      "name": "advmag1"
+    },
+    {
+      "name": "warmboots"
+    },
+    {
+      "name": "imperialboots"
+    },
+    {
+      "name": "sisterold"
+    },
+    {
+      "name": "FWboots"
+    },
+    {
+      "name": "umboots",
+      "directions": 4
+    },
+    {
+      "name": "kboots"
+    },
+    {
+      "name": "smboots",
+      "directions": 4
+    },
+    {
+      "name": "orkshoes",
+      "directions": 4
+    },
+    {
+      "name": "warlock"
+    },
+    {
+      "name": "exorcist_boots",
+      "directions": 4
+    },
+    {
+      "name": "exorcist_boots0",
+      "directions": 4
+    },
+    {
+      "name": "exorcist_boots1",
+      "directions": 4
+    },
+    {
+      "name": "pmboots"
+    },
+    {
+      "name": "pmboots0"
+    },
+    {
+      "name": "pmboots1"
+    },
+    {
+      "name": "flakboots"
+    },
+    {
+      "name": "corsairold"
+    },
+    {
+      "name": "hopboots"
+    },
+    {
+      "name": "ihboots"
+    },
+    {
+      "name": "harlequin"
+    },
+    {
+      "name": "ksons"
+    },
+    {
+      "name": "comissar2"
+    },
+    {
+      "name": "umcap"
+    },
+    {
+      "name": "rgboots"
+    },
+    {
+      "name": "sisteroldd"
+    },
+    {
+      "name": "um_boots",
+      "directions": 4
+    },
+    {
+      "name": "sl_boots",
+      "directions": 4
+    },
+    {
+      "name": "rg_boots",
+      "directions": 4
+    },
+    {
+      "name": "1k_boots",
+      "directions": 4
+    },
+    {
+      "name": "sister"
+    },
+    {
+      "name": "Noisemarine_boots 0,1",
+      "directions": 4
+    },
+    {
+      "name": "Skit_shoes"
+    },
+    {
+      "name": "spsykerboots"
+    },
+    {
+      "name": "um_lib"
+    },
+    {
+      "name": "rg_lib"
+    },
+    {
+      "name": "acolyteboots"
+    },
+    {
+      "name": "corsair"
+    },
+    {
+      "name": "guardian"
+    },
+    {
+      "name": "inqshoes"
+    },
+    {
+      "name": "vig_boots"
+    },
+    {
+      "name": "techpriest",
+      "directions": 4
+    },
+    {
+      "name": "krootboot",
+      "directions": 4
+    },
+    {
+      "name": "skitshoes",
+      "directions": 4
+    },
+    {
+      "name": "kriegboots_OLD"
+    },
+    {
+      "name": "kriegboots_d_OLD"
+    },
+    {
+      "name": "grenboots_OLD"
+    },
+    {
+      "name": "brboots",
+      "directions": 4
+    },
+    {
+      "name": "gsfeet",
+      "directions": 4
+    },
+    {
+      "name": "ork_boots"
+    },
+    {
+      "name": "scionboots",
+      "directions": 4
+    },
+    {
+      "name": "ba_boots",
+      "directions": 4
+    },
+    {
+      "name": "mlsister"
+    },
+    {
+      "name": "brsister"
+    },
+    {
+      "name": "M_Boots-Icon"
+    },
+    {
+      "name": "kriegboots"
+    },
+    {
+      "name": "grenboots"
+    },
+    {
+      "name": "kriegboots_d"
+    },
+    {
+      "name": "ScionBoots"
+    },
+    {
+      "name": "Boots"
+    }
+  ]
+}

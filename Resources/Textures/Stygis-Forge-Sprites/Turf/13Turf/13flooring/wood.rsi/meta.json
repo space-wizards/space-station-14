@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "wood"
+    },
+    {
+      "name": "wood1"
+    },
+    {
+      "name": "wood_broken0"
+    },
+    {
+      "name": "wood_broken1"
+    },
+    {
+      "name": "wood_broken2"
+    },
+    {
+      "name": "wood_broken3"
+    },
+    {
+      "name": "wood_broken4"
+    },
+    {
+      "name": "wood_broken5"
+    },
+    {
+      "name": "wood_broken6"
+    },
+    {
+      "name": "new_wood"
+    },
+    {
+      "name": "new_wood2"
+    },
+    {
+      "name": "new_wood3"
+    },
+    {
+      "name": "new_wood4"
+    },
+    {
+      "name": "new_wood5"
+    },
+    {
+      "name": "new_wood6"
+    },
+    {
+      "name": "new_wood7"
+    },
+    {
+      "name": "new_wood8"
+    },
+    {
+      "name": "new_wood9"
+    }
+  ]
+}

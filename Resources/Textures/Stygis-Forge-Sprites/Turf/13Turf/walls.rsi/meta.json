@@ -1,0 +1,924 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "0"
+    },
+    {
+      "name": "riveted"
+    },
+    {
+      "name": "rock"
+    },
+    {
+      "name": "rock-dark"
+    },
+    {
+      "name": "rock_Archaeo"
+    },
+    {
+      "name": "rock_side",
+      "directions": 4
+    },
+    {
+      "name": "rock_side",
+      "directions": 4
+    },
+    {
+      "name": "rock_side",
+      "directions": 4
+    },
+    {
+      "name": "rockvault"
+    },
+    {
+      "name": "sandstonevault"
+    },
+    {
+      "name": "alienvault"
+    },
+    {
+      "name": "cult-narsie",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "fakewindows",
+      "directions": 8
+    },
+    {
+      "name": "fakewindows2",
+      "directions": 4
+    },
+    {
+      "name": "overlay_archaeo1"
+    },
+    {
+      "name": "overlay_archaeo2"
+    },
+    {
+      "name": "overlay_archaeo3"
+    },
+    {
+      "name": "overlay_excv1_1"
+    },
+    {
+      "name": "overlay_excv1_2"
+    },
+    {
+      "name": "overlay_excv1_3"
+    },
+    {
+      "name": "overlay_excv2_1"
+    },
+    {
+      "name": "overlay_excv2_2"
+    },
+    {
+      "name": "overlay_excv2_3"
+    },
+    {
+      "name": "overlay_excv3_1"
+    },
+    {
+      "name": "overlay_excv3_2"
+    },
+    {
+      "name": "overlay_excv3_3"
+    },
+    {
+      "name": "overlay_excv4_1"
+    },
+    {
+      "name": "overlay_excv4_2"
+    },
+    {
+      "name": "overlay_excv4_3"
+    },
+    {
+      "name": "overlay_damage"
+    },
+    {
+      "name": "rock"
+    },
+    {
+      "name": "rocky"
+    },
+    {
+      "name": "rock_side",
+      "directions": 4
+    },
+    {
+      "name": "rock11",
+      "directions": 4
+    },
+    {
+      "name": "corners",
+      "directions": 8
+    },
+    {
+      "name": "1parts",
+      "directions": 4
+    },
+    {
+      "name": "full_w",
+      "directions": 4
+    },
+    {
+      "name": "full_e",
+      "directions": 4
+    },
+    {
+      "name": "full_s",
+      "directions": 4
+    },
+    {
+      "name": "rock_side_large",
+      "directions": 4
+    },
+    {
+      "name": "W"
+    },
+    {
+      "name": "wall2"
+    },
+    {
+      "name": "wall1"
+    },
+    {
+      "name": "wall4"
+    },
+    {
+      "name": "wall8"
+    },
+    {
+      "name": "xwall10"
+    },
+    {
+      "name": "xwall5"
+    },
+    {
+      "name": "xwall9"
+    },
+    {
+      "name": "xwall6"
+    },
+    {
+      "name": "wall12"
+    },
+    {
+      "name": "wall10"
+    },
+    {
+      "name": "wall6"
+    },
+    {
+      "name": "wall5"
+    },
+    {
+      "name": "wall9"
+    },
+    {
+      "name": "wall3"
+    },
+    {
+      "name": "wall7"
+    },
+    {
+      "name": "wall11"
+    },
+    {
+      "name": "wall13"
+    },
+    {
+      "name": "hull0"
+    },
+    {
+      "name": "rock_side",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rock_side2",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "soft",
+      "directions": 8,
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05,
+          0.05
+        ]
+      ]
+    },
+    {
+      "name": "obs",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05
+        ]
+      ]
+    },
+    {
+      "name": "wall0"
+    },
+    {
+      "name": "wall15"
+    },
+    {
+      "name": "rustwall12",
+      "directions": 8
+    },
+    {
+      "name": "rustwall3",
+      "directions": 8
+    },
+    {
+      "name": "rustwall2"
+    },
+    {
+      "name": "rustwall1"
+    },
+    {
+      "name": "rustwall4"
+    },
+    {
+      "name": "rustwall8"
+    },
+    {
+      "name": "rustwall9"
+    },
+    {
+      "name": "rustwall10"
+    },
+    {
+      "name": "rustwall6"
+    },
+    {
+      "name": "rustwall5"
+    },
+    {
+      "name": "rustwall14"
+    },
+    {
+      "name": "rustwall7"
+    },
+    {
+      "name": "rustwall13"
+    },
+    {
+      "name": "rustwall11"
+    },
+    {
+      "name": "cyberspace",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "riveted_complex"
+    },
+    {
+      "name": "riveted_complex2"
+    },
+    {
+      "name": "rock"
+    },
+    {
+      "name": "r1"
+    },
+    {
+      "name": "r2"
+    },
+    {
+      "name": "r3"
+    },
+    {
+      "name": "fwall_open"
+    },
+    {
+      "name": "fwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "fwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "caves",
+      "directions": 8
+    },
+    {
+      "name": "2,0",
+      "directions": 8
+    },
+    {
+      "name": "3",
+      "directions": 4
+    },
+    {
+      "name": "caves_anim",
+      "directions": 8,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "black"
+    },
+    {
+      "name": "rock_side2",
+      "directions": 4
+    },
+    {
+      "name": "rock_corner_nw"
+    },
+    {
+      "name": "rock_corner_ne"
+    },
+    {
+      "name": "rock_corner_sw"
+    },
+    {
+      "name": "rock_corner_se"
+    },
+    {
+      "name": "vau2",
+      "directions": 8
+    },
+    {
+      "name": "vau4",
+      "directions": 8
+    },
+    {
+      "name": "vau3",
+      "directions": 8
+    },
+    {
+      "name": "tgr"
+    },
+    {
+      "name": "tgr2"
+    },
+    {
+      "name": "tgr3"
+    },
+    {
+      "name": "tgr4"
+    },
+    {
+      "name": "tgr5"
+    },
+    {
+      "name": "dark_side",
+      "directions": 4
+    },
+    {
+      "name": "r_wall-3"
+    },
+    {
+      "name": "r_wall"
+    },
+    {
+      "name": "r_wall-1"
+    },
+    {
+      "name": "r_wall-2"
+    },
+    {
+      "name": "r_wall-4"
+    },
+    {
+      "name": "r_wall-5"
+    },
+    {
+      "name": "r_wall-6"
+    },
+    {
+      "name": "frwall_open"
+    },
+    {
+      "name": "frwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "frwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "rwall0"
+    },
+    {
+      "name": "rwall1"
+    },
+    {
+      "name": "rwall2"
+    },
+    {
+      "name": "rwall3"
+    },
+    {
+      "name": "rwall4"
+    },
+    {
+      "name": "rwall5"
+    },
+    {
+      "name": "rwall6"
+    },
+    {
+      "name": "rwall7"
+    },
+    {
+      "name": "rwall8"
+    },
+    {
+      "name": "rwall9"
+    },
+    {
+      "name": "rwall10"
+    },
+    {
+      "name": "rwall11"
+    },
+    {
+      "name": "rwall12"
+    },
+    {
+      "name": "rwall13"
+    },
+    {
+      "name": "rwall14"
+    },
+    {
+      "name": "rwall15"
+    },
+    {
+      "name": "frwallx"
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "2",
+      "directions": 8,
+      "delays": [
+        [
+          0.5,
+          0.1
+        ],
+        [
+          0.5,
+          0.1
+        ],
+        [
+          0.5,
+          0.1
+        ],
+        [
+          0.5,
+          0.1
+        ],
+        [
+          0.5,
+          0.1
+        ],
+        [
+          0.5,
+          0.1
+        ],
+        [
+          0.5,
+          0.1
+        ],
+        [
+          0.5,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "4",
+      "directions": 8
+    },
+    {
+      "name": "5"
+    },
+    {
+      "name": "bg",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rock_side3",
+      "directions": 4
+    },
+    {
+      "name": "dark_over",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "ch2"
+    },
+    {
+      "name": "ch22"
+    },
+    {
+      "name": "ch223"
+    },
+    {
+      "name": "02",
+      "directions": 8
+    },
+    {
+      "name": "04",
+      "directions": 8
+    },
+    {
+      "name": "05"
+    },
+    {
+      "name": "scratch1"
+    },
+    {
+      "name": "scratch2"
+    },
+    {
+      "name": "scratch3"
+    },
+    {
+      "name": "scratch4"
+    },
+    {
+      "name": "wound1"
+    },
+    {
+      "name": "wound2"
+    },
+    {
+      "name": "wound3"
+    },
+    {
+      "name": "wound4"
+    },
+    {
+      "name": "damage1"
+    },
+    {
+      "name": "damage2"
+    },
+    {
+      "name": "damage3"
+    },
+    {
+      "name": "damage4"
+    },
+    {
+      "name": "damage5"
+    },
+    {
+      "name": "damage6"
+    },
+    {
+      "name": "damage7"
+    },
+    {
+      "name": "dirt1"
+    },
+    {
+      "name": "dirt2"
+    },
+    {
+      "name": "dirt3"
+    },
+    {
+      "name": "dirt4"
+    },
+    {
+      "name": "detail3"
+    },
+    {
+      "name": "detail1"
+    },
+    {
+      "name": "detail2",
+      "delays": [
+        [
+          0.1,
+          1.5,
+          0.0009999999,
+          1.5
+        ]
+      ]
+    },
+    {
+      "name": "detail2o",
+      "delays": [
+        [
+          0.1,
+          1.5,
+          0.0009999999,
+          1.5
+        ]
+      ]
+    },
+    {
+      "name": "rrwall0"
+    },
+    {
+      "name": "rrwall1"
+    },
+    {
+      "name": "rrwall2"
+    },
+    {
+      "name": "rrwall3",
+      "directions": 4
+    },
+    {
+      "name": "rrwall4"
+    },
+    {
+      "name": "rrwall5"
+    },
+    {
+      "name": "rrwall6"
+    },
+    {
+      "name": "rrwall7"
+    },
+    {
+      "name": "rrwall8"
+    },
+    {
+      "name": "rrwall9"
+    },
+    {
+      "name": "rrwall10"
+    },
+    {
+      "name": "rrwall11"
+    },
+    {
+      "name": "rrwall12",
+      "directions": 4
+    },
+    {
+      "name": "rrwall13"
+    },
+    {
+      "name": "rrwall14"
+    },
+    {
+      "name": "rrwall15"
+    },
+    {
+      "name": "r_wall1111"
+    },
+    {
+      "name": "detail2u"
+    },
+    {
+      "name": "wall14"
+    },
+    {
+      "name": "W0"
+    },
+    {
+      "name": "WN"
+    },
+    {
+      "name": "dug"
+    },
+    {
+      "name": "rock2",
+      "directions": 4
+    },
+    {
+      "name": "A"
+    },
+    {
+      "name": "rock3"
+    },
+    {
+      "name": "snow1",
+      "directions": 4
+    },
+    {
+      "name": "snow6",
+      "directions": 4
+    },
+    {
+      "name": "snow9",
+      "directions": 4
+    },
+    {
+      "name": "snow5"
+    },
+    {
+      "name": "snow10"
+    },
+    {
+      "name": "snow3"
+    },
+    {
+      "name": "single"
+    },
+    {
+      "name": "snow7"
+    },
+    {
+      "name": "snow12"
+    },
+    {
+      "name": "snow13"
+    },
+    {
+      "name": "snow14"
+    },
+    {
+      "name": "rock1"
+    },
+    {
+      "name": "snow"
+    },
+    {
+      "name": "snow0"
+    }
+  ]
+}

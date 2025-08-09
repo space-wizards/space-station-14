@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "snowairlock"
+    },
+    {
+      "name": "snowfloor_e"
+    },
+    {
+      "name": "snowfloor"
+    },
+    {
+      "name": "snowfloor_n"
+    },
+    {
+      "name": "snowfloor_s"
+    },
+    {
+      "name": "snowfloor_w"
+    },
+    {
+      "name": "snowwall_e"
+    },
+    {
+      "name": "snowwall_n"
+    },
+    {
+      "name": "snowwall_s"
+    },
+    {
+      "name": "snowwall_w"
+    },
+    {
+      "name": "greenOverlay"
+    },
+    {
+      "name": "redOverlay"
+    }
+  ]
+}

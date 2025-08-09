@@ -1,0 +1,715 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "lasgun"
+    },
+    {
+      "name": "lasgun_smallmag"
+    },
+    {
+      "name": "lasgun_mag"
+    },
+    {
+      "name": "lasgun_bigmag"
+    },
+    {
+      "name": "lasgun_specmag"
+    },
+    {
+      "name": "lasgun_plug"
+    },
+    {
+      "name": "lasgun_plugalt"
+    },
+    {
+      "name": "laspistol"
+    },
+    {
+      "name": "laspistol_smallmag"
+    },
+    {
+      "name": "laspistol_mag"
+    },
+    {
+      "name": "laspistol_bigmag"
+    },
+    {
+      "name": "laspistol_specmag"
+    },
+    {
+      "name": "laspistol_plug"
+    },
+    {
+      "name": "laspistol_plugalt"
+    },
+    {
+      "name": "lucius"
+    },
+    {
+      "name": "lucius_smallmag"
+    },
+    {
+      "name": "lucius_mag"
+    },
+    {
+      "name": "lucius_bigmag"
+    },
+    {
+      "name": "lucius_specmag"
+    },
+    {
+      "name": "lucius_plug"
+    },
+    {
+      "name": "lucius_plugalt"
+    },
+    {
+      "name": "elysian"
+    },
+    {
+      "name": "elysian_smallmag"
+    },
+    {
+      "name": "elysian_mag"
+    },
+    {
+      "name": "elysian_bigmag"
+    },
+    {
+      "name": "elysian_specmag"
+    },
+    {
+      "name": "elysian_plug"
+    },
+    {
+      "name": "elysian_plugalt"
+    },
+    {
+      "name": "hellgun"
+    },
+    {
+      "name": "hellgun_plug"
+    },
+    {
+      "name": "hellgun_plugalt"
+    },
+    {
+      "name": "hellpistol"
+    },
+    {
+      "name": "hellpistol_plug"
+    },
+    {
+      "name": "hellpistol_plugalt"
+    },
+    {
+      "name": "flamer"
+    },
+    {
+      "name": "flamer_mag"
+    },
+    {
+      "name": "flamer_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "flamer_on_mag",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "flamepistol"
+    },
+    {
+      "name": "flamepistol_mag"
+    },
+    {
+      "name": "flamepistol_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "flamepistol_on_mag",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plasmagun"
+    },
+    {
+      "name": "plasmagun_mag"
+    },
+    {
+      "name": "plasmagun_plug"
+    },
+    {
+      "name": "plasmagun_plugalt"
+    },
+    {
+      "name": "plasmagun_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plasmagun_on_mag",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plasmagun_on_plug",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plasmagun_on_plugalt",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plasmapistol"
+    },
+    {
+      "name": "plasmapistol_mag"
+    },
+    {
+      "name": "plasmapistol_plug"
+    },
+    {
+      "name": "plasmapistol_plugalt"
+    },
+    {
+      "name": "plasmapistol_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plasmapistol_on_mag",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plasmapistol_on_plug",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plasmapistol_on_plugalt",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "Rplasmapistol"
+    },
+    {
+      "name": "Rplasmapistol_mag"
+    },
+    {
+      "name": "Rplasmapistol_plug"
+    },
+    {
+      "name": "Rplasmapistol_plugalt"
+    },
+    {
+      "name": "Rplasmapistol_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "Rplasmapistol_on_mag",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "Rplasmapistol_on_plug",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "Rplasmapistol_on_plugalt",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "Gplasmapistol"
+    },
+    {
+      "name": "Gplasmapistol_mag"
+    },
+    {
+      "name": "Gplasmapistol_plug"
+    },
+    {
+      "name": "Gplasmapistol_plugalt"
+    },
+    {
+      "name": "Gplasmapistol_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "Gplasmapistol_on_mag",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "Gplasmapistol_on_plug",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "Gplasmapistol_on_plugalt",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "volkite"
+    },
+    {
+      "name": "volkite_mag"
+    },
+    {
+      "name": "volkite_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "volkite_on_mag",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "boltpistol"
+    },
+    {
+      "name": "boltpistol_loaded"
+    },
+    {
+      "name": "boltpistol_mag"
+    },
+    {
+      "name": "boltpistol_loaded_mag"
+    },
+    {
+      "name": "boltpistol_bigmag"
+    },
+    {
+      "name": "boltpistol_loaded_bigmag"
+    },
+    {
+      "name": "boltpistol_firemag"
+    },
+    {
+      "name": "boltpistol_loaded_firemag"
+    },
+    {
+      "name": "Rboltpistol"
+    },
+    {
+      "name": "Rboltpistol_loaded"
+    },
+    {
+      "name": "Rboltpistol_mag"
+    },
+    {
+      "name": "Rboltpistol_loaded_mag"
+    },
+    {
+      "name": "Rboltpistol_bigmag"
+    },
+    {
+      "name": "Rboltpistol_loaded_bigmag"
+    },
+    {
+      "name": "Rboltpistol_firemag"
+    },
+    {
+      "name": "Rboltpistol_loaded_firemag"
+    },
+    {
+      "name": "Gboltpistol"
+    },
+    {
+      "name": "Gboltpistol_loaded"
+    },
+    {
+      "name": "Gboltpistol_mag"
+    },
+    {
+      "name": "Gboltpistol_loaded_mag"
+    },
+    {
+      "name": "Gboltpistol_bigmag"
+    },
+    {
+      "name": "Gboltpistol_loaded_bigmag"
+    },
+    {
+      "name": "Gboltpistol_firemag"
+    },
+    {
+      "name": "Gboltpistol_loaded_firemag"
+    },
+    {
+      "name": "guardshotgun"
+    },
+    {
+      "name": "guardshotgun_loaded"
+    },
+    {
+      "name": "guardshotgun_pump"
+    },
+    {
+      "name": "guardshotgun_pump_obj"
+    },
+    {
+      "name": "kriegshotgun"
+    },
+    {
+      "name": "kriegshotgun_loaded"
+    },
+    {
+      "name": "chainsword"
+    },
+    {
+      "name": "chainsword_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "Rchainsword"
+    },
+    {
+      "name": "Rchainsword_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "Gchainsword"
+    },
+    {
+      "name": "Gchainsword_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "hypogauntlet"
+    },
+    {
+      "name": "hypogauntlet_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "powersword"
+    },
+    {
+      "name": "powersword_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "powerclaw"
+    },
+    {
+      "name": "powerclaw_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "powerclaw_mag"
+    },
+    {
+      "name": "powerclaw_on_mag",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "powerclaw_alt"
+    },
+    {
+      "name": "powerclaw-alt_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "powerclaw-alt_mag"
+    },
+    {
+      "name": "powerclaw-alt_on_mag",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "sheath"
+    },
+    {
+      "name": "sheath_chainsword"
+    },
+    {
+      "name": "sheath_Rchainsword"
+    },
+    {
+      "name": "sheath_Gchainsword"
+    },
+    {
+      "name": "sheath_powersword"
+    },
+    {
+      "name": "guardflag"
+    },
+    {
+      "name": "smallmag_100"
+    },
+    {
+      "name": "smallmag_50"
+    },
+    {
+      "name": "smallmag_0",
+      "delays": [
+        [
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "lasmag_100"
+    },
+    {
+      "name": "lasmag_50"
+    },
+    {
+      "name": "lasmag_0",
+      "delays": [
+        [
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "bigmag_100"
+    },
+    {
+      "name": "bigmag_50"
+    },
+    {
+      "name": "bigmag_0",
+      "delays": [
+        [
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "specmag_100"
+    },
+    {
+      "name": "specmag_50"
+    },
+    {
+      "name": "specmag_0",
+      "delays": [
+        [
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "plug"
+    },
+    {
+      "name": "plug_alt"
+    },
+    {
+      "name": "flamer_tank"
+    },
+    {
+      "name": "plasma_flask"
+    },
+    {
+      "name": "8ga-shellbox"
+    },
+    {
+      "name": "8ga-shellbox_0"
+    },
+    {
+      "name": "8ga-shell_1"
+    },
+    {
+      "name": "8ga-shell_2"
+    },
+    {
+      "name": "8ga-shell_3"
+    },
+    {
+      "name": "8ga-shell_4"
+    },
+    {
+      "name": "boltersmallmag"
+    },
+    {
+      "name": "boltersmallmag_0"
+    },
+    {
+      "name": "bolterbigmag"
+    },
+    {
+      "name": "bolterbigmag_0"
+    },
+    {
+      "name": "bolterfiremag"
+    },
+    {
+      "name": "bolterfiremag_0"
+    }
+  ]
+}

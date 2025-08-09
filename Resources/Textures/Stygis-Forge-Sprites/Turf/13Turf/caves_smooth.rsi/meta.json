@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "stonewall",
+      "directions": 8
+    },
+    {
+      "name": "stonewall_end",
+      "directions": 4
+    },
+    {
+      "name": "stonewall_straight",
+      "directions": 4
+    },
+    {
+      "name": "wall15"
+    },
+    {
+      "name": "xwall",
+      "directions": 8
+    }
+  ]
+}

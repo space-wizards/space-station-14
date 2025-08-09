@@ -1,0 +1,170 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "normal_bolter"
+    },
+    {
+      "name": "normal_bolter_empty"
+    },
+    {
+      "name": "ultrabolter"
+    },
+    {
+      "name": "ultrabolter_empty"
+    },
+    {
+      "name": "sallybolter"
+    },
+    {
+      "name": "sallybolter_empty"
+    },
+    {
+      "name": "ravenbolter"
+    },
+    {
+      "name": "ravenbolter_empty"
+    },
+    {
+      "name": "sonsbolter"
+    },
+    {
+      "name": "sonsbolter_empty"
+    },
+    {
+      "name": "nurglebolter"
+    },
+    {
+      "name": "nurglebolter_empty"
+    },
+    {
+      "name": "normal_boltpistol"
+    },
+    {
+      "name": "normal_boltpistol_empty"
+    },
+    {
+      "name": "ultraboltpistol"
+    },
+    {
+      "name": "ultraboltpistol_empty"
+    },
+    {
+      "name": "sallyboltpistol"
+    },
+    {
+      "name": "sallyboltpistol_empty"
+    },
+    {
+      "name": "ravenboltpistol"
+    },
+    {
+      "name": "ravenboltpistol_empty"
+    },
+    {
+      "name": "sonsboltpistol"
+    },
+    {
+      "name": "sonsboltpistol_empty"
+    },
+    {
+      "name": "nurgleboltpistol"
+    },
+    {
+      "name": "nurgleboltpistol_empty"
+    },
+    {
+      "name": "lasgun"
+    },
+    {
+      "name": "lasgun_empty"
+    },
+    {
+      "name": "longlas"
+    },
+    {
+      "name": "longlas_empty"
+    },
+    {
+      "name": "autogun"
+    },
+    {
+      "name": "autogun_empty"
+    },
+    {
+      "name": "voxlegishotgun"
+    },
+    {
+      "name": "voxlegishotgun_empty"
+    },
+    {
+      "name": "flamer"
+    },
+    {
+      "name": "flamer_empty"
+    },
+    {
+      "name": "stormbolter"
+    },
+    {
+      "name": "stormbolter_empty"
+    },
+    {
+      "name": "fragnade"
+    },
+    {
+      "name": "fragnade_live"
+    },
+    {
+      "name": "kraknade"
+    },
+    {
+      "name": "kraknade_live",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "boltermag"
+    },
+    {
+      "name": "boltermag_empty"
+    },
+    {
+      "name": "boltpistolmag"
+    },
+    {
+      "name": "boltpistolmag_empty"
+    },
+    {
+      "name": "lasgunmag"
+    },
+    {
+      "name": "autogunmag"
+    },
+    {
+      "name": "autogunmag_empty"
+    },
+    {
+      "name": "stormboltermag"
+    },
+    {
+      "name": "stormboltermag_empty"
+    },
+    {
+      "name": "bonus_tristbolter"
+    },
+    {
+      "name": "bonus_tristbolter_empty"
+    }
+  ]
+}

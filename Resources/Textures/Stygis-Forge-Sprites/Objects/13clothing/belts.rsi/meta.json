@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "warfare_belt"
+    },
+    {
+      "name": "utilitybelt"
+    },
+    {
+      "name": "gearbelt"
+    },
+    {
+      "name": "soulstonebelt"
+    },
+    {
+      "name": "securitybelt"
+    },
+    {
+      "name": "championbelt"
+    },
+    {
+      "name": "swatbelt"
+    },
+    {
+      "name": "inflatable"
+    },
+    {
+      "name": "emsbelt"
+    },
+    {
+      "name": "fannypack_white"
+    },
+    {
+      "name": "fannypack_big_white"
+    },
+    {
+      "name": "medicalbelt"
+    },
+    {
+      "name": "alch_belt"
+    },
+    {
+      "name": "M_Backpack-Icon"
+    },
+    {
+      "name": "M_SBackpack-Icon"
+    },
+    {
+      "name": "kriegback"
+    }
+  ]
+}

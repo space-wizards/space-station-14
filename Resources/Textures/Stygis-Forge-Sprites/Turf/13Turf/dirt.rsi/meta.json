@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "dirt",
+      "directions": 8
+    },
+    {
+      "name": "dirt1",
+      "directions": 8
+    },
+    {
+      "name": "dirtlump"
+    },
+    {
+      "name": "grave"
+    },
+    {
+      "name": "gravecovered"
+    },
+    {
+      "name": "surface",
+      "directions": 4
+    },
+    {
+      "name": "surface1",
+      "directions": 4
+    },
+    {
+      "name": "mud",
+      "directions": 8
+    },
+    {
+      "name": "0,0"
+    },
+    {
+      "name": "1,0"
+    },
+    {
+      "name": "2,0"
+    },
+    {
+      "name": "0,1"
+    },
+    {
+      "name": "1,1"
+    },
+    {
+      "name": "2,1"
+    },
+    {
+      "name": "0,2"
+    },
+    {
+      "name": "1,2"
+    },
+    {
+      "name": "2,2"
+    }
+  ]
+}

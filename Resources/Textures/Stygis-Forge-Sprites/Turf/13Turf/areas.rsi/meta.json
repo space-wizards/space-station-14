@@ -1,0 +1,1029 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "unknown"
+    },
+    {
+      "name": "captain"
+    },
+    {
+      "name": "Vault"
+    },
+    {
+      "name": "bridge"
+    },
+    {
+      "name": "ce"
+    },
+    {
+      "name": "engineering"
+    },
+    {
+      "name": "engineering_foyer"
+    },
+    {
+      "name": "atmos"
+    },
+    {
+      "name": "atmos_monitoring"
+    },
+    {
+      "name": "atmos_storage"
+    },
+    {
+      "name": "engine"
+    },
+    {
+      "name": "engine_waste"
+    },
+    {
+      "name": "engineering_storage"
+    },
+    {
+      "name": "engineering_supply"
+    },
+    {
+      "name": "drone_fab"
+    },
+    {
+      "name": "engine_monitoring"
+    },
+    {
+      "name": "engine_smes"
+    },
+    {
+      "name": "engine_eva"
+    },
+    {
+      "name": "engineering_locker"
+    },
+    {
+      "name": "engineering_break"
+    },
+    {
+      "name": "engineering_workshop"
+    },
+    {
+      "name": "gravgen"
+    },
+    {
+      "name": "teleporter"
+    },
+    {
+      "name": "chapel"
+    },
+    {
+      "name": "chapeldorm"
+    },
+    {
+      "name": "chapeloffice"
+    },
+    {
+      "name": "chapelsurgery"
+    },
+    {
+      "name": "chapelchem"
+    },
+    {
+      "name": "chapelrecovery"
+    },
+    {
+      "name": "chapelarmory"
+    },
+    {
+      "name": "chapelvault"
+    },
+    {
+      "name": "sistersup"
+    },
+    {
+      "name": "yellow"
+    },
+    {
+      "name": "robotics"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "security"
+    },
+    {
+      "name": "barracks"
+    },
+    {
+      "name": "sec_prison"
+    },
+    {
+      "name": "hos"
+    },
+    {
+      "name": "security_sub"
+    },
+    {
+      "name": "rd"
+    },
+    {
+      "name": "toxins"
+    },
+    {
+      "name": "toxlab"
+    },
+    {
+      "name": "xeno_lab"
+    },
+    {
+      "name": "xeno_f_lab"
+    },
+    {
+      "name": "xeno_f_store"
+    },
+    {
+      "name": "toxstorage"
+    },
+    {
+      "name": "toxtest"
+    },
+    {
+      "name": "toxmisc"
+    },
+    {
+      "name": "chem"
+    },
+    {
+      "name": "decontamination"
+    },
+    {
+      "name": "crew_quarters"
+    },
+    {
+      "name": "research"
+    },
+    {
+      "name": "research_dock"
+    },
+    {
+      "name": "mechbay"
+    },
+    {
+      "name": "researchbreak"
+    },
+    {
+      "name": "labwing"
+    },
+    {
+      "name": "misclab"
+    },
+    {
+      "name": "devlab"
+    },
+    {
+      "name": "morgue"
+    },
+    {
+      "name": "storage"
+    },
+    {
+      "name": "art_storage"
+    },
+    {
+      "name": "aux_storage"
+    },
+    {
+      "name": "primary_storage"
+    },
+    {
+      "name": "eva_storage"
+    },
+    {
+      "name": "tech_storage"
+    },
+    {
+      "name": "securetech_storage"
+    },
+    {
+      "name": "tecomm_storage"
+    },
+    {
+      "name": "shuttle"
+    },
+    {
+      "name": "exit"
+    },
+    {
+      "name": "start"
+    },
+    {
+      "name": "dk_yellow"
+    },
+    {
+      "name": "purple"
+    },
+    {
+      "name": "bar"
+    },
+    {
+      "name": "cafeteria"
+    },
+    {
+      "name": "conference"
+    },
+    {
+      "name": "restrooms"
+    },
+    {
+      "name": "observatory"
+    },
+    {
+      "name": "shuttle2"
+    },
+    {
+      "name": "shuttle3"
+    },
+    {
+      "name": "blue"
+    },
+    {
+      "name": "red"
+    },
+    {
+      "name": "customs"
+    },
+    {
+      "name": "brig"
+    },
+    {
+      "name": "armory"
+    },
+    {
+      "name": "sec_processing"
+    },
+    {
+      "name": "execution_room"
+    },
+    {
+      "name": "rt"
+    },
+    {
+      "name": "courtroom"
+    },
+    {
+      "name": "ai_upload"
+    },
+    {
+      "name": "ai_server"
+    },
+    {
+      "name": "ai_foyer"
+    },
+    {
+      "name": "ai_chamber"
+    },
+    {
+      "name": "ai_cyborg"
+    },
+    {
+      "name": "detective"
+    },
+    {
+      "name": "checkpoint1"
+    },
+    {
+      "name": "eva"
+    },
+    {
+      "name": "kitchen"
+    },
+    {
+      "name": "medbay"
+    },
+    {
+      "name": "medbay2"
+    },
+    {
+      "name": "mansionmedstorage"
+    },
+    {
+      "name": "mansionmed"
+    },
+    {
+      "name": "mansionsurgery"
+    },
+    {
+      "name": "medbay4"
+    },
+    {
+      "name": "medbay_break"
+    },
+    {
+      "name": "mansionchem"
+    },
+    {
+      "name": "primarystorage"
+    },
+    {
+      "name": "panelsS"
+    },
+    {
+      "name": "panelsP"
+    },
+    {
+      "name": "SolarcontrolS"
+    },
+    {
+      "name": "SolarcontrolP"
+    },
+    {
+      "name": "construction"
+    },
+    {
+      "name": "auxstorage"
+    },
+    {
+      "name": "emergencystorage"
+    },
+    {
+      "name": "locker"
+    },
+    {
+      "name": "fitness"
+    },
+    {
+      "name": "head_quarters"
+    },
+    {
+      "name": "maintenance"
+    },
+    {
+      "name": "maintcentral"
+    },
+    {
+      "name": "maintcentral2"
+    },
+    {
+      "name": "nemaint"
+    },
+    {
+      "name": "nmaint"
+    },
+    {
+      "name": "nmaint2"
+    },
+    {
+      "name": "nwmaint"
+    },
+    {
+      "name": "wmaint"
+    },
+    {
+      "name": "swmaint"
+    },
+    {
+      "name": "emaint"
+    },
+    {
+      "name": "southmaint"
+    },
+    {
+      "name": "southmaint2"
+    },
+    {
+      "name": "semaint"
+    },
+    {
+      "name": "maint_bridge"
+    },
+    {
+      "name": "maint_engine"
+    },
+    {
+      "name": "maint_turbine"
+    },
+    {
+      "name": "maint_electrical"
+    },
+    {
+      "name": "maint_atmos"
+    },
+    {
+      "name": "maint_engineering"
+    },
+    {
+      "name": "maint_department"
+    },
+    {
+      "name": "maint_sci"
+    },
+    {
+      "name": "maint_xenobio"
+    },
+    {
+      "name": "maint_e_shuttle"
+    },
+    {
+      "name": "maint_research_shuttle"
+    },
+    {
+      "name": "maint_research_port"
+    },
+    {
+      "name": "maint_research_starboard"
+    },
+    {
+      "name": "maint_bar"
+    },
+    {
+      "name": "maint_cargo"
+    },
+    {
+      "name": "maint_disposal"
+    },
+    {
+      "name": "maint_library"
+    },
+    {
+      "name": "maint_chapel"
+    },
+    {
+      "name": "maint_monastery"
+    },
+    {
+      "name": "maint_locker"
+    },
+    {
+      "name": "maint_arrivals"
+    },
+    {
+      "name": "maint_medbay"
+    },
+    {
+      "name": "maint_morgue"
+    },
+    {
+      "name": "maint_eva"
+    },
+    {
+      "name": "maint_dorms"
+    },
+    {
+      "name": "maint_crew"
+    },
+    {
+      "name": "maint_mining"
+    },
+    {
+      "name": "maint_sec"
+    },
+    {
+      "name": "maint_brig"
+    },
+    {
+      "name": "maint_prison"
+    },
+    {
+      "name": "maint_security_port"
+    },
+    {
+      "name": "maint_security_starboard"
+    },
+    {
+      "name": "hallC1"
+    },
+    {
+      "name": "hallC2"
+    },
+    {
+      "name": "hallC3"
+    },
+    {
+      "name": "halln"
+    },
+    {
+      "name": "halle"
+    },
+    {
+      "name": "halls"
+    },
+    {
+      "name": "hallw"
+    },
+    {
+      "name": "escape"
+    },
+    {
+      "name": "entry_1"
+    },
+    {
+      "name": "entry_2"
+    },
+    {
+      "name": "entry_3"
+    },
+    {
+      "name": "entry_4"
+    },
+    {
+      "name": "entry_pods"
+    },
+    {
+      "name": "hop"
+    },
+    {
+      "name": "cargo"
+    },
+    {
+      "name": "cargo_office"
+    },
+    {
+      "name": "tradefloor"
+    },
+    {
+      "name": "quartoffice"
+    },
+    {
+      "name": "warehouse"
+    },
+    {
+      "name": "mailroom"
+    },
+    {
+      "name": "cargo_break"
+    },
+    {
+      "name": "cargo_lobby"
+    },
+    {
+      "name": "janitor"
+    },
+    {
+      "name": "ai"
+    },
+    {
+      "name": "disposal"
+    },
+    {
+      "name": "mining"
+    },
+    {
+      "name": "mining_break"
+    },
+    {
+      "name": "mining_office"
+    },
+    {
+      "name": "mining_production"
+    },
+    {
+      "name": "mining_eva"
+    },
+    {
+      "name": "mining_living"
+    },
+    {
+      "name": "explored"
+    },
+    {
+      "name": "unexplored"
+    },
+    {
+      "name": "cave"
+    },
+    {
+      "name": "sewer"
+    },
+    {
+      "name": "dungeon"
+    },
+    {
+      "name": "hydro"
+    },
+    {
+      "name": "garden"
+    },
+    {
+      "name": "library"
+    },
+    {
+      "name": "law"
+    },
+    {
+      "name": "toxmix"
+    },
+    {
+      "name": "shuttlegrn"
+    },
+    {
+      "name": "shuttlegrn2"
+    },
+    {
+      "name": "shuttlered"
+    },
+    {
+      "name": "shuttlered2"
+    },
+    {
+      "name": "nuke_storage"
+    },
+    {
+      "name": "virology"
+    },
+    {
+      "name": "cmo"
+    },
+    {
+      "name": "warden"
+    },
+    {
+      "name": "panelsA"
+    },
+    {
+      "name": "cryopods"
+    },
+    {
+      "name": "lounge"
+    },
+    {
+      "name": "Sleep"
+    },
+    {
+      "name": "SolarcontrolA"
+    },
+    {
+      "name": "toilet"
+    },
+    {
+      "name": "LP"
+    },
+    {
+      "name": "LPS"
+    },
+    {
+      "name": "showroom"
+    },
+    {
+      "name": "theatre"
+    },
+    {
+      "name": "exam_room"
+    },
+    {
+      "name": "surgery"
+    },
+    {
+      "name": "genetics"
+    },
+    {
+      "name": "cloning"
+    },
+    {
+      "name": "server"
+    },
+    {
+      "name": "thunder"
+    },
+    {
+      "name": "centcom"
+    },
+    {
+      "name": "cryo"
+    },
+    {
+      "name": "patients"
+    },
+    {
+      "name": "syndie-ship"
+    },
+    {
+      "name": "syndie-control"
+    },
+    {
+      "name": "syndie-elite"
+    },
+    {
+      "name": "firingrange"
+    },
+    {
+      "name": "tcomsatcham"
+    },
+    {
+      "name": "tcomsatentrance"
+    },
+    {
+      "name": "tcomsatlob"
+    },
+    {
+      "name": "tcomsatstore"
+    },
+    {
+      "name": "tcomsateast"
+    },
+    {
+      "name": "tcomsatwest"
+    },
+    {
+      "name": "tcomsatcomp"
+    },
+    {
+      "name": "tcomsatlounge"
+    },
+    {
+      "name": "Holodeck"
+    },
+    {
+      "name": "away"
+    },
+    {
+      "name": "away1"
+    },
+    {
+      "name": "away2"
+    },
+    {
+      "name": "away3"
+    },
+    {
+      "name": "away4"
+    },
+    {
+      "name": "red2"
+    },
+    {
+      "name": "blue2"
+    },
+    {
+      "name": "blue-red2"
+    },
+    {
+      "name": "blue-red-d"
+    },
+    {
+      "name": "blue-red",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "invi"
+    },
+    {
+      "name": "blueold",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "dark"
+    },
+    {
+      "name": "dark160"
+    },
+    {
+      "name": "dark128"
+    },
+    {
+      "name": "party",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "blue",
+      "delays": [
+        [
+          0.3,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "bluenew",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "anomaly"
+    },
+    {
+      "name": "anog"
+    },
+    {
+      "name": "anosample"
+    },
+    {
+      "name": "anoentry"
+    },
+    {
+      "name": "anohallway"
+    },
+    {
+      "name": "anofilter"
+    },
+    {
+      "name": "anolab"
+    },
+    {
+      "name": "anolab"
+    },
+    {
+      "name": "anospectro"
+    },
+    {
+      "name": "iso1"
+    },
+    {
+      "name": "iso2"
+    },
+    {
+      "name": "iso3"
+    },
+    {
+      "name": "red",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "north"
+    },
+    {
+      "name": "northeast"
+    },
+    {
+      "name": "northwest"
+    },
+    {
+      "name": "south"
+    },
+    {
+      "name": "southeast"
+    },
+    {
+      "name": "southwest"
+    },
+    {
+      "name": "east"
+    },
+    {
+      "name": "west"
+    },
+    {
+      "name": "Tactical"
+    },
+    {
+      "name": "substation"
+    },
+    {
+      "name": "space"
+    },
+    {
+      "name": "outpost_research"
+    },
+    {
+      "name": "outpost_engine"
+    },
+    {
+      "name": "outpost_mine_main"
+    },
+    {
+      "name": "outpost_mine_west"
+    },
+    {
+      "name": "outpost_mine_north"
+    },
+    {
+      "name": "sub_maint_fore"
+    },
+    {
+      "name": "sub_maint_aft"
+    },
+    {
+      "name": "sub_maint_port"
+    },
+    {
+      "name": "sub_maint_starboard"
+    },
+    {
+      "name": "sub_maint_central"
+    },
+    {
+      "name": "sub_maint_command"
+    },
+    {
+      "name": "checkpoint"
+    },
+    {
+      "name": "thruster"
+    },
+    {
+      "name": "exploration"
+    },
+    {
+      "name": "hangar"
+    },
+    {
+      "name": "maint1"
+    },
+    {
+      "name": "maint2"
+    },
+    {
+      "name": "maint3"
+    },
+    {
+      "name": "hprimary"
+    },
+    {
+      "name": "grey"
+    },
+    {
+      "name": "brown"
+    },
+    {
+      "name": "sickly_green"
+    },
+    {
+      "name": "tyranid_red"
+    },
+    {
+      "name": "farm"
+    },
+    {
+      "name": "inn"
+    },
+    {
+      "name": "hab"
+    },
+    {
+      "name": "habinside"
+    },
+    {
+      "name": "enforce"
+    },
+    {
+      "name": "village"
+    },
+    {
+      "name": "villageinside"
+    },
+    {
+      "name": "solars"
+    },
+    {
+      "name": "gatehouse"
+    },
+    {
+      "name": "forest"
+    },
+    {
+      "name": "forwardpost"
+    },
+    {
+      "name": "vault"
+    },
+    {
+      "name": "tauship"
+    },
+    {
+      "name": "graveyard"
+    },
+    {
+      "name": "pathfinder"
+    }
+  ]
+}

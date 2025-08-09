@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "skrell_cloth_male"
+    },
+    {
+      "name": "skrell_cloth_female"
+    },
+    {
+      "name": "skrell_band"
+    },
+    {
+      "name": "skrell_chain"
+    },
+    {
+      "name": "skrell_chain_ebony"
+    },
+    {
+      "name": "skrell_chain_sil"
+    },
+    {
+      "name": "skrell_band_rjewel"
+    },
+    {
+      "name": "skrell_band_bjewel"
+    },
+    {
+      "name": "skrell_chain_bjewel"
+    },
+    {
+      "name": "skrell_band_ebony"
+    },
+    {
+      "name": "skrell_band_sil"
+    },
+    {
+      "name": "skrell_chain_rjewel"
+    },
+    {
+      "name": "ear_stud"
+    },
+    {
+      "name": "ear_dangle"
+    }
+  ]
+}

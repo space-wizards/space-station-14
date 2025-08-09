@@ -1,0 +1,408 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "solid0",
+      "directions": 4
+    },
+    {
+      "name": "solid1",
+      "directions": 4
+    },
+    {
+      "name": "solid2",
+      "directions": 4
+    },
+    {
+      "name": "solid3",
+      "directions": 4
+    },
+    {
+      "name": "solid4",
+      "directions": 4
+    },
+    {
+      "name": "solid5",
+      "directions": 4
+    },
+    {
+      "name": "solid6",
+      "directions": 4
+    },
+    {
+      "name": "solid7",
+      "directions": 4
+    },
+    {
+      "name": "solidfwall_open"
+    },
+    {
+      "name": "solidfwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "solidfwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "stone0",
+      "directions": 4
+    },
+    {
+      "name": "stone1",
+      "directions": 4
+    },
+    {
+      "name": "stone2",
+      "directions": 4
+    },
+    {
+      "name": "stone3",
+      "directions": 4
+    },
+    {
+      "name": "stone4",
+      "directions": 4
+    },
+    {
+      "name": "stone5",
+      "directions": 4
+    },
+    {
+      "name": "stone6",
+      "directions": 4
+    },
+    {
+      "name": "stone7",
+      "directions": 4
+    },
+    {
+      "name": "stonefwall_open"
+    },
+    {
+      "name": "stonefwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "stonefwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "metal0",
+      "directions": 4
+    },
+    {
+      "name": "metal1",
+      "directions": 4
+    },
+    {
+      "name": "metal2",
+      "directions": 4
+    },
+    {
+      "name": "metal3",
+      "directions": 4
+    },
+    {
+      "name": "metal4",
+      "directions": 4
+    },
+    {
+      "name": "metal5",
+      "directions": 4
+    },
+    {
+      "name": "metal6",
+      "directions": 4
+    },
+    {
+      "name": "metal7",
+      "directions": 4
+    },
+    {
+      "name": "metalfwall_open"
+    },
+    {
+      "name": "metalfwall_opening",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "metalfwall_closing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cult0",
+      "directions": 4
+    },
+    {
+      "name": "cult1",
+      "directions": 4
+    },
+    {
+      "name": "cult2",
+      "directions": 4
+    },
+    {
+      "name": "cult3",
+      "directions": 4
+    },
+    {
+      "name": "cult4",
+      "directions": 4
+    },
+    {
+      "name": "cult5",
+      "directions": 4
+    },
+    {
+      "name": "cult6",
+      "directions": 4
+    },
+    {
+      "name": "cult7",
+      "directions": 4
+    },
+    {
+      "name": "generic1"
+    },
+    {
+      "name": "rgeneric1"
+    },
+    {
+      "name": "generic"
+    },
+    {
+      "name": "rgeneric"
+    },
+    {
+      "name": "cult"
+    },
+    {
+      "name": "reinf_cult"
+    },
+    {
+      "name": "reinf_over"
+    },
+    {
+      "name": "blank"
+    },
+    {
+      "name": "reinf_metal"
+    },
+    {
+      "name": "reinf_stone0",
+      "directions": 4
+    },
+    {
+      "name": "reinf_stone1",
+      "directions": 4
+    },
+    {
+      "name": "reinf_stone2",
+      "directions": 4
+    },
+    {
+      "name": "reinf_stone3",
+      "directions": 4
+    },
+    {
+      "name": "reinf_stone4",
+      "directions": 4
+    },
+    {
+      "name": "reinf_stone5",
+      "directions": 4
+    },
+    {
+      "name": "reinf_ston6",
+      "directions": 4
+    },
+    {
+      "name": "reinf_stone7",
+      "directions": 4
+    },
+    {
+      "name": "reinf_construct-5"
+    },
+    {
+      "name": "reinf_construct-4"
+    },
+    {
+      "name": "reinf_construct-3"
+    },
+    {
+      "name": "reinf_construct-2"
+    },
+    {
+      "name": "reinf_construct-1"
+    },
+    {
+      "name": "reinf_construct-0"
+    },
+    {
+      "name": "debug0",
+      "directions": 4
+    },
+    {
+      "name": "debug1",
+      "directions": 4
+    },
+    {
+      "name": "debug2",
+      "directions": 4
+    },
+    {
+      "name": "debug3",
+      "directions": 4
+    },
+    {
+      "name": "debug4",
+      "directions": 4
+    },
+    {
+      "name": "debug5",
+      "directions": 4
+    },
+    {
+      "name": "debug6",
+      "directions": 4
+    },
+    {
+      "name": "debug7",
+      "directions": 4
+    },
+    {
+      "name": "rdebug"
+    },
+    {
+      "name": "diona0",
+      "directions": 4
+    },
+    {
+      "name": "diona1",
+      "directions": 4
+    },
+    {
+      "name": "diona2",
+      "directions": 4
+    },
+    {
+      "name": "diona3",
+      "directions": 4
+    },
+    {
+      "name": "diona4",
+      "directions": 4
+    },
+    {
+      "name": "diona5",
+      "directions": 4
+    },
+    {
+      "name": "diona6",
+      "directions": 4
+    },
+    {
+      "name": "diona7",
+      "directions": 4
+    },
+    {
+      "name": "dionafwall_open"
+    },
+    {
+      "name": "dionafwall_opening"
+    },
+    {
+      "name": "dionafwall_closing"
+    },
+    {
+      "name": "reinf_over0",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over1",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over2",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over3",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over4",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over5",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over6",
+      "directions": 4
+    },
+    {
+      "name": "reinf_over7",
+      "directions": 4
+    }
+  ]
+}

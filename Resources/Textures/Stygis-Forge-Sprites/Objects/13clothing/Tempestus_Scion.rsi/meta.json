@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "Helmet",
+      "directions": 4
+    },
+    {
+      "name": "Armor",
+      "directions": 4
+    },
+    {
+      "name": "Gloves",
+      "directions": 4
+    },
+    {
+      "name": "Boots",
+      "directions": 4
+    },
+    {
+      "name": "Undersuit",
+      "directions": 4
+    },
+    {
+      "name": "Backpack",
+      "directions": 4
+    },
+    {
+      "name": "Helmet Icon"
+    },
+    {
+      "name": "Armor Icon"
+    },
+    {
+      "name": "Gloves Icon"
+    },
+    {
+      "name": "Boots Icon"
+    },
+    {
+      "name": "Undersuit Icon"
+    },
+    {
+      "name": "Backpack Icon"
+    }
+  ]
+}

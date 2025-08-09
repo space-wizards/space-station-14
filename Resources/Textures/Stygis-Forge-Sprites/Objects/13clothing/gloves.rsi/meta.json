@@ -1,0 +1,270 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "black"
+    },
+    {
+      "name": "latex"
+    },
+    {
+      "name": "white"
+    },
+    {
+      "name": "leather"
+    },
+    {
+      "name": "s-ninja"
+    },
+    {
+      "name": "s-ninjan"
+    },
+    {
+      "name": "s-ninjak"
+    },
+    {
+      "name": "captain"
+    },
+    {
+      "name": "rainbow"
+    },
+    {
+      "name": "gloves_wire"
+    },
+    {
+      "name": "gloves_cell"
+    },
+    {
+      "name": "boxing"
+    },
+    {
+      "name": "boxinggreen"
+    },
+    {
+      "name": "boxingblue"
+    },
+    {
+      "name": "boxingyellow"
+    },
+    {
+      "name": "gloves-vox"
+    },
+    {
+      "name": "gloves-armalis"
+    },
+    {
+      "name": "ninja_rig_sealed"
+    },
+    {
+      "name": "ninja_rig"
+    },
+    {
+      "name": "medical_rig"
+    },
+    {
+      "name": "medical_rig_sealed"
+    },
+    {
+      "name": "hacker_rig_sealed"
+    },
+    {
+      "name": "hacker_rig"
+    },
+    {
+      "name": "ert_commander_rig_sealed"
+    },
+    {
+      "name": "ert_engineer_rig_sealed"
+    },
+    {
+      "name": "ert_medical_rig_sealed"
+    },
+    {
+      "name": "ert_security_rig_sealed"
+    },
+    {
+      "name": "ert_commander_rig"
+    },
+    {
+      "name": "ert_engineer_rig"
+    },
+    {
+      "name": "ert_medical_rig"
+    },
+    {
+      "name": "ert_security_rig"
+    },
+    {
+      "name": "breacher_rig_cheap_sealed"
+    },
+    {
+      "name": "breacher_rig_cheap"
+    },
+    {
+      "name": "breacher_rig"
+    },
+    {
+      "name": "breacher_rig_sealed"
+    },
+    {
+      "name": "engineering_rig"
+    },
+    {
+      "name": "engineering_rig_sealed"
+    },
+    {
+      "name": "security_rig"
+    },
+    {
+      "name": "security_rig_sealed"
+    },
+    {
+      "name": "merc_rig_sealed"
+    },
+    {
+      "name": "merc_rig"
+    },
+    {
+      "name": "science_rig_sealed"
+    },
+    {
+      "name": "science_rig"
+    },
+    {
+      "name": "asset_protection_rig_sealed"
+    },
+    {
+      "name": "asset_protection_rig"
+    },
+    {
+      "name": "eva_rig_sealed"
+    },
+    {
+      "name": "eva_rig"
+    },
+    {
+      "name": "hazard_rig_sealed"
+    },
+    {
+      "name": "hazard_rig"
+    },
+    {
+      "name": "stealth_rig_sealed"
+    },
+    {
+      "name": "ert_janitor_rig"
+    },
+    {
+      "name": "stealth_rig"
+    },
+    {
+      "name": "ert_janitor_rig_sealed"
+    },
+    {
+      "name": "military_rig_sealed"
+    },
+    {
+      "name": "evening_gloves"
+    },
+    {
+      "name": "military_rig"
+    },
+    {
+      "name": "forensic"
+    },
+    {
+      "name": "work"
+    },
+    {
+      "name": "guards"
+    },
+    {
+      "name": "mystical"
+    },
+    {
+      "name": "ce_rig"
+    },
+    {
+      "name": "ce_rig_sealed"
+    },
+    {
+      "name": "nitrile"
+    },
+    {
+      "name": "merc_rig_heavy_sealed"
+    },
+    {
+      "name": "merc_rig_heavy"
+    },
+    {
+      "name": "arbiter"
+    },
+    {
+      "name": "undertaker"
+    },
+    {
+      "name": "prac_gloves"
+    },
+    {
+      "name": "prac_gloves"
+    },
+    {
+      "name": "namgloves"
+    },
+    {
+      "name": "warfare_gloves"
+    },
+    {
+      "name": "warfare_gloves"
+    },
+    {
+      "name": "gloves"
+    },
+    {
+      "name": "techpriest",
+      "directions": 4
+    },
+    {
+      "name": "krieggloves_OLD"
+    },
+    {
+      "name": "grengloves_OLD"
+    },
+    {
+      "name": "sister"
+    },
+    {
+      "name": "mlsister"
+    },
+    {
+      "name": "brsister"
+    },
+    {
+      "name": "M_Gloves-Icon"
+    },
+    {
+      "name": "M_SGauntlets-Icon"
+    },
+    {
+      "name": "krieggloves"
+    },
+    {
+      "name": "kriegissargloves"
+    },
+    {
+      "name": "ScionGloves"
+    },
+    {
+      "name": "rtg"
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "glass-0"
+    },
+    {
+      "name": "glass-1"
+    },
+    {
+      "name": "glass-2"
+    },
+    {
+      "name": "glass-3"
+    },
+    {
+      "name": "glass-4"
+    },
+    {
+      "name": "glass-5"
+    },
+    {
+      "name": "glass-6"
+    },
+    {
+      "name": "glass-7"
+    },
+    {
+      "name": "glass-8"
+    },
+    {
+      "name": "glass-9"
+    },
+    {
+      "name": "glass-10"
+    },
+    {
+      "name": "glass-11"
+    },
+    {
+      "name": "glass-12"
+    },
+    {
+      "name": "glass-13"
+    },
+    {
+      "name": "glass-14"
+    },
+    {
+      "name": "glass-15"
+    },
+    {
+      "name": "glass-21"
+    },
+    {
+      "name": "glass-23"
+    },
+    {
+      "name": "glass-29"
+    },
+    {
+      "name": "glass-31"
+    },
+    {
+      "name": "glass-38"
+    },
+    {
+      "name": "glass-39"
+    },
+    {
+      "name": "glass-46"
+    },
+    {
+      "name": "glass-47"
+    },
+    {
+      "name": "glass-55"
+    },
+    {
+      "name": "glass-63"
+    },
+    {
+      "name": "glass-74"
+    },
+    {
+      "name": "glass-75"
+    },
+    {
+      "name": "glass-78"
+    },
+    {
+      "name": "glass-79"
+    },
+    {
+      "name": "glass-95"
+    },
+    {
+      "name": "glass-110"
+    },
+    {
+      "name": "glass-111"
+    },
+    {
+      "name": "glass-127"
+    },
+    {
+      "name": "glass-137"
+    },
+    {
+      "name": "glass-139"
+    },
+    {
+      "name": "glass-141"
+    },
+    {
+      "name": "glass-143"
+    },
+    {
+      "name": "glass-157"
+    },
+    {
+      "name": "glass-159"
+    },
+    {
+      "name": "glass-175"
+    },
+    {
+      "name": "glass-191"
+    },
+    {
+      "name": "glass-203"
+    },
+    {
+      "name": "glass-207"
+    },
+    {
+      "name": "glass-223"
+    },
+    {
+      "name": "glass-239"
+    },
+    {
+      "name": "glass-255"
+    },
+    {
+      "name": "glass-damaged1"
+    },
+    {
+      "name": "glass-damaged2"
+    },
+    {
+      "name": "glass-damaged3"
+    }
+  ]
+}

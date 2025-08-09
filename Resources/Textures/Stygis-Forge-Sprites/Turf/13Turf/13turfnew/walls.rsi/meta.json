@@ -1,0 +1,335 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "riveted"
+    },
+    {
+      "name": "rockvault"
+    },
+    {
+      "name": "sandstonevault"
+    },
+    {
+      "name": "alienvault"
+    },
+    {
+      "name": "iron0"
+    },
+    {
+      "name": "iron1"
+    },
+    {
+      "name": "iron2"
+    },
+    {
+      "name": "iron3"
+    },
+    {
+      "name": "iron4"
+    },
+    {
+      "name": "iron5"
+    },
+    {
+      "name": "iron6"
+    },
+    {
+      "name": "iron7"
+    },
+    {
+      "name": "iron8"
+    },
+    {
+      "name": "iron9"
+    },
+    {
+      "name": "iron10"
+    },
+    {
+      "name": "iron11"
+    },
+    {
+      "name": "iron12"
+    },
+    {
+      "name": "iron13"
+    },
+    {
+      "name": "iron14"
+    },
+    {
+      "name": "iron15"
+    },
+    {
+      "name": "fakewindows",
+      "directions": 8
+    },
+    {
+      "name": "fakewindows2",
+      "directions": 8
+    },
+    {
+      "name": "rock_labor"
+    },
+    {
+      "name": "rock_lowchance"
+    },
+    {
+      "name": "rock_nochance"
+    },
+    {
+      "name": "alien1"
+    },
+    {
+      "name": "alien2"
+    },
+    {
+      "name": "alien3"
+    },
+    {
+      "name": "alien4"
+    },
+    {
+      "name": "alien5"
+    },
+    {
+      "name": "alien6"
+    },
+    {
+      "name": "alien7"
+    },
+    {
+      "name": "alien8"
+    },
+    {
+      "name": "alien9"
+    },
+    {
+      "name": "alien10"
+    },
+    {
+      "name": "alien11"
+    },
+    {
+      "name": "alien12"
+    },
+    {
+      "name": "alien13"
+    },
+    {
+      "name": "alien14"
+    },
+    {
+      "name": "alien15"
+    },
+    {
+      "name": "alien16"
+    },
+    {
+      "name": "alien17"
+    },
+    {
+      "name": "alien18"
+    },
+    {
+      "name": "alien19"
+    },
+    {
+      "name": "alien20"
+    },
+    {
+      "name": "alien21"
+    },
+    {
+      "name": "alien22"
+    },
+    {
+      "name": "alien23"
+    },
+    {
+      "name": "alien24"
+    },
+    {
+      "name": "iced"
+    },
+    {
+      "name": "snowrock"
+    },
+    {
+      "name": "icerock"
+    },
+    {
+      "name": "wall3",
+      "directions": 8
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "4 dir",
+      "directions": 4
+    },
+    {
+      "name": "sign"
+    },
+    {
+      "name": "diagonal",
+      "directions": 8
+    },
+    {
+      "name": "floor"
+    },
+    {
+      "name": "clockwork_wall"
+    },
+    {
+      "name": "necro"
+    },
+    {
+      "name": "paperwall"
+    },
+    {
+      "name": "reebe"
+    },
+    {
+      "name": "matrix",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ]
+      ]
+    },
+    {
+      "name": "hoteldoor",
+      "delays": [
+        [
+          2.5,
+          0.02,
+          0.015000001,
+          0.01,
+          0.015000001,
+          0.02,
+          2.5,
+          0.02,
+          0.015000001,
+          0.01,
+          0.015000001,
+          0.02
+        ]
+      ]
+    },
+    {
+      "name": "hotelwall"
+    },
+    {
+      "name": "snow_rock"
+    },
+    {
+      "name": "snow_rock1"
+    },
+    {
+      "name": "snow_rock2"
+    },
+    {
+      "name": "snow_rock3"
+    },
+    {
+      "name": "snow_rock4"
+    },
+    {
+      "name": "ice0"
+    },
+    {
+      "name": "ice1"
+    },
+    {
+      "name": "ice2"
+    },
+    {
+      "name": "ice3"
+    },
+    {
+      "name": "ice4"
+    },
+    {
+      "name": "ice5"
+    },
+    {
+      "name": "ice6"
+    },
+    {
+      "name": "ice7"
+    },
+    {
+      "name": "ice8"
+    },
+    {
+      "name": "ice9"
+    },
+    {
+      "name": "ice10"
+    },
+    {
+      "name": "ice11"
+    },
+    {
+      "name": "ice12"
+    },
+    {
+      "name": "ice13"
+    },
+    {
+      "name": "ice14"
+    },
+    {
+      "name": "ice15"
+    },
+    {
+      "name": "ice"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "throne"
+    },
+    {
+      "name": "throne1"
+    },
+    {
+      "name": "throne2"
+    },
+    {
+      "name": "throne3"
+    },
+    {
+      "name": "throne4"
+    },
+    {
+      "name": "throne5"
+    },
+    {
+      "name": "throne6"
+    },
+    {
+      "name": "throne7"
+    },
+    {
+      "name": "throne8"
+    },
+    {
+      "name": "throne9"
+    },
+    {
+      "name": "throne10"
+    },
+    {
+      "name": "throne11"
+    },
+    {
+      "name": "throne12"
+    },
+    {
+      "name": "throne13"
+    },
+    {
+      "name": "throne14"
+    },
+    {
+      "name": "throne15"
+    },
+    {
+      "name": "throne16"
+    },
+    {
+      "name": "throne17"
+    },
+    {
+      "name": "throne18"
+    },
+    {
+      "name": "throne19"
+    },
+    {
+      "name": "throne20"
+    },
+    {
+      "name": "throne"
+    },
+    {
+      "name": "coin"
+    }
+  ]
+}

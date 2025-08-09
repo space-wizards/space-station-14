@@ -1,0 +1,194 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pcarrier"
+    },
+    {
+      "name": "pcarrier_blue"
+    },
+    {
+      "name": "pcarrier_navy"
+    },
+    {
+      "name": "pcarrier_green"
+    },
+    {
+      "name": "pcarrier_tan"
+    },
+    {
+      "name": "pcarrier_press"
+    },
+    {
+      "name": "riot"
+    },
+    {
+      "name": "ablative"
+    },
+    {
+      "name": "ballistic"
+    },
+    {
+      "name": "armor_light"
+    },
+    {
+      "name": "armor_medium"
+    },
+    {
+      "name": "armor_tactical"
+    },
+    {
+      "name": "armor_merc"
+    },
+    {
+      "name": "pouches"
+    },
+    {
+      "name": "pouches_blue"
+    },
+    {
+      "name": "pouches_navy"
+    },
+    {
+      "name": "pouches_green"
+    },
+    {
+      "name": "pouches_tan"
+    },
+    {
+      "name": "pouches_white"
+    },
+    {
+      "name": "lpouches"
+    },
+    {
+      "name": "lpouches_blue"
+    },
+    {
+      "name": "lpouches_navy"
+    },
+    {
+      "name": "lpouches_green"
+    },
+    {
+      "name": "lpouches_tan"
+    },
+    {
+      "name": "armguards"
+    },
+    {
+      "name": "armguards_blue"
+    },
+    {
+      "name": "armguards_navy"
+    },
+    {
+      "name": "armguards_green"
+    },
+    {
+      "name": "armguards_tan"
+    },
+    {
+      "name": "armguards_merc"
+    },
+    {
+      "name": "armguards_riot"
+    },
+    {
+      "name": "armguards_ablative"
+    },
+    {
+      "name": "armguards_ballistic"
+    },
+    {
+      "name": "legguards"
+    },
+    {
+      "name": "legguards_blue"
+    },
+    {
+      "name": "legguards_navy"
+    },
+    {
+      "name": "legguards_green"
+    },
+    {
+      "name": "legguards_tan"
+    },
+    {
+      "name": "legguards_merc"
+    },
+    {
+      "name": "legguards_riot"
+    },
+    {
+      "name": "legguards_ablative"
+    },
+    {
+      "name": "legguards_ballistic"
+    },
+    {
+      "name": "nanotag"
+    },
+    {
+      "name": "pcrctag"
+    },
+    {
+      "name": "saaretag"
+    },
+    {
+      "name": "presstag"
+    },
+    {
+      "name": "opostag"
+    },
+    {
+      "name": "onegtag"
+    },
+    {
+      "name": "apostag"
+    },
+    {
+      "name": "anegtag"
+    },
+    {
+      "name": "bpostag"
+    },
+    {
+      "name": "bnegtag"
+    },
+    {
+      "name": "abpostag"
+    },
+    {
+      "name": "abnegtag"
+    },
+    {
+      "name": "helmcover_blue"
+    },
+    {
+      "name": "helmcover_navy"
+    },
+    {
+      "name": "helmcover_green"
+    },
+    {
+      "name": "helmcover_tan"
+    },
+    {
+      "name": "helmcover_nt"
+    },
+    {
+      "name": "helmcover_pcrc"
+    },
+    {
+      "name": "helmcover_saare"
+    }
+  ]
+}

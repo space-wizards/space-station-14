@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "white"
+    },
+    {
+      "name": "plating"
+    },
+    {
+      "name": "dark"
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "bcircuit"
+    },
+    {
+      "name": "gcircuit"
+    },
+    {
+      "name": "black",
+      "directions": 8
+    },
+    {
+      "name": "freezerfloor"
+    },
+    {
+      "name": "asteroid"
+    },
+    {
+      "name": "hydrofloor"
+    },
+    {
+      "name": "carpet"
+    },
+    {
+      "name": "showroomfloor"
+    },
+    {
+      "name": "elevatorshaft"
+    },
+    {
+      "name": "vault",
+      "directions": 8
+    },
+    {
+      "name": "rockvault"
+    },
+    {
+      "name": "sandstonevault"
+    },
+    {
+      "name": "alienvault"
+    },
+    {
+      "name": "cult"
+    },
+    {
+      "name": "lava",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "wood"
+    },
+    {
+      "name": "snow"
+    },
+    {
+      "name": "asteroidplating"
+    },
+    {
+      "name": "asteroidfloor"
+    },
+    {
+      "name": "cult-narsie",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "steel"
+    },
+    {
+      "name": "bcarpet"
+    },
+    {
+      "name": "steel_dirty"
+    },
+    {
+      "name": "freezer"
+    },
+    {
+      "name": "lino"
+    },
+    {
+      "name": "grass0"
+    },
+    {
+      "name": "reinforced"
+    },
+    {
+      "name": "diona"
+    },
+    {
+      "name": "b2carpet"
+    },
+    {
+      "name": "noop"
+    },
+    {
+      "name": "n2floor"
+    }
+  ]
+}

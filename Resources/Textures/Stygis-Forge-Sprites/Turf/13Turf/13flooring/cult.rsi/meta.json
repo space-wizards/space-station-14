@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cult"
+    },
+    {
+      "name": "cult_broken0"
+    },
+    {
+      "name": "cult_broken1"
+    },
+    {
+      "name": "cult_broken2"
+    },
+    {
+      "name": "cult_broken3"
+    },
+    {
+      "name": "cult_broken4"
+    },
+    {
+      "name": "cult_broken5"
+    },
+    {
+      "name": "cult_broken6"
+    },
+    {
+      "name": "cult-narsie",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    }
+  ]
+}

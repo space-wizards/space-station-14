@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "brickstone0"
+    },
+    {
+      "name": "brickstone1"
+    },
+    {
+      "name": "brickstone2"
+    },
+    {
+      "name": "brickstone3"
+    },
+    {
+      "name": "brickstone4"
+    },
+    {
+      "name": "brickstone5"
+    },
+    {
+      "name": "brickstone6"
+    },
+    {
+      "name": "brickstone7"
+    },
+    {
+      "name": "brickstone8"
+    },
+    {
+      "name": "brickstone9"
+    },
+    {
+      "name": "brickstone10"
+    },
+    {
+      "name": "brickstone11"
+    },
+    {
+      "name": "brickstone12"
+    },
+    {
+      "name": "brickstone13"
+    },
+    {
+      "name": "2,2"
+    },
+    {
+      "name": "2,1"
+    }
+  ]
+}

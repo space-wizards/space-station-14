@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "xwall10"
+    },
+    {
+      "name": "xwall9"
+    },
+    {
+      "name": "xwall5"
+    },
+    {
+      "name": "xwall6"
+    },
+    {
+      "name": "wall2"
+    },
+    {
+      "name": "wall8"
+    },
+    {
+      "name": "wall1"
+    },
+    {
+      "name": "wall4"
+    },
+    {
+      "name": "wall11"
+    },
+    {
+      "name": "wall13"
+    },
+    {
+      "name": "wall7"
+    },
+    {
+      "name": "wall14"
+    },
+    {
+      "name": "wall10"
+    },
+    {
+      "name": "wall9"
+    },
+    {
+      "name": "wall5"
+    },
+    {
+      "name": "wall6"
+    },
+    {
+      "name": "wall15"
+    },
+    {
+      "name": "wall12",
+      "directions": 4
+    },
+    {
+      "name": "wall3",
+      "directions": 4
+    },
+    {
+      "name": "fort1"
+    },
+    {
+      "name": "fort2",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "fwall"
+    },
+    {
+      "name": "fwall2"
+    },
+    {
+      "name": "fort3"
+    },
+    {
+      "name": "fortclosed"
+    },
+    {
+      "name": "21",
+      "directions": 8
+    },
+    {
+      "name": "sfff"
+    },
+    {
+      "name": "stonefloor"
+    },
+    {
+      "name": "stonefloor3",
+      "directions": 8
+    },
+    {
+      "name": "stonefloor2",
+      "directions": 4
+    },
+    {
+      "name": "stonedamaged"
+    },
+    {
+      "name": "rwall1"
+    },
+    {
+      "name": "rwall2"
+    },
+    {
+      "name": "rwall3"
+    },
+    {
+      "name": "rwall4"
+    },
+    {
+      "name": "rwall5"
+    },
+    {
+      "name": "rwall6"
+    },
+    {
+      "name": "rwall7"
+    },
+    {
+      "name": "rwall8"
+    },
+    {
+      "name": "rwall9"
+    },
+    {
+      "name": "rwall10"
+    },
+    {
+      "name": "rwall11"
+    },
+    {
+      "name": "rwall12"
+    },
+    {
+      "name": "rwall13"
+    },
+    {
+      "name": "rwall14"
+    },
+    {
+      "name": "rwall15"
+    },
+    {
+      "name": "walls_manuais"
+    }
+  ]
+}

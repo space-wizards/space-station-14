@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "asteroid2"
+    },
+    {
+      "name": "asteroid3"
+    },
+    {
+      "name": "asteroid4"
+    },
+    {
+      "name": "asteroid6",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "asteroid7",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "asteroid8"
+    },
+    {
+      "name": "asteroid"
+    },
+    {
+      "name": "asteroid5"
+    },
+    {
+      "name": "asteroid0"
+    },
+    {
+      "name": "asteroid1"
+    },
+    {
+      "name": "asteroid9"
+    },
+    {
+      "name": "asteroid10"
+    },
+    {
+      "name": "asteroid11"
+    },
+    {
+      "name": "asteroid12"
+    },
+    {
+      "name": "asteroid13"
+    },
+    {
+      "name": "asteroid_dug3"
+    },
+    {
+      "name": "asteroid_dug2"
+    },
+    {
+      "name": "asteroid_dug1"
+    }
+  ]
+}

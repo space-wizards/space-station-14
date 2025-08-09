@@ -1,0 +1,1925 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "fire"
+    },
+    {
+      "name": "bomb"
+    },
+    {
+      "name": "armor"
+    },
+    {
+      "name": "armor"
+    },
+    {
+      "name": "detective-armor"
+    },
+    {
+      "name": "heavy"
+    },
+    {
+      "name": "swatold"
+    },
+    {
+      "name": "deathsquad"
+    },
+    {
+      "name": "space"
+    },
+    {
+      "name": "civ-rig"
+    },
+    {
+      "name": "syndicate-green"
+    },
+    {
+      "name": "syndicate-green-dark"
+    },
+    {
+      "name": "syndicate-orange"
+    },
+    {
+      "name": "syndicate-blue"
+    },
+    {
+      "name": "syndicate-black"
+    },
+    {
+      "name": "syndicate-black-green"
+    },
+    {
+      "name": "syndicate-black-blue"
+    },
+    {
+      "name": "syndicate-black-med"
+    },
+    {
+      "name": "syndicate-black-orange"
+    },
+    {
+      "name": "syndicate-black-red"
+    },
+    {
+      "name": "syndicate-black-engie"
+    },
+    {
+      "name": "rig-old"
+    },
+    {
+      "name": "void"
+    },
+    {
+      "name": "bio"
+    },
+    {
+      "name": "bio_general"
+    },
+    {
+      "name": "bio_virology"
+    },
+    {
+      "name": "bio_security"
+    },
+    {
+      "name": "bio_janitor"
+    },
+    {
+      "name": "bio_scientist"
+    },
+    {
+      "name": "bombsuit"
+    },
+    {
+      "name": "bombsuit_white"
+    },
+    {
+      "name": "bombsuitOld"
+    },
+    {
+      "name": "rad"
+    },
+    {
+      "name": "rad_old"
+    },
+    {
+      "name": "detective"
+    },
+    {
+      "name": "labcoat"
+    },
+    {
+      "name": "doctor_vest"
+    },
+    {
+      "name": "syndicate"
+    },
+    {
+      "name": "vest"
+    },
+    {
+      "name": "apron"
+    },
+    {
+      "name": "chef"
+    },
+    {
+      "name": "santa"
+    },
+    {
+      "name": "death"
+    },
+    {
+      "name": "tdgreen"
+    },
+    {
+      "name": "tdred"
+    },
+    {
+      "name": "straight_jacket"
+    },
+    {
+      "name": "johnny"
+    },
+    {
+      "name": "nazi"
+    },
+    {
+      "name": "centcom"
+    },
+    {
+      "name": "oldcaparmor"
+    },
+    {
+      "name": "caparmor"
+    },
+    {
+      "name": "judge"
+    },
+    {
+      "name": "pirate"
+    },
+    {
+      "name": "plaguedoctor"
+    },
+    {
+      "name": "labcoat_cmo"
+    },
+    {
+      "name": "wizard-fake"
+    },
+    {
+      "name": "wizard"
+    },
+    {
+      "name": "redwizard"
+    },
+    {
+      "name": "s-ninja-old"
+    },
+    {
+      "name": "s-ninja"
+    },
+    {
+      "name": "s-ninjan"
+    },
+    {
+      "name": "s-ninjanf"
+    },
+    {
+      "name": "s-ninjak"
+    },
+    {
+      "name": "s-ninjakf"
+    },
+    {
+      "name": "hazard"
+    },
+    {
+      "name": "firesuit"
+    },
+    {
+      "name": "labgreen"
+    },
+    {
+      "name": "surgical"
+    },
+    {
+      "name": "bombsuitsecold"
+    },
+    {
+      "name": "marisa"
+    },
+    {
+      "name": "captunic"
+    },
+    {
+      "name": "nun"
+    },
+    {
+      "name": "chaplain_hoodie"
+    },
+    {
+      "name": "imperium_monk"
+    },
+    {
+      "name": "suitjacket_blue"
+    },
+    {
+      "name": "suitjacket_blue_open"
+    },
+    {
+      "name": "labcoat_open"
+    },
+    {
+      "name": "labcoat_cmo_open"
+    },
+    {
+      "name": "bearhide"
+    },
+    {
+      "name": "bearhide_space"
+    },
+    {
+      "name": "riotold"
+    },
+    {
+      "name": "labcoat_gen"
+    },
+    {
+      "name": "labcoat_gen_open"
+    },
+    {
+      "name": "labcoat_vir"
+    },
+    {
+      "name": "labcoat_vir_open"
+    },
+    {
+      "name": "labcoat_chem"
+    },
+    {
+      "name": "labcoat_chem_open"
+    },
+    {
+      "name": "labcoat_tox"
+    },
+    {
+      "name": "labcoat_tox_open"
+    },
+    {
+      "name": "labgreen_open"
+    },
+    {
+      "name": "chickensuit"
+    },
+    {
+      "name": "holidaypriest"
+    },
+    {
+      "name": "apronchef"
+    },
+    {
+      "name": "monkeysuit"
+    },
+    {
+      "name": "cultrobes"
+    },
+    {
+      "name": "bio_cmo"
+    },
+    {
+      "name": "hastur"
+    },
+    {
+      "name": "suitjacket_purp"
+    },
+    {
+      "name": "jensencoat"
+    },
+    {
+      "name": "hgpirate",
+      "directions": 4
+    },
+    {
+      "name": "reactive"
+    },
+    {
+      "name": "reactiveoff"
+    },
+    {
+      "name": "justice"
+    },
+    {
+      "name": "magusred"
+    },
+    {
+      "name": "magusblue"
+    },
+    {
+      "name": "cardborg"
+    },
+    {
+      "name": "ianshirt"
+    },
+    {
+      "name": "bluetag"
+    },
+    {
+      "name": "redtag"
+    },
+    {
+      "name": "engspace_suit"
+    },
+    {
+      "name": "cespace_suit"
+    },
+    {
+      "name": "rig-engineering"
+    },
+    {
+      "name": "rig-mining"
+    },
+    {
+      "name": "rig-syndie"
+    },
+    {
+      "name": "rig-wiz"
+    },
+    {
+      "name": "rig-secTG"
+    },
+    {
+      "name": "overalls"
+    },
+    {
+      "name": "cult_armour"
+    },
+    {
+      "name": "cultrobesalt"
+    },
+    {
+      "name": "hosbluejacket"
+    },
+    {
+      "name": "hosdnavyjacket"
+    },
+    {
+      "name": "hostanjacket"
+    },
+    {
+      "name": "officerbluejacket"
+    },
+    {
+      "name": "officerdnavyjacket"
+    },
+    {
+      "name": "officertanjacket"
+    },
+    {
+      "name": "wardenbluejacket"
+    },
+    {
+      "name": "wardendnavyjacket"
+    },
+    {
+      "name": "wardentanjacket"
+    },
+    {
+      "name": "rig-medical"
+    },
+    {
+      "name": "xenos"
+    },
+    {
+      "name": "rig-atmos"
+    },
+    {
+      "name": "forensics_blue"
+    },
+    {
+      "name": "forensics_red"
+    },
+    {
+      "name": "fr_jacket_open"
+    },
+    {
+      "name": "rig-sec"
+    },
+    {
+      "name": "rig-soghun"
+    },
+    {
+      "name": "mantle-unathi"
+    },
+    {
+      "name": "robe-unathi"
+    },
+    {
+      "name": "ia_jacket"
+    },
+    {
+      "name": "ia_jacket_open"
+    },
+    {
+      "name": "capjacket"
+    },
+    {
+      "name": "fr_jacket"
+    },
+    {
+      "name": "vox-pressure"
+    },
+    {
+      "name": "vox-carapace"
+    },
+    {
+      "name": "vox-scrap"
+    },
+    {
+      "name": "psyamp"
+    },
+    {
+      "name": "armalis_armour"
+    },
+    {
+      "name": "s-ninjas"
+    },
+    {
+      "name": "s-ninjasf"
+    },
+    {
+      "name": "vox-stealth"
+    },
+    {
+      "name": "vox-medic"
+    },
+    {
+      "name": "armorsec"
+    },
+    {
+      "name": "hos"
+    },
+    {
+      "name": "warden_jacket"
+    },
+    {
+      "name": "skrell_suit_black"
+    },
+    {
+      "name": "skrell_suit_white"
+    },
+    {
+      "name": "rig-taj"
+    },
+    {
+      "name": "rig-syndie-taj"
+    },
+    {
+      "name": "rig-syndie-unathi"
+    },
+    {
+      "name": "rig-syndie-human"
+    },
+    {
+      "name": "rig-syndie-skrell"
+    },
+    {
+      "name": "detective2"
+    },
+    {
+      "name": "gentlecoat"
+    },
+    {
+      "name": "swatarmor"
+    },
+    {
+      "name": "bombsuitsec"
+    },
+    {
+      "name": "zhan_furs"
+    },
+    {
+      "name": "ertarmor_cmd"
+    },
+    {
+      "name": "ertarmor_med"
+    },
+    {
+      "name": "ertarmor_eng"
+    },
+    {
+      "name": "ertarmor_sec"
+    },
+    {
+      "name": "greenponcho"
+    },
+    {
+      "name": "redponcho"
+    },
+    {
+      "name": "classicponcho"
+    },
+    {
+      "name": "rig-hazardhardsuit"
+    },
+    {
+      "name": "blueponcho"
+    },
+    {
+      "name": "purpleponcho"
+    },
+    {
+      "name": "leather_jacket"
+    },
+    {
+      "name": "brown_jacket"
+    },
+    {
+      "name": "brown_jacket_nt"
+    },
+    {
+      "name": "leather_jacket_nt"
+    },
+    {
+      "name": "brown_jacket_open"
+    },
+    {
+      "name": "brown_jacket_nt_open"
+    },
+    {
+      "name": "labcoat_cmoalt"
+    },
+    {
+      "name": "labcoat_cmoalt_open"
+    },
+    {
+      "name": "ninja_rig"
+    },
+    {
+      "name": "ninja_rig_sealed"
+    },
+    {
+      "name": "hacker_rig_sealed"
+    },
+    {
+      "name": "hacker_rig"
+    },
+    {
+      "name": "ert_security_rig_sealed"
+    },
+    {
+      "name": "ert_medical_rig_sealed"
+    },
+    {
+      "name": "ert_engineer_rig_sealed"
+    },
+    {
+      "name": "ert_commander_rig_sealed"
+    },
+    {
+      "name": "ert_security_rig"
+    },
+    {
+      "name": "ert_commander_rig"
+    },
+    {
+      "name": "ert_medical_rig"
+    },
+    {
+      "name": "ert_engineer_rig"
+    },
+    {
+      "name": "breacher_rig_cheap_sealed"
+    },
+    {
+      "name": "breacher_rig_sealed"
+    },
+    {
+      "name": "breacher_rig_cheap"
+    },
+    {
+      "name": "breacher_rig"
+    },
+    {
+      "name": "engineering_rig_sealed"
+    },
+    {
+      "name": "engineering_rig"
+    },
+    {
+      "name": "security_rig_sealed"
+    },
+    {
+      "name": "security_rig"
+    },
+    {
+      "name": "medical_rig"
+    },
+    {
+      "name": "medical_rig_sealed"
+    },
+    {
+      "name": "hazard_rig_sealed"
+    },
+    {
+      "name": "hazard_rig"
+    },
+    {
+      "name": "merc_rig_sealed"
+    },
+    {
+      "name": "merc_rig"
+    },
+    {
+      "name": "bomber"
+    },
+    {
+      "name": "bomber_open"
+    },
+    {
+      "name": "asset_protection_rig_sealed"
+    },
+    {
+      "name": "asset_protection_rig"
+    },
+    {
+      "name": "eva_rig_sealed"
+    },
+    {
+      "name": "eva_rig"
+    },
+    {
+      "name": "ems_jacket_closed"
+    },
+    {
+      "name": "ems_jacket_open"
+    },
+    {
+      "name": "stealth_rig_sealed"
+    },
+    {
+      "name": "internalaffairs_rig"
+    },
+    {
+      "name": "stealth_rig"
+    },
+    {
+      "name": "internalaffairs_rig_sealed"
+    },
+    {
+      "name": "hostrench"
+    },
+    {
+      "name": "leathercoat"
+    },
+    {
+      "name": "science_rig_sealed"
+    },
+    {
+      "name": "science_rig"
+    },
+    {
+      "name": "rig-excavation"
+    },
+    {
+      "name": "bio_anom"
+    },
+    {
+      "name": "ert_janitor_rig_sealed"
+    },
+    {
+      "name": "ert_janitor_rig"
+    },
+    {
+      "name": "military_rig_sealed"
+    },
+    {
+      "name": "military_rig"
+    },
+    {
+      "name": "rig-engineeringalt"
+    },
+    {
+      "name": "rig-medicalalt"
+    },
+    {
+      "name": "rig-atmosalt"
+    },
+    {
+      "name": "rig-miningalt"
+    },
+    {
+      "name": "rig-secalt"
+    },
+    {
+      "name": "hazard_g"
+    },
+    {
+      "name": "hazard_w"
+    },
+    {
+      "name": "hazard_b"
+    },
+    {
+      "name": "blackservice"
+    },
+    {
+      "name": "blackservice_crew"
+    },
+    {
+      "name": "blackservice_med"
+    },
+    {
+      "name": "blackservice_medcom"
+    },
+    {
+      "name": "blackservice_eng"
+    },
+    {
+      "name": "blackservice_engcom"
+    },
+    {
+      "name": "blackservice_sup"
+    },
+    {
+      "name": "blackservice_sec"
+    },
+    {
+      "name": "blackservice_seccom"
+    },
+    {
+      "name": "blackservice_com"
+    },
+    {
+      "name": "greenservice"
+    },
+    {
+      "name": "greenservice_eng"
+    },
+    {
+      "name": "greenservice_engcom"
+    },
+    {
+      "name": "greenservice_med"
+    },
+    {
+      "name": "greenservice_medcom"
+    },
+    {
+      "name": "greenservice_sup"
+    },
+    {
+      "name": "greenservice_sec"
+    },
+    {
+      "name": "greenservice_seccom"
+    },
+    {
+      "name": "greenservice_com"
+    },
+    {
+      "name": "greydress"
+    },
+    {
+      "name": "greydress_com"
+    },
+    {
+      "name": "whitedress"
+    },
+    {
+      "name": "whitedress_open"
+    },
+    {
+      "name": "whitedress_com"
+    },
+    {
+      "name": "whitedress_com_open"
+    },
+    {
+      "name": "blackdress"
+    },
+    {
+      "name": "blackdress_com"
+    },
+    {
+      "name": "marshal_jacket"
+    },
+    {
+      "name": "marshal_jacket_open"
+    },
+    {
+      "name": "kvest"
+    },
+    {
+      "name": "webvest"
+    },
+    {
+      "name": "mercwebvest"
+    },
+    {
+      "name": "secwebvest"
+    },
+    {
+      "name": "ntvest"
+    },
+    {
+      "name": "comwebvest"
+    },
+    {
+      "name": "detvest"
+    },
+    {
+      "name": "ntwebvest"
+    },
+    {
+      "name": "solvest"
+    },
+    {
+      "name": "solwebvest"
+    },
+    {
+      "name": "pcrcvest"
+    },
+    {
+      "name": "pcrcwebvest"
+    },
+    {
+      "name": "tacwebvest"
+    },
+    {
+      "name": "riot"
+    },
+    {
+      "name": "reflect"
+    },
+    {
+      "name": "bulletproof"
+    },
+    {
+      "name": "riotvest"
+    },
+    {
+      "name": "reflectvest"
+    },
+    {
+      "name": "bulletproofvest"
+    },
+    {
+      "name": "mbill"
+    },
+    {
+      "name": "rig-salvage"
+    },
+    {
+      "name": "blue_edge_labcoat"
+    },
+    {
+      "name": "blue_edge_labcoat_open"
+    },
+    {
+      "name": "coatmedical"
+    },
+    {
+      "name": "coatsecurity_t"
+    },
+    {
+      "name": "coatcaptain_t"
+    },
+    {
+      "name": "coatminer_t"
+    },
+    {
+      "name": "coatcaptain"
+    },
+    {
+      "name": "coathydro"
+    },
+    {
+      "name": "coatwinter_t"
+    },
+    {
+      "name": "coatcargo"
+    },
+    {
+      "name": "coatatmos_t"
+    },
+    {
+      "name": "coatsecurity"
+    },
+    {
+      "name": "coathydro_t"
+    },
+    {
+      "name": "coatengineer_t"
+    },
+    {
+      "name": "coatwinter"
+    },
+    {
+      "name": "coatatmos"
+    },
+    {
+      "name": "coatscience_t"
+    },
+    {
+      "name": "coatscience"
+    },
+    {
+      "name": "coatcargo_t"
+    },
+    {
+      "name": "coatminer"
+    },
+    {
+      "name": "coatengineer"
+    },
+    {
+      "name": "secponcho"
+    },
+    {
+      "name": "medponcho"
+    },
+    {
+      "name": "engiponcho"
+    },
+    {
+      "name": "cargoponcho"
+    },
+    {
+      "name": "sciponcho"
+    },
+    {
+      "name": "ce_rig"
+    },
+    {
+      "name": "ce_rig_sealed"
+    },
+    {
+      "name": "hoodie"
+    },
+    {
+      "name": "hoodie_open"
+    },
+    {
+      "name": "cti_hoodie"
+    },
+    {
+      "name": "cti_hoodie_open"
+    },
+    {
+      "name": "mu_hoodie"
+    },
+    {
+      "name": "mu_hoodie_open"
+    },
+    {
+      "name": "nt_hoodie_open"
+    },
+    {
+      "name": "nt_hoodie"
+    },
+    {
+      "name": "smw_hoodie_open"
+    },
+    {
+      "name": "smw_hoodie"
+    },
+    {
+      "name": "resomicoat"
+    },
+    {
+      "name": "resomicoat_open"
+    },
+    {
+      "name": "trackjacketblue"
+    },
+    {
+      "name": "trackjacketblue_open"
+    },
+    {
+      "name": "trackjacketgreen"
+    },
+    {
+      "name": "trackjacketgreen_open"
+    },
+    {
+      "name": "trackjacketred_open"
+    },
+    {
+      "name": "trackjacketred"
+    },
+    {
+      "name": "trackjacket_open"
+    },
+    {
+      "name": "trackjacket"
+    },
+    {
+      "name": "trackjacketwhite_open"
+    },
+    {
+      "name": "trackjacketwhite"
+    },
+    {
+      "name": "Kal_Poncho",
+      "directions": 4
+    },
+    {
+      "name": "pvest"
+    },
+    {
+      "name": "merc_rig_heavy_sealed"
+    },
+    {
+      "name": "merc_rig_heavy"
+    },
+    {
+      "name": "greyutility_r_s"
+    },
+    {
+      "name": "labcoat_rd"
+    },
+    {
+      "name": "labcoat_rd_open"
+    },
+    {
+      "name": "labcoat_nt"
+    },
+    {
+      "name": "labcoat_nt_open"
+    },
+    {
+      "name": "catsuit"
+    },
+    {
+      "name": "lizsuit"
+    },
+    {
+      "name": "skrellsuit"
+    },
+    {
+      "name": "mansuit"
+    },
+    {
+      "name": "opvest"
+    },
+    {
+      "name": "arbiter"
+    },
+    {
+      "name": "cowl"
+    },
+    {
+      "name": "robes"
+    },
+    {
+      "name": "undertaker"
+    },
+    {
+      "name": "kaneda"
+    },
+    {
+      "name": "barney_vest"
+    },
+    {
+      "name": "coat-church"
+    },
+    {
+      "name": "redcoat"
+    },
+    {
+      "name": "bluecoat"
+    },
+    {
+      "name": "redcoat_leader"
+    },
+    {
+      "name": "redcoat_medic"
+    },
+    {
+      "name": "bluecoat_leader"
+    },
+    {
+      "name": "bluecoat_medic"
+    },
+    {
+      "name": "redcoat"
+    },
+    {
+      "name": "bluecoat"
+    },
+    {
+      "name": "redcoat_leader"
+    },
+    {
+      "name": "bluecoat_leader"
+    },
+    {
+      "name": "redsentryarmor"
+    },
+    {
+      "name": "bluesentryarmor"
+    },
+    {
+      "name": "redfiresuit"
+    },
+    {
+      "name": "bluefiresuit"
+    },
+    {
+      "name": "prac_apron"
+    },
+    {
+      "name": "bluecoat_alpha"
+    },
+    {
+      "name": "bluecoat_bravo"
+    },
+    {
+      "name": "bluecoat_charlie"
+    },
+    {
+      "name": "bluecoat_medic_alpha"
+    },
+    {
+      "name": "bluecoat_medic_bravo"
+    },
+    {
+      "name": "bluecoat_medic_charlie"
+    },
+    {
+      "name": "redcoat_alpha"
+    },
+    {
+      "name": "redcoat_bravo"
+    },
+    {
+      "name": "redcoat_charlie"
+    },
+    {
+      "name": "redcoat_medic_alpha"
+    },
+    {
+      "name": "redcoat_medic_bravo"
+    },
+    {
+      "name": "redcoat_medic_charlie"
+    },
+    {
+      "name": "explorer"
+    },
+    {
+      "name": "prac_robes"
+    },
+    {
+      "name": "child_redcoat"
+    },
+    {
+      "name": "child_bluecoat"
+    },
+    {
+      "name": "redcoat_sniper"
+    },
+    {
+      "name": "bluecoat_sniper"
+    },
+    {
+      "name": "fvest"
+    },
+    {
+      "name": "valarmor"
+    },
+    {
+      "name": "mvalarmor"
+    },
+    {
+      "name": "farmorold"
+    },
+    {
+      "name": "fharmor"
+    },
+    {
+      "name": "umpowerarmor"
+    },
+    {
+      "name": "Ultracap"
+    },
+    {
+      "name": "Ravcap"
+    },
+    {
+      "name": "sl_lib"
+    },
+    {
+      "name": "Ultrapoth"
+    },
+    {
+      "name": "Ravapoth"
+    },
+    {
+      "name": "Salapoth"
+    },
+    {
+      "name": "Saltech"
+    },
+    {
+      "name": "farmor"
+    },
+    {
+      "name": "deldarmor"
+    },
+    {
+      "name": "eldarmor"
+    },
+    {
+      "name": "acolytecoat"
+    },
+    {
+      "name": "skitrobe"
+    },
+    {
+      "name": "warlock"
+    },
+    {
+      "name": "hereticuscoat"
+    },
+    {
+      "name": "inqarmor_hooded"
+    },
+    {
+      "name": "inqarmor"
+    },
+    {
+      "name": "fw_armorold"
+    },
+    {
+      "name": "lccoat"
+    },
+    {
+      "name": "commisar3"
+    },
+    {
+      "name": "merc",
+      "directions": 4
+    },
+    {
+      "name": "rig-white",
+      "directions": 4
+    },
+    {
+      "name": "hospitaller",
+      "directions": 4
+    },
+    {
+      "name": "hospitallerold",
+      "directions": 4
+    },
+    {
+      "name": "techpriestold",
+      "directions": 4,
+      "delays": [
+        [
+          0.3,
+          0.2,
+          0.3,
+          0.2
+        ],
+        [
+          0.3,
+          0.2,
+          0.3,
+          0.2
+        ],
+        [
+          0.3,
+          0.2,
+          0.3,
+          0.2
+        ],
+        [
+          0.3,
+          0.2,
+          0.3,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "comissar3",
+      "directions": 4
+    },
+    {
+      "name": "grosthrobe",
+      "directions": 4
+    },
+    {
+      "name": "rg_lib",
+      "directions": 4
+    },
+    {
+      "name": "medicae",
+      "directions": 4
+    },
+    {
+      "name": "magos_old",
+      "directions": 4
+    },
+    {
+      "name": "coat"
+    },
+    {
+      "name": "science2",
+      "directions": 4
+    },
+    {
+      "name": "fem2",
+      "directions": 4
+    },
+    {
+      "name": "male2",
+      "directions": 4
+    },
+    {
+      "name": "mapron",
+      "directions": 4
+    },
+    {
+      "name": "servitor_robe",
+      "directions": 4
+    },
+    {
+      "name": "servitor_robe2",
+      "directions": 4
+    },
+    {
+      "name": "ministorum_priest"
+    },
+    {
+      "name": "bsapron",
+      "directions": 4
+    },
+    {
+      "name": "genetor"
+    },
+    {
+      "name": "genetor_hooded",
+      "directions": 4
+    },
+    {
+      "name": "mortician",
+      "directions": 4
+    },
+    {
+      "name": "valhalla",
+      "directions": 4
+    },
+    {
+      "name": "cadianarmor",
+      "directions": 4
+    },
+    {
+      "name": "robes_item",
+      "directions": 4
+    },
+    {
+      "name": "chokha",
+      "directions": 4
+    },
+    {
+      "name": "xomrobe",
+      "directions": 4
+    },
+    {
+      "name": "sherpa"
+    },
+    {
+      "name": "scum"
+    },
+    {
+      "name": "inqcoat"
+    },
+    {
+      "name": "techpriest_old",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rtdrip_old"
+    },
+    {
+      "name": "rg_chap"
+    },
+    {
+      "name": "um_chap"
+    },
+    {
+      "name": "tbrea",
+      "directions": 4
+    },
+    {
+      "name": "tabard",
+      "directions": 4
+    },
+    {
+      "name": "merchant",
+      "directions": 4
+    },
+    {
+      "name": "yminer",
+      "directions": 4
+    },
+    {
+      "name": "skitsuit",
+      "directions": 4
+    },
+    {
+      "name": "skitsuit_t",
+      "directions": 4
+    },
+    {
+      "name": "admeme"
+    },
+    {
+      "name": "oldkriegcoat_OLD"
+    },
+    {
+      "name": "kriegcoat_OLD"
+    },
+    {
+      "name": "watchcoat_OLD"
+    },
+    {
+      "name": "grencoat_OLD"
+    },
+    {
+      "name": "mkriegcoat_OLD"
+    },
+    {
+      "name": "brpowerarmor",
+      "directions": 4
+    },
+    {
+      "name": "castellan",
+      "directions": 4
+    },
+    {
+      "name": "advisor",
+      "directions": 4
+    },
+    {
+      "name": "techpriest"
+    },
+    {
+      "name": "magos"
+    },
+    {
+      "name": "Commissar4"
+    },
+    {
+      "name": "Kriegissar_OLD"
+    },
+    {
+      "name": "catacommissar"
+    },
+    {
+      "name": "Judge"
+    },
+    {
+      "name": "kriegcoat"
+    },
+    {
+      "name": "grencoat"
+    },
+    {
+      "name": "Kriegissar"
+    },
+    {
+      "name": "Kriegissarplate"
+    },
+    {
+      "name": "Catachan_Vest"
+    },
+    {
+      "name": "mCatachan_Vest"
+    },
+    {
+      "name": "bondagearmor",
+      "directions": 4
+    },
+    {
+      "name": "potarmor",
+      "directions": 4
+    },
+    {
+      "name": "snazzarmor",
+      "directions": 4
+    },
+    {
+      "name": "armLskull",
+      "directions": 4
+    },
+    {
+      "name": "armRskull",
+      "directions": 4
+    },
+    {
+      "name": "armLmetal1",
+      "directions": 4
+    },
+    {
+      "name": "armRmetal1",
+      "directions": 4
+    },
+    {
+      "name": "armRmetal2",
+      "directions": 4
+    },
+    {
+      "name": "armLmetal2",
+      "directions": 4
+    },
+    {
+      "name": "armLpaint2",
+      "directions": 4
+    },
+    {
+      "name": "armRpaint2",
+      "directions": 4
+    },
+    {
+      "name": "armRpaint3",
+      "directions": 4
+    },
+    {
+      "name": "armLpaint3",
+      "directions": 4
+    },
+    {
+      "name": "armRmetal3",
+      "directions": 4
+    },
+    {
+      "name": "armLmetal3",
+      "directions": 4
+    },
+    {
+      "name": "ork_m_armor"
+    },
+    {
+      "name": "senkhalat"
+    },
+    {
+      "name": "rtdrip",
+      "directions": 4
+    },
+    {
+      "name": "ooml_old",
+      "directions": 4
+    },
+    {
+      "name": "fw_armor"
+    },
+    {
+      "name": "ooml",
+      "directions": 4
+    },
+    {
+      "name": "bravsuit"
+    },
+    {
+      "name": "carapacearmor",
+      "directions": 4
+    },
+    {
+      "name": "bloodpactarmor"
+    },
+    {
+      "name": "combat",
+      "directions": 4
+    },
+    {
+      "name": "ork_skullza"
+    },
+    {
+      "name": "snazzya"
+    },
+    {
+      "name": "zoga"
+    },
+    {
+      "name": "heretmil"
+    },
+    {
+      "name": "heretmil2"
+    },
+    {
+      "name": "meister"
+    },
+    {
+      "name": "trinet"
+    },
+    {
+      "name": "bmerc2"
+    },
+    {
+      "name": "chemsis"
+    },
+    {
+      "name": "hauberk"
+    },
+    {
+      "name": "iplate"
+    },
+    {
+      "name": "slaverobe"
+    },
+    {
+      "name": "spacer"
+    },
+    {
+      "name": "towntrench_heavy"
+    },
+    {
+      "name": "paladin"
+    },
+    {
+      "name": "venator"
+    },
+    {
+      "name": "fox"
+    },
+    {
+      "name": "berserker"
+    },
+    {
+      "name": "syndievest"
+    },
+    {
+      "name": "scribe"
+    },
+    {
+      "name": "carapace2"
+    },
+    {
+      "name": "carapace3"
+    },
+    {
+      "name": "lightpa2"
+    },
+    {
+      "name": "flak1"
+    },
+    {
+      "name": "flak2"
+    },
+    {
+      "name": "templar"
+    },
+    {
+      "name": "carapace4"
+    },
+    {
+      "name": "knight_grey"
+    },
+    {
+      "name": "uegarmor"
+    },
+    {
+      "name": "gothcoat"
+    },
+    {
+      "name": "leatherarmor"
+    },
+    {
+      "name": "wornmfp"
+    },
+    {
+      "name": "biker_jacket"
+    },
+    {
+      "name": "ghostechoe"
+    },
+    {
+      "name": "raider_combat"
+    },
+    {
+      "name": "shadow"
+    },
+    {
+      "name": "t51bgs"
+    },
+    {
+      "name": "towntrench_special"
+    },
+    {
+      "name": "exile"
+    },
+    {
+      "name": "knight_hospitaller"
+    },
+    {
+      "name": "mutie1"
+    },
+    {
+      "name": "mutie2"
+    },
+    {
+      "name": "towntrench_medium"
+    },
+    {
+      "name": "talon_duster"
+    },
+    {
+      "name": "tribal_armor"
+    },
+    {
+      "name": "bonearmor"
+    },
+    {
+      "name": "ranger"
+    },
+    {
+      "name": "tailcoat"
+    },
+    {
+      "name": "ladiescoat"
+    },
+    {
+      "name": "ladiesredcoat"
+    },
+    {
+      "name": "tailcoatb"
+    },
+    {
+      "name": "ladiescoatg"
+    },
+    {
+      "name": "ladiescoatb"
+    },
+    {
+      "name": "repentia_chest",
+      "directions": 4
+    },
+    {
+      "name": "mlsister"
+    },
+    {
+      "name": "brsister"
+    },
+    {
+      "name": "ranger2"
+    },
+    {
+      "name": "ranger3"
+    },
+    {
+      "name": "necromundacarapace"
+    },
+    {
+      "name": "necromundaflak"
+    },
+    {
+      "name": "rtdrip2unused"
+    },
+    {
+      "name": "aeldar_armor"
+    },
+    {
+      "name": "renegade_militia_armor",
+      "directions": 4
+    },
+    {
+      "name": "kasrkinarmor"
+    },
+    {
+      "name": "preacherarmor"
+    },
+    {
+      "name": "taxstomach"
+    },
+    {
+      "name": "kasrkinarmorb"
+    },
+    {
+      "name": "brigandine"
+    },
+    {
+      "name": "newguard"
+    },
+    {
+      "name": "enforcer"
+    },
+    {
+      "name": "prince"
+    },
+    {
+      "name": "enforcercoat"
+    },
+    {
+      "name": "watchcoat2",
+      "directions": 4
+    },
+    {
+      "name": "femquisitor-armor_worn",
+      "directions": 4
+    },
+    {
+      "name": "M_Armor-Icon"
+    },
+    {
+      "name": "M_SArmor-Icon"
+    },
+    {
+      "name": "ScionArmour"
+    },
+    {
+      "name": "i-Stormtrooper Armor",
+      "directions": 4
+    },
+    {
+      "name": "rtarm"
+    },
+    {
+      "name": "MineWorkerS",
+      "directions": 4
+    },
+    {
+      "name": "PalaniteArmor"
+    },
+    {
+      "name": "MarshalArmor",
+      "directions": 4
+    },
+    {
+      "name": "freeboota"
+    },
+    {
+      "name": "tzeecult"
+    },
+    {
+      "name": "PDF-T",
+      "directions": 4
+    },
+    {
+      "name": "PDF-SpecialT",
+      "directions": 4
+    },
+    {
+      "name": "PDF-MedicT",
+      "directions": 4
+    },
+    {
+      "name": "ultrac"
+    },
+    {
+      "name": "alphalegc"
+    },
+    {
+      "name": "lamenterc"
+    },
+    {
+      "name": "emperorscc"
+    }
+  ]
+}

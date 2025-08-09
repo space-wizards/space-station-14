@@ -1,0 +1,154 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "0,0"
+    },
+    {
+      "name": "1,0"
+    },
+    {
+      "name": "2,0"
+    },
+    {
+      "name": "3,0"
+    },
+    {
+      "name": "4,0"
+    },
+    {
+      "name": "5,0"
+    },
+    {
+      "name": "25",
+      "directions": 8
+    },
+    {
+      "name": "0,1"
+    },
+    {
+      "name": "1,1"
+    },
+    {
+      "name": "2,1"
+    },
+    {
+      "name": "3,1"
+    },
+    {
+      "name": "4,1"
+    },
+    {
+      "name": "5,1"
+    },
+    {
+      "name": "0,2"
+    },
+    {
+      "name": "1,2"
+    },
+    {
+      "name": "2,2"
+    },
+    {
+      "name": "3,2"
+    },
+    {
+      "name": "4,2"
+    },
+    {
+      "name": "5,2"
+    },
+    {
+      "name": "0,3"
+    },
+    {
+      "name": "1,3"
+    },
+    {
+      "name": "2,3"
+    },
+    {
+      "name": "3,3"
+    },
+    {
+      "name": "4,3"
+    },
+    {
+      "name": "5,3"
+    },
+    {
+      "name": "66"
+    },
+    {
+      "name": "255",
+      "directions": 4
+    },
+    {
+      "name": "aborder1",
+      "directions": 8
+    },
+    {
+      "name": "aborder2",
+      "directions": 4
+    },
+    {
+      "name": "4,31"
+    },
+    {
+      "name": "52",
+      "directions": 4
+    },
+    {
+      "name": "s",
+      "directions": 8
+    },
+    {
+      "name": "stonedamaged"
+    },
+    {
+      "name": "sfff"
+    },
+    {
+      "name": "stonefloor"
+    },
+    {
+      "name": "stonefloor3",
+      "directions": 8
+    },
+    {
+      "name": "stonefloor2",
+      "directions": 4
+    },
+    {
+      "name": "newstone4"
+    },
+    {
+      "name": "newstone3"
+    },
+    {
+      "name": "newstone2"
+    },
+    {
+      "name": "newstone1"
+    },
+    {
+      "name": "stonecrafted4"
+    },
+    {
+      "name": "stonecrafted3"
+    },
+    {
+      "name": "stonecrafted2"
+    },
+    {
+      "name": "stonecrafted1"
+    }
+  ]
+}

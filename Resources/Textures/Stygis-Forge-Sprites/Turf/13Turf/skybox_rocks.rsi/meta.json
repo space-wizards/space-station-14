@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "a2"
+    },
+    {
+      "name": "a3"
+    },
+    {
+      "name": "a4"
+    },
+    {
+      "name": "a5"
+    },
+    {
+      "name": "a6"
+    },
+    {
+      "name": "a7"
+    },
+    {
+      "name": "a8"
+    },
+    {
+      "name": "a9"
+    },
+    {
+      "name": "a10"
+    }
+  ]
+}

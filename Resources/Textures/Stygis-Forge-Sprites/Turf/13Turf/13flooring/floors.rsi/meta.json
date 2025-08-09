@@ -1,0 +1,1148 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "newstone3",
+      "directions": 8
+    },
+    {
+      "name": "os4",
+      "directions": 4
+    },
+    {
+      "name": "floor"
+    },
+    {
+      "name": "newstone4",
+      "directions": 8
+    },
+    {
+      "name": "bfloorz",
+      "directions": 8
+    },
+    {
+      "name": "legadam"
+    },
+    {
+      "name": "soft",
+      "directions": 8
+    },
+    {
+      "name": "newcyber",
+      "directions": 4,
+      "delays": [
+        [
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01
+        ],
+        [
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01
+        ],
+        [
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01
+        ],
+        [
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01,
+          0.01
+        ]
+      ]
+    },
+    {
+      "name": "newbar",
+      "directions": 8
+    },
+    {
+      "name": "solarpanel2"
+    },
+    {
+      "name": "mhole",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "polarwarn",
+      "directions": 8
+    },
+    {
+      "name": "polarwarn2",
+      "directions": 8
+    },
+    {
+      "name": "bleeky",
+      "directions": 4
+    },
+    {
+      "name": "bleeky2",
+      "directions": 4
+    },
+    {
+      "name": "npolar",
+      "directions": 8
+    },
+    {
+      "name": "polar",
+      "directions": 8
+    },
+    {
+      "name": "lev",
+      "directions": 4
+    },
+    {
+      "name": "osb1"
+    },
+    {
+      "name": "os2",
+      "directions": 4
+    },
+    {
+      "name": "os3"
+    },
+    {
+      "name": "os5"
+    },
+    {
+      "name": "os7"
+    },
+    {
+      "name": "os8"
+    },
+    {
+      "name": "os4warn",
+      "directions": 8
+    },
+    {
+      "name": "os4warn2",
+      "directions": 4
+    },
+    {
+      "name": "os6",
+      "directions": 4
+    },
+    {
+      "name": "os9"
+    },
+    {
+      "name": "os10"
+    },
+    {
+      "name": "os11"
+    },
+    {
+      "name": "os12"
+    },
+    {
+      "name": "npolar2"
+    },
+    {
+      "name": "exotic",
+      "directions": 8
+    },
+    {
+      "name": "bluestone",
+      "directions": 8
+    },
+    {
+      "name": "bluestone2",
+      "directions": 4
+    },
+    {
+      "name": "bet",
+      "directions": 4
+    },
+    {
+      "name": "newstone2",
+      "directions": 8
+    },
+    {
+      "name": "k1",
+      "directions": 4
+    },
+    {
+      "name": "k3",
+      "directions": 4
+    },
+    {
+      "name": "mrav",
+      "directions": 8
+    },
+    {
+      "name": "mrav2"
+    },
+    {
+      "name": "k2",
+      "directions": 4
+    },
+    {
+      "name": "2115",
+      "directions": 8
+    },
+    {
+      "name": "surgery",
+      "directions": 8
+    },
+    {
+      "name": "cluster",
+      "directions": 8
+    },
+    {
+      "name": "H"
+    },
+    {
+      "name": "grimy",
+      "directions": 8
+    },
+    {
+      "name": "grim2",
+      "directions": 4
+    },
+    {
+      "name": "sealab",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "ss_ladder",
+      "directions": 4
+    },
+    {
+      "name": "snf2",
+      "directions": 8
+    },
+    {
+      "name": "snf24",
+      "directions": 8
+    },
+    {
+      "name": "snf23",
+      "directions": 8
+    },
+    {
+      "name": "snf22",
+      "directions": 8
+    },
+    {
+      "name": "nf2",
+      "directions": 8
+    },
+    {
+      "name": "newstone",
+      "directions": 4
+    },
+    {
+      "name": "stonecrafted",
+      "directions": 4
+    },
+    {
+      "name": "stonedamaged"
+    },
+    {
+      "name": "nf24",
+      "directions": 8
+    },
+    {
+      "name": "nf23",
+      "directions": 8
+    },
+    {
+      "name": "nf22",
+      "directions": 8
+    },
+    {
+      "name": "alien"
+    },
+    {
+      "name": "newbar4",
+      "directions": 4
+    },
+    {
+      "name": "black"
+    },
+    {
+      "name": "newbar5",
+      "directions": 4,
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "asteroid_anim",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "w",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "wb",
+      "directions": 8
+    },
+    {
+      "name": "wb2",
+      "directions": 8,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "23",
+      "directions": 8
+    },
+    {
+      "name": "23b",
+      "directions": 8
+    },
+    {
+      "name": "23s",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "24"
+    },
+    {
+      "name": "23323"
+    },
+    {
+      "name": "snowbase"
+    },
+    {
+      "name": "above",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "asteroid2"
+    },
+    {
+      "name": "asteroid3"
+    },
+    {
+      "name": "asteroid4"
+    },
+    {
+      "name": "asteroid6",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "asteroid7",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "asteroid8"
+    },
+    {
+      "name": "asteroid"
+    },
+    {
+      "name": "asteroid5"
+    },
+    {
+      "name": "asteroid0"
+    },
+    {
+      "name": "asteroid1"
+    },
+    {
+      "name": "asteroid9"
+    },
+    {
+      "name": "asteroid10"
+    },
+    {
+      "name": "s_ladder",
+      "directions": 4
+    },
+    {
+      "name": "ladder",
+      "directions": 4
+    },
+    {
+      "name": "ladder2",
+      "directions": 4
+    },
+    {
+      "name": "ladder4",
+      "directions": 4
+    },
+    {
+      "name": "ladder3",
+      "directions": 4
+    },
+    {
+      "name": "asteroid11"
+    },
+    {
+      "name": "asteroid12"
+    },
+    {
+      "name": "asteroid13"
+    },
+    {
+      "name": "plazar",
+      "directions": 8
+    },
+    {
+      "name": "trainstation",
+      "directions": 4
+    },
+    {
+      "name": "cyberspace",
+      "delays": [
+        [
+          0.4,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "plating"
+    },
+    {
+      "name": "bar2",
+      "directions": 4,
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "bar2r",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bbb",
+      "directions": 4
+    },
+    {
+      "name": "rct2",
+      "directions": 4
+    },
+    {
+      "name": "bloodbar",
+      "delays": [
+        [
+          0.4,
+          0.1,
+          0.05,
+          0.05,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bbar2"
+    },
+    {
+      "name": "firewall",
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1,
+          0.2,
+          0.1,
+          0.2,
+          0.1,
+          0.2,
+          0.1,
+          0.2,
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "nfloorz",
+      "directions": 8
+    },
+    {
+      "name": "n2floors"
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "empty"
+    },
+    {
+      "name": "open2"
+    },
+    {
+      "name": "mayo"
+    },
+    {
+      "name": "circuitoff"
+    },
+    {
+      "name": "circuitoff2"
+    },
+    {
+      "name": "ldamaged1"
+    },
+    {
+      "name": "ldamaged2"
+    },
+    {
+      "name": "ldamaged3"
+    },
+    {
+      "name": "ldamaged4"
+    },
+    {
+      "name": "wf",
+      "directions": 4
+    },
+    {
+      "name": "wf2",
+      "directions": 4
+    },
+    {
+      "name": "ldamaged5"
+    },
+    {
+      "name": "lpanelscorched"
+    },
+    {
+      "name": "lfloorscorched1"
+    },
+    {
+      "name": "lfloorscorched2"
+    },
+    {
+      "name": "lplatingdmg1"
+    },
+    {
+      "name": "platingdmg2"
+    },
+    {
+      "name": "platingdmg3"
+    },
+    {
+      "name": "damaged1"
+    },
+    {
+      "name": "damaged2"
+    },
+    {
+      "name": "damaged3"
+    },
+    {
+      "name": "panelscorched"
+    },
+    {
+      "name": "floorscorched1"
+    },
+    {
+      "name": "floorscorched2"
+    },
+    {
+      "name": "damaged4"
+    },
+    {
+      "name": "damaged5"
+    },
+    {
+      "name": "platingdmg1"
+    },
+    {
+      "name": "platingdmg2"
+    },
+    {
+      "name": "platingdmg3"
+    },
+    {
+      "name": "bar3",
+      "directions": 4
+    },
+    {
+      "name": "chapelnew",
+      "directions": 8
+    },
+    {
+      "name": "blackice",
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1,
+          0.2,
+          0.1,
+          0.2,
+          0.1,
+          0.2,
+          0.1,
+          0.2,
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "hull",
+      "directions": 4
+    },
+    {
+      "name": "newhull",
+      "directions": 8
+    },
+    {
+      "name": "plazaf"
+    },
+    {
+      "name": "plazaf2"
+    },
+    {
+      "name": "plaza",
+      "directions": 8
+    },
+    {
+      "name": "plazabox",
+      "directions": 8
+    },
+    {
+      "name": "6",
+      "directions": 8
+    },
+    {
+      "name": "zzz"
+    },
+    {
+      "name": "seabed",
+      "directions": 4
+    },
+    {
+      "name": "asteroid_dug3"
+    },
+    {
+      "name": "asteroid_dug2"
+    },
+    {
+      "name": "asteroid_dug1"
+    },
+    {
+      "name": "platingk"
+    },
+    {
+      "name": "floor02",
+      "directions": 4
+    },
+    {
+      "name": "34242",
+      "directions": 8
+    },
+    {
+      "name": "black",
+      "directions": 8
+    },
+    {
+      "name": "blackcorner",
+      "directions": 4
+    },
+    {
+      "name": "n",
+      "directions": 8
+    },
+    {
+      "name": "carpbet2side",
+      "directions": 8
+    },
+    {
+      "name": "carpbet2"
+    },
+    {
+      "name": "carpet2side",
+      "directions": 8
+    },
+    {
+      "name": "carpet2",
+      "directions": 4
+    },
+    {
+      "name": "21",
+      "directions": 8
+    },
+    {
+      "name": "22"
+    },
+    {
+      "name": "surface",
+      "directions": 4
+    },
+    {
+      "name": "FX"
+    },
+    {
+      "name": "FX2"
+    },
+    {
+      "name": "K"
+    },
+    {
+      "name": "zero"
+    },
+    {
+      "name": "F7",
+      "directions": 8
+    },
+    {
+      "name": "rct",
+      "directions": 4
+    },
+    {
+      "name": "rct3",
+      "directions": 8
+    },
+    {
+      "name": "rct4",
+      "directions": 4
+    },
+    {
+      "name": "steel",
+      "directions": 8
+    },
+    {
+      "name": "wallo6",
+      "delays": [
+        [
+          2.5,
+          0.2,
+          0.1,
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "wallo5",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "wallo7",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "wallo8",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "F2",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "F3",
+      "directions": 8,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "F4",
+      "directions": 4
+    },
+    {
+      "name": "F55",
+      "directions": 4
+    },
+    {
+      "name": "F5",
+      "directions": 4
+    },
+    {
+      "name": "F"
+    },
+    {
+      "name": "F6",
+      "directions": 8
+    },
+    {
+      "name": "FF",
+      "directions": 8
+    },
+    {
+      "name": "F74",
+      "directions": 8
+    },
+    {
+      "name": "H2"
+    },
+    {
+      "name": "surface2",
+      "directions": 8
+    },
+    {
+      "name": "newbar2",
+      "directions": 8
+    },
+    {
+      "name": "evil",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bloodf2"
+    },
+    {
+      "name": "3323",
+      "directions": 8
+    },
+    {
+      "name": "carpbet23side",
+      "directions": 8
+    },
+    {
+      "name": "carpbet23"
+    },
+    {
+      "name": "bf2",
+      "directions": 8
+    },
+    {
+      "name": "bf22",
+      "directions": 8
+    },
+    {
+      "name": "bf25",
+      "directions": 8
+    },
+    {
+      "name": "troom1",
+      "directions": 8
+    },
+    {
+      "name": "troom2",
+      "directions": 8
+    },
+    {
+      "name": "troom3",
+      "directions": 8
+    },
+    {
+      "name": "grimy3",
+      "directions": 8
+    },
+    {
+      "name": "nfloorz2",
+      "directions": 8
+    },
+    {
+      "name": "checkers1"
+    },
+    {
+      "name": "rectangles1"
+    },
+    {
+      "name": "rectangles2"
+    },
+    {
+      "name": "brick1"
+    },
+    {
+      "name": "checkers2"
+    },
+    {
+      "name": "brick2"
+    },
+    {
+      "name": "metal1"
+    },
+    {
+      "name": "metal2"
+    },
+    {
+      "name": "metal3"
+    },
+    {
+      "name": "metal4"
+    },
+    {
+      "name": "metal5"
+    },
+    {
+      "name": "metal6"
+    },
+    {
+      "name": "metal7"
+    },
+    {
+      "name": "metal8"
+    },
+    {
+      "name": "metal9"
+    },
+    {
+      "name": "metal10"
+    }
+  ]
+}

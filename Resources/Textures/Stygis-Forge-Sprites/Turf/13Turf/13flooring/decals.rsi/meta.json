@@ -1,0 +1,675 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "corner_white1",
+      "directions": 8
+    },
+    {
+      "name": "corner_white",
+      "directions": 8
+    },
+    {
+      "name": "corner_white_diagonal",
+      "directions": 4
+    },
+    {
+      "name": "corner_white_three_quarters",
+      "directions": 4
+    },
+    {
+      "name": "corner_white_full"
+    },
+    {
+      "name": "corner_white_diagonal1",
+      "directions": 4
+    },
+    {
+      "name": "corner_white_three_quarters1",
+      "directions": 4
+    },
+    {
+      "name": "corner_white_full1"
+    },
+    {
+      "name": "loadingarea",
+      "directions": 4
+    },
+    {
+      "name": "delivery"
+    },
+    {
+      "name": "warning",
+      "directions": 8
+    },
+    {
+      "name": "warningcorner",
+      "directions": 4
+    },
+    {
+      "name": "warningfull"
+    },
+    {
+      "name": "warningcee",
+      "directions": 4
+    },
+    {
+      "name": "warning_white",
+      "directions": 8
+    },
+    {
+      "name": "warningcorner_white",
+      "directions": 4
+    },
+    {
+      "name": "warningfull_white"
+    },
+    {
+      "name": "warningcee_white",
+      "directions": 4
+    },
+    {
+      "name": "warning_red",
+      "directions": 8
+    },
+    {
+      "name": "warningcorner_red",
+      "directions": 4
+    },
+    {
+      "name": "warningfull_red"
+    },
+    {
+      "name": "warningcee_red",
+      "directions": 4
+    },
+    {
+      "name": "white_1"
+    },
+    {
+      "name": "white_2"
+    },
+    {
+      "name": "white_a"
+    },
+    {
+      "name": "white_b"
+    },
+    {
+      "name": "white_c"
+    },
+    {
+      "name": "white_d"
+    },
+    {
+      "name": "white_ex"
+    },
+    {
+      "name": "white_m"
+    },
+    {
+      "name": "white_cmo"
+    },
+    {
+      "name": "white_v"
+    },
+    {
+      "name": "white_p"
+    },
+    {
+      "name": "plaque"
+    },
+    {
+      "name": "L1",
+      "directions": 4
+    },
+    {
+      "name": "L2",
+      "directions": 4
+    },
+    {
+      "name": "L3",
+      "directions": 4
+    },
+    {
+      "name": "L4",
+      "directions": 4
+    },
+    {
+      "name": "L5",
+      "directions": 4
+    },
+    {
+      "name": "L6",
+      "directions": 4
+    },
+    {
+      "name": "L7",
+      "directions": 4
+    },
+    {
+      "name": "L8",
+      "directions": 4
+    },
+    {
+      "name": "L9",
+      "directions": 4
+    },
+    {
+      "name": "L10",
+      "directions": 4
+    },
+    {
+      "name": "L11",
+      "directions": 4
+    },
+    {
+      "name": "L12",
+      "directions": 4
+    },
+    {
+      "name": "L13",
+      "directions": 4
+    },
+    {
+      "name": "L14",
+      "directions": 4
+    },
+    {
+      "name": "L15",
+      "directions": 4
+    },
+    {
+      "name": "L16",
+      "directions": 4
+    },
+    {
+      "name": "derelict1"
+    },
+    {
+      "name": "derelict2"
+    },
+    {
+      "name": "derelict3"
+    },
+    {
+      "name": "derelict4"
+    },
+    {
+      "name": "derelict5"
+    },
+    {
+      "name": "derelict6"
+    },
+    {
+      "name": "derelict7"
+    },
+    {
+      "name": "derelict8"
+    },
+    {
+      "name": "derelict9"
+    },
+    {
+      "name": "derelict10"
+    },
+    {
+      "name": "derelict11"
+    },
+    {
+      "name": "derelict12"
+    },
+    {
+      "name": "derelict13"
+    },
+    {
+      "name": "derelict14"
+    },
+    {
+      "name": "derelict15"
+    },
+    {
+      "name": "derelict16"
+    },
+    {
+      "name": "asteroid_dug_overlay"
+    },
+    {
+      "name": "asteroid0"
+    },
+    {
+      "name": "asteroid1"
+    },
+    {
+      "name": "asteroid2"
+    },
+    {
+      "name": "asteroid3"
+    },
+    {
+      "name": "asteroid4"
+    },
+    {
+      "name": "asteroid5"
+    },
+    {
+      "name": "asteroid6"
+    },
+    {
+      "name": "asteroid7"
+    },
+    {
+      "name": "asteroid8"
+    },
+    {
+      "name": "asteroid9"
+    },
+    {
+      "name": "chapel",
+      "directions": 4
+    },
+    {
+      "name": "warningcorner_dust",
+      "directions": 4
+    },
+    {
+      "name": "warning_dust",
+      "directions": 8
+    },
+    {
+      "name": "outline"
+    },
+    {
+      "name": "spline_fancy",
+      "directions": 8
+    },
+    {
+      "name": "spline_fancy_corner",
+      "directions": 4
+    },
+    {
+      "name": "spline_fancy_cee",
+      "directions": 4
+    },
+    {
+      "name": "spline_fancy_full"
+    },
+    {
+      "name": "spline_plain",
+      "directions": 8
+    },
+    {
+      "name": "spline_plain_diagonal",
+      "directions": 4
+    },
+    {
+      "name": "spline_plain_cee",
+      "directions": 4
+    },
+    {
+      "name": "spline_plain_full"
+    },
+    {
+      "name": "solarpanel"
+    },
+    {
+      "name": "shutoff",
+      "directions": 4
+    },
+    {
+      "name": "traction"
+    },
+    {
+      "name": "manydot"
+    },
+    {
+      "name": "manydot_tiled"
+    },
+    {
+      "name": "pryhole"
+    },
+    {
+      "name": "edge",
+      "directions": 8
+    },
+    {
+      "name": "ntlogo",
+      "directions": 4
+    },
+    {
+      "name": "steelwhat"
+    },
+    {
+      "name": "dir_white",
+      "directions": 4
+    },
+    {
+      "name": "dir_black",
+      "directions": 4
+    },
+    {
+      "name": "mark_white"
+    },
+    {
+      "name": "mark_black"
+    },
+    {
+      "name": "punctuation_white"
+    },
+    {
+      "name": "punctuation_black"
+    },
+    {
+      "name": "plaza",
+      "directions": 8
+    },
+    {
+      "name": "plazabox",
+      "directions": 4
+    },
+    {
+      "name": "bloodbar",
+      "delays": [
+        [
+          0.4,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bloodbar2"
+    },
+    {
+      "name": "barfull"
+    },
+    {
+      "name": "bar2",
+      "directions": 4,
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "bar3",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ],
+        [
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "shaft",
+      "directions": 4
+    },
+    {
+      "name": "shaft-ready"
+    },
+    {
+      "name": "coldroom",
+      "directions": 8
+    },
+    {
+      "name": "steel",
+      "directions": 8
+    },
+    {
+      "name": "cafe2"
+    },
+    {
+      "name": "cafefull",
+      "directions": 4
+    },
+    {
+      "name": "aesculapius"
+    },
+    {
+      "name": "mem"
+    },
+    {
+      "name": "mento"
+    },
+    {
+      "name": "mori"
+    },
+    {
+      "name": "platingfull"
+    },
+    {
+      "name": "plate"
+    },
+    {
+      "name": "barnew"
+    },
+    {
+      "name": "shaftplating"
+    },
+    {
+      "name": "platingfull2"
+    },
+    {
+      "name": "checkers1"
+    },
+    {
+      "name": "rectangles1"
+    },
+    {
+      "name": "rectangles2"
+    },
+    {
+      "name": "brick1"
+    },
+    {
+      "name": "checkers2"
+    },
+    {
+      "name": "brick2"
+    },
+    {
+      "name": "metal1"
+    },
+    {
+      "name": "metal2"
+    },
+    {
+      "name": "metal3"
+    },
+    {
+      "name": "metal4"
+    },
+    {
+      "name": "metal5"
+    },
+    {
+      "name": "metal6"
+    },
+    {
+      "name": "metal7"
+    },
+    {
+      "name": "metal8"
+    },
+    {
+      "name": "metal9"
+    },
+    {
+      "name": "metal10"
+    },
+    {
+      "name": "marble"
+    },
+    {
+      "name": "carpet"
+    },
+    {
+      "name": "housewood2"
+    },
+    {
+      "name": "basalt0"
+    },
+    {
+      "name": "basalt1",
+      "delays": [
+        [
+          2,
+          2,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "basalt3",
+      "delays": [
+        [
+          2,
+          2,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "basalt9",
+      "delays": [
+        [
+          2,
+          2,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "basalt10"
+    },
+    {
+      "name": "necro1"
+    },
+    {
+      "name": "necro2",
+      "delays": [
+        [
+          1.5,
+          2,
+          0.5,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "oldsmoothdirt"
+    },
+    {
+      "name": "tunneldirty"
+    },
+    {
+      "name": "tunnelchess"
+    },
+    {
+      "name": "sewerhatch1"
+    },
+    {
+      "name": "sewerhatch0"
+    },
+    {
+      "name": "n00"
+    },
+    {
+      "name": "n01",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "surgery2",
+      "directions": 8
+    },
+    {
+      "name": "brothel",
+      "directions": 8
+    },
+    {
+      "name": "clockwork"
+    }
+  ]
+}

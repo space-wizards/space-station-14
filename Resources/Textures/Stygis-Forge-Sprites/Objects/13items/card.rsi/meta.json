@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "blank"
+    },
+    {
+      "name": "id-robot",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "clownGold"
+    },
+    {
+      "name": "mime"
+    },
+    {
+      "name": "mimeGold"
+    },
+    {
+      "name": "syndie"
+    },
+    {
+      "name": "syndieGold"
+    },
+    {
+      "name": "centcomGold"
+    },
+    {
+      "name": "lifetime"
+    },
+    {
+      "name": "cyan"
+    },
+    {
+      "name": "cyanGold"
+    },
+    {
+      "name": "pink"
+    },
+    {
+      "name": "pinkGold"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "greenGold"
+    },
+    {
+      "name": "fingerprint0"
+    },
+    {
+      "name": "fingerprint1"
+    },
+    {
+      "name": "emag"
+    },
+    {
+      "name": "guest"
+    },
+    {
+      "name": "guest_invalid"
+    },
+    {
+      "name": "permit"
+    },
+    {
+      "name": "solgov"
+    },
+    {
+      "name": "trader"
+    },
+    {
+      "name": "dogtag"
+    },
+    {
+      "name": "dogtag"
+    },
+    {
+      "name": "tagred"
+    },
+    {
+      "name": "tagblue"
+    },
+    {
+      "name": "plaque-card"
+    },
+    {
+      "name": "key"
+    },
+    {
+      "name": "key2"
+    },
+    {
+      "name": "key3"
+    },
+    {
+      "name": "key4"
+    },
+    {
+      "name": "tau"
+    },
+    {
+      "name": "admin_ring"
+    },
+    {
+      "name": "medicae_ring"
+    },
+    {
+      "name": "goldring"
+    },
+    {
+      "name": "data"
+    },
+    {
+      "name": "id"
+    },
+    {
+      "name": "gold"
+    },
+    {
+      "name": "goldNew"
+    },
+    {
+      "name": "cave"
+    },
+    {
+      "name": "silver"
+    },
+    {
+      "name": "eng"
+    },
+    {
+      "name": "engGold"
+    },
+    {
+      "name": "cargo"
+    },
+    {
+      "name": "cargoGold"
+    },
+    {
+      "name": "corporate"
+    },
+    {
+      "name": "sec"
+    },
+    {
+      "name": "secGold"
+    },
+    {
+      "name": "sci"
+    },
+    {
+      "name": "sciGold"
+    },
+    {
+      "name": "civ"
+    },
+    {
+      "name": "civGold"
+    },
+    {
+      "name": "medGold"
+    },
+    {
+      "name": "med"
+    },
+    {
+      "name": "syndicate"
+    },
+    {
+      "name": "centcom_old"
+    },
+    {
+      "name": "centcomNew"
+    },
+    {
+      "name": "centcom"
+    }
+  ]
+}

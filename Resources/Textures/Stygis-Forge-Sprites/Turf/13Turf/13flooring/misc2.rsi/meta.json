@@ -1,0 +1,404 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "red",
+      "directions": 4
+    },
+    {
+      "name": "red-quarter",
+      "directions": 4
+    },
+    {
+      "name": "red-corner",
+      "directions": 4
+    },
+    {
+      "name": "red-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "redsolid"
+    },
+    {
+      "name": "blue",
+      "directions": 4
+    },
+    {
+      "name": "blue-quarter",
+      "directions": 4
+    },
+    {
+      "name": "blue-corner",
+      "directions": 4
+    },
+    {
+      "name": "blue-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "bluesolid"
+    },
+    {
+      "name": "green",
+      "directions": 4
+    },
+    {
+      "name": "green-quarter",
+      "directions": 4
+    },
+    {
+      "name": "green-corner",
+      "directions": 4
+    },
+    {
+      "name": "green-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "greensolid"
+    },
+    {
+      "name": "yellow",
+      "directions": 4
+    },
+    {
+      "name": "yellow-quarter",
+      "directions": 4
+    },
+    {
+      "name": "yellow-corner",
+      "directions": 4
+    },
+    {
+      "name": "yellow-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "yellowsolid"
+    },
+    {
+      "name": "purple",
+      "directions": 4
+    },
+    {
+      "name": "purple-quarter",
+      "directions": 4
+    },
+    {
+      "name": "purple-corner",
+      "directions": 4
+    },
+    {
+      "name": "purple-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "purplesolid"
+    },
+    {
+      "name": "teal",
+      "directions": 4
+    },
+    {
+      "name": "teal-quarter",
+      "directions": 4
+    },
+    {
+      "name": "teal-corner",
+      "directions": 4
+    },
+    {
+      "name": "teal-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "tealsolid"
+    },
+    {
+      "name": "whitekafel",
+      "directions": 4
+    },
+    {
+      "name": "whitekafel-quarter",
+      "directions": 4
+    },
+    {
+      "name": "whitekafel-corner",
+      "directions": 4
+    },
+    {
+      "name": "whitekafel-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "bluekafel",
+      "directions": 4
+    },
+    {
+      "name": "bluekafel-quarter",
+      "directions": 4
+    },
+    {
+      "name": "bluekafel-corner",
+      "directions": 4
+    },
+    {
+      "name": "bluekafel-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "white",
+      "directions": 4
+    },
+    {
+      "name": "white-quarter",
+      "directions": 4
+    },
+    {
+      "name": "white-corner",
+      "directions": 4
+    },
+    {
+      "name": "white-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "whitesolid"
+    },
+    {
+      "name": "wgreen",
+      "directions": 4
+    },
+    {
+      "name": "wgreen-quarter",
+      "directions": 4
+    },
+    {
+      "name": "wgreen-corner",
+      "directions": 4
+    },
+    {
+      "name": "wgreen-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "wgreensolid"
+    },
+    {
+      "name": "black",
+      "directions": 4
+    },
+    {
+      "name": "black-quarter",
+      "directions": 4
+    },
+    {
+      "name": "black-corner",
+      "directions": 4
+    },
+    {
+      "name": "black-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "blacksolid"
+    },
+    {
+      "name": "plazaf",
+      "directions": 4
+    },
+    {
+      "name": "plazaf-quarter",
+      "directions": 4
+    },
+    {
+      "name": "plazaf-corner",
+      "directions": 4
+    },
+    {
+      "name": "plazaf-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "plazaf2",
+      "directions": 4
+    },
+    {
+      "name": "plazaf2-quarter",
+      "directions": 4
+    },
+    {
+      "name": "plazaf2-corner",
+      "directions": 4
+    },
+    {
+      "name": "plazaf2-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "bar",
+      "directions": 4
+    },
+    {
+      "name": "bar-quarter",
+      "directions": 4
+    },
+    {
+      "name": "bar-corner",
+      "directions": 4
+    },
+    {
+      "name": "bar-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "cafe",
+      "directions": 4
+    },
+    {
+      "name": "cafe-quarter",
+      "directions": 4
+    },
+    {
+      "name": "cafe-corner",
+      "directions": 4
+    },
+    {
+      "name": "cafe-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "plating",
+      "directions": 4
+    },
+    {
+      "name": "plating-quarter",
+      "directions": 4
+    },
+    {
+      "name": "plating-corner",
+      "directions": 4
+    },
+    {
+      "name": "plating-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "concrete"
+    },
+    {
+      "name": "reinforced",
+      "directions": 8
+    },
+    {
+      "name": "rcorner",
+      "directions": 4
+    },
+    {
+      "name": "polar",
+      "directions": 4
+    },
+    {
+      "name": "polar-quarter",
+      "directions": 4
+    },
+    {
+      "name": "polar-corner",
+      "directions": 4
+    },
+    {
+      "name": "grey",
+      "directions": 4
+    },
+    {
+      "name": "grey-quarter",
+      "directions": 4
+    },
+    {
+      "name": "grey-corner",
+      "directions": 4
+    },
+    {
+      "name": "grey-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "grey1",
+      "directions": 4
+    },
+    {
+      "name": "grey-quarter1",
+      "directions": 4
+    },
+    {
+      "name": "grey-corner1",
+      "directions": 4
+    },
+    {
+      "name": "grey-diagonal1",
+      "directions": 4
+    },
+    {
+      "name": "greysolid"
+    },
+    {
+      "name": "shaftplating",
+      "directions": 4
+    },
+    {
+      "name": "shaftplating-quarter",
+      "directions": 4
+    },
+    {
+      "name": "shaftplating-corner",
+      "directions": 4
+    },
+    {
+      "name": "shaftplating-diagonal",
+      "directions": 4
+    },
+    {
+      "name": "train",
+      "directions": 8
+    },
+    {
+      "name": "train2",
+      "directions": 8
+    },
+    {
+      "name": "train_c",
+      "directions": 8
+    },
+    {
+      "name": "train2_c",
+      "directions": 8
+    },
+    {
+      "name": "step",
+      "directions": 4
+    },
+    {
+      "name": "step_i",
+      "directions": 4
+    },
+    {
+      "name": "nbar",
+      "directions": 8
+    },
+    {
+      "name": "nbar_corner",
+      "directions": 4
+    },
+    {
+      "name": "dwood",
+      "directions": 4
+    }
+  ]
+}

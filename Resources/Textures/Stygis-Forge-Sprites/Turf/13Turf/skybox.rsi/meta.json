@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 736,
+    "y": 736
+  },
+  "states": [
+    {
+      "name": "background_narsie"
+    },
+    {
+      "name": "background_ark"
+    },
+    {
+      "name": "background_reebe"
+    },
+    {
+      "name": "background_cascade"
+    },
+    {
+      "name": "background_soft"
+    },
+    {
+      "name": "background_theworld"
+    },
+    {
+      "name": "background_frost"
+    },
+    {
+      "name": "background_julia"
+    },
+    {
+      "name": "background_mandelbrot"
+    },
+    {
+      "name": "background_dyable1"
+    },
+    {
+      "name": "background_dyable",
+      "delays": [
+        [
+          25,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ]
+      ]
+    }
+  ]
+}

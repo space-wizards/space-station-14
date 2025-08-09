@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bluetie"
+    },
+    {
+      "name": "redtie"
+    },
+    {
+      "name": "horribletie"
+    },
+    {
+      "name": "stethoscope"
+    },
+    {
+      "name": "bronze"
+    },
+    {
+      "name": "silver"
+    },
+    {
+      "name": "gold"
+    },
+    {
+      "name": "cargo"
+    },
+    {
+      "name": "cargo2"
+    },
+    {
+      "name": "engie"
+    },
+    {
+      "name": "engie2"
+    },
+    {
+      "name": "rnd"
+    },
+    {
+      "name": "rnd2"
+    },
+    {
+      "name": "med"
+    },
+    {
+      "name": "red"
+    },
+    {
+      "name": "hydro"
+    },
+    {
+      "name": "holster_low"
+    },
+    {
+      "name": "holster"
+    },
+    {
+      "name": "altair_locket"
+    },
+    {
+      "name": "webbing"
+    },
+    {
+      "name": "vest_brown"
+    },
+    {
+      "name": "vest_black"
+    },
+    {
+      "name": "holobadge"
+    },
+    {
+      "name": "holobadge-cord"
+    },
+    {
+      "name": "konaahirano"
+    },
+    {
+      "name": "unathiharness0"
+    },
+    {
+      "name": "unathiharness1"
+    },
+    {
+      "name": "unathiharness2"
+    },
+    {
+      "name": "bandolier"
+    },
+    {
+      "name": "pinksquare"
+    },
+    {
+      "name": "bootknife_1"
+    },
+    {
+      "name": "bootknife_0"
+    },
+    {
+      "name": "knife_in",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "knife_out",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

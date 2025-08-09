@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "lasgun_back"
+    },
+    {
+      "name": "lucius_back"
+    },
+    {
+      "name": "elysian_back"
+    },
+    {
+      "name": "hellgun_back"
+    },
+    {
+      "name": "flamer_back"
+    },
+    {
+      "name": "plasmagun_back"
+    },
+    {
+      "name": "plasmagun-alt_back",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "guardshotgun_back"
+    },
+    {
+      "name": "kriegshotgun_back"
+    },
+    {
+      "name": "chainsword_back"
+    },
+    {
+      "name": "Rchainsword_back"
+    },
+    {
+      "name": "Gchainsword_back"
+    },
+    {
+      "name": "powersword_back"
+    },
+    {
+      "name": "sheath_chainsword_back"
+    },
+    {
+      "name": "sheath_Rchainsword_back"
+    },
+    {
+      "name": "sheath_Gchainsword_back"
+    },
+    {
+      "name": "sheath_powersword_back"
+    },
+    {
+      "name": "sheath_back"
+    },
+    {
+      "name": "chainsword_belt",
+      "directions": 4
+    },
+    {
+      "name": "Rchainsword_belt",
+      "directions": 4
+    },
+    {
+      "name": "Gchainsword_belt",
+      "directions": 4
+    },
+    {
+      "name": "powersword_belt",
+      "directions": 4
+    },
+    {
+      "name": "sheath_chainsword_belt",
+      "directions": 4
+    },
+    {
+      "name": "sheath_Rchainsword_belt",
+      "directions": 4
+    },
+    {
+      "name": "sheath_Gchainsword_belt",
+      "directions": 4
+    },
+    {
+      "name": "sheath_powersword_belt",
+      "directions": 4
+    },
+    {
+      "name": "sheath_belt",
+      "directions": 4
+    }
+  ]
+}

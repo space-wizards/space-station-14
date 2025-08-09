@@ -1,0 +1,260 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "doorc0",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "door1"
+    },
+    {
+      "name": "doorc1",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "door0"
+    },
+    {
+      "name": "propulsion",
+      "directions": 4
+    },
+    {
+      "name": "propulsion_l",
+      "directions": 4
+    },
+    {
+      "name": "propulsion_r",
+      "directions": 4
+    },
+    {
+      "name": "burst_s",
+      "directions": 4
+    },
+    {
+      "name": "burst_l",
+      "directions": 4
+    },
+    {
+      "name": "burst_r",
+      "directions": 4
+    },
+    {
+      "name": "router",
+      "directions": 4
+    },
+    {
+      "name": "platform",
+      "directions": 8
+    },
+    {
+      "name": "heater",
+      "directions": 4
+    },
+    {
+      "name": "floor"
+    },
+    {
+      "name": "floor2"
+    },
+    {
+      "name": "floor3"
+    },
+    {
+      "name": "floor4"
+    },
+    {
+      "name": "floor5"
+    },
+    {
+      "name": "floor6"
+    },
+    {
+      "name": "floor7"
+    },
+    {
+      "name": "diagonalWall",
+      "directions": 8
+    },
+    {
+      "name": "wall1"
+    },
+    {
+      "name": "wall2"
+    },
+    {
+      "name": "wall",
+      "directions": 8
+    },
+    {
+      "name": "diagonalWall2"
+    },
+    {
+      "name": "pwall",
+      "directions": 8
+    },
+    {
+      "name": "wall3",
+      "directions": 8
+    },
+    {
+      "name": "diagonalWall3",
+      "directions": 8
+    },
+    {
+      "name": "wall_floor",
+      "directions": 8
+    },
+    {
+      "name": "wall_space",
+      "directions": 8
+    },
+    {
+      "name": "swall0"
+    },
+    {
+      "name": "swall",
+      "directions": 8
+    },
+    {
+      "name": "swall_straight",
+      "directions": 4
+    },
+    {
+      "name": "swall_t",
+      "directions": 4
+    },
+    {
+      "name": "swall15"
+    },
+    {
+      "name": "swall_c",
+      "directions": 4
+    },
+    {
+      "name": "swall_s",
+      "directions": 4
+    },
+    {
+      "name": "gwall_space",
+      "directions": 4
+    },
+    {
+      "name": "gwall_floor",
+      "directions": 4
+    },
+    {
+      "name": "vwall0"
+    },
+    {
+      "name": "vwall1"
+    },
+    {
+      "name": "vwall2"
+    },
+    {
+      "name": "vwall3"
+    },
+    {
+      "name": "vwall4"
+    },
+    {
+      "name": "vwall8"
+    },
+    {
+      "name": "vwall12"
+    },
+    {
+      "name": "vwallc1"
+    },
+    {
+      "name": "vwallc2"
+    },
+    {
+      "name": "vwallc3"
+    },
+    {
+      "name": "vwallc4"
+    },
+    {
+      "name": "vfloor"
+    },
+    {
+      "name": "vwall_f5"
+    },
+    {
+      "name": "vwall_f6"
+    },
+    {
+      "name": "vwall_f9"
+    },
+    {
+      "name": "vwall_f10"
+    },
+    {
+      "name": "vcorner1"
+    },
+    {
+      "name": "vcorner2"
+    },
+    {
+      "name": "vcorner3"
+    },
+    {
+      "name": "vcorner4"
+    },
+    {
+      "name": "swall_f",
+      "directions": 4
+    },
+    {
+      "name": "corner_white",
+      "directions": 8
+    },
+    {
+      "name": "corner_white_block",
+      "directions": 8
+    },
+    {
+      "name": "corner_dark",
+      "directions": 8
+    },
+    {
+      "name": "fuel_port"
+    },
+    {
+      "name": "fuel_port_empty"
+    },
+    {
+      "name": "fuel_port_full"
+    }
+  ]
+}

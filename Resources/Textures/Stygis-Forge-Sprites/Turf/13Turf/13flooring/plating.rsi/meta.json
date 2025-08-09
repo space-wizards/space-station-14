@@ -1,0 +1,315 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "dmg11"
+    },
+    {
+      "name": "dmg22"
+    },
+    {
+      "name": "dmg33"
+    },
+    {
+      "name": "dmg44"
+    },
+    {
+      "name": "asteroidplating"
+    },
+    {
+      "name": "plating1"
+    },
+    {
+      "name": "wall_thermite"
+    },
+    {
+      "name": "cult"
+    },
+    {
+      "name": "plating1"
+    },
+    {
+      "name": "plating1"
+    },
+    {
+      "name": "plating"
+    },
+    {
+      "name": "dmg1"
+    },
+    {
+      "name": "dmg2"
+    },
+    {
+      "name": "dmg3"
+    },
+    {
+      "name": "dmg4"
+    },
+    {
+      "name": "n2floor"
+    },
+    {
+      "name": "concrete"
+    },
+    {
+      "name": "marbletile"
+    },
+    {
+      "name": "dark_wood",
+      "directions": 8
+    },
+    {
+      "name": "coralgranite"
+    },
+    {
+      "name": "steel_dark",
+      "directions": 4
+    },
+    {
+      "name": "steelnew",
+      "directions": 8
+    },
+    {
+      "name": "troom3",
+      "directions": 8
+    },
+    {
+      "name": "metroedges",
+      "directions": 8
+    },
+    {
+      "name": "metrofull",
+      "directions": 8
+    },
+    {
+      "name": "graywhite"
+    },
+    {
+      "name": "evil",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "surgery",
+      "directions": 8
+    },
+    {
+      "name": "surgery2",
+      "directions": 8
+    },
+    {
+      "name": "surface",
+      "directions": 4
+    },
+    {
+      "name": "stonecrafted",
+      "directions": 4
+    },
+    {
+      "name": "seabed",
+      "directions": 4
+    },
+    {
+      "name": "newstone4",
+      "directions": 8
+    },
+    {
+      "name": "lev",
+      "directions": 4
+    },
+    {
+      "name": "bloodf2"
+    },
+    {
+      "name": "stoney"
+    },
+    {
+      "name": "stone_old"
+    },
+    {
+      "name": "stoning"
+    },
+    {
+      "name": "stonefloor"
+    },
+    {
+      "name": "stonefloor3",
+      "directions": 8
+    },
+    {
+      "name": "stonefloor2",
+      "directions": 4
+    },
+    {
+      "name": "nfloorz3",
+      "directions": 8
+    },
+    {
+      "name": "newstone2",
+      "directions": 8
+    },
+    {
+      "name": "stonefloor4"
+    },
+    {
+      "name": "rusty_ship2"
+    },
+    {
+      "name": "sborder1",
+      "directions": 8
+    },
+    {
+      "name": "sborder2",
+      "directions": 4
+    },
+    {
+      "name": "carpbet2side",
+      "directions": 8
+    },
+    {
+      "name": "carpbet2"
+    },
+    {
+      "name": "carpet2side",
+      "directions": 8
+    },
+    {
+      "name": "carpet2",
+      "directions": 4
+    },
+    {
+      "name": "carpbet23side",
+      "directions": 8
+    },
+    {
+      "name": "carpet0",
+      "directions": 4
+    },
+    {
+      "name": "blucarpet2side",
+      "directions": 8
+    },
+    {
+      "name": "carpet3",
+      "directions": 4
+    },
+    {
+      "name": "caveramp",
+      "directions": 4
+    },
+    {
+      "name": "grass3"
+    },
+    {
+      "name": "bluestone2",
+      "directions": 4
+    },
+    {
+      "name": "trench_flooring",
+      "directions": 8
+    },
+    {
+      "name": "grass_dark"
+    },
+    {
+      "name": "SoulFloor",
+      "directions": 4
+    },
+    {
+      "name": "cluster",
+      "directions": 8
+    },
+    {
+      "name": "SoulFloorS",
+      "directions": 4
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "darkfloor",
+      "directions": 4
+    },
+    {
+      "name": "rwall0"
+    },
+    {
+      "name": "rwall3",
+      "directions": 4
+    },
+    {
+      "name": "rwall12",
+      "directions": 4
+    },
+    {
+      "name": "rwall1"
+    },
+    {
+      "name": "rwall2"
+    },
+    {
+      "name": "rwall8"
+    },
+    {
+      "name": "rwall4"
+    },
+    {
+      "name": "rwall6"
+    },
+    {
+      "name": "rwall10"
+    },
+    {
+      "name": "rwall9"
+    },
+    {
+      "name": "rwall5"
+    },
+    {
+      "name": "rwall7"
+    },
+    {
+      "name": "rwall15"
+    },
+    {
+      "name": "rwall11"
+    },
+    {
+      "name": "rwall14"
+    },
+    {
+      "name": "rwall13"
+    },
+    {
+      "name": "corner",
+      "directions": 4
+    }
+  ]
+}

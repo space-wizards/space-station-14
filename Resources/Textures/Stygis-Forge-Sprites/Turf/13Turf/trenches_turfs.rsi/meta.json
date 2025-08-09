@@ -1,0 +1,253 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "greatrock"
+    },
+    {
+      "name": "wood0"
+    },
+    {
+      "name": "wood1"
+    },
+    {
+      "name": "wood2"
+    },
+    {
+      "name": "wood3"
+    },
+    {
+      "name": "wood4"
+    },
+    {
+      "name": "wood5"
+    },
+    {
+      "name": "wood6"
+    },
+    {
+      "name": "wood7"
+    },
+    {
+      "name": "wood8"
+    },
+    {
+      "name": "wood9"
+    },
+    {
+      "name": "wood10"
+    },
+    {
+      "name": "wood11"
+    },
+    {
+      "name": "wood12"
+    },
+    {
+      "name": "wood13"
+    },
+    {
+      "name": "wood14"
+    },
+    {
+      "name": "wood15"
+    },
+    {
+      "name": "wwi",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "wwidirt"
+    },
+    {
+      "name": "wwidirtplating"
+    },
+    {
+      "name": "trench0",
+      "directions": 8
+    },
+    {
+      "name": "trench",
+      "directions": 4
+    },
+    {
+      "name": "wwidirtboarded1"
+    },
+    {
+      "name": "wwidirtboarded2"
+    },
+    {
+      "name": "trenchcenter"
+    },
+    {
+      "name": "brust",
+      "directions": 8
+    },
+    {
+      "name": "trenchleft",
+      "directions": 4
+    },
+    {
+      "name": "trenchright",
+      "directions": 4
+    },
+    {
+      "name": "trenchedgeturf1"
+    },
+    {
+      "name": "trenchedgeturf2"
+    },
+    {
+      "name": "trenchboth",
+      "directions": 4
+    },
+    {
+      "name": "trenchmissingcorners",
+      "directions": 4
+    },
+    {
+      "name": "cornerdirt1_1"
+    },
+    {
+      "name": "cornerdirt1_2"
+    },
+    {
+      "name": "cornerdirt2_1"
+    },
+    {
+      "name": "cornerdirt2_2"
+    },
+    {
+      "name": "l1"
+    },
+    {
+      "name": "l2"
+    },
+    {
+      "name": "l3"
+    },
+    {
+      "name": "l4"
+    },
+    {
+      "name": "l5"
+    },
+    {
+      "name": "l6"
+    },
+    {
+      "name": "l7"
+    },
+    {
+      "name": "l8"
+    },
+    {
+      "name": "l9"
+    },
+    {
+      "name": "crater"
+    },
+    {
+      "name": "m1"
+    },
+    {
+      "name": "m2"
+    },
+    {
+      "name": "m3"
+    },
+    {
+      "name": "m4"
+    },
+    {
+      "name": "dirtcornerleft"
+    },
+    {
+      "name": "dirtcornercenter"
+    },
+    {
+      "name": "dirtcornerright"
+    },
+    {
+      "name": "grass",
+      "delays": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "railleft"
+    },
+    {
+      "name": "rail"
+    },
+    {
+      "name": "railright"
+    },
+    {
+      "name": "railcenter"
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "sandbags",
+      "directions": 8
+    },
+    {
+      "name": "trenchcorner",
+      "directions": 8
+    },
+    {
+      "name": "lonelytrench"
+    },
+    {
+      "name": "trenchT"
+    },
+    {
+      "name": "trenchPlus"
+    },
+    {
+      "name": "trench_NES"
+    },
+    {
+      "name": "trench_NSW"
+    },
+    {
+      "name": "oof",
+      "directions": 4
+    },
+    {
+      "name": "fug",
+      "directions": 4
+    },
+    {
+      "name": "trench_flooring",
+      "directions": 8
+    },
+    {
+      "name": "wood_left"
+    },
+    {
+      "name": "wood_mid"
+    },
+    {
+      "name": "wood_right"
+    }
+  ]
+}

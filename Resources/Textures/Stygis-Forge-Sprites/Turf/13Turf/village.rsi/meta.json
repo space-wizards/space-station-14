@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "village0"
+    },
+    {
+      "name": "village1"
+    },
+    {
+      "name": "village2"
+    },
+    {
+      "name": "village3"
+    },
+    {
+      "name": "village4"
+    },
+    {
+      "name": "village5"
+    },
+    {
+      "name": "village6"
+    },
+    {
+      "name": "village7"
+    },
+    {
+      "name": "village8"
+    },
+    {
+      "name": "village9"
+    },
+    {
+      "name": "village10"
+    },
+    {
+      "name": "village11"
+    },
+    {
+      "name": "village12"
+    },
+    {
+      "name": "village13"
+    },
+    {
+      "name": "village14"
+    },
+    {
+      "name": "village15"
+    }
+  ]
+}

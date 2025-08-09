@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "desert"
+    },
+    {
+      "name": "desert_dug"
+    },
+    {
+      "name": "desert0"
+    },
+    {
+      "name": "desert1"
+    },
+    {
+      "name": "desert2"
+    },
+    {
+      "name": "desert3"
+    },
+    {
+      "name": "desert4"
+    },
+    {
+      "name": "desert5"
+    },
+    {
+      "name": "desert6"
+    },
+    {
+      "name": "desert7"
+    },
+    {
+      "name": "desert8"
+    },
+    {
+      "name": "sandglass"
+    }
+  ]
+}
