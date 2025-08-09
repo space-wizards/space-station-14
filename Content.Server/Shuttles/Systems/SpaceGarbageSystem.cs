@@ -1,4 +1,5 @@
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Destructible;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
@@ -10,6 +11,8 @@ namespace Content.Server.Shuttles.Systems;
 /// </summary>
 public sealed class SpaceGarbageSystem : EntitySystem
 {
+    [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
+
     private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
@@ -30,6 +33,7 @@ public sealed class SpaceGarbageSystem : EntitySystem
         if (ourXform.GridUid == otherXform.GridUid)
             return;
 
-        QueueDel(uid);
+        _destructible.DestroyEntity(uid);
+        
     }
 }
