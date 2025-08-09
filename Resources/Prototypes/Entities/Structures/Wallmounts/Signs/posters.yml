@@ -1069,7 +1069,7 @@
   parent: PosterBase
   id: PosterLegitPeriodicTable
   name: "Periodic Table of the Elements"
-  description: "A periodic table of the elements, from Hydrogen to Oganesson, and everything inbetween."
+  description: "A periodic table of the elements, from Hydrogen to Oganesson, and everything in between."
   components:
     - type: Sprite
       state: poster49_legit

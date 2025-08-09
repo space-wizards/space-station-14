@@ -129245,7 +129245,7 @@ entities:
         [bold]Insufficient power to operate TEG:[/bold] Use any available secondary power sources to power equipment as needed to start the TEG. If necassary, disable auxilary power connections to ensure TEG is properly powered for startup.
 
 
-        [bold]Gas leak occured within TEG facility:[/bold] Use included emergency ventilation shutters to evacuate gas from facility. Ensure proper hazard protection is worn during this proceedure. This operation can be done from the TEG chamber or TEG control room.
+        [bold]Gas leak occurred within TEG facility:[/bold] Use included emergency ventilation shutters to evacuate gas from facility. Ensure proper hazard protection is worn during this procedure. This operation can be done from the TEG chamber or TEG control room.
 
 
         [bold]My team is incompetent:[/bold] Please return your team to your manufacturer as soon as possible and order a new one. Refunds may apply as per manufacturer warranty. TB Engineering takes no responsibility for injury, financial losses, station losses, braincell losses, loss of life or migraines caused by attempting to operate the TEG with a faulty team.
@@ -129318,7 +129318,7 @@ entities:
         [bold]Insufficient power to operate TEG:[/bold] Use any available secondary power sources to power equipment as needed to start the TEG. If necassary, disable auxilary power connections to ensure TEG is properly powered for startup.
 
 
-        [bold]Gas leak occured within TEG facility:[/bold] Use included emergency ventilation shutters to evacuate gas from facility. Ensure proper hazard protection is worn during this proceedure. This operation can be done from the TEG chamber or TEG control room.
+        [bold]Gas leak occurred within TEG facility:[/bold] Use included emergency ventilation shutters to evacuate gas from facility. Ensure proper hazard protection is worn during this procedure. This operation can be done from the TEG chamber or TEG control room.
 
 
         [bold]My team is incompetent:[/bold] Please return your team to your manufacturer as soon as possible and order a new one. Refunds may apply as per manufacturer warranty. TB Engineering takes no responsibility for injury, financial losses, station losses, braincell losses, loss of life or migraines caused by attempting to operate the TEG with a faulty team.
@@ -129390,7 +129390,7 @@ entities:
 
         [head=1][color=#ff0000]                   WARNING![/color][/head]
 
-        [bold]Ensure internal airlock is fully closed before undocking. Failure to ensure internal airlock is closed will lead to internal and external airlocks remaining open during undocking proceedure.[/bold]
+        [bold]Ensure internal airlock is fully closed before undocking. Failure to ensure internal airlock is closed will lead to internal and external airlocks remaining open during undocking procedure.[/bold]
   - uid: 25911
     components:
     - type: Transform
