@@ -37,7 +37,7 @@ namespace Content.Client.Wires.UI
             if (!disposing)
                 return;
 
-            _menu?.Dispose();
+            _menu?.Close();
         }
     }
 }
