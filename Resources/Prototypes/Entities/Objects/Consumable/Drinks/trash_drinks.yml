@@ -18,6 +18,8 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
+  - type: SolutionItemStatus
+    solution: drink
   - type: Drink
   - type: MeleeWeapon
     soundNoDamage:
@@ -110,6 +112,8 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
+  - type: SolutionItemStatus
+    solution: drink
   - type: Drink
   - type: Spillable
     solution: drink
