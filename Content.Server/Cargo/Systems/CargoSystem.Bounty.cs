@@ -31,8 +31,7 @@ public sealed partial class CargoSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSys = default!;
     [Dependency] private readonly IdCardSystem _idCard = default!;
 
-    [ValidatePrototypeId<NameIdentifierGroupPrototype>]
-    private const string BountyNameIdentifierGroup = "Bounty";
+    private static readonly ProtoId<NameIdentifierGroupPrototype> BountyNameIdentifierGroup = "Bounty";
 
     private EntityQuery<StackComponent> _stackQuery;
     private EntityQuery<ContainerManagerComponent> _containerQuery;
