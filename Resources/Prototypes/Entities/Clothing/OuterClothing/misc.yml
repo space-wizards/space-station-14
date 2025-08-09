@@ -237,6 +237,17 @@
 
 - type: entity
   parent: ClothingOuterBase
+  id: ClothingOuterWizardFake
+  name: fake wizard robes
+  description: Covered in glittery stars and mystery stains. Instantly boosts your arcane fashion sense.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/wizard_fake.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/wizard_fake.rsi
+
+- type: entity
+  parent: ClothingOuterBase
   id: ClothingOuterSkub
   name: skub suit
   description: 'Skub is crudely written on the outside of this cylindrical suit.'
