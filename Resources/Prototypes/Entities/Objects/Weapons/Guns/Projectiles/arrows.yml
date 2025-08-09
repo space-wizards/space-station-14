@@ -45,7 +45,7 @@
     solutions:
       ammo:
         maxVol: 2
-  - type: RefillableSolution
+  - type: RefillableSolution # This is sus. You can't really just run an arrowhead under a sink faucet.
     solution: ammo
   - type: InjectableSolution
     solution: ammo

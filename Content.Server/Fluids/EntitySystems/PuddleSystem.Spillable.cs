@@ -1,20 +1,8 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry;
-using Content.Shared.Clothing;
-using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Popups;
 using Content.Shared.Spillable;
 using Content.Shared.Throwing;
-using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Player;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -26,10 +14,8 @@ public sealed partial class PuddleSystem
 
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
         // Openable handles the event if it's closed
-        SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit, after: [typeof(OpenableSystem)]);
         SubscribeLocalEvent<SpillableComponent, SolutionContainerOverflowEvent>(OnOverflow);
         SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<SpillableComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
     }
 
     private void OnOverflow(Entity<SpillableComponent> entity, ref SolutionContainerOverflowEvent args)
@@ -39,66 +25,6 @@ public sealed partial class PuddleSystem
 
         TrySpillAt(Transform(entity).Coordinates, args.Overflow, out _);
         args.Handled = true;
-    }
-
-    private void SplashOnMeleeHit(Entity<SpillableComponent> entity, ref MeleeHitEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        // When attacking someone reactive with a spillable entity,
-        // splash a little on them (touch react)
-        // If this also has solution transfer, then assume the transfer amount is how much we want to spill.
-        // Otherwise let's say they want to spill a quarter of its max volume.
-
-        if (!_solutionContainerSystem.TryGetDrainableSolution(entity.Owner, out var soln, out var solution))
-            return;
-
-        var hitCount = args.HitEntities.Count;
-
-        var totalSplit = FixedPoint2.Min(solution.MaxVolume * 0.25, solution.Volume);
-        if (TryComp<SolutionTransferComponent>(entity, out var transfer))
-        {
-            totalSplit = FixedPoint2.Min(transfer.TransferAmount, solution.Volume);
-        }
-
-        // a little lame, but reagent quantity is not very balanced and we don't want people
-        // spilling like 100u of reagent on someone at once!
-        totalSplit = FixedPoint2.Min(totalSplit, entity.Comp.MaxMeleeSpillAmount);
-
-        if (totalSplit == 0)
-            return;
-
-        // Optionally allow further melee handling occur
-        args.Handled = entity.Comp.PreventMelee;
-
-        // First update the hit count so anything that is not reactive wont count towards the total!
-        foreach (var hit in args.HitEntities)
-        {
-            if (!HasComp<ReactiveComponent>(hit))
-                hitCount -= 1;
-        }
-
-        foreach (var hit in args.HitEntities)
-        {
-            if (!HasComp<ReactiveComponent>(hit))
-                continue;
-
-            var splitSolution = _solutionContainerSystem.SplitSolution(soln.Value, totalSplit / hitCount);
-
-            _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SharedSolutionContainerSystem.ToPrettyString(splitSolution):solution} from {ToPrettyString(entity.Owner):entity} onto {ToPrettyString(hit):target}");
-            _reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
-
-            _popups.PopupEntity(
-                Loc.GetString("spill-melee-hit-attacker", ("amount", totalSplit / hitCount), ("spillable", entity.Owner),
-                    ("target", Identity.Entity(hit, EntityManager))),
-                hit, args.User);
-
-            _popups.PopupEntity(
-                Loc.GetString("spill-melee-hit-others", ("attacker", args.User), ("spillable", entity.Owner),
-                    ("target", Identity.Entity(hit, EntityManager))),
-                hit, Filter.PvsExcept(args.User), true, PopupType.SmallCaution);
-        }
     }
 
     private void SpillOnLand(Entity<SpillableComponent> entity, ref LandEvent args)
@@ -114,28 +40,12 @@ public sealed partial class PuddleSystem
 
         if (args.User != null)
         {
-            _adminLogger.Add(LogType.Landed,
+            AdminLogger.Add(LogType.Landed,
                 $"{ToPrettyString(entity.Owner):entity} spilled a solution {SharedSolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
 
         var drainedSolution = _solutionContainerSystem.Drain(entity.Owner, soln.Value, solution.Volume);
         TrySplashSpillAt(entity.Owner, Transform(entity).Coordinates, drainedSolution, out _);
-    }
-
-    /// <summary>
-    /// Prevent Pacified entities from throwing items that can spill liquids.
-    /// </summary>
-    private void OnAttemptPacifiedThrow(Entity<SpillableComponent> ent, ref AttemptPacifiedThrowEvent args)
-    {
-        // Don’t care about closed containers.
-        if (Openable.IsClosed(ent))
-            return;
-
-        // Don’t care about empty containers.
-        if (!_solutionContainerSystem.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out _, out var solution) || solution.Volume <= 0)
-            return;
-
-        args.Cancel("pacified-cannot-throw-spill");
     }
 
     private void OnDoAfter(Entity<SpillableComponent> entity, ref SpillDoAfterEvent args)
