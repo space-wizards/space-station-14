@@ -7,7 +7,7 @@
   description: A taco shell, easy to hold, but falls on its side when put down.
   components:
   - type: Item
-    storedRotation: -90
+    storedOffset: 0,-3
   - type: Food
     transferAmount: 3
   - type: Sprite
@@ -61,7 +61,9 @@
           Quantity: 4
   - type: Item
     sprite: Objects/Consumable/Food/taco.rsi
-    storedRotation: -90
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,1
   - type: Tag
     tags:
       - Meat
@@ -172,6 +174,8 @@
   id: FoodTacoDragon
   description: A dragon taco, which is technically also a fish taco.
   components:
+  - type: Item
+    storedOffset: 0,3
   - type: FlavorProfile
     flavors:
     - meaty

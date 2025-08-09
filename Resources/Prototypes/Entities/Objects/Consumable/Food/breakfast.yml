@@ -9,8 +9,7 @@
   description: A full breakfast, rise and shine!
   components:
   - type: Item
-    storedRotation: -90
-  - type: Food
+    size: Normal
   - type: Sprite
     sprite: Objects/Consumable/Food/breakfast.rsi
   - type: SolutionContainerManager

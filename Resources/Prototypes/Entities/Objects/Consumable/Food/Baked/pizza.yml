@@ -10,7 +10,6 @@
     flavors:
       - oily
       - bread
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
   - type: SolutionContainerManager
@@ -28,6 +27,7 @@
     size: Normal
     shape:
     - 0,0,2,1
+    storedOffset: 0,-5
   - type: Tag
     tags:
     - Pizza
