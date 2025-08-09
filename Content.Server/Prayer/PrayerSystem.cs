@@ -10,6 +10,7 @@ using Content.Shared.Prayer;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Content.Shared.Bible.Components;
 
 namespace Content.Server.Prayer;
 /// <summary>
