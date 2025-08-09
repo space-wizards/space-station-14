@@ -6,4 +6,4 @@ job-description-blueshield = Your primary job is to protect the heads. Remember,
 job-description-miningspec = Stay station side and enrich the station with materials using your salvage magnet and ore processors
 job-description-mailtech = Deliver letters and packages to the crew of the station to make cargo money.
 job-description-surgeon = Heal people, cripple enemies, and replace limbs and organs!
-job-description-ntccblueshield = Your primary job is to protect your charged Nanotrasen-Central Command Consortium officials, this overrules anything else.
+job-description-ntncblueshield = Your primary job is to protect your charged Nanotrasen-Central Command officials, this overrules anything else.
