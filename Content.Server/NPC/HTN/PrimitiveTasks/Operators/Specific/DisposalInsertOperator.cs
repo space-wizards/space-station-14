@@ -13,13 +13,13 @@ public sealed partial class DisposalInsertOperator : HTNOperator
     /// <summary>
     /// Target entity to flush
     /// </summary>
-    [DataField("targetKey", required: true)]
+    [DataField(required: true)]
     public string TargetKey = string.Empty;
 
     /// <summary>
     /// Target disposal bin entity
     /// </summary>
-    [DataField("disposalTargetKey", required: true)]
+    [DataField(required: true)]
     public string DisposalTargetKey = string.Empty;
 
     public override void Initialize(IEntitySystemManager sysManager)
@@ -50,9 +50,6 @@ public sealed partial class DisposalInsertOperator : HTNOperator
 
         if (!_disposalSystem.TryInsert(disposalUnitTarget, target, owner))
             return HTNOperatorStatus.Failed;
-
-        //if (!disposalComp.Engaged)
-        //    _disposalSystem.ToggleEngage(disposalUnitTarget, disposalComp);
 
         return HTNOperatorStatus.Finished;
 

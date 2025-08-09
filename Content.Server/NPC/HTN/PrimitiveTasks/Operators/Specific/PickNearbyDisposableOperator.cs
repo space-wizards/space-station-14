@@ -17,25 +17,25 @@ public sealed partial class PickNearbyDisposableOperator : HTNOperator
     private ContainerSystem _container = default!;
 
 
-    [DataField("rangeKey", required: true)]
+    [DataField(required: true)]
     public string RangeKey = default!;
 
     /// <summary>
     /// Target entity to flush
     /// </summary>
-    [DataField("targetKey", required: true)]
+    [DataField(required: true)]
     public string TargetKey = string.Empty;
 
     /// <summary>
     /// Target disposal bin entity
     /// </summary>
-    [DataField("disposalTargetKey", required: true)]
+    [DataField(required: true)]
     public string DisposalTargetKey = string.Empty;
 
     /// <summary>
     /// Target entitycoordinates to move to.
     /// </summary>
-    [DataField("targetMoveKey", required: true)]
+    [DataField(required: true)]
     public string TargetMoveKey = string.Empty;
 
     public override void Initialize(IEntitySystemManager sysManager)
