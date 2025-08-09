@@ -1,12 +1,12 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Atmos;
 using Content.Shared.Botany;
 using Content.Shared.Burial.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
@@ -22,11 +22,13 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Database;
+using LogType = Content.Shared.Database.LogType;
 using Content.Shared.Labels.Components;
+using System.Linq;
 
 namespace Content.Server.Botany.Systems;
 
@@ -45,11 +47,10 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISerializationManager _copier = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
-    public const float HydroponicsSpeedMultiplier = 1f;
-    public const float HydroponicsConsumptionMultiplier = 2f;
 
     private static readonly ProtoId<TagPrototype> HoeTag = "Hoe";
     private static readonly ProtoId<TagPrototype> PlantSampleTakerTag = "PlantSampleTaker";
@@ -59,7 +60,6 @@ public sealed class PlantHolderSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<PlantHolderComponent, SolutionTransferredEvent>(OnSolutionTransferred);
     }
 
@@ -85,7 +85,10 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed == null)
             return 0;
 
-        var result = Math.Max(1, (int)(component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
+        if (!TryComp<PlantTraitsComponent>(uid, out var traits))
+            return 1;
+
+        var result = Math.Max(1, (int)(component.Age * traits.GrowthStages / traits.Maturation));
         return result;
     }
 
@@ -109,28 +112,31 @@ public sealed class PlantHolderSystem : EntitySystem
                     ("seedName", displayName),
                     ("toBeForm", displayName.EndsWith('s') ? "are" : "is")));
 
-                if (component.Health <= component.Seed.Endurance / 2)
+                if (!TryComp<PlantTraitsComponent>(entity, out var traits))
+                    return;
+
+                if (component.Health <= traits.Endurance / 2)
                 {
                     args.PushMarkup(Loc.GetString(
                         "plant-holder-component-something-already-growing-low-health-message",
                         ("healthState",
-                            Loc.GetString(component.Age > component.Seed.Lifespan
+                            Loc.GetString(component.Age > traits.Lifespan
                                 ? "plant-holder-component-plant-old-adjective"
                                 : "plant-holder-component-plant-unhealthy-adjective"))));
                 }
 
                 // For future reference, mutations should only appear on examine if they apply to a plant, not to produce.
 
-                if (component.Seed.Ligneous)
+                if (traits.Ligneous)
                     args.PushMarkup(Loc.GetString("mutation-plant-ligneous"));
 
-                if (component.Seed.TurnIntoKudzu)
+                if (traits.TurnIntoKudzu)
                     args.PushMarkup(Loc.GetString("mutation-plant-kudzu"));
 
-                if (component.Seed.CanScream)
+                if (traits.CanScream)
                     args.PushMarkup(Loc.GetString("mutation-plant-scream"));
 
-                if (component.Seed.Viable == false)
+                if (!traits.Viable)
                     args.PushMarkup(Loc.GetString("mutation-plant-unviable"));
             }
             else
@@ -153,9 +159,6 @@ public sealed class PlantHolderSystem : EntitySystem
             {
                 if (component.Toxins > 40f)
                     args.PushMarkup(Loc.GetString("plant-holder-component-toxins-high-warning"));
-
-                if (component.ImproperLight)
-                    args.PushMarkup(Loc.GetString("plant-holder-component-light-improper-warning"));
 
                 if (component.ImproperHeat)
                     args.PushMarkup(Loc.GetString("plant-holder-component-heat-improper-warning"));
@@ -187,18 +190,32 @@ public sealed class PlantHolderSystem : EntitySystem
                     ("seedName", name),
                     ("seedNoun", noun)), args.User, PopupType.Medium);
 
-                component.Seed = seed;
+                component.Seed = seed.Clone();
                 component.Dead = false;
                 component.Age = 1;
+                component.DrawWarnings = true;
+
+                // Get endurance from seed's PlantTraitsComponent
+                var seedTraits = _botany.GetPlantTraits(seed);
                 if (seeds.HealthOverride != null)
                 {
                     component.Health = seeds.HealthOverride.Value;
                 }
-                else
+                else if (seedTraits != null)
                 {
-                    component.Health = component.Seed.Endurance;
+                    component.Health = seedTraits.Endurance;
                 }
                 component.LastCycle = _gameTiming.CurTime;
+
+                // Ensure no existing growth components before adding new ones
+                var existingGrowthComponents = EntityManager.GetComponents<PlantGrowthComponent>(uid).ToList();
+                foreach (var g in existingGrowthComponents)
+                    EntityManager.RemoveComponent(uid, g);
+
+                foreach (var g in seed.GrowthComponents)
+                    EntityManager.AddComponent(uid, _copier.CreateCopy(g, notNullableOverride: true), overwrite: true);
+
+                EnsureDefaultGrowthComponents(uid);
 
                 if (TryComp<PaperLabelComponent>(args.Used, out var paperLabel))
                 {
@@ -288,7 +305,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
-            component.Health -= (_random.Next(3, 5) * 10);
+            component.Health -= _random.Next(3, 5) * 10;
 
             float? healthOverride;
             if (component.Harvest)
@@ -300,28 +317,31 @@ public sealed class PlantHolderSystem : EntitySystem
                 healthOverride = component.Health;
             }
             var packetSeed = component.Seed;
-            var seed = _botany.SpawnSeedPacket(packetSeed, Transform(args.User).Coordinates, args.User, healthOverride);
-            _randomHelper.RandomOffset(seed, 0.25f);
-            var displayName = Loc.GetString(component.Seed.DisplayName);
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
-                ("seedName", displayName)), args.User);
 
-            DoScream(entity.Owner, component.Seed);
+            if (packetSeed != null)
+            {
+                // Copy growth components from the plant to the seed before creating seed packet
+                var plantGrowthComponents = EntityManager.GetComponents<PlantGrowthComponent>(uid).ToList();
+                packetSeed.GrowthComponents?.Clear();
+                foreach (var growthComponent in plantGrowthComponents)
+                {
+                    var newComponent = growthComponent.DupeComponent();
+                    packetSeed.GrowthComponents?.Add(newComponent);
+                }
 
-            if (_random.Prob(0.3f))
-                component.Sampled = true;
+                var seed = _botany.SpawnSeedPacket(packetSeed, Transform(args.User).Coordinates, args.User, healthOverride);
+                _randomHelper.RandomOffset(seed, 0.25f);
+                var displayName = Loc.GetString(component.Seed.DisplayName);
+                _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
+                    ("seedName", displayName)), args.User);
 
-            // Just in case.
-            CheckLevelSanity(uid, component);
-            ForceUpdateByExternalCause(uid, component);
+                if (_random.Prob(0.3f))
+                    component.Sampled = true;
 
-            return;
-        }
+                CheckLevelSanity(uid, component);
+                ForceUpdateByExternalCause(uid, component);
+            }
 
-        if (HasComp<SharpComponent>(args.Used))
-        {
-            args.Handled = true;
-            DoHarvest(uid, args.User, component);
             return;
         }
 
@@ -352,8 +372,12 @@ public sealed class PlantHolderSystem : EntitySystem
             var seed = produce.Seed;
             if (seed != null)
             {
-                var nutrientBonus = seed.Potency / 2.5f;
-                AdjustNutrient(uid, nutrientBonus, component);
+                var seedTraits = _botany.GetPlantTraits(seed);
+                if (seedTraits != null)
+                {
+                    var nutrientBonus = seedTraits.Potency / 2.5f;
+                    AdjustNutrient(uid, nutrientBonus, component);
+                }
             }
             QueueDel(args.Used);
         }
@@ -363,16 +387,6 @@ public sealed class PlantHolderSystem : EntitySystem
     {
         _audio.PlayPvs(ent.Comp.WateringSound, ent.Owner);
     }
-    private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
-    {
-        DoHarvest(entity, args.User, entity.Comp);
-    }
-
-    public void WeedInvasion()
-    {
-        // TODO
-    }
-
 
     public void Update(EntityUid uid, PlantHolderComponent? component = null)
     {
@@ -383,6 +397,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         var curTime = _gameTiming.CurTime;
 
+        // ForceUpdate is used for external triggers like swabbing
         if (component.ForceUpdate)
             component.ForceUpdate = false;
         else if (curTime < (component.LastCycle + component.CycleDelay))
@@ -394,46 +409,18 @@ public sealed class PlantHolderSystem : EntitySystem
 
         component.LastCycle = curTime;
 
-        // Process mutations
+        if (component.Seed != null && !component.Dead)
+        {
+            var plantGrow = new OnPlantGrowEvent();
+            RaiseLocalEvent(uid, ref plantGrow);
+        }
+
+        // Process mutations. All plants can mutate, so this stays here.
         if (component.MutationLevel > 0)
         {
             Mutate(uid, Math.Min(component.MutationLevel, 25), component);
             component.UpdateSpriteAfterUpdate = true;
             component.MutationLevel = 0;
-        }
-
-        // Weeds like water and nutrients! They may appear even if there's not a seed planted.
-        if (component.WaterLevel > 10 && component.NutritionLevel > 5)
-        {
-            var chance = 0f;
-            if (component.Seed == null)
-                chance = 0.05f;
-            else if (component.Seed.TurnIntoKudzu)
-                chance = 1f;
-            else
-                chance = 0.01f;
-
-            if (_random.Prob(chance))
-                component.WeedLevel += 1 + HydroponicsSpeedMultiplier * component.WeedCoefficient;
-
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
-        if (component.Seed != null && component.Seed.TurnIntoKudzu
-            && component.WeedLevel >= component.Seed.WeedHighLevelThreshold)
-        {
-            Spawn(component.Seed.KudzuPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
-            component.Seed.TurnIntoKudzu = false;
-            component.Health = 0;
-        }
-
-        // There's a chance for a weed explosion to happen if weeds take over.
-        // Plants that are themselves weeds (WeedTolerance > 8) are unaffected.
-        if (component.WeedLevel >= 10 && _random.Prob(0.1f))
-        {
-            if (component.Seed == null || component.WeedLevel >= component.Seed.WeedTolerance + 2)
-                WeedInvasion();
         }
 
         // If we have no seed planted, or the plant is dead, stop processing here.
@@ -445,242 +432,30 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        // There's a small chance the pest population increases.
-        // Can only happen when there's a live seed planted.
-        if (_random.Prob(0.01f))
-        {
-            component.PestLevel += 0.5f * HydroponicsSpeedMultiplier;
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
-        // Advance plant age here.
-        if (component.SkipAging > 0)
-            component.SkipAging--;
-        else
-        {
-            if (_random.Prob(0.8f))
-                component.Age += (int)(1 * HydroponicsSpeedMultiplier);
-
-            component.UpdateSpriteAfterUpdate = true;
-        }
-
-        // Nutrient consumption.
-        if (component.Seed.NutrientConsumption > 0 && component.NutritionLevel > 0 && _random.Prob(0.75f))
-        {
-            component.NutritionLevel -= MathF.Max(0f, component.Seed.NutrientConsumption * HydroponicsSpeedMultiplier);
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
-        // Water consumption.
-        if (component.Seed.WaterConsumption > 0 && component.WaterLevel > 0 && _random.Prob(0.75f))
-        {
-            component.WaterLevel -= MathF.Max(0f,
-                component.Seed.WaterConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
-        var healthMod = _random.Next(1, 3) * HydroponicsSpeedMultiplier;
-
-        // Make sure genetics are viable.
-        if (!component.Seed.Viable)
-        {
-            AffectGrowth(uid, -1, component);
-            component.Health -= 6 * healthMod;
-        }
-
-        // Prevents the plant from aging when lacking resources.
-        // Limits the effect on aging so that when resources are added, the plant starts growing in a reasonable amount of time.
-        if (component.SkipAging < 10)
-        {
-            // Make sure the plant is not starving.
-            if (component.NutritionLevel > 5)
-            {
-                component.Health += Convert.ToInt32(_random.Prob(0.35f)) * healthMod;
-            }
-            else
-            {
-                AffectGrowth(uid, -1, component);
-                component.Health -= healthMod;
-            }
-
-            // Make sure the plant is not thirsty.
-            if (component.WaterLevel > 10)
-            {
-                component.Health += Convert.ToInt32(_random.Prob(0.35f)) * healthMod;
-            }
-            else
-            {
-                AffectGrowth(uid, -1, component);
-                component.Health -= healthMod;
-            }
-
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
-        var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
-
-        component.MissingGas = 0;
-        if (component.Seed.ConsumeGasses.Count > 0)
-        {
-            foreach (var (gas, amount) in component.Seed.ConsumeGasses)
-            {
-                if (environment.GetMoles(gas) < amount)
-                {
-                    component.MissingGas++;
-                    continue;
-                }
-
-                environment.AdjustMoles(gas, -amount);
-            }
-
-            if (component.MissingGas > 0)
-            {
-                component.Health -= component.MissingGas * HydroponicsSpeedMultiplier;
-                if (component.DrawWarnings)
-                    component.UpdateSpriteAfterUpdate = true;
-            }
-        }
-
-        // SeedPrototype pressure resistance.
-        var pressure = environment.Pressure;
-        if (pressure < component.Seed.LowPressureTolerance || pressure > component.Seed.HighPressureTolerance)
-        {
-            component.Health -= healthMod;
-            component.ImproperPressure = true;
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-        else
-        {
-            component.ImproperPressure = false;
-        }
-
-        // SeedPrototype ideal temperature.
-        if (MathF.Abs(environment.Temperature - component.Seed.IdealHeat) > component.Seed.HeatTolerance)
-        {
-            component.Health -= healthMod;
-            component.ImproperHeat = true;
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-        else
-        {
-            component.ImproperHeat = false;
-        }
-
-        // Gas production.
-        var exudeCount = component.Seed.ExudeGasses.Count;
-        if (exudeCount > 0)
-        {
-            foreach (var (gas, amount) in component.Seed.ExudeGasses)
-            {
-                environment.AdjustMoles(gas,
-                    MathF.Max(1f, MathF.Round(amount * MathF.Round(component.Seed.Potency) / exudeCount)));
-            }
-        }
-
-        // Toxin levels beyond the plant's tolerance cause damage.
-        // They are, however, slowly reduced over time.
-        if (component.Toxins > 0)
-        {
-            var toxinUptake = MathF.Max(1, MathF.Round(component.Toxins / 10f));
-            if (component.Toxins > component.Seed.ToxinsTolerance)
-            {
-                component.Health -= toxinUptake;
-            }
-
-            component.Toxins -= toxinUptake;
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
-        // Weed levels.
-        if (component.PestLevel > 0)
-        {
-            // TODO: Carnivorous plants?
-            if (component.PestLevel > component.Seed.PestTolerance)
-            {
-                component.Health -= HydroponicsSpeedMultiplier;
-            }
-
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
-        // Weed levels.
-        if (component.WeedLevel > 0)
-        {
-            // TODO: Parasitic plants.
-            if (component.WeedLevel >= component.Seed.WeedTolerance)
-            {
-                component.Health -= HydroponicsSpeedMultiplier;
-            }
-
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
-        if (component.Age > component.Seed.Lifespan)
-        {
-            component.Health -= _random.Next(3, 5) * HydroponicsSpeedMultiplier;
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-        else if (component.Age < 0) // Revert back to seed packet!
-        {
-            var packetSeed = component.Seed;
-            // will put it in the trays hands if it has any, please do not try doing this
-            _botany.SpawnSeedPacket(packetSeed, Transform(uid).Coordinates, uid);
-            RemovePlant(uid, component);
-            component.ForceUpdate = true;
-            Update(uid, component);
-            return;
-        }
-
         CheckHealth(uid, component);
-
-        if (component.Harvest && component.Seed.HarvestRepeat == HarvestType.SelfHarvest)
-            AutoHarvest(uid, component);
-
-        // If enough time has passed since the plant was harvested, we're ready to harvest again!
-        if (!component.Dead && component.Seed.ProductPrototypes.Count > 0)
-        {
-            if (component.Age > component.Seed.Production)
-            {
-                if (component.Age - component.LastProduce > component.Seed.Production && !component.Harvest)
-                {
-                    component.Harvest = true;
-                    component.LastProduce = component.Age;
-                }
-            }
-            else
-            {
-                if (component.Harvest)
-                {
-                    component.Harvest = false;
-                    component.LastProduce = component.Age;
-                }
-            }
-        }
-
         CheckLevelSanity(uid, component);
+
+        // Synchronize harvest status between PlantHolderComponent and HarvestComponent
+        if (TryComp<HarvestComponent>(uid, out var harvestComp))
+        {
+            component.Harvest = harvestComp.ReadyForHarvest;
+        }
 
         if (component.UpdateSpriteAfterUpdate)
             UpdateSprite(uid, component);
     }
 
-    //TODO: kill this bullshit
+    /// <summary>
+    /// Ensures all plant holder levels are within valid ranges.
+    /// TODO: Move this validation logic to individual growth components
+    /// </summary>
     public void CheckLevelSanity(EntityUid uid, PlantHolderComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.Seed != null)
-            component.Health = MathHelper.Clamp(component.Health, 0, component.Seed.Endurance);
+        if (component.Seed != null && TryComp<PlantTraitsComponent>(uid, out var traits))
+            component.Health = MathHelper.Clamp(component.Health, 0, traits.Endurance);
         else
         {
             component.Health = 0f;
@@ -695,85 +470,6 @@ public sealed class PlantHolderSystem : EntitySystem
         component.Toxins = MathHelper.Clamp(component.Toxins, 0f, 100f);
         component.YieldMod = MathHelper.Clamp(component.YieldMod, 0, 2);
         component.MutationMod = MathHelper.Clamp(component.MutationMod, 0f, 3f);
-    }
-
-    public bool DoHarvest(EntityUid plantholder, EntityUid user, PlantHolderComponent? component = null)
-    {
-        if (!Resolve(plantholder, ref component))
-            return false;
-
-        if (component.Seed == null || Deleted(user))
-            return false;
-
-
-        if (component.Harvest && !component.Dead)
-        {
-            if (_hands.TryGetActiveItem(user, out var activeItem))
-            {
-                if (!_botany.CanHarvest(component.Seed, activeItem))
-                {
-                    _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), user);
-                    return false;
-                }
-            }
-            else if (!_botany.CanHarvest(component.Seed))
-            {
-                return false;
-            }
-
-            _botany.Harvest(component.Seed, user, component.YieldMod);
-            AfterHarvest(plantholder, component);
-            return true;
-        }
-
-        if (!component.Dead)
-            return false;
-
-        RemovePlant(plantholder, component);
-        AfterHarvest(plantholder, component);
-        return true;
-    }
-
-    /// <summary>
-    /// Force do scream on PlantHolder (like plant is screaming) using seed's ScreamSound specifier (collection or soundPath)
-    /// </summary>
-    /// <returns></returns>
-    public bool DoScream(EntityUid plantholder, SeedData? seed = null)
-    {
-        if (seed == null || seed.CanScream == false)
-            return false;
-
-        _audio.PlayPvs(seed.ScreamSound, plantholder);
-        return true;
-    }
-
-    public void AutoHarvest(EntityUid uid, PlantHolderComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        if (component.Seed == null || !component.Harvest)
-            return;
-
-        _botany.AutoHarvest(component.Seed, Transform(uid).Coordinates);
-        AfterHarvest(uid, component);
-    }
-
-    private void AfterHarvest(EntityUid uid, PlantHolderComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        component.Harvest = false;
-        component.LastProduce = component.Age;
-
-        DoScream(uid, component.Seed);
-
-        if (component.Seed?.HarvestRepeat == HarvestType.NoRepeat)
-            RemovePlant(uid, component);
-
-        CheckLevelSanity(uid, component);
-        UpdateSprite(uid, component);
     }
 
     public void CheckHealth(EntityUid uid, PlantHolderComponent? component = null)
@@ -797,18 +493,21 @@ public sealed class PlantHolderSystem : EntitySystem
         component.MutationLevel = 0;
         component.YieldMod = 1;
         component.MutationMod = 1;
-        component.ImproperLight = false;
-        component.ImproperHeat = false;
         component.ImproperPressure = false;
-        component.WeedLevel += 1 * HydroponicsSpeedMultiplier;
+        component.WeedLevel += 1;
         component.PestLevel = 0;
         UpdateSprite(uid, component);
     }
 
     public void RemovePlant(EntityUid uid, PlantHolderComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component) || component.Seed == null)
             return;
+
+        // Remove all growth components before planting new seed
+        var growthComponents = EntityManager.GetComponents<PlantGrowthComponent>(uid).ToList();
+        foreach (var g in growthComponents)
+            EntityManager.RemoveComponent(uid, g);
 
         component.YieldMod = 1;
         component.MutationMod = 1;
@@ -819,35 +518,10 @@ public sealed class PlantHolderSystem : EntitySystem
         component.LastProduce = 0;
         component.Sampled = false;
         component.Harvest = false;
-        component.ImproperLight = false;
         component.ImproperPressure = false;
         component.ImproperHeat = false;
 
         UpdateSprite(uid, component);
-    }
-
-    public void AffectGrowth(EntityUid uid, int amount, PlantHolderComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        if (component.Seed == null)
-            return;
-
-        if (amount > 0)
-        {
-            if (component.Age < component.Seed.Maturation)
-                component.Age += amount;
-            else if (!component.Harvest && component.Seed.Yield <= 0f)
-                component.LastProduce -= amount;
-        }
-        else
-        {
-            if (component.Age < component.Seed.Maturation)
-                component.SkipAging++;
-            else if (!component.Harvest && component.Seed.Yield <= 0f)
-                component.LastProduce += amount;
-        }
     }
 
     public void AdjustNutrient(EntityUid uid, float amount, PlantHolderComponent? component = null)
@@ -915,11 +589,16 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(uid, out var app))
             return;
 
+        TryComp<PlantTraitsComponent>(uid, out var traits);
+
+        if (traits == null)
+            return;
+
         if (component.Seed != null)
         {
             if (component.DrawWarnings)
             {
-                _appearance.SetData(uid, PlantHolderVisuals.HealthLight, component.Health <= component.Seed.Endurance / 2f);
+                _appearance.SetData(uid, PlantHolderVisuals.HealthLight, component.Health <= traits.Endurance / 2f);
             }
 
             if (component.Dead)
@@ -932,18 +611,21 @@ public sealed class PlantHolderSystem : EntitySystem
                 _appearance.SetData(uid, PlantHolderVisuals.PlantRsi, component.Seed.PlantRsi.ToString(), app);
                 _appearance.SetData(uid, PlantHolderVisuals.PlantState, "harvest", app);
             }
-            else if (component.Age < component.Seed.Maturation)
-            {
-                var growthStage = GetCurrentGrowthStage((uid, component));
-
-                _appearance.SetData(uid, PlantHolderVisuals.PlantRsi, component.Seed.PlantRsi.ToString(), app);
-                _appearance.SetData(uid, PlantHolderVisuals.PlantState, $"stage-{growthStage}", app);
-                component.LastProduce = component.Age;
-            }
             else
             {
-                _appearance.SetData(uid, PlantHolderVisuals.PlantRsi, component.Seed.PlantRsi.ToString(), app);
-                _appearance.SetData(uid, PlantHolderVisuals.PlantState, $"stage-{component.Seed.GrowthStages}", app);
+                if (component.Age < traits.Maturation)
+                {
+                    var growthStage = GetCurrentGrowthStage((uid, component));
+
+                    _appearance.SetData(uid, PlantHolderVisuals.PlantRsi, component.Seed.PlantRsi.ToString(), app);
+                    _appearance.SetData(uid, PlantHolderVisuals.PlantState, $"stage-{growthStage}", app);
+                    component.LastProduce = component.Age;
+                }
+                else
+                {
+                    _appearance.SetData(uid, PlantHolderVisuals.PlantRsi, component.Seed.PlantRsi.ToString(), app);
+                    _appearance.SetData(uid, PlantHolderVisuals.PlantState, $"stage-{traits.GrowthStages}", app);
+                }
             }
         }
         else
@@ -959,13 +641,13 @@ public sealed class PlantHolderSystem : EntitySystem
         _appearance.SetData(uid, PlantHolderVisuals.NutritionLight, component.NutritionLevel <= 8, app);
         _appearance.SetData(uid, PlantHolderVisuals.AlertLight,
             component.WeedLevel >= 5 || component.PestLevel >= 5 || component.Toxins >= 40 || component.ImproperHeat ||
-            component.ImproperLight || component.ImproperPressure || component.MissingGas > 0, app);
+            component.ImproperPressure || component.MissingGas > 0, app);
         _appearance.SetData(uid, PlantHolderVisuals.HarvestLight, component.Harvest, app);
     }
 
     /// <summary>
-    ///     Check if the currently contained seed is unique. If it is not, clone it so that we have a unique seed.
-    ///     Necessary to avoid modifying global seeds.
+    /// Check if the currently contained seed is unique. If it is not, clone it so that we have a unique seed.
+    /// Necessary to avoid modifying global seeds.
     /// </summary>
     public void EnsureUniqueSeed(EntityUid uid, PlantHolderComponent? component = null)
     {
@@ -984,5 +666,17 @@ public sealed class PlantHolderSystem : EntitySystem
         component.SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
         component.ForceUpdate = true;
         Update(uid, component);
+    }
+
+    /// <summary>
+    /// Ensures that all default growth components are added to the plant if they're not already present.
+    /// </summary>
+    private void EnsureDefaultGrowthComponents(EntityUid uid)
+    {
+        EnsureComp<PlantComponent>(uid);
+        EnsureComp<BasicGrowthComponent>(uid);
+        EnsureComp<PlantTraitsComponent>(uid);
+        EnsureComp<AtmosphericGrowthComponent>(uid);
+        EnsureComp<WeedPestGrowthComponent>(uid);
     }
 }
