@@ -1,14 +1,15 @@
+using Content.Server.Chat.Managers;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
+using Content.Shared.Chat;
 using Content.Shared.Clothing;
+using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
+using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.StationRecords;
-using Content.Shared.Delivery;
-using Content.Shared.Labels.EntitySystems;
 using Content.Shared._Starlight.Railroading.Events;
 using Content.Shared._Starlight.Railroading;
-using Content.Shared.Chat;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using System.Linq;
@@ -17,15 +18,15 @@ namespace Content.Server._Starlight.Railroading;
 
 public sealed partial class RailroadingDeliveryRewardSystem : EntitySystem
 {
-    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly LabelSystem _label = default!;
+    [Dependency] private readonly LoadoutSystem _loadout = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
     [Dependency] private readonly StationRecordsSystem _records = default!;
-    [Dependency] private readonly LoadoutSystem _loadout = default!;
-    [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
-    [Dependency] private readonly LabelSystem _label = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly StationSystem _station = default!;
 
     public override void Initialize()
     {
