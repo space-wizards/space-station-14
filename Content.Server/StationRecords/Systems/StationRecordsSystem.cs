@@ -289,6 +289,26 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
     }
 
     /// <summary>
+    /// Returns an id if a record with the same fingerprint exists.
+    /// </summary>
+    /// <remarks>
+    /// Linear search so O(n) time complexity.
+    /// </remarks>
+    public uint? GetRecordByFingerprint(EntityUid station, string fingerprint, StationRecordsComponent? records = null)
+    {
+        if (!Resolve(station, ref records, false))
+            return null;
+
+        foreach (var (id, record) in GetRecordsOfType<GeneralStationRecord>(station, records))
+        {
+            if (record.Fingerprint == fingerprint)
+                return id;
+        }
+
+        return null;
+    }
+
+    /// <summary>
     ///     Gets all records of a specific type from a station.
     /// </summary>
     /// <param name="station">The station to get the records from.</param>
