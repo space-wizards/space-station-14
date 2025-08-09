@@ -5,6 +5,6 @@
                       SetSize="600 250">
     <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
         <!-- This is where the feedback section controls go -->
-        <BoxContainer Name="BigArea" Orientation="Vertical" Margin="10 0 10 0" />
+        <BoxContainer Name="FeedbackContainerArea" Orientation="Vertical" Margin="10 0 10 0" />
     </ScrollContainer>
 </controls:FancyWindow>

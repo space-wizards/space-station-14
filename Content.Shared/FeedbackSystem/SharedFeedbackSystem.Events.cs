@@ -31,7 +31,11 @@ public sealed partial class SharedFeedbackSystem
         var feedbackProtypes = _proto.EnumeratePrototypes<FeedbackPopupPrototype>()
             .Where(x => x.ShowRoundEnd && _validOrigins.Contains(x.PopupOrigin))
             .Select(x => new ProtoId<FeedbackPopupPrototype>(x.ID))
+            .OrderBy(x => x.Id)
             .ToList();
+
+        if (feedbackProtypes.Count == 0)
+            return;
 
         while (actors.MoveNext(out _, out var actorComp))
         {

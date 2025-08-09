@@ -54,7 +54,7 @@ public sealed partial class FeedbackSectionControl : Control
         var label = new RichTextLabel
         {
             Text = text,
-            Margin = new Thickness(0,0,0,10),
+            Margin = new Thickness(20,0,0,10),
         };
         DescriptionBox.AddChild(label);
     }
