@@ -197,8 +197,15 @@
         },
         {
             "name": "fire_ARACHNID",
-            "direction": 4,
+            "directions": 4,
             "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
                 [
                     0.2,
                     0.2,
@@ -437,9 +444,17 @@
             ]
         },
         {
-            "name": "frost_ARACHNID",
+            "name": "flora_ARACHNID",
             "directions": 4,
             "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3
+                ],
                 [
                     0.3,
                     0.3,
