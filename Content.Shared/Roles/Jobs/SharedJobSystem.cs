@@ -100,6 +100,45 @@ public abstract class SharedJobSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Tries to get all the departments for a given job. Will return an empty list if none are found.
+    /// </summary>
+    public bool TryGetAllDepartments(string jobProto, out List<DepartmentPrototype> departmentPrototypes)
+    {
+        // not sorting it since there should only be 1 primary department for a job.
+        // this is enforced by the job tests.
+        var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>();
+        departmentPrototypes = new List<DepartmentPrototype>();
+        var found = false;
+
+        foreach (var department in departmentProtos)
+        {
+            if (department.Roles.Contains(jobProto))
+            {
+                departmentPrototypes.Add(department);
+                found = true;
+            }
+        }
+
+        return found;
+    }
+
+    /// <summary>
+    /// Try to get the lowest weighted department for the given job. If the job has no departments will return null.
+    /// </summary>
+    public bool TryGetLowestWeightDepartment(string jobProto, [NotNullWhen(true)] out DepartmentPrototype? departmentPrototype)
+    {
+        departmentPrototype = null;
+
+        if (!TryGetAllDepartments(jobProto, out var departmentPrototypes) || departmentPrototypes.Count == 0)
+            return false;
+
+        departmentPrototypes.Sort((x, y) => y.Weight.CompareTo(x.Weight));
+
+        departmentPrototype = departmentPrototypes[0];
+        return true;
+    }
+
     public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
     {
 

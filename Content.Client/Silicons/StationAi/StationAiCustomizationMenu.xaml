@@ -1,0 +1,23 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+         xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         SetSize="600 600"
+         MinSize="600 220">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="10 5 10 -5">
+            <controls:StripeBack HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Control SetWidth="200">
+                        <Label Text="{Loc 'station-ai-customization-categories'}" Margin="0 5 0 5" HorizontalExpand="True" HorizontalAlignment="Center"  />
+                    </Control>
+                    <Label Text="{Loc 'station-ai-customization-options'}" Margin="0 5 0 5" HorizontalExpand="True" HorizontalAlignment="Center"/>
+                </BoxContainer>
+            </controls:StripeBack>
+        </BoxContainer>
+        <VerticalTabContainer Name="CustomizationGroupsContainer"
+                              VerticalExpand="True"
+                              HorizontalExpand="True">
+        </VerticalTabContainer>
+    </BoxContainer>
+</controls:FancyWindow>

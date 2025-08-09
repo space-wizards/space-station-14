@@ -46,9 +46,7 @@ entities:
       name: map 89
     - type: Transform
     - type: Map
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
 - proto: SpawnPointLatejoin

@@ -1,5 +1,5 @@
 - type: entity
-  parent: GrenadeBase
+  parent: [ GrenadeBase, BaseMinorContraband ]
   id: PipeBomb
   name: pipe bomb
   description: An improvised explosive made from pipes and wire.
@@ -10,7 +10,8 @@
     - state: base
       map: ["enum.TriggerVisualLayers.Base"]
     - state: wires
-  - type: OnUseTimerTrigger # todo: make it activate through welder/lighter/fire instead
+  - type: TriggerOnActivate # todo: make it activate through welder/lighter/fire instead
+  - type: TimerTrigger
     delay: 5
     examinable: false
     initialBeepDelay: 0
@@ -19,6 +20,8 @@
     min: 1
     max: 10
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive # Weak explosion in a very small radius. Doesn't break underplating.
     explosionType: Default
     totalIntensity: 50
@@ -32,7 +35,7 @@
     node: pipebomb
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseMinorContraband ]
   id: PipeBombGunpowder
   name: pipe bomb
   description: An improvised explosive made from a pipe. This one has no gunpowder.
@@ -47,7 +50,7 @@
     defaultTarget: pipebomb
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseMinorContraband ]
   id: PipeBombCable
   name: pipe bomb
   description: An improvised explosive made from a pipe. This one has no cable.
