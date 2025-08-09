@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Atmos;
 
 namespace Content.Shared.PneumaticCannon;
 
@@ -15,7 +16,7 @@ public sealed partial class PneumaticCannonComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public PneumaticCannonPower Power = PneumaticCannonPower.Medium;
 
-    [DataField("toolModifyPower", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+    [DataField("toolModifyPower", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
     public string ToolModifyPower = "Anchoring";
 
     /// <summary>
@@ -49,6 +50,15 @@ public sealed partial class PneumaticCannonComponent : Component
     /// </summary>
     [DataField("throwItems"), ViewVariables(VVAccess.ReadWrite)]
     public bool ThrowItems = true;
+
+    [DataField]
+    public HashSet<Gas>? AllowedGases;
+
+    [DataField]
+    public LocId MessageImpureMix = "tank-eject-invalid-gas";
+
+    [DataField]
+    public LocId MessageInsufficientGas = "tank-eject-insufficient-gas";
 }
 
 /// <summary>
