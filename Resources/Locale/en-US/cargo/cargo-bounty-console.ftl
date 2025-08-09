@@ -24,6 +24,11 @@ bounty-console-status = {$status ->
         [1] Waiting
         *[other] Undelivered
     }
+bounty-console-status-tooltip = {$status ->
+    [2] This bounty is on the shuttle, ready to be delivered to the trade station
+    [1] This bounty is waiting to be fulfilled
+    *[other] This bounty has not yet been sent out for fulfilment
+    }
 bounty-console-id-label = ID#{$id}
 
 bounty-console-flavor-left = Bounties sourced from local unscrupulous dealers.
