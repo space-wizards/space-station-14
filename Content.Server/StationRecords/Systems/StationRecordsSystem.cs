@@ -407,7 +407,9 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
 
     private bool IsFilterWithSomeCodeValue(string value, string filter)
     {
-        return !value.ToLower().StartsWith(filter);
+        // Use contains like other filters (name/job/species) instead of a stricter starts-with check.
+        // This fixes filtering for fingerprints/DNA requiring only prefixes to match.
+        return !value.ToLower().Contains(filter);
     }
 
     /// <summary>
