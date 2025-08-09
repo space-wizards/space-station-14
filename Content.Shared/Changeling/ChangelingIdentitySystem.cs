@@ -23,7 +23,6 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     [Dependency] private readonly SharedPvsOverrideSystem _pvsOverrideSystem = default!;
 
     public MapId? PausedMapId;
-    private int _numberOfStoredIdentities = 0; // TODO: remove this
 
     public override void Initialize()
     {
@@ -102,11 +101,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
             return null;
 
         EnsurePausedMap();
-        // TODO: Setting the spawn location is a shitty bandaid to prevent admins from crashing our servers.
-        // Movercontrollers and mob collisions are currently being calculated even for paused entities.
-        // Spawning all of them in the same spot causes severe performance problems.
-        // Cryopods and Polymorph have the same problem.
-        var mob = Spawn(speciesPrototype.Prototype, new MapCoordinates(new Vector2(2 * _numberOfStoredIdentities++, 0), PausedMapId!.Value));
+        var mob = Spawn(speciesPrototype.Prototype, new MapCoordinates(Vector2.Zero, PausedMapId!.Value));
 
         var storedIdentity = EnsureComp<ChangelingStoredIdentityComponent>(mob);
         storedIdentity.OriginalEntity = target; // TODO: network this once we have WeakEntityReference or the autonetworking source gen is fixed

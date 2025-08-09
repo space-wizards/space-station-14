@@ -124,4 +124,8 @@ public sealed class MoverController : SharedMoverController
         else
             _alerts.ClearAlert(entity, WalkingAlert);
     }
+
+    protected override void UpdateMoverStatus(Entity<InputMoverComponent?, MovementRelayTargetComponent?> ent)
+    {
+    }
 }
