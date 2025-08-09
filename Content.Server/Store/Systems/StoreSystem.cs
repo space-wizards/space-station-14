@@ -153,7 +153,7 @@ public sealed partial class StoreSystem : EntitySystem
         // same tick
         currency.Comp.Price.Clear();
         if (stack != null)
-            _stack.SetCount(currency.Owner, 0, stack);
+            _stack.SetCount((currency.Owner, stack), 0);
 
         QueueDel(currency);
         return true;
