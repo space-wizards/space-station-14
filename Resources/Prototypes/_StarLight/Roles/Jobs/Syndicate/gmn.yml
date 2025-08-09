@@ -2,7 +2,7 @@
   id: GMNMAAGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitSyndieFormal
-    back: ClothingBackpackSyndicateGMNMAA
+    back: ClothingBackpackSyndicate
     shoes: ClothingShoesBootsJackFilled
     outerClothing: ClothingOuterHardsuitSyndie
     id: CommanderPDA
@@ -14,17 +14,6 @@
     gloves: ClothingHandsGlovesCombat
     pocket1: EmpImplanter
     pocket2: FreedomImplanter
-
-- type: entity
-  id: ClothingBackpackSyndicateGMNMAA
-  parent: ClothingBackpackSyndicate
-  components:
-  - type: StorageFill
-    contents:
-    - id: WeaponPistolStechkin
-    - id: MagazinePistolCaselessRifle
-    - id: MagazinePistolCaselessRifle
-    - id: MagazinePistolCaselessRifle
 
 - type: startingGear
   id: GMNDamageControlGear
@@ -54,7 +43,7 @@
   id: GMNNavigatorGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitCommandGeneric
-    back: ClothingBackpackSyndicateGMNNavigator
+    back: ClothingBackpackSyndicate
     shoes: ClothingShoesBootsMagSyndie
     outerClothing: ClothingOuterHardsuitSyndieElite
     id: CommanderPDA
@@ -65,22 +54,11 @@
     belt: ClothingBeltMilitaryWebbingFilledNavigator
     gloves: ClothingHandsGlovesCombat
 
-- type: entity
-  id: ClothingBackpackSyndicateGMNNavigator
-  parent: ClothingBackpackSyndicate
-  components:
-  - type: StorageFill
-    contents:
-    - id: WeaponPistolCobra
-    - id: MagazinePistolCaselessRifle
-    - id: MagazinePistolCaselessRifle
-    - id: MagazinePistolCaselessRifle
-
 - type: startingGear
   id: GMNMedicalTechnicianGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitCorpsman
-    back: ClothingBackpackDuffelSyndicateMedicalGMN
+    back: ClothingBackpackDuffelSyndicateMedical
     shoes: ClothingShoesBootsMagSyndie
     outerClothing: ClothingOuterHardsuitSyndieMedic
     id: SyndiAgentPDA
@@ -88,16 +66,9 @@
     ears: ClothingHeadsetAltSyndicateAgent
     mask: ClothingMaskGasSyndicate
     belt: ClothingBeltMilitaryWebbingMedFilled
+    pocket1: SyndiHypo
+    pocket2: DefibrillatorSyndicate
     gloves: ClothingHandsGlovesCombat
-
-- type: entity
-  id: ClothingBackpackDuffelSyndicateMedicalGMN
-  parent: ClothingBackpackDuffelSyndicateMedical
-  components:
-  - type: StorageFill
-    contents:
-    - id: SyndiHypo
-    - id: DefibrillatorSyndicate
 
 - type: startingGear
   id: GMNGunnerGear
