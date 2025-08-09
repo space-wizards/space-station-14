@@ -10888,5 +10888,42 @@ Entries:
   id: 1498
   time: '2025-08-09T00:32:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1266
+- author: CawsForConcern
+  changes:
+  - message: (Silica) JR PACMAN generators around maintenance
+    type: Add
+  id: 1499
+  time: '2025-08-09T00:34:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1262
+- author: CawsForConcern
+  changes:
+  - message: (Silica) Mass Scanner to the Cargo Bay
+    type: Add
+  id: 1500
+  time: '2025-08-09T00:34:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1262
+- author: CawsForConcern
+  changes:
+  - message: (Silica) missing Atmos Direction Fans at the backup Evac docking and
+      backup Arrivals docking areas
+    type: Fix
+  id: 1501
+  time: '2025-08-09T00:34:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1262
+- author: CawsForConcern
+  changes:
+  - message: (Silica) Cargo Bay's conveyors near Cargo Shuttle Docking not being wired
+      up the nearby levers
+    type: Fix
+  id: 1502
+  time: '2025-08-09T00:34:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1262
+- author: CawsForConcern
+  changes:
+  - message: (Silica) some missing floor tiles under Shuttle Docks at Evac and Arrivals
+    type: Fix
+  id: 1503
+  time: '2025-08-09T00:34:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1262
 Order: -1
 
