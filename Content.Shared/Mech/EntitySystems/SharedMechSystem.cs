@@ -67,7 +67,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechPilotComponent, CanAttackFromContainerEvent>(OnCanAttackFromContainer);
         SubscribeLocalEvent<MechPilotComponent, AttackAttemptEvent>(OnAttackAttempt);
         SubscribeLocalEvent<MechPilotComponent, EntGotRemovedFromContainerMessage>(OnPilotRemoved); // Starlight-edit
-        
+
         SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechMoveEvent); // Starlight-edit: Moved from server side, broken
         SubscribeLocalEvent<MechPilotComponent, UpdateCanMoveEvent>(OnPilotMoveEvent); // Starlight-edit
         SubscribeLocalEvent<MechComponent, ChangeDirectionAttemptEvent>(OnMechMoveEvent); // Starlight-edit
@@ -76,9 +76,9 @@ public abstract partial class SharedMechSystem : EntitySystem
 
         InitializeRelay();
     }
-    
+
     // Starlight-start: Attempt events
-    
+
     private void OnPilotMoveEvent(EntityUid uid, MechPilotComponent component, UpdateCanMoveEvent args)
     {
         if (component.LifeStage > ComponentLifeStage.Running || !TryComp<MechComponent>(component.Mech, out var mech))
@@ -87,7 +87,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         if (mech.Broken || mech.Integrity <= 0 || mech.Energy <= 0 || mech.MaintenanceMode)
             args.Cancel();
     }
-    
+
     private void OnMechMoveEvent(EntityUid uid, MechComponent component, CancellableEntityEventArgs args)
     {
         if (component.LifeStage > ComponentLifeStage.Running)
@@ -96,16 +96,16 @@ public abstract partial class SharedMechSystem : EntitySystem
         if (component.Broken || component.Integrity <= 0 || component.Energy <= 0 || component.MaintenanceMode)
             args.Cancel();
     }
-    
+
     private void OnShootAttempt(EntityUid uid, MechComponent component, ref ShotAttemptedEvent args)
     {
         if (!component.MaintenanceMode)
             return;
-        
+
         _popup.PopupCursor("Turn off maintenance mode first!", args.User, PopupType.MediumCaution); // Starlight: I think we need translation strings?
         args.Cancel();
     }
-    
+
     private void OnRepairAttempt(EntityUid uid, MechComponent component, ref CanRepairEvent args)
     {
         if (!component.MaintenanceMode)
@@ -114,7 +114,7 @@ public abstract partial class SharedMechSystem : EntitySystem
             args.Message = "You need to turn on maintenance mode first!";
         }
     }
-    
+
     // Starlight-end
 
     private void OnToggleEquipmentAction(EntityUid uid, MechComponent component, MechToggleEquipmentEvent args)
@@ -199,7 +199,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         rider.Mech = mech;
         Dirty(pilot, rider);
 
-        if ((component.Integrity / component.MaxIntegrity) * 100 >= 50 )
+        if ((component.Integrity / component.MaxIntegrity) * 100 >= 50)
             if (component.FirstStart)
             {
                 _audioSystem.PlayEntity(component.NominalLongSound, pilot, mech);
@@ -344,7 +344,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         _container.Insert(toInsert, component.EquipmentContainer);
         var ev = new MechEquipmentInsertedEvent(uid);
         RaiseLocalEvent(toInsert, ref ev);
-        UpdateUserInterface(uid, component);
+        // Starlight-edit: UpdateUserInterface moved on server side
         if (component.PilotSlot.ContainedEntity != null)
             UpdateActions(uid, component.PilotSlot.ContainedEntity.Value, component);
     }
@@ -382,7 +382,7 @@ public abstract partial class SharedMechSystem : EntitySystem
 
         equipmentComponent.EquipmentOwner = null;
         _container.Remove(toRemove, component.EquipmentContainer);
-        UpdateUserInterface(uid, component);
+        // Starlight-edit: UpdateUserInterface moved on server side.
     }
 
     /// <summary>
