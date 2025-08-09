@@ -10881,5 +10881,12 @@ Entries:
   id: 1497
   time: '2025-08-08T14:27:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1264
+- author: Citrea
+  changes:
+  - message: Knives can once again be un-embedded.
+    type: Fix
+  id: 1498
+  time: '2025-08-09T00:32:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1266
 Order: -1
 
