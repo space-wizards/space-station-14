@@ -64,10 +64,14 @@ public abstract class SharedFirelockSystem : EntitySystem
 
     private void OnBeforePry(EntityUid uid, FirelockComponent component, ref BeforePryEvent args)
     {
-        if (args.Cancelled || !component.Powered || args.StrongPry || args.PryPowered)
+        if (!args.CanPry)
             return;
 
-        args.Cancelled = true;
+        if (!component.Powered || args.Strength >= PryStrength.Strong)
+            return;
+
+        args.Message = string.Empty;
+        args.CanPry = false;
     }
 
     private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)
