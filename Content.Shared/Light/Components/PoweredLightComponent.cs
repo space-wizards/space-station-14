@@ -1,18 +1,16 @@
-using Content.Server.Light.EntitySystems;
-using Content.Shared.Damage;
 using Content.Shared.DeviceLinking;
-using Content.Shared.Light.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Content.Shared.Light.EntitySystems;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Light.Components
+namespace Content.Shared.Light.Components
 {
     /// <summary>
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
-    [RegisterComponent, Access(typeof(PoweredLightSystem))]
+    [RegisterComponent, Access(typeof(SharedPoweredLightSystem))]
     public sealed partial class PoweredLightComponent : Component
     {
         [DataField("burnHandSound")]
@@ -22,7 +20,7 @@ namespace Content.Server.Light.Components
         public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Machines/light_tube_on.ogg");
 
         [DataField("hasLampOnSpawn", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? HasLampOnSpawn = null;
+        public string? HasLampOnSpawn;
 
         [DataField("bulb")]
         public LightBulbType BulbType;
