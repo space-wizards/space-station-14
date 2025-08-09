@@ -7,16 +7,20 @@ namespace Content.Client.Medical.CrewMonitoring;
 
 public sealed partial class CrewMonitoringNavMapControl : NavMapControl
 {
+    private readonly SharedTransformSystem _transform;
+
     public NetEntity? Focus;
     public Dictionary<NetEntity, string> LocalizedNames = new();
 
-    private Label _trackedEntityLabel;
-    private PanelContainer _trackedEntityPanel;
+    private readonly Label _trackedEntityLabel;
+    private readonly PanelContainer _trackedEntityPanel;
 
-    public CrewMonitoringNavMapControl() : base()
+    public CrewMonitoringNavMapControl()
     {
+        _transform = EntManager.System<SharedTransformSystem>();
+
         WallColor = new Color(192, 122, 196);
-        TileColor = new(71, 42, 72);
+        TileColor = new Color(71, 42, 72);
         BackgroundColor = Color.FromSrgb(TileColor.WithAlpha(BackgroundOpacity));
 
         _trackedEntityLabel = new Label
@@ -41,7 +45,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         };
 
         _trackedEntityPanel.AddChild(_trackedEntityLabel);
-        this.AddChild(_trackedEntityPanel);
+        AddChild(_trackedEntityPanel);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -56,17 +60,21 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
             return;
         }
 
-        foreach ((var netEntity, var blip) in TrackedEntities)
+        foreach (var (netEntity, blip) in TrackedEntities)
         {
             if (netEntity != Focus)
                 continue;
 
             if (!LocalizedNames.TryGetValue(netEntity, out var name))
-                name = "Unknown";
+                name = Loc.GetString("crew-monitoring-user-interface-identity-unknown");
 
-            var message = name + "\nLocation: [x = " + MathF.Round(blip.Coordinates.X) + ", y = " + MathF.Round(blip.Coordinates.Y) + "]";
+            var location = Loc.GetString(
+                "crew-monitoring-user-interface-location-coordinates",
+                ("x", (int)blip.Coordinates.X),
+                ("y", (int)blip.Coordinates.Y)
+            );
 
-            _trackedEntityLabel.Text = message;
+            _trackedEntityLabel.Text = $"{name}\n{location}";
             _trackedEntityPanel.Visible = true;
 
             return;
