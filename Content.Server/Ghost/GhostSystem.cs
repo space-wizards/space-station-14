@@ -479,13 +479,21 @@ namespace Content.Server.Ghost
             var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition.Value);
             var ghostComponent = Comp<GhostComponent>(ghost);
 
-            // Try setting the ghost entity name to either the character name or the player name.
-            // If all else fails, it'll default to the default entity prototype name, "observer".
-            // However, that should rarely happen.
-            if (!string.IsNullOrWhiteSpace(mind.Comp.CharacterName))
-                _metaData.SetEntityName(ghost, mind.Comp.CharacterName);
-            else if (mind.Comp.UserId is { } userId && _player.TryGetSessionById(userId, out var session))
-                _metaData.SetEntityName(ghost, session.Name);
+            // Prefer the current in-round entity name (includes job/custom name modifiers),
+            // then fall back to the profile character name, then finally the session name.
+            string? desiredName = null;
+
+            if (mind.Comp.CurrentEntity is { } current && TryComp<MetaDataComponent>(current, out var currentMeta))
+                desiredName = currentMeta.EntityName;
+
+            if (string.IsNullOrWhiteSpace(desiredName) && !string.IsNullOrWhiteSpace(mind.Comp.CharacterName))
+                desiredName = mind.Comp.CharacterName;
+
+            if (string.IsNullOrWhiteSpace(desiredName) && mind.Comp.UserId is { } userId && _player.TryGetSessionById(userId, out var session))
+                desiredName = session.Name;
+
+            if (!string.IsNullOrWhiteSpace(desiredName))
+                _metaData.SetEntityName(ghost, desiredName);
 
             if (mind.Comp.TimeOfDeath.HasValue)
             {
