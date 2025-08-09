@@ -477,6 +477,12 @@ namespace Content.Client.Stylesheets
             var monotoneCheckBoxTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/Monotone/monotone_checkbox_checked.svg.96dpi.png");
             var monotoneCheckBoxTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/Monotone/monotone_checkbox_unchecked.svg.96dpi.png");
 
+            // SwitchButton
+            var switchButtonTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_off.svg.96dpi.png");
+            var switchButtonTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_on.svg.96dpi.png");
+            var switchButtonTextureDisabledUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_disabled_off.svg.96dpi.png");
+            var switchButtonTextureDisabledChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_disabled_on.svg.96dpi.png");
+
             // Tooltip box
             var tooltipTexture = resCache.GetTexture("/Textures/Interface/Nano/tooltip.png");
             var tooltipBox = new StyleBoxTexture
@@ -1014,6 +1020,34 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(TextureRect), new [] { MonotoneCheckBox.StyleClassMonotoneCheckBox, CheckBox.StyleClassCheckBoxChecked }, null, null), new[]
                 {
                     new StyleProperty(TextureRect.StylePropertyTexture, monotoneCheckBoxTextureChecked),
+                }),
+
+                // SwitchButton
+                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, null), new[]
+                {
+                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureUnchecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, new[] { SwitchButton.StylePseudoClassPressed }), new[]
+                {
+                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureChecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, new[] { SwitchButton.StylePseudoClassDisabled }), new[]
+                {
+                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureDisabledUnchecked),
+                    new StyleProperty("font-color", DisabledFore),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, new[] { SwitchButton.StylePseudoClassDisabled, SwitchButton.StylePseudoClassPressed }), new[]
+                {
+                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureDisabledChecked),
+                    new StyleProperty("font-color", DisabledFore),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(BoxContainer), new [] { SwitchButton.StyleClassSwitchButton }, null, null), new[]
+                {
+                    new StyleProperty(BoxContainer.StylePropertySeparation, 10),
                 }),
 
                 // Tooltip
