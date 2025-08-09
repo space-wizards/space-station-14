@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseChameleon]
   id: ClothingHeadHatChameleon
   name: beret
   description: A beret, an artists favorite headwear.
@@ -14,10 +14,6 @@
     - type: ChameleonClothing
       slot: [HEAD]
       default: ClothingHeadHatBeret
-    - type: UserInterface
-      interfaces:
-        enum.ChameleonUiKey.Key:
-          type: ChameleonBoundUserInterface
 
 - type: entity
   parent: ClothingHeadHatFedoraBrown
