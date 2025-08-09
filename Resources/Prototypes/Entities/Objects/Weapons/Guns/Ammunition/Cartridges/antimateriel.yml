@@ -2,6 +2,7 @@
   parent: [ BaseCartridge, BaseMajorContraband ]
   id: CartridgeAntiMateriel
   name: cartridge (.60 anti-materiel)
+  description: A massive cartridge used by anti-materiel rifles and heavy machine guns. Anti-materiel rounds are designed to destroy armored vehicles and equipment, but it will work just as well against a person. Caution should be exercised in pressure vessels, as it has a tendency to penetrate them.
   components:
   - type: Tag
     tags:
