@@ -46,10 +46,16 @@ public sealed class GibOnRoundEndSystem : EntitySystem
             if (!gib)
                 continue;
 
-            if (gibComp.SpawnProto != null)
-                SpawnAtPosition(gibComp.SpawnProto, Transform(uid).Coordinates);
+            foreach (var ent in gibComp.ToGib)
+            {
+                if (TerminatingOrDeleted(ent))
+                    continue;
 
-            _body.GibBody(uid, splatModifier: 5f);
+                if (gibComp.SpawnProto != null)
+                    SpawnAtPosition(gibComp.SpawnProto, Transform(ent).Coordinates);
+
+                _body.GibBody(ent, splatModifier: 5f);
+            }
         }
     }
 }
