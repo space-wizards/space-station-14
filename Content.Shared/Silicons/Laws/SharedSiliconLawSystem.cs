@@ -73,7 +73,7 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         component.OwnerName = Name(args.UserUid);
 
         NotifyLawsChanged(uid, component.EmaggedSound);
-        if(_mind.TryGetMind(uid, out var mindId, out _))
+        if (_mind.TryGetMind(uid, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
 
         _stunSystem.TryParalyze(uid, component.StunTime, true);
@@ -95,6 +95,15 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     {
 
     }
+
+    #region Starlight
+    public void SetLawset(EntityUid entity, SiliconLawset? laws)
+    {
+        if (!TryComp<SiliconLawProviderComponent>(entity, out var provider))
+            return;
+        provider.Lawset = laws;
+    }
+    #endregion
 }
 
 [ByRefEvent]

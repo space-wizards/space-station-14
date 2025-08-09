@@ -35,6 +35,7 @@ using Content.Server._Starlight.Radio.Systems;
 using Content.Shared._Starlight.Language;
 using Content.Shared._Starlight.Language.Systems;
 using Content.Server._Starlight.Language;
+using Content.Shared._Starlight.Silicons.Borgs;
 // Starlight - End
 
 namespace Content.Server.Radio.EntitySystems;
@@ -260,7 +261,7 @@ public sealed class RadioSystem : EntitySystem
             jobName = Loc.GetString("job-name-borg");
         }
 
-        if (HasComp<StationAiHeldComponent>(messageSource))
+        if (HasComp<StationAiHeldComponent>(messageSource) || (TryComp<StationAIShuntComponent>(messageSource, out var aiShunt) && aiShunt.Return.HasValue))
         {
             iconId = "JobIconStationAi";
             jobName = Loc.GetString("job-name-station-ai");

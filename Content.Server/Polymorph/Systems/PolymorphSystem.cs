@@ -3,6 +3,7 @@ using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Polymorph.Components;
+using Content.Shared._Starlight.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Buckle;
