@@ -244,7 +244,7 @@
   parent: BaseMech
   id: MechVim
   name: Vim
-  description: A miniature exosuit from Nanotrasen, developed to let the irreplaceable station pets live a little longer.
+  description: A miniature exosuit from NanoTrasen, developed to let the irreplaceable station pets live a little longer.
   components:
   - type: Sprite
     drawdepth: Mobs

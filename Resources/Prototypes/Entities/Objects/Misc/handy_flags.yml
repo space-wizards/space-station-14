@@ -13,7 +13,7 @@
 - type: entity
   parent: BaseItem
   id: NTHandyFlag
-  name: Nanotrasen handheld flag
+  name: NanoTrasen handheld flag
   description: "Glory to NT! Wait, they really made a handheld flag for a corporation?"
   components:
   - type: Sprite
