@@ -69,6 +69,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
             _container.EnsureContainer<Container>(ent, StatusEffectContainerComponent.ContainerId);
         // We show the contents of the container to allow status effects to have visible sprites.
         ent.Comp.ActiveStatusEffects.ShowContents = true;
+        ent.Comp.ActiveStatusEffects.OccludesLight = false;
     }
 
     private void OnStatusContainerShutdown(Entity<StatusEffectContainerComponent> ent, ref ComponentShutdown args)
@@ -201,6 +202,10 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     )
     {
         statusEffect = null;
+
+        if (duration <= TimeSpan.Zero)
+            return false;
+
         if (!CanAddStatusEffect(target, effectProto))
             return false;
 
