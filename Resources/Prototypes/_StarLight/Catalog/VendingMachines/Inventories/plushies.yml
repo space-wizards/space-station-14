@@ -574,3 +574,14 @@
   conditions:
     - !type:ListingLimitedStockCondition
       stock: 1
+      
+- type: listing
+  id: VendorPlushieDoxesTheCaptain
+  productEntity: PlushieDoxesTheCaptain
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
