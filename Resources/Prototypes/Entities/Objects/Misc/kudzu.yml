@@ -256,13 +256,6 @@
             Quantity: 2
           - ReagentId: Protein
             Quantity: 1
-    - type: Respirator
-      damage:
-        types:
-          Asphyxiation: 0.25
-      damageRecovery:
-        types:
-          Asphyxiation: -0.25
     - type: Tag
       tags:
       - Meat
