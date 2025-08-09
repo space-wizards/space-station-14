@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
+using Content.Shared.Storage.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
@@ -168,6 +169,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.Used is { } @using && !xformQuery.TryGetComponent(@using, out usedXform))
             return true;
 
+        if (args.BreakOnMove && HasComp<InsideEntityStorageComponent>(args.User) != doAfter.UserInStorage)
+            return true;
+
         // TODO: Re-use existing xform query for these calculations.
         if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User, xform: userXform)))
         {
@@ -187,6 +191,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // Whether the user and the target are too far apart.
         if (args.Target != null)
         {
+            if (args.BreakOnMove && HasComp<InsideEntityStorageComponent>(args.Target.Value) != doAfter.TargetInStorage)
+                return true;
+
             if (args.DistanceThreshold != null)
             {
                 if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value, args.DistanceThreshold.Value))
