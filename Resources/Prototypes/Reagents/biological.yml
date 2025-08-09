@@ -1,3 +1,16 @@
+- type: reaction
+  id: AnimalProteinsBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    UncookedAnimalProteins:
+      amount: 1
+    Carbon:
+      amount: 2
+  products:
+    Fluorine: 0.5
+    
 - type: reagent
   id: Blood
   name: reagent-name-blood
