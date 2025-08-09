@@ -680,11 +680,12 @@
   color: "#0064C8"
   metabolisms:
     Drink:
+      metabolismRate: 3
       effects:
         - !type:SatiateThirst
           factor: 6
         - !type:ModifyBloodLevel
-          amount: 1
+          amount: 6
 
 - type: reagent
   id: Siderlac
