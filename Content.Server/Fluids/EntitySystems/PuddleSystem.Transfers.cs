@@ -52,6 +52,7 @@ public sealed partial class PuddleSystem
                 var split = _solutionContainerSystem.SplitSolution(soln.Value, dumpableSolution.AvailableVolume);
                 success = _solutionContainerSystem.TryAddSolution(dumpableSoln.Value, split);
             }
+            Dirty(dumpableSoln.Value);
 
             if (success)
             {
@@ -75,6 +76,7 @@ public sealed partial class PuddleSystem
 
             if (_solutionContainerSystem.TryAddSolution(soln.Value, split))
             {
+                Dirty(soln.Value);
                 _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, entity);
             }
             else
