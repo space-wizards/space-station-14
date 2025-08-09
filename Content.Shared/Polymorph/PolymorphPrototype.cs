@@ -106,6 +106,12 @@ public sealed partial record PolymorphConfiguration
     public bool RevertOnDeath = true;
 
     /// <summary>
+    /// Whether or not the polymorph reverts when the entity is deleted.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public bool RevertOnDelete = true;
+
+    /// <summary>
     /// Whether or not the polymorph reverts when the entity is eaten or fully sliced.
     /// </summary>
     [DataField(serverOnly: true)]
