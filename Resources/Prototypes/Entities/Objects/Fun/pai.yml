@@ -2,7 +2,8 @@
 
 - type: entity
   parent: BaseItem
-  id: PersonalAI
+  id: PersonalAIBase
+  abstract: true
   name: personal ai device
   description: Your electronic pal who's fun to be with!
   components:
@@ -26,13 +27,13 @@
       enum.StationMapUiKey.Key:
         type: StationMapBoundUserInterface
         requireInputValidation: false
+      enum.PAICustomizationUiKey.Key:
+        type: PAICustomizationBoundUserInterface
+        requireInputValidation: false
+      enum.PAIRadialCustomizationUiKey.Key:
+        type: PAIRadialCustomizationBoundUserInterface
+        requireInputValidation: false
   - type: Sprite
-    sprite: Objects/Fun/pai.rsi
-    layers:
-    - state: pai-base
-    - state: pai-off-overlay
-      shader: unshaded
-      map: ["screen"]
   - type: Input
     context: "human"
   - type: PAI
@@ -81,12 +82,6 @@
       - Alive
   - type: Appearance
   - type: GenericVisualizer
-    visuals:
-      enum.ToggleableGhostRoleVisuals.Status:
-        screen:
-          Off: { state: pai-off-overlay }
-          Searching: { state: pai-searching-overlay }
-          On: { state: pai-on-overlay }
   - type: StationMap
   - type: ChangeVoiceInContainer
     whitelist:
@@ -101,6 +96,56 @@
     - SiliconEmotes
 
 - type: entity
+  parent: PersonalAIBase
+  id: PersonalAI
+  name: personal ai device
+  description: Your electronic pal who's fun to be with!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pai.rsi
+    layers:
+    - state: pai-base
+    - state: pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+    - state: pai-on-overlay
+      shader: unshaded
+      map: ["emotion"]
+      visible: false
+  - type: PAICustomization
+  - type: ToggleableGhostRole
+    examineTextMindPresent: pai-system-pai-installed
+    examineTextMindSearching: pai-system-still-searching
+    examineTextNoMind: pai-system-off
+    beginSearchingText: pai-system-searching
+    roleName: pai-system-role-name
+    roleDescription: pai-system-role-description
+    roleRules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    wipeVerbText: pai-system-wipe-device-verb-text
+    wipeVerbPopup: pai-system-wiped-device
+    stopSearchVerbText: pai-system-stop-searching-verb-text
+    stopSearchVerbPopup: pai-system-stopped-searching
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: pai-off-overlay }
+          Searching: { state: pai-searching-overlay }
+          On: { state: pai-on-overlay }
+        emotion:
+          Off: { visible: false }
+          Searching: { visible: false }
+          On: { visible: true }
+      enum.PAIEmotionVisuals.Emotion:
+        emotion:
+          Neutral: { state: pai-on-overlay }
+          Happy: { state: pai-happy-overlay }
+          Sad: { state: pai-sad-overlay }
+          Angry: { state: pai-angry-overlay }
+
+- type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
   id: SyndicatePersonalAI
   name: syndicate personal ai device
@@ -113,6 +158,10 @@
     - state: syndicate-pai-off-overlay
       shader: unshaded
       map: ["screen"]
+    - state: syndicate-pai-on-overlay
+      shader: unshaded
+      map: ["emotion"]
+      visible: false
   - type: ToggleableGhostRole
     roleName: pai-system-role-name-syndicate
     roleDescription: pai-system-role-description-syndicate
@@ -133,6 +182,16 @@
           Off: { state: syndicate-pai-off-overlay }
           Searching: { state: syndicate-pai-searching-overlay }
           On: { state: syndicate-pai-on-overlay }
+        emotion:
+          Off: { visible: false }
+          Searching: { visible: false }
+          On: { visible: true }
+      enum.PAIEmotionVisuals.Emotion:
+        emotion:
+          Neutral: { state: syndicate-pai-on-overlay }
+          Happy: { state: syndicate-pai-happy-overlay }
+          Sad: { state: syndicate-pai-sad-overlay }
+          Angry: { state: syndicate-pai-angry-overlay }
   - type: StaticPrice
     price: 500
   - type: Vocal
@@ -152,12 +211,16 @@
     - state: pai-off-overlay
       shader: unshaded
       map: ["screen"]
+    - state: pai-on-overlay
+      shader: unshaded
+      map: ["emotion"]
+      visible: false
   - type: Appearance
   - type: StaticPrice
     price: 5000
 
 - type: entity
-  parent: PersonalAI
+  parent: PersonalAIBase
   id: PotatoAI
   name: potato artificial intelligence
   description: It's a potato. You forced it to be sentient, you monster.
@@ -236,3 +299,29 @@
   - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.StationMapUiKey.Key
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAICustomization
+  name: Customization Display
+  description: Open your customization display to change your appearance.
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_pai.rsi, state: pai-emotions }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.PAICustomizationUiKey.Key
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIRadialCustomization
+  name: pai-action-radial-customization-name
+  description: pai-action-radial-customization-description
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_pai.rsi, state: radial }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.PAIRadialCustomizationUiKey.Key
