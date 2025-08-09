@@ -64,6 +64,12 @@ namespace Content.Server.Atmos.EntitySystems
         private EntityQuery<MapGridComponent> _gridQuery;
         private EntityQuery<GasTileOverlayComponent> _query;
 
+        /// <summary>
+        /// How much the distortion strength should change for the temperature of a tile to be dirtied.
+        /// The strength goes from 0.0f to 1.0f, so 0.05f gives it essentially 20 "steps"
+        /// </summary>
+        private const float HeatDistortionStrengthChangeTolerance = 0.05f;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -175,7 +181,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         public GasOverlayData GetOverlayData(GasMixture? mixture)
         {
-            var data = new GasOverlayData(0, new byte[VisibleGasId.Length]);
+            var data = new GasOverlayData(0,
+                new byte[VisibleGasId.Length],
+                mixture?.Temperature ?? Atmospherics.T20C);
 
             for (var i = 0; i < VisibleGasId.Length; i++)
             {
@@ -215,15 +223,17 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             var changed = false;
+            var temp = tile.Hotspot.Valid ? tile.Hotspot.Temperature : tile.Air?.Temperature ?? Atmospherics.TCMB;
             if (oldData.Equals(default))
             {
                 changed = true;
-                oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length]);
+                oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], temp);
             }
-            else if (oldData.FireState != tile.Hotspot.State)
+            else if (oldData.FireState != tile.Hotspot.State ||
+                     CheckTemperatureTolerance(oldData.Temperature, temp, HeatDistortionStrengthChangeTolerance))
             {
                 changed = true;
-                oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity);
+                oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, temp);
             }
 
             if (tile is {Air: not null, NoGridTile: false})
@@ -269,6 +279,20 @@ namespace Content.Server.Atmos.EntitySystems
 
             chunk.LastUpdate = _gameTiming.CurTick;
             return true;
+        }
+
+        /// <summary>
+        /// This function determines whether the change in temperature is significant enough to warrant dirtying the tile data.
+        /// </summary>
+        private static bool CheckTemperatureTolerance(float tempA, float tempB, float tolerance)
+        {
+            var (strengthA, strengthB) = (GetHeatDistortionStrength(tempA), GetHeatDistortionStrength(tempB));
+
+            return (strengthA <= 0f && strengthB > 0f) || // change to or from 0
+                   (strengthB <= 0f && strengthA > 0f) ||
+                   (strengthA >= 1f && strengthB < 1f) || // change to or from 1
+                   (strengthB >= 1f && strengthA < 1f) ||
+                   Math.Abs(strengthA - strengthB) > tolerance; // other change within tolerance
         }
 
         private void UpdateOverlayData()
