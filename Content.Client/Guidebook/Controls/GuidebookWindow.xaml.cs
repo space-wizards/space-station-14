@@ -22,10 +22,13 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
     [Dependency] private readonly IResourceManager _resourceManager = default!;
 
     private Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry> _entries = new();
+    private List<ProtoId<GuideEntryPrototype>>? _rootEntries = null;
+    private ProtoId<GuideEntryPrototype>? _forceRoot = null;
 
     private readonly ISawmill _sawmill;
 
-    public ProtoId<GuideEntryPrototype> LastEntry;
+    public ProtoId<GuideEntryPrototype>? Selected { get; private set; }
+
 
     public GuidebookWindow()
     {
@@ -91,6 +94,12 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
     {
         if (item != null && item.Metadata is GuideEntry entry)
         {
+            // do nothing if the guide is the same as the currently selected one
+            if (entry.Id == Selected)
+            {
+                return;
+            }
+
             ShowGuide(entry);
 
             var isRulesEntry = entry.RuleEntry;
@@ -107,6 +116,8 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         EntryContainer.Visible = false;
         SearchContainer.Visible = false;
         EntryContainer.RemoveAllChildren();
+
+        Selected = null;
     }
 
     private void ShowGuide(GuideEntry entry)
@@ -127,7 +138,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
             _sawmill.Error($"Failed to parse contents of guide document {entry.Id}.");
         }
 
-        LastEntry = entry.Id;
+        Selected = entry.Id;
 
         var (linkableControls, linkControls) = GetLinkableControlsAndLinks(EntryContainer);
 
@@ -147,34 +158,81 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         }
     }
 
-    public void UpdateGuides(
+    /// <summary>
+    ///     Updates the guides used in the window.
+    ///     Returns whether the guides changed.
+    /// </summary>
+    public bool UpdateGuides(
         Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry> entries,
         List<ProtoId<GuideEntryPrototype>>? rootEntries = null,
         ProtoId<GuideEntryPrototype>? forceRoot = null,
         ProtoId<GuideEntryPrototype>? selected = null)
     {
-        _entries = entries;
-        RepopulateTree(rootEntries, forceRoot);
-        ClearSelectedGuide();
-
-        Split.State = SplitContainer.SplitState.Auto;
-        if (entries.Count == 1)
+        var sameAsLastUpdate = SameAsLastUpdate(entries, rootEntries, forceRoot);
+        if (!sameAsLastUpdate)
         {
-            TreeBox.Visible = false;
-            Split.ResizeMode = SplitContainer.SplitResizeMode.NotResizable;
-            selected = entries.Keys.First();
+            _entries = entries;
+            RepopulateTree(rootEntries, forceRoot);
+            Split.State = SplitContainer.SplitState.Auto;
+            if (entries.Count == 1)
+            {
+                TreeBox.Visible = false;
+                Split.ResizeMode = SplitContainer.SplitResizeMode.NotResizable;
+                selected = entries.Keys.First();
+            }
+            else
+            {
+                TreeBox.Visible = true;
+                Split.ResizeMode = SplitContainer.SplitResizeMode.RespectChildrenMinSize;
+            }
+        }
+
+        if (selected == null)
+        {
+            ClearSelectedGuide();
         }
         else
-        {
-            TreeBox.Visible = true;
-            Split.ResizeMode = SplitContainer.SplitResizeMode.RespectChildrenMinSize;
-        }
-
-        if (selected != null)
         {
             var item = Tree.Items.FirstOrDefault(x => x.Metadata is GuideEntry entry && entry.Id == selected);
             Tree.SetSelectedIndex(item?.Index);
         }
+
+        return !sameAsLastUpdate;
+    }
+
+    /// <summary>
+    ///     Returns true if all parameters refer to the same guides
+    ///     as the parameters from last time <see cref="UpdateGuides" />
+    ///     was called, false otherwise.
+    /// </summary>
+    public bool SameAsLastUpdate(
+        Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry> entries,
+        List<ProtoId<GuideEntryPrototype>>? rootEntries = null,
+        ProtoId<GuideEntryPrototype>? forceRoot = null
+    )
+    {
+        if (forceRoot != _forceRoot)
+        {
+            return false;
+        }
+
+        // check if old and new rootEntries are equal
+        if (rootEntries != null && _rootEntries != null)
+        {
+            HashSet<ProtoId<GuideEntryPrototype>> rootEntriesSet = [..rootEntries];
+            if (!rootEntriesSet.SetEquals(_rootEntries))
+            {
+                return false;
+            }
+        }
+
+        // check if old and new entries are equal
+        if (entries.Count != _entries.Count || !entries.All(_entries.Contains))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private IEnumerable<GuideEntry> GetSortedEntries(List<ProtoId<GuideEntryPrototype>>? rootEntries)
@@ -186,6 +244,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
             {
                 entries.ExceptWith(entry.Children);
             }
+
             rootEntries = entries.ToList();
         }
 
