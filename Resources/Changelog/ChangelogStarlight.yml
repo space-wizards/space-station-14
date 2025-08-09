@@ -11046,5 +11046,62 @@ Entries:
   id: 1519
   time: '2025-08-09T10:53:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1272
+- author: Rinary
+  changes:
+  - message: Fixed bug, when mech can shoot on client with maintenance mode enabled.
+    type: Fix
+  id: 1520
+  time: '2025-08-09T10:58:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1267
+- author: Rinary
+  changes:
+  - message: Fixed bug, when mech can move with maintenance mode enabled.
+    type: Fix
+  id: 1521
+  time: '2025-08-09T10:58:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1267
+- author: Rinary
+  changes:
+  - message: Fixed bug, when mech can be repaired on client with maintenance mode
+      disabled.
+    type: Fix
+  id: 1522
+  time: '2025-08-09T10:58:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1267
+- author: Rinary
+  changes:
+  - message: Fixed bug, when maintenance mode buttons doesn't update on client.
+    type: Fix
+  id: 1523
+  time: '2025-08-09T10:58:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1267
+- author: Rinary
+  changes:
+  - message: Fixed bug, when x-ray mech weapon have not enough ammo.
+    type: Fix
+  id: 1524
+  time: '2025-08-09T10:58:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1267
+- author: Rinary
+  changes:
+  - message: Fixed bug, when solaris laser cannon mech weapon have not enough ammo.
+    type: Fix
+  id: 1525
+  time: '2025-08-09T10:58:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1267
+- author: Rinary
+  changes:
+  - message: Fixed bug, when battery charge doesn't update.
+    type: Fix
+  id: 1526
+  time: '2025-08-09T10:58:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1267
+- author: Rinary
+  changes:
+  - message: Fixed bug, when equipment list doesn't update correctly.
+    type: Fix
+  id: 1527
+  time: '2025-08-09T10:58:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1267
 Order: -1
 
