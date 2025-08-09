@@ -1,6 +1,6 @@
 using System.Numerics;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.ImmovableRod;
+using Content.Shared.ImmovableRod;
 using Content.Server.StationEvents.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.GameTicking.Components;
