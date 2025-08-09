@@ -27,7 +27,7 @@
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
   - type: Storage
-    clickInsert: true
+    clickInsert: false
     openOnActivate: false
     showVerb: true
     grid:
