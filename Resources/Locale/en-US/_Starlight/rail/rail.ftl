@@ -7,6 +7,9 @@ railroading-card-examined = ┌Active card:
     └[color={$Color}]{$Desc}[/color]
 railroading-issued-card = [color={$IconColor}][font="Icon"]{$Icon}[/font][/color] [color={$Color}]{$Title}[/color]
 
+railroading-chat-delivery-message = You have received a package as a donation.
+railroading-chat-delivery-wrapped-message = [bold]You have received a package as a donation[/bold].
+
 rail-consume-task = Eat {INDEFINITE($Target)} {$Target}
 
 rr-apple-pie = Apple pie
@@ -26,7 +29,6 @@ rr-melon-fruit-bowl-desc = At the spaceport, they called this dish Fructose Momm
 
 rr-stew = Stew
 rr-stew-desc = Space makes a lot of ordinary things feel exotic. Just try not to think about how it was cooked in a microwave.
-
 
 # Metabolize
 

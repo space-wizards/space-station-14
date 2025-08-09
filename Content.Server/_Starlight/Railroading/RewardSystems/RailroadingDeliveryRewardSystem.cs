@@ -8,6 +8,8 @@ using Content.Shared.Delivery;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared._Starlight.Railroading.Events;
 using Content.Shared._Starlight.Railroading;
+using Content.Shared.Chat;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using System.Linq;
 
@@ -22,6 +24,8 @@ public sealed partial class RailroadingDeliveryRewardSystem : EntitySystem
     [Dependency] private readonly LoadoutSystem _loadout = default!;
     [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
     [Dependency] private readonly LabelSystem _label = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
 
     public override void Initialize()
     {
@@ -60,6 +64,12 @@ public sealed partial class RailroadingDeliveryRewardSystem : EntitySystem
         var delivery = Spawn(ent.Comp.Delivery, Transform(spawner.Value).Coordinates);
         var profile = _loadout.GetProfile(args.Subject);
         var recordID = _records.GetRecordByName(station, MetaData(args.Subject).EntityName);
+
+        var message = Loc.GetString($"railroading-chat-delivery-message");
+        var wrappedMessage = Loc.GetString($"railroading-chat-delivery-wrapped-message");
+
+        if (_playerManager.TryGetSessionByEntity(args.Subject, out var session))
+            _chat.ChatMessageToOne(ChatChannel.Notifications, message, wrappedMessage, default, false, session.Channel, Color.FromHex("#57A3F7"));
 
         if (!TryComp<DeliveryComponent>(delivery, out var deliveryComp)
             || recordID == null
