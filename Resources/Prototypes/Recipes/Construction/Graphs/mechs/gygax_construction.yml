@@ -1,0 +1,180 @@
+- type: constructionGraph
+  id: Gygax
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: gygax
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 1
+
+      - tool: Screwing
+        doAfter: 1
+
+      - material: Cable
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 2
+
+      - tool: Cutting
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 3
+
+      - tag: GygaxCentralControlModule
+        name: gygax central control module
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "mainboard"
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 4
+
+      - tool: Screwing
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 5
+
+      - tag: GygaxPeripheralsControlModule
+        name: gygax peripherals control module
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: id_mod
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 6
+
+      - tool: Screwing
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 7
+
+      - tag: GygaxTargetingControlModule
+        name: gygax weapon control and targeting module
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: mcontroller
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 8
+
+      - tool: Screwing
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 9
+
+      - tag: CapacitorStockPart
+        name: capacitor
+        icon:
+          sprite: Objects/Misc/stock_parts.rsi
+          state: capacitor
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 10
+
+      - tool: Screwing
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 11
+
+      - component: PowerCell
+        name: power cell
+        store: battery-container
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 12
+
+      - tool: Screwing
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 13
+
+      - material: Steel
+        amount: 5
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 16
+
+      - tool: Anchoring
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 17
+
+      - tool: Welding
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 18
+
+      - tag: MechAirTank
+        name: exosuit air tank
+        icon:
+          sprite: Objects/Specific/Mech/mecha_equipment.rsi
+          state: mecha_air_tank
+
+      - tool: Anchoring
+        doAfter: 1
+
+      - tag: MechThruster
+        name: exosuit thruster
+        icon:
+          sprite: Objects/Specific/Mech/mecha_equipment.rsi
+          state: mecha_bin
+
+      - tool: Anchoring
+        doAfter: 1
+
+      - tag: GygaxArmor
+        name: gygax armor plates
+        icon:
+          sprite: "Objects/Specific/Mech/gygax_construction.rsi"
+          state: gygax_armor
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 19
+
+      - tool: Anchoring
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 20
+
+      - tool: Welding
+        doAfter: 1
+
+  - node: gygax
+    actions:
+    - !type:BuildMech
+      mechPrototype: MechGygax
