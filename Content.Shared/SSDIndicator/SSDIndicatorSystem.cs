@@ -1,4 +1,5 @@
 using Content.Shared.CCVar;
+using Content.Shared.Mind.Components;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -17,6 +18,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
 
     private bool _icSsdSleep;
     private float _icSsdSleepTime;
@@ -43,6 +45,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
         }
 
         Dirty(uid, component);
+        _entityManager.EventBus.RaiseEvent(EventSource.Local, new ForceUpdateMindStatusEvent(uid));
     }
 
     private void OnPlayerDetached(EntityUid uid, SSDIndicatorComponent component, PlayerDetachedEvent args)
@@ -56,6 +59,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
         }
 
         Dirty(uid, component);
+        _entityManager.EventBus.RaiseEvent(EventSource.Local, new ForceUpdateMindStatusEvent(uid));
     }
 
     // Prevents mapped mobs to go to sleep immediately
