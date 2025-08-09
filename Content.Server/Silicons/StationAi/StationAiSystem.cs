@@ -1,33 +1,32 @@
-using System.Linq;
-using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
-using Content.Shared.Chat;
-using Content.Shared.Mind;
-using Content.Shared.Roles;
+using Content.Shared.Chat.Prototypes;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
-using Robust.Shared.Audio;
+using Content.Shared.Turrets;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.Silicons.StationAi;
 
 public sealed class StationAiSystem : SharedStationAiSystem
 {
-    [Dependency] private readonly IChatManager _chats = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
 
-    private readonly HashSet<Entity<StationAiCoreComponent>> _ais = new();
+    private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
+    private readonly ProtoId<ChatNotificationPrototype> _turretIsAttackingChatNotificationPrototype = "TurretIsAttacking";
+    private readonly ProtoId<ChatNotificationPrototype> _aiWireSnippedChatNotificationPrototype = "AiWireSnipped";
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ExpandICChatRecipientsEvent>(OnExpandICChatRecipients);
+        SubscribeLocalEvent<StationAiTurretComponent, AmmoShotEvent>(OnAmmoShot);
     }
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)
@@ -37,7 +36,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
 
         // This function ensures that chat popups appear on camera views that have connected microphones.
-        var query = EntityManager.EntityQueryEnumerator<StationAiCoreComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<StationAiCoreComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var entStationAiCore, out var entXform))
         {
             var stationAiCore = new Entity<StationAiCoreComponent?>(ent, entStationAiCore);
@@ -61,15 +60,33 @@ public sealed class StationAiSystem : SharedStationAiSystem
         }
     }
 
+    private void OnAmmoShot(Entity<StationAiTurretComponent> ent, ref AmmoShotEvent args)
+    {
+        var xform = Transform(ent);
+
+        if (!TryComp(xform.GridUid, out MapGridComponent? grid))
+            return;
+
+        var ais = GetStationAIs(xform.GridUid.Value);
+
+        foreach (var ai in ais)
+        {
+            var ev = new ChatNotificationEvent(_turretIsAttackingChatNotificationPrototype, ent);
+
+            if (TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork))
+                ev.SourceNameOverride = Loc.GetString("station-ai-turret-component-name", ("name", Name(ent)), ("address", deviceNetwork.Address));
+
+            RaiseLocalEvent(ai, ref ev);
+        }
+    }
+
     public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
         if (!base.SetVisionEnabled(entity, enabled, announce))
             return false;
 
         if (announce)
-        {
             AnnounceSnip(entity.Owner);
-        }
 
         return true;
     }
@@ -80,54 +97,59 @@ public sealed class StationAiSystem : SharedStationAiSystem
             return false;
 
         if (announce)
-        {
             AnnounceSnip(entity.Owner);
-        }
 
         return true;
     }
 
-    public override void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null)
+    private void AnnounceSnip(EntityUid uid)
     {
-        if (!TryComp<ActorComponent>(uid, out var actor))
-            return;
-
-        var msg = Loc.GetString("ai-consciousness-download-warning");
-        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chats.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.Red);
-
-        if (cue != null && _mind.TryGetMind(uid, out var mindId, out _))
-            _roles.MindPlaySound(mindId, cue);
-    }
-
-    private void AnnounceSnip(EntityUid entity)
-    {
-        var xform = Transform(entity);
+        var xform = Transform(uid);
 
         if (!TryComp(xform.GridUid, out MapGridComponent? grid))
             return;
 
-        _ais.Clear();
-        _lookup.GetChildEntities(xform.GridUid.Value, _ais);
-        var filter = Filter.Empty();
+        var ais = GetStationAIs(xform.GridUid.Value);
 
-        foreach (var ai in _ais)
+        foreach (var ai in ais)
         {
-            // TODO: Filter API?
-            if (TryComp(ai.Owner, out ActorComponent? actorComp))
-            {
-                filter.AddPlayer(actorComp.PlayerSession);
-            }
+            if (!StationAiCanDetectWireSnipping(ai))
+                continue;
+
+            var ev = new ChatNotificationEvent(_aiWireSnippedChatNotificationPrototype, uid);
+
+            var tile = Maps.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
+            ev.SourceNameOverride = tile.ToString();
+
+            RaiseLocalEvent(ai, ref ev);
+        }
+    }
+
+    private bool StationAiCanDetectWireSnipping(EntityUid uid)
+    {
+        // TODO: The ability to detect snipped AI interaction wires
+        // should be a MALF ability and/or a purchased upgrade rather
+        // than something available to the station AI by default.
+        // When these systems are added, add the appropriate checks here.
+
+        return false;
+    }
+
+    public HashSet<EntityUid> GetStationAIs(EntityUid gridUid)
+    {
+        _stationAiCores.Clear();
+        _lookup.GetChildEntities(gridUid, _stationAiCores);
+
+        var hashSet = new HashSet<EntityUid>();
+
+        foreach (var stationAiCore in _stationAiCores)
+        {
+            if (!TryGetHeld((stationAiCore, stationAiCore.Comp), out var insertedAi))
+                continue;
+
+            hashSet.Add(insertedAi);
         }
 
-        // TEST
-        // filter = Filter.Broadcast();
-
-        // No easy way to do chat notif embeds atm.
-        var tile = Maps.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
-        var msg = Loc.GetString("ai-wire-snipped", ("coords", tile));
-
-        _chats.ChatMessageToMany(ChatChannel.Notifications, msg, msg, entity, false, true, filter.Recipients.Select(o => o.Channel));
-        // Apparently there's no sound for this.
+        return hashSet;
     }
 }

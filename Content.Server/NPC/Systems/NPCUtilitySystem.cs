@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Hands.Systems;
 using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
@@ -43,8 +44,9 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DrinkSystem _drink = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly FoodSystem _food = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly IngestionSystem _ingestion = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
@@ -172,14 +174,8 @@ public sealed class NPCUtilitySystem : EntitySystem
         {
             case FoodValueCon:
             {
-                if (!TryComp<FoodComponent>(targetUid, out var food))
-                    return 0f;
-
-                // mice can't eat unpeeled bananas, need monkey's help
-                if (_openable.IsClosed(targetUid))
-                    return 0f;
-
-                if (!_food.IsDigestibleBy(owner, targetUid, food))
+                // do we have a mouth available? Is the food item opened?
+                if (!_ingestion.CanConsume(owner, targetUid))
                     return 0f;
 
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
@@ -192,15 +188,16 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
                     return 0f;
 
+                var nutrition = _ingestion.TotalNutrition(targetUid, owner);
+                if (nutrition <= 1.0f)
+                    return 0f;
+
                 return 1f;
             }
             case DrinkValueCon:
             {
-                if (!TryComp<DrinkComponent>(targetUid, out var drink))
-                    return 0f;
-
-                // can't drink closed drinks
-                if (_openable.IsClosed(targetUid))
+                // can't drink closed drinks and can't drink with a mask on...
+                if (!_ingestion.CanConsume(owner, targetUid))
                     return 0f;
 
                 // only drink when thirsty
@@ -212,7 +209,9 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
 
                 // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.
-                var hydration = _drink.TotalHydration(targetUid, drink);
+                // We don't check if the solution is metabolizable cause all drinks should be currently.
+                // If that changes then simply use the other overflow.
+                var hydration = _ingestion.TotalHydration(targetUid);
                 if (hydration <= 1.0f)
                     return 0f;
 
@@ -256,8 +255,9 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case TargetAmmoMatchesCon:
             {
-                if (!blackboard.TryGetValue(NPCBlackboard.ActiveHand, out Hand? activeHand, EntityManager) ||
-                    !TryComp<BallisticAmmoProviderComponent>(activeHand.HeldEntity, out var heldGun))
+                if (!blackboard.TryGetValue(NPCBlackboard.ActiveHand, out string? activeHand, EntityManager) ||
+                    !_hands.TryGetHeldItem(owner, activeHand, out var heldEntity) ||
+                    !TryComp<BallisticAmmoProviderComponent>(heldEntity, out var heldGun))
                 {
                     return 0f;
                 }
