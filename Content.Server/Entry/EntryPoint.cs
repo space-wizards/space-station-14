@@ -50,6 +50,8 @@ namespace Content.Server.Entry
         private IServerDbManager? _dbManager;
         private IWatchlistWebhookManager _watchlistWebhookManager = default!;
         private IConnectionManager? _connectionManager;
+        private DiscordLink _discordLink = default!;
+        private DiscordStatusLink _discordStatusLink = default!;
 
         /// <inheritdoc />
         public override void Init()
@@ -98,6 +100,8 @@ namespace Content.Server.Entry
                 _sysMan = IoCManager.Resolve<IEntitySystemManager>();
                 _dbManager = IoCManager.Resolve<IServerDbManager>();
                 _watchlistWebhookManager = IoCManager.Resolve<IWatchlistWebhookManager>();
+                _discordLink = IoCManager.Resolve<DiscordLink>();
+                _discordStatusLink = IoCManager.Resolve<DiscordStatusLink>();
 
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
@@ -118,6 +122,7 @@ namespace Content.Server.Entry
                 _watchlistWebhookManager.Initialize();
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
                 IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
+                IoCManager.Resolve<DiscordStatusLink>().Initialize();
             }
         }
 
@@ -180,6 +185,8 @@ namespace Content.Server.Entry
                     _playTimeTracking?.Update();
                     _watchlistWebhookManager.Update();
                     _connectionManager?.Update();
+                    _discordLink.Update();
+                    _discordStatusLink.Update();
                     break;
             }
         }
