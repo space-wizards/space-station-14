@@ -2,7 +2,7 @@
 - type: guideEntry
   id: Jobs
   name: guide-entry-jobs
-  text: "_Ronstation/ServerInfo/Guidebook/Jobs.xml" # Ronstation - modification
+  text: "/ServerInfo/_Ronstation/Guidebook/Jobs.xml" # Ronstation - modification
 # Start of modifications.
   children:
   - Cargo
