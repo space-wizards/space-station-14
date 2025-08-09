@@ -61,7 +61,7 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
 
     public bool CanUnderstand(Entity<LanguageSpeakerComponent?> ent, ProtoId<LanguagePrototype> language)
     {
-        if (language == UniversalPrototype || TryComp<UniversalLanguageSpeakerComponent>(ent, out var uni) && uni.Enabled)
+        if (language == UniversalPrototype || HasComp<UniversalLanguageSpeakerComponent>(ent))
             return true;
 
         return Resolve(ent, ref ent.Comp, logMissing: false) && ent.Comp.UnderstoodLanguages.Contains(language);

@@ -206,10 +206,12 @@ public sealed class RadioSystem : EntitySystem
             RaiseLocalEvent(receiver, ref ev);
 
         }
+
         RaiseLocalEvent(new RadioSpokeEvent
         {
             Source = messageSource,
             Message = message,
+            Language = language,
             Receivers = [.. ev.Receivers]
         });
 

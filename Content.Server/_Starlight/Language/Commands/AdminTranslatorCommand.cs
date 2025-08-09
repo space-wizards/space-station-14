@@ -31,7 +31,6 @@ public sealed class AdminTranslatorCommand : ToolshedCommand
         [CommandArgument] bool addUnderstand = true
     )
     {
-        // noob trap - needs a universallanguagespeakercomponent.
         if (language == SharedLanguageSystem.UniversalPrototype)
             throw new ArgumentException(Loc.GetString("command-language-error-this-will-not-work"));
 
