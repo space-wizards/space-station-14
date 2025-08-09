@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 35,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "lewis"
+    },
+    {
+      "name": "lewis_empty"
+    },
+    {
+      "name": "deployed-lewis"
+    },
+    {
+      "name": "deployed-lewis_empty"
+    },
+    {
+      "name": "knight-lewis"
+    },
+    {
+      "name": "knight-lewis_empty"
+    },
+    {
+      "name": "mg08"
+    },
+    {
+      "name": "mg08_empty"
+    },
+    {
+      "name": "deployed-mg08"
+    },
+    {
+      "name": "deployed-mg08_empty"
+    },
+    {
+      "name": "knight-mg08"
+    },
+    {
+      "name": "knight-mg08-e"
+    }
+  ]
+}

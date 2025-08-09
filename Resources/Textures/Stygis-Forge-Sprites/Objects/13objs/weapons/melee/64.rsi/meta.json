@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "longsword"
+    },
+    {
+      "name": "longsword1"
+    },
+    {
+      "name": "polemace"
+    },
+    {
+      "name": "polemace1"
+    },
+    {
+      "name": "halberd"
+    },
+    {
+      "name": "halberd1"
+    },
+    {
+      "name": "eaglebeak"
+    },
+    {
+      "name": "eaglebeak1"
+    },
+    {
+      "name": "gsw"
+    },
+    {
+      "name": "gsw1"
+    },
+    {
+      "name": "goedendag"
+    },
+    {
+      "name": "goedendag1"
+    },
+    {
+      "name": "bardiche"
+    },
+    {
+      "name": "bardiche1"
+    },
+    {
+      "name": "polehammer"
+    },
+    {
+      "name": "polehammer1"
+    },
+    {
+      "name": "spear"
+    },
+    {
+      "name": "spear1"
+    },
+    {
+      "name": "stonespear"
+    },
+    {
+      "name": "stonespear1"
+    },
+    {
+      "name": "zwei"
+    },
+    {
+      "name": "zwei1"
+    },
+    {
+      "name": "billhook"
+    },
+    {
+      "name": "billhook1"
+    },
+    {
+      "name": "longbow"
+    },
+    {
+      "name": "blksword"
+    },
+    {
+      "name": "blksword1"
+    },
+    {
+      "name": "terminusest"
+    },
+    {
+      "name": "terminusest1"
+    },
+    {
+      "name": "exe"
+    },
+    {
+      "name": "exe1"
+    },
+    {
+      "name": "woodstaff"
+    },
+    {
+      "name": "woodstaff1"
+    },
+    {
+      "name": "musk0"
+    },
+    {
+      "name": "musk1"
+    },
+    {
+      "name": "sg0"
+    },
+    {
+      "name": "sg1"
+    },
+    {
+      "name": "machine"
+    },
+    {
+      "name": "0,0"
+    },
+    {
+      "name": "0,0"
+    },
+    {
+      "name": "0,0"
+    }
+  ]
+}

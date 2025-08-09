@@ -1,0 +1,275 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "staffofchange"
+    },
+    {
+      "name": "staffofanimation"
+    },
+    {
+      "name": "nothingwand"
+    },
+    {
+      "name": "staffofhealing"
+    },
+    {
+      "name": "staffofnothing"
+    },
+    {
+      "name": "revivewand",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "deathwand",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "polywand",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "telewand",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "doorwand"
+    },
+    {
+      "name": "firewand",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "revivewand-drained"
+    },
+    {
+      "name": "deathwand-drained"
+    },
+    {
+      "name": "polywand-drained"
+    },
+    {
+      "name": "telewand-drained"
+    },
+    {
+      "name": "doorwand-drained"
+    },
+    {
+      "name": "sword0"
+    },
+    {
+      "name": "swordblue",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "swordred",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "swordgreen",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "swordpurple",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "stunbaton_active",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "stunbaton"
+    },
+    {
+      "name": "stunbaton_nocell"
+    },
+    {
+      "name": "axe0"
+    },
+    {
+      "name": "axe1",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "cutlass0"
+    },
+    {
+      "name": "cutlass1",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "blade",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "dualsaberblue",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "dualsaberred",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "dualsabergreen",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "dualsaberpurple",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "autoharvester",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "stunprod_nocell"
+    },
+    {
+      "name": "stunprod"
+    },
+    {
+      "name": "stunprod_active",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "brander",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "offhand"
+    },
+    {
+      "name": "eshield0"
+    },
+    {
+      "name": "eshield1"
+    },
+    {
+      "name": "tau"
+    },
+    {
+      "name": "tau0"
+    }
+  ]
+}

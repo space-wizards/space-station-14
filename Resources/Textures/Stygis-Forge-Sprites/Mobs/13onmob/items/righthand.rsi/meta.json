@@ -1,0 +1,2566 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "DONGS",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "RPED",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "an_tank",
+      "directions": 4
+    },
+    {
+      "name": "analyzer",
+      "directions": 4
+    },
+    {
+      "name": "armor",
+      "directions": 4
+    },
+    {
+      "name": "armor_reflec",
+      "directions": 4
+    },
+    {
+      "name": "assembly",
+      "directions": 4
+    },
+    {
+      "name": "atoxinbottle",
+      "directions": 4
+    },
+    {
+      "name": "autoinjector",
+      "directions": 4
+    },
+    {
+      "name": "axe0",
+      "directions": 4
+    },
+    {
+      "name": "axe1",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "b_mask",
+      "directions": 4
+    },
+    {
+      "name": "b_shoes",
+      "directions": 4
+    },
+    {
+      "name": "b_shoesold",
+      "directions": 4
+    },
+    {
+      "name": "balloon",
+      "directions": 4
+    },
+    {
+      "name": "balloon-empty",
+      "directions": 4
+    },
+    {
+      "name": "basketball",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "baton",
+      "directions": 4
+    },
+    {
+      "name": "baton",
+      "directions": 4
+    },
+    {
+      "name": "beachball",
+      "directions": 4
+    },
+    {
+      "name": "beaker",
+      "directions": 4
+    },
+    {
+      "name": "bedsheet",
+      "directions": 4
+    },
+    {
+      "name": "beer",
+      "directions": 4
+    },
+    {
+      "name": "bgloves",
+      "directions": 4
+    },
+    {
+      "name": "bible",
+      "directions": 4
+    },
+    {
+      "name": "bike_horn",
+      "directions": 4
+    },
+    {
+      "name": "bio_orange",
+      "directions": 4
+    },
+    {
+      "name": "bio_suit",
+      "directions": 4
+    },
+    {
+      "name": "bl_shoes",
+      "directions": 4
+    },
+    {
+      "name": "bl_shoesold",
+      "directions": 4
+    },
+    {
+      "name": "blade",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.1,
+          0.1
+        ],
+        [
+          0.2,
+          0.2,
+          0.1,
+          0.1
+        ],
+        [
+          0.2,
+          0.2,
+          0.1,
+          0.1
+        ],
+        [
+          0.2,
+          0.2,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "blindfold",
+      "directions": 4
+    },
+    {
+      "name": "blueprints",
+      "directions": 4
+    },
+    {
+      "name": "bombvest",
+      "directions": 4
+    },
+    {
+      "name": "brain2",
+      "directions": 4
+    },
+    {
+      "name": "brick",
+      "directions": 4
+    },
+    {
+      "name": "briefcase",
+      "directions": 4
+    },
+    {
+      "name": "broken_beer",
+      "directions": 4
+    },
+    {
+      "name": "broom",
+      "directions": 4
+    },
+    {
+      "name": "brown_jacket",
+      "directions": 4
+    },
+    {
+      "name": "browncane",
+      "directions": 4
+    },
+    {
+      "name": "brutepack",
+      "directions": 4
+    },
+    {
+      "name": "bucket",
+      "directions": 4
+    },
+    {
+      "name": "buckler",
+      "directions": 4
+    },
+    {
+      "name": "bucklerOLD",
+      "directions": 4
+    },
+    {
+      "name": "buildpipe",
+      "directions": 4
+    },
+    {
+      "name": "burger",
+      "directions": 4
+    },
+    {
+      "name": "butch",
+      "directions": 4
+    },
+    {
+      "name": "butcher_knife",
+      "directions": 4
+    },
+    {
+      "name": "butterflyknife_open",
+      "directions": 4
+    },
+    {
+      "name": "c_tube",
+      "directions": 4
+    },
+    {
+      "name": "candy",
+      "directions": 4
+    },
+    {
+      "name": "canister",
+      "directions": 4
+    },
+    {
+      "name": "capjacket",
+      "directions": 4
+    },
+    {
+      "name": "capspacesuit",
+      "directions": 4
+    },
+    {
+      "name": "captunic",
+      "directions": 4
+    },
+    {
+      "name": "card-id",
+      "directions": 4
+    },
+    {
+      "name": "cardborg",
+      "directions": 4
+    },
+    {
+      "name": "carton",
+      "directions": 4
+    },
+    {
+      "name": "caution",
+      "directions": 4
+    },
+    {
+      "name": "ce_hardsuit",
+      "directions": 4
+    },
+    {
+      "name": "ce_helm",
+      "directions": 4
+    },
+    {
+      "name": "cell",
+      "directions": 4
+    },
+    {
+      "name": "centcom",
+      "directions": 4
+    },
+    {
+      "name": "cespace_suit",
+      "directions": 4
+    },
+    {
+      "name": "chainmail",
+      "directions": 4
+    },
+    {
+      "name": "chickensuit",
+      "directions": 4
+    },
+    {
+      "name": "chips",
+      "directions": 4
+    },
+    {
+      "name": "cigoff",
+      "directions": 4
+    },
+    {
+      "name": "cigon",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cigpacket",
+      "directions": 4
+    },
+    {
+      "name": "classic_baton",
+      "directions": 4
+    },
+    {
+      "name": "cleaner",
+      "directions": 4
+    },
+    {
+      "name": "clipboard",
+      "directions": 4
+    },
+    {
+      "name": "clown_hat",
+      "directions": 4
+    },
+    {
+      "name": "clown_shoes",
+      "directions": 4
+    },
+    {
+      "name": "coffee",
+      "directions": 4
+    },
+    {
+      "name": "coil",
+      "directions": 4
+    },
+    {
+      "name": "coil-wire",
+      "directions": 4
+    },
+    {
+      "name": "cola",
+      "directions": 4
+    },
+    {
+      "name": "contliquid",
+      "directions": 4
+    },
+    {
+      "name": "contsolid",
+      "directions": 4
+    },
+    {
+      "name": "contvapour",
+      "directions": 4
+    },
+    {
+      "name": "coolant-c",
+      "directions": 4
+    },
+    {
+      "name": "crowbar",
+      "directions": 4
+    },
+    {
+      "name": "crowbar_red",
+      "directions": 4
+    },
+    {
+      "name": "cultblade",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "culthood",
+      "directions": 4
+    },
+    {
+      "name": "cultpack",
+      "directions": 4
+    },
+    {
+      "name": "cultrobes",
+      "directions": 4
+    },
+    {
+      "name": "cutlass0",
+      "directions": 4
+    },
+    {
+      "name": "cutlass1",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "cutters",
+      "directions": 4
+    },
+    {
+      "name": "cutters_yellow",
+      "directions": 4
+    },
+    {
+      "name": "daederic",
+      "directions": 4
+    },
+    {
+      "name": "deagleg",
+      "directions": 4
+    },
+    {
+      "name": "death_commando_mask",
+      "directions": 4
+    },
+    {
+      "name": "death_commando_suit",
+      "directions": 4
+    },
+    {
+      "name": "deathnettle",
+      "directions": 4
+    },
+    {
+      "name": "det_suit",
+      "directions": 4
+    },
+    {
+      "name": "dnainjector",
+      "directions": 4
+    },
+    {
+      "name": "donut1",
+      "directions": 4
+    },
+    {
+      "name": "donut2",
+      "directions": 4
+    },
+    {
+      "name": "dpickaxe",
+      "directions": 4
+    },
+    {
+      "name": "dr_gibb",
+      "directions": 4
+    },
+    {
+      "name": "dropper",
+      "directions": 4
+    },
+    {
+      "name": "dualsaber0",
+      "directions": 4
+    },
+    {
+      "name": "dualsaber1",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "earmuffs",
+      "directions": 4
+    },
+    {
+      "name": "egg",
+      "directions": 4
+    },
+    {
+      "name": "egg1",
+      "directions": 4
+    },
+    {
+      "name": "egg2",
+      "directions": 4
+    },
+    {
+      "name": "egg3",
+      "directions": 4
+    },
+    {
+      "name": "egg4",
+      "directions": 4
+    },
+    {
+      "name": "egg5",
+      "directions": 4
+    },
+    {
+      "name": "electronic",
+      "directions": 4
+    },
+    {
+      "name": "electropack",
+      "directions": 4
+    },
+    {
+      "name": "emergency",
+      "directions": 4
+    },
+    {
+      "name": "emergency_double",
+      "directions": 4
+    },
+    {
+      "name": "emergency_engi",
+      "directions": 4
+    },
+    {
+      "name": "emp",
+      "directions": 4
+    },
+    {
+      "name": "energy_drink",
+      "directions": 4
+    },
+    {
+      "name": "eshield0",
+      "directions": 4
+    },
+    {
+      "name": "eshield1",
+      "directions": 4
+    },
+    {
+      "name": "faggot",
+      "directions": 4
+    },
+    {
+      "name": "farwaplush",
+      "directions": 4
+    },
+    {
+      "name": "fire_extinguisher",
+      "directions": 4
+    },
+    {
+      "name": "fire_suit",
+      "directions": 4
+    },
+    {
+      "name": "fireaxe0",
+      "directions": 4
+    },
+    {
+      "name": "fireaxe1",
+      "directions": 4
+    },
+    {
+      "name": "firefighter",
+      "directions": 4
+    },
+    {
+      "name": "firstaid",
+      "directions": 4
+    },
+    {
+      "name": "firstaid-advanced",
+      "directions": 4
+    },
+    {
+      "name": "firstaid-ointment",
+      "directions": 4
+    },
+    {
+      "name": "firstaid-toxin",
+      "directions": 4
+    },
+    {
+      "name": "firstaid-o2",
+      "directions": 4
+    },
+    {
+      "name": "flamethrower_0",
+      "directions": 4
+    },
+    {
+      "name": "flamethrower_1",
+      "directions": 4
+    },
+    {
+      "name": "blueflare",
+      "directions": 4
+    },
+    {
+      "name": "flare",
+      "directions": 4
+    },
+    {
+      "name": "flash",
+      "directions": 4
+    },
+    {
+      "name": "flashbang",
+      "directions": 4
+    },
+    {
+      "name": "flashlight",
+      "directions": 4
+    },
+    {
+      "name": "foamcrossbow",
+      "directions": 4
+    },
+    {
+      "name": "focus",
+      "directions": 4
+    },
+    {
+      "name": "focus",
+      "directions": 4
+    },
+    {
+      "name": "foldcane",
+      "directions": 4
+    },
+    {
+      "name": "fork",
+      "directions": 4
+    },
+    {
+      "name": "fr_jacket",
+      "directions": 4
+    },
+    {
+      "name": "galoshes",
+      "directions": 4
+    },
+    {
+      "name": "gas_alt",
+      "directions": 4
+    },
+    {
+      "name": "gas_mask",
+      "directions": 4
+    },
+    {
+      "name": "gift",
+      "directions": 4
+    },
+    {
+      "name": "glasses",
+      "directions": 4
+    },
+    {
+      "name": "gold_id",
+      "directions": 4
+    },
+    {
+      "name": "gpickaxe",
+      "directions": 4
+    },
+    {
+      "name": "greatcoat",
+      "directions": 4
+    },
+    {
+      "name": "grey_hoodie",
+      "directions": 4
+    },
+    {
+      "name": "handcuff",
+      "directions": 4
+    },
+    {
+      "name": "harpoon",
+      "directions": 4
+    },
+    {
+      "name": "hatchet",
+      "directions": 4
+    },
+    {
+      "name": "head_m",
+      "directions": 4
+    },
+    {
+      "name": "headset",
+      "directions": 4
+    },
+    {
+      "name": "healthanalyzer",
+      "directions": 4
+    },
+    {
+      "name": "hoe",
+      "directions": 4
+    },
+    {
+      "name": "holidaypriest",
+      "directions": 4
+    },
+    {
+      "name": "hook_knife",
+      "directions": 4
+    },
+    {
+      "name": "ice_tea_can",
+      "directions": 4
+    },
+    {
+      "name": "imperium_monk",
+      "directions": 4
+    },
+    {
+      "name": "implantcase",
+      "directions": 4
+    },
+    {
+      "name": "ithaqua",
+      "directions": 4
+    },
+    {
+      "name": "jackboots",
+      "directions": 4
+    },
+    {
+      "name": "jackhammer",
+      "directions": 4
+    },
+    {
+      "name": "jensencoat",
+      "directions": 4
+    },
+    {
+      "name": "jensensuit",
+      "directions": 4
+    },
+    {
+      "name": "jetpack",
+      "directions": 4
+    },
+    {
+      "name": "jetpack-black",
+      "directions": 4
+    },
+    {
+      "name": "jetpack-void",
+      "directions": 4
+    },
+    {
+      "name": "johnny_coat",
+      "directions": 4
+    },
+    {
+      "name": "judge",
+      "directions": 4
+    },
+    {
+      "name": "katana",
+      "directions": 4
+    },
+    {
+      "name": "kingyellow",
+      "directions": 4
+    },
+    {
+      "name": "knife",
+      "directions": 4
+    },
+    {
+      "name": "kobskull",
+      "directions": 4
+    },
+    {
+      "name": "koran",
+      "directions": 4
+    },
+    {
+      "name": "labcoat",
+      "directions": 4
+    },
+    {
+      "name": "lamp",
+      "directions": 4
+    },
+    {
+      "name": "lampgreen",
+      "directions": 4
+    },
+    {
+      "name": "latexballon",
+      "directions": 4
+    },
+    {
+      "name": "leather_jacket",
+      "directions": 4
+    },
+    {
+      "name": "lemon-lime",
+      "directions": 4
+    },
+    {
+      "name": "lgloves",
+      "directions": 4
+    },
+    {
+      "name": "lipstick",
+      "directions": 4
+    },
+    {
+      "name": "lipstickopen",
+      "directions": 4
+    },
+    {
+      "name": "nullrod",
+      "directions": 4
+    },
+    {
+      "name": "m_mask",
+      "directions": 4
+    },
+    {
+      "name": "magboots"
+    },
+    {
+      "name": "medibottle",
+      "directions": 4
+    },
+    {
+      "name": "melted",
+      "directions": 4
+    },
+    {
+      "name": "metalbat0",
+      "directions": 4
+    },
+    {
+      "name": "metalbat1",
+      "directions": 4
+    },
+    {
+      "name": "mimesuit",
+      "directions": 4
+    },
+    {
+      "name": "miniFE",
+      "directions": 4
+    },
+    {
+      "name": "mop",
+      "directions": 4
+    },
+    {
+      "name": "mousetrap",
+      "directions": 4
+    },
+    {
+      "name": "multitool",
+      "directions": 4
+    },
+    {
+      "name": "muzzle",
+      "directions": 4
+    },
+    {
+      "name": "nazi1",
+      "directions": 4
+    },
+    {
+      "name": "necronomicon",
+      "directions": 4
+    },
+    {
+      "name": "nettle",
+      "directions": 4
+    },
+    {
+      "name": "newspaper",
+      "directions": 4
+    },
+    {
+      "name": "nothing",
+      "directions": 4
+    },
+    {
+      "name": "ntballoon",
+      "directions": 4
+    },
+    {
+      "name": "nun",
+      "directions": 4
+    },
+    {
+      "name": "o_shoes",
+      "directions": 4
+    },
+    {
+      "name": "o_shoes1",
+      "directions": 4
+    },
+    {
+      "name": "o_shoes1old",
+      "directions": 4
+    },
+    {
+      "name": "o_shoesold",
+      "directions": 4
+    },
+    {
+      "name": "ointment",
+      "directions": 4
+    },
+    {
+      "name": "overalls",
+      "directions": 4
+    },
+    {
+      "name": "owl_mask",
+      "directions": 4
+    },
+    {
+      "name": "oxygen",
+      "directions": 4
+    },
+    {
+      "name": "oxygen-c",
+      "directions": 4
+    },
+    {
+      "name": "oxygen_f",
+      "directions": 4
+    },
+    {
+      "name": "oxygen_fr",
+      "directions": 4
+    },
+    {
+      "name": "paintcan",
+      "directions": 4
+    },
+    {
+      "name": "painted_secure",
+      "directions": 4
+    },
+    {
+      "name": "paper",
+      "directions": 4
+    },
+    {
+      "name": "pen",
+      "directions": 4
+    },
+    {
+      "name": "pickaxe",
+      "directions": 4
+    },
+    {
+      "name": "pie",
+      "directions": 4
+    },
+    {
+      "name": "pill",
+      "directions": 4
+    },
+    {
+      "name": "plantbgone",
+      "directions": 4
+    },
+    {
+      "name": "plasma",
+      "directions": 4
+    },
+    {
+      "name": "plasma-c",
+      "directions": 4
+    },
+    {
+      "name": "plasticbag",
+      "directions": 4
+    },
+    {
+      "name": "plasticx",
+      "directions": 4
+    },
+    {
+      "name": "ppickaxe",
+      "directions": 4
+    },
+    {
+      "name": "ppickaxe-old",
+      "directions": 4
+    },
+    {
+      "name": "prod",
+      "directions": 4
+    },
+    {
+      "name": "purple_can",
+      "directions": 4
+    },
+    {
+      "name": "quarrel",
+      "directions": 4
+    },
+    {
+      "name": "r_feet",
+      "directions": 4
+    },
+    {
+      "name": "r_hands",
+      "directions": 4
+    },
+    {
+      "name": "r_head",
+      "directions": 4
+    },
+    {
+      "name": "r_shoes",
+      "directions": 4
+    },
+    {
+      "name": "rack_parts",
+      "directions": 4
+    },
+    {
+      "name": "rad_suit",
+      "directions": 4
+    },
+    {
+      "name": "radio",
+      "directions": 4
+    },
+    {
+      "name": "rcd",
+      "directions": 4
+    },
+    {
+      "name": "rcdammo",
+      "directions": 4
+    },
+    {
+      "name": "rejuvbottle",
+      "directions": 4
+    },
+    {
+      "name": "rev_headballoon",
+      "directions": 4
+    },
+    {
+      "name": "revballoon",
+      "directions": 4
+    },
+    {
+      "name": "rig_helm",
+      "directions": 4
+    },
+    {
+      "name": "rig_suit",
+      "directions": 4
+    },
+    {
+      "name": "riot",
+      "directions": 4
+    },
+    {
+      "name": "riot",
+      "directions": 4
+    },
+    {
+      "name": "ro_suit",
+      "directions": 4
+    },
+    {
+      "name": "rods",
+      "directions": 4
+    },
+    {
+      "name": "rolling_pin",
+      "directions": 4
+    },
+    {
+      "name": "rubberducky",
+      "directions": 4
+    },
+    {
+      "name": "s-ninja_mask",
+      "directions": 4
+    },
+    {
+      "name": "s-ninja_suit",
+      "directions": 4
+    },
+    {
+      "name": "s_mask",
+      "directions": 4
+    },
+    {
+      "name": "santa",
+      "directions": 4
+    },
+    {
+      "name": "saw3",
+      "directions": 4
+    },
+    {
+      "name": "scalpel",
+      "directions": 4
+    },
+    {
+      "name": "scientology",
+      "directions": 4
+    },
+    {
+      "name": "scrapbook",
+      "directions": 4
+    },
+    {
+      "name": "screwdriver",
+      "directions": 4
+    },
+    {
+      "name": "screwdriver_blue",
+      "directions": 4
+    },
+    {
+      "name": "screwdriver_brown",
+      "directions": 4
+    },
+    {
+      "name": "screwdriver_cyan",
+      "directions": 4
+    },
+    {
+      "name": "screwdriver_green",
+      "directions": 4
+    },
+    {
+      "name": "screwdriver_purple",
+      "directions": 4
+    },
+    {
+      "name": "screwdriver_yellow",
+      "directions": 4
+    },
+    {
+      "name": "scythe0",
+      "directions": 4
+    },
+    {
+      "name": "sec-case",
+      "directions": 4
+    },
+    {
+      "name": "secsoft",
+      "directions": 4
+    },
+    {
+      "name": "shard-glass",
+      "directions": 4
+    },
+    {
+      "name": "sheet-card",
+      "directions": 4
+    },
+    {
+      "name": "sheet-glass",
+      "directions": 4
+    },
+    {
+      "name": "sheet-metal",
+      "directions": 4
+    },
+    {
+      "name": "sheet-rglass",
+      "directions": 4
+    },
+    {
+      "name": "shovel",
+      "directions": 4
+    },
+    {
+      "name": "shovel",
+      "directions": 4
+    },
+    {
+      "name": "signaler",
+      "directions": 4
+    },
+    {
+      "name": "silver_id",
+      "directions": 4
+    },
+    {
+      "name": "sodawater",
+      "directions": 4
+    },
+    {
+      "name": "space-up",
+      "directions": 4
+    },
+    {
+      "name": "space_mountain_wind",
+      "directions": 4
+    },
+    {
+      "name": "spade",
+      "directions": 4
+    },
+    {
+      "name": "spearglass0",
+      "directions": 4
+    },
+    {
+      "name": "spearglass1",
+      "directions": 4
+    },
+    {
+      "name": "speargun",
+      "directions": 4
+    },
+    {
+      "name": "spickaxe",
+      "directions": 4
+    },
+    {
+      "name": "spoon",
+      "directions": 4
+    },
+    {
+      "name": "spraycan",
+      "directions": 4
+    },
+    {
+      "name": "staff",
+      "directions": 4
+    },
+    {
+      "name": "staffofchange",
+      "directions": 4
+    },
+    {
+      "name": "stamp",
+      "directions": 4
+    },
+    {
+      "name": "starkist",
+      "directions": 4
+    },
+    {
+      "name": "stick",
+      "directions": 4
+    },
+    {
+      "name": "bar_stool",
+      "directions": 4
+    },
+    {
+      "name": "stool",
+      "directions": 4
+    },
+    {
+      "name": "straight_jacket",
+      "directions": 4
+    },
+    {
+      "name": "sunglasses",
+      "directions": 4
+    },
+    {
+      "name": "sunglasses",
+      "directions": 4
+    },
+    {
+      "name": "swat_gl",
+      "directions": 4
+    },
+    {
+      "name": "swat_sh",
+      "directions": 4
+    },
+    {
+      "name": "swat_suit",
+      "directions": 4
+    },
+    {
+      "name": "switchblade_open",
+      "directions": 4
+    },
+    {
+      "name": "sword0",
+      "directions": 4
+    },
+    {
+      "name": "swordblue",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "swordchain",
+      "directions": 4
+    },
+    {
+      "name": "swordgreen",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "swordpurple",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "swordred",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "syndballoon",
+      "directions": 4
+    },
+    {
+      "name": "syringe_0",
+      "directions": 4
+    },
+    {
+      "name": "syringe_1",
+      "directions": 4
+    },
+    {
+      "name": "syringe_10",
+      "directions": 4
+    },
+    {
+      "name": "syringe_15",
+      "directions": 4
+    },
+    {
+      "name": "syringe_5",
+      "directions": 4
+    },
+    {
+      "name": "syringe_kit",
+      "directions": 4
+    },
+    {
+      "name": "syringegun",
+      "directions": 4
+    },
+    {
+      "name": "table_parts",
+      "directions": 4
+    },
+    {
+      "name": "tdgreen",
+      "directions": 4
+    },
+    {
+      "name": "tdhelm",
+      "directions": 4
+    },
+    {
+      "name": "tdred",
+      "directions": 4
+    },
+    {
+      "name": "template",
+      "directions": 4
+    },
+    {
+      "name": "thirteen_loko",
+      "directions": 4
+    },
+    {
+      "name": "tile",
+      "directions": 4
+    },
+    {
+      "name": "tonic",
+      "directions": 4
+    },
+    {
+      "name": "toolbox_blue",
+      "directions": 4
+    },
+    {
+      "name": "toolbox_red",
+      "directions": 4
+    },
+    {
+      "name": "toolbox_syndi",
+      "directions": 4
+    },
+    {
+      "name": "toolbox_yellow",
+      "directions": 4
+    },
+    {
+      "name": "toxinbottle",
+      "directions": 4
+    },
+    {
+      "name": "toysword0",
+      "directions": 4
+    },
+    {
+      "name": "toysword1",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "trashbag",
+      "directions": 4
+    },
+    {
+      "name": "unathiknife",
+      "directions": 4
+    },
+    {
+      "name": "upickaxe",
+      "directions": 4
+    },
+    {
+      "name": "vhammer",
+      "directions": 4
+    },
+    {
+      "name": "vhelmet",
+      "directions": 4
+    },
+    {
+      "name": "vialblue",
+      "directions": 4
+    },
+    {
+      "name": "vialgreen",
+      "directions": 4
+    },
+    {
+      "name": "violin",
+      "directions": 4
+    },
+    {
+      "name": "w_shoes",
+      "directions": 4
+    },
+    {
+      "name": "warden",
+      "directions": 4
+    },
+    {
+      "name": "wcoat",
+      "directions": 4
+    },
+    {
+      "name": "welder",
+      "directions": 4
+    },
+    {
+      "name": "welder1",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "welding-g",
+      "directions": 4
+    },
+    {
+      "name": "weldingoff",
+      "directions": 4
+    },
+    {
+      "name": "wiz_hardsuit",
+      "directions": 4
+    },
+    {
+      "name": "wiz_helm",
+      "directions": 4
+    },
+    {
+      "name": "wizrobe",
+      "directions": 4
+    },
+    {
+      "name": "wizshoe",
+      "directions": 4
+    },
+    {
+      "name": "wrap_paper",
+      "directions": 4
+    },
+    {
+      "name": "wrench",
+      "directions": 4
+    },
+    {
+      "name": "xenos_suit",
+      "directions": 4
+    },
+    {
+      "name": "ygloves",
+      "directions": 4
+    },
+    {
+      "name": "zippo",
+      "directions": 4
+    },
+    {
+      "name": "zippoon",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "empgrenade",
+      "directions": 4
+    },
+    {
+      "name": "grenade",
+      "directions": 4
+    },
+    {
+      "name": "flashtool",
+      "directions": 4
+    },
+    {
+      "name": "monkey",
+      "directions": 4
+    },
+    {
+      "name": "teapot",
+      "directions": 4
+    },
+    {
+      "name": "farwa",
+      "directions": 4
+    },
+    {
+      "name": "neaera",
+      "directions": 4
+    },
+    {
+      "name": "stok",
+      "directions": 4
+    },
+    {
+      "name": "laundry",
+      "directions": 4
+    },
+    {
+      "name": "toolbox_pink",
+      "directions": 4
+    },
+    {
+      "name": "case",
+      "directions": 4
+    },
+    {
+      "name": "toolbox_green",
+      "directions": 4
+    },
+    {
+      "name": "towel",
+      "directions": 4
+    },
+    {
+      "name": "camcorder",
+      "directions": 4,
+      "delays": [
+        [
+          0.7,
+          0.4
+        ],
+        [
+          0.7,
+          0.4
+        ],
+        [
+          0.7,
+          0.4
+        ],
+        [
+          0.7,
+          0.4
+        ]
+      ]
+    },
+    {
+      "name": "camcorder_on",
+      "directions": 4,
+      "delays": [
+        [
+          0.7,
+          0.4
+        ],
+        [
+          0.7,
+          0.4
+        ],
+        [
+          0.7,
+          0.4
+        ],
+        [
+          0.7,
+          0.4
+        ]
+      ]
+    },
+    {
+      "name": "defibunit",
+      "directions": 4
+    },
+    {
+      "name": "defibpaddles",
+      "directions": 4
+    },
+    {
+      "name": "lash",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "glowstick",
+      "directions": 4
+    },
+    {
+      "name": "pettyofficersword",
+      "directions": 4
+    },
+    {
+      "name": "marineofficersword",
+      "directions": 4
+    },
+    {
+      "name": "glowstick-on",
+      "directions": 4
+    },
+    {
+      "name": "officersword",
+      "directions": 4
+    },
+    {
+      "name": "fl_painter",
+      "directions": 4
+    },
+    {
+      "name": "rbed",
+      "directions": 4
+    },
+    {
+      "name": "flashdark",
+      "directions": 4
+    },
+    {
+      "name": "maglight",
+      "directions": 4
+    },
+    {
+      "name": "maglight-on",
+      "directions": 4
+    },
+    {
+      "name": "ecigoff1",
+      "directions": 4
+    },
+    {
+      "name": "ecigon",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "ecigoff2",
+      "directions": 4
+    },
+    {
+      "name": "pcigoff1",
+      "directions": 4
+    },
+    {
+      "name": "pcigon",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pcigoff2",
+      "directions": 4
+    },
+    {
+      "name": "ccigoff",
+      "directions": 4
+    },
+    {
+      "name": "ccigon",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "firstaid-surgery",
+      "directions": 4
+    },
+    {
+      "name": "bone_axe0",
+      "directions": 4
+    },
+    {
+      "name": "bone_axe1",
+      "directions": 4
+    },
+    {
+      "name": "guitar",
+      "directions": 4
+    },
+    {
+      "name": "sabre",
+      "directions": 4
+    },
+    {
+      "name": "sabre",
+      "directions": 4
+    },
+    {
+      "name": "club",
+      "directions": 4
+    },
+    {
+      "name": "torch1",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "torch0",
+      "directions": 4
+    },
+    {
+      "name": "chemjar",
+      "directions": 4
+    },
+    {
+      "name": "boombox",
+      "directions": 4
+    },
+    {
+      "name": "trench_club",
+      "directions": 4
+    },
+    {
+      "name": "crutches",
+      "directions": 4
+    },
+    {
+      "name": "EB-knife",
+      "directions": 4
+    },
+    {
+      "name": "WU-machete",
+      "directions": 4
+    },
+    {
+      "name": "EB-shaft",
+      "directions": 4
+    },
+    {
+      "name": "WU-club",
+      "directions": 4
+    },
+    {
+      "name": "trenchaxe",
+      "directions": 4
+    },
+    {
+      "name": "trenchaxe-w",
+      "directions": 4
+    },
+    {
+      "name": "barbwire_item",
+      "directions": 4
+    },
+    {
+      "name": "shotgun_handful",
+      "directions": 4
+    },
+    {
+      "name": "mortar_tube",
+      "directions": 4
+    },
+    {
+      "name": "commissword",
+      "directions": 4
+    },
+    {
+      "name": "ministorum_staff",
+      "directions": 4
+    },
+    {
+      "name": "censer",
+      "directions": 4
+    },
+    {
+      "name": "crozius",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pcsword",
+      "directions": 4
+    },
+    {
+      "name": "mercychainsword",
+      "directions": 4
+    },
+    {
+      "name": "inqchainsword",
+      "directions": 4
+    },
+    {
+      "name": "slanarm",
+      "directions": 4
+    },
+    {
+      "name": "eviscerator",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "thunder_hammer",
+      "directions": 4
+    },
+    {
+      "name": "thunder_hammer-w",
+      "directions": 4
+    },
+    {
+      "name": "catachanfang",
+      "directions": 4
+    },
+    {
+      "name": "powersword",
+      "directions": 4
+    },
+    {
+      "name": "powersword-w",
+      "directions": 4
+    },
+    {
+      "name": "plague_knife",
+      "directions": 4
+    },
+    {
+      "name": "Whistle_InHand",
+      "directions": 4
+    },
+    {
+      "name": "Whistle_InHand_W",
+      "directions": 4
+    },
+    {
+      "name": "rapier",
+      "directions": 4
+    },
+    {
+      "name": "spatha",
+      "directions": 4
+    },
+    {
+      "name": "dagger",
+      "directions": 4
+    },
+    {
+      "name": "claymore",
+      "directions": 4
+    },
+    {
+      "name": "bastard",
+      "directions": 4
+    },
+    {
+      "name": "savaxe",
+      "directions": 4
+    },
+    {
+      "name": "klevec",
+      "directions": 4
+    },
+    {
+      "name": "bone_spear",
+      "directions": 4
+    },
+    {
+      "name": "bone_spear-w",
+      "directions": 4
+    },
+    {
+      "name": "spear-scrap",
+      "directions": 4
+    },
+    {
+      "name": "spear-scrap-w",
+      "directions": 4
+    },
+    {
+      "name": "spear",
+      "directions": 4
+    },
+    {
+      "name": "spear-w",
+      "directions": 4
+    },
+    {
+      "name": "baseballspike",
+      "directions": 4
+    },
+    {
+      "name": "baseballspike-w",
+      "directions": 4
+    },
+    {
+      "name": "scythe",
+      "directions": 4
+    },
+    {
+      "name": "clawspear",
+      "directions": 4
+    },
+    {
+      "name": "clawspear-w",
+      "directions": 4
+    },
+    {
+      "name": "lance",
+      "directions": 4
+    },
+    {
+      "name": "lance-w",
+      "directions": 4
+    },
+    {
+      "name": "salvagedmachete",
+      "directions": 4
+    },
+    {
+      "name": "machete",
+      "directions": 4
+    },
+    {
+      "name": "pipe",
+      "directions": 4
+    },
+    {
+      "name": "trench",
+      "directions": 4
+    },
+    {
+      "name": "kchainaxe",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pklaw",
+      "directions": 4
+    },
+    {
+      "name": "nurglebook",
+      "directions": 4
+    },
+    {
+      "name": "tzbook",
+      "directions": 4
+    }
+  ]
+}

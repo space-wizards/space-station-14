@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cat",
+      "directions": 4
+    },
+    {
+      "name": "cat2",
+      "directions": 4
+    },
+    {
+      "name": "cat3",
+      "directions": 4
+    },
+    {
+      "name": "kitten",
+      "directions": 4
+    },
+    {
+      "name": "repairbot",
+      "directions": 4
+    },
+    {
+      "name": "mouse_brown",
+      "directions": 4
+    },
+    {
+      "name": "mouse_gray",
+      "directions": 4
+    },
+    {
+      "name": "mouse_white",
+      "directions": 4
+    },
+    {
+      "name": "nymph",
+      "directions": 4
+    },
+    {
+      "name": "monkey",
+      "directions": 4
+    },
+    {
+      "name": "neara",
+      "directions": 4
+    },
+    {
+      "name": "farwa",
+      "directions": 4
+    },
+    {
+      "name": "stok",
+      "directions": 4
+    },
+    {
+      "name": "pai-cat",
+      "directions": 4
+    },
+    {
+      "name": "pai-repairbot",
+      "directions": 4
+    },
+    {
+      "name": "pai-monkey",
+      "directions": 4
+    },
+    {
+      "name": "pai-mouse",
+      "directions": 4
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "constructiondrone",
+      "directions": 4
+    },
+    {
+      "name": "pai-rabbit",
+      "directions": 4
+    },
+    {
+      "name": "voxslug",
+      "directions": 4
+    },
+    {
+      "name": "corgi",
+      "directions": 4
+    },
+    {
+      "name": "stinky",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,681 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "riot"
+    },
+    {
+      "name": "metal"
+    },
+    {
+      "name": "hoe"
+    },
+    {
+      "name": "offhand"
+    },
+    {
+      "name": "fireaxe0"
+    },
+    {
+      "name": "fireaxe1"
+    },
+    {
+      "name": "syndballoon"
+    },
+    {
+      "name": "ntballoon"
+    },
+    {
+      "name": "cultblade"
+    },
+    {
+      "name": "pepperspray"
+    },
+    {
+      "name": "nullrod"
+    },
+    {
+      "name": "hatchet"
+    },
+    {
+      "name": "scythe0"
+    },
+    {
+      "name": "buckler"
+    },
+    {
+      "name": "katana"
+    },
+    {
+      "name": "sledgehammer"
+    },
+    {
+      "name": "chain"
+    },
+    {
+      "name": "harpoon"
+    },
+    {
+      "name": "switchblade_open"
+    },
+    {
+      "name": "switchblade"
+    },
+    {
+      "name": "butterflyknife"
+    },
+    {
+      "name": "butterflyknife_open"
+    },
+    {
+      "name": "spearglass0"
+    },
+    {
+      "name": "spearglass1"
+    },
+    {
+      "name": "star"
+    },
+    {
+      "name": "woodbat0"
+    },
+    {
+      "name": "metalbat0"
+    },
+    {
+      "name": "woodbat1"
+    },
+    {
+      "name": "metalbat1"
+    },
+    {
+      "name": "tacknife"
+    },
+    {
+      "name": "telebaton_1"
+    },
+    {
+      "name": "telebaton_0"
+    },
+    {
+      "name": "towel"
+    },
+    {
+      "name": "pocketknife"
+    },
+    {
+      "name": "pocketknife_open"
+    },
+    {
+      "name": "whip"
+    },
+    {
+      "name": "officersword"
+    },
+    {
+      "name": "marinesword"
+    },
+    {
+      "name": "marineofficersword"
+    },
+    {
+      "name": "pettyofficersword"
+    },
+    {
+      "name": "bone_axe0"
+    },
+    {
+      "name": "bone_axe1"
+    },
+    {
+      "name": "machete2"
+    },
+    {
+      "name": "machete_red"
+    },
+    {
+      "name": "machete_blue"
+    },
+    {
+      "name": "machete_black"
+    },
+    {
+      "name": "machete_olive"
+    },
+    {
+      "name": "machetedx"
+    },
+    {
+      "name": "club"
+    },
+    {
+      "name": "sabre"
+    },
+    {
+      "name": "sabre_sheath1"
+    },
+    {
+      "name": "sabre_sheath0"
+    },
+    {
+      "name": "combatknife"
+    },
+    {
+      "name": "trench_club1"
+    },
+    {
+      "name": "trench_club2"
+    },
+    {
+      "name": "trench_club3"
+    },
+    {
+      "name": "crutches"
+    },
+    {
+      "name": "knuckleduster"
+    },
+    {
+      "name": "Trench Knife_Icon"
+    },
+    {
+      "name": "In Hand_R",
+      "directions": 4
+    },
+    {
+      "name": "In Hand_L",
+      "directions": 4
+    },
+    {
+      "name": "Blood Layer"
+    },
+    {
+      "name": "Trench Knife_Bloody"
+    },
+    {
+      "name": "In Hand_R_bloody",
+      "directions": 4
+    },
+    {
+      "name": "In Hand_L_bloody",
+      "directions": 4
+    },
+    {
+      "name": "trenchaxe2"
+    },
+    {
+      "name": "trenchAxe_bloody2"
+    },
+    {
+      "name": "trenchaxe"
+    },
+    {
+      "name": "trenchAxe_bloody"
+    },
+    {
+      "name": "trenchAxe"
+    },
+    {
+      "name": "trenchAxe_bloody"
+    },
+    {
+      "name": "sabre_sheath0",
+      "directions": 4
+    },
+    {
+      "name": "sabre_sheath1",
+      "directions": 4
+    },
+    {
+      "name": "machete_sheath1"
+    },
+    {
+      "name": "machete_sheath0"
+    },
+    {
+      "name": "machete_black",
+      "directions": 4
+    },
+    {
+      "name": "machete_black",
+      "directions": 4
+    },
+    {
+      "name": "unathiknife"
+    },
+    {
+      "name": "nettle"
+    },
+    {
+      "name": "deathnettle"
+    },
+    {
+      "name": "cane"
+    },
+    {
+      "name": "canesword_hidden"
+    },
+    {
+      "name": "canesword_sheath"
+    },
+    {
+      "name": "cane_sword"
+    },
+    {
+      "name": "chainsword",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "Scorpion_CS"
+    },
+    {
+      "name": "commissword"
+    },
+    {
+      "name": "mekmace"
+    },
+    {
+      "name": "ministorum_staff"
+    },
+    {
+      "name": "censer"
+    },
+    {
+      "name": "crozius",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "saxe"
+    },
+    {
+      "name": "saxe_blood"
+    },
+    {
+      "name": "artknife"
+    },
+    {
+      "name": "artknife_blood"
+    },
+    {
+      "name": "wclub"
+    },
+    {
+      "name": "wclub_blood"
+    },
+    {
+      "name": "choppa"
+    },
+    {
+      "name": "choppa_bloody"
+    },
+    {
+      "name": "pcsword",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "inqchainsword",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mercychainsword",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "lash"
+    },
+    {
+      "name": "slanarm"
+    },
+    {
+      "name": "eviscerator",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "hellblade"
+    },
+    {
+      "name": "slaanesh_sword"
+    },
+    {
+      "name": "chaos_knife"
+    },
+    {
+      "name": "slaanesh_dagger"
+    },
+    {
+      "name": "0,0"
+    },
+    {
+      "name": "0,1"
+    },
+    {
+      "name": "thunder_hammer"
+    },
+    {
+      "name": "devilsclaw"
+    },
+    {
+      "name": "catachanfang"
+    },
+    {
+      "name": "powersword"
+    },
+    {
+      "name": "plague_knife"
+    },
+    {
+      "name": "chainaxe",
+      "delays": [
+        [
+          0.075,
+          0.075,
+          0.075,
+          0.075
+        ]
+      ]
+    },
+    {
+      "name": "bloodchains",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "gchain",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "ggchain",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "inqchainswordold",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mercychainswordold",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "knife_trench"
+    },
+    {
+      "name": "knife_bowie"
+    },
+    {
+      "name": "glaive-dagger"
+    },
+    {
+      "name": "tire"
+    },
+    {
+      "name": "glaive"
+    },
+    {
+      "name": "bone_spear"
+    },
+    {
+      "name": "scrapsabre"
+    },
+    {
+      "name": "entrenching_tool"
+    },
+    {
+      "name": "machete_imp"
+    },
+    {
+      "name": "machete"
+    },
+    {
+      "name": "spatha"
+    },
+    {
+      "name": "lance"
+    },
+    {
+      "name": "bardiche"
+    },
+    {
+      "name": "claymore"
+    },
+    {
+      "name": "riot_bulletproof"
+    },
+    {
+      "name": "shieldmetal"
+    },
+    {
+      "name": "longsword"
+    },
+    {
+      "name": "clawspear0"
+    },
+    {
+      "name": "bostaff0"
+    },
+    {
+      "name": "tomahawk"
+    },
+    {
+      "name": "rapier"
+    },
+    {
+      "name": "bastard"
+    },
+    {
+      "name": "pklaw"
+    },
+    {
+      "name": "pklawblue"
+    },
+    {
+      "name": "pklawred"
+    },
+    {
+      "name": "zombo_clawr"
+    },
+    {
+      "name": "zombo_clawl"
+    },
+    {
+      "name": "tzbook"
+    },
+    {
+      "name": "battleaxe"
+    },
+    {
+      "name": "smace"
+    },
+    {
+      "name": "spiked_club"
+    },
+    {
+      "name": "sdagger"
+    },
+    {
+      "name": "sildagger"
+    },
+    {
+      "name": "bsword"
+    },
+    {
+      "name": "sword1"
+    },
+    {
+      "name": "sword3"
+    },
+    {
+      "name": "decsword1"
+    },
+    {
+      "name": "decsword3"
+    },
+    {
+      "name": "isword"
+    },
+    {
+      "name": "spikedmace"
+    },
+    {
+      "name": "shield_tower"
+    },
+    {
+      "name": "shield_tower_behind"
+    },
+    {
+      "name": "club2"
+    },
+    {
+      "name": "wsword"
+    },
+    {
+      "name": "whip"
+    },
+    {
+      "name": "falchion"
+    },
+    {
+      "name": "elfdagger"
+    },
+    {
+      "name": "woodstaff"
+    },
+    {
+      "name": "cudgel"
+    },
+    {
+      "name": "cleav"
+    },
+    {
+      "name": "huntingknife"
+    },
+    {
+      "name": "axe"
+    },
+    {
+      "name": "flail"
+    },
+    {
+      "name": "iflail"
+    },
+    {
+      "name": "aries"
+    },
+    {
+      "name": "scepter",
+      "delays": [
+        [
+          1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "stunmace0"
+    },
+    {
+      "name": "stunmace1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "ironsh"
+    },
+    {
+      "name": "ironsh_detail"
+    },
+    {
+      "name": "ironsh_behind"
+    },
+    {
+      "name": "woodsh"
+    },
+    {
+      "name": "woodsh_behind"
+    }
+  ]
+}

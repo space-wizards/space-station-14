@@ -1,0 +1,1330 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 40,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "taser"
+    },
+    {
+      "name": "taser0",
+      "delays": [
+        [
+          0.3,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "taser25"
+    },
+    {
+      "name": "taser50"
+    },
+    {
+      "name": "taser75"
+    },
+    {
+      "name": "taser100"
+    },
+    {
+      "name": "lasgun"
+    },
+    {
+      "name": "lasgun100"
+    },
+    {
+      "name": "lasgun75"
+    },
+    {
+      "name": "lasgun50",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "lasgun25",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "lasgun0",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "longlas"
+    },
+    {
+      "name": "longlas100"
+    },
+    {
+      "name": "longlas75"
+    },
+    {
+      "name": "longlas50",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "longlas25",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "longlas0",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "lascarbine"
+    },
+    {
+      "name": "lascarbine100"
+    },
+    {
+      "name": "lascarbine75"
+    },
+    {
+      "name": "lascarbine50",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "lascarbine25",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "lascarbine0",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "accatran"
+    },
+    {
+      "name": "accatran100"
+    },
+    {
+      "name": "accatran75"
+    },
+    {
+      "name": "accatran50",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "accatran25",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "accatran0",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "laspistol"
+    },
+    {
+      "name": "laspistol100"
+    },
+    {
+      "name": "laspistol75"
+    },
+    {
+      "name": "laspistol50",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "laspistol25",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "laspistol0",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "accatranp"
+    },
+    {
+      "name": "accatranp100"
+    },
+    {
+      "name": "accatranp75"
+    },
+    {
+      "name": "accatranp50",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "accatranp25",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "accatranp0",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "energy"
+    },
+    {
+      "name": "energystun0",
+      "delays": [
+        [
+          0.3,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "energystun25"
+    },
+    {
+      "name": "energystun50"
+    },
+    {
+      "name": "energystun75"
+    },
+    {
+      "name": "energystun100"
+    },
+    {
+      "name": "ppistol_empte"
+    },
+    {
+      "name": "energykill0",
+      "delays": [
+        [
+          0.3,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "energykill25"
+    },
+    {
+      "name": "energykill50"
+    },
+    {
+      "name": "energykill75"
+    },
+    {
+      "name": "energykill100"
+    },
+    {
+      "name": "energykill"
+    },
+    {
+      "name": "xray"
+    },
+    {
+      "name": "xray100"
+    },
+    {
+      "name": "xray75"
+    },
+    {
+      "name": "xray50"
+    },
+    {
+      "name": "xray25"
+    },
+    {
+      "name": "xray0",
+      "delays": [
+        [
+          0.3,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "disabler25"
+    },
+    {
+      "name": "disabler50"
+    },
+    {
+      "name": "disabler75"
+    },
+    {
+      "name": "disabler100"
+    },
+    {
+      "name": "disabler0",
+      "delays": [
+        [
+          0.3,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "disabler"
+    },
+    {
+      "name": "nenergy-g",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "nenergy-f",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "nenergy-c",
+      "delays": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "lasercannon"
+    },
+    {
+      "name": "lasercannon0",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "lasercannon25"
+    },
+    {
+      "name": "lasercannon50"
+    },
+    {
+      "name": "lasercannon75"
+    },
+    {
+      "name": "lasercannon100"
+    },
+    {
+      "name": "laser"
+    },
+    {
+      "name": "laser0",
+      "delays": [
+        [
+          0.4,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "laser25"
+    },
+    {
+      "name": "laser50"
+    },
+    {
+      "name": "laser75"
+    },
+    {
+      "name": "laser100"
+    },
+    {
+      "name": "bluetag0"
+    },
+    {
+      "name": "bluetag25"
+    },
+    {
+      "name": "bluetag50"
+    },
+    {
+      "name": "bluetag75"
+    },
+    {
+      "name": "bluetag100"
+    },
+    {
+      "name": "redtag"
+    },
+    {
+      "name": "redtag0"
+    },
+    {
+      "name": "redtag25"
+    },
+    {
+      "name": "redtag50"
+    },
+    {
+      "name": "redtag75"
+    },
+    {
+      "name": "redtag100"
+    },
+    {
+      "name": "bluetag"
+    },
+    {
+      "name": "lucius"
+    },
+    {
+      "name": "lucius0"
+    },
+    {
+      "name": "lucius100"
+    },
+    {
+      "name": "lucius75"
+    },
+    {
+      "name": "lucius50"
+    },
+    {
+      "name": "lucius25"
+    },
+    {
+      "name": "ionriflet"
+    },
+    {
+      "name": "ionriflet100"
+    },
+    {
+      "name": "ionriflet75"
+    },
+    {
+      "name": "ionriflet50"
+    },
+    {
+      "name": "ionriflet25"
+    },
+    {
+      "name": "ionriflet0"
+    },
+    {
+      "name": "railgun"
+    },
+    {
+      "name": "railgun100"
+    },
+    {
+      "name": "railgun75"
+    },
+    {
+      "name": "railgun50"
+    },
+    {
+      "name": "railgun25"
+    },
+    {
+      "name": "railgun0"
+    },
+    {
+      "name": "laspistolciv"
+    },
+    {
+      "name": "laspistolciv100"
+    },
+    {
+      "name": "laspistolciv75"
+    },
+    {
+      "name": "laspistolciv50",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "laspistolciv25",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "laspistolciv0",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "luciuspistol"
+    },
+    {
+      "name": "luciuspistol100"
+    },
+    {
+      "name": "luciuspistol75"
+    },
+    {
+      "name": "luciuspistol50",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "luciuspistol25",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "luciuspistol0",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "lascar100"
+    },
+    {
+      "name": "lascar75"
+    },
+    {
+      "name": "lascar50"
+    },
+    {
+      "name": "lascar25"
+    },
+    {
+      "name": "lascar0"
+    },
+    {
+      "name": "lascar-e"
+    },
+    {
+      "name": "hotshotgun"
+    },
+    {
+      "name": "hotshotgun100"
+    },
+    {
+      "name": "hotshotgun75"
+    },
+    {
+      "name": "hotshotgun50",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "hotshotgun25",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "hotshotgun0",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "pulsep100",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pulsep75",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pulsep50",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pulsep25",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pulsep",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pulsep0"
+    },
+    {
+      "name": "pulseb",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pulseb100",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pulseb75",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pulseb50",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pulseb25",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pulseb0"
+    },
+    {
+      "name": "prifle",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "prifle100",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "prifle75",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "prifle50",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "prifle25",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "prifle0",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "ppistol",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "ppistol100",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "ppistol75",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "ppistol50",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "ppistol25",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "ppistol0",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "chaosppistol"
+    },
+    {
+      "name": "chaosppistol100"
+    },
+    {
+      "name": "chaosppistol75",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "chaosppistol50",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "chaosppistol25",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "chaosplaspistol0",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "chaosplaspistol-e"
+    },
+    {
+      "name": "bloodlaspistol"
+    },
+    {
+      "name": "bloodlaspistol100"
+    },
+    {
+      "name": "bloodlaspistol75"
+    },
+    {
+      "name": "bloodlaspistol50"
+    },
+    {
+      "name": "bloodlaspistol25"
+    },
+    {
+      "name": "bloodlaspistol0"
+    },
+    {
+      "name": "lordlaspistol",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "toasterppistol",
+      "delays": [
+        [
+          0.25,
+          0.25
+        ]
+      ]
+    },
+    {
+      "name": "toasterppistol100",
+      "delays": [
+        [
+          0.25,
+          0.25
+        ]
+      ]
+    },
+    {
+      "name": "toasterppistol75",
+      "delays": [
+        [
+          0.25,
+          0.25
+        ]
+      ]
+    },
+    {
+      "name": "toasterppistol50",
+      "delays": [
+        [
+          0.25,
+          0.25
+        ]
+      ]
+    },
+    {
+      "name": "toasterppistol25",
+      "delays": [
+        [
+          0.25,
+          0.25
+        ]
+      ]
+    },
+    {
+      "name": "toasterppistol0",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "semir"
+    },
+    {
+      "name": "semir-e"
+    },
+    {
+      "name": "semip"
+    },
+    {
+      "name": "semip-e"
+    },
+    {
+      "name": "xenolpistol",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "xenolrifle",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "xenoheavyr",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "glockl100"
+    },
+    {
+      "name": "glockl75"
+    },
+    {
+      "name": "glockl50"
+    },
+    {
+      "name": "glockl25"
+    },
+    {
+      "name": "glockl0",
+      "delays": [
+        [
+          0.2,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "glockl0-e",
+      "delays": [
+        [
+          0.2,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "xenosniper",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "xenosniper-e",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "teslar"
+    },
+    {
+      "name": "teslar-0"
+    },
+    {
+      "name": "teslar100"
+    },
+    {
+      "name": "teslar75"
+    },
+    {
+      "name": "teslar50"
+    },
+    {
+      "name": "teslar25"
+    },
+    {
+      "name": "teslar0"
+    },
+    {
+      "name": "kriegsniper"
+    },
+    {
+      "name": "kriegsniper100"
+    },
+    {
+      "name": "kriegsniper75"
+    },
+    {
+      "name": "kriegsniper50"
+    },
+    {
+      "name": "kriegsniper25"
+    },
+    {
+      "name": "kriegsniper0"
+    },
+    {
+      "name": "kriegsniper-e"
+    },
+    {
+      "name": "hotshot_krieg"
+    },
+    {
+      "name": "hotshot_krieg100"
+    },
+    {
+      "name": "hotshot_krieg75"
+    },
+    {
+      "name": "hotshot_krieg50"
+    },
+    {
+      "name": "hotshot_krieg25"
+    },
+    {
+      "name": "hotshot_krieg0"
+    },
+    {
+      "name": "hotshot_krieg-e"
+    },
+    {
+      "name": "wattz2k"
+    },
+    {
+      "name": "wattz2k_e"
+    },
+    {
+      "name": "dueling_pistol"
+    },
+    {
+      "name": "dueling_pistol_e"
+    },
+    {
+      "name": "emitter_carbine",
+      "delays": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "emitter_carbine_e",
+      "delays": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "emitter_carbine-e",
+      "delays": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "emitter_carbine-0",
+      "delays": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "warplens",
+      "delays": [
+        [
+          1200,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "warplens100",
+      "delays": [
+        [
+          1200,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "warplens75",
+      "delays": [
+        [
+          1200,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "warplens0",
+      "delays": [
+        [
+          1200,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "warplens25",
+      "delays": [
+        [
+          1200,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "warplens50",
+      "delays": [
+        [
+          1200,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 40,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "infiltrator"
+    },
+    {
+      "name": "infiltrator-e"
+    },
+    {
+      "name": "infiltrator-10"
+    },
+    {
+      "name": "infiltrator-10-e"
+    },
+    {
+      "name": "infiltrator-20"
+    },
+    {
+      "name": "infiltrator-20-e"
+    },
+    {
+      "name": "infiltrator-30"
+    },
+    {
+      "name": "infiltrator-30-e"
+    },
+    {
+      "name": "infiltrator-50"
+    },
+    {
+      "name": "infiltrator-50-e"
+    },
+    {
+      "name": "infiltrator_old"
+    },
+    {
+      "name": "infiltrator-e_old"
+    },
+    {
+      "name": "infiltrator-10_old"
+    },
+    {
+      "name": "infiltrator-10-e_old"
+    },
+    {
+      "name": "infiltrator-20_old"
+    },
+    {
+      "name": "infiltrator-20-e_old"
+    },
+    {
+      "name": "infiltrator-30_old"
+    },
+    {
+      "name": "infiltrator-30-e_old"
+    },
+    {
+      "name": "infiltrator-50_old"
+    },
+    {
+      "name": "infiltrator-50-e_old"
+    }
+  ]
+}

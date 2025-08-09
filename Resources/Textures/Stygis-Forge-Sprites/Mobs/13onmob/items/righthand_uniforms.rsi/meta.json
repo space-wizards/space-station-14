@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "atmos_suit",
+      "directions": 4
+    },
+    {
+      "name": "b_suit",
+      "directions": 4
+    },
+    {
+      "name": "ba_suit",
+      "directions": 4
+    },
+    {
+      "name": "bl_suit",
+      "directions": 4
+    },
+    {
+      "name": "blackskirt",
+      "directions": 4
+    },
+    {
+      "name": "blue_blazer",
+      "directions": 4
+    },
+    {
+      "name": "chef",
+      "directions": 4
+    },
+    {
+      "name": "clown",
+      "directions": 4
+    },
+    {
+      "name": "det",
+      "directions": 4
+    },
+    {
+      "name": "dg_suit",
+      "directions": 4
+    },
+    {
+      "name": "engi_suit",
+      "directions": 4
+    },
+    {
+      "name": "g_suit",
+      "directions": 4
+    },
+    {
+      "name": "gy_suit",
+      "directions": 4
+    },
+    {
+      "name": "janitor",
+      "directions": 4
+    },
+    {
+      "name": "jensensuit",
+      "directions": 4
+    },
+    {
+      "name": "johnny",
+      "directions": 4
+    },
+    {
+      "name": "kilt",
+      "directions": 4
+    },
+    {
+      "name": "lawyer_black",
+      "directions": 4
+    },
+    {
+      "name": "lawyer_blue",
+      "directions": 4
+    },
+    {
+      "name": "lawyer_red",
+      "directions": 4
+    },
+    {
+      "name": "lb_suit",
+      "directions": 4
+    },
+    {
+      "name": "mai_yang",
+      "directions": 4
+    },
+    {
+      "name": "nursesuit",
+      "directions": 4
+    },
+    {
+      "name": "o_suit",
+      "directions": 4
+    },
+    {
+      "name": "owl",
+      "directions": 4
+    },
+    {
+      "name": "p_suit",
+      "directions": 4
+    },
+    {
+      "name": "psyche",
+      "directions": 4
+    },
+    {
+      "name": "r_suit",
+      "directions": 4
+    },
+    {
+      "name": "rainbow",
+      "directions": 4
+    },
+    {
+      "name": "scratch",
+      "directions": 4
+    },
+    {
+      "name": "sl_suit",
+      "directions": 4
+    },
+    {
+      "name": "jumpsuit",
+      "directions": 4
+    },
+    {
+      "name": "waiter",
+      "directions": 4
+    },
+    {
+      "name": "y_suit",
+      "directions": 4
+    }
+  ]
+}

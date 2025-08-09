@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "backpack",
+      "directions": 4
+    },
+    {
+      "name": "captainpack",
+      "directions": 4
+    },
+    {
+      "name": "clownpack",
+      "directions": 4
+    },
+    {
+      "name": "engiepack",
+      "directions": 4
+    },
+    {
+      "name": "giftbag",
+      "directions": 4
+    },
+    {
+      "name": "medicalpack",
+      "directions": 4
+    },
+    {
+      "name": "securitypack",
+      "directions": 4
+    },
+    {
+      "name": "duffle",
+      "directions": 4
+    },
+    {
+      "name": "duffle_syndiemed",
+      "directions": 4
+    },
+    {
+      "name": "duffle_captain",
+      "directions": 4
+    },
+    {
+      "name": "duffle_sec",
+      "directions": 4
+    },
+    {
+      "name": "duffle_eng",
+      "directions": 4
+    },
+    {
+      "name": "duffle_med",
+      "directions": 4
+    },
+    {
+      "name": "duffle_syndieammo",
+      "directions": 4
+    },
+    {
+      "name": "duffle_syndie",
+      "directions": 4
+    }
+  ]
+}

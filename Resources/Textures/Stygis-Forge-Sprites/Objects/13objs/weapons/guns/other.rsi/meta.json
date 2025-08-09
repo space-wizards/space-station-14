@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ml"
+    },
+    {
+      "name": "ml-drained"
+    },
+    {
+      "name": "shuriken_pistol"
+    },
+    {
+      "name": "flamer_offold"
+    },
+    {
+      "name": "flamer-20old",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "flamer_onold",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "multimelta"
+    },
+    {
+      "name": "flamer_20",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "hflamer_off"
+    },
+    {
+      "name": "hflamer_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "inferno"
+    },
+    {
+      "name": "handflamer_off"
+    },
+    {
+      "name": "handflamer_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "flamer_off"
+    },
+    {
+      "name": "flamer_e"
+    },
+    {
+      "name": "flamer_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "crossbow"
+    },
+    {
+      "name": "crossbow-nocked"
+    },
+    {
+      "name": "crossbow-drawn"
+    },
+    {
+      "name": "metal-rod"
+    },
+    {
+      "name": "bolt"
+    },
+    {
+      "name": "harpoon"
+    },
+    {
+      "name": "metal-rod-superheated"
+    },
+    {
+      "name": "quill"
+    },
+    {
+      "name": "crossbowframe0"
+    },
+    {
+      "name": "crossbowframe1"
+    },
+    {
+      "name": "crossbowframe2"
+    },
+    {
+      "name": "crossbowframe3"
+    },
+    {
+      "name": "crossbowframe4"
+    },
+    {
+      "name": "crossbowframe5"
+    },
+    {
+      "name": "pneumatic0"
+    },
+    {
+      "name": "pneumatic1"
+    },
+    {
+      "name": "pneumatic2"
+    },
+    {
+      "name": "pneumatic3"
+    },
+    {
+      "name": "pneumatic4"
+    },
+    {
+      "name": "pneumatic5"
+    },
+    {
+      "name": "zipgun0"
+    },
+    {
+      "name": "zipgun1"
+    },
+    {
+      "name": "zipgun2"
+    },
+    {
+      "name": "zipgun3"
+    },
+    {
+      "name": "stick"
+    },
+    {
+      "name": "uglymine",
+      "delays": [
+        [
+          0.3,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "uglyminearmed",
+      "delays": [
+        [
+          0.3,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "syringegun"
+    },
+    {
+      "name": "rapidsyringegun"
+    },
+    {
+      "name": "chemsprayer"
+    },
+    {
+      "name": "riotgun"
+    },
+    {
+      "name": "kineticgun"
+    },
+    {
+      "name": "kineticgun100"
+    },
+    {
+      "name": "kineticgun0",
+      "delays": [
+        [
+          0.3,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "flamer-20",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "melta"
+    },
+    {
+      "name": "meltaum"
+    },
+    {
+      "name": "meltabp"
+    },
+    {
+      "name": "rhflamer_on"
+    },
+    {
+      "name": "rhflamer_off"
+    },
+    {
+      "name": "ghflamer_on"
+    },
+    {
+      "name": "ghflamer_off"
+    },
+    {
+      "name": "needler-e"
+    },
+    {
+      "name": "needler-18"
+    },
+    {
+      "name": "needler-18-e"
+    },
+    {
+      "name": "grenade"
+    },
+    {
+      "name": "rcl_rifle"
+    },
+    {
+      "name": "rcl_rifle-e"
+    },
+    {
+      "name": "bazooka"
+    },
+    {
+      "name": "bazooka-e"
+    },
+    {
+      "name": "boomer"
+    },
+    {
+      "name": "boomer-e"
+    },
+    {
+      "name": "rokkit_launcha"
+    },
+    {
+      "name": "rokkit_launcha-e"
+    }
+  ]
+}

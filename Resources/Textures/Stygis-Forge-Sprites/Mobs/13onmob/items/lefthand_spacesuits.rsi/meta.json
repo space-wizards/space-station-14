@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "s_suit",
+      "directions": 4
+    },
+    {
+      "name": "space_suit_syndicate",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-black",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-black-blue",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-black-green",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-black-red",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-green",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-green-dark",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-blue",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-orange",
+      "directions": 4
+    },
+    {
+      "name": "atmos_voidsuit",
+      "directions": 4
+    },
+    {
+      "name": "sec_voidsuit",
+      "directions": 4
+    },
+    {
+      "name": "medical_voidsuit",
+      "directions": 4
+    },
+    {
+      "name": "mining_voidsuit",
+      "directions": 4
+    },
+    {
+      "name": "eng_voidsuit",
+      "directions": 4
+    },
+    {
+      "name": "engspace_suit",
+      "directions": 4
+    },
+    {
+      "name": "syndie_voidsuit",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "helmet",
+      "directions": 4
+    },
+    {
+      "name": "syndicate",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-helm-black",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-helm-black-blue",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-helm-black-green",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-helm-black-red",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-helm-blue",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-helm-green",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-helm-green-dark",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-helm-orange",
+      "directions": 4
+    },
+    {
+      "name": "xenos_helm",
+      "directions": 4
+    },
+    {
+      "name": "chefhat",
+      "directions": 4
+    },
+    {
+      "name": "cardborg_h",
+      "directions": 4
+    },
+    {
+      "name": "caphat",
+      "directions": 4
+    },
+    {
+      "name": "centhat",
+      "directions": 4
+    },
+    {
+      "name": "pwig",
+      "directions": 4
+    },
+    {
+      "name": "tophat",
+      "directions": 4
+    },
+    {
+      "name": "cueball",
+      "directions": 4
+    },
+    {
+      "name": "greenbandana",
+      "directions": 4
+    },
+    {
+      "name": "cake0",
+      "directions": 4
+    },
+    {
+      "name": "cake1",
+      "directions": 4
+    },
+    {
+      "name": "paper",
+      "directions": 4
+    },
+    {
+      "name": "s_helmet",
+      "directions": 4
+    },
+    {
+      "name": "capspace",
+      "directions": 4
+    },
+    {
+      "name": "santahat",
+      "directions": 4
+    },
+    {
+      "name": "emergencyhelm",
+      "directions": 4
+    },
+    {
+      "name": "eng_helm",
+      "directions": 4
+    },
+    {
+      "name": "mining_helm",
+      "directions": 4
+    },
+    {
+      "name": "medical_helm",
+      "directions": 4
+    },
+    {
+      "name": "sec_helm",
+      "directions": 4
+    },
+    {
+      "name": "atmos_helm",
+      "directions": 4
+    },
+    {
+      "name": "syndie_helm",
+      "directions": 4
+    },
+    {
+      "name": "wiz_helm",
+      "directions": 4
+    },
+    {
+      "name": "bio_hood",
+      "directions": 4
+    },
+    {
+      "name": "wizhat",
+      "directions": 4
+    },
+    {
+      "name": "det_hat",
+      "directions": 4
+    },
+    {
+      "name": "engspace_helmet",
+      "directions": 4
+    },
+    {
+      "name": "cespace_helmet",
+      "directions": 4
+    },
+    {
+      "name": "swat_hel",
+      "directions": 4
+    },
+    {
+      "name": "welding",
+      "directions": 4
+    },
+    {
+      "name": "demonwelding",
+      "directions": 4
+    },
+    {
+      "name": "fancywelding",
+      "directions": 4
+    },
+    {
+      "name": "engiewelding",
+      "directions": 4
+    },
+    {
+      "name": "carpwielding",
+      "directions": 4
+    },
+    {
+      "name": "crown",
+      "directions": 4
+    }
+  ]
+}

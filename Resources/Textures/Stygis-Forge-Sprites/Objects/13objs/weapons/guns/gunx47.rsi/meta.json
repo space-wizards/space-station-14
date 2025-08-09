@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 48,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cognisLMG"
+    },
+    {
+      "name": "cognisLMG-e"
+    },
+    {
+      "name": "0,1OLD"
+    },
+    {
+      "name": "galvrifle"
+    },
+    {
+      "name": "galvrifle-e"
+    },
+    {
+      "name": "chaos_bolterOLD"
+    },
+    {
+      "name": "0,1"
+    },
+    {
+      "name": "1,1"
+    },
+    {
+      "name": "0,2"
+    },
+    {
+      "name": "1,2"
+    },
+    {
+      "name": "shuriken add later"
+    },
+    {
+      "name": "1,2"
+    },
+    {
+      "name": "sniper_krieg"
+    },
+    {
+      "name": "hellgun_krieg"
+    },
+    {
+      "name": "heavystubberkreig"
+    },
+    {
+      "name": "heavystubberkrieg-e"
+    },
+    {
+      "name": "40x40"
+    }
+  ]
+}

@@ -1,0 +1,1540 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 40,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "revolver"
+    },
+    {
+      "name": "detective"
+    },
+    {
+      "name": "shotgun"
+    },
+    {
+      "name": "dshotgun"
+    },
+    {
+      "name": "dshotgun-e"
+    },
+    {
+      "name": "cshotgun"
+    },
+    {
+      "name": "sawnshotgun"
+    },
+    {
+      "name": "pistol"
+    },
+    {
+      "name": "pistol-e"
+    },
+    {
+      "name": "pistol-silencer-e"
+    },
+    {
+      "name": "pistol-silencer"
+    },
+    {
+      "name": "silencer"
+    },
+    {
+      "name": "makarov"
+    },
+    {
+      "name": "makarov-e"
+    },
+    {
+      "name": "\u002B ALT \u002B"
+    },
+    {
+      "name": "handgun7"
+    },
+    {
+      "name": "handgun6"
+    },
+    {
+      "name": "handgun5"
+    },
+    {
+      "name": "handgun4"
+    },
+    {
+      "name": "handgun3"
+    },
+    {
+      "name": "handgun2"
+    },
+    {
+      "name": "handgun1"
+    },
+    {
+      "name": "handgun0"
+    },
+    {
+      "name": "handgun"
+    },
+    {
+      "name": "handgun-e"
+    },
+    {
+      "name": "machinepistol"
+    },
+    {
+      "name": "machinepistol-0"
+    },
+    {
+      "name": "machinepistol-e"
+    },
+    {
+      "name": "autorifle"
+    },
+    {
+      "name": "autorifle-e"
+    },
+    {
+      "name": "autorifle-0"
+    },
+    {
+      "name": "hmg"
+    },
+    {
+      "name": "hmg-0"
+    },
+    {
+      "name": "hmg-e"
+    },
+    {
+      "name": "boltaction"
+    },
+    {
+      "name": "boltaction-e"
+    },
+    {
+      "name": "karabiner_empty"
+    },
+    {
+      "name": "boltactionalt"
+    },
+    {
+      "name": "mosin2"
+    },
+    {
+      "name": "bayonett"
+    },
+    {
+      "name": "talon"
+    },
+    {
+      "name": "talon-ef"
+    },
+    {
+      "name": "talon-e"
+    },
+    {
+      "name": "m22"
+    },
+    {
+      "name": "m22-e"
+    },
+    {
+      "name": "border"
+    },
+    {
+      "name": "leverchester"
+    },
+    {
+      "name": "leverchester-e"
+    },
+    {
+      "name": "leverchesteralt"
+    },
+    {
+      "name": "leverchesteralt-e"
+    },
+    {
+      "name": "leverchesterdark"
+    },
+    {
+      "name": "sawn-leverchester"
+    },
+    {
+      "name": "sawn-leverchester-e"
+    },
+    {
+      "name": "sawn-winchester"
+    },
+    {
+      "name": "sawn-winchester_empty"
+    },
+    {
+      "name": "winchester"
+    },
+    {
+      "name": "winchesteralt"
+    },
+    {
+      "name": "sawnchester"
+    },
+    {
+      "name": "sawnchester-e"
+    },
+    {
+      "name": "winchester-e"
+    },
+    {
+      "name": "condition_1"
+    },
+    {
+      "name": "condition_2"
+    },
+    {
+      "name": "condition_3"
+    },
+    {
+      "name": "condition_4"
+    },
+    {
+      "name": "condition_5"
+    },
+    {
+      "name": "condition_6"
+    },
+    {
+      "name": "condition_7"
+    },
+    {
+      "name": "condition_8"
+    },
+    {
+      "name": "krautshot"
+    },
+    {
+      "name": "cptrevolver"
+    },
+    {
+      "name": "marshallrevolver"
+    },
+    {
+      "name": "revolver_open"
+    },
+    {
+      "name": "foldingstock_shotgun"
+    },
+    {
+      "name": "autoshotty"
+    },
+    {
+      "name": "autoshotty-0"
+    },
+    {
+      "name": "autoshotty-e"
+    },
+    {
+      "name": "heavysniper"
+    },
+    {
+      "name": "heavysniper-open"
+    },
+    {
+      "name": "boltactionsharp"
+    },
+    {
+      "name": "boltactionsharp-e"
+    },
+    {
+      "name": "rsc"
+    },
+    {
+      "name": "rsc-0"
+    },
+    {
+      "name": "rsc-e"
+    },
+    {
+      "name": "bolter-e"
+    },
+    {
+      "name": "bolter-30-e"
+    },
+    {
+      "name": "bolter-30"
+    },
+    {
+      "name": "bolter"
+    },
+    {
+      "name": "bolter-eold"
+    },
+    {
+      "name": "bolter-25-eold"
+    },
+    {
+      "name": "bolter-25old"
+    },
+    {
+      "name": "bolterold"
+    },
+    {
+      "name": "shotta"
+    },
+    {
+      "name": "shotta_unload"
+    },
+    {
+      "name": "bpistolold-10-e"
+    },
+    {
+      "name": "bpistolold-e"
+    },
+    {
+      "name": "bpistolold"
+    },
+    {
+      "name": "bpistolold-10"
+    },
+    {
+      "name": "bpistol-10-eold"
+    },
+    {
+      "name": "bpistol-eold__"
+    },
+    {
+      "name": "bpistolold__"
+    },
+    {
+      "name": "bpistol-10old"
+    },
+    {
+      "name": "stormbolter"
+    },
+    {
+      "name": "stormbolter_unload"
+    },
+    {
+      "name": "plaguegun"
+    },
+    {
+      "name": "bolteralt"
+    },
+    {
+      "name": "stormbolteralt"
+    },
+    {
+      "name": "voxlegis_old"
+    },
+    {
+      "name": "voxlegis"
+    },
+    {
+      "name": "bolters-e"
+    },
+    {
+      "name": "bolters-30"
+    },
+    {
+      "name": "bolters-30-e"
+    },
+    {
+      "name": "scope"
+    },
+    {
+      "name": "bolters"
+    },
+    {
+      "name": "bolterc-e"
+    },
+    {
+      "name": "bolterc-30-e"
+    },
+    {
+      "name": "bolterc-30"
+    },
+    {
+      "name": "bolterc"
+    },
+    {
+      "name": "boltercs-e"
+    },
+    {
+      "name": "boltercs-30"
+    },
+    {
+      "name": "boltercs-30-e"
+    },
+    {
+      "name": "boltercs"
+    },
+    {
+      "name": "snazzgun"
+    },
+    {
+      "name": "bolterglow-30"
+    },
+    {
+      "name": "combibolter"
+    },
+    {
+      "name": "combibolter-30"
+    },
+    {
+      "name": "combibolter-30-e"
+    },
+    {
+      "name": "combibolter-e"
+    },
+    {
+      "name": "chaos_bolter-30"
+    },
+    {
+      "name": "chaos_bolter-30-e"
+    },
+    {
+      "name": "chaos_bolter"
+    },
+    {
+      "name": "chaos_bolter-e"
+    },
+    {
+      "name": "bpistol-10"
+    },
+    {
+      "name": "bpistol-10-e"
+    },
+    {
+      "name": "bpistol"
+    },
+    {
+      "name": "bpistol-e"
+    },
+    {
+      "name": "bolter-100"
+    },
+    {
+      "name": "bolter-100-e"
+    },
+    {
+      "name": "ultrabolter"
+    },
+    {
+      "name": "ultrabolter-30"
+    },
+    {
+      "name": "ultrabolter-e"
+    },
+    {
+      "name": "ultrabolter-30-e"
+    },
+    {
+      "name": "sallybolter"
+    },
+    {
+      "name": "sallybolter-30"
+    },
+    {
+      "name": "sallybolter-e"
+    },
+    {
+      "name": "sallybolter-30-e"
+    },
+    {
+      "name": "bangbolter"
+    },
+    {
+      "name": "bangbolter-e"
+    },
+    {
+      "name": "bangbolter-30"
+    },
+    {
+      "name": "bangbolter-30-e"
+    },
+    {
+      "name": "ravenbolter"
+    },
+    {
+      "name": "ravenbolter-30"
+    },
+    {
+      "name": "ravenbolter-e"
+    },
+    {
+      "name": "ravenbolter-30-e"
+    },
+    {
+      "name": "sallybpistol-10"
+    },
+    {
+      "name": "sallybpistol-10-e"
+    },
+    {
+      "name": "sallybpistol"
+    },
+    {
+      "name": "sallybpistol-e"
+    },
+    {
+      "name": "ultrabpistol-10"
+    },
+    {
+      "name": "ultrabpistol-10-e"
+    },
+    {
+      "name": "ultrabpistol"
+    },
+    {
+      "name": "ultrabpistol-e"
+    },
+    {
+      "name": "ravenbpistol-10"
+    },
+    {
+      "name": "ravenbpistol-10-e"
+    },
+    {
+      "name": "ravenbpistol"
+    },
+    {
+      "name": "ravenbpistol-e"
+    },
+    {
+      "name": "nurglebolter-30"
+    },
+    {
+      "name": "nurglebolter-30-e"
+    },
+    {
+      "name": "nurglebolter"
+    },
+    {
+      "name": "nurglebolter-e"
+    },
+    {
+      "name": "nurglebpistol-10"
+    },
+    {
+      "name": "nurglebpistol-10-e"
+    },
+    {
+      "name": "nurglebpistol"
+    },
+    {
+      "name": "nurglebpistol_e"
+    },
+    {
+      "name": "p08"
+    },
+    {
+      "name": "p08empty"
+    },
+    {
+      "name": "saber"
+    },
+    {
+      "name": "saber-e"
+    },
+    {
+      "name": "saber-20"
+    },
+    {
+      "name": "saber-20-e"
+    },
+    {
+      "name": "gyropistol"
+    },
+    {
+      "name": "gyropistolloaded"
+    },
+    {
+      "name": "c05r"
+    },
+    {
+      "name": "c05r-e"
+    },
+    {
+      "name": "c05r-20"
+    },
+    {
+      "name": "c05r-20-e"
+    },
+    {
+      "name": "shuriken_pistol"
+    },
+    {
+      "name": "shuriken_pistol-e"
+    },
+    {
+      "name": "oldshoota"
+    },
+    {
+      "name": "zipgun0"
+    },
+    {
+      "name": "zipgun1"
+    },
+    {
+      "name": "zipgun2"
+    },
+    {
+      "name": "zipgun3"
+    },
+    {
+      "name": "detective_leopard"
+    },
+    {
+      "name": "detective_gold"
+    },
+    {
+      "name": "dshotgun-sawn"
+    },
+    {
+      "name": "mateba"
+    },
+    {
+      "name": "uzi-e"
+    },
+    {
+      "name": "uzi"
+    },
+    {
+      "name": "uzi-30"
+    },
+    {
+      "name": "uzi-30-e"
+    },
+    {
+      "name": "silenced_pistol"
+    },
+    {
+      "name": "deagleg"
+    },
+    {
+      "name": "deagleg-e"
+    },
+    {
+      "name": "deaglecamo"
+    },
+    {
+      "name": "deaglecamo-e"
+    },
+    {
+      "name": "deagle"
+    },
+    {
+      "name": "deagle-e"
+    },
+    {
+      "name": "tommygun-50"
+    },
+    {
+      "name": "tommygun-50-e"
+    },
+    {
+      "name": "tommygun"
+    },
+    {
+      "name": "tommygun-e"
+    },
+    {
+      "name": "dshotgun-d"
+    },
+    {
+      "name": "dshotgun-f"
+    },
+    {
+      "name": "dshotgun-g"
+    },
+    {
+      "name": "dshotgun-l"
+    },
+    {
+      "name": "dshotgun-p"
+    },
+    {
+      "name": "dshotgun-d-sawn"
+    },
+    {
+      "name": "dshotgun-f-sawn"
+    },
+    {
+      "name": "dshotgun-g-sawn"
+    },
+    {
+      "name": "dshotgun-l-sawn"
+    },
+    {
+      "name": "dshotgun-p-sawn"
+    },
+    {
+      "name": "glock"
+    },
+    {
+      "name": "glock-e"
+    },
+    {
+      "name": "mac10"
+    },
+    {
+      "name": "mac10-e"
+    },
+    {
+      "name": "m1911"
+    },
+    {
+      "name": "m1911-e"
+    },
+    {
+      "name": "c20r"
+    },
+    {
+      "name": "c20r-e"
+    },
+    {
+      "name": "c20r-20"
+    },
+    {
+      "name": "c20r-16"
+    },
+    {
+      "name": "c20r-12"
+    },
+    {
+      "name": "c20r-8"
+    },
+    {
+      "name": "c20r-4"
+    },
+    {
+      "name": "c20r-0"
+    },
+    {
+      "name": "c20r-0-e"
+    },
+    {
+      "name": "c20r-silencer"
+    },
+    {
+      "name": "c20r-silencer-e"
+    },
+    {
+      "name": "c20r-silencer-20"
+    },
+    {
+      "name": "c20r-silencer-16"
+    },
+    {
+      "name": "c20r-silencer-12"
+    },
+    {
+      "name": "c20r-silencer-8"
+    },
+    {
+      "name": "c20r-silencer-4"
+    },
+    {
+      "name": "c20r-silencer-0"
+    },
+    {
+      "name": "c20r-silencer-0-e"
+    },
+    {
+      "name": "bpap-100"
+    },
+    {
+      "name": "bpap"
+    },
+    {
+      "name": "bpap-e"
+    },
+    {
+      "name": "bpap-100-e"
+    },
+    {
+      "name": "BPMP"
+    },
+    {
+      "name": "BPMP_unload"
+    },
+    {
+      "name": "stormbolter_old"
+    },
+    {
+      "name": "stormbolter_unload_old"
+    },
+    {
+      "name": "scatapult"
+    },
+    {
+      "name": "scatapult-e"
+    },
+    {
+      "name": "flaregun"
+    },
+    {
+      "name": "flaregun-10-e"
+    },
+    {
+      "name": "flaregun-10"
+    },
+    {
+      "name": "flaregun-e"
+    },
+    {
+      "name": "caxea"
+    },
+    {
+      "name": "battlerifle"
+    },
+    {
+      "name": "battlerifle_unloaded"
+    },
+    {
+      "name": "autogun_old"
+    },
+    {
+      "name": "autogun_unloaded_old"
+    },
+    {
+      "name": "autogunloaded_b_old"
+    },
+    {
+      "name": "autogununloaded_b_old"
+    },
+    {
+      "name": "hbolter-25"
+    },
+    {
+      "name": "hbolter"
+    },
+    {
+      "name": "hbolter-25-e",
+      "delays": [
+        [
+          0.5,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "hbolter-e",
+      "delays": [
+        [
+          0.5,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "woodstock-r-l"
+    },
+    {
+      "name": "metalstock-r-l"
+    },
+    {
+      "name": "woodstock2-r-l"
+    },
+    {
+      "name": "metalstock2-r-l"
+    },
+    {
+      "name": "woodstock2-r-s"
+    },
+    {
+      "name": "metalstock2-r-s"
+    },
+    {
+      "name": "woodstock-r-s"
+    },
+    {
+      "name": "metalstock-r-s"
+    },
+    {
+      "name": "ksonbolter-25OLD"
+    },
+    {
+      "name": "ksonbolter-25-eOLD",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "ksonbolterOLD"
+    },
+    {
+      "name": "ksonbolter-eOLD",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "bolterglow-25"
+    },
+    {
+      "name": "gatling",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bbolter"
+    },
+    {
+      "name": "bbolter-e"
+    },
+    {
+      "name": "bbpistol"
+    },
+    {
+      "name": "bbpistol-e"
+    },
+    {
+      "name": "ravenbolter_empty"
+    },
+    {
+      "name": "plaguegun_old"
+    },
+    {
+      "name": "plaguegun"
+    },
+    {
+      "name": "plaguegun_empty"
+    },
+    {
+      "name": "stub"
+    },
+    {
+      "name": "stub-e"
+    },
+    {
+      "name": "stub-silencer"
+    },
+    {
+      "name": "stub-silencer-e"
+    },
+    {
+      "name": "heavypistol"
+    },
+    {
+      "name": "heavypistol-e"
+    },
+    {
+      "name": "heavypistol-0-e"
+    },
+    {
+      "name": "heavypistol-silenced"
+    },
+    {
+      "name": "heavypistol-silenced-e"
+    },
+    {
+      "name": "heavypistol-silencer-0-e"
+    },
+    {
+      "name": "shootaOLD"
+    },
+    {
+      "name": "shoota-0OLD"
+    },
+    {
+      "name": "shoota-eOLD"
+    },
+    {
+      "name": "krootrifle"
+    },
+    {
+      "name": "flamer-off"
+    },
+    {
+      "name": "flamer-e"
+    },
+    {
+      "name": "flamer-on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "flamer"
+    },
+    {
+      "name": "flamer-0",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "lockebolter-30-e"
+    },
+    {
+      "name": "lockebolter-e"
+    },
+    {
+      "name": "lockebolter"
+    },
+    {
+      "name": "lockebolter-30"
+    },
+    {
+      "name": "sisterbolter-30"
+    },
+    {
+      "name": "sisterbolter-30-e"
+    },
+    {
+      "name": "sisterbpistol"
+    },
+    {
+      "name": "sisterbpistol-e"
+    },
+    {
+      "name": "flintlock_WIP"
+    },
+    {
+      "name": "shotgun_WIP"
+    },
+    {
+      "name": "mervex"
+    },
+    {
+      "name": "colt"
+    },
+    {
+      "name": "autogun_agrip"
+    },
+    {
+      "name": "auto_grim"
+    },
+    {
+      "name": "auto_grim-e"
+    },
+    {
+      "name": "necros"
+    },
+    {
+      "name": "slug_revolver"
+    },
+    {
+      "name": "needler"
+    },
+    {
+      "name": "needler0"
+    },
+    {
+      "name": "needler5"
+    },
+    {
+      "name": "needler10"
+    },
+    {
+      "name": "needler-e"
+    },
+    {
+      "name": "voxlegisnew"
+    },
+    {
+      "name": "voxlegisnew-e"
+    },
+    {
+      "name": "1kbolter"
+    },
+    {
+      "name": "1kbolter-30"
+    },
+    {
+      "name": "1kbolter-e"
+    },
+    {
+      "name": "1kbolter-30-e"
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "cognisLMG"
+    },
+    {
+      "name": "cognisLMG-e"
+    },
+    {
+      "name": "galvrifle"
+    },
+    {
+      "name": "galvrifle-e"
+    },
+    {
+      "name": "gpistol"
+    },
+    {
+      "name": "gpistol-10"
+    },
+    {
+      "name": "gpistol-e"
+    },
+    {
+      "name": "gpistol0-e"
+    },
+    {
+      "name": "shoota"
+    },
+    {
+      "name": "shoota-0"
+    },
+    {
+      "name": "shoota-e"
+    },
+    {
+      "name": "shootabayo"
+    },
+    {
+      "name": "shootabayo-0"
+    },
+    {
+      "name": "shootabayo-e"
+    },
+    {
+      "name": "shootakustom"
+    },
+    {
+      "name": "shootakustom-0"
+    },
+    {
+      "name": "shootakustom-e"
+    },
+    {
+      "name": "shootabig"
+    },
+    {
+      "name": "shootabig-0"
+    },
+    {
+      "name": "shootabig-e"
+    },
+    {
+      "name": "shootafurtha"
+    },
+    {
+      "name": "shootafurtha-0"
+    },
+    {
+      "name": "shootafurtha-e"
+    },
+    {
+      "name": "slugga"
+    },
+    {
+      "name": "slugga-e"
+    },
+    {
+      "name": "villiers"
+    },
+    {
+      "name": "villiers-e"
+    },
+    {
+      "name": "villiers-0"
+    },
+    {
+      "name": "stub2"
+    },
+    {
+      "name": "stub2-e"
+    },
+    {
+      "name": "stub2-0"
+    },
+    {
+      "name": "snubby"
+    },
+    {
+      "name": "snubby-e"
+    },
+    {
+      "name": "snubby-0"
+    },
+    {
+      "name": "kiejistub"
+    },
+    {
+      "name": "kiejistub-e",
+      "delays": [
+        [
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "name": "kiejistub-0"
+    },
+    {
+      "name": "kieji"
+    },
+    {
+      "name": "kieji-e"
+    },
+    {
+      "name": "kieji-0"
+    },
+    {
+      "name": "commando"
+    },
+    {
+      "name": "commando-e"
+    },
+    {
+      "name": "commando-0"
+    },
+    {
+      "name": "kriegstubber"
+    },
+    {
+      "name": "kriegstubber-e"
+    },
+    {
+      "name": "kriegstubber-0"
+    },
+    {
+      "name": "hunting_revolver"
+    },
+    {
+      "name": "oldglory"
+    },
+    {
+      "name": "trench"
+    },
+    {
+      "name": "trench-e"
+    },
+    {
+      "name": "brushgun"
+    },
+    {
+      "name": "brushgun-e"
+    },
+    {
+      "name": "hunting-sawn"
+    },
+    {
+      "name": "l6closed-empty"
+    },
+    {
+      "name": "l6closed75"
+    },
+    {
+      "name": "l6closed50"
+    },
+    {
+      "name": "l6closed25"
+    },
+    {
+      "name": "l6closed0"
+    },
+    {
+      "name": "l6open-empty"
+    },
+    {
+      "name": "l6open100"
+    },
+    {
+      "name": "l6open75"
+    },
+    {
+      "name": "autogun"
+    },
+    {
+      "name": "autogun-e"
+    },
+    {
+      "name": "autogun-0"
+    },
+    {
+      "name": "autogun-60"
+    },
+    {
+      "name": "bautogun-e"
+    },
+    {
+      "name": "bautogun"
+    },
+    {
+      "name": "bautogun-60"
+    },
+    {
+      "name": "autogun-150"
+    },
+    {
+      "name": "bautogun-150"
+    },
+    {
+      "name": "AC"
+    },
+    {
+      "name": "AC-e"
+    },
+    {
+      "name": "AC-0"
+    },
+    {
+      "name": "exitus"
+    },
+    {
+      "name": "exitus-e"
+    },
+    {
+      "name": "exitus-6"
+    },
+    {
+      "name": "exitus-6-e"
+    },
+    {
+      "name": "exitus-1"
+    },
+    {
+      "name": "exitus-0"
+    },
+    {
+      "name": "marksmenrifle-30"
+    },
+    {
+      "name": "marksmenrifle-0"
+    },
+    {
+      "name": "marksmenrifle-e"
+    },
+    {
+      "name": "armal-0"
+    },
+    {
+      "name": "armal"
+    },
+    {
+      "name": "armal-e"
+    },
+    {
+      "name": "musket"
+    },
+    {
+      "name": "musket-e"
+    },
+    {
+      "name": "m50-open"
+    },
+    {
+      "name": "m50"
+    },
+    {
+      "name": "m50-e"
+    },
+    {
+      "name": "m50-0"
+    },
+    {
+      "name": "m50-open-e"
+    },
+    {
+      "name": "tacpistol"
+    },
+    {
+      "name": "tacpistol-0"
+    },
+    {
+      "name": "tacpistol-e"
+    },
+    {
+      "name": "sten"
+    },
+    {
+      "name": "sten-0"
+    },
+    {
+      "name": "sten-e"
+    },
+    {
+      "name": "trenchgunaxe"
+    },
+    {
+      "name": "sheetp"
+    },
+    {
+      "name": "sheetp-0"
+    },
+    {
+      "name": "sheetp-e"
+    },
+    {
+      "name": "sigp"
+    },
+    {
+      "name": "sigp-e"
+    },
+    {
+      "name": "sigp-0"
+    },
+    {
+      "name": "scopecommando"
+    },
+    {
+      "name": "scopecommando-e"
+    },
+    {
+      "name": "scopecommando-0"
+    },
+    {
+      "name": "slayersniper"
+    },
+    {
+      "name": "slayersniper-0"
+    },
+    {
+      "name": "slayersniper-e"
+    },
+    {
+      "name": "amr"
+    },
+    {
+      "name": "amr-0"
+    },
+    {
+      "name": "amr-e"
+    },
+    {
+      "name": "detective_panther"
+    },
+    {
+      "name": "detective_peacemaker"
+    },
+    {
+      "name": "R84"
+    },
+    {
+      "name": "R84-e"
+    },
+    {
+      "name": "lucky37"
+    },
+    {
+      "name": "crusader_pistol"
+    },
+    {
+      "name": "crusader_pistol-0"
+    },
+    {
+      "name": "crusader_pistol-e"
+    },
+    {
+      "name": "needlerpistol-e"
+    },
+    {
+      "name": "needlerpistol-0"
+    },
+    {
+      "name": "needlerpistol"
+    },
+    {
+      "name": "lever"
+    },
+    {
+      "name": "lever-e"
+    },
+    {
+      "name": "single_shotgun"
+    },
+    {
+      "name": "single_shotgun-e"
+    },
+    {
+      "name": "rockwell"
+    },
+    {
+      "name": "rockwell-0"
+    },
+    {
+      "name": "rockwell-e"
+    },
+    {
+      "name": "n99-suppressed"
+    },
+    {
+      "name": "n99-suppressed-e"
+    },
+    {
+      "name": "n99-suppressed-0"
+    },
+    {
+      "name": "chinese"
+    },
+    {
+      "name": "chinese-0"
+    },
+    {
+      "name": "chinese-e"
+    },
+    {
+      "name": "goldmateba"
+    },
+    {
+      "name": "goldmateba-e"
+    },
+    {
+      "name": "agripinaa"
+    },
+    {
+      "name": "agripinaa-0"
+    },
+    {
+      "name": "agripinaa_e"
+    },
+    {
+      "name": "bigarbites"
+    },
+    {
+      "name": "flintlock0"
+    },
+    {
+      "name": "flintlock1"
+    },
+    {
+      "name": "dualgun3"
+    },
+    {
+      "name": "dualgun0"
+    },
+    {
+      "name": "dualgun1"
+    },
+    {
+      "name": "shitrevolv0"
+    },
+    {
+      "name": "shitrevolv1"
+    },
+    {
+      "name": "hushrev0"
+    },
+    {
+      "name": "hushrev1"
+    }
+  ]
+}

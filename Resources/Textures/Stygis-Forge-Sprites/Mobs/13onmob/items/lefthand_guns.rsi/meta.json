@@ -1,0 +1,1269 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ionrifle",
+      "directions": 4
+    },
+    {
+      "name": "ionrifle100",
+      "directions": 4
+    },
+    {
+      "name": "ionrifle75",
+      "directions": 4
+    },
+    {
+      "name": "ionrifle50",
+      "directions": 4
+    },
+    {
+      "name": "ionrifle25",
+      "directions": 4
+    },
+    {
+      "name": "ionrifle0",
+      "directions": 4,
+      "delays": [
+        [
+          0.3,
+          0.1
+        ],
+        [
+          0.3,
+          0.1
+        ],
+        [
+          0.3,
+          0.1
+        ],
+        [
+          0.3,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "dartgun-5",
+      "directions": 4
+    },
+    {
+      "name": "dartgun-4",
+      "directions": 4
+    },
+    {
+      "name": "dartgun-3",
+      "directions": 4
+    },
+    {
+      "name": "dartgun-2",
+      "directions": 4
+    },
+    {
+      "name": "dartgun-1",
+      "directions": 4
+    },
+    {
+      "name": "dartgun-0",
+      "directions": 4
+    },
+    {
+      "name": "dartgun-empty",
+      "directions": 4
+    },
+    {
+      "name": "lasercannon100",
+      "directions": 4
+    },
+    {
+      "name": "lasercannon75",
+      "directions": 4
+    },
+    {
+      "name": "lasercannon50",
+      "directions": 4
+    },
+    {
+      "name": "lasercannon25",
+      "directions": 4
+    },
+    {
+      "name": "lasercannon0",
+      "directions": 4
+    },
+    {
+      "name": "cshotgun",
+      "directions": 4
+    },
+    {
+      "name": "shotgun",
+      "directions": 4
+    },
+    {
+      "name": "dshotgun",
+      "directions": 4
+    },
+    {
+      "name": "pistol-silencer",
+      "directions": 4
+    },
+    {
+      "name": "pistol",
+      "directions": 4
+    },
+    {
+      "name": "wt550",
+      "directions": 4
+    },
+    {
+      "name": "bluetag",
+      "directions": 4
+    },
+    {
+      "name": "redtag",
+      "directions": 4
+    },
+    {
+      "name": "syringegun",
+      "directions": 4
+    },
+    {
+      "name": "rapidsyringegun",
+      "directions": 4
+    },
+    {
+      "name": "caplaser",
+      "directions": 4
+    },
+    {
+      "name": "retro",
+      "directions": 4
+    },
+    {
+      "name": "decloner",
+      "directions": 4
+    },
+    {
+      "name": "florayield",
+      "directions": 4
+    },
+    {
+      "name": "floramut",
+      "directions": 4
+    },
+    {
+      "name": "xray",
+      "directions": 4
+    },
+    {
+      "name": "stunrevolver",
+      "directions": 4
+    },
+    {
+      "name": "revolver",
+      "directions": 4
+    },
+    {
+      "name": "c20r",
+      "directions": 4
+    },
+    {
+      "name": "arifle",
+      "directions": 4
+    },
+    {
+      "name": "arifle-empty",
+      "directions": 4
+    },
+    {
+      "name": "z8carbine",
+      "directions": 4
+    },
+    {
+      "name": "rocket",
+      "directions": 4
+    },
+    {
+      "name": "spikethrower",
+      "directions": 4
+    },
+    {
+      "name": "pulse0",
+      "directions": 4
+    },
+    {
+      "name": "pulse25",
+      "directions": 4
+    },
+    {
+      "name": "pulse50",
+      "directions": 4
+    },
+    {
+      "name": "pulse75",
+      "directions": 4
+    },
+    {
+      "name": "pulse100",
+      "directions": 4
+    },
+    {
+      "name": "pulse",
+      "directions": 4
+    },
+    {
+      "name": "taser0",
+      "directions": 4
+    },
+    {
+      "name": "taser25",
+      "directions": 4
+    },
+    {
+      "name": "taser50",
+      "directions": 4
+    },
+    {
+      "name": "taser75",
+      "directions": 4
+    },
+    {
+      "name": "taser100",
+      "directions": 4
+    },
+    {
+      "name": "taser",
+      "directions": 4
+    },
+    {
+      "name": "nucgun0",
+      "directions": 4
+    },
+    {
+      "name": "nucgun25",
+      "directions": 4
+    },
+    {
+      "name": "nucgun50",
+      "directions": 4
+    },
+    {
+      "name": "nucgun75",
+      "directions": 4
+    },
+    {
+      "name": "nucgun100",
+      "directions": 4
+    },
+    {
+      "name": "nucgun",
+      "directions": 4
+    },
+    {
+      "name": "energykill0",
+      "directions": 4
+    },
+    {
+      "name": "energykill25",
+      "directions": 4
+    },
+    {
+      "name": "energykill50",
+      "directions": 4
+    },
+    {
+      "name": "energykill75",
+      "directions": 4
+    },
+    {
+      "name": "energykill100",
+      "directions": 4
+    },
+    {
+      "name": "energykill",
+      "directions": 4
+    },
+    {
+      "name": "energyshock0",
+      "directions": 4
+    },
+    {
+      "name": "energyshock25",
+      "directions": 4
+    },
+    {
+      "name": "energyshock50",
+      "directions": 4
+    },
+    {
+      "name": "energyshock75",
+      "directions": 4
+    },
+    {
+      "name": "energyshock100",
+      "directions": 4
+    },
+    {
+      "name": "energyshock",
+      "directions": 4
+    },
+    {
+      "name": "energystun0",
+      "directions": 4
+    },
+    {
+      "name": "energystun25",
+      "directions": 4
+    },
+    {
+      "name": "energystun50",
+      "directions": 4
+    },
+    {
+      "name": "energystun75",
+      "directions": 4
+    },
+    {
+      "name": "energystun100",
+      "directions": 4
+    },
+    {
+      "name": "energystun",
+      "directions": 4
+    },
+    {
+      "name": "pneumatic",
+      "directions": 4
+    },
+    {
+      "name": "pneumatic-tank",
+      "directions": 4
+    },
+    {
+      "name": "crossbow",
+      "directions": 4
+    },
+    {
+      "name": "crossbow-solid",
+      "directions": 4
+    },
+    {
+      "name": "gun",
+      "directions": 4
+    },
+    {
+      "name": "gun",
+      "directions": 4
+    },
+    {
+      "name": "laser",
+      "directions": 4
+    },
+    {
+      "name": "riotgun",
+      "directions": 4
+    },
+    {
+      "name": "sawnshotgun",
+      "directions": 4
+    },
+    {
+      "name": "gun_wielded",
+      "directions": 4
+    },
+    {
+      "name": "l6closed",
+      "directions": 4
+    },
+    {
+      "name": "l6open",
+      "directions": 4
+    },
+    {
+      "name": "l6closedmag",
+      "directions": 4
+    },
+    {
+      "name": "l6openmag",
+      "directions": 4
+    },
+    {
+      "name": "l6closed-empty",
+      "directions": 4
+    },
+    {
+      "name": "l6open-empty",
+      "directions": 4
+    },
+    {
+      "name": "lasercannon100",
+      "directions": 4
+    },
+    {
+      "name": "arifle-wielded",
+      "directions": 4
+    },
+    {
+      "name": "arifle-wielded-empty",
+      "directions": 4
+    },
+    {
+      "name": "z8carbine-wielded",
+      "directions": 4
+    },
+    {
+      "name": "laser-wielded",
+      "directions": 4
+    },
+    {
+      "name": "coilgun",
+      "directions": 4
+    },
+    {
+      "name": "smallgunkill",
+      "directions": 4
+    },
+    {
+      "name": "smallgunkill100",
+      "directions": 4
+    },
+    {
+      "name": "smallgunkill75",
+      "directions": 4
+    },
+    {
+      "name": "smallgunkill50",
+      "directions": 4
+    },
+    {
+      "name": "smallgunkill25",
+      "directions": 4
+    },
+    {
+      "name": "smallgunkill0",
+      "directions": 4
+    },
+    {
+      "name": "smallgunshock",
+      "directions": 4
+    },
+    {
+      "name": "smallgunshock100",
+      "directions": 4
+    },
+    {
+      "name": "smallgunshock75",
+      "directions": 4
+    },
+    {
+      "name": "smallgunshock50",
+      "directions": 4
+    },
+    {
+      "name": "smallgunshock25",
+      "directions": 4
+    },
+    {
+      "name": "smallgunshock0",
+      "directions": 4
+    },
+    {
+      "name": "smallgunstun",
+      "directions": 4
+    },
+    {
+      "name": "smallgunstun100",
+      "directions": 4
+    },
+    {
+      "name": "smallgunstun75",
+      "directions": 4
+    },
+    {
+      "name": "smallgunstun50",
+      "directions": 4
+    },
+    {
+      "name": "smallgunstun25",
+      "directions": 4
+    },
+    {
+      "name": "smallgunstun0",
+      "directions": 4
+    },
+    {
+      "name": "ionpistol0",
+      "directions": 4
+    },
+    {
+      "name": "ionpistol25",
+      "directions": 4
+    },
+    {
+      "name": "ionpistol50",
+      "directions": 4
+    },
+    {
+      "name": "ionpistol75",
+      "directions": 4
+    },
+    {
+      "name": "ionpistol100",
+      "directions": 4
+    },
+    {
+      "name": "ionpistol",
+      "directions": 4
+    },
+    {
+      "name": "tasercarbine0",
+      "directions": 4
+    },
+    {
+      "name": "tasercarbine25",
+      "directions": 4
+    },
+    {
+      "name": "tasercarbine50",
+      "directions": 4
+    },
+    {
+      "name": "tasercarbine75",
+      "directions": 4
+    },
+    {
+      "name": "tasercarbine100",
+      "directions": 4
+    },
+    {
+      "name": "tasercarbine",
+      "directions": 4
+    },
+    {
+      "name": "stunrifle",
+      "directions": 4
+    },
+    {
+      "name": "oldxray",
+      "directions": 4
+    },
+    {
+      "name": "pulse_carbine0",
+      "directions": 4
+    },
+    {
+      "name": "pulse_carbine",
+      "directions": 4
+    },
+    {
+      "name": "pulse_carbine100",
+      "directions": 4
+    },
+    {
+      "name": "pulse_pistol50",
+      "directions": 4
+    },
+    {
+      "name": "pulse_pistol75",
+      "directions": 4
+    },
+    {
+      "name": "pulse_pistol",
+      "directions": 4
+    },
+    {
+      "name": "pulse_pistol0",
+      "directions": 4
+    },
+    {
+      "name": "freezegun",
+      "directions": 4
+    },
+    {
+      "name": "pulse_pistol100",
+      "directions": 4
+    },
+    {
+      "name": "pulse_carbine50",
+      "directions": 4
+    },
+    {
+      "name": "pulse_carbine75",
+      "directions": 4
+    },
+    {
+      "name": "pulse_pistol25",
+      "directions": 4
+    },
+    {
+      "name": "pulse_carbine25",
+      "directions": 4
+    },
+    {
+      "name": "tasercarbine-wielded",
+      "directions": 4
+    },
+    {
+      "name": "ionrifle-wielded",
+      "directions": 4
+    },
+    {
+      "name": "stunrifle-wielded",
+      "directions": 4
+    },
+    {
+      "name": "webley",
+      "directions": 4
+    },
+    {
+      "name": "money_launcher",
+      "directions": 4
+    },
+    {
+      "name": "shotgun-wielded",
+      "directions": 4
+    },
+    {
+      "name": "rifle-wielded",
+      "directions": 4
+    },
+    {
+      "name": "boltaction",
+      "directions": 4
+    },
+    {
+      "name": "boltaction-wielded",
+      "directions": 4
+    },
+    {
+      "name": "boltaction",
+      "directions": 4
+    },
+    {
+      "name": "boltaction-wielded",
+      "directions": 4
+    },
+    {
+      "name": "mosin2",
+      "directions": 4
+    },
+    {
+      "name": "mosin2-wielded",
+      "directions": 4
+    },
+    {
+      "name": "mosin2-wielded",
+      "directions": 4
+    },
+    {
+      "name": "mosin2",
+      "directions": 4
+    },
+    {
+      "name": "dshotgun1",
+      "directions": 4
+    },
+    {
+      "name": "cshotgun1",
+      "directions": 4
+    },
+    {
+      "name": "cshotgun2",
+      "directions": 4
+    },
+    {
+      "name": "wshotgun",
+      "directions": 4
+    },
+    {
+      "name": "mrifle_left",
+      "directions": 4
+    },
+    {
+      "name": "handgun",
+      "directions": 4
+    },
+    {
+      "name": "crevolver",
+      "directions": 4
+    },
+    {
+      "name": "winchester",
+      "directions": 4
+    },
+    {
+      "name": "winchester-wielded",
+      "directions": 4
+    },
+    {
+      "name": "autorifle",
+      "directions": 4
+    },
+    {
+      "name": "autorifle-e",
+      "directions": 4
+    },
+    {
+      "name": "autorifle-wielded",
+      "directions": 4
+    },
+    {
+      "name": "autorifle-wielded-e",
+      "directions": 4
+    },
+    {
+      "name": "machinepistol",
+      "directions": 4
+    },
+    {
+      "name": "machinepistol-e",
+      "directions": 4
+    },
+    {
+      "name": "machinepistol-wielded",
+      "directions": 4
+    },
+    {
+      "name": "machinepistol-wielded-e",
+      "directions": 4
+    },
+    {
+      "name": "hmg",
+      "directions": 4
+    },
+    {
+      "name": "hmg-e",
+      "directions": 4
+    },
+    {
+      "name": "hmg-wielded",
+      "directions": 4
+    },
+    {
+      "name": "hmg-wielded-e",
+      "directions": 4
+    },
+    {
+      "name": "leverchester",
+      "directions": 4
+    },
+    {
+      "name": "leverchester-wielded",
+      "directions": 4
+    },
+    {
+      "name": "leverchester-wielded",
+      "directions": 4
+    },
+    {
+      "name": "sawn-enfield_1hand",
+      "directions": 4
+    },
+    {
+      "name": "sawn-enfield_2hand",
+      "directions": 4
+    },
+    {
+      "name": "sawn-leben_1hand",
+      "directions": 4
+    },
+    {
+      "name": "sawn-leben_2hand",
+      "directions": 4
+    },
+    {
+      "name": "sawn-leverchester_1hand",
+      "directions": 4
+    },
+    {
+      "name": "sawn-springfield_1hand",
+      "directions": 4
+    },
+    {
+      "name": "sawn-springfield_2hand",
+      "directions": 4
+    },
+    {
+      "name": "sawnchester",
+      "directions": 4
+    },
+    {
+      "name": "sawnchester-wielded",
+      "directions": 4
+    },
+    {
+      "name": "winchester-alt",
+      "directions": 4
+    },
+    {
+      "name": "winchesteralt-wielded",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "leverchesteralt",
+      "directions": 4
+    },
+    {
+      "name": "leverchesteralt-wielded",
+      "directions": 4
+    },
+    {
+      "name": "flamer",
+      "directions": 4
+    },
+    {
+      "name": "flamer-e",
+      "directions": 4
+    },
+    {
+      "name": "flamer-wielded",
+      "directions": 4
+    },
+    {
+      "name": "flamer-wielded-e",
+      "directions": 4
+    },
+    {
+      "name": "autoshotty",
+      "directions": 4
+    },
+    {
+      "name": "autoshotty-e",
+      "directions": 4
+    },
+    {
+      "name": "autoshotty-wielded",
+      "directions": 4
+    },
+    {
+      "name": "autoshotty-wielded-e",
+      "directions": 4
+    },
+    {
+      "name": "heavysniper",
+      "directions": 4
+    },
+    {
+      "name": "heavysniper-wielded",
+      "directions": 4
+    },
+    {
+      "name": "rsc",
+      "directions": 4
+    },
+    {
+      "name": "rsc-e",
+      "directions": 4
+    },
+    {
+      "name": "rsc-wielded",
+      "directions": 4
+    },
+    {
+      "name": "rsc-wielded-e",
+      "directions": 4
+    },
+    {
+      "name": "lasgun",
+      "directions": 4
+    },
+    {
+      "name": "lasgun-wielded",
+      "directions": 4
+    },
+    {
+      "name": "longlas",
+      "directions": 4
+    },
+    {
+      "name": "longlas-wielded",
+      "directions": 4
+    },
+    {
+      "name": "lascar",
+      "directions": 4
+    },
+    {
+      "name": "lascar-wielded",
+      "directions": 4
+    },
+    {
+      "name": "krootrifle-wielded",
+      "directions": 4
+    },
+    {
+      "name": "krootrifle",
+      "directions": 4
+    },
+    {
+      "name": "pulseb-old",
+      "directions": 4
+    },
+    {
+      "name": "pulsep",
+      "directions": 4
+    },
+    {
+      "name": "luscius",
+      "directions": 4
+    },
+    {
+      "name": "luscius-wielded",
+      "directions": 4
+    },
+    {
+      "name": "hevluscius",
+      "directions": 4
+    },
+    {
+      "name": "hevluscius-wielded",
+      "directions": 4
+    },
+    {
+      "name": "snipeluscius",
+      "directions": 4
+    },
+    {
+      "name": "snipeluscius-wielded",
+      "directions": 4
+    },
+    {
+      "name": "pulseb",
+      "directions": 4
+    },
+    {
+      "name": "pulseb_wielded",
+      "directions": 4
+    },
+    {
+      "name": "storm",
+      "directions": 4
+    },
+    {
+      "name": "hbolter",
+      "directions": 4
+    },
+    {
+      "name": "hbolter-e",
+      "directions": 4
+    },
+    {
+      "name": "multimelta",
+      "directions": 4
+    },
+    {
+      "name": "lightclaw",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "lascannon",
+      "directions": 4
+    },
+    {
+      "name": "stormbolter",
+      "directions": 4
+    },
+    {
+      "name": "chaos_bolter",
+      "directions": 4
+    },
+    {
+      "name": "ksonsbolter",
+      "directions": 4
+    },
+    {
+      "name": "bpistol",
+      "directions": 4
+    },
+    {
+      "name": "bolter",
+      "directions": 4
+    },
+    {
+      "name": "auto_grim",
+      "directions": 4
+    },
+    {
+      "name": "auto_grim-wielded",
+      "directions": 4
+    },
+    {
+      "name": "ionriflet",
+      "directions": 4
+    },
+    {
+      "name": "ionriflet-wielded",
+      "directions": 4
+    },
+    {
+      "name": "railgun",
+      "directions": 4
+    },
+    {
+      "name": "railgun-wielded",
+      "directions": 4
+    },
+    {
+      "name": "semir",
+      "directions": 4
+    },
+    {
+      "name": "musket",
+      "directions": 4
+    },
+    {
+      "name": "musket-wielded",
+      "directions": 4
+    },
+    {
+      "name": "kram",
+      "directions": 4
+    },
+    {
+      "name": "kram-wielded",
+      "directions": 4
+    },
+    {
+      "name": "blooper",
+      "directions": 4
+    },
+    {
+      "name": "brushgun",
+      "directions": 4
+    },
+    {
+      "name": "lasmusket",
+      "directions": 4
+    },
+    {
+      "name": "shotguntrench",
+      "directions": 4
+    },
+    {
+      "name": "fnfal",
+      "directions": 4
+    },
+    {
+      "name": "R84",
+      "directions": 4
+    },
+    {
+      "name": "scoped308",
+      "directions": 4
+    },
+    {
+      "name": "sniper_rifle",
+      "directions": 4
+    },
+    {
+      "name": "M38closedmag",
+      "directions": 4
+    },
+    {
+      "name": "laer",
+      "directions": 4
+    },
+    {
+      "name": "las_musket",
+      "directions": 4
+    },
+    {
+      "name": "marksman",
+      "directions": 4
+    },
+    {
+      "name": "esniper",
+      "directions": 4
+    },
+    {
+      "name": "agripinaa_e",
+      "directions": 4
+    },
+    {
+      "name": "agripinaa",
+      "directions": 4
+    },
+    {
+      "name": "chaosppistol",
+      "directions": 4
+    },
+    {
+      "name": "plasmapistol",
+      "directions": 4
+    },
+    {
+      "name": "plasmarifle",
+      "directions": 4
+    },
+    {
+      "name": "plasmarifle0",
+      "directions": 4
+    },
+    {
+      "name": "plasmarifle-wielded",
+      "directions": 4
+    },
+    {
+      "name": "pulserifle-wielded",
+      "directions": 4
+    },
+    {
+      "name": "pulserifle_egov-wielded",
+      "directions": 4
+    },
+    {
+      "name": "pulserifle",
+      "directions": 4
+    },
+    {
+      "name": "pulserifle_egov",
+      "directions": 4
+    },
+    {
+      "name": "bullpuprifle-wielded",
+      "directions": 4
+    },
+    {
+      "name": "bullpuprifle",
+      "directions": 4
+    },
+    {
+      "name": "seeker-wielded",
+      "directions": 4
+    },
+    {
+      "name": "seeker",
+      "directions": 4
+    },
+    {
+      "name": "misc-wielded",
+      "directions": 4
+    },
+    {
+      "name": "misc",
+      "directions": 4
+    },
+    {
+      "name": "forcegun-wielded",
+      "directions": 4
+    },
+    {
+      "name": "forcegun",
+      "directions": 4
+    },
+    {
+      "name": "contact-wielded",
+      "directions": 4
+    },
+    {
+      "name": "contact",
+      "directions": 4
+    },
+    {
+      "name": "linecutter",
+      "directions": 4
+    },
+    {
+      "name": "linecutter_open",
+      "directions": 4
+    },
+    {
+      "name": "heavypulserifle",
+      "directions": 4
+    },
+    {
+      "name": "heavypulserifle-wielded",
+      "directions": 4
+    },
+    {
+      "name": "detonator-wielded",
+      "directions": 4
+    },
+    {
+      "name": "detonator",
+      "directions": 4
+    },
+    {
+      "name": "plasmacutter",
+      "directions": 4
+    },
+    {
+      "name": "scl_shotgun",
+      "directions": 4
+    },
+    {
+      "name": "scl_shotgun-wielded-empty",
+      "directions": 4
+    },
+    {
+      "name": "scl_shotgun-wielded",
+      "directions": 4
+    },
+    {
+      "name": "javelin_p-wielded",
+      "directions": 4
+    },
+    {
+      "name": "javelin_p",
+      "directions": 4
+    },
+    {
+      "name": "javelin_wielded",
+      "directions": 4
+    },
+    {
+      "name": "javelin",
+      "directions": 4
+    },
+    {
+      "name": "hrrevolver",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/WoodenTucker/40K-Eipharius",
+  "size": {
+    "x": 40,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "assault_carbine"
+    },
+    {
+      "name": "assault_carbine-e"
+    },
+    {
+      "name": "assault_carbine-24"
+    },
+    {
+      "name": "assault_carbine-24-e"
+    },
+    {
+      "name": "assault_carbine-48"
+    },
+    {
+      "name": "assault_carbine-48-e"
+    },
+    {
+      "name": "makeshift"
+    },
+    {
+      "name": "makeshift-e"
+    },
+    {
+      "name": "makeshift-24"
+    },
+    {
+      "name": "makeshift-24-e"
+    },
+    {
+      "name": "makeshift-48"
+    },
+    {
+      "name": "makeshift-48-e"
+    },
+    {
+      "name": "assault_carbine_old"
+    },
+    {
+      "name": "assault_carbine_old-e"
+    },
+    {
+      "name": "assault_carbine_old-24"
+    },
+    {
+      "name": "assault_carbine_old-24-e"
+    },
+    {
+      "name": "assault_carbine_old-48"
+    },
+    {
+      "name": "assault_carbine_old-48-e"
+    }
+  ]
+}
