@@ -6,13 +6,12 @@ using Robust.Shared.Enums;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal sealed class WhisperCommand : IConsoleCommand
+    internal sealed class WhisperCommand : LocalizedEntityCommands
     {
-        public string Command => "whisper";
-        public string Description => "Send chat messages to the local channel as a whisper";
-        public string Help => "whisper <text>";
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
+        public override string Command => "whisper";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not { } player)
             {
@@ -25,7 +24,7 @@ namespace Content.Server.Chat.Commands
 
             if (player.AttachedEntity is not {} playerEntity)
             {
-                shell.WriteError("You don't have an entity!");
+                shell.WriteError(Loc.GetString($"shell-must-be-attached-to-entity"));
                 return;
             }
 
@@ -36,8 +35,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>()
-                .TrySendInGameICMessage(playerEntity, message, InGameICChatType.Whisper, ChatTransmitRange.Normal, false, shell, player);
+            _chatSystem.TrySendInGameICMessage(playerEntity, message, InGameICChatType.Whisper, ChatTransmitRange.Normal, false, shell, player);
         }
     }
 }

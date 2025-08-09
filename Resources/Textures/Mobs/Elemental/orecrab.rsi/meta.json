@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by brainfood1183 (github), Gold and Coal Crab pallet swapped by Firewars763 (github),",
+  "copyright": "Made by brainfood1183 (github)",
   "states": [
     {
       "name": "iron_crab",
@@ -25,6 +25,10 @@
     },
     {
         "name": "gold_crab",
+        "directions": 4
+    },
+    {
+        "name": "bananium_crab",
         "directions": 4
     },
     {
