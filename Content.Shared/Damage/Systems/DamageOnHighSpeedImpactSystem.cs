@@ -54,7 +54,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
 
         if (_gameTiming.IsFirstTimePredicted)
             _audio.PlayPvs(component.SoundHit, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
-        _color.RaiseEffect(Color.Red, new List<EntityUid>() { uid }, Filter.Pvs(uid, entityManager: EntityManager));
+        _color.RaiseEffect(SharedColorFlashEffectSystem.HitDamageEffect, new List<EntityUid>() { uid }, Filter.Pvs(uid, entityManager: EntityManager));
     }
 
     public void ChangeCollide(EntityUid uid, float minimumSpeed, float stunSeconds, float damageCooldown, float speedDamage, DamageOnHighSpeedImpactComponent? collide = null)
