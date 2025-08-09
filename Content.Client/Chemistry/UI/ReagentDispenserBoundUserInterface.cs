@@ -37,6 +37,7 @@ namespace Content.Client.Chemistry.UI
             // Setup static button actions.
             _window.EjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(SharedReagentDispenser.OutputSlotName));
             _window.ClearButton.OnPressed += _ => SendMessage(new ReagentDispenserClearContainerSolutionMessage());
+            _window.OnInsertStorageButtonPressed += () => SendMessage(new ReagentDispenserInsertStorageMessage());
 
             _window.AmountGrid.OnButtonPressed += s => SendMessage(new ReagentDispenserSetDispenseAmountMessage(s));
 
