@@ -17,24 +17,24 @@
   - type: DnaSubstanceTrace
   - type: Edible
     edible: Drink # Namesake. This entity is a sort of cup you can drink directly from.
-    solution: drink
     destroyOnEmpty: false
+    solution: &sol drink # solution name alias
   - type: Spillable
-    solution: drink
+    solution: *sol
   - type: MixableSolution
-    solution: drink
+    solution: *sol
   - type: DrawableSolution
-    solution: drink
+    solution: *sol
   - type: RefillableSolution
-    solution: drink
+    solution: *sol
   - type: DrainableSolution
-    solution: drink
+    solution: *sol
   - type: InjectableSolution # Injectors (syringe) will fall back to RefillableSolution. This adds support for hyposprays and liquid anomalies.
-    solution: drink
+    solution: *sol
   - type: ExaminableSolution
-    solution: drink
+    solution: *sol
   - type: SolutionItemStatus
-    solution: drink
+    solution: *sol
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -56,7 +56,7 @@
   components:
   - type: SpaceGarbage
   - type: TrashOnSolutionEmpty
-    solution: drink
+    solution: *sol
   - type: Tag
     tags:
     - Trash
@@ -70,7 +70,7 @@
   components:
   - type: Openable
   - type: PressurizedSolution
-    solution: drink
+    solution: *sol
   - type: Shakeable
   - type: Sealable
 
