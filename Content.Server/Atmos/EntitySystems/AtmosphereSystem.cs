@@ -4,6 +4,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Damage;
 using Content.Shared.Decals;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
@@ -37,6 +38,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] public readonly PuddleSystem Puddle = default!;
+    [Dependency] private readonly DeltaPressureSystem _deltaPressure = default!;
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
