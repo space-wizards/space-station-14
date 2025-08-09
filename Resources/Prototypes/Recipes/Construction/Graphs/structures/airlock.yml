@@ -365,7 +365,6 @@
     edges:
     - to: highSecurity
       completed:
-      - !type:AttemptElectrocute
       - !type:GivePrototype
         prototype: PartRodMetal1
         amount: 2
@@ -373,6 +372,7 @@
       - !type:WirePanel {}
       steps:
       - tool: Cutting
+        tryElectrocute: true
         doAfter: 0.5
 
     - to: superMaxSecurityUnfinished
