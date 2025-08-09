@@ -23,3 +23,5 @@
       state: lit-icon
   - type: RailroadDeliveryReward
     delivery: PackageDeliveryReward
+    dataset: railroadingDeliveryMessages
+    wrappedDataset: railroadingDeliveryWrappedMessages
