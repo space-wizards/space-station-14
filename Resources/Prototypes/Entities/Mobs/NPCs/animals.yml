@@ -1433,6 +1433,7 @@
       methods: [ Touch ]
       effects:
       - !type:WashCreamPieReaction
+  - type: Crawler
 
 
 
