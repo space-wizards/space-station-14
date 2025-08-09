@@ -148,10 +148,10 @@
     grid:
     - 0,0,7,4
     maxItemSize: Small
-    quickInsert: true
-    areaInsert: true
     whitelist:
       components:
         - Produce
         - Seed
   - type: Dumpable
+  - type: QuickPickup
+  - type: AreaPickup

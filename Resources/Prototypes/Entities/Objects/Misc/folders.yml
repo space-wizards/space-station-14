@@ -277,7 +277,7 @@
   - type: Storage
     grid:
     - 0,0,4,3
-    quickInsert: true
+  - type: QuickPickup
   - type: StorageFill
     contents: [] #to override base clipboard fill
   - type: ItemMapper

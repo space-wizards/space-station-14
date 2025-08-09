@@ -30,6 +30,8 @@
     layers:
       - state: boxwidetoy
       - state: shelltoy
+  - type: QuickPickup
+  - type: AreaPickup
 
 - type: entity
   parent: BaseMagazineBoxMagnum
