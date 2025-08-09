@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.DisplacementMap;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
@@ -55,7 +56,25 @@ public partial class InventorySystem : EntitySystem
         return false;
     }
 
-    private void OnInit(Entity<InventoryComponent> ent, ref ComponentInit args)
+    /// <summary>
+    /// Copy this component's datafields from one entity to another.
+    /// This can't use CopyComp because the template needs to be applied using the API method.
+    /// <summary>
+    public void CopyComponent(Entity<InventoryComponent?> source, EntityUid target)
+    {
+        if (!Resolve(source, ref source.Comp))
+            return;
+
+        var targetComp = EnsureComp<InventoryComponent>(target);
+        targetComp.SpeciesId = source.Comp.SpeciesId;
+        targetComp.Displacements = new Dictionary<string, DisplacementData>(source.Comp.Displacements);
+        targetComp.FemaleDisplacements = new Dictionary<string, DisplacementData>(source.Comp.FemaleDisplacements);
+        targetComp.MaleDisplacements = new Dictionary<string, DisplacementData>(source.Comp.MaleDisplacements);
+        SetTemplateId((target, targetComp), source.Comp.TemplateId);
+        Dirty(target, targetComp);
+    }
+
+    protected virtual void OnInit(Entity<InventoryComponent> ent, ref ComponentInit args)
     {
         UpdateInventoryTemplate(ent);
     }
@@ -92,6 +111,9 @@ public partial class InventorySystem : EntitySystem
             container.OccludesLight = false;
             ent.Comp.Containers[i] = container;
         }
+
+        var ev = new InventoryTemplateUpdated();
+        RaiseLocalEvent(ent, ref ev);
     }
 
     private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev, EntitySessionEventArgs args)

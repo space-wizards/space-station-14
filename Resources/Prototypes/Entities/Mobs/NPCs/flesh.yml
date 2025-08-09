@@ -42,6 +42,7 @@
       75: Dead
   - type: Stamina
     critThreshold: 50
+    animationThreshold: 25
   - type: Sliceable
     slices:
     - id: FoodMeat
@@ -239,8 +240,14 @@
       75: Dead
   - type: Stamina
     critThreshold: 50
+<<<<<<< HEAD
   - type: Sliceable
     slices:
+=======
+    animationThreshold: 25
+  - type: Butcherable
+    spawned:
+>>>>>>> master
     - id: FoodMeat
   - type: Bloodstream
     bloodMaxVolume: 100

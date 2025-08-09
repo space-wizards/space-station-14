@@ -1,28 +1,27 @@
-using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using Robust.Shared.Network;
-using Content.Shared.Random.Helpers;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Sliceable;
 
@@ -39,6 +38,7 @@ public sealed class SliceableSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
 
     public override void Initialize()
     {
@@ -131,45 +131,39 @@ public sealed class SliceableSystem : EntitySystem
 
     private void AfterSlicing(Entity<SliceableComponent> ent, ref TrySliceDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled)
+        if (args.Handled || args.Cancelled || args.Used is null)
             return;
 
-        var hasBody = TryComp<BodyComponent>(ent, out var body);
-
         // only show a big popup when butchering living things.
-        var popupType = PopupType.Small;
-        if (hasBody)
-            popupType = PopupType.LargeCaution;
+        // Meant to differentiate cutting up clothes and cutting up your boss.
+        var popupType = HasComp<MobStateComponent>(ent)
+            ? PopupType.LargeCaution
+            : PopupType.Small;
 
-        _popup.PopupPredicted(Loc.GetString("slice-butchered-success", ("target", ent.Owner), ("tool", args.Used!.Value)),
-            Loc.GetString("slice-butchered-success-others", ("user", args.User), ("target", ent.Owner), ("tool", args.Used!.Value)),
+        _popup.PopupPredicted(Loc.GetString("slice-butchered-success", ("target", ent.Owner), ("tool", args.Used.Value)),
+            Loc.GetString("slice-butchered-success-others", ("user", args.User), ("target", ent.Owner), ("tool", args.Used.Value)),
             args.User, args.User, popupType);
 
-        if (TrySlice(ent))
+        if (TrySlice(ent.Owner, args.User))
         {
             var ev = new SliceEvent();
             RaiseLocalEvent(ent, ref ev);
 
-            if (hasBody)
-                _body.GibBody(ent, body: body);
-            else
-                PredictedQueueDel(ent.Owner);
+            _body.GibBody(ent);
+            _destructible.DestroyEntity(ent);
         }
     }
 
-    private bool TrySlice(EntityUid uid,
-        SliceableComponent? comp = null,
-        FoodComponent? food = null,
-        TransformComponent? transform = null)
+    private bool TrySlice(Entity<TransformComponent?, SliceableComponent?, EdibleComponent?> ent, EntityUid user)
     {
-        if (!Resolve(uid, ref comp, ref transform))
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2))
             return false;
 
-        var slices = EntitySpawnCollection.GetSpawns(comp.Slices);
+        var slices = EntitySpawnCollection.GetSpawns(ent.Comp2.Slices);
 
         foreach (var sliceProto in slices)
         {
-            var sliceUid = PredictedSpawnNextToOrDrop(sliceProto, uid);
+            var sliceUid = PredictedSpawnNextToOrDrop(sliceProto, ent);
             _transform.SetLocalRotation(sliceUid, 0);
 
             if (_net.IsServer && slices.Count != 0 && !_container.IsEntityOrParentInContainer(sliceUid))
@@ -179,9 +173,9 @@ public sealed class SliceableSystem : EntitySystem
             }
 
             // Fills new slice if comp allows.
-            if (comp.TransferSolution && Resolve(uid, ref food))
+            if (ent.Comp2.TransferSolution && Resolve(ent, ref ent.Comp3))
             {
-                if (!_solutionContainer.TryGetSolution(uid, food.Solution, out var soln, out var solution))
+                if (!_solutionContainer.TryGetSolution(ent.Owner, ent.Comp3.Solution, out var soln, out var solution))
                     return false;
 
                 var sliceVolume = solution.Volume / FixedPoint2.New(slices.Count);
@@ -191,14 +185,20 @@ public sealed class SliceableSystem : EntitySystem
             }
         }
 
-        _audio.PlayPvs(comp.Sound, transform.Coordinates, AudioParams.Default.WithVolume(-2));
+        _audio.PlayPvs(ent.Comp2.Sound, ent.Comp1.Coordinates, AudioParams.Default.WithVolume(-2));
+
+        var ev = new BeforeFullySlicedEvent
+        {
+            User = user
+        };
+        RaiseLocalEvent(ent, ev);
 
         return true;
     }
 
     private void FillSlice(EntityUid sliceUid, Solution solution)
     {
-        if (TryComp<FoodComponent>(sliceUid, out var sliceFoodComp) &&
+        if (TryComp<EdibleComponent>(sliceUid, out var sliceFoodComp) &&
             _solutionContainer.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSoln, out var itsSolution))
         {
             _solutionContainer.RemoveAllSolution(itsSoln.Value);
