@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Assets taken from Skyrat 13 (/tg/station Downstream) at https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297. frills_neckful taken from Bubberstation at https://github.com/Bubberstation/Bubberstation/commit/8bc6b83404803466a560b694bf22ef3c0ac266a2.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "frills_simple",
+            "directions": 4
+        },
+        {
+            "name": "frills_short",
+            "directions": 4
+        },
+        {
+            "name": "frills_aquatic",
+            "directions": 4
+        },
+        {
+            "name": "frills_divinity",
+            "directions": 4
+        },
+        {
+            "name": "frills_axolotl",
+            "directions": 4
+        },
+        {
+            "name": "frills_hood_primary",
+            "directions": 4
+        },
+        {
+            "name": "frills_hood_secondary",
+            "directions": 4
+        },
+        {
+            "name": "frills_big",
+            "directions": 4
+        },
+        {
+            "name": "frills_neckfull",
+            "directions": 4
+        }
+    ]
+}
