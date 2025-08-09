@@ -25,10 +25,10 @@ public sealed class UncuffOnTriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        if (!TryComp<CuffableComponent>(target.Value, out var cuffs) || cuffs.Container.ContainedEntities.Count < 1)
+        if (!TryComp<CuffableComponent>(target.Value, out var cuffs) || !_cuffable.TryGetLastCuff(target.Value, out var cuff))
             return;
 
-        _cuffable.Uncuff(target.Value, args.User, cuffs.LastAddedCuffs);
+        _cuffable.Uncuff(target.Value, args.User, cuff.Value);
         args.Handled = true;
     }
 }
