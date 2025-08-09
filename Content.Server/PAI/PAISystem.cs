@@ -1,8 +1,8 @@
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Instruments;
-using Content.Server.Kitchen.Components;
 using Content.Server.Store.Systems;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
 using Content.Shared.PAI;
