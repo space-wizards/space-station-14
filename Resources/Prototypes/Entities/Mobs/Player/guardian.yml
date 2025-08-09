@@ -111,6 +111,7 @@
     - type: Tag
       tags:
         - CannotSuicide
+    - type: CargoSellBlacklist
 
 # From the uplink injector
 - type: entity
