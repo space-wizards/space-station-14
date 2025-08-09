@@ -1,4 +1,4 @@
-using Content.Server.Atmos.Components;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Trigger.Components.Effects;
 
@@ -7,9 +7,19 @@ namespace Content.Shared.Trigger.Components.Effects;
 ///     Requires <see cref="FlammableComponent"/> to ignite the target.
 /// </summary>
 /// <seealso cref="IgniteOnTriggerComponent"/>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CombustOnTriggerComponent : BaseXOnTriggerComponent
 {
-    [DataField]
+    /// <summary>
+    ///     How many fire stacks to add or remove.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public float FireStacks;
+
+    /// <summary>
+    ///     If true, the target will be set on fire if it isn't already.
+    ///     If false does nothing.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool DoIgnite = true;
 }
