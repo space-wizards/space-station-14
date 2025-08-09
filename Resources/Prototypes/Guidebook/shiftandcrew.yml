@@ -7,9 +7,9 @@
   children:
   - Cargo
   - Command
-  - Engineering
   - Medical
   - Science
+  - Engineering
   - Security
   - Service
 # End of modifications.
