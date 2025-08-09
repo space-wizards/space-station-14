@@ -1243,7 +1243,9 @@
     size: Tiny
   - type: Tag
     tags:
-      - Trash
+    - Trash
+  - type: Food
+    requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
       food:
