@@ -5,7 +5,8 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization;
-using Content.Shared.Silicons.Laws; //#Starlight
+using Content.Shared.Silicons.Laws;
+using Content.Shared.Radio; //#Starlight
 
 namespace Content.Shared.Emag.Components;
 
@@ -55,5 +56,11 @@ public sealed partial class EmagComponent : Component
     /// </summary>
     [DataField]
     public ComponentRegistry? Components = null;
+
+    /// <summary>
+    /// What radio channels should be added to a emagged borg chassis
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<RadioChannelPrototype>> ChannelAdd = ["Syndicate"];
     //#endregion Starlight
 }

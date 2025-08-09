@@ -38,6 +38,7 @@ public sealed partial class HubSystem : EntitySystem
     private void OnSoftMaxPlayersChanged(int maxPlayers)
     {
         _maxPlayers = maxPlayers;
+        TryUpdateServerInfo();
     }
 
     private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
