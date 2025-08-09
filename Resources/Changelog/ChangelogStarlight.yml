@@ -11039,5 +11039,12 @@ Entries:
   id: 1518
   time: '2025-08-09T01:51:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1158
+- author: Happyrobot33
+  changes:
+  - message: Fixed crew spawning on nukie map
+    type: Fix
+  id: 1519
+  time: '2025-08-09T10:53:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1272
 Order: -1
 
