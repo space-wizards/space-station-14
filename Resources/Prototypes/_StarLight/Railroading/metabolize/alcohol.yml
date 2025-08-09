@@ -2463,8 +2463,8 @@
     - ReagentId: WhiteGilgamesh
       Quantity: 30 # One Glass
     icon:
-      sprite: Unknown.rsi
-      state: icon_empty
+      sprite: Objects/Consumable/Drinks/glass_brown2.rsi
+      state: icon
   - type: RailroadDonationReward
     amount:
       min: 5
