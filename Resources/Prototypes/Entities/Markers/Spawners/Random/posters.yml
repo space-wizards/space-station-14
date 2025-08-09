@@ -34,7 +34,7 @@
       - PosterContrabandFreeTonto
       - PosterContrabandAtmosiaDeclarationIndependence
       - PosterContrabandFunPolice
-      - PosterContrabandRealExomorph
+      - PosterContrabandRealXeno
       - PosterContrabandSyndicateRecruitment
       - PosterContrabandClown
       - PosterContrabandSmoke
@@ -92,9 +92,9 @@
       - PosterContrabandInterdyne
       - PosterContrabandWaffleCorp
       - PosterContrabandMissingSpacepen
-      - PosterContrabandExoAcid
-      - PosterContrabandExoRun
-      - PosterContrabandExoChomp
+      - PosterContrabandXenoAcid
+      - PosterContrabandXenoRun
+      - PosterContrabandXenoChomp
     chance: 1
 
 - type: entity
