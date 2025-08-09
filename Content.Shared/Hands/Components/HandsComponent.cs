@@ -1,6 +1,8 @@
 using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Hands.Components;
@@ -106,16 +108,45 @@ public sealed partial class HandsComponent : Component
 public partial record struct Hand
 {
     [DataField]
-    public HandLocation Location = HandLocation.Right;
+    public HandLocation Location = HandLocation.Middle;
+
+    /// <summary>
+    /// The label to be displayed for this hand when it does not contain an entity
+    /// </summary>
+    [DataField]
+    public LocId? EmptyLabel;
+
+    /// <summary>
+    /// The prototype ID of a "representative" entity prototype for what this hand could hold, used in the UI.
+    /// It is not map-initted.
+    /// </summary>
+    [DataField]
+    public EntProtoId? EmptyRepresentative;
+
+    /// <summary>
+    /// What this hand is allowed to hold
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// What this hand is not allowed to hold
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
 
     public Hand()
     {
 
     }
 
-    public Hand(HandLocation location)
+    public Hand(HandLocation location, LocId? emptyLabel = null, EntProtoId? emptyRepresentative = null, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
     {
         Location = location;
+        EmptyLabel = emptyLabel;
+        EmptyRepresentative = emptyRepresentative;
+        Whitelist = whitelist;
+        Blacklist = blacklist;
     }
 }
 
