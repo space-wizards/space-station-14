@@ -13,11 +13,9 @@ namespace Content.Client.Doors;
 public sealed class TurnstileSystem : SharedTurnstileSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
     private static readonly EntProtoId ExamineArrow = "TurnstileArrow";
-
-    private const string AnimationKey = "Turnstile";
 
     public override void Initialize()
     {
@@ -29,12 +27,14 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
 
     private void OnAnimationCompleted(Entity<TurnstileComponent> ent, ref AnimationCompletedEvent args)
     {
-        if (args.Key != AnimationKey)
-            return;
-
-        if (!TryComp<SpriteComponent>(ent, out var sprite))
-            return;
-        _sprite.LayerSetRsiState((ent.Owner, sprite), TurnstileVisualLayers.Base, new RSI.StateId(ent.Comp.DefaultState));
+        if (args.Key == nameof(TurnstileVisualLayers.Indicators))
+        {
+            _spriteSystem.LayerSetVisible(ent.Owner, TurnstileVisualLayers.Indicators, false);
+        }
+        else if (args.Key != nameof(TurnstileVisualLayers.Spinner))
+        {
+            _spriteSystem.LayerSetRsiState(ent.Owner, TurnstileVisualLayers.Spinner, new RSI.StateId(ent.Comp.DefaultState));
+        }
     }
 
     private void OnExamined(Entity<TurnstileComponent> ent, ref ExaminedEvent args)
@@ -42,14 +42,31 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
         Spawn(ExamineArrow, new EntityCoordinates(ent, 0, 0));
     }
 
-    protected override void PlayAnimation(EntityUid uid, string stateId)
+    protected override void StopAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
+    {
+        StopAnimation(uid, layer, stateId, null);
+    }
+
+    private void StopAnimation(EntityUid uid,
+        TurnstileVisualLayers layer,
+        string stateId,
+        AnimationPlayerComponent? player = null)
+    {
+        if (!Resolve(uid, ref player, logMissing: false))
+            return;
+
+        var ent = (uid, player);
+
+        if (_animationPlayer.HasRunningAnimation(player, layer.ToString()))
+            _animationPlayer.Stop(ent, layer.ToString());
+    }
+
+    protected override void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
     {
         if (!TryComp<AnimationPlayerComponent>(uid, out var animation) || !TryComp<SpriteComponent>(uid, out var sprite))
             return;
-        var ent = (uid, animation);
 
-        if (_animationPlayer.HasRunningAnimation(animation, AnimationKey))
-            _animationPlayer.Stop(ent, AnimationKey);
+        StopAnimation(uid, layer, stateId, animation);
 
         if (sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(stateId, out var state))
             return;
@@ -61,7 +78,7 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
             {
                 new AnimationTrackSpriteFlick
                 {
-                    LayerKey = TurnstileVisualLayers.Base,
+                    LayerKey = layer,
                     KeyFrames =
                     {
                         new AnimationTrackSpriteFlick.KeyFrame(state.StateId, 0f),
@@ -71,6 +88,7 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
             Length = TimeSpan.FromSeconds(animLength),
         };
 
-        _animationPlayer.Play(ent, anim, AnimationKey);
+        _spriteSystem.LayerSetVisible(uid, layer, true);
+        _animationPlayer.Play(uid, anim, layer.ToString());
     }
 }
