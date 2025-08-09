@@ -68,7 +68,8 @@
   - type: Vocalizer
     minVocalizeInterval: 60
     maxVocalizeInterval: 120
-  - type: AnimalVocalizer
+  - type: DatasetVocalizer
+    dataset: AnimalVocalizations
 
 - type: entity
   parent:
@@ -113,4 +114,5 @@
   - type: Vocalizer
     minVocalizeInterval: 60
     maxVocalizeInterval: 120
-  - type: AnimalVocalizer
+  - type: DatasetVocalizer
+    dataset: AnimalVocalizations

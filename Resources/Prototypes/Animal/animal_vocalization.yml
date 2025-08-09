@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: AnimalVocalizations
+  values:
+    prefix: animal-vocalization-placeholder-
+    count: 5
