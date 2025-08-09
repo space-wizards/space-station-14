@@ -113,7 +113,7 @@ rr-andalusia = Andalusia
 rr-andalusia-desc = Tastes like sunshine, olives, and unapologetic naps.
 
 rr-antifreeze = Antifreeze
-rr-andalusia-desc = Winter-proof my liver.
+rr-antifreeze-desc = Winter-proof my liver.
 
 rr-atomicbomb = Atomic Bomb
 rr-atomicbomb-desc = Guaranteed to split my evening in half.
