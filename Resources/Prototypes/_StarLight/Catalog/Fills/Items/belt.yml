@@ -64,3 +64,55 @@
     - id: GrenadeFlashBang
     - id: TearGasGrenade
     - id: MedkitCombatFilled
+
+# GMN webbings
+- type: entity
+  id: ClothingOuterVestWebEliteFilledMAA
+  parent: ClothingOuterVestWebElite
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: Stunbaton
+    - id: Handcuffs
+    - id: Handcuffs
+    - id: GrenadeShrapnel
+    - id: Bola
+    - id: HoloprojectorSecurity
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingFilledDamageControle
+  parent: ClothingBeltMilitaryWebbing
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: SyndicateJawsOfLife
+    - id: PowerDrill
+    - id: Multitool
+    - id: MetalFoamGrenade
+    - id: MetalFoamGrenade
+    - id: AirGrenade
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingFilledNavigator
+  parent: ClothingBeltMilitaryWebbing
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: Binoculars
+    - id: ThrowingKnife
+    - id: Whistle
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingFilledGunner
+  parent: ClothingBeltMilitaryWebbing
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: MedkitCombatFilled
+    - id: CombatMedipen
+    - id: CrowbarRed
+    - id: Binoculars
