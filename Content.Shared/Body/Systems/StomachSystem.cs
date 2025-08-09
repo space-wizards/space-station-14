@@ -31,12 +31,20 @@ public sealed class StomachSystem : EntitySystem
 
     private void OnMapInit(Entity<StomachComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
+        var curTime = _gameTiming.CurTime;
+        ent.Comp.NextUpdate = curTime + ent.Comp.UpdateInterval;
+        // TODO: this is inaccurate for persistence; this should be changed once
+        // https://github.com/space-wizards/RobustToolbox/issues/3768 is fixed
+        // That being said, we don't serialize stuff like BaseMob so I think
+        // this only matters for... not much, but it's the thought that counts.
+        UpdateDigestionTimes(ent, _ => curTime + ent.Comp.AdjustedDigestionDelay);
     }
 
     private void OnUnpaused(Entity<StomachComponent> ent, ref EntityUnpausedEvent args)
     {
-        ent.Comp.NextUpdate += args.PausedTime;
+        var time = args.PausedTime;
+        ent.Comp.NextUpdate += time;
+        UpdateDigestionTimes(ent, t => t + time);
     }
 
     private void OnEntRemoved(Entity<StomachComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -52,15 +60,19 @@ public sealed class StomachSystem : EntitySystem
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<StomachComponent, OrganComponent, SolutionContainerManagerComponent>();
+        var curTime = _gameTiming.CurTime;
         while (query.MoveNext(out var uid, out var stomach, out var organ, out var sol))
         {
-            if (_gameTiming.CurTime < stomach.NextUpdate)
+            if (curTime < stomach.NextUpdate)
                 continue;
 
-            stomach.NextUpdate += stomach.AdjustedUpdateInterval;
+            stomach.NextUpdate += stomach.UpdateInterval;
 
             // Get our solutions
-            if (!_solutionContainerSystem.ResolveSolution((uid, sol), DefaultSolutionName, ref stomach.Solution, out var stomachSolution))
+            if (!_solutionContainerSystem.ResolveSolution((uid, sol),
+                    DefaultSolutionName,
+                    ref stomach.Solution,
+                    out var stomachSolution))
                 continue;
 
             if (organ.Body is not { } body
@@ -71,17 +83,9 @@ public sealed class StomachSystem : EntitySystem
 
             foreach (var (id, deltas) in stomach.ReagentDeltas.ToList())
             {
-                // Get the deltas with their timestamps incremented. Note we
-                // can't just set a timespan that the reagents are digested
-                // at, since our update interval may change after the delta
-                // was added.
-                var nextDeltas = deltas
-                    .Select(delta => delta with { Lifetime = delta.Lifetime + stomach.UpdateInterval })
-                    .ToList();
-
                 // Get the deltas that we can now digest
-                var expiredDeltas = nextDeltas
-                    .Where(delta => delta.Lifetime > stomach.DigestionDelay)
+                var expiredDeltas = deltas
+                    .Where(delta => curTime >= delta.DigestionTime)
                     .ToList();
 
                 foreach (var (quantity, _) in expiredDeltas)
@@ -101,7 +105,7 @@ public sealed class StomachSystem : EntitySystem
                 if (stomach.ReagentDeltas[id].Count == expiredDeltas.Count)
                     stomach.ReagentDeltas.Remove(id);
                 else
-                    stomach.ReagentDeltas[id] = nextDeltas.Except(expiredDeltas).ToList();
+                    stomach.ReagentDeltas[id] = deltas.Except(expiredDeltas).ToList();
             }
 
             _solutionContainerSystem.UpdateChemicals(stomach.Solution.Value);
@@ -113,7 +117,10 @@ public sealed class StomachSystem : EntitySystem
 
     private void OnApplyMetabolicMultiplier(Entity<StomachComponent> ent, ref ApplyMetabolicMultiplierEvent args)
     {
-        ent.Comp.UpdateIntervalMultiplier = args.Multiplier;
+        var curTime = _gameTiming.CurTime;
+        var multiplier = args.Multiplier;
+        UpdateDigestionTimes(ent, t => curTime + multiplier/ent.Comp.DigestionDelayMultiplier * (t - curTime));
+        ent.Comp.DigestionDelayMultiplier = multiplier;
     }
 
     private void OnSolutionContainerChanged(Entity<StomachComponent> ent, ref SolutionContainerChangedEvent args)
@@ -121,6 +128,7 @@ public sealed class StomachSystem : EntitySystem
         if (args.SolutionId != DefaultSolutionName)
             return;
 
+        var curTime = _gameTiming.CurTime;
         foreach (var reagent in args.Solution.Contents)
         {
             var known = ent.Comp.ReagentDeltas.GetOrNew(reagent.Reagent);
@@ -130,12 +138,25 @@ public sealed class StomachSystem : EntitySystem
                 continue;
 
             // If the stomach now has a higher quantity of a reagent than what
-            // we've tracked, add it as a new delta
+            // we've tracked, add it as a new delta. Otherwise... we don't
+            // bother, as it'll be removed in the stomach update loop. It would
+            // be more correct to handle that here, but... it'd be kinda tricky
+            // and I was told it's fine for now™.
             var newQuantity = new ReagentQuantity(reagent.Reagent, reagent.Quantity - knownQuantity);
-            known.Add(new ReagentDelta(newQuantity, TimeSpan.Zero));
+            known.Add(new ReagentDelta(newQuantity, curTime + ent.Comp.AdjustedDigestionDelay));
         }
     }
 
+    private void UpdateDigestionTimes(Entity<StomachComponent> ent, Func<TimeSpan, TimeSpan> func)
+    {
+        foreach (var (id, deltas) in ent.Comp.ReagentDeltas)
+        {
+            foreach (var (i, delta) in deltas.Index().ToList())
+            {
+                ent.Comp.ReagentDeltas[id][i] = delta with { DigestionTime = func(delta.DigestionTime) };
+            }
+        }
+    }
 
     public bool CanTransferSolution(
         EntityUid uid,
