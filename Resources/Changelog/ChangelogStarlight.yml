@@ -11017,5 +11017,12 @@ Entries:
   id: 1515
   time: '2025-08-09T01:00:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/935
+- author: CMDROverwerk
+  changes:
+  - message: increased default moles in mech air tank from 2 to 50
+    type: Tweak
+  id: 1516
+  time: '2025-08-09T01:09:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1236
 Order: -1
 
