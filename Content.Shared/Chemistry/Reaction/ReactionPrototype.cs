@@ -40,6 +40,13 @@ namespace Content.Shared.Chemistry.Reaction
         public bool ConserveEnergy = true;
 
         /// <summary>
+        ///     The amount of thermal energy added to the solution after the reaction occurs, in joules per unit
+        ///     reactions.
+        /// </summary>
+        [DataField("adjustEnergy")]
+        public float AdjustEnergy = 0.0f;
+
+        /// <summary>
         ///     The maximum temperature the reaction can occur at.
         /// </summary>
         [DataField("maxTemp")]

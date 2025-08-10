@@ -171,6 +171,7 @@ namespace Content.Shared.Chemistry.Reaction
             var (uid, comp) = soln;
             var solution = comp.Solution;
 
+            // If ConserveEnergy, the solution's energy from before performing the reaction is used
             var energy = reaction.ConserveEnergy ? solution.GetThermalEnergy(_prototypeManager) : 0;
 
             //Remove reactants
@@ -191,12 +192,17 @@ namespace Content.Shared.Chemistry.Reaction
                 solution.AddReagent(product.Key, product.Value * unitReactions);
             }
 
-            if (reaction.ConserveEnergy)
+            // If not ConserveEnergy, the solution's energy from after performing the reaction is used
+            if (!reaction.ConserveEnergy)
             {
-                var newCap = solution.GetHeatCapacity(_prototypeManager);
-                if (newCap > 0)
-                    solution.Temperature = energy / newCap;
+                energy = solution.GetThermalEnergy(_prototypeManager);
             }
+
+            energy += reaction.AdjustEnergy * (float)(unitReactions);
+
+            var newCap = solution.GetHeatCapacity(_prototypeManager);
+            if (newCap > 0)
+                solution.Temperature = energy / newCap;
 
             OnReaction(soln, reaction, null, unitReactions);
 
