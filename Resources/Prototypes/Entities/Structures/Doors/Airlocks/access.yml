@@ -1134,8 +1134,8 @@
       board: [ DoorElectronicsNukeop ]
 
 - type: entity
-  parent: AirlockHatch
-  id: AirlockHatchXenoborgLocked
+  parent: AirlockXenoborg
+  id: AirlockXenoborgLocked
   suffix: Xenoborg, Locked
   components:
   - type: StationAiWhitelist
