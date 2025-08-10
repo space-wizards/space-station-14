@@ -62,7 +62,7 @@
     HeadBedsheetStealCollectionObjective: 1
     StampStealCollectionObjective: 1
     DoorRemoteStealCollectionObjective: 1
-    OfficerHandgunsStealCollectionObjective: 1          #sec
+    OfficerHandgunsStealCollectionObjective: 10         #sec
     TechnologyDiskStealCollectionObjective: 1           #sci
     MailStealCollectionObjective: 1                     #cargo
     IDCardsStealCollectionObjective: 1
@@ -71,8 +71,8 @@
 - type: weightedRandom
   id: ThiefObjectiveGroupItem
   weights:
-    DeckardStealObjective: 1                            #command
-    ChiefEngineerToolbeltStealObjective: 1
+    DeckardStealObjective: 10                            #command
+    ChiefEngineerToolbeltStealObjective: 10
     ClothingHeadsetAltMedicalStealObjective: 1
     ForensicScannerStealObjective: 1                    #sec
     FlippoEngravedLighterStealObjective: 0.5
@@ -85,7 +85,7 @@
     ExpeditionsCircuitboardStealObjective: 1            #sup
     CargoShuttleCircuitboardStealObjective: 1
     ClothingEyesHudBeerStealObjective: 0.5                #srv
-    BartenderShotgunStealObjective: 1
+    BartenderShotgunStealObjective: 10
     BibleStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
