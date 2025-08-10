@@ -216,7 +216,7 @@
   - type: StealCondition
     stealGroup: DeckardSteal
   - type: Objective
-    difficulty: 1
+    difficulty: 1.1
 
 - type: entity                                      #Medical subgroup
   parent: BaseThiefStealObjective
