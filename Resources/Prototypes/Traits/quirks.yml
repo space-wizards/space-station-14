@@ -24,3 +24,25 @@
   category: Quirks
   components:
   - type: Snoring
+
+- type: trait
+  id: SpontaneousCombustion
+  name: trait-combustion-name
+  description: trait-combustion-desc
+  category: Quirks
+  whitelist:
+    components:
+    - Flammable
+  components:
+  - type: TriggerOnSpawn
+    keyOut: &startSC StartSpontaneousCombustion
+  - type: CombustOnTrigger
+    fireStacks: 100
+    keysIn:
+    - timer
+  - type: TimerTrigger
+    delay: 30s
+    examinable: false
+    popup: null
+    keysIn:
+    - *startSC
