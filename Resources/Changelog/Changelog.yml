@@ -1,96 +1,4 @@
 ﻿Entries:
-- author: Kickguy223
-  changes:
-  - message: Reduced the price of firelock electronics to half the price of the input
-      materials
-    type: Tweak
-  id: 8318
-  time: '2025-04-22T23:53:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33469
-- author: murolem
-  changes:
-  - message: Building orientation on fences, diagonal grilles and the diagonal shuttle
-      wall is now respected.
-    type: Fix
-  id: 8319
-  time: '2025-04-23T01:58:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36488
-- author: kosticia
-  changes:
-  - message: Added analog of donk-pockets for moth - moth-pockets
-    type: Add
-  id: 8320
-  time: '2025-04-23T05:36:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34517
-- author: AgentSmithRadio
-  changes:
-  - message: New food crates are now available for purchase from the automated trade
-      station!
-    type: Add
-  - message: You can no longer use Sweetie's Pistachios to fulfill cargo's generic
-      fruit bounty.
-    type: Remove
-  id: 8321
-  time: '2025-04-23T05:37:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33286
-- author: SaphireLattice
-  changes:
-  - message: Steel sheets no longer have unintuitively wasteful plating placement
-      that can be done with steel tiles instead
-    type: Remove
-  id: 8322
-  time: '2025-04-23T11:08:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33443
-- author: ArchRBX
-  changes:
-  - message: pAI's can now install a variety of useful software through their new
-      Software Catalog.
-    type: Add
-  - message: pAI's no longer start with a Station Map or MIDI Player, and must purchase
-      these through the shop.
-    type: Tweak
-  id: 8323
-  time: '2025-04-23T23:55:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36857
-- author: NoElkaTheGod
-  changes:
-  - message: Toysword now actually looks almost like the real thing, as advertised
-      in the description
-    type: Tweak
-  id: 8324
-  time: '2025-04-24T01:21:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34199
-- author: Pronana
-  changes:
-  - message: Moths can now eat pills
-    type: Tweak
-  id: 8325
-  time: '2025-04-24T02:28:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35609
-- author: Coolsurf6
-  changes:
-  - message: Updated more contraband items for Syndicate and Security.
-    type: Tweak
-  id: 8326
-  time: '2025-04-24T02:57:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35102
-- author: Beck Thompson
-  changes:
-  - message: You can how hide items inside cake by using a knife! Eating a cake with
-      an item inside will do minor damage.
-    type: Add
-  id: 8327
-  time: '2025-04-24T03:00:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31015
-- author: RedBookcase
-  changes:
-  - message: Added Advanced Circular Saw as a Medical Doctor specific uplink item.
-    type: Add
-  - message: Removed Syndicate Surgery Duffel Bag from uplink.
-    type: Remove
-  id: 8328
-  time: '2025-04-24T03:01:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35915
 - author: AgentSmithRadio, MadeOfHeartAndStone
   changes:
   - message: Added cotton grilled cheese sandwich entity and recipe.
@@ -3907,3 +3815,87 @@
   id: 8830
   time: '2025-08-05T23:15:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39410
+- author: ScarKy0, beck-thompson
+  changes:
+  - message: Various canines will now sometimes clumsily spill things they drink.
+    type: Add
+  id: 8831
+  time: '2025-08-06T13:00:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38852
+- author: aada
+  changes:
+  - message: You can examine fuel tanks to see how much they're filled.
+    type: Add
+  id: 8832
+  time: '2025-08-06T16:11:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39362
+- author: Tao7891
+  changes:
+  - message: Craftable cardboard structures and equipment.
+    type: Add
+  id: 8833
+  time: '2025-08-06T16:58:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37363
+- author: slarticodefast
+  changes:
+  - message: Fixed inventory sprites flickering when hovering over the slot with an
+      item.
+    type: Fix
+  id: 8834
+  time: '2025-08-06T20:14:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39379
+- author: Thinbug0
+  changes:
+  - message: New onion mutation, Bloonions! floating balloon-like onions.
+    type: Add
+  id: 8835
+  time: '2025-08-07T01:51:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33375
+- author: Kittygyat
+  changes:
+  - message: Made baseball bats 1x4 instead of 2x2
+    type: Tweak
+  - message: New baseball bat inventory icon sprites
+    type: Add
+  id: 8836
+  time: '2025-08-07T03:03:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38392
+- author: lolman360
+  changes:
+  - message: Fixed certain items (like pickaxes) failing to insert into containers
+      that have enough space to store them, sometimes.
+    type: Fix
+  id: 8837
+  time: '2025-08-07T16:01:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38896
+- author: chromiumboy
+  changes:
+  - message: The station AI will receive chat notifications when its sentry turrets
+      start firing upon hostile targets.
+    type: Add
+  id: 8838
+  time: '2025-08-08T18:56:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35277
+- author: K-Dynamic
+  changes:
+  - message: Captain and Head of Personnel starts with administration glasses and
+      hud respectively.
+    type: Add
+  id: 8839
+  time: '2025-08-08T19:00:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35531
+- author: perryprog
+  changes:
+  - message: The emote radial menu now shows the correct icons for its subcategories.
+    type: Fix
+  id: 8840
+  time: '2025-08-08T19:27:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39481
+- author: Flareguy
+  changes:
+  - message: Updated moth displacement maps to fix missing pixels, among other various
+      issues.
+    type: Fix
+  id: 8841
+  time: '2025-08-09T21:52:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39174
