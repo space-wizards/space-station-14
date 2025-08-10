@@ -156,6 +156,11 @@
      state: mag-1 
     }
   productEntity: MagazineMagnumRifleSP
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkAmmo
+  conditions:
 
 - type: listing
   id: UplinkShotgunBreachingMagazine
