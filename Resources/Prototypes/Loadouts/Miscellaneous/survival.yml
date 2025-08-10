@@ -18,6 +18,7 @@
     - Human
     - Moth
     - Reptilian
+    - Avali #Originally implemented on Cosmic Drift, ported to LateStation and LateStation ported to harmony, now ported to RonStation.
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
