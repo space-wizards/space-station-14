@@ -28,16 +28,9 @@
     tags:
       - HideContextMenu
   # At least one fixture is needed for the CanCollide field of the PhysicsComponent to not always be false.
-  # EdgeShape will be overwritten by the BeamSystem.
   - type: Fixtures
     fixtures:
-      BeamBody:
-        shape:
-          !type:EdgeShape {}
-        mask:
-        - ItemMask
-        layer:
-        - MobLayer
+      fix1: {}
 
 - type: entity
   name: lightning
