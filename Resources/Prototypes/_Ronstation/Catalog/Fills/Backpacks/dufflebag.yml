@@ -8,16 +8,3 @@
     contents:
       - id: X4
         amount: 4
-
-- type: entity
-  id: ClothingBackpackSatchelHoldingCentcomFormalFilled
-  parent: ClothingBackpackSatchelHolding
-  suffix: Filled, Centcom Formal, Admeme
-  components:
-  - type: StorageFill
-    contents:
-      - id: ToolDebug
-      - id: WelderExperimental
-      - id: RCDExperimental
-      - id: Multitool
-      - id: BoxSurvival
