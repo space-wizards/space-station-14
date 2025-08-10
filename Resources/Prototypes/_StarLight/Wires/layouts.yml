@@ -1,0 +1,12 @@
+- type: wireLayout
+  id: Locker
+  wires:
+  - !type:AccessWireAction
+  - !type:AiInteractWireAction
+  dummyWires: 4
+  
+- type: wireLayout
+  id: MedibotControls
+  dummyWires: 9
+  wires:
+  - !type:SpeechWireAction

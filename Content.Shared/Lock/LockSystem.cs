@@ -87,7 +87,7 @@ public sealed class LockSystem : EntitySystem
         if (!component.Locked)
             return;
 
-        if (!args.Silent)
+        if (!args.Silent && component.PopupMessage) // Starlight-edit
             _sharedPopupSystem.PopupClient(Loc.GetString("entity-storage-component-locked-message"), uid, args.User);
 
         args.Cancelled = true;
@@ -417,7 +417,7 @@ public sealed class LockSystem : EntitySystem
         if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked != component.RequireLocked)
         {
             args.Cancel();
-            if (lockComp.Locked)
+            if (lockComp.Locked && component.PopupMessage) // Starlight-edit
             {
                 _sharedPopupSystem.PopupClient(Loc.GetString("entity-storage-component-locked-message"), uid, args.User);
             }

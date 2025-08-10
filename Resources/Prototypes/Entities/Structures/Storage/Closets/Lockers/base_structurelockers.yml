@@ -5,6 +5,7 @@
   components:
   - type: AccessReader
   - type: Lock
+    popupMessage: false # Starlight-edit
   - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/closet.rsi
@@ -25,6 +26,8 @@
       sprite: Structures/Storage/closet_labels.rsi
       offset: "-0.065,0"
       map: ["enum.PaperLabelVisuals.Layer"]
+    - state: panel_open # Starlight-edit: Maintenance Panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"] # Starlight-edit: Maintenance Panel
   - type: Destructible
     thresholds:
     - trigger:
@@ -56,6 +59,19 @@
     - entity_storage
   - type: Paintable
     group: Locker
+  # Starlight-start: Wires panel
+  - type: StationAiWhitelist
+  - type: WiresPanel
+  - type: WiresPanelSecurity
+  - type: WiresVisuals
+  - type: Wires
+    boardName: wires-board-name-locker
+    layoutId: Locker
+  - type: UserInterface
+    interfaces:
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  # Starlight-end
 
 - type: entity
   id: LockerBaseSecure
