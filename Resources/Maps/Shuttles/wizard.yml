@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 247.1.0
+  engineVersion: 248.0.2
   forkId: ""
   forkVersion: ""
-  time: 02/23/2025 10:35:57
-  entityCount: 791
+  time: 03/20/2025 07:20:18
+  entityCount: 793
 maps: []
 grids:
 - 768
@@ -1369,6 +1369,11 @@ entities:
     components:
     - type: Transform
       pos: 7.5,1.5
+      parent: 768
+  - uid: 793
+    components:
+    - type: Transform
+      pos: 5.5,4.5
       parent: 768
 - proto: CableHV
   entities:

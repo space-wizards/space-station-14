@@ -1,0 +1,250 @@
+- type: entity
+  abstract: true
+  id: SurveillanceCameraBase
+  name: camera
+  description: A surveillance camera. It's watching you. Kinda.
+  components:
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      light:
+        shape:
+          !type:PhysShapeCircle
+          radius: 5
+        hard: false
+        mask:
+        - GhostImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,-0.2,-0.15"
+        density: 190
+        mask:
+        - None
+        layer:
+        - TabletopMachineLayer
+  - type: LightOnCollide
+  - type: PointLight
+    enabled: false
+    radius: 5
+  - type: SlimPoweredLight
+    enabled: false
+  - type: StationAiVision
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Construction
+    graph: SurveillanceCamera
+    node: camera
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: WallMount
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Eye
+  - type: WiredNetworkConnection
+  - type: DeviceNetworkRequiresPower
+  - type: Transform
+    anchored: true
+  - type: WiresPanel
+  - type: Wires
+    alwaysRandomize: true
+    layoutId: SurveillanceCamera
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/camera.rsi
+    layers:
+      - map: [ "enum.SurveillanceCameraVisualsKey.Layer" ]
+        state: camera
+        cycle: true
+  - type: Appearance
+  - type: SurveillanceCameraVisuals
+    sprites:
+      Active: camera
+      Disabled: camera_off
+      InUse: camera_in_use
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraSetupUiKey.Camera:
+        type: SurveillanceCameraSetupBoundUi
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: StaticPrice
+    price: 200
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+              params:
+                volume: -8
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wallmount
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraConstructed
+  name: camera
+  suffix: Constructed
+  components:
+    - type: DeviceNetwork
+      deviceNetId: Wired
+      transmitFrequencyId: SurveillanceCamera
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+        - SurveillanceCameraEngineering
+        - SurveillanceCameraSecurity
+        - SurveillanceCameraService
+        - SurveillanceCameraSupply
+        - SurveillanceCameraScience
+        - SurveillanceCameraGeneral
+        - SurveillanceCameraMedical
+        - SurveillanceCameraCommand
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraEngineering
+  name: camera
+  suffix: Engineering
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraEngineering
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraSecurity
+  name: camera
+  suffix: Security
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraScience
+  name: camera
+  suffix: Science
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraScience
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraSupply
+  name: camera
+  suffix: Supply
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraSupply
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraCommand
+  name: camera
+  suffix: Command
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraCommand
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraService
+  name: camera
+  suffix: Service
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraService
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraMedical
+  name: camera
+  suffix: Medical
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraMedical
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraGeneral
+  name: camera
+  suffix: General
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraGeneral
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  id: SurveillanceCameraAssembly
+  name: camera
+  description: A surveillance camera. Doesn't seem to be watching anybody any time soon. Probably.
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Construction
+      graph: SurveillanceCamera
+      node: assembly
+    - type: WallMount
+    - type: Transform
+      anchored: true
+    - type: Damageable
+      damageContainer: StructuralInorganic
+      damageModifierSet: Metallic
+    - type: Sprite
+      drawdepth: WallMountedItems
+      sprite: Structures/Wallmounts/camera.rsi
+      layers:
+        - state: camera_off
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wallmount

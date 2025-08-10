@@ -475,6 +475,7 @@
   - type: Tag
     tags:
     - Slice
+    - ClothMade
   - type: Construction
     graph: DoughRopeCotton
     node: start
@@ -489,7 +490,7 @@
           Quantity: 3.5
 
 - type: entity
-  name: dough rope
+  name: cotton dough rope
   parent: FoodBakingBase
   id: FoodDoughCottonRope
   description: A thin noodle of cotton dough. Can be cooked into a cotton bagel.
@@ -512,6 +513,10 @@
           Quantity: 1.5
         - ReagentId: Fiber
           Quantity: 3.5
+  - type: Tag
+    tags:
+     - ClothMade
+     - Ingredient
 
 - type: entity
   name: raw pastry base
@@ -715,6 +720,12 @@
     entries:
       Taco: CheeseTaco
       Burger: CheeseBurger
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: cheesewedge-inhand-left
+      right:
+      - state: cheesewedge-inhand-right
 
 - type: entity
   name: chèvre log
