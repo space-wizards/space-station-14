@@ -1,5 +1,5 @@
 - type: entity
-  id: VoiceLock
+  id: SyndicateLock
   abstract: true
   components:
   - type: Lock
@@ -13,12 +13,22 @@
     lockingSound: null
     lockTime: 0
     unlockTime: 0
-  - type: TriggerOnVoice
-    listenRange: 2 # more fun
-    startRecordingVerb: voice-trigger-lock-verb-record
-    recordingVerbMessage: voice-trigger-lock-verb-message
-    inspectUninitializedLoc: voice-trigger-lock-on-uninitialized
-    inspectInitializedLoc: voice-trigger-lock-on-examine
+  - type: SelectableComponentAdder
+    selections: 1
+    entries:
+    - verbName: syndicate-lock-verb-no-lock
+      priority: 0
+      componentsToAdd: null
+    - verbName: voice-trigger-lock-add-verb
+      priority: 1
+      componentsToAdd:
+      - type: TriggerOnVoice
+        listenRange: 2 # more fun
+        startRecordingVerb: voice-trigger-lock-verb-record
+        recordingVerbMessage: voice-trigger-lock-verb-message
+        inspectUninitializedLoc: voice-trigger-lock-on-uninitialized
+        inspectInitializedLoc: voice-trigger-lock-on-examine
+    verbCategoryName: syndicate-lock-verb-category-name
   - type: LockOnTrigger
   - type: ActiveListener
   - type: VoiceTriggerLock
