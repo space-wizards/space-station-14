@@ -51,10 +51,9 @@ public sealed partial class ArcadeEnemyInvincibleWireAction : BaseToggleWireActi
 
     public override void ToggleValue(EntityUid owner, bool setting)
     {
-        if (EntityManager.TryGetComponent<SpaceVillainArcadeComponent>(owner, out var arcade)
-        && arcade.Game != null)
+        if (EntityManager.TryGetComponent<SpaceVillainArcadeComponent>(owner, out var arcade))
         {
-            arcade.Game.VillainChar.Invincible = !setting;
+            arcade.VillainInvincFlag = !setting;
         }
     }
 

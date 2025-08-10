@@ -13,9 +13,17 @@ public sealed partial class SpaceVillainArcadeComponent : SharedSpaceVillainArca
     /// </summary>
     [ViewVariables]
     public bool OverflowFlag;
-
+    /// <summary>
+    /// Flag for if the Player Fighter is Invincible or not
+    /// </summary>
     [ViewVariables]
     public bool InvincFlag;
+
+    /// <summary>
+    /// Flag for if the Villain Fighter is Invincible or not
+    /// </summary>
+    [ViewVariables]
+    public bool VillainInvincFlag;
     /// <summary>
     /// The current session of the SpaceVillain game for this arcade machine.
     /// </summary>

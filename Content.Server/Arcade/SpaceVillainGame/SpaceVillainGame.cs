@@ -81,7 +81,7 @@ public sealed partial class SpaceVillainGame
             Hp = 45,
             MpMax = 20,
             Mp = 20,
-            Invincible = false
+            Invincible = arcade.VillainInvincFlag
         };
     }
 
