@@ -43,7 +43,7 @@ public sealed partial class ZombieComponent : Component
     };
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public float ZombieMovementSpeedDebuff = 0.80f;
+    public float ZombieMovementSpeedDebuff = 0.80f; // Starlight-edit
 
     /// <summary>
     /// The skin color of the zombie
