@@ -1198,10 +1198,8 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesPercy
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesPercy
         - type: TextToSpeech
           voice: medic
 
@@ -1248,10 +1246,8 @@
               acts: [ "Destruction" ]
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesAsh
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesAsh
         - type: TextToSpeech
           voice: wanderer
 
@@ -1273,10 +1269,8 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesGlados
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesGlados
         - type: TextToSpeech
           voice: circusbaby
 
@@ -1298,10 +1292,8 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesWEH
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesWEH
         - type: TextToSpeech
           voice: circusbaby
 
@@ -1324,10 +1316,8 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesRufia
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesRufia
         - type: TextToSpeech
           voice: himeko
 
@@ -1383,10 +1373,8 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
-        - type: Advertise
-          pack: PlushiesPoley
-          minimumWait: 120
-          maximumWait: 240
+        - type: DatasetVocalizer
+          dataset: PlushiesPoley
         - type: TextToSpeech
           voice: neon
 
