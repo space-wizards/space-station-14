@@ -1,0 +1,61 @@
+- type: startingGear
+  id: NTNCHardsuitGear
+  equipment:
+    jumpsuit: ClothingUniformNTNCFatigues
+    back: ClothingBackpackBlueShield
+    shoes: ClothingShoesBootsJackFilled
+    outerClothing: ClothingOuterHardsuitNTNCConsortium
+    id: NTNCCSPDA
+    eyes: ClothingEyesGlassesBlueShield
+    ears: ClothingHeadsetAltCentCom
+    mask: ClothingMaskGasSecurity
+    belt: ClothingBeltBlueShieldWebbingFilled
+    gloves: ClothingHandsGlovesCombat
+    suitstorage: WeaponSubMachineGunWt550
+
+- type: startingGear
+  id: NTNCTrainerGear
+  equipment:
+    jumpsuit: ClothingUniformNTNCFatigues
+    back: ClothingBackpackBlueShield
+    shoes: ClothingShoesBootsJackFilled
+    head: ClothingHeadHatBeretCommand
+    outerClothing: ClothingOuterHardsuitNTNCConsortium
+    id: NTNCCSPDA
+    eyes: ClothingEyesGlassesBlueShield
+    ears: ClothingHeadsetAltCentCom
+    mask: ClothingMaskGasSecurity
+    belt: ClothingBeltBlueShieldWebbingFilled
+    gloves: ClothingHandsGlovesCombat
+    suitstorage: WeaponSubMachineGunWt550
+
+- type: startingGear
+  id: NTNCBasicGear
+  equipment:
+    jumpsuit: ClothingUniformNTNCFatigues
+    back: ClothingBackpackBlueShield
+    shoes: ClothingShoesBootsJackFilled
+    head: ClothingHeadHelmetHardsuitNTNCConsortium
+    outerClothing: ClothingOuterVestNTNC
+    id: NTNCCSPDA
+    eyes: ClothingEyesGlassesBlueShield
+    ears: ClothingHeadsetAltCentCom
+    mask: ClothingMaskGasSecurity
+    belt: ClothingBeltBlueShieldWebbingFilled
+    gloves: ClothingHandsGlovesCombat
+    suitstorage: WeaponSubMachineGunWt550
+
+- type: startingGear
+  id: NTNCMedicGear
+  equipment:
+    jumpsuit: ClothingUniformNTNCFatigues
+    back: ClothingBackpackDuffelBlueShield
+    shoes: ClothingShoesBootsJackFilled
+    outerClothing: ClothingOuterHardsuitNTNCConsortiumMedic
+    id: NTNCCSPDA
+    eyes: ClothingEyesGlassesBlueShield
+    ears: ClothingHeadsetAltCentCom
+    mask: ClothingMaskGasSecurity
+    belt: ClothingBeltBlueShieldWebbingFilled
+    gloves: ClothingHandsGlovesCombat
+    suitstorage: WeaponSubMachineGunWt550

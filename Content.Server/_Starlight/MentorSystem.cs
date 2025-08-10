@@ -33,6 +33,8 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared._NullLink;
+using Content.Server._NullLink.PlayerData;
 
 namespace Content.Server.Administration.Systems;
 
@@ -43,6 +45,8 @@ public sealed partial class MentorSystem : SharedMentorSystem
 
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!;
+    [Dependency] private readonly ISharedNullLinkPlayerRolesReqManager _playerRoles = default!;
+    [Dependency] private readonly INullLinkPlayerManager _nullLinkPlayers = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PlayerRateLimitManager _rateLimit = default!;
@@ -91,7 +95,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
         var adminData = _adminManager.GetAdminData(senderSession);
 
         var senderIsAdmin = adminData?.HasFlag(AdminFlags.Adminhelp) ?? false;
-        var senderIsMentor = _playerRolesManager.GetPlayerData(senderSession)?.HasFlag(PlayerFlags.Mentor) ?? false;
+        var senderIsMentor = _playerRoles.IsMentor(senderSession);
         if (!senderIsAdmin && !senderIsMentor && _rateLimit.CountAction(senderSession, RateLimitKey) != RateLimitStatus.Allowed)
             return;
         
@@ -151,7 +155,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
                 PlaySound = false,
                 TicketClosed = true
             };
-            var nonparticipantsRecipients = _playerRolesManager.Mentors
+            var nonparticipantsRecipients = _nullLinkPlayers.Mentors
                 .Except([_playerManager.GetSessionById(ticket.Creator), _playerManager.GetSessionById(ticket.Mentor.Value)])
                 .Except(_adminManager.ActiveAdmins);
             foreach (var channel in nonparticipantsRecipients)
@@ -169,7 +173,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
             .Concat([_playerManager.GetSessionById(ticket.Creator)])
             .Concat(ticket.Mentor is not null
                 ? [_playerManager.GetSessionById(ticket.Mentor.Value)]
-                : _playerRolesManager.Mentors)
+                : _nullLinkPlayers.Mentors)
             .Distinct();
 
         foreach (var channel in recipients)
@@ -182,7 +186,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
         var adminData = _adminManager.GetAdminData(senderSession);
 
         var senderIsAdmin = adminData?.HasFlag(AdminFlags.Adminhelp) ?? false;
-        var senderIsMentor = _playerRolesManager.GetPlayerData(senderSession)?.HasFlag(PlayerFlags.Mentor) ?? false;
+        var senderIsMentor = _playerRoles.IsMentor(senderSession);
         if (!senderIsAdmin && !senderIsMentor && _rateLimit.CountAction(senderSession, RateLimitKey) != RateLimitStatus.Allowed)
             return;
         if (message.Ticket is not Guid ticketId)
@@ -211,7 +215,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
             .Concat([_playerManager.GetSessionById(ticket.Creator)])
             .Concat(ticket.Mentor is not null
                 ? [_playerManager.GetSessionById(ticket.Mentor.Value)]
-                : _playerRolesManager.Mentors)
+                : _nullLinkPlayers.Mentors)
             .Distinct();
 
         foreach (var channel in recipients)
@@ -237,7 +241,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
             .Concat([_playerManager.GetSessionById(ticket.Creator)])
             .Concat(ticket.Mentor is not null
                 ? [_playerManager.GetSessionById(ticket.Mentor.Value)]
-                : _playerRolesManager.Mentors)
+                : _nullLinkPlayers.Mentors)
             .Except([senderSession])
             .Distinct();
 
@@ -268,7 +272,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
             var recipients = _adminManager.ActiveAdmins
                  .Concat(ticket.Mentor is not null
                      ? [_playerManager.GetSessionById(ticket.Mentor.Value)]
-                     : _playerRolesManager.Mentors)
+                     : _nullLinkPlayers.Mentors)
                  .Except([e.Session])
                  .Distinct();
 

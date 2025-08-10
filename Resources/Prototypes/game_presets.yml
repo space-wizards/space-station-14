@@ -161,7 +161,7 @@
   rules:
   # - DummyNonAntagChance 🌟Starlight🌟
   - Traitor
-  - SubGamemodesRule
+  - SubGamemodesRuleNoChangelings #Starlight
   - BasicStationEventScheduler
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
@@ -307,12 +307,28 @@
   alias:
     - lingtraitor
     - traitorling
-  name: secret-title
-  description: secret-description
-  showInVote: false
+  name: traitorling-title
+  description: traitorling-description
+  showInVote: true #Starlight
+  minPlayers: 50 #Starlight
   rules:
     - Changeling
     - Traitor
-    - SubGamemodesRule
+    - SubGamemodesRuleNoChangelings #Starlight
     - BasicStationEventScheduler
+    - BasicRoundstartVariation
+
+#Starlight EventLight Gamemode for Event Usage 
+- type: gamePreset
+  id: EventLight
+  alias:
+    - eventlight
+    - eventlite
+    - eventdiet
+  name: eventlight-title
+  description: eventlight-description
+  showInVote: false
+  rules:
+    - SpaceTrafficControlEventScheduler
+    - ThiefGamerule
     - BasicRoundstartVariation
