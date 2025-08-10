@@ -12,17 +12,3 @@
   - type: ConditionalSpawner
     prototypes:
     - MobGingerbreadAI
-
-- type: entity
-  parent: MarkerBase
-  id: SpawnHonkBot
-  name: honk bot spawner
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: honkbot
-      sprite: Mobs/Silicon/Bots/honkbot.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobHonkBot
