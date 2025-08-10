@@ -1,3 +1,5 @@
+using Content.Shared.Speech;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.VoiceMask;
@@ -12,12 +14,14 @@ public enum VoiceMaskUIKey : byte
 public sealed class VoiceMaskBuiState : BoundUserInterfaceState
 {
     public readonly string Name;
-    public readonly string? Verb;
+    public readonly ProtoId<SpeechVerbPrototype>? Verb;
+    public readonly ProtoId<SpeechSoundsPrototype>? Sound;
 
-    public VoiceMaskBuiState(string name, string? verb)
+    public VoiceMaskBuiState(string name, ProtoId<SpeechVerbPrototype>? verb, ProtoId<SpeechSoundsPrototype>? sound)
     {
         Name = name;
         Verb = verb;
+        Sound = sound;
     }
 }
 
@@ -38,10 +42,24 @@ public sealed class VoiceMaskChangeNameMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class VoiceMaskChangeVerbMessage : BoundUserInterfaceMessage
 {
-    public readonly string? Verb;
+    public readonly ProtoId<SpeechVerbPrototype>? Verb;
 
-    public VoiceMaskChangeVerbMessage(string? verb)
+    public VoiceMaskChangeVerbMessage(ProtoId<SpeechVerbPrototype>? verb)
     {
         Verb = verb;
+    }
+}
+
+/// <summary>
+///     Change the speech noise prototype to override, or null to use the user's default noise.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class VoiceMaskChangeSoundMessage : BoundUserInterfaceMessage
+{
+    public readonly ProtoId<SpeechSoundsPrototype>? Sound;
+
+    public VoiceMaskChangeSoundMessage(ProtoId<SpeechSoundsPrototype>? sound)
+    {
+        Sound = sound;
     }
 }
