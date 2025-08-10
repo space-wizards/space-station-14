@@ -5,7 +5,7 @@ using Content.Shared.Trigger.Components.Effects;
 namespace Content.Server.Trigger.Systems;
 
 /// <summary>
-///     Trigger system for
+///     Trigger system for setting something on fire.
 /// </summary>
 public sealed class CombustOnTriggerSystem : EntitySystem
 {
