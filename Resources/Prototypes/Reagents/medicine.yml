@@ -162,7 +162,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 15
-        - !type:Drunk
+        - !type:drunk
 
 - type: reagent
   id: Cryoxadone
