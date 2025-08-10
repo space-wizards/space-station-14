@@ -21,12 +21,12 @@ public sealed class LockVisualizerSystem : VisualizerSystem<LockVisualsComponent
             powered = true;
 
         var unlockedStateExist = args.Sprite.BaseRSI?.TryGetState(comp.StateUnlocked, out _);
-
-        if (!powered) // Starlight-edit
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, powered); // Starlight-edit
             
         if (AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component))
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, !open);
+        {
+            var visible = open == true ? !open : powered; // Starlight-edit
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, visible); // Starlight-edit
+        }
         else if (!(bool)unlockedStateExist!)
             SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, locked);
 
