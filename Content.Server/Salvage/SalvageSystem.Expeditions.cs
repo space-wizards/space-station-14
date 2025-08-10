@@ -2,18 +2,14 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Salvage.Expeditions;
 using Content.Shared.CCVar;
-using Content.Shared.Examine;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Procedural;
-using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
-using Content.Shared.Salvage.Expeditions.Modifiers;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
 using Robust.Shared.GameStates;
 using Robust.Shared.Random;
-using Robust.Shared.Map;
 
 namespace Content.Server.Salvage;
 
