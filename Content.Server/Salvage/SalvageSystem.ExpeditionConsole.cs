@@ -17,7 +17,6 @@ public sealed partial class SalvageSystem
     public static readonly EntProtoId CoordinatesDisk = "CoordinatesDisk";
     public static readonly ProtoId<LocalizedDatasetPrototype> PlanetNames = "NamesBorer";
 
-
     private void OnSalvageClaimMessage(EntityUid uid, SalvageExpeditionConsoleComponent component, ClaimSalvageMessage args)
     {
         var station = _station.GetOwningStation(uid);
