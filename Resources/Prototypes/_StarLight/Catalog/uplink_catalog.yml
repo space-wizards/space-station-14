@@ -160,7 +160,6 @@
     Telecrystal: 2
   categories:
     - UplinkAmmo
-  conditions:
 
 - type: listing
   id: UplinkShotgunBreachingMagazine
