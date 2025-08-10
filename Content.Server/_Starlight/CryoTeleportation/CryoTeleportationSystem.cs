@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Server.Bed.Cryostorage;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
-using Content.Server.Polymorph.Components;
+using Content.Shared._Starlight.Polymorph.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Bed.Cryostorage;

@@ -66,3 +66,7 @@ trait-spanish-desc = Hola señor, donde esta la biblioteca.
 
 trait-painnumbness-name = Numb
 trait-painnumbness-desc = You lack any sense of feeling pain, being unaware of how hurt you may be.
+
+## 🌟Starlight🌟
+trait-clumsy-name = Clumsy
+trait-clumsy-desc = You are a bit accident-prone
