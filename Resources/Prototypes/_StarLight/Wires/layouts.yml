@@ -3,7 +3,8 @@
   wires:
   - !type:AccessWireAction
   - !type:AiInteractWireAction
-  dummyWires: 4
+  - !type:LogWireAction
+  dummyWires: 3
   
 - type: wireLayout
   id: MedibotControls
