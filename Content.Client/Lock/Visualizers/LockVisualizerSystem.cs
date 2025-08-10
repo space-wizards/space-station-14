@@ -1,5 +1,6 @@
 using Content.Shared.Storage;
 using Content.Shared.Lock;
+using Content.Shared.Power; // Starlight-edit
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Lock.Visualizers;
@@ -15,6 +16,9 @@ public sealed class LockVisualizerSystem : VisualizerSystem<LockVisualsComponent
         // Lock state for the entity.
         if (!AppearanceSystem.TryGetData<bool>(uid, LockVisuals.Locked, out var locked, args.Component))
             locked = true;
+        
+        if (!AppearanceSystem.TryGetData<bool>(uid, PowerDeviceVisuals.Powered, out var powered, args.Component)) // Starlight-edit
+            powered = true;
 
         var unlockedStateExist = args.Sprite.BaseRSI?.TryGetState(comp.StateUnlocked, out _);
 
@@ -22,6 +26,8 @@ public sealed class LockVisualizerSystem : VisualizerSystem<LockVisualsComponent
         {
             SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, !open);
         }
+        else if (!powered) // Starlight-edit
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, powered); // Starlight-edit
         else if (!(bool)unlockedStateExist!)
             SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, locked);
 

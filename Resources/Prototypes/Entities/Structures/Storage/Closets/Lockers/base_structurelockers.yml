@@ -90,10 +90,6 @@
         type: WiresBoundUserInterface
   - type: GenericVisualizer
     visuals:
-      enum.PowerDeviceVisuals.Powered:
-        enum.LockVisualLayers.Lock:
-          True: { visible: True }
-          False: { visible: False }
       enum.ElectrifiedVisuals.ShowSparks:
         enum.ElectrifiedLayers.Sparks:
           True: { visible: True }
