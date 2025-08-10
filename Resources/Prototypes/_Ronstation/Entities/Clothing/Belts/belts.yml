@@ -18,31 +18,32 @@
         - state: inhand-right 
   - type: ItemSlots
     slots:
-      pistol:
+#      pistol:
+      item:
         name: Pistol
         whitelist:
           tags:
           - WeaponPistolGendarme
-        priority: 2
-      shield:
-        name: Shield
-        whitelist:
-          tags:
-          - HolographicTowerShield
-        blacklist:
-          sizes:
-          - Ginormous
-        priority: 1
+#        priority: 2
+#      shield:
+#        name: Shield
+#        whitelist:
+#          tags:
+#          - HolographicTowerShield
+#        blacklist:
+#          sizes:
+#          - Ginormous
+#        priority: 1
   - type: ItemMapper
     mapLayers:
       pistol:
         whitelist:
           tags:
           - WeaponPistolGendarme
-      shield:
-        whitelist:
-          tags:
-          - HolographicTowerShield
+#      shield:
+#        whitelist:
+#          tags:
+#          - HolographicTowerShield
   - type: Appearance
 
 - type: entity
@@ -52,7 +53,7 @@
   components:
   - type: ContainerFill
     containers:
-      pistol:
+      item:
       - WeaponPistolGendarme
         #      shield:
         #      - HoloTowerShield
