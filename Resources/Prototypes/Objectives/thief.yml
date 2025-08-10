@@ -318,7 +318,7 @@
     difficulty: 0.3
 
 - type: entity
-  paren: BaseThiefStealObjective
+  parent: BaseThiefStealObjective
   id: BartenderShotgunStealObjective
   components:
   - type: NotJobRequirement

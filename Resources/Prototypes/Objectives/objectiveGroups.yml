@@ -62,29 +62,34 @@
     HeadBedsheetStealCollectionObjective: 1
     StampStealCollectionObjective: 1
     DoorRemoteStealCollectionObjective: 1
+    OfficerHandgunsStealCollectionObjective: 1          #sec
     TechnologyDiskStealCollectionObjective: 1           #sci
     MailStealCollectionObjective: 1                     #cargo
     IDCardsStealCollectionObjective: 1
-    LAMPStealCollectionObjective: 2                     #only for moth
+    LAMPStealCollectionObjective: 0.1                   #only for moth, weight decreased cause boring
 
 - type: weightedRandom
   id: ThiefObjectiveGroupItem
   weights:
+    DeckardStealObjective: 1                            #command
+    ChiefEngineerToolbeltStealObjective: 1
+    ClothingHeadsetAltMedicalStealObjective: 1
     ForensicScannerStealObjective: 1                    #sec
     FlippoEngravedLighterStealObjective: 0.5
     ClothingHeadHatWardenStealObjective: 1
     WantedListCartridgeStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
-    ClothingHeadsetAltMedicalStealObjective: 1
     FireAxeStealObjective: 1                            #eng
     AmePartFlatpackStealObjective: 1
     ExpeditionsCircuitboardStealObjective: 1            #sup
     CargoShuttleCircuitboardStealObjective: 1
-    ClothingEyesHudBeerStealObjective: 1                #srv
+    ClothingEyesHudBeerStealObjective: 0.5                #srv
+    BartenderShotgunStealObjective: 1
     BibleStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
+
 
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure
