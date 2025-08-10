@@ -91,29 +91,29 @@
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshieldshirt.rsi
 
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitSalvageLead
-  name: salvage leads's jumpsuit
-  description: It's a snappy jumpsuit with a sturdy set of overalls. It's very dirty.
-  components:
-  - type: RollUpSleeves
-  - type: Sprite
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/salvagelead.rsi
-  - type: Clothing
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/salvagelead.rsi # DOTS - finish sprites
+#- type: entity
+#  parent: ClothingUniformBase
+#  id: ClothingUniformJumpsuitSalvageLead
+#  name: salvage leads's jumpsuit
+#  description: It's a snappy jumpsuit with a sturdy set of overalls. It's very dirty.
+#  components:
+#  - type: RollUpSleeves
+#  - type: Sprite
+#    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/salvagelead.rsi
+#  - type: Clothing
+#    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/salvagelead.rsi
 
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitSalvageMedic
-  name: salvage medic's jumpsuit
-  description: It's a snappy jumpsuit with a sturdy set of overalls. It's very bloody.
-  components:
-  - type: RollUpSleeves
-  - type: Sprite
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/salvagemedic.rsi
-  - type: Clothing
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/salvagemedic.rsi # DOTS - finish sprites
+#- type: entity
+#  parent: ClothingUniformBase
+#  id: ClothingUniformJumpsuitSalvageMedic
+#  name: salvage medic's jumpsuit
+#  description: It's a snappy jumpsuit with a sturdy set of overalls. It's very bloody.
+#  components:
+#  - type: RollUpSleeves
+#  - type: Sprite
+#    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/salvagemedic.rsi
+#  - type: Clothing
+#    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/salvagemedic.rsi
 
 - type: entity
   parent: ClothingUniformBase

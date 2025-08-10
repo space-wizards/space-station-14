@@ -28,7 +28,7 @@
 - type: startingGear
   id: SalvageMedicGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitSalvageMedic
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
     id: SalvageMedicPDA
     ears: ClothingHeadsetMining
     #storage:
