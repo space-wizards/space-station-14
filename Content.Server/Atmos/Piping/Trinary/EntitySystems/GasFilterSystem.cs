@@ -61,9 +61,9 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
-
-            // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferVol = filter.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
+            
+            //starlight edit - Moved logic to a new method
+            var transferVol = GetTransferRate(filter, args, inletNode.Air, outletNode); //starlight edit
 
             if (transferVol <= 0)
             {
@@ -75,18 +75,71 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             if (filter.FilteredGas.HasValue)
             {
-                var filteredOut = new GasMixture() { Temperature = removed.Temperature };
+                var wantsToFilter = new GasMixture(removed.Volume) { Temperature = removed.Temperature };
 
-                filteredOut.SetMoles(filter.FilteredGas.Value, removed.GetMoles(filter.FilteredGas.Value));
+                wantsToFilter.SetMoles(filter.FilteredGas.Value, removed.GetMoles(filter.FilteredGas.Value));
                 removed.SetMoles(filter.FilteredGas.Value, 0f);
-
-                var target = filterNode.Air.Pressure < Atmospherics.MaxOutputPressure ? filterNode : inletNode;
-                _atmosphereSystem.Merge(target.Air, filteredOut);
-                _ambientSoundSystem.SetAmbience(uid, filteredOut.TotalMoles > 0f);
+                
+                // starlight edit start - fix subtick
+                var filterVolume = GetTransferRate(filter, args, wantsToFilter, filterNode);
+                
+                // Remove the filtered volume that actually can fit in the filter
+                var actuallyFiltered = wantsToFilter.RemoveVolume(filterVolume);
+                
+                // The remaining gas in wantsToFilter should be returned to inlet
+                var returned = wantsToFilter;
+                
+                // Put gases in their respective nodes
+                _atmosphereSystem.Merge(filterNode.Air, actuallyFiltered);
+                _atmosphereSystem.Merge(inletNode.Air, returned);
+                // starlight edit end - fix subtick
+                
+                _ambientSoundSystem.SetAmbience(uid, wantsToFilter.TotalMoles > 0f); // starlight edit - fix subtick
             }
 
             _atmosphereSystem.Merge(outletNode.Air, removed);
         }
+
+        
+        //starlight fix subtick
+        /// <summary>
+        /// Calculates how many moles of gas to transfer from the inlet to the outlet.
+        /// </summary>
+        /// <param name="filter">A filter component</param>
+        /// <param name="args">Arguments of the event</param>
+        /// <param name="inletGasMixture">Gas mixture in the inlet node (simplified for easier use)</param>
+        /// <param name="outletNode">Output for the gas</param>
+        /// <returns>Returns the flow rate in volume(L/s) of how much gas has to be moved to fill the outlet</returns>
+        private float GetTransferRate(GasFilterComponent filter, AtmosDeviceUpdateEvent args, GasMixture inletGasMixture,
+            PipeNode outletNode)
+        {
+            float wantToTransfer = filter.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
+
+            // Get The Volume to transfer, do not attempt to transfer more than the pipe can hold.
+            float transferVolume = Math.Min(inletGasMixture.Volume, wantToTransfer);
+
+            // Calculate how many moles does this transfer contain
+            float transferMoles =
+                inletGasMixture.Pressure * transferVolume / (inletGasMixture.Temperature * Atmospherics.R);
+
+            // Calculate how many moles can outlet still contain
+            float molesSpaceLeft = (Atmospherics.MaxOutputPressure - outletNode.Air.Pressure) * outletNode.Air.Volume /
+                                   (outletNode.Air.Temperature * Atmospherics.R);
+
+            // Get the lower value of the two, and clamp it to the transfer rate
+            float actualMolesTransfered = Math.Clamp(transferMoles, 0, Math.Max(0, molesSpaceLeft));
+
+            float actualTransferVolume = 0;
+            if (actualMolesTransfered > 0 && inletGasMixture.Pressure > 0)
+            {
+                // Calculate how much volume is needed to transfer those moles
+                actualTransferVolume = actualMolesTransfered * inletGasMixture.Temperature * Atmospherics.R /
+                                       inletGasMixture.Pressure;
+            }
+
+            return actualTransferVolume;
+        }
+        //starlight end
 
         private void OnFilterLeaveAtmosphere(EntityUid uid, GasFilterComponent filter, ref AtmosDeviceDisabledEvent args)
         {

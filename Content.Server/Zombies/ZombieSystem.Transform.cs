@@ -186,6 +186,9 @@ public sealed partial class ZombieSystem
             //This is done here because non-humanoids shouldn't get baller damage
             melee.Damage = zombiecomp.DamageOnBite;
 
+            // Starlight, This is me attempting to add a melee speed limit to zombies, with literally zero C# knowledge, lol, and lmao.
+            melee.AttackRate = zombiecomp.BiteSpeed;
+
             // humanoid zombies get to pry open doors and shit
             var pryComp = EnsureComp<PryingComponent>(target);
             pryComp.SpeedModifier = 0.75f;

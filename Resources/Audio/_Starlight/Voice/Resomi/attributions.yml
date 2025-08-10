@@ -1,0 +1,4 @@
+- files: ["BirdChirp.ogg", "BirdGiggle.ogg","BirdSquawk.ogg", "BirdSting.ogg", "HighBirdCall.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from public wildlife sound library xeno-canto.org"
+  source: "https://xeno-canto.org"

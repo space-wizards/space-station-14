@@ -24,28 +24,6 @@
     - ClothingUnderSocksCoder
 
 - type: loadout
-  id: ClothingShoesHighheelBoots
-  effects:
-    - !type:JobRequirementLoadoutEffect
-      requirement:
-        !type:OverallPlaytimeRequirement
-        time: 144000 # 40hr
-  storage:
-    back:
-    - ClothingShoesHighheelBoots
-
-- type: loadout
-  id: ClothingShoesHighheelShoes
-  effects:
-    - !type:JobRequirementLoadoutEffect
-      requirement:
-        !type:OverallPlaytimeRequirement
-        time: 144000 # 40hr
-  storage:
-    back:
-    - ClothingShoesHighheelShoesAesthetic
-
-- type: loadout
   id: ClothWrap
   storage:
     back:
