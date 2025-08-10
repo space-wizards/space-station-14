@@ -11,8 +11,10 @@
     useAccess: false
     unlockingSound: null # TODO: Maybe add sounds but just to the user?
     lockingSound: null
+    breakOnAccessBreaker: true # more fun
     lockTime: 0
     unlockTime: 0
+  - type: LockOnTrigger
   - type: SelectableComponentAdder
     selections: 1
     entries:
@@ -28,7 +30,6 @@
         recordingVerbMessage: voice-trigger-lock-verb-message
         inspectUninitializedLoc: voice-trigger-lock-on-uninitialized
         inspectInitializedLoc: voice-trigger-lock-on-examine
+      - type: ActiveListener
+      - type: VoiceTriggerLock
     verbCategoryName: syndicate-lock-verb-category-name
-  - type: LockOnTrigger
-  - type: ActiveListener
-  - type: VoiceTriggerLock
