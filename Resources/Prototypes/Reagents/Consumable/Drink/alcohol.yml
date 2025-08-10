@@ -1637,7 +1637,7 @@
     Drink:
       effects:
       - !type:SatiateThirst
-        factor: 2
+        factor: 1
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.2
