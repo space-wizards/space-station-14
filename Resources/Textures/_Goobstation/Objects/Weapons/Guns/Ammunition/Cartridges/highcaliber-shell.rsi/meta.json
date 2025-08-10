@@ -1,0 +1,65 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprited by Gallaghin",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "base-spent"
+        },
+        {
+            "name": "beanbag"
+        },
+        {
+            "name": "beanbag-spent"
+        },
+        {
+            "name": "incendiary"
+        },
+        {
+            "name": "incendiary-spent"
+        },
+        {
+            "name": "practice"
+        },
+        {
+            "name": "practice-spent"
+        },
+        {
+            "name": "slug"
+        },
+        {
+            "name": "slug-spent"
+        },
+        {
+            "name": "depleted-uranium"
+        },
+        {
+            "name": "depleted-uranium-spent"
+        },
+        {
+            "name": "emp"
+        },
+        {
+            "name": "emp-spent"
+        },
+        {
+            "name": "snare"
+        },
+        {
+            "name": "snare-spent"
+        },
+        {
+            "name": "flash"
+        },
+        {
+            "name": "flash-spent"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "version": 1,
+    "size": { "x": 96, "y": 34 },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from TGStation at commit https://github.com/tgstation/tgstation/commit/e9cc620e9f908e18949031c6e1b5811e3fc5af4e, sprite split and grayscaled by JORJ949",
+    "states": [
+        {
+            "name": "robotic_base",
+            "directions": 4
+        },
+        {
+            "name": "robotic_light",
+            "directions": 4
+        }
+    ]
+}

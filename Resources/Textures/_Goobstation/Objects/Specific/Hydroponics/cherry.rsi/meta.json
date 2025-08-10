@@ -1,0 +1,44 @@
+  {
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "All but seed.png and pit.png taken from taken from https://github.com/ParadiseSS13/Paradise/commit/bd91a1b962fe9bd38e346e9fafd4ebb10784fcb3 -- seed.png made by jellygato -- pit.png taken from https://github.com/vgstation-coders/vgstation13/commit/1dbcf389b0ec6b2c51b002df5fef8dd1519f8068 and remade by RumiTiger",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	{
+      "name": "stage-1"
+    },
+    {
+      "name": "stage-2"
+    },
+    {
+      "name": "stage-3"
+    },
+    {
+      "name": "stage-4"
+    },
+    {
+      "name": "stage-5"
+    },
+    {
+      "name": "stage-6"
+    },
+    {
+      "name": "harvest"
+    },
+    {
+      "name": "dead"
+    },
+	{
+      "name": "seed"
+    },
+	{
+      "name": "produce"
+    },
+    {
+      "name": "pit"
+    }
+  ]
+}

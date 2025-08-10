@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Based on Citadelstation at commit https://github.com/Citadel-Station-13/Citadel-Station-13/commit/0a4a0fadb32e3245f8bc2ee03f88d776de1852b5 and tgstation at commit https://github.com/tgstation/tgstation/commit/0345de358247afe0eb23ed0ff509b9b5f1995135 | Original sprite by @Zydras (github), resprited (colored) for bluespace bag by erhardsteinhauer (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon",
+      "delays": [
+        [ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ]
+      ]
+    },
+    {
+      "name": "icon-unlit",
+      "delays": [
+        [ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ]
+      ]
+    },
+    {
+      "name": "broken"
+    },
+    {
+      "name": "holding-equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "holding-equipped-BACKPACK-unlit",
+      "directions": 4,
+      "delays": [
+        [ 0.6 ],
+        [ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ],
+        [ 0.6 ],
+        [ 0.6 ]
+      ]
+    },
+    {
+      "name": "broken-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "broken-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-unlit",
+      "directions": 4,
+      "delays": [
+        [ 0.7 ],
+        [ 0.7 ],
+        [ 0.7 ],
+        [ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ]
+      ]
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-unlit",
+      "directions": 4,
+      "delays": [
+        [ 0.7 ],
+        [ 0.7 ],
+        [ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ],
+        [ 0.7 ]
+      ]
+    }
+  ]
+}

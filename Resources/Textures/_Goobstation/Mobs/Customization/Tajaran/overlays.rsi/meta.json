@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "copyright": "Creator was not supplied, oldest reference tracked to KasparoVy @ https://github.com/ParadiseSS13/Paradise/commit/3610cfd4ea7e9bffc804320851f0b0a625db1dba. Minor tweaks by SX-7",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "patch",
+            "directions": 4
+        },
+        {
+            "name": "points",
+            "directions": 4
+        }
+    ]
+}

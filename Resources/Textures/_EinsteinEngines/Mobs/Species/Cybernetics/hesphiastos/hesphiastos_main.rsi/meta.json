@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "copyright": "Sprites originally from Paradise Station (https://github.com/ParadiseSS13/Paradise). Monochromatic version made by: DayOS (https://github.com/Day-OS)",
+  "license": "CC-BY-SA-3.0",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "l_foot-1",
+      "directions": 4
+    },
+    {
+      "name": "l_foot-2",
+      "directions": 4
+    },
+    {
+      "name": "r_foot-1",
+      "directions": 4
+    },
+    {
+      "name": "r_foot-2",
+      "directions": 4
+    },
+    {
+      "name": "l_leg-1",
+      "directions": 4
+    },
+    {
+      "name": "l_leg-2",
+      "directions": 4
+    },
+    {
+      "name": "r_leg-1",
+      "directions": 4
+    },
+    {
+      "name": "r_leg-2",
+      "directions": 4
+    },
+    {
+      "name": "torso-1",
+      "directions": 4
+    },
+    {
+      "name": "torso-2",
+      "directions": 4
+    },
+    {
+      "name": "l_arm-1",
+      "directions": 4
+    },
+    {
+      "name": "l_arm-2",
+      "directions": 4
+    },
+    {
+      "name": "r_arm-1",
+      "directions": 4
+    },
+    {
+      "name": "r_arm-2",
+      "directions": 4
+    },
+    {
+      "name": "l_hand-1",
+      "directions": 4
+    },
+    {
+      "name": "l_hand-2",
+      "directions": 4
+    },
+    {
+      "name": "r_hand-1",
+      "directions": 4
+    },
+    {
+      "name": "r_hand-2",
+      "directions": 4
+    }
+  ]
+}

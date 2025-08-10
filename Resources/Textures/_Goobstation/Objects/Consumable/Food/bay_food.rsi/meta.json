@@ -1,0 +1,1231 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Baystation12 at https://github.com/Baystation12/Baystation12/blob/464342c5dc8c417b7e79d56c69aa30445bdf3b75/icons/obj/food/food.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "plaincake"
+    },
+    {
+      "name": "cheesecake"
+    },
+    {
+      "name": "chocolatecake"
+    },
+    {
+      "name": "birthdaycake"
+    },
+    {
+      "name": "applecake"
+    },
+    {
+      "name": "orangecake"
+    },
+    {
+      "name": "lemoncake"
+    },
+    {
+      "name": "carrotcake"
+    },
+    {
+      "name": "limecake"
+    },
+    {
+      "name": "pumpkinpie"
+    },
+    {
+      "name": "braincake"
+    },
+    {
+      "name": "plaincake_slice"
+    },
+    {
+      "name": "cheesecake_slice"
+    },
+    {
+      "name": "chocolatecake_slice"
+    },
+    {
+      "name": "birthdaycakeslice"
+    },
+    {
+      "name": "applecakeslice"
+    },
+    {
+      "name": "orangecake_slice"
+    },
+    {
+      "name": "lemoncake_slice"
+    },
+    {
+      "name": "carrotcake_slice"
+    },
+    {
+      "name": "limecake_slice"
+    },
+    {
+      "name": "pumpkinpieslice"
+    },
+    {
+      "name": "braincakeslice"
+    },
+    {
+      "name": "pie"
+    },
+    {
+      "name": "applepie"
+    },
+    {
+      "name": "meatpie"
+    },
+    {
+      "name": "cherrypie"
+    },
+    {
+      "name": "xenomeatpie"
+    },
+    {
+      "name": "waffles"
+    },
+    {
+      "name": "soylent_green"
+    },
+    {
+      "name": "soylent_yellow"
+    },
+    {
+      "name": "rofflewaffles"
+    },
+    {
+      "name": "bread"
+    },
+    {
+      "name": "bananabread"
+    },
+    {
+      "name": "creamcheesebread"
+    },
+    {
+      "name": "meatbread"
+    },
+    {
+      "name": "tofubread"
+    },
+    {
+      "name": "xenomeatbread"
+    },
+    {
+      "name": "breadslice"
+    },
+    {
+      "name": "sandwich_top"
+    },
+    {
+      "name": "bananabreadslice"
+    },
+    {
+      "name": "creamcheesebreadslice"
+    },
+    {
+      "name": "meatbreadslice"
+    },
+    {
+      "name": "tofubreadslice"
+    },
+    {
+      "name": "xenobreadslice"
+    },
+    {
+      "name": "hburger"
+    },
+    {
+      "name": "cheeseburger"
+    },
+    {
+      "name": "xburger"
+    },
+    {
+      "name": "brainburger"
+    },
+    {
+      "name": "jellyburger"
+    },
+    {
+      "name": "fishburger"
+    },
+    {
+      "name": "tofuburger"
+    },
+    {
+      "name": "ghostburger",
+      "delays": [
+        [
+          0.1,
+          0.08,
+          0.060000002,
+          0.05,
+          0.04,
+          0.04,
+          0.07,
+          0.1,
+          0.13,
+          0.11,
+          0.089999996,
+          0.07,
+          0.05,
+          0.060000002,
+          0.07,
+          0.08,
+          0.1,
+          0.120000005
+        ]
+      ]
+    },
+    {
+      "name": "spellburger"
+    },
+    {
+      "name": "clownburger"
+    },
+    {
+      "name": "mimeburger"
+    },
+    {
+      "name": "roburger",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.4
+        ]
+      ]
+    },
+    {
+      "name": "bigbiteburger"
+    },
+    {
+      "name": "superbiteburger"
+    },
+    {
+      "name": "pizzamargherita"
+    },
+    {
+      "name": "meatpizza"
+    },
+    {
+      "name": "mushroompizza"
+    },
+    {
+      "name": "vegetablepizza"
+    },
+    {
+      "name": "fruitpizza"
+    },
+    {
+      "name": "pizzamargheritaslice"
+    },
+    {
+      "name": "meatpizzaslice"
+    },
+    {
+      "name": "mushroompizzaslice"
+    },
+    {
+      "name": "vegetablepizzaslice"
+    },
+    {
+      "name": "fruitpizzaslice"
+    },
+    {
+      "name": "cookie"
+    },
+    {
+      "name": "phelmbiscuit"
+    },
+    {
+      "name": "spagetti"
+    },
+    {
+      "name": "spagettiboiled"
+    },
+    {
+      "name": "meatballspagetti"
+    },
+    {
+      "name": "pastatomato"
+    },
+    {
+      "name": "spesslaw"
+    },
+    {
+      "name": "stewedsoymeat"
+    },
+    {
+      "name": "coldchili"
+    },
+    {
+      "name": "hotchili"
+    },
+    {
+      "name": "meatballsoup"
+    },
+    {
+      "name": "onionsoup"
+    },
+    {
+      "name": "nettlesoup"
+    },
+    {
+      "name": "wishsoup"
+    },
+    {
+      "name": "tomatosoup"
+    },
+    {
+      "name": "vegetablesoup"
+    },
+    {
+      "name": "clownstears"
+    },
+    {
+      "name": "mushroomsoup"
+    },
+    {
+      "name": "mysterysoup",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "herbsalad"
+    },
+    {
+      "name": "aesirsalad"
+    },
+    {
+      "name": "validsalad"
+    },
+    {
+      "name": "donut1"
+    },
+    {
+      "name": "donut2"
+    },
+    {
+      "name": "jdonut1"
+    },
+    {
+      "name": "jdonut2"
+    },
+    {
+      "name": "donut_chaos",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "fries"
+    },
+    {
+      "name": "cheesyfries"
+    },
+    {
+      "name": "carrotfries"
+    },
+    {
+      "name": "meatball"
+    },
+    {
+      "name": "monkeycubebox"
+    },
+    {
+      "name": "monkeycubewrap"
+    },
+    {
+      "name": "monkeycube"
+    },
+    {
+      "name": "egg"
+    },
+    {
+      "name": "egg-purple"
+    },
+    {
+      "name": "egg-blue"
+    },
+    {
+      "name": "egg-red"
+    },
+    {
+      "name": "egg-orange"
+    },
+    {
+      "name": "egg-yellow"
+    },
+    {
+      "name": "egg-green"
+    },
+    {
+      "name": "egg-rainbow"
+    },
+    {
+      "name": "egg-mime"
+    },
+    {
+      "name": "chocolateegg"
+    },
+    {
+      "name": "donkpocket"
+    },
+    {
+      "name": "donutbox"
+    },
+    {
+      "name": "eggbox5"
+    },
+    {
+      "name": "eggbox1"
+    },
+    {
+      "name": "eggbox2"
+    },
+    {
+      "name": "eggbox3"
+    },
+    {
+      "name": "eggbox4"
+    },
+    {
+      "name": "eggbox11"
+    },
+    {
+      "name": "eggbox6"
+    },
+    {
+      "name": "eggbox7"
+    },
+    {
+      "name": "eggbox8"
+    },
+    {
+      "name": "eggbox9"
+    },
+    {
+      "name": "eggbox10"
+    },
+    {
+      "name": "eggbox12"
+    },
+    {
+      "name": "eggbox0"
+    },
+    {
+      "name": "eggbox"
+    },
+    {
+      "name": "crackerbag6"
+    },
+    {
+      "name": "crackerbag5"
+    },
+    {
+      "name": "crackerbag4"
+    },
+    {
+      "name": "crackerbag3"
+    },
+    {
+      "name": "crackerbag2"
+    },
+    {
+      "name": "crackerbag1"
+    },
+    {
+      "name": "crackerbag0"
+    },
+    {
+      "name": "crackerbag"
+    },
+    {
+      "name": "tray"
+    },
+    {
+      "name": "muffin"
+    },
+    {
+      "name": "sugarsmall"
+    },
+    {
+      "name": "liquidfood"
+    },
+    {
+      "name": "tastybread"
+    },
+    {
+      "name": "skrellsnacks"
+    },
+    {
+      "name": "candy_corn"
+    },
+    {
+      "name": "cubancarp"
+    },
+    {
+      "name": "loadedbakedpotato"
+    },
+    {
+      "name": "omelette"
+    },
+    {
+      "name": "kabob"
+    },
+    {
+      "name": "tofu"
+    },
+    {
+      "name": "meat"
+    },
+    {
+      "name": "rottenmeat",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "xenomeat"
+    },
+    {
+      "name": "birdmeat"
+    },
+    {
+      "name": "birdsteak"
+    },
+    {
+      "name": "popcorn"
+    },
+    {
+      "name": "eggplantparm"
+    },
+    {
+      "name": "fortune_cookie"
+    },
+    {
+      "name": "berryclafoutis"
+    },
+    {
+      "name": "badrecipe"
+    },
+    {
+      "name": "meatsteak"
+    },
+    {
+      "name": "spacylibertyduff",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "amanitajelly",
+      "delays": [
+        [
+          5,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "poppypretzel"
+    },
+    {
+      "name": "bacon"
+    },
+    {
+      "name": "rawbacon"
+    },
+    {
+      "name": "plump_pie"
+    },
+    {
+      "name": "amanita_pie"
+    },
+    {
+      "name": "bearmeat"
+    },
+    {
+      "name": "enchiladas"
+    },
+    {
+      "name": "monkeysdelight"
+    },
+    {
+      "name": "baguette"
+    },
+    {
+      "name": "fishandchips"
+    },
+    {
+      "name": "sandwich_filling"
+    },
+    {
+      "name": "sandwich"
+    },
+    {
+      "name": "toastedsandwich"
+    },
+    {
+      "name": "stew"
+    },
+    {
+      "name": "jellytoast"
+    },
+    {
+      "name": "milosoup"
+    },
+    {
+      "name": "soydope"
+    },
+    {
+      "name": "watermelonslice"
+    },
+    {
+      "name": "candiedapple"
+    },
+    {
+      "name": "chocolatebar"
+    },
+    {
+      "name": "hugemushroomslice"
+    },
+    {
+      "name": "tomatomeat"
+    },
+    {
+      "name": "jellysandwich"
+    },
+    {
+      "name": "boiledslimecore"
+    },
+    {
+      "name": "twobread"
+    },
+    {
+      "name": "sausage"
+    },
+    {
+      "name": "fishfingers"
+    },
+    {
+      "name": "friedegg"
+    },
+    {
+      "name": "mint"
+    },
+    {
+      "name": "chawanmushi"
+    },
+    {
+      "name": "beetsoup"
+    },
+    {
+      "name": "gappletart"
+    },
+    {
+      "name": "pizzabox1"
+    },
+    {
+      "name": "pizzabox_messy"
+    },
+    {
+      "name": "pizzabox_open"
+    },
+    {
+      "name": "pizzabox4"
+    },
+    {
+      "name": "pizzabox2"
+    },
+    {
+      "name": "pizzabox3"
+    },
+    {
+      "name": "pizzabox_tag"
+    },
+    {
+      "name": "pizzabox5"
+    },
+    {
+      "name": "cracker"
+    },
+    {
+      "name": "boiledrice"
+    },
+    {
+      "name": "rpudding"
+    },
+    {
+      "name": "tofurkey"
+    },
+    {
+      "name": "stuffing"
+    },
+    {
+      "name": "dionaroast"
+    },
+    {
+      "name": "taco"
+    },
+    {
+      "name": "hotdog"
+    },
+    {
+      "name": "0box-donut1"
+    },
+    {
+      "name": "0box-donut_chaos",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "1box-donut1"
+    },
+    {
+      "name": "1box-donut_chaos",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "2box-donut1"
+    },
+    {
+      "name": "2box-donut_chaos",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "3box-donut1"
+    },
+    {
+      "name": "3box-donut_chaos",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "4box-donut1"
+    },
+    {
+      "name": "4box-donut_chaos",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "5box-donut1"
+    },
+    {
+      "name": "5box-donut_chaos",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "6box-donut1"
+    },
+    {
+      "name": "6box-donut_chaos"
+    },
+    {
+      "name": "icecream_cone_waffle"
+    },
+    {
+      "name": "icecream_cone_chocolate"
+    },
+    {
+      "name": "icecream_vanilla"
+    },
+    {
+      "name": "icecream_strawberry"
+    },
+    {
+      "name": "icecream_blue"
+    },
+    {
+      "name": "icecream_chocolate"
+    },
+    {
+      "name": "bunbun"
+    },
+    {
+      "name": "barbecue"
+    },
+    {
+      "name": "threebread"
+    },
+    {
+      "name": "pancakes"
+    },
+    {
+      "name": "icecream_cherry"
+    },
+    {
+      "name": "icecream_banana"
+    },
+    {
+      "name": "hotcorgi"
+    },
+    {
+      "name": "onionrings"
+    },
+    {
+      "name": "flour"
+    },
+    {
+      "name": "emptycondiment"
+    },
+    {
+      "name": "mixedcondiments"
+    },
+    {
+      "name": "enzyme"
+    },
+    {
+      "name": "hotsauce"
+    },
+    {
+      "name": "ketchup"
+    },
+    {
+      "name": "soysauce"
+    },
+    {
+      "name": "mayo"
+    },
+    {
+      "name": "vinegar"
+    },
+    {
+      "name": "saltshakersmall"
+    },
+    {
+      "name": "peppermillsmall"
+    },
+    {
+      "name": "coldsauce"
+    },
+    {
+      "name": "cereal_box"
+    },
+    {
+      "name": "chips"
+    },
+    {
+      "name": "proteinbar"
+    },
+    {
+      "name": "sosjerky"
+    },
+    {
+      "name": "4no_raisins"
+    },
+    {
+      "name": "space_twinkie"
+    },
+    {
+      "name": "syndi_cakes"
+    },
+    {
+      "name": "cheesie_honkers"
+    },
+    {
+      "name": "salt"
+    },
+    {
+      "name": "nanopasta",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "ancient_hotdog"
+    },
+    {
+      "name": "ancient_fries"
+    },
+    {
+      "name": "ancient_pizza"
+    },
+    {
+      "name": "ancient_burger"
+    },
+    {
+      "name": "ancient_taco"
+    },
+    {
+      "name": "ancient_hburger"
+    },
+    {
+      "name": "pistachios"
+    },
+    {
+      "name": "semki"
+    },
+    {
+      "name": "salo"
+    },
+    {
+      "name": "driedfish"
+    },
+    {
+      "name": "squid"
+    },
+    {
+      "name": "croutons"
+    },
+    {
+      "name": "lizard_egg"
+    },
+    {
+      "name": "mre"
+    },
+    {
+      "name": "mre1"
+    },
+    {
+      "name": "vegmre"
+    },
+    {
+      "name": "vegmre1"
+    },
+    {
+      "name": "meatmre"
+    },
+    {
+      "name": "meatmre1"
+    },
+    {
+      "name": "meatcube"
+    },
+    {
+      "name": "spiderleg"
+    },
+    {
+      "name": "spiderleg_c"
+    },
+    {
+      "name": "pouch_small1"
+    },
+    {
+      "name": "packet_medium"
+    },
+    {
+      "name": "katsu"
+    },
+    {
+      "name": "crayonmre1"
+    },
+    {
+      "name": "crayonmre"
+    },
+    {
+      "name": "packet_small_white"
+    },
+    {
+      "name": "packet_small_red"
+    },
+    {
+      "name": "pouch_medium"
+    },
+    {
+      "name": "packet_small_black"
+    },
+    {
+      "name": "pouch_small"
+    },
+    {
+      "name": "packet_small"
+    },
+    {
+      "name": "pouch_medium1"
+    },
+    {
+      "name": "chazuke"
+    },
+    {
+      "name": "jupiter"
+    },
+    {
+      "name": "lunacake"
+    },
+    {
+      "name": "tidegobs"
+    },
+    {
+      "name": "saturno"
+    },
+    {
+      "name": "pluto"
+    },
+    {
+      "name": "mooncake_wrapped"
+    },
+    {
+      "name": "mochicake_wrapped"
+    },
+    {
+      "name": "lunacake_wrapped"
+    },
+    {
+      "name": "venus"
+    },
+    {
+      "name": "oort"
+    },
+    {
+      "name": "mars"
+    },
+    {
+      "name": "ricecake"
+    },
+    {
+      "name": "dango"
+    },
+    {
+      "name": "pokeys"
+    },
+    {
+      "name": "weebonuts"
+    },
+    {
+      "name": "chocobanana"
+    },
+    {
+      "name": "candy"
+    },
+    {
+      "name": "oliveoilsmall"
+    },
+    {
+      "name": "fishfillet"
+    },
+    {
+      "name": "cheesewheel"
+    },
+    {
+      "name": "cheesewedge"
+    },
+    {
+      "name": "cheesewheel-fresh"
+    },
+    {
+      "name": "cheesewedge-fresh"
+    },
+    {
+      "name": "cheesewheel-blue"
+    },
+    {
+      "name": "cheesewedge-blue"
+    },
+    {
+      "name": "chilied-eggs"
+    },
+    {
+      "name": "hatchling-surprise"
+    },
+    {
+      "name": "red-sun-special"
+    },
+    {
+      "name": "sea-delight"
+    },
+    {
+      "name": "stok-skewers"
+    },
+    {
+      "name": "gukhe-fish"
+    },
+    {
+      "name": "aghrassh-cake"
+    },
+    {
+      "name": "clam-chowder"
+    },
+    {
+      "name": "bisque"
+    },
+    {
+      "name": "stuffed-clam"
+    },
+    {
+      "name": "steamed-mussels"
+    },
+    {
+      "name": "oysters-rockefeller"
+    },
+    {
+      "name": "crab-cakes"
+    },
+    {
+      "name": "crab-rangoon"
+    },
+    {
+      "name": "crab-dinner"
+    },
+    {
+      "name": "shrimp-cocktail"
+    },
+    {
+      "name": "shrimp-tempura"
+    },
+    {
+      "name": "seafood-paella"
+    },
+    {
+      "name": "unscottiloaf"
+    },
+    {
+      "name": "unscotti"
+    },
+    {
+      "name": "biscotti"
+    },
+    {
+      "name": "corpsecube"
+    }
+  ]
+}

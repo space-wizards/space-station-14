@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from goonstation at https://github.com/goonstation/goonstation/blob/16f8a5c31a6cfc019a1549b0b97f18865002a44c/icons/obj/barber_shop.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pole",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "barberchair"
+    },
+    {
+      "name": "dyedispenser"
+    },
+    {
+      "name": "dyedispenser-off"
+    },
+    {
+      "name": "dyedispenser-broken"
+    },
+    {
+      "name": "thesnip"
+    }
+  ]
+}

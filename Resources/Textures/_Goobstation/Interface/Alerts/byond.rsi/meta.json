@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "tgstation at https://github.com/tgstation/tgstation/blob/967b912458209ae5f4d3e35a5792bac357398fec/icons/ui_icons/chat/member_content.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "byond"
+    }
+  ]
+}

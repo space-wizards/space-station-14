@@ -1,0 +1,91 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore and Bighorn are drawn by Ubaser, and Kobold Ears are drawn by Pigeonpeas. Body_underbelly made by Nairod(github) for SS14. Large drawn by Ubaser. Wagging tail by SonicDC. Splotch modified from Sharp by KittenColony(github). Frills neckfull come from: https://github.com/Bubberstation/Bubberstation/commit/8bc6b83404803466a560b694bf22ef3c0ac266a2, resprited by @mishutka09 | Edited, resprited and reshaded by PuroSlavKing (Github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cobra_hood_with_ears",
+            "directions": 4
+        },
+        {
+            "name": "cobra_hood_with_ears_overlay",
+            "directions": 4
+        },
+        {
+            "name": "horns_argali_l",
+            "directions": 4
+        },
+        {
+            "name": "horns_argali_r",
+            "directions": 4
+        },
+        {
+            "name": "horns_ayrshire_l",
+            "directions": 4
+        },
+        {
+            "name": "horns_ayrshire_r",
+            "directions": 4
+        },
+        {
+            "name": "horns_bighorn_l",
+            "directions": 4
+        },
+        {
+            "name": "horns_bighorn_r",
+            "directions": 4
+        },
+        {
+            "name": "horns_myrsore_l",
+            "directions": 4
+        },
+        {
+            "name": "horns_myrsore_r",
+            "directions": 4
+        },
+        {
+            "name": "horns_ram_l",
+            "directions": 4
+        },
+        {
+            "name": "horns_ram_r",
+            "directions": 4
+        },
+        {
+            "name": "horns_short_l",
+            "directions": 4
+        },
+        {
+            "name": "horns_short_r",
+            "directions": 4
+        },
+        {
+            "name": "horns_simple_l",
+            "directions": 4
+        },
+        {
+            "name": "horns_simple_r",
+            "directions": 4
+        },
+        {
+            "name": "horns_curled_l",
+            "directions": 4
+        },
+        {
+            "name": "horns_curled_r",
+            "directions": 4
+        },
+        {
+            "name": "horns_double_l",
+            "directions": 4
+        },
+        {
+            "name": "horns_double_r",
+            "directions": 4
+        }
+    ]
+}

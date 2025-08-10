@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from paradise station at https://github.com/ParadiseSS13/Paradise/commit/e3bc7e3fd7787cc772353295a56f087fc1c37312. lightning taken from https://github.com/Citadel-Station-13/Citadel-Station-13/commit/06689416691093474d600924242f69eb7d223f3e and modified. toolbox Taken from baystation at commit https://github.com/Baystation12/Baystation12/commit/a929584d9db319eb7484113221be25cfa1d5dc09 and modified. art_summon, return_to_monkey, spellcard, exsanguinating_strike, scream_for_me, bee, chuuni, swap, soultap, thrown_lightning, the_traps and arcane_barrage taken from tgstation at https://github.com/tgstation/tgstation/commit/80ab61c8c7741e1d95e5f168357a9e6e61b38f2c and modified",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "art_summon"
+    },
+    {
+      "name": "return_to_monkey"
+    },
+    {
+      "name": "jaunt"
+    },
+    {
+      "name": "mindswap"
+    },
+    {
+      "name": "gib"
+    },
+    {
+      "name": "blink"
+    },
+    {
+      "name": "charge"
+    },
+    {
+      "name": "knock"
+    },
+    {
+      "name": "shield_greater"
+    },
+    {
+      "name": "fireball"
+    },
+    {
+      "name": "immrod"
+    },
+    {
+      "name": "thrown_lightning"
+    },
+    {
+      "name": "soultap"
+    },
+    {
+      "name": "swap"
+    },
+    {
+      "name": "chuuni"
+    },
+    {
+      "name": "exsanguinating_strike"
+    },
+    {
+      "name": "monkey"
+    },
+    {
+      "name": "bee"
+    },
+    {
+      "name": "the_traps"
+    },
+    {
+      "name": "teleport"
+    },
+    {
+      "name": "summons"
+    },
+    {
+      "name": "scream_for_me"
+    },
+    {
+      "name": "barn"
+    },
+    {
+      "name": "bolt_action"
+    },
+    {
+      "name": "arcane_barrage"
+    },
+    {
+      "name": "spellcard"
+    },
+    {
+      "name": "toolbox"
+    },
+    {
+      "name": "lightning"
+    },
+    {
+      "name": "tesla"
+    },
+    {
+      "name": "mutate"
+    },
+    {
+      "name": "skeleton"
+    },
+    {
+      "name": "blind"
+    },
+    {
+      "name": "corpse_explosion"
+    },
+    {
+      "name": "time"
+    },
+    {
+      "name": "repulse"
+    },
+    {
+      "name": "smoke"
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "mime"
+    },
+    {
+      "name": "cluwne"
+    },
+    {
+      "name": "missile"
+    },
+    {
+      "name": "emp"
+    },
+    {
+      "name": "tile"
+    },
+    {
+      "name": "tileglobal"
+    },
+    {
+      "name": "curseofbyond"
+    }
+  ]
+}

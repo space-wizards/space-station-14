@@ -1,0 +1,307 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "crowned by dootythefrooty, serket/pisces/virgo/sagittarius/vantas/nepeta/taurus/aries/tavris/inclined/wavy/antlers/unicorn/erebia/double_thick by angelofallars (github), double_curved/double_curved_outwards made by Rane modified by angelofallars (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "crowned",
+            "directions": 4
+        },
+        {
+            "name": "serket",
+            "directions": 4
+        },
+        {
+            "name": "serket_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "serket_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "serket_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "pisces",
+            "directions": 4
+        },
+        {
+            "name": "pisces_2tone_1",
+            "directions": 4
+        },
+        {
+            "name": "pisces_2tone_2",
+            "directions": 4
+        },
+        {
+            "name": "pisces_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "pisces_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "pisces_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "virgo",
+            "directions": 4
+        },
+        {
+            "name": "virgo_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "virgo_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "virgo_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "sagittarius",
+            "directions": 4
+        },
+        {
+            "name": "sagittarius_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "sagittarius_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "sagittarius_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "vantas",
+            "directions": 4
+        },
+        {
+            "name": "vantas_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "vantas_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "vantas_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "nepeta",
+            "directions": 4
+        },
+        {
+            "name": "nepeta_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "nepeta_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "nepeta_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "taurus",
+            "directions": 4
+        },
+        {
+            "name": "taurus_2tone_1",
+            "directions": 4
+        },
+        {
+            "name": "taurus_2tone_2",
+            "directions": 4
+        },
+        {
+            "name": "taurus_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "taurus_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "taurus_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "aries",
+            "directions": 4
+        },
+        {
+            "name": "aries_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "aries_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "aries_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "tavris",
+            "directions": 4
+        },
+        {
+            "name": "tavris_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "tavris_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "tavris_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "inclined",
+            "directions": 4
+        },
+        {
+            "name": "inclined_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "inclined_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "inclined_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "wavy",
+            "directions": 4
+        },
+        {
+            "name": "wavy_2tone_1",
+            "directions": 4
+        },
+        {
+            "name": "wavy_2tone_2",
+            "directions": 4
+        },
+        {
+            "name": "wavy_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "wavy_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "wavy_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "antlers_2tone_1",
+            "directions": 4
+        },
+        {
+            "name": "antlers_2tone_2",
+            "directions": 4
+        },
+        {
+            "name": "antlers_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "antlers_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "antlers_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "unicorn",
+            "directions": 4
+        },
+        {
+            "name": "erebia",
+            "directions": 4
+        },
+        {
+            "name": "erebia_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "erebia_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "erebia_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "erebia_rings",
+            "directions": 4
+        },
+        {
+            "name": "double_thick",
+            "directions": 4
+        },
+        {
+            "name": "double_thick_2tone_1",
+            "directions": 4
+        },
+        {
+            "name": "double_thick_2tone_2",
+            "directions": 4
+        },
+        {
+            "name": "double_thick_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "double_thick_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "double_thick_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "double_curved_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "double_curved_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "double_curved_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "double_curved_outwards_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "double_curved_outwards_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "double_curved_outwards_3tone_3",
+            "directions": 4
+        }
+    ]
+}

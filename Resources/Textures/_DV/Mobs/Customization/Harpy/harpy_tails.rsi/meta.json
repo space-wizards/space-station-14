@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Phoenix and Rooster by @leonardo_dabepis",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "phoenix_tail",
+            "directions": 4
+        },
+        {
+            "name": "rooster_tail",
+            "directions": 4
+        }
+    ]
+}

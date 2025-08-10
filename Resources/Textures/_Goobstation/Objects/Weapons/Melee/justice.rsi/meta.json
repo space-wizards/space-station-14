@@ -1,0 +1,106 @@
+{
+    "version": 1,
+    "copyright": "Sprited by Taro Varne",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "empowered-icon",
+            "delays": [
+              [
+                1,
+                0.2,
+                0.2,
+                0.2,
+                0.2,
+                0.2
+              ]
+            ]
+        },
+        {
+            "name": "stun-icon",
+            "delays": [
+              [
+                1,
+                0.2,
+                0.2,
+                0.2,
+                0.2,
+                0.2
+              ]
+            ]
+        },
+        {
+            "name": "lethal-icon",
+            "delays": [
+              [
+                1,
+                0.2,
+                0.2,
+                0.2,
+                0.2,
+                0.2
+              ]
+            ]
+        },
+        {
+            "name": "ion-icon",
+            "delays": [
+              [
+                1,
+                0.2,
+                0.2,
+                0.2,
+                0.2,
+                0.2
+              ]
+            ]
+        },
+		{
+            "name": "off-inhand-left",
+			"directions": 4
+        },
+		{
+            "name": "off-inhand-right",
+			"directions": 4
+        },
+		{
+            "name": "ion-inhand-left",
+			"directions": 4
+        },
+		{
+            "name": "ion-inhand-right",
+			"directions": 4
+        },
+		{
+            "name": "lethal-inhand-left",
+			"directions": 4
+        },
+		{
+            "name": "lethal-inhand-right",
+			"directions": 4
+        },
+		{
+            "name": "stun-inhand-left",
+			"directions": 4
+        },
+		{
+            "name": "stun-inhand-right",
+			"directions": 4
+        },
+		{
+            "name": "empowered-inhand-left",
+			"directions": 4
+        },
+		{
+            "name": "empowered-inhand-right",
+			"directions": 4
+        }
+    ]
+}

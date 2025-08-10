@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from baystation at commit https://github.com/Baystation12/Baystation12/commit/464342c5dc8c417b7e79d56c69aa30445bdf3b75",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "waffles"
+    },
+    {
+      "name": "plate"
+    },
+    {
+      "name": "snack_bowl"
+    },
+    {
+      "name": "tray"
+    },
+    {
+      "name": "trashbag0"
+    },
+    {
+      "name": "trashbag1"
+    },
+    {
+      "name": "trashbag2"
+    },
+    {
+      "name": "trashbag3"
+    },
+    {
+      "name": "liquidfood"
+    },
+    {
+      "name": "plasticbag"
+    },
+    {
+      "name": "corncob"
+    },
+    {
+      "name": "tastybread"
+    },
+    {
+      "name": "liquidfood_old"
+    },
+    {
+      "name": "4no_raisins"
+    },
+    {
+      "name": "proteinbar"
+    },
+    {
+      "name": "chips"
+    },
+    {
+      "name": "popcorn"
+    },
+    {
+      "name": "cheesie_honkers"
+    },
+    {
+      "name": "sosjerky"
+    },
+    {
+      "name": "syndi_cakes"
+    },
+    {
+      "name": "pistachios_pack"
+    },
+    {
+      "name": "semki_pack"
+    },
+    {
+      "name": "candy"
+    },
+    {
+      "name": "fisheggs"
+    },
+    {
+      "name": "salo"
+    },
+    {
+      "name": "driedfish"
+    },
+    {
+      "name": "squid"
+    },
+    {
+      "name": "monkeywrap"
+    },
+    {
+      "name": "croutons"
+    },
+    {
+      "name": "blank"
+    },
+    {
+      "name": "beef"
+    },
+    {
+      "name": "beans"
+    },
+    {
+      "name": "tomato"
+    },
+    {
+      "name": "spinach"
+    },
+    {
+      "name": "berries"
+    },
+    {
+      "name": "carpeggs"
+    },
+    {
+      "name": "cakewrap"
+    },
+    {
+      "name": "mochicakewrap"
+    },
+    {
+      "name": "mooncakewrap"
+    },
+    {
+      "name": "jupiter"
+    },
+    {
+      "name": "tidegobs"
+    },
+    {
+      "name": "saturno"
+    },
+    {
+      "name": "pluto"
+    },
+    {
+      "name": "venus"
+    },
+    {
+      "name": "oort"
+    },
+    {
+      "name": "mars"
+    },
+    {
+      "name": "stick"
+    },
+    {
+      "name": "weebonuts"
+    },
+    {
+      "name": "hollowpineapple"
+    },
+    {
+      "name": "hollowcoconut"
+    },
+    {
+      "name": "usedplatter"
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "copyright": "Sprited by Bloomyex and implemented by RobynTheWarcrime, FrizzyBraid by Renee - https://discord.com/channels/1202734573247795300/1288192265319223387/1288887697917607936",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+      {
+        "name": "braidedExtensions",
+        "directions": 4
+      },
+      {
+        "name": "cometTail",
+        "directions": 4
+      },
+      {
+        "name": "fantasyHair",
+        "directions": 4
+      },
+      {
+        "name": "flatTwistsUpdo",
+        "directions": 4
+      },
+      {
+        "name": "floorlengthBraid",
+        "directions": 4
+      },
+      {
+        "name": "floorlengthWavy",
+        "directions": 4
+      },
+      {
+        "name": "frizzyBraid",
+        "directions": 4
+      },
+      {
+        "name": "frontBraidsLong",
+        "directions": 4
+      },
+      {
+        "name": "frontBraidsMedium",
+        "directions": 4
+      },
+      {
+        "name": "frontBraidsShort",
+        "directions": 4
+      },
+      {
+        "name": "hairnet",
+        "directions": 4
+      },
+      {
+        "name": "jellyfish",
+        "directions": 4
+      },
+      {
+        "name": "kazuyaMishima",
+        "directions": 4
+      },
+      {
+        "name": "longBraids",
+        "directions": 4
+      },
+      {
+        "name": "longCurvy",
+        "directions": 4
+      },
+      {
+        "name": "longPompadour",
+        "directions": 4
+      },
+      {
+        "name": "mediumCurls",
+        "directions": 4
+      },
+      {
+        "name": "mullet",
+        "directions": 4
+      },
+      {
+        "name": "pelvicLengthBraid",
+        "directions": 4
+      },
+      {
+        "name": "plateau",
+        "directions": 4
+      },
+      {
+        "name": "queenBee",
+        "directions": 4
+      },
+      {
+        "name": "saggedMohawk",
+        "directions": 4
+      },
+      {
+        "name": "sharpMohawk",
+        "directions": 4
+      },
+      {
+        "name": "shortAndPoofy",
+        "directions": 4
+      },
+      {
+        "name": "shortCurls",
+        "directions": 4
+      },
+      {
+        "name": "shoulderLengthBraid",
+        "directions": 4
+      },
+      {
+        "name": "sideSpike",
+        "directions": 4
+      },
+      {
+        "name": "spaceLoops",
+        "directions": 4
+      },
+      {
+        "name": "star",
+        "directions": 4
+      },
+      {
+        "name": "starFro",
+        "directions": 4
+      },
+      {
+        "name": "styledCurls",
+        "directions": 4
+      },
+      {
+        "name": "unkemptScientist",
+        "directions": 4
+      },
+      {
+        "name": "wispy",
+        "directions": 4
+      },
+	   {
+        "name": "spikehawk",
+        "directions": 4
+      }
+    ]
+  }

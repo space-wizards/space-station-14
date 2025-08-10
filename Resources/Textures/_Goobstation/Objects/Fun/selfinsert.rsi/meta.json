@@ -1,0 +1,92 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Muppet, OnsenCapy, Bobbble, Phantom, Mr Cheeese123",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "plushie_benny"
+        },
+        {
+            "name": "plushie_cairo"
+        },
+        {
+            "name": "plushie_command_human"
+        },
+        {
+            "name": "plushie_delta"
+        },
+        {
+            "name": "plushie_knott"
+        },
+        {
+            "name": "plushie_pash"
+        },
+        {
+            "name": "plushie_raki"
+        },
+        {
+            "name": "plushie_ranork"
+        },
+        {
+            "name": "plushie_sparkle"
+        },
+        {
+            "name": "plushie_stoop"
+        },
+        {
+            "name": "plushie_tider_moth"
+        },
+        {
+            "name": "plushie_tina"
+        },
+        {
+            "name": "plushie_weh_winter"
+        },
+        {
+            "name": "plushie_zlorb"
+        },
+        {
+            "name": "plushie_violet_slime"
+        },
+        {
+            "name": "plushie_ahti"
+        },
+        {
+            "name": "plushie_grub"
+        },
+        {
+            "name": "plushie_fern"
+        },
+        {
+            "name": "plushie_hexadecimal"
+        },
+        {
+            "name": "plushie_flint"
+        },
+        {
+            "name": "plushie_sees_the_stars"
+        },
+        {
+            "name": "plushie_pistachio"
+        },
+        {
+            "name": "plushie_dumb_lizard"
+        },
+        {
+            "name": "plushie_squeaks"
+        },
+        {
+            "name": "plushie_haato"
+        },
+        {
+            "name": "plushie_chews"
+        },
+        {
+            "name": "plushie_tinylane"
+        }
+    ]
+}

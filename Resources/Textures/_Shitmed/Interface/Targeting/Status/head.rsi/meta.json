@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c7e14784b35b1a136351c396d3a546f461ee2451",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+        "name": "head_0"
+        },
+        {
+        "name": "head_1"
+        },
+        {
+        "name": "head_2"
+        },
+        {
+        "name": "head_3"
+        },
+        {
+        "name": "head_4"
+        },
+        {
+        "name": "head_5"
+        },
+        {
+        "name": "head_6"
+        },
+        {
+        "name": "head_bleed"
+        }
+    ]
+}

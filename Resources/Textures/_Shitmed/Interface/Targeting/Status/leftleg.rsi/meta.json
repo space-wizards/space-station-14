@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Edited by Mocho from the original tgstation sprites taken at commit https://github.com/tgstation/tgstation/commit/c7e14784b35b1a136351c396d3a546f461ee2451",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+        "name": "leftleg_0"
+        },
+        {
+        "name": "leftleg_1"
+        },
+        {
+        "name": "leftleg_2"
+        },
+        {
+        "name": "leftleg_3"
+        },
+        {
+        "name": "leftleg_4"
+        },
+        {
+        "name": "leftleg_5"
+        },
+        {
+        "name": "leftleg_6"
+        },
+        {
+        "name": "leftleg_bleed"
+        }
+    ]
+}

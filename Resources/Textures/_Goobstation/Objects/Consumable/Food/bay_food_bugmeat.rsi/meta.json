@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from baystation at commit https://github.com/Baystation12/Baystation12/commit/464342c5dc8c417b7e79d56c69aa30445bdf3b75",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "box"
+    },
+    {
+      "name": "box-open"
+    },
+    {
+      "name": "rawcutlet"
+    },
+    {
+      "name": "cutlet"
+    },
+    {
+      "name": "rawbacon"
+    },
+    {
+      "name": "bacon"
+    }
+  ]
+}

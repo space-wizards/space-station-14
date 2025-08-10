@@ -1,0 +1,17 @@
+{
+    "copyright" : "Made by dootythefrooty (273243513800622090)",
+    "license" : "CC-BY-SA-3.0",
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "flight_off"
+      },
+      {
+        "name": "flight_on"
+      }
+    ]
+  }

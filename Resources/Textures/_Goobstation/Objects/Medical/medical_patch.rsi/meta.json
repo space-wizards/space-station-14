@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "@jorgun  inspired by Studenterhue of Goonstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+        "name": "GenericPatch"
+    },
+    {
+        "name": "GenericPatchBorder"
+    },
+    {
+        "name": "GenericPatch-1"
+    },
+    {
+        "name": "GenericPatch-2"
+    },
+    {
+        "name": "GenericPatch-3"
+    },
+    {
+        "name": "GenericPatch-4"
+    },
+    {
+        "name": "GenericPatch-5"
+    },
+    {
+        "name": "GenericPatch-6"
+    },
+    {
+        "name": "GenericPatch-7"
+    },
+    {
+        "name": "GenericPatch-8"
+    },
+    {
+        "name": "GenericPatch-9"
+    },
+    {
+        "name": "GenericPatchSmall"
+    },
+    {
+        "name": "GenericPatchSmallCornerLayer"
+    },
+    {
+        "name": "GenericPatchSmall-1"
+    },
+    {
+        "name": "GenericPatchSmall-2"
+    },
+    {
+        "name": "GenericPatchSmall-3"
+    },
+    {
+        "name": "GenericPatchSmall-4"
+    },
+    {
+        "name": "GenericPatchSmall-5"
+    },
+    {
+        "name": "MakeshiftPatch"
+    },
+    {
+        "name": "MakeshiftPatchUsed"
+    },
+    {
+        "name": "GenericPatchSmallUsed"
+    }
+  ]
+}

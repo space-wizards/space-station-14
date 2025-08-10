@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "BeeRobyn on discord & Github",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "yowie_fur",
+            "directions": 4
+        },
+        {
+            "name": "yowie_fur_feet_right",
+            "directions": 4
+        },
+        {
+            "name": "yowie_fur_feet_left",
+            "directions": 4
+        }
+    ]
+}

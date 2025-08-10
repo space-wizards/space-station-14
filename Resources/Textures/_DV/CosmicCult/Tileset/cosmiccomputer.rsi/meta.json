@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "A custom item by AftrLite (Github).",
+    "states": [
+        {
+            "name": "computer",
+            "directions": 4
+        },
+        {
+            "name": "computer-unshaded",
+            "directions": 4
+        }
+    ]
+}

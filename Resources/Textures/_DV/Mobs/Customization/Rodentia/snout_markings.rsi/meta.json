@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "portfiend",
+  "size": {"x": 32, "y": 32},
+  "states": [
+    {
+      "name": "bat",
+      "directions": 4
+    },
+    {
+      "name": "bat_overlay",
+      "directions": 4
+    },
+    {
+      "name": "bat_nose",
+      "directions": 4
+    },
+    {
+      "name": "flat",
+      "directions": 4
+    },
+    {
+      "name": "flat_overlay",
+      "directions": 4
+    },
+    {
+      "name": "flat_nose",
+      "directions": 4
+    },
+    {
+      "name": "round",
+      "directions": 4
+    },
+    {
+      "name": "round_overlay",
+      "directions": 4
+    },
+    {
+      "name": "round_nose",
+      "directions": 4
+    }
+  ]
+}

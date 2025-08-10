@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from CDDA MSXOtto+ at https://github.com/I-am-Erk/CDDA-Tilesets/blob/b90e13f7bdb470390fa4b0c7a4262298fc9bf890/gfx/MShockXotto%2B/pngs_tiles_32x32/furniture/f_autodoc/f_autodoc.png",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "idle"
+        }
+    ]
+}

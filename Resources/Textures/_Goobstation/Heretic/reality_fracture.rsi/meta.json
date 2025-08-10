@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "taken from TG station",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon",
+      "delays": [ [ 0.1, 0.1, 0.1, 0.1 ] ]
+    },
+    {
+      "name": "icon_harvested",
+      "delays":
+      [
+        [
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1
+        ]
+      ]
+    }
+  ]
+}

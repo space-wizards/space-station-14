@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/Migratingcocofruit/ParaPRs/blob/530c0c84037df6bda184391edc2772a96412c389/icons/goonstation/objects/pt_laser.dmi",
+  "size": {
+    "x": 96,
+    "y": 96
+  },
+  "states": [
+    {
+      "name": "base",
+      "directions": 4
+    },
+    {
+      "name": "started_firing",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "charge-1",
+      "directions": 4
+    },
+    {
+      "name": "charge-2",
+      "directions": 4
+    },
+    {
+      "name": "charge-3",
+      "directions": 4
+    },
+    {
+      "name": "charge-4",
+      "directions": 4
+    },
+    {
+      "name": "charge-5",
+      "directions": 4
+    },
+    {
+      "name": "charge-6",
+      "directions": 4
+    },
+    {
+      "name": "green_light",
+      "directions": 4
+    },
+    {
+      "name": "unpowered",
+      "directions": 4
+    },
+    {
+      "name": "red_light",
+      "directions": 4
+    },
+    {
+      "name": "firing",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

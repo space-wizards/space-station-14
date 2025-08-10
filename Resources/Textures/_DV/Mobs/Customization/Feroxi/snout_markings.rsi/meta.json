@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Made by BlitzTheSquishy",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "feroxi-snout",
+            "directions": 4
+        },
+        {
+            "name": "feroxi-snout-stripe",
+            "directions": 4
+        },
+        {
+            "name": "feroxi-snout-countershading",
+            "directions": 4
+        },
+        {
+            "name": "feroxi-snout-nurse",
+            "directions": 4
+        }
+    ]
+}

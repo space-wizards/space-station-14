@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Yogstation at https://github.com/yogstation13/Yogstation/commit/9c046aa5327c71f9e93e45a34283b3a4aff58bd1",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ipc_antenna_tv",
+      "directions": 4
+    },
+    {
+      "name": "ipc_antenna_tesla",
+      "directions": 4,
+      "delays": [
+        [
+          4,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          4,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          4,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          4,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "ipc_antenna_lightb",
+      "directions": 4,
+      "delays": [
+        [
+          4,
+          0.5,
+          0.1,
+          0.5
+        ],
+        [
+          4,
+          0.5,
+          0.1,
+          0.5
+        ],
+        [
+          4,
+          0.5,
+          0.1,
+          0.5
+        ],
+        [
+          4,
+          0.5,
+          0.1,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "ipc_antenna_light",
+      "directions": 4
+    },
+    {
+      "name": "ipc_antenna_cyberhead",
+      "directions": 4
+    },
+    {
+      "name": "ipc_antenna_sidelights",
+      "directions": 4
+    },
+    {
+      "name": "ipc_antenna_antlers",
+      "directions": 4
+    },
+    {
+      "name": "ipc_antenna_droneeyes",
+      "directions": 4
+    },
+    {
+      "name": "ipc_antenna_crowned",
+      "directions": 4
+    },
+    {
+      "name": "ipc_antenna_towers",
+      "directions": 4
+    }
+  ]
+}

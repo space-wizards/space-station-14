@@ -1,0 +1,413 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from baystation at commit https://github.com/Baystation12/Baystation12/commit/464342c5dc8c417b7e79d56c69aa30445bdf3b75",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pitcher"
+    },
+    {
+      "name": "pitcher15"
+    },
+    {
+      "name": "pitcher30"
+    },
+    {
+      "name": "pitcher50"
+    },
+    {
+      "name": "pitcher70"
+    },
+    {
+      "name": "pitcher85"
+    },
+    {
+      "name": "pitcher100"
+    },
+    {
+      "name": "alco-blue"
+    },
+    {
+      "name": "alco-red"
+    },
+    {
+      "name": "alco-green"
+    },
+    {
+      "name": "shaker"
+    },
+    {
+      "name": "jar"
+    },
+    {
+      "name": "jar_metroid"
+    },
+    {
+      "name": "jar_what"
+    },
+    {
+      "name": "waterbottle"
+    },
+    {
+      "name": "water_cup"
+    },
+    {
+      "name": "water_cup_e"
+    },
+    {
+      "name": "grenadinebottle"
+    },
+    {
+      "name": "holyflask"
+    },
+    {
+      "name": "barflask"
+    },
+    {
+      "name": "bigteacup"
+    },
+    {
+      "name": "bigteacup100"
+    },
+    {
+      "name": "vacuumflask"
+    },
+    {
+      "name": "teapot"
+    },
+    {
+      "name": "shinyflask"
+    },
+    {
+      "name": "lithiumflask"
+    },
+    {
+      "name": "rag"
+    },
+    {
+      "name": "rag_lit",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "rag_small"
+    },
+    {
+      "name": "rag_small_lit",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "colabottle"
+    },
+    {
+      "name": "space-up_bottle"
+    },
+    {
+      "name": "space_mountain_wind_bottle"
+    },
+    {
+      "name": "fitness-cup_black"
+    },
+    {
+      "name": "fitness-cup_red"
+    },
+    {
+      "name": "fitness-cup_blue"
+    },
+    {
+      "name": "beer"
+    },
+    {
+      "name": "alebottle"
+    },
+    {
+      "name": "rumbottle"
+    },
+    {
+      "name": "whiskeybottle"
+    },
+    {
+      "name": "whiskeybottle2"
+    },
+    {
+      "name": "vodkabottle"
+    },
+    {
+      "name": "premiumvodka"
+    },
+    {
+      "name": "ginbottle"
+    },
+    {
+      "name": "cognacbottle"
+    },
+    {
+      "name": "goldschlagerbottle"
+    },
+    {
+      "name": "patronbottle"
+    },
+    {
+      "name": "orangejuice"
+    },
+    {
+      "name": "limejuice"
+    },
+    {
+      "name": "cream"
+    },
+    {
+      "name": "tomatojuice"
+    },
+    {
+      "name": "sodawater"
+    },
+    {
+      "name": "milk"
+    },
+    {
+      "name": "soymilk"
+    },
+    {
+      "name": "coffee"
+    },
+    {
+      "name": "flask"
+    },
+    {
+      "name": "ramen"
+    },
+    {
+      "name": "golden_cup"
+    },
+    {
+      "name": "bottleofnothing"
+    },
+    {
+      "name": "nothing"
+    },
+    {
+      "name": "vermouthbottle"
+    },
+    {
+      "name": "kahluabottle"
+    },
+    {
+      "name": "tequillabottle"
+    },
+    {
+      "name": "winebottle"
+    },
+    {
+      "name": "pwinebottle"
+    },
+    {
+      "name": "premiumwine"
+    },
+    {
+      "name": "(mdr)grapejuice"
+    },
+    {
+      "name": "broken"
+    },
+    {
+      "name": "broken_bottle"
+    },
+    {
+      "name": "detflask"
+    },
+    {
+      "name": "badminka"
+    },
+    {
+      "name": "silver_cup"
+    },
+    {
+      "name": "bronze_cup"
+    },
+    {
+      "name": "herbal"
+    },
+    {
+      "name": "absinthebottle"
+    },
+    {
+      "name": "oil"
+    },
+    {
+      "name": "coolant"
+    },
+    {
+      "name": "placeholder"
+    },
+    {
+      "name": "syndi_cola"
+    },
+    {
+      "name": "syndi_cola_x"
+    },
+    {
+      "name": "art_bru"
+    },
+    {
+      "name": "beercan"
+    },
+    {
+      "name": "alecan"
+    },
+    {
+      "name": "space_mountain_wind"
+    },
+    {
+      "name": "dr_gibb"
+    },
+    {
+      "name": "starkist"
+    },
+    {
+      "name": "space-up"
+    },
+    {
+      "name": "lemon-lime"
+    },
+    {
+      "name": "tonic"
+    },
+    {
+      "name": "cola"
+    },
+    {
+      "name": "purple_can"
+    },
+    {
+      "name": "ice_tea_can"
+    },
+    {
+      "name": "energy_drink"
+    },
+    {
+      "name": "thirteen_loko"
+    },
+    {
+      "name": "flavorpak"
+    },
+    {
+      "name": "lunabrandy"
+    },
+    {
+      "name": "hellshenbeer"
+    },
+    {
+      "name": "blackstrap"
+    },
+    {
+      "name": "sake"
+    },
+    {
+      "name": "tadmorwine"
+    },
+    {
+      "name": "champagne"
+    },
+    {
+      "name": "prosecco"
+    },
+    {
+      "name": "whiskeybottle3"
+    },
+    {
+      "name": "beastenergy"
+    },
+    {
+      "name": "hrukhzaextract"
+    },
+    {
+      "name": "gingerbeer"
+    },
+    {
+      "name": "cola-orange"
+    },
+    {
+      "name": "cola-pink"
+    },
+    {
+      "name": "cola-purple"
+    },
+    {
+      "name": "cola-yellow"
+    },
+    {
+      "name": "cola-red"
+    },
+    {
+      "name": "cola-blue"
+    },
+    {
+      "name": "cola-brown"
+    },
+    {
+      "name": "cola-green"
+    },
+    {
+      "name": "cola-pork"
+    },
+    {
+      "name": "vcola"
+    },
+    {
+      "name": "ccola"
+    },
+    {
+      "name": "ocola"
+    },
+    {
+      "name": "ionbru"
+    },
+    {
+      "name": "baijiu"
+    },
+    {
+      "name": "cachaca"
+    },
+    {
+      "name": "rakia"
+    },
+    {
+      "name": "dnb"
+    },
+    {
+      "name": "alcoholfreebeer"
+    },
+    {
+      "name": "lager"
+    },
+    {
+      "name": "soju"
+    },
+    {
+      "name": "lemonjuice"
+    },
+    {
+      "name": "maplesyrup"
+    },
+    {
+        "name": "thoom"
+    },
+    {
+        "name": "water"
+    }
+  ]
+}

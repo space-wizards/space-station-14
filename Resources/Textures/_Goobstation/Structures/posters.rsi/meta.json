@@ -1,0 +1,68 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprites for goob_poster1-11_legit made by LevitatingTree on Discord & GitHub, goob_poster12-17_legit & goob_poster1_contraband sprites lovingly handmade by BeeRobyn on Discord - https://github.com/BeeRobynn, goob_poster18_legit created by wyvernrer on Discord, goob_poster2_contraband made by Azrakoth (file name is a placeholder for now due to Goobcode)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "goob_poster1_legit"
+        },
+        {
+            "name": "goob_poster2_legit"
+        },
+        {
+            "name": "goob_poster3_legit"
+        },
+        {
+            "name": "goob_poster4_legit"
+        },
+        {
+            "name": "goob_poster5_legit"
+        },
+        {
+            "name": "goob_poster6_legit"
+        },
+        {
+            "name": "goob_poster7_legit"
+        },
+        {
+            "name": "goob_poster8_legit"
+        },
+        {
+            "name": "goob_poster9_legit"
+        },
+        {
+            "name": "goob_poster10_legit"
+        },
+        {
+            "name": "goob_poster11_legit"
+        },
+        {
+            "name": "goob_poster12_legit"
+        },
+        {
+            "name": "goob_poster13_legit"
+        },
+        {
+            "name": "goob_poster14_legit"
+        },
+        {
+            "name": "goob_poster15_legit"
+        },
+        {
+            "name": "goob_poster16_legit"
+        },
+        {
+            "name": "goob_poster17_legit"
+        },
+        {
+            "name": "goob_poster18_legit"
+        },
+        {
+            "name": "goob_poster1_contraband"
+        }
+    ]
+}

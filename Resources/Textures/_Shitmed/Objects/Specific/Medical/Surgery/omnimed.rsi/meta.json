@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/b7c3ac536391a3dfe3046f3b5197721af4564d90",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "omnimed"
+		},
+		{
+			"name": "inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "inhand-right",
+			"directions": 4
+		},
+                {
+			"name": "evil"
+		},
+		{
+			"name": "evil-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "evil-inhand-right",
+			"directions": 4
+		}
+	]
+}

@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-4.0",
+    "copyright": "foot.png created by evgen99 (673243657935257617). body.png created by ko4erga (266899933632659456).",
+    "states": [
+        {
+            "name": "foot"
+        },
+        {
+            "name": "body"
+        }
+    ]
+}

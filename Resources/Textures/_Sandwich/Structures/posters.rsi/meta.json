@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Check Attributions.yml in \\Resources\\Textures\\_Sandwich\\Structures\\posters.rsi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "poster_dave"
+        },
+        {
+            "name": "poster_sandwich"
+        }
+    ]
+}

@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from baystation at commit https://github.com/Baystation12/Baystation12/commit/464342c5dc8c417b7e79d56c69aa30445bdf3b75",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon_open"
+    },
+    {
+      "name": "icon_empty"
+    },
+    {
+      "name": "fitness-cup10"
+    },
+    {
+      "name": "fitness-cup20"
+    },
+    {
+      "name": "fitness-cup30"
+    },
+    {
+      "name": "fitness-cup40"
+    },
+    {
+      "name": "fitness-cup50"
+    },
+    {
+      "name": "fitness-cup60"
+    },
+    {
+      "name": "fitness-cup70"
+    },
+    {
+      "name": "fitness-cup80"
+    },
+    {
+      "name": "fitness-cup90"
+    },
+    {
+      "name": "fitness-cup100"
+    }
+  ]
+}

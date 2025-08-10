@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited for SS14 by GitHub user Willhelm53, later overhauledby GitHub user Psychpsyo, recolour and edits by AstroDoge",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "science"
+    },
+    {
+      "name": "science-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "science-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "medical"
+    },
+    {
+      "name": "medical-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "medical-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "security"
+    },
+    {
+      "name": "security-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "security-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "command"
+    },
+    {
+      "name": "command-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "command-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cargo"
+    },
+    {
+      "name": "cargo-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "cargo-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "engineering"
+    },
+    {
+      "name": "engineering-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "engineering-inhand-right",
+      "directions": 4
+    }
+  ]
+}

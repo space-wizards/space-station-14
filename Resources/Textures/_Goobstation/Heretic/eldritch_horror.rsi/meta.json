@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "inspiration from TGstation, made by whateverusername0",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "alive",
+      "delays":
+      [
+        [
+          0.083, 0.083, 0.083, 0.083, 0.083,
+          0.083, 0.083, 0.083, 0.083, 0.083,
+          0.083
+        ]
+      ]
+    },
+    {
+      "name": "dead"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by PS3MOIRA",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "shaved",
+            "directions": 4
+        },
+        {
+            "name": "bull",
+            "directions": 4
+        }
+    ]
+}

@@ -1,0 +1,267 @@
+light_mode unshaded;
+
+uniform highp float hue;
+uniform highp float textureHeight;
+
+//
+// Description : Array and textureless GLSL 2D/3D/4D simplex
+//               noise functions.
+//      Author : Ian McEwan, Ashima Arts.
+//  Maintainer : stegu
+//     Lastmod : 20201014 (stegu)
+//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
+//               Distributed under the MIT License. See LICENSE file.
+//               https://github.com/ashima/webgl-noise
+//               https://github.com/stegu/webgl-noise
+//
+
+highp vec3 mod289(highp vec3 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+highp vec4 mod289(highp vec4 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+highp vec4 permute(highp vec4 x) {
+     return mod289(((x*34.0)+10.0)*x);
+}
+
+highp vec4 taylorInvSqrt(highp vec4 r)
+{
+  return 1.79284291400159 - 0.85373472095314 * r;
+}
+
+highp float snoise(highp vec3 v)
+  {
+  const highp vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+  const highp vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+
+// First corner
+  highp vec3 i  = floor(v + dot(v, C.yyy) );
+  highp vec3 x0 =   v - i + dot(i, C.xxx) ;
+
+// Other corners
+  highp vec3 g = step(x0.yzx, x0.xyz);
+  highp vec3 l = 1.0 - g;
+  highp vec3 i1 = min( g.xyz, l.zxy );
+  highp vec3 i2 = max( g.xyz, l.zxy );
+
+  //   x0 = x0 - 0.0 + 0.0 * C.xxx;
+  //   x1 = x0 - i1  + 1.0 * C.xxx;
+  //   x2 = x0 - i2  + 2.0 * C.xxx;
+  //   x3 = x0 - 1.0 + 3.0 * C.xxx;
+  highp vec3 x1 = x0 - i1 + C.xxx;
+  highp vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y
+  highp vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y
+
+// Permutations
+  i = mod289(i);
+  highp vec4 p = permute( permute( permute(
+             i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+           + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))
+           + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+
+// Gradients: 7x7 points over a square, mapped onto an octahedron.
+// The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
+  highp float n_ = 0.142857142857; // 1.0/7.0
+  highp vec3  ns = n_ * D.wyz - D.xzx;
+
+  highp vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)
+
+  highp vec4 x_ = floor(j * ns.z);
+  highp vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
+
+  highp vec4 x = x_ *ns.x + ns.yyyy;
+  highp vec4 y = y_ *ns.x + ns.yyyy;
+  highp vec4 h = 1.0 - abs(x) - abs(y);
+
+  highp vec4 b0 = vec4( x.xy, y.xy );
+  highp vec4 b1 = vec4( x.zw, y.zw );
+
+  //vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;
+  //vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;
+  highp vec4 s0 = floor(b0)*2.0 + 1.0;
+  highp vec4 s1 = floor(b1)*2.0 + 1.0;
+  highp vec4 sh = -step(h, vec4(0.0));
+
+  highp vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+  highp vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+
+  highp vec3 p0 = vec3(a0.xy,h.x);
+  highp vec3 p1 = vec3(a0.zw,h.y);
+  highp vec3 p2 = vec3(a1.xy,h.z);
+  highp vec3 p3 = vec3(a1.zw,h.w);
+
+//Normalise gradients
+  highp vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+  p0 *= norm.x;
+  p1 *= norm.y;
+  p2 *= norm.z;
+  p3 *= norm.w;
+
+// Mix final noise value
+  highp vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+  m = m * m;
+  return 105.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),
+                                dot(p2,x2), dot(p3,x3) ) );
+  }
+
+
+//
+// https://github.com/jamieowen/glsl-blend
+//
+// The MIT License (MIT) Copyright (c) 2015 Jamie Owen
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//
+
+highp float blendOverlay(highp float base, highp float blend) {
+	return base<0.5?(2.0*base*blend):(1.0-2.0*(1.0-base)*(1.0-blend));
+}
+
+highp vec3 blendOverlay(highp vec3 base, highp vec3 blend) {
+	return vec3(blendOverlay(base.r,blend.r),blendOverlay(base.g,blend.g),blendOverlay(base.b,blend.b));
+}
+
+highp vec3 blendOverlay(highp vec3 base, highp vec3 blend, highp float opacity) {
+	return (blendOverlay(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+highp float blendLinearDodge(highp float base, highp float blend) {
+	// Note : Same implementation as BlendAddf
+	return min(base+blend,1.0);
+}
+
+highp vec3 blendLinearDodge(highp vec3 base, highp vec3 blend) {
+	// Note : Same implementation as BlendAdd
+	return min(base+blend,vec3(1.0));
+}
+
+highp vec3 blendLinearDodge(highp vec3 base, highp vec3 blend, highp float opacity) {
+	return (blendLinearDodge(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+highp float blendScreen(highp float base, highp float blend) {
+	return 1.0-((1.0-base)*(1.0-blend));
+}
+
+highp vec3 blendScreen(highp vec3 base, highp vec3 blend) {
+	return vec3(blendScreen(base.r,blend.r),blendScreen(base.g,blend.g),blendScreen(base.b,blend.b));
+}
+
+highp vec3 blendScreen(highp vec3 base, highp vec3 blend, highp float opacity) {
+	return (blendScreen(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+
+//
+// https://gamedev.stackexchange.com/a/59808
+//
+//   Author: sam hocevar
+// Answered: Jul 27, 2013 at 13:33
+//  License: CC BY-SA 3.0
+//
+
+highp vec3 rgb2hsv(highp vec3 c)
+{
+    highp vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+    highp vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+    highp vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+
+    highp float d = q.x - min(q.w, q.y);
+    /* float e = 1.0e-10; */
+    highp float e = 0.0000000001;
+    return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+}
+
+highp vec3 hsv2rgb(highp vec3 c)
+{
+    highp vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    highp vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
+
+
+//
+//  Author: @Vordenburg
+// License: follows Nyanotrasen/LICENSE.TXT as of this commit.
+//
+
+highp float pingpong(highp float value)
+{
+    highp float tmp = mod(value, 1.0) * 2.0;
+    return tmp < 1.0 ? tmp : 2.0 - tmp;
+}
+
+void fragment()
+{
+    const highp float TIME_OFFSET1 = 138.11;
+    const highp float TIME_OFFSET2 = 517.43;
+    const highp float TIME_OFFSET3 = 1298.67;
+
+    highp vec4 product = zTexture(UV);
+
+    // Colorize
+    highp vec3 hsv = rgb2hsv(product.rgb);
+    hsv.x = hue;
+    product.rgb = hsv2rgb(hsv);
+
+
+    // Scanlines
+    const highp float LINE_SCROLL_SPEED = 0.12;
+
+    highp float uv_noise = snoise(vec3(UV * 100.0, TIME));
+    highp float Y = UV.y + uv_noise * 0.1;
+    highp float MX = 4.0;
+    highp float MY = textureHeight / MX / 4.0;
+
+    highp float lines =
+        (
+        mod(TIME * LINE_SCROLL_SPEED + Y, 1.0 / MX)
+        )
+        * MX
+        ;
+
+    lines = floor(lines * MY) / MY;
+    highp vec3 line3 = hsv2rgb(vec3(hue, 0.9, 2.0 * lines));
+
+    product.xyz = blendScreen(product.xyz, line3, 0.33);
+
+
+    // Noise
+    const highp float noise_scale = 32.0;
+    const highp float noise_limit = 4.0;
+    const highp float noise_rate = 1.4;
+    const highp float noise_density = 0.0;
+
+    highp float noise_hue = hue - 0.2 * pingpong((TIME_OFFSET1 + TIME) * 0.21);
+
+    highp vec2 noise_coord = floor(UV * noise_scale);
+    highp float noise_result = snoise(vec3(noise_coord, (TIME_OFFSET2 + TIME) * noise_rate));
+
+    highp vec3 noise3 = hsv2rgb(vec3(noise_hue, 1.0, noise_result));
+    product.xyz = blendOverlay(product.xyz, noise3, noise_result < 0.3 ? 0.0 : 0.5);
+
+
+    // Alpha
+    product.w *= 0.9 - 0.4 * pingpong((TIME_OFFSET3 + TIME) * 0.36);
+
+    COLOR = product;
+}

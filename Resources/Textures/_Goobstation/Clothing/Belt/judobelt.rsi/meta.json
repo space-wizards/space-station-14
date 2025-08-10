@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/7da09f5e7230369ec48d9e5d31bdddb3f95a6d8f/icons/mob/clothing/belt.dmi, https://github.com/ParadiseSS13/Paradise/blob/7da09f5e7230369ec48d9e5d31bdddb3f95a6d8f/icons/obj/clothing/belts.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "icon"
+    }
+  ]
+}

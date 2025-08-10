@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by SolsticeOfTheWinter",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base-devil-icon"
+    },
+	{
+      "name": "shadow-jaunt"
+    },
+    {
+      "name": "summon-contract"
+    },
+	{
+	  "name": "summon-contract-revival"
+	},
+	{
+	  "name": "cheat-death"
+	},
+	{
+      "name": "devil-grip"
+    },
+    {
+      "name": "possess"
+    },
+    {
+      "name": "heart-broken"
+    }
+  ]
+}

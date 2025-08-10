@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from baystation at commit https://github.com/Baystation12/Baystation12/commit/464342c5dc8c417b7e79d56c69aa30445bdf3b75",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "blank"
+    },
+    {
+      "name": "blank-open"
+    },
+    {
+      "name": "beef"
+    },
+    {
+      "name": "beef-open"
+    },
+    {
+      "name": "beans"
+    },
+    {
+      "name": "beans-open"
+    },
+    {
+      "name": "tomato"
+    },
+    {
+      "name": "tomato-open"
+    },
+    {
+      "name": "spinach"
+    },
+    {
+      "name": "spinach-open"
+    },
+    {
+      "name": "berries"
+    },
+    {
+      "name": "berries-open"
+    },
+    {
+      "name": "fisheggs"
+    },
+    {
+      "name": "fisheggs-open"
+    },
+    {
+      "name": "carpeggs-open"
+    },
+    {
+      "name": "carpeggs"
+    }
+  ]
+}

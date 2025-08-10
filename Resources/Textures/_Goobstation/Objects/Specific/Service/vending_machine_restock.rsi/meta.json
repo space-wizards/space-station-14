@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original source: https://github.com/tgstation/tgstation/blob/master/icons/obj/vending_restock.dmi @ commit 014c44ef6279beb02a5f3e76824439fa57181c22 - Sweettoof by SolsticeOfTheWinter",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "green_bit"
+    },
+    {
+      "name": "refill_sweettoof"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "BeeRobynn, plyush, bellcatsu , George Gimme, and Ahti, plushie_samantha by SolsticeOfTheWinter, Abductor by Shy Bandit, plushie_jvne by Jvne",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "plushie_louie"
+        },
+        {
+            "name": "plushie_durk"
+        },
+		{
+            "name": "plushie_jvne"
+        },
+		{
+            "name": "plushiejvne-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plushiejvne-inhand-right",
+            "directions": 4
+        },
+		{
+            "name": "plushie_samantha"
+        },
+		{
+            "name": "plushiesamantha-equipped-HELMET",
+            "directions": 4
+        },
+		{
+            "name": "plushiesamantha-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plushiesamantha-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "plushie_blackburn"
+        },
+        {
+            "name": "plushie_matryoskya"
+        },
+        {
+            "name": "plushie_kobliska"
+        },
+        {
+            "name": "plushie_abductor"
+        },
+        {
+            "name": "plushie_desislava",
+            "delays": [
+                [
+                    0.5,
+                    0.25
+                ]
+            ]
+        },
+        {
+            "name": "bingleing"
+        },
+        {
+            "name": "bongle",
+            "directions": 4
+        },
+        {
+            "name": "bingle_pony",
+            "directions": 4
+        }
+
+    ]
+}

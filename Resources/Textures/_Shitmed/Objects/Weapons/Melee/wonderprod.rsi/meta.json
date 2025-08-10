@@ -1,0 +1,139 @@
+{
+    "version": 1,
+    "copyright": "Taked From Paradise Station, animated by darkrell",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "sleep-icon",
+            "delays": [
+              [
+                1,
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                0.15
+              ]
+            ]
+        },
+        {
+            "name": "stun-icon",
+            "delays": [
+              [
+                1,
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                0.15,
+                1
+              ]
+            ]
+        },
+        {
+            "name": "damage-icon",
+            "delays": [
+              [
+                0.2,
+                0.2,
+                0.2,
+                0.2,
+                0.2,
+                0.2,
+                0.2,
+                0.2,
+                0.2
+              ]
+            ]
+        },
+        {
+            "name": "cuffs-icon",
+            "delays": [
+              [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+              ]
+            ]
+        },
+        {
+            "name": "sleep-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "sleep-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "sleep-equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "sleep-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "stun-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "stun-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "stun-equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "stun-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "damage-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "damage-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "damage-equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "damage-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "cuffs-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "cuffs-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "cuffs-equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "cuffs-equipped-BACKPACK",
+            "directions": 4
+        }
+    ]
+}

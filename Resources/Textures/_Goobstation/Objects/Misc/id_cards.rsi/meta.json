@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by BombasterDS - https://github.com/MetalSage/space-stories-archive/commit/26812e79c19c5f998bcbc445afbdceea625bc887, Chemist by Lehmin",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	{
+      "name": "future"
+    },
+	{
+      "name": "idhelldiver"
+    },
+	{
+      "name": "idchrono"
+    },
+	{
+      "name": "chemist-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "chemist-inhand-right",
+      "directions": 4
+    }
+  ]
+}

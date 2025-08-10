@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by @rosef6774 for Goobstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "display"
+    },
+    {
+      "name": "icon"
+    },
+    {
+      "name": "printing",
+      "delays": [[0.25, 0.25, 0.25, 0.25]]
+    },
+    {
+      "name": "unshaded",
+      "delays": [[2, 1, 1, 1]]
+    }
+  ]
+}

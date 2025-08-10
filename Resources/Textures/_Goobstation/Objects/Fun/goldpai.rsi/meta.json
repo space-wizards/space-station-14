@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Muppet. Sprites by ShyBandit",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "icon-goldpai-off"
+      },
+      {
+        "name": "goldpai-base"
+      },
+      {
+        "name": "goldpai-off-overlay"
+      },
+      {
+        "name": "goldpai-on-overlay",
+        "delays": [
+          [
+            0.8,
+            0.8
+          ]
+        ]
+      },
+      {
+        "name": "goldpai-searching-overlay",
+        "delays": [
+          [
+            0.8,
+            0.8
+          ]
+        ]
+      }
+    ]
+}

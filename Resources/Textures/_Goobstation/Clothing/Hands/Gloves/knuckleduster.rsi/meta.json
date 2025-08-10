@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Paradise Station, equipped-HAND by SolsticeOfTheWinter",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "knuckleduster"
+    },
+	{
+      "name": "goldenknuckleduster"
+    },
+	{
+      "name": "brassknuckleduster"
+    },
+	{
+      "name": "syndicateknuckleduster"
+    },
+	{
+      "name": "equipped-HAND",
+      "directions": 4
+    }
+  ]
+}

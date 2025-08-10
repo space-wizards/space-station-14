@@ -1,0 +1,75 @@
+{
+    "version": 1,
+    "copyright": "Felinid ears made by @Vordenburg for Nyanotrasen @ https://github.com/Nyanotrasen/Nyanotrasen/pull/581/commits/77fe4c38589516ceef533de17cde56665ce970c7, modified by SX-7. Copy of original is in felinid_ears.rsi in Nyanotrasen namespace",
+    "license": "CC-BY-SA-4.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "basic_inner",
+            "directions": 4
+        },
+        {
+            "name": "basic_outer",
+            "directions": 4
+        },
+        {
+            "name": "curled_inner",
+            "directions": 4
+        },
+        {
+            "name": "curled_outer",
+            "directions": 4
+        },
+        {
+            "name": "fuzzy_inner",
+            "directions": 4
+        },
+        {
+            "name": "tall_outer",
+            "directions": 4
+        },
+        {
+            "name": "tall_inner",
+            "directions": 4
+        },
+        {
+            "name": "tall_fuzz",
+            "directions": 4
+        },
+        {
+            "name": "torn_outer",
+            "directions": 4
+        },
+        {
+            "name": "torn_inner",
+            "directions": 4
+        },
+        {
+            "name": "stubby_outer",
+            "directions": 4
+        },
+        {
+            "name": "stubby_inner",
+            "directions": 4
+        },
+        {
+            "name": "droopy_outer",
+            "directions": 4
+        },
+        {
+            "name": "droopy_inner",
+            "directions": 4
+        },
+        {
+            "name": "wide_inner",
+            "directions": 4
+        },
+        {
+            "name": "wide_outer",
+            "directions": 4
+        }
+    ]
+}

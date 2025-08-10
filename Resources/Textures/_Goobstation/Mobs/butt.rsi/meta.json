@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/tgstation/tgstation/blob/8024397cc81c5f47f74cf4279e35728487d0a1a7/icons/mob/human_parts_greyscale.dmi and modified by DrSmugleaf & Piras314",
+    "size": {
+      "x": 9,
+      "y": 6
+    },
+    "states": [
+      {
+        "name": "butt"
+      }
+    ]
+}

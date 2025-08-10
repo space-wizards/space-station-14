@@ -1,0 +1,34 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprited by Taro Varne",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bolt_blue_heavy",
+            "delays": [
+                [
+                    0.060000002,
+                    0.060000002,
+                    0.060000002,
+                    0.060000002
+                ]
+            ]
+        },
+        {
+			"name": "bolt_red_heavy",
+            "delays": [
+                [
+                    0.060000002,
+                    0.060000002,
+                    0.060000002,
+                    0.060000002
+                ]
+            ]
+        }
+    ]
+}
+

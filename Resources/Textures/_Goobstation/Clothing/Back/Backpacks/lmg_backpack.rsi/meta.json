@@ -1,0 +1,39 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "made by imasleeping on Discord",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "base"
+        },
+        {
+            "name": "mag-1"
+        },
+        {
+            "name": "mag-0"
+        },
+        {
+            "name": "equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "mag-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "red-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "green-equipped-BACKPACK",
+            "directions": 4
+        }
+    ]
+}

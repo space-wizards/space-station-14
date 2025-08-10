@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "From tgstation - https://github.com/tgstation/tgstation/pull/59109",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "control"
+    },
+		{
+		  "name": "control-sealed",
+		  "delays": [
+		    [
+				  0.1,
+				  0.1,
+				  0.1,
+				  0.1
+				]
+		  ]
+		},
+		{
+			"name": "equipped-BACKPACK",
+			"directions": 4
+		},
+		{
+			"name": "equipped-BACKPACK-sealed",
+			"directions": 4
+		}
+  ]
+}

@@ -1,0 +1,30 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Sprited by kipdotnet (github) for Impstation",
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "base",
+            "directions": 4
+        },
+        {
+            "name": "powered",
+            "directions": 4
+        },
+        {
+            "name": "arm-short",
+            "directions": 4
+        },
+        {
+            "name": "arm-long",
+            "directions": 4
+        }
+    ]
+}

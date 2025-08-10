@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Edited by Mocho from the original tgstation sprites taken at commit https://github.com/tgstation/tgstation/commit/c7e14784b35b1a136351c396d3a546f461ee2451",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+        "name": "chest_0"
+        },
+        {
+        "name": "chest_1"
+        },
+        {
+        "name": "chest_2"
+        },
+        {
+        "name": "chest_3"
+        },
+        {
+        "name": "chest_4"
+        },
+        {
+        "name": "chest_5"
+        },
+        {
+        "name": "chest_6"
+        },
+        {
+        "name": "chest_bleed"
+        }
+    ]
+}

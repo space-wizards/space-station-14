@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Edited by Mocho from the original tgstation sprites taken at commit https://github.com/tgstation/tgstation/commit/c7e14784b35b1a136351c396d3a546f461ee2451",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+        "name": "groin_0"
+        },
+        {
+        "name": "groin_1"
+        },
+        {
+        "name": "groin_2"
+        },
+        {
+        "name": "groin_3"
+        },
+        {
+        "name": "groin_4"
+        },
+        {
+        "name": "groin_5"
+        },
+        {
+        "name": "groin_6"
+        },
+        {
+        "name": "groin_bleed"
+        }
+    ]
+}

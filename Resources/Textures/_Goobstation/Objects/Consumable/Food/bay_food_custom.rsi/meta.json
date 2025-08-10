@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Baystation12 at https://github.com/Baystation12/Baystation12/blob/464342c5dc8c417b7e79d56c69aa30445bdf3b75/icons/obj/food/food_custom.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pizza"
+    },
+    {
+      "name": "pizza_filling"
+    },
+    {
+      "name": "pizza_slice"
+    },
+    {
+      "name": "pizza_slice_filling"
+    },
+    {
+      "name": "cakecustom"
+    },
+    {
+      "name": "cakecustom_filling"
+    },
+    {
+      "name": "cakecustom_slice"
+    },
+    {
+      "name": "cakecustom_slice_filling"
+    },
+    {
+      "name": "piecustom"
+    },
+    {
+      "name": "piecustom_filling"
+    },
+    {
+      "name": "breadcustom"
+    },
+    {
+      "name": "breadcustom_filling"
+    },
+    {
+      "name": "breadcustom_slice"
+    },
+    {
+      "name": "breadcustom_slice_filling"
+    },
+    {
+      "name": "kabob"
+    },
+    {
+      "name": "kabob_filling"
+    },
+    {
+      "name": "waffles"
+    },
+    {
+      "name": "waffles_filling"
+    },
+    {
+      "name": "cookie"
+    },
+    {
+      "name": "cookie_filling"
+    },
+    {
+      "name": "donut"
+    },
+    {
+      "name": "donut_filling"
+    },
+    {
+      "name": "donk"
+    },
+    {
+      "name": "donk_filling"
+    },
+    {
+      "name": "bar"
+    },
+    {
+      "name": "bar_filling"
+    },
+    {
+      "name": "sucker"
+    },
+    {
+      "name": "sucker_filling"
+    },
+    {
+      "name": "jellycustom_filling"
+    },
+    {
+      "name": "jellycustom"
+    },
+    {
+      "name": "jawbreaker"
+    },
+    {
+      "name": "jawbreaker_filling"
+    },
+    {
+      "name": "pancakescustom"
+    },
+    {
+      "name": "pancakescustom_filling"
+    },
+    {
+      "name": "stuffing"
+    },
+    {
+      "name": "stuffing_filling"
+    },
+    {
+      "name": "shreds"
+    },
+    {
+      "name": "shreds_filling"
+    },
+    {
+      "name": "stew"
+    },
+    {
+      "name": "stew_filling"
+    },
+    {
+      "name": "serving_bowl"
+    },
+    {
+      "name": "serving_bowl_4"
+    },
+    {
+      "name": "serving_bowl_3"
+    },
+    {
+      "name": "serving_bowl_2"
+    },
+    {
+      "name": "serving_bowl_1"
+    },
+    {
+      "name": "customburger"
+    },
+    {
+      "name": "customburger_filling"
+    }
+  ]
+}

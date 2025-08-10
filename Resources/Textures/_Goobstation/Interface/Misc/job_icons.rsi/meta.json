@@ -1,0 +1,43 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Future taken from space stories  https://github.com/MetalSage/space-stories-archive/commit/26812e79c19c5f998bcbc445afbdceea625bc887 Blueshield, Nanotrasen Representative, and Trainer taken from Paradise @ https://github.com/ParadiseSS13/Paradise/commit/5a68c5f6d3b60ee82c06e0287d1eb8108d2e1fe2, Lambda by SolsticeOfTheWinter",
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+	{
+	  "name": "Future",
+	  "delays": [
+	  [
+		  0.2,
+		  0.2,
+		  0.2,
+		  0.2
+	  ]
+	  ]
+	},
+    {
+      "name": "nanotrasenrepresentative"
+    },
+    {
+      "name": "blueshield"
+    },
+	{
+      "name": "lambda"
+    },
+	{
+      "name": "trainer"
+    },
+    {
+        "name": "Mindcontrolled"
+    },
+    {
+        "name": "Ghoul"
+    },
+    {
+        "name": "HereticMaster"
+    }
+    ]
+}

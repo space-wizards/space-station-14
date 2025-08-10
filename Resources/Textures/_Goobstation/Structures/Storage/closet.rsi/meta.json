@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "copyright": "Made by Icepick - https://discord.com/channels/1202734573247795300/1236697829171527841/1282401830181277789",
+  "license": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "bso"
+    },
+    {
+      "name": "bso_door"
+    },
+    {
+      "name": "bso_open"
+    },
+	{
+      "name": "ntr"
+    },
+    {
+      "name": "ntr_door"
+    },
+    {
+      "name": "ntr_open"
+    },
+	{
+      "name": "generic"
+    },
+    {
+      "name": "generic_door"
+    },
+    {
+      "name": "generic_open"
+    },
+	{
+      "name": "generic_icon"
+    },
+	{
+      "name": "welded"
+    },
+	{
+      "name": "unlocked"
+    },
+	{
+      "name": "locked"
+    }
+  ]
+}

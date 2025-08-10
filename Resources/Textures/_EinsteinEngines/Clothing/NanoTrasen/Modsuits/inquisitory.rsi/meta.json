@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TG Station's Files",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "equipped-BACKPACK-sealed",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HEAD-sealed",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HEAD",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HEAD-sealed-unshaded",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-sealed",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HAND-sealed",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HAND",
+      "directions": 4
+    },
+    {
+      "name": "equipped-FEET-sealed",
+      "directions": 4
+    },
+    {
+      "name": "equipped-FEET",
+      "directions": 4
+    },
+    {
+      "name": "control-sealed",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "control"
+    },
+    {
+      "name": "helmet-sealed"
+    },
+    {
+      "name": "helmet"
+    },
+    {
+      "name": "chestplate-sealed"
+    },
+    {
+      "name": "chestplate"
+    },
+    {
+      "name": "gauntlets-sealed"
+    },
+    {
+      "name": "gauntlets"
+    },
+    {
+      "name": "boots-sealed"
+    },
+    {
+      "name": "boots"
+    }
+  ]
+}

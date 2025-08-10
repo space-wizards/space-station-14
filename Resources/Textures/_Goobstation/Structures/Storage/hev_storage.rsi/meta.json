@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Resprited suit storage (made by Alekshhh) by BombasterDS",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "glass"
+    },
+	{
+      "name": "glass-up"
+    },
+    {
+      "name": "unlocked"
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "panel"
+    },
+	{
+      "name": "suit"
+    },
+    {
+      "name": "welded"
+    }
+  ]
+}

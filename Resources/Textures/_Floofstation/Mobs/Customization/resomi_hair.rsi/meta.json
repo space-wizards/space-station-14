@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore and Bighorn are drawn by Ubaser, and Kobold Ears are drawn by Pigeonpeas. Body_underbelly made by Nairod(github) for SS14. Large drawn by Ubaser. Wagging tail by SonicDC. Splotch modified from Sharp by KittenColony(github). Frills neckfull come from: https://github.com/Bubberstation/Bubberstation/commit/8bc6b83404803466a560b694bf22ef3c0ac266a2",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "ResomiBackstrafe",
+            "directions": 4
+        },
+        {
+            "name": "ResomiBurstShort",
+            "directions": 4
+        },
+        {
+            "name": "ResomiDefault",
+            "directions": 4
+        },
+        {
+            "name": "ResomiDroopy",
+            "directions": 4
+        },
+        {
+            "name": "ResomiEars",
+            "directions": 4
+        },
+        {
+            "name": "ResomiFluffymohawk",
+            "directions": 4
+        },
+        {
+            "name": "ResomiHedge",
+            "directions": 4
+        },
+        {
+            "name": "ResomiLongway",
+            "directions": 4
+        },
+        {
+            "name": "ResomiMane",
+            "directions": 4
+        },
+        {
+            "name": "ResomiManeBeardless",
+            "directions": 4
+        },
+        {
+            "name": "ResomiMohawk",
+            "directions": 4
+        },
+        {
+            "name": "ResomiMushroom",
+            "directions": 4
+        },
+        {
+            "name": "ResomiNotree",
+            "directions": 4
+        },
+        {
+            "name": "ResomiPointy",
+            "directions": 4
+        },
+        {
+            "name": "ResomiSpiky",
+            "directions": 4
+        },
+        {
+            "name": "ResomiTwies",
+            "directions": 4
+        },
+        {
+            "name": "ResomiUpright",
+            "directions": 4
+        },
+        {
+            "name": "ResomiLong",
+            "directions": 4
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "version": 1,
+    "size": { "x": 96, "y": 32 },
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Created by JORJ949 for Goobstation",
+    "states": [
+        {
+            "name": "merciful_base",
+            "directions": 4
+        },
+        {
+            "name": "merciful_light",
+            "directions": 4
+        }
+    ]
+}

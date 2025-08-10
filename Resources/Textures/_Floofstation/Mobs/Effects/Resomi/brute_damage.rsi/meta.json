@@ -1,0 +1,184 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Drawn by Ubaser.",
+	"size": {"x": 32, "y": 32},
+    "states": [
+        {
+            "name": "Head_Brute_10",
+            "directions": 4
+        },
+        {
+            "name": "LArm_Brute_10",
+            "directions": 4
+        },
+        {
+            "name": "LLeg_Brute_10",
+            "directions": 4
+        },
+        {
+            "name": "RArm_Brute_10",
+            "directions": 4
+        },
+        {
+            "name": "RLeg_Brute_10",
+            "directions": 4
+        },
+        {
+            "name": "Chest_Brute_10",
+            "directions": 4
+        },
+        {
+            "name": "Head_Brute_30",
+            "directions": 4
+        },
+        {
+            "name": "LArm_Brute_30",
+            "directions": 4
+        },
+        {
+            "name": "LLeg_Brute_30",
+            "directions": 4
+        },
+        {
+            "name": "RArm_Brute_30",
+            "directions": 4
+        },
+        {
+            "name": "RLeg_Brute_30",
+            "directions": 4
+        },
+        {
+            "name": "Chest_Brute_30",
+            "directions": 4
+        },
+        {
+            "name": "Head_Brute_50",
+            "directions": 4
+        },
+        {
+            "name": "LArm_Brute_50",
+            "directions": 4
+        },
+        {
+            "name": "LLeg_Brute_50",
+            "directions": 4
+        },
+        {
+            "name": "RArm_Brute_50",
+            "directions": 4
+        },
+        {
+            "name": "RLeg_Brute_50",
+            "directions": 4
+        },
+        {
+            "name": "Chest_Brute_50",
+            "directions": 4
+        },
+        {
+            "name": "Head_Brute_70",
+            "directions": 4
+        },
+        {
+            "name": "LArm_Brute_70",
+            "directions": 4
+        },
+        {
+            "name": "LLeg_Brute_70",
+            "directions": 4
+        },
+        {
+            "name": "RArm_Brute_70",
+            "directions": 4
+        },
+        {
+            "name": "RLeg_Brute_70",
+            "directions": 4
+        },
+        {
+            "name": "Chest_Brute_70",
+            "directions": 4
+        },
+        {
+            "name": "LHand_Brute_10",
+            "directions": 4
+        },
+        {
+            "name": "LHand_Brute_30",
+            "directions": 4
+        },
+        {
+            "name": "LHand_Brute_50",
+            "directions": 4
+        },
+        {
+            "name": "LHand_Brute_70",
+            "directions": 4
+        },
+        {
+            "name": "LFoot_Brute_10",
+            "directions": 4
+        },
+        {
+            "name": "LFoot_Brute_30",
+            "directions": 4
+        },
+        {
+            "name": "LFoot_Brute_50",
+            "directions": 4
+        },
+        {
+            "name": "LFoot_Brute_70",
+            "directions": 4
+        },
+        {
+            "name": "RHand_Brute_10",
+            "directions": 4
+        },
+        {
+            "name": "RHand_Brute_30",
+            "directions": 4
+        },
+        {
+            "name": "RHand_Brute_50",
+            "directions": 4
+        },
+        {
+            "name": "RHand_Brute_70",
+            "directions": 4
+        },
+        {
+            "name": "RFoot_Brute_10",
+            "directions": 4
+        },
+        {
+            "name": "RFoot_Brute_30",
+            "directions": 4
+        },
+        {
+            "name": "RFoot_Brute_50",
+            "directions": 4
+        },
+        {
+            "name": "RFoot_Brute_70",
+            "directions": 4
+        },
+        {
+            "name": "Tail_Brute_10",
+            "directions": 4
+        },
+        {
+            "name": "Tail_Brute_30",
+            "directions": 4
+        },
+        {
+            "name": "Tail_Brute_50",
+            "directions": 4
+        },
+        {
+            "name": "Tail_Brute_70",
+            "directions": 4
+        }
+    ]
+}

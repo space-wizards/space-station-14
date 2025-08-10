@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Brainrot HQ",
+  "size": {
+        "x": 32,
+        "y": 32
+  },
+  "states": [
+    {
+        "name": "alive",
+        "directions": 4
+    },
+    {
+        "name": "pit",
+        "delays": [
+            [
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+    },
+    {
+        "name": "icon"
+    },
+    {
+        "name": "dead"
+    },
+    {
+         "name": "dead_upgraded"
+    },
+    {
+        "name": "Upgraded",
+        "directions": 4
+    },
+    {
+        "name": "combat",
+        "directions": 4
+    }
+  ]
+}

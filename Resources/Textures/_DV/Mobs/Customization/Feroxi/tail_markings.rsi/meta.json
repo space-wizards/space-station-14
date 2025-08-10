@@ -1,0 +1,48 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Made by BlitzTheSquishy",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "feroxi-tail",
+            "directions": 4
+        },
+        {
+            "name": "feroxi-tail-top-tip",
+            "directions": 4
+        },
+        {
+            "name": "feroxi-tail-bottom-tip",
+            "directions": 4
+        },
+        {
+            "name": "feroxi-tail-second-dorsal-tip",
+            "directions": 4
+        },
+
+        {
+            "name": "feroxi-tail-under",
+            "directions": 4
+        },
+        {
+            "name": "feroxi-tail-stripes",
+            "directions": 4
+        },
+        {
+            "name": "feroxi-dorsal",
+            "directions": 4
+        },
+        {
+            "name": "feroxi-dorsal-tip",
+            "directions": 4
+        },
+        {
+            "name": "feroxi-dorsal-stripes",
+            "directions": 4
+        }
+    ]
+}

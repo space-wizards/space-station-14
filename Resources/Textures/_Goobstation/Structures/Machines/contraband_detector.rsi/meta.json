@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TG station - https://github.com/tgstation/tgstation/pull/85077",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "empty"
+    },
+    {
+      "name": "frame",
+      "directions": 4
+    },
+    {
+      "name": "wires",
+      "directions": 4
+    },
+    {
+      "name": "passive",
+      "directions": 4,
+      "delays": [
+        [
+            0.3,
+            0.3
+        ],
+        [
+            0.3,
+            0.3
+        ],
+        [
+            0.3,
+            0.3
+        ],
+        [
+            0.3,
+            0.3
+        ]
+      ]
+    },
+    {
+      "name": "scan",
+      "directions": 4,
+      "delays": [
+        [
+            0.3,
+            0.3
+        ],
+        [
+            0.3,
+            0.3
+        ],
+        [
+            0.3,
+            0.3
+        ],
+        [
+            0.3,
+            0.3
+        ]
+      ]
+    },
+    {
+      "name": "alarm",
+      "directions": 4,
+      "delays": [
+        [
+            0.3,
+            0.3
+        ],
+        [
+            0.3,
+            0.3
+        ],
+        [
+            0.3,
+            0.3
+        ],
+        [
+            0.3,
+            0.3
+        ]
+      ]
+    }
+  ]
+}

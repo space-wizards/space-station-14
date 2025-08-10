@@ -1,0 +1,188 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original sprites by @KillianKirilenko from vorestation at commit https://github.com/VOREStation/VOREStation/pull/14891 | split into layers and resprited in grey scale by erhardsteinhauer (discord/github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon-base-bottom"
+    },
+    {
+      "name": "icon-base-top-jumpsuit"
+    },
+    {
+      "name": "icon-base-top-turtleneck"
+    },
+    {
+      "name": "icon-belt"
+    },
+    {
+      "name": "icon-belt-buckle"
+    },
+    {
+      "name": "icon-decor-contractor"
+    },
+    {
+      "name": "icon-decor-contractor-tac"
+    },
+    {
+      "name": "icon-decor-department"
+    },
+    {
+      "name": "icon-decor-department-head"
+    },
+    {
+      "name": "icon-decor-epaulets"
+    },
+    {
+      "name": "icon-decor-shoulder-patch"
+    },
+    {
+      "name": "equipped-base-bottom",
+      "directions": 4
+    },
+    {
+      "name": "equipped-base-top-jumpsuit",
+      "directions": 4
+    },
+    {
+      "name": "equipped-base-top-jumpsuit-tac",
+      "directions": 4
+    },
+    {
+      "name": "equipped-base-top-turtleneck",
+      "directions": 4
+    },
+    {
+      "name": "equipped-base-top-turtleneck-alt",
+      "directions": 4
+    },
+    {
+      "name": "equipped-belt",
+      "directions": 4
+    },
+    {
+      "name": "equipped-belt-buckle",
+      "directions": 4
+    },
+    {
+      "name": "equipped-decor-contractor",
+      "directions": 4
+    },
+    {
+      "name": "equipped-decor-contractor-tac",
+      "directions": 4
+    },
+    {
+      "name": "equipped-decor-department",
+      "directions": 4
+    },
+    {
+      "name": "equipped-decor-department-head",
+      "directions": 4
+    },
+    {
+      "name": "equipped-decor-epaulets",
+      "directions": 4
+    },
+    {
+      "name": "equipped-decor-shoulder-patch",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-base-bottom",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-base-top-jumpsuit",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-base-top-turtleneck",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-belt",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-belt-buckle",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-decor-contractor",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-decor-contractor-tac",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-decor-department",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-decor-department-head",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-decor-epaulets",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-decor-shoulder-patch",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-base-bottom",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-base-top-jumpsuit",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-base-top-turtleneck",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-belt",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-belt-buckle",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-decor-contractor",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-decor-contractor-tac",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-decor-department",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-decor-department-head",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-decor-epaulets",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-decor-shoulder-patch",
+      "directions": 4
+    },
+    {
+      "name": "mask_null",
+      "directions": 4
+    }
+  ]
+}

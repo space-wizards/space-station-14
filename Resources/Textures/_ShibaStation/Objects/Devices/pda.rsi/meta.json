@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Mail PDA by AstroDoge | Base Made by BombasterDS - https://github.com/MetalSage/space-stories-archive/commit/26812e79c19c5f998bcbc445afbdceea625bc887",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	{
+      "name": "pda"
+    },
+	{
+      "name": "pda-mail"
+    },
+	{
+      "name": "id_overlay"
+    },
+	{
+      "name": "light_overlay"
+    }
+  ]
+}

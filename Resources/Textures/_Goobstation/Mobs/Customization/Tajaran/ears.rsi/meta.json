@@ -1,0 +1,43 @@
+{
+    "version": 1,
+    "copyright": "Creator was not supplied, oldest reference to markings ('patch') tracked to KasparoVy @ https://github.com/ParadiseSS13/Paradise/commit/3610cfd4ea7e9bffc804320851f0b0a625db1dba, meanwhile ears are made by Cael Aislinn in commit https://github.com/ParadiseSS13/Paradise/commit/9e4539fdce01f00ed7e47ca1174a1470ac5fe77c. Minor tweaks and '_near' versions by SX-7",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "ears",
+            "directions": 4
+        },
+        {
+            "name": "inears",
+            "directions": 4
+        },
+        {
+            "name": "outears",
+            "directions": 4
+        },
+        {
+            "name": "patch",
+            "directions": 4
+        },
+        {
+            "name": "ears_near",
+            "directions": 4
+        },
+        {
+            "name": "inears_near",
+            "directions": 4
+        },
+        {
+            "name": "outears_near",
+            "directions": 4
+        },
+        {
+            "name": "patch_near",
+            "directions": 4
+        }
+    ]
+}

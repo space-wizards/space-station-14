@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "portfiend",
+  "size": {"x": 32, "y": 32},
+  "states": [
+    {
+      "name": "bat",
+      "directions": 4
+    },
+    {
+      "name": "bat_large",
+      "directions": 4
+    },
+    {
+      "name": "hamster",
+      "directions": 4
+    },
+    {
+      "name": "hamster_overlay",
+      "directions": 4
+    },
+    {
+      "name": "long",
+      "directions": 4
+    },
+    {
+      "name": "long_overlay",
+      "directions": 4
+    },
+    {
+      "name": "mouse",
+      "directions": 4
+    },
+    {
+      "name": "mouse_overlay",
+      "directions": 4
+    },
+    {
+      "name": "mouse_large",
+      "directions": 4
+    },
+    {
+      "name": "mouse_large_overlay",
+      "directions": 4
+    },
+    {
+      "name": "none",
+      "directions": 4
+    },
+    {
+      "name": "pointy",
+      "directions": 4
+    },
+    {
+      "name": "rabbit",
+      "directions": 4
+    },
+    {
+      "name": "rabbit_overlay",
+      "directions": 4
+    },
+    {
+      "name": "small",
+      "directions": 4
+    }
+  ]
+}

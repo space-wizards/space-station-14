@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://www.pinterest.com/pin/681450987343974739/",
+    "size": {
+        "x": 1284,
+        "y": 724
+    },
+    "states": [
+        {
+            "name": "static",
+            "delays": [
+                [
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        }
+    ]
+}

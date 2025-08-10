@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "copyright": "apparently splurt-station https://github.com/SPLURT-Station/S.P.L.U.R.T-Station-13/commit/96703f76bccd8fe6a96b78524efb97a9af661767",
+    "license": "CC-BY-SA-4.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base_fox_tail",
+            "directions": 4
+        },
+        {
+            "name": "base_fox_tail_tip",
+            "directions": 4
+        }
+    ]
+}

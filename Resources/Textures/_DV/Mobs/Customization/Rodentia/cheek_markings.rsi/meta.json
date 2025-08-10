@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/tgstation/tgstation/blob/8024397cc81c5f47f74cf4279e35728487d0a1a7/icons/mob/human_parts_greyscale.dmi, modified by DrSmugleaf and portfiend",
+  "size": {"x": 32, "y": 32},
+  "states": [
+    {
+      "name": "cheeks",
+      "directions": 4
+    },
+    {
+      "name": "cheeks_overlay",
+      "directions": 4
+    },
+    {
+      "name": "fluff",
+      "directions": 4
+    },
+    {
+      "name": "fluff_overlay",
+      "directions": 4
+    },
+    {
+      "name": "fluff_alt",
+      "directions": 4
+    },
+    {
+      "name": "fluff_alt_overlay",
+      "directions": 4
+    },
+    {
+      "name": "whiskers",
+      "directions": 4
+    }
+  ]
+}

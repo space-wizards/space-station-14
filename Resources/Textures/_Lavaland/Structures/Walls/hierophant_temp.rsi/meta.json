@@ -1,0 +1,16 @@
+{"version": 1,
+ "size": {"x": 32, "y": 32},
+  "license": "CC-BY-SA-3.0",
+   "copyright": "Taken from Yogstation",
+    "states": [
+        {"name": "full"},
+        {"name": "hierotemp0", "directions": 4},
+        {"name": "hierotemp1", "directions": 4},
+        {"name": "hierotemp2", "directions": 4},
+        {"name": "hierotemp3", "directions": 4},
+        {"name": "hierotemp4", "directions": 4},
+        {"name": "hierotemp5", "directions": 4},
+        {"name": "hierotemp6", "directions": 4},
+        {"name": "hierotemp7", "directions": 4}
+    ]
+}

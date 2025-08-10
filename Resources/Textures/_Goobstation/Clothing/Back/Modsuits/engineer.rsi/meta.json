@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "From Baystation12 - https://github.com/Baystation12/Baystation12/pull/34564, equipped-BACKPACK and equipped-BACKPACK-sealed pulled apart by JoeHammad",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "control"
+    },
+		{
+		  "name": "control-sealed",
+		  "delays": [
+		    [
+				  0.1,
+				  0.1,
+				  0.1,
+				  0.1
+				]
+		  ]
+		},
+		{
+			"name": "equipped-BACKPACK",
+			"directions": 4
+		},
+		{
+			"name": "equipped-BACKPACK-sealed",
+			"directions": 4
+		}
+  ]
+}

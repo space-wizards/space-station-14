@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/cc65477c04f7403ca8a457bd5bae69a01abadbf0 modified by gtheglorious and aidenkrz, vapor made by modifying oxy by AstroDoge",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "box"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "box_hug"
+    },
+    {
+      "name": "hug-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "hug-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "box_med"
+    },
+    {
+      "name": "box_sec"
+    },
+    {
+      "name": "box_syndie"
+    },
+    {
+      "name": "box_extend"
+    },
+    {
+      "name": "flare"
+    },
+    {
+      "name": "mask"
+    },
+    {
+      "name": "secmask"
+    },
+    {
+      "name": "syndiemask"
+    },
+    {
+      "name": "emergencypen"
+    },
+    {
+      "name": "spacepen"
+    },
+    {
+      "name": "nutriblock"
+    },
+    {
+      "name": "water"
+    },
+    {
+      "name": "oxy"
+    },
+    {
+      "name": "oxyclown"
+    },
+    {
+      "name": "oxyextend"
+    },
+    {
+      "name": "nit"
+    },
+	{
+	  "name": "vapor"
+	}
+  ]
+}

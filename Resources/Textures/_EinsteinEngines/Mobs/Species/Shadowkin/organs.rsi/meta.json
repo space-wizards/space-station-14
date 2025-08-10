@@ -1,0 +1,44 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/tgstation/tgstation/commit/f309886bf3e29808206693e9142304260df134e9",
+    "states": [
+        {
+            "name": "appendix"
+        },
+        {
+            "name": "brain"
+        },
+        {
+            "name": "core"
+        },
+        {
+            "name": "ears"
+        },
+        {
+            "name": "eyes"
+        },
+        {
+            "name": "heart"
+        },
+        {
+            "name": "kidneys"
+        },
+        {
+            "name": "liver"
+        },
+        {
+            "name": "lungs"
+        },
+        {
+            "name": "stomach"
+        },
+        {
+            "name": "tongue"
+        }
+    ]
+}

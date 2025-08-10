@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by angelofallars (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pointy_ears_standard",
+      "directions": 4
+    },
+    {
+      "name": "pointy_ears_wide",
+      "directions": 4
+    },
+    {
+      "name": "pointy_ears_small",
+      "directions": 4
+    },
+    {
+      "name": "pointy_ears_thin",
+      "directions": 4
+    },
+    {
+      "name": "pointy_ears_upwards",
+      "directions": 4
+    },
+    {
+      "name": "pointy_ears_tall",
+      "directions": 4
+    },
+    {
+      "name": "pointy_ears_slanted",
+      "directions": 4
+    },
+    {
+      "name": "pointy_ears_large",
+      "directions": 4
+    },
+    {
+      "name": "pointy_ears_none",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Baystation12 at https://github.com/Baystation12/Baystation12/blob/464342c5dc8c417b7e79d56c69aa30445bdf3b75/icons/obj/food/food_shellfish.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "clam"
+    },
+    {
+      "name": "clam_open"
+    },
+    {
+      "name": "clam_empty"
+    },
+    {
+      "name": "mussel"
+    },
+    {
+      "name": "mussel_open"
+    },
+    {
+      "name": "mussel_empty"
+    },
+    {
+      "name": "oyster"
+    },
+    {
+      "name": "oyster_open"
+    },
+    {
+      "name": "oyster_empty"
+    },
+    {
+      "name": "shrimp"
+    },
+    {
+      "name": "shrimp_meat"
+    },
+    {
+      "name": "crab"
+    },
+    {
+      "name": "crab_meat"
+    }
+  ]
+}

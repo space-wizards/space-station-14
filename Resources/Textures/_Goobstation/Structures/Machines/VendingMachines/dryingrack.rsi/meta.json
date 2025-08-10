@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Baystation at commit https://github.com/Baystation12/Baystation12/commit/bddd2b27f6103e46dadb6d251c7c1832e012a84d",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "drying_rack",
+      "directions": 4
+    },
+    {
+      "name": "drying_rack-plant",
+      "directions": 4
+    },
+    {
+      "name": "drying_rack-close",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "drying_rack-off",
+      "directions": 4
+    },
+    {
+      "name": "drying_rack-plant-off",
+      "directions": 4
+    },
+    {
+      "name": "drying_rack-close-off",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "copyright": "Creator was not supplied, oldest reference tracked to KasparoVy @ https://github.com/ParadiseSS13/Paradise/commit/38717e3b034550b3c0a9f3c5f3c78a957dcad0d9. Minor tweaks by SX-7",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "belly",
+            "directions": 4
+        },
+        {
+            "name": "crest",
+            "directions": 4
+        },
+        {
+            "name": "fullbelly",
+            "directions": 4
+        }
+    ]
+}

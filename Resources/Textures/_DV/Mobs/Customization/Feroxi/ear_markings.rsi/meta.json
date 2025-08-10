@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Made by BlitzTheSquishy",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+    {
+        "name": "feroxi-ears",
+        "directions": 4
+    },
+    {
+        "name": "feroxi-ears-inner",
+        "directions": 4
+    },
+    {
+        "name": "feroxi-ears-tips",
+        "directions": 4
+    }
+    ]
+}

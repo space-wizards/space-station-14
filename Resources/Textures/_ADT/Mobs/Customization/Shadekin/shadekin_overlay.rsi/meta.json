@@ -1,0 +1,81 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by discord:filokini",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "body_arrow",
+            "directions": 4
+        },
+        {
+            "name": "body_blackhole",
+            "directions": 4
+        },
+        {
+            "name": "body_brace",
+            "directions": 4
+        },
+        {
+            "name": "body_brawly",
+            "directions": 4
+        },
+        {
+            "name": "body_heart",
+            "directions": 4
+        },
+        {
+            "name": "body_ink",
+            "directions": 4
+        },
+        {
+            "name": "body_ink_anim",
+            "directions": 4,
+            "delays": [
+                [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4],
+                [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4],
+                [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4],
+                [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4]
+            ]
+        },
+        {
+            "name": "body_ink2",
+            "directions": 4
+        },
+        {
+            "name": "body_ink3",
+            "directions": 4
+        },
+        {
+            "name": "body_ink4",
+            "directions": 4
+        },
+        {
+            "name": "body_ink5",
+            "directions": 4
+        },
+        {
+            "name": "body_ink6",
+            "directions": 4
+        },
+        {
+            "name": "body_lines",
+            "directions": 4
+        },
+        {
+            "name": "body_neck",
+            "directions": 4
+        },
+        {
+            "name": "body_shield",
+            "directions": 4
+        },
+        {
+            "name": "body_vacuum",
+            "directions": 4
+        }
+    ]
+}

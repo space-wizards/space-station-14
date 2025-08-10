@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Ahti",
+    "size": {
+        "x": 32,
+        "y": 36
+    },
+    "states": [
+        {
+            "name": "yakubbingle",
+            "directions": 4
+        }
+    ]
+}

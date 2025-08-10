@@ -1,0 +1,38 @@
+light_mode unshaded;
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp vec3 tint; // Colour of the tint
+uniform highp float luminance_threshold; // number between 0 and 1
+uniform highp float noise_amount; // number between 0 and 1
+
+lowp float rand (lowp vec2 n) {
+  return 0.5 + 0.5 * fract (sin (dot (n.xy, vec2 (12.9898, 78.233)))* 43758.5453);
+}
+
+void fragment() {
+
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, FRAGCOORD.xy * SCREEN_PIXEL_SIZE);
+
+    // convert color to grayscale using luminance
+    highp float grey = dot(color.rgb, vec3(0.298, 0.5882, 0.1137));
+
+    // calculate local threshold
+    highp float threshold = grey * luminance_threshold;
+
+    // amplify low luminance parts
+    if (grey < threshold) {
+        grey += (threshold - grey) * 0.5;
+        if (grey > 1.0) {
+            grey = 1.0;
+        }
+    }
+
+    // apply night vision color tint
+    color.rgb = mix(color.rgb, tint, grey);
+
+    // add some noise for realism
+    lowp float noise = rand(FRAGCOORD.xy + TIME) * noise_amount / 10.0;
+    color.rgb += noise;
+
+    COLOR = color;
+}

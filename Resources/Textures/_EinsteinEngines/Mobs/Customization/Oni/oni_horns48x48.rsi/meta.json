@@ -1,0 +1,67 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "tall_curved & tall_bull by dootythefrooty, makara by angelofallars (github)",
+    "size": {
+        "x": 48,
+        "y": 48
+    },
+    "states": [
+        {
+            "name": "tall_curved",
+            "directions": 4
+        },
+        {
+            "name": "tall_curved_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "tall_curved_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "tall_curved_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "tall_bull",
+            "directions": 4
+        },
+        {
+            "name": "tall_bull_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "tall_bull_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "tall_bull_3tone_3",
+            "directions": 4
+        },
+        {
+            "name": "makara",
+            "directions": 4
+        },
+        {
+            "name": "makara_2tone_1",
+            "directions": 4
+        },
+        {
+            "name": "makara_2tone_2",
+            "directions": 4
+        },
+        {
+            "name": "makara_3tone_1",
+            "directions": 4
+        },
+        {
+            "name": "makara_3tone_2",
+            "directions": 4
+        },
+        {
+            "name": "makara_3tone_3",
+            "directions": 4
+        }
+    ]
+}

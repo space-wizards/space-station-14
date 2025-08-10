@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Finch & Forked Tailfin by @stillxicarus, haven & forked_long & swallow by @Kilath",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "huescale_forked_tailfin",
+            "directions": 4
+        },
+        {
+            "name": "whitescale_forked_tailfin",
+            "directions": 4
+        },
+        {
+            "name": "haven_tone_1",
+            "directions": 4
+        },
+        {
+            "name": "haven_tone_2",
+            "directions": 4
+        },
+        {
+            "name": "forked_long",
+            "directions": 4
+        },
+        {
+            "name": "swallow_tail",
+            "directions": 4
+        }
+    ]
+}

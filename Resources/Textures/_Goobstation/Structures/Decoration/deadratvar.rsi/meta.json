@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "/TG/Station 13",
+    "size": {
+        "x": 440,
+        "y": 196
+    },
+    "states": [
+        {
+            "name": "dead_ratvar"
+        }
+    ]
+}

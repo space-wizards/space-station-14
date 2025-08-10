@@ -1,0 +1,92 @@
+# SPDX-FileCopyrightText: 2024 BombasterDS <115770678+BombasterDS@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Attempted to keep the files in alphabetical order so its easier to audit.
+# Finding individual authors is an unfeasible task. If you can reference the author please do so.
+
+- files: ["meow.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by BombasterDS)"
+  source: "https://github.com/BombasterDS"
+
+- files: ["scream.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified standart laught.png icon by BombasterDS)"
+  source: "https://github.com/BombasterDS"
+
+- files: ["mew.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["purr.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["growl.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["hiss.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["awoo.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["bark.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["snarl.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["howl.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["whine.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["ring.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified red_phone.png by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["pew.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified disabler.png by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["rev.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified juicer.png by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["bang.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified n1984.png by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["caw.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by BombasterDS"
+  source: "https://github.com/BombasterDS"
+
+- files: ["fart.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Piras314"
+  source: "https://github.com/Piras314"

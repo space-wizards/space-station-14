@@ -1,0 +1,48 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Piras314",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+
+    "states": [
+      {
+        "name": "base1"
+      },
+      {
+        "name": "base2"
+      },
+      {
+        "name": "base3"
+      },
+      {
+        "name": "base4"
+      },
+      {
+        "name": "base5"
+      },
+      {
+        "name": "base6"
+      },
+      {
+        "name": "lights1"
+      },
+      {
+        "name": "lights2"
+      },
+      {
+        "name": "lights3"
+      },
+      {
+        "name": "lights4"
+      },
+      {
+        "name": "lights5"
+      },
+      {
+        "name": "lights6"
+      }
+    ]
+  }

@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Rebel/RebelExtended/Loyal/LoyalMale/Plumage/Cosmorunner by chlymerine(SS14)/kaminukurumi(github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "ResomiRebel",
+            "directions": 4
+        },
+        {
+            "name": "ResomiRebelExtended",
+            "directions": 4
+        },
+        {
+            "name": "ResomiPlumage",
+            "directions": 4
+        },
+        {
+            "name": "ResomiPlumageLong",
+            "directions": 4
+        },
+        {
+            "name": "ResomiLoyal",
+            "directions": 4
+        },
+        {
+            "name": "ResomiCosmorunner",
+            "directions": 4
+        },
+        {
+            "name": "ResomiLoyalMale",
+            "directions": 4
+        },
+        {
+            "name": "ResomiGenericallyUnique",
+            "directions": 4
+        }
+    ]
+}

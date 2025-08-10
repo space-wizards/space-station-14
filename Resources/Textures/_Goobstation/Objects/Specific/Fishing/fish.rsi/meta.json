@@ -1,0 +1,95 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "bingle, boy_fisher, gib, disk, nuker, pufferfish by arraydeess (discord), clown, tropical, mutant, alien, bluefintuna, blob, toxic by imasleeping (discord), ian fish by latibulate_ (discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "alien"
+        },
+        {
+            "name": "angler"
+        },
+        {
+            "name": "bass"
+        },
+        {
+            "name": "bingle"
+        },
+        {
+            "name": "blob"
+        },
+        {
+            "name": "blue_fintuna"
+        },
+        {
+            "name": "boy_fisher",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "catfish"
+        },
+        {
+            "name": "clown"
+        },
+        {
+            "name": "disk",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "gib",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "mutant"
+        },
+        {
+            "name": "nuker"
+        },
+        {
+            "name": "pufferfish"
+        },
+        {
+            "name": "silverfish"
+        },
+        {
+            "name": "sun_tropical"
+        },
+        {
+            "name": "toxic"
+        },
+        {
+            "name": "tropical"
+        },
+        {
+            "name": "ian"
+        }
+    ]
+}

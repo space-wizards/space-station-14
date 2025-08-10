@@ -1,0 +1,111 @@
+{
+    "copyright" : "Taken from https://github.com/tgstation/tgstation at https://github.com/tgstation/tgstation/commit/91af16bcbfd2dd363a89d846ae2acd6d655083c2",
+    "license" : "CC-BY-SA-3.0",
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "durand_chassis"
+      },
+      {
+        "name": "durand_harness"
+      },
+      {
+        "name": "durand_armor"
+      },
+      {
+        "name": "durand_harness+o"
+      },
+      {
+        "name": "durand_head"
+      },
+      {
+        "name": "durand_head+o"
+      },
+      {
+        "name": "durand_r_arm"
+      },
+      {
+        "name": "durand_r_arm+o"
+      },
+      {
+        "name": "durand_l_arm"
+      },
+      {
+        "name": "durand_l_arm+o"
+      },
+      {
+        "name": "durand_r_leg"
+      },
+      {
+        "name": "durand_r_leg+o"
+      },
+      {
+        "name": "durand_l_leg"
+      },
+      {
+        "name": "durand_l_leg+o"
+      },
+      {
+        "name": "durand0"
+      },
+      {
+        "name": "durand1"
+      },
+      {
+        "name": "durand2"
+      },
+      {
+        "name": "durand3"
+      },
+      {
+        "name": "durand4"
+      },
+      {
+        "name": "durand5"
+      },
+      {
+        "name": "durand6"
+      },
+      {
+        "name": "durand7"
+      },
+      {
+        "name": "durand8"
+      },
+      {
+        "name": "durand9"
+      },
+      {
+        "name": "durand10"
+      },
+      {
+        "name": "durand11"
+      },
+      {
+        "name": "durand12"
+      },
+      {
+        "name": "durand13"
+      },
+      {
+        "name": "durand14"
+      },
+      {
+        "name": "durand15"
+      },
+      {
+        "name": "durand16"
+      },
+      {
+        "name": "durand17"
+      },
+      {
+        "name": "durand18"
+      }
+    ]
+  }
+  

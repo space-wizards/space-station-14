@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Baystation at commit https://github.com/Baystation12/Baystation12/commit/bddd2b27f6103e46dadb6d251c7c1832e012a84d",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "empty",
+      "directions": 4
+    },
+    {
+      "name": "chem-1",
+      "directions": 4
+    },
+    {
+      "name": "chem-2",
+      "directions": 4
+    },
+    {
+      "name": "chem-3",
+      "directions": 4
+    },
+    {
+      "name": "chem-4",
+      "directions": 4
+    },
+    {
+      "name": "drink-1",
+      "directions": 4
+    },
+    {
+      "name": "drink-2",
+      "directions": 4
+    },
+    {
+      "name": "drink-3",
+      "directions": 4
+    },
+    {
+      "name": "drink-4",
+      "directions": 4
+    },
+    {
+      "name": "slime-1",
+      "directions": 4
+    },
+    {
+      "name": "slime-2",
+      "directions": 4
+    },
+    {
+      "name": "slime-3",
+      "directions": 4
+    },
+    {
+      "name": "slime-4",
+      "directions": 4
+    },
+    {
+      "name": "food-1",
+      "directions": 4
+    },
+    {
+      "name": "food-2",
+      "directions": 4
+    },
+    {
+      "name": "food-3",
+      "directions": 4
+    },
+    {
+      "name": "food-4",
+      "directions": 4
+    },
+    {
+      "name": "empty-off",
+      "directions": 4
+    },
+    {
+      "name": "chem-1-off",
+      "directions": 4
+    },
+    {
+      "name": "chem-2-off",
+      "directions": 4
+    },
+    {
+      "name": "chem-3-off",
+      "directions": 4
+    },
+    {
+      "name": "chem-4-off",
+      "directions": 4
+    },
+    {
+      "name": "drink-1-off",
+      "directions": 4
+    },
+    {
+      "name": "drink-2-off",
+      "directions": 4
+    },
+    {
+      "name": "drink-3-off",
+      "directions": 4
+    },
+    {
+      "name": "drink-4-off",
+      "directions": 4
+    },
+    {
+      "name": "slime-1-off",
+      "directions": 4
+    },
+    {
+      "name": "slime-2-off",
+      "directions": 4
+    },
+    {
+      "name": "slime-3-off",
+      "directions": 4
+    },
+    {
+      "name": "slime-4-off",
+      "directions": 4
+    },
+    {
+      "name": "food-1-off",
+      "directions": 4
+    },
+    {
+      "name": "food-2-off",
+      "directions": 4
+    },
+    {
+      "name": "food-3-off",
+      "directions": 4
+    },
+    {
+      "name": "food-4-off",
+      "directions": 4
+    }
+  ]
+}

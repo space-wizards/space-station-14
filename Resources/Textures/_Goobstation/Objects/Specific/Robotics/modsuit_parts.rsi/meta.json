@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "From tgstation - https://github.com/tgstation/tgstation/pull/59109",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "chestplate"
+    },
+		{
+		  "name": "gauntlets"
+		},
+		{
+		  "name": "helmet"
+		},
+		{
+			"name": "standard-plating"
+		},
+		{
+			"name": "boots"
+		},
+		{
+			"name": "shell"
+		},
+		{
+			"name": "mod-core-standard",
+			"delays": [[0.1, 0.1, 0.1, 0.1]]
+		},
+		{
+			"name": "shell-core",
+			"delays": [[0.1, 0.1, 0.1, 0.1]]
+		},
+		{
+			"name": "shell-core-secured",
+			"delays": [[0.1, 0.1, 0.1, 0.1]]
+		},
+		{
+			"name": "shell-helmet"
+		},
+		{
+			"name": "shell-chestplate"
+		},
+		{
+			"name": "shell-gauntlets"
+		},
+		{
+			"name": "shell-boots"
+		},
+		{
+			"name": "shell-secured"
+		}
+  ]
+}

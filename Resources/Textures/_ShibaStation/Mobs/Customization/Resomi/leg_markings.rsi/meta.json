@@ -1,0 +1,24 @@
+﻿{"version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "chlymerine(SS14)/kaminukurumi(github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },    "states": [
+        {
+            "name": "cyberkinetic-leg-l",
+            "directions": 4
+        },
+        {
+            "name": "cyberkinetic-leg-r",
+            "directions": 4
+        },{
+            "name": "cyberkinetic-foot-l",
+            "directions": 4
+        },
+        {
+            "name": "cyberkinetic-foot-r",
+            "directions": 4
+        }
+    ]
+}

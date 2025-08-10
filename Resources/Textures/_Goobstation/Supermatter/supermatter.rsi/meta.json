@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "copyright": "Taken and edited from https://tgstation13.org/wiki/images/a/a4/Supermatter-bg.gif",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 48
+    },
+    "states": [
+        {
+            "name": "supermatter",
+            "delays": [
+                [
+                    0.08,
+                    0.08,
+                    0.08
+                ]
+            ]
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/a5726efe0c300662cb6f3a4a12d9151aa3eabe78/icons/mob/actions/actions.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "legsweep"
+    },
+    {
+      "name": "lungpunch"
+    },
+    {
+      "name": "neckchop"
+    }
+  ]
+}

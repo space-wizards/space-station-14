@@ -1,0 +1,83 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "A custom item by AftrLite (Github).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "decay0",
+            "directions": 4
+        },
+        {
+            "name": "decay1",
+            "directions": 4
+        },
+        {
+            "name": "decay2",
+            "directions": 4
+        },
+        {
+            "name": "decay3",
+            "directions": 4
+        },
+        {
+            "name": "decay4",
+            "directions": 4
+        },
+        {
+            "name": "decay5",
+            "directions": 4
+        },
+        {
+            "name": "decay6",
+            "directions": 4
+        },
+        {
+            "name": "decay7",
+            "directions": 4
+        },
+        {
+            "name": "decay",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

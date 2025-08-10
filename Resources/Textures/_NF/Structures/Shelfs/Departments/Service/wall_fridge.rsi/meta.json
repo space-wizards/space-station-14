@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by erhardsteinhauer (discord/github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "closed"
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "unlocked"
+    },
+    {
+      "name": "food-0"
+    },
+    {
+      "name": "food-1"
+    },
+    {
+      "name": "food-2"
+    },
+    {
+      "name": "food-3"
+    },
+    {
+      "name": "food-4"
+    },
+    {
+      "name": "food-5"
+    },
+    {
+      "name": "food-6"
+    },
+    {
+      "name": "food-7"
+    },
+    {
+      "name": "food-8"
+    },
+    {
+      "name": "food-9"
+    }
+  ]
+}

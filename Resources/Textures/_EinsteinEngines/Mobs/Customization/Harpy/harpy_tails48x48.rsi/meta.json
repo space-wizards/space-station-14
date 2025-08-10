@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Peacock by stillxicarus (Discord).",
+    "size": {
+        "x": 48,
+        "y": 48
+    },
+    "states": [
+        {
+            "name": "peacock_tail_feathers",
+            "directions": 4
+        },
+        {
+            "name": "peacock_tail_eyes",
+            "directions": 4
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit  https://github.com/tgstation/tgstation/commit/2b8b045d5a237147d736e3ba3c77c8cc5fb66cb5",
+  "size": {
+    "x": 32,
+    "y": 32
+    },
+      "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

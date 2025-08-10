@@ -1,0 +1,151 @@
+﻿{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by Unknown, blobbernaut_flex.png created from blobbernaut.png by Ilya246",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "blobpod",
+      "delays": [
+        [
+          1,
+          0.3,
+          0.5,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "blobPod-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "blobbernaut_produce",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "blobbernaut",
+      "directions": 4
+    },
+    {
+      "name": "blobbernaut_death",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.15,
+          0.15,
+          0.15,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "blobbernaut_flex",
+      "directions": 1,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "blobbernaut_flex_damage",
+      "directions": 1,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "blobbernaut_dead"
+    },
+    {
+      "name": "nautdamage",
+      "directions": 4,
+      "delays": [
+        [
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.2,
+          0.075,
+          0.075,
+          0.075,
+          0.075
+        ],
+        [
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.2,
+          0.075,
+          0.075,
+          0.075,
+          0.075
+        ],
+        [
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.2,
+          0.075,
+          0.075,
+          0.075,
+          0.075
+        ],
+        [
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.2,
+          0.075,
+          0.075,
+          0.075,
+          0.075
+        ]
+      ]
+    },
+    {
+      "name": "marker",
+      "delays": [
+        [
+          1,
+          1
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "by marteeno on discord for ShibaStation",
+    "size": {"x": 32, "y": 32},
+    "states": [
+      {
+        "name": "tail",
+        "directions": 4
+      },
+      {
+        "name": "tail_overlay",
+        "directions": 4
+      }
+    ]
+  }

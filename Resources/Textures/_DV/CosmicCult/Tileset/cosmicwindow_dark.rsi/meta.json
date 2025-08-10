@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "A custom item by AftrLite (Github).",
+    "states": [
+        {
+            "name": "cosDwindow0",
+            "directions": 4
+        },
+        {
+            "name": "cosDwindow1",
+            "directions": 4
+        },
+        {
+            "name": "cosDwindow2",
+            "directions": 4
+        },
+        {
+            "name": "cosDwindow3",
+            "directions": 4
+        },
+        {
+            "name": "cosDwindow4",
+            "directions": 4
+        },
+        {
+            "name": "cosDwindow5",
+            "directions": 4
+        },
+        {
+            "name": "cosDwindow6",
+            "directions": 4
+        },
+        {
+            "name": "cosDwindow7",
+            "directions": 4
+        },
+        {
+            "name": "full"
+        }
+    ]
+}

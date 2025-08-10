@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from S.P.L.U.R.T at commit https://github.com/SPLURT-Station/S.P.L.U.R.T-Station-13/commit/02617f9b08d7767e2feb137a8c96650342bd3c0a | Edited, resprited and reshaded by PuroSlavKing (Github)",
+    "states": [
+        {
+            "name": "eastern_dragon",
+            "directions": 4
+        },
+        {
+            "name": "eastern_dragon_overlay",
+            "directions": 4
+        },
+        {
+            "name": "eastern_dragon_usiki",
+            "directions": 4
+        },
+        {
+            "name": "guilmon",
+            "directions": 4
+        }
+    ]
+}

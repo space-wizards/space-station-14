@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by wyvernrer (337793232195026944)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "eyeballs-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "eyeballs-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "eyeball-l"
+        },
+        {
+            "name": "eyeball-r"
+        }
+    ]
+}

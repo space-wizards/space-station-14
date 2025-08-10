@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from yogstation at https://github.com/yogstation13/Yogstation/commit/8c424469c5286a6153435c95b9865a54b686df58. One-handed and equipped sprites made by Aviu00",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+        "name": "spear"
+    },
+    {
+        "name": "inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "wielded-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "wielded-inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "equipped-BACKPACK",
+        "directions": 4
+    },
+    {
+        "name": "equipped-SUITSTORAGE",
+        "directions": 4
+    }
+  ]
+}

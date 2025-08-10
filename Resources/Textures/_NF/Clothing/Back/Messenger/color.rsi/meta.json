@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/0345de358247afe0eb23ed0ff509b9b5f1995135 | Original sprites by @Zydras (github), split into layers by erhardsteinhauer (discor/github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon-base"
+    },
+    {
+      "name": "icon-base-top"
+    },
+    {
+      "name": "icon-clasp"
+    },
+    {
+      "name": "icon-sling"
+    },
+    {
+      "name": "icon-decor"
+    },
+    {
+      "name": "icon-decor-accent"
+    },
+    {
+      "name": "base-equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "base-top-equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "clasp-equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "sling-equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "decor-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "decor-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "decor-equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "decor-accent-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "decor-accent-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "decor-accent-equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "base-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "base-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "base-top-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "base-top-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "clasp-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "clasp-inhand-right",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+﻿{"version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "chlymerine(SS14)/kaminukurumi(github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },    "states": [
+        {
+            "name": "cyberkinetic-arm-r",
+            "directions": 4
+        },
+        {
+            "name": "cyberkinetic-arm-r-full",
+            "directions": 4
+        },
+        {
+            "name": "cyberkinetic-arm-l",
+            "directions": 4
+        },
+        {
+            "name": "cyberkinetic-arm-l-full",
+            "directions": 4
+        },
+        {
+            "name": "cyberkinetic-hand-r",
+            "directions": 4
+        },
+        {
+            "name": "cyberkinetic-hand-l",
+            "directions": 4
+        }
+    ]
+}

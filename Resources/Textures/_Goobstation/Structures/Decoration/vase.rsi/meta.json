@@ -1,0 +1,41 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Goonstation 13",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "vase-random"
+        },
+        {
+            "name": "vase-0"
+        },
+        {
+            "name": "vase-1"
+        },
+        {
+            "name": "vase-2"
+        },
+        {
+            "name": "vase-3"
+        },
+        {
+            "name": "vase-4"
+        },
+        {
+            "name": "vase-5"
+        },
+        {
+            "name": "vase-6"
+        },
+        {
+            "name": "vase-7"
+        },
+        {
+            "name": "vase-8"
+        }
+    ]
+}

@@ -1,0 +1,44 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Arraydeess14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "red"
+        },
+        {
+            "name": "blue"
+        },
+        {
+            "name": "green"
+        },
+        {
+            "name": "yellow"
+        },
+        {
+            "name": "pink"
+        },
+        {
+            "name": "black"
+        },
+        {
+            "name": "steel"
+        },
+        {
+            "name": "zebra"
+        },
+        {
+            "name": "rainbow"
+        },
+        {
+            "name": "white"
+        }
+    ]
+}

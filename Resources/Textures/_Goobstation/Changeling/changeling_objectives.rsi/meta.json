@@ -1,0 +1,18 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Absorb made from chitinous armour and helmet. Survive made from a background-less fleshmend. modified by thebiggestbruh (github).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "absorb"
+        },
+	{
+            "name": "survive"
+        }
+
+    ]
+}

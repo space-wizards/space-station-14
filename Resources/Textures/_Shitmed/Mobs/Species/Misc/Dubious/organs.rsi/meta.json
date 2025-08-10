@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Paradise Station at https://github.com/ParadiseSS13/Paradise/commit/b55bef2ed28b8bde30883fb14311b221ab0dc977",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "egg"
+    },
+    {
+      "name": "emp"
+    },
+    {
+      "name": "gland"
+    },
+    {
+      "name": "health"
+    },
+    {
+      "name": "mindshock"
+    },
+    {
+      "name": "slime"
+    },
+    {
+      "name": "spider"
+    },
+    {
+      "name": "vent"
+    },
+    {
+      "name": "viral"
+    },
+    {
+      "name": "species"
+    }
+  ]
+}

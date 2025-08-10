@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by Creatorbot01. resprite from smart magazine sprite.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "erifle_disabler"
+        },
+        {
+            "name":"erifle_ion"
+        },
+        {
+            "name":"erifle_lethal"
+        },
+        {
+            "name":"erifle_overcharge"
+        }
+    ]
+}

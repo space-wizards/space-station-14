@@ -1,0 +1,159 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "shadekin, shadekin_stripes made by team Adventure Time. Other made by discord:filokini",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "aqua_default",
+            "directions": 4
+        },
+        {
+            "name": "aqua_incolor",
+            "directions": 4
+        },
+        {
+            "name": "bull_default",
+            "directions": 4
+        },
+        {
+            "name": "bull_smooth",
+            "directions": 4
+        },
+        {
+            "name": "cowling_secondary",
+            "directions": 4
+        },
+        {
+            "name": "motley_secondary",
+            "directions": 4
+        },
+        {
+            "name": "shady",
+            "directions": 4
+        },
+        {
+            "name": "fluffy_butterfly",
+            "directions": 4
+        },
+        {
+            "name": "fluffy_cowling",
+            "directions": 4
+        },
+        {
+            "name": "fluffy_crow",
+            "directions": 4
+        },
+        {
+            "name": "fluffy_default",
+            "directions": 4
+        },
+        {
+            "name": "fluffy_motley",
+            "directions": 4
+        },
+        {
+            "name": "fluffy_ringed_left",
+            "directions": 4
+        },
+        {
+            "name": "fluffy_ringed_right",
+            "directions": 4
+        },
+        {
+            "name": "fluffy_ringed_all",
+            "directions": 4
+        },
+        {
+            "name": "fluffy_spidy",
+            "directions": 4
+        },
+        {
+            "name": "gauze_ear_l_default",
+            "directions": 4
+        },
+        {
+            "name": "gauze_ear_r_default",
+            "directions": 4
+        },
+        {
+            "name": "gauze_ear_all_default",
+            "directions": 4
+        },
+        {
+            "name": "piercing_all",
+            "directions": 4
+        },
+        {
+            "name": "piercing_left",
+            "directions": 4
+        },
+        {
+            "name": "piercing_right",
+            "directions": 4
+        },
+        {
+            "name": "ringed_left_secondary",
+            "directions": 4
+        },
+        {
+            "name": "ringed_right_secondary",
+            "directions": 4
+        },
+        {
+            "name": "ringed_all_secondary",
+            "directions": 4
+        },
+        {
+            "name": "saggy_brawly",
+            "directions": 4
+        },
+        {
+            "name": "saggy_default",
+            "directions": 4
+        },
+        {
+            "name": "saggy_gauze_l",
+            "directions": 4
+        },
+        {
+            "name": "saggy_gauze_r",
+            "directions": 4
+        },
+        {
+            "name": "saggy_gauze_all",
+            "directions": 4
+        },
+        {
+            "name": "saggy_gradient",
+            "directions": 4
+        },
+        {
+            "name": "saggy_zebra",
+            "directions": 4
+        },
+        {
+            "name": "short_butterfly",
+            "directions": 4
+        },
+        {
+            "name": "short_default",
+            "directions": 4
+        },
+        {
+            "name": "short_ringed_left",
+            "directions": 4
+        },
+        {
+            "name": "short_ringed_right",
+            "directions": 4
+        },
+        {
+            "name": "short_ringed_all",
+            "directions": 4
+        }
+    ]
+}
