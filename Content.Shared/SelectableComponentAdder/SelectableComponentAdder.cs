@@ -7,11 +7,11 @@ namespace Content.Shared.SelectableComponentAdder;
 /// <summary>
 /// Brings up a verb menu that allows players to select components that will get added to the item with this component.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SelectableComponentAdderComponent : Component
 {
     /// <summary>
-    /// List of Loc string -> components to add for that loc string basically.
+    /// List of verb -> components to add for that verb when selected basically!
     /// </summary>
     [DataField(required: true)]
     public List<ComponentAdderEntry> Entries = new();
@@ -23,9 +23,9 @@ public sealed partial class SelectableComponentAdderComponent : Component
     public int? Selections;
 
     /// <summary>
-    /// List of Loc string -> components to add for that loc string basically.
+    /// The verb category name that will be used.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId VerbCategoryName = "selectable-component-adder-category-name";
 }
 
@@ -66,5 +66,6 @@ public enum ComponentExistsSetting
     // If a component already exists, replace it with the new one.
     Replace = 1,
     // Don't show the verb if any one of the components exists.
+    // If the component gets added
     Block   = 2,
 }

@@ -33,6 +33,7 @@ public sealed partial class SelectableComponentAdderSystem : EntitySystem
                 {
                     AddComponents(target, entry.ComponentsToAdd, entry.ComponentExistsBehavior);
                     ent.Comp.Selections--;
+                    Dirty(ent);
                 },
                 Text = Loc.GetString(entry.VerbName),
             };
@@ -59,7 +60,7 @@ public sealed partial class SelectableComponentAdderSystem : EntitySystem
 
     private void AddComponents(EntityUid target, ComponentRegistry? registry, ComponentExistsSetting setting)
     {
-        if (registry == null)
+        if (registry == null || CheckDisabled(target, registry, setting))
             return;
 
         foreach (var component in registry)
