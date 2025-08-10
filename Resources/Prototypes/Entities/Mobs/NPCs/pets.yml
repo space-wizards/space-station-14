@@ -663,7 +663,7 @@
     - sadness
 
 - type: entity
-  parent: MobHamster
+  parent: MobHamsterHamlet
   id: MobHamsterHamletSlippery
   suffix: Slippery
   components:
@@ -676,6 +676,7 @@
     sound:
       path: "/Audio/Animals/mouse_squeak.ogg"
     positional: true
+    predicted: true
 
 - type: entity
   name: Shiva
