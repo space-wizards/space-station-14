@@ -39,6 +39,7 @@
     - ActionJumpToCore
     - ActionSurvCameraLights
     - ActionAIViewLaws
+    - ActionAIShunt # Starlight AI Shunt ability
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
@@ -198,6 +199,7 @@
         acts: [ "Destruction" ]
   - type: ApcPowerReceiver
     powerLoad: 1000
+    needsPower: false
   - type: StationAiCore
   - type: StationAiVision
   - type: InteractionOutline
@@ -226,7 +228,6 @@
     listeningRange: 0
     speakerVolume: Speak
     unlistedNumber: true
-    requiresPower: false
   - type: Holopad
   - type: StationAiWhitelist
   - type: UserInterface
@@ -304,6 +305,7 @@
     #region Starlight
   - type: IonStormTarget
     chance: 0.6 # lets just try it at 3/4th the chance of a borg and see how bad it gets
+  - type: StationAIShuntable # marker comp so that station AI is able to shunt into other borgs.
     #endregion
 
 # Hologram projection that the AI's eye tracks.

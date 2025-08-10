@@ -41,14 +41,8 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly TagSystem _tag = default!; //Starlight-edit
 
-        [ValidatePrototypeId<EntityPrototype>]
-        private const string PillPrototypeId = "Pill";
-        
-        //Starlight-start
-        [ValidatePrototypeId<EntityPrototype>]
-        private const string PatchPrototypeId = "Patch";
-        //Starlight-end
-
+        private static readonly EntProtoId PillPrototypeId = "Pill";
+        private static readonly EntProtoId PatchPrototypeId = "Patch"; //Starlight
         public override void Initialize()
         {
             base.Initialize();

@@ -1,37 +1,37 @@
 <Document>
-    # Brigmedic
+# Brigmedic
 
-        <GuideEntityEmbed Entity="ToyFigurineSecurity" Caption="Brigmedic"/>
+<GuideEntityEmbed Entity="ToyFigurineSecurity" Caption="Brigmedic"/>
 
-    1 . Standard Code Green equipment is:
+1 . Standard [color=#00a933]Code Green[/color] equipment is:
+<Box>
+	<GuideEntityEmbed Entity="MedkitAdvancedFilled"/>
+	<GuideEntityEmbed Entity="DefibrillatorBrigmedical"/>
+	<GuideEntityEmbed Entity="HandheldBrigmedicCrewMonitor"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="WeaponDisabler"/>
+	<GuideEntityEmbed Entity="Stunbaton"/>
+	<GuideEntityEmbed Entity="WeaponPistolMk58"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="FlashlightSeclite"/>
+	<GuideEntityEmbed Entity="RadioHandheldSecurity"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="CombatKnife"/>
+	in
+	<GuideEntityEmbed Entity="ClothingShoesBootsJack"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="Handcuffs"/>
+	or
+	<GuideEntityEmbed Entity="Zipties"/>
+</Box>
 
+2. Brigmedics may not perform Security Officer duties unless security is severely understaffed, or a crime has occurred in their sight.
 
-    <Box>    
-        <GuideEntityEmbed Entity="MedkitAdvancedFilled"/>
-        <GuideEntityEmbed Entity="DefibrillatorBrigmedical"/>
-        <GuideEntityEmbed Entity="HandheldBrigmedicCrewMonitor"/>
-    </Box>
-    <Box>
-        <GuideEntityEmbed Entity="WeaponDisabler"/>
-        <GuideEntityEmbed Entity="Stunbaton"/>
-        <GuideEntityEmbed Entity="HoloprojectorSecurity"/>
-        <GuideEntityEmbed Entity="FlashlightSeclite"/>
-        <GuideEntityEmbed Entity="RadioHandheldSecurity"/>
-    </Box>
-    <Box>
-        <GuideEntityEmbed Entity="CombatKnife"/>
-        in
-        <GuideEntityEmbed Entity="ClothingShoesBootsJack"/>
-    </Box>
-    <Box>
-        <GuideEntityEmbed Entity="Handcuffs"/>
-        or
-        <GuideEntityEmbed Entity="Zipties"/>
-    </Box>
+3. Brigmedics must prioritize the health and safety of Security Officers and Prisoners over all other priorities.
 
-    2. Brigmedics may not perform Security Officer duties unless Security is severely understaffed, or a crime has occurred in their sight.
-
-    3. Brigmedics must prioritize the health and safety of Security Officers and Prisoners over all other priorities.
-
-    4. Brigmedics putting themselves in excessive danger, and by extension the entire department, are to be considered negligent in their duties.
+4. Brigmedics putting themselves in excessive danger, and by extension the entire department, are to be considered negligent in their duties.
 </Document>

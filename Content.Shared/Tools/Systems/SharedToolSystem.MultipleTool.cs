@@ -22,7 +22,7 @@ public abstract partial class SharedToolSystem
     private void OnMultipleToolStartup(EntityUid uid, MultipleToolComponent multiple, ComponentStartup args)
     {
         // Only set the multiple tool if we have a tool component.
-        if (EntityManager.TryGetComponent(uid, out ToolComponent? tool))
+        if (TryComp(uid, out ToolComponent? tool))
             SetMultipleTool(uid, multiple, tool);
     }
 
@@ -31,7 +31,8 @@ public abstract partial class SharedToolSystem
         if (args.Handled || !args.Complex)
             return;
 
-        args.Handled = CycleMultipleTool(uid, multiple, args.User);
+        //args.Handled =    🌟Starlight🌟 - This doesn't *appear* to ever be relevant, but messes with knife embedding now that they're semi-omnitools
+        CycleMultipleTool(uid, multiple, args.User);
     }
 
     public bool CycleMultipleTool(EntityUid uid, MultipleToolComponent? multiple = null, EntityUid? user = null)

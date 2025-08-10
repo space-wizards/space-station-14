@@ -6,7 +6,8 @@ names-dragon-dataset-5 = Aldooin
 names-dragon-dataset-6 = Wrathalos
 names-dragon-dataset-7 = Four-Eyes
 names-dragon-dataset-8 = Flamespew
-names-dragon-dataset-9 = Daniel
+## Starlight
+names-dragon-dataset-9 = Draco
 names-dragon-dataset-10 = Blacksmoke
 names-dragon-dataset-11 = Spacemaw
 names-dragon-dataset-12 = Cyprinidus

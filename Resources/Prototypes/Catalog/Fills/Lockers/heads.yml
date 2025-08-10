@@ -24,6 +24,7 @@
     - id: PlushieLance #starlight
     - id: RadioHandheldExpedition #starlight
     - id: ClothingOuterHardsuitLuxmax #starlight
+    - id: SalvageShuttleConsoleCircuitboard #starlight
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -48,7 +49,7 @@
     - id: ClothingHeadsetAltCommand
     - id: ClothingOuterArmorCaptainCarapace
     - id: CommsComputerCircuitboard
-    - id: DoorRemoteCommand
+    - id: DoorRemoteCustom
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
@@ -63,18 +64,6 @@
       conditions:
       - !type:PlayerCountCondition
         max: 15
-    - id: PaperTooQuietNeedChaos #Starlight
-      conditions:
-      - !type:PlayerCountCondition
-        invert: true
-        max: 15
-      prob: 0.05
-    - id: PaperTooQuietNeedChaosFew #lowpop varient which needs less singnatures.
-      conditions:
-      - !type:PlayerCountCondition
-        max: 15
-      prob: 0.05
-    #Starlight
 
 
 # No laser table + Laser table
@@ -254,6 +243,8 @@
     - id: MedkitFilled
     - id: RubberStampCMO
     - id: MedTekCartridge
+    - id: AutoMenderBurnFilled #Starlight
+    - id: AutoMenderBruteFilled #Starlight
     - id: CMOLicense #STARLIGHT
 
 # Hardsuit table, used for suit storage as well

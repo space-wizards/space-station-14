@@ -32,6 +32,7 @@ using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Utility;
 using Content.Shared.Starlight.TextToSpeech;
 using System.Linq;
+using Content.Shared._Starlight.Silicons.Borgs;//Starlight
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -72,7 +73,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     private EntityQuery<BroadphaseComponent> _broadphaseQuery;
     private EntityQuery<MapGridComponent> _gridQuery;
 
-    [ValidatePrototypeId<EntityPrototype>]
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
 
     private const float MaxVisionMultiplier = 5f;
@@ -125,6 +125,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
                 Category = VerbCategory.Debug,
                 Act = () =>
                 {
+                    if (_net.IsClient)
+                        return;
                     var brain = SpawnInContainerOrDrop(DefaultAi, ent.Owner, StationAiCoreComponent.Container);
                     _mind.ControlMob(user, brain);
                 },
@@ -240,6 +242,17 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!TryComp(args.Args.Target, out StationAiHolderComponent? targetHolder))
             return;
 
+        //#region Starlight
+        // basically if the AI is off shunting we wanna force them BACK. simplest way to do that is to fake the event to send them back.
+        var item = ent.Comp.Slot.Item;
+        if (item.HasValue && TryComp<StationAIShuntableComponent>(item.Value, out var shuntable))
+            if (shuntable.Inhabited.HasValue)
+            {
+                var returnEvent = new AIUnShuntActionEvent();
+                RaiseLocalEvent(shuntable.Inhabited.Value, returnEvent);
+            }
+        //#endregion Starlight
+        
         // Try to insert our thing into them
         if (_slots.CanEject(ent.Owner, args.User, ent.Comp.Slot))
         {

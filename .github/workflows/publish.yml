@@ -51,6 +51,7 @@ jobs:
 
   update-changelog:
     name: Publish Changelogs
+    needs: build
     runs-on: ubuntu-latest
     environment: prod
     steps:
@@ -77,17 +78,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-
-      - name: Commit & Push sent changelogs
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Resources/Changelog/ChangelogStarlight.yml Tools/changelogs/sent_changelog_ids.yml
-          git commit -m "Update sent changelogs [skip ci]"
-          git push git@github.com:${{ github.repository }} HEAD:Starlight
-
-      - name: Publish changelog (RSS)
-        continue-on-error: true
-        run: Tools/actions_changelog_rss.py
-        env:
-          CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}

@@ -23,6 +23,7 @@
   - External
   - Cryogenics
   - Brigmedic
+  - Chemistry
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

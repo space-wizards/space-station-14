@@ -286,6 +286,13 @@
     prefix: advertisement-medibot-
     count: 17
 
+# starlight. And if anyone complains about the Megatron reference. It's not changing.
+- type: localizedDataset
+  id: CleanbotAds
+  values:
+    prefix: advertisement-cleanbot-
+    count: 12
+
 - type: localizedDataset
   id: PrideDrobeAds
   values:

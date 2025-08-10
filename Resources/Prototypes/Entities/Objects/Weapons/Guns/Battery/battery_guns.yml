@@ -10,7 +10,7 @@
     - abductor-gun-restricted-1
   - type: Sprite
   - type: Item
-    size: Huge
+    size: Large # Starlight
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     quickEquip: false
@@ -108,7 +108,7 @@
 
 - type: entity
   name: svalinn laser pistol
-  parent: [ BaseWeaponPowerCellSmall, BaseSecurityContraband ]
+  parent: [BaseWeaponPowerCellSmall, BaseSecurityContraband]
   id: WeaponLaserSvalinn
   description: A cheap and widely used laser pistol.
   components:
@@ -129,7 +129,7 @@
 
 - type: entity
   name: retro laser blaster
-  parent: [ BaseWeaponBatterySmall, BaseMajorContraband ]
+  parent: [BaseWeaponBatterySmall, BaseMajorContraband]
   id: WeaponLaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
@@ -152,7 +152,7 @@
 
 - type: entity
   name: makeshift laser pistol
-  parent: BaseWeaponBatterySmall
+  parent: [BaseWeaponBatterySmall, BaseMinorContraband]
   id: WeaponMakeshiftLaser
   description: Better pray it won't burn your hands off.
   components:
@@ -180,7 +180,7 @@
 
 - type: entity
   name: tesla gun
-  parent: [ BaseWeaponBattery, BaseMajorContraband ] #Starlight Major Contra
+  parent: [BaseWeaponBattery, BaseMajorContraband]
   id: WeaponTeslaGun
   description: The power of the primordial element of lightning in your hands.
   components:
@@ -252,9 +252,18 @@
     magState: mag
     steps: 5
     zeroVisible: true
+  - type: Gun #Starlight - Start
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto #Just allows people to hold down left click
+  - type: Battery 
+    maxCharge: 1500 # ~1:30 minutes for recharge
+    startingCharge: 1500
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
-    fireCost: 62.5
+    fireCost: 30 #Starlight - End
 
 #- type: entity
 #  name: pulse pistol
@@ -370,14 +379,14 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
     proto: RedHeavyLaser
-    fireCost: 100
+    fireCost: 40 #Starlight
   - type: Tag
     tags:
     - TurretCompatibleWeapon
 
 - type: entity
   name: portable particle decelerator
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseEngineeringContraband]
   id: WeaponParticleDecelerator
   description: A portable particle decelerator capable of decomposing a tesla or singularity.
   components:
@@ -427,7 +436,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
     proto: XrayLaser
-    fireCost: 100
+    fireCost: 40 #Starlight
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -467,7 +476,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: HitscanBatteryAmmoProvider
     proto: DisablerBoltPractice # 🌟Starlight🌟
-    fireCost: 50
+    fireCost: 62.5
   - type: Tag
     tags:
     - Taser
@@ -475,7 +484,7 @@
 
 - type: entity
   name: disabler
-  parent: [ WeaponDisablerPractice, BaseSecurityCommandContraband ]
+  parent: [WeaponDisablerPractice, BaseSecurityCommandContraband]
   id: WeaponDisabler
   description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
   components:
@@ -495,7 +504,7 @@
       - Belt
   - type: HitscanBatteryAmmoProvider
     proto: DisablerBolt # 🌟Starlight🌟
-    fireCost: 50
+    fireCost: 62.5
   - type: GuideHelp
     guides:
     - Security
@@ -503,7 +512,7 @@
 
 - type: entity
   name: disabler SMG
-  parent: [ BaseWeaponBattery, BaseSecurityContraband ]
+  parent: [BaseWeaponBattery, BaseSecurityContraband]
   id: WeaponDisablerSMG
   description: Advanced weapon that exhausts organic targets, weakening them until they collapse.
   components:
@@ -541,7 +550,7 @@
 
 - type: entity
   name: taser
-  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband ]
+  parent: [BaseWeaponBatterySmall, BaseSecurityContraband]
   id: WeaponTaser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at close range.
   components:
@@ -638,7 +647,7 @@
 
 - type: entity
   name: advanced laser pistol
-  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband]
+  parent: [BaseWeaponBatterySmall, BaseSecurityContraband]
   id: WeaponAdvancedLaser
   description: An experimental high-energy laser pistol with a self-charging nuclear battery.
   components:
@@ -721,7 +730,7 @@
   name: experimental C.H.I.M.P. handcannon
   parent: [WeaponPistolCHIMP, BaseSyndicateContraband]
   id: WeaponPistolCHIMPUpgraded
-  description: This C.H.I.M.P. seems to have a greater punch than is usual...
+  description: This C.H.I.M.P. seems to have a greater punch than usual...
   components:
   - type: BatteryWeaponFireModes
     fireModes:
@@ -786,16 +795,16 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: ProjectileBatteryAmmoProvider
-    proto: BulletLaserSpreadNarrow
-    fireCost: 150
+    proto: BulletLaserSpread
+    fireCost: 60
   - type: BatteryWeaponFireModes
     fireModes:
-    #- proto: BulletLaserSpread
-      #fireCost: 150
-    - proto: BulletLaserSpreadNarrow
-      fireCost: 200
-    - proto: BulletDisablerSmgSpread
-      fireCost: 120
+#    - proto: BulletLaserSpread Starlight
+#      fireCost: 65
+    - proto: BulletLaserSpreadNarrow #Starlight
+      fireCost: 80
+    - proto: BulletDisablerSmgSpread #Starlight
+      fireCost: 60
   - type: Item
     size: Large
     shape:
@@ -814,7 +823,7 @@
 
 - type: entity
   name: temperature gun
-  parent: [BaseWeaponBattery, BaseGunWieldable]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponTemperatureGun
   description: An advanced gun that shoots body-temperature-changing beams. This probably constitutes as some kind of war crime.
   components:
@@ -858,12 +867,12 @@
 
 - type: entity
   name: xenoborg laser gun
-  parent: [ WeaponAdvancedLaser, BaseXenoborgContraband ]
+  parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
   id: XenoborgLaserGun
 
 - type: entity
   name: xenoborg heavy laser gun
-  parent: [ WeaponAdvancedLaser, BaseXenoborgContraband ]
+  parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
   id: XenoborgHeavyLaserGun
   components:
   - type: HitscanBatteryAmmoProvider

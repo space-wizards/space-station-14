@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
+using Content.Shared._Starlight.Silicons.Borgs; //Starlight
 using Content.Shared.Chat;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
@@ -37,7 +38,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
 
         // This function ensures that chat popups appear on camera views that have connected microphones.
-        var query = EntityManager.EntityQueryEnumerator<StationAiCoreComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<StationAiCoreComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var entStationAiCore, out var entXform))
         {
             var stationAiCore = new Entity<StationAiCoreComponent?>(ent, entStationAiCore);
@@ -89,6 +90,13 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
     public override void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null)
     {
+        //#region Starlight
+        // basically if the AI is AWOL off in a borg body. it should send it out to their active body
+        if (TryComp<StationAIShuntableComponent>(uid, out var shuntable))
+            if (shuntable.Inhabited.HasValue)
+                uid = shuntable.Inhabited.Value;
+        //#endregion
+        
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 

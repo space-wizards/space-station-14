@@ -16,8 +16,8 @@
   - NpcFactionMember
   # traits
   # - LegsParalyzed (you get healed)
+  - BlackAndWhiteOverlay
   - LightweightDrunk
-  - Monochromacy
   - Muted
   - Narcolepsy
   - Pacified
@@ -33,6 +33,7 @@
   - MindShield
   - MimePowers
   - SpaceNinja
+  - Thieving
   # accents
   - Accentless
   - BackwardsAccent

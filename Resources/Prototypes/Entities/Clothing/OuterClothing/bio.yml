@@ -16,10 +16,10 @@
       coefficients:
         Caustic: 0.75
   - type: ZombificationResistance
-    zombificationResistanceCoefficient: 0.35
+    zombificationResistanceCoefficient: 0.1 # Starlight Edit, also removed the specific coefficients from the security and virology biosuits
   - type: GroupExamine
   - type: ClothingSpeedModifier
-    walkModifier: 1
+    walkModifier: 0.95
     sprintModifier: 0.95
 
 - type: entity
@@ -79,8 +79,6 @@
         Caustic: 0.8
         Slash: 0.6
         Piercing: 0.8
-  - type: ZombificationResistance
-    zombificationResistanceCoefficient: 0.4
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -93,5 +91,3 @@
     sprite: Clothing/OuterClothing/Bio/virology.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/virology.rsi
-  - type: ZombificationResistance
-    zombificationResistanceCoefficient: 0.25
