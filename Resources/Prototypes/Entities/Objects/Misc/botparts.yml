@@ -42,7 +42,7 @@
     keyOut: sensor
     enablingKeysIn:
     - enable
-    toggleKeysIn:
+    togglingKeysIn:
     - toggle
   - type: EmitSoundOnTrigger
     keysIn:

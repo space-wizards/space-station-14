@@ -38,7 +38,7 @@ public sealed partial class TriggerOnProximityComponent : BaseTriggerOnXComponen
     /// <see cref="DisablingKeysIn"/> and <see cref="EnablingKeysIn"/>.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<string> ToggleKeysIn = new();
+    public HashSet<string> TogglingKeysIn = new();
 
     /// <summary>
     /// The ID if the fixture that is observed for collisions.
