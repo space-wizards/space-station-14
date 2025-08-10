@@ -24,7 +24,8 @@ public sealed class LockVisualizerSystem : VisualizerSystem<LockVisualsComponent
 
         if (!powered) // Starlight-edit
             SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, powered); // Starlight-edit
-        else if (AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component)) // Starlight-edit
+            
+        if (AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component))
             SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, !open);
         else if (!(bool)unlockedStateExist!)
             SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, locked);
