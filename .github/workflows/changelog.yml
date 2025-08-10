@@ -1,0 +1,100 @@
+# SPDX-FileCopyrightText: 2024 Piras314 <92357316+Piras314@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Aiden <aiden@djkraz.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# From https://github.com/DeltaV-Station/Delta-v/
+name: PR Changelogs
+concurrency: commit_action
+on:
+  pull_request_target:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Pull Request Number'
+        required: true
+        type: string
+
+env:
+  GH_APP_ID: ${{ secrets.GH_APP_ID }}
+  GH_PRIVATE_KEY: ${{ secrets.GH_PRIVATE_KEY }}
+  
+  ssh-key: ${{ secrets.BOT_SSH_KEY }}
+  CHANGELOG_DIR: ${{ vars.CHANGELOG_DIR }}
+  PR_NUMBER: ${{ github.event.inputs.pr_number || github.event.number }}
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: write
+    steps:
+      ##################################################
+      # Long ass workaround for PEM, thanks github -_- #
+      ##################################################
+      - name: Decode the GitHub App Private Key
+        shell: bash
+        id: decode
+        run: |
+          private_key=$(echo "$GH_PRIVATE_KEY" | base64 -d | awk 'BEGIN {ORS="\\n"} {print}' | head -c -2) &> /dev/null
+          # GitHub way of making a variable sensitive / not shown in logs
+          echo "::add-mask::$private_key"
+          echo "private-key=$private_key" >> "$GITHUB_OUTPUT"
+        env:
+          GH_PRIVATE_KEY: ${{ secrets.GH_PRIVATE_KEY }}
+
+      # generate a private token from the private key
+      - uses: actions/create-github-app-token@v1
+        id: login
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ steps.decode.outputs.private-key }}
+
+      - name: Mask token
+        shell: bash
+        run: echo "::add-mask::$GITHUB_TOKEN"
+        env:
+          GITHUB_TOKEN: ${{ steps.login.outputs.token }}
+      ######################################
+      # End of long ass workaround for PEM #    
+      ######################################
+      
+      - name: Checkout Master
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.login.outputs.token }}
+          ref: "${{ vars.CHANGELOG_BRANCH }}"
+
+      - name: Setup Git
+        run: |
+          git config --global user.name "${{ vars.CHANGELOG_USER }}"
+          git config --global user.email "${{ vars.CHANGELOG_EMAIL }}"
+        shell: bash
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install Dependencies
+        run: |
+          cd "Tools/changelog"
+          npm install
+          npm install --package-lock-only
+        shell: bash
+
+      - name: Generate Changelog
+        run: |
+          cd "Tools/changelog"
+          node changelog.js
+        shell: bash
+
+      - name: Commit Changelog
+        run: |
+          git add *.yml
+          git commit -m "${{ vars.CHANGELOG_MESSAGE }} (#${{ env.PR_NUMBER }})" || echo "No changes to commit"
+          git push
+        shell: bash
+        continue-on-error: true
