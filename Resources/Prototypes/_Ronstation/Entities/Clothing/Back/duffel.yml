@@ -1,0 +1,8 @@
+- type: entity
+  parent: [ClothingBackpackDuffel, BaseCentcommCommandContraband]
+  id: ClothingBackpackDuffelBlueshield
+  name: blueshield duffel bag
+  description: A large duffel bag for holding extra defense and defense adjacent goods.
+  components:
+  - type: Sprite
+    sprite: Ronstation/Clothing/Back/Duffels/blueshield.rsi

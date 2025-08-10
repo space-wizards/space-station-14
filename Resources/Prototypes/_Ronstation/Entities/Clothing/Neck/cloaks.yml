@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakBlueshield
+  name: blueshield officer's cloak
+  description: A large blue and black silhoutte obscuring cloak. Perfect for bodyblocking your VIP from the view of any assassins.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Neck/Cloaks/blueshield.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak

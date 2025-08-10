@@ -1,8 +1,0 @@
-- type: entity
-  parent: [ClothingBackpackSatchel, BaseCentcommCommandContraband]
-  id: ClothingBackpackSatchelBlueshield
-  name: Blueshield satchel
-  description: A robust satchel for blueshield related needs.
-  components:
-  - type: Sprite
-    sprite: Ronstation/Clothing/Back/Satchels/blueshield.rsi

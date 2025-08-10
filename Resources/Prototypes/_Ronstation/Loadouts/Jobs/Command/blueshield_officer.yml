@@ -1,0 +1,103 @@
+# Blueshield Shield
+- type: loadoutEffectGroup
+  id: MasterBSO
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobBlueshieldOfficer
+        time: 72000 #20 hrs
+
+# Head
+- type: loadout
+  id: BlueshieldCap
+  equipment:
+    head: ClothingHeadHatCapBlueshield
+
+- type: loadout
+  id: BlueshieldBeret
+  equipment:
+    head: ClothingHeadHatBeretBlueshield
+
+# Jumpsuit
+- type: loadout
+  id: BlueshieldJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBlueshield
+
+- type: loadout
+  id: BlueshieldJumpsuitCasual
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBlueshieldCasual
+
+- type: loadout
+  id: BlueshieldJumpsuitFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBlueshieldFormal
+
+- type: loadout
+  id: BlueshieldJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtBlueshield
+
+- type: loadout
+  id: BlueshieldJumpskirtCasual
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtBlueshieldCasual
+
+- type: loadout
+  id: BlueshieldJumpskirtFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtBlueshieldFormal
+
+# Neck
+- type: loadout
+  id: BlueshieldCloak
+  equipment:
+    neck: ClothingNeckCloakBlueshield
+
+- type: loadout
+  id: BlueshieldMantle
+  equipment:
+    neck: ClothingNeckMantleBlueshield
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterBSO
+
+# Back
+- type: loadout
+  id: BlueshieldBackpack
+  equipment:
+    back: ClothingBackpackBlueshield
+
+- type: loadout
+  id: BlueshieldSatchel
+  equipment:
+    back: ClothingBackpackSatchelBlueshield
+
+- type: loadout
+  id: BlueshieldDuffel
+  equipment:
+    back: ClothingBackpackDuffelBlueshield
+
+# Outerclothing
+- type: loadout
+  id: BlueshieldOfficerWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterBlueshield
+
+# Shoes
+- type: loadout
+  id: BlueshieldWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterBlueshield
+
+# Misc
+- type: loadout
+  id: BlueMedal
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: BlueshieldMedalWorthy
+  storage:
+    back:
+    - Dinkyshield

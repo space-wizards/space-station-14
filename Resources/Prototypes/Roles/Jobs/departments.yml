@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: department
   id: Cargo
   name: department-Cargo
@@ -48,8 +49,7 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
-  - BlueshieldOfficer
-  - CentralCommandBlueshieldOfficer
+  - BlueshieldOfficer # Ronstation
   editorHidden: true
   weight: 120
 
@@ -75,7 +75,7 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
-  - BlueshieldOfficer
+  - BlueshieldOfficer # Ronstation
   primary: false
   weight: 100
 
@@ -115,6 +115,14 @@
   - SecurityOfficer
   - Detective
   - Warden
+  - BlueshieldOfficer # Ronstation - BSO does NOT do a secoff's job.
+  # however. BSO requires miscellaneous security contraband to do their bodyguarding job
+  # instead of editing 300 items individually. or messing with the contraband abstract
+  # BSO is treated as part of security.
+  # NONE of the options are great.
+  # BSO's role as a NOT SECURITY OFFICER will be enforced via bwoinks and the guidebook
+  # if it becomes apparent that this solution won't cut it, i'll do something else.
+  # i'm not even paid for this
 
 - type: department
   id: Science

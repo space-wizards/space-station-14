@@ -1,0 +1,12 @@
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineBlueshield
+  name: blueshield officer figure
+  description: A figurine depicting an elite bodyguard, allegedly.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Objects/Fun/figurines.rsi
+    state: blueshield
+  - type: SpeakOnTrigger
+    pack: FigurinesBlueshield
+

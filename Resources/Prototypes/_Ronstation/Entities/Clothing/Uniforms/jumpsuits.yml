@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBlueshield
+  name: blueshield officer's jumpsuit
+  description: A robust jumpsuit made of dark synthetic fibers for the elite bodyguard. Vow of silence not included.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/blueshield.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/blueshield.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBlueshieldCasual
+  name: blueshield casual jumpsuit
+  description: Hah, what are the chances someone attempts an assassination anyway? No prablem.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/blueshield_casual.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/blueshield_casual.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBlueshieldFormal
+  name: blueshield formal suit
+  description: For the highest stakes missions. Accompanying your VIP to a tea party.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/blueshield_formal.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/blueshield_formal.rsi

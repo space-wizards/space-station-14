@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Based on tgstation at commit https://github.com/tgstation/tgstation/commit/555fa0ed9f380509156d94131bd8a3f1c1fee1cf , edited by arenaconspiracy (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+        "name": "equipped-BELT",
+        "directions": 4
+    },
+    {
+        "name": "icon"
+    },
+    {
+        "name": "pistol"
+    },
+    {
+    	"name": "shield"
+    },
+    {
+	"name": "inhand-left"
+    },
+    {
+	"name": "inhand-right"
+    }
+  ]
+}

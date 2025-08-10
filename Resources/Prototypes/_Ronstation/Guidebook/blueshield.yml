@@ -1,0 +1,4 @@
+- type: guideEntry
+  id: BlueshieldOfficer
+  name: guide-entry-blueshield
+  text: "/ServerInfo/_Ronstation/Guidebook/Blueshield.xml"

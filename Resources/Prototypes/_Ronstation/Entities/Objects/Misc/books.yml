@@ -1,0 +1,18 @@
+- type: entity
+  id: BookBlueshield
+  parent: BaseGuidebook
+  name: blueshield officer directives
+  description: Official directives straight from Central Command on how to do your job as an overpaid bodyguard.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+    - state: cover_strong
+      color: "#258"
+    - state: decor_spine
+      color: "#222"
+    - state: icon_letter_N
+      color: "#FFF"
+  - type: GuideHelp
+    guides:
+    - BlueshieldOfficer

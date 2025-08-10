@@ -1,0 +1,13 @@
+- type: entity
+  name: bluesheld officer's rubber stamp
+  parent: [RubberStampBase, BaseCentcommContraband]
+  id: RubberStampBlueshield
+  categories: [ DoNotMap ]
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-blueshield
+    stampedColor: "#058" # 16 bit hex because i'm evil
+    stampState: "paper_stamp-cap" # close enough
+  - type: Sprite
+    sprite: _Ronstation/Objects/Misc/stamps.rsi
+    state: stamp-blueshield

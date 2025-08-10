@@ -1,0 +1,30 @@
+- type: entity
+  parent: ClothingUniformJumpsuitBlueshield
+  id: ClothingUniformJumpskirtBlueshield
+  name: blueshield officer's jumpskirt
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Uniforms/Jumpskirt/blueshield.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Uniforms/Jumpskirt/blueshield.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitBlueshieldCasual
+  id: ClothingUniformJumpskirtBlueshieldCasual
+  name: blueshield casual jumpskirt
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Uniforms/Jumpskirt/blueshield_casual.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Uniforms/Jumpskirt/blueshield_casual.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitBlueshieldFormal
+  id: ClothingUniformJumpskirtBlueshieldFormal
+  name: blueshield formal dress
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Uniforms/Jumpskirt/blueshield_formal.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Uniforms/Jumpskirt/blueshield_formal.rsi
+

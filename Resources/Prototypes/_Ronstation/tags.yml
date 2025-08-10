@@ -1,2 +1,8 @@
 - type: Tag
   id: MagazineNegotiator
+
+- type: Tag
+  id: WeaponPistolGendarme
+
+- type: Tag
+  id: HolographicTowerShield

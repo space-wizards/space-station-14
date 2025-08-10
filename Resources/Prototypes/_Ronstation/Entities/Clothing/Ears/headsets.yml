@@ -1,0 +1,18 @@
+- type: entity
+  id: ClothingHeadsetBlueshield
+  name: blueshield officer's headset
+  description: A headset used by the elite bodyguard. Has space for 5 total encryption keys. They say knowing is half the battle.
+  parent: ClothingHeadset
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Ears/Headsets/blueshield.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Ears/Headsets/blueshield.rsi
+  - type: EncryptionKeyHolder
+    keySlots: 5 # NanoTrasen signature stolen Syndicate technology
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommand
+      - EncryptionKeyCentCom
+      - EncryptionKeyCommon

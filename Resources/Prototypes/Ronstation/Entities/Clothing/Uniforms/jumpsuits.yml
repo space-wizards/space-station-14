@@ -8,25 +8,3 @@
     sprite: Ronstation/Clothing/Uniforms/Jumpsuit/heccdiver.rsi
   - type: Clothing
     sprite: Ronstation/Clothing/Uniforms/Jumpsuit/heccdiver.rsi
-
-- type: entity
-  parent: [ClothingUniformBase, BaseCentcommCommandContraband]
-  id: ClothingUniformJumpsuitBlueshieldGrey
-  name: grey blueshield jumpsuit
-  description: The main suit of the protector.
-  components:
-  - type: Sprite
-    sprite: Ronstation/Clothing/Uniforms/Jumpsuit/blueshield_grey.rsi
-  - type: Clothing
-    sprite: Ronstation/Clothing/Uniforms/Jumpsuit/blueshield_grey.rsi
-
-- type: entity
-  parent: [ClothingUniformBase, BaseCentcommCommandContraband]
-  id: ClothingUniformJumpsuitBlueshield
-  name: blueshield jumpsuit
-  description: A jumpsuit made of strong material, providing robust protection, even for a bodyguard.
-  components:
-  - type: Sprite
-    sprite: Ronstation/Clothing/Uniforms/Jumpsuit/blueshield.rsi
-  - type: Clothing
-    sprite: Ronstation/Clothing/Uniforms/Jumpsuit/blueshield.rsi

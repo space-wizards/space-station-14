@@ -1,0 +1,52 @@
+# gendarme bolts
+
+- type: entity
+  id: BulletDisablerGendarme
+  parent: BulletDisabler
+  categories: [ HideSpawnMenu ]
+  name: nonlethal bolt
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Objects/Weapons/Guns/Projectiles/gendarme.rsi
+    layers:
+    - state: nonlethal
+      shader: unshaded
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Opaque
+  - type: StaminaDamageOnCollide
+    damage: 22 # 11 less than a normal disabler
+
+- type: entity
+  id: BulletLaserGendarme
+  parent: BulletLaser
+  categories: [ HideSpawnMenu ]
+  name: lethal bolt
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Objects/Weapons/Guns/Projectiles/gendarme.rsi
+    layers:
+    - state: lethal
+      shader: unshaded
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Opaque
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 20
+  - type: StaminaDamageOnCollide
+    damage: 15

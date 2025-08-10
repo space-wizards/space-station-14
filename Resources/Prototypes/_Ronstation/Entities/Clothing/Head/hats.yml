@@ -1,0 +1,30 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapBlueshield
+  name: blueshield officer's cap
+  description: A dark and foreboding piece of headwear to stave off any would-be attackers through intimidation alone.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Head/Hats/cap_blueshield.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Head/Hats/cap_blueshield.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretBlueshield
+  name: blueshield officer's beret
+  description: A refined headwear option issued to NanoTrasen Blueshield officers. Defend corporate interests in style.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Head/Hats/beret_blueshield.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Head/Hats/beret_blueshield.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon

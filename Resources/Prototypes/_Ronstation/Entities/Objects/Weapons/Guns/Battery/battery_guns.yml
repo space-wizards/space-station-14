@@ -1,0 +1,57 @@
+- type: entity
+  name: gendarme
+  description: A multi-configuration energy pistol issued to NanoTrasen Blueshield Officers. Fires finely concentrated energy bolts at lethal and nonlethal energy levels, both modes exhaust organic targets. Features a self replenishing internal powerbank.
+  id: WeaponPistolGendarme
+  parent: [BaseWeaponBattery, BaseGrandTheftContraband]
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Ronstation/Objects/Weapons/Guns/Battery/gendarme.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: base-unshaded
+      shader: unshaded
+    - state: mag-unshaded-5
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+  - type: Tag
+    tags:
+    - HighRiskItem
+    - Sidearm
+    - WeaponPistolGendarme
+  - type: Item
+    shape:
+    - 0,0,0,1
+    - 0,0,2,0
+    size: Normal
+  - type: Contraband
+    allowedDepartments:
+    - CentralCommand
+  - type: StealTarget
+    stealGroup: WeaponPistolGendarme
+  - type: Gun
+    fireRate: 1.5
+    projectileSpeed: 35
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+      params:
+        pitch: 0.8
+  - type: Battery
+    startingCharge: 1200
+    maxCharge: 1200
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 25
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletLaserGendarme
+    fireCost: 200
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletLaserGendarme
+      fireCost: 200
+    - proto: BulletDisablerGendarme
+      fireCost: 100
