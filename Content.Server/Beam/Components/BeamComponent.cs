@@ -4,5 +4,5 @@ namespace Content.Server.Beam.Components;
 [RegisterComponent]
 public sealed partial class BeamComponent : SharedBeamComponent
 {
-    public static string FixtureID = "BeamBody";
+    public static readonly string FixtureID = "BeamBody";
 }
