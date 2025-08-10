@@ -1,14 +1,14 @@
 # When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_single.yml
 
 - type: entity
-  name: taco shell
   parent: FoodMealBase
   id: FoodTacoShell
+  name: taco shell
   description: A taco shell, easy to hold, but falls on its side when put down.
   components:
   - type: Item
     storedOffset: 0,-3
-  - type: Food
+  - type: Edible
     transferAmount: 3
   - type: Sprite
     sprite: Objects/Consumable/Food/taco_sequence.rsi
@@ -38,15 +38,15 @@
 # Old tacos
 
 - type: entity
+  abstract: true
   parent: FoodInjectableBase
   id: FoodTacoBase
-  abstract: true
   components:
   - type: FlavorProfile
     flavors:
       - meaty
       - cheesy
-  - type: Food
+  - type: Edible
     transferAmount: 3
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
@@ -74,7 +74,7 @@
   id: FoodTacoBeef
   description: A very basic and run of the mill beef taco, now with cheese!
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: beeftaco
 
@@ -84,7 +84,7 @@
   id: FoodTacoChicken
   description: A very basic and run of the mill chicken taco, now with cheese!
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: chickentaco
 
@@ -98,7 +98,7 @@
     flavors:
       - onion
       - fishy
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: fishtaco
   - type: SolutionContainerManager
@@ -117,7 +117,7 @@
   id: FoodTacoRat
   description: Yeah, that looks about right...
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: rattaco
   - type: SolutionContainerManager
@@ -136,7 +136,7 @@
   id: FoodTacoBeefSupreme
   description: It's like a regular beef taco, but surpeme!
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: beeftacosupreme
   - type: SolutionContainerManager
@@ -155,7 +155,7 @@
   id: FoodTacoChickenSupreme
   description: It's like a regular chicken taco, but surpeme!
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: chickentacosupreme
   - type: SolutionContainerManager
@@ -169,9 +169,9 @@
           Quantity: 6
 
 - type: entity
-  name: draco
   parent: FoodTacoBase
   id: FoodTacoDragon
+  name: draco
   description: A dragon taco, which is technically also a fish taco.
   components:
   - type: Item
@@ -180,7 +180,7 @@
     flavors:
     - meaty
     - spicy
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: dragontaco
   - type: SolutionContainerManager

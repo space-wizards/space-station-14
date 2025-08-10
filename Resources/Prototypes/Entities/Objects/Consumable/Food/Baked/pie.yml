@@ -2,9 +2,9 @@
 # Base
 
 - type: entity
+  abstract: true
   parent: FoodInjectableBase
   id: FoodPieBase
-  abstract: true
   components:
   - type: Item
     shape:

@@ -1,9 +1,9 @@
 # Base
 
 - type: entity
+  abstract: true
   parent: FoodInjectableBase
   id: FoodMeatBase
-  abstract: true
   components:
   - type: FlavorProfile
     flavors:
@@ -83,9 +83,9 @@
 # Raw
 
 - type: entity
-  name: raw meat
   parent: FoodMeatRawBase
   id: FoodMeat
+  name: raw meat
   description: A slab of raw meat.
   components:
   - type: Sprite
@@ -119,9 +119,9 @@
       - state: plain-inhand-right
 
 - type: entity
-  name: raw human meat
   parent: FoodMeatRawBase
   id: FoodMeatHuman
+  name: raw human meat
   description: Gross.
   components:
   - type: Sprite
@@ -144,10 +144,10 @@
       - state: plain-inhand-right
 
 - type: entity
-  name: raw carp fillet
   parent: FoodMeatBase
   # MeatFish?...
   id: FoodMeatFish
+  name: raw carp fillet
   description: Your last words being "Wow, exotic!" are not worth it. The taste itself though? Maybe.
   components:
   - type: FlavorProfile
@@ -179,10 +179,10 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  name: raw bacon
   # bacon is cured so not raw = cant rot
   parent: FoodMeatBase
   id: FoodMeatBacon
+  name: raw bacon
   description: A raw piece of bacon.
   components:
   - type: Tag
@@ -216,9 +216,9 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  name: raw bear meat
   parent: FoodMeatRawBase
   id: FoodMeatBear
+  name: raw bear meat
   description: A very manly slab of raw bear meat.
   components:
   - type: Sprite
@@ -249,9 +249,9 @@
         color: "#934C64"
 
 - type: entity
-  name: raw penguin meat
   parent: FoodMeatRawBase
   id: FoodMeatPenguin
+  name: raw penguin meat
   description: A slab of raw penguin meat. Can be used as a substitute for fish in recipes.
   components:
   - type: Sprite
@@ -280,9 +280,9 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  name: raw chicken meat
   parent: FoodMeatRawBase
   id: FoodMeatChicken
+  name: raw chicken meat
   description: A slab of raw chicken. Remember to wash your hands!
   components:
   - type: Sprite
@@ -313,9 +313,9 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  name: raw duck meat
   parent: FoodMeatRawBase
   id: FoodMeatDuck
+  name: raw duck meat
   description: A slab of raw duck. Remember to wash your hands!
   components:
   - type: Sprite
@@ -375,9 +375,9 @@
       - state: corgi-inhand-right
 
 - type: entity
-  name: raw crab meat
   parent: FoodMeatRawBase
   id: FoodMeatCrab
+  name: raw crab meat
   description: A pile of raw crab meat.
   components:
   - type: Item
@@ -401,9 +401,9 @@
     defaultTarget: cooked crab
 
 - type: entity
-  name: raw goliath meat
   parent: FoodMeatRawBase
   id: FoodMeatGoliath
+  name: raw goliath meat
   description: A slab of goliath meat. It's not very edible now, but it cooks great in lava.
   components:
   - type: Sprite
@@ -431,9 +431,9 @@
       - state: plain-inhand-right
 
 - type: entity
-  name: dragon flesh
   parent: FoodMeatBase
   id: FoodMeatDragon
+  name: dragon flesh
   description: The dense meat of the space-era apex predator is oozing with its mythical ichor. Ironically, best eaten raw.
   components:
   - type: Tag
@@ -472,9 +472,9 @@
       - state: dragon-inhand-right
 
 - type: entity
-  name: raw rat meat
   parent: FoodMeatRawBase
   id: FoodMeatRat
+  name: raw rat meat
   description: Prime meat from maintenance!
   components:
   - type: Sprite
@@ -499,9 +499,9 @@
       - state: plain-inhand-right
 
 - type: entity
-  name: raw lizard meat
   parent: FoodMeatRawBase
   id: FoodMeatLizard
+  name: raw lizard meat
   description: Delicious dino damage.
   components:
   - type: Sprite
@@ -541,9 +541,9 @@
     state: plant
 
 - type: entity
-  name: rotten meat
   parent: FoodMeatBase
   id: FoodMeatRotten
+  name: rotten meat
   description: Halfway to becoming fertilizer for your garden.
   components:
   - type: Tag
@@ -573,9 +573,9 @@
       - state: rotten-inhand-right
 
 - type: entity
-  name: raw spider meat
   parent: FoodMeatRawBase
   id: FoodMeatSpider
+  name: raw spider meat
   description: A slab of spider meat. That's so Kafkaesque.
   components:
   - type: Sprite
@@ -596,9 +596,9 @@
     heldPrefix: spider
 
 - type: entity
-  name: raw spider leg
   parent: FoodMeatBase
   id: FoodMeatSpiderLeg
+  name: raw spider leg
   description: A still twitching leg of a giant spider... you don't really want to eat this, do you?
   components:
   - type: Sprite
@@ -624,9 +624,9 @@
         color: "#333333"
 
 - type: entity
-  name: meatwheat clump
   parent: FoodMeatBase
   id: FoodMeatWheat
+  name: meatwheat clump
   description: This doesn't look like meat, but your standards aren't that high to begin with.
   components:
   - type: FlavorProfile
@@ -653,9 +653,9 @@
         color: "#934C64"
 
 - type: entity
-  name: raw snake meat
   parent: FoodMeatBase
   id: FoodMeatSnake
+  name: raw snake meat
   description: A long piece of snake meat, hopefully not poisonous.
   components:
   - type: Tag
@@ -681,10 +681,10 @@
       - state: snake-inhand-right
 
 - type: entity
-  name: raw xeno meat
   # not raw since acid kills bacteria or something, same as xeno
   parent: FoodMeatBase
   id: FoodMeatXeno
+  name: raw xeno meat
   description: A slab of xeno meat, dripping with acid.
   components:
   - type: FlavorProfile
@@ -752,9 +752,9 @@
       - state: plain-inhand-right
 
 - type: entity
-  name: killer tomato meat
   parent: FoodMeatBase
   id: FoodMeatTomato
+  name: killer tomato meat
   description: A slice from a huge tomato.
   components:
   - type: Sprite
@@ -773,9 +773,9 @@
       - state: tomato-inhand-right
 
 - type: entity
-  name: salami
   parent: FoodMeatBase
   id: FoodMeatSalami
+  name: salami
   description: A large tube of salami. Best not to ask what went into it.
   components:
   - type: Item
@@ -801,9 +801,9 @@
         Blunt: 2
 
 - type: entity
-  name: meat clown
   parent: FoodMeatBase
   id: FoodMeatClown
+  name: meat clown
   description: A delicious, round piece of meat clown. How horrifying.
   components:
   - type: Item
@@ -822,9 +822,9 @@
     slice: FoodMeatSalamiSlice
 
 - type: entity
-  name: meatball
   parent: FoodMeatBase
   id: FoodMeatMeatball
+  name: meatball
   description: A raw ball of meat. Meat ball.
   components:
   - type: Item
@@ -845,9 +845,9 @@
 # meat patty - grillin' time
 
 - type: entity
-  name: meat patty
   parent: FoodMeatBase
   id: FoodMeatPatty
+  name: meat patty
   description: A flat slab of ground meat. Ready for grillin'.
   components:
   - type: Tag
@@ -869,9 +869,9 @@
     heldPrefix: generic-pink
 
 - type: entity
-  name: slimeball
   parent: FoodMeatBase
   id: FoodMeatSlime
+  name: slimeball
   description: A gelatinous shaping of slime jelly.
   components:
   - type: FlavorProfile
@@ -897,9 +897,9 @@
       - state: slime-inhand-right
 
 - type: entity
-  name: raw snail meat
   parent: FoodMeatRawBase
   id: FoodMeatSnail
+  name: raw snail meat
   description: Improved with salt.
   components:
   - type: Sprite
@@ -926,9 +926,9 @@
         color: "#E2AE7C"
 
 - type: entity
-  name: anomalous meat mass
   parent: FoodMeatRawBase
   id: FoodMeatAnomaly
+  name: anomalous meat mass
   description: An impossibly dense slab of meat. Just looking at it makes you uncomfortable.
   components:
   - type: Sprite
@@ -1001,9 +1001,9 @@
     - Meat
 
 - type: entity
-  name: steak
   parent: FoodMeatBase
   id: FoodMeatCooked
+  name: steak
   description: A cooked slab of meat. Smells primal.
   components:
   - type: Tag
@@ -1041,9 +1041,9 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  name: bacon
   parent: FoodMeatBase
   id: FoodMeatBaconCooked
+  name: bacon
   description: A delicious piece of cooked bacon.
   components:
   - type: Tag
@@ -1085,9 +1085,9 @@
         color: "#5B3E2A"
 
 - type: entity
-  name: cooked bear
   parent: FoodMeatBase
   id: FoodMeatBearCooked
+  name: cooked bear
   description: A well-cooked slab of bear meat. Tough, but tasty with the right sides.
   components:
   - type: Tag
@@ -1121,9 +1121,9 @@
     heldPrefix: meatball
 
 - type: entity
-  name: penguin filet
   parent: FoodMeatBase
   id: FoodMeatPenguinCooked
+  name: penguin filet
   description: A cooked filet of penguin. Can be used as a substitute for fish in recipes.
   components:
   - type: Tag
@@ -1162,9 +1162,9 @@
         color: "#F7E3A3"
 
 - type: entity
-  name: cooked chicken
   parent: FoodMeatBase
   id: FoodMeatChickenCooked
+  name: cooked chicken
   description: A cooked piece of chicken. Best used in other recipes.
   components:
   - type: Tag
@@ -1243,9 +1243,9 @@
         color: "#F7E3A3"
 
 - type: entity
-  name: cooked duck
   parent: FoodMeatBase
   id: FoodMeatDuckCooked
+  name: cooked duck
   description: A cooked piece of duck. Best used in other recipes.
   components:
   - type: Tag
@@ -1284,9 +1284,9 @@
         color: "#F7E3A3"
 
 - type: entity
-  name: cooked crab
   parent: FoodMeatBase
   id: FoodMeatCrabCooked
+  name: cooked crab
   description: Some deliciously cooked crab meat.
   components:
   - type: FlavorProfile
@@ -1323,9 +1323,9 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  name: goliath steak
   parent: FoodMeatBase
   id: FoodMeatGoliathCooked
+  name: goliath steak
   description: A delicious, lava cooked steak.
   components:
   - type: Tag
@@ -1400,9 +1400,9 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  name: lizard steak
   parent: FoodMeatBase
   id: FoodMeatLizardCooked
+  name: lizard steak
   description: Cooked, tough lizard meat.
   components:
   - type: Tag
@@ -1440,9 +1440,9 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  name: boiled spider leg
   parent: FoodMeatBase
   id: FoodMeatSpiderlegCooked
+  name: boiled spider leg
   description: A giant spider's leg that's still twitching after being cooked. Gross!
   components:
   - type: Tag
@@ -1475,9 +1475,9 @@
         color: "#44201A"
 
 - type: entity
-  name: meatball
   parent: FoodMeatBase
   id: FoodMeatMeatballCooked
+  name: meatball
   description: A cooked meatball. Perfect to add to other dishes... except fruity ones.
   components:
   - type: Tag
@@ -1509,9 +1509,9 @@
     heldPrefix: meatball
 
 - type: entity
-  name: cooked meat patty
   parent: FoodMeatBase
   id: FoodMeatPattyCooked
+  name: cooked meat patty
   description: A cooked meat patty.
   components:
   - type: Tag
@@ -1543,9 +1543,9 @@
     heldPrefix: meatball
 
 - type: entity
-  name: boiled snail
   parent: FoodMeatBase
   id: FoodMeatSnailCooked
+  name: boiled snail
   description: Improved with salt.
   components:
   - type: Tag
@@ -1581,9 +1581,9 @@
         color: "#5B3E2A"
 
 - type: entity
-  name: anomalous steak
   parent: FoodMeatBase
   id: FoodMeatAnomalyCooked
+  name: anomalous steak
   description: A gigantic mass of cooked meat. A meal for a dinner party, or someone REALLY hungry.
   components:
   - type: Tag
@@ -1619,9 +1619,9 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  name: dragon steak
   parent: FoodMeatBase
   id: FoodMeatDragonCooked
+  name: dragon steak
   description: Pouring ketchup on this is considered a capital crime on most stations.
   components:
   - type: Tag
@@ -1665,9 +1665,9 @@
 # Raw
 
 - type: entity
-  name: raw cutlet
   parent: FoodMeatBase
   id: FoodMeatCutlet
+  name: raw cutlet
   description: A raw meat cutlet.
   components:
   - type: Tag
@@ -1700,9 +1700,9 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  name: raw bear cutlet
   parent: FoodMeatBase
   id: FoodMeatBearCutlet
+  name: raw bear cutlet
   description: A very manly cutlet of raw bear meat.
   components:
   - type: Tag
@@ -1740,9 +1740,9 @@
         color: brown
 
 - type: entity
-  name: raw penguin cutlet
   parent: FoodMeatBase
   id: FoodMeatPenguinCutlet
+  name: raw penguin cutlet
   description: A cutlet of raw penguin meat. Can be used as a substitute for fish in recipes.
   components:
   - type: Tag
@@ -1778,9 +1778,9 @@
         color: white
 
 - type: entity
-  name: raw chicken cutlet
   parent: FoodMeatBase
   id: FoodMeatChickenCutlet
+  name: raw chicken cutlet
   description: A cutlet of raw chicken. Remember to wash your hands!
   components:
   - type: Tag
@@ -1814,9 +1814,9 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  name: raw duck cutlet
   parent: FoodMeatBase
   id: FoodMeatDuckCutlet
+  name: raw duck cutlet
   description: A cutlet of raw duck. Remember to wash your hands!
   components:
   - type: Tag
@@ -1850,9 +1850,9 @@
       - state: generic-pink-inhand-right
 
 - type: entity
-  name: raw lizard cutlet
   parent: FoodMeatBase
   id: FoodMeatLizardCutlet
+  name: raw lizard cutlet
   description: Delicious dino cutlet.
   components:
   - type: Tag
@@ -1891,9 +1891,9 @@
         color: green
 
 - type: entity
-  name: raw spider cutlet
   parent: FoodMeatBase
   id: FoodMeatSpiderCutlet
+  name: raw spider cutlet
   description: A cutlet of raw spider meat. So Kafkaesque.
   components:
   - type: Tag
@@ -1928,9 +1928,9 @@
         color: green
 
 - type: entity
-  name: raw xeno cutlet
   parent: FoodMeatBase
   id: FoodMeatXenoCutlet
+  name: raw xeno cutlet
   description: A slab of raw xeno meat, dripping with acid.
   components:
   - type: FlavorProfile
@@ -1967,9 +1967,9 @@
         color: green
 
 - type: entity
-  name: raw killer tomato cutlet
   parent: FoodMeatBase
   id: FoodMeatTomatoCutlet
+  name: raw killer tomato cutlet
   description: A cutlet from a slab of tomato.
   components:
   - type: Item
@@ -1988,9 +1988,9 @@
     price: 30
 
 - type: entity
-  name: salami slice
   parent: FoodMeatBase
   id: FoodMeatSalamiSlice
+  name: salami slice
   description: A slice of cured salami.
   components:
   - type: Item
@@ -2015,9 +2015,9 @@
           Quantity: 1
 
 - type: entity
-  name: raw dragon cutlet
   parent: FoodMeatBase
   id: FoodMeatDragonCutlet
+  name: raw dragon cutlet
   description: A raw dragon meat cutlet.
   components:
   - type: Tag
@@ -2055,9 +2055,9 @@
 # Cooked
 
 - type: entity
-  name: cutlet
   parent: FoodMeatBase
   id: FoodMeatCutletCooked
+  name: cutlet
   description: A cooked meat cutlet. Needs some seasoning.
   components:
   - type: Tag
@@ -2096,9 +2096,9 @@
         color: "#5B3614"
 
 - type: entity
-  name: bear cutlet
   parent: FoodMeatBase
   id: FoodMeatBearCutletCooked
+  name: bear cutlet
   description: A very manly cutlet of cooked bear meat.
   components:
   - type: Tag
@@ -2140,9 +2140,9 @@
         color: "#5B3614"
 
 - type: entity
-  name: penguin cutlet
   parent: FoodMeatBase
   id: FoodMeatPenguinCutletCooked
+  name: penguin cutlet
   description: A cutlet of cooked penguin meat.
   components:
   - type: Tag
@@ -2182,9 +2182,9 @@
         color: "#5B3614"
 
 - type: entity
-  name: chicken cutlet
   parent: FoodMeatBase
   id: FoodMeatChickenCutletCooked
+  name: chicken cutlet
   description: A cutlet of cooked chicken. Remember to wash your hands!
   components:
   - type: Tag
@@ -2224,9 +2224,9 @@
         color: "#5B3614"
 
 - type: entity
-  name: duck cutlet
   parent: FoodMeatBase
   id: FoodMeatDuckCutletCooked
+  name: duck cutlet
   description: A cutlet of cooked duck. Remember to wash your hands!
   components:
   - type: Tag
@@ -2266,9 +2266,9 @@
         color: "#5B3614"
 
 - type: entity
-  name: lizard cutlet
   parent: FoodMeatBase
   id: FoodMeatLizardCutletCooked
+  name: lizard cutlet
   description: Delicious cooked dino cutlet.
   components:
   - type: Tag
@@ -2309,9 +2309,9 @@
         color: "#153F06"
 
 - type: entity
-  name: spider cutlet
   parent: FoodMeatBase
   id: FoodMeatSpiderCutletCooked
+  name: spider cutlet
   description: A cutlet of cooked spider meat. Finally edible.
   components:
   - type: Tag
@@ -2350,9 +2350,9 @@
         color: "#153F06"
 
 - type: entity
-  name: xeno cutlet
   parent: FoodMeatBase
   id: FoodMeatXenoCutletCooked
+  name: xeno cutlet
   description: A cutlet of cooked xeno, dripping with... tastiness?
   components:
   - type: Tag
@@ -2391,9 +2391,9 @@
         color: "#153F06"
 
 - type: entity
-  name: dragon cutlet
   parent: FoodMeatBase
   id: FoodMeatDragonCutletCooked
+  name: dragon cutlet
   description: It's a meal for kings!
   components:
   - type: Tag

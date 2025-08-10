@@ -6,7 +6,7 @@
   id: FoodSnackBase
   abstract: true
   components:
-  - type: Food
+  - type: Edible
   - type: Tag
     tags:
       - FoodSnack
@@ -41,7 +41,7 @@
     state: boritos
   - type: Item
     heldPrefix: boritos
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketBoritosTrash
 
@@ -58,7 +58,7 @@
     state: cnds
   - type: Item
     heldPrefix: cnds
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketCnDsTrash
 
@@ -76,7 +76,7 @@
     state: cheesiehonkers
   - type: Item
     heldPrefix: cheesiehonkers
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketCheesieTrash
 
@@ -95,14 +95,14 @@
     state: chips
   - type: Item
     heldPrefix: chips
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketChipsTrash
 
 - type: entity
-  name: chocolate bar
   parent: BaseItem
   id: FoodSnackChocolate
+  name: chocolate bar
   description: Tastes like cardboard.
   components:
   - type: Sprite
@@ -123,9 +123,9 @@
       path: /Audio/Effects/unwrap.ogg
 
 - type: entity
-  name: chocolate bar
   parent: FoodSnackBase
   id: FoodSnackChocolateBar
+  name: chocolate bar
   description: Tastes like cardboard.
   components:
   - type: FlavorProfile
@@ -153,9 +153,9 @@
           Quantity: 1
 
 - type: entity
-  name: energy bar
   parent: FoodSnackBase
   id: FoodSnackEnergy
+  name: energy bar
   description: An energy bar with a lot of punch.
   components:
   - type: Sprite
@@ -171,9 +171,9 @@
       path: /Audio/Effects/unwrap.ogg
 
 - type: entity
-  name: energy bar
   parent: FoodSnackBase
   id: FoodSnackEnergyBar
+  name: energy bar
   description: An energy bar with a lot of punch.
   components:
   - type: FlavorProfile
@@ -189,9 +189,9 @@
     storedOffset: 0,-2
 
 - type: entity
-  name: Sweetie's pistachios
   parent: FoodSnackBase
   id: FoodSnackPistachios
+  name: Sweetie's pistachios
   description: Sweeties's name-brand pistachios. Probably won't give you diseases. Probably.
   components:
   - type: FlavorProfile
@@ -203,7 +203,7 @@
   - type: Item
     heldPrefix: pistachio
     storedOffset: 1,0
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketPistachioTrash
   - type: Tag
@@ -226,7 +226,7 @@
     state: popcorn
   - type: Item
     heldPrefix: popcorn
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketPopcornTrash
 
@@ -243,7 +243,7 @@
     state: raisins
   - type: Item
     heldPrefix: raisins
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketRaisinsTrash
   - type: Tag
@@ -251,9 +251,9 @@
     - Fruit
 
 - type: entity
-  name: bob's semki sunflower seeds
   parent: FoodSnackBase
   id: FoodSnackSemki
+  name: bob's semki sunflower seeds
   description: Proudly produced by the Bob Bobson nutritional corporation. Perfect for spitting at people.
   components:
   - type: FlavorProfile
@@ -264,7 +264,7 @@
   - type: Item
     heldPrefix: semki
     storedOffset: 1,0
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketSemkiTrash
 
@@ -281,7 +281,7 @@
     state: susjerky
   - type: Item
     heldPrefix: susjerky
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketSusTrash
   - type: Tag
@@ -301,7 +301,7 @@
     state: syndicakes
   - type: Item
     heldPrefix: syndicakes
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketSyndiTrash
 
@@ -326,7 +326,7 @@
           Quantity: 5
   - type: Sprite
     state: ramen
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketCupRamenTrash
   - type: Item
@@ -350,9 +350,9 @@
           Quantity: 5
 
 - type: entity
-  name: chow mein
   parent: FoodSnackBase
   id: FoodSnackChowMein
+  name: chow mein
   description: A salty fried noodle snack. Looks like they forgot the vegetables.
   components:
   - type: FlavorProfile
@@ -374,14 +374,14 @@
           Quantity: 10
         - ReagentId: Soysauce
           Quantity: 2
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketChowMeinTrash
 
 - type: entity
-  name: dan dan noodles
   parent: FoodSnackBase
   id: FoodSnackDanDanNoodles
+  name: dan dan noodles
   description: A spicy Sichuan noodle snack. The chili oil slick pools on top.
   components:
   - type: FlavorProfile
@@ -405,14 +405,14 @@
           Quantity: 2
         - ReagentId: Soysauce
           Quantity: 2
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketDanDanTrash
 
 - type: entity
-  name: fortune cookie
   parent: FoodSnackBase
   id: FoodSnackCookieFortune
+  name: fortune cookie
   description: A boring cardboard tasting snack with a fortune inside. Surprise! You're boring too.
   components:
   - type: FlavorProfile
@@ -432,13 +432,13 @@
     heldPrefix: cookie_fortune
     storedOffset: 1,-1
     size: Tiny
-  - type: Food
+  - type: Edible
     trash:
     - FoodCookieFortune
 
 - type: entity
-  id: FoodSnackNutribrick
   parent: BaseItem
+  id: FoodSnackNutribrick
   name: nutribrick
   description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
   components:
@@ -460,8 +460,8 @@
       path: /Audio/Effects/unwrap.ogg
 
 - type: entity
-  id: FoodSnackNutribrickOpen
   parent: FoodSnackBase
+  id: FoodSnackNutribrickOpen
   name: nutribrick
   description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
   components:
@@ -477,7 +477,7 @@
       - ReptilianFood
   - type: Sprite
     state: nutribrick-open
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:
@@ -487,8 +487,8 @@
           Quantity: 20
 
 - type: entity
-  id: FoodSnackMREBrownie
   parent: BaseItem
+  id: FoodSnackMREBrownie
   name: brownie
   description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
   components:
@@ -510,8 +510,8 @@
       path: /Audio/Effects/unwrap.ogg
 
 - type: entity
-  id: FoodSnackMREBrownieOpen
   parent: FoodSnackBase
+  id: FoodSnackMREBrownieOpen
   name: brownie
   suffix: MRE
   description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
@@ -524,7 +524,7 @@
   - type: Item
     heldPrefix: mre-brownie-open
     storedOffset: -1,-1
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:
@@ -536,9 +536,9 @@
           Quantity: 3
 
 - type: entity
-  name: swirl lollipop
   parent: FoodSnackBase
   id: FoodSnackSwirlLollipop
+  name: swirl lollipop
   description: A swirly circle of pure concentrated sugar. Who's the biggest kid on the playground now?
   components:
   - type: Sprite
@@ -602,7 +602,7 @@
         reagents:
         - ReagentId: ToxinTrash
           Quantity: 5
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
 
 - type: entity
@@ -862,7 +862,7 @@
   name: MRE wrapper
   description: A general purpose wrapper for a variety of military food goods.
   components:
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:

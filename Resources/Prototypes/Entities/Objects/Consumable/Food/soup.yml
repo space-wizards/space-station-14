@@ -1,15 +1,15 @@
 # When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_meal.yml
 
 - type: entity
+  abstract: true
   parent: FoodInjectableBase
   id: FoodBowlBase
-  abstract: true
   components:
   - type: Item
     shape:
     - 0,0,1,0
     storedOffset: 0,-3
-  - type: Food
+  - type: Edible
     trash:
     - FoodBowlBig
     utensil: Spoon
@@ -559,9 +559,9 @@
     - state: spacelibertyduff
 
 - type: entity
-  name: amanita jelly
   parent: FoodInjectableBase
   id: FoodJellyAmanita
+  name: amanita jelly
   description: It's evil, don't touch it!
   components:
   - type: Item
@@ -983,7 +983,7 @@
   - type: FlavorProfile
     flavors:
       - miso
-  - type: Food
+  - type: Edible
     trash:
     - FoodBowlFancy
   - type: Sprite
@@ -1188,9 +1188,9 @@
 # Tastes like crab.
 
 - type: entity
-  name: electron soup
   parent: FoodBowlBase
   id: FoodSoupElectron
+  name: electron soup
   description: A gastronomic curiosity of ethereal origin.
   components:
   - type: Item
