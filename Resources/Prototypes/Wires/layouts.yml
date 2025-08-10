@@ -96,6 +96,15 @@
     alarmOnPulse: true
 
 - type: wireLayout
+  id: Arcade
+  wires:
+  - !type:PowerWireAction
+  - !type:SpeechWireAction
+  - !type:ArcadeOverflowWireAction
+  - !type:ArcadePlayerInvincibleWireAction
+  - !type:AiInteractWireAction
+
+- type: wireLayout
   id: SpaceVillainArcade
   wires:
   - !type:PowerWireAction

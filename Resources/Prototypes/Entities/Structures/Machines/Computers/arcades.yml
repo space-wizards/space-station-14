@@ -27,6 +27,9 @@
     sprite: Structures/Machines/arcade.rsi
     state: arcade
   - type: WiresPanel
+  - type: Wires
+    layoutId: Arcade
+    boardName: wires-board-name-arcade
   - type: WiresVisuals
   - type: TypingIndicator
     proto: robot
