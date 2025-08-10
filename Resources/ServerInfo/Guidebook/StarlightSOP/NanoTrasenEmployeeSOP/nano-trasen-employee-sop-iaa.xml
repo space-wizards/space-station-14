@@ -1,16 +1,17 @@
 <Document>
-    #Internal Affairs Agent
+# Internal Affairs Agent
 
-    1. Internal Affairs Agents are considered subordinate to both the NT Representative, and the Magistrate, and are not considered part of command.
+<GuideEntityEmbed Entity="ToyFigurineLawyer" Caption="Internal Affairs Agent"/>
 
-    2. Internal Affairs Agents are to only legally represent prisoners who are accused of capital level crimes, however they may choose to provide legal council to both Security, as well as prisoners of lesser crimes.
+1. The Internal Affairs Agents are considered subordinate to [bold]both[/bold] the NT Representative and the Magistrate. They are also not considered part of command.
 
-    3. Internal Affairs Agents may request access to a department to ensure that Standard Operating Procedures are being carried out. This request does not have to be accepted, however denial may be a cause for concern.
+2. The Internal Affairs Agents are to only legally represent prisoners who are accused of capital level crimes, however they may choose to provide legal council to both security, as well as prisoners of lesser crimes.
 
-    4. The Internal Affairs Agent may not significantly impede any department with paperwork, or multiple inspections within a short timeframe.
+3. The Internal Affairs Agents may request access to a department to ensure that Standard Operating Procedures are being carried out. This request does not have to be accepted, however denial may be a cause for concern.
 
-    5. All violations of SOP or Space Law should be brought to the relevant department head, NT Representative, or Magistrate.
+4. The Internal Affairs Agents may not significantly impede any department with paperwork or do multiple inspections within a short timeframe.
 
-    6. The Internal Affairs Agent may carry a flash on them at all times.
+5. All violations of SOP or corporate law should be brought to the relevant department head, NanoTrasen Representative or Magistrate.
 
+6. The Internal Affairs Agents may carry a flash on them at all times.
 </Document> 

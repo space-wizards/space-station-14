@@ -17,6 +17,12 @@
     ClothingOuterPlagueSuit: 1
     ClothingMaskPlague: 1
     ClothingHeadsetService: 2
+    #Starlight
+    DruidRobesUniformSuit: 1
+    TogaUniformSuit: 1
+    ClothingOuterBurnedRobes: 1
+    ClothingKitsuneMask: 1
+    #Endofstarlight
     BoxCandle: 2
     BoxCandleSmall: 2
     Urn: 5

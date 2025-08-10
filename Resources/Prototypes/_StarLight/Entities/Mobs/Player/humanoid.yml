@@ -1,7 +1,7 @@
 ## NTCC Default Settings
 
 - type: randomHumanoidSettings
-  id: EventHumanoidNTCC
+  id: EventHumanoidNTNC
   parent: EventHumanoidMindShielded
   components:
   - type: AutoImplant
@@ -12,27 +12,27 @@
 ## NTCC Blueshield
 
 - type: entity
-  name: NT-CC Consortium Blueshield
-  id: RandomHumanoidNTCCConsortiumBlueshieldSpawner
+  name: NT-NC Consortium Blueshield
+  id: RandomHumanoidNTNCConsortiumBlueshieldSpawner
   components:
     - type: Sprite
       sprite: _Starlight/Markers/jobs.rsi
       state: obs
     - type: RandomHumanoidSpawner
-      settings: NTCCConsortiumBlueshield
+      settings: NTNCConsortiumBlueshield
 
 - type: randomHumanoidSettings
-  id: NTCCConsortiumBlueshield
-  parent: EventHumanoidNTCC
+  id: NTNCConsortiumBlueshield
+  parent: EventHumanoidNTNC
   randomizeName: false
   components:
     - type: GhostRole
-      name: ghost-role-information-ntcc-consortium-officer-name
-      description: ghost-role-information-ntcc-consortium-officer-description
+      name: ghost-role-information-ntnc-consortium-officer-name
+      description: ghost-role-information-ntnc-consortium-officer-description
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: default
-      job: NTCCBlueshield
+      job: NTNCBlueshield
       requirements:
       - !type:OverallPlaytimeRequirement
         time: 72000 # 20h
@@ -40,7 +40,7 @@
         role: JobSecurityOfficer
         time: 18000 # 5h
     - type: Loadout
-      prototypes: [ NTCCBlueShieldGear ]
+      prototypes: [ NTNCBlueShieldGear ]
       roleLoadout: [ RoleSurvivalStandard ]
     - type: RandomMetadata
       nameSegments:

@@ -37,5 +37,10 @@ public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSou
         var cache = dependencies.Resolve<GeneratedParallaxCache>();
         cache.Unload(Identifier);
     }
+	/// <summary>
+	/// Controls the speed of the parallax effect for this texture.
+	/// </summary>
+	[DataField("slowness")]
+	public float Slowness { get; private set; }
 }
 

@@ -45,6 +45,23 @@ public sealed class SpawnPointSystem : EntitySystem
             }
         }
 
+        //starlight start, nukie spawn fix
+        if (possiblePositions.Count == 0)
+        {
+            //so we havent found a valid spawn point
+            //try to use a late joiner spawn point exclusively
+            //this will most likely always end up being arrivals
+            points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
+            while ( points.MoveNext(out var uid, out var spawnPoint, out var xform))
+            {
+                if (spawnPoint.SpawnType == SpawnPointType.LateJoin)
+                {
+                    possiblePositions.Add(xform.Coordinates);
+                }
+            }
+        }
+        //starlight end
+
         if (possiblePositions.Count == 0)
         {
             // Ok we've still not returned, but we need to put them /somewhere/.
