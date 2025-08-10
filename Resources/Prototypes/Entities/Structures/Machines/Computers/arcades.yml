@@ -27,9 +27,6 @@
     sprite: Structures/Machines/arcade.rsi
     state: arcade
   - type: WiresPanel
-  - type: Wires
-    layoutId: Arcade
-    boardName: wires-board-name-arcade
   - type: WiresVisuals
   - type: TypingIndicator
     proto: robot
@@ -156,7 +153,7 @@
     - Whistle
   - type: WiresPanel
   - type: Wires
-    layoutId: Arcade
+    layoutId: SpaceVillainArcade
     boardName: wires-board-name-arcade
   - type: ActivatableUI
     key: enum.SpaceVillainArcadeUiKey.Key

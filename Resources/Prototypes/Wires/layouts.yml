@@ -96,7 +96,7 @@
     alarmOnPulse: true
 
 - type: wireLayout
-  id: Arcade
+  id: SpaceVillainArcade
   wires:
   - !type:PowerWireAction
   - !type:SpeechWireAction
