@@ -25,13 +25,7 @@ namespace Content.Shared.Stunnable;
 /// </summary>
 public abstract partial class SharedStunSystem
 {
-    // TODO: Both of these constants need to be moved to a component somewhere, and need to be tweaked for balance...
-    // We don't always have standing state available when these are called so it can't go there
-    // Maybe I can pass the values to KnockedDownComponent from Standing state on Component init?
-    // Default knockdown timer
-    public static readonly TimeSpan DefaultKnockedDuration = TimeSpan.FromSeconds(0.5f);
-    // Minimum damage taken to refresh our knockdown timer to the default duration
-    public static readonly float KnockdownDamageThreshold = 5f;
+    private EntityQuery<CrawlerComponent> _crawlerQuery;
 
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -43,6 +37,8 @@ public abstract partial class SharedStunSystem
 
     private void InitializeKnockdown()
     {
+        _crawlerQuery = GetEntityQuery<CrawlerComponent>();
+
         SubscribeLocalEvent<KnockedDownComponent, RejuvenateEvent>(OnRejuvenate);
 
         // Startup and Shutdown
@@ -61,8 +57,9 @@ public abstract partial class SharedStunSystem
         // DoAfter event subscriptions
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
 
-        // Knockdown Extenders
-        SubscribeLocalEvent<KnockedDownComponent, DamageChangedEvent>(OnDamaged);
+        // Crawling
+        SubscribeLocalEvent<CrawlerComponent, KnockedDownRefreshEvent>(OnKnockdownRefresh);
+        SubscribeLocalEvent<CrawlerComponent, DamageChangedEvent>(OnDamaged);
 
         // Handling Alternative Inputs
         SubscribeAllEvent<ForceStandUpEvent>(OnForceStandup);
@@ -81,6 +78,7 @@ public abstract partial class SharedStunSystem
 
         while (query.MoveNext(out var uid, out var knockedDown))
         {
+            // If it's null then we don't want to stand up
             if (!knockedDown.AutoStand || knockedDown.DoAfterId.HasValue || knockedDown.NextUpdate > GameTiming.CurTime)
                 continue;
 
@@ -157,7 +155,7 @@ public abstract partial class SharedStunSystem
     /// <param name="entity">Entity who's knockdown time we're updating.</param>
     /// <param name="time">The time we're updating with.</param>
     /// <param name="refresh">Whether we're resetting the timer or adding to the current timer.</param>
-    public void UpdateKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan time, bool refresh = true)
+    public void UpdateKnockdownTime(Entity<KnockedDownComponent?> entity, TimeSpan time, bool refresh = true)
     {
         if (refresh)
             RefreshKnockdownTime(entity, time);
@@ -174,6 +172,7 @@ public abstract partial class SharedStunSystem
     {
         entity.Comp.NextUpdate = time;
         DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.NextUpdate));
+        Alerts.ShowAlert(entity, KnockdownAlert, null, (GameTiming.CurTime, entity.Comp.NextUpdate));
     }
 
     /// <summary>
@@ -182,11 +181,14 @@ public abstract partial class SharedStunSystem
     /// </summary>
     /// <param name="entity">Entity whose timer we're updating</param>
     /// <param name="time">The time we want them to be knocked down for.</param>
-    public void RefreshKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan time)
+    public void RefreshKnockdownTime(Entity<KnockedDownComponent?> entity, TimeSpan time)
     {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
         var knockedTime = GameTiming.CurTime + time;
         if (entity.Comp.NextUpdate < knockedTime)
-            SetKnockdownTime(entity, knockedTime);
+            SetKnockdownTime((entity, entity.Comp), knockedTime);
     }
 
     /// <summary>
@@ -194,35 +196,20 @@ public abstract partial class SharedStunSystem
     /// </summary>
     /// <param name="entity">Entity whose timer we're updating</param>
     /// <param name="time">The time we want to add to their knocked down timer.</param>
-    public void AddKnockdownTime(Entity<KnockedDownComponent> entity, TimeSpan time)
+    public void AddKnockdownTime(Entity<KnockedDownComponent?> entity, TimeSpan time)
     {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
         if (entity.Comp.NextUpdate < GameTiming.CurTime)
         {
-            SetKnockdownTime(entity, GameTiming.CurTime + time);
+            SetKnockdownTime((entity, entity.Comp), GameTiming.CurTime + time);
             return;
         }
 
         entity.Comp.NextUpdate += time;
         DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.NextUpdate));
-    }
-
-    /// <summary>
-    /// Checks if an entity is able to stand, returns true if it can, returns false if it cannot.
-    /// </summary>
-    /// <param name="entity">Entity we're checking</param>
-    /// <returns>Returns whether the entity is able to stand</returns>
-    public bool CanStand(Entity<KnockedDownComponent> entity)
-    {
-        if (entity.Comp.NextUpdate > GameTiming.CurTime)
-            return false;
-
-        if (!Blocker.CanMove(entity))
-            return false;
-
-        var ev = new StandUpAttemptEvent();
-        RaiseLocalEvent(entity, ref ev);
-
-        return !ev.Cancelled;
+        Alerts.ShowAlert(entity, KnockdownAlert, null, (GameTiming.CurTime, entity.Comp.NextUpdate));
     }
 
     #endregion
@@ -237,29 +224,55 @@ public abstract partial class SharedStunSystem
         if (playerSession.AttachedEntity is not { Valid: true } playerEnt || !Exists(playerEnt))
             return;
 
-        if (!TryComp<KnockedDownComponent>(playerEnt, out var component))
+        ToggleKnockdown(playerEnt);
+    }
+
+    /// <summary>
+    /// Handles an entity trying to make itself fall down.
+    /// </summary>
+    /// <param name="entity">Entity who is trying to fall down</param>
+    private void ToggleKnockdown(Entity<CrawlerComponent?, KnockedDownComponent?> entity)
+    {
+        // We resolve here instead of using TryCrawling to be extra sure someone without crawler can't stand up early.
+        if (!Resolve(entity, ref entity.Comp1, false))
+            return;
+
+        if (!Resolve(entity, ref entity.Comp2, false))
         {
-            TryKnockdown(playerEnt, DefaultKnockedDuration, true, false, false); // TODO: Unhardcode these numbers
+            TryKnockdown(entity.Owner, entity.Comp1.DefaultKnockedDuration, true, false, false);
             return;
         }
 
-        var stand = !component.DoAfterId.HasValue;
-        SetAutoStand(playerEnt, stand);
+        var stand = !entity.Comp2.DoAfterId.HasValue;
+        SetAutoStand((entity, entity.Comp2), stand);
 
-        if (!stand || !TryStanding(playerEnt))
-            CancelKnockdownDoAfter((playerEnt, component));
+        if (!stand || !TryStanding((entity, entity.Comp2)))
+            CancelKnockdownDoAfter((entity, entity.Comp2));
     }
 
-    public bool TryStanding(Entity<KnockedDownComponent?, StandingStateComponent?> entity)
+    public bool TryStanding(Entity<KnockedDownComponent?> entity)
     {
         // If we aren't knocked down or can't be knocked down, then we did technically succeed in standing up
-        if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
+        if (!Resolve(entity, ref entity.Comp, false))
             return true;
 
-        if (!TryStand((entity.Owner, entity.Comp1)))
+        if (!KnockdownOver((entity, entity.Comp)))
             return false;
 
-        var ev = new GetStandUpTimeEvent(entity.Comp2.StandTime);
+        if (!_crawlerQuery.TryComp(entity, out var crawler))
+        {
+            // If we can't crawl then just have us sit back up...
+            // In case you're wondering, the KnockdownOverCheck, returns if we're able to move, so if next update is null.
+            // An entity that can't crawl will stand up the next time they can move, which should prevent moving while knocked down.
+            RemComp<KnockedDownComponent>(entity);
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} has stood up from knockdown.");
+            return true;
+        }
+
+        if (!TryStand((entity, entity.Comp)))
+            return false;
+
+        var ev = new GetStandUpTimeEvent(crawler.StandTime);
         RaiseLocalEvent(entity, ref ev);
 
         var doAfterArgs = new DoAfterArgs(EntityManager, entity, ev.DoAfterTime, new TryStandDoAfterEvent(), entity, entity)
@@ -275,9 +288,17 @@ public abstract partial class SharedStunSystem
         if (!DoAfter.TryStartDoAfter(doAfterArgs, out var doAfterId))
             return false;
 
-        entity.Comp1.DoAfterId = doAfterId.Value.Index;
-        DirtyField(entity, entity.Comp1, nameof(KnockedDownComponent.DoAfterId));
+        entity.Comp.DoAfterId = doAfterId.Value.Index;
+        DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.DoAfterId));
         return true;
+    }
+
+    public bool KnockdownOver(Entity<KnockedDownComponent> entity)
+    {
+        if (entity.Comp.NextUpdate > GameTiming.CurTime)
+            return false;
+
+        return Blocker.CanMove(entity);
     }
 
     /// <summary>
@@ -288,10 +309,7 @@ public abstract partial class SharedStunSystem
     /// <returns>Returns whether the entity is able to stand</returns>
     public bool TryStand(Entity<KnockedDownComponent> entity)
     {
-        if (entity.Comp.NextUpdate > GameTiming.CurTime)
-            return false;
-
-        if (!Blocker.CanMove(entity))
+        if (!KnockdownOver(entity))
             return false;
 
         var ev = new StandUpAttemptEvent(entity.Comp.AutoStand);
@@ -304,6 +322,22 @@ public abstract partial class SharedStunSystem
         {
             _popup.PopupClient(ev.Message.Value.Item1, entity, entity, ev.Message.Value.Item2);
         }
+
+        return !ev.Cancelled;
+    }
+
+    /// <summary>
+    /// Checks if an entity is able to stand, returns true if it can, returns false if it cannot.
+    /// </summary>
+    /// <param name="entity">Entity we're checking</param>
+    /// <returns>Returns whether the entity is able to stand</returns>
+    public bool CanStand(Entity<KnockedDownComponent> entity)
+    {
+        if (!KnockdownOver(entity))
+            return false;
+
+        var ev = new StandUpAttemptEvent();
+        RaiseLocalEvent(entity, ref ev);
 
         return !ev.Cancelled;
     }
@@ -338,7 +372,7 @@ public abstract partial class SharedStunSystem
         // That way if we fail to stand, the game will try to stand for us when we are able to
         SetAutoStand(entity, true);
 
-        if (!HasComp<StandingStateComponent>(entity) || StandingBlocked((entity, entity.Comp)))
+        if (StandingBlocked((entity, entity.Comp)))
             return;
 
         if (!_hands.TryGetEmptyHand(entity.Owner, out _))
@@ -436,16 +470,22 @@ public abstract partial class SharedStunSystem
 
     #endregion
 
-    #region Knockdown Extenders
+    #region Crawling
 
-    private void OnDamaged(Entity<KnockedDownComponent> entity, ref DamageChangedEvent args)
+    private void OnDamaged(Entity<CrawlerComponent> entity, ref DamageChangedEvent args)
     {
         // We only want to extend our knockdown timer if it would've prevented us from standing up
         if (!args.InterruptsDoAfters || !args.DamageIncreased || args.DamageDelta == null || GameTiming.ApplyingState)
             return;
 
-        if (args.DamageDelta.GetTotal() >= KnockdownDamageThreshold) // TODO: Unhardcode this
-            SetKnockdownTime(entity, GameTiming.CurTime + DefaultKnockedDuration);
+        if (args.DamageDelta.GetTotal() >= entity.Comp.KnockdownDamageThreshold)
+            RefreshKnockdownTime(entity.Owner, entity.Comp.DefaultKnockedDuration);
+    }
+
+    private void OnKnockdownRefresh(Entity<CrawlerComponent> entity, ref KnockedDownRefreshEvent args)
+    {
+        args.FrictionModifier *= entity.Comp.FrictionModifier;
+        args.SpeedModifier *= entity.Comp.SpeedModifier;
     }
 
     #endregion
