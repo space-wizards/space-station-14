@@ -40,6 +40,8 @@ using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.NPC.Prototypes;
+using Content.Server._Starlight.Language;
+using Content.Shared._Starlight.Language.Components;
 
 namespace Content.Server.Zombies;
 
@@ -65,6 +67,7 @@ public sealed partial class ZombieSystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly LanguageSystem _language = default!; // Starlight
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
@@ -117,12 +120,18 @@ public sealed partial class ZombieSystem
         RemComp<LegsParalyzedComponent>(target);
         RemComp<ComplexInteractionComponent>(target);
 
-        //funny voice
-        var accentType = "zombie";
-        if (TryComp<ZombieAccentOverrideComponent>(target, out var accent))
-            accentType = accent.Accent;
+        // Add Zombie Language - Starlight
+        RemComp<UniversalLanguageSpeakerComponent>(target);
+        EnsureComp<LanguageKnowledgeComponent>(target, out var knowledge);
+        EnsureComp<LanguageSpeakerComponent>(target, out var speaker);
 
-        EnsureComp<ReplacementAccentComponent>(target).Accent = accentType;
+        knowledge.SpokenLanguages.Clear();
+        knowledge.UnderstoodLanguages.Clear();
+
+        speaker.SpokenLanguages.Clear();
+        speaker.UnderstoodLanguages.Clear();
+
+        _language.AddLanguage(target, "Zombie");
 
         //This is needed for stupid entities that fuck up combat mode component
         //in an attempt to make an entity not attack. This is the easiest way to do it.
@@ -211,8 +220,6 @@ public sealed partial class ZombieSystem
 
         //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
         _inventory.TryUnequip(target, "gloves", true, true);
-        //Should prevent instances of zombies using comms for information they shouldnt be able to have.
-        _inventory.TryUnequip(target, "ears", true, true);
 
         //popup
         _popup.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);

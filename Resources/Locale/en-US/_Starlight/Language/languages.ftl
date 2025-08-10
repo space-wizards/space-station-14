@@ -41,7 +41,7 @@ language-Mouse-name = Mouse
 language-Mouse-description = Squeeek!
 
 language-Scratch-name = Scratch
-language-Scratch-description = WIP
+language-Scratch-description = A simplified, written dialect of the Avali and Resomi. Scratch is the galactic standard language model for the Illuminate. The origins of this language come from the pre-space age nomadic tribes, whose carvings and etches into ice caves hold a striking similarity to the modern Scratch.
 
 language-Terrum-name = Terrum
 language-Terrum-description = Sounds similar to old-earth Hebrew.
@@ -51,3 +51,6 @@ language-Chittin-description = The noise made by rubbing its antennae together i
 
 language-VoxPidgin-name = Vox-Pidgin
 language-VoxPidgin-description = The common tongue of the various Vox ships making up the Shoal. It sounds like chaotic shrieking to everyone else.
+
+language-Zombie-name = Zombie
+language-Zombie-description = Brainsss... Braaaiiinnsss..
