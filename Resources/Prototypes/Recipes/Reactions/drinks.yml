@@ -881,6 +881,20 @@
   products:
     Moonshine: 3
 
+- type: reaction
+  id: NadaColada
+  reactants:
+    Nothing:
+      amount: 3
+    JuiceLime:
+      amount: 1
+    Rum:
+      amount: 1
+    CreamOfCoconut:
+      amount: 1
+  products:
+    NadaColada: 6
+
 # - type: reaction
 #   id: Neurotoxin
 #   reactants:
@@ -943,6 +957,20 @@
       amount: 1
   products:
     Painkiller: 6
+
+- type: reaction
+  id: PainColada
+  reactants:
+    Razorium:
+      amount: 3
+    JuiceLime:
+      amount: 1
+    Rum:
+      amount: 1
+    CreamOfCoconut:
+      amount: 1
+  products:
+    PainColada: 6
 
 - type: reaction
   id: PinaColada
