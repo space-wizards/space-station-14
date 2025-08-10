@@ -1,5 +1,5 @@
+using Content.Shared.Examine;
 using Content.Shared.Trigger.Components.Triggers;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Trigger.Systems;
@@ -13,6 +13,41 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<TriggerOnProximityComponent, MapInitEvent>(OnMapInit);
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<TriggerOnProximityComponent, AnchorStateChangedEvent>(OnProximityAnchor);
+        SubscribeLocalEvent<TriggerOnProximityComponent, TriggerEvent>(OnProximityReceivingTrigger);
+        SubscribeLocalEvent<TriggerOnProximityComponent, ExaminedEvent>(OnProximityExamined);
+    }
+
+    private void OnProximityExamined(Entity<TriggerOnProximityComponent> ent, ref ExaminedEvent args)
+    {
+        if (!ent.Comp.Examinable || !args.IsInDetailsRange)
+            return;
+
+        args.PushMarkup(Loc.GetString("proximity-trigger-examine", ("enabled", ent.Comp.Enabled)));
+    }
+
+    private void OnProximityReceivingTrigger(Entity<TriggerOnProximityComponent> ent, ref TriggerEvent args)
+    {
+        var proximityComponent = ent.Comp;
+        var key = args.Key;
+
+        if (key == null)
+            return;
+
+        // So, enable the comp if the key exists in `EnableKeysIn` even if it exists in `DisableKeysIn`.
+        // If the key only exists in `DisableKeysIn`, then disable the comp.
+        // If the key exists in neither, keep `Enabled` at it's original value.
+        proximityComponent.Enabled =
+            proximityComponent.EnablingKeysIn.Contains(key) ||
+            (!proximityComponent.DisablingKeysIn.Contains(key) &&
+             proximityComponent.Enabled);
+
+        if (proximityComponent.ToggleKeysIn.Contains(key))
+            proximityComponent.Enabled ^= true;
+
+        // If you could manually enable/disable collision processing on fixtures then I'd do it here.
+        // Surely it would save some performance, no?
+        DirtyField(ent, proximityComponent, nameof(proximityComponent.Enabled));
+        SetProximityAppearance(ent);
     }
 
     private void OnProximityAnchor(Entity<TriggerOnProximityComponent> ent, ref AnchorStateChangedEvent args)
@@ -26,7 +61,7 @@ public sealed partial class TriggerSystem
             ent.Comp.Colliding.Clear();
         }
         // Re-check for contacts as we cleared them.
-        else if (TryComp<PhysicsComponent>(ent, out var body))
+        else if (_physicsQuery.TryGetComponent(ent, out var body))
         {
             _physics.RegenerateContacts((ent.Owner, body));
         }
@@ -40,7 +75,7 @@ public sealed partial class TriggerSystem
 
         SetProximityAppearance(ent);
 
-        if (!TryComp<PhysicsComponent>(ent, out var body))
+        if (!_physicsQuery.TryGetComponent(ent, out var body))
             return;
 
         _fixture.TryCreateFixture(
@@ -127,6 +162,9 @@ public sealed partial class TriggerSystem
                     continue;
 
                 if (colliding.LinearVelocity.Length() < trigger.TriggerSpeed)
+                    continue;
+
+                if (trigger.RequiresLineOfSight && !_examineSystem.InRangeUnOccluded(uid, collidingUid, range: trigger.Shape.Radius))
                     continue;
 
                 // Trigger!

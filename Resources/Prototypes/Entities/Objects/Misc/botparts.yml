@@ -2,13 +2,65 @@
   parent: BaseItem
   id: ProximitySensor
   name: proximity sensor
-  description: Senses things in close proximity.
+  description: Senses moving things in close proximity and sends a signal when active. Can be remotely enabled with a signal, bypassing the timer.
   components:
   - type: Sprite
     sprite: Objects/Misc/proximity_sensor.rsi
     state: icon
   - type: Tag
     tags:
-      - ProximitySensor
+    - ProximitySensor
   - type: StaticPrice
     price: 40
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 50
+  - type: TriggerOnUse
+    keyOut: trigger
+  - type: TimerTrigger
+    keysIn:
+    - trigger
+    keyOut: toggle # TODO: add an accompanying popup for proxsensor being toggled, when `PopupOnTrigger` gets added.
+    delay: 3 # borrowed from timertrigger
+    delayOptions: [3, 5, 10, 15, 30, 45, 60]
+    initialBeepDelay: 0
+    beepSound:
+      path: /Audio/Machines/quickbeep.ogg
+      params:
+        volume: -3
+  - type: TriggerOnProximity
+    enabled: false
+    cooldown: 1
+    triggerSpeed: 1.5
+    shape:
+      !type:PhysShapeCircle
+        radius: 3
+    repeating: true
+    examinable: true
+    keyOut: sensor
+    enablingKeysIn:
+    - enable
+    toggleKeysIn:
+    - toggle
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - sensor
+    sound:
+      path: /Audio/Effects/double_beep.ogg
+      params:
+        volume: -1.5
+  - type: DeviceLinkSink
+    ports:
+    - On
+  - type: TriggerOnSignal
+    port: On
+    keyOut: enable
+  - type: DeviceLinkSource
+    ports:
+    - Trigger
+  - type: SignalOnTrigger
+    port: Trigger
+    keysIn:
+    - sensor

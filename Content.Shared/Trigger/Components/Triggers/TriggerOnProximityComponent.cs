@@ -1,4 +1,5 @@
 using Content.Shared.Physics;
+using Content.Shared.Trigger.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -12,9 +13,33 @@ namespace Content.Shared.Trigger.Components.Triggers;
 /// The user is the entity that collided with the fixture.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState, AutoGenerateComponentPause]
+[AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
 public sealed partial class TriggerOnProximityComponent : BaseTriggerOnXComponent
 {
+    /// <summary>
+    /// The keys that, upon being triggered, will enable the proximity trigger.
+    /// If this shares a key with <see cref="DisablingKeysIn"/>, this trigger
+    /// will be enabled when that key gets triggered.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public HashSet<string> EnablingKeysIn = new();
+
+    /// <summary>
+    /// The keys that, upon being triggered, will disable the proximity trigger.
+    /// If this shares a key with <see cref="EnablingKeysIn"/>, this proximity
+    /// will be enabled when that key gets triggered.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public HashSet<string> DisablingKeysIn = new();
+
+    /// <summary>
+    /// The keys that, upon being triggered, will enable the proximity trigger
+    /// if it is disabled, and disable it if it is enabled. Processes after
+    /// <see cref="DisablingKeysIn"/> and <see cref="EnablingKeysIn"/>.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public HashSet<string> ToggleKeysIn = new();
+
     /// <summary>
     /// The ID if the fixture that is observed for collisions.
     /// </summary>
@@ -38,6 +63,20 @@ public sealed partial class TriggerOnProximityComponent : BaseTriggerOnXComponen
     /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan AnimationDuration = TimeSpan.FromSeconds(0.6f);
+
+    /// <summary>
+    /// Whether an unoccluded line of sight between the proximity trigger and any
+    /// colliding objects is required for it to be triggered.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RequiresLineOfSight = true;
+
+    /// <summary>
+    /// Should an examiner be told whether this proximity trigger is enabled
+    /// or not?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Examinable = false;
 
     /// <summary>
     /// Whether the entity needs to be anchored for the proximity to work.
