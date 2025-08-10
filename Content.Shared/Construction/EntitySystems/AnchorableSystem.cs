@@ -203,7 +203,10 @@ public sealed partial class AnchorableSystem : EntitySystem
         else
             RaiseLocalEvent(uid, (UnanchorAttemptEvent)attempt);
 
-        var delay =  anchorable.Delay + attempt.Delay;
+        if (attempt.Cancelled)
+            return;
+
+        var delay = anchorable.Delay + attempt.Delay;
 
         if (anchoring)
         {
