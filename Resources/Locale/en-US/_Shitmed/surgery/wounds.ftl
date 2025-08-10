@@ -1,0 +1,19 @@
+inspect-wound-Bleeding-minor = is minorly bleeding
+inspect-wound-Bleeding-moderate = is bleeding
+inspect-wound-Bleeding-severe = is bleeding profusely
+inspect-wound-Brute-minor = looks bruised
+inspect-wound-Brute-moderate = looks battered
+inspect-wound-Brute-severe = looks mangled
+inspect-wound-Burn-minor = looks red
+inspect-wound-Burn-moderate = has blisters all over
+inspect-wound-Burn-severe = skin is peeling away
+
+self-inspect-wound-Bleeding-minor = is minorly bleeding
+self-inspect-wound-Bleeding-moderate = is bleeding
+self-inspect-wound-Bleeding-severe = is bleeding profusely
+self-inspect-wound-Brute-minor = looks bruised, and feels sore
+self-inspect-wound-Brute-moderate = looks battered
+self-inspect-wound-Brute-severe = looks completely mangled
+self-inspect-wound-Burn-minor = burns a little
+self-inspect-wound-Burn-moderate = has some painful blisters
+self-inspect-wound-Burn-severe = has skin peeling away from it

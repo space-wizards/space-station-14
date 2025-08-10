@@ -1,0 +1,21 @@
+dv-ascended-title-1 = Ascendant
+dv-ascended-title-2 = Apocryphal
+dv-ascended-title-3 = Boundless
+dv-ascended-title-4 = Transcendant
+
+dv-ascended-name-1 = It-That-Gazes,
+dv-ascended-name-2 = It-That-Fled,
+dv-ascended-name-3 = It-That-Waits,
+dv-ascended-name-4 = It-That-Whispers,
+dv-ascended-name-5 = It-That-Watches,
+dv-ascended-name-6 = It-That-Wants,
+dv-ascended-name-7 = It-That-Was,
+dv-ascended-name-8 = It-That-Reaches,
+dv-ascended-name-9 = It-That-Chases,
+dv-ascended-name-10 = It-That-Hollows,
+dv-ascended-name-11 = It-That-Lurks,
+dv-ascended-name-12 = That-Which-Wants,
+dv-ascended-name-13 = That-Which-Waits,
+dv-ascended-name-14 = That-Which-Watches,
+dv-ascended-name-15 = That-Which-Whispers,
+dv-ascended-name-16 = That-Which-Was,

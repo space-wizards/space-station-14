@@ -1,0 +1,16 @@
+ariral-names-male-dataset-1 = Urahi
+ariral-names-male-dataset-2 = Jemul
+ariral-names-male-dataset-3 = Desurich
+ariral-names-male-dataset-4 = Kevari
+ariral-names-male-dataset-5 = Zulith
+ariral-names-male-dataset-6 = Mirek
+ariral-names-male-dataset-7 = Thalor
+ariral-names-male-dataset-8 = Veshin
+ariral-names-male-dataset-9 = Rynath
+ariral-names-male-dataset-10 = Kaelith
+ariral-names-male-dataset-11 = Nethari
+ariral-names-male-dataset-12 = Sularin
+ariral-names-male-dataset-13 = Thirek
+ariral-names-male-dataset-14 = Veshari
+ariral-names-male-dataset-15 = Mireth
+ariral-names-male-dataset-16 = Rynith

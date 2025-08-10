@@ -1,0 +1,10 @@
+names-tider-last-1 = Tide
+names-tider-last-2 = Crawler
+names-tider-last-3 = King
+names-tider-last-4 = Toolbox
+names-tider-last-5 = Breaker
+names-tider-last-6 = Stealer
+names-tider-last-7 = Wrench
+names-tider-last-8 = Crowbar
+names-tider-last-9 = Shitter
+names-tider-last-10 = Belt
