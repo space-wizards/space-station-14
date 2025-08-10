@@ -5,7 +5,7 @@ using Content.Shared.Trigger.Components.Effects;
 namespace Content.Server.Trigger.Systems;
 
 /// <summary>
-/// Trigger system for setting something on fire.
+/// Trigger system for adding or removing fire from an entity with <see cref="FlammableComponent"/>.
 /// </summary>
 /// <seealso cref="IgniteOnTriggerSystem"/>
 public sealed class FlameStackOnTriggerSystem : EntitySystem
@@ -17,10 +17,11 @@ public sealed class FlameStackOnTriggerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<FlameStackOnTriggerComponent, TriggerEvent>(OnTrigger);
+        SubscribeLocalEvent<FlameStackOnTriggerComponent, TriggerEvent>(OnTriggerFlame);
+        SubscribeLocalEvent<ExtinguishOnTriggerComponent, TriggerEvent>(OnTriggerExtinguish);
     }
 
-    private void OnTrigger(Entity<FlameStackOnTriggerComponent> ent, ref TriggerEvent args)
+    private void OnTriggerFlame(Entity<FlameStackOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
@@ -31,6 +32,21 @@ public sealed class FlameStackOnTriggerSystem : EntitySystem
             return;
 
         _flame.AdjustFireStacks(target.Value, ent.Comp.FireStacks, ignite: ent.Comp.DoIgnite);
+
+        args.Handled = true;
+    }
+
+    private void OnTriggerExtinguish(Entity<ExtinguishOnTriggerComponent> ent, ref TriggerEvent args)
+    {
+        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+            return;
+
+        var target = ent.Comp.TargetUser ? args.User : ent.Owner;
+
+        if (target == null)
+            return;
+
+        _flame.Extinguish(target.Value);
 
         args.Handled = true;
     }
