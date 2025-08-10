@@ -21,6 +21,8 @@
     children:
     - id: ClothingMaskBreath
     - id: ClothingOuterSuitEmergency
+    - id: ClothingOuterSuitEmergency #Starlight, 2 per locker for higher pop
+      prob: 0.5 #Starlight
     - !type:GroupSelector
       children:
       - id: EmergencyOxygenTankFilled
@@ -33,6 +35,8 @@
       prob: 0.1
     - id: BoxMRE
       prob: 0.1
+    - id: SpaceMedipen #Starlight
+      prob: 0.5 #Starlight
 
 - type: entity
   id: ClosetEmergencyFilledRandom
@@ -60,6 +64,10 @@
     children:
     - id: ClothingMaskBreath
     - id: ClothingOuterSuitEmergency
+    - id: ClothingOuterSuitEmergency #Starlight, 2 per locker for higher pop
+      prob: 0.5 #Starlight
+    - id: SpaceMedipen #Starlight
+      prob: 0.5 #Starlight
     - id: BoxMRE
       prob: 0.1
     - id: ToolboxEmergencyFilled

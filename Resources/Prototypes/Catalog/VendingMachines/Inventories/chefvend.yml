@@ -1,10 +1,10 @@
 - type: vendingMachineInventory
   id: ChefvendInventory
   startingInventory:
-    ReagentContainerFlour: 2
+    ReagentContainerFlour: 3 #Starlight 2 -> 3
     ReagentContainerCornmeal: 2
     ReagentContainerSugar: 2
-    ReagentContainerRice: 2
+    ReagentContainerRice: 3 #Starlight 2 -> 3
     FoodCondimentPacketSalt: 4
     FoodCondimentBottleEnzyme: 2
     FoodCondimentBottleHotsauce: 1
@@ -18,8 +18,8 @@
     DrinkMilkCarton: 2
     DrinkSoyMilkCarton: 1
     FoodButter: 3
-    FoodCheese: 1
-    FoodMeat: 6
+    FoodCheese: 3 #Starlight 1 -> 3
+    FoodMeat: 8 #Starlight 6 -> 8
     # Starlight-start
     KitchenOvenFlatpack: 1
     KitchenStoveFlatpack: 1
