@@ -588,6 +588,75 @@
     - Syringe
     - Trash
 
+- type: entity
+  id: BorgRegenerativeSyringeBase
+  name: regenerative syringe
+  parent: BaseItem # Inherits from BaseItem to avoid Spillable/TrashOnSolutionEmpty from BaseSyringe
+  abstract: true
+  description: An integrated syringe for a cyborg that automatically regenerates its contents.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    layers:
+    - state: syringe1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+    - state: syringe_base0
+      map: ["enum.SolutionContainerLayers.Base"]
+  - type: Icon
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: "syringe_base0"
+  - type: Item
+    size: Tiny
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 50
+  - type: Injector
+    transferAmount: 15
+    injectOnly: true
+    onlyAffectsMobs: true
+    autoToggle: false
+    toggleState: Inject
+    delay: 2.0
+  - type: ExaminableSolution
+    solution: injector
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: syringe
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
+  - type: Tag
+    tags:
+    - Syringe
+
+- type: entity
+  id: BorgSyringeTricordrazineRegenerative
+  name: regenerative tricordrazine syringe
+  parent: BorgRegenerativeSyringeBase
+  description: An integrated syringe for a cyborg that automatically regenerates Tricordrazine.
+  components:
+  - type: SolutionRegeneration
+    solution: injector
+    generated:
+      reagents:
+      - ReagentId: Tricordrazine
+        Quantity: 0.5 # 30u per minute
+
+- type: entity
+  id: BorgSyringeInaprovalineRegenerative
+  name: regenerative inaprovaline syringe
+  parent: BorgRegenerativeSyringeBase
+  description: An integrated syringe for a cyborg that automatically regenerates Inaprovaline.
+  components:
+  - type: SolutionRegeneration
+    solution: injector
+    generated:
+      reagents:
+      - ReagentId: Inaprovaline
+        Quantity: 0.25 # 15u per minute
 
 - type: entity
   name: pill
