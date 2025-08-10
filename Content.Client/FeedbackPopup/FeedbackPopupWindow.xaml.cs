@@ -18,7 +18,7 @@ public sealed partial class FeedbackPopupWindow : FancyWindow
         foreach (var proto in popupProtos)
         {
             FeedbackContainerArea.AddChild(new FeedbackSectionControl(proto));
-            FeedbackContainerArea.AddChild(new VSeparator() { Margin = new Thickness(0, 2.5f, 0, 2.5f) });
+            // FeedbackContainerArea.AddChild(new VSeparator { Margin = new Thickness(0, 2.5f, 0, 2.5f) });
         }
     }
 }

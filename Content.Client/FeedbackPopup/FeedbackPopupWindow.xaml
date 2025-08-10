@@ -1,8 +1,7 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       Title="{Loc 'feedbackpopup-window-name'}"
-                      MinSize="300 250"
-                      SetSize="600 250">
+                      MinSize="500 250">
     <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
         <!-- This is where the feedback section controls go -->
         <BoxContainer Name="FeedbackContainerArea" Orientation="Vertical" Margin="10 0 10 0" />

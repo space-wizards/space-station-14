@@ -38,7 +38,7 @@ public sealed partial class FeedbackSectionControl : Control
         }
 
         // Discord link button
-        if (_feedbackpopup.ResponseLink != null)
+        if (!Uri.IsWellFormedUriString(_feedbackpopup.ResponseLink, UriKind.Absolute))
         {
             var button = new Button
             {
