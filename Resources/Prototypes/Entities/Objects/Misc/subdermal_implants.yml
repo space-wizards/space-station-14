@@ -105,7 +105,7 @@
     - type: TriggerOnMobstateChange
       mobState:
       - Critical
-    - type: Rattle
+    - type: RattleOnTrigger
       radioChannel: "Security"
     # end of modifications
 
