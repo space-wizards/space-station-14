@@ -4,9 +4,14 @@ using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles;
+using Content.Server.Pinpointer;
+using Content.Server.Radio.EntitySystems;
 using Content.Server.Weapons.Ranged.Systems;
+using Content.Shared.Construction;
 using Content.Shared.Database;
+using Content.Shared.Destructible;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
@@ -34,6 +39,9 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly ProjectileSystem _projectile = default!;
         [Dependency] private readonly GunSystem _gun = default!;
+        [Dependency] private readonly RadioSystem _radio = default!;
+        [Dependency] private readonly NavMapSystem _navMap = default!;
+        [Dependency] private readonly LockSystem _lock = default!;
 
         public override void Initialize()
         {
@@ -44,6 +52,9 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<EmitterComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
             SubscribeLocalEvent<EmitterComponent, SignalReceivedEvent>(OnSignalReceived);
+            SubscribeLocalEvent<EmitterComponent, DestructionAttemptEvent>(OnDestructionAttempted);
+            SubscribeLocalEvent<EmitterComponent, MachineDeconstructedEvent>(OnDeconstructed); // you shouldn't be able to deconstruct locked emitters but out of scope to fix
+            SubscribeLocalEvent<EmitterComponent, LockToggledEvent>(OnLockToggled);
         }
 
         private void OnAnchorStateChanged(EntityUid uid, EmitterComponent component, ref AnchorStateChangedEvent args)
@@ -164,6 +175,8 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
             }
 
+            AlertRadio(uid, component, "unpowered");
+
             component.IsPowered = false;
 
             // Must be set while emitter powered.
@@ -283,6 +296,37 @@ namespace Content.Server.Singularity.EntitySystems
             {
                 component.BoltType = boltType;
             }
+        }
+
+        private void OnDestructionAttempted(EntityUid uid, EmitterComponent component, ref DestructionAttemptEvent args)
+        {
+            // warn engineering their containment engine needs IMMEDIATE repairs
+            // this doesn't change much for natural loosing through emitter destruction given any meteor warning serves the same purpose
+            // can also be used to scare engineering though given it broadcasts its location you need a renamed station beacon to really scare them
+            AlertRadio(uid, component, "destroyed");
+        }
+
+        private void OnDeconstructed(EntityUid uid, EmitterComponent component, ref MachineDeconstructedEvent args)
+        {
+            // right now you don't even need to unlock the emitter to deconstruct it. that's almost certainly a bug but even without it it probably still needs an alert
+            AlertRadio(uid, component, "deconstructed");
+        }
+
+        private void AlertRadio(EntityUid uid, EmitterComponent component, string type)
+        {
+            if (!component.AlertRadio || !component.IsOn || !component.IsPowered) return; // APEs do not need to scream over engineering radio, and an emitter that is off is probably not going to be alerting radios
+
+            var message = Loc.GetString("emitter-" + type + "-broadcast",
+            ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString(uid)))
+            );
+            _radio.SendRadioMessage(uid, message, component.RadioChannel, uid);
+        }
+
+        private void OnLockToggled(EntityUid uid, EmitterComponent component, ref LockToggledEvent args)
+        {
+            if (args.Locked) return;
+
+            AlertRadio(uid, component, "unlocked");
         }
     }
 }
