@@ -140,7 +140,7 @@ namespace Content.Server.Body.Systems
             _random.Shuffle(list);
 
             TryComp<BloodstreamComponent>(solutionEntityUid.Value, out var bloodstream);
-            TryComp<MobStateComponent>(solutionEntityUid.Value, out var state);
+            bool isDead = _mobStateSystem.IsDead(solutionEntityUid.Value);
 
             int reagents = 0;
             foreach (var (reagent, quantity) in list)
@@ -189,13 +189,8 @@ namespace Content.Server.Body.Systems
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
                     // still remove reagents
-                    if (state != null
-                        && !proto.WorksOnTheDead
-                        && _mobStateSystem.IsDead(solutionEntityUid.Value, state))
-                    {
+                    if (isDead && !proto.WorksOnTheDead)
                         continue;
-                    }
-
 
                     var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
                     var args = new EntityEffectReagentArgs(actualEntity, EntityManager, ent, solution, mostToRemove, proto, null, scale);
