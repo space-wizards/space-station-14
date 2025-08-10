@@ -2,7 +2,7 @@
   id: CentcomFormalGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitCentcomFormal
-    back: ClothingBackpackSatchelHolding
+    back: ClothingBackpackSatchelHoldingCentcomFormalFilled
     shoes: ClothingShoesBootsCombatFilled
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesCombat
@@ -11,8 +11,6 @@
     belt: WeaponRevolverMateba
     pocket1: MindShieldImplanter
     pocket2: DeathRattleImplanterCentcomm
-  inhand:
-  - BriefcaseCentcomFormal
 
 - type: startingGear
   id: CentcomInspectorGear
