@@ -1,4 +1,4 @@
-﻿# Modifications ported by Ronstation from Starlight, Starlight changes licensed as MIT.
+﻿# Modifications ported by Ronstation from Starlight, Starlight changes licensed under Starlight license.
 - type: entity
   id: TegCenter
   name: thermo-electric generator
