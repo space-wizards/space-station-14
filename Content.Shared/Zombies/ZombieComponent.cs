@@ -114,7 +114,7 @@ public sealed partial class ZombieComponent : Component
             { "Slash", -0.5 }, // Starlight-edit
             { "Piercing", -0.6 }, // Starlight-edit
             { "Heat", -0.02 },
-            { "Shock", -0.05 }
+            { "Shock", -0.05 } // Starlight-edit
         }
     };
 
