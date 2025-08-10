@@ -11,7 +11,6 @@ using Content.Shared.Construction;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
@@ -41,7 +40,6 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly GunSystem _gun = default!;
         [Dependency] private readonly RadioSystem _radio = default!;
         [Dependency] private readonly NavMapSystem _navMap = default!;
-        [Dependency] private readonly LockSystem _lock = default!;
 
         public override void Initialize()
         {
