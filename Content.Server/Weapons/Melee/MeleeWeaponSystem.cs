@@ -2,11 +2,13 @@ using Content.Server.Chat.Systems;
 using Content.Server.Movement.Systems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Doors.Components;
 using Content.Shared.Effects;
 using Content.Shared.Speech.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using System.Linq;
 using System.Numerics;
@@ -17,8 +19,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly LagCompensationSystem _lag = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -50,7 +54,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         ICommonSession? session)
     {
         // Originally the client didn't predict damage effects so you'd intuit some level of how far
-        // in the future you'd need to predict, but then there was a lot of complaining like "why would you add artifical delay" as if ping is a choice.
+        // in the future you'd need to predict, but then there was a lot of complaining like "why would you add artificial delay" as if ping is a choice.
         // Now damage effects are predicted but for wide attacks it differs significantly from client and server so your game could be lying to you on hits.
         // This isn't fair in the slightest because it makes ping a huge advantage and this would be a hidden system.
         // Now the client tells us what they hit and we validate if it's plausible.
@@ -71,16 +75,53 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     protected override bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
     {
+        // Unobstructed check
         EntityCoordinates targetCoordinates;
         Angle targetLocalAngle;
 
         if (session is { } pSession)
         {
             (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
-            return Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false);
+            if (Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false))
+                return true;
+        }
+        else
+        {
+            if (Interaction.InRangeUnobstructed(user, target, range))
+                return true;
         }
 
-        return Interaction.InRangeUnobstructed(user, target, range);
+        // Fallback for entities on the same tile as a porous blocker
+        var userXform = Transform(user);
+        var targetXform = Transform(target);
+
+        // Ensure both are on the same map
+        if (userXform.MapID != targetXform.MapID || userXform.MapID == MapId.Nullspace)
+            return false;
+
+        // Perform a simple distance check
+        if ((TransformSystem.GetWorldPosition(userXform) - TransformSystem.GetWorldPosition(targetXform)).Length() > range)
+            return false;
+
+        // If within distance, check if the obstruction is a door-like entity on the same tile as the target
+        if (targetXform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var grid))
+            return false;
+
+        var targetTileIndices = _map.CoordinatesToTile(gridUid, grid, targetXform.Coordinates);
+
+        var entitiesOnTile = _lookup.GetLocalEntitiesIntersecting(gridUid, targetTileIndices, 0.0f, flags: LookupFlags.Static);
+
+        foreach (var entity in entitiesOnTile)
+        {
+            if (entity == target || entity == user)
+                continue;
+
+            // If we find a DoorComponent OR a TurnstileComponent on this tile, we assume it was the blocker and allow the hit
+            if (HasComp<DoorComponent>(entity) || HasComp<TurnstileComponent>(entity))
+                return true;
+        }
+
+        return false;
     }
 
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
