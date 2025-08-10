@@ -27,9 +27,12 @@ public abstract partial class SharedWeaponDismantleOnShootSystem : EntitySystem
 
     private void OnExamine(Entity<WeaponDismantleOnShootComponent> ent, ref ExaminedEvent args)
     {
+        if (!args.IsInDetailsRange)
+            return;
+
         if (ent.Comp.DismantleChance <= 0.0f)
             return;
 
-        args.PushMarkup(Loc.GetString("examine-weapon-dismantle-on-shoot", ("chance", MathF.Round(ent.Comp.DismantleChance * 100, 1))));
+        args.PushMarkup(Loc.GetString("examine-weapon-dismantle-on-shoot", ("chance", String.Format("{0:0.#}", ent.Comp.DismantleChance * 100))));
     }
 }
