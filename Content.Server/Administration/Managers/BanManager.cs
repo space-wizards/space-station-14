@@ -240,8 +240,11 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
     public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
-        // TODO: Phase out string-typed roles, take/pass indexed prototypes
-
+        if (!role.StartsWith(JobPrefix) && !role.StartsWith(AntagPrefix))
+        {
+            _sawmill.Error($"Role ban target '{role}' does not have a valid role prefix!");
+            return;
+        }
         if (role.StartsWith(JobPrefix) && !_prototypeManager.HasIndex<JobPrototype>(role.TrimStart(JobPrefix.ToCharArray())))
         {
             _sawmill.Error($"Role ban, {role}, started with the job prefix ({JobPrefix}) but did not have a valid prototype!");
