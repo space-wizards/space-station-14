@@ -1,0 +1,11 @@
+{
+    "_credit": "https://github.com/DeltaV-Station/Delta-v/pull/11/files by DebugOk",
+    "name": "changelog-generator",
+    "version": "1.0.0",
+    "description": "Changelog generator for PRs",
+    "main": "changelog.js",
+    "dependencies": {
+        "axios": "^1.6.0",
+        "js-yaml": "^4.1.0"
+    }
+}
