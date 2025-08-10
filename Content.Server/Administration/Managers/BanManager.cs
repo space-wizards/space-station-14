@@ -243,16 +243,19 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         if (!role.StartsWith(JobPrefix) && !role.StartsWith(AntagPrefix))
         {
             _sawmill.Error($"Role ban target '{role}' does not have a valid role prefix!");
+            //TODO raise event to notify the banning admin about the failure
             return;
         }
         if (role.StartsWith(JobPrefix) && !_prototypeManager.HasIndex<JobPrototype>(role.TrimStart(JobPrefix.ToCharArray())))
         {
             _sawmill.Error($"Role ban, {role}, started with the job prefix ({JobPrefix}) but did not have a valid prototype!");
+            //TODO raise event to notify the banning admin about the failure
             return;
         }
         if (role.StartsWith(AntagPrefix) && !_prototypeManager.HasIndex<AntagPrototype>(role.TrimStart(AntagPrefix.ToCharArray())))
         {
             _sawmill.Error($"Role ban, {role}, started with the antag prefix ({AntagPrefix}) but did not have a valid prototype!");
+            //TODO raise event to notify the banning admin about the failure
             return;
         }
 
