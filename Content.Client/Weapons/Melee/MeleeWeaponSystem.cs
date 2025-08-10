@@ -1,10 +1,7 @@
 using System.Linq;
 using Content.Client.Gameplay;
-using Content.Shared.CombatMode;
+using Content.Shared.Doors.Components;
 using Content.Shared.Effects;
-using Content.Shared.Hands.Components;
-using Content.Shared.Mobs.Components;
-using Content.Shared.StatusEffect;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
@@ -16,6 +13,7 @@ using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
 namespace Content.Client.Weapons.Melee;
@@ -31,6 +29,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -158,7 +157,42 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var targetCoordinates = xform.Coordinates;
         var targetLocalAngle = xform.LocalRotation;
 
-        return Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false);
+        // Default unobstructed check
+        if (Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false))
+            return true;
+
+        // Fallback for entities on the same tile as a porous blocker
+        var userXform = Transform(user);
+        var targetXform = xform;
+
+        // Ensure both are on the same map
+        if (userXform.MapID != targetXform.MapID || userXform.MapID == MapId.Nullspace)
+            return false;
+
+        // Perform a simple distance check
+        if ((TransformSystem.GetWorldPosition(userXform) - TransformSystem.GetWorldPosition(targetXform)).Length() > range)
+            return false;
+
+        // If within distance, check if the obstruction is a door-like entity on the same tile as the target
+        if (targetXform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var grid))
+            return false;
+
+        var targetTileIndices = _map.CoordinatesToTile(gridUid, grid, targetXform.Coordinates);
+
+        // Use an unambiguous overload by providing the enlargement parameter
+        var entitiesOnTile = _lookup.GetLocalEntitiesIntersecting(gridUid, targetTileIndices, 0.0f, flags: LookupFlags.Static);
+
+        foreach (var entity in entitiesOnTile)
+        {
+            if (entity == target || entity == user)
+                continue;
+
+            // If we find a DoorComponent OR a TurnstileComponent on this tile, we assume it was the blocker and allow the hit
+            if (HasComp<DoorComponent>(entity) || HasComp<TurnstileComponent>(entity))
+                return true;
+        }
+
+        return false;
     }
 
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
