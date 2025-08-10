@@ -41,7 +41,7 @@ public sealed partial class TriggerSystem
             (!proximityComponent.DisablingKeysIn.Contains(key) &&
              proximityComponent.Enabled);
 
-        if (proximityComponent.ToggleKeysIn.Contains(key))
+        if (proximityComponent.TogglingKeysIn.Contains(key))
             proximityComponent.Enabled ^= true;
 
         // If you could manually enable/disable collision processing on fixtures then I'd do it here.
