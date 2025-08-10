@@ -2,16 +2,16 @@ using Content.Server.Chat.Systems;
 using Content.Server.Movement.Systems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Doors.Components; // Starlight edit
 using Content.Shared.Effects;
 using Content.Shared.Speech.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components; // Starlight edit
 using Robust.Shared.Player;
 using System.Linq;
 using System.Numerics;
-using Content.Shared.Doors.Components;
-using Robust.Shared.Map.Components;
 
 namespace Content.Server.Weapons.Melee;
 
@@ -19,10 +19,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!; // Starlight edit
     [Dependency] private readonly LagCompensationSystem _lag = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!; // Starlight edit
 
     public override void Initialize()
     {
@@ -82,7 +82,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (session is { } pSession)
         {
             (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
-            if (Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false))
+            if (Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false)) // Starlight edit begin
                 return true;
         }
         else
@@ -118,10 +118,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
             // If we find a DoorComponent OR a TurnstileComponent on this tile, we assume it was the blocker and allow the hit
             if (HasComp<DoorComponent>(entity) || HasComp<TurnstileComponent>(entity))
-                return true;
+                return true; // Starlight edit end
         }
 
-        return false;
+        return false; // Starlight edit
     }
 
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)

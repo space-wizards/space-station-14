@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Client.Gameplay;
-using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Components; // Starlight edit
 using Content.Shared.Effects;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Components;
@@ -13,7 +13,7 @@ using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
+using Robust.Shared.Map.Components; // Starlight edit
 using Robust.Shared.Player;
 
 namespace Content.Client.Weapons.Melee;
@@ -25,11 +25,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!; // Starlight edit
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -157,7 +157,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var targetCoordinates = xform.Coordinates;
         var targetLocalAngle = xform.LocalRotation;
 
-        // Default unobstructed check
+        // Default unobstructed check - Starlight edit begins
         if (Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false))
             return true;
 
@@ -192,7 +192,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 return true;
         }
 
-        return false;
+        return false; //Starlight edit ends
     }
 
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
