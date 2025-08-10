@@ -170,6 +170,7 @@
           - Wrench
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - stealGroup: ChiefEngineerToolBelt
 
 - type: entity
   parent: ClothingBeltStorageBase

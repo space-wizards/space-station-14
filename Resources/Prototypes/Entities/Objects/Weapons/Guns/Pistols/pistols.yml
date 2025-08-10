@@ -210,6 +210,7 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - stealGroup: OfficerHandgun
 
 - type: entity
   name: N1984

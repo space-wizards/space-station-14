@@ -125,6 +125,7 @@
     graph: ShotgunSawn
     node: start
     deconstructionTarget: null
+  - stealgroup: BartenderShotgun #sure the shotgun can be used by zookeepers but it is basically the bartender's gun
 
 - type: entity
   name: double-barreled shotgun
@@ -135,6 +136,7 @@
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
+
 
 - type: entity
   name: Enforcer
@@ -206,6 +208,7 @@
     graph: ShotgunSawn
     node: shotgunsawn
     deconstructionTarget: null
+  - stealgroup: BartenderShotgun
 
 - type: entity
   name: sawn-off shotgun

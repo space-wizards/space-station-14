@@ -77,6 +77,7 @@
   - type: Appearance
   - type: StaticPrice
     price: 1500
+  - stealGroup: DeckardSteal
 
 - type: entity
   name: Inspector
@@ -92,6 +93,7 @@
     capacity: 6
     chambers: [ True, True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null, null ]
+  - stealGroup: OfficerHandgun
 
 - type: entity
   name: Mateba
