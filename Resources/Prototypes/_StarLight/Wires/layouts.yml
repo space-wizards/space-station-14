@@ -1,10 +1,13 @@
 - type: wireLayout
   id: Locker
   wires:
+  - !type:PowerWireAction
+  - !type:PowerWireAction
+    pulseTimeout: 15
   - !type:AccessWireAction
   - !type:AiInteractWireAction
   - !type:LogWireAction
-  dummyWires: 3
+  dummyWires: 1
   
 - type: wireLayout
   id: MedibotControls

@@ -91,6 +91,9 @@ public sealed partial class LockComponent : Component
     
     [DataField]
     public bool PopupMessage = true; // Starlight-edit
+    
+    [DataField]
+    public bool PowerNeeded = false; // Starlight-edit
 }
 
 /// <summary>

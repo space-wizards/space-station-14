@@ -6,6 +6,7 @@
   - type: AccessReader
   - type: Lock
     popupMessage: false # Starlight-edit
+    powerNeeded: true # Starlight-edit
   - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/closet.rsi
@@ -26,8 +27,20 @@
       sprite: Structures/Storage/closet_labels.rsi
       offset: "-0.065,0"
       map: ["enum.PaperLabelVisuals.Layer"]
-    - state: panel_open # Starlight-edit: Maintenance Panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"] # Starlight-edit: Maintenance Panel
+    # Starlight-start: Maintenance panel
+    - state: panel_open
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: electrified_ai
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.HUD"]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.Sparks"]
+    # Starlight-end
   - type: Destructible
     thresholds:
     - trigger:
@@ -60,6 +73,10 @@
   - type: Paintable
     group: Locker
   # Starlight-start: Wires panel
+  - type: Electrified
+    enabled: false
+    requirePower: false
+  - type: PoweredLocker
   - type: StationAiWhitelist
   - type: WiresPanel
   - type: WiresPanelSecurity
