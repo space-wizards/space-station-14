@@ -1,5 +1,5 @@
 - type: entity
-  id: SyndicateLock
+  id: SelectableLock
   abstract: true
   components:
   - type: Lock
@@ -18,7 +18,7 @@
   - type: SelectableComponentAdder
     selections: 1
     entries:
-    - verbName: syndicate-lock-verb-no-lock
+    - verbName: selectable-lock-verb-no-lock
       priority: 0
       componentsToAdd: null
     - verbName: voice-trigger-lock-add-verb
@@ -32,4 +32,4 @@
         inspectInitializedLoc: voice-trigger-lock-on-examine
       - type: ActiveListener
       - type: VoiceTriggerLock
-    verbCategoryName: syndicate-lock-verb-category-name
+    verbCategoryName: selectable-lock-verb-category-name
