@@ -202,7 +202,7 @@
           - PotatoBattery
 
 - type: entity
-  parent: BaseItemRecharger
+  parent: [ BaseItemRecharger, BaseWallmount ]
   id: WallWeaponCapacitorRecharger
   name: wall recharger
   description: A compact wall-mounted recharger. It can only recharge electronic devices and has no space for power cells.
@@ -215,7 +215,8 @@
     - map: ["enum.PowerChargerVisualLayers.Light"]
       state: "light-off"
       shader: "unshaded"
-  - type: WallMount
+  - type: Charger
+    chargeRate: 25
   - type: ItemSlots
     slots:
       charger_slot:

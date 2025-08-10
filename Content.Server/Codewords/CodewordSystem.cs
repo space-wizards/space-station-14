@@ -56,7 +56,7 @@ public sealed class CodewordSystem : EntitySystem
         var factionProto = _prototypeManager.Index<CodewordFactionPrototype>(faction.Id);
 
         var codewords = GenerateCodewords(factionProto.Generator);
-        var codewordsContainer = EntityManager.Spawn(protoName:null, MapCoordinates.Nullspace);
+        var codewordsContainer = Spawn(prototype: null, MapCoordinates.Nullspace);
         EnsureComp<CodewordComponent>(codewordsContainer)
             .Codewords = codewords;
         manager.Codewords[faction] = codewordsContainer;
