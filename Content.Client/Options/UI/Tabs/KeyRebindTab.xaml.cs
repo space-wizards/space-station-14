@@ -12,7 +12,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Options.UI.Tabs
 {
@@ -29,79 +28,13 @@ namespace Content.Client.Options.UI.Tabs
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        private BindButton? _currentlyRebinding;
+        private (BoundKeyFunction Function, IKeyBinding? Binding) _currentlyRebinding;
+        private bool _isFirstHeader = true;
 
         private readonly Dictionary<BoundKeyFunction, KeyControl> _keyControls =
             new();
 
         private readonly List<Action> _deferCommands = new();
-
-        private void HandleToggleUSQWERTYCheckbox(BaseButton.ButtonToggledEventArgs args)
-        {
-            _cfg.SetCVar(CVars.DisplayUSQWERTYHotkeys, args.Pressed);
-            _cfg.SaveToFile();
-        }
-
-        private void InitToggleWalk()
-        {
-            if (_cfg.GetCVar(CCVars.ToggleWalk))
-            {
-                ToggleFunctions.Add(EngineKeyFunctions.Walk);
-            }
-            else
-            {
-                ToggleFunctions.Remove(EngineKeyFunctions.Walk);
-            }
-        }
-
-        private void HandleToggleWalk(BaseButton.ButtonToggledEventArgs args)
-        {
-            _cfg.SetCVar(CCVars.ToggleWalk, args.Pressed);
-            _cfg.SaveToFile();
-            InitToggleWalk();
-
-            if (!_keyControls.TryGetValue(EngineKeyFunctions.Walk, out var keyControl))
-            {
-                return;
-            }
-
-            var bindingType = args.Pressed ? KeyBindingType.Toggle : KeyBindingType.State;
-            for (var i = 0; i <= 1; i++)
-            {
-                var binding = (i == 0 ? keyControl.BindButton1 : keyControl.BindButton2).Binding;
-                if (binding == null)
-                {
-                    continue;
-                }
-
-                var registration = new KeyBindingRegistration
-                {
-                    Function = EngineKeyFunctions.Walk,
-                    BaseKey = binding.BaseKey,
-                    Mod1 = binding.Mod1,
-                    Mod2 = binding.Mod2,
-                    Mod3 = binding.Mod3,
-                    Priority = binding.Priority,
-                    Type = bindingType,
-                    CanFocus = binding.CanFocus,
-                    CanRepeat = binding.CanRepeat,
-                };
-
-                _deferCommands.Add(() =>
-                {
-                    _inputManager.RemoveBinding(binding);
-                    _inputManager.RegisterBinding(registration);
-                });
-            }
-
-            _deferCommands.Add(_inputManager.SaveToUserData);
-        }
-
-        private void HandleStaticStorageUI(BaseButton.ButtonToggledEventArgs args)
-        {
-            _cfg.SetCVar(CCVars.StaticStorageUI, args.Pressed);
-            _cfg.SaveToFile();
-        }
 
         public KeyRebindTab()
         {
@@ -117,39 +50,7 @@ namespace Content.Client.Options.UI.Tabs
                 });
             };
 
-            var first = true;
-
-            void AddHeader(string headerContents)
-            {
-                if (!first)
-                {
-                    KeybindsContainer.AddChild(new Control { MinSize = new Vector2(0, 8) });
-                }
-
-                first = false;
-                KeybindsContainer.AddChild(new Label
-                {
-                    Text = Loc.GetString(headerContents),
-                    FontColorOverride = StyleNano.NanoGold,
-                    StyleClasses = { StyleNano.StyleClassLabelKeyText }
-                });
-            }
-
-            void AddButton(BoundKeyFunction function)
-            {
-                var control = new KeyControl(this, function);
-                KeybindsContainer.AddChild(control);
-                _keyControls.Add(function, control);
-            }
-
-            void AddCheckBox(string checkBoxName, bool currentState, Action<BaseButton.ButtonToggledEventArgs>? callBackOnClick)
-            {
-                CheckBox newCheckBox = new CheckBox() { Text = Loc.GetString(checkBoxName) };
-                newCheckBox.Pressed = currentState;
-                newCheckBox.OnToggled += callBackOnClick;
-
-                KeybindsContainer.AddChild(newCheckBox);
-            }
+            #region Fill key functions list
 
             AddHeader("ui-options-header-general");
             AddCheckBox("ui-options-hotkey-keymap", _cfg.GetCVar(CVars.DisplayUSQWERTYHotkeys), HandleToggleUSQWERTYCheckbox);
@@ -314,36 +215,145 @@ namespace Content.Client.Options.UI.Tabs
 
             foreach (var control in _keyControls.Values)
             {
-                UpdateKeyControl(control);
+                control.UpdateData(_inputManager);
             }
+            #endregion
         }
 
-        private void UpdateKeyControl(KeyControl control)
+        private void HandleToggleUSQWERTYCheckbox(BaseButton.ButtonToggledEventArgs args)
         {
-            var activeBinds = _inputManager.GetKeyBindings(control.Function);
+            _cfg.SetCVar(CVars.DisplayUSQWERTYHotkeys, args.Pressed);
+            _cfg.SaveToFile();
+        }
 
-            IKeyBinding? bind1 = null;
-            IKeyBinding? bind2 = null;
-
-            if (activeBinds.Count > 0)
+        private void InitToggleWalk()
+        {
+            if (_cfg.GetCVar(CCVars.ToggleWalk))
             {
-                bind1 = activeBinds[0];
+                ToggleFunctions.Add(EngineKeyFunctions.Walk);
+            }
+            else
+            {
+                ToggleFunctions.Remove(EngineKeyFunctions.Walk);
+            }
+        }
 
-                if (activeBinds.Count > 1)
-                {
-                    bind2 = activeBinds[1];
-                }
+        private void HandleToggleWalk(BaseButton.ButtonToggledEventArgs args)
+        {
+            _cfg.SetCVar(CCVars.ToggleWalk, args.Pressed);
+            _cfg.SaveToFile();
+            InitToggleWalk();
+
+            if (!_keyControls.TryGetValue(EngineKeyFunctions.Walk, out var keyControl))
+            {
+                return;
             }
 
-            control.BindButton1.Binding = bind1;
-            control.BindButton1.UpdateText();
+            var bindingType = args.Pressed ? KeyBindingType.Toggle : KeyBindingType.State;
+            for (var i = 0; i <= 1; i++)
+            {
+                var binding = i == 0
+                    ? keyControl.Bind1
+                    : keyControl.Bind2;
+                if (binding == null)
+                {
+                    continue;
+                }
 
-            control.BindButton2.Binding = bind2;
-            control.BindButton2.UpdateText();
+                var registration = new KeyBindingRegistration
+                {
+                    Function = EngineKeyFunctions.Walk,
+                    BaseKey = binding.BaseKey,
+                    Mod1 = binding.Mod1,
+                    Mod2 = binding.Mod2,
+                    Mod3 = binding.Mod3,
+                    Priority = binding.Priority,
+                    Type = bindingType,
+                    CanFocus = binding.CanFocus,
+                    CanRepeat = binding.CanRepeat,
+                };
 
-            control.BindButton2.Button.Disabled = activeBinds.Count == 0;
-            control.ResetButton.Disabled = !_inputManager.IsKeyFunctionModified(control.Function);
+                _deferCommands.Add(() =>
+                {
+                    _inputManager.RemoveBinding(binding);
+                    _inputManager.RegisterBinding(registration);
+                });
+            }
+
+            _deferCommands.Add(_inputManager.SaveToUserData);
         }
+
+        #region Append list element methods
+
+        private void AddHeader(string headerContents)
+        {
+            if (!_isFirstHeader)
+            {
+                KeybindsContainer.AddChild(new Control { MinSize = new Vector2(0, 8) });
+            }
+
+            _isFirstHeader = false;
+            KeybindsContainer.AddChild(new Label
+            {
+                Text = Loc.GetString(headerContents),
+                FontColorOverride = StyleNano.NanoGold,
+                StyleClasses = { StyleNano.StyleClassLabelKeyText }
+            });
+        }
+
+        private void AddButton(BoundKeyFunction function)
+        {
+            var control = new KeyControl
+            {
+                Function = function,
+                OnBind = RebindButtonPressed,
+                OnReset = () =>
+                {
+                    _deferCommands.Add(() =>
+                    {
+                        _inputManager.ResetBindingsFor(function);
+                        _inputManager.SaveToUserData();
+                    });
+                },
+                ButtonOnKeyBindingDown = (args, binding) =>
+                {
+                    if (args.Function == EngineKeyFunctions.UIRightClick)
+                    {
+                        _deferCommands.Add(() =>
+                        {
+                            _inputManager.RemoveBinding(binding);
+                            _inputManager.SaveToUserData();
+                        });
+
+                        args.Handle();
+                    }
+                }
+            };
+
+            // todo: aggregate them all in one subscription, and unsub
+            _inputManager.OnInputModeChanged += control.UpdateBindText;
+
+            KeybindsContainer.AddChild(control);
+            _keyControls.Add(function, control);
+        }
+
+        private void AddCheckBox(
+            string checkBoxName,
+            bool currentState,
+            Action<BaseButton.ButtonToggledEventArgs>? callBackOnClick
+        )
+        {
+            var newCheckBox = new CheckBox
+            {
+                Text = Loc.GetString(checkBoxName)
+            };
+            newCheckBox.Pressed = currentState;
+            newCheckBox.OnToggled += callBackOnClick;
+
+            KeybindsContainer.AddChild(newCheckBox);
+        }
+
+        #endregion
 
         protected override void EnteredTree()
         {
@@ -380,17 +390,17 @@ namespace Content.Client.Options.UI.Tabs
                 return;
             }
 
-            if (removal && _currentlyRebinding?.KeyControl == keyControl)
+            if (removal && _currentlyRebinding.Function == bind.Function)
             {
                 // Don't do update if the removal was from initiating a rebind.
                 return;
             }
 
-            UpdateKeyControl(keyControl);
+            keyControl.UpdateData(_inputManager);
 
-            if (_currentlyRebinding == keyControl.BindButton1 || _currentlyRebinding == keyControl.BindButton2)
+            if (_currentlyRebinding.Function == keyControl.Function)
             {
-                _currentlyRebinding = null;
+                _currentlyRebinding = default;
             }
         }
 
@@ -398,7 +408,7 @@ namespace Content.Client.Options.UI.Tabs
         {
             DebugTools.Assert(IsInsideTree);
 
-            if (_currentlyRebinding == null)
+            if (_currentlyRebinding == default)
             {
                 return;
             }
@@ -442,11 +452,20 @@ namespace Content.Client.Options.UI.Tabs
                 mods[i] = Keyboard.Key.LSystem;
             }
 
-            var function = _currentlyRebinding.KeyControl.Function;
+            var function = _currentlyRebinding.Function;
             var bindType = KeyBindingType.State;
             if (ToggleFunctions.Contains(function))
             {
                 bindType = KeyBindingType.Toggle;
+            }
+
+            var bindingPriority = _currentlyRebinding.Binding?.Priority;
+            if (bindingPriority is null)
+            {
+                if (_keyControls.TryGetValue(function, out var control) && control.Bind1 != null)
+                {
+                    bindingPriority = 1;
+                }
             }
 
             var registration = new KeyBindingRegistration
@@ -456,7 +475,7 @@ namespace Content.Client.Options.UI.Tabs
                 Mod1 = mods[0],
                 Mod2 = mods[1],
                 Mod3 = mods[2],
-                Priority = _currentlyRebinding.Binding?.Priority ?? 0,
+                Priority = bindingPriority ?? 0,
                 Type = bindType,
                 CanFocus = key == Keyboard.Key.MouseLeft
                            || key == Keyboard.Key.MouseRight
@@ -469,23 +488,21 @@ namespace Content.Client.Options.UI.Tabs
             _inputManager.SaveToUserData();
         }
 
-        private void RebindButtonPressed(BindButton button)
+        private void RebindButtonPressed(BindButton button, BoundKeyFunction function, IKeyBinding? binding)
         {
-            if (_currentlyRebinding != null)
-            {
+            if (_currentlyRebinding != default)
                 return;
-            }
 
-            _currentlyRebinding = button;
-            _currentlyRebinding.Button.Text = Loc.GetString("ui-options-key-prompt");
+            _currentlyRebinding = (function, binding);
+            button.Text = Loc.GetString("ui-options-key-prompt");
 
-            if (button.Binding != null)
+            if (binding != null)
             {
                 _deferCommands.Add(() =>
                 {
                     // Have to do defer this or else there will be an exception in InputManager.
                     // Because this IS fired from an input event.
-                    _inputManager.RemoveBinding(button.Binding);
+                    _inputManager.RemoveBinding(binding);
                 });
             }
         }
@@ -505,115 +522,6 @@ namespace Content.Client.Options.UI.Tabs
             }
 
             _deferCommands.Clear();
-        }
-
-        private sealed class KeyControl : Control
-        {
-            public readonly BoundKeyFunction Function;
-            public readonly BindButton BindButton1;
-            public readonly BindButton BindButton2;
-            public readonly Button ResetButton;
-
-            public KeyControl(KeyRebindTab parent, BoundKeyFunction function)
-            {
-                Function = function;
-                var name = new Label
-                {
-                    Text = Loc.GetString(
-                        $"ui-options-function-{CaseConversion.PascalToKebab(function.FunctionName)}"),
-                    HorizontalExpand = true,
-                    HorizontalAlignment = HAlignment.Left
-                };
-
-                BindButton1 = new BindButton(parent, this, StyleBase.ButtonOpenRight);
-                BindButton2 = new BindButton(parent, this, StyleBase.ButtonOpenLeft);
-                ResetButton = new Button { Text = Loc.GetString("ui-options-bind-reset"), StyleClasses = { StyleBase.ButtonCaution } };
-
-                var hBox = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Horizontal,
-                    Children =
-                    {
-                        new Control {MinSize = new Vector2(5, 0)},
-                        name,
-                        BindButton1,
-                        BindButton2,
-                        new Control {MinSize = new Vector2(10, 0)},
-                        ResetButton
-                    }
-                };
-
-                ResetButton.OnPressed += args =>
-                {
-                    parent._deferCommands.Add(() =>
-                    {
-                        parent._inputManager.ResetBindingsFor(function);
-                        parent._inputManager.SaveToUserData();
-                    });
-                };
-
-                AddChild(hBox);
-            }
-        }
-
-        private sealed class BindButton : Control
-        {
-            private readonly KeyRebindTab _tab;
-            public readonly KeyControl KeyControl;
-            public readonly Button Button;
-            public IKeyBinding? Binding;
-
-            public BindButton(KeyRebindTab tab, KeyControl keyControl, string styleClass)
-            {
-                _tab = tab;
-                KeyControl = keyControl;
-                Button = new Button { StyleClasses = { styleClass } };
-                UpdateText();
-                AddChild(Button);
-
-                Button.OnPressed += args =>
-                {
-                    tab.RebindButtonPressed(this);
-                };
-
-                Button.OnKeyBindDown += ButtonOnOnKeyBindDown;
-
-                MinSize = new Vector2(200, 0);
-            }
-
-            protected override void EnteredTree()
-            {
-                base.EnteredTree();
-                _tab._inputManager.OnInputModeChanged += UpdateText;
-            }
-
-            protected override void ExitedTree()
-            {
-                base.ExitedTree();
-                _tab._inputManager.OnInputModeChanged -= UpdateText;
-            }
-
-            private void ButtonOnOnKeyBindDown(GUIBoundKeyEventArgs args)
-            {
-                if (args.Function == EngineKeyFunctions.UIRightClick)
-                {
-                    if (Binding != null)
-                    {
-                        _tab._deferCommands.Add(() =>
-                        {
-                            _tab._inputManager.RemoveBinding(Binding);
-                            _tab._inputManager.SaveToUserData();
-                        });
-                    }
-
-                    args.Handle();
-                }
-            }
-
-            public void UpdateText()
-            {
-                Button.Text = Binding?.GetKeyString() ?? Loc.GetString("ui-options-unbound");
-            }
         }
     }
 }
