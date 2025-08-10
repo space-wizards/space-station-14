@@ -666,6 +666,7 @@
   name: Hamlet
   parent: MobHamster
   id: MobHamsterHamletSlippery
+  suffix: Slippery
   description: A grumpy, cute and fluffy hamster.
   components:
   - type: Slippery
