@@ -663,18 +663,15 @@
     - sadness
 
 - type: entity
-  name: Hamlet
   parent: MobHamster
   id: MobHamsterHamletSlippery
   suffix: Slippery
-  description: A grumpy, cute and fluffy hamster.
   components:
   - type: Slippery
   - type: StepTrigger
     requiredTriggeredSpeed: 1
-  - type: TriggerOnSlip
+  - type: TriggerOnStepTrigger
   - type: GibOnTrigger
-    targetUser: false
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Animals/mouse_squeak.ogg"
