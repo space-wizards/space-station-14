@@ -42,9 +42,8 @@
   - type: ItemTogglePointLight
   - type: Appearance
   - type: HandheldLight
-    addprefix: false
     blinkingBehaviourId: blinking
-    radiationehaviourId: radiating
+    radiatingBehaviourId: radiating
   - type: PointLight
     enabled: false
     color: "#358"
@@ -62,7 +61,7 @@
         startValue: 3.0
         endValue: 2.0
         isLooped: true
-        reversWhenFinished: true
+        reverseWhenFinished: true
       - !type:PulseBehaviour
         id: blinking
         interpolate: Nearest

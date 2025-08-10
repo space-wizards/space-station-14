@@ -91,13 +91,3 @@
   id: BlueshieldWinterBoots
   equipment:
     shoes: ClothingShoesBootsWinterBlueshield
-
-# Misc
-- type: loadout
-  id: BlueMedal
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: BlueshieldMedalWorthy
-  storage:
-    back:
-    - Dinkyshield
