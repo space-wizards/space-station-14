@@ -10,6 +10,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/matthew_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/matthew_plushie.rsi
+    layers: 
       - state: icon
       - state: icon-unshaded
         shader: unshaded
@@ -35,6 +36,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/emmie_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/emmie_plushie.rsi
+    layers: 
       - state: icon
       - state: icon-unshaded
         shader: unshaded
@@ -60,6 +62,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/trystan_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/trystan_plushie.rsi
+    layers: 
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -83,6 +86,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/morgana_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/morgana_plushie.rsi
+    layers: 
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -106,6 +110,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/morgana_round_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/morgana_round_plushie.rsi
+    layers: 
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -129,6 +134,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/kiosha_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/kiosha_plushie.rsi
+    layers: 
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -152,6 +158,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/lance_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/lance_plushie.rsi
+    layers: 
       - state: icon
       - state: icon-unshaded
         shader: unshaded
@@ -177,6 +184,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/killer_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/killer_plushie.rsi
+    layers: 
       - state: icon
       - state: icon-unshaded
         shader: unshaded
@@ -202,6 +210,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/amali_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/amali_plushie.rsi
+    layers: 
       - state: icon
   # reason I didn't make a female human base plushie is because they wanted specific sounds. Will make one eventually. Probably.a
   - type: EmitSoundOnUse
@@ -248,6 +257,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/oog_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/oog_plushie.rsi
+    layers: 
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -271,6 +281,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/vanilla_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/vanilla_plushie.rsi
+    layers: 
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -295,6 +306,7 @@
     sprite: _Starlight/Objects/Fun/Plushies/op_plushie.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/op_plushie.rsi
+    layers: 
       - state: icon
   - type: ItemToggle
     onUse: false
@@ -388,6 +400,7 @@
 
 - type: entity
   parent: BaseLizardPlushie
+  id: PlushieMimeLizard 
   name: lizard mime plushie
   description: Wait, where is the sou-- oh.
   components:
@@ -442,6 +455,7 @@
   - type: Sprite
     sprite: _Starlight/Objects/Fun/Plushies/vika_plushie.rsi
     state: icon
+      
 - type: entity
   parent: BasePlushie
   id: AbductorPlushie
@@ -474,6 +488,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Guns/Hits/taser_hit.ogg
+      
 - type: entity
   parent: BasePlushie
   id: AxolotlPlushie
@@ -506,6 +521,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/toysqueak3.ogg
+      
 - type: entity
   parent: BasePlushie
   id: BorbPlushie
@@ -571,6 +587,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/_Starlight/Items/Toys/yippie.ogg
+      
 - type: entity
   parent: BasePlushie
   id: GnomePlushie
@@ -603,6 +620,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/_Starlight/Items/Toys/gnome_murderer.ogg
+      
 - type: entity
   parent: BasePlushie
   id: GoatPlushie
@@ -635,7 +653,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/toysqueak3.ogg
-
+      
 - type: entity
   parent: BasePlushie
   id: IanPlushie
@@ -668,6 +686,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/dog_bark2.ogg
+      
 - type: entity
   parent: BasePlushie
   id: LisaPlushie
@@ -700,6 +719,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/dog_bark2.ogg
+      
 - type: entity
   parent: BasePlushie
   id: KittenPlushie
@@ -732,6 +752,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/cat_hiss.ogg
+      
 - type: entity
   parent: BasePlushie
   id: PigPlushie
@@ -764,6 +785,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/pig_oink.ogg
+      
 - type: entity
   parent: BasePlushie
   id: RenaultPlushie
@@ -796,6 +818,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/fox11.ogg
+      
 - type: entity
   parent: BasePlushie
   id: SnailPlushie
@@ -828,6 +851,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/toysqueak2.ogg
+      
 - type: entity
   parent: BasePlushie
   id: SquishimsCow
@@ -860,6 +884,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/toysqueak2.ogg
+      
 - type: entity
   parent: BasePlushie
   id: SquishimsFrog
@@ -892,6 +917,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/toysqueak2.ogg
+      
 - type: entity
   parent: BasePlushie
   id: SusPlushie
@@ -1172,6 +1198,10 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
+        - type: Advertise
+          pack: PlushiesPercy
+          minimumWait: 120
+          maximumWait: 240
         - type: TextToSpeech
           voice: medic
 
@@ -1218,6 +1248,10 @@
               acts: [ "Destruction" ]
     - type: ComponentToggler
       components:
+        - type: Advertise
+          pack: PlushiesAsh
+          minimumWait: 120
+          maximumWait: 240
         - type: TextToSpeech
           voice: wanderer
 
@@ -1239,6 +1273,10 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
+        - type: Advertise
+          pack: PlushiesGlados
+          minimumWait: 120
+          maximumWait: 240
         - type: TextToSpeech
           voice: circusbaby
 
@@ -1260,6 +1298,10 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
+        - type: Advertise
+          pack: PlushiesWEH
+          minimumWait: 120
+          maximumWait: 240
         - type: TextToSpeech
           voice: circusbaby
 
@@ -1282,6 +1324,10 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
+        - type: Advertise
+          pack: PlushiesRufia
+          minimumWait: 120
+          maximumWait: 240
         - type: TextToSpeech
           voice: himeko
 
@@ -1337,6 +1383,10 @@
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
       components:
+        - type: Advertise
+          pack: PlushiesPoley
+          minimumWait: 120
+          maximumWait: 240
         - type: TextToSpeech
           voice: neon
 
