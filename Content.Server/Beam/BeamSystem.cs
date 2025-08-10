@@ -77,19 +77,22 @@ public sealed class BeamSystem : SharedBeamSystem
         var ent = Spawn(prototype, beamSpawnPos);
         var shape = new EdgeShape(distanceCorrection, new Vector2(0,0));
 
-        if (!TryComp<PhysicsComponent>(ent, out var physics) || !TryComp<BeamComponent>(ent, out var beam))
+        if (!TryComp<BeamComponent>(ent, out var beam))
             return;
 
-        _fixture.TryCreateFixture(
-            ent,
-            shape,
-            "BeamBody",
-            hard: false,
-            collisionMask: (int)CollisionGroup.ItemMask,
-            collisionLayer: (int)CollisionGroup.MobLayer,
-            body: physics);
+        if (TryComp<PhysicsComponent>(ent, out var physics) && physics.CanCollide)
+        {
+            _fixture.TryCreateFixture(
+                    ent,
+                    shape,
+                    "BeamBody",
+                    hard: false,
+                    collisionMask: (int)CollisionGroup.ItemMask,
+                    collisionLayer: (int)CollisionGroup.MobLayer,
+                    body: physics);
 
-        _broadphase.RegenerateContacts((ent, physics));
+            _broadphase.RegenerateContacts((ent, physics));
+        }
 
         var distanceLength = distanceCorrection.Length();
 
