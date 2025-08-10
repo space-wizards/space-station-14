@@ -7,7 +7,8 @@ namespace Content.Server.Trigger.Systems;
 /// <summary>
 ///     Trigger system for setting something on fire.
 /// </summary>
-public sealed class CombustOnTriggerSystem : EntitySystem
+/// <seealso cref="IgniteOnTriggerSystem"/>
+public sealed class FlameStackOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly FlammableSystem _flame = default!;
 
@@ -16,10 +17,10 @@ public sealed class CombustOnTriggerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CombustOnTriggerComponent, TriggerEvent>(OnTrigger);
+        SubscribeLocalEvent<FlameStackOnTriggerComponent, TriggerEvent>(OnTrigger);
     }
 
-    private void OnTrigger(Entity<CombustOnTriggerComponent> ent, ref TriggerEvent args)
+    private void OnTrigger(Entity<FlameStackOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
