@@ -226,6 +226,31 @@
       - MindRoleTraitorReinforcement
 
 - type: entity
+  id: Changeling
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 25
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 3
+      playerRatio: 15
+      briefing:
+        text: changeling-role-greeting
+        color: Red
+        sound: /Audio/Ambience/Antag/changeling_start.ogg
+      components:
+      - type: ChangelingDevour
+      - type: ChangelingIdentity
+      - type: ChangelingTransform
+      - type: ActionGrant
+        actions:
+        - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
+      mindRoles:
+      - MindRoleChangeling
+
+- type: entity
   id: Revolutionary
   parent: BaseGameRule
   components:
@@ -271,7 +296,7 @@
     - WizardSurviveObjective
     - WizardDemonstrateObjective
   - type: LoadMapRule
-    gridPath: /Maps/Shuttles/wizard.yml
+    mapPath: /Maps/Nonstations/wizardsden.yml
   - type: RuleGrids
   - type: AntagSelection
   - type: AntagLoadProfileRule

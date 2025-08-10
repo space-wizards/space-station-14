@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, Spicy Rock Pizza modified from margherita pizza by mkanke, cotton made by mlexf (discord 1143460554963427380), world peazza modified from margherita by MisterImp (GitHub)",
+  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, Spicy Rock Pizza modified from margherita pizza by mkanke, cotton made by mlexf (discord 1143460554963427380), world peazza modified from margherita by MisterImp (GitHub). Inhands ported over from Starlight at https://github.com/ss14Starlight/space-station-14/pull/72 with edits by Orsoniks.",
   "size": {
     "x": 32,
     "y": 32
@@ -18,6 +18,14 @@
     },
     {
       "name": "arnold-slice"
+    },
+    {
+      "name": "arnold-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "arnold-slice-inhand-left",
+      "directions": 4
     },
     {
       "name": "base-1"
@@ -50,10 +58,26 @@
       "name": "cotton-slice"
     },
     {
+      "name": "cotton-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cotton-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "dank"
     },
     {
       "name": "dank-slice"
+    },
+    {
+      "name": "dank-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "dank-slice-inhand-left",
+      "directions": 4
     },
     {
       "name": "donkpocket"
@@ -62,13 +86,37 @@
       "name": "donkpocket-slice"
     },
     {
+      "name": "donkpocket-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "donkpocket-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "meat"
     },
     {
       "name": "meat-slice"
     },
     {
+      "name": "meat-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "meat-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "moldy-slice"
+    },
+    {
+      "name": "moldy-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "moldy-slice-inhand-left",
+      "directions": 4
     },
     {
       "name": "mushroom"
@@ -77,10 +125,26 @@
       "name": "mushroom-slice"
     },
     {
+      "name": "mushroom-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "mushroom-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "pineapple"
     },
     {
       "name": "pineapple-slice"
+    },
+    {
+      "name": "pineapple-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pineapple-slice-inhand-left",
+      "directions": 4
     },
     {
       "name": "box"
@@ -125,16 +189,40 @@
       "name": "margherita-slice"
     },
     {
+      "name": "margherita-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "margherita-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "sassysage"
     },
     {
       "name": "sassysage-slice"
     },
     {
+      "name": "sassysage-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "sassysage-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "vegetable"
     },
     {
       "name": "vegetable-slice"
+    },
+    {
+      "name": "vegetable-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "vegetable-slice-inhand-left",
+      "directions": 4
     },
     {
       "name": "box-inhand-right",
@@ -151,10 +239,26 @@
       "name": "uranium-slice"
     },
     {
+      "name": "uranium-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "uranium-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "worldpeas"
     },
     {
       "name": "worldpeas-slice"
+    },
+    {
+      "name": "worldpeas-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "worldpeas-slice-inhand-left",
+      "directions": 4
     }
   ]
 }
