@@ -103,8 +103,6 @@ public sealed partial class EmitterComponent : Component
 
     [DataField]
     public bool AlertRadio = false; // is this emitter critical to the station to the point a radio channel should be alerted if anything happens to it (i.e. emitters near singularity/tesla containment)
-
-    public string LastLockInteractingPlayer = "Unknown"; // used to transfer info between LockToggleAttemptEvent and LockToggledEvent.
 }
 
 [NetSerializable, Serializable]
