@@ -3,6 +3,8 @@ using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Wires;
+using Content.Server.Electrocution; // Starlight-edit
+using Content.Shared.Electrocution; // Starlight-edit
 
 namespace Content.Server.Access;
 
@@ -75,9 +77,6 @@ public sealed partial class AccessWireAction : ComponentWireAction<AccessReaderC
     {
         if (!EntityManager.TryGetComponent<ElectrifiedComponent>(wire.Owner, out var electrified) || !_electrify)
             return true;
-
-        // always set this to true
-        SetElectrified(wire.Owner, true, electrified);
 
         var electrifiedAttempt = _electrocution.TryDoElectrifiedAct(wire.Owner, user);
 
