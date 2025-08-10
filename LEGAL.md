@@ -26,6 +26,7 @@ Content under these subdirectories originate from their respective forks and may
 | `_Ronstation` | Ronstation | https://github.com/RonRonstation/ronstation/ | AGPL 3.0 |
 | `Ronstation` | Ronstation(Legacy) | https://github.com/RonRonstation/ronstation/ | MIT* |
 | `_Impstation` | Impstation | https://github.com/impstation/imp-station-14 | AGPL 3.0 |
+| `_CorvaxNext` | Corvax NEXT | https://github.com/space-syndicate/space-station-14-next | AGPL 3.0 |
 | `EstacaoPirata` | Estacao Pirata | https://github.com/estacao-pirata/estacao-pirata | AGPL 3.0 |
 
 Additional repos that we have ported features from without subdirectories are listed below.
