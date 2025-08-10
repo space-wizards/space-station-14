@@ -833,6 +833,8 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(performer, performer.Comp);
         ent.Comp.AttachedEntity = null;
         DirtyField(ent, ent.Comp, nameof(ActionComponent.AttachedEntity));
+        ent.Comp.Toggled = false;
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.Toggled));
         ActionRemoved((performer, performer.Comp), ent);
 
         if (ent.Comp.Temporary)
