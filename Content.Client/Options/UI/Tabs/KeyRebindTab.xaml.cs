@@ -330,9 +330,6 @@ namespace Content.Client.Options.UI.Tabs
                 }
             };
 
-            // todo: aggregate them all in one subscription, and unsub
-            _inputManager.OnInputModeChanged += control.UpdateBindText;
-
             KeybindsContainer.AddChild(control);
             _keyControls.Add(function, control);
         }
@@ -362,6 +359,7 @@ namespace Content.Client.Options.UI.Tabs
             _inputManager.FirstChanceOnKeyEvent += InputManagerOnFirstChanceOnKeyEvent;
             _inputManager.OnKeyBindingAdded += OnKeyBindAdded;
             _inputManager.OnKeyBindingRemoved += OnKeyBindRemoved;
+            _inputManager.OnInputModeChanged += UpdateKeyControlBindText;
         }
 
         protected override void ExitedTree()
@@ -371,6 +369,7 @@ namespace Content.Client.Options.UI.Tabs
             _inputManager.FirstChanceOnKeyEvent -= InputManagerOnFirstChanceOnKeyEvent;
             _inputManager.OnKeyBindingAdded -= OnKeyBindAdded;
             _inputManager.OnKeyBindingRemoved -= OnKeyBindRemoved;
+            _inputManager.OnInputModeChanged -= UpdateKeyControlBindText;
         }
 
         private void OnKeyBindRemoved(IKeyBinding obj)
@@ -522,6 +521,14 @@ namespace Content.Client.Options.UI.Tabs
             }
 
             _deferCommands.Clear();
+        }
+
+        private void UpdateKeyControlBindText()
+        {
+            foreach (var keyControl in _keyControls.Values)
+            {
+                keyControl.UpdateBindText();
+            }
         }
     }
 }
