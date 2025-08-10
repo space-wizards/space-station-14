@@ -17,6 +17,7 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Playtime;
 using Content.Client.Radiation.Overlays;
 using Content.Client.Replay;
+using Content.Client.Roles;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
 using Content.Client.Stylesheets;
@@ -66,7 +67,8 @@ namespace Content.Client.Entry
         [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
         [Dependency] private readonly GhostKickManager _ghostKick = default!;
         [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
-        [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
+        [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+        [Dependency] private readonly JobRequirementsManager _jobRequirments = default!;
         [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
         [Dependency] private readonly ContentReplayPlaybackManager _playbackMan = default!;
         [Dependency] private readonly IResourceManager _resourceManager = default!;
@@ -136,7 +138,8 @@ namespace Content.Client.Entry
             _viewportManager.Initialize();
             _ghostKick.Initialize();
             _extendedDisconnectInformation.Initialize();
-            _jobRequirements.Initialize();
+            _playTimeTracking.Initialize();
+            _jobRequirments.Initialize();
             _playbackMan.Initialize();
             _clientsidePlaytimeManager.Initialize();
 
