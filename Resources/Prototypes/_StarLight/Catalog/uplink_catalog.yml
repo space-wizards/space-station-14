@@ -162,9 +162,9 @@
     - UplinkAmmo
   conditions:
     - !type:StoreWhitelistCondition
-    whitelist:
-      tags:
-        - NukeOpsUplink
+      whitelist:
+        tags:
+          - NukeOpsUplink
 
 - type: listing
   id: UplinkShotgunBreachingMagazine
