@@ -72,7 +72,7 @@
   id: ThiefObjectiveGroupItem
   weights:
     DeckardStealObjective: 10                            #command
-    ChiefEngineerToolbeltStealObjective: 10
+    ChiefEngineerToolbeltStealObjective: 100
     ClothingHeadsetAltMedicalStealObjective: 1
     ForensicScannerStealObjective: 1                    #sec
     FlippoEngravedLighterStealObjective: 0.5
