@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Logs;
-using Content.Server.Body.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
@@ -71,7 +70,6 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly NameModifierSystem _nameMod = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly GhostSpriteStateSystem _ghostState = default!;
 
         private EntityQuery<GhostComponent> _ghostQuery;
