@@ -1,7 +1,6 @@
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Destructible;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Shuttles.Systems;
@@ -34,6 +33,5 @@ public sealed class SpaceGarbageSystem : EntitySystem
             return;
 
         _destructible.DestroyEntity(uid);
-
     }
 }
