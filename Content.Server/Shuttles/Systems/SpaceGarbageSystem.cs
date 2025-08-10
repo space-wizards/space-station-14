@@ -34,6 +34,6 @@ public sealed class SpaceGarbageSystem : EntitySystem
             return;
 
         _destructible.DestroyEntity(uid);
-        
+
     }
 }
