@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: Added Advanced Circular Saw as a Medical Doctor specific uplink item.
-    type: Add
-  - message: Removed Syndicate Surgery Duffel Bag from uplink.
-    type: Remove
-  id: 8328
-  time: '2025-04-24T03:01:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35915
-- author: AgentSmithRadio, MadeOfHeartAndStone
-  changes:
-  - message: Added cotton grilled cheese sandwich entity and recipe.
-    type: Add
-  id: 8329
-  time: '2025-04-24T03:24:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36135
-- author: SG6732
-  changes:
-  - message: Added meat patties. Get the charcoal and let's start grillin.
-    type: Add
-  id: 8330
-  time: '2025-04-24T03:45:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34896
 - author: DrMelon, EmoGarbage404
   changes:
   - message: Added turnstiles, gates able to limit the flow of foot traffic. The station's
@@ -3900,3 +3877,31 @@
   id: 8840
   time: '2025-08-08T19:27:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39481
+- author: Flareguy
+  changes:
+  - message: Updated moth displacement maps to fix missing pixels, among other various
+      issues.
+    type: Fix
+  id: 8841
+  time: '2025-08-09T21:52:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39174
+- author: Princess-Cheeseballs
+  changes:
+  - message: Mobs such as borgs, dragons, etc can no longer crawl.
+    type: Tweak
+  id: 8842
+  time: '2025-08-10T17:49:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39084
+- author: beck-thompson
+  changes:
+  - message: Various syndicate items can now be "locked" with your voice to hide their
+      true identity. The items are, all chameleon clothing, voice masks, no slips,
+      agent IDs, cane swords, and e daggers.
+    type: Add
+  - message: e dagger now has a slightly longer activation cool down (1s -> 1.5s).
+    type: Tweak
+  - message: Voice triggered items now properly display the trigger text when examined.
+    type: Fix
+  id: 8843
+  time: '2025-08-10T18:10:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39310

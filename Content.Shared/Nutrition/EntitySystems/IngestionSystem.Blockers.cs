@@ -7,6 +7,7 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Storage;
+using Content.Shared.Weapons.Ranged.Systems;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
@@ -117,7 +118,10 @@ public sealed partial class IngestionSystem
 
     private void OnOpenableEdible(Entity<OpenableComponent> ent, ref EdibleEvent args)
     {
-        if (_openable.IsClosed(ent, args.User, ent.Comp))
+        if (args.Cancelled)
+            return;
+
+        if (_openable.IsClosed(ent, args.User, ent.Comp, predicted: true))
             args.Cancelled = true;
     }
 
