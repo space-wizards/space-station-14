@@ -214,8 +214,8 @@
   description: View the Xenoborgs Control Console
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/actions_ai.rsi, state: manifest }
-    iconOn: Interface/Actions/actions_ai.rsi/manifest.png
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-basic-module }
+    iconOn: Interface/Actions/actions_borg.rsi/xenoborg-basic-module.png
     keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
   - type: InstantAction
@@ -228,8 +228,8 @@
   description: View the Xenoborgs Camera Monitor
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/actions_ai.rsi, state: camera_light }
-    iconOn: Interface/Actions/actions_ai.rsi/camera_light.png
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye-module }
+    iconOn: Interface/Actions/actions_borg.rsi/xenoborg-eye-module.png
     keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
   - type: InstantAction
