@@ -22,8 +22,7 @@ public sealed partial class SuitSensorComponent : Component
     /// <summary>
     ///     If true user can't change suit sensor mode
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool ControlsLocked = false;
 
     /// <summary>
@@ -35,8 +34,7 @@ public sealed partial class SuitSensorComponent : Component
     /// <summary>
     ///     Current sensor mode. Can be switched by user verbs.
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public SuitSensorMode Mode = SuitSensorMode.SensorOff;
 
     /// <summary>
@@ -60,8 +58,7 @@ public sealed partial class SuitSensorComponent : Component
     /// <summary>
     ///     Current user that wears suit sensor. Null if nobody wearing it.
     /// </summary>
-    [ViewVariables]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? User = null;
 
     /// <summary>
@@ -74,8 +71,7 @@ public sealed partial class SuitSensorComponent : Component
     /// <summary>
     ///     The station this suit sensor belongs to. If it's null the suit didn't spawn on a station and the sensor doesn't work.
     /// </summary>
-    [DataField("station")]
-    [AutoNetworkedField]
+    [DataField("station"), AutoNetworkedField]
     public EntityUid? StationId = null;
 
     /// <summary>

@@ -14,15 +14,19 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Station;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Medical.SuitSensors;
 
 public abstract class SharedSuitSensorSystem : EntitySystem
 {
+    [Dependency] private readonly SharedStationSystem _stationSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -33,11 +37,15 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
+    private EntityQuery<SuitSensorComponent> _sensorQuery;
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
         SubscribeLocalEvent<SuitSensorComponent, ClothingGotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<SuitSensorComponent, ClothingGotUnequippedEvent>(OnUnequipped);
@@ -46,6 +54,46 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         SubscribeLocalEvent<SuitSensorComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
         SubscribeLocalEvent<SuitSensorComponent, EntGotRemovedFromContainerMessage>(OnRemove);
         SubscribeLocalEvent<SuitSensorComponent, SuitSensorChangeDoAfterEvent>(OnSuitSensorDoAfter);
+
+        _sensorQuery = GetEntityQuery<SuitSensorComponent>();
+    }
+
+    /// <summary>
+    /// Checks whether the sensor is assigned to a station or not
+    /// and tries to assign an unassigned sensor to a station if it's currently on a grid.
+    /// </summary>
+    /// <returns>True if the sensor is assigned to a station or assigning it was successful. False otherwise.</returns>
+    public bool CheckSensorAssignedStation(Entity<SuitSensorComponent> sensor)
+    {
+        if (!sensor.Comp.StationId.HasValue && Transform(sensor.Owner).GridUid == null)
+            return false;
+
+        sensor.Comp.StationId = _stationSystem.GetOwningStation(sensor.Owner);
+        Dirty(sensor);
+        return sensor.Comp.StationId.HasValue;
+    }
+
+    private void OnMapInit(Entity<SuitSensorComponent> ent, ref MapInitEvent args)
+    {
+        // Fallback
+        ent.Comp.StationId ??= _stationSystem.GetOwningStation(ent.Owner);
+
+        // generate random mode
+        if (ent.Comp.RandomMode)
+        {
+            //make the sensor mode favor higher levels, except coords.
+            var modesDist = new[]
+            {
+                SuitSensorMode.SensorOff,
+                SuitSensorMode.SensorBinary, SuitSensorMode.SensorBinary,
+                SuitSensorMode.SensorVitals, SuitSensorMode.SensorVitals, SuitSensorMode.SensorVitals,
+                SuitSensorMode.SensorCords, SuitSensorMode.SensorCords
+            };
+            ent.Comp.Mode = _random.Pick(modesDist);
+        }
+
+        ent.Comp.NextUpdate = _timing.CurTime;
+        Dirty(ent);
     }
 
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent ev)
@@ -53,47 +101,45 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         // If the player spawns in arrivals then the grid underneath them may not be appropriate.
         // in which case we'll just use the station spawn code told us they are attached to and set all of their
         // sensors.
-        var sensorQuery = GetEntityQuery<SuitSensorComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        RecursiveSensor(ev.Mob, ev.Station, sensorQuery, xformQuery);
+        RecursiveSensor(ev.Mob, ev.Station);
     }
 
-    private void RecursiveSensor(EntityUid uid, EntityUid stationUid, EntityQuery<SuitSensorComponent> sensorQuery, EntityQuery<TransformComponent> xformQuery)
+    private void RecursiveSensor(EntityUid uid, EntityUid stationUid)
     {
-        var xform = xformQuery.GetComponent(uid);
+        var xform = Transform(uid);
         var enumerator = xform.ChildEnumerator;
 
         while (enumerator.MoveNext(out var child))
         {
-            if (sensorQuery.TryGetComponent(child, out var sensor))
+            if (_sensorQuery.TryComp(child, out var sensor))
             {
                 sensor.StationId = stationUid;
                 Dirty(child, sensor);
             }
 
-            RecursiveSensor(child, stationUid, sensorQuery, xformQuery);
+            RecursiveSensor(child, stationUid);
         }
     }
 
-    private void OnEquipped(EntityUid uid, SuitSensorComponent component, ref ClothingGotEquippedEvent args)
+    private void OnEquipped(Entity<SuitSensorComponent> ent, ref ClothingGotEquippedEvent args)
     {
-        component.User = args.Wearer;
-        Dirty(uid, component);
+        ent.Comp.User = args.Wearer;
+        Dirty(ent);
     }
 
-    private void OnUnequipped(EntityUid uid, SuitSensorComponent component, ref ClothingGotUnequippedEvent args)
+    private void OnUnequipped(Entity<SuitSensorComponent> ent, ref ClothingGotUnequippedEvent args)
     {
-        component.User = null;
-        Dirty(uid, component);
+        ent.Comp.User = null;
+        Dirty(ent);
     }
 
-    private void OnExamine(EntityUid uid, SuitSensorComponent component, ExaminedEvent args)
+    private void OnExamine(Entity<SuitSensorComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
         string msg;
-        switch (component.Mode)
+        switch (ent.Comp.Mode)
         {
             case SuitSensorMode.SensorOff:
                 msg = "suit-sensor-examine-off";
@@ -114,10 +160,10 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         args.PushMarkup(Loc.GetString(msg));
     }
 
-    private void OnVerb(EntityUid uid, SuitSensorComponent component, GetVerbsEvent<Verb> args)
+    private void OnVerb(Entity<SuitSensorComponent> ent, ref GetVerbsEvent<Verb> args)
     {
         // check if user can change sensor
-        if (component.ControlsLocked)
+        if (ent.Comp.ControlsLocked)
             return;
 
         // standard interaction checks
@@ -128,49 +174,49 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             return;
 
         // check if target is incapacitated (cuffed, dead, etc)
-        if (component.User != null && args.User != component.User && _actionBlocker.CanInteract(component.User.Value, null))
+        if (ent.Comp.User != null && args.User != ent.Comp.User && _actionBlocker.CanInteract(ent.Comp.User.Value, null))
             return;
 
         args.Verbs.UnionWith(new[]
         {
-            CreateVerb(uid, component, args.User, SuitSensorMode.SensorOff),
-            CreateVerb(uid, component, args.User, SuitSensorMode.SensorBinary),
-            CreateVerb(uid, component, args.User, SuitSensorMode.SensorVitals),
-            CreateVerb(uid, component, args.User, SuitSensorMode.SensorCords)
+            CreateVerb(ent, args.User, SuitSensorMode.SensorOff),
+            CreateVerb(ent, args.User, SuitSensorMode.SensorBinary),
+            CreateVerb(ent, args.User, SuitSensorMode.SensorVitals),
+            CreateVerb(ent, args.User, SuitSensorMode.SensorCords)
         });
     }
 
-    private void OnInsert(EntityUid uid, SuitSensorComponent component, EntGotInsertedIntoContainerMessage args)
+    private void OnInsert(Entity<SuitSensorComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID != component.ActivationContainer)
+        if (args.Container.ID != ent.Comp.ActivationContainer)
             return;
 
-        component.User = args.Container.Owner;
-        Dirty(uid, component);
+        ent.Comp.User = args.Container.Owner;
+        Dirty(ent);
     }
 
-    private void OnRemove(EntityUid uid, SuitSensorComponent component, EntGotRemovedFromContainerMessage args)
+    private void OnRemove(Entity<SuitSensorComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != component.ActivationContainer)
+        if (args.Container.ID != ent.Comp.ActivationContainer)
             return;
 
-        component.User = null;
-        Dirty(uid, component);
+        ent.Comp.User = null;
+        Dirty(ent);
     }
 
-    private Verb CreateVerb(EntityUid uid, SuitSensorComponent component, EntityUid userUid, SuitSensorMode mode)
+    private Verb CreateVerb(Entity<SuitSensorComponent> ent, EntityUid userUid, SuitSensorMode mode)
     {
         return new Verb()
         {
             Text = GetModeName(mode),
-            Disabled = component.Mode == mode,
+            Disabled = ent.Comp.Mode == mode,
             Priority = -(int)mode, // sort them in descending order
             Category = VerbCategory.SetSensor,
-            Act = () => TrySetSensor((uid, component), mode, userUid)
+            Act = () => TrySetSensor(ent.AsNullable(), mode, userUid)
         };
     }
 
-    private string GetModeName(SuitSensorMode mode)
+    public string GetModeName(SuitSensorMode mode)
     {
         string name;
         switch (mode)
@@ -195,24 +241,23 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to set <see cref="SuitSensorComponent"/> mode of the entity to the selected in params
+    /// Attempts to set <see cref="SuitSensorComponent"/> mode of the entity to the selected in params.
+    /// Works instantly if the user is the player wearing the sensors and will start a DoAfter otherwise.
     /// </summary>
-    /// <param name="sensors">Entity and it's component that should be changed</param>
+    /// <param name="sensors">Entity and its component that should be changed.</param>
     /// <param name="mode">Selected mode</param>
     /// <param name="userUid">userUid, when not equal to the <see cref="SuitSensorComponent.User"/>, creates doafter</param>
-    public void TrySetSensor(Entity<SuitSensorComponent> sensors, SuitSensorMode mode, EntityUid userUid)
+    public bool TrySetSensor(Entity<SuitSensorComponent?> sensors, SuitSensorMode mode, EntityUid userUid)
     {
-        var comp = sensors.Comp;
+        if (!Resolve(sensors, ref sensors.Comp, false))
+            return false;
 
-        if (!Resolve(sensors, ref comp))
-            return;
-
-        if (comp.User == null || userUid == comp.User)
+        if (sensors.Comp.User == null || userUid == sensors.Comp.User)
             SetSensor(sensors, mode, userUid);
         else
         {
             var doAfterEvent = new SuitSensorChangeDoAfterEvent(mode);
-            var doAfterArgs = new DoAfterArgs(EntityManager, userUid, comp.SensorsTime, doAfterEvent, sensors)
+            var doAfterArgs = new DoAfterArgs(EntityManager, userUid, sensors.Comp.SensorsTime, doAfterEvent, sensors)
             {
                 BreakOnMove = true,
                 BreakOnDamage = true
@@ -220,6 +265,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
 
             _doAfterSystem.TryStartDoAfter(doAfterArgs);
         }
+        return true;
     }
 
     private void OnSuitSensorDoAfter(Entity<SuitSensorComponent> sensors, ref SuitSensorChangeDoAfterEvent args)
@@ -227,7 +273,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
-        SetSensor(sensors, args.Mode, args.User);
+        SetSensor(sensors.AsNullable(), args.Mode, args.User);
     }
 
     /// <summary>
@@ -237,11 +283,12 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     /// <param name="sensors">Entity and it's component that should be changed</param>
     /// <param name="mode">Selected mode</param>
     /// <param name="userUid">uid, required for the popup</param>
-    public void SetSensor(Entity<SuitSensorComponent> sensors, SuitSensorMode mode, EntityUid? userUid = null)
+    public void SetSensor(Entity<SuitSensorComponent?> sensors, SuitSensorMode mode, EntityUid? userUid = null)
     {
-        var comp = sensors.Comp;
+        if (!Resolve(sensors, ref sensors.Comp, false))
+            return;
 
-        comp.Mode = mode;
+        sensors.Comp.Mode = mode;
         Dirty(sensors);
 
         if (userUid != null)
@@ -252,7 +299,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Set all suit sensors on the equipment someone is wearing to the specified mode.
+    /// Set all suit sensors on the equipment someone is wearing to the specified mode.
     /// </summary>
     public void SetAllSensors(EntityUid target, SuitSensorMode mode, SlotFlags slots = SlotFlags.All)
     {
@@ -270,10 +317,13 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     /// </summary>
     /// <param name="uid">Entity to get status</param>
     /// <returns>Full <see cref="SuitSensorStatus"/> of the chosen uid</returns>
-    public SuitSensorStatus? GetSensorState(EntityUid uid, SuitSensorComponent? sensor = null, TransformComponent? transform = null)
+    public SuitSensorStatus? GetSensorState(Entity<SuitSensorComponent?, TransformComponent?> ent)
     {
-        if (!Resolve(uid, ref sensor, ref transform))
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2, false))
             return null;
+
+        var sensor = ent.Comp1;
+        var transform = ent.Comp2;
 
         // check if sensor is enabled and worn by user
         if (sensor.Mode == SuitSensorMode.SensorOff || sensor.User == null || !HasComp<MobStateComponent>(sensor.User) || transform.GridUid == null)
@@ -313,7 +363,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             totalDamageThreshold = critThreshold.Value.Int();
 
         // finally, form suit sensor status
-        var status = new SuitSensorStatus(GetNetEntity(sensor.User.Value), GetNetEntity(uid), userName, userJob, userJobIcon, userJobDepartments);
+        var status = new SuitSensorStatus(GetNetEntity(sensor.User.Value), GetNetEntity(ent.Owner), userName, userJob, userJobIcon, userJobDepartments);
         switch (sensor.Mode)
         {
             case SuitSensorMode.SensorBinary:
@@ -355,7 +405,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Serialize create a device network package from the suit sensors status.
+    /// Create a device network package from the suit sensors status.
     /// </summary>
     public NetworkPayload SuitSensorToPacket(SuitSensorStatus status)
     {
@@ -382,7 +432,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Try to create the suit sensors status from the device network message
+    /// Try to create the suit sensors status from the device network message.
     /// </summary>
     public SuitSensorStatus? PacketToSuitSensor(NetworkPayload payload)
     {
