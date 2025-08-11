@@ -91,10 +91,9 @@ public sealed partial class ModifyKnockdown : EntityEffect
     /// <inheritdoc />
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString(
-            "reagent-effect-guidebook-status-effect",
+            "reagent-effect-guidebook-knockdown",
             ("chance", Probability),
             ("type", Type),
-            ("time", Time),
-            ("key", "Knockdown")
+            ("time", Time.TotalSeconds)
         );
 }
