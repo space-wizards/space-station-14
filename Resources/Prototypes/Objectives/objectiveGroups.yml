@@ -83,12 +83,12 @@
     CargoShuttleCircuitboardStealObjective: 1
     ClothingEyesHudBeerStealObjective: 1                #srv
     BibleStealObjective: 1
+    ClothingShoesClownStealObjective: 0.25 # if only I could group the clown objectives together :o)
+    ClothingMaskClownStealObjective: 0.25
+    ClownRecorderStealObjective: 0.25
+    BikeHornStealObjective: 0.25
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
-    ClothingShoesClownStealObjective: 1 # if only I could group the clown objectives together :o)
-    ClothingMaskClownStealObjective: 1
-    ClownRecorderStealObjective: 1
-    BikeHornStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure

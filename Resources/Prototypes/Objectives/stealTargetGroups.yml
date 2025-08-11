@@ -158,7 +158,7 @@
 
 # Thief single item
 
-- type: stealTargetGroup
+- type: stealTargetGroup                                      #Security subgroup
   id: ForensicScanner
   name: steal-target-groups-forensic-scanner
   sprite:
@@ -187,6 +187,13 @@
     state: icon
 
 - type: stealTargetGroup
+  id: WantedListCartridge
+  name: steal-target-groups-wanted-list-cartridge
+  sprite:
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-sec
+
+- type: stealTargetGroup                                      #Medical subgroup
   id: ClothingOuterHardsuitVoidParamed
   name: steal-target-groups-clothing-outer-hardsuit-void-paramed
   sprite:
@@ -214,7 +221,7 @@
     sprite: Objects/Misc/module.rsi
     state: science
 
-- type: stealTargetGroup
+- type: stealTargetGroup                                      #Engineering subgroup
   id: FireAxe
   name: steal-target-groups-fire-axe
   sprite:
@@ -228,7 +235,7 @@
     sprite: Objects/Devices/flatpack.rsi
     state: ame-part
 
-- type: stealTargetGroup
+- type: stealTargetGroup                                      #Cargo subgroup
   id: SalvageExpeditionsComputerCircuitboard
   name: steal-target-groups-salvage-expeditions-computer-circuitboard
   sprite:
@@ -242,7 +249,7 @@
     sprite: Objects/Misc/module.rsi
     state: cpuboard
 
-- type: stealTargetGroup
+- type: stealTargetGroup                                      #Service subgroup
   id: ClothingEyesHudBeer
   name: steal-target-groups-clothing-eyes-hud-beer
   sprite:
@@ -256,28 +263,7 @@
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon
 
-- type: stealTargetGroup
-  id: ClothingNeckGoldmedal
-  name: steal-target-groups-clothing-neck-goldmedal
-  sprite:
-    sprite: Clothing/Neck/Medals/gold.rsi
-    state: icon
-
-- type: stealTargetGroup
-  id: ClothingNeckClownmedal
-  name: steal-target-groups-clothing-neck-clownmedal
-  sprite:
-    sprite: Clothing/Neck/Medals/clownmedal.rsi
-    state: icon
-
-- type: stealTargetGroup
-  id: WantedListCartridge
-  name: steal-target-groups-wanted-list-cartridge
-  sprite:
-    sprite: Objects/Devices/cartridge.rsi
-    state: cart-sec
-
-- type: stealTargetGroup
+- type: stealTargetGroup #Clown subsubgroup :o)
   id: ClothingShoesClown
   name: steal-target-groups-clothing-shoes-clown
   sprite:
@@ -303,6 +289,20 @@
   name: steal-target-groups-bike-horn
   sprite:
     sprite: Objects/Fun/bikehorn.rsi
+    state: icon
+
+- type: stealTargetGroup                                      #Other subgroup
+  id: ClothingNeckGoldmedal
+  name: steal-target-groups-clothing-neck-goldmedal
+  sprite:
+    sprite: Clothing/Neck/Medals/gold.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: ClothingNeckClownmedal
+  name: steal-target-groups-clothing-neck-clownmedal
+  sprite:
+    sprite: Clothing/Neck/Medals/clownmedal.rsi
     state: icon
 
 #Thief structures

@@ -292,28 +292,6 @@
   - type: Objective
     difficulty: 0.4
 
-- type: entity                                      #Other subgroup
-  parent: BaseThiefStealObjective
-  id: ClothingNeckGoldmedalStealObjective
-  components:
-  - type: NotJobRequirement
-    job: HeadOfPersonnel
-  - type: StealCondition
-    stealGroup: ClothingNeckGoldmedal
-  - type: Objective
-    difficulty: 1
-
-- type: entity                                      #Clown group :o)
-  parent: BaseThiefStealObjective
-  id: ClothingNeckClownmedalStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Captain
-  - type: StealCondition
-    stealGroup: ClothingNeckClownmedal
-  - type: Objective
-    difficulty: 1
-
 - type: entity
   parent: BaseThiefStealObjective
   id: ClothingShoesClownStealObjective
@@ -357,6 +335,28 @@
     stealGroup: BikeHorn
   - type: Objective
     difficulty: 0.3 # Clown usually has a spare mapped
+
+- type: entity                                      #Other subgroup
+  parent: BaseThiefStealObjective
+  id: ClothingNeckGoldmedalStealObjective
+  components:
+  - type: NotJobRequirement
+    job: HeadOfPersonnel
+  - type: StealCondition
+    stealGroup: ClothingNeckGoldmedal
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ClothingNeckClownmedalStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Captain
+  - type: StealCondition
+    stealGroup: ClothingNeckClownmedal
+  - type: Objective
+    difficulty: 1
 
 # Structures
 
