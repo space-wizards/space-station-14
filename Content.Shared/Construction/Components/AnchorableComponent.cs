@@ -2,6 +2,7 @@ using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Construction.Components
 {
@@ -24,12 +25,6 @@ namespace Content.Shared.Construction.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public float Delay = 1f;
-
-        /// <summary>
-        /// If true, the entity cannot be unanchored using a tool.
-        /// </summary>
-        [DataField]
-        public bool IsUnanchorable = false;
     }
 
     [Flags]

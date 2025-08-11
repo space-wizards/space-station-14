@@ -170,8 +170,6 @@
   - AiHolder
   suffix: Empty
   components:
-  - type: Anchorable
-    isUnanchorable: true
   - type: WarpPoint
     blacklist:
       tags:

@@ -74,9 +74,6 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!Resolve(uid, ref anchorable, ref transform))
             return;
 
-        if (anchorable.IsUnanchorable)
-            return;
-
         if (!Resolve(usingUid, ref usingTool))
             return;
 
@@ -105,7 +102,7 @@ public sealed partial class AnchorableSystem : EntitySystem
     private void OnAnchoredExamine(EntityUid uid, AnchorableComponent component, ExaminedEvent args)
     {
         var isAnchored = Comp<TransformComponent>(uid).Anchored;
-        var messageId = isAnchored ? (component.IsUnanchorable ? "examinable-permanently-anchored" : "examinable-anchored") : "examinable-unanchored";
+        var messageId = isAnchored ? "examinable-anchored" : "examinable-unanchored";
         args.PushMarkup(Loc.GetString(messageId, ("target", uid)));
     }
 
