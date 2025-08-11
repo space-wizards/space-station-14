@@ -5,7 +5,7 @@
   minPlayers: 35
   maxPlayers: 80
   stations:
-    StarlightBagel:
+    Bagel:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
