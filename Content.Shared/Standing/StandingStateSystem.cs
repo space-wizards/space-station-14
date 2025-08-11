@@ -72,6 +72,7 @@ public sealed class StandingStateSystem : EntitySystem
         if (entity.Comp.Standing)
             return;
 
+        // Currently only Climbing also edits fixtures layers like this so this is fine for now.
         ChangeLayers(entity);
     }
 
@@ -178,6 +179,7 @@ public sealed class StandingStateSystem : EntitySystem
         return true;
     }
 
+    // TODO: This should be moved to a PhysicsModifierSystem which raises events so multiple systems can modify fixtures at once
     private void ChangeLayers(Entity<StandingStateComponent, FixturesComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp2, false))
@@ -193,6 +195,7 @@ public sealed class StandingStateSystem : EntitySystem
         }
     }
 
+    // TODO: This should be moved to a PhysicsModifierSystem which raises events so multiple systems can modify fixtures at once
     private void RevertLayers(Entity<StandingStateComponent, FixturesComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp2, false))
