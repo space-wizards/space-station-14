@@ -36,6 +36,7 @@ public abstract class AlertsSystem : EntitySystem
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<AlertAutoRemoveComponent>();
+        var curTime = _timing.CurTime;
         while (query.MoveNext(out var uid, out var autoComp))
         {
             var dirtyComp = false;
@@ -50,7 +51,7 @@ public abstract class AlertsSystem : EntitySystem
             {
                 alertComp.Alerts.TryGetValue(alertKey, out var alertState);
 
-                if (alertState.Cooldown is null || alertState.Cooldown.Value.Item2 >= _timing.CurTime)
+                if (alertState.Cooldown is null || alertState.Cooldown.Value.Item2 >= curTime)
                     continue;
                 removeList.Add(alertKey);
                 alertComp.Alerts.Remove(alertKey);
@@ -98,7 +99,7 @@ public abstract class AlertsSystem : EntitySystem
         if (TryGet(alertType, out var alert))
             return entity.Comp.Alerts.ContainsKey(alert.AlertKey);
 
-        Log.Debug("Unknown alert type {0}", alertType);
+        Log.Debug($"Unknown alert type {alertType}");
         return false;
     }
 
@@ -146,9 +147,7 @@ public abstract class AlertsSystem : EntitySystem
 
         if (!TryGet(alertType, out var alert))
         {
-            Log.Error("Unable to show alert {0}, please ensure this alertType has" +
-                      " a corresponding YML alert prototype",
-                alertType);
+            Log.Error($"Unable to show alert {alertType}, please ensure this alertType has a corresponding YML alert prototype");
             return;
         }
 
@@ -271,7 +270,7 @@ public abstract class AlertsSystem : EntitySystem
         }
         else
         {
-            Log.Error("Unable to clear alert, unknown alertType {0}", alertType);
+            Log.Error($"Unable to clear alert, unknown alertType {alertType}");
         }
     }
 
@@ -330,11 +329,7 @@ public abstract class AlertsSystem : EntitySystem
         foreach (var alert in _prototypeManager.EnumeratePrototypes<AlertPrototype>())
         {
             if (!dict.TryAdd(alert.ID, alert))
-            {
-                Log.Error("Found alert with duplicate alertType {0} - all alerts must have" +
-                          " a unique alertType, this one will be skipped",
-                    alert.ID);
-            }
+                Log.Error($"Found alert with duplicate alertType {alert.ID} - all alerts must have a unique alertType, this one will be skipped");
         }
 
         _typeToAlert = dict.ToFrozenDictionary();
@@ -357,16 +352,13 @@ public abstract class AlertsSystem : EntitySystem
 
         if (!IsShowingAlert(player.Value, msg.Type))
         {
-            Log.Debug("User {0} attempted to" +
-                                   " click alert {1} which is not currently showing for them",
-                Comp<MetaDataComponent>(player.Value).EntityName,
-                msg.Type);
+            Log.Debug($"User {ToPrettyString(player.Value)} attempted to click alert {msg.Type} which is not currently showing for them");
             return;
         }
 
         if (!TryGet(msg.Type, out var alert))
         {
-            Log.Warning("Unrecognized encoded alert {0}", msg.Type);
+            Log.Warning($"Unrecognized encoded alert {msg.Type}");
             return;
         }
 
