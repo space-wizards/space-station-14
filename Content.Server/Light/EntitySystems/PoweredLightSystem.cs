@@ -3,7 +3,6 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Emp;
 using Content.Server.Ghost;
-using Content.Server.Light.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
@@ -12,6 +11,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
+using Content.Shared.Light.EntitySystems;
 using Content.Shared.Light.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -28,7 +28,7 @@ namespace Content.Server.Light.EntitySystems
     /// <summary>
     ///     System for the PoweredLightComponents
     /// </summary>
-    public sealed class PoweredLightSystem : EntitySystem
+    public sealed class PoweredLightSystem : SharedPoweredLightSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
