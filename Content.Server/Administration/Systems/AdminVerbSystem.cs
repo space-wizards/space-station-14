@@ -11,15 +11,10 @@ using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Configurable;
-using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
-using Content.Shared.Inventory;
-using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Laws.Components;
-using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Shared.Console;
@@ -27,10 +22,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
-using Robust.Shared.Utility;
-using System.Linq;
 using Robust.Shared.Network;
-using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Administration.Systems;
 
@@ -49,15 +41,12 @@ public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
     [Dependency] private readonly DisposalTubeSystem _disposalTubes = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly PrayerSystem _prayerSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
-    [Dependency] private readonly ToolshedManager _toolshed = default!;
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StationSystem _stations = default!;
     [Dependency] private readonly StationSpawningSystem _spawning = default!;
-    [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly AdminFrozenSystem _freeze = default!;
     [Dependency] private readonly SiliconLawSystem _siliconLawSystem = default!;
 
@@ -69,13 +58,6 @@ public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
-    }
-
-    public override void GetVerbs(GetVerbsEvent<Verb> args)
-    {
-        base.GetVerbs(args);
-
-        AddDebugVerbs(args);
     }
 
     // This is a solution to deal with the fact theres no shared way to check command perms.

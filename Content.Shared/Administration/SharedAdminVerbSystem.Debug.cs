@@ -18,7 +18,7 @@ public abstract partial class SharedAdminVerbSystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
 
-    private void AddDebugVerbs(GetVerbsEvent<Verb> args)
+    protected virtual void AddDebugVerbs(GetVerbsEvent<Verb> args)
     {
         if (!TryComp(args.User, out ActorComponent? actor))
             return;
@@ -182,19 +182,19 @@ public abstract partial class SharedAdminVerbSystem
         }
     }
 
-    public virtual void DebugRejuvenateVerb(EntityUid target)
+    protected virtual void DebugRejuvenateVerb(EntityUid target)
     {
     }
 
-    public virtual void DebugSetOutfitVerb(ICommonSession player, EntityUid target)
+    protected virtual void DebugSetOutfitVerb(ICommonSession player, EntityUid target)
     {
     }
 
-    public virtual void DebugMakeGhostRoleVerb(ICommonSession player, EntityUid target)
+    protected virtual void DebugMakeGhostRoleVerb(ICommonSession player, EntityUid target)
     {
     }
 
-    public virtual void DebugAddReagentVerb(ICommonSession player, EntityUid target)
+    protected virtual void DebugAddReagentVerb(ICommonSession player, EntityUid target)
     {
     }
 }

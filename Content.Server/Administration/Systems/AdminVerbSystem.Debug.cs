@@ -12,8 +12,10 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    private void AddDebugVerbs(GetVerbsEvent<Verb> args)
+    protected override void AddDebugVerbs(GetVerbsEvent<Verb> args)
     {
+        base.AddDebugVerbs(args);
+
         if (!TryComp(args.User, out ActorComponent? actor))
             return;
 
@@ -34,22 +36,22 @@ public sealed partial class AdminVerbSystem
         }
     }
 
-    public override void DebugRejuvenateVerb(EntityUid target)
+    protected override void DebugRejuvenateVerb(EntityUid target)
     {
         _rejuvenate.PerformRejuvenate(target);
     }
 
-    public override void DebugSetOutfitVerb(ICommonSession player, EntityUid target)
+    protected override void DebugSetOutfitVerb(ICommonSession player, EntityUid target)
     {
         _euiManager.OpenEui(new SetOutfitEui(GetNetEntity(target)), player);
     }
 
-    public override void DebugMakeGhostRoleVerb(ICommonSession player, EntityUid target)
+    protected override void DebugMakeGhostRoleVerb(ICommonSession player, EntityUid target)
     {
         _ghostRoleSystem.OpenMakeGhostRoleEui(player, target);
     }
 
-    public override void DebugAddReagentVerb(ICommonSession player, EntityUid target)
+    protected override void DebugAddReagentVerb(ICommonSession player, EntityUid target)
     {
         OpenEditSolutionsEui(player, target);
     }
