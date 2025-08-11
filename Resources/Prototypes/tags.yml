@@ -160,6 +160,9 @@
   id: BoxCardboard
 
 - type: Tag
+  id: BoxCutter
+
+- type: Tag
   id: BoxHug
 
 - type: Tag

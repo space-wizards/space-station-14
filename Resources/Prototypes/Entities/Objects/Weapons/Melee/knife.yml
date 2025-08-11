@@ -344,6 +344,7 @@
   - type: Tag
     tags:
     - Knife
+    - BoxCutter
   - type: Sprite
     sprite: Objects/Weapons/Melee/box_cutter.rsi
     state: icon
