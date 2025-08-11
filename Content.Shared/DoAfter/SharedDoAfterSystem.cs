@@ -206,13 +206,10 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         if (args.BreakOnMove)
         {
-            doAfter.UserInStorage = HasComp<InsideEntityStorageComponent>(args.User);
             doAfter.UserPosition = Transform(args.User).Coordinates;
 
-            if (args.Target != null)
+            if (args.Target != null && args.BreakOnMove)
             {
-                doAfter.TargetInStorage = HasComp<InsideEntityStorageComponent>(args.Target.Value);
-
                 var targetPosition = Transform(args.Target.Value).Coordinates;
                 doAfter.UserPosition.TryDistance(EntityManager, targetPosition, out doAfter.TargetDistance);
             }
