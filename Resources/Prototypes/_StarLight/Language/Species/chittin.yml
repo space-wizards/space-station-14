@@ -8,7 +8,7 @@
       Speak: chat-sign-language-message-wrap
       Whisper: chat-sign-language-whisper-wrap
     speechVerbOverrides:
-    - rubs their antennae together
+    - chat-speech-verb-chittin-1
   obfuscation:
     !type:ReplacementObfuscation
     replacement:
