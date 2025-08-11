@@ -3,9 +3,7 @@ using Content.Client.Actions;
 using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
-using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
-using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Examine;
 using Robust.Client.GameObjects;
@@ -28,7 +26,6 @@ public sealed class ActionButton : Control, IEntityControl
     private IPlayerManager _player;
     private SpriteSystem? _spriteSys;
     private ActionUIController? _controller;
-    private SharedChargesSystem _sharedChargesSys;
     private bool _beingHovered;
     private bool _depressed;
     private bool _toggled;
@@ -72,7 +69,6 @@ public sealed class ActionButton : Control, IEntityControl
         _entities = entities;
         _player = IoCManager.Resolve<IPlayerManager>();
         _spriteSys = spriteSys;
-        _sharedChargesSys = _entities.System<SharedChargesSystem>();
         _controller = controller;
 
         MouseFilter = MouseFilterMode.Pass;
