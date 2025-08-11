@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Southbridge
-  changes:
-  - message: Colorful Light Crates have been added and can be ordered.
-    type: Add
-  id: 8333
-  time: '2025-04-24T17:41:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36750
 - author: ScarKy0, Jbsundown
   changes:
   - message: Letters and Packages can now be cut open with sharp objects. Be wary,
@@ -3902,3 +3895,16 @@
   id: 8845
   time: '2025-08-11T11:00:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39505
+- author: Samuka
+  changes:
+  - message: The Robotics Console now correctly displays the brain installed information
+      if the borg has a empty MMI
+    type: Fix
+  - message: The Robotics Console now shows the borg physical integrity
+    type: Tweak
+  - message: Changed the colors for the battery display in the robotics console so
+      it easier to read the percentage
+    type: Tweak
+  id: 8846
+  time: '2025-08-11T18:57:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38023
