@@ -47,6 +47,8 @@ namespace Content.Client.UserInterface.Controls
             }
         }
 
+        public string SlotDisplayName = "";
+
         public bool Highlight { get => HighlightRect.Visible; set => HighlightRect.Visible = value;}
 
         public bool Blocked { get => BlockedRect.Visible; set => BlockedRect.Visible = value;}
