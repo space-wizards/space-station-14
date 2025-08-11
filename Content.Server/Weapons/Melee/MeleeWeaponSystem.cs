@@ -21,7 +21,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly LagCompensationSystem _lag = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -78,7 +77,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     protected override bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
     {
-        // Default unobstructed check with lag compensation
+        // Server-side unobstructed check with lag compensation
         if (session is { } pSession)
         {
             var (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
@@ -87,26 +86,33 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
         else
         {
-            if (Interaction.InRangeUnobstructed(user, target, range))
+            // Fallback for when no session is provided
+            var targetXformSimple = Transform(target);
+            if (Interaction.InRangeUnobstructed(user, target, targetXformSimple.Coordinates, targetXformSimple.LocalRotation, range, overlapCheck: false))
                 return true;
         }
 
-        // --- Systemic Fallback for Same-Tile Obstructions ---
+        // Fallback for same-tile obstructions
         var userXform = Transform(user);
         var targetXform = Transform(target);
 
         var userPos = TransformSystem.GetWorldPosition(userXform);
         var targetPos = TransformSystem.GetWorldPosition(targetXform);
-        var distance = (targetPos - userPos).Length();
+        var delta = targetPos - userPos;
+        var distance = delta.Length();
 
         if (distance > range)
             return false;
+
+        // If distance is near-zero, it's a point-blank attack. The path is definitionally "unobstructed"
+        if (distance < 0.001f)
+            return true;
 
         var mapId = userXform.MapID;
         if (mapId == MapId.Nullspace)
             return false;
 
-        var dir = (targetPos - userPos).Normalized();
+        var dir = delta.Normalized();
         const int attackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
 
         var ray = new CollisionRay(userPos, dir, attackMask);
@@ -127,7 +133,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var targetTile = _map.CoordinatesToTile(gridUid, grid, targetXform.Coordinates);
         var hitTile = _map.CoordinatesToTile(gridUid, grid, hitXform.Coordinates);
 
-        // If the first obstruction is on the same tile as the target, allow the attack.
+        // If the first obstruction is on the same tile as the target, allow the attack
         return targetTile == hitTile;
     }
 
@@ -161,7 +167,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        if (comp.Battlecry != null)//If the battlecry is set to empty, doesn't speak
+        if (comp.Battlecry != null) //If the battlecry is set to empty, doesn't speak
         {
             _chat.TrySendInGameICMessage(args.User, comp.Battlecry, InGameICChatType.Speak, true, true, checkRadioPrefix: false);  //Speech that isn't sent to chat or adminlogs
         }

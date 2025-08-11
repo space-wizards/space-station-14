@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Client.Gameplay;
-using Content.Shared.Doors.Components;
 using Content.Shared.Effects;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Components;
@@ -16,13 +15,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
-using Content.Shared.Damage;
-using Content.Shared.Doors.Components;
-using Content.Shared.Mobs.Components;
-using Robust.Client.GameObjects;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
-using System.Linq;
 using Content.Shared.Physics;
 using Robust.Shared.Physics;
 
@@ -34,13 +26,10 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -164,25 +153,31 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     protected override bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
     {
+        // Client-side unobstructed check.
         var targetXform = Transform(target);
         if (Interaction.InRangeUnobstructed(user, target, targetXform.Coordinates, targetXform.LocalRotation, range, overlapCheck: false))
             return true;
 
-        // --- Systemic Fallback for Same-Tile Obstructions ---
+        // Fallback for same-tile obstructions
         var userXform = Transform(user);
 
         var userPos = TransformSystem.GetWorldPosition(userXform);
         var targetPos = TransformSystem.GetWorldPosition(targetXform);
-        var distance = (targetPos - userPos).Length();
+        var delta = targetPos - userPos;
+        var distance = delta.Length();
 
         if (distance > range)
             return false;
+
+        // If distance is near-zero, it's a point-blank attack. The path is definitionally "unobstructed"
+        if (distance < 0.001f)
+            return true;
 
         var mapId = userXform.MapID;
         if (mapId == MapId.Nullspace)
             return false;
 
-        var dir = (targetPos - userPos).Normalized();
+        var dir = delta.Normalized();
         const int attackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
 
         var ray = new CollisionRay(userPos, dir, attackMask);
@@ -203,7 +198,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var targetTile = _map.CoordinatesToTile(gridUid, grid, targetXform.Coordinates);
         var hitTile = _map.CoordinatesToTile(gridUid, grid, hitXform.Coordinates);
 
-        // If the first obstruction is on the same tile as the target, allow the attack.
+        // If the first obstruction is on the same tile as the target, allow the attack
         return targetTile == hitTile;
     }
 
@@ -258,74 +253,21 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (mousePos.MapId != attackerPos.MapId || (attackerPos.Position - mousePos.Position).Length() > meleeComponent.Range)
             return;
 
-        // First, get a broad list of candidate entities near the cursor using their physical AABBs
-        var candidateEntities = _lookup.GetEntitiesIntersecting(mousePos);
-        var eyeRot = _eyeManager.CurrentEye.Rotation;
-
-        // Now, filter this list to only include entities where the cursor is actually over their visible sprite.
-        var validTargets = new List<(EntityUid Entity, SpriteComponent Sprite)>();
-        foreach (var uid in candidateEntities)
-        {
-            if (!TryComp<SpriteComponent>(uid, out var sprite))
-                continue;
-
-            var xform = Transform(uid);
-            var (worldPos, worldRot) = TransformSystem.GetWorldPositionRotation(xform);
-
-            // Calculate the sprite's precise bounds in the world.
-            var bounds = _sprite.CalculateBounds((uid, sprite), worldPos, worldRot, eyeRot);
-
-            // Check if the mouse cursor is inside these precise bounds
-            if (bounds.Contains(mousePos.Position))
-            {
-                validTargets.Add((uid, sprite));
-            }
-        }
-
-        if (validTargets.Count == 0)
-        {
-            // Send a miss event if we clicked on nothing.
-            RaisePredictiveEvent(new LightAttackEvent(null, GetNetEntity(weaponUid), GetNetCoordinates(coordinates)));
-            return;
-        }
-
-        // Sort the valid targets by priority: Mobs > everything else. Then sort by draw depth
-        var sortedEntities = validTargets
-            .OrderByDescending(e => HasComp<MobStateComponent>(e.Entity))
-            .ThenByDescending(e => e.Sprite.DrawDepth)
-            .Select(e => e.Entity)
-            .ToList();
-
+        // Find the entity directly under the cursor
         EntityUid? target = null;
+        if (_stateManager.CurrentState is GameplayStateBase screen)
+            target = screen.GetClickedEntity(mousePos);
 
-        // Find the highest-priority damageable entity from our precisely filtered list.
-        foreach (var entity in sortedEntities)
+        // If no entity was clicked (a "miss"), we still want to play the swing animation.
+        // To do this, we target the grid entity itself. The server will should interpret
+        // an attack on a non-damageable grid as a miss
+        if (target == null)
         {
-            if (HasComp<DamageableComponent>(entity))
-            {
-                target = entity;
-                break;
-            }
+            if (MapManager.TryFindGridAt(mousePos, out var gridUid, out _))
+                target = gridUid;
+            else
+                target = _map.GetMapOrInvalid(mousePos.MapId);
         }
-
-        if (target != null)
-        {
-            // If the found target is the top-most entity based on our new priority sort AND it's interactable,
-            // we let the interaction system take priority. This prevents accidentally attacking friendly NPCs.
-            if (target == sortedEntities[0] && Interaction.CombatModeCanHandInteract(attacker, target.Value))
-            {
-                return;
-            }
-        }
-        else
-        {
-            // No damageable entity was found. Still respect CombatModeCanHandInteract for the top entity.
-            if (Interaction.CombatModeCanHandInteract(attacker, sortedEntities[0]))
-                return;
-        }
-
-        if (target == attacker)
-            target = null;
 
         RaisePredictiveEvent(new LightAttackEvent(GetNetEntity(target), GetNetEntity(weaponUid), GetNetCoordinates(coordinates)));
     }
