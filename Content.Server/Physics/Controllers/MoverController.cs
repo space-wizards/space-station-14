@@ -23,11 +23,14 @@ public sealed class MoverController : SharedMoverController
 
     private Dictionary<EntityUid, (ShuttleComponent, List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>)> _shuttlePilots = new();
 
+    private EntityQuery<ActiveInputMoverComponent> _activeQuery;
     private EntityQuery<DroneConsoleComponent> _droneQuery;
     private EntityQuery<ShuttleComponent> _shuttleQuery;
 
     // Not needed for persistence; just used to save an alloc
     private readonly HashSet<EntityUid> _seenMovers = [];
+    // Budget OrderedSet
+    private readonly Dictionary<EntityUid, InputMoverComponent> _moversToUpdate = [];
 
     public override void Initialize()
     {
@@ -41,6 +44,7 @@ public sealed class MoverController : SharedMoverController
         SubscribeLocalEvent<InputMoverComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<InputMoverComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
+        _activeQuery = GetEntityQuery<ActiveInputMoverComponent>();
         _droneQuery = GetEntityQuery<DroneConsoleComponent>();
         _shuttleQuery = GetEntityQuery<ShuttleComponent>();
     }
@@ -86,19 +90,29 @@ public sealed class MoverController : SharedMoverController
             if (Terminating(ent, meta))
                 break;
 
+            ActiveInputMoverComponent? activeMover = null;
             if (!meta.EntityPaused
                 || PhysicsQuery.TryComp(ent, out var phys) && phys.IgnorePaused)
-                EnsureComp<ActiveInputMoverComponent>(ent);
+                activeMover = EnsureComp<ActiveInputMoverComponent>(ent);
 
             // If we're a relay target, make sure our drivers are InputMovers
             if (RelayTargetQuery.Resolve(ent, ref ent.Comp2, logMissing: false)
+                // In case we're called from ComponentShutdown:
+                && ent.Comp2.LifeStage <= ComponentLifeStage.Running
                 && Exists(ent.Comp2.Source)
                 && !_seenMovers.Contains(ent.Comp2.Source))
             {
+                if (activeMover is not null)
+                    activeMover.RelayedFrom = ent.Comp2.Source;
+
                 ent = ent.Comp2.Source;
                 _seenMovers.Add(ent);
                 continue;
             }
+
+            // No longer a well-defined relay target
+            if (activeMover is not null)
+                activeMover.RelayedFrom = null;
 
             break;
         }
@@ -135,15 +149,36 @@ public sealed class MoverController : SharedMoverController
     {
         base.UpdateBeforeSolve(prediction, frameTime);
 
+        _moversToUpdate.Clear();
         var inputQueryEnumerator = AllEntityQuery<ActiveInputMoverComponent, InputMoverComponent>();
 
-        var count = 0;
-        while (inputQueryEnumerator.MoveNext(out var uid, out _, out var moverComp))
+        while (inputQueryEnumerator.MoveNext(out var uid, out var activeComp, out var moverComp))
         {
-            count++;
+            // If it's already inserted, that's fine—that means it'll still be
+            // handled before its child movers
+            _moversToUpdate.TryAdd(uid, moverComp);
+            // Run up the chain of RelayedFrom's to get a deterministic update
+            // order for relay movers
+            var next = activeComp.RelayedFrom;
+            // Rely on RelayedFrom always being set in a way that prevents loops.
+            while (next is not null)
+            {
+                // We only care if it's still a mover
+                if (!_activeQuery.TryComp(next, out var nextActive)
+                    || !MoverQuery.TryComp(next, out var nextMover))
+                    break;
+
+                _moversToUpdate.TryAdd(next.Value, nextMover);
+                next = nextActive.RelayedFrom;
+            }
+        }
+
+        ActiveMoverGauge.Set(_moversToUpdate.Count);
+
+        foreach (var (uid, moverComp) in _moversToUpdate)
+        {
             HandleMobMovement((uid, moverComp), frameTime);
         }
-        ActiveMoverGauge.Set(count);
 
         HandleShuttleMovement(frameTime);
     }
