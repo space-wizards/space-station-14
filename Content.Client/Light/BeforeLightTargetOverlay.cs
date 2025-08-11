@@ -39,6 +39,7 @@ public sealed class BeforeLightTargetOverlay : Overlay
         // This just exists to copy the lightrendertarget and write back to it.
         if (EnlargedLightTarget?.Size != size)
         {
+            EnlargedLightTarget?.Dispose();
             EnlargedLightTarget = _clyde
                 .CreateRenderTarget(size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "enlarged-light-copy");
         }
