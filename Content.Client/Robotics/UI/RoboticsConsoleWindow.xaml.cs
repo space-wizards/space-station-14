@@ -123,19 +123,19 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         BorgSprite.Texture = _sprite.Frame0(data.ChassisSprite!);
 
         var batteryColor = data.Charge switch {
-            < 0.2f => "#FF0000", // red
-            < 0.4f => "#FF7F00", // orange
-            < 0.6f => "#FFFF00", // yellow
-            < 0.8f => "#7FFF00", // lime?
-            _ => "#00FF00" // bright green
+            < 0.2f => "#FF6C7F", // red
+            < 0.4f => "#EF973C", // orange
+            < 0.6f => "#E8CB2D", // yellow
+            < 0.8f => "#30CC19", // green
+            _ => "#00D3B8" // cyan
         };
 
         var hpPercentColor = data.HpPercent switch {
-            < 0.2f => "#FF0000", // red
-            < 0.4f => "#FF7F00", // orange
-            < 0.6f => "#FFFF00", // yellow
-            < 0.8f => "#7FFF00", // lime?
-            _ => "#00FF00" // bright green
+            < 0.2f => "#FF6C7F", // red
+            < 0.4f => "#EF973C", // orange
+            < 0.6f => "#E8CB2D", // yellow
+            < 0.8f => "#30CC19", // green
+            _ => "#00D3B8" // cyan
         };
 
         var text = new FormattedMessage();
