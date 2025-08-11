@@ -19,7 +19,7 @@ namespace Content.Client.Changelog
         [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         private const string SawmillName = "changelog";
-        public const string MainChangelogName = "Changelog";
+        public const string MainChangelogName = "SandwichChangelog"; /// Sandwich - Changed main to our branch
 
         private ISawmill _sawmill = default!;
 
@@ -42,7 +42,7 @@ namespace Content.Client.Changelog
             NewChangelogEntries = false;
             NewChangelogEntriesChanged?.Invoke();
 
-            using var sw = _resource.UserData.OpenWriteText(new ($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
+            using var sw = _resource.UserData.OpenWriteText(new($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
 
             sw.Write(MaxId.ToString());
         }

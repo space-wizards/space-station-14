@@ -1,0 +1,189 @@
+Name: SandwichChangelog
+Order: -2
+Entries:
+- author: SandwichStation
+  changes:
+    - message: SandwichStation changelog added.
+      type: Add
+  id: 1
+  time: '2025-06-07T17:00:00.000000'
+- author: B3CKDOOR
+  changes:
+    - type: Fix
+      message: Changelogs now work automagically™
+  id: 2
+  time: '2025-07-04T23:54:38.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Add
+      message: Sandwich poster
+    - type: Fix
+      message: Moved Dave's portrait to _Sandwich
+  id: 3
+  time: '2025-07-05T20:22:34.0000000+00:00'
+- author: Azrakoth
+  changes:
+    - type: Tweak
+      message: >-
+        Replaced goob_poster2_contraband.png with a newly made Dave poster as a
+        placeholder.
+  id: 4
+  time: '2025-07-03T18:42:23.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Fix
+      message: 'Fixed #17 '
+  id: 5
+  time: '2025-06-27T14:07:02.0000000+00:00'
+- author: mart33no
+  changes:
+    - type: Tweak
+      message: Increased legs and arms marking points
+  id: 6
+  time: '2025-06-27T21:32:18.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Tweak
+      message: Rebranding to SandwichStation
+  id: 7
+  time: '2025-06-08T13:20:31.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Tweak
+      message: Rebranding
+  id: 8
+  time: '2025-06-07T16:10:40.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Tweak
+      message: Funding updated to correct funding targets
+    - type: Tweak
+      message: SVG logo replaced (whoops forgot)
+  id: 9
+  time: '2025-06-07T16:37:34.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Remove
+      message: MoMMI
+    - type: Add
+      message: Discord chat link
+  id: 10
+  time: '2025-07-06T10:36:56.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Add
+      message: Sandwich Points™
+    - type: Add
+      message: Shop for said Points
+    - type: Remove
+      message: Shiba Shillings
+  id: 11
+  time: '2025-07-06T17:55:08.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Fix
+      message: Fixed mailsystem
+  id: 12
+  time: '2025-07-06T20:08:30.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Fix
+      message: Fixed uncompletable thief objectives
+  id: 13
+  time: '2025-07-08T18:46:13.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Tweak
+      message: PTL can now be rotated
+  id: 14
+  time: '2025-07-08T20:37:46.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Tweak
+      message: SOP rules have been changed, check discord for more info.
+    - type: Add
+      message: Alert level Dave is now in the Guidebook under Alerts
+  id: 15
+  time: '2025-07-21T10:48:27.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Remove
+      message: Removed un-used rulefiles
+    - type: Tweak
+      message: Rules have been changed, check discord for more info.
+    - type: Fix
+      message: Broken links in the Guidebook
+  id: 16
+  time: '2025-07-21T10:47:51.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Fix
+      message: Fixed crash of server on printing 1000+ items at the same time
+  id: 17
+  time: '2025-07-25T15:52:56.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Add
+      message: Added new "job" Off-Duty
+    - type: Remove
+      message: Removed Maints access for Passengers permanently.
+    - type: Tweak
+      message: >-
+        Set role playtime restriction on "passenger", making you play "Off-Duty"
+        instead with more access
+    - type: Fix
+      message: >-
+        Fixed Raiders/Shitters having access to maints without removing maints
+        access from good crew
+  id: 18
+  time: '2025-07-27T19:52:29.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Tweak
+      message: Reptilians can now have wigs
+  id: 19
+  time: '2025-07-27T19:52:07.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Fix
+      message: Jukebox songs are now sorted
+    - type: Fix
+      message: Added missing attributions for music/textures
+    - type: Add
+      message: New lobby screens
+    - type: Add
+      message: New lobby music
+    - type: Tweak
+      message: NukeOps Music
+    - type: Tweak
+      message: NukeArmed Music
+    - type: Tweak
+      message: TEMP. disabled "known music" in favor of newer ones
+    - type: Remove
+      message: Hyde admeme
+    - type: Remove
+      message: Goobstation Music for Lobby/Jukebox
+    - type: Remove
+      message: Goobstation Lobby screens
+  id: 20
+  time: '2025-07-31T15:21:29.0000000+00:00'
+- author: pantherpusher
+  changes:
+    - type: Add
+      message: SM engine to Elkridge Depot
+    - type: Remove
+      message: Previous Tesla engine
+  id: 21
+  time: '2025-08-08T11:42:07.0000000+00:00'
+- author: B3CKDOOR
+  changes:
+    - type: Add
+      message: Added a completely new language system
+    - type: Add
+      message: Translator devices / implants
+    - type: Remove
+      message: Old Language system
+    - type: Tweak
+      message: IPC/Vox can no longer be cloned, they arent fleshy
+  id: 22
+  time: '2025-08-08T12:17:00.0000000+00:00'
