@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -311,12 +312,11 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
     private void OnMetabolismExclusion(Entity<BloodstreamComponent> ent, ref MetabolismExclusionEvent args)
     {
-        foreach (var reagentQuantity in args.ReagentList)
+        // Copy to list again to avoid modifying during enumeration!
+        foreach (var reagentQuantity in args.ReagentList.ToList())
         {
             if (reagentQuantity.Reagent.Prototype == ent.Comp.BloodReagent.Id)
-            {
                 args.ReagentList.Remove(reagentQuantity);
-            }
         }
     }
 
