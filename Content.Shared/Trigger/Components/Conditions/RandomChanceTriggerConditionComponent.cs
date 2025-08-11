@@ -12,5 +12,5 @@ public sealed partial class RandomChanceTriggerConditionComponent : BaseTriggerC
     /// Chance for the trigger to be cancelled and not go through.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float FailureChance = .1f;
+    public float SuccessChance = .9f;
 }
