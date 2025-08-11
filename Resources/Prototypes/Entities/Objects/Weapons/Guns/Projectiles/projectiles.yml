@@ -233,7 +233,6 @@
   parent: BulletTaser
   id: BulletTaserSuper
   categories: [ HideSpawnMenu ]
-  name: taser bolt
   description: If you can see this, you've probably been stun-meta'd
   components:
   - type: Sprite
