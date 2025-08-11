@@ -160,9 +160,6 @@
   id: BoxCardboard
 
 - type: Tag
-  id: UtilityKnife
-
-- type: Tag
   id: BoxHug
 
 - type: Tag
@@ -1459,6 +1456,9 @@
 
 - type: Tag
   id: UtilityBelt
+
+- type: Tag
+  id: UtilityKnife
 
 - type: Tag
   id: Vegetable
