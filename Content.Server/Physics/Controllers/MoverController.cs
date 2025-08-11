@@ -26,6 +26,9 @@ public sealed class MoverController : SharedMoverController
     private EntityQuery<DroneConsoleComponent> _droneQuery;
     private EntityQuery<ShuttleComponent> _shuttleQuery;
 
+    // Not needed for persistence; just used to save an alloc
+    private readonly HashSet<EntityUid> _seenMovers = [];
+
     public override void Initialize()
     {
         base.Initialize();
@@ -70,7 +73,7 @@ public sealed class MoverController : SharedMoverController
     protected override void UpdateMoverStatus(Entity<InputMoverComponent?, MovementRelayTargetComponent?> ent)
     {
         // Track that we aren't in a loop of movement relayers
-        HashSet<EntityUid> seen = [];
+        _seenMovers.Clear();
         while (true)
         {
             if (!MoverQuery.Resolve(ent, ref ent.Comp1, logMissing: false))
@@ -90,10 +93,10 @@ public sealed class MoverController : SharedMoverController
             // If we're a relay target, make sure our drivers are InputMovers
             if (RelayTargetQuery.Resolve(ent, ref ent.Comp2, logMissing: false)
                 && Exists(ent.Comp2.Source)
-                && !seen.Contains(ent.Comp2.Source))
+                && !_seenMovers.Contains(ent.Comp2.Source))
             {
                 ent = ent.Comp2.Source;
-                seen.Add(ent);
+                _seenMovers.Add(ent);
                 continue;
             }
 
