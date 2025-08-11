@@ -561,6 +561,7 @@
   parent: BaseBullet
   id: BaseAnomalousParticle
   name: base anomalous particle
+  description: Run if it's coming to you.
   categories: [ HideSpawnMenu ]
   components:
   - type: PointLight
