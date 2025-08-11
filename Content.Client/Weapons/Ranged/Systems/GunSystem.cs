@@ -6,6 +6,7 @@ using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
@@ -426,6 +427,8 @@ public sealed partial class GunSystem : SharedGunSystem
         EntityUid? bestTarget = null;
         foreach (var target in targets)
         {
+            // Yeah, every single number is a magic number, but they need to specific per component.
+            // These numbers are always going to be subjective.
             var ev = new TargetRankEvent(1);
             RaiseLocalEvent(target, ref ev);
 
@@ -445,11 +448,16 @@ public sealed partial class GunSystem : SharedGunSystem
         if (args.Priority == 0)
             return;
 
-        if (entity.Comp.CurrentState != MobState.Alive)
-            return;
+        switch (entity.Comp.CurrentState)
+        {
+            case (MobState.Alive):
+                args.Priority *= 4;
+                break;
+            case (MobState.Critical):
+                args.Priority *= 2;
+                break;
+        }
 
-        // Double priority if we're alive.
-        args.Priority *= 2;
     }
 
     private void OnRequireProjectileTargetRank(Entity<RequireProjectileTargetComponent> entity, ref TargetRankEvent args)
