@@ -2,6 +2,7 @@
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Beeper.Components;
@@ -17,6 +18,11 @@ namespace Content.Shared.Beeper.Components;
 [Access(typeof(BeeperSystem))]
 public sealed partial class BeeperComponent : Component
 {
+    /// <summary>
+    /// Default beeper sound.
+    /// </summary>
+    private static readonly ProtoId<SoundCollectionPrototype> DefaultBeep = new("BeeperBeep");
+
     /// <summary>
     /// How much to scale the interval by. Min - 0, max - 1.
     /// Setting this will lerp Interval between MinBeepInterval and MaxBeepInterval.
@@ -58,5 +64,5 @@ public sealed partial class BeeperComponent : Component
     /// The sound played when the locator beeps.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? BeepSound;
+    public SoundSpecifier BeepSound = new SoundCollectionSpecifier(DefaultBeep);
 }
