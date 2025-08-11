@@ -43,6 +43,8 @@ public abstract class SharedPoweredLightSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<PoweredLightComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<PoweredLightComponent, EntRemovedFromContainerMessage>(OnRemoved);
+        SubscribeLocalEvent<PoweredLightComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<PoweredLightComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PoweredLightComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
@@ -56,6 +58,22 @@ public abstract class SharedPoweredLightSystem : EntitySystem
     {
         light.LightBulbContainer = ContainerSystem.EnsureContainer<ContainerSlot>(uid, LightBulbContainer);
         _deviceLink.EnsureSinkPorts(uid, light.OnPort, light.OffPort, light.TogglePort);
+    }
+
+    private void OnRemoved(Entity<PoweredLightComponent> light, ref EntRemovedFromContainerMessage args)
+    {
+        if (args.Container.ID != LightBulbContainer)
+            return;
+
+        UpdateLight(light, light);
+    }
+
+    private void OnInserted(Entity<PoweredLightComponent> light, ref EntInsertedIntoContainerMessage args)
+    {
+        if (args.Container.ID != LightBulbContainer)
+            return;
+
+        UpdateLight(light, light);
     }
 
     private void OnInteractUsing(EntityUid uid, PoweredLightComponent component, InteractUsingEvent args)
@@ -146,7 +164,6 @@ public abstract class SharedPoweredLightSystem : EntitySystem
             _storage.PlayPickupAnimation(bulbUid, xform.Coordinates, itemXform.Coordinates, itemXform.LocalRotation, user: user);
         }
 
-        UpdateLight(uid, light, user: user);
         return true;
     }
 
@@ -170,7 +187,6 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         // try to place bulb in hands
         _handsSystem.PickupOrDrop(userUid, bulb);
 
-        UpdateLight(uid, light);
         return bulb;
     }
 
