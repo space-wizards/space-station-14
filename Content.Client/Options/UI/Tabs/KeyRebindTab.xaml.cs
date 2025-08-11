@@ -213,9 +213,9 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.TextCompleteNext);
             AddButton(EngineKeyFunctions.TextCompletePrev);
 
-            foreach (var control in _keyControls.Values)
+            foreach (var (function, control) in _keyControls)
             {
-                control.UpdateData(_inputManager);
+                UpdateBindingsData(function, control);
             }
             #endregion
         }
@@ -395,7 +395,7 @@ namespace Content.Client.Options.UI.Tabs
                 return;
             }
 
-            keyControl.UpdateData(_inputManager);
+            UpdateBindingsData(bind.Function, keyControl);
 
             if (_currentlyRebinding.Function == keyControl.Function)
             {
@@ -529,6 +529,13 @@ namespace Content.Client.Options.UI.Tabs
             {
                 keyControl.UpdateBindText();
             }
+        }
+
+        private void UpdateBindingsData(BoundKeyFunction function, KeyControl control)
+        {
+            var isModified = !_inputManager.IsKeyFunctionModified(function);
+            var activeBinds = _inputManager.GetKeyBindings(function);
+            control.UpdateData(activeBinds, isModified);
         }
     }
 }

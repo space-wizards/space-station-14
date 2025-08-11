@@ -2,10 +2,12 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using System.Numerics;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Input;
 
 namespace Content.Client.Options.UI.Tabs;
 
+/// <summary>
+/// Button for assigning keybinding.
+/// </summary>
 public sealed class BindButton : Button
 {
     private IKeyBinding? _binding;
@@ -20,6 +22,9 @@ public sealed class BindButton : Button
         OnKeyBindDown += InvokeKeyBindDown;
     }
 
+    /// <summary>
+    /// Keybinding set to this button.
+    /// </summary>
     public IKeyBinding? Binding
     {
         get => _binding;
@@ -32,6 +37,9 @@ public sealed class BindButton : Button
         }
     }
 
+    /// <summary>
+    /// Update button text. Defaults to 'Unbound' text if no binding is present.
+    /// </summary>
     public void UpdateText()
     {
         Text = Binding?.GetKeyString()

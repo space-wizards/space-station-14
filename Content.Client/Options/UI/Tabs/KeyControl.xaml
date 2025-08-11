@@ -1,11 +1,15 @@
 <tabs:KeyControl xmlns="https://spacestation14.io"
                  xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs">
     <BoxContainer Orientation="Horizontal">
-        <Control MinSize="5,0"/>
-        <Label HorizontalAlignment="Left" HorizontalExpand="True" Name="NameLabel"></Label>
-        <tabs:BindButton Name="BindButton1" StyleClasses="OpenRight"></tabs:BindButton>
-        <tabs:BindButton Name="BindButton2" StyleClasses="OpenLeft"></tabs:BindButton>
-        <Control MinSize="10,0"/>
-        <Button Name="ResetButton" Text="{Loc ui-options-bind-reset}" StyleClasses="Caution"/>
+        <Label Name="NameLabel"
+               HorizontalAlignment="Left"
+               HorizontalExpand="True"
+               Margin="5,0,0,0" />
+        <tabs:BindButton Name="BindButton1" StyleClasses="OpenRight" />
+        <tabs:BindButton Name="BindButton2" StyleClasses="OpenLeft" />
+        <Button Name="ResetButton"
+                Text="{Loc ui-options-bind-reset}"
+                StyleClasses="Caution"
+                Margin="10,0,0,0" />
     </BoxContainer>
 </tabs:KeyControl>
