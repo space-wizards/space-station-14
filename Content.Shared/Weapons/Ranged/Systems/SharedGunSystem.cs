@@ -641,7 +641,7 @@ public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootab
 public record struct ShooterImpulseEvent()
 {
     public bool Push;
-};
+}
 
 public enum EffectLayers : byte
 {

@@ -5,6 +5,10 @@ using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
 using Content.Shared.CombatMode;
+using Content.Shared.Damage.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Physics;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -19,6 +23,7 @@ using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
@@ -79,6 +84,11 @@ public sealed partial class GunSystem : SharedGunSystem
         SubscribeLocalEvent<AmmoCounterComponent, ItemStatusCollectMessage>(OnAmmoCounterCollect);
         SubscribeLocalEvent<AmmoCounterComponent, UpdateClientAmmoEvent>(OnUpdateClientAmmo);
         SubscribeAllEvent<MuzzleFlashEvent>(OnMuzzleFlash);
+
+        // Targeting data
+        SubscribeLocalEvent<MobStateComponent, TargetRankEvent>(OnMobStateRank);
+        SubscribeLocalEvent<RequireProjectileTargetComponent, TargetRankEvent>(OnRequireProjectileTargetRank);
+        SubscribeLocalEvent<FixturesComponent, TargetRankEvent>(OnFixturesRank);
 
         // Plays animated effects on the client.
         SubscribeNetworkEvent<HitscanEvent>(OnHitscan);
@@ -199,7 +209,11 @@ public sealed partial class GunSystem : SharedGunSystem
 
         NetEntity? target = null;
         if (_state.CurrentState is GameplayStateBase screen)
-            target = GetNetEntity(screen.GetClickedEntity(mousePos));
+        {
+            var targets = screen.GetClickableEntities(mousePos);
+            target = GetBestTarget(targets);
+        }
+
 
         Log.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
@@ -404,4 +418,73 @@ public sealed partial class GunSystem : SharedGunSystem
         _animPlayer.Stop(gunUid, uidPlayer, "muzzle-flash-light");
         _animPlayer.Play((gunUid, uidPlayer), animTwo, "muzzle-flash-light");
     }
+
+    // TODO: Maybe make this public API and move it somewhere else so melee can use it? Not currently an issue for melee though since it can target anything...
+    private NetEntity? GetBestTarget(IEnumerable<EntityUid> targets)
+    {
+        var topPriority = 0;
+        EntityUid? bestTarget = null;
+        foreach (var target in targets)
+        {
+            var ev = new TargetRankEvent(1);
+            RaiseLocalEvent(target, ref ev);
+
+            // We check purely for being greater than topPriority to prioritize targets earlier in the list.
+            if (ev.Priority <= topPriority)
+                continue;
+
+            topPriority = ev.Priority;
+            bestTarget = target;
+        }
+
+        return GetNetEntity(bestTarget);
+    }
+
+    private void OnMobStateRank(Entity<MobStateComponent> entity, ref TargetRankEvent args)
+    {
+        if (args.Priority == 0)
+            return;
+
+        if (entity.Comp.CurrentState != MobState.Alive)
+            return;
+
+        // Double priority if we're alive.
+        args.Priority *= 2;
+    }
+
+    private void OnRequireProjectileTargetRank(Entity<RequireProjectileTargetComponent> entity, ref TargetRankEvent args)
+    {
+        if (args.Priority == 0)
+            return;
+
+        if (!entity.Comp.Active)
+            return;
+
+        // Double priority if we need to specifically target this one.
+        args.Priority *= 2;
+    }
+
+    private void OnFixturesRank(Entity<FixturesComponent> entity, ref TargetRankEvent args)
+    {
+        if (args.Priority == 0)
+            return;
+
+        foreach (var fix in entity.Comp.Fixtures)
+        {
+            if (!fix.Value.Hard || (fix.Value.CollisionLayer & (int)CollisionGroup.BulletImpassable) == 0)
+                continue;
+
+            // Only need to check if we're hitting one fixture
+            return;
+        }
+
+        // If we cannot collide then we absolutely do not want to target it!
+        args.Priority = 0;
+    }
+
+    /// <summary>
+    /// Raised on an entity that is being hovered over by the client's mouse to get an appropriate "Rank" for being targeted.
+    /// </summary>
+    [ByRefEvent]
+    public record struct TargetRankEvent(int Priority);
 }
