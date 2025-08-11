@@ -258,27 +258,48 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (mousePos.MapId != attackerPos.MapId || (attackerPos.Position - mousePos.Position).Length() > meleeComponent.Range)
             return;
 
-        // Get all entities under the cursor.
-        var entities = _lookup.GetEntitiesIntersecting(mousePos)
-            .Select(e => (Entity: e, Sprite: TryComp<SpriteComponent>(e, out var sprite) ? sprite : null))
-            .Where(e => e.Sprite != null)
-            // Sort entities by priority: Mobs > everything else. Then sort by draw depth.
-            .OrderByDescending(e => HasComp<MobStateComponent>(e.Entity))
-            .ThenByDescending(e => e.Sprite!.DrawDepth)
-            .Select(e => e.Entity)
-            .ToList();
+        // First, get a broad list of candidate entities near the cursor using their physical AABBs
+        var candidateEntities = _lookup.GetEntitiesIntersecting(mousePos);
+        var eyeRot = _eyeManager.CurrentEye.Rotation;
 
-        if (entities.Count == 0)
+        // Now, filter this list to only include entities where the cursor is actually over their visible sprite.
+        var validTargets = new List<(EntityUid Entity, SpriteComponent Sprite)>();
+        foreach (var uid in candidateEntities)
+        {
+            if (!TryComp<SpriteComponent>(uid, out var sprite))
+                continue;
+
+            var xform = Transform(uid);
+            var (worldPos, worldRot) = TransformSystem.GetWorldPositionRotation(xform);
+
+            // Calculate the sprite's precise bounds in the world.
+            var bounds = _sprite.CalculateBounds((uid, sprite), worldPos, worldRot, eyeRot);
+
+            // Check if the mouse cursor is inside these precise bounds
+            if (bounds.Contains(mousePos.Position))
+            {
+                validTargets.Add((uid, sprite));
+            }
+        }
+
+        if (validTargets.Count == 0)
         {
             // Send a miss event if we clicked on nothing.
             RaisePredictiveEvent(new LightAttackEvent(null, GetNetEntity(weaponUid), GetNetCoordinates(coordinates)));
             return;
         }
 
+        // Sort the valid targets by priority: Mobs > everything else. Then sort by draw depth
+        var sortedEntities = validTargets
+            .OrderByDescending(e => HasComp<MobStateComponent>(e.Entity))
+            .ThenByDescending(e => e.Sprite.DrawDepth)
+            .Select(e => e.Entity)
+            .ToList();
+
         EntityUid? target = null;
 
-        // Find the highest-priority damageable entity under the cursor.
-        foreach (var entity in entities)
+        // Find the highest-priority damageable entity from our precisely filtered list.
+        foreach (var entity in sortedEntities)
         {
             if (HasComp<DamageableComponent>(entity))
             {
@@ -291,16 +312,15 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             // If the found target is the top-most entity based on our new priority sort AND it's interactable,
             // we let the interaction system take priority. This prevents accidentally attacking friendly NPCs.
-            if (target == entities[0] && Interaction.CombatModeCanHandInteract(attacker, target.Value))
+            if (target == sortedEntities[0] && Interaction.CombatModeCanHandInteract(attacker, target.Value))
             {
-                // We found an interactable target; do nothing and let the interaction system handle it.
                 return;
             }
         }
         else
         {
-            // No damageable entity was found. Still respect CombatModeCanHandInteract for the top entity in the sorted list.
-            if (Interaction.CombatModeCanHandInteract(attacker, entities[0]))
+            // No damageable entity was found. Still respect CombatModeCanHandInteract for the top entity.
+            if (Interaction.CombatModeCanHandInteract(attacker, sortedEntities[0]))
                 return;
         }
 
