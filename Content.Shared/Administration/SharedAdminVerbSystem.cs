@@ -31,6 +31,7 @@ public abstract partial class SharedAdminVerbSystem : EntitySystem
     public virtual void GetVerbs(GetVerbsEvent<Verb> args)
     {
         AddAdminVerbs(args);
+        AddAntagVerbs(args);
         AddDebugVerbs(args);
     }
 
