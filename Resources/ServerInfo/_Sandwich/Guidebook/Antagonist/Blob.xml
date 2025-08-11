@@ -1,0 +1,133 @@
+<Document>
+# Blob
+
+[color=#ff0000]Confirmed level 5 biohazard aboard the station. All personnel must contain the outbreak.[/color]
+
+A blob is a fast-growing dangerous organism whose main goal is to take over the station.
+  <Box>
+    <GuideEntityEmbed Entity="CoreBlobTile" Caption="Blob"/>
+	<GuideEntityEmbed Entity="MobMouse" Caption="Carrier of the blob"/>
+  </Box>
+
+You can become a blob carrier both at the beginning of the round and in the middle if you take on the role of a ghost. The carrier of the blob is a crewmate, or a mouse.
+
+## Core
+
+The most important blob tile is the [color=#a4885c]Core[/color]. By destroying the Core, the blob will be defeated, and all its other tiles will die, turning white.
+
+You can always see the core health on the right side of the screen as a percentage. Watch your core and don't let it be destroyed!
+
+There are 2 steps you can do with the Core: [color=#a4885c]transfer[/color] and [color=#a4885c]split[/color].
+- When a core is transferred, the selected node and kernel are swapped. This is useful in case the kernel location is not very secure.
+- When the core is split, the selected node becomes [color=#a4885c]new and independent core[/color]. Although this action requires a lot of points, in the long run, a new core can help you capture the station.
+
+## Tile Types
+
+Normal tiles are extremely vulnerable to burns or even mechanical damage until they're upgraded.
+They can also be upgraded to strong versions, and then reflective versions, or turned into special blob tiles.
+[bold]You cannot upgrade strong/reflective tiles to special tiles![/bold]
+
+## Special tiles
+
+  <Box>
+    <GuideEntityEmbed Entity="ResourceBlobTile" Caption="Resource Tile"/>
+	<GuideEntityEmbed Entity="FactoryBlobTile" Caption="Factory Tile"/>
+	<GuideEntityEmbed Entity="NodeBlobTile" Caption="Node Tile"/>
+
+  </Box>
+
+- [color=#a4885c]Resource Tiles[/color] are constantly gaining points for all the actions the blob performs. These are your second most important tiles, before the Core.
+- [color=#a4885c]Factory Tiles[/color] creates Blob Pods and Blobbernauts to help fight against the station.
+- [color=#a4885c]Node Tiles[/color] allow you to place other blob tiles around it within a certain radius. They will also heal Zombies and Blobbernauts when close.
+
+## Minions
+
+  <Box>
+    <GuideEntityEmbed Entity="MobBlobBlobbernaut" Caption="Blobbernaut"/>
+	<GuideEntityEmbed Entity="MobBlobPod" Caption="Blob Spore"/>
+  </Box>
+
+Blob factories can produce Blob Spores and Blobbernauts, these are your bread and butter.
+Blob Spores have the ability to turn dead humanoids into zombie blobs, which will force them to fight on your side against the rest of the crew. They will also release a cloud of smoke on death, the effect depending on your chemical.
+- Blobbernauts deal a lot of damage, and are tanky, which will come in handy for attacking. They will also carry over any effects the Blob has, such as exploding whatever they punch!
+
+## Management
+
+- To place a blob tile, click on an empty space. If a tile is occupied, or someone or something is standing on it, clicking on it will attack and deal damage.
+- Note that [color=#a4885c]you cannot place regular blob tiles far from blob nodes. Place blob nodes to be able to grow further.[/color]
+- By pressing Alt+LMB, you can upgrade normal tiles to strong tiles and strong tiles to reflective.
+
+  <Box>
+    <GuideEntityEmbed Entity="StrongBlobTile" Caption="Strong tiles"/>
+	<GuideEntityEmbed Entity="ReflectiveBlobTile" Caption="Reflective tiles"/>
+  </Box>
+
+## Special Abilities
+
+In the action bar, you can use special abilities that will allow you to perform important actions, such as placing special cells, or special actions with the core and chemicals.
+
+- [color=#a4885c]Changing chemicals[/color] allows you to change your chemical. Each has its own characteristics suitable for different situations.
+- [color=#a4885c]Demote Blob[/color] gives you the option to downgrade any blob cell back to normal for free. It is useful in order to correct the wrong placement, or placing a special tile.
+
+## Chemicals
+
+No, not the chemistry kind of chemicals, instead, you can change what your tiles, and blob drops do! There's several types of Chemicals-
+
+- Reactive Spines - Your default chemical. You'll deal 25 brute damage, and your Blob Drops will release a puff of smoke when killed.
+
+- Blazing Oil - You deal 15 burn damage and light targets on fire. Your blob drops will release a cloud of smoke that sets anyone in it on fire.
+
+- Regenerative Materia - You deal 6 brute damage, and 15 toxin damage. Your core will also regenerate 10 times faster then it normally would, along with generating a extra resource. Your blob drops will also release a cloud of toxic smoke on death.
+
+- Explosive Lattice - You deal 5 burn damage, BUT, you explode your target, dealing 10 brute damage. You also well, explode things in general. Your drops will also explode on death. You will however, take even more burn damage and electrical damage.
+
+- Electomagnetic Web - You will deal 20 burn damage, and have a 20% chance to cause a EMP when attacking. Your tiles will also cause a EMP pulse when destroyed, you will however, take more brute and electrical damage. You're effectively a IPC's worst nightmare.
+
+## Course of the round
+
+As the blob grows, the station will pass through several stages.
+
+- 1. [color=#a4885c]Silent stage[/color] - The blob is still undetected, and you can (probably) grow and prepare while the crew still has no idea about your existence.
+- 2. [color=#a4885c]Biohazard detection[/color] - As soon as the blob grows a little, the station is automatically set to red, and complete isolation of the station is declared. The evacuation shuttle cannot be called at this point. If it was called, it will automatically be recalled.
+- 3. [color=#a4885c]Delta Alert[/color] - If the blob captures a significant part of the station, Delta Alert is triggered. The main goal of the station now is to detonate the nuke, and the nuke codes will be sent to a fax machine. Defeating a blob at this point is most likely impossible.
+- 4. [color=#a4885c]Critical Mass[/color] - If the blob captures a majority of the station, it reaches critical mass, causing the round to end with the blob winning.
+
+Starting from the second stage, the captain has a priority goal in the form of protecting the nuclear authentication disk. If you lose it, the blob cannot be destroyed in Delta, which gives an near guaranteed victory to the blob! If you are the captain, do NOT charge head first into the blob!!
+
+  <Box>
+    <GuideEntityEmbed Entity="NukeDisk" Caption="Nuclear Authentication Disk"/>
+  </Box>
+
+## Some dude just turned the game into a RTS, what do?
+
+"Man, I love going to wor- wait, what do you mean there's a level 5 biohazard? AND WHY DO I HEAR BOSS MUSIC?!" is probably your first thought the first time you encounter a blob. Well, get ready to kick ass and chew bubblegum. But before you're so eager to go and either get turned into a blob zombie, or be in the frontline and be honored a hero, ask yourself the following questions;
+
+- 1. "Do I have the nuclear disk?" If your answer is yes, great, don't go into the blob and hug the nuke like it's your best friend.
+
+- 2. "Do I have a ranged weapon?" If your answer is no, go grab one, most preferably a Laser Rifle, and then ask yourself these questions again. Otherwise you'll be a nice zombie.
+
+- 3. "Is the blob core exposed to space?" If your answer yes, go out into space and shoot as the Blob cries in the lack of things it can do against- wait, what do you mean the Blob moved its core?
+
+## A drop just turned me into a zombie, what do?
+
+Congrats, you died miserably and turned into a zombie. This isn’t your usual normal zombie, that’d be LAME! Instead, you can actually use your hands and be useful for once. And unlike a Blobbernaut, you can actually go outside of your blob's boundaries. Unfortunately, you cannot use guns, but melee weapons are free game. There are some responsibilites to being a zombie, for example;
+
+- Lynching whoever is trying to go near the nuke, unless it's already activated. If it is, there is nothing you can do.
+
+- Dragging the person you just lynched with your zombie friends into the blob, for a fresh new friend!
+
+- Using the tools you found, or had, to build up some defenses. Or at least until the blob rampages through them.
+
+Just remember blob drops take your head slot, and that once you fall into a critical condition, a crewmember can take the drop off, killing it instantly.
+
+## Methods of control
+
+As said before, the Blob is very weak to burn damage. As such, the following items are very good for fighting against it:
+
+  <Box>
+    <GuideEntityEmbed Entity="MagazineBoxPistolIncendiary" Caption="Incendiary Rounds"/>
+	<GuideEntityEmbed Entity="WeaponLaserCarbine" Caption="Laser Rifle"/>
+	<GuideEntityEmbed Entity="Welder" Caption="Welder "/>
+  </Box>
+
+</Document>

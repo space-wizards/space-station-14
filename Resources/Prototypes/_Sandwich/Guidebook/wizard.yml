@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: guideEntry
+  id: WizardGuide
+  priority: 999
+  name: guide-entry-wizard
+  text: "/ServerInfo/_Sandwich/Guidebook/Antagonist/Wizard.xml"
+  children:
+  - WizardSpells
+
+- type: guideEntry
+  id: WizardSpells
+  priority: 999
+  name: guide-entry-wizard-spells
+  text: "/ServerInfo/_Sandwich/Guidebook/Antagonist/WizardSpells.xml"

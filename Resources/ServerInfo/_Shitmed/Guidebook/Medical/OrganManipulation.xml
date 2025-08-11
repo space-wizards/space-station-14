@@ -1,0 +1,58 @@
+<!--
+SPDX-FileCopyrightText: 2024 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Organ Manipulation
+These surgeries allow you to remove or replace organs from a patient for healthy ones. Which can help treat conditions on their bodies.
+
+## Anatomy
+Normally a body has the following organs:
+
+<Box>
+<GuideEntityEmbed Entity="OrganHumanBrain" Caption="brain"/>
+<GuideEntityEmbed Entity="OrganHumanEyes" Caption="eyes"/>
+<GuideEntityEmbed Entity="OrganHumanHeart" Caption="heart"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="OrganHumanKidneys" Caption="kidneys"/>
+<GuideEntityEmbed Entity="OrganHumanLiver" Caption="liver"/>
+<GuideEntityEmbed Entity="OrganHumanLungs" Caption="lungs"/>
+<GuideEntityEmbed Entity="OrganHumanStomach" Caption="stomach"/>
+</Box>
+
+Certain species might have more or less organs, such as Diona having a combined organ that serves multiple functions, but this is the rough outline of what you'll see.
+To remove an organ, you'll need to apply the respective Organ Removal surgery on it, which will then remove it without harming the patient.
+
+However if you want to transplant an organ, you'll need to apply the respective Organ Transplant surgery where it originally was.
+
+## What does each organ transplant do?
+
+- Transplanting a [color=#a4885c]brain[/color] will allow the patient to take over another body. An excellent alternative to cloning if you can afford to spare another body.
+- Transplanting a [color=#a4885c]liver[/color] will cure severe poisoning from a patient's body.
+- Transplanting [color=#a4885c]lungs[/color] will help cure patients from severe asphyxiation.
+- Transplanting a [color=#a4885c]heart[/color] will cure a patient's body of rot and decay.
+- Transplanting [color=#a4885c]eyes[/color] will allow the patient to see again, and heal any eye damage.
+
+## Where do I get more organs?
+
+Normally when your patients come in needing new organs, they'll need to get a new one, as their old ones will be either missing, or damaged beyond repair.
+For this you can use the Medical Biofabricator with some Biomass. Which can manufacture Biosynthetic organs for all species.
+
+<Box>
+<GuideEntityEmbed Entity="MedicalBiofabricator" Caption="medical biofabricator"/>
+<GuideEntityEmbed Entity="MedicalBiofabMachineBoard" Caption="biofabricator board"/>
+<GuideEntityEmbed Entity="MaterialBiomass" Caption="biomass"/>
+</Box>
+
+By default, every Chief Medical Officer has access to a Medical Biofabricator board in their locker.
+
+## Why didn't the organ transplant
+## do anything?
+
+Your patient's body rejected the organ as it is in a bad shape, try using a fresh organ from a donor, or getting a new one from the Medical Biofabricator.
+
+</Document>

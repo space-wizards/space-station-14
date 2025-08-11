@@ -1,0 +1,25 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Jobs SOP
+Attached below this are several different categories for Job-Specific Standard Operating Procedures (SOP). These are here to help clarify different goals in your job or department.
+
+<Box>
+[bold][color=#f0e4b4]To be clear:[/color][/bold] these are not a [italic]checklist[/italic] for you to follow. They can be used as such, but should be used more as guidelines.
+</Box>
+
+The following folders are listed underneath this folder:
+- [textlink="Cargo Department" link="Cargo SOP"]
+- [textlink="Command Department" link="Command SOP"]
+- [textlink="Engineering Department" link="Engineering SOP"]
+- [textlink="Medical Department" link="Medical SOP"]
+- [textlink="Science Department" link="Science SOP"]
+- [textlink="Security Department" link="Security SOP"]
+- [textlink="Service Department" link="Service SOP"]
+
+</Document>

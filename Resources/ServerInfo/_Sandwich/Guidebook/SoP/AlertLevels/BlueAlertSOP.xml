@@ -1,0 +1,49 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Station Alert - Blue
+
+  <Box>
+    [italic]Called by: Anyone with Command-Level Access at a working Communications Console.[/italic]
+  </Box>
+
+  [bold]Conditions:[/bold]
+
+  There is a suspected threat on-board the station, or at a nearby location in space. This includes any signs of hostile activity that have not caused any damage to station or crew, but nonetheless seem present.
+
+  [italics]Minor threats such as thieves, bar fights, and non-violent protests are not credible enough threats to elevate alert level to blue.
+
+  [bold]OR[/bold]
+
+  Confirmed Code Red threats have been properly handled or subsided on their own. It is recommended that, after 10+ minutes on Code Red without any hostile activity, Code Blue be called.
+
+  [bold]Security:[/bold]
+
+  Weapons do not need to be holstered. However, it is recommended that Security personnel follow Security SOP in order to prevent accidents and to be fully aware of armament procedure;
+
+  Random searches are fully permitted. Security personnel may detain any personnel refusing a random search in order to conduct said search;
+
+  [bold]Secure Areas:[/bold]
+
+  EVA Storage, Tech Storage, Gravity Generator, Engineering Secure Storage, AI Upload, Vault, Gateway, anywhere else requiring command level access that does not get regularly used.
+
+  It is recommended that all Secure Areas be bolted down unless their use is necessary;
+
+  Excursions into the Gateway are not recommended, unless they are rescue parties.
+
+  [bold]General Crew:[/bold]
+
+  All personnel are highly recommended to maximize their Suit Sensors;
+
+  Personnel are to report any suspicious activity to the nearest member of Security, or use their PDA or headsets if required;
+
+  Personnel are highly encouraged to exercise caution, even if the threat is only suspected. Following simple safety procedures (such as not going through Maintenance alone) can prevent needless accidents;
+
+  Visitors to the station (anyone with Civilian-level access) are recommended to stay in public areas, for their safety.
+
+</Document>

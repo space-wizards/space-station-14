@@ -1,0 +1,31 @@
+<!--
+SPDX-FileCopyrightText: 2024 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Utility Surgeries
+
+## Tend Wounds
+
+Tend Wounds is a surgery that allows you to heal brute or burn damage from a patient without the need for topicals.
+To begin you need to open an incision on the patient's body, and then apply a Hemostat to it until the part is fully healed.
+At which point then you can close the incision with a Cautery.
+
+<Box>
+<GuideEntityEmbed Entity="Scalpel" Caption="scalpel"/>
+<GuideEntityEmbed Entity="Hemostat" Caption="hemostat"/>
+<GuideEntityEmbed Entity="Cautery" Caption="cautery"/>
+</Box>
+
+This surgery performs best the more damaged your patient is, especially if they are still alive. And allows you to bring otherwise unrecoverable
+patients, such as the dumb Technical Assistant that just walked into the burn chamber.
+
+## Cavity Implant
+
+This surgery allows you to implant any Tiny or Small item into a patient's torso. To begin you need to open an incision, and then open their ribcage.
+Your patient cannot access the implanted item normally, though there may be uses for this, such as hiding the Nuclear Authentication Disk.
+
+</Document>

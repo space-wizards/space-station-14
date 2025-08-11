@@ -1,0 +1,13 @@
+- type: guideEntry
+  id: Devil
+  name: "Devil"
+  priority: 999
+  text: "/ServerInfo/_Sandwich/Guidebook/Antagonist/Devil.xml"
+  children:
+  - DevilClauses
+
+- type: guideEntry
+  id: DevilClauses
+  priority: 999
+  name: "Devil Clauses"
+  text: "/ServerInfo/_Sandwich/Guidebook/Antagonist/DevilClauses.xml"

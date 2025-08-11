@@ -1,0 +1,20 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Engineering Department SOP
+These are the list of SOPs that Engineering Personnel should follow. These are, as stated before, [bold]not checklists[/bold] and should be treated as guidelines.
+
+For clarification, [color=#c8a404][bold]Station Engineer[/bold][/color] and [color=#c8a404][bold]Technical Assistant[/bold][/color] are combined into the same entry, and should be followed as such.
+
+The following jobs have entries in this Department, with [color=#1b67a5][bold]Chief Engineer[/bold][/color] being the Head of Staff:
+- [textlink="Chief Engineer" link="ChiefEngineer SOP"]
+- [textlink="Atmospheric Technician" link="AtmosTech SOP"]
+- [textlink="Station Engineer" link="StationEngineer SOP"]
+- [textlink="Technical Assistant" link="StationEngineer SOP"]
+
+</Document>

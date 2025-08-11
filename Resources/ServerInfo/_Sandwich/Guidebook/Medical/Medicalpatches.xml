@@ -1,0 +1,47 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+SPDX-FileCopyrightText: 2024 Theapug <159912420+Teapug@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 botanySupremist <160211017+botanySupremist@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Patches
+
+Patches are a simple and effective way to administer medication to a patient over time with lower risk of an overdose.
+They can be made at a medical techfab and filled via a ChemMaster. They can be directly applied to a patient and will fall off by themselves once empty.
+
+<GuideEntityEmbed Entity="MedicalPatchBasic" Rotation="0"/>
+
+There are 6 types of patches:
+- Basic
+- Rapid
+- Large
+- Therapeutic
+- Prefilled
+- Makeshift
+
+## Basic
+The (basic) patch holds 40 units of chemicals and transfers 1 unit every second.
+
+## Rapid
+The rapid patch holds 40 units and transfers 2 units every second.
+
+## Large
+The large patch holds 60 units and transfers 1 unit every second.
+However, the large patch also transfers 15% of its chemicals immediately when applied (10 units if full).
+
+## Therapeutic
+The therapeutic patch holds 40 units and transfers 0.5 units every second.
+
+## Prefilled
+NanoMed Plus machines and some medkits contain prefilled patches for treating Brute or Burn damage.
+These hold 30 units and transfer 0.25 units per second, but cannot be refilled or emptied. Not reusable.
+
+## Makeshift
+This rudimentary patch can hold 20 units and transfers 1 unit every 2 seconds.
+However, it can be made by hand with cloth and filled manually without a ChemMaster. Not reusable.
+</Document>

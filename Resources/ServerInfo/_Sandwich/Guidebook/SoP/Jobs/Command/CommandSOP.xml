@@ -1,0 +1,31 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Command Department SOP
+These are the list of SOPs that Command Personnel should follow. These are, as stated before, [bold]not checklists[/bold] and should be treated as guidelines.
+
+Below are the list of guidelines [bold]all of Command should follow[/bold]:
+
+1. The Command Personnel, excluding Head of Security, should not act as Security. Their job is to maintain their own Departments and assist the station.
+
+2. The Command Personnel may defend themselves and perform arrests as needed in self-defense, but may not try, place times, or perform any other Security activities except hand-off arrested personnel to Security.
+
+3. The Command Personnel may not, under any circumstances, promote station personnel to Central Command VIP Positions ([color=#1b67a5][bold]Nanotrasen Representative[/bold][/color] and [color=#1b67a5][bold]Blueshield Officer[/bold][/color]) without authorization from Central Command.
+
+The following jobs have entries in this Department, the Chain of Command being linked at the top, the Central Command VIP being separated in terms of Chain of Command, the Captain being the top of Chain of Command, and all Heads of Staff on equal footing:
+- [textlink="Chain of Command" link="Succession"]
+- [textlink="Nanotrasen Representative" link="NanotrasenRep SOP"]
+- [textlink="Blueshield Officer" link="BlueshieldOfficer SOP"]
+- [textlink="Head of Personnel" link="HeadOfPersonnel SOP"]
+- [textlink="Head of Security" link="HeadOfSecurity SOP"]
+- [textlink="Research Director" link="ResearchDirector SOP"]
+- [textlink="Chief Medical Officer" link="ChiefMedicalOfficer SOP"]
+- [textlink="Chief Engineer" link="ChiefEngineer SOP"]
+- [textlink="Quartermaster" link="Quartermaster SOP"]
+
+</Document>

@@ -1,0 +1,69 @@
+<!--
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Officer/Cadet SOP
+This is the list of procedures, responsibilities, and duties of the [color=#ba292c][bold]Security Officer[/bold][/color] and [color=#ba292c][bold]Security Cadet[/bold][/color] of this station.
+
+<ColorBox>
+  <Box>
+    For the purposes of Alert Escalation: Treat higher alerts as if they are still on the previous alert level. (Yellow Alert is Blue Alert if it was Blue Alert prior.) Furthermore, treat Delta, Gamma, Epsilon, and Violet Alert as Red Alert.
+  </Box>
+</ColorBox>
+
+[color=#ba292c][bold]Security Officer[/bold][/color]s are permitted to carry their shift-start pistols, but should follow escalation laws and leave them holstered on Green Alert.
+
+## Green Alert
+1. Security Officers are required to state the reasons behind an arrest before any further action is taken.
+<Box>Exception is made if the suspect refuses to stop.</Box>
+
+2. Security Officers must attempt to bring all suspects or witnesses to the Brig without handcuffing or incapacitating them. Should the suspect not cooperate, the officer may proceed as usual.
+
+3. No lethal weaponry is to be unholstered unless the suspect attempts to run away or becomes actively hostile.
+
+4. Security Officers are permitted to carry a standard disabler, a flashbang, a stunbaton, and a combat knife (which should be in their jackboots in their lockers).
+
+5. Security Officers may not demand access to the interior of other Departments during regular patrols. However, asking for access from the Head of Personnel is still acceptable.
+<Box>Exceptions apply when a hostile suspect is within an inaccessible area.</Box>
+
+6. Security officers are not permitted to have weapons drawn during regular patrols.
+<Box>Refer to escalation rules for necessary use of duty-start pistols.</Box>
+
+7. Security officers are permitted to conduct searches, provided there is reasonable evidence/suspicion that the person in question has committed a crime.
+<Box>Any further searches require a warrant from the Captain and/or Head of Security.</Box>
+
+8. Security Officers are required to wear at least one (1) identifiable and visible piece of security equipment on their person at all times.
+<Box>Acceptable items are: any security jumpsuit, any security armor, any security jacket or security winter coat, any security helmet or headwear.</Box>
+
+## Blue Alert
+1. Guidelines 1, 2, 4 and 8 are carried over from [color=#388c34]Green Alert[/color].
+
+2. Security Officers are permitted to carry around any weapons or equipment available in the Armory, at the Warden's discretion, but never more than one at a time.
+<Box>Exception is made for extreme emergencies, such as Nuclear Operatives, Blob, and/or Delta Alert.</Box>
+
+3. Security Officers are permitted to carry weapons in hand during regular patrols, although this is not advised.
+
+4. Security Officers are permitted to present weapons during arrests.
+<Box>Security Officers must priorize non-lethal takedowns unless the suspect/wanted personnel is hostile and/or continuously evading arrest (over extended periods of time).</Box>
+
+5. Security Officers may demand entry to specific Departments during regular patrols.
+
+6. Security Officers may randomly search crewmembers, but are not allowed to apply any degree of force unless said crewmember acts overtly hostile.
+<Box>Station Personnel who refuse to be searched may be stunned and cuffed for the search.</Box>
+
+7. Security Officers are permitted to leave prisoners bucklecuffed should they act hostile.
+
+## Red Alert
+1. Guidelines 2, 3, 4, 5, 6, and 7 are carried over from [color=#1b67a5]Blue Alert[/color].
+
+2. Guideline 8 is carried over from [color=#388c34]Green Alert[/color].
+
+3. Security Officers may arrest crewmembers with no stated reason if there is evidence they are involved in criminal activities.
+
+4. Security Officers may forcefully relocate crewmembers to their respective Departments if necessary.
+
+</Document>

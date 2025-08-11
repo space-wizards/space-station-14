@@ -1,0 +1,295 @@
+<!--
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Armok <155400926+ARMOKS@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Starting Abilities
+
+  ## Absorb DNA
+  <Box>
+    [color=#999999][italic]0 Chems[italic][/color]
+  </Box>
+
+  - Allows you to slowly and noisily absorb a dead, crit, cuffed or hard-grabbed crewmate. This adds their DNA to your pool, gives you 2 evolution points, and refills your biomass.
+  - If another changeling is absorbed, you instead get half of their total evolution points and half of their max chemicals.
+  - Target must be in a HARD grab to use this ability.
+  - Can be used in lesser form.
+  - Cannot be used while on fire.
+
+  ## Extract DNA Sting
+
+  <Box>
+    [color=#999999][italic]25 Chems[italic][/color]
+  </Box>
+
+  - Adds the stung player's DNA to your pool.
+  - Can be used while cuffed or in lesser form.
+
+  ## Cycle DNA
+  <Box>
+    [color=#999999][italic]0 Chems[italic][/color]
+  </Box>
+
+  - Changes the active DNA used for transform.
+  - Can be used while cuffed or in lesser form.
+
+  ## Transform
+  <Box>
+    [color=#999999][italic]5 Chems[italic][/color]
+  </Box>
+
+  - Transforms you to have the exact name and voice of your currently active DNA, consumes the DNA.
+  - Can be used while cuffed or in lesser form.
+
+  ## Enter Regenerative Statis
+  <Box>
+    [color=#999999][italic]0 chems[italic][/color]
+  </Box>
+
+  - Changeling instantly dies, and the exit stasis ability is unlocked.
+  - Can be used while cuffed or in lesser form.
+  - Can be used while on fire.
+
+  ## Exit Regenerative Statis
+  <Box>
+    [color=#999999][italic]30 Chems[italic][/color]
+  </Box>
+
+  - Changeling instantly revives, all health is fully recovered.
+  - Can be used while cuffed or in lesser form.
+  - Can be used while on fire.
+  - Can only be used after a set duration. This scales with damage taken prior to stasis, up to 180 seconds.
+
+  # Combat Abilities
+
+  ## Dissonant Shriek
+  <Box>
+    [color=#999999][italic] 2 Evolution Points / 30 Chems / 1 Absorbed Organic [italic][/color]
+  </Box>
+
+  - Changeling emits an EMP blast, disabling borgs, IPCs, suit coordinates, and other electronic equipment.
+  - Can be used while cuffed or in lesser form.
+  - Can be used while on fire.
+
+  ## Resonant Shriek
+  <Box>
+    [color=#999999][italic] 2 Evolution Points / 30 Chems / 1 Absorbed Organic [italic][/color]
+  </Box>
+  - Screeches, blinding anyone in the nearby area without flash protection, breaks nearby lights as well.
+  - Can be used while cuffed or in lesser form.
+  - Can be used while on fire.
+
+  ## Organic Shield
+  <Box>
+    [color=#999999][italic] 2 Evolution Points / 20 Chems / 1 Absorbed Organic [italic][/color]
+  </Box>
+
+  - Grows one of its arms into a robust shield, absorbs 50% of incoming damage until destroyed.
+
+  ## Strained Muscles
+  <Box>
+    [color=#999999][italic] 2 Evolution Points / 0 Chems [italic][/color]
+  </Box>
+  - Speeds the changeling up greatly, but deals heavy stamina damage over time to self. Toggles on and off.
+  - Can be used while cuffed or in lesser form.
+  - Can be used while on fire
+
+  ## Bone Shard
+  <Box>
+    [color=#999999][italic] 3 Evolution Points / 15 Chems [italic][/color]
+  </Box>
+  - Changeling forms a bone shard throwing weapon that hardstuns in two hits, shards dissolve after a short while.
+
+  ## Dart Gun
+  <Box>
+    [color=#999999][italic] 3 Evolution Points / 15 Chems [italic][/color]
+  </Box>
+  - Changeling forms an arm into a dart gun. Dart gun fires any of the lings evolved stings, costs 1/3 the stings cost in chems per shot.
+  - Can shoot and select darts while on fire (if in use/toggled)
+
+  ## Arm Blade
+  <Box>
+    [color=#999999][italic] 4 Evolution Points / 15 Chems [italic][/color]
+  </Box>
+  - Changeling forms an arm into a blade. Deals heavy limb damage on light attack when targeting a limb.
+
+  ## Arm Claw
+  <Box>
+    [color=#999999][italic] 4 Evolution Points / 15 Chems [italic][/color]
+  </Box>
+  - Changeling forms an arm into a claw. Claws can grab organisms and prevent them from moving. Claw cannot be used to attack while grabbing.
+
+  ## Arm Hammer
+  <Box>
+    [color=#999999][italic] 4 Evolution Points / 15 Chems [italic][/color]
+  </Box>
+  - Changeling forms an arm into a hammer. Deals blunt damage, knocks down, and flings targets on light attack.
+
+  ## Chitinous Armor
+  <Box>
+    [color=#999999][italic] 4 Evolution Points / 25 Chems / 2 Absorbed Organics [italic][/color]
+  </Box>
+  - Changeling forms body into a mass of armor, only usable when outerwear and head slots are empty.
+  - Armor slows ling by 15 percent
+  - Armor reduces all damage by 50 percent
+  - Head armor reduces brute and burn damages by 10 percent
+  - Has decent protection against fires
+  - Slows down chem regen rate by 25%.
+
+  # Stings Abilities
+
+  ## Blind Sting
+  <Box>
+    [color=#999999][italic] 2 Evolution Points / 20 Chems [italic][/color]
+  </Box>
+  - Changeling injects organic with 2 units of blind toxin, blinding the target for 12 seconds.
+  - Can be used while cuffed or in lesser form.
+  - Does not work on Yowies.
+  - Can stack with itself.
+
+  ## Cryogenic Sting
+  <Box>
+    [color=#999999][italic] 2 Evolution Points / 20 Chems [italic][/color]
+  </Box>
+  - Changeling injects organic with 10 units of fresium, dropping their temperature to 0 degrees Celsius in most cases.
+  - Cold organics move far slower.
+  - Can be used while cuffed or in lesser form.
+  - Can stack with itself.
+
+  ## Mute Sting
+  <Box>
+    [color=#999999][italic] 2 Evolution Points / 20 Chems [italic][/color]
+  </Box>
+  - Changeling injects organic with 2 units of mute toxin, muting the target for 40 seconds.
+  - Can be used while cuffed or in lesser form.
+  - Can stack with itself.
+  - Does not work on Yowies.
+
+  ## Lethargic Sting
+  <Box>
+    [color=#999999][italic] 3 Evolution Points / 30 Chems [italic][/color]
+  </Box>
+  - Changeling injects organic with 5 units of impredrezene and tirizene, causing numerous effects.
+  - Slows target by 35%
+  - Deals 20 poison damage
+  - Deals 15 stamina damage per second for ten seconds
+  - Can be used while cuffed or in lesser form.
+  - Can stack with itself.
+  - Does not work on Yowies.
+
+  ## False Armblade Sting
+  <Box>
+    [color=#999999][italic] 4 Evolution Points / 50 Chems [italic][/color]
+  </Box>
+  - Changeling injects organic with some of its genome, forcing the organic to grow a temporary useless armblade.
+  - Can be used while cuffed or in lesser form.
+  - Lasts roughly 60 seconds.
+
+  # Utility Abilities
+
+  ## Anatomic Panacea
+  <Box>
+    [color=#999999][italic] 2 Evolution Points / 30 Chems [italic][/color]
+  </Box>
+  - Produces 10 units of Ling Panacea within the changeling.
+  - Heals 60 genetic, radiation and poison damage.
+  - Cures disabilities (permanent blindness, narcolepsy, leg paralysis ect)
+  - Can be used while cuffed or in lesser form.
+
+  ## Last Resort
+  <Box>
+    [color=#999999][italic] 2 Evolution Points / 20 Chems [italic][/color]
+  </Box>
+  - Explodes the changelings current body and turns them into a headslug.
+  - Headslugs are extremely fast, can ventcrawl, and can crawl under doors.
+  - It can be used while cuffed but cannot be used in lesser form.
+  - Headslugs can infect a non-hollow corpse to turn into a lesser form changeling after a short timer.
+  - If the infected body is destroyed, the headslug will not revive, and will be forever lost.
+  - Can be activated while on fire.
+
+  ## Lesser Form
+  <Box>
+    [color=#999999][italic] 2 Evolution Points / 20 Chems [italic][/color]
+  </Box>
+  - Changeling turns into a monkey.
+  - Uncuffs changeling.
+  - Money can ventcrawl, but loses some abilities that the ling would otherwise have.
+
+  ## Absorb Biomatter
+  <Box>
+    [color=#999999][italic] 3 Evolution Points [italic][/color]
+  </Box>
+  - Consuming meat products restores the changelings chemical stores.
+
+  ## Augmented Eyesight
+  <Box>
+    [color=#999999][italic] 4 Evolution Points / 0 Chems [italic][/color]
+  </Box>
+  - Changeling can toggle eyesight between flash resistant and thermal vision.
+  - While using thermal vision, flashes stun the changeling for twice as long.
+  - Thermal vision also provides changeling with night vision.
+  - Can be used while cuffed or in lesser form.
+
+  ## Biodegrade
+  <Box>
+    [color=#999999][italic] 4 Evolution Points / 30 Chems [italic][/color]
+  </Box>
+  - Burns cuffs off the changeling.
+  - Uncuffs changeling.
+  - Splashes anyone grabbing changeling with acid, doing slight caustic damage, blinding them and knocking them down.
+  - Can be used while cuffed or in lesser form.
+  - Can be used while on fire.
+
+  ## Chameleon Skin
+  <Box>
+    [color=#999999][italic] 4 Evolution Points / 20 Chems [italic][/color]
+  </Box>
+  - Changeling gains invisibility.
+  - Invisibility increases while standing still.
+  - Invisibility rapidly decreases while moving.
+  - Can be used while cuffed.
+  - Slows down chem regen rate by 25%.
+
+  ## Adrenaline Reserves
+  <Box>
+    [color=#999999][italic] 4 Evolution Points / 25 Chems [italic][/color]
+  </Box>
+  - Changeling produces 5 units of Changeling Adrenaline.
+  - Deals 6.75 poison damage to changeling upon immediate second use.
+  - Removes stuns, knockdown times, and makes you impervious to most forms of fatigue.
+  - Can be used while cuffed or in lesser form.
+  - Can be used while on fire.
+
+  ## Hivemind Access
+  <Box>
+    [color=#999999][italic] 4 Evolution Points [italic][/color]
+  </Box>
+  - Shows a symbol above all changelings with this ability.
+  - Togglable on and off.
+  - Grants access to the hivemind channel - :g
+
+  ## Void Adaption
+  <Box>
+    [color=#999999][italic] 4 Evolution Points / 0 Chems / 2 Absorbed Organics [italic][/color]
+  </Box>
+  - Renders you immune to barotrauma (spacing) damage if active.
+  - Immune to freezing temperatures and its effects if active.
+  - Does not protect from cold damage.
+  - Changeling no longer needs to breathe if active.
+  - Slows down chem regen rate by 25%.
+
+  ## Fleshmend
+  <Box>
+    [color=#999999][italic] 5 Evolution Points / 35 Chems [italic][/color]
+  </Box>
+  - Changeling produces 5 units of changeling fleshmenders.
+  - Reduces bleed by 8 every unit.
+  - Restores 20 blood level per unit.
+  - Heals 70 of each brute damage.
+  - Heals 30 of each burn damage.
+  - Usable while in critical condition.
+  - Can be used while cuffed or in lesser form.
+</Document>

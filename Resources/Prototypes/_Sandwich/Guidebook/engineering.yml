@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+# SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: guideEntry
+  id: Supermatter
+  priority: 999
+  name: guide-entry-sm
+  text: "/ServerInfo/_Sandwich/Guidebook/Engineering/Supermatter.xml"
+
+- type: guideEntry
+  id: Automation
+  priority: 999
+  name: guide-entry-automation
+  text: "/ServerInfo/_Sandwich/Guidebook/Engineering/Automation.xml"

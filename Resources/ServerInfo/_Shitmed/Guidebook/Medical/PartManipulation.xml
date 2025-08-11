@@ -1,0 +1,61 @@
+<!--
+SPDX-FileCopyrightText: 2024 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Piras314 <p1r4s@proton.me>
+SPDX-FileCopyrightText: 2025 SX-7 <92227810+SX-7@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Part Manipulation
+  This is how you will turn Tajaran into humans, or vice versa if you're feeling particularly cruel.
+
+  ## Anatomy
+  Normally a body has 11 main parts. Those being:
+
+  <Box>
+<GuideEntityEmbed Entity="HeadHuman" Caption="head"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="RightHandHuman" Caption="right hand"/>
+<GuideEntityEmbed Entity="RightArmHuman" Caption="right arm"/>
+<GuideEntityEmbed Entity="ChestHuman" Caption="torso"/>
+<GuideEntityEmbed Entity="GroinHuman" Caption="groin"/>
+<GuideEntityEmbed Entity="LeftArmHuman" Caption="left arm"/>
+<GuideEntityEmbed Entity="LeftHandHuman" Caption="left hand"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="RightFootHuman" Caption="right foot"/>
+<GuideEntityEmbed Entity="RightLegHuman" Caption="right leg"/>
+<GuideEntityEmbed Entity="LeftLegHuman" Caption="left leg"/>
+<GuideEntityEmbed Entity="LeftFootHuman" Caption="left foot"/>
+</Box>
+
+Certain species might have more or less parts, such as tails, wings, or extra limbs, but this is the rough outline of what you'll see.
+To detach a limb, you'll need to apply the Remove Part surgery on it, which will then remove it without harming the patient.
+
+However if you want to reattach the limb, you'll need to apply the Attach Part surgery where you want it attached.
+Hands are attached to the arms, feet are attached to the legs. And everything else is attached to the torso.
+
+
+## Where do I get more parts?
+
+Normally when your patients come in needing new limbs, they'll need to get a new one, as their old ones will be either missing, or damaged beyond repair.
+For this you can use the Medical Biofabricator with some Biomass. Which can manufacture Biosynthetic limbs for all species.
+
+<Box>
+<GuideEntityEmbed Entity="MedicalBiofabricator" Caption="medical biofabricator"/>
+<GuideEntityEmbed Entity="MedicalBiofabMachineBoard" Caption="biofabricator board"/>
+<GuideEntityEmbed Entity="MaterialBiomass" Caption="biomass"/>
+</Box>
+
+By default, every Chief Medical Officer has access to a Medical Biofabricator board in their locker.
+
+## I reattached my patient's limb, but
+## it's not working?
+
+Your patient has taken enough damage to the point that their limb's nerves were badly damaged, and they need to be healed properly before it can work again.
+For this you can try the Tend Wounds surgeries, or letting them use topicals on their wounds.
+
+</Document>

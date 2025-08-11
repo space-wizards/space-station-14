@@ -1,0 +1,27 @@
+<!--
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 AstroDogeDX <48888500+AstroDogeDX@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Resomi
+
+  <Box>
+    <GuideEntityEmbed Entity="MobResomiDummy" Caption=""/>
+  </Box>
+
+  Resomi are a small avian-like species that hail from an icy world.
+
+  Like most other non-human species, Resomi are capable of digesting raw meat and other uncooked animal proteins.
+
+  As a result of the conditions of their home planet and ammonia-based blood, Resomi are immune to any cold damage and other effects.
+  Consequently, they find temperatures that most other species find comfortable to be unbearably hot, finding themselves suffering starting at just 30°C.
+
+  Along with their temperature tolerances, they take 30% more heat and brute damage.
+
+  Due to their small size, they can fit in duffelbags. They also weigh less, making it harder for them to pull other species. Their unarmed attack deals Slash damage.
+
+</Document>

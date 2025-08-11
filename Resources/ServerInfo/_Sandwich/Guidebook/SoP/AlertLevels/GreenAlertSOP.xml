@@ -1,0 +1,47 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+    # Station Alert - Green
+
+    <Box>
+        [italic]Called by: Anyone with Command-Level Access at a working Communications Console.[/italic]
+    </Box>
+
+    [bold]Conditions:[/bold]
+
+    Default Alert Code at the start of the shift. Do not change unless a threat is suspected/confirmed;
+
+    [bold]OR[/bold]
+
+    All confirmed/suspected threats to the station and/or crew have been handled, or simply vanished on their own. It is recommended that, after 15+ minutes on Code Blue without any hostile activity, Code Green be called;
+
+    [bold]Security:[/bold]
+
+    All weapons must be holstered or kept in pockets/suit storage slots unless absolutely required;
+
+    Random searches are not permitted without express permission by either the Head of Security or Captain. However, searches are still permitted if there is reasonable suspicion of a crime.
+
+    [bold]Secure Areas:[/bold]
+
+    EVA Storage, Tech Storage, Gravity Generator, Engineering Secure Storage, AI Upload, Vault, Gateway, anywhere else requiring command level access that does not get regularly used.
+
+    Secure areas such as EVA are to be left unbolted and ready to be used for their intended purposes.
+
+    Exceptions are below;
+
+    The Vault is not to be opened unless repairs are required, gold is required for Research and Development (in case Mining fails to deliver) or a critical item needs to be hidden in the safe.
+
+    Searches of a person or department need to have a signed and stamped warrant by the Captain or HoP.
+
+    [bold]General Crew:[/bold]
+
+    While not required, it is recommended that the crew activate and maximize their Suit Sensors, due to the potential for workplace accidents;
+
+    Free transit through the station is permitted for the crew, excluding Secure Areas.
+
+</Document>

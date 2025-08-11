@@ -1,0 +1,38 @@
+<!--
+SPDX-FileCopyrightText: 2024 Ashley Woodiss-Field <ash@DESKTOP-H64M4AI.localdomain>
+SPDX-FileCopyrightText: 2024 BeeRobynn <166929042+BeeRobynn@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 ColesMagnum <98577947+AW-FulCode@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 SX-7 <92227810+SX-7@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Yowie
+
+  <Box>
+    <GuideEntityEmbed Entity="MobYowie" Caption=""/>
+  </Box>
+
+  Yowie are a once-thought urban myth, turned newly discovered mystical species of bipedal hairy creature.
+  Their body is larger than most other species in stature, with the downside of them [color=#AAFF00]not being able to fit into most Nanotrasen external wear or shoes[/color] (they can barely squeeze into softsuits), or [color=#AAFF00] being able to be carried by others[/color].
+  Their fur also allows them to take [color=#baf2ef]less cold damage[/color].
+
+  Their stature makes their unarmed punch deal [color=#ec3a3a]2x the damage[/color] of a human punch.
+
+  They are larger, making them easier to hit in combat, but they take 25% less Blunt, Slash and Piercing damage.
+  They also weigh more, allowing them to pull lighter species with ease.
+
+  ## Fuckin' skiz, mate
+  <Box>
+    <GuideEntityEmbed Entity="Joint" Caption=""/>
+  </Box>
+
+  From discussions had between our species, it seems historically they were living beside humanity during its existence on Earth in parts of Australia, lending them to develop a thick australian accent with slang included.
+  They seem to have spent most of their time experimenting with some of the most dangerous and experimental drugs, and on review, they've built up a bigger tolerance to most chemicals. Uniquely, their liver carries out the task of metabolizing chemicals.
+
+
+</Document>

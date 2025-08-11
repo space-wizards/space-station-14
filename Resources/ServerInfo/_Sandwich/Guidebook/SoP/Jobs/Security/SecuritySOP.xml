@@ -1,0 +1,21 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Security Department SOP
+These are the list of SOPs that Security Personnel should follow. These are, as stated before, [bold]not checklists[/bold] and should be treated as guidelines.
+
+For reference, [color=#ba292c][bold]Security Officer[/bold][/color] and [color=#ba292c][bold]Security Cadet[/bold][/color] have been combined in the same entry, for ease of use.
+
+The following jobs have entries in this department, the [color=#1b67a5][bold]Head of Security[/bold][/color] being the Head of Staff and [color=#ba292c][bold]Warden[/bold][/color] commanding underneath them:
+- [textlink="Head of Security" link="HeadOfSecurity SOP"]
+- [textlink="Warden" link="Warden SOP"]
+- [textlink="Detective" link="Detective SOP"]
+- [textlink="Security Officer" link="OfficerCadet SOP"]
+- [textlink="Security Cadet" link="OfficerCadet SOP"]
+
+</Document>

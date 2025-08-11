@@ -1,0 +1,73 @@
+<!--
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Warden SOP
+This is the list of procedures, responsibilities, and duties of the [color=#ba292c][bold]Warden[/bold][/color] of this station.
+
+<ColorBox>
+  <Box>
+    For the purposes of Alert Escalation: Treat higher alerts as if they are still on the previous alert level. (Yellow Alert is Blue Alert if it was Blue Alert prior.) Furthermore, treat Delta, Gamma, Epsilon, and Violet Alert as Red Alert.
+  </Box>
+</ColorBox>
+
+The [color=#ba292c][bold]Warden[/bold][/color] is permitted to carry their shift-start equipment, but should follow escalation procedures and refrain from using lethals.
+
+## Green Alert
+1. The Warden is obligated to remain in the Security Department at all times except to assist in transportation of prisoners.
+<Box>The Warden must maintain control over the Armory as well, with only exceptions being allowed for Captain and Head of Security.</Box>
+
+2. The Warden may not perform arrests if there are Security Officers active.
+
+3. The Warden must conduct a thorough search of every prisoner's belongings, including pockets, PDA slots, any coat pockets and suit storage slots.
+<Box>Following proper Space Law: PDA, clothes, and Headsets are to be returned when the search is finished; unless contraband/tampering is evident. Then replacements should be issued.</Box>
+
+4. The warden should ensure that all prisoners are equipped with their PDA, Headset, and clothes (provided they are not contraband/tampered with).
+<Box>In such cases where the PDA, Headset, and/or clothes are tampered with or harboring contraband, replacements should be issued.</Box>
+
+5. The Warden is not obligated to provide a trial, but is encouraged to allow legal representation should the suspect request it. This only applies to Capital Crimes.
+
+6. The Warden may not hand out any weapons or armour from the Armory, except for extra disablers.
+
+7. The Warden is permitted to carry a standard disabler, a flash, a stunbaton, a flashbang and their provided energy shotgun.
+
+8. The Warden may not place the portable flashers nor deployable barriers within the Brig.
+
+9. The Warden must read to every prisoner the crimes they are sentenced to.
+
+10. The Warden is not permitted to leave prisoners buckled and cuffed to their beds.
+<Box>An exception is made if the prisoners are acting overly hostile or attempting to breach the cell in order to escape.</Box>
+
+11. The Warden must follow the same guidelines as Security Officers for attire, with the exception that their own assigned attire is also acceptable for any of the attire mentioned for Security Officers.
+
+12. The Warden is permitted to place the portable flashers inside the Brig if there is an influx of prisoner personnel and/or several attempts to escape.
+
+## Blue Alert
+1. Guidelines 2, 3, 5, 7, 10, and 12 are carried over from [color=#388c34]Green Alert[/color].
+
+2. The Warden is permitted to hand out all equipment from the Armory. Energy and Laser guns are only to be handed out with Captain and/or Head of Security's approval, as they present a lethal risk.
+<Box>Exceptions apply if there is a lethal threat and/or emergency, such as Nuclear Operatives, Blob, and/or Delta Alert.</Box>
+
+3. The Warden is permitted to place the portable flashes and deployable barriers inside the Brig at all times.
+
+4. The Warden should still remain in the Security Department unless an emergency requires moving.
+
+## Red Alert
+1. Guidelines 3, 5, 7, 10, and 12 are carried over from [color=#388c34]Green Alert[/color].
+
+2. Guidelines 2 and 3 are carried over from [color=#1b67a5]Blue Alert[/color]. In addition, the Warden may also carry any weapon from the Armory, but never more than one at a time.
+
+3.The Warden is permitted to distribute any weapon or piece of equipment in the Armory. This includes whatever Research has provided.
+
+4. The Warden is permitted to carry out arrests freely.
+
+5. The Warden, with approval from Captain and/or Head of Security, may give one (1) lethal weapon to a Head of Staff.
+<Box>The lethal weapon must be returned when the alert is reduced.</Box>
+
+6. The Warden should still remain in the Security Department unless an emergency requires moving.
+
+</Document>

@@ -1,0 +1,62 @@
+<!--
+SPDX-FileCopyrightText: 2024 blobadoodle <lucahtaylor@gmail.com>
+SPDX-FileCopyrightText: 2024 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # I.P.C.
+  <GuideEntityEmbed Entity="MobIPCDummy" Caption="I.P.C."/>
+  An IPC (short for Integrated Positronic Chassis) is a type of sentient robot and is considered an [color=yellow]independent individual[/color], meaning [color=red]they are not guided by any laws of robotics[/color]. IPCs cannot be hacked by Emags because they do not have to follow any predefined directives in their system. [color=red]IPCs are silicon-based beings, so they are usually healed by Science or Engineering instead of Medical.[/color]
+  They take 20% less Brute damage, 70% more Heat damage and 100% more Shock damage. Contrary to cyborgs, they take Radiation damage, but 60% less than humans. They are made of a heavy alloy, which means they are harder to pull, though IPCs themselves can pull more lightweight species with ease.
+
+  <Box>
+    <GuideEntityEmbed Entity="PositronicBrain" Caption="Positronic Brain"/>
+  </Box>
+  Like borgs, IPCs have a positronic brain as their processing source. However, unlike them, IPCs can't be assembled. "It's cheaper to create a shell that obeys you than one that doesn't! *wink*"
+
+  ## Recharging an IPC
+   <Box>
+    <GuideEntityEmbed Entity="APCBasic" Caption="APC Terminal"/>
+    <GuideEntityEmbed Entity="BorgCharger" Caption="Borg Charger"/>
+    <GuideEntityEmbed Entity="PowerCellMedium" Caption="Power Cell"/>
+  </Box>
+  IPCs can be recharged in three different ways:
+
+  APC Terminal: IPCs can use APC terminals to recharge. Press [color=yellow]Alt + left click[/color] on a terminal as many times as needed to fully recharge.
+
+  Borg Rechargers: IPCs can use borg rechargers to recharge. Always prioritize the ones outside of the Sci area to avoid headaches.
+
+  Power Cell: IPCs have an internal power cell that serves as their battery. They can simply swap it out by opening the hatch and manually replacing it.
+
+  ## Integrated Radio
+  <Box>
+    <GuideEntityEmbed Entity="EncryptionKeyScience" Caption="Encryption key"/>
+  </Box>
+
+  IPCs do [bold]not[/bold] use external radios because they already have one built in. They only need to get an encryption key from a radio. By clicking on an IPC with a [color=yellow]wire cutter[/color], you can remove their keys.
+  You can find new keys around the station or remove one from a sector radio using a [color=yellow]screwdriver[/color].
+
+  ## Repairing
+  <Box HorizontalAlignment="Stretch">
+    <GuideEntityEmbed Entity="WelderIndustrialAdvanced" Caption="Welder"/>
+    Welders can be used to repair [color=yellow]Brute[/color] damage.
+  </Box>
+  <Box HorizontalAlignment="Stretch">
+    <GuideEntityEmbed Entity="CableApcStack" Caption="Cables (any type)"/>
+    Cables can be used to repair [color=yellow]Burns[/color].
+  </Box>
+  <Box HorizontalAlignment="Stretch">
+    <GuideEntityEmbed Entity="SheetGlass" Caption="Glass Sheets (any type)"/>
+    Glass Sheets can be used to repair [color=yellow]Blindness[/color].
+  </Box>
+  <Box HorizontalAlignment="Stretch">
+    In the event an IPC dies, after being fully repaired, it should be restarted using the [color=yellow]"Restart"[/color] button (located by right-clicking).
+
+    [color=red]NEVER ELECTROCUTE AN IPC with a defibrillator or in any other way while it is dead, as this will cause the battery to discharge energy rays outward![/color]
+  </Box>
+
+</Document>

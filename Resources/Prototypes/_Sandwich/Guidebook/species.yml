@@ -1,0 +1,5 @@
+- type: guideEntry
+  id: Ariral
+  name: species-name-ariral
+  priority: 999
+  text: "/ServerInfo/Guidebook/_ShibaStation/Mobs/ariral.xml"

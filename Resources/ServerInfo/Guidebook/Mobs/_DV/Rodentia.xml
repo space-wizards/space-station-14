@@ -1,0 +1,35 @@
+<!--
+SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 deltanedas <39013340+deltanedas@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Rodentians
+
+  <Box>
+    <GuideEntityEmbed Entity="MobRodentiaDummy" Caption=""/>
+  </Box>
+
+  Rodentians are a race of humanoid beings resembling rodents. Resourceful, evasive, sneaky, but fragile. They are [color=#1e90ff]able to eat raw meat.[/color]
+
+  They slash with their claws instead of using their fists, dealing [color=#ec3a3a]Slashing[/color] and [color=#ec3a3a]Blunt[/color] damage.
+
+  Due to their [color=yellow]small stature[/color], Rodentians can also [color=#1e90ff]fit into duffel bags[/color]. However, this comes at the cost of being [color=#ec3a3a]25% easier to knock down[/color].
+
+  ## Special
+
+  - Can rummage in disposal chutes, sometimes digging up food.
+  - Can store small items in their cheeks. However, having items in their mouth makes their speech unintelligible. If attacked, stunned, or shoved, they will drop all items in their mouth.
+  - Can "sneak" underneath tables, but not doors.
+
+  ## Drawbacks
+
+  - Takes 30% more Blunt damage, and 15% more Slash and Piercing damage.
+  - Gets hungry 33% faster.
+
+</Document>

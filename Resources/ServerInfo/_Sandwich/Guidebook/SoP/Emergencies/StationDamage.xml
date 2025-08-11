@@ -1,0 +1,22 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Structural Damage Procedures
+In the event of massive structural damage to the station, Command should set the alert to [color=#c8a404]Yellow Alert[/color] and notify Engineering of the location of the damage.
+
+1. Engineering personnel should be allowed access to the damage site (in the event of the location being in a different department and inaccessible).
+
+2. Engineering should be given priority for materials to rebuild the section for a safe state.
+
+3. Engineering should repressurize the area to prevent pressure lockout.
+
+4. All secure areas that are affected should be completely sealed off and returned to a secure state, confirmed by Security/Command.
+
+5. Once all damage has been dealt with, Engineering is to give the all clear with confirmation from Command, and the alert should be set to a safe alert.
+
+</Document>

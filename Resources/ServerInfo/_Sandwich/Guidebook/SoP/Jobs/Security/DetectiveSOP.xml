@@ -1,0 +1,52 @@
+<!--
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Detective SOP
+This is the list of procedures, responsibilities, and duties of the [color=#ba292c][bold]Detective[/bold][/color] of this station.
+
+<ColorBox>
+  <Box>
+    For the purposes of Alert Escalation: Treat higher alerts as if they are still on the previous alert level. (Yellow Alert is Blue Alert if it was Blue Alert prior.) Furthermore, treat Delta, Gamma, Epsilon, and Violet Alert as Red Alert.
+  </Box>
+</ColorBox>
+
+The [color=#ba292c][bold]Detective[/bold][/color] is permitted to carry their shift-start equipment, but should follow escalation laws and leave them holstered on Green Alert.
+
+## Green Alert
+1. The Detective is permitted to assist Security Officers with all Patrol Duties. This includes stops, searches, and arrests as per the current Alert Code.
+<Box>They should, however, prioritize investigations and the collection of forensic evidence.</Box>
+
+2. The Detective is to follow all Standard Operating Procedures as outlined by the Security Officer SOP in regards to stops, searches and arrests as per the current Alert Code.
+
+3. The Detective may carry their Revolver and spare ammunition.
+
+4. The Detective is not permitted to obtain more ammunition without permission from the Captain, Head of Security, and/or Warden.
+
+5. The Detective is permitted to wear non-Security clothing with permission from the Captain and/or Head of Security for the purpose of undercover investigations.
+
+6. When not undercover, the Detective must follow the same guidelines as Security Officers for attire, with the exception that their own assigned attire is also acceptable for any of the attire mentioned for Security Officers.
+
+## Blue Alert
+1. All Guidelines carry over from [color=#388c34]Green Alert[/color].
+
+2. The Detective may pull aside any suspect for an interrogation during the course of their time in Processing. No detainee is to be held for longer than five (5) minutes in Processing if no evidence against them is readily available.
+<Box>Exceptions may be made for changelings, heretics, and/or revolutionaries.</Box>
+
+3. The Detective may use their revolver during arrests.
+
+## Red Alert
+1. Guidelines 1, 2, 3, 4, 5 and 7 carry over from [color=#388c34]Green Alert[/color].
+
+2. Guidelines 2 and 3 carry over from [color=#1b67a5]Blue Alert[/color].
+
+3. The Detective is permitted to overcharge their energy revolver and freely discharge it when handling deadly threats in accordance with Space Law's ruling on Use of Deadly Force.
+
+4. The Detective is permitted to carry around any weapons or equipment available in the Armory, at the Captain, Head of Security, and/or Warden's discretion, but never more than one at a time.
+<Box>Exception is made for extreme emergencies, such as Nuclear Operatives, Blob, and/or Delta Alert.</Box>
+
+</Document>

@@ -1,0 +1,85 @@
+<!--
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Armok <155400926+ARMOKS@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Piras314 <p1r4s@proton.me>
+SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Abductors
+
+  <Box>
+    <GuideEntityEmbed Entity="MobLoneAbductor"/>
+    <GuideEntityEmbed Entity="MobAbductorAgent"/>
+    <GuideEntityEmbed Entity="MobAbductorScientist"/>
+  </Box>
+  Abductors are an alien society set on cataloging and experimenting on the sectors personnel.
+  Its important to note: Abductors, unlike most antagonists are [color=red]NOT set on killing people[/color] and are rather purely interested in completing their experiments.
+
+  Abductors do not possess the ability to speak and therefore communicate through telepathy.
+
+  ##Abductors
+  There are three types of abductors; lone abductors, scientists, and agents.
+  - [color=#a4885c]Lone abductors[/color] are a solo abductor, and will not have support or allies.
+  - [color=#a4885c]Scientists[/color] are group abductors, and need to support the agent by toggling their armor and experimenting on crew.
+  - [color=#a4885c]Agents[/color] are group abductors, and work to kidnap crew for the scientist to experiment on.
+  - Any abductor can fill anothers role in the event of an unfortunate death.
+
+  ##Abduction
+
+  <Box>
+    <GuideEntityEmbed Entity="Wonderprod"/>
+
+    <GuideEntityEmbed Entity="WeaponAlien"/>
+
+    <GuideEntityEmbed Entity="AbductorGizmo"/>
+  </Box>
+
+  Abductors begin on their ship somewhere near the station. Using the [color=#a149bf]"Human Observation Console"[/color] you can seek out victims who are alone and [color=lightblue]warp[/color] near them to begin abduction.
+
+  The wonderprod is the primary tool of an Abductor. It has four modes you will use for abduction:
+  - [color=yellow]{Stun}[/color] Stuns the victim for roughly 5 seconds.
+  - [color=pink]{Restrain}[/color] binds the victims hands in weak cables.
+  - [color=blue]{Sleep}[/color] Induces a sleep-like state in the victim.
+  - [color=red]{Harm}[/color] Burns the target, dealing damage. [bold]ONLY USE IF YOU MUST.[/bold]
+
+  Once a target is immobilized you can use the [italic]gizmo[/italic] to implant them with a nano tracker, return to your ship using the [color=lightblue]return action[/color], then use the gizmo on your [color=#a149bf]Abductor Console[/color].
+
+  In a bad situation you can use the alien pistol to get out of a pinch, it is completely armor piercing but has low capacity. [color=red] You are not here to kill, use sparingly.[/color]
+
+  ##Experimentation
+
+  <Box>
+    <GuideEntityEmbed Entity="AbductorConsole"/>
+    <GuideEntityEmbed Entity="AbductorExperimentator"/>
+  </Box>
+
+  Once you have linked the most recent nano tracker to the console, select [bold]{ATTRACT}[/bold] to warp your victim to your ship.
+
+  Now that you have your victim aboard, its recommended you:
+  - Buckle them to your surgical table.
+  - Change out their cuffs for a higher grade of handcuffs provided on the ship.
+  - Remove any of their belongings that could damage you or the secrecy of the experiment.
+  - Use your vast surgical knowledge to replace their heart with a gland. You don't need to remove their clothes to do surgery, unlike normal surgeons.
+
+  Finally, drag the victim whom you have completed your experiment on into the [color=#a149bf]Experimentator[/color] to confirm the results of the experiment on the [color=#a149bf]Abductor Console[/color] and send them back where you found them.
+
+  ## Abductor Tools
+
+  <Box>
+    <GuideEntityEmbed Entity="Silencer"/>
+    <GuideEntityEmbed Entity="EnergyScalpelAbductor"/>
+    <GuideEntityEmbed Entity="CrowbarAbductor"/>
+  </Box>
+
+  Abductors have access to more advanced tools than normal surgeons or engineers. Their surgical tools are faster than advanced surgical tools, and from their normal tools, the multitool's alternative mode is able to be used to hijack doors.
+
+  You also have access to a silencer, which prevents the crew from speaking when they are hit with it.
+
+  ##Getting rid of an Abductor
+  Like [textlink="Changelings" link="Changelings"], Abductors are not protected by [textlink="space law" link="SpaceLaw"] and are able to be executed freely.
+
+  Also, an abductor's ship is a physical object in the world, anyone with access to a space-faring ship such as [textlink="salvage" link="Salvage"] can bump into them in space and dismantle their ship.
+</Document>

@@ -1,0 +1,35 @@
+<!--
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Station Alert - Omicron
+
+  <Box>
+    [italic]Called by: Central Command Only.[/italic]
+  </Box>
+
+  [bold]Conditions:[/bold]
+
+  Central Command has decided to take direct control of the station.
+
+  [bold]Security:[/bold]
+
+  All security members are to de-arm and await further instructions from Central Command.
+
+  [bold]Secure Areas:[/bold]
+
+  All Secure Areas are to be bolted down.
+
+  [bold]General Crew:[/bold]
+
+  All personnel must maximise their suit sensors.
+
+  All personnel should remain in their department, and await further orders.
+
+  Personnel are required to follow all Central Command orders.
+
+</Document>

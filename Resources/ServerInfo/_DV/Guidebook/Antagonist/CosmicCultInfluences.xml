@@ -1,0 +1,30 @@
+<Document>
+  # Influences
+
+  Culists begin with two powerful inflences, and will gradually unlock more as they progress the Monument through its three stages.
+
+  Once the Monument reaches its second stage, any time a cultist uses an influence, they have a chance to generate a telltale [color=#4cabb3]Malign Echo[/color]. These will fade after a short time, but may alert outsiders to the presence of your cult prematurely!
+
+  Using Siphon Entropy will never generate a Malign Echo.
+
+  <Box>
+    <GuideEntityEmbed Entity="CosmicEchoVfx" Caption=""/>
+  </Box>
+
+  ## Starting Influences
+  - [color=#4cabb3][bold]Siphon Entropy:[/bold][/color] Silently siphon entropy from your target, dealing some damage in the process.
+  - [color=#4cabb3][bold]Null Glare:[/bold][/color] Emit a horrific pulse of cosmic light, slowing and disorienting everyone around you.
+
+  ## Unlockable Active Influences
+  - [color=#4cabb3][bold]Abberant Lapse:[/bold][/color] Lapse your target's corporeal form, temporarily rendering it immutable, impassible, and frozen in place.
+  - [color=#4cabb3][bold]Shunt Subjectivity:[/bold][/color] Shunt your target's mind out of their body and unto the cosmic dark, temporarily rendering their body mindless.
+  - [color=#4cabb3][bold]Force Ingress:[/bold][/color] Use a concentrated blast of power to force a secure doorway open.
+  - [color=#4cabb3][bold]Astral Nova:[/bold][/color] Hurl a large and disruptive blast of astral energy.
+  - [color=#4cabb3][bold]Vacuous Imposition:[/bold][/color] You negate any incoming damage for a short time.
+
+  ## Unlockable Passive Influences
+  - [color=#4cabb3][bold]Eschew Metabolism:[/bold][/color] Your corporeal needs of hunger and thirst are sundered - you no longer need to eat or drink.
+  - [color=#4cabb3][bold]Unbound Step:[/bold][/color] You move relative only to the starless black - your movement is no longer affected by gravity.
+  - [color=#4cabb3][bold]Astral Stride:[/bold][/color] Astral energy invigorates your every move, subtly hastening your speed.
+  - [color=#4cabb3][bold]Vacuous Vitality:[/bold][/color] The starless emptiness of The Monument overwhelms your mind and body. Your corporeal form slowly regenerates while in its presence.
+</Document>

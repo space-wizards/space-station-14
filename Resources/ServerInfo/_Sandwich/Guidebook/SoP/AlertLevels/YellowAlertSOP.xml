@@ -1,0 +1,37 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Station Alert - Yellow
+
+  <Box>
+    [italic]Called by: Anyone with Command-Level Access at a working Communications Console.[/italic]
+  </Box>
+
+
+  [bold]Conditions:[/bold]
+  There is an atmospheric threat aboard the station such as mass hull breaches, spacing, or high temperatures that make the station uninhabitable without an EVA suit.
+
+  [bold]Security:[/bold]
+
+  You should ensure EVA suits are properly distributed around the station while maintaining vigilance.
+
+  [bold]Secure Areas:[/bold]
+
+  EVA Storage, Tech Storage, Gravity Generator, Engineering Secure Storage, AI Upload, Vault, Gateway, anywhere else requiring command level access that does not get regularly used.
+
+  It is recommended that all Secure Areas be bolted down unless their use is necessary;
+
+  [bold]General Crew:[/bold]
+
+  All personnel are highly recommended to maximize their Suit Sensors;
+
+  Personnel are to report any suspicious activity to the nearest member of Security, or use their PDA or headsets if required;
+
+  Personnel are highly encouraged to either get into a safe area or find emergency EVA suits as well as a source of oxygen/nitrogen as required.
+
+</Document>

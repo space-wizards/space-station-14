@@ -1,0 +1,45 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Station Alert - Red
+
+  <Box>
+    [italic]Called by: Anyone with Command-Level Access at a working Communications Console.[/italic]
+  </Box>
+
+  [bold]Conditions:[/bold]
+
+  There is a confirmed, hostile threat on-board the station or nearby in space. This threat should pose recognizable danger to the station and/or crew at large.
+
+  [bold]Security:[/bold]
+
+  Security personnel should read Security SOP for armament, armory and safety procedures;
+
+  Random searches are fully permitted and recommended. Security personnel may detain any personnel refusing a random search in order to conduct said search;
+
+  Security personnel are to cooperate fully with any Central Command Staff (such as Emergency Response Teams) in order to eliminate the threat to the station.
+
+  [bold]Secure Areas:[/bold]
+
+  EVA Storage, Tech Storage, Gravity Generator, Engineering Secure Storage, AI Upload, Vault, anywhere else requiring command level access that does not get regularly used.
+
+  There are no restrictions on bolting Secure Areas. Secure Areas may be left bolted or unbolted at the discretion of Command personnel;
+
+  [bold]General Crew:[/bold]
+
+  All personnel are required to maximize their Suit Sensors;
+
+  Unless their job demands it, personnel are forbidden from entering maintenance tunnels. Personnel in violation of this order may be charged with trespassing;
+
+  Visitors to the station (anyone with Civilian-level access) are to remain inside the Bar, Library or Dormitories for the duration of Code Red;
+
+  Personnel are to follow the instructions of Security staff, so long as they are within the bounds of Space Law and are not acting against the general well-being of the station and its crew. Failure to do so may lead to their arrest for Creating a Workplace Hazard.
+
+  Crewmembers in maintenance without proper reason or authorization may be detained for trespassing.
+
+</Document>

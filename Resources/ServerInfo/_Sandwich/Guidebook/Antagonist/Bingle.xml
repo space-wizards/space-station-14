@@ -1,0 +1,46 @@
+<!--
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Armok <155400926+ARMOKS@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Bingle
+
+A bingle is a disgusting fungus that rapidly grows and takes over stations. Very weak on its own, their strength is in numbers.
+
+  <Box>
+    <GuideEntityEmbed Entity="MobBingle" Caption="Bingle"/>
+	  <GuideEntityEmbed Entity="BinglePit" Caption="Bingle Pit"/>
+  </Box>
+
+A bingle is a midround antagonist that spawns alone, but can quickly grow in numbers
+
+## Playing As A Bingle
+
+- The most difficult part of a bingle pit's development is the beginning, when it is very weak. As the first bingle you should prioritize dragging as many items to the pit as fast as you can.
+Bingles are very strong in melee combat, stunning in a few hits. Try to take out any lone witnesses before they can call out the pits location.
+
+- Once there are a few bingles, you should focus on dragging items in, as well as protecting the pit. If it breaks, you wont be able to make any more bingles and the colony will die out.
+
+- The bingle pit is the home of bingles, when several items are drug into it and fall down a new bingle is made. After quite a large number of items are drug into it, bingles are upgraded into armored bingles, which have far more health than the normal ones. The bingle pit also grows to larger than before, allowing for corpses to be dropped into the pit.
+
+## Playing Against Bingles
+
+The most best way to play against bingles is to avoid melee combat. Instead; Use ranged weapons to deal with them and thin their numbers from afar.
+  <Box>
+    <GuideEntityEmbed Entity="WeaponRifleLecter"/>
+	  <GuideEntityEmbed Entity="WeaponLaserCarbine"/>
+  </Box>
+The bingle pit itself can only be damaged by melee weapons and explosives. When attacking the pit directly be careful to avoid falling into it, as you can do so even while alive. It is typically best to deal with the bingles themselves before attacking the pit.
+
+If a bingle infestation is growing out of hand, consider shutting down gravity, bingles cannot drop items into a pit without gravity and therefor cannot multiply.
+
+  <Box>
+    <GuideEntityEmbed Entity="GravityGenerator"/>
+  </Box>
+
+All items (and people) lost to the pit will be spat out when destroyed!
+
+</Document>

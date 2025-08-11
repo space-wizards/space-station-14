@@ -1,0 +1,40 @@
+<!--
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Roboticist SOP
+This is the list of procedures, responsibilities, and duties of the [color=#cc74fc]Roboticist[/color] of this station.
+<Box>For clarification, 'Scientist' and 'Roboticist' are both referred to as 'Scientist' in this SOP.</Box>
+
+<ColorBox>
+  <Box>
+    For the purposes of Alert Escalation: Treat higher alerts as if they are still on the previous alert level. (Yellow Alert is Blue Alert if it was Blue Alert prior.) Furthermore, treat Delta, Gamma, Epsilon, and Violet Alert as Red Alert.
+  </Box>
+</ColorBox>
+
+## Green Alert
+1. The Scientist is not permitted to construct any Combat Mechs without express permission from the Captain and/or Head of Security.
+<Box>The [color=#1b67a5][bold]Research Director[/bold][/color] is placed under these same restrictions.</Box>
+
+2. The Scientist is freely permitted to construct Utility Mechs, along with Utility Equipment. This refers to Ripleys.
+
+3. The Scientist is freely permitted to construct Cyborgs and all assorted equipment (modules and more).
+
+4. The Scientist is not permitted to transfer personnel MMIs into Cyborgs without express written or verbal consent from the person in question.
+<Box>The consent form should be kept safe.</Box>
+
+## Blue Alert
+1. Guidelines 2, 3, and 4 carry over from [color=#388c34]Green Alert[/color].
+
+2. The Scientist is permitted to construct Combat Mechs, but [bold]must deliver them to Armory[/bold] for Storage. Failure to do so will result in the Combat Mech being destroyed.
+<Box>The only exception to this policy is for extreme emergencies, such as Delta Alert, Nuclear Operatives, Blob, et cetera.</Box>
+<Box>The [color=#1b67a5][bold]Research Director[/bold][/color] is placed under these same restrictions.</Box>
+
+## Red Alert
+1. All guidelines from [color=#388c34]Green Alert[/color] and [color=#1b67a5]Blue Alert[/color] carry over. No special guidelines in [color=#ba292c]Red Alert[/color].
+
+</Document>

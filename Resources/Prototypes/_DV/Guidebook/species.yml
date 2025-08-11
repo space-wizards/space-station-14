@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2025 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2025 deltanedas <39013340+deltanedas@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: guideEntry
+  id: Rodentia
+  priority: 999
+  name: species-name-rodentia
+  text: "/ServerInfo/Guidebook/Mobs/_DV/Rodentia.xml"
+
+- type: guideEntry
+  id: Oni
+  priority: 999
+  name: species-name-oni
+  text: "/ServerInfo/Guidebook/Mobs/_DV/Oni.xml"
+
+- type: guideEntry
+  id: Feroxi
+  priority: 999
+  name: species-name-feroxi
+  text: "/ServerInfo/Guidebook/Mobs/_DV/Feroxi.xml"

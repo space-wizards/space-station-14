@@ -1,0 +1,614 @@
+- type: guideEntry # Main page for the rules
+  id: DefaultRuleset
+  name: "SandwichStation Rules"
+  priority: 1
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/SandwichRules.xml"
+  children:
+  - SandwichCoreRules
+  - SandwichRoleplayRules
+  - SandwichJobExpectations
+  - SandwichSiliconRules
+
+- type: guideEntry
+  id: SandwichCoreRules
+  name: "Core Rules"
+  priority: 1
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleCAll.xml"
+  children:
+  - SandwichRuleUA0
+  - SandwichRuleC1
+  - SandwichRuleC2
+  - SandwichRuleC3
+  - SandwichRuleC4
+  - SandwichRuleC5
+  - SandwichRuleC6
+  - SandwichRuleC7
+  - SandwichRuleC8
+  - SandwichRuleC9
+  - SandwichRuleC10
+  - SandwichRuleC11
+  - SandwichRuleC12
+  - SandwichRuleC13
+
+- type: guideEntry
+  id: SandwichRuleUA0
+  name: "Ultimate Authority 0"
+  ruleEntry: true
+  priority: 1
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleUA0Admins.xml"
+
+- type: guideEntry
+  id: SandwichRuleC1
+  name: "Core Rule 1"
+  ruleEntry: true
+  priority: 2
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC1Over18.xml"
+
+- type: guideEntry
+  id: SandwichRuleC2
+  name: "Core Rule 2"
+  ruleEntry: true
+  priority: 3
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC2EnglishOnly.xml"
+
+- type: guideEntry
+  id: SandwichRuleC3
+  name: "Core Rule 3"
+  ruleEntry: true
+  priority: 4
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC3DBAD.xml"
+
+- type: guideEntry
+  id: SandwichRuleC4
+  name: "Core Rule 4"
+  ruleEntry: true
+  priority: 5
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC4BeCivil.xml"
+
+- type: guideEntry
+  id: SandwichRuleC5
+  name: "Core Rule 5"
+  ruleEntry: true
+  priority: 6
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC5FunForAll.xml"
+
+- type: guideEntry
+  id: SandwichRuleC6
+  name: "Core Rule 6"
+  ruleEntry: true
+  priority: 7
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC6LightERP.xml"
+
+- type: guideEntry
+  id: SandwichRuleC7
+  name: "Core Rule 7"
+  ruleEntry: true
+  priority: 8
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC7Metacomms.xml"
+
+- type: guideEntry
+  id: SandwichRuleC8
+  name: "Core Rule 8"
+  ruleEntry: true
+  priority: 9
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC8BanEvasion.xml"
+
+- type: guideEntry
+  id: SandwichRuleC9
+  name: "Core Rule 9"
+  ruleEntry: true
+  priority: 10
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC9Multikey.xml"
+
+- type: guideEntry
+  id: SandwichRuleC10
+  name: "Core Rule 10"
+  ruleEntry: true
+  priority: 11
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC10Ahelp.xml"
+
+- type: guideEntry
+  id: SandwichRuleC11
+  name: "Core Rule 11"
+  ruleEntry: true
+  priority: 12
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC11AhelpThreats.xml"
+
+- type: guideEntry
+  id: SandwichRuleC12
+  name: "Core Rule 12"
+  ruleEntry: true
+  priority: 13
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC12CharacterNames.xml"
+
+- type: guideEntry
+  id: SandwichRuleC13
+  name: "Core Rule 13"
+  ruleEntry: true
+  priority: 14
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/CoreRules/SandwichRuleC13ICinOOC.xml"
+
+- type: guideEntry # Roleplay rules
+  id: SandwichRoleplayRules
+  name: "Roleplay Rules"
+  priority: 2
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleRAll.xml"
+  children:
+  - SandwichRuleR1
+  - SandwichRuleR2
+  - SandwichRuleR3
+  - SandwichRuleR4
+  - SandwichRuleR5-0
+  - SandwichRuleR5-1
+  - SandwichRuleR6
+  - SandwichRuleR7
+  - SandwichRuleR8
+  - SandwichRuleR9
+  - SandwichRuleR10
+  - SandwichRuleR11
+  - SandwichRuleR12
+
+- type: guideEntry
+  id: SandwichRuleR1
+  name: "Roleplay Rule 1"
+  ruleEntry: true
+  priority: 1
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR1JobExpectations.xml"
+  children:
+  - SandwichJobExpectations
+
+- type: guideEntry
+  id: SandwichRuleR2
+  name: "Roleplay Rule 2"
+  ruleEntry: true
+  priority: 2
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR2SiliconRules.xml"
+
+- type: guideEntry
+  id: SandwichRuleR3
+  name: "Roleplay Rule 3"
+  ruleEntry: true
+  priority: 3
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR3Familiars.xml"
+
+- type: guideEntry
+  id: SandwichRuleR4
+  name: "Roleplay Rule 4"
+  ruleEntry: true
+  priority: 4
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR4ReasonablePerson.xml"
+
+- type: guideEntry
+  id: SandwichRuleR5-0
+  name: "Roleplay Rule 5"
+  ruleEntry: true
+  priority: 5
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR5-0SelfAntag.xml"
+
+- type: guideEntry
+  id: SandwichRuleR5-1
+  name: "Roleplay Rule 5-1"
+  ruleEntry: true
+  priority: 5
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR5-1AcceptableCollateral.xml"
+
+- type: guideEntry
+  id: SandwichRuleR6
+  name: "Roleplay Rule 6"
+  ruleEntry: true
+  priority: 6
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR6NoEORG.xml"
+
+- type: guideEntry
+  id: SandwichRuleR7
+  name: "Roleplay Rule 7"
+  ruleEntry: true
+  priority: 7
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR7Metashield.xml"
+
+- type: guideEntry
+  id: SandwichRuleR8
+  name: "Roleplay Rule 8"
+  ruleEntry: true
+  priority: 8
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR8-0Escalation.xml"
+  children:
+  - SandwichRuleR8-1
+  - SandwichRuleR8-2
+
+- type: guideEntry
+  id: SandwichRuleR8-1
+  name: "Roleplay Rule 8-1"
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR8-1AnimalEscalation.xml"
+
+- type: guideEntry
+  id: SandwichRuleR8-2
+  name: "Roleplay Rule 8-2"
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR8-2ConflictTypes.xml"
+
+- type: guideEntry
+  id: SandwichRuleR9
+  name: "Roleplay Rule 9"
+  ruleEntry: true
+  priority: 9
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR9Arrivals.xml"
+
+- type: guideEntry
+  id: SandwichRuleR10
+  name: "Roleplay Rule 10"
+  ruleEntry: true
+  priority: 10
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR10Stalling.xml"
+
+- type: guideEntry
+  id: SandwichRuleR11
+  name: "Roleplay Rule 11"
+  ruleEntry: true
+  priority: 11
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR11Powergaming.xml"
+
+- type: guideEntry
+  id: SandwichRuleR12
+  name: "Roleplay Rule 12"
+  ruleEntry: true
+  priority: 12
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/RoleplayRules/SandwichRuleR12Validhunting.xml"
+
+- type: guideEntry # Job expectations
+  id: SandwichJobExpectations
+  name: "Job Expectations"
+  priority: 3
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/_JobExMain.xml"
+  children:
+  - SandwichJobExCommandBSO
+  - SandwichJobExCommandCaptain
+  - SandwichJobExCommandCE
+  - SandwichJobExCommandCMO
+  - SandwichJobExCommandHoP
+  - SandwichJobExCommandHoS
+  - SandwichJobExCommandNTRep
+  - SandwichJobExCommandQM
+  - SandwichJobExCommandRD
+  - SandwichJobExCargoMailCarrier
+  - SandwichJobExCargoSalvager
+  - SandwichJobExCargoTechnician
+  - SandwichJobExEngiAssistant
+  - SandwichJobExEngiAtmos
+  - SandwichJobExEngiEngineer
+  - SandwichJobExMedicalChemist
+  - SandwichJobExMedicalDoctor
+  - SandwichJobExMedicalIntern
+  - SandwichJobExMedicalParamedic
+  - SandwichJobExMedicalPsychologist
+  - SandwichJobExSciAssistant
+  - SandwichJobExSciScientist
+  - SandwichJobExSecurityCadet
+  - SandwichJobExSecurityDetective
+  - SandwichJobExSecurityOfficer
+  - SandwichJobExSecurityWarden
+  - SandwichJobExSiliconAI
+  - SandwichJobExSiliconBorg
+  - SandwichJobExCivilianPassenger
+  - SandwichJobExCivilianOffDuty
+  - SandwichJobExCivilianBartender
+  - SandwichJobExCivilianBotanist
+  - SandwichJobExCivilianBoxer
+  - SandwichJobExCivilianChaplain
+  - SandwichJobExCivilianChef
+  - SandwichJobExCivilianClown
+  - SandwichJobExCivilianJanitor
+  - SandwichJobExCivilianLawyer
+  - SandwichJobExCivilianLibrarian
+  - SandwichJobExCivilianMime
+  - SandwichJobExCivilianMusician
+  - SandwichJobExCivilianReporter
+  - SandwichJobExCivilianServiceWorker
+  - SandwichJobExCivilianZookeeper
+
+- type: guideEntry
+  id: SandwichJobExCommandBSO
+  ruleEntry: true
+  name: "Command - Blueshield Officer"
+  priority: 1
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCommandBSO.xml"
+
+- type: guideEntry
+  id: SandwichJobExCommandCaptain
+  ruleEntry: true
+  name: "Command - Captain"
+  priority: 2
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCommandCaptain.xml"
+
+- type: guideEntry
+  id: SandwichJobExCommandCE
+  ruleEntry: true
+  name: "Command - Chief Engineer"
+  priority: 3
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCommandCE.xml"
+
+- type: guideEntry
+  id: SandwichJobExCommandCMO
+  ruleEntry: true
+  name: "Command - Chief Medical Officer"
+  priority: 4
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCommandCMO.xml"
+
+- type: guideEntry
+  id: SandwichJobExCommandHoP
+  ruleEntry: true
+  name: "Command - Head of Personnel"
+  priority: 5
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCommandHoP.xml"
+
+- type: guideEntry
+  id: SandwichJobExCommandHoS
+  ruleEntry: true
+  name: "Command - Head of Security"
+  priority: 6
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCommandHoS.xml"
+
+- type: guideEntry
+  id: SandwichJobExCommandNTRep
+  ruleEntry: true
+  name: "Command - NT Representative"
+  priority: 7
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCommandNTRep.xml"
+
+- type: guideEntry
+  id: SandwichJobExCommandQM
+  ruleEntry: true
+  name: "Command - Quartermaster"
+  priority: 8
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCommandQM.xml"
+
+- type: guideEntry
+  id: SandwichJobExCommandRD
+  ruleEntry: true
+  name: "Command - Research Director"
+  priority: 9
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCommandRD.xml"
+
+- type: guideEntry
+  id: SandwichJobExCargoMailCarrier
+  ruleEntry: true
+  name: "Cargo - Mail Carrier"
+  priority: 10
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCargoMailCarrier.xml"
+
+- type: guideEntry
+  id: SandwichJobExCargoSalvager
+  ruleEntry: true
+  name: "Cargo - Salvager"
+  priority: 11
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCargoSalvager.xml"
+
+- type: guideEntry
+  id: SandwichJobExCargoTechnician
+  ruleEntry: true
+  name: "Cargo - Technician"
+  priority: 12
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCargoTechnician.xml"
+
+- type: guideEntry
+  id: SandwichJobExEngiAssistant
+  ruleEntry: true
+  name: "Engineering - Assistant"
+  priority: 13
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExEngiAssistant.xml"
+
+- type: guideEntry
+  id: SandwichJobExEngiAtmos
+  ruleEntry: true
+  name: "Engineering - Atmospheric Technician"
+  priority: 14
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExEngiAtmos.xml"
+
+- type: guideEntry
+  id: SandwichJobExEngiEngineer
+  ruleEntry: true
+  name: "Engineering - Station Engineer"
+  priority: 15
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExEngiEngineer.xml"
+
+- type: guideEntry
+  id: SandwichJobExMedicalChemist
+  ruleEntry: true
+  name: "Medical - Chemist"
+  priority: 16
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExMedicalChemist.xml"
+
+- type: guideEntry
+  id: SandwichJobExMedicalDoctor
+  ruleEntry: true
+  name: "Medical - Doctor"
+  priority: 17
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExMedicalDoctor.xml"
+
+- type: guideEntry
+  id: SandwichJobExMedicalIntern
+  ruleEntry: true
+  name: "Medical - Intern"
+  priority: 18
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExMedicalIntern.xml"
+
+- type: guideEntry
+  id: SandwichJobExMedicalParamedic
+  ruleEntry: true
+  name: "Medical - Paramedic"
+  priority: 19
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExMedicalParamedic.xml"
+
+- type: guideEntry
+  id: SandwichJobExMedicalPsychologist
+  ruleEntry: true
+  name: "Medical - Psychologist"
+  priority: 20
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExMedicalPsychologist.xml"
+
+- type: guideEntry
+  id: SandwichJobExSciAssistant
+  ruleEntry: true
+  name: "Science - Research Assistant"
+  priority: 21
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExSciAssistant.xml"
+
+- type: guideEntry
+  id: SandwichJobExSciScientist
+  ruleEntry: true
+  name: "Science - Scientist"
+  priority: 22
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExSciScientist.xml"
+
+- type: guideEntry
+  id: SandwichJobExSecurityCadet
+  ruleEntry: true
+  name: "Security - Cadet"
+  priority: 23
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExSecurityCadet.xml"
+
+- type: guideEntry
+  id: SandwichJobExSecurityDetective
+  ruleEntry: true
+  name: "Security - Detective"
+  priority: 24
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExSecurityDetective.xml"
+
+- type: guideEntry
+  id: SandwichJobExSecurityOfficer
+  ruleEntry: true
+  name: "Security - Officer"
+  priority: 25
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExSecurityOfficer.xml"
+
+- type: guideEntry
+  id: SandwichJobExSecurityWarden
+  ruleEntry: true
+  name: "Security - Warden"
+  priority: 26
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExSecurityWarden.xml"
+
+- type: guideEntry
+  id: SandwichJobExSiliconAI
+  ruleEntry: true
+  name: "Silicon - AI"
+  priority: 27
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExSiliconAI.xml"
+
+- type: guideEntry
+  id: SandwichJobExSiliconBorg
+  ruleEntry: true
+  name: "Silicon - Cyborg"
+  priority: 28
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExSiliconBorg.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianPassenger
+  ruleEntry: true
+  name: "Civilian - Passenger"
+  priority: 29
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianPassenger.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianOffDuty
+  ruleEntry: true
+  name: "Civilian - OffDuty"
+  priority: 29
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianOffDuty.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianBartender
+  ruleEntry: true
+  name: "Civilian - Bartender"
+  priority: 31
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianBartender.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianBotanist
+  ruleEntry: true
+  name: "Civilian - Botanist"
+  priority: 32
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianBotanist.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianBoxer
+  ruleEntry: true
+  name: "Civilian - Boxer"
+  priority: 33
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianBoxer.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianChaplain
+  ruleEntry: true
+  name: "Civilian - Chaplain"
+  priority: 34
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianChaplain.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianChef
+  ruleEntry: true
+  name: "Civilian - Chef"
+  priority: 35
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianChef.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianClown
+  ruleEntry: true
+  name: "Civilian - Clown"
+  priority: 36
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianClown.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianJanitor
+  ruleEntry: true
+  name: "Civilian - Janitor"
+  priority: 37
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianJanitor.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianLawyer
+  ruleEntry: true
+  name: "Civilian - Lawyer"
+  priority: 38
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianLawyer.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianLibrarian
+  ruleEntry: true
+  name: "Civilian - Librarian"
+  priority: 39
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianLibrarian.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianMime
+  ruleEntry: true
+  name: "Civilian - Mime"
+  priority: 40
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianMime.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianMusician
+  ruleEntry: true
+  name: "Civilian - Musician"
+  priority: 41
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianMusician.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianReporter
+  ruleEntry: true
+  name: "Civilian - Reporter"
+  priority: 42
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianReporter.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianServiceWorker
+  ruleEntry: true
+  name: "Civilian - Service Worker"
+  priority: 43
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianServiceWorker.xml"
+
+- type: guideEntry
+  id: SandwichJobExCivilianZookeeper
+  ruleEntry: true
+  name: "Civilian - Zookeeper"
+  priority: 44
+  text: "/ServerInfo/_Sandwich/Guidebook/ServerRules/JobExpectations/JobExCivilianZookeeper.xml"

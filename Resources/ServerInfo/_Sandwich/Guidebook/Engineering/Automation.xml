@@ -1,0 +1,120 @@
+<Document>
+<GuideEntityEmbed Entity="RoboticArm" Caption="The factory must grow."/>
+
+On goob many machines and processes can be automated.
+
+The first step is getting science to unlock [bold]Industrial Engineering[/bold] which unlocks everything you need.
+
+If you have played with Factorio or the Create mod you will be familiar with how it works.
+
+## Robotic Arm
+
+<GuideEntityEmbed Entity="RoboticArm"/>
+
+The main workhorse for automation, it moves items from an input to an output.
+
+Without any configuration, it will work with items on the floor infront of it and behind it.
+
+[bold]Use a multitool[/bold] to link its input and output machine to [bold]automated machines[/bold].
+Any signal port that starts with "Item:" is compatible.
+
+It has a [italic]Moved[/italic] signal port which is invoked after an item is moved to the output.
+
+## Automated Machines
+
+A variety of machines can be automated by installing an [bold]Automation Upgrade[/bold] on them.
+
+This can unlock:
+- signal ports to control the machine by linking it to buttons, logic gates, etc.
+- signal ports that get invoked when the machine does something, like a disposal unit being ready to flush
+- item automation ports for the [bold]robotic arm[/bold] to use
+- a combination of both
+
+Here is every machine that accepts automation upgrades:
+
+<GuideAutomationSlotsEmbed/>
+
+## Storage Bin
+
+<GuideEntityEmbed Entity="StorageBin"/>
+
+A large gridinv storage that can be accessed by robotic arms by default.
+
+It has a filter slot to control what items can be inserted, similar to a belt whitelist.
+
+A good use of this is stacking up items and then extracting them in chunks with a stack filter robotic arm.
+
+## Interactor
+
+<GuideEntityEmbed Entity="Interactor"/>
+
+This simulates left click interactions with its held item on an entity infront of it.
+If no item is held it's like pressing E, to open a door/crate, picking up an item, etc.
+
+It stores its tool in an actual hand so you can swap it out with the strip menu by pressing E on it.
+
+A filter slot is used to change what entities it will interact with. Using a proper filter is essential as it will only try to interact with 1 item.
+It will search for [bold]any entity[/bold] without a filter, even things like conveyors or puddles! Use filters.
+
+It has 4 signal ports:
+- Start, used to try interacting with something
+- Auto Start, when enabled it will automatically try to interact after a successful interaction
+- Started, invoked if the interaction starts a doafter
+- Completed, invoked on interaction success OR when the doafter ends
+- Failed, invoked if it could not interact with anything
+
+## Constructor
+
+<GuideEntityEmbed Entity="Constructor"/>
+
+This will construct new objects like you would in the G menu, click it to select which thing to craft.
+It will only complete the first step, [bold]use interactors to finish multi-step constructions[/bold].
+Construction ghosts and created items both get placed infront of it.
+
+Input items are taken from the floor nearby as well as its internal storage, which doubles as a storage bin.
+
+It has the same ports as an Interactor.
+
+## Filters
+
+Filters can be inserted into robotic arms and storage bins to restrict what items they can move and store respectively.
+
+Craft them by hand in the [bold]G menu[/bold] and click them into machines to insert them.
+
+<Box>
+<GuideEntityEmbed Entity="AutomationFilterName"/>
+The name filter searches an item's name in some way.
+For example, if you set it to check that an item [italic]contains[/italic] "sheet", it will match steel sheets, glass sheets, etc.
+</Box>
+
+<Box>
+<GuideEntityEmbed Entity="AutomationFilterLabel"/>
+The label filter requires items to have an exact matching label.
+Use a hand labeler on items to have them picked up.
+</Box>
+
+<Box>
+<GuideEntityEmbed Entity="AutomationFilterStack"/>
+The stack filter controls how it interacts with stacks.
+The minimum stack size is a simple minimum, if an item doesn't have that much in a stack it won't be used.
+Out chunk size limits how many of a stack can be taken. Only a whole multiple of this size will be taken out.
+[italic]For example, a chunk size of 5 on stacks of 6, 10, 14 and 15 will take 5, 10, 10 and 15 respectively.[/italic]
+</Box>
+
+<Box>
+<GuideEntityEmbed Entity="AutomationFilterCombined"/>
+The combined filter stores 2 filters inside it and uses a logic gate to control how they function.
+By default it will allow any item that passes either filter (an OR gate).
+It supports all the same operations that logic gate items do.
+These can be nested for arbitrarily complex filters!
+</Box>
+
+## Transport
+
+Conveyor belts are an obvious way to transport items around as they allow machines to pick up from them.
+
+For higher speed you can use automated disposal units to flush items around.
+
+For long-range space transport you can use Containment Field + Disposal Unit cannons to fire items precisely.
+
+</Document>

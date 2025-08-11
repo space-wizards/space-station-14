@@ -1,0 +1,45 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Station Alert - Violet
+
+  <Box>
+    [italic]Called by: A viral threat aboard the station.[/italic]
+  </Box>
+
+  [bold]Conditions:[/bold]
+
+  There is a known viral threat aboard the station, and all hands on deck are required to combat it.
+
+  [bold]Security:[/bold]
+
+  Security should fully arm themselves, and at their discretion may also hand out arms to trusted crewmembers and Command.
+
+  Security personnel are to prioritize the safety of themselves and Command, and crewmembers as the next-highest priority.
+
+  Security personnel should distance themselves from others in order to avoid the spread of unknown pathogens.
+
+  [bold]Secure Areas:[/bold]
+
+  EVA Storage, Tech Storage, Gravity Generator, Engineering Secure Storage, AI Upload, Vault, Gateway, anywhere else requiring command level access that does not get regularly used.
+
+  It is recommended that all Secure Areas be bolted down unless their use is necessary;
+
+  The Gateway should be fully closed to avoid off-station spread of the virus.
+
+  [bold]General Crew:[/bold]
+
+  All personnel are required to maximize their Suit Sensors;
+
+  Personnel are to distance themselves from other personnel where infection or carrier status is suspected.
+
+  Personnel must exercise caution at all times. Following simple safety procedures (such as not going through Maintenance alone) can prevent needless accidents.
+
+  Personnel are advised to secure a secluded location to ride out the viral threat in. Stock as much food and water as is possible.
+
+</Document>

@@ -1,0 +1,116 @@
+<Document>
+  # Job Expectations
+
+  Here you will find the expectations for each job on the station.
+
+  Some jobs are more important than others, and jobs of less importance will be noted as such. You will still be expected to perform your duties, but you will not be expected to perform them to the same standard as more important jobs.
+
+  Antagonists are exempt from following job expectations, but you'll probably blow your cover if you do!
+
+  ## Command
+
+  Command staff are expected to be the most active and responsive staff on the station. They are expected to be available for communication with the crew at all times, and to be able to respond to any emergencies that may arise. Command staff have the highest authority on the station, before CentComm.
+
+  - [textlink="Captain" link="SandwichJobExCommandCaptain"]
+  - [textlink="Head of Personnel" link="SandwichJobExCommandHoP"]
+  - [textlink="Head of Security" link="SandwichJobExCommandHoS"]
+  - [textlink="Chief Medical Officer" link="SandwichJobExCommandCMO"]
+  - [textlink="Chief Engineer" link="SandwichJobExCommandCE"]
+  - [textlink="Research Director" link="SandwichJobExCommandRD"]
+  - [textlink="Quartermaster" link="SandwichJobExCommandQM"]
+
+  The following jobs are technically Command roles, but have slightly different expectations to standard operations.
+
+  - [textlink="NanoTrasen (NT) Representative" link="SandwichJobExCommandNTRep"]
+  - [textlink="Blueshield Officer" link="SandwichJobExCommandBSO"]
+
+  ## Silicon
+
+  Silicon entities; AI and Cyborgs, have their own special laws and [textlink="Silicon Rules" link="SiliconRules"] to follow. These entries will generally encapsulate what the silicon entities are expected to do.
+
+  - [textlink="AI" link="SandwichJobExSiliconAI"]
+  - [textlink="Cyborg" link="SandwichJobExSiliconBorg"]
+
+  ## Security
+
+  Security staff are dedicated to ensuring the safety of the crew at large. They are the on-board police force and military response if and when larger threats arise.
+
+  - [textlink="Head of Security" link="SandwichJobExCommandHoS"]
+  - [textlink="Warden" link="SandwichJobExSecurityWarden"]
+  - [textlink="Security Officer" link="SandwichJobExSecurityOfficer"]
+  - [textlink="Detective" link="SandwichJobExSecurityDetective"]
+  - [textlink="Security Cadet" link="SandwichJobExSecurityCadet"]
+
+  ## Medical
+
+  Medical staff are tasked with ensuring the crew remain fit and healthy. Doctors should be prepared to administer treatment and perform surgeries.
+
+  - [textlink="Chief Medical Officer" link="SandwichJobExCommandCMO"]
+  - [textlink="Medical Doctor" link="SandwichJobExMedicalDoctor"]
+  - [textlink="Paramedic" link="SandwichJobExMedicalParamedic"]
+  - [textlink="Chemist" link="SandwichJobExMedicalChemist"]
+  - [textlink="Medical Intern" link="SandwichJobExMedicalIntern"]
+
+  The following is a station specific role and one that is not expected to be performed to the same standard as other medical roles.
+
+  - [textlink="Psychologist" link="SandwichJobExMedicalPsychologist"]
+
+  ## Engineering
+
+  Engineering staff work to keep the station running. They are responsible for power generation, repairs, maintaining a habital atmosphere and on occasion construction and refitting.
+
+  - [textlink="Chief Engineer" link="SandwichJobExCommandCE"]
+  - [textlink="Station Engineer" link="SandwichJobExEngiEngineer"]
+  - [textlink="Atmospheric Technician" link="SandwichJobExEngiAtmos"]
+  - [textlink="Technical Assistant" link="SandwichJobExEngiAssistant"]
+
+  ## Science
+
+  The Science team focus on researching xenobiological artifacts and containing anomalies. Their efforts generate Research Points that can be used to unlock new technologies that benefit the entire station.
+
+  - [textlink="Research Director" link="SandwichJobExCommandRD"]
+  - [textlink="Scientist" link="SandwichJobExSciScientist"]
+  - [textlink="Research Assistant" link="SandwichJobExSciAssistant"]
+
+  ## Cargo
+
+  Cargo staff handle the logistics of the station. They handle the movement of goods and resources to and from the Automated Trade Station and the procurement of exotic goods via mining and salvaging. Some stations are equipped with mail facilities, too.
+
+  - [textlink="Quartermaster" link="SandwichJobExCommandQM"]
+  - [textlink="Cargo Technician" link="SandwichJobExCargoTechnician"]
+  - [textlink="Salvage Specialist" link="SandwichJobExCargoSalvager"]
+  - [textlink="Mail Carrier" link="SandwichJobExCargoMailCarrier"]
+
+  ## Service
+
+  Service staff are civilian roles of higher importance than the other civilian roles. Generally they provide productive service to the crew, such as food preparation, janitorial duties, and other similar tasks.
+
+  - [textlink="Head of Personnel" link="SandwichJobExCommandHoP"]
+  - [textlink="Bartender" link="SandwichJobExCivilianBartender"]
+  - [textlink="Chef" link="SandwichJobExCivilianChef"]
+  - [textlink="Botanist" link="SandwichJobExCivilianBotanist"]
+  - [textlink="Janitor" link="SandwichJobExCivilianJanitor"]
+  - [textlink="Service Worker" link="SandwichJobExCivilianServiceWorker"]
+
+  The following is a station specific role and one that is not expected to be performed to the same standard as other service roles.
+
+  - [textlink="Zookeeper" link="SandwichJobExCivilianZookeeper"]
+
+  ## Civilian
+
+  Civilian roles are typically of the least importance on the station. Still, they have jobs to do and should be expected to perform them to the best of their ability.
+
+  - [textlink="Assistant" link="SandwichJobExCivilianPassenger"]
+  - [textlink="Assistant" link="SandwichJobExCivilianOffDuty"]
+  - [textlink="Lawyer" link="SandwichJobExCivilianLawyer"]
+  - [textlink="Chaplain" link="SandwichJobExCivilianChaplain"]
+  - [textlink="Musician" link="SandwichJobExCivilianMusician"]
+  - [textlink="Librarian" link="SandwichJobExCivilianLibrarian"]
+  - [textlink="Mime" link="SandwichJobExCivilianMime"]
+  - [textlink="Clown" link="SandwichJobExCivilianClown"]
+
+  The following are station specific roles and may not be available on all stations.
+
+  - [textlink="Reporter" link="SandwichJobExCivilianReporter"]
+  - [textlink="Boxer" link="SandwichJobExCivilianBoxer"]
+</Document>

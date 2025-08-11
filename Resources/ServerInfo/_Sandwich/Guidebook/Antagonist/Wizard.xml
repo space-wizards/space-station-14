@@ -1,0 +1,51 @@
+<!--
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Wizard
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingHeadHatWizardReal" Caption=""/>
+  </Box>
+
+  [color=lightblue][bold]Wizards[/bold][/color] are unique individuals who have access to powers that defy scientific principles. They are part of the Space Wizard Federation, who have their own interests. They have one objective - to simply [color=red][bold]cause havoc and destruction to the station[/bold][/color]. Unlike the [textlink="The Syndicate" link="Traitors"], however, wizards do not receive any outside assistance from the Federation. Outside of the wizard's spells and/or their apprentice, the wizard is completely on their own.
+
+  ## Objectives
+  All you have to do as a wizard is to [color=green]survive[/color]. You don't have to escape on the shuttle. Other than that, wizards can do whatever they want. Remember, the more chaos you cause - the better. [color=red]Mass sabotage[/color] is allowed but not encouraged by The Federation.
+
+  ## Your Magical Equipment
+  After you spawn inside the Wizard's Den, you'll find several enchanted items either on your person or spread out around you:
+  - [bold]Wizard's Grimoire[/bold]: This is where you buy all your fancy spells and trinkets to unleash chaos on the crew. You’ll start with 10 WizCoins to spend as you wish, and can refund most spells (unless otherwise stated) while you are still inside the wizard’s den. The spellbook is also bound to only open to you, so your apprentice or random crew members cannot open it themselves to acquire magic of their own.
+  - [bold]Wizard Garb[/bold]: Due south of your starting location will be a table filled with various outfits. The [color=lightblue]Wizard's Hat and Robes[/color] provide decent protection as well as allow you to cast most of the spells. If you lose these, it can make completing your objective a lot harder. If you want even more protection, you can go for [color=blue]Magus Armor[/color] (that does not allow you to cast robed spells) located in the middle room or for [color=purple]Wizard Hardsuit[/color] available in the grimoire. Keep in mind, that all of the wizard outerwear are fireproof and also partially protect from extreme temperatures (hardsuit has full temperature protection), so you can be on fire for quite a while before you die.
+  - [bold]Scroll of Teleportation[/bold]: A [color=yellow]4-use[/color] (1-use if you’re an apprentice) magical scroll that will let you teleport to most locations on the station. You’ll need this to actually board it in the first place (unless you have the teleport spell), but the remaining uses can come in handy if you’re in a bind and need to wait for your spells to cool down. Do note that you cannot teleport back to the wizard's den once you leave it.
+  - [bold]Magic Mirror[/bold]: If you wish to rename yourself or change what species you are, you may use the magic mirror in the main room. It'll let you customize nearly everything about your appearance.
+  - [bold]Mugwort Tea[/bold]: A cup of mugwort rests on your table in the library of the den. Mugwort will slowly heal wizards and apprentices of [color=lightgreen]all damage types[/color] over time, so be sure to grab it if you need to heal up later on.
+  - [bold]Pondering Orb[/bold]: A stationary [color=cyan]pondering orb[/color] that allows you to scout the station before your destructive arrival. While functionally similar to the [color=cyan]scrying orb[/color], you cannot bring it on station.
+
+  <Box>
+    <GuideEntityEmbed Entity="WizardsGrimoire"/>
+    <GuideEntityEmbed Entity="ClothingOuterWizardReal"/>
+    <GuideEntityEmbed Entity="ScrollTeleport"/>
+    <GuideEntityEmbed Entity="WizardMirror"/>
+    <GuideEntityEmbed Entity="PonderingOrbWizard"/>
+  </Box>
+
+  ## You Are the Wizard, the Wizard Is You
+
+  As a single wizard against the entire crew, you do not have an easy task ahead of you. You can bet that most of the crew will be after your blood the moment your arrival is announced, regardless of your intentions. Picking out a good loadout of spells and equipment is crucial if you want to survive while causing as much chaos as you possibly can. Below are a few pointers to consider when choosing what spells and magical artefacts you want to take with you on your quest:
+  - It is [bold]heavily[/bold] recommended that you take at least 1 mobility spell with you. While you have access to some of the most powerful abilities and items in the game, you are still just a regular old crew member with zero station access when it comes to dealing with weaponry and airlocks. Having access to a spell which can whisk you away from danger and let you easily move around the station will significantly improve your odds of surviving. Some good choices for mobility spells include [bold]Ethereal Jaunt[/bold], [bold]Blink[/bold] and [bold]Teleport[/bold]. [bold]Rod Form[/bold] can also be a good mix of mobility and offence, but be careful you don’t throw yourself into space with no means of getting back onto the station.
+  - [bold]Bind Soul[/bold] is a good choice for newbie wizards who want the possibility of another shot at wizardry, as it will revive you some time after death to wherever you stored your bound item. Be warned that it if the crew finds the item and destroys it, you will not revive from death. You will also resurrect with only some black wizard robes on you, so any items you acquired or bought will be lost unless you're making use of [bold]Instant Summons[/bold].
+  - While many of the magical items and artefacts are powerful and fun to use, bear in mind that the crew can and often will try to take these away from you, often choosing to then use them against you if possible. Stick with spells if you do not want to die to your own items or invest in the [bold]Instant Summons[/bold] spell to bind an item to you so you can recall it back into your hands if it gets stolen.
+  - While you start off on your own, you can invest your WizCoins into getting [bold]apprentices[/bold], who can focus on keeping you alive or causing some mayhem of their own. Remember that some spells (such as [bold]The Traps[/bold], [bold]Tesla Blast[/bold], [bold]Magic Missile[/bold] and many others) may hurt or target your apprentice so chose your loadout wisely.
+  - One little known trick is that you can buy the same spell multiple times to upgrade it, which reduces the cool down. A compatible spell can be upgraded up to 5 times, though obviously doing this severely limits your versatility.
+  - Two very useful items to acquire once you board the station are an ID card (the more access the better, but any will help) and a medical kit for healing. Having an ID means you don’t need to waste spell charges getting through maintenance doors and the medical kit will become highly useful once the [bold]mugwort tea[/bold] runs out. You can also get an ID card with accesses by acquiring special bundles from the grimoire (only available after purchasing certain spells).
+  - If you want a lot of spell versatility for a low cost, consider taking the [bold]Magic Wand[/bold] and the [bold]Charge[/bold] spell. Normally the wand can only be used so many times before it is drained but charge will restore a portion of its uses, heavily increasing its lifespan. Take note that wand can only be recharged so many times before being rendered useless, and that the number of uses you replenish will gradually get lower each time it is charged. In addition anyone can use your wand if you lose it, so be very careful when and where you use it.
+
+  ## Spells
+  - [textlink="Spells" link="WizardSpells"]
+
+</Document>

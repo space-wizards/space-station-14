@@ -1,0 +1,30 @@
+<Document>
+  # Ariral
+
+  <Box>
+    <GuideEntityEmbed Entity="MobAriralDummy" Caption=""/>
+  </Box>
+
+  The Arirals (ah-ree-ral) are a race of cat-like alien humanoids. Towering over humans, they can at first seem rather intimidating - but the real danger is their natural toxicity; even simple contact with them can be dangerous.
+
+  ## Diet
+
+  - Shares the same diet as humans.
+  - Raw animal proteins will make them sick.
+
+  ## Benefits
+
+  - They take 20% less Blunt damage.
+  - They take 90% less Poison damage, on account of their natural toxins.
+  - Their unarmed melee strikes transfer some of their natural toxins to their target. With sufficient exposure, the target will vomit, hallucinate and be poisoned!
+  - Their blood is even more toxic, which could have some uses...
+
+  ## Drawbacks
+
+  - They take 15% more Slash and Pierce damage.
+  - They take 20% more Cold and Radiation damage.
+  - They bleed more easily; losing blood faster, clotting and regenerating blood slower.
+  - They tire faster than humans, having less overall stamina.
+  - They can't be hugged or pet, no matter how much you want to.
+
+</Document>

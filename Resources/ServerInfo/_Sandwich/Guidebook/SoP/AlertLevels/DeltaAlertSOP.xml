@@ -1,0 +1,45 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Station Alert - Delta
+
+  <Box>
+    [italic]Called by: Anyone with Command-Level Access at a working Communications Console, Malfunctioning AI Units, the Supermatter Delaminating, or a Nuclear Fission Device Activating On-Board.[/italic]
+  </Box>
+
+  [bold]Conditions:[/bold]
+
+  A Malfunctioning AI Unit has dropped all semblance of stealth and activated their Override Mechanism.
+
+  [bold]OR[/bold]
+
+  The on-board Nuclear Fission Device has been activated by Command or Central Command personnel. Though it does not trigger Code Delta, Nuclear Operative Nuclear Operations should still be considered as a Code Delta situation.
+
+  [bold]OR[/bold]
+
+  The supermatter is in the process of delaminating. This is a station-wide threat.
+
+  [bold]Security:[/bold]
+
+  In the case of a Malfunctioning AI Unit, all Security personnel are required to drop whatever it is they are doing, and proceed to neutralize the AI Unit. Any relevant help from station personnel (such as Engineers or Scientists) is not to be turned down;
+
+  In the case of a Central Command-authorized activation of the on-board Nuclear Fission Device, all Security personnel are to stand down.
+
+  [bold]Secure Areas:[/bold]
+
+  EVA Storage, Tech Storage, Gravity Generator, Engineering Secure Storage, AI Upload, Vault, Gateway, anywhere else requiring command level access that does not get regularly used.
+
+  Procedures are irrelevant.
+
+  [bold]General Crew:[/bold]
+
+  In the case of a Malfunctioning AI Unit or Nuclear Operatives that have armed a nuclear device, all non-vital personnel are to evacuate off-station immediately;
+
+  In the case of a Central Command-authorized activation of the on-board Nuclear Fission Device, all personnel are to stand down.
+
+</Document>

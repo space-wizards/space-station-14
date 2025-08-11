@@ -1,0 +1,39 @@
+<!--
+SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+SPDX-FileCopyrightText: 2024 BeeRobynn <robynthewarcrime@proton.me>
+SPDX-FileCopyrightText: 2024 SolsticeOfTheWinter <solsticeofthewinter@gmail.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Harpy
+
+  <Box>
+    <GuideEntityEmbed Entity="MobHarpy" Caption=""/>
+  </Box>
+
+  Harpies are an avian human mutation, sprouting feathered wings and ruffled tails.
+  They see the world through an ultraviolet view, slash with their claws dealing
+  [color=#ec3a3a]piercing [/color]damage, and walk around on digitrade legs.
+  Their most iconic ability, however, is to take to the skies!
+
+  ## Sing your heart out
+
+  Harpies are capable of singing out a tune on the spot with their voice, allowing for you to play music wherever you are,
+  as long as you aren't muffled.
+
+  ## Take to the skies!
+
+  Harpies can fly with their wings to increase their movement speed dramatically, at the cost of heavy stamina drain and a temporary inability to use their hands.
+  Their wings give them better acceleration if there is no gravity on the station, but they still can't move without equipment when floating out in space.
+
+  ## Weaknesses
+
+  Due to their digitrade legs, they are unable to wear any type of footwear. Harpies also breathe [color=#1e90ff]3 times faster[/color] than other races.
+  They take 15% more brute damage.
+  They are very lightweight, making it hard for them to pull any other species. However, they also run 10% faster than other species.
+
+</Document>

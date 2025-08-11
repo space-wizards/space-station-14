@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2025 Armok <155400926+ARMOKS@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: guideEntry
+  id: Changelings
+  priority: 999
+  name: "Changelings"
+  text: "/ServerInfo/_Sandwich/Guidebook/Antagonist/Changelings.xml"
+  children:
+  - ChangelingsAbilities
+
+- type: guideEntry
+  id: ChangelingsAbilities
+  priority: 999
+  name: "Changeling Abilities"
+  text: "/ServerInfo/_Sandwich/Guidebook/Antagonist/ChangelingsAbilities.xml"

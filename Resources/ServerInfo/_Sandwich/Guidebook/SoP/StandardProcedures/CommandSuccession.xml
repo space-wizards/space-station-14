@@ -1,0 +1,53 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Chain of Command
+This is the ideal list for passing down the Captain role in command. There are several factors to take into respect here, but this boils down to a simple list.
+
+[bullet/][color=#1b67a5]Blueshield Officer[/color] (BSO) and [color=#1b67a5]Nanotrasen Representative[/color] (NTR) should never hold a position of command on this station.
+
+[bullet/]This list can be deviated from for special circumstances, with the vote resting on Command to do so.
+
+[bullet/][color=#1b67a5]Nanotrasen Representative[/color], if one is present, should assist in this process and guide the new Captain.
+
+[bullet/]When choosing the succeeding Captain, they should be marked on their ID as [color=#1b67a5]Acting Captain[/color] (following the same promotion procedures).
+
+<Box>~</Box>
+<Box>[bold][color=#1b67a5][head=1]Command Succession[/head][/color][/bold]</Box>
+<Box>Captain</Box>
+<Box>Head of Personnel (HoP)</Box>
+<Box>Head of Security (HoS)</Box>
+<Box>Warden</Box>
+<Box>Research Director (RD)</Box>
+<Box>Chief Medical Officer (CMO)</Box>
+<Box>Chief Engineer (CE)</Box>
+<Box>Quartermaster (QM)</Box>
+<Box>Security Officer</Box>
+<Box>~</Box>
+
+## Succession Decision Process
+The new Acting Captain should follow the same responsibilities and uphold the same duties as a normal Captain would. These can be found in the Captain SOP.
+The succession list is shown from [bold]top to bottom[/bold] and should be followed as such.
+
+If it is deemed necessary, or by wish of the Head of Staff that is being chosen, the next person in the succession may be skipped.
+
+[bullet/]For choices where the Head of Staff is deemed necessary to skip by others, it should be put to a vote by successors (barring Security Officers).
+
+[bullet/]For choices where the Head of Staff chooses to not accept the title, they should have a valid reason for doing so and justify it if necessary.
+
+## Choosing Security Officers
+When choosing Security Officers for Command Succession, it should be put to a vote by all those included if there is no [color=#1b67a5]Nanotrasen Representative[/color].
+
+When voting, it should be held as fast as possible. If a tie happens while voting, seniority should prevail.
+
+## Procedure for Acquiring Access
+If at all possible, damage to station and Captain Quarter's should be minimized while acquiring accesses to ID during Command Succession procedures.
+
+AI should follow these procedures and assist in this process. If AI is not available, engineers should be utilized in opening the doors and ensuring they are properly secured when finished.
+
+</Document>

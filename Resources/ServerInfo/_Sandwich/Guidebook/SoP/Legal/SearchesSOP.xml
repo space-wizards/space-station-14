@@ -1,0 +1,33 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Search Procedures
+This is the list of procedures that should be followed when performing searches on station personnel and/or in Departments.
+
+1. On [color=#388c34]Green Alert[/color], a search requires probable cause and/or approval from the Captain and/or Head of Security.
+<Box>Probable Cause is defined as any circumstance that creates reasonable suspicion that a crime was committed (eg, direct accusation from a crewmember, witnessing the crime directly, prints on a crime scene, presence in a restricted area with high value items, etc).</Box>
+<Box>Approval simply requires permission from the relevant person - verbal or over radio is enough.</Box>
+
+2. On [color=#388c34]Green Alert[/color], searches should be conducted without cuffs, and the searched personnel must hand over requested items.
+
+3. Searchees who refuse may be cuffed for the search.
+
+4. Any other item in the searchee's possession may be asked for, including but not limited to bags, belts, jackets, headsets, and PDAs.
+
+5. On [color=#1b67a5]Blue Alert[/color] and above, a search can be done without probable cause.
+<Box>This can be done by cuffing the searched, and forcibly removing their bags and emptying their pockets.</Box>
+
+6. Refusing a legal search is considered resisting arrest (on [color=#1b67a5]Blue Alert[/color] or higher).
+
+7. Security may only perform surgery to search for illegal implants if the searched personnel is a confirmed EoC or has been confirmed to have stolen an item that can no longer be located.
+<Box>In addition, if there is reasonable suspicion of illegal implant possession, the Captain and/or Head of Security can issue a warrant for an implant search if they deem it necessary.</Box>
+
+8. Recommended but optional: After searching someone, their security status should be set to RELEASED, and add a note that they were searched but nothing was found.
+<Box>This helps prevent security wasting time by repeatedly re-searching the same person, and makes it easier to tell who has not yet been searched.</Box>
+
+</Document>

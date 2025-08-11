@@ -1,0 +1,24 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Meteor Storm Procedures
+In the event of a meteor storm affecting the station, the station alert should be set to [color=#c8a404]Yellow Alert[/color] until the meteor storm damage/event is over.
+
+1. Station personnel are to report damages and assist injured crew when possible.
+
+2. Repair activities should be prioritized for immediate/severe damage areas, and should not be done to low-impacted areas until after the event is over.
+
+3. All personnel performing EVA/shuttle activity (primarily Cargo Department) should return until the meteor storm event is over.
+
+4. Engineering Personnel should repair all damages with location assistance from crew, when the meteor storm is over.
+
+5. In the event that the station damage is too severe, the evacuation shuttle should be called.
+
+6. In the event of the meteor storm remaining prolonged in time, immediate evacuation may be requested from Central Command.
+
+</Document>

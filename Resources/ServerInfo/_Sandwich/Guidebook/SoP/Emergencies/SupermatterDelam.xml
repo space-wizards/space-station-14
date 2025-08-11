@@ -1,0 +1,23 @@
+<!--
+SPDX-FileCopyrightText: 2024 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+# Supermatter Delamination Procedures
+In the event of the supermatter crystal completely delaminating, the station alert should be set to [color=#a40484]Delta Alert[/color] and the evacuation shuttle should be called.
+
+1. If the Supermatter Crystal integrity is rapidly declining, Engineering personnel should vent the atmosphere in an attempt to stabilize it.
+
+2. If the Supermatter Crystal integrity is nearing zero, Engineering personnel should attempt to fix and/or prepare containment fields to contain the delamination.
+
+3. If the Supermatter Crystal is beyond saving, containment fields impossible to setup, Engineering personnel should attempt to remove the Supermatter Crystal from the station by any means necessary.
+
+4. If the delamination is contained, the station alert should be set to a safe alert level, and crew should be notified of the recovery.
+<Box>Engineering personnel should alert the crew of a successful containment.</Box>
+
+5. If it is found that the delamination process was due to gross negligence, incompetence, and/or sabotage, the personnel responsible should be dismissed/demoted.
+
+</Document>
