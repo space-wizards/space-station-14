@@ -87,7 +87,6 @@
         whitelist:
           components:
             - FitsInDispenser
-  - type: ItemToggle
   - type: HealthAnalyzer
     scanDelay: 0
   - type: UserInterface
@@ -110,6 +109,8 @@
       - scanner-body
   - type: CryoPod
   - type: CryoPodAir
+  - type: Climbable # so that ejected bodies don't get stuck
+    vaultable: false
   - type: ContainerTemperatureDamageThresholds
     coldDamageThreshold: 10
   - type: GuideHelp

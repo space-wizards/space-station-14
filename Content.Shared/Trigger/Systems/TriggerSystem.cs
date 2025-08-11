@@ -11,7 +11,6 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
 using Robust.Shared.Audio.Systems;
-using Content.Shared.Gravity;
 
 
 namespace Content.Shared.Trigger.Systems;
@@ -39,9 +38,6 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
     [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public const string DefaultTriggerKey = "trigger";
 
@@ -50,7 +46,6 @@ public sealed partial class TriggerSystem : EntitySystem
         base.Initialize();
 
         InitializeCollide();
-        InitializeStepTrigger();
         InitializeCondition();
         InitializeInteraction();
         InitializeProximity();
@@ -187,6 +182,5 @@ public sealed partial class TriggerSystem : EntitySystem
         UpdateRepeat();
         UpdateProximity();
         UpdateTimedCollide();
-        UpdateStepTrigger();
     }
 }

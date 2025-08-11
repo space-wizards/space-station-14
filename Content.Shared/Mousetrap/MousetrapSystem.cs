@@ -12,13 +12,13 @@ public sealed class MousetrapSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MousetrapComponent, BeforeDamageOnTriggerEvent>(BeforeDamageOnTrigger);
-        SubscribeLocalEvent<MousetrapComponent, TriggerStepAttemptEvent>(OnStepTriggerAttempt);
+        SubscribeLocalEvent<MousetrapComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
     }
 
     // only allow step triggers to trigger if the trap is armed
     // TODO: refactor Steptriggers to get rid of this
     // they should just use the new trigger conditions
-    private void OnStepTriggerAttempt(Entity<MousetrapComponent> ent, ref TriggerStepAttemptEvent args)
+    private void OnStepTriggerAttempt(Entity<MousetrapComponent> ent, ref StepTriggerAttemptEvent args)
     {
         if (!TryComp<ItemToggleComponent>(ent, out var toggle))
             return;
