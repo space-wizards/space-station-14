@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: reagent
   id: Oxygen
   name: reagent-name-oxygen
@@ -282,6 +284,12 @@
         conditions:
         - !type:OrganType
           type: Slime
+      # start of modifications
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Avali
+      # end of modifications
       # Converts Nitrogen into CO2
       - !type:ModifyLungGas
         conditions:
@@ -297,6 +305,15 @@
         ratios:
           NitrousOxide: 1.0
           Nitrogen: -1.0
+      # start of modifications
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Avali
+        ratios:
+          Ammonia: 1.0
+          Nitrogen: -1.0
+      # end of modifications
 
 - type: reagent
   id: NitrousOxide
