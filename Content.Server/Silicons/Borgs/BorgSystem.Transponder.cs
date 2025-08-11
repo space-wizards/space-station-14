@@ -20,7 +20,6 @@ public sealed partial class BorgSystem
 {
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
@@ -173,7 +172,7 @@ public sealed partial class BorgSystem
         if (!TryComp<DamageableComponent>(uid, out var damageable))
             return 1;
 
-        if (!_mobStateSystem.IsAlive(uid))
+        if (!_mobState.IsAlive(uid))
             return 0;
 
         if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold))
