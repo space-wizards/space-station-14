@@ -13,7 +13,7 @@
   id: SpaceDragonStaffTheme
   name: Space Dragon
   description: Giant space fish.
-  colorizeabe: true
+  colorizeable: true
   spriteSpecifier:
     sprite:
       sprite: Mobs/Aliens/Carps/dragon.rsi
