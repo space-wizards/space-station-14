@@ -24,9 +24,8 @@ namespace Content.Server.Cloning;
 ///     System responsible for making a copy of a humanoid's body.
 ///     For the cloning machines themselves look at CloningPodSystem, CloningConsoleSystem and MedicalScannerSystem instead.
 /// </summary>
-public sealed partial class CloningSystem : EntitySystem
+public sealed partial class CloningSystem : SharedCloningSystem
 {
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -85,13 +84,7 @@ public sealed partial class CloningSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    ///     Copy components from one entity to another based on a CloningSettingsPrototype.
-    /// </summary>
-    /// <param name="original">The orignal Entity to clone components from.</param>
-    /// <param name="clone">The target Entity to clone components to.</param>
-    /// <param name="settings">The clone settings prototype containing the list of components to clone.</param>
-    public void CloneComponents(EntityUid original, EntityUid clone, CloningSettingsPrototype settings)
+    public override void CloneComponents(EntityUid original, EntityUid clone, CloningSettingsPrototype settings)
     {
         var componentsToCopy = settings.Components;
         var componentsToEvent = settings.EventComponents;
@@ -106,7 +99,7 @@ public sealed partial class CloningSystem : EntitySystem
 
         foreach (var componentName in componentsToCopy)
         {
-            if (!_componentFactory.TryGetRegistration(componentName, out var componentRegistration))
+            if (!Factory.TryGetRegistration(componentName, out var componentRegistration))
             {
                 Log.Error($"Tried to use invalid component registration for cloning: {componentName}");
                 continue;
@@ -122,14 +115,15 @@ public sealed partial class CloningSystem : EntitySystem
 
         foreach (var componentName in componentsToEvent)
         {
-            if (!_componentFactory.TryGetRegistration(componentName, out var componentRegistration))
+            if (!Factory.TryGetRegistration(componentName, out var componentRegistration))
             {
                 Log.Error($"Tried to use invalid component registration for cloning: {componentName}");
                 continue;
             }
 
             // If the original does not have the component, then the clone shouldn't have it either.
-            RemComp(clone, componentRegistration.Type);
+            if (!HasComp(original, componentRegistration.Type))
+                RemComp(clone, componentRegistration.Type);
         }
 
         var cloningEv = new CloningEvent(settings, clone);
@@ -176,7 +170,7 @@ public sealed partial class CloningSystem : EntitySystem
         if (prototype == null)
             return null;
 
-        var spawned = EntityManager.SpawnAtPosition(prototype, coords);
+        var spawned = SpawnAtPosition(prototype, coords);
 
         // copy over important component data
         var ev = new CloningItemEvent(spawned);

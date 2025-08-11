@@ -28,3 +28,13 @@
     jumpsuit: ClothingUniformJumpsuitColorPurple
     head: ClothingHeadHatVioletwizard
     outerClothing: ClothingOuterWizardViolet
+
+- type: chameleonOutfit
+  id: WizardChameleonOutfit
+  name: roles-antag-wizard-name
+  startingGear: WizardBlueGear
+  equipment:
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    neck: ClothingNeckLGBTPin
+    gloves: ClothingHandsGlovesColorBlack
