@@ -240,12 +240,6 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
     public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
-        if (!role.StartsWith(PrefixJob) && !role.StartsWith(PrefixAntag))
-        {
-            _sawmill.Error($"Role ban target '{role}' does not have a valid role prefix!");
-            //TODO raise event to notify the banning admin about the failure
-            return;
-        }
         if (role.StartsWith(PrefixJob) && !_prototypeManager.HasIndex<JobPrototype>(role.TrimStart(PrefixJob.ToCharArray())))
         {
             _sawmill.Error($"Role ban, {role}, started with the job prefix ({PrefixJob}) but did not have a valid prototype!");
@@ -255,6 +249,12 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         if (role.StartsWith(PrefixAntag) && !_prototypeManager.HasIndex<AntagPrototype>(role.TrimStart(PrefixAntag.ToCharArray())))
         {
             _sawmill.Error($"Role ban, {role}, started with the antag prefix ({PrefixAntag}) but did not have a valid prototype!");
+            //TODO raise event to notify the banning admin about the failure
+            return;
+        }
+        if (!role.StartsWith(PrefixJob) && !role.StartsWith(PrefixAntag))
+        {
+            _sawmill.Error($"Role ban target '{role}' does not have a valid role prefix!");
             //TODO raise event to notify the banning admin about the failure
             return;
         }
