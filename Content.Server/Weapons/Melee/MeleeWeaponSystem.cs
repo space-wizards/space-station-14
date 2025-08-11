@@ -1,19 +1,19 @@
-using System.Linq;
-using System.Numerics;
+using System.Linq; // Starlight-edit™
+using System.Numerics; // Starlight-edit™
 using Content.Server.Chat.Systems;
 using Content.Server.Movement.Systems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Effects;
-using Content.Shared.Physics;
+using Content.Shared.Physics; // Starlight-edit™
 using Content.Shared.Speech.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Systems;
+using Robust.Shared.Physics; // Starlight-edit™
+using Robust.Shared.Physics.Systems; // Starlight-edit™
 
 namespace Content.Server.Weapons.Melee;
 
@@ -23,8 +23,8 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
     [Dependency] private readonly LagCompensationSystem _lag = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!; // Starlight-edit™
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!; // Starlight-edit™
 
     public override void Initialize()
     {
@@ -80,7 +80,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Server-side unobstructed check with lag compensation
         if (session is { } pSession)
         {
-            var (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
+            var (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession); // Starlight-edit-begin™
             if (Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false))
                 return true;
         }
@@ -89,10 +89,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // Fallback for when no session is provided
             var targetXformSimple = Transform(target);
             if (Interaction.InRangeUnobstructed(user, target, targetXformSimple.Coordinates, targetXformSimple.LocalRotation, range, overlapCheck: false))
-                return true;
+                return true; // Starlight-edit-end™
         }
 
-        // Fallback for same-tile obstructions
+        // Fallback for same-tile obstructions // Starlight-edit-begin™
         var userXform = Transform(user);
         var targetXform = Transform(target);
 
@@ -134,7 +134,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var hitTile = _map.CoordinatesToTile(gridUid, grid, hitXform.Coordinates);
 
         // If the first obstruction is on the same tile as the target, allow the attack
-        return targetTile == hitTile;
+        return targetTile == hitTile; // Starlight-edit-end™
     }
 
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
