@@ -130,7 +130,6 @@
     activated: false # gets activated when a mind is added
     onUse: false # no item-borg toggling sorry
   - type: ItemTogglePointLight
-  - type: AccessToggle
   # TODO: refactor movement to just be based on toggle like speedboots but for the boots themselves
   # TODO: or just have sentient speedboots be fast idk
   - type: PowerCellDraw
@@ -318,7 +317,6 @@
     factions:
     - NanoTrasen
   - type: Access
-    enabled: false
     groups:
     - AllAccess
     tags:
@@ -375,7 +373,6 @@
     factions:
     - NanoTrasen #The seemingly best fit. It was a regular NT cyborg once, after all.
   - type: Access
-    enabled: false
     groups:
     - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard for it to enter the station or navigate it..
   - type: AccessReader
@@ -490,7 +487,6 @@
     - Robotics
     # TODO: add Xenoborg guide (part 7 spoilers)
   - type: Access
-    enabled: false
     tags:
     - Xenoborg
   - type: AccessReader
