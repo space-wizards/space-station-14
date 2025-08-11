@@ -33,15 +33,15 @@ public sealed class DeltaPressureSystem : EntitySystem
 
     private void OnComponentInit(Entity<DeltaPressureComponent> ent, ref ComponentInit args)
     {
-        if (ent.Comp.AutoJoin)
+        if (ent.Comp.AutoJoinProcessingList)
         {
-            TryAddToList(ent);
+            TryAddToProcessingQueue(ent);
         }
     }
 
     private void OnComponentShutdown(Entity<DeltaPressureComponent> ent, ref ComponentShutdown args)
     {
-        TryRemoveFromList(ent);
+        TryRemoveFromProcessingQueue(ent);
     }
 
     private void OnExamined(Entity<DeltaPressureComponent> ent, ref ExaminedEvent args)
@@ -54,12 +54,12 @@ public sealed class DeltaPressureSystem : EntitySystem
     {
         if (args.OldGrid != null)
         {
-            TryRemoveFromList(ent, args.OldGrid.Value);
+            TryRemoveFromProcessingQueue(ent, args.OldGrid.Value);
         }
 
         if (args.NewGrid != null)
         {
-            TryAddToList(ent, args.NewGrid.Value);
+            TryAddToProcessingQueue(ent, args.NewGrid.Value);
         }
     }
 
@@ -70,7 +70,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     /// <returns>True if the device was added, false if the device could not be added
     /// or was already in the processing list.</returns>
     [PublicAPI]
-    public bool TryAddToList(Entity<DeltaPressureComponent> ent)
+    public bool TryAddToProcessingQueue(Entity<DeltaPressureComponent> ent)
     {
         var xform = Transform(ent);
 
@@ -91,7 +91,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     /// <returns>True if the device was added, false if the device could not be added
     /// or was already in the processing list.</returns>
     [PublicAPI]
-    public bool TryAddToList(Entity<DeltaPressureComponent> ent, EntityUid grid)
+    public bool TryAddToProcessingQueue(Entity<DeltaPressureComponent> ent, EntityUid grid)
     {
         return _atmosphereSystem.TryAddDeltaPressureEntity(grid, ent);
     }
@@ -103,7 +103,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     /// <returns>True if the device was removed, false if the device could not be removed
     /// or was not in the processing list.</returns>
     [PublicAPI]
-    public bool TryRemoveFromList(Entity<DeltaPressureComponent> ent)
+    public bool TryRemoveFromProcessingQueue(Entity<DeltaPressureComponent> ent)
     {
         var xformEnt = Transform(ent);
 
@@ -124,7 +124,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     /// <returns>True if the device was removed, false if the device could not be removed
     /// from the provided grid EntityUid or was not in the processing list.</returns>
     [PublicAPI]
-    public bool TryRemoveFromList(Entity<DeltaPressureComponent> ent, EntityUid grid)
+    public bool TryRemoveFromProcessingQueue(Entity<DeltaPressureComponent> ent, EntityUid grid)
     {
         return _atmosphereSystem.TryRemoveDeltaPressureEntity(grid, ent);
     }
@@ -147,7 +147,6 @@ public sealed class DeltaPressureSystem : EntitySystem
             return;
         }
 
-        // shitcode
         var baseDamage = ent.Comp.BaseDamage;
         var appliedDamage = ent.Comp.BaseDamage;
         if (aboveMinPressure)
@@ -202,82 +201,5 @@ public sealed class DeltaPressureSystem : EntitySystem
         }
 
         return damage;
-    }
-
-    /// <summary>
-    /// Sets the base damage applied to the entity per atmos tick when above the damage threshold.
-    /// </summary>
-    /// <param name="ent">The entity whose component to modify.</param>
-    /// <param name="baseDamage">The new base damage specifier.</param>
-    [PublicAPI]
-    public static void SetBaseDamage(Entity<DeltaPressureComponent> ent, DamageSpecifier baseDamage)
-    {
-        ent.Comp.BaseDamage = baseDamage;
-    }
-
-    /// <summary>
-    /// Sets whether the entity stacks damage if both minimum pressure requirements are met.
-    /// </summary>
-    /// <param name="ent">The entity whose component to modify.</param>
-    /// <param name="stackDamage">True to stack damage, false otherwise.</param>
-    [PublicAPI]
-    public static void SetStackDamage(Entity<DeltaPressureComponent> ent, bool stackDamage)
-    {
-        ent.Comp.StackDamage = stackDamage;
-    }
-
-    /// <summary>
-    /// Sets the minimum pressure in kPa at which the entity will start taking damage.
-    /// </summary>
-    /// <param name="ent">The entity whose component to modify.</param>
-    /// <param name="minPressure">The new minimum pressure in kPa.</param>
-    [PublicAPI]
-    public static void SetMinPressure(Entity<DeltaPressureComponent> ent, float minPressure)
-    {
-        ent.Comp.MinPressure = minPressure;
-    }
-
-    /// <summary>
-    /// Sets the minimum difference in pressure between any side required for the entity to start taking damage.
-    /// </summary>
-    /// <param name="ent">The entity whose component to modify.</param>
-    /// <param name="minPressureDelta">The new minimum pressure delta.</param>
-    [PublicAPI]
-    public static void SetMinPressureDelta(Entity<DeltaPressureComponent> ent, float minPressureDelta)
-    {
-        ent.Comp.MinPressureDelta = minPressureDelta;
-    }
-
-    /// <summary>
-    /// Sets the maximum pressure at which damage will no longer scale.
-    /// </summary>
-    /// <param name="ent">The entity whose component to modify.</param>
-    /// <param name="maxPressure">The new maximum pressure.</param>
-    [PublicAPI]
-    public static void SetMaxPressure(Entity<DeltaPressureComponent> ent, float maxPressure)
-    {
-        ent.Comp.MaxPressure = maxPressure;
-    }
-
-    /// <summary>
-    /// Sets the scaling power constant for damage scaling behavior.
-    /// </summary>
-    /// <param name="ent">The entity whose component to modify.</param>
-    /// <param name="scalingPower">The new scaling power.</param>
-    [PublicAPI]
-    public static void SetScalingPower(Entity<DeltaPressureComponent> ent, float scalingPower)
-    {
-        ent.Comp.ScalingPower = scalingPower;
-    }
-
-    /// <summary>
-    /// Sets the scaling type for damage calculation.
-    /// </summary>
-    /// <param name="ent">The entity whose component to modify.</param>
-    /// <param name="scalingType">The new scaling type.</param>
-    [PublicAPI]
-    public static void SetScalingType(Entity<DeltaPressureComponent> ent, DeltaPressureDamageScalingType scalingType)
-    {
-        ent.Comp.ScalingType = scalingType;
     }
 }

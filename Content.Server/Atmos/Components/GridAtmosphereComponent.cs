@@ -61,11 +61,23 @@ namespace Content.Server.Atmos.Components
         [ViewVariables]
         public int HighPressureDeltaCount => HighPressureDelta.Count;
 
+        /// <summary>
+        /// A set of entities that have a <see cref="DeltaPressureComponent"/> and are to
+        /// be processed by the <see cref="DeltaPressureSystem"/>, if enabled.
+        /// </summary>
         [ViewVariables]
         public readonly HashSet<Entity<DeltaPressureComponent>> DeltaPressureEntities = new();
 
+        /// <summary>
+        /// A dictionary of coordinates and the current pressures at those coordinates.
+        /// Used by the <see cref="DeltaPressureSystem"/> to cache pressure values for fast lookup
+        /// later (as many entities can share the same tiles that we need to check).
+        /// Faster to store and access than using the <see cref="TileAtmosphere"/> directly,
+        /// as we have to get the tile, nullcheck it, and then get the pressure
+        /// (which is a get method in of itself!).
+        /// </summary>
         [ViewVariables]
-        public readonly Dictionary<Vector2i, float> DeltaPressureCoords = new(1000);
+        public readonly Dictionary<Vector2i, float> DeltaPressureCache = new(1000);
 
         [ViewVariables]
         public readonly HashSet<IPipeNet> PipeNets = new();

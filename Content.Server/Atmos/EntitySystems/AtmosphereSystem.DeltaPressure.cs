@@ -1,21 +1,43 @@
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
-using Content.Shared.Damage;
+using static System.Runtime.CompilerServices.Unsafe;
 
 namespace Content.Server.Atmos.EntitySystems;
 
 public sealed partial class AtmosphereSystem
 {
     /// <summary>
+    /// The number of pairs of opposing directions we can have.
+    /// This is Atmospherics.Directions / 2, since we always compare opposing directions
+    /// (e.g. North vs South, East vs West, etc.).
+    /// Used to determine the size of the opposing groups when processing delta pressure entities.
+    /// </summary>
+    private const int DeltaPressurePairCount = Atmospherics.Directions / 2;
+
+    /// <summary>
     /// Processes a singular entity, determining the pressures it's experiencing and applying damage based on that.
     /// </summary>
     /// <param name="ent">The entity to process.</param>
     /// <param name="gridAtmosComp">The <see cref="GridAtmosphereComponent"/> that belongs to the entity's GridUid.</param>
-    private void ProcessDeltaPressureEntity(Entity<DeltaPressureComponent> ent, GridAtmosphereComponent gridAtmosComp)
+    /// <param name="opposingGroupA">Span containing the pressures in one set of opposing directions for comparison.</param>
+    /// <param name="opposingGroupB">Span containing the pressures in the opposite set of directions to <paramref name="opposingGroupA"/>.</param>
+    /// <param name="opposingGroupMax">Span to store the maximum pressures between each pair of opposing directions.</param>
+    private void ProcessDeltaPressureEntity(Entity<DeltaPressureComponent> ent,
+        GridAtmosphereComponent gridAtmosComp,
+        Span<float> opposingGroupA,
+        Span<float> opposingGroupB,
+        Span<float> opposingGroupMax)
     {
+        // These should be of length Atmospherics.Directions / 2, so we can use them to compare opposing directions.
+        // If not, then someone messed up somehow.
+        Debug.Assert(opposingGroupA.Length == DeltaPressurePairCount);
+        Debug.Assert(opposingGroupB.Length == DeltaPressurePairCount);
+        Debug.Assert(opposingGroupMax.Length == DeltaPressurePairCount);
+
         if (ent.Comp.RandomDamageChance is not 1f &&
-            Random.Shared.NextSingle() >= ent.Comp.RandomDamageChance)
+            _random.NextFloat() >= ent.Comp.RandomDamageChance)
         {
             return;
         }
@@ -38,20 +60,15 @@ public sealed partial class AtmosphereSystem
 
         // Directions are always in pairs: the number of directions is always even
         // (we must consider the future where Multi-Z is real)
-        const int pairCount = Atmospherics.Directions / 2;
-
-        Span<float> opposingGroupA = stackalloc float[pairCount]; // Will hold North, East, ...
-        Span<float> opposingGroupB = stackalloc float[pairCount]; // Will hold South, West, ...
-        Span<float> opposingGroupMax = stackalloc float[pairCount];
 
         // First, we null check data and prep it for comparison
-        for (var i = 0; i < pairCount; i++)
+        for (var i = 0; i < DeltaPressurePairCount; i++)
         {
             // First direction in the pair (North, East, ...)
             var dirA = (AtmosDirection)(1 << i);
 
             // Second direction in the pair (South, West, ...)
-            var dirB = (AtmosDirection)(1 << (i + pairCount));
+            var dirB = (AtmosDirection)(1 << (i + DeltaPressurePairCount));
 
             opposingGroupA[i] = GetTilePressure(gridAtmosComp, indices.Offset(dirA));
             opposingGroupB[i] = GetTilePressure(gridAtmosComp, indices.Offset(dirB));
@@ -65,14 +82,14 @@ public sealed partial class AtmosphereSystem
         NumericsHelpers.Abs(opposingGroupA);
 
         var maxPressure = 0f;
-        for (var i = 0; i < pairCount; i++)
+        for (var i = 0; i < DeltaPressurePairCount; i++)
         {
             maxPressure = Math.Max(maxPressure, opposingGroupMax[i]);
         }
 
         // Find maximum pressure difference
         var maxDelta = 0f;
-        for (var i = 0; i < pairCount; i++)
+        for (var i = 0; i < DeltaPressurePairCount; i++)
         {
             maxDelta = Math.Max(maxDelta, opposingGroupA[i]);
         }
@@ -90,24 +107,24 @@ public sealed partial class AtmosphereSystem
     {
         // First try and retrieve the tile atmosphere for the given indices from our cache.
         // Use a safe lookup method because we're going to be writing to the dictionary.
-        if (gridAtmosComp.DeltaPressureCoords.TryGetValue(indices, out var cf))
+        if (gridAtmosComp.DeltaPressureCache.TryGetValue(indices, out var cachedFloat))
         {
-            return cf;
+            return cachedFloat;
         }
 
         // Didn't hit the cache.
         // Since we're not writing to this dict, we can use an unsafe lookup method.
         // Supposed to be a bit faster, though we need to check for null refs.
         ref var tileA = ref CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices);
-        var nf = 0f;
+        var newFloat = 0f;
 
-        if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref tileA) && tileA.Air != null)
+        if (!IsNullRef(ref tileA) && tileA.Air != null)
         {
             // Cache the pressure value for this tile index.
-            nf = tileA.Air.Pressure;
+            newFloat = tileA.Air.Pressure;
         }
 
-        gridAtmosComp.DeltaPressureCoords[indices] = nf;
-        return nf;
+        gridAtmosComp.DeltaPressureCache[indices] = newFloat;
+        return newFloat;
     }
 }

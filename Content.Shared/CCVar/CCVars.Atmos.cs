@@ -156,6 +156,7 @@ public sealed partial class CCVars
     /// Entities with this component will take damage if they are exposed to a pressure difference
     /// above the minimum pressure threshold defined in the component.
     /// </summary>
+    // TODO: Needs CVARs for global configuration, like min pressure, max damage, etc.
     public static readonly CVarDef<bool> DeltaPressureDamage =
         CVarDef.Create("atmos.delta_pressure_damage", true, CVar.SERVERONLY);
 }

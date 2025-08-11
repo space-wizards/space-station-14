@@ -11,24 +11,25 @@ namespace Content.Server.Atmos.Components;
 /// Atmospherics.DeltaPressure batch-processes entities with this component in a list on
 /// the grid's <see cref="GridAtmosphereComponent"/>.
 /// The entities are automatically added and removed from this list, and automatically
-/// added on initialization if <see cref="AutoJoin"/> is set to true.
+/// added on initialization if <see cref="AutoJoinProcessingList"/> is set to true.
 /// </summary>
 /// <remarks><para>Systems wanting to change these values should go through the <see cref="DeltaPressureSystem"/> API.</para>
 /// <para>Note that the entity should have an <see cref="AirtightComponent"/> and be a grid structure.</para></remarks>
 [RegisterComponent]
-[Access(typeof(DeltaPressureSystem), typeof(AtmosphereSystem))]
 public sealed partial class DeltaPressureComponent : Component
 {
     /// <summary>
     /// Whether the entity is allowed to take pressure damage or not.
     /// </summary>
     [DataField(readOnly: true)]
-    public bool Enabled;
+    [Access(typeof(DeltaPressureSystem), typeof(AtmosphereSystem))]
+    public bool InProcessingList;
 
     /// <summary>
     /// Whether this entity is currently taking damage.
     /// </summary>
     [DataField(readOnly: true)]
+    [Access(typeof(DeltaPressureSystem), typeof(AtmosphereSystem))]
     public bool IsTakingDamage;
 
     /// <summary>
@@ -37,7 +38,7 @@ public sealed partial class DeltaPressureComponent : Component
     /// If this is set to false, the entity will not be automatically added to the list.
     /// </summary>
     [DataField]
-    public bool AutoJoin = true;
+    public bool AutoJoinProcessingList = true;
 
     /// <summary>
     /// The percent chance that the entity will take damage each atmos tick,
@@ -90,7 +91,7 @@ public sealed partial class DeltaPressureComponent : Component
     /// If the effective pressure goes beyond this, the damage will be considered at this pressure.
     /// </summary>
     [DataField]
-    public float MaxPressure = 10000;
+    public float MaxEffectivePressure = 10000;
 
     /// <summary>
     /// Simple constant to affect the scaling behavior.

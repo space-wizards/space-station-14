@@ -339,7 +339,7 @@ public partial class AtmosphereSystem
         if (!grid.Comp.DeltaPressureEntities.Add(ent))
             return false;
 
-        ent.Comp.Enabled = true;
+        ent.Comp.InProcessingList = true;
         return true;
     }
 
@@ -359,7 +359,7 @@ public partial class AtmosphereSystem
         if (!grid.Comp.DeltaPressureEntities.Remove(ent))
             return false;
 
-        ent.Comp.Enabled = false;
+        ent.Comp.InProcessingList = false;
         return true;
     }
 
