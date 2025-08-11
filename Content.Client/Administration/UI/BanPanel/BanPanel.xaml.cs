@@ -34,6 +34,9 @@ public sealed partial class BanPanel : DefaultWindow
     private bool HasBanFlag { get; set; }
     private TimeSpan? ButtonResetOn { get; set; }
 
+    private const string PrefixAntag = SharedRoleSystem.RolePrefixAntag;
+    private const string PrefixJob = SharedRoleSystem.RolePrefixJob;
+
     // This is less efficient than just holding a reference to the root control and enumerating children, but you
     // have to know how the controls are nested, which makes the code more complicated.
     // Role group name -> the role buttons themselves.
@@ -159,12 +162,12 @@ public sealed partial class BanPanel : DefaultWindow
         {
             var roles = proto.Roles.Select(x => _protoMan.Index(x))
                              .OrderBy(x => x.ID);
-            CreateRoleGroup(proto.ID, "Job:", proto.Color, roles);
+            CreateRoleGroup(proto.ID, PrefixJob, proto.Color, roles);
         }
 
         var antagRoles = _protoMan.EnumeratePrototypes<AntagPrototype>()
                                   .OrderBy(x => x.ID);
-        CreateRoleGroup("Antagonist", "Antag:", Color.Red, antagRoles);
+        CreateRoleGroup("Antagonist", PrefixAntag, Color.Red, antagRoles);
     }
 
     /// <summary>

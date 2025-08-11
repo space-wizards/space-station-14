@@ -28,8 +28,8 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     private readonly List<string> _roleBans = new();
     private readonly List<string> _jobWhitelists = new();
 
-    public const string JobPrefix = "Job:";
-    public const string AntagPrefix = "Antag:";
+    private const string PrefixAntag = SharedRoleSystem.RolePrefixAntag;
+    private const string PrefixJob = SharedRoleSystem.RolePrefixJob;
 
     private ISawmill _sawmill = default!;
 
@@ -127,9 +127,9 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
             var prefixedProto = proto;
             // Forcing index types for sorting
             if (_prototypes.TryIndex<JobPrototype>(proto, out job))
-                prefixedProto = JobPrefix + proto;
+                prefixedProto = PrefixJob + proto;
             else if (_prototypes.TryIndex<AntagPrototype>(proto, out antag))
-                prefixedProto = AntagPrefix + proto;
+                prefixedProto = PrefixAntag + proto;
             else
                 _sawmill.Error($"Role prototype '{proto}' could not be indexed as either a Job or an Antag");
 

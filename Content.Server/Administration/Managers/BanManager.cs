@@ -26,17 +26,17 @@ namespace Content.Server.Administration.Managers;
 
 public sealed partial class BanManager : IBanManager, IPostInjectInit
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly ServerDbEntryManager _entryManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly ILocalizationManager _localizationManager = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntitySystemManager _systems = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ILocalizationManager _localizationManager = default!;
-    [Dependency] private readonly ServerDbEntryManager _entryManager = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ITaskManager _taskManager = default!;
     [Dependency] private readonly UserDbDataManager _userDbData = default!;
 
@@ -44,8 +44,8 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
     public const string SawmillId = "admin.bans";
 
-    public const string JobPrefix = "Job:";
-    public const string AntagPrefix = "Antag:";
+    private const string PrefixAntag = SharedRoleSystem.RolePrefixAntag;
+    private const string PrefixJob = SharedRoleSystem.RolePrefixJob;
 
     private readonly Dictionary<ICommonSession, List<ServerRoleBanDef>> _cachedRoleBans = new();
     // Cached ban exemption flags are used to handle
@@ -240,21 +240,21 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
     public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
-        if (!role.StartsWith(JobPrefix) && !role.StartsWith(AntagPrefix))
+        if (!role.StartsWith(PrefixJob) && !role.StartsWith(PrefixAntag))
         {
             _sawmill.Error($"Role ban target '{role}' does not have a valid role prefix!");
             //TODO raise event to notify the banning admin about the failure
             return;
         }
-        if (role.StartsWith(JobPrefix) && !_prototypeManager.HasIndex<JobPrototype>(role.TrimStart(JobPrefix.ToCharArray())))
+        if (role.StartsWith(PrefixJob) && !_prototypeManager.HasIndex<JobPrototype>(role.TrimStart(PrefixJob.ToCharArray())))
         {
-            _sawmill.Error($"Role ban, {role}, started with the job prefix ({JobPrefix}) but did not have a valid prototype!");
+            _sawmill.Error($"Role ban, {role}, started with the job prefix ({PrefixJob}) but did not have a valid prototype!");
             //TODO raise event to notify the banning admin about the failure
             return;
         }
-        if (role.StartsWith(AntagPrefix) && !_prototypeManager.HasIndex<AntagPrototype>(role.TrimStart(AntagPrefix.ToCharArray())))
+        if (role.StartsWith(PrefixAntag) && !_prototypeManager.HasIndex<AntagPrototype>(role.TrimStart(PrefixAntag.ToCharArray())))
         {
-            _sawmill.Error($"Role ban, {role}, started with the antag prefix ({AntagPrefix}) but did not have a valid prototype!");
+            _sawmill.Error($"Role ban, {role}, started with the antag prefix ({PrefixAntag}) but did not have a valid prototype!");
             //TODO raise event to notify the banning admin about the failure
             return;
         }
@@ -343,8 +343,8 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             return null;
 
         return roleBans
-            .Where(ban => ban.Role.StartsWith(JobPrefix, StringComparison.Ordinal))
-            .Select(ban => new ProtoId<JobPrototype>(ban.Role[JobPrefix.Length..]))
+            .Where(ban => ban.Role.StartsWith(PrefixJob, StringComparison.Ordinal))
+            .Select(ban => new ProtoId<JobPrototype>(ban.Role[PrefixJob.Length..]))
             .ToHashSet();
     }
     #endregion
@@ -368,9 +368,9 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
             // The database stores roles with prefixes to distinguish them, so we must add them to the IDs before comparison
             if (_prototypeManager.TryIndex<JobPrototype>(role, out _ ))
-                roleId = JobPrefix + role;
+                roleId = PrefixJob + role;
             else if (_prototypeManager.TryIndex<AntagPrototype>(role, out _ ))
-                roleId = AntagPrefix + role;
+                roleId = PrefixAntag + role;
 
             if (bans.Contains(roleId))
                 return true;
@@ -391,7 +391,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
         foreach (var proto in prototypes)
         {
-            list.Add(AntagPrefix + proto);
+            list.Add(PrefixAntag + proto);
         }
 
         return IsRoleBanned(player, list);
