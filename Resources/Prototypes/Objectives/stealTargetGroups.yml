@@ -291,6 +291,13 @@
     sprite: Clothing/Mask/clown.rsi
     state: icon
 
+- type: stealTargetGroup
+  id: ClownRecorder
+  name: steal-target-groups-clown-recorder
+  sprite:
+    sprite: Objects/Fun/clownrecorder.rsi
+    state: icon
+
 #Thief structures
 
 - type: stealTargetGroup

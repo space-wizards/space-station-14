@@ -817,26 +817,24 @@
     sprite: Objects/Fun/clownrecorder.rsi
     state: icon
   - type: EmitSoundOnUse
-    sound:
+    sound: &laugh
       collection: ClownRecorder
   - type: EmitSoundOnLand
-    sound:
-      collection: ClownRecorder
+    sound: *laugh
   - type: EmitSoundOnActivate
-    sound:
-      collection: ClownRecorder
+    sound: *laugh
   - type: EmitSoundOnTrigger
-    sound:
-      collection: ClownRecorder
+    sound: *laugh
   - type: EmitSoundOnCollide
-    sound:
-      collection: ClownRecorder
+    sound: *laugh
   - type: UseDelay
     delay: 30.0
   - type: Tag
     tags:
     - ClownRecorder
     - Payload
+  - type: StealTarget
+    stealGroup: ClownRecorder
 
 - type: entity
   parent: BaseItem

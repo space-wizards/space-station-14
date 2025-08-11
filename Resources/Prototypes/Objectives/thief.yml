@@ -315,7 +315,7 @@
     difficulty: 1
 
 - type: entity
-  parent: BaseThiefStealCollectionObjective
+  parent: BaseThiefStealObjective
   id: ClothingShoesClownStealObjective
   components:
   - type: NotJobRequirement
@@ -326,7 +326,7 @@
     difficulty: 0.2 # Very easy when you don't actually target the clown
 
 - type: entity
-  parent: BaseThiefStealCollectionObjective
+  parent: BaseThiefStealObjective
   id: ClothingMaskClownStealObjective
   components:
   - type: NotJobRequirement
@@ -335,6 +335,17 @@
     stealGroup: ClothingMaskClown
   - type: Objective
     difficulty: 0.2 # Very easy if you don't actually target the clown
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ClownRecorderStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Clown
+  - type: StealCondition
+    stealGroup: ClownRecorder
+  - type: Objective
+    difficulty: 0.4 # About as hard as a bible
 
 # Structures
 

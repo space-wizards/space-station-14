@@ -45,6 +45,7 @@ steal-target-groups-clothing-neck-clownmedal = clown medal
 steal-target-groups-wanted-list-cartridge = wanted list cartridge
 steal-target-groups-clothing-shoes-clown = clown's clown shoes
 steal-target-groups-clothing-mask-clown = clown's mask
+steal-target-groups-clown-recorder = clown's laugh track
 
 # Thief structures
 steal-target-groups-teg = teg generator part
