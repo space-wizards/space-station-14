@@ -1,0 +1,402 @@
+- type: adminSmite
+  id: Explode
+  name: admin-smite-explode-name
+  desc: admin-smite-explode-description
+  icon: Interface/VerbIcons/smite.svg.192dpi.png
+
+- type: adminSmite
+  id: ChessDimension
+  name: admin-smite-chess-dimension-name
+  desc: admin-smite-chess-dimension-description
+  icon:
+    sprite: Objects/Fun/Tabletop/chessboard.rsi
+    state: chessboard
+
+- type: adminSmite
+  id: SetAlight
+  name: admin-smite-set-alight-name
+  desc: admin-smite-set-alight-description
+  popupMessage: admin-smite-set-alight-self
+  icon: Interface/Alerts/Fire/fire.png
+  whitelist:
+    components:
+    - Flammable
+  effects:
+  - !type:Jitter
+  - !type:FlammableReaction
+    multiplier: 10
+  - !type:AdjustTemperature
+    amount: 60000
+  - !type:Ignite
+
+- type: adminSmite 
+  id: MonkeyPolymorph #Need polymorph system move to shared
+  name: admin-smite-monkeyify-name
+  desc: admin-smite-monkeyify-description
+  icon:
+    sprite: Mobs/Animals/monkey.rsi
+    state: monkey
+
+- type: adminSmite
+  id: GarbageCanPolymorph #Need polymorph system move to shared
+  name: admin-smite-garbage-can-name
+  desc: admin-smite-garbage-can-description
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: disposal
+
+- type: adminSmite
+  id: Electrocute
+  name: admin-smite-electrocute-name
+  desc: admin-smite-electrocute-description
+  icon:
+    sprite: Clothing/Hands/Gloves/Color/yellow.rsi
+    state: icon
+  whitelist:
+    components:
+    - Damageable
+    - MobState
+    requireAll: true
+  effects:
+  - !type:Electrocute
+    electrocuteTime: 30
+    electrocuteDamageScale: 100
+
+- type: adminSmite
+  id: Creampie
+  name: admin-smite-creampie-name
+  desc: admin-smite-creampie-description
+  icon:
+    sprite: Objects/Consumable/Food/Baked/pie.rsi
+    state: plain-slice
+  whitelist:
+    components:
+    - CreamPied
+
+- type: adminSmite
+  id: RemoveBlood
+  name: admin-smite-remove-blood-name
+  desc: admin-smite-remove-blood-description
+  icon:
+    sprite: Fluids/tomato_splat.rsi
+    icon: puddle-1
+  whitelist:
+    components:
+    - Bloodstream
+
+- type: adminSmite
+  id: VomitOrgans
+  name: admin-smite-vomit-organs-name
+  desc: admin-smite-vomit-organs-description
+  icon:
+    sprite: Fluids/vomit_toxin.rsi
+    icon: vomit_toxin-1
+  whitelist:
+    components:
+    - Body
+
+- type: adminSmite
+  id: RemoveHands
+  name: admin-smite-remove-hands-name
+  desc: admin-smite-remove-hands-description
+  icon: Interface/AdminActions/remove-hands.png
+  whitelist:
+    components:
+    - Body
+
+- type: adminSmite
+  id: StomachRemoval
+  name: admin-smite-stomach-removal-name
+  desc: admin-smite-stomach-removal-description
+  icon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: stomach
+  whitelist:
+    components:
+    - Body
+
+- type: adminSmite
+  id: LungRemoval
+  name: admin-smite-lung-removal-name
+  desc: admin-smite-lung-removal-description
+  icon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: lung-r
+  whitelist:
+    components:
+    - Body
+
+- type: adminSmite
+  id: Pinball
+  name: admin-smite-pinball-name
+  desc: admin-smite-pinball-description
+  icon:
+    sprite: Objects/Fun/Balls/basketball.rsi
+    state: icon
+  whitelist:
+    components:
+    - Physics
+
+- type: adminSmite
+  id: Yeet
+  name: admin-smite-yeet-name
+  desc: admin-smite-yeet-description
+  icon: Interface/VerbIcons/eject.svg.192dpi.png
+  whitelist:
+    components:
+    - Physics
+
+- type: adminSmite
+  id: BreadPolymorph #Need polymorph system move to shared
+  name: admin-smite-become-bread-name
+  desc: admin-smite-become-bread-description
+  icon:
+    sprite: Objects/Consumable/Food/Baked/bread.rsi
+    state: plain
+
+- type: adminSmite
+  id: MousePolymorph #Need polymorph system move to shared
+  name: admin-smite-become-mouse-name
+  desc: admin-smite-become-mouse-description
+  icon:
+    sprite: Mobs/Animals/mouse.rsi
+    state: icon-0
+
+- type: adminSmite
+  id: GhostKick
+  name: admin-smite-ghostkick-name
+  desc: admin-smite-ghostkick-description
+  icon: Interface/gavel.svg.192dpi.png
+  whitelist:
+    components:
+    - Actor
+
+- type: adminSmite
+  id: Nyanify
+  name: admin-smite-nyanify-name
+  desc: admin-smite-nyanify-description
+  icon:
+    sprite: Clothing/Head/Hats/catears.rsi
+    state: icon
+  whitelist:
+    components:
+    - Inventory
+
+- type: adminSmite
+  id: KillSign
+  name: admin-smite-kill-sign-name
+  desc: admin-smite-kill-sign-description
+  icon:
+    sprite: Objects/Misc/killsign.rsi
+    state: icon
+  components:
+  - type: KillSign
+
+- type: adminSmite
+  id: Cluwne
+  name: admin-smite-cluwne-name
+  desc: admin-smite-cluwne-description
+  icon:
+    sprite: Clothing/Mask/cluwne.rsi
+    state: icon
+  whitelist:
+    components:
+    - Inventory
+  components:
+  - type: Cluwne
+
+- type: adminSmite
+  id: Maid
+  name: admin-smite-maid-name
+  desc: admin-smite-maid-description
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
+    state: icon
+  whitelist:
+    components:
+    - Inventory
+  components:
+  - type: Clumsy
+
+- type: adminSmite
+  id: AngerArrows
+  name: admin-smite-anger-pointing-arrows-name
+  desc: admin-smite-anger-pointing-arrows-description
+  icon:
+    sprite: Interface/Misc/pointing.rsi
+    state: pointing
+  components:
+  - type: PointingArrowAngering
+
+- type: adminSmite
+  id: Dust
+  name: admin-smite-dust-name
+  desc: admin-smite-dust-description
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: ash
+
+- type: adminSmite
+  id: Buffering
+  name: admin-smite-buffering-name
+  desc: admin-smite-buffering-description
+  icon: Interface/Misc/buffering_smite_icon.png
+  components:
+  - type: Buffering
+
+#- type: adminSmite
+#  id: InstrumentPolymorph #Need polymorph system move to shared
+#  name: admin-smite-become-instrument-name
+#  desc: admin-smite-become-instrument-description
+#  icon:
+#    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+#    state: supersynth
+
+- type: adminSmite
+  id: RemoveGravity
+  name: admin-smite-remove-gravity-name
+  desc: admin-smite-remove-gravity-description
+  icon:
+    sprite: Structures/Machines/gravity_generator.rsi
+    state: off
+  components:
+  - type: MovementIgnoreGravity
+    gravityState: true
+
+#- type: adminSmite
+#  id: LizardPolymorph #Need polymorph system move to shared
+#  name: admin-smite-reptilian-species-swap-name
+#  desc: admin-smite-reptilian-species-swap-description
+#  icon:
+#    sprite: Objects/Fun/Plushies/lizard.rsi
+#    state: icon
+
+- type: adminSmite
+  id: LockerStuff
+  name: admin-smite-locker-stuff-name
+  desc: admin-smite-locker-stuff-description
+  icon:
+    sprite: Structures/Storage/closet.rsi
+    state: generic
+
+- type: adminSmite
+  id: Headstand
+  name: admin-smite-headstand-name
+  desc: admin-smite-headstand-description
+  icon: Interface/VerbIcons/refresh.svg.192dpi.png
+  components:
+  - type: Headstand
+
+- type: adminSmite
+  id: ZoomIn
+  name: admin-smite-zoom-in-name
+  desc: admin-smite-zoom-in-description
+  icon: Interface/AdminActions/zoom.png
+  whitelist:
+    components:
+    - ContentEye
+
+- type: adminSmite
+  id: FlipEye
+  name: admin-smite-flip-eye-name
+  desc: admin-smite-flip-eye-description
+  icon: Interface/AdminActions/flip.png
+  whitelist:
+    components:
+    - ContentEye
+
+- type: adminSmite
+  id: RunWalkSwap
+  name: admin-smite-run-walk-swap-name
+  desc: admin-smite-run-walk-swap-description
+  icon: Interface/AdminActions/run-walk-swap.png
+  whitelist:
+    components:
+    - MovementSpeedModifier
+
+- type: adminSmite
+  id: SpeakBackward
+  name: admin-smite-speak-backwards-name
+  desc: admin-smite-speak-backwards-description
+  icon: Interface/AdminActions/help-backwards.png
+  components:
+  - type: BackwardsAccent
+
+- type: adminSmite
+  id: DisarmProne
+  name: admin-smite-disarm-prone-name
+  desc: admin-smite-disarm-prone-description
+  icon: Interface/Actions/disarm.png
+  components:
+  - type: DisarmProne
+
+- type: adminSmite
+  id: SuperSpeed
+  name: admin-smite-super-speed-name
+  desc: admin-smite-super-speed-description
+  popupMessage: admin-smite-super-speed-prompt
+  icon: Interface/AdminActions/super_speed.png
+  whitelist:
+    components:
+    - MovementSpeedModifier
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 400
+    baseSprintSpeed: 8000
+    baseAcceleration: 40
+
+- type: adminSmite
+  id: SuperBonkLite
+  name: admin-smite-super-bonk-lite-name
+  desc: admin-smite-super-bonk-lite-description
+  icon:
+    sprite: Structures/Furniture/Tables/glass.rsi
+    state: full
+
+- type: adminSmite
+  id: SuperBonk
+  name: admin-smite-super-bonk-name
+  desc: admin-smite-super-bonk-description
+  icon:
+    sprite: Structures/Furniture/Tables/generic.rsi
+    state: full
+
+- type: adminSmite
+  id: SuperSlip
+  name: admin-smite-super-slip-name
+  desc: admin-smite-super-slip-description
+  icon:
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    state: omega-4
+
+- type: adminSmite
+  id: OmniAccent
+  name: admin-smite-omni-accent-name
+  desc: admin-smite-omni-accent-description
+  icon:
+    sprite: Interface/Actions/voice-mask.rsi
+    state: icon
+  components:
+  - type: BarkAccent
+  - type: BleatingAccent
+  - type: FrenchAccent
+  - type: GermanAccent
+  - type: LizardAccent
+  - type: MobsterAccent
+  - type: MothAccent
+  - type: OwOAccent
+  - type: SkeletonAccent
+  - type: SouthernAccent
+  - type: SpanishAccent
+  - type: StutteringAccent
+  # - type: BackwardsAccent (1/8 chance in old realization)
+
+- type: adminSmite
+  id: Crawler
+  name: admin-smite-crawler-name
+  desc: admin-smite-crawler-description
+  icon:
+    sprite: Mobs/Animals/snake.rsi
+    state: icon
+  components:
+  - type: Worm

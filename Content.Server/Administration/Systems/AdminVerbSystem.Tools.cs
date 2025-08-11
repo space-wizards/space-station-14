@@ -832,7 +832,7 @@ public sealed partial class AdminVerbSystem
 
     private void GiveAllAccess(EntityUid entity)
     {
-        var allAccess = _prototypeManager
+        var allAccess = _proto
             .EnumeratePrototypes<AccessLevelPrototype>()
             .Select(p => new ProtoId<AccessLevelPrototype>(p.ID)).ToArray();
 
