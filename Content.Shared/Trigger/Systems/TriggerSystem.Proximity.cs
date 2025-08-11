@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Examine;
 using Content.Shared.Trigger.Components.Triggers;
 using Robust.Shared.Physics.Events;
@@ -148,20 +149,24 @@ public sealed partial class TriggerSystem
                 SetProximityAppearance((uid, trigger));
             }
 
-            if (!trigger.Enabled)
+            // Continue if we're disabled or on cooldown.
+            if (!trigger.Enabled ||
+                curTime < trigger.NextTrigger)
                 continue;
 
-            if (curTime < trigger.NextTrigger)
-                // The trigger's on cooldown.
-                continue;
+            var ourSpeed = _physicsQuery.TryGetComponent(uid, out var physicsComponent) ?
+                physicsComponent.LinearVelocity :
+                Vector2.Zero;
 
-            // Check for anything colliding and moving fast enough.
+            var triggerSpeed = trigger.TriggerSpeed;
+
+            // Check for anything colliding and moving fast enough, relative to us.
             foreach (var (collidingUid, colliding) in trigger.Colliding)
             {
                 if (TerminatingOrDeleted(collidingUid))
                     continue;
 
-                if (colliding.LinearVelocity.Length() < trigger.TriggerSpeed)
+                if ((colliding.LinearVelocity - ourSpeed).Length() < triggerSpeed)
                     continue;
 
                 if (trigger.RequiresLineOfSight && !_examineSystem.InRangeUnOccluded(uid, collidingUid, range: trigger.Shape.Radius))
