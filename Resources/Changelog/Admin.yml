@@ -1293,5 +1293,42 @@ Entries:
   id: 157
   time: '2025-07-25T16:53:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36969
+- author: perryprog
+  changes:
+  - message: savegrid and savemap will no longer fail to save unpaused grids with
+      vending machines on them.
+    type: Fix
+  id: 158
+  time: '2025-07-31T18:34:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38406
+- author: PJB3005
+  changes:
+  - message: The "scale" console command was replaced with a toolshed command.
+    type: Tweak
+  id: 159
+  time: '2025-08-06T15:09:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39421
+- author: slarticodefast
+  changes:
+  - message: Added the "scale:multiplyvector" toolshed command.
+    type: Add
+  id: 160
+  time: '2025-08-06T17:23:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39424
+- author: slarticodefast
+  changes:
+  - message: Paused maps from cryostorage and polymorphing are now named to make them
+      easier to find when debugging.
+    type: Tweak
+  id: 161
+  time: '2025-08-07T14:55:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39453
+- author: K-Dynamic
+  changes:
+  - message: Centcomm Official now starts with administration glasses.
+    type: Tweak
+  id: 162
+  time: '2025-08-08T19:00:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35531
 Name: Admin
 Order: 2
