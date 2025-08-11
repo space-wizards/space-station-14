@@ -14,8 +14,8 @@
     Steel: 500
 
 - type: latheRecipe
-  id: BoxCutter
-  result: BoxCutter
+  id: UtilityKnife
+  result: UtilityKnife
   completetime: 2
   materials:
     Steel: 100
