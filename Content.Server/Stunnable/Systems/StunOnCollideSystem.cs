@@ -5,6 +5,7 @@ using Content.Shared.Throwing;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Stunnable.Systems;
+
 [UsedImplicitly]
 internal sealed class StunOnCollideSystem : EntitySystem
 {
@@ -14,6 +15,7 @@ internal sealed class StunOnCollideSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<StunOnCollideComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<StunOnCollideComponent, ThrowDoHitEvent>(HandleThrow);
     }

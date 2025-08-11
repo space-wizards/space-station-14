@@ -58,7 +58,6 @@ public abstract partial class SharedStunSystem
         // DoAfter event subscriptions
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
 
-        // Crawling
         SubscribeLocalEvent<CrawlerComponent, KnockedDownRefreshEvent>(OnKnockdownRefresh);
         SubscribeLocalEvent<CrawlerComponent, DamageChangedEvent>(OnDamaged);
         SubscribeLocalEvent<HandsComponent, GetStandUpTimeEvent>(OnHandsStandUpTime);
@@ -236,7 +235,7 @@ public abstract partial class SharedStunSystem
     private void ToggleKnockdown(Entity<CrawlerComponent?, KnockedDownComponent?> entity)
     {
         // We resolve here instead of using TryCrawling to be extra sure someone without crawler can't stand up early.
-        if (!Resolve(entity, ref entity.Comp1))
+        if (!_crawlerQuery.Resolve(entity, ref entity.Comp1, false))
             return;
 
         if (!Resolve(entity, ref entity.Comp2, false))

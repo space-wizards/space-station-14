@@ -16,12 +16,12 @@ public sealed partial class KnockdownStatusEffectComponent : Component
     /// Or if your status effect doesn't whitelist itself to only those with <see cref="CrawlerComponent"/>
     /// Then you need to set this to true.
     /// </remarks>
-    [ViewVariables]
+    [DataField]
     public bool Crawl;
 
     /// <summary>
     /// Should we drop items when we fall?
     /// </summary>
-    [ViewVariables]
+    [DataField]
     public bool Drop = true;
 }
