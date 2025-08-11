@@ -10,7 +10,8 @@
     - Wall
   components:
   - type: Anchorable
-    isUnanchorable: true
+    flags: 
+    - Anchorable
   - type: Rotatable
   - type: RangedDamageSound
     soundGroups:
