@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Client.Gameplay;
-using Content.Shared.Doors.Components; // Starlight edit
 using Content.Shared.Effects;
+using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
@@ -13,8 +13,10 @@ using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components; // Starlight edit
+using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Physics;
 
 namespace Content.Client.Weapons.Melee;
 
@@ -25,10 +27,10 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!; // Starlight edit
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
@@ -153,46 +155,53 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     protected override bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
     {
-        var xform = Transform(target);
-        var targetCoordinates = xform.Coordinates;
-        var targetLocalAngle = xform.LocalRotation;
-
-        // Default unobstructed check - Starlight edit begins
-        if (Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false))
+        // Client-side unobstructed check.
+        var targetXform = Transform(target);
+        if (Interaction.InRangeUnobstructed(user, target, targetXform.Coordinates, targetXform.LocalRotation, range, overlapCheck: false))
             return true;
 
-        // Fallback for entities on the same tile as a porous blocker
+        // Fallback for same-tile obstructions
         var userXform = Transform(user);
-        var targetXform = xform;
 
-        // Ensure both are on the same map
-        if (userXform.MapID != targetXform.MapID || userXform.MapID == MapId.Nullspace)
+        var userPos = TransformSystem.GetWorldPosition(userXform);
+        var targetPos = TransformSystem.GetWorldPosition(targetXform);
+        var delta = targetPos - userPos;
+        var distance = delta.Length();
+
+        if (distance > range)
             return false;
 
-        // Perform a simple distance check
-        if ((TransformSystem.GetWorldPosition(userXform) - TransformSystem.GetWorldPosition(targetXform)).Length() > range)
+        // If distance is near-zero, it's a point-blank attack. The path is definitionally "unobstructed"
+        if (distance < 0.001f)
+            return true;
+
+        var mapId = userXform.MapID;
+        if (mapId == MapId.Nullspace)
             return false;
 
-        // If within distance, check if the obstruction is a door-like entity on the same tile as the target
+        var dir = delta.Normalized();
+        const int attackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
+
+        var ray = new CollisionRay(userPos, dir, attackMask);
+        var rayCastResults = _physics.IntersectRay(mapId, ray, distance, user, false).ToList();
+
+        if (!rayCastResults.Any() || rayCastResults.First().HitEntity == target)
+            return true;
+
+        var hitEntity = rayCastResults.First().HitEntity;
+
         if (targetXform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
 
-        var targetTileIndices = _map.CoordinatesToTile(gridUid, grid, targetXform.Coordinates);
+        var hitXform = Transform(hitEntity);
+        if (hitXform.GridUid != gridUid)
+            return false;
 
-        // Use an unambiguous overload by providing the enlargement parameter
-        var entitiesOnTile = _lookup.GetLocalEntitiesIntersecting(gridUid, targetTileIndices, 0.0f, flags: LookupFlags.Static);
+        var targetTile = _map.CoordinatesToTile(gridUid, grid, targetXform.Coordinates);
+        var hitTile = _map.CoordinatesToTile(gridUid, grid, hitXform.Coordinates);
 
-        foreach (var entity in entitiesOnTile)
-        {
-            if (entity == target || entity == user)
-                continue;
-
-            // If we find a DoorComponent OR a TurnstileComponent on this tile, we assume it was the blocker and allow the hit
-            if (HasComp<DoorComponent>(entity) || HasComp<TurnstileComponent>(entity))
-                return true;
-        }
-
-        return false; //Starlight edit ends
+        // If the first obstruction is on the same tile as the target, allow the attack
+        return targetTile == hitTile;
     }
 
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
@@ -246,14 +255,21 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (mousePos.MapId != attackerPos.MapId || (attackerPos.Position - mousePos.Position).Length() > meleeComponent.Range)
             return;
 
+        // Find the entity directly under the cursor
         EntityUid? target = null;
-
         if (_stateManager.CurrentState is GameplayStateBase screen)
             target = screen.GetClickedEntity(mousePos);
 
-        // Don't light-attack if interaction will be handling this instead
-        if (Interaction.CombatModeCanHandInteract(attacker, target))
-            return;
+        // If no entity was clicked (a "miss"), we still want to play the swing animation.
+        // To do this, we target the grid entity itself. The server will should interpret
+        // an attack on a non-damageable grid as a miss
+        if (target == null)
+        {
+            if (MapManager.TryFindGridAt(mousePos, out var gridUid, out _))
+                target = gridUid;
+            else
+                target = _map.GetMapOrInvalid(mousePos.MapId);
+        }
 
         RaisePredictiveEvent(new LightAttackEvent(GetNetEntity(target), GetNetEntity(weaponUid), GetNetCoordinates(coordinates)));
     }
