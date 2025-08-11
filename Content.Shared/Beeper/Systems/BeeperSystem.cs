@@ -67,10 +67,8 @@ public sealed class BeeperSystem : EntitySystem
             return;
 
         ent.Comp.IntervalScaling = FixedPoint2.Clamp(newScaling, 0, 1);
-        DirtyField(ent, ent.Comp, nameof(ent.Comp.IntervalScaling));
-
         ent.Comp.Interval = (ent.Comp.MaxBeepInterval - ent.Comp.MinBeepInterval) * ent.Comp.IntervalScaling.Float() + ent.Comp.MinBeepInterval;
-        DirtyField(ent, ent.Comp, nameof(ent.Comp.Interval));
+        DirtyFields(ent, ent.Comp, null, nameof(ent.Comp.Interval), nameof(ent.Comp.IntervalScaling));
     }
 
     /// <summary>
