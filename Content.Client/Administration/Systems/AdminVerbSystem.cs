@@ -17,7 +17,7 @@ public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
     [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
     [Dependency] private readonly ISharedAdminManager _admin = default!;
 
-    public override void GetVerbs(GetVerbsEvent<Verb> args)
+    protected override void GetVerbs(GetVerbsEvent<Verb> args)
     {
         base.GetVerbs(args);
 

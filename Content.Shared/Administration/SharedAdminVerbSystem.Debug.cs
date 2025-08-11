@@ -28,36 +28,36 @@ public abstract partial class SharedAdminVerbSystem
         // Delete verb
         if (_toolshedManager.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshedManager.DefaultEnvironment.GetCommand("delete"), null), player, out _) ?? false)
         {
-            Verb debugDeleteVerb = new()
+            Verb deleteVerb = new()
             {
                 Text = Loc.GetString("delete-verb-get-data-text"),
                 Category = VerbCategory.Debug,
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
                 Act = () => Del(args.Target),
                 Impact = LogImpact.Medium,
                 ConfirmationPopup = true,
             };
-            args.Verbs.Add(debugDeleteVerb);
+            args.Verbs.Add(deleteVerb);
         }
 
         // Rejuvenate verb
         if (_toolshedManager.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshedManager.DefaultEnvironment.GetCommand("rejuvenate"), null), player, out _) ?? false)
         {
-            Verb debugRejuvenateVerb = new()
+            Verb rejuvenateVerb = new()
             {
                 Text = Loc.GetString("rejuvenate-verb-get-data-text"),
                 Category = VerbCategory.Debug,
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png")),
                 Act = () => DebugRejuvenateVerb(args.Target),
                 Impact = LogImpact.Medium,
             };
-            args.Verbs.Add(debugRejuvenateVerb);
+            args.Verbs.Add(rejuvenateVerb);
         }
 
         // Control mob verb
         if (_toolshedManager.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshedManager.DefaultEnvironment.GetCommand("mind"), "control"), player, out _) ?? false)
         {
-            Verb debugControlMobVerb = new()
+            Verb controlMobVerb = new()
             {
                 Text = Loc.GetString("control-mob-verb-get-data-text"),
                 Category = VerbCategory.Debug,
@@ -66,21 +66,21 @@ public abstract partial class SharedAdminVerbSystem
                 Impact = LogImpact.High,
                 ConfirmationPopup = true,
             };
-            args.Verbs.Add(debugControlMobVerb);
+            args.Verbs.Add(controlMobVerb);
         }
 
         // Make Sentient verb
         if (CanCommandOverride(player, "makesentient") && args.User != args.Target && !HasComp<MindContainerComponent>(args.Target))
         {
-            Verb debugMakeSentientVerb = new()
+            Verb makeSentientVerb = new()
             {
                 Text = Loc.GetString("make-sentient-verb-get-data-text"),
                 Category = VerbCategory.Debug,
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/sentient.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/sentient.svg.192dpi.png")),
                 Act = () => _mindSystem.MakeSentient(args.Target),
                 Impact = LogImpact.Medium,
             };
-            args.Verbs.Add(debugMakeSentientVerb);
+            args.Verbs.Add(makeSentientVerb);
         }
 
         if (TryComp<InventoryComponent>(args.Target, out var inventoryComponent))
@@ -88,39 +88,40 @@ public abstract partial class SharedAdminVerbSystem
             // Strip all verb
             if (CanCommandOverride(player, "stripall"))
             {
-                args.Verbs.Add(new Verb
+                Verb stripAllVerb = new()
                 {
                     Text = Loc.GetString("strip-all-verb-get-data-text"),
                     Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                     Act = () => _consoleHost.RemoteExecuteCommand(player, $"stripall \"{args.Target}\""),
                     Impact = LogImpact.Medium,
-                });
+                };
+                args.Verbs.Add(stripAllVerb);
             }
 
             // set outfit verb
             if (CanCommandOverride(player, "setoutfit"))
             {
-                Verb verb = new()
+                Verb setOutfitVerb = new()
                 {
                     Text = Loc.GetString("set-outfit-verb-get-data-text"),
                     Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                     Act = () => DebugSetOutfitVerb(player, args.Target),
                     Impact = LogImpact.Medium,
                 };
-                args.Verbs.Add(verb);
+                args.Verbs.Add(setOutfitVerb);
             }
         }
 
         // In range unoccluded verb
         if (CanCommandOverride(player, "inrangeunoccluded"))
         {
-            Verb verb = new()
+            Verb inRangeUnoccludedVerb = new()
             {
                 Text = Loc.GetString("in-range-unoccluded-verb-get-data-text"),
                 Category = VerbCategory.Debug,
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
                 Act = () =>
                 {
 
@@ -131,14 +132,14 @@ public abstract partial class SharedAdminVerbSystem
                     _popupSystem.PopupClient(message, args.Target, args.User);
                 }
             };
-            args.Verbs.Add(verb);
+            args.Verbs.Add(inRangeUnoccludedVerb);
         }
 
         // Make ghost role verb
         if (CanCommandOverride(player, "makeghostrole") &&
             !(EntityManager.GetComponentOrNull<MindContainerComponent>(args.Target)?.HasMind ?? false))
         {
-            Verb verb = new()
+            Verb makeGhostRoleVerb = new()
             {
                 Text = Loc.GetString("make-ghost-role-verb-get-data-text"),
                 Category = VerbCategory.Debug,
@@ -147,7 +148,7 @@ public abstract partial class SharedAdminVerbSystem
                 Act = () => DebugMakeGhostRoleVerb(player, args.Target),
                 Impact = LogImpact.Medium,
             };
-            args.Verbs.Add(verb);
+            args.Verbs.Add(makeGhostRoleVerb);
         }
 
         // Need a suggestion for a better solution to this.
@@ -155,30 +156,28 @@ public abstract partial class SharedAdminVerbSystem
 
         if (adminData != null && adminData.CanAdminMenu() && TryComp(args.Target, out ConfigurationComponent? config))
         {
-            Verb verb = new()
+            Verb configureVerb = new()
             {
                 Text = Loc.GetString("configure-verb-get-data-text"),
-                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
                 Category = VerbCategory.Debug,
-                Act = () => _uiSystem.OpenUi(args.Target,
-                    ConfigurationComponent.ConfigurationUiKey.Key,
-                    actor.PlayerSession),
+                Act = () => _uiSystem.OpenUi(args.Target, ConfigurationComponent.ConfigurationUiKey.Key, actor.PlayerSession),
             };
-            args.Verbs.Add(verb);
+            args.Verbs.Add(configureVerb);
         }
 
         // Add verb to open Solution Editor
         if (CanCommandOverride(player, "addreagent") && HasComp<SolutionContainerManagerComponent>(args.Target))
         {
-            Verb verb = new()
+            Verb addReagentVerb = new()
             {
                 Text = Loc.GetString("edit-solutions-verb-get-data-text"),
                 Category = VerbCategory.Debug,
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/spill.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/spill.svg.192dpi.png")),
                 Act = () => DebugAddReagentVerb(player, args.Target),
                 Impact = LogImpact.Medium, // maybe high depending on WHAT reagents they add...
             };
-            args.Verbs.Add(verb);
+            args.Verbs.Add(addReagentVerb);
         }
     }
 

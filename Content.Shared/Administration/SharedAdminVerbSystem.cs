@@ -28,7 +28,7 @@ public abstract partial class SharedAdminVerbSystem : EntitySystem
         SubscribeLocalEvent<GetVerbsEvent<Verb>>(GetVerbs);
     }
 
-    public virtual void GetVerbs(GetVerbsEvent<Verb> args)
+    protected virtual void GetVerbs(GetVerbsEvent<Verb> args)
     {
         AddAdminVerbs(args);
         AddAntagVerbs(args);
