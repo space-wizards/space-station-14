@@ -1,0 +1,28 @@
+- type: body
+  id: SmartCorgi
+  name: corgi
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - righthand
+      - lefthand
+      - legs
+      organs:
+        brain: OrganHumanBrain # feels strange but it is what it is
+        lungs: OrganAnimalLungs
+        stomach: OrganAnimalStomach
+        liver: OrganAnimalLiver
+        heart: OrganAnimalHeart
+        kidneys: OrganAnimalKidneys
+    lefthand:
+      part: LeftHandSmartCorgi
+    righthand:
+      part: RightHandSmartCorgi
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal

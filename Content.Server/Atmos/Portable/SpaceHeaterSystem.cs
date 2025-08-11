@@ -5,6 +5,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Piping.Portable.Components;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Power;
 using Content.Shared.UserInterface;
@@ -41,6 +42,7 @@ public sealed class SpaceHeaterSystem : EntitySystem
     {
         if (!TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
             return;
+
         thermoMachine.Cp = spaceHeater.HeatingCp;
         thermoMachine.HeatCapacity = spaceHeater.PowerConsumption;
     }

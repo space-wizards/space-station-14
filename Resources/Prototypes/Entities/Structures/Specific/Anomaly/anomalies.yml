@@ -72,6 +72,8 @@
   - type: Anomaly
     corePrototype: AnomalyCorePyroclastic
     coreInertPrototype: AnomalyCorePyroclasticInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyPyroSupercritical
   - type: Sprite
     sprite: Structures/Specific/Anomalies/pyro_anom.rsi
     layers:
@@ -124,6 +126,9 @@
   - type: Anomaly
     corePrototype: AnomalyCoreGravity
     coreInertPrototype: AnomalyCoreGravityInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyGravitySupercritical
+    supercriticalDuration: 15s
   - type: Sprite
     layers:
     - state: anom2
@@ -156,6 +161,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreElectricity
     coreInertPrototype: AnomalyCoreElectricityInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyElectricitySupercritical
   - type: Sprite
     layers:
     - state: anom3
@@ -181,6 +188,8 @@
     coreInertPrototype: AnomalyCoreFleshInert
     minPulseLength: 180
     maxPulseLength: 300
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyFleshSupercritical
   - type: Sprite
     layers:
     - state: anom5
@@ -306,6 +315,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreBluespace
     coreInertPrototype: AnomalyCoreBluespaceInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyBluespaceSupercritical
     pulseSound:
       collection: RadiationPulse
       params:
@@ -332,6 +343,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreIce
     coreInertPrototype: AnomalyCoreIceInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyIceSupercritical
   - type: ExplosionAnomaly
     supercriticalExplosion: Cryo
     explosionTotalIntensity: 300
@@ -376,6 +389,8 @@
     coreInertPrototype: AnomalyCoreRockInert
     minPulseLength: 180
     maxPulseLength: 300
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyRockSupercritical
   - type: Sprite
     layers:
     - state: anom6
@@ -452,9 +467,56 @@
         maxRange: 5
       spawns:
       - MobSpawnCrabUranium
-  - type: RadiationSource
-    intensity: 0.2
-    slope: 0.1
+
+- type: entity
+  id: AnomalyRockBananium
+  parent: AnomalyRockBase
+  suffix: Rock, Bananium
+  components:
+  - type: Sprite
+    color: "#ddde40"
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#ddde40"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 8
+        maxAmount: 15
+        minRange: 4.5
+        maxRange: 7.5
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidBananium
+      - WallSpawnAsteroidBananiumCrab
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalYellow
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - CrystalYellow
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidBananiumCrab
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 3
+        maxAmount: 6
+        maxRange: 5
+      spawns:
+      - MobSpawnCrabBananium
 
 - type: entity
   id: AnomalyRockQuartz
@@ -557,6 +619,56 @@
       - MobSpawnCrabSilver
 
 - type: entity
+  id: AnomalyRockGold
+  parent: AnomalyRockBase
+  suffix: Rock, Gold
+  components:
+  - type: Sprite
+    color: "#e3ba70"
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#e3ba70"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 8
+        maxAmount: 15
+        minRange: 4.5
+        maxRange: 7.5
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidGold
+      - WallSpawnAsteroidGoldCrab
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalYellow
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - CrystalYellow
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidGoldCrab
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 6
+        maxAmount: 10
+        maxRange: 5
+      spawns:
+      - MobSpawnCrabGold
+
+- type: entity
   id: AnomalyRockIron
   parent: AnomalyRockBase
   suffix: Rock, Iron
@@ -607,6 +719,56 @@
       - MobSpawnCrabIron
 
 - type: entity
+  id: AnomalyRockCoal
+  parent: AnomalyRockBase
+  suffix: Rock, Coal
+  components:
+  - type: Sprite
+    color: "#484848"
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#484848"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 8
+        maxAmount: 15
+        minRange: 4.5
+        maxRange: 7.5
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidCoal
+      - WallSpawnAsteroidCoalCrab
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalBlack
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - CrystalBlack
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidCoalCrab
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 6
+        maxAmount: 10
+        maxRange: 5
+      spawns:
+      - MobSpawnCrabCoal
+
+- type: entity
   id: AnomalyFlora
   parent: BaseAnomaly
   suffix: Flora
@@ -631,6 +793,8 @@
     coreInertPrototype: AnomalyCoreFloraInert
     minPulseLength: 60
     maxPulseLength: 120
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyFloraSupercritical
   - type: TileSpawnAnomaly
     entries:
     - settings:
@@ -734,6 +898,8 @@
     coreInertPrototype: AnomalyCoreLiquidInert
     minPulseLength: 60
     maxPulseLength: 120
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyFluidSupercritical
   - type: EntitySpawnAnomaly
     entries:
     - settings:
@@ -813,6 +979,8 @@
     solution: anomaly
   - type: ExaminableSolution
     solution: anomaly
+    exactVolume: true
+    locVolume: "examinable-solution-on-examine-volume-no-max"
   - type: RefillableSolution
     solution: anomaly
   - type: InjectableSolution
@@ -847,6 +1015,8 @@
     maxPulseLength: 120
     animationTime: 4
     offset: "-0.1,0.1"
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyShadowSupercritical
   - type: EntitySpawnAnomaly
     entries:
     - settings:
@@ -907,6 +1077,8 @@
     coreInertPrototype: AnomalyCoreTechInert
     minPulseLength: 60
     maxPulseLength: 120
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyTechSupercritical
   - type: TechAnomaly
   - type: DeviceLinkSource
     ports:
@@ -965,6 +1137,8 @@
     coreInertPrototype: AnomalyCoreSantaInert
     minPulseLength: 60
     maxPulseLength: 120
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyPresentSupercritical
   - type: EntitySpawnAnomaly
     entries:
     - settings:

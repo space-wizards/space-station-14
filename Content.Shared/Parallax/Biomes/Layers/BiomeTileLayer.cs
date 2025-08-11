@@ -26,11 +26,4 @@ public sealed partial class BiomeTileLayer : IBiomeLayer
 
     [DataField(required: true)]
     public ProtoId<ContentTileDefinition> Tile = string.Empty;
-
-    // TODO: Need some good engine solution to this, see FlagSerializer for what needs changing.
-    /// <summary>
-    /// Flags to set on the tile when placed.
-    /// </summary>
-    [DataField]
-    public byte Flags = 0;
 }

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Vapor;
+using Content.Shared.Vapor;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 
@@ -41,7 +41,7 @@ public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsCompone
             TryComp<AnimationPlayerComponent>(uid, out var animPlayer) &&
             !AnimationSystem.HasRunningAnimation(uid, animPlayer, VaporVisualsComponent.AnimationKey))
         {
-            AnimationSystem.Play(uid, animPlayer, comp.VaporFlick, VaporVisualsComponent.AnimationKey);
+            AnimationSystem.Play((uid, animPlayer), comp.VaporFlick, VaporVisualsComponent.AnimationKey);
         }
     }
 
@@ -52,7 +52,7 @@ public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsCompone
     {
         if (AppearanceSystem.TryGetData<Color>(uid, VaporVisuals.Color, out var color, args.Component) && args.Sprite != null)
         {
-            args.Sprite.Color = color;
+            SpriteSystem.SetColor((uid, args.Sprite), color);
         }
     }
 }

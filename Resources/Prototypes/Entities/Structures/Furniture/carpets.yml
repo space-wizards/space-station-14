@@ -36,6 +36,7 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
+  - type: TrayScanReveal
 
 - type: entity
   id: Carpet
@@ -364,3 +365,61 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: TrayScanReveal
+
+#cardpet
+
+- type: entity
+  id: CarpetCard
+  parent: BaseStructure
+  name: cardboard "carpet"
+  description: "Even lino is better."
+  components:
+  - type: Sprite
+    drawdepth: FloorTiles
+    sprite: Structures/Furniture/Carpets/card_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/card_carpet.rsi
+    state: full
+  - type: IconSmooth
+    key: cardpets
+    additionalKeys:
+    - cards
+    base: carpet_
+  - type: Tag
+    tags:
+    - Carpet
+    - ForceFixRotations
+  - type: Physics
+    canCollide: false
+  - type: Clickable
+  - type: Fixtures
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Card
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 40
+        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              MaterialCardboard:
+                min: 1
+                max: 1
+  - type: Butcherable
+    butcheringType: Knife
+    butcherDelay: 1
+    spawned:
+    - id: MaterialCardboard1
+      amount: 1
+  - type: TrayScanReveal

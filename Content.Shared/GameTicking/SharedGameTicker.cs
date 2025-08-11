@@ -6,6 +6,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Timing;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.GameTicking
 {
@@ -17,8 +18,7 @@ namespace Content.Shared.GameTicking
         // See ideally these would be pulled from the job definition or something.
         // But this is easier, and at least it isn't hardcoded.
         //TODO: Move these, they really belong in StationJobsSystem or a cvar.
-        [ValidatePrototypeId<JobPrototype>]
-        public const string FallbackOverflowJob = "Passenger";
+        public static readonly ProtoId<JobPrototype> FallbackOverflowJob = "Passenger";
 
         public const string FallbackOverflowJobName = "job-name-passenger";
 
@@ -196,7 +196,7 @@ namespace Content.Shared.GameTicking
         /// <summary>
         /// Sound gets networked due to how entity lifecycle works between client / server and to avoid clipping.
         /// </summary>
-        public string? RestartSound;
+        public ResolvedSoundSpecifier? RestartSound;
 
         public RoundEndMessageEvent(
             string gamemodeTitle,
@@ -205,7 +205,7 @@ namespace Content.Shared.GameTicking
             int roundId,
             int playerCount,
             RoundEndPlayerInfo[] allPlayersEndInfo,
-            string? restartSound)
+            ResolvedSoundSpecifier? restartSound)
         {
             GamemodeTitle = gamemodeTitle;
             RoundEndText = roundEndText;
