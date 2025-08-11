@@ -64,5 +64,8 @@ public sealed partial class BeeperComponent : Component
     /// The sound played when the locator beeps.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier BeepSound = new SoundCollectionSpecifier(DefaultBeep);
+    public SoundSpecifier BeepSound = new SoundCollectionSpecifier(DefaultBeep)
+    {
+        Params = AudioParams.Default.WithMaxDistance(1f),
+    };
 }
