@@ -5,10 +5,10 @@ using Content.Shared.Trigger.Components.Effects;
 namespace Content.Server.Trigger.Systems;
 
 /// <summary>
-/// Trigger system for adding or removing fire from an entity with <see cref="FlammableComponent"/>.
+/// Trigger system for adding or removing fire stacks from an entity with <see cref="FlammableComponent"/>.
 /// </summary>
 /// <seealso cref="IgniteOnTriggerSystem"/>
-public sealed class FlameStackOnTriggerSystem : EntitySystem
+public sealed class FireStackOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly FlammableSystem _flame = default!;
 
@@ -17,11 +17,11 @@ public sealed class FlameStackOnTriggerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<FlameStackOnTriggerComponent, TriggerEvent>(OnTriggerFlame);
+        SubscribeLocalEvent<FireStackOnTriggerComponent, TriggerEvent>(OnTriggerFlame);
         SubscribeLocalEvent<ExtinguishOnTriggerComponent, TriggerEvent>(OnTriggerExtinguish);
     }
 
-    private void OnTriggerFlame(Entity<FlameStackOnTriggerComponent> ent, ref TriggerEvent args)
+    private void OnTriggerFlame(Entity<FireStackOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
