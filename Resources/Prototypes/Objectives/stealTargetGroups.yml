@@ -277,6 +277,13 @@
     sprite: Objects/Devices/cartridge.rsi
     state: cart-sec
 
+- type: stealTargetGroup
+  id: ClothingShoesClown
+  name: steal-target-groups-clothing-shoes-clown
+  sprite:
+    sprite: Clothing/Shoes/Specific/clown.rsi
+    state: icon
+
 #Thief structures
 
 - type: stealTargetGroup

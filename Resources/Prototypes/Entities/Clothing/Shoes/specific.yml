@@ -26,6 +26,8 @@
         blacklist:
           components:
           - Sharp
+  - type: StealTarget
+    stealGroup: ClothingShoesClown
 
 - type: entity
   parent: ClothingShoesClownBase
