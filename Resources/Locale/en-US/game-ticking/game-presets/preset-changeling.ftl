@@ -5,8 +5,7 @@ changeling-role-greeting =
     Kill, consume, hide, survive.
 
 changeling-briefing =
-    You are a changeling, your goal is to survive.
-    Consume humanoids to gain biomass and utilize it to evade termination.
+    You are a changeling.
     You are able to utilize and assume the identities of those you consume to evade a grim fate.
 
 objective-issuer-changeling = [color=#FA2A55]The Hivemind[/color]
