@@ -10,7 +10,7 @@ namespace Content.Shared.Administration;
 public abstract partial class SharedAdminVerbSystem
 {
     // All antag verbs have names so invokeverb works.
-    public void AddAntagVerbs(GetVerbsEvent<Verb> args)
+    private void AddAntagVerbs(GetVerbsEvent<Verb> args)
     {
         if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
