@@ -134,16 +134,21 @@ namespace Content.Server.Body.Systems
                 return;
             }
 
+            var list = solution.Contents;
+
+            // excluding chemicals which bloodstream declares as blood
+            var ev = new MetabolismExclusionEvent(list);
+            RaiseLocalEvent(solutionEntityUid.Value, ref ev);
+
             // randomize the reagent list so we don't have any weird quirks
             // like alphabetical order or insertion order mattering for processing
-            var list = solution.Contents.ToArray();
-            _random.Shuffle(list);
+            var array = list.ToArray();
+            _random.Shuffle(array);
 
-            TryComp<BloodstreamComponent>(solutionEntityUid.Value, out var bloodstream);
             bool isDead = _mobStateSystem.IsDead(solutionEntityUid.Value);
 
             int reagents = 0;
-            foreach (var (reagent, quantity) in list)
+            foreach (var (reagent, quantity) in array)
             {
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
                     continue;
@@ -162,13 +167,6 @@ namespace Content.Server.Body.Systems
                 // we're done here entirely if this is true
                 if (reagents >= ent.Comp1.MaxReagentsProcessable)
                     return;
-
-                // skips blood
-                if (bloodstream != null
-                    && reagent.Prototype == bloodstream.BloodReagent.Id)
-                {
-                    continue;
-                }
 
                 // loop over all our groups and see which ones apply
                 if (ent.Comp1.MetabolismGroups is null)

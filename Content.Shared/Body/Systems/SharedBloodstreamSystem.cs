@@ -52,6 +52,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
         SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<BloodstreamComponent, MetabolismExclusionEvent>(OnMetabolismExclusion);
     }
 
     public override void Update(float frameTime)
@@ -305,6 +306,17 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         {
             SolutionContainer.RemoveAllSolution(ent.Comp.BloodSolution.Value);
             TryModifyBloodLevel(ent.AsNullable(), ent.Comp.BloodReferenceVolume);
+        }
+    }
+
+    private void OnMetabolismExclusion(Entity<BloodstreamComponent> ent, ref MetabolismExclusionEvent args)
+    {
+        foreach (var reagentQuantity in args.ReagentList)
+        {
+            if (reagentQuantity.Reagent.Prototype == ent.Comp.BloodReagent.Id)
+            {
+                args.ReagentList.Remove(reagentQuantity);
+            }
         }
     }
 
