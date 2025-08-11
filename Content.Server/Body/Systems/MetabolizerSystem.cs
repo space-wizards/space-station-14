@@ -142,7 +142,7 @@ namespace Content.Server.Body.Systems
 
             // randomize the reagent list so we don't have any weird quirks
             // like alphabetical order or insertion order mattering for processing
-            var array = list.ToArray();
+            var array = ev.ReagentList.ToArray();
             _random.Shuffle(array);
 
             bool isDead = _mobStateSystem.IsDead(solutionEntityUid.Value);
