@@ -5,7 +5,8 @@
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: Anchorable
-    isUnanchorable: true
+    flags:
+    - Anchorable
   - type: Rotatable
   - type: StationAiWhitelist
   - type: MeleeSound

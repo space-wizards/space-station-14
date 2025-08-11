@@ -9,7 +9,8 @@
     - Window
   components:
   - type: Anchorable
-    isUnanchorable: true
+    flags:
+    - Anchorable
   - type: Rotatable
   - type: MeleeSound
     soundGroups:

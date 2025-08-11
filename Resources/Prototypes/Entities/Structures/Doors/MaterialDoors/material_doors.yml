@@ -6,7 +6,8 @@
   description: A door, where will it lead?
   components:
   - type: Anchorable
-    isUnanchorable: true
+    flags:
+    - Anchorable
   - type: Rotatable
   - type: InteractionOutline
   - type: Sprite

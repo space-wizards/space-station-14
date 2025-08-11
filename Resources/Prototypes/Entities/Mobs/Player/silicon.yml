@@ -171,7 +171,8 @@
   suffix: Empty
   components:
   - type: Anchorable
-    isUnanchorable: true
+    flags: 
+    - Anchorable
   - type: Rotatable
   - type: WarpPoint
     blacklist:

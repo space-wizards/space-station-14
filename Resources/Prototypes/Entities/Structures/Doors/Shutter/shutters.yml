@@ -8,7 +8,8 @@
     mode: SnapgridCenter
   components:
   - type: Anchorable
-    isUnanchorable: true
+    flags:
+    - Anchorable
   - type: Rotatable
   - type: StationAiWhitelist
   - type: Sprite

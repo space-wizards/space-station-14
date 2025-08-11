@@ -6,7 +6,8 @@
   description: Apply crowbar.
   components:
     - type: Anchorable
-      isUnanchorable: true
+      flags:
+      - Anchorable
     - type: Rotatable
     - type: AtmosAlarmable
       syncWith:

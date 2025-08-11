@@ -7,7 +7,8 @@
     - Wallmount
   components:
   - type: Anchorable
-    isUnanchorable: true
+    flags:
+    - Anchorable
   - type: Rotatable
   - type: Physics
     canCollide: false
