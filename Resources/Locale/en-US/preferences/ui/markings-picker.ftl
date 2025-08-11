@@ -23,6 +23,9 @@ marking-modifier-base-layers = Base layers
 marking-modifier-layer-enabled = Enabled
 marking-modifier-layer-protoid = Sprite layer prototype ID:
 
+# Special case for hair (only shows up in admeme version)
+marking-modifier-hair-color = Hair color:
+
 # Categories
 
 markings-category-Special = Special
