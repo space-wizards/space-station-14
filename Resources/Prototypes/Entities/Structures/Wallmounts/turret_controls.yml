@@ -199,10 +199,10 @@
   components:
   - type: AccessReader
     access: [["StationAi"], ["Security"]]
-  #- type: ContainerFill - Will be added in a later PR
-  #  containers:
-  #    board:
-  #    - WeaponEnergyTurretSecurityControlPanelElectronics
+  - type: ContainerFill
+    containers:
+      board:
+      - WeaponEnergyTurretSecurityControlPanelElectronics
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Security
@@ -216,10 +216,10 @@
   components:
   - type: AccessReader
     access: [["StationAi"], ["Command"]]
-  #- type: ContainerFill - Will be added in a later PR
-  #  containers:
-  #    board:
-  #    - WeaponEnergyTurretCommandControlPanelElectronics
+  - type: ContainerFill
+    containers:
+      board:
+      - WeaponEnergyTurretSecurityControlPanelElectronics
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Command
