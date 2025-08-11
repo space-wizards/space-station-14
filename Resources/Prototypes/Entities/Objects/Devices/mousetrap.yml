@@ -24,6 +24,7 @@
       canActivate: false
       showPopup: false # only show the popup when arming/disarming the trap in your hand
     - type: TriggerOnStepEnd
+    - type: TriggerOnStepAlwaysAttempt
     - type: TriggerPreventableStepTrigger
     - type: DamageOnTrigger
       targetUser: true
