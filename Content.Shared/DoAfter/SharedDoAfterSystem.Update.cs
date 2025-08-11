@@ -3,7 +3,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
-using Content.Shared.Storage.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
