@@ -94,6 +94,8 @@
     - id: ClothingNeckCloakMoth
     - id: ClothingMaskClown
     - id: ClothingMaskMime
+    - id: ClothingMaskSadMime
+    - id: ClothingMaskScaredMime
     - id: ClothingShoesClown
     - id: ClothingUniformJumpskirtJanimaid
     - id: ClothingNeckCloakVoid
