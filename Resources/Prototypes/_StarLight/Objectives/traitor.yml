@@ -219,7 +219,7 @@
         sprite: Objects/Consumable/Drinks/beer.rsi
         state: icon
 
- - type: entity
+- type: entity
   parent: BaseTraitorStealObjective
   id: HoPBoardStealObjective
   components:

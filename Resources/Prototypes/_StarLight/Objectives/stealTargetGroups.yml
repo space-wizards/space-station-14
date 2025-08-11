@@ -20,3 +20,10 @@
   sprite:
     sprite: Objects/Misc/module.rsi
     state: cpuboard
+
+- type: stealTargetGroup
+  id: HoPBoardSteal
+  name: steal-target-groups-hopboard
+  sprite:
+    sprite: _Starlight/Objects/Misc/hop_clipboard.rsi
+    state: hop_clipboard

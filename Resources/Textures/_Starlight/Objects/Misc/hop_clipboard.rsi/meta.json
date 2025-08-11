@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Clipboard sprites Salem.uwu",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "hop_clipboard"
+    },
+    {
+      "name": "hop_clipboard_over"
+    },
+    {
+      "name": "hop_clipboard_paper"
+    },
+    {
+      "name": "hop_clipboard_pen"
+    },
+    {
+      "name": "hop_clipboard_priv_id"
+    },
+    {
+      "name": "hop_clipboard_target_id"
+    },
+    {
+      "name": "inhand-hopboard-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-hopboard-right",
+      "directions": 4
+    }
+  ]
+}
