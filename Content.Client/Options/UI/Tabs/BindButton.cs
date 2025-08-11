@@ -10,7 +10,7 @@ public sealed class BindButton : Button
 {
     private IKeyBinding? _binding;
 
-    public Action<GUIBoundKeyEventArgs, IKeyBinding>? ButtonOnKeyBindingDown;
+    public Action<GUIBoundKeyEventArgs, IKeyBinding?>? ButtonOnKeyBindingDown;
 
     public BindButton()
     {
@@ -22,7 +22,7 @@ public sealed class BindButton : Button
 
     public IKeyBinding? Binding
     {
-        private get => _binding;
+        get => _binding;
         set
         {
             _binding = value;
@@ -40,10 +40,6 @@ public sealed class BindButton : Button
 
     private void InvokeKeyBindDown(GUIBoundKeyEventArgs arg)
     {
-        if (arg.Function == EngineKeyFunctions.UIRightClick
-            && _binding != null)
-            Disabled = true;
-
         if (_binding is not null && ButtonOnKeyBindingDown is not null)
             ButtonOnKeyBindingDown.Invoke(arg, _binding);
     }

@@ -317,7 +317,7 @@ namespace Content.Client.Options.UI.Tabs
                 },
                 ButtonOnKeyBindingDown = (args, binding) =>
                 {
-                    if (args.Function == EngineKeyFunctions.UIRightClick)
+                    if (args.Function == EngineKeyFunctions.UIRightClick && binding != null)
                     {
                         _deferCommands.Add(() =>
                         {
