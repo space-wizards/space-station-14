@@ -198,7 +198,6 @@ public sealed class ActionButton : Control, IEntityControl
 
         var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityName));
         var desc = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityDescription));
-        FormattedMessage? chargesText = null;
 
         if (_player.LocalEntity is null)
             return null;
