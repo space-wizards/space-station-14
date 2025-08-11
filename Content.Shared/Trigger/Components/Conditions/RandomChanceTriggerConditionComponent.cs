@@ -8,6 +8,9 @@ namespace Content.Shared.Trigger.Components.Conditions;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RandomChanceTriggerConditionComponent : BaseTriggerConditionComponent
 {
+    /// <summary>
+    /// Chance for the trigger to be cancelled and not go through.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float FailureChance = .1f;
 }

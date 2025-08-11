@@ -23,6 +23,6 @@ public sealed class RandomChanceTriggerConditionSystem : EntitySystem
     private void OnRandomChanceTriggerAttempt(Entity<RandomChanceTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
         if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
-            args.Cancelled |= _random.Prob(ent.Comp.FailureChance);
+            args.Cancelled |= _random.Prob(ent.Comp.FailureChance); // When the roll succeeds, the trigger is canceled
     }
 }
