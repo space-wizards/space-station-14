@@ -31,6 +31,42 @@ public abstract class AlertsSystem : EntitySystem
         LoadPrototypes();
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<AlertAutoRemoveComponent>();
+        while (query.MoveNext(out var uid, out var autoComp))
+        {
+            var dirtyComp = false;
+            if (autoComp.AlertKeys.Count <= 0 || !_alertsQuery.TryComp(uid, out var alertComp))
+            {
+                RemCompDeferred(uid, autoComp);
+                continue;
+            }
+
+            var removeList = new List<AlertKey>();
+            foreach (var alertKey in autoComp.AlertKeys)
+            {
+                alertComp.Alerts.TryGetValue(alertKey, out var alertState);
+
+                if (alertState.Cooldown is null || alertState.Cooldown.Value.Item2 >= _timing.CurTime)
+                    continue;
+                removeList.Add(alertKey);
+                alertComp.Alerts.Remove(alertKey);
+                dirtyComp = true;
+            }
+
+            foreach (var alertKey in removeList)
+            {
+                autoComp.AlertKeys.Remove(alertKey);
+            }
+
+            if (dirtyComp)
+                Dirty(uid, alertComp);
+        }
+    }
+
     public IReadOnlyDictionary<AlertKey, AlertState>? GetActiveAlerts(Entity<AlertsComponent?> entity)
     {
         return _alertsQuery.Resolve(entity, ref entity.Comp, false)
@@ -270,42 +306,6 @@ public abstract class AlertsSystem : EntitySystem
 
         if (dirty)
             Dirty(entity, alertComp);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<AlertAutoRemoveComponent>();
-        while (query.MoveNext(out var uid, out var autoComp))
-        {
-            var dirtyComp = false;
-            if (autoComp.AlertKeys.Count <= 0 || !_alertsQuery.TryComp(uid, out var alertComp))
-            {
-                RemCompDeferred(uid, autoComp);
-                continue;
-            }
-
-            var removeList = new List<AlertKey>();
-            foreach (var alertKey in autoComp.AlertKeys)
-            {
-                alertComp.Alerts.TryGetValue(alertKey, out var alertState);
-
-                if (alertState.Cooldown is null || alertState.Cooldown.Value.Item2 >= _timing.CurTime)
-                    continue;
-                removeList.Add(alertKey);
-                alertComp.Alerts.Remove(alertKey);
-                dirtyComp = true;
-            }
-
-            foreach (var alertKey in removeList)
-            {
-                autoComp.AlertKeys.Remove(alertKey);
-            }
-
-            if (dirtyComp)
-                Dirty(uid, alertComp);
-        }
     }
 
     protected virtual void HandleComponentShutdown(EntityUid uid, AlertsComponent component, ComponentShutdown args)
