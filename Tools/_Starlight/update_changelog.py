@@ -96,7 +96,7 @@ def update_changelog():
                     "message": entry["message"],
                     "type": entry["type"]
                 }],
-                "id": last_id,
+                "id": calculatedID,
                 "time": merge_time.isoformat(timespec='microseconds'),
                 "url": f"https://github.com/{repo_name}/pull/{pr_number}"
             }
