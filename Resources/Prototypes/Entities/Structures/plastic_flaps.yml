@@ -5,6 +5,9 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Anchorable
+    isUnanchorable: true
+  - type: Rotatable
   - type: Sprite
     sprite: Structures/plastic_flaps.rsi
     state: plasticflaps

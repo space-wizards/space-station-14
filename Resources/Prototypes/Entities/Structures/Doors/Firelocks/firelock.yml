@@ -5,6 +5,9 @@
   name: firelock
   description: Apply crowbar.
   components:
+    - type: Anchorable
+      isUnanchorable: true
+    - type: Rotatable
     - type: AtmosAlarmable
       syncWith:
         - FireAlarm

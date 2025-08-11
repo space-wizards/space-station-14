@@ -5,6 +5,9 @@
   abstract: true
   description: A door, where will it lead?
   components:
+  - type: Anchorable
+    isUnanchorable: true
+  - type: Rotatable
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/metal_door.rsi

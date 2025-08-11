@@ -9,6 +9,9 @@
     snap:
     - Wall
   components:
+  - type: Anchorable
+    isUnanchorable: true
+  - type: Rotatable
   - type: RangedDamageSound
     soundGroups:
       Brute:

@@ -8,6 +8,9 @@
     snap:
     - Window
   components:
+  - type: Anchorable
+    isUnanchorable: true
+  - type: Rotatable
   - type: MeleeSound
     soundGroups:
       Brute:
