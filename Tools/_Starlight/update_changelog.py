@@ -89,7 +89,7 @@ def update_changelog():
             #shift PR number up two digits
             #add current ID to it
             # e.g., PR number 123, last_id 5 -> calculatedID = (123 * 100) + 5 = 12305
-            calculatedID = (pr_number * 100) + last_id
+            calculatedID = (int(pr_number) * 100) + last_id
             changelog_entry = {
                 "author": entry["author"],
                 "changes": [{
