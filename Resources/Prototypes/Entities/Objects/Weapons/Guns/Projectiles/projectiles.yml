@@ -570,6 +570,10 @@
     energy: 7.0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: magicm
+      shader: unshaded
+
   - type: Ammo
     muzzleFlash: null
   - type: Fixtures
