@@ -47,7 +47,6 @@
     stripTime: 6
     uiWindowPos: 2,1
     strippingWindowPos: 2,4
-    dependsOn: jumpsuit
     displayName: ID
   - name: suitstorage
     slotTexture: suit_storage
@@ -60,3 +59,13 @@
     dependsOnComponents:
     - type: AllowSuitStorage
     displayName: Suit Storage
+  - name: outerClothing
+    slotTexture: suit
+    slotFlags: OUTERCLOTHING
+    stripTime: 6
+    uiWindowPos: 0,3
+    strippingWindowPos: 1,3
+    displayName: Suit
+    whitelist:
+      tags:
+      - ScurretWearable

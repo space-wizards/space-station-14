@@ -67,12 +67,18 @@ public sealed class BinSystem : EntitySystem
 
     private void OnEntInserted(Entity<BinComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
+        if (args.Container.ID != ent.Comp.ContainerId)
+            return;
+
         ent.Comp.Items.Add(args.Entity);
     }
 
-    private void OnEntRemoved(EntityUid uid, BinComponent component, EntRemovedFromContainerMessage args)
+    private void OnEntRemoved(Entity<BinComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        component.Items.Remove(args.Entity);
+        if (args.Container.ID != ent.Comp.ContainerId)
+            return;
+
+        ent.Comp.Items.Remove(args.Entity);
     }
 
     private void OnInteractHand(EntityUid uid, BinComponent component, InteractHandEvent args)
