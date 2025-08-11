@@ -8,7 +8,7 @@
   components:
   - type: ThermalVision
   - type: Bloodstream
-    bloodMaxVolume: 650
+    bloodMaxVolume: 600
   - type: GhostRole
     allowMovement: true
     allowSpeech: true
@@ -89,13 +89,13 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      450: Critical
-      500: Dead
-  - type: AntagMonsterScaling # Starlight
+      350: Critical
+      400: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
+      200: 0.9
       250: 0.7
-      400: 0.5
+      300: 0.5
   # disable taking damage from fire, since its a fire breathing dragon
   - type: Flammable
     damage:
