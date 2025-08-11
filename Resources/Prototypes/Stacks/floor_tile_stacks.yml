@@ -668,7 +668,7 @@
 - type: stack
   id: FloorTileXenoborg
   name: stack-xenoborg
-  spawn: FloorXenoborg
+  spawn: FloorTileItemXenoborg
   maxCount: 30
 
 - type: stack
