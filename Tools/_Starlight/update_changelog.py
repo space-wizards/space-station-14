@@ -86,7 +86,6 @@ def update_changelog():
 
         last_id = 0
         for entry in entries:
-            last_id += 1
             #shift PR number up two digits
             #add current ID to it
             # e.g., PR number 123, last_id 5 -> calculatedID = (123 * 100) + 5 = 12305
@@ -102,6 +101,7 @@ def update_changelog():
                 "url": f"https://github.com/{repo_name}/pull/{pr_number}"
             }
             changelog_data["Entries"].append(changelog_entry)
+            last_id += 1
 
         os.makedirs(os.path.dirname(changelog_path), exist_ok=True)
 
