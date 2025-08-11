@@ -60,3 +60,8 @@
     - a cryptic message
     - a signal
     - a message
+
+- type: language
+  id: CodeSpeak
+  icon: LanguageIconCodeSpeak
+  iconNotUnderstood: false

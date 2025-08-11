@@ -7,6 +7,13 @@
   id: MobCorgiIan
   description: Favorite pet corgi.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
@@ -57,6 +64,13 @@
   id: MobCorgiIanOld
   description: Still the favorite pet corgi. Love his wheels.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -82,6 +96,13 @@
   id: MobCorgiLisa
   description: Ian's favorite corgi.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -119,6 +140,13 @@
   id: MobCorgiMouse
   description: It's 100% a real hungry mouse.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -142,6 +170,13 @@
   id: MobCorgiIanPup
   description: Favourite puppy corgi. Awww.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
   - type: Grammar
     attributes:
       proper: true
@@ -160,6 +195,13 @@
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Cat
+    understands:
+    - Cat
+    - GalacticCommon
   - type: NpcFactionMember
     factions:
       - PetsNT
@@ -188,6 +230,13 @@
   parent: MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Cat
+    understands:
+    - Cat
+    - GalacticCommon
   - type: NpcFactionMember
     factions:
       - PetsNT
@@ -213,6 +262,13 @@
   parent: MobCatCaracal
   description: He out here.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Cat
+    understands:
+    - Cat
+    - GalacticCommon
   - type: Fixtures
     fixtures:
       fix1:
@@ -260,6 +316,13 @@
   id: MobBingus
   description: Bingus my beloved...
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Cat
+    understands:
+    - Cat
+    - GalacticCommon
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/bingus.rsi
@@ -318,6 +381,13 @@
   id: MobMcGriff
   description: This dog can tell something smells around here, and that something is CRIME!
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/mcgriff.rsi
@@ -364,8 +434,6 @@
     spawned:
     - id: FoodMeat
       amount: 2
-  - type: ReplacementAccent
-    accent: dog
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-dog
@@ -427,6 +495,13 @@
   id: MobWalter
   description: He likes chems and treats. Walter.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/walter.rsi
@@ -460,8 +535,6 @@
     spawned:
     - id: FoodMeat
       amount: 3
-  - type: ReplacementAccent
-    accent: dog
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-dog
@@ -577,6 +650,13 @@
   id: MobAlexander
   description: Chef's finest colleague.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Pig
+    understands:
+    - Pig
+    - GalacticCommon
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: petting-success-pig
@@ -599,6 +679,13 @@
   id: MobFoxRenault
   description: The captain's trustworthy fox.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Fox
+    understands:
+    - Fox
+    - GalacticCommon
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: petting-success-soft-floofy
@@ -629,6 +716,13 @@
   id: MobHamsterHamlet
   description: A grumpy, cute and fluffy hamster.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Mouse
+    understands:
+    - Mouse
+    - GalacticCommon
   - type: Sprite
     drawdepth: SmallMobs
     sprite: Mobs/Pets/hamlet.rsi
@@ -682,6 +776,13 @@
   id: MobSpiderShiva
   description: The first defender of the station.
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Chittin
+    understands:
+    - Chittin
+    - GalacticCommon
   - type: InteractionPopup
     successChance: 0.5 # spider is mean
     interactSuccessString: petting-success-tarantula
@@ -780,6 +881,13 @@
   parent: [MobAdultSlimes, StripableInventoryBase]
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Fox
+    understands:
+    - Fox
+    - Bubblish
   - type: Sprite
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]

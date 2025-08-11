@@ -54,6 +54,13 @@
   - type: ProtectedFromStepTriggers
   - type: NoSlip
   - type: Insulated
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    understands:
+    - GalacticCommon
+    - Machine
 
 # Used for bots
 - type: entity

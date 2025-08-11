@@ -4,6 +4,12 @@
   id: MobMoproach
   description: This little mothroach has mopshoes on its feet! How adorable!
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - Moffic
+    understands:
+    - Moffic
+    - GalacticCommon
   - type: GhostRole
     name: ghost-role-information-moproach-name
     description: ghost-role-information-moproach-description

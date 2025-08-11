@@ -6,6 +6,25 @@
   name: personal ai device
   description: Your electronic pal who's fun to be with!
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    understands:
+    - GalacticCommon
+    - Machine
+    - Canilunzt
+    - Sign
+    - Bubblish
+    - Chittin
+    - Draconic
+    - Marish
+    - Moffic
+    - Nekomimetic
+    - Sylvan
+    - Terrum
+    - VoxPidgin
   - type: TextToSpeech
   - type: Instrument
     allowPercussion: false

@@ -5,6 +5,14 @@
   description: Just add capitalism!
   abstract: true
   components:
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    understands:
+    - GalacticCommon
+    - Machine
   - type: ActionGrant
     actions:
     - ActionVendingThrow

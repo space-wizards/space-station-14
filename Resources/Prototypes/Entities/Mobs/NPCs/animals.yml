@@ -4,6 +4,11 @@
   id: MobBat
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - Mouse
+    understands:
+    - Mouse
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 6
@@ -51,8 +56,6 @@
     flavorKind: station-event-random-sentience-flavor-organic
   - type: Bloodstream
     bloodMaxVolume: 50
-  - type: ReplacementAccent
-    accent: mouse
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Effects/bite.ogg
@@ -196,6 +199,11 @@
   id: MobChicken
   description: Comes before an egg, and IS a dinosaur!
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - Chicken
+    understands:
+    - Chicken
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -265,8 +273,6 @@
     eggSpawn:
     - id: FoodEgg
   - type: ExaminableHunger
-  - type: ReplacementAccent
-    accent: chicken
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -475,6 +481,11 @@
   id: MobMothroach
   description: This is the adorable by-product of multiple attempts at genetically mixing mothpeople with cockroaches.
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - Moffic
+    understands:
+    - Moffic
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -562,8 +573,6 @@
       amount: 2
   - type: Extractable
     grindableSolutionName: food
-  - type: ReplacementAccent
-    accent: mothroach
   - type: ZombieAccentOverride
     accent: zombieMoth
   - type: Vocal
@@ -645,6 +654,11 @@
   id: MobDuckMallard
   description: An adorable mallard duck, it's fluffy and soft!
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - Sylvan
+    understands:
+    - Sylvan
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -704,8 +718,6 @@
     eggSpawn:
     - id: FoodEgg
   - type: ExaminableHunger
-  - type: ReplacementAccent
-    accent: duck
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -2388,6 +2400,11 @@
   id: MobSpiderBase
   abstract: true
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - Chittin
+    understands:
+    - Chittin
   - type: VentCrawler
   - type: Physics
   - type: Fixtures
@@ -2425,8 +2442,6 @@
   - type: MeleeChemicalInjector
     transferAmount: 0.75
     solution: melee
-  - type: ReplacementAccent
-    accent: xeno
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
@@ -2600,11 +2615,6 @@
   id: MobGiantSpiderWizard
   description: This spider looks a little magical
   suffix: Wizard
-  components:
-  - type: Accentless
-    removes:
-    - type: ReplacementAccent
-      accent: xeno  #let this wizard speak
 
 - type: entity
   name: possum
@@ -2738,6 +2748,11 @@
   id: MobFox
   description: They're a fox.
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - Fox
+    understands:
+    - Fox
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/fox.rsi
@@ -2857,6 +2872,11 @@
   parent: MobCorgiBase
   id: MobCorgi
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2869,8 +2889,6 @@
     spawned:
     - id: FoodMeat
       amount: 2
-  - type: ReplacementAccent
-    accent: dog
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-corgi
   - type: Tag
@@ -2972,6 +2990,11 @@
   id: MobCat
   description: Feline pet, very funny.
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - Cat
+    understands:
+    - Cat
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/cat.rsi
@@ -3008,8 +3031,6 @@
     spawned:
     - id: FoodMeat
       amount: 3
-  - type: ReplacementAccent
-    accent: cat
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-cat
@@ -3318,6 +3339,11 @@
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - Mouse
+    understands:
+    - Mouse
   - type: VentCrawler
   - type: GhostRole
     makeSentient: true
@@ -3409,8 +3435,6 @@
     spawned:
     - id: FoodMeat
       amount: 1
-  - type: ReplacementAccent
-    accent: mouse
   - type: Tag
     tags:
     - VimPilot
@@ -3471,6 +3495,11 @@
   id: MobPig
   description: Oink.
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - Pig
+    understands:
+    - Pig
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -3525,8 +3554,6 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/pig_oink.ogg
-  - type: ReplacementAccent
-    accent: pig
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -3622,8 +3649,11 @@
   id: MobDionaNymphAccent # No talky. For non-brain & wild nymphs
   suffix: Accent
   components:
-  - type: ReplacementAccent
-    accent: nymph
+  - type: LanguageKnowledge
+    speaks:
+    - Sylvan
+    understands:
+    - Sylvan
 
 - type: entity
   name: reindeer buck
@@ -3726,6 +3756,13 @@
   description: An unusually smart dog.
   components:
   # Use corgi sprite, need to add handcuff layer
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    - GalacticCommon
+    understands:
+    - Dog
+    - GalacticCommon
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]

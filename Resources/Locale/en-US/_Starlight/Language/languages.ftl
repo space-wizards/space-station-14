@@ -54,3 +54,27 @@ language-VoxPidgin-description = The common tongue of the various Vox ships maki
 
 language-Zombie-name = Zombie
 language-Zombie-description = Brainsss... Braaaiiinnsss..
+
+language-CodeSpeak-name = CodeSpeak
+language-CodeSpeak-description = Syndicate operatives can use a series of codewords to convey complex information, while sounding like random concepts and drinks to anyone listening in.
+
+language-Carptongue-name = Carptongue
+language-Carptongue-description = Various fishy sounds that might make sense to space carps.
+
+language-Xeno-name = Xeno
+language-Xeno-description = The common tongue of the xenos
+
+language-Cat-name = Cat
+language-Cat-description = Meow
+
+language-Dog-name = Dog
+language-Dog-description = Bark!
+
+language-Fox-name = Fox
+language-Fox-description = Yeeps!
+
+language-Chicken-name = Chicken
+language-Chicken-description = Coot!
+
+language-Duck-name = Duck
+language-Duck-description = Quack!

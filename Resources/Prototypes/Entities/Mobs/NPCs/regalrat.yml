@@ -4,6 +4,13 @@
   parent: [ SimpleMobBase, MobCombat ]
   description: He's da rat. He make da roolz.
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Mouse
+    understands:
+    - GalacticCommon
+    - Mouse
   - type: ThermalVision
   - type: VentCrawler
   - type: CombatMode
@@ -173,6 +180,12 @@
   description: He's da mini rat. He don't make da roolz.
   categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - Mouse
+    understands:
+    - GalacticCommon
+    - Mouse
   - type: VentCrawler
   - type: CombatMode
   - type: MovementSpeedModifier
