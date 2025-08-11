@@ -202,6 +202,10 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     )
     {
         statusEffect = null;
+
+        if (duration <= TimeSpan.Zero)
+            return false;
+
         if (!CanAddStatusEffect(target, effectProto))
             return false;
 

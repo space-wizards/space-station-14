@@ -1323,5 +1323,12 @@ Entries:
   id: 161
   time: '2025-08-07T14:55:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39453
+- author: K-Dynamic
+  changes:
+  - message: Centcomm Official now starts with administration glasses.
+    type: Tweak
+  id: 162
+  time: '2025-08-08T19:00:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35531
 Name: Admin
 Order: 2

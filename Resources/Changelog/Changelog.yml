@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: Pronana
-  changes:
-  - message: Moths can now eat pills
-    type: Tweak
-  id: 8325
-  time: '2025-04-24T02:28:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35609
-- author: Coolsurf6
-  changes:
-  - message: Updated more contraband items for Syndicate and Security.
-    type: Tweak
-  id: 8326
-  time: '2025-04-24T02:57:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35102
-- author: Beck Thompson
-  changes:
-  - message: You can how hide items inside cake by using a knife! Eating a cake with
-      an item inside will do minor damage.
-    type: Add
-  id: 8327
-  time: '2025-04-24T03:00:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31015
 - author: RedBookcase
   changes:
   - message: Added Advanced Circular Saw as a Medical Doctor specific uplink item.
@@ -3899,3 +3877,26 @@
   id: 8837
   time: '2025-08-07T16:01:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38896
+- author: chromiumboy
+  changes:
+  - message: The station AI will receive chat notifications when its sentry turrets
+      start firing upon hostile targets.
+    type: Add
+  id: 8838
+  time: '2025-08-08T18:56:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35277
+- author: K-Dynamic
+  changes:
+  - message: Captain and Head of Personnel starts with administration glasses and
+      hud respectively.
+    type: Add
+  id: 8839
+  time: '2025-08-08T19:00:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35531
+- author: perryprog
+  changes:
+  - message: The emote radial menu now shows the correct icons for its subcategories.
+    type: Fix
+  id: 8840
+  time: '2025-08-08T19:27:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39481
