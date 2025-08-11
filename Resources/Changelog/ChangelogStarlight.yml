@@ -11103,5 +11103,12 @@ Entries:
   id: 1527
   time: '2025-08-09T10:58:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1267
+- author: walksanatora
+  changes:
+  - message: un-smart corgis now have a unqiue description so they can be telled apart.
+    type: Tweak
+  id: 1528
+  time: '2025-08-10T04:30:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1286
 Order: -1
 
