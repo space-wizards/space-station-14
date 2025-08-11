@@ -9,7 +9,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// </summary>
 /// <seealso cref="IgniteOnTriggerComponent"/>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class FlameStackOnTriggerComponent : BaseXOnTriggerComponent
+public sealed partial class FireStackOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>
     /// How many fire stacks to add or remove.
