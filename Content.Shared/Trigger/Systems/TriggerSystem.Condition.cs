@@ -65,8 +65,16 @@ public sealed partial class TriggerSystem
         if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
         {
             // TODO: Replace with RandomPredicted once the engine PR is merged
-            var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
+            var hash = new List<int>
+            {
+                (int)_timing.CurTick.Value,
+                GetNetEntity(ent).Id,
+                args.User == null ? 0 : GetNetEntity(args.User.Value).Id,
+                args.Key == null ? 0 : args.Key.GetHashCode(),
+            };
+            var seed = SharedRandomExtensions.HashCodeCombine(hash);
             var rand = new System.Random(seed);
+
             args.Cancelled |= !rand.Prob(ent.Comp.SuccessChance); // When not successful, Cancelled = true
         }
     }
