@@ -1,0 +1,24 @@
+- type: constructionGraph
+  id: ImprovisedGrenade
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: grenade
+          steps:
+            - material: Steel
+              amount: 3
+              doAfter: 1
+            - material: Plastic
+              amount: 3
+              doAfter: 1
+            - material: Cable
+              amount: 5
+              doAfter: 1
+            - tag: FireBomb
+              icon:
+               sprite: Objects/Weapons/Bombs/ied.rsi
+               state: icon
+              name: Fire Bomb
+    - node: grenade
+      entity: GrenadeHandmad

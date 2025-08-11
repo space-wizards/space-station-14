@@ -570,6 +570,9 @@
   id: FireExtinguisher
 
 - type: Tag
+  id: FireBomb
+  
+- type: Tag
   id: FireHelmet
 
 - type: Tag

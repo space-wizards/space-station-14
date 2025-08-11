@@ -90,6 +90,26 @@
     suffix: false
 
 - type: entity
+  id: GrenadeHandmad
+  name: handmade grenade
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: BulletHandmadeGrenadeBlast
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    layers:
+    - state: iedbl
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Construction
+    graph: ImprovisedGrenade
+    node: grenade
+  - type: Appearance
+  - type: SpentAmmoVisuals
+    state: iedbl
+    suffix: false
+
+- type: entity
   id: GrenadeFlash
   name: flash grenade
   parent: BaseGrenade

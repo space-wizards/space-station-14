@@ -57,6 +57,42 @@
     price: 10000
 
 - type: entity
+  name: Bombaga
+  parent: [BaseWeaponLauncher, BaseGunWieldable, BaseSyndicateContraband]
+  id: Bombaga
+  description: the new era of greytide.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/bombada.rsi
+    layers:
+      - state: icon
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Launchers/bombada.rsi
+    slots:
+    - Back
+    - suitStorage
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - Grenade
+    capacity: 1
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: GunRequiresWield
+  - type: Construction
+    graph: bombaga
+    node: bombarda
+    
+- type: entity
   parent: [ BaseWeaponLauncher, BaseGunWieldable, BaseMajorContraband ]
   id: WeaponLauncherHydra
   name: hydra

@@ -181,3 +181,20 @@
   targetNode: bagPet
   category: construction-category-clothing
   objectType: Item
+  
+- type: construction
+  id: improvisedgrenade
+  graph: ImprovisedGrenade
+  startNode: start
+  targetNode: grenade
+  category: construction-category-weapons
+  objectType: Item
+  
+- type: construction
+  id: bombaga
+  graph: bombaga
+  startNode: start
+  targetNode: bombarda
+  category: construction-category-weapons
+  objectType: Item
+  
