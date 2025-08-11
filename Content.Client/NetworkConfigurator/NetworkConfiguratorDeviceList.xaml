@@ -1,9 +1,8 @@
 <ScrollContainer xmlns="https://spacestation14.io"
                  HorizontalExpand="True"
                  VerticalExpand="True">
-    <Control VerticalExpand="True">
-        <PanelContainer StyleClasses="PanelBackgroundBaseDark"></PanelContainer>
+    <PanelContainer StyleClasses="PanelDark" VerticalExpand="True">
         <BoxContainer Orientation="Vertical" Name="DeviceList" VerticalExpand="True" SeparationOverride="4">
         </BoxContainer>
-    </Control>
+    </PanelContainer>
 </ScrollContainer>

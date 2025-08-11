@@ -2,12 +2,12 @@
          xmlns:pllax="clr-namespace:Content.Client.Parallax">
     <pllax:ParallaxControl SpeedX="20"/>
     <Control HorizontalAlignment="Center" VerticalAlignment="Center">
-        <PanelContainer StyleClasses="AngleRect" />
+        <PanelContainer StyleClasses="BackgroundPanel" />
         <BoxContainer Orientation="Vertical" SetSize="800 600" Margin="2">
             <ScrollContainer Name="what" VerticalExpand="True" HScrollEnabled="False" Margin="0 0 0 2" ReturnMeasure="True">
                 <RichTextLabel Name="ReasonLabel" VerticalAlignment="Top" />
             </ScrollContainer>
-            <Button Name="RetryButton" StyleClasses="Caution" Text="{Loc 'replay-loading-retry'}" Visible="False" />
+            <Button Name="RetryButton" StyleClasses="negative" Text="{Loc 'replay-loading-retry'}" Visible="False" />
             <Button Name="CancelButton" Text="{Loc 'replay-loading-cancel'}" Visible="False" />
         </BoxContainer>
     </Control>

@@ -28,19 +28,13 @@
                         Text="{Loc 'character-setup-gui-character-setup-close-button'}"
                         StyleClasses="ButtonBig"/>
             </BoxContainer>
-            <PanelContainer>
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
-                </PanelContainer.PanelOverride>
+            <PanelContainer StyleClasses="highlight">
             </PanelContainer>
             <BoxContainer Orientation="Horizontal" VerticalExpand="True" SeparationOverride="0">
                 <ScrollContainer MinSize="325 0" Margin="5 5 0 0">
                     <BoxContainer Name="Characters" Orientation="Vertical" />
                 </ScrollContainer>
-                <PanelContainer MinSize="2 0">
-                    <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
-                    </PanelContainer.PanelOverride>
+                <PanelContainer MinSize="2 0" StyleClasses="highlight">
                 </PanelContainer>
                 <BoxContainer Name="CharEditor" HorizontalExpand="True" />
             </BoxContainer>
