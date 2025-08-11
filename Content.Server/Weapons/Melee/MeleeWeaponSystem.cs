@@ -2,14 +2,16 @@ using Content.Server.Chat.Systems;
 using Content.Server.Movement.Systems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
-using Content.Shared.Doors.Components;
 using Content.Shared.Effects;
+using Content.Shared.Physics;
 using Content.Shared.Speech.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using System.Linq;
 using System.Numerics;
 
@@ -23,6 +25,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly LagCompensationSystem _lag = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -75,13 +78,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     protected override bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
     {
-        // Unobstructed check
-        EntityCoordinates targetCoordinates;
-        Angle targetLocalAngle;
-
+        // Default unobstructed check with lag compensation
         if (session is { } pSession)
         {
-            (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
+            var (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
             if (Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false))
                 return true;
         }
@@ -91,37 +91,44 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 return true;
         }
 
-        // Fallback for entities on the same tile as a porous blocker
+        // --- Systemic Fallback for Same-Tile Obstructions ---
         var userXform = Transform(user);
         var targetXform = Transform(target);
 
-        // Ensure both are on the same map
-        if (userXform.MapID != targetXform.MapID || userXform.MapID == MapId.Nullspace)
+        var userPos = TransformSystem.GetWorldPosition(userXform);
+        var targetPos = TransformSystem.GetWorldPosition(targetXform);
+        var distance = (targetPos - userPos).Length();
+
+        if (distance > range)
             return false;
 
-        // Perform a simple distance check
-        if ((TransformSystem.GetWorldPosition(userXform) - TransformSystem.GetWorldPosition(targetXform)).Length() > range)
+        var mapId = userXform.MapID;
+        if (mapId == MapId.Nullspace)
             return false;
 
-        // If within distance, check if the obstruction is a door-like entity on the same tile as the target
+        var dir = (targetPos - userPos).Normalized();
+        const int attackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
+
+        var ray = new CollisionRay(userPos, dir, attackMask);
+        var rayCastResults = _physics.IntersectRay(mapId, ray, distance, user, false).ToList();
+
+        if (!rayCastResults.Any() || rayCastResults.First().HitEntity == target)
+            return true;
+
+        var hitEntity = rayCastResults.First().HitEntity;
+
         if (targetXform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
 
-        var targetTileIndices = _map.CoordinatesToTile(gridUid, grid, targetXform.Coordinates);
+        var hitXform = Transform(hitEntity);
+        if (hitXform.GridUid != gridUid)
+            return false;
 
-        var entitiesOnTile = _lookup.GetLocalEntitiesIntersecting(gridUid, targetTileIndices, 0.0f, flags: LookupFlags.Static);
+        var targetTile = _map.CoordinatesToTile(gridUid, grid, targetXform.Coordinates);
+        var hitTile = _map.CoordinatesToTile(gridUid, grid, hitXform.Coordinates);
 
-        foreach (var entity in entitiesOnTile)
-        {
-            if (entity == target || entity == user)
-                continue;
-
-            // If we find a DoorComponent OR a TurnstileComponent on this tile, we assume it was the blocker and allow the hit
-            if (HasComp<DoorComponent>(entity) || HasComp<TurnstileComponent>(entity))
-                return true;
-        }
-
-        return false;
+        // If the first obstruction is on the same tile as the target, allow the attack.
+        return targetTile == hitTile;
     }
 
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
