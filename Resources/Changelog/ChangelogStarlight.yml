@@ -11171,5 +11171,12 @@ Entries:
   id: 129000
   time: '2025-08-11T21:10:13.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1290
+- author: Quini98
+  changes:
+  - message: Lottery Shuttle
+    type: Tweak
+  id: 129300
+  time: '2025-08-11T21:26:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1293
 Order: -1
 
