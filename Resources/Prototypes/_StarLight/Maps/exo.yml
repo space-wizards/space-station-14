@@ -5,7 +5,7 @@
   minPlayers: 40
   maxPlayers: 80
   stations:
-    StarlightExo:
+    Exo:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
