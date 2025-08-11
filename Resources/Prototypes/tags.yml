@@ -160,7 +160,7 @@
   id: BoxCardboard
 
 - type: Tag
-  id: BoxCutter
+  id: UtilityKnife
 
 - type: Tag
   id: BoxHug

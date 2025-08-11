@@ -1,4 +1,4 @@
-- type: entity
+`- type: entity
   parent: BaseItem
   id: BaseKnife
   abstract: true
@@ -338,17 +338,17 @@
         friction: 0.2
 
 - type: entity
-  name: box cutter
+  name: utility knife
   parent: BaseKnife
-  id: BoxCutter
-  description: A knife with a tiny blade. Useful for cutting open mail, and in a pinch, butchering space carps.
+  id: UtilityKnife
+  description: A knife with a tiny blade. Useful for opening mail, and in a pinch, butchering space carp.
   components:
   - type: Tag
     tags:
     - Knife
-    - BoxCutter
+    - UtilityKnife
   - type: Sprite
-    sprite: Objects/Weapons/Melee/box_cutter.rsi
+    sprite: Objects/Weapons/Melee/utility_knife.rsi
     state: icon
   - type: MeleeWeapon
     attackRate: 1.5
@@ -357,7 +357,7 @@
         Slash: 5
   - type: Item
     size: Tiny
-    sprite: Objects/Weapons/Melee/box_cutter.rsi
+    sprite: Objects/Weapons/Melee/utility_knife.rsi
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
@@ -370,3 +370,4 @@
   - type: UseDelay
     delay: 1.5
 
+`
