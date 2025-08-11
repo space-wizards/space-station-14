@@ -12,7 +12,18 @@ public sealed class InventoryCommand : ToolshedCommand
     private InventorySystem? _inventorySystem;
 
     [CommandImplementation("getflags")]
-    public IEnumerable<EntityUid> InventoryGetFlags([PipedArgument] EntityUid ent, SlotFlags slotFlag)
+    public IEnumerable<EntityUid> InventoryGetFlags([PipedArgument] IEnumerable<EntityUid> ents, SlotFlags slotFlag)
+    {
+        var items = Enumerable.Empty<EntityUid>();
+        foreach (var ent in ents)
+        {
+            items = items.Concat(InventoryGetFlags(ent, slotFlag));
+        }
+
+        return items;
+    }
+
+    public IEnumerable<EntityUid> InventoryGetFlags(EntityUid ent, SlotFlags slotFlag)
     {
         _inventorySystem ??= GetSys<InventorySystem>();
 
@@ -32,20 +43,20 @@ public sealed class InventoryCommand : ToolshedCommand
         return items;
     }
 
-    [CommandImplementation("getflags")]
-    public IEnumerable<EntityUid> InventoryGetFlags([PipedArgument] IEnumerable<EntityUid> ents, SlotFlags slotFlag)
+
+    [CommandImplementation("getnamed")]
+    public IEnumerable<EntityUid> InventoryGetNamed([PipedArgument] IEnumerable<EntityUid> ents, string slotName)
     {
         var items = Enumerable.Empty<EntityUid>();
         foreach (var ent in ents)
         {
-            items = items.Concat(InventoryGetFlags(ent, slotFlag));
+            items = items.Concat(InventoryGetNamed(ent, slotName));
         }
 
         return items;
     }
 
-    [CommandImplementation("getnamed")]
-    public IEnumerable<EntityUid> InventoryGetNamed([PipedArgument] EntityUid ent, string slotName)
+    public IEnumerable<EntityUid> InventoryGetNamed(EntityUid ent, string slotName)
     {
         _inventorySystem ??= GetSys<InventorySystem>();
 
@@ -65,21 +76,15 @@ public sealed class InventoryCommand : ToolshedCommand
         return items;
     }
 
-    [CommandImplementation("getnamed")]
-    public IEnumerable<EntityUid> InventoryGetNamed([PipedArgument] IEnumerable<EntityUid> ents, string slotName)
-    {
-        var items = Enumerable.Empty<EntityUid>();
-        foreach (var ent in ents)
-        {
-            items = items.Concat(InventoryGetNamed(ent, slotName));
-        }
-
-        return items;
-    }
 
 
     [CommandImplementation("forceput")]
-    public EntityUid? InventoryForcePut([PipedArgument] EntityUid targetEnt, EntityUid itemEnt, SlotFlags slotFlag)
+    public EntityUid? InventoryForcePut([PipedArgument] IEnumerable<EntityUid> ents,
+        EntityUid itemEnt,
+        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, InventoryForcePut);
+
+
+    public EntityUid? InventoryForcePut(EntityUid targetEnt, EntityUid itemEnt, SlotFlags slotFlag)
     {
         return InventoryPutBase(targetEnt,
             itemEnt,
@@ -89,13 +94,14 @@ public sealed class InventoryCommand : ToolshedCommand
             : null;
     }
 
-    [CommandImplementation("forceput")]
-    public EntityUid? InventoryForcePut([PipedArgument] IEnumerable<EntityUid> ents,
-        EntityUid itemEnt,
-        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, InventoryForcePut);
 
     [CommandImplementation("put")]
-    public EntityUid? InventoryPut([PipedArgument] EntityUid targetEnt, EntityUid itemEnt, SlotFlags slotFlag)
+    public EntityUid? InventoryPut([PipedArgument] IEnumerable<EntityUid> ents,
+        EntityUid itemEnt,
+        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, InventoryPut);
+
+
+    public EntityUid? InventoryPut(EntityUid targetEnt, EntityUid itemEnt, SlotFlags slotFlag)
     {
         return InventoryPutBase(targetEnt,
             itemEnt,
@@ -105,14 +111,14 @@ public sealed class InventoryCommand : ToolshedCommand
             : null;
     }
 
-    [CommandImplementation("put")]
-    public EntityUid? InventoryPut([PipedArgument] IEnumerable<EntityUid> ents,
-        EntityUid itemEnt,
-        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, InventoryPut);
-
 
     [CommandImplementation("tryput")]
-    public EntityUid? InventoryTryPut([PipedArgument] EntityUid targetEnt, EntityUid itemEnt, SlotFlags slotFlag)
+    public EntityUid? InventoryTryPut([PipedArgument] IEnumerable<EntityUid> ents,
+        EntityUid itemEnt,
+        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, InventoryTryPut);
+
+
+    public EntityUid? InventoryTryPut(EntityUid targetEnt, EntityUid itemEnt, SlotFlags slotFlag)
     {
         return InventoryPutBase(targetEnt,
             itemEnt,
@@ -122,14 +128,15 @@ public sealed class InventoryCommand : ToolshedCommand
             : null;
     }
 
-    [CommandImplementation("tryput")]
-    public EntityUid? InventoryTryPut([PipedArgument] IEnumerable<EntityUid> ents,
-        EntityUid itemEnt,
-        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, InventoryTryPut);
+
 
 
     [CommandImplementation("ensure")]
-    public EntityUid? InventoryEnsure([PipedArgument] EntityUid targetEnt, EntityUid itemEnt, SlotFlags slotFlag)
+    public EntityUid? InventoryEnsure([PipedArgument] IEnumerable<EntityUid> ents,
+        EntityUid itemEnt,
+        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, InventoryEnsure);
+
+    public EntityUid? InventoryEnsure(EntityUid targetEnt, EntityUid itemEnt, SlotFlags slotFlag)
     {
         return InventoryPutBase(targetEnt,
             itemEnt,
@@ -137,11 +144,20 @@ public sealed class InventoryCommand : ToolshedCommand
             PutType.Ensure);
     }
 
-    [CommandImplementation("ensure")]
-    public EntityUid? InventoryEnsure([PipedArgument] IEnumerable<EntityUid> ents,
-        EntityUid itemEnt,
-        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, InventoryEnsure);
+    private EntityUid? InventoryPutEnumerableBase(IEnumerable<EntityUid> targetEnts,
+        EntityUid itemToInsert,
+        SlotFlags slotFlags,
+        Func<EntityUid, EntityUid, SlotFlags, EntityUid?> targetFunc)
+    {
+        foreach (var entity in targetEnts)
+        {
+            var result = targetFunc(entity, itemToInsert, slotFlags);
+            if (result != null)
+                return result;
+        }
 
+        return null;
+    }
 
     private EntityUid? InventoryPutBase(EntityUid targetEnt,
         EntityUid itemToInsert,
@@ -180,20 +196,7 @@ public sealed class InventoryCommand : ToolshedCommand
         return null;
     }
 
-    private EntityUid? InventoryPutEnumerableBase(IEnumerable<EntityUid> targetEnts,
-        EntityUid itemToInsert,
-        SlotFlags slotFlags,
-        Func<EntityUid, EntityUid, SlotFlags, EntityUid?> targetFunc)
-    {
-        foreach (var entity in targetEnts)
-        {
-            var result = targetFunc(entity, itemToInsert, slotFlags);
-            if (result != null)
-                return result;
-        }
 
-        return null;
-    }
 
     private enum PutType
     {

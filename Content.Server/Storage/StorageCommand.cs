@@ -15,25 +15,29 @@ public sealed class StorageCommand : ToolshedCommand
     private SharedStorageSystem? _storage;
     private SharedContainerSystem? _container;
 
+
     [CommandImplementation("insert")]
-    public EntityUid? StorageInsert([PipedArgument] EntityUid entToInsert, EntityUid targetEnt)
+    public IEnumerable<EntityUid> StorageInsert([PipedArgument] IEnumerable<EntityUid> entsToInsert,
+        EntityUid targetEnt) => entsToInsert.Where(x => StorageInsert(x, targetEnt) != null);
+
+    public EntityUid? StorageInsert(EntityUid entToInsert, EntityUid targetEnt)
     {
         _storage ??= GetSys<SharedStorageSystem>();
 
         if (!EntityManager.TryGetComponent<StorageComponent>(targetEnt, out var storage))
             return null;
 
-        return _storage.Insert(targetEnt, entToInsert, out EntityUid? stackedEntity, null, storage, false)
+        return _storage.Insert(targetEnt, entToInsert, out var stackedEntity, null, storage, false)
             ? entToInsert
             : null;
     }
 
-    [CommandImplementation("insert")]
-    public IEnumerable<EntityUid> StorageInsert([PipedArgument] IEnumerable<EntityUid> entsToInsert,
-        EntityUid targetEnt) => entsToInsert.Where(x => StorageInsert(x, targetEnt) != null);
 
     [CommandImplementation("fasttake")]
-    public EntityUid? StorageFastTake([PipedArgument] EntityUid storageEnt)
+    public IEnumerable<EntityUid> StorageFastTake([PipedArgument] IEnumerable<EntityUid> storageEnts) =>
+        storageEnts.Select(StorageFastTake).OfType<EntityUid>();
+
+    public EntityUid? StorageFastTake(EntityUid storageEnt)
     {
         _storage ??= GetSys<SharedStorageSystem>();
         _container ??= GetSys<SharedContainerSystem>();
@@ -49,9 +53,6 @@ public sealed class StorageCommand : ToolshedCommand
         return null;
     }
 
-    [CommandImplementation("fasttake")]
-    public IEnumerable<EntityUid> StorageFastTake([PipedArgument] IEnumerable<EntityUid> storageEnts) =>
-        storageEnts.Select(StorageFastTake).OfType<EntityUid>();
 
 
 }
