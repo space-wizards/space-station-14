@@ -28,7 +28,7 @@ public sealed class StatusEffectAlertSystem : EntitySystem
         if (!_effectQuery.TryComp(ent, out var effectComp))
             return;
 
-        RefreshAlert(ent, args.Target, effectComp.EndEffectTime);
+        _alerts.UpdateAlert(args.Target, ent.Comp.Alert, cooldown: ent.Comp.ShowDuration ? effectComp.EndEffectTime : null);
     }
 
     private void OnStatusEffectRemoved(Entity<StatusEffectAlertComponent> ent, ref StatusEffectRemovedEvent args)
@@ -38,11 +38,6 @@ public sealed class StatusEffectAlertSystem : EntitySystem
 
     private void OnEndTimeUpdated(Entity<StatusEffectAlertComponent> ent, ref StatusEffectEndTimeUpdatedEvent args)
     {
-        RefreshAlert(ent, args.Target, args.EndTime);
-    }
-
-    private void RefreshAlert(Entity<StatusEffectAlertComponent> ent, EntityUid target, TimeSpan? endTime)
-    {
-        _alerts.UpdateAlert(target, ent.Comp.Alert, cooldown: ent.Comp.ShowDuration ? endTime : null);
+        _alerts.UpdateAlert(args.Target, ent.Comp.Alert, cooldown: ent.Comp.ShowDuration ? args.EndTime : null);
     }
 }
