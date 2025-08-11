@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ScarKy0, Jbsundown
-  changes:
-  - message: Letters and Packages can now be cut open with sharp objects. Be wary,
-      this makes cargo lose money!
-    type: Add
-  id: 8334
-  time: '2025-04-24T19:47:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36815
 - author: EmoGarbage404
   changes:
   - message: Fixed situations where using the QSI would send the player into an esoteric
@@ -3908,3 +3900,10 @@
   id: 8846
   time: '2025-08-11T18:57:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38023
+- author: metalgearsloth
+  changes:
+  - message: Inserting lights now plays an insert animation.
+    type: Add
+  id: 8847
+  time: '2025-08-11T21:06:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36541
