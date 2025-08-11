@@ -284,6 +284,13 @@
     sprite: Clothing/Shoes/Specific/clown.rsi
     state: icon
 
+- type: stealTargetGroup
+  id: ClothingMaskClown
+  name: steal-target-groups-clothing-mask-clown
+  sprite:
+    sprite: Clothing/Mask/clown.rsi
+    state: icon
+
 #Thief structures
 
 - type: stealTargetGroup

@@ -325,6 +325,17 @@
   - type: Objective
     difficulty: 0.2 # Very easy when you don't actually target the clown
 
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: ClothingMaskClownStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Clown
+  - type: StealCondition
+    stealGroup: ClothingMaskClown
+  - type: Objective
+    difficulty: 0.2 # Very easy if you don't actually target the clown
+
 # Structures
 
 - type: entity

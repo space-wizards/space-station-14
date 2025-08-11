@@ -86,6 +86,7 @@
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
     ClothingShoesClownStealObjective: 1 # if only I could group the clown objectives together :o)
+    ClothingMaskClownStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure

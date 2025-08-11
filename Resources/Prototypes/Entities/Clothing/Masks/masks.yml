@@ -207,6 +207,8 @@
   - type: HideLayerClothing
     slots:
     - Snout
+  - type: StealTarget
+    stealGroup: ClothingMaskClown
 
 - type: entity
   parent: ClothingMaskClownBase
