@@ -191,11 +191,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value, args.DistanceThreshold.Value))
                     return true;
             }
-            else
-            {
-                if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
-                    return true;
-            }
         }
 
         // Whether the distance between the tool and the user has grown too much.
@@ -206,11 +201,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 if (!_interaction.InRangeUnobstructed(args.User,
                         args.Used.Value,
                         args.DistanceThreshold.Value))
-                    return true;
-            }
-            else
-            {
-                if (!_interaction.InRangeUnobstructed(args.User,args.Used.Value))
                     return true;
             }
         }
