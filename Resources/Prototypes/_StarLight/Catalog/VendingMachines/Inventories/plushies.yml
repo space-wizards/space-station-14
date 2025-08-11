@@ -574,3 +574,14 @@
   conditions:
     - !type:ListingLimitedStockCondition
       stock: 1
+      
+- type: listing
+  id: VendorPlushieKilla
+  productEntity: PlushieKilla
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
