@@ -1374,13 +1374,13 @@
           type: WiresBoundUserInterface
 
 - type: entity
-  parent: BaseComputer
+  parent: ComputerSurveillanceWirelessCameraMonitor
   id: ComputerSurveillanceWirelessXenoborgCameraMonitor
   name: xenoborg camera monitor
   description: A wireless xenoborg camera monitor. You're watching them. Maybe.
   components:
   - type: Computer
-    board: 
+    board: XenoborgCameraMonitorCircuitboard
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: Mothership
