@@ -665,7 +665,7 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
   - type: DeviceNetwork
-    deviceNetId: Wireless    
+    deviceNetId: Wireless
     transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
@@ -1575,8 +1575,8 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: RoboticsConsole
+    allowBorgControl: false
     radioChannel: Xenoborg
-    destroyCooldown: 0
   - type: ActiveRadio
     channels:
     - Xenoborg

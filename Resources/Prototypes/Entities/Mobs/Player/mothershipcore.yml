@@ -93,6 +93,8 @@
   - type: SurveillanceCameraSpeaker
   - type: SurveillanceCameraMonitor
   - type: RoboticsConsole
+    allowBorgControl: false
+    radioChannel: Xenoborg
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: Mothership
