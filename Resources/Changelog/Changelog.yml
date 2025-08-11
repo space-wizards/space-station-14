@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added prisoner closets. These create automatic ID's which allow you to
-      quickly handle the transfer of prisoners in and out of genpop cells while keeping
-      their belongings secure. Imprison people today!
-    type: Add
-  id: 8332
-  time: '2025-04-24T14:32:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36392
 - author: Southbridge
   changes:
   - message: Colorful Light Crates have been added and can be ordered.
@@ -3904,3 +3895,10 @@
   id: 8844
   time: '2025-08-10T22:20:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39531
+- author: perryprog
+  changes:
+  - message: "Diona\_nymphs that reform inside of a locker will no longer be invisible."
+    type: Fix
+  id: 8845
+  time: '2025-08-11T11:00:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39505
