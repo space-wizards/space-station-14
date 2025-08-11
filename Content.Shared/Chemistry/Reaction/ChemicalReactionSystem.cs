@@ -171,8 +171,13 @@ namespace Content.Shared.Chemistry.Reaction
             var (uid, comp) = soln;
             var solution = comp.Solution;
 
-            // If ConserveEnergy, the solution's energy from before performing the reaction is used
-            var energy = reaction.ConserveEnergy ? solution.GetThermalEnergy(_prototypeManager) : 0;
+            var energy = 0.0f;
+
+            // If ConserveEnergy is true, the solution's energy from before performing the reaction is used
+            if (reaction.ConserveEnergy)
+            {
+                energy = solution.GetThermalEnergy(_prototypeManager);
+            }
 
             //Remove reactants
             foreach (var reactant in reaction.Reactants)
@@ -192,17 +197,21 @@ namespace Content.Shared.Chemistry.Reaction
                 solution.AddReagent(product.Key, product.Value * unitReactions);
             }
 
-            // If not ConserveEnergy, the solution's energy from after performing the reaction is used
-            if (!reaction.ConserveEnergy)
+            // If ConserveEnergy is false and AdjustEnergy is 0, it's not necessary to recalculate temperature
+            if (reaction.ConserveEnergy || reaction.AdjustEnergy != 0.0)
             {
-                energy = solution.GetThermalEnergy(_prototypeManager);
+                // If ConserveEnergy is false, the solution's energy from after performing the reaction is used
+                if (!reaction.ConserveEnergy)
+                {
+                    energy = solution.GetThermalEnergy(_prototypeManager);
+                }
+
+                energy += reaction.AdjustEnergy * (float)unitReactions;
+
+                var newCap = solution.GetHeatCapacity(_prototypeManager);
+                if (newCap > 0)
+                    solution.Temperature = energy / newCap;
             }
-
-            energy += reaction.AdjustEnergy * (float)(unitReactions);
-
-            var newCap = solution.GetHeatCapacity(_prototypeManager);
-            if (newCap > 0)
-                solution.Temperature = energy / newCap;
 
             OnReaction(soln, reaction, null, unitReactions);
 
