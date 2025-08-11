@@ -200,10 +200,22 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      #- !type:ChangeConstructionNodeBehavior
-      #  node: machineFrame
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassReinforced:
+            min: 1
+            max: 2
+          SheetPlasteel:
+            min: 2
+            max: 2
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    damageDivisor: 8
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: ExtensionCableReceiver
@@ -223,9 +235,10 @@
     layers:
     - state: base
     - state: ai_empty
+      map: ["enum.StationAiVisualLayers.Base"]
       shader: unshaded
     - state: ai
-      map: ["enum.StationAiVisualState.Key"]
+      map: ["enum.StationAiVisualLayers.Icon"]
       shader: unshaded
       visible: false
     - state: ai_unpowered
@@ -238,6 +251,10 @@
         enum.PowerDeviceVisualLayers.Powered:
           False: { visible: true }
           True: { visible: false }
+      enum.StationAiVisuals.Broken:
+        enum.StationAiVisualLayers.Base:
+          False: { state: ai_empty }
+          True: { state: ai_error }
   - type: InteractionPopup
     interactSuccessString: petting-success-station-ai
     interactFailureString: petting-failure-station-ai

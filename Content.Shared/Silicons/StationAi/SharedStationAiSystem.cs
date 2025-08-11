@@ -1,9 +1,12 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Managers;
+using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Destructible;
 using Content.Shared.Doors.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Electrocution;
@@ -11,11 +14,14 @@ using Content.Shared.Intellicard;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Repairable;
 using Content.Shared.StationAi;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
@@ -28,11 +34,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Chat;
-using Content.Shared.Destructible;
-using Content.Shared.Damage;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs;
 using System.Linq;
 
 namespace Content.Shared.Silicons.StationAi;
@@ -114,6 +115,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
 
         SubscribeLocalEvent<StationAiCoreComponent, BreakageEventArgs>(OnBroken);
+        SubscribeLocalEvent<StationAiCoreComponent, RepairedEvent>(OnRepaired);
     }
 
     private void OnCoreVerbs(Entity<StationAiCoreComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -374,6 +376,15 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     private void OnBroken(Entity<StationAiCoreComponent> ent, ref BreakageEventArgs args)
     {
         KillHeldAi(ent);
+
+        if (TryComp<AppearanceComponent>(ent, out var appearance))
+            _appearance.SetData(ent, StationAiVisuals.Broken, true, appearance);
+    }
+
+    private void OnRepaired(Entity<StationAiCoreComponent> ent, ref RepairedEvent args)
+    {
+        if (TryComp<AppearanceComponent>(ent, out var appearance))
+            _appearance.SetData(ent, StationAiVisuals.Broken, false, appearance);
     }
 
     public virtual void KillHeldAi(Entity<StationAiCoreComponent> ent)
@@ -558,7 +569,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         }
 
         // Otherwise let generic visualizers handle the appearance update
-        _appearance.SetData(entity.Owner, StationAiVisualState.Key, state);
+        _appearance.SetData(entity.Owner, StationAiVisualLayers.Icon, state);
     }
 
     public virtual bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
@@ -606,15 +617,16 @@ public sealed partial class JumpToCoreEvent : InstantActionEvent
 public sealed partial class IntellicardDoAfterEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
-public enum StationAiVisualState : byte
+public enum StationAiVisualLayers : byte
 {
-    Key,
+    Base,
+    Icon,
 }
 
 [Serializable, NetSerializable]
-public enum StationAiSpriteState : byte
+public enum StationAiVisuals : byte
 {
-    Key,
+    Broken,
 }
 
 [Serializable, NetSerializable]
