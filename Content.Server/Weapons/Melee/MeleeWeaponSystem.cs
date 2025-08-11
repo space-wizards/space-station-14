@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Numerics;
 using Content.Server.Chat.Systems;
 using Content.Server.Movement.Systems;
 using Content.Shared.Damage.Events;
@@ -12,8 +14,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
-using System.Linq;
-using System.Numerics;
 
 namespace Content.Server.Weapons.Melee;
 

@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.Gameplay;
 using Content.Shared.Effects;
+using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
@@ -15,7 +16,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
-using Content.Shared.Physics;
 using Robust.Shared.Physics;
 
 namespace Content.Client.Weapons.Melee;
