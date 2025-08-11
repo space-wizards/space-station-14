@@ -114,6 +114,9 @@ public abstract class SharedDecalSystem : EntitySystem
                     $"{eventArgs.SenderSession.Name} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
             }
 
+            if (ev.Decal != null && decal != ev.Decal)
+                continue;
+
             RemoveDecal(gridId.Value, decalId, out var _);
         }
     }
@@ -475,9 +478,11 @@ public sealed class RequestDecalPlacementEvent : EntityEventArgs
 public sealed class RequestDecalRemovalEvent : EntityEventArgs
 {
     public NetCoordinates Coordinates;
+    public Decal? Decal;
 
-    public RequestDecalRemovalEvent(NetCoordinates coordinates)
+    public RequestDecalRemovalEvent(NetCoordinates coordinates, Decal? decal = null)
     {
         Coordinates = coordinates;
+        Decal = decal;
     }
 }
