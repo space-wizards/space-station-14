@@ -93,7 +93,8 @@ def get_last_changelog() -> str:
 
     session = requests.Session()
     session.headers["Authorization"] = f"Bearer {github_token}"
-    session.headers["Accept"] = "Accept: application/vnd.github+json"
+    # Correct Accept header value for GitHub API; no field name prefix.
+    session.headers["Accept"] = "application/vnd.github+json"
     session.headers["X-GitHub-Api-Version"] = "2022-11-28"
 
     most_recent = get_most_recent_workflow(session, github_repository, github_run)
