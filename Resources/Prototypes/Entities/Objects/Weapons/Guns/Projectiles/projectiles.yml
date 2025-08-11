@@ -236,9 +236,7 @@
   description: If you can see this, you've probably been stun-meta'd
   components:
   - type: Sprite
-    noRot: true
     sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
-    color: "#ffff33"
     layers:
     - state: tesla_projectile
       shader: unshaded
@@ -253,8 +251,6 @@
     stunAmount: 5
     knockdownAmount: 10
     slowdownAmount: 10
-    walkSpeedModifier: 0.5
-    sprintSpeedModifier: 0.5
 
 - type: entity
   name : disabler bolt
