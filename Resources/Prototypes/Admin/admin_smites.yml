@@ -244,13 +244,13 @@
   components:
   - type: Buffering
 
-#- type: adminSmite
-#  id: InstrumentPolymorph #Need polymorph system move to shared
-#  name: admin-smite-become-instrument-name
-#  desc: admin-smite-become-instrument-description
-#  icon:
-#    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
-#    state: supersynth
+- type: adminSmite
+  id: InstrumentPolymorph #Need polymorph system move to shared
+  name: admin-smite-become-instrument-name
+  desc: admin-smite-become-instrument-description
+  icon:
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+    state: supersynth
 
 - type: adminSmite
   id: RemoveGravity
@@ -263,13 +263,13 @@
   - type: MovementIgnoreGravity
     gravityState: true
 
-#- type: adminSmite
-#  id: LizardPolymorph #Need polymorph system move to shared
-#  name: admin-smite-reptilian-species-swap-name
-#  desc: admin-smite-reptilian-species-swap-description
-#  icon:
-#    sprite: Objects/Fun/Plushies/lizard.rsi
-#    state: icon
+- type: adminSmite
+  id: LizardPolymorph #Need polymorph system move to shared
+  name: admin-smite-reptilian-species-swap-name
+  desc: admin-smite-reptilian-species-swap-description
+  icon:
+    sprite: Objects/Fun/Plushies/lizard.rsi
+    state: icon
 
 - type: adminSmite
   id: LockerStuff
@@ -389,7 +389,11 @@
   - type: SouthernAccent
   - type: SpanishAccent
   - type: StutteringAccent
-  # - type: BackwardsAccent (1/8 chance in old realization)
+  - type: ComponentTable
+    table: !type:AllSelector
+      children:
+      - id: BackwardsAccent
+        prob: 0.125
 
 - type: adminSmite
   id: Crawler
