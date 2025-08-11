@@ -87,3 +87,12 @@
     - qu
     - ack
     - quack
+
+- type: language
+  id: Pig
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 3
+    replacement:
+    - oink

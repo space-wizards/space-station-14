@@ -308,6 +308,7 @@
       startingGear: WizardBlueGear
       # TODO: WizardComp as needed
       components:
+      - type: UniversalLanguageSpeaker
       - type: NpcFactionMember
         factions:
         - Wizard

@@ -78,3 +78,6 @@ language-Chicken-description = Coot!
 
 language-Duck-name = Duck
 language-Duck-description = Quack!
+
+language-Pig-name = Pig
+language-Pig-description = Oink!
