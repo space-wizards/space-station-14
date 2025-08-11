@@ -210,4 +210,4 @@
   - type: SurveillanceCameraRouter
     subnetFrequency: Xenoborg
   - type: Machine
-    board: 
+    board: SurveillanceCameraWirelessRouterXenoborgCircuitboard
