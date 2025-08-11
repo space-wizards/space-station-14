@@ -36,10 +36,9 @@
         effectProto: StatusEffectStunned
         time: 3
         type: Remove
-      #- !type:ModifyStatusEffect
-      #  effectProto: StatusEffectKnockdown
-      #  time: 3
-      #  type: Remove
+      - !type:ModifyKnockdown
+        time: 3
+        type: Remove
       - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentThreshold
@@ -84,10 +83,9 @@
         effectProto: StatusEffectStunned
         time: 1
         type: Remove
-      #- !type:ModifyStatusEffect
-      #  effectProto: StatusEffectKnockdown
-      #  time: 1
-      #  type: Remove
+      - !type:ModifyKnockdown
+        time: 1
+        type: Remove
       - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentThreshold
@@ -143,10 +141,9 @@
         effectProto: StatusEffectStunned
         time: 3
         type: Remove
-      #- !type:ModifyStatusEffect
-      #  effectProto: StatusEffectKnockdown
-      #  time: 3
-      #  type: Remove
+      - !type:ModifyKnockdown
+        time: 3
+        type: Remove
       - !type:GenericStatusEffect
         key: StaminaModifier
         component: StaminaModifier

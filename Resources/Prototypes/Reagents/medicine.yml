@@ -365,10 +365,9 @@
         effectProto: StatusEffectStunned
         time: 0.75
         type: Remove
-      #- !type:ModifyStatusEffect
-      #  effectProto: StatusEffectKnockdown
-      #  time: 0.75
-      #  type: Remove
+      - !type:ModifyKnockdown
+        time: 0.75
+        type: Remove
       - !type:GenericStatusEffect
         key: Adrenaline # Guess what epinephrine is...
         component: IgnoreSlowOnDamage
@@ -743,10 +742,9 @@
         effectProto: StatusEffectStunned
         time: 3.0
         type: Remove
-      #- !type:ModifyStatusEffect
-      #  effectProto: StatusEffectKnockdown
-      #  time: 3.0
-      #  type: Remove
+      - !type:ModifyKnockdown
+        time: 3.0
+        type: Remove
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
         time: 15.0
