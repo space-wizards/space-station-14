@@ -125,10 +125,10 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
 
             // The database stores roles with prefixes to distinguish them, so we must add them to the IDs before comparison
             var prefixedProto = proto;
-            // Forcing index types for sorting
-            if (_prototypes.TryIndex<JobPrototype>(proto, out job))
+
+            if (_prototypes.TryIndex(proto, out job))
                 prefixedProto = PrefixJob + proto;
-            else if (_prototypes.TryIndex<AntagPrototype>(proto, out antag))
+            else if (_prototypes.TryIndex(proto, out antag))
                 prefixedProto = PrefixAntag + proto;
             else
                 _sawmill.Error($"Role prototype '{proto}' could not be indexed as either a Job or an Antag");

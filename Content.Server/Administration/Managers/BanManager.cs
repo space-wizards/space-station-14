@@ -240,6 +240,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
     public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
+        // The role ID must be prefixed to designate the type of the role being banned. Currently only two types exist: 'Job:' and 'Antag:'
         if (role.StartsWith(PrefixJob) && !_prototypeManager.HasIndex<JobPrototype>(role.TrimStart(PrefixJob.ToCharArray())))
         {
             _sawmill.Error($"Role ban, {role}, started with the job prefix ({PrefixJob}) but did not have a valid prototype!");
@@ -353,7 +354,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     /// Checks if the player is currently banned from any of the listed roles.
     /// </summary>
     /// <param name="player">The player.</param>
-    /// <param name="roles">A list of antag and/or job prototype IDs.</param>
+    /// <param name="roles">A list of antag and/or job prototype IDs. If they can be indexed as a job or antag prototype, they will be added the appropriate prefix. If they can't, then they will still be compared against the ban list, so prefixed IDs will also work.</param>
     /// <returns>Returns True if an active role ban is found for this player for any of the listed roles.</returns>>
     public bool IsRoleBanned(ICommonSession player, List<string> roles)
     {

@@ -209,9 +209,8 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         JobPrototype? job;
         AntagPrototype? antag;
 
-        // Forcing types for sorting
-        _prototypes.TryIndex<JobPrototype>(role, out job);
-        _prototypes.TryIndex<AntagPrototype>(role, out antag);
+        _prototypes.TryIndex(role, out job);
+        _prototypes.TryIndex(role, out antag);
 
         if (job is null &&
             antag is null ||

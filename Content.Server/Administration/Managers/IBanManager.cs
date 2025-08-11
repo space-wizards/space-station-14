@@ -31,9 +31,9 @@ public interface IBanManager
     /// Checks if the player is currently banned from any of the listed roles.
     /// </summary>
     /// <param name="player">The player.</param>
-    /// <param name="prototypes">A list of antag and/or job prototype IDs.</param>
+    /// <param name="roles">A list of antag and/or job prototype IDs, with or without role prefixes.</param>
     /// <returns>Returns True if an active role ban is found for this player for any of the listed roles.</returns>
-    public bool IsRoleBanned(ICommonSession player, List<string> prototypes);
+    public bool IsRoleBanned(ICommonSession player, List<string> roles);
 
     /// <summary>
     /// Checks if the player is currently banned from any of the listed roles.
@@ -48,7 +48,7 @@ public interface IBanManager
     /// Creates a job ban for the specified target, username or GUID
     /// </summary>
     /// <param name="target">Target user, username or GUID, null for none</param>
-    /// <param name="role">Role to be banned from</param>
+    /// <param name="role">Role ID to be banned from. It must be prefixed to designate the type ('Job:' or 'Antag:')</param>
     /// <param name="severity">Severity of the resulting ban note</param>
     /// <param name="reason">Reason for the ban</param>
     /// <param name="minutes">Number of minutes to ban for. 0 and null mean permanent</param>

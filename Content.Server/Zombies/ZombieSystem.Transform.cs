@@ -74,7 +74,7 @@ public sealed partial class ZombieSystem
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
     private static readonly ProtoId<NpcFactionPrototype> ZombieFaction = "Zombie";
     private static readonly string MindRoleZombie = "MindRoleZombie";
-    private static readonly List<string> BannableZombiePrototypes = new List<string> { "Antag:Zombie" };
+    private static readonly List<string> BannableZombiePrototypes = new List<string> { "Zombie" };
 
     /// <summary>
     /// Handles an entity turning into a zombie when they die or go into crit

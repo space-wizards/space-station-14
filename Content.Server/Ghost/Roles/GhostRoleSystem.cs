@@ -517,7 +517,7 @@ public sealed class GhostRoleSystem : EntitySystem
             return list;
         }
 
-        if(roleEnt.Comp.JobProto is not null)
+        if (roleEnt.Comp.JobProto is not null)
             list.Add(roleEnt.Comp.JobProto);
 
         // If there is no mind, check the mindRole prototypes
