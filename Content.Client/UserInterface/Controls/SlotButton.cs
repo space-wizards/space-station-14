@@ -14,6 +14,7 @@ namespace Content.Client.UserInterface.Controls
             Highlight = slotData.Highlighted;
             StorageTexturePath = "Slots/back";
             SlotName = slotData.SlotName;
+            SlotDisplayName = slotData.SlotDisplayName;
         }
     }
 }

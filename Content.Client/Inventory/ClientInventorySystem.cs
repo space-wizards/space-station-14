@@ -284,7 +284,7 @@ namespace Content.Client.Inventory
             [ViewVariables] public string SlotName => SlotDef.Name;
             [ViewVariables] public bool ShowInWindow => SlotDef.ShowInWindow;
             [ViewVariables] public string SlotGroup => SlotDef.SlotGroup;
-            [ViewVariables] public string SlotDisplayName => SlotDef.DisplayName;
+            [ViewVariables] public string SlotDisplayName => Robust.Shared.Localization.Loc.GetString(SlotDef.DisplayName);
             [ViewVariables] public string TextureName => "Slots/" + SlotDef.TextureName;
             [ViewVariables] public string FullTextureName => SlotDef.FullTextureName;
 
