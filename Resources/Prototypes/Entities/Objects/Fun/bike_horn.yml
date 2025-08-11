@@ -17,48 +17,34 @@
   - type: UseDelay
     delay: 0.5
   - type: EmitSoundOnUse
-    sound:
+    sound: &BikeHorn
       collection: BikeHorn
       params:
         variation: 0.125
   - type: EmitSoundOnLand
-    sound:
-      collection: BikeHorn
-      params:
-        variation: 0.125
+    sound: *BikeHorn
   - type: EmitSoundOnTrigger
-    sound:
-      collection: BikeHorn
-      params:
-        variation: 0.125
+    sound: *BikeHorn
   - type: EmitSoundOnActivate
-    sound:
-      collection: BikeHorn
-      params:
-        variation: 0.125
+    sound: *BikeHorn
   - type: EmitSoundOnCollide
-    sound:
-      collection: BikeHorn
-      params:
-        variation: 0.125
+    sound: *BikeHorn
   - type: Tag
     tags:
     - Payload # yes, you can make re-usable prank grenades
     - BikeHorn
   - type: MeleeWeapon
     wideAnimationRotation: 135
-    soundHit:
-      collection: BikeHorn
-      params:
-        variation: 0.125
+    soundHit: *BikeHorn
     damage:
       types:
         Blunt: 0
   - type: Tool
     qualities:
     - Honking
-    useSound:
-      collection: BikeHorn
+    useSound: *BikeHorn
+  - type: StealTarget
+    stealGroup: BikeHorn
 
 - type: entity
   parent: BaseItem

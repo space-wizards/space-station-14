@@ -303,7 +303,7 @@
   - type: Objective
     difficulty: 1
 
-- type: entity
+- type: entity                                      #Clown group :o)
   parent: BaseThiefStealObjective
   id: ClothingNeckClownmedalStealObjective
   components:
@@ -346,6 +346,17 @@
     stealGroup: ClownRecorder
   - type: Objective
     difficulty: 0.4 # About as hard as a bible
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: BikeHornStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Clown
+  - type: StealCondition
+    stealGroup: BikeHorn
+  - type: Objective
+    difficulty: 0.3 # Clown usually has a spare mapped
 
 # Structures
 
