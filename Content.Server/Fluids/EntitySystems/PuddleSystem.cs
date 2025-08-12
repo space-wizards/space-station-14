@@ -426,7 +426,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         Dirty(entity, slipComp);
     }
 
-    private void UpdateSlow(EntityUid uid, Solution solution)
+    private void UpdateSlow(Entity<PuddleComponent> ent, Solution solution)
     {
         var maxViscosity = 0f;
         foreach (var (reagent, _) in solution.Contents)
@@ -437,13 +437,13 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         if (maxViscosity > 0)
         {
-            var comp = EnsureComp<SpeedModifierContactsComponent>(uid);
-            var speed = 1 - maxViscosity;
-            _speedModContacts.ChangeSpeedModifiers(uid, speed, comp);
+            var comp = EnsureComp<SpeedModifierContactsComponent>(ent);
+            var speed = 1 - solution.Volume / ent.Comp.OverflowVolume * maxViscosity;
+            _speedModContacts.ChangeSpeedModifiers(ent, speed.Float(), comp);
         }
         else
         {
-            RemComp<SpeedModifierContactsComponent>(uid);
+            RemComp<SpeedModifierContactsComponent>(ent);
         }
     }
 
