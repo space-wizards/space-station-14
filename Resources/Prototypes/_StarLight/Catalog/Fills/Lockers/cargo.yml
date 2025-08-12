@@ -12,8 +12,7 @@
     children:
     - id: OxygenTankFilled
     - id: ClothingShoesBootsMag
-#    - id: ClothingOuterHardsuitSpatioLead
-    - id: ClothingOuterHardsuitSpatio
+    - id: ClothingOuterHardsuitSpatioLead
     - id: ClothingMaskGasExplorer
 
 - type: entity
@@ -51,8 +50,19 @@
   id: LockerFillSalvageMedic
   table: !type:AllSelector
     children:
+    - id: ClothingBeltMedicalFilled
+    - id: SurvivalKnife
+    - id: HandheldGPSBasic
+    - id: RadioHandheldExpedition
+    - id: AppraisalTool
+    - id: FireExtinguisher
+    - id: Flare
+      prob: 0.3
+      rolls: !type:ConstantNumberSelector
+        value: 3
     - id: MedkitAdvanced
     - id: BoxBodyBag
+    - id: EmergencyRollerBedSpawnFolded
 
 - type: entityTable
   id: FillSalvageMedicHardsuitSpatio
@@ -60,8 +70,7 @@
     children:
     - id: OxygenTankFilled
     - id: ClothingShoesBootsMag
-#    - id: ClothingOuterHardsuitSpatioMedic
-    - id: ClothingOuterHardsuitSpatio
+    - id: ClothingOuterHardsuitSpatioMedic
     - id: ClothingMaskGasExplorer
 
 - type: entity
@@ -77,8 +86,6 @@
           tableId: FillSalvageMedicHardsuitSpatio
         - !type:NestedSelector
           tableId: LockerFillSalvageMedic
-        - !type:NestedSelector
-          tableId: LockerFillSalvageSpecialist
 
 - type: entity
   id: LockerSalvageMedicFilled
@@ -91,8 +98,6 @@
         children:
         - !type:NestedSelector
           tableId: LockerFillSalvageMedic
-        - !type:NestedSelector
-          tableId: LockerFillSalvageSpecialist
 
 # Salvage Lead/Medic Combo Large Locker
 - type: entity
@@ -114,8 +119,6 @@
           tableId: FillSalvageMedicHardsuitSpatio
         - !type:NestedSelector
           tableId: LockerFillSalvageMedic
-        - !type:NestedSelector
-          tableId: LockerFillSalvageSpecialist
 
 - type: entity
   id: LockerSalvageLeadMedicFilled
@@ -132,8 +135,6 @@
           tableId: LockerFillSalvageSpecialist
         - !type:NestedSelector
           tableId: LockerFillSalvageMedic
-        - !type:NestedSelector
-          tableId: LockerFillSalvageSpecialist
 
 # Salvage Specialist
 # regular lockers located in Wizden's Resources/Prototypes/Catalog/Fills/Lockers/cargo.yml
