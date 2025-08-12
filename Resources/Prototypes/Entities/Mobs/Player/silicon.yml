@@ -175,6 +175,17 @@
     blacklist:
       tags:
       - GhostOnlyWarp
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 200
   - type: ContainerComp
     proto: AiHeld
     container: station_ai_mind_slot
