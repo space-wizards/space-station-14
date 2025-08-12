@@ -232,8 +232,8 @@
     powerLoad: 1000
   - type: ExtensionCableReceiver
   - type: Battery
-    maxCharge: 60000
-    startingCharge: 60000
+    maxCharge: 600000
+    startingCharge: 600000
   - type: ApcPowerReceiverBattery
     idleLoad: 1000
     batteryRechargeRate: 2000
