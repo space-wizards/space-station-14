@@ -1625,20 +1625,20 @@
  - type: EmitSoundOnUse
     sound:
       path: /Audio/Animals/cat_meow.ogg
-  - type: EmitSoundOnLand
+- type: EmitSoundOnLand
     sound:
       path: /Audio/Animals/cat_meow2.ogg
-  - type: EmitSoundOnActivate
+- type: EmitSoundOnActivate
     sound:
       path: /Audio/Animals/cat_meow.ogg
-  - type: EmitSoundOnTrigger
+ - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Animals/cat_meow2.ogg
-  - type: Food
+- type: Food
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Items/Toys/toysqueak3.ogg
-  - type: MeleeWeapon
+- type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/cat_hiss.ogg
