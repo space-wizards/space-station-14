@@ -1496,7 +1496,7 @@
       - HEAD
       clothingVisuals:
         head:
-        - states: equipped-HELMET
+        - state: equipped-HELMET
     - type: ItemToggle
       onUse: false
       verbToggleOn: plushie-voicebox-activate
