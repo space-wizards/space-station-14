@@ -1,7 +1,7 @@
 - type: stack
   id: Telecrystal
   name: stack-telecrystal
-  icon: Objects/Specific/Syndicate/telecrystal.rsi
+  icon: { sprite: /Textures/Objects/Specific/Syndicate/telecrystal.rsi, state: telecrystal }
   spawn: Telecrystal1
 
 - type: stack

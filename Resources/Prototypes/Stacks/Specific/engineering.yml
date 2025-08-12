@@ -3,13 +3,15 @@
   parent: BaseSmallStack
   id: InflatableWall
   name: stack-inflatable-wall
+  icon: { sprite: "/Textures/Objects/Misc/inflatable_wall.rsi", state: item_wall }
   spawn: InflatableWallStack1
 
 - type: stack
   id: InflatableDoor
   name: stack-inflatable-door
+  icon: { sprite: "/Textures/Objects/Misc/inflatable_door.rsi", state: item_door }
   spawn: InflatableDoorStack1
-  maxCount: 4
+  maxCount: 4 # Maybe increased to 5 to reuse the base?
 
 # Cables
 - type: stack

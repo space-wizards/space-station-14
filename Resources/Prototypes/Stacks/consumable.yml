@@ -3,18 +3,21 @@
 - type: stack
   id: Pancake
   name: stack-pancake
+  icon: { sprite: /Textures/Objects/Consumable/Food/Baked/misc.rsi, state: pancakes1 }
   spawn: FoodBakedPancake
   maxCount: 9
 
 - type: stack
   id: PancakeBb
   name: stack-blueberry-pancake
+  icon: { sprite: /Textures/Objects/Consumable/Food/Baked/misc.rsi, state: pancakesbb1 }
   spawn: FoodBakedPancakeBb
   maxCount: 9
 
 - type: stack
   id: PancakeCc
   name: stack-chocolate-chip-pancake
+  icon: { sprite: /Textures/Objects/Consumable/Food/Baked/misc.rsi, state: pancakescc1 }
   spawn: FoodBakedPancakeCc
   maxCount: 9
 

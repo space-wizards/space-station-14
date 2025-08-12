@@ -12,7 +12,7 @@
   id: BaseSmallStack
   maxCount: 10
 
-# Default size, used by most materials
+# Default size
 - type: stack
   abstract: true
   id: BaseMediumStack
@@ -27,3 +27,9 @@
   abstract: true
   id: BaseVeryLargeStack
   maxCount: 100
+
+# size used by "sheets," typically materials like steel and plasma
+- type: stack
+  abstract: true
+  id: BaseSheetStack
+  maxCount: 30
