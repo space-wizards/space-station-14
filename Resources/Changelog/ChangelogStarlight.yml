@@ -11193,5 +11193,12 @@ Entries:
   id: 129800
   time: '2025-08-12T17:46:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1298
+- author: TheRealSlimRedwoods
+  changes:
+  - message: Added more plushies! (this is a cry for help please this made me go insane)
+    type: Add
+  id: 130900
+  time: '2025-08-12T17:56:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1309
 Order: -1
 
