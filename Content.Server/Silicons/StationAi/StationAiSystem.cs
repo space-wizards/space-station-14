@@ -5,12 +5,15 @@ using Content.Server.Mind;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Spawners.EntitySystems;
+using Content.Server.Station.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
+using Content.Shared.Destructible;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Popups;
+using Content.Shared.Roles;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech.Components;
 using Content.Shared.StationAi;
@@ -35,6 +38,8 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly StationJobsSystem _stationJobs = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
 
@@ -43,6 +48,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
     private readonly ProtoId<AlertPrototype> _batteryAlert = "BorgBattery";
     private readonly ProtoId<AlertPrototype> _integrityAlert = "BorgHealth";
+    private readonly ProtoId<JobPrototype> _stationAiJob = "StationAi";
 
     public override void Initialize()
     {
@@ -51,6 +57,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         SubscribeLocalEvent<StationAiCoreComponent, ContainerSpawnEvent>(OnContainerSpawn);
         SubscribeLocalEvent<StationAiCoreComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<StationAiCoreComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<StationAiCoreComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<StationAiCoreComponent, DoAfterAttemptEvent<IntellicardDoAfterEvent>>(OnDoAfterAttempt);
         SubscribeLocalEvent<ExpandICChatRecipientsEvent>(OnExpandICChatRecipients);
         SubscribeLocalEvent<StationAiTurretComponent, AmmoShotEvent>(OnAmmoShot);
@@ -93,6 +100,16 @@ public sealed class StationAiSystem : SharedStationAiSystem
             accent.OverrideTotalDamage = null;
             accent.DamageAtMaxCorruption = null;
         }
+    }
+
+    private void OnDestruction(Entity<StationAiCoreComponent> ent, ref DestructionEventArgs args)
+    {
+        var station = _station.GetOwningStation(ent);
+
+        if (station == null)
+            return;
+
+        _stationJobs.TryAdjustJobSlot(station.Value, _stationAiJob, -1, false, true);
     }
 
     private void OnChargeChanged(Entity<StationAiCoreComponent> entity, ref ChargeChangedEvent args)
