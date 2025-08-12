@@ -236,7 +236,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
         var adminData = _adminManager.GetAdminData(senderSession);
 
         var senderIsAdmin = adminData?.HasFlag(AdminFlags.Adminhelp) ?? false;
-        var senderIsMentor = _playerRolesManager.GetPlayerData(senderSession)?.HasFlag(PlayerFlags.Mentor) ?? false;
+        var senderIsMentor = _nullLinkPlayers.IsMentor(senderSession);
         if (!(senderIsAdmin || senderIsMentor)) //only admins/mentors can use mtpto
             return;
         if (message.Ticket is not Guid ticketId)
