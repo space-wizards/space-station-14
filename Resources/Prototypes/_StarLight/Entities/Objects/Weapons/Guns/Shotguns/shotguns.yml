@@ -159,18 +159,18 @@
   - type: Clothing
     sprite: _Starlight/Objects/Weapons/Guns/Shotguns/minotaur.rsi
   - type: Item
-    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/minotaur_inhands_64x.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/minotaur.rsi
   - type: GunRequiresWield
   - type: Gun
     spread: 20
-    fireRate: 3
+    fireRate: 2
     burstFireRate: 4
     burstCooldown: 1
     selectedMode: Burst
     shotsPerBurst: 3
     availableModes:
     - Burst
-    - FullAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/minotaur.ogg
   - type: ItemSlots

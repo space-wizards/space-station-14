@@ -31,6 +31,7 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Shared;
 using Content.Server.Radio.Components;
 using Content.Server._Starlight.Radio.Systems;
+using Content.Shared._Starlight.Silicons.Borgs;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -146,14 +147,17 @@ public sealed class RadioSystem : EntitySystem
                 }
             }
         }
-        
+
         if (HasComp<BorgChassisComponent>(messageSource) || HasComp<BorgBrainComponent>(messageSource))
         {
             iconId = "JobIconBorg";
             jobName = Loc.GetString("job-name-borg");
         }
-        
-        if (HasComp<StationAiHeldComponent>(messageSource))
+
+        //starlight if statement edited for AI Shunt
+        if (HasComp<StationAiHeldComponent>(messageSource) || (
+            TryComp<StationAIShuntComponent>(messageSource, out var aiShunt) && aiShunt.Return.HasValue
+        ))
         {
             iconId = "JobIconStationAi";
             jobName = Loc.GetString("job-name-station-ai");
