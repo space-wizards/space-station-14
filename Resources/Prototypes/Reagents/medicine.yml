@@ -1051,7 +1051,7 @@
         damage:
           types:
             Piercing: -2 # 8 per u
-            Cellular: 0.06 # 0.24 per u, 3.6 for 15u
+            Cellular: 0.05 # 0.2 per u, 3 for 15u
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -1076,7 +1076,7 @@
         damage:
           types:
             Blunt: -2 # 8 per u
-      - !type:SatiateThirst
+      - !type:SatiateHunger
         factor: -1
       - !type:HealthChange
         conditions:
