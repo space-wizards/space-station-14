@@ -11110,5 +11110,12 @@ Entries:
   id: 1528
   time: '2025-08-10T04:30:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1286
+- author: Walksanatora
+  changes:
+  - message: Apply patch from wizden for dionae exploit
+    type: Fix
+  id: 1528
+  time: '2025-08-11T21:13:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1306
 Order: -1
 
