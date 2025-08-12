@@ -158,31 +158,29 @@ public sealed class StomachSystem : EntitySystem
         }
     }
 
-    public bool CanTransferSolution(
-        EntityUid uid,
-        Solution solution,
-        StomachComponent? stomach = null,
-        SolutionContainerManagerComponent? solutions = null)
+    /// <summary>
+    /// Attempts to transfer a solution into a given stomach.
+    /// </summary>
+    /// <param name="ent">The stomach to be inserted into.</param>
+    /// <param name="solution">
+    /// The solution to be added. If it cannot fit, it will be partially
+    /// transferred.
+    /// </param>
+    /// <returns>
+    /// False if the stomach's solution couldn't be resolved or is fully full.
+    /// Otherwise, true.
+    /// </returns>
+    public bool TryTransferSolution(Entity<StomachComponent?, SolutionContainerManagerComponent?> ent, Solution solution)
     {
-        return Resolve(uid, ref stomach, ref solutions, logMissing: false)
-               && _solutionContainerSystem.ResolveSolution((uid, solutions), DefaultSolutionName, ref stomach.Solution, out var stomachSolution)
-               // TODO: For now no partial transfers. Potentially change by design
-               && stomachSolution.CanAddSolution(solution);
-    }
-
-    public bool TryTransferSolution(
-        EntityUid uid,
-        Solution solution,
-        StomachComponent? stomach = null,
-        SolutionContainerManagerComponent? solutions = null)
-    {
-        if (!Resolve(uid, ref stomach, ref solutions, logMissing: false)
-            || !_solutionContainerSystem.ResolveSolution((uid, solutions), DefaultSolutionName, ref stomach.Solution)
-            || !CanTransferSolution(uid, solution, stomach, solutions))
-        {
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2, logMissing: false)
+            || !_solutionContainerSystem.ResolveSolution((ent, ent.Comp2),
+                DefaultSolutionName,
+                ref ent.Comp1.Solution,
+                out var stomachSol)
+            || stomachSol.AvailableVolume == FixedPoint2.Zero)
             return false;
-        }
 
-        return _solutionContainerSystem.TryAddSolution(stomach.Solution.Value, solution);
+        _solutionContainerSystem.AddSolution(ent.Comp1.Solution.Value, solution);
+        return true;
     }
 }
