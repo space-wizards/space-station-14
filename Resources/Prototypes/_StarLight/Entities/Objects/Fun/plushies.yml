@@ -1631,9 +1631,9 @@
 - type: EmitSoundOnActivate
   sound:
   path: /Audio/Animals/cat_meow.ogg
- - type: EmitSoundOnTrigger
+- type: EmitSoundOnTrigger
   sound:
-    path: /Audio/Animals/cat_meow2.ogg
+  path: /Audio/Animals/cat_meow2.ogg
 - type: Food
   requiresSpecialDigestion: true
   useSound:
