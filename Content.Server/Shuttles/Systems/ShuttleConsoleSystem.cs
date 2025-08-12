@@ -235,6 +235,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                     _xformQuery.TryGetComponent(comp.DockedWith, out var otherDockXform) ?
                     GetNetEntity(otherDockXform.GridUid) :
                     null,
+                Color = comp.RadarColor,
+                HighlightedColor = comp.HighlightedRadarColor
             };
 
             gridDocks.Add(state);
