@@ -263,6 +263,14 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         AppearanceComponent? appearance = null,
         EntityUid? user = null)
     {
+        // We don't do anything during state application on the client as if
+        // it's due to an entity spawn, we'd have to wait for component init to
+        // be able to do anything, despite the server having already sent us the
+        // state that we need. On the other hand, we still want this to run in
+        // prediction so we can, well, predict lights turning on.
+        if (GameTiming.ApplyingState)
+            return;
+
         if (!Resolve(uid, ref light, false))
             return;
 
