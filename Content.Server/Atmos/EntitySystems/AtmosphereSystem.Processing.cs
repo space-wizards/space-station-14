@@ -478,28 +478,16 @@ namespace Content.Server.Atmos.EntitySystems
             if (!atmosphere.ProcessingPaused)
             {
                 atmosphere.CurrentRunDeltaPressureEntities.Clear();
-                atmosphere.DeltaPressureCache.Clear();
-                atmosphere.CurrentRunDeltaPressureEntities.EnsureCapacity(atmosphere.DeltaPressureEntities.Count);
                 foreach (var ent in atmosphere.DeltaPressureEntities)
                 {
                     atmosphere.CurrentRunDeltaPressureEntities.Enqueue(ent);
                 }
             }
 
-            Span<float> opposingGroupA = stackalloc float[DeltaPressurePairCount];
-            Span<float> opposingGroupB = stackalloc float[DeltaPressurePairCount];
-            Span<float> opposingGroupMax = stackalloc float[DeltaPressurePairCount];
-
-            var iterations = 0;
-            while (atmosphere.CurrentRunDeltaPressureEntities.TryDequeue(out var ent))
+            while (!atmosphere.CurrentRunDeltaPressureEntities.IsEmpty)
             {
-                ProcessDeltaPressureEntity(ent, atmosphere, opposingGroupA, opposingGroupB, opposingGroupMax);
+                ProcessDeltaPressureEntities(atmosphere, LagCheckIterations);
 
-                if (iterations++ < LagCheckIterations)
-                    continue;
-
-                iterations = 0;
-                // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
                 {
                     return false;
