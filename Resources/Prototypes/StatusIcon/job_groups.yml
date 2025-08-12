@@ -91,7 +91,11 @@
   - JobIconServiceWorker
   - JobIconBartender
   - JobIconBotanist
+  - JobIconChaplain
   - JobIconChef
+  - JobIconJanitor
+  - JobIconLawyer
+  - JobIconLibrarian
   - JobIconReporter
   - JobIconZookeeper
 
@@ -102,10 +106,10 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Clown
   icons:
-  - JobIconBoxer
   - JobIconClown
   - JobIconMime
   - JobIconMusician
+  - JobIconBoxer
 
 - type: jobIconGroup
   id: CivilianIconGroup
@@ -115,10 +119,6 @@
     state: Passenger
   icons:
   - JobIconPassenger
-  - JobIconChaplain
-  - JobIconJanitor
-  - JobIconLawyer
-  - JobIconLibrarian
   - JobIconVisitor
 
 - type: jobIconGroup
@@ -148,6 +148,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Syndicate
   icons:
+  - JobIconCluwne
   - JobIconSyndicate
   - JobIconZombie
 

@@ -41,13 +41,6 @@
                             <LineEdit Name="NameLineEdit" Margin="0 2" SelectAllOnFocus="True" />
                             <Label Margin="8 0" Text="{Loc 'agent-id-ui-input-job'}" />
                             <LineEdit Name="JobLineEdit" Margin="0 2" SelectAllOnFocus="True" />
-                            <CheckBox Name="CheckCopyAll" Margin="0 12 0 0" Text="{Loc 'agent-id-ui-check-copy-all'}" />
-                            <BoxContainer Orientation="Vertical" Margin="24 4 0 0">
-                                <CheckBox Name="CheckCopyName" Pressed="True" Text="{Loc 'agent-id-ui-check-copy-name'}" />
-                                <CheckBox Name="CheckCopyJob" Pressed="True" Text="{Loc 'agent-id-ui-check-copy-job'}" />
-                                <CheckBox Name="CheckCopyJobIcon" Pressed="True" Text="{Loc 'agent-id-ui-check-copy-job-icon'}" />
-                                <CheckBox Name="CheckCopyAccess" Text="{Loc 'agent-id-ui-check-copy-access'}" />
-                            </BoxContainer>
                         </BoxContainer>
                     </ScrollContainer>
 
