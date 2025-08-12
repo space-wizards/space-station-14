@@ -85,12 +85,12 @@ public sealed class HealthExaminableSystem : EntitySystem
             {
                 first = false;
             }
-            msg.AddMarkupOrThrow(chosenLocStr);
+            msg.AddMarkupPermissive(chosenLocStr);
         }
 
         if (msg.IsEmpty)
         {
-            msg.AddMarkupOrThrow(Loc.GetString($"health-examinable-{component.LocPrefix}-none"));
+            msg.AddMarkupPermissive(Loc.GetString($"health-examinable-{component.LocPrefix}-none"));
         }
 
         // Anything else want to add on to this?

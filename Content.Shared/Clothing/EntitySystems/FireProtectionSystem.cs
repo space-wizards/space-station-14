@@ -31,6 +31,6 @@ public sealed class FireProtectionSystem : EntitySystem
             return;
 
         args.Msg.PushNewline();
-        args.Msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("value", value)));
+        args.Msg.AddMarkupPermissive(Loc.GetString(ent.Comp.ExamineMessage, ("value", value)));
     }
 }

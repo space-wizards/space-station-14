@@ -68,7 +68,7 @@ public sealed class TraitorCodePaperSystem : EntitySystem
                 break;
 
             codesMessage.PushNewline();
-            codesMessage.AddMarkupOrThrow(code);
+            codesMessage.AddMarkupPermissive(code);
         }
 
         if (!codesMessage.IsEmpty)

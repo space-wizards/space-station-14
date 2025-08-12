@@ -40,7 +40,7 @@ public sealed class RattleOnTriggerSystem : EntitySystem
             return;
 
         // Gets the location of the user
-        var posText = FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString(target.Value));
+        var posText = FormattedMessage.RemoveMarkupPermissive(_navMap.GetNearestBeaconString(target.Value));
 
         var message = Loc.GetString(messageId, ("user", target.Value), ("position", posText));
         // Sends a message to the radio channel specified by the implant
