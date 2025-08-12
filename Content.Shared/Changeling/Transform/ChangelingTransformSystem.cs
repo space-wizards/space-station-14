@@ -71,7 +71,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
             foreach (var consumedIdentity in userIdentity.ConsumedIdentities)
             {
-                identityData.Add(GetNetEntity(consumedIdentity));
+                identityData.Add(GetNetEntity(consumedIdentity.Key));
             }
 
             _uiSystem.SetUiState((ent, userInterfaceComp), TransformUI.Key, new ChangelingTransformBoundUserInterfaceState(identityData));
@@ -137,7 +137,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (identity.CurrentIdentity == targetIdentity)
             return; // don't transform into ourselves
 
-        if (!identity.ConsumedIdentities.Contains(targetIdentity.Value))
+        if (!identity.ConsumedIdentities.ContainsKey(targetIdentity.Value))
             return; // this identity does not belong to this player
 
         TransformInto(ent.AsNullable(), targetIdentity.Value);
@@ -162,7 +162,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         _humanoidAppearanceSystem.CloneAppearance(targetIdentity, args.User);
         _cloningSystem.CloneComponents(targetIdentity, args.User, settings);
-        
+
         if(TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
         else

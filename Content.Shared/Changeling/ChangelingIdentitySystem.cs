@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System.Linq;
+using System.Numerics;
+using Content.Shared.Changeling.Devour;
 using Content.Shared.Cloning;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
@@ -34,6 +36,8 @@ public sealed class ChangelingIdentitySystem : EntitySystem
         SubscribeLocalEvent<ChangelingIdentityComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<ChangelingIdentityComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<ChangelingStoredIdentityComponent, ComponentRemove>(OnStoredRemove);
+
+        SubscribeLocalEvent<ChangelingDevouredComponent, ComponentShutdown>(OnDevouredShutdown);
     }
 
     private void OnMindAdded(Entity<ChangelingIdentityComponent> ent, ref MindAddedMessage args)
@@ -60,6 +64,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     {
         CleanupPvsOverride(ent, ent.Owner);
         CleanupChangelingNullspaceIdentities(ent);
+        CleanupDevouredReferences(ent);
     }
 
     private void OnStoredRemove(Entity<ChangelingStoredIdentityComponent> ent, ref ComponentRemove args)
@@ -67,6 +72,21 @@ public sealed class ChangelingIdentitySystem : EntitySystem
         // The last stored identity is being deleted, we can clean up the map.
         if (_net.IsServer && PausedMapId != null && Count<ChangelingStoredIdentityComponent>() <= 1)
             _map.QueueDeleteMap(PausedMapId.Value);
+    }
+
+    private void OnDevouredShutdown(Entity<ChangelingDevouredComponent> ent, ref ComponentShutdown args)
+    {
+        // We remove all references to this entity for all changelings that devoured it.
+        foreach (var ling in ent.Comp.DevouredBy)
+        {
+            if (!TryComp<ChangelingIdentityComponent>(ling, out var identityComp))
+                continue;
+
+            var key = identityComp.ConsumedIdentities.FirstOrDefault(x => x.Value == ent.Owner).Key;
+            identityComp.ConsumedIdentities[key] = null;
+
+            Dirty(ling, identityComp);
+        }
     }
 
     /// <summary>
@@ -80,7 +100,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
 
         foreach (var consumedIdentity in ent.Comp.ConsumedIdentities)
         {
-            QueueDel(consumedIdentity);
+            QueueDel(consumedIdentity.Key);
         }
     }
 
@@ -119,7 +139,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
 
         var targetName = _nameMod.GetBaseName(target);
         _metaSystem.SetEntityName(mob, targetName);
-        ent.Comp.ConsumedIdentities.Add(mob);
+        ent.Comp.ConsumedIdentities.Add(mob, target);
 
         Dirty(ent);
         HandlePvsOverride(ent, mob);
@@ -152,7 +172,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
 
         foreach (var identity in ent.Comp.ConsumedIdentities)
         {
-            _pvsOverrideSystem.RemoveSessionOverride(identity, actor.PlayerSession);
+            _pvsOverrideSystem.RemoveSessionOverride(identity.Key, actor.PlayerSession);
         }
     }
 
@@ -165,7 +185,7 @@ public sealed class ChangelingIdentitySystem : EntitySystem
     {
         foreach (var entity in comp.ConsumedIdentities)
         {
-            _pvsOverrideSystem.AddSessionOverride(entity, session);
+            _pvsOverrideSystem.AddSessionOverride(entity.Key, session);
         }
     }
 
@@ -181,5 +201,24 @@ public sealed class ChangelingIdentitySystem : EntitySystem
         _metaSystem.SetEntityName(mapUid, Loc.GetString("changeling-paused-map-name"));
         PausedMapId = newMapId;
         _map.SetPaused(mapUid, true);
+    }
+
+    /// <summary>
+    /// Removes all references to the owning changeling from ChangelingDevouredComponents.
+    /// </summary>
+    /// <param name="ent">The changeling entity</param>
+    private void CleanupDevouredReferences(Entity<ChangelingIdentityComponent> ent)
+    {
+        foreach (var entity in ent.Comp.ConsumedIdentities)
+        {
+            if (!TryComp<ChangelingDevouredComponent>(entity.Value, out var devoured))
+                continue;
+
+            if (!devoured.DevouredBy.Contains(ent.Owner))
+                continue;
+
+            devoured.DevouredBy.Remove(ent.Owner);
+            Dirty(entity.Value.Value, devoured);
+        }
     }
 }
