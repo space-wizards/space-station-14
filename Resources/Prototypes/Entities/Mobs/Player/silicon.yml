@@ -144,10 +144,11 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.StationAiVisualState.Key:
+      enum.StationAiVisualLayers.Icon:
         unshaded:
           Empty: { state: empty }
           Occupied: { state: full }
+          Dead: { state: dead }
   - type: Intellicard
 
 - type: entity
