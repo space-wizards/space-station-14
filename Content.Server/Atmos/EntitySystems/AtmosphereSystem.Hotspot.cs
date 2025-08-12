@@ -172,7 +172,7 @@ namespace Content.Server.Atmos.EntitySystems
                     Temperature = exposedTemperature + 50 * puddleFlammability,
                     SkippedFirstProcess = tile.CurrentCycle > gridAtmosphere.UpdateCounter,
                     Valid = true,
-                    State = 1
+                    State = (byte)(puddleFlammability > 0 ? 4 : 1)
                 };
 
                 AddActiveTile(gridAtmosphere, tile);
