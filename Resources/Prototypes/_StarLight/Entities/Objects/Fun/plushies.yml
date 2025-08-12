@@ -1504,7 +1504,7 @@
     - type: ComponentToggler
       components:
         - type: DatasetVocalizer
-          dataset: PlushiesRedwoods
+          dataset: PlushiesVirus
         - type: TextToSpeech
           voice: neon
 
@@ -1527,7 +1527,7 @@
   - type: ComponentToggler
     components:
       - type: DatasetVocalizer
-        dataset: PlushiesRedwoods
+        dataset: PlushiesMahio
       - type: TextToSpeech
         voice: engineer
 
@@ -1573,7 +1573,7 @@
   - type: ComponentToggler
     components:
       - type: DatasetVocalizer
-        dataset: PlushiesRhea
+        dataset: PlushiesMalachi
       - type: TextToSpeech
         voice: clementine
 
@@ -1619,7 +1619,7 @@
   - type: ComponentToggler
     components:
       - type: DatasetVocalizer
-        dataset: PlushiesRemiie
+        dataset: PlushiesBrighteyes
       - type: TextToSpeech
         voice: clara
   - type: EmitSoundOnUse
