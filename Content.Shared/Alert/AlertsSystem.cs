@@ -162,8 +162,7 @@ public abstract class AlertsSystem : EntitySystem
 
         // Check whether the alert category we want to show is already being displayed, with the same type,
         // severity, and cooldown.
-        if (entity.Comp.Alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) &&
-            Equals(state, alertStateCallback))
+        if (entity.Comp.Alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) && state == alertStateCallback)
             return;
 
         // In the case we're changing the alert type but not the category, we need to remove it first.
@@ -214,12 +213,10 @@ public abstract class AlertsSystem : EntitySystem
             return;
         }
 
-        (TimeSpan Start, TimeSpan End) down;
-
         // Keep the progress duration the same but only if we're removing time.
         // If the next cooldown is greater than our previous one we should reset the timer
         TryGetAlertState(entity, alert.AlertKey, out var alertState);
-        down = alertState.Cooldown?.endTime < cooldown.Value
+        var down = alertState.Cooldown?.endTime < cooldown.Value
             ? (_timing.CurTime, cooldown.Value)
             : (alertState.Cooldown?.startTime ?? _timing.CurTime, cooldown.Value);
 
@@ -295,7 +292,8 @@ public abstract class AlertsSystem : EntitySystem
             if (alert.Value.Cooldown is null)
                 continue;
 
-            var cooldown = (alert.Value.Cooldown.Value.startTime, alert.Value.Cooldown.Value.endTime + args.PausedTime);
+            var (start, end) = alert.Value.Cooldown.Value;
+            var cooldown = (start, end + args.PausedTime);
 
             var state = alert.Value with { Cooldown = cooldown };
             alertComp.Alerts[alert.Key] = state;
