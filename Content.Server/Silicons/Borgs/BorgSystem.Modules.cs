@@ -191,7 +191,6 @@ public sealed partial class BorgSystem
             return;
 
         var xform = Transform(chassis);
-        var hasSpawnedItems = component.StoredItems is not null;
 
         for (var i = 0; i < component.Hands.Count; i++)
         {
@@ -242,7 +241,6 @@ public sealed partial class BorgSystem
 
         for (var i = 0; i < component.Hands.Count; i++)
         {
-            var hand = component.Hands[i];
             var handId = $"{uid}-hand-{i}";
 
             if (_hands.TryGetHeldItem(chassis, handId, out var held))

@@ -158,11 +158,13 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             {
                 if (hand.EmptyRepresentative is { } representative)
                 {
+                    // placeholder, view it
                     SetRepresentative(handButton, representative);
                 }
                 else
                 {
-                    handButton.SetEntity(held);
+                    // otherwise empty
+                    handButton.SetEntity(null);
                 }
                 handButton.Blocked = false;
             }
@@ -211,6 +213,20 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         if (hand == null)
             return;
 
+        if (_playerHandsComponent != null &&
+            _player.LocalSession?.AttachedEntity is { } playerEntity &&
+            _handsSystem.TryGetHand((playerEntity, _playerHandsComponent), name, out var handData))
+        {
+            UpdateHandStatus(hand, null, handData);
+            if (handData?.EmptyRepresentative is { } representative)
+            {
+                SetRepresentative(hand, representative);
+                return;
+            }
+        }
+
+        hand.SetEntity(null);
+
         if (_entities.TryGetComponent(entity, out VirtualItemComponent? virt))
         {
             hand.SetEntity(virt.BlockingEntity);
@@ -220,13 +236,6 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             hand.SetEntity(entity);
             hand.Blocked = false;
-        }
-
-        if (_playerHandsComponent != null &&
-            _player.LocalSession?.AttachedEntity is { } playerEntity &&
-            _handsSystem.TryGetHand((playerEntity, _playerHandsComponent), name, out var handData))
-        {
-            UpdateHandStatus(hand, entity, handData);
         }
     }
 

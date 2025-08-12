@@ -219,6 +219,9 @@ namespace Content.Client.UserInterface.Controls
             HoverSpriteView.SetEntity(null);
         }
 
+        /// <summary>
+        /// Causes the control to display a placeholder prototype, optionally faded
+        /// </summary>
         public void SetEntity(EntityUid? ent)
         {
             SpriteView.SetEntity(ent);
@@ -227,6 +230,9 @@ namespace Content.Client.UserInterface.Controls
             UpdateButtonTexture();
         }
 
+        /// <summary>
+        /// Causes the control to display a placeholder prototype, optionally faded
+        /// </summary>
         public void SetPrototype(EntProtoId? proto, bool fade)
         {
             ProtoView.SetPrototype(proto);
