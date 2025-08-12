@@ -124,7 +124,7 @@ public abstract class AlertsSystem : EntitySystem
 
     }
 
-/// <summary>
+    /// <summary>
     /// Shows the alert. If the alert or another alert of the same category is already showing,
     /// it will be updated / replaced with the specified values.
     /// </summary>
