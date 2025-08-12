@@ -322,7 +322,7 @@ public partial class AtmosphereSystem
 
     public bool SetPuddleFlammabilityAtTile(Entity<TransformComponent?> ent, int flammability = 0)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp, false))
             return false;
         var grid = ent.Comp.GridUid;
         var position = _transformSystem.GetGridTilePositionOrDefault((ent, ent.Comp));
@@ -334,7 +334,7 @@ public partial class AtmosphereSystem
         Entity<GridAtmosphereComponent?>? grid,
         int flammability = 0)
     {
-        if (grid is not { } gridEnt || !Resolve(gridEnt, ref gridEnt.Comp) ||
+        if (grid is not { } gridEnt || !Resolve(gridEnt, ref gridEnt.Comp, false) ||
             !gridEnt.Comp.Tiles.TryGetValue(position, out var atmosTile))
             return false;
         atmosTile.PuddleSolutionFlammability = flammability;
