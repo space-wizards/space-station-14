@@ -20,6 +20,7 @@ public sealed class MGhostCommand : LocalizedCommands
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly ISharedPlayersRoleManager _roleManager = default!;
+    [Dependency] private readonly ISharedNullLinkPlayerRolesReqManager _playerRoles = default!;
 
     public override string Command => "mghost";
     public override string Help => "mghost";
