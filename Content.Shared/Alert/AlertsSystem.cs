@@ -162,11 +162,16 @@ public abstract class AlertsSystem : EntitySystem
 
         // Check whether the alert category we want to show is already being displayed, with the same type,
         // severity, and cooldown.
-        if (entity.Comp.Alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) && state == alertStateCallback)
-            return;
+        if (entity.Comp.Alerts.TryGetValue(alert.AlertKey, out var alertStateCallback))
+        {
+            if (state == alertStateCallback)
+                return;
 
-        // In the case we're changing the alert type but not the category, we need to remove it first.
-        entity.Comp.Alerts.Remove(alert.AlertKey);
+            // If the alert exists and we're updating it, we need to remove it first before adding it back.
+            entity.Comp.Alerts.Remove(alert.AlertKey);
+        }
+
+        entity.Comp.Alerts.Add(alert.AlertKey, state);
 
         // Keeping a list of AutoRemove alerts, so Update() doesn't need to check every alert
         if (state.AutoRemove)
