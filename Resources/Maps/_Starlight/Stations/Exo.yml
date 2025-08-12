@@ -6828,7 +6828,7 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: BecomesStation
-      id: Exo
+      id: StarlightExo
     - type: ImplicitRoof
 - proto: ActionStethoscope
   entities:
