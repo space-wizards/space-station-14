@@ -167,17 +167,12 @@ public sealed class StomachSystem : EntitySystem
     /// transferred.
     /// </param>
     /// <returns>
-    /// False if the stomach's solution couldn't be resolved or is fully full.
-    /// Otherwise, true.
+    /// False if the stomach's solution couldn't be resolved. Otherwise, true.
     /// </returns>
     public bool TryTransferSolution(Entity<StomachComponent?, SolutionContainerManagerComponent?> ent, Solution solution)
     {
         if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2, logMissing: false)
-            || !_solutionContainerSystem.ResolveSolution((ent, ent.Comp2),
-                DefaultSolutionName,
-                ref ent.Comp1.Solution,
-                out var stomachSol)
-            || stomachSol.AvailableVolume == FixedPoint2.Zero)
+            || !_solutionContainerSystem.ResolveSolution((ent, ent.Comp2), DefaultSolutionName, ref ent.Comp1.Solution))
             return false;
 
         _solutionContainerSystem.AddSolution(ent.Comp1.Solution.Value, solution);
