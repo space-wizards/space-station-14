@@ -1496,7 +1496,7 @@
       - HEAD
       clothingVisuals:
         head:
-        - states: Saleswoman-head
+        - states: equipped-HELMET
     - type: ItemToggle
       onUse: false
       verbToggleOn: plushie-voicebox-activate
