@@ -4,6 +4,13 @@ agent-id-new = { $number ->
    *[other] Gained {$number} new accesses from {THE($card)}.
 }
 
+agent-id-card-current-name = Name:
+agent-id-card-current-job = Job:
+agent-id-card-job-icon-label = Job icon:
+agent-id-menu-title = Agent ID Card
+
+agent-id-open-ui-verb = Change settings
+
 agent-id-ui-menu-title = Agent ID Card
 agent-id-ui-tab-settings = Settings
 agent-id-ui-tab-job-icons = Job Icons

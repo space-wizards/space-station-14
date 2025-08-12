@@ -264,12 +264,6 @@ public class ListContainer : Control
             _updateChildren = false;
 
             var toRemove = new Dictionary<ListData, ListContainerButton>(_buttons);
-            foreach (var child in Children.ToArray())
-            {
-                if (child == _vScrollBar)
-                    continue;
-                RemoveChild(child);
-            }
 
             if (_data.Count > 0)
             {
@@ -292,8 +286,9 @@ public class ListContainer : Control
 
                         if (Toggle && data == _selected)
                             button.Pressed = true;
+                        AddChild(button);
                     }
-                    AddChild(button);
+                    button.SetPositionInParent(i - _topIndex);
                     button.Measure(finalSize);
                 }
             }

@@ -8,9 +8,9 @@
     outerClothing: ClothingOuterWizard
     shoes: ClothingShoesWizard
     id: WizardPDA
-    ears: ClothingHeadsetAltCommand
+    ears: ClothingHeadsetAltWizard
     belt: ClothingBeltWand
-    # pocket1: TODO: Include wizard teleport scroll
+    pocket1: WizardTeleportScroll
     pocket2: WizardsGrimoire
 
 - type: startingGear
@@ -29,8 +29,12 @@
     head: ClothingHeadHatVioletwizard
     outerClothing: ClothingOuterWizardViolet
 
-- type: startingGear
-  id: WizardHardsuitGear
-  parent: WizardVioletGear
+- type: chameleonOutfit
+  id: WizardChameleonOutfit
+  name: roles-antag-wizard-name
+  startingGear: WizardBlueGear
   equipment:
-    outerClothing: ClothingOuterHardsuitWizard
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    neck: ClothingNeckLGBTPin
+    gloves: ClothingHandsGlovesColorBlack
