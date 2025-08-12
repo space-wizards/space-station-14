@@ -39,7 +39,7 @@ public abstract class AlertsSystem : EntitySystem
         var curTime = _timing.CurTime;
         while (query.MoveNext(out var uid, out var autoComp))
         {
-            var dirtyComp = false;
+            var removed = false;
             if (autoComp.AlertKeys.Count <= 0 || !_alertsQuery.TryComp(uid, out var alertComp))
             {
                 RemCompDeferred(uid, autoComp);
@@ -51,20 +51,24 @@ public abstract class AlertsSystem : EntitySystem
             {
                 alertComp.Alerts.TryGetValue(alertKey, out var alertState);
 
-                if (alertState.Cooldown is null || alertState.Cooldown.Value.Item2 >= curTime)
+                if (alertState.Cooldown is null || alertState.Cooldown.Value.endTime >= curTime)
                     continue;
+
                 removeList.Add(alertKey);
                 alertComp.Alerts.Remove(alertKey);
-                dirtyComp = true;
+                removed = true;
             }
+
+            if (!removed)
+                return;
 
             foreach (var alertKey in removeList)
             {
                 autoComp.AlertKeys.Remove(alertKey);
             }
 
-            if (dirtyComp)
-                Dirty(uid, alertComp);
+            Dirty(uid, alertComp);
+            Dirty(uid, autoComp);
         }
     }
 
@@ -78,7 +82,7 @@ public abstract class AlertsSystem : EntitySystem
     public short GetSeverityRange(ProtoId<AlertPrototype> alertType)
     {
         var minSeverity = _typeToAlert[alertType].MinSeverity;
-        return (short)MathF.Max(minSeverity,_typeToAlert[alertType].MaxSeverity - minSeverity);
+        return (short)MathF.Max(minSeverity, _typeToAlert[alertType].MaxSeverity - minSeverity);
     }
 
     public short GetMaxSeverity(ProtoId<AlertPrototype> alertType)
@@ -120,11 +124,11 @@ public abstract class AlertsSystem : EntitySystem
 
     }
 
-    /// <summary>
+/// <summary>
     /// Shows the alert. If the alert or another alert of the same category is already showing,
     /// it will be updated / replaced with the specified values.
     /// </summary>
-    /// <param name="entity"></param>
+    /// <param name="entity">The entity who we are showing the alert for.</param>
     /// <param name="alertType">type of the alert to set</param>
     /// <param name="severity">severity, if supported by the alert</param>
     /// <param name="cooldown">cooldown start and end, if null there will be no cooldown (and it will
@@ -138,6 +142,11 @@ public abstract class AlertsSystem : EntitySystem
         bool autoRemove = false,
         bool showCooldown = true )
     {
+        ShowAlert(entity, new AlertState { Type = alertType, Severity = severity, Cooldown = cooldown, AutoRemove = autoRemove, ShowCooldown = showCooldown});
+    }
+
+    public void ShowAlert(Entity<AlertsComponent?> entity, AlertState state)
+    {
         // This should be handled as part of networking.
         if (_timing.ApplyingState)
             return;
@@ -145,42 +154,33 @@ public abstract class AlertsSystem : EntitySystem
         if (!_alertsQuery.Resolve(entity, ref entity.Comp, false))
             return;
 
-        if (!TryGet(alertType, out var alert))
+        if (!TryGet(state.Type, out var alert))
         {
-            Log.Error($"Unable to show alert {alertType}, please ensure this alertType has a corresponding YML alert prototype");
+            Log.Error($"Unable to show alert {state.Type}, please ensure this alertType has a corresponding YML alert prototype");
             return;
         }
 
         // Check whether the alert category we want to show is already being displayed, with the same type,
         // severity, and cooldown.
         if (entity.Comp.Alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) &&
-            alertStateCallback.Type == alertType &&
-            alertStateCallback.Severity == severity &&
-            alertStateCallback.Cooldown == cooldown &&
-            alertStateCallback.AutoRemove == autoRemove &&
-            alertStateCallback.ShowCooldown == showCooldown)
-        {
+            Equals(state, alertStateCallback))
             return;
-        }
 
         // In the case we're changing the alert type but not the category, we need to remove it first.
         entity.Comp.Alerts.Remove(alert.AlertKey);
 
-        var state = new AlertState
-            { Cooldown = cooldown, Severity = severity, Type = alertType, AutoRemove = autoRemove, ShowCooldown = showCooldown};
-        entity.Comp.Alerts[alert.AlertKey] = state;
-
         // Keeping a list of AutoRemove alerts, so Update() doesn't need to check every alert
-        if (autoRemove)
+        if (state.AutoRemove)
         {
-            var autoComp = EnsureComp<AlertAutoRemoveComponent>(entity);
-            if (!autoComp.AlertKeys.Contains(alert.AlertKey))
-                autoComp.AlertKeys.Add(alert.AlertKey);
+            EnsureComp<AlertAutoRemoveComponent>(entity, out var autoComp);
+
+            if (autoComp.AlertKeys.Add(alert.AlertKey))
+                Dirty (entity, autoComp);
         }
 
         AfterShowAlert((entity, entity.Comp));
 
-        Dirty(entity, entity.Comp);
+        Dirty(entity);
     }
 
     /// <summary>
@@ -219,10 +219,9 @@ public abstract class AlertsSystem : EntitySystem
         // Keep the progress duration the same but only if we're removing time.
         // If the next cooldown is greater than our previous one we should reset the timer
         TryGetAlertState(entity, alert.AlertKey, out var alertState);
-        if (alertState.Cooldown?.Item2 < cooldown.Value)
-            down = (_timing.CurTime, cooldown.Value);
-        else
-            down = (alertState.Cooldown?.Item1 ?? _timing.CurTime, cooldown.Value);
+        down = alertState.Cooldown?.endTime < cooldown.Value
+            ? (_timing.CurTime, cooldown.Value)
+            : (alertState.Cooldown?.startTime ?? _timing.CurTime, cooldown.Value);
 
         ShowAlert(entity, alertType, severity, down, autoRemove, showCooldown);
     }
@@ -296,7 +295,7 @@ public abstract class AlertsSystem : EntitySystem
             if (alert.Value.Cooldown is null)
                 continue;
 
-            var cooldown = (alert.Value.Cooldown.Value.Item1, alert.Value.Cooldown.Value.Item2 + args.PausedTime);
+            var cooldown = (alert.Value.Cooldown.Value.startTime, alert.Value.Cooldown.Value.endTime + args.PausedTime);
 
             var state = alert.Value with { Cooldown = cooldown };
             alertComp.Alerts[alert.Key] = state;

@@ -7,7 +7,7 @@ namespace Content.Shared.Alert;
 public struct AlertState
 {
     public short? Severity;
-    public (TimeSpan, TimeSpan)? Cooldown;
+    public (TimeSpan startTime, TimeSpan endTime)? Cooldown;
     public bool AutoRemove;
     public bool ShowCooldown;
     public ProtoId<AlertPrototype> Type;
