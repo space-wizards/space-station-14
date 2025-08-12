@@ -119,13 +119,13 @@
     count: 8
 
 - type: localizedDataset
-  id: PlushiesVirus
+  id: PlushieVirus
   values:
     prefix: plushie-virus-
     count: 9
 
 - type: localizedDataset
-  id: PlushiesMahio
+  id: PlushieMahio
   values:
     prefix: plushie-mahio-
     count: 9
