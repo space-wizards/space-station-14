@@ -1476,3 +1476,169 @@
           dataset: PlushiesRedwoods
         - type: TextToSpeech
           voice: klaasjeamandou
+
+- type: entity
+  parent: BaseShadekinPlushie
+  id: PlushieVirus
+  name: Virus Plushie
+  description: BEST SALESWOMAN, resgistered 2525, now in a pocket version! # spamton ass character :sob:
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/virus_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/virus_plushie.rsi
+      layers:
+        - state: icon
+    - type: Clothing
+      sprite: _Starlight/Objects/Fun/Plushies/virus_plushie.rsi
+      slots:
+      - HEAD
+      clothingVisuals:
+        head:
+        - state: equipped-HELMET
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesVirus
+        - type: TextToSpeech
+          voice: neon
+
+- type: entity
+  parent: BaseMothPlushie
+  id: PlushieMahio
+  name: Mahio Plushie
+  description: Is this moth even RD?
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/mahio_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/mahio_plushie.rsi
+    state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesMahio
+      - type: TextToSpeech
+        voice: engineer
+
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieRhea
+  name: Rhea Plushie
+  description: Our beloved Urlunete Salvie is now made out of pure polyester! Hug them while fucking over xenos.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/rhea_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/rhea_plushie.rsi
+    state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesRhea
+      - type: TextToSpeech
+        voice: kamisatoayaka
+
+- type: entity
+  parent: BaseResomiPlushie # Temporary until I make a Avali plushie base...... fml
+  id: PlushieMalachi
+  name: Malachi Plushie
+  description: Small but can REALLY fuck up your mischiefs and now she watches you as a plushie, a reminder that she is still there.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/malachi_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/malachi_plushie.rsi
+    state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesMalachi
+      - type: TextToSpeech
+        voice: clementine
+
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieRemiie
+  name: Remiie Plushie
+  description: Beta sector's favourite veteran head of personnel! Now turned into a marketable plushie and is extremely huggable!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/remiie_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/remiie_plushie.rsi
+    state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesRemiie
+      - type: TextToSpeech
+        voice: judy
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieBrighteyes
+  name: Brighteyes Plushie
+  description:  It's Brighteyes, Sentinel Pack, now in adorable marketable plushie form! This tiny kitty always packs a fiery punch to protect the station, particularly her family and friends. She won't let you give her uppies, but at least this plush will.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/brighteyes_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/brighteyes_plushie.rsi
+    state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesBrighteyes
+      - type: TextToSpeech
+        voice: clara
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/cat_meow2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/cat_meow2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/cat_hiss.ogg
