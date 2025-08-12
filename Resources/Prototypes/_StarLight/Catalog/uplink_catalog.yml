@@ -187,7 +187,11 @@
   icon:
     { sprite: /Textures/_Starlight/Objects/Weapons/Guns/Ammunition/Magazine/SMGs/uzi.rsi, state: base }
   productEntity: MagazinePistolSubMachineGunUzi
-
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkAmmo
+    
 - type: listing
   id: UplinkShotgunBreachingMagazine
   name: uplink-breaching-magazine-name
