@@ -1,5 +1,3 @@
-using Content.Client.Chemistry.Containers.EntitySystems;
-using Content.Client.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
@@ -11,19 +9,10 @@ namespace Content.Client.Chemistry.UI.ChemMaster;
 /// Initializes a <see cref="ChemMasterWindow"/> and updates it when new server messages are received.
 /// </summary>
 [UsedImplicitly]
-public sealed class ChemMasterBoundUserInterface : BoundUserInterface
+public sealed class ChemMasterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private ChemMasterWindow? _window;
-
-    private readonly ChemMasterSystem _chem;
-    private readonly SolutionContainerSystem _solContainer;
-
-    public ChemMasterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-        _chem = EntMan.System<ChemMasterSystem>();
-        _solContainer = EntMan.System<SolutionContainerSystem>();
-    }
 
     /// <summary>
     /// Called each time a chem master UI instance is opened. Generates the window and fills it with
@@ -49,31 +38,13 @@ public sealed class ChemMasterBoundUserInterface : BoundUserInterface
             SendPredictedMessage(new ChemMasterCreatePillsMessage(args.Dosage, args.Count, args.Label));
         _window.OnCreateBottle += args =>
             SendPredictedMessage(new ChemMasterOutputToBottleMessage(args.Dosage, args.Label));
-
-        Update();
     }
 
-    public override void Update()
+    protected override void UpdateState(BoundUserInterfaceState state)
     {
-        if (_window == null || !EntMan.TryGetComponent<ChemMasterComponent>(Owner, out var cm))
+        if (state is not ChemMasterBoundUserInterfaceState chemState)
             return;
 
-        if (!_solContainer.TryGetSolution(Owner,
-                ChemMasterComponent.BufferSolutionName,
-                out _,
-                out var bufferSolution))
-            return;
-
-        var inputInfo = _chem.BuildInputContainerInfo((Owner, cm));
-        var outputInfo = _chem.BuildOutputContainerInfo((Owner, cm));
-
-        _window.UpdateBuffer(bufferSolution, cm.Mode, cm.SortingType);
-        _window.SetInputContainerInfo(inputInfo);
-        _window.SetOutputContainerInfo(outputInfo);
-        _window.UpdateDosageFields(bufferSolution,
-            outputInfo,
-            cm.OutputLabel,
-            cm.PillType,
-            cm.PillDosageLimit);
+        _window?.UpdateState(chemState);
     }
 }

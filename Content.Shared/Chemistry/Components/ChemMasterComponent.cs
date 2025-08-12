@@ -11,9 +11,9 @@ namespace Content.Shared.Chemistry.Components;
 /// <summary>
 /// An industrial grade chemical manipulator with pill and bottle production included.
 /// </summary>
-/// <seealso cref="SharedChemMasterSystem"/>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-[Access(typeof(SharedChemMasterSystem))]
+/// <seealso cref="ChemMasterSystem"/>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(ChemMasterSystem))]
 public sealed partial class ChemMasterComponent : Component
 {
     public const uint PillTypes = 20;
@@ -37,12 +37,6 @@ public sealed partial class ChemMasterComponent : Component
     [DataField, AutoNetworkedField]
     public ChemMasterSortingType SortingType = ChemMasterSortingType.None;
 
-    /// <summary>
-    /// The set label within the output tab.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public string? OutputLabel;
-
     [DataField(required: true)]
     public FixedPoint2 PillDosageLimit;
 
@@ -52,9 +46,14 @@ public sealed partial class ChemMasterComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class ChemMasterSetModeMessage(ChemMasterMode mode) : BoundUserInterfaceMessage
+public sealed class ChemMasterSetModeMessage : BoundUserInterfaceMessage
 {
-    public readonly ChemMasterMode ChemMasterMode = mode;
+    public readonly ChemMasterMode ChemMasterMode;
+
+    public ChemMasterSetModeMessage(ChemMasterMode mode)
+    {
+        ChemMasterMode = mode;
+    }
 }
 
 [Serializable, NetSerializable]
@@ -145,6 +144,41 @@ public sealed class ContainerInfo(string displayName, FixedPoint2 currentVolume,
             ("currentVolume", CurrentVolume.ToString(CultureInfo.CurrentCulture)),
             ("maxVolume", MaxVolume.ToString(CultureInfo.CurrentCulture)));
     }
+}
+
+// TODO this needs distilled down into what's actually used and can be derived from other arguments.
+// There's no way all of this is needed.
+[Serializable, NetSerializable]
+public sealed class ChemMasterBoundUserInterfaceState(
+    ChemMasterMode mode,
+    ChemMasterSortingType sortingType,
+    ContainerInfo? inputContainerInfo,
+    ContainerInfo? outputContainerInfo,
+    IReadOnlyList<ReagentQuantity> bufferReagents,
+    FixedPoint2 bufferCurrentVolume,
+    uint selectedPillType,
+    FixedPoint2 pillDosageLimit,
+    bool updateLabel)
+    : BoundUserInterfaceState
+{
+    public readonly ContainerInfo? InputContainerInfo = inputContainerInfo;
+    public readonly ContainerInfo? OutputContainerInfo = outputContainerInfo;
+
+    /// <summary>
+    /// A list of the reagents and their amounts within the buffer, if applicable.
+    /// </summary>
+    public readonly IReadOnlyList<ReagentQuantity> BufferReagents = bufferReagents;
+
+    public readonly ChemMasterMode Mode = mode;
+
+    public readonly ChemMasterSortingType SortingType = sortingType;
+
+    public readonly FixedPoint2? BufferCurrentVolume = bufferCurrentVolume;
+    public readonly uint SelectedPillType = selectedPillType;
+
+    public readonly FixedPoint2 PillDosageLimit = pillDosageLimit;
+
+    public readonly bool UpdateLabel = updateLabel;
 }
 
 [Serializable, NetSerializable]

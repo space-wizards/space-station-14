@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -12,24 +13,23 @@ using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
 /// <summary>
-/// Contains all the shared logic for ChemMasters.
+/// Contains all the server-side logic for ChemMasters.
 /// <seealso cref="ChemMasterComponent"/>
 /// </summary>
 [UsedImplicitly]
-public abstract class SharedChemMasterSystem : EntitySystem
+public sealed class ChemMasterSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] protected readonly SharedSolutionContainerSystem SolContainer = default!;
-    [Dependency] protected readonly ItemSlotsSystem ItemSlots = default!;
-    [Dependency] protected readonly SharedStorageSystem Storage = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
     [Dependency] private readonly LabelSystem _labelSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
@@ -59,10 +59,36 @@ public abstract class SharedChemMasterSystem : EntitySystem
 
     private void SubscribeUpdateUiState<T>(Entity<ChemMasterComponent> ent, ref T ev)
     {
-        DirtyUI(ent);
+        UpdateUiState(ent);
     }
 
-    protected virtual void DirtyUI(Entity<ChemMasterComponent> ent) { }
+    private void UpdateUiState(Entity<ChemMasterComponent> ent, bool updateLabel = false)
+    {
+        var (owner, chemMaster) = ent;
+        if (!_solutionContainerSystem.TryGetSolution(owner,
+                ChemMasterComponent.BufferSolutionName,
+                out _,
+                out var bufferSolution))
+            return;
+        var inputContainer = _itemSlotsSystem.GetItemOrNull(owner, ChemMasterComponent.InputSlotName);
+        var outputContainer = _itemSlotsSystem.GetItemOrNull(owner, ChemMasterComponent.OutputSlotName);
+
+        var bufferReagents = bufferSolution.Contents;
+        var bufferCurrentVolume = bufferSolution.Volume;
+
+        var state = new ChemMasterBoundUserInterfaceState(
+            chemMaster.Mode,
+            chemMaster.SortingType,
+            BuildInputContainerInfo(inputContainer),
+            BuildOutputContainerInfo(outputContainer),
+            bufferReagents,
+            bufferCurrentVolume,
+            chemMaster.PillType,
+            chemMaster.PillDosageLimit,
+            updateLabel);
+
+        _userInterfaceSystem.SetUiState(owner, ChemMasterUiKey.Key, state);
+    }
 
     private void OnSetModeMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSetModeMessage message)
     {
@@ -72,7 +98,7 @@ public abstract class SharedChemMasterSystem : EntitySystem
 
         chemMaster.Comp.Mode = message.ChemMasterMode;
         Dirty(chemMaster);
-        DirtyUI(chemMaster);
+        UpdateUiState(chemMaster);
         ClickSound(chemMaster, message.Actor);
     }
 
@@ -83,7 +109,7 @@ public abstract class SharedChemMasterSystem : EntitySystem
             chemMaster.Comp.SortingType = ChemMasterSortingType.None;
 
         Dirty(chemMaster);
-        DirtyUI(chemMaster);
+        UpdateUiState(chemMaster);
         ClickSound(chemMaster, message.Actor);
     }
 
@@ -95,7 +121,7 @@ public abstract class SharedChemMasterSystem : EntitySystem
 
         chemMaster.Comp.PillType = message.PillType;
         Dirty(chemMaster);
-        DirtyUI(chemMaster);
+        UpdateUiState(chemMaster);
         ClickSound(chemMaster, message.Actor);
     }
 
@@ -123,13 +149,13 @@ public abstract class SharedChemMasterSystem : EntitySystem
 
     private void TransferReagents(Entity<ChemMasterComponent> chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
     {
-        var container = ItemSlots.GetItemOrNull(chemMaster, ChemMasterComponent.InputSlotName);
+        var container = _itemSlotsSystem.GetItemOrNull(chemMaster, ChemMasterComponent.InputSlotName);
         // TODO this should be resolving the solution instead of using TryGet. (Likely applies elsewhere in here.)
         if (container is null
-            || !SolContainer.TryGetFitsInDispenser(container.Value,
+            || !_solutionContainerSystem.TryGetFitsInDispenser(container.Value,
                 out var containerSoln,
                 out var containerSolution)
-            || !SolContainer.TryGetSolution(chemMaster.Owner,
+            || !_solutionContainerSystem.TryGetSolution(chemMaster.Owner,
                 ChemMasterComponent.BufferSolutionName,
                 out var buffer,
                 out var bufferSolution))
@@ -141,26 +167,27 @@ public abstract class SharedChemMasterSystem : EntitySystem
         {
             amount = FixedPoint2.Min(amount, containerSolution.AvailableVolume);
             amount = bufferSolution.RemoveReagent(id, amount, preserveOrder: true);
-            SolContainer.TryAddReagent(containerSoln.Value, id, amount, out _);
+            _solutionContainerSystem.TryAddReagent(containerSoln.Value, id, amount, out _);
         }
         else // Container to buffer
         {
             amount = FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(id));
-            SolContainer.RemoveReagent(containerSoln.Value, id, amount);
+            _solutionContainerSystem.RemoveReagent(containerSoln.Value, id, amount);
             bufferSolution.AddReagent(id, amount);
         }
 
         // AddReagent/RemoveReagent don't auto dirty. :(
         Dirty(containerSoln.Value);
         Dirty(buffer.Value);
-        DirtyUI(chemMaster);
+
+        UpdateUiState(chemMaster, updateLabel: true);
     }
 
     private void DiscardReagents(Entity<ChemMasterComponent> chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
     {
         if (fromBuffer)
         {
-            if (SolContainer.TryGetSolution(chemMaster.Owner, ChemMasterComponent.BufferSolutionName, out var bufferEnt, out var bufferSolution))
+            if (_solutionContainerSystem.TryGetSolution(chemMaster.Owner, ChemMasterComponent.BufferSolutionName, out var bufferEnt, out var bufferSolution))
             {
                 bufferSolution.RemoveReagent(id, amount, preserveOrder: true);
                 Dirty(bufferEnt.Value);
@@ -168,23 +195,23 @@ public abstract class SharedChemMasterSystem : EntitySystem
         }
         else
         {
-            var container = ItemSlots.GetItemOrNull(chemMaster, ChemMasterComponent.InputSlotName);
+            var container = _itemSlotsSystem.GetItemOrNull(chemMaster, ChemMasterComponent.InputSlotName);
             if (container is not null &&
-                SolContainer.TryGetFitsInDispenser(container.Value, out var containerSolution, out _))
+                _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution, out _))
             {
                 // I feel like this should maybe be using split but I can't think of any problem with not
-                SolContainer.RemoveReagent(containerSolution.Value, id, amount);
+                _solutionContainerSystem.RemoveReagent(containerSolution.Value, id, amount);
                 Dirty(containerSolution.Value);
             }
         }
 
-        DirtyUI(chemMaster);
+        UpdateUiState(chemMaster, updateLabel: fromBuffer);
     }
 
     private void OnCreatePillsMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterCreatePillsMessage message)
     {
         var user = message.Actor;
-        var maybeContainer = ItemSlots.GetItemOrNull(chemMaster, ChemMasterComponent.OutputSlotName);
+        var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, ChemMasterComponent.OutputSlotName);
         if (maybeContainer is not { Valid: true } container
             || !TryComp(container, out StorageComponent? storage))
         {
@@ -192,7 +219,7 @@ public abstract class SharedChemMasterSystem : EntitySystem
         }
 
         // Ensure the number is valid.
-        if (message.Number == 0 || !Storage.HasSpace((container, storage)))
+        if (message.Number == 0 || !_storageSystem.HasSpace((container, storage)))
             return;
 
         // Ensure the amount is valid.
@@ -208,55 +235,39 @@ public abstract class SharedChemMasterSystem : EntitySystem
             return;
 
         _labelSystem.Label(container, message.Label);
-        ClickSound(chemMaster, message.Actor);
-
-        // TODO FIXME ETC BEFORE MERGE
-        // This doesn't seem to work: it turns out we can't predict all of pill creation properly
-        // because we can't predict creation of solution entities (internally it uses spawn uninitialized)
-        // I'm trying to just make that part not predicted but for some reason after pill creation
-        // the chemmaster needs a dirty (e.g., from console/vvwrite/clicking a pill type button) to
-        // refresh and show the pills.
-        Dirty(container, storage);
-        Dirty(chemMaster);
-
-        if (_netMan.IsClient)
-            return;
 
         for (var i = 0; i < message.Number; i++)
         {
             var item = PredictedSpawnAttachedTo(PillPrototypeId, Transform(container).Coordinates);
-            Storage.Insert(container, item, out _, user: user, storage);
+            _storageSystem.Insert(container, item, out _, user: user, storage);
             _labelSystem.Label(item, message.Label);
 
-            SolContainer.EnsureSolutionEntity(item,
-                ChemMasterComponent.PillSolutionName,
-                out var itemSolution,
-                message.Dosage);
+            _solutionContainerSystem.EnsureSolutionEntity(item, ChemMasterComponent.PillSolutionName,out var itemSolution ,message.Dosage);
+            if (!itemSolution.HasValue)
+                return;
+
+            _solutionContainerSystem.TryAddSolution(itemSolution.Value, withdrawal.SplitSolution(message.Dosage));
 
             var pill = EnsureComp<PillComponent>(item);
             pill.PillType = chemMaster.Comp.PillType;
             Dirty(item, pill);
-
-            // No predicted solution entity creations yet, we can just spawn the pills
-            // (Or we're server and something worse has happened)
-            if (!itemSolution.HasValue)
-                continue;
-
-            SolContainer.TryAddSolution(itemSolution.Value, withdrawal.SplitSolution(message.Dosage));
 
             // Log pill creation by a user
             _adminLogger.Add(LogType.Action,
                 LogImpact.Low,
                 $"{ToPrettyString(user):user} printed {ToPrettyString(item):pill} {SharedSolutionContainerSystem.ToPrettyString(itemSolution.Value.Comp.Solution)}");
         }
+
+        UpdateUiState(chemMaster);
+        ClickSound(chemMaster, message.Actor);
     }
 
     private void OnOutputToBottleMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterOutputToBottleMessage message)
     {
         var user = message.Actor;
-        var maybeContainer = ItemSlots.GetItemOrNull(chemMaster, ChemMasterComponent.OutputSlotName);
+        var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, ChemMasterComponent.OutputSlotName);
         if (maybeContainer is not { Valid: true } container
-            || !SolContainer.TryGetSolution(container, ChemMasterComponent.BottleSolutionName, out var soln, out var solution))
+            || !_solutionContainerSystem.TryGetSolution(container, ChemMasterComponent.BottleSolutionName, out var soln, out var solution))
         {
             return; // output can't fit reagents
         }
@@ -273,14 +284,14 @@ public abstract class SharedChemMasterSystem : EntitySystem
             return;
 
         _labelSystem.Label(container, message.Label);
-        SolContainer.TryAddSolution(soln.Value, withdrawal);
+        _solutionContainerSystem.TryAddSolution(soln.Value, withdrawal);
 
         // Log bottle creation by a user
         _adminLogger.Add(LogType.Action,
             LogImpact.Low,
             $"{ToPrettyString(user):user} bottled {ToPrettyString(container):bottle} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
 
-        DirtyUI(chemMaster);
+        UpdateUiState(chemMaster);
         ClickSound(chemMaster, message.Actor);
     }
 
@@ -291,7 +302,7 @@ public abstract class SharedChemMasterSystem : EntitySystem
     {
         outputSolution = null;
 
-        if (!SolContainer.TryGetSolution(chemMaster.Owner,
+        if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner,
                 ChemMasterComponent.BufferSolutionName,
                 out var bufferEnt,
                 out var solution))
@@ -320,5 +331,61 @@ public abstract class SharedChemMasterSystem : EntitySystem
     private void ClickSound(Entity<ChemMasterComponent> chemMaster, EntityUid actor)
     {
         _audioSystem.PlayPredicted(chemMaster.Comp.ClickSound, chemMaster, actor);
+    }
+
+    private ContainerInfo? BuildInputContainerInfo(EntityUid? container)
+    {
+        if (container is not { Valid: true })
+            return null;
+
+        if (!TryComp(container, out FitsInDispenserComponent? fits)
+            || !_solutionContainerSystem.TryGetSolution(container.Value, fits.Solution, out _, out var solution))
+            return null;
+
+        return BuildContainerInfo(Name(container.Value), solution);
+    }
+
+    private ContainerInfo? BuildOutputContainerInfo(EntityUid? container)
+    {
+        if (container is not { Valid: true })
+            return null;
+
+        var name = Name(container.Value);
+        {
+            if (_solutionContainerSystem.TryGetSolution(
+                    container.Value, ChemMasterComponent.BottleSolutionName, out _, out var solution))
+            {
+                return BuildContainerInfo(name, solution);
+            }
+        }
+
+        if (!TryComp(container, out StorageComponent? storage))
+            return null;
+
+        var pills = storage.Container.ContainedEntities.Select(pill =>
+                {
+                    _solutionContainerSystem.TryGetSolution(pill,
+                        ChemMasterComponent.PillSolutionName,
+                        out _,
+                        out var solution);
+                    var quantity = solution?.Volume ?? FixedPoint2.Zero;
+                    return (pill, quantity);
+                })
+            .ToList();
+
+        return new ContainerInfo(name,
+            _storageSystem.GetCumulativeItemAreas((container.Value, storage)),
+            storage.Grid.GetArea())
+        {
+            Entities = pills.Select(x => (GetNetEntity(x.pill), x.quantity)).ToList()
+        };
+    }
+
+    private static ContainerInfo BuildContainerInfo(string name, Solution solution)
+    {
+        return new ContainerInfo(name, solution.Volume, solution.MaxVolume)
+        {
+            Reagents = solution.Contents
+        };
     }
 }

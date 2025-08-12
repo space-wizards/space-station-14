@@ -41,7 +41,7 @@ public sealed partial class ChemMasterWindow : FancyWindow
     private readonly ReagentList _inputReagentList;
     private readonly ReagentList _outputReagentList;
 
-    // Scale that gets applied to the pill sprites.
+    // Scale that gets applied to the pill spriets
     private readonly Vector2 _pillTextureScale = new(1.75f, 1.75f);
 
     /// <summary>
@@ -105,6 +105,7 @@ public sealed partial class ChemMasterWindow : FancyWindow
 
         // Pill type selection buttons, in total there are 20 pills.
         // Pill rsi file should have states named as pill1, pill2, and so on.
+        var resourcePath = _pillsRsiPath;
         var pillTypeGroup = new ButtonGroup();
         _pillTypeButtons = new Button[ChemMasterComponent.PillTypes];
         for (uint i = 0; i < _pillTypeButtons.Length; i++)
@@ -128,7 +129,7 @@ public sealed partial class ChemMasterWindow : FancyWindow
             };
 
             // Generate buttons textures
-            var specifier = new SpriteSpecifier.Rsi(_pillsRsiPath, "pill" + (i + 1));
+            var specifier = new SpriteSpecifier.Rsi(resourcePath, "pill" + (i + 1));
             var pillTypeTexture = new TextureRect
             {
                 Texture = spriteSys.Frame0(specifier),
@@ -146,10 +147,62 @@ public sealed partial class ChemMasterWindow : FancyWindow
         }
     }
 
+    public void UpdateState(ChemMasterBoundUserInterfaceState state)
+    {
+        if (state.UpdateLabel)
+            LabelLineEdit.Text = GenerateLabel(state.BufferReagents);
+
+        // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
+        UpdatePanelInfo(state);
+
+        BufferCurrentVolume.Text = " " + ReagentQuantity.LocalizedQuantity(state.BufferCurrentVolume);
+
+        InputEjectButton.Disabled = state.InputContainerInfo is null;
+        OutputEjectButton.Disabled = state.OutputContainerInfo is null;
+        CreateBottleButton.Disabled = state.OutputContainerInfo?.Reagents == null;
+        CreatePillButton.Disabled = state.OutputContainerInfo?.Entities == null;
+
+        UpdateDosageFields(state);
+    }
+
+    /// <summary>
+    /// Assigns default values to the various pill fields and configures their validation.
+    /// </summary>
+    private void UpdateDosageFields(ChemMasterBoundUserInterfaceState state)
+    {
+        var output = state.OutputContainerInfo;
+        var remainingCapacity = output is null ? 0 : (output.MaxVolume - output.CurrentVolume).Int();
+        var holdsReagents = output?.Reagents != null;
+        var pillNumberMax = holdsReagents ? 0 : remainingCapacity;
+        var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
+        var bufferVolume = state.BufferCurrentVolume ?? 0;
+
+        var maxDosage = FixedPoint2.Min(bufferVolume, state.PillDosageLimit);
+        PillDosage.Value = maxDosage.Int();
+
+        _pillTypeButtons[state.SelectedPillType].Pressed = true;
+
+        PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
+        PillDosage.IsValid = x => x > 0 && x <= state.PillDosageLimit;
+        BottleDosage.IsValid = x => x >= 0 && x <= bottleAmountMax;
+
+        if (PillNumber.Value > pillNumberMax)
+            PillNumber.Value = pillNumberMax;
+        if (BottleDosage.Value > bottleAmountMax)
+            BottleDosage.Value = bottleAmountMax;
+
+        // Avoid division by zero
+        PillNumber.Value = maxDosage > 0
+            ? FixedPoint2.Min(bufferVolume / maxDosage, pillNumberMax).Int()
+            : 0;
+
+        BottleDosage.Value = FixedPoint2.Min(bottleAmountMax, bufferVolume).Int();
+    }
+
     /// <summary>
     /// Generate a product label based on reagents in the buffer.
     /// </summary>
-    private string GenerateLabel(List<ReagentQuantity> bufferReagents)
+    private string GenerateLabel(IReadOnlyList<ReagentQuantity> bufferReagents)
     {
         if (bufferReagents.Count == 0)
             return "";
@@ -157,6 +210,34 @@ public sealed partial class ChemMasterWindow : FancyWindow
         var reagent = bufferReagents.OrderBy(r => r.Quantity).First().Reagent;
         _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
         return proto?.LocalizedName ?? "";
+    }
+
+    /// <summary>
+    /// Update the container, buffer, and packaging panels.
+    /// </summary>
+    /// <param name="state">State data for the dispenser.</param>
+    private void UpdatePanelInfo(ChemMasterBoundUserInterfaceState state)
+    {
+        BufferTransferButton.Pressed = state.Mode == ChemMasterMode.Transfer;
+        BufferDiscardButton.Pressed = state.Mode == ChemMasterMode.Discard;
+
+        // Input + output lists
+        UpdateContainerInfo(_inputReagentList, state.InputContainerInfo);
+        UpdateContainerInfo(_outputReagentList, state.OutputContainerInfo);
+
+        // Actual buffer itself
+        BufferSortButton.Text = state.SortingType switch
+        {
+            ChemMasterSortingType.Alphabetical => Loc.GetString("chem-master-window-sort-type-alphabetical"),
+            ChemMasterSortingType.Quantity => Loc.GetString("chem-master-window-sort-type-quantity"),
+            ChemMasterSortingType.Latest => Loc.GetString("chem-master-window-sort-type-latest"),
+            _ => Loc.GetString("chem-master-window-sort-type-none")
+        };
+
+        var reagentDict = state.BufferReagents.ToDictionary(r => new ReagentListId(r.Reagent), r => r.Quantity);
+        _bufferReagentList.Update(reagentDict, state.SortingType);
+
+        _bufferReagentList.SetVolumeLabel(ReagentQuantity.LocalizedQuantity(state.BufferCurrentVolume));
     }
 
     private void UpdateContainerInfo(ReagentList list, ContainerInfo? info)
@@ -183,89 +264,5 @@ public sealed partial class ChemMasterWindow : FancyWindow
 
         list.SetNameLabel($"{name}: ");
         list.SetVolumeLabel(info.LocalizedCapacity());
-    }
-
-    /// <summary>
-    /// Sets up the listing for the input container.
-    /// </summary>
-    public void SetInputContainerInfo(ContainerInfo? info)
-    {
-        InputEjectButton.Disabled = info is null;
-        UpdateContainerInfo(_inputReagentList, info);
-    }
-
-    /// <summary>
-    /// Sets up the listing for the output container.
-    /// </summary>
-    public void SetOutputContainerInfo(ContainerInfo? info)
-    {
-        OutputEjectButton.Disabled = info is null;
-        CreateBottleButton.Disabled = info?.Reagents == null;
-        CreatePillButton.Disabled = info?.Entities == null;
-        UpdateContainerInfo(_outputReagentList, info);
-    }
-
-    /// <summary>
-    /// Sets up the actual funny infinite storage buffer.
-    /// </summary>
-    public void UpdateBuffer(Solution bufferSolution, ChemMasterMode mode, ChemMasterSortingType sortingType)
-    {
-        BufferTransferButton.Pressed = mode == ChemMasterMode.Transfer;
-        BufferDiscardButton.Pressed = mode == ChemMasterMode.Discard;
-
-        // Actual buffer itself
-        BufferSortButton.Text = sortingType switch
-        {
-            ChemMasterSortingType.Alphabetical => Loc.GetString("chem-master-window-sort-type-alphabetical"),
-            ChemMasterSortingType.Quantity => Loc.GetString("chem-master-window-sort-type-quantity"),
-            ChemMasterSortingType.Latest => Loc.GetString("chem-master-window-sort-type-latest"),
-            _ => Loc.GetString("chem-master-window-sort-type-none")
-        };
-
-        var reagentDict = bufferSolution.Contents.ToDictionary(r => new ReagentListId(r.Reagent), r => r.Quantity);
-        _bufferReagentList.Update(reagentDict, sortingType);
-
-        _bufferReagentList.SetVolumeLabel(ReagentQuantity.LocalizedQuantity(bufferSolution.Volume));
-    }
-
-    /// <summary>
-    /// Assigns default values to the various pill fields and configures their validation.
-    /// </summary>
-    public void UpdateDosageFields(Solution buffer,
-        ContainerInfo? outputContainerInfo,
-        string? outputLabel,
-        uint selectedPillType,
-        FixedPoint2 pillDosageLimit)
-    {
-        LabelLineEdit.Text = outputLabel ?? GenerateLabel(buffer.Contents);
-        BufferCurrentVolume.Text = " " + ReagentQuantity.LocalizedQuantity(buffer.Volume);
-
-        var remainingCapacity = outputContainerInfo is not null
-            ? (outputContainerInfo.MaxVolume - outputContainerInfo.CurrentVolume).Int()
-            : 0;
-        var holdsReagents = outputContainerInfo?.Reagents != null;
-        var pillNumberMax = holdsReagents ? 0 : remainingCapacity;
-        var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
-
-        var maxDosage = FixedPoint2.Min(buffer.Volume, pillDosageLimit);
-        PillDosage.Value = maxDosage.Int();
-
-        _pillTypeButtons[selectedPillType].Pressed = true;
-
-        PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
-        PillDosage.IsValid = x => x > 0 && x <= pillDosageLimit;
-        BottleDosage.IsValid = x => x >= 0 && x <= bottleAmountMax;
-
-        if (PillNumber.Value > pillNumberMax)
-            PillNumber.Value = pillNumberMax;
-        if (BottleDosage.Value > bottleAmountMax)
-            BottleDosage.Value = bottleAmountMax;
-
-        // Avoid division by zero
-        PillNumber.Value = maxDosage > 0
-            ? FixedPoint2.Min(buffer.Volume / maxDosage, pillNumberMax).Int()
-            : 0;
-
-        BottleDosage.Value = FixedPoint2.Min(bottleAmountMax, buffer.Volume).Int();
     }
 }
