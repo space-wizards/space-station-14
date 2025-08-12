@@ -13,7 +13,6 @@
   - type: Item
     shape:
     - 0,0,1,0
-  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
   - type: SolutionContainerManager

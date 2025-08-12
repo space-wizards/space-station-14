@@ -74,7 +74,6 @@
   id: FoodTacoBeef
   description: A very basic and run of the mill beef taco, now with cheese!
   components:
-  - type: Edible
   - type: Sprite
     state: beeftaco
 
@@ -84,7 +83,6 @@
   id: FoodTacoChicken
   description: A very basic and run of the mill chicken taco, now with cheese!
   components:
-  - type: Edible
   - type: Sprite
     state: chickentaco
 
@@ -98,7 +96,6 @@
     flavors:
       - onion
       - fishy
-  - type: Edible
   - type: Sprite
     state: fishtaco
   - type: SolutionContainerManager
@@ -117,7 +114,6 @@
   id: FoodTacoRat
   description: Yeah, that looks about right...
   components:
-  - type: Edible
   - type: Sprite
     state: rattaco
   - type: SolutionContainerManager
@@ -136,7 +132,6 @@
   id: FoodTacoBeefSupreme
   description: It's like a regular beef taco, but surpeme!
   components:
-  - type: Edible
   - type: Sprite
     state: beeftacosupreme
   - type: SolutionContainerManager
@@ -155,7 +150,6 @@
   id: FoodTacoChickenSupreme
   description: It's like a regular chicken taco, but surpeme!
   components:
-  - type: Edible
   - type: Sprite
     state: chickentacosupreme
   - type: SolutionContainerManager
@@ -180,7 +174,6 @@
     flavors:
     - meaty
     - spicy
-  - type: Edible
   - type: Sprite
     state: dragontaco
   - type: SolutionContainerManager

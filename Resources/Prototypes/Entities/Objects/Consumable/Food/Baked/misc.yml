@@ -6,7 +6,6 @@
   id: FoodBakedBase
   abstract: true
   components:
-  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
   - type: SolutionContainerManager

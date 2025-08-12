@@ -54,7 +54,6 @@
   id: FoodBreadVolcanic
   description: A dark loaf. Resembles pumice.
   components:
-  - type: Edible
   - type: Sprite
     layers:
     - state: alpha
@@ -70,7 +69,6 @@
   id: FoodBreadVolcanicSlice
   description: A slice of dark loaf. Resembles pumice.
   components:
-  - type: Edible
   - type: Sprite
     layers:
     - state: alpha-slice
@@ -90,7 +88,6 @@
     flavors:
       - banana
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: banana
@@ -112,7 +109,6 @@
     flavors:
       - banana
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: banana-slice
@@ -193,7 +189,6 @@
     flavors:
       - bread
       - corn
-  - type: Edible
   - type: Sprite
     layers:
     - state: cornbread
@@ -218,7 +213,6 @@
     flavors:
       - bread
       - corn
-  - type: Edible
   - type: Sprite
     layers:
     - state: cornbread-slice
@@ -241,7 +235,6 @@
       - cheesy
       - creamy
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: creamcheese
@@ -269,7 +262,6 @@
       - cheesy
       - creamy
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: creamcheese-slice
@@ -293,7 +285,6 @@
     flavors:
       - meaty
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: meat
@@ -324,7 +315,6 @@
     flavors:
       - meaty
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: meat-slice
@@ -353,7 +343,6 @@
     flavors:
       - nothing
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: mimana
@@ -384,7 +373,6 @@
     flavors:
       - nothing
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: mimana-slice
@@ -408,7 +396,6 @@
   id: FoodBreadPlain
   description: Some plain old earthen bread.
   components:
-  - type: Edible
   - type: Sprite
     layers:
     - state: plain
@@ -421,7 +408,6 @@
   id: FoodBreadPlainSlice
   description: A slice of home.
   components:
-  - type: Edible
   - type: Sprite
     layers:
     - state: plain-slice
@@ -436,7 +422,6 @@
     flavors:
       - meaty
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: sausage
@@ -468,7 +453,6 @@
     flavors:
       - meaty
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: sausage-slice
@@ -499,7 +483,6 @@
     flavors:
       - cobwebs
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: spidermeat
@@ -530,7 +513,6 @@
     flavors:
       - cobwebs
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: spidermeat-slice
@@ -559,7 +541,6 @@
     flavors:
       - tofu
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: tofu
@@ -586,7 +567,6 @@
     flavors:
       - tofu
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: tofu-slice
@@ -610,7 +590,6 @@
     flavors:
       - acid
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: xenomeat
@@ -641,7 +620,6 @@
     flavors:
       - acid
       - bread
-  - type: Edible
   - type: Sprite
     layers:
     - state: xenomeat-slice

@@ -42,7 +42,6 @@
     flavors:
       - oily
       - bread
-  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
   - type: SolutionContainerManager
