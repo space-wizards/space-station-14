@@ -43,7 +43,6 @@ steal-target-groups-clothing-eyes-hud-beer = beer goggles
 steal-target-groups-bible = bible
 steal-target-groups-clothing-shoes-clown = clown's clown shoes
 steal-target-groups-clothing-mask-clown = clown's mask
-steal-target-groups-clown-recorder = clown's laugh track
 steal-target-groups-bike-horn = clown's horn
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal

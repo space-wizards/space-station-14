@@ -316,17 +316,6 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: ClownRecorderStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Clown
-  - type: StealCondition
-    stealGroup: ClownRecorder
-  - type: Objective
-    difficulty: 0.4 # About as hard as a bible
-
-- type: entity
-  parent: BaseThiefStealObjective
   id: BikeHornStealObjective
   components:
   - type: NotJobRequirement

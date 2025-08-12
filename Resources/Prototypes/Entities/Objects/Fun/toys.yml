@@ -833,8 +833,6 @@
     tags:
     - ClownRecorder
     - Payload
-  - type: StealTarget
-    stealGroup: ClownRecorder
 
 - type: entity
   parent: BaseItem

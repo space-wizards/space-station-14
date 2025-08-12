@@ -278,13 +278,6 @@
     state: icon
 
 - type: stealTargetGroup
-  id: ClownRecorder
-  name: steal-target-groups-clown-recorder
-  sprite:
-    sprite: Objects/Fun/clownrecorder.rsi
-    state: icon
-
-- type: stealTargetGroup
   id: BikeHorn
   name: steal-target-groups-bike-horn
   sprite:
