@@ -202,7 +202,7 @@
 
 - type: cargoBounty
   id: BountyKnife
-  reward: 6000
+  reward: 2000
   description: bounty-description-knife
   entries:
   - name: bounty-item-knife
