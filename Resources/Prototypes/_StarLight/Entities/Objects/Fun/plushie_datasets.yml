@@ -119,37 +119,37 @@
     count: 8
 
 - type: localizedDataset
-  id: PlushieVirus
+  id: PlushiesVirus
   values:
     prefix: plushie-virus-
     count: 9
 
 - type: localizedDataset
-  id: PlushieMahio
+  id: PlushiesMahio
   values:
     prefix: plushie-mahio-
     count: 9
 
 - type: localizedDataset
-  id: PlushieRhea
+  id: PlushiesRhea
   values:
     prefix: plushie-rhea-
     count: 9
 
 - type: localizedDataset
-  id: PlushieRemiie
+  id: PlushiesRemiie
   values:
     prefix: plushie-remiie-
     count: 9
 
 - type: localizedDataset
-  id: PlushieMalachi
+  id: PlushiesMalachi
   values:
     prefix: plushie-malachi-
     count: 9
 
 - type: localizedDataset
-  id: PlushieBrighteyes
+  id: PlushiesBrighteyes
   values:
     prefix: plushie-brighteyes-
     count: 9
