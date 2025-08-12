@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Server.Actions;
 using Content.Server.GameTicking;
-using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
@@ -144,7 +143,7 @@ public sealed partial class RevenantSystem : EntitySystem
             FixedPoint2.Min(component.Essence, component.EssenceRegenCap);
 
         if (TryComp<StoreComponent>(uid, out var store))
-            _store.UpdateUserInterface(uid, uid, store);
+            _store.UpdateAvailableListings(uid, uid, store);
 
         _alerts.ShowAlert(uid, component.EssenceAlert);
 

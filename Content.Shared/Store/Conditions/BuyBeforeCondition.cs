@@ -1,8 +1,7 @@
-using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Store.Conditions;
+namespace Content.Shared.Store.Conditions;
 
 public sealed partial class BuyBeforeCondition : ListingCondition
 {

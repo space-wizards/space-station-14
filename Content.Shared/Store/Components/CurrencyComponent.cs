@@ -1,8 +1,8 @@
 using Content.Shared.FixedPoint;
-using Content.Shared.Store;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server.Store.Components;
+namespace Content.Shared.Store.Components;
 
 /// <summary>
 /// Identifies a component that can be inserted into a store
@@ -13,7 +13,7 @@ namespace Content.Server.Store.Components;
 /// the whole stack. This also means that in general, the actual value should not be modified from the initial
 /// prototype value because otherwise stack merging/splitting may modify the total value.
 /// </remarks>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class CurrencyComponent : Component
 {
     /// <summary>
@@ -27,7 +27,7 @@ public sealed partial class CurrencyComponent : Component
     /// prototype value
     /// because otherwise stack merging/splitting may modify the total value.
     /// </remarks>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     [DataField("price", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
     public Dictionary<string, FixedPoint2> Price = new();
 }

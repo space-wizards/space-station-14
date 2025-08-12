@@ -1,6 +1,7 @@
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;
+using Content.Shared.PDA.Ringer;
 using Content.Shared.Store.Components;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
@@ -10,7 +11,7 @@ namespace Content.Client.Store.Ui;
 [UsedImplicitly]
 public sealed class StoreBoundUserInterface : BoundUserInterface
 {
-    private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     [ViewVariables]
     private StoreMenu? _menu;
@@ -30,12 +31,10 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<StoreMenu>();
-        if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store))
-            _menu.Title = Loc.GetString(store.Name);
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
-            SendMessage(new StoreBuyListingMessage(listing.ID));
+            SendPredictedMessage(new StoreBuyListingMessage(listing.ID));
         };
 
         _menu.OnCategoryButtonPressed += (_, category) =>
@@ -46,6 +45,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
         _menu.OnWithdrawAttempt += (_, type, amount) =>
         {
+            // TODO: Make this predicted after StackSystem will support full prediction
             SendMessage(new StoreRequestWithdrawMessage(type, amount));
         };
 
@@ -55,28 +55,33 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
             UpdateListingsWithSearchFilter();
         };
 
-        _menu.OnRefundAttempt += (_) =>
+        _menu.OnRefundAttempt += _ =>
         {
-            SendMessage(new StoreRequestRefundMessage());
+            SendPredictedMessage(new StoreRequestRefundMessage());
         };
+
+        Update();
     }
-    protected override void UpdateState(BoundUserInterfaceState state)
+
+    public override void Update()
     {
-        base.UpdateState(state);
+        if (_menu == null)
+            return;
 
-        switch (state)
-        {
-            case StoreUpdateState msg:
-                _listings = msg.Listings;
+        if (!EntMan.TryGetComponent(Owner, out StoreComponent? store))
+            return;
 
-                _menu?.UpdateBalance(msg.Balance);
+        var showFooter = EntMan.HasComponent<RingerUplinkComponent>(Owner);
 
-                UpdateListingsWithSearchFilter();
-                _menu?.SetFooterVisibility(msg.ShowFooter);
-                _menu?.UpdateRefund(msg.AllowRefund);
-                break;
-        }
+        _menu.Title = Loc.GetString(store.Name);
+        _menu.SetFooterVisibility(showFooter);
+        _menu.UpdateRefund(store.RefundAllowed);
+        _menu.UpdateBalance(store.Balance);
+        _listings = store.LastAvailableListings;
+
+        UpdateListingsWithSearchFilter();
     }
+
 
     private void UpdateListingsWithSearchFilter()
     {
@@ -86,6 +91,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         var filteredListings = new HashSet<ListingDataWithCostModifiers>(_listings);
         if (!string.IsNullOrEmpty(_search))
         {
+            // What.
             filteredListings.RemoveWhere(listingData => !ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search) &&
                                                         !ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search));
         }
