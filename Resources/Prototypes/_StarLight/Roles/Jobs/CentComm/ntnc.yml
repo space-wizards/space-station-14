@@ -7,7 +7,7 @@
     outerClothing: ClothingOuterHardsuitNTNCConsortium
     id: NTNCCSPDA
     eyes: ClothingEyesGlassesBlueShield
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComNTNC
     mask: ClothingMaskGasSecurity
     belt: ClothingBeltNTNCRigFilled
     gloves: ClothingHandsGlovesCombat
@@ -23,7 +23,7 @@
     outerClothing: ClothingOuterHardsuitNTNCConsortium
     id: NTNCCSPDA
     eyes: ClothingEyesGlassesBlueShield
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComNTNC
     mask: ClothingMaskGasSecurity
     belt: ClothingBeltNTNCRigFilled
     gloves: ClothingHandsGlovesCombat
@@ -39,7 +39,7 @@
     outerClothing: ClothingOuterVestNTNC
     id: NTNCCSPDA
     eyes: ClothingEyesGlassesBlueShield
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComNTNC
     mask: ClothingMaskGasSecurity
     belt: ClothingBeltNTNCRigFilled
     gloves: ClothingHandsGlovesCombat
@@ -54,7 +54,7 @@
     outerClothing: ClothingOuterHardsuitNTNCConsortiumMedic
     id: NTNCCSPDA
     eyes: ClothingEyesGlassesBlueShield
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComNTNC
     mask: ClothingMaskGasSecurity
     belt: ClothingBeltNTNCRigFilledMed
     gloves: ClothingHandsGlovesCombat
