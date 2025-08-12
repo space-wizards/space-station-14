@@ -11178,5 +11178,20 @@ Entries:
   id: 129300
   time: '2025-08-11T21:26:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1293
+- author: Rinary
+  changes:
+  - message: Fixed upstream rewrite, now all cooking recipes require their cooking
+      device(See guidebook pls, don't write bug reports)
+    type: Fix
+  id: 131000
+  time: '2025-08-12T17:40:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1310
+- author: TopGuy
+  changes:
+  - message: Fixed kudzu that grew on turnstiles being untargetable
+    type: Fix
+  id: 129800
+  time: '2025-08-12T17:46:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1298
 Order: -1
 
