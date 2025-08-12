@@ -233,14 +233,14 @@ public sealed class MaterialArbitrageTest
 
                     foreach (var (key, value) in spawn.Spawn)
                     {
-                        spawnedEnts[key] = spawnedEnts.GetValueOrDefault(key) + (value.Min + value.Max) / 2;
+                        spawnedEnts[key] = spawnedEnts.GetValueOrDefault(key) + (float)(value.Min + value.Max) / 2;
 
                         if (!compositions.TryGetValue(key, out var composition))
                             continue;
 
                         foreach (var (matId, amount) in composition)
                         {
-                            spawnedMats[matId] = (value.Min + value.Max) / 2 * amount + spawnedMats.GetValueOrDefault(matId);
+                            spawnedMats[matId] = (float)(value.Min + value.Max) / 2 * amount + spawnedMats.GetValueOrDefault(matId);
                         }
                     }
                 }
