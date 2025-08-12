@@ -149,12 +149,6 @@
     count: 9
 
 - type: localizedDataset
-  id: PlushieRhea
-  values:
-    prefix: plushie-rhea-
-    count: 9
-
-- type: localizedDataset
   id: PlushieBrighteyes
   values:
     prefix: plushie-brighteyes-
