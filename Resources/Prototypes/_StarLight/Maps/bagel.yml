@@ -1,5 +1,5 @@
 - type: gameMap
-  id: StarlightBagel
+  id: Bagel
   mapName: 'Bagel Station'
   mapPath: /Maps/_Starlight/Stations/Bagel.yml
   minPlayers: 35
