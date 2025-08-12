@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
@@ -49,6 +48,7 @@ namespace Content.Client.Options.UI.Tabs
                     _inputManager.SaveToUserData();
                 });
             };
+            AddCustomBindingButton.OnPressed += AddCustomBindingControl;
 
             #region Fill key functions list
 
@@ -213,11 +213,31 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.TextCompleteNext);
             AddButton(EngineKeyFunctions.TextCompletePrev);
 
+
+
             foreach (var (function, control) in _keyControls)
             {
                 UpdateBindingsData(function, control);
             }
             #endregion
+        }
+
+        private void AddCustomBindingControl(BaseButton.ButtonEventArgs obj)
+        {
+            foreach (var existingControls in CustomBindingsContainer.Children)
+            {
+                if(existingControls is not CustomCommandBindingControl customBinding)
+                    continue;
+
+                if(!customBinding.IsComplete)
+                    return;
+            }
+            
+            var customCommandBindingControl = new CustomCommandBindingControl();
+            CustomBindingsContainer.AddChild(customCommandBindingControl);
+
+            AddCustomBindingButton.ToolTip = Loc.GetString("ui-options-add-custom-command-binding-disable-tooltip");
+            AddCustomBindingButton.Disabled = true;
         }
 
         private void HandleToggleUSQWERTYCheckbox(BaseButton.ButtonToggledEventArgs args)
@@ -287,18 +307,19 @@ namespace Content.Client.Options.UI.Tabs
 
         private void AddHeader(string headerContents)
         {
-            if (!_isFirstHeader)
-            {
-                KeybindsContainer.AddChild(new Control { MinSize = new Vector2(0, 8) });
-            }
-
-            _isFirstHeader = false;
-            KeybindsContainer.AddChild(new Label
+            var control = new Label
             {
                 Text = Loc.GetString(headerContents),
                 FontColorOverride = StyleNano.NanoGold,
-                StyleClasses = { StyleNano.StyleClassLabelKeyText }
-            });
+                StyleClasses = { StyleNano.StyleClassLabelKeyText },
+            };
+            if (!_isFirstHeader)
+            {
+                control.Margin = new Thickness(0, 8);
+            }
+
+            KeybindsContainer.AddChild(control);
+            _isFirstHeader = false;
         }
 
         private void AddButton(BoundKeyFunction function)

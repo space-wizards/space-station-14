@@ -1,11 +1,24 @@
-﻿<Control xmlns="https://spacestation14.io"
+<Control xmlns="https://spacestation14.io"
          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">
         <ScrollContainer VerticalExpand="True">
-            <BoxContainer Name="KeybindsContainer" Orientation="Vertical" Margin="8 8 8 8">
+            <BoxContainer Orientation="Vertical">
+                <BoxContainer Name="KeybindsContainer" Orientation="Vertical" Margin="8 8 8 8">
 
-                <!-- Keybind buttons are added here in the C# code -->
+                    <!-- Keybind buttons are added here in the C# code -->
 
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical" Margin="8 8 8 8">
+                    <Label Text="{Loc 'ui-options-header-custom-command-bindings'}"
+                           StyleClasses="LabelKeyText"
+                           FontColorOverride="#A88B5E" />
+                    <BoxContainer Name="CustomBindingsContainer"  Orientation="Vertical">
+
+                    </BoxContainer>
+                    <Button Text="{Loc 'ui-options-add-custom-command-binding'}"
+                            Name="AddCustomBindingButton"
+                            HorizontalAlignment="Left" />
+                </BoxContainer>
             </BoxContainer>
         </ScrollContainer>
         <controls:StripeBack HasBottomEdge="False" HasMargins="False">

@@ -1,0 +1,15 @@
+<tabs:CustomCommandBindingControl xmlns="https://spacestation14.io"
+                                  xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs"
+                                  Orientation="Horizontal">
+
+    <Button Text="Action:" HorizontalAlignment="Left"></Button>
+    <OptionButton Name="OptionsDropDown"></OptionButton>
+    <LineEdit Text="Enter your custom command..."
+              Name="NewBindingCommandText"
+              StyleClasses="chatLineEdit"
+              MinSize="400,10"
+              HorizontalExpand="True" />
+    <Control HorizontalExpand="True"></Control>
+
+    <tabs:BindButton HorizontalAlignment="Right"></tabs:BindButton>
+</tabs:CustomCommandBindingControl>
