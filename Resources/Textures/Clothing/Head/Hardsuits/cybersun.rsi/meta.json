@@ -40,6 +40,10 @@
     {
       "name": "equipped-HELMET-monkey",
       "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-dog",
+      "directions": 4
     }
   ]
 }
