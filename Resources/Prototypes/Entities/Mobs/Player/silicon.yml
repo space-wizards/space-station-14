@@ -179,7 +179,7 @@
     proto: AiHeld
     container: station_ai_mind_slot
   - type: Damageable
-    damageModifierSet: Metallic
+    damageModifierSet: StrongMetallic
   - type: Repairable
     doAfterDelay: 10
     allowSelfRepair: false
@@ -187,7 +187,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 300
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -196,7 +196,7 @@
         acts: [ "Breakage" ]
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 600
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -212,11 +212,11 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
-    damageDivisor: 8
+    thresholds: [25, 50, 75, 100, 125, 150, 175]
+    damageDivisor: 3
     trackAllDamage: true
     damageOverlay:
-      sprite: Structures/Windows/cracks.rsi
+      sprite: Mobs/Silicon/station_ai_cracks.rsi
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: ExtensionCableReceiver
