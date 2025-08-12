@@ -355,7 +355,77 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLuxmax
 
-#Mining Specialist MAHS
+#Spationaut Lead Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseSalvageContraband]
+  id: ClothingOuterHardsuitSpatioLead
+  name: spationaut lead hardsuit
+  description: A lightweight decorated hardsuit designed for industrial EVA in zero gravity.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/OuterClothing/Hardsuits/leadspatio.rsi
+    - type: Clothing
+      sprite: _Starlight/Clothing/OuterClothing/Hardsuits/leadspatio.rsi
+    - type: PressureProtection
+      highPressureMultiplier: 0.7
+      lowPressureMultiplier: 1000
+    - type: Pierceable
+      level: Metal
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.9
+          Slash: 0.9
+          Piercing: 0.9
+          Radiation: 0.3 #salv is supposed to have radiation hazards in the future
+          Caustic: 0.8
+    - type: ClothingSpeedModifier
+      walkModifier: 0.8
+      sprintModifier: 0.8
+    - type: HeldSpeedModifier
+    - type: ToggleableClothing
+      clothingPrototype: ClothingHeadHelmetHardsuitSpatioLead
+    - type: Tag
+      tags:
+        - Hardsuit
+        - HardsuitSpatio
+    
+#Spationaut Medic Hardsuit
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseSalvageContraband ]
+  id: ClothingOuterHardsuitSpatioMedic
+  name: spationaut medic hardsuit
+  description: A lightweight white trimmed hardsuit designed for industrial EVA in zero gravity.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/OuterClothing/Hardsuits/medicspatio.rsi
+    - type: Clothing
+      sprite: _Starlight/Clothing/OuterClothing/Hardsuits/medicspatio.rsi
+    - type: PressureProtection
+      highPressureMultiplier: 0.7
+      lowPressureMultiplier: 1000
+    - type: Pierceable
+      level: Metal
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.9
+          Slash: 0.9
+          Piercing: 0.9
+          Radiation: 0.3 #salv is supposed to have radiation hazards in the future
+          Caustic: 0.8
+    - type: ClothingSpeedModifier
+      walkModifier: 0.8
+      sprintModifier: 0.8
+    - type: HeldSpeedModifier
+    - type: ToggleableClothing
+      clothingPrototype: ClothingHeadHelmetHardsuitSpatioMedic
+    - type: Tag
+      tags:
+        - Hardsuit
+        - HardsuitSpatio
+
+#Mining Specialist Advanced hardsuit
 - type: entity
   parent: [ ClothingOuterHardsuitBase, BaseSalvageMiningContraband ]
   id: ClothingOuterHardsuitAdvancedMining
@@ -363,9 +433,9 @@
   description: A jetpack-equipped hardsuit designed for mining operations.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/advmining.rsi # DOTS Still need a sprite for this
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/advmining.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/advmining.rsi # DOTS still need a sprite for this
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/advmining.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
