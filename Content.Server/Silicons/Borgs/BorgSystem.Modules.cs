@@ -237,6 +237,9 @@ public sealed partial class BorgSystem
         if (!_container.TryGetContainer(uid, component.HoldingContainer, out var container))
             return;
 
+        if (TerminatingOrDeleted(uid))
+            return;
+
         component.StoredItems ??= new();
 
         for (var i = 0; i < component.Hands.Count; i++)
