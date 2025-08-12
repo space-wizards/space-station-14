@@ -10,6 +10,7 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Popups;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech.Components;
 using Content.Shared.StationAi;
@@ -33,6 +34,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedPopupSystem _popups = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
 
@@ -156,14 +158,21 @@ public sealed class StationAiSystem : SharedStationAiSystem
     {
         // Do not allow an AI to be uploaded into a currently unpowered or broken AI core.
 
+        if (TryGetHeld((ent.Owner, ent.Comp), out var _))
+            return;
+
         if (TryComp<ApcPowerReceiverComponent>(ent, out var apcPower) && !apcPower.Powered)
         {
+            _popups.PopupEntity(Loc.GetString("station-ai-has-no-power-for-upload"), ent, args.Event.User);
+
             args.Cancel();
             return;
         }
 
         if (TryComp<DestructibleComponent>(ent, out var destructible) && destructible.IsBroken)
         {
+            _popups.PopupEntity(Loc.GetString("station-ai-is-too-damaged-for-upload"), ent, args.Event.User);
+
             args.Cancel();
             return;
         }
