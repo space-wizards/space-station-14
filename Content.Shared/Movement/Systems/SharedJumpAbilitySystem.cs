@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Content.Shared.Stunnable;
@@ -28,6 +29,8 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
 
         SubscribeLocalEvent<ActiveLeaperComponent, StartCollideEvent>(OnLeaperCollide);
         SubscribeLocalEvent<ActiveLeaperComponent, LandEvent>(OnLeaperLand);
+
+        SubscribeLocalEvent<JumpAbilityComponent, CloningEvent>(OnClone);
     }
 
     private void OnInit(Entity<JumpAbilityComponent> entity, ref MapInitEvent args)
@@ -83,5 +86,20 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
             EnsureComp<ActiveLeaperComponent>(entity);
 
         args.Handled = true;
+    }
+
+    private void OnClone(Entity<JumpAbilityComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var targetComp = EnsureComp<JumpAbilityComponent>(args.CloneUid);
+        targetComp.Action = ent.Comp.Action;
+        targetComp.CanCollide = ent.Comp.CanCollide;
+        targetComp.JumpSound = ent.Comp.JumpSound;
+        targetComp.CollideKnockdown = ent.Comp.CollideKnockdown;
+        targetComp.JumpDistance = ent.Comp.JumpDistance;
+        targetComp.JumpThrowSpeed = ent.Comp.JumpThrowSpeed;
+        Dirty(args.CloneUid, targetComp);
     }
 }

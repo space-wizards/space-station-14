@@ -51,7 +51,6 @@
   - type: TemperatureProtection
     heatingCoefficient: 1.2
     coolingCoefficient: 0.50
-  - type: SolutionScanner
   - type: JumpAbility
     action: ActionVulpkaninGravityJump
     canCollide: true
