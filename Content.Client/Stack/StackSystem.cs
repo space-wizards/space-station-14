@@ -33,7 +33,7 @@ namespace Content.Client.Stack
             base.SetCount(ent, amount);
 
             // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
-            if (ent.Comp.Count <= 0 && !ent.Comp.Lingering)
+            if (ent.Comp.Count <= 0)
             {
                 Xform.DetachEntity(ent.Owner, Transform(ent.Owner));
                 return;
