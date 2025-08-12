@@ -49,23 +49,7 @@ namespace Content.Client.Access.UI
             _MaxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _MaxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
             */
-
-            // Tab Buttons
-
-            SettingsTabButton.OnPressed += _ =>
-            {
-                SettingsTabButton.IsCurrent = true;
-                JobIconTabButton.IsCurrent = false;
-            };
-
-            JobIconTabButton.OnPressed += _ =>
-            {
-                SettingsTabButton.IsCurrent = false;
-                JobIconTabButton.IsCurrent = true;
-            };
-
-            // LineEdit
-
+            
             NameLineEdit.OnTextEntered += e =>
             {
                 OnNameChanged?.Invoke(e.Text);
@@ -92,8 +76,8 @@ namespace Content.Client.Access.UI
             NameLineEdit.IsValid = s => s.Length <= NameMaxLength;
             JobLineEdit.IsValid = s => s.Length <= JobMaxLength;
 
-            //CTabContainer.SetTabTitle(0, Loc.GetString("agent-id-ui-tab-settings"));
-            //CTabContainer.SetTabTitle(1, Loc.GetString("agent-id-ui-tab-job-icons"));
+            CTabContainer.SetTabTitle(0, Loc.GetString("agent-id-ui-tab-settings"));
+            CTabContainer.SetTabTitle(1, Loc.GetString("agent-id-ui-tab-job-icons"));
         }
 
         //TODO rename, remove currentJobIconId, summary
