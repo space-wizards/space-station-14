@@ -88,7 +88,7 @@
 - type: entity
   parent: [ IDCardStandard, BaseCommandContraband ]
   id: NTNCBlueShieldIDCard
-  name: NT-NC naval officer's ID card
+  name: Nanotrasen Navy Corps Marine's ID card
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Misc/id_cards.rsi

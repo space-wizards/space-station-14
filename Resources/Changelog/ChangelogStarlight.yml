@@ -11103,5 +11103,194 @@ Entries:
   id: 1527
   time: '2025-08-09T10:58:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1267
+- author: walksanatora
+  changes:
+  - message: un-smart corgis now have a unqiue description so they can be telled apart.
+    type: Tweak
+  id: 128600
+  time: '2025-08-10T04:30:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1286
+- author: Conflee
+  changes:
+  - message: Changed dragon's max blood from 650 to 600, critical state from 450 damage
+      to 350 damage, and it's dead state from 500 damage to 400 damage. Adjusted wounded
+      speed debuff to match.
+    type: Tweak
+  id: 128400
+  time: '2025-08-11T20:22:55.585282+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1284
+- author: Conflee
+  changes:
+  - message: Kitsune Mask now has 10% blunt resist instead of 95%. oopsi i made a
+      fucky wucky (ᵕ•͈ω•͈)
+    type: Fix
+  id: 129700
+  time: '2025-08-11T20:25:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1297
+- author: RoadTrain
+  changes:
+  - message: Fixes NT-NC ghost role name/desc.
+    type: Fix
+  id: 128700
+  time: '2025-08-11T20:28:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1287
+- author: RoadTrain
+  changes:
+  - message: The ghost role spawner now uses the basic preset.
+    type: Tweak
+  id: 128701
+  time: '2025-08-11T20:28:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1287
+- author: RoadTrain
+  changes:
+  - message: Adds a second ghost role spawner, which specifically uses the hardsuit
+      preset.
+    type: Add
+  id: 128702
+  time: '2025-08-11T20:28:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1287
+- author: Killer Tamashi
+  changes:
+  - message: Bird noises to Avali
+    type: Add
+  id: 130400
+  time: '2025-08-11T20:57:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1304
+- author: Killer Tamashi
+  changes:
+  - message: Fixed missing noises in other species, you can now Weh and Hew to your
+      heart's content
+    type: Fix
+  id: 130401
+  time: '2025-08-11T20:57:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1304
+- author: PubliclyExecutedPig
+  changes:
+  - message: Fixed Pitbull mags not showing up in the uplink
+    type: Fix
+  id: 129000
+  time: '2025-08-11T21:10:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1290
+- author: Quini98
+  changes:
+  - message: Lottery Shuttle
+    type: Tweak
+  id: 129300
+  time: '2025-08-11T21:26:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1293
+- author: Rinary
+  changes:
+  - message: Fixed upstream rewrite, now all cooking recipes require their cooking
+      device(See guidebook pls, don't write bug reports)
+    type: Fix
+  id: 131000
+  time: '2025-08-12T17:40:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1310
+- author: TopGuy
+  changes:
+  - message: Fixed kudzu that grew on turnstiles being untargetable
+    type: Fix
+  id: 129800
+  time: '2025-08-12T17:46:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1298
+- author: TheRealSlimRedwoods
+  changes:
+  - message: Added more plushies! (this is a cry for help please this made me go insane)
+    type: Add
+  id: 130900
+  time: '2025-08-12T17:56:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1309
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Renamed the "lecter safe" to the "rifle safe"
+    type: Tweak
+  id: 94000
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Renamed the "drozd safe" to the "smg safe"
+    type: Tweak
+  id: 94001
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Renamed the "mk58 safe" to the "pistol safe"
+    type: Tweak
+  id: 94002
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Renamed the "kammerer safe" to the "shotgun safe"
+    type: Tweak
+  id: 94003
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Added the Leikha burst AR to the rifle safe
+    type: Add
+  id: 94004
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Added the Syndicate Fireaxe to the uplink
+    type: Add
+  id: 94005
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: The Syndicate Fireaxe now fits on the suit storage slot
+    type: Tweak
+  id: 94006
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: The Desert Eagle bundle now comes with magnum magazines
+    type: Fix
+  id: 94007
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Added the Type U3 Uzi to the uplink, along with the associated magazines
+    type: Add
+  id: 94008
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Added the Peacemaker Battle Rifle for ERT
+    type: Add
+  id: 94009
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Replaced the ARG safe in the ERT shuttle with a Peacemaker safe
+    type: Tweak
+  id: 94010
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: Resprited the Minotaur
+    type: Tweak
+  id: 94011
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: PubliclyExecutedPig, Salem
+  changes:
+  - message: The Minotaur no longer has full auto capabilities, instead replaced with
+      a slower semi-auto and the pre-existing burst (Yes full auto minotaur was unintended)
+    type: Fix
+  id: 94012
+  time: '2025-08-12T18:10:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/940
 Order: -1
 
