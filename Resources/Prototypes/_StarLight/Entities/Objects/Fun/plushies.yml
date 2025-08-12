@@ -334,7 +334,7 @@
     
 - type: entity
   parent: BaseMothPlushie
-  id: KoniPlush
+  id: PlushieKoni
   name: koni plushie
   description: Some sort of moth-cat hybrid. You can't help but find it really cute. Can squeak and meow!
   components:
