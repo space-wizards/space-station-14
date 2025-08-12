@@ -100,6 +100,14 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
+  - type: BoneSaw # 🌟Starlight🌟
+  - type: SurgeryTool # 🌟Starlight🌟
+    successRate: 0.4
+    speed: 0.8
+    startSound:
+      path: /Audio/Effects/chop.ogg
+    endSound:
+      path: /Audio/Effects/chop.ogg
 
 - type: entity
   name: spade

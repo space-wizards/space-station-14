@@ -33,6 +33,14 @@
     guides:
     - VoltageNetworks
     - Power
+  - type: Retractor # 🌟Starlight🌟
+  - type: SurgeryTool # 🌟Starlight🌟
+    successRate: 0.6 # really not ideal, but in a pinch...
+    speed: 1.5
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/retractor1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/retractor2.ogg
 
 - type: entity
   id: CableHVStack
