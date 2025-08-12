@@ -1,8 +1,8 @@
 ## base entities
 
 - type: entity
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
   id: BaseChemistryVial
   components:
   - type: Tag
