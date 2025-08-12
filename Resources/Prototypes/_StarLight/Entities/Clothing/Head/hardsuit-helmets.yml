@@ -320,9 +320,9 @@
   description: A specially designed helmet for mining operations.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/Head/Hardsuits/advmining.rsi # DOTS Still need a sprite for this
+    sprite: _Starlight/Clothing/Head/Hardsuits/advmining.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Head/Hardsuits/advmining.rsi # DOTS Still need a sprite for this
+    sprite: _Starlight/Clothing/Head/Hardsuits/advmining.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
