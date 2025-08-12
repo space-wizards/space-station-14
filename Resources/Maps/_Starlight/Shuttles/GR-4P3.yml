@@ -44,6 +44,7 @@ entities:
       bodyType: Dynamic
     - type: Fixtures
       fixtures: {}
+    - type: MiningShuttle
     - type: OccluderTree
     - type: SpreaderGrid
     - type: Shuttle

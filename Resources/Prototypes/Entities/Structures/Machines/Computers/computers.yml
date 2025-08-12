@@ -222,7 +222,8 @@
     - map: ["computerLayerKeyboard"]
       state: generic_keyboard
     - map: ["computerLayerScreen"]
-      state: shuttle
+      sprite: _Starlight/Structures/Machines/computers.rsi # Starlight
+      state: shuttle-cargo # Starlight
     - map: ["computerLayerKeys"]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
@@ -235,7 +236,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    color: "#43ccb5"
+    color: "#a56d19" # Starlight - matches new computerLayerScreen
   - type: Computer
     board: CargoShuttleConsoleCircuitboard
   - type: StealTarget

@@ -25,6 +25,7 @@
     - id: RadioHandheldExpedition #starlight
     - id: ClothingOuterHardsuitLuxmax #starlight
     - id: SalvageShuttleConsoleCircuitboard #starlight
+    - id: MiningShuttleConsoleCircuitboard #starlight
 
 - type: entity
   id: LockerQuarterMasterFilled

@@ -78,3 +78,14 @@
     storedRotation: 90
   - type: ThiefUndeterminedBackpack
     spawnedStoragePrototype: ClothingBackpackSatchelSmugglerUnanchored
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: MiningShuttleCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: CargoTechnician
+  - type: StealCondition
+    stealGroup: MiningShuttleConsoleCircuitboard
+  - type: Objective
+    difficulty: 0.7
