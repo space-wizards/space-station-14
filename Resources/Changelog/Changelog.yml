@@ -1,81 +1,4 @@
 ﻿Entries:
-- author: Pronana
-  changes:
-  - message: Moths can now eat pills
-    type: Tweak
-  id: 8325
-  time: '2025-04-24T02:28:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35609
-- author: Coolsurf6
-  changes:
-  - message: Updated more contraband items for Syndicate and Security.
-    type: Tweak
-  id: 8326
-  time: '2025-04-24T02:57:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35102
-- author: Beck Thompson
-  changes:
-  - message: You can how hide items inside cake by using a knife! Eating a cake with
-      an item inside will do minor damage.
-    type: Add
-  id: 8327
-  time: '2025-04-24T03:00:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31015
-- author: RedBookcase
-  changes:
-  - message: Added Advanced Circular Saw as a Medical Doctor specific uplink item.
-    type: Add
-  - message: Removed Syndicate Surgery Duffel Bag from uplink.
-    type: Remove
-  id: 8328
-  time: '2025-04-24T03:01:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35915
-- author: AgentSmithRadio, MadeOfHeartAndStone
-  changes:
-  - message: Added cotton grilled cheese sandwich entity and recipe.
-    type: Add
-  id: 8329
-  time: '2025-04-24T03:24:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36135
-- author: SG6732
-  changes:
-  - message: Added meat patties. Get the charcoal and let's start grillin.
-    type: Add
-  id: 8330
-  time: '2025-04-24T03:45:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34896
-- author: DrMelon, EmoGarbage404
-  changes:
-  - message: Added turnstiles, gates able to limit the flow of foot traffic. The station's
-      flow is at your fingertips.
-    type: Add
-  id: 8331
-  time: '2025-04-24T11:39:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36313
-- author: EmoGarbage404
-  changes:
-  - message: Added prisoner closets. These create automatic ID's which allow you to
-      quickly handle the transfer of prisoners in and out of genpop cells while keeping
-      their belongings secure. Imprison people today!
-    type: Add
-  id: 8332
-  time: '2025-04-24T14:32:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36392
-- author: Southbridge
-  changes:
-  - message: Colorful Light Crates have been added and can be ordered.
-    type: Add
-  id: 8333
-  time: '2025-04-24T17:41:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36750
-- author: ScarKy0, Jbsundown
-  changes:
-  - message: Letters and Packages can now be cut open with sharp objects. Be wary,
-      this makes cargo lose money!
-    type: Add
-  id: 8334
-  time: '2025-04-24T19:47:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36815
 - author: EmoGarbage404
   changes:
   - message: Fixed situations where using the QSI would send the player into an esoteric
@@ -3899,3 +3822,88 @@
   id: 8837
   time: '2025-08-07T16:01:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38896
+- author: chromiumboy
+  changes:
+  - message: The station AI will receive chat notifications when its sentry turrets
+      start firing upon hostile targets.
+    type: Add
+  id: 8838
+  time: '2025-08-08T18:56:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35277
+- author: K-Dynamic
+  changes:
+  - message: Captain and Head of Personnel starts with administration glasses and
+      hud respectively.
+    type: Add
+  id: 8839
+  time: '2025-08-08T19:00:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35531
+- author: perryprog
+  changes:
+  - message: The emote radial menu now shows the correct icons for its subcategories.
+    type: Fix
+  id: 8840
+  time: '2025-08-08T19:27:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39481
+- author: Flareguy
+  changes:
+  - message: Updated moth displacement maps to fix missing pixels, among other various
+      issues.
+    type: Fix
+  id: 8841
+  time: '2025-08-09T21:52:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39174
+- author: Princess-Cheeseballs
+  changes:
+  - message: Mobs such as borgs, dragons, etc can no longer crawl.
+    type: Tweak
+  id: 8842
+  time: '2025-08-10T17:49:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39084
+- author: beck-thompson
+  changes:
+  - message: Various syndicate items can now be "locked" with your voice to hide their
+      true identity. The items are, all chameleon clothing, voice masks, no slips,
+      agent IDs, cane swords, and e daggers.
+    type: Add
+  - message: e dagger now has a slightly longer activation cool down (1s -> 1.5s).
+    type: Tweak
+  - message: Voice triggered items now properly display the trigger text when examined.
+    type: Fix
+  id: 8843
+  time: '2025-08-10T18:10:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39310
+- author: jessicamaybe
+  changes:
+  - message: 'Added a rare Hamlet variant: Fragile Hamlet'
+    type: Add
+  id: 8844
+  time: '2025-08-10T22:20:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39531
+- author: perryprog
+  changes:
+  - message: "Diona\_nymphs that reform inside of a locker will no longer be invisible."
+    type: Fix
+  id: 8845
+  time: '2025-08-11T11:00:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39505
+- author: Samuka
+  changes:
+  - message: The Robotics Console now correctly displays the brain installed information
+      if the borg has a empty MMI
+    type: Fix
+  - message: The Robotics Console now shows the borg physical integrity
+    type: Tweak
+  - message: Changed the colors for the battery display in the robotics console so
+      it easier to read the percentage
+    type: Tweak
+  id: 8846
+  time: '2025-08-11T18:57:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38023
+- author: metalgearsloth
+  changes:
+  - message: Inserting lights now plays an insert animation.
+    type: Add
+  id: 8847
+  time: '2025-08-11T21:06:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36541
