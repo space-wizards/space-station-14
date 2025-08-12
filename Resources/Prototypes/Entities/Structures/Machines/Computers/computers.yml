@@ -1569,7 +1569,7 @@
     - map: ["computerLayerKeyboard"]
       state: generic_keyboard
     - map: ["computerLayerScreen"]
-      state: xenorobot # future : custom sprite
+      state: xenorobot
     - map: ["computerLayerKeys"]
       state: rd_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
