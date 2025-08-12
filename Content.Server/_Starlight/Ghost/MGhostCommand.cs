@@ -1,17 +1,11 @@
-using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.Ghost;
-using Content.Server.Mind;
 using Content.Shared.Administration;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
-using Content.Shared.Starlight;
 using Content.Shared._NullLink;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 
 namespace Content.Server._Starlight.Ghost;
 
@@ -19,17 +13,12 @@ namespace Content.Server._Starlight.Ghost;
 public sealed class MGhostCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
-    [Dependency] private readonly ISharedPlayersRoleManager _roleManager = default!;
     [Dependency] private readonly ISharedNullLinkPlayerRolesReqManager _playerRoles = default!;
 
     public override string Command => "mghost";
     public override string Help => "mghost";
 
-    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
-    {
-        return CompletionResult.Empty;
-    }
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args) => CompletionResult.Empty;
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -47,7 +36,7 @@ public sealed class MGhostCommand : LocalizedCommands
             return;
         }
 
-        if (!_roleManager.HasAnyPlayerFlags(player, [PlayerFlags.Mentor])) // if you are a admin use aghost
+        if (!_playerRoles.IsMentor(player)) // if you are a admin you should be using aghost
         {
             shell.WriteError(LocalizationManager.GetString("mghost-mentors-only"));
             return;
