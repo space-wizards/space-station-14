@@ -20,6 +20,12 @@
             "name": "mag-1"
         },
         {
+            "name": "red"
+        },
+        {
+            "name": "practice"
+        },
+        {
             "name": "inhand-left-mag",
             "directions": 4
         },
