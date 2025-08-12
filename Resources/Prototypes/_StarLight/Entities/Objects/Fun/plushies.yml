@@ -1556,7 +1556,7 @@
 
 - type: entity
   parent: BaseResomiPlushie # Temporary until I make a Avali plushie base...... fml
-  id: MalachiPlushie
+  id: PlushieMalachi
   name: Malachi Plushie
   description: Small but can REALLY fuck up your mischiefs and now she watches you as a plushie, a reminder that she is still there.
   components:
@@ -1579,7 +1579,7 @@
 
 - type: entity
   parent: BaseResomiPlushie
-  id: RemiiePlushie
+  id: PlushieRemiie
   name: Remiie Plushie
   description: Beta sector's favourite veteran head of personnel! Now turned into a marketable plushie and is extremely huggable!
   components:
@@ -1602,7 +1602,7 @@
 
 - type: entity
   parent: BasePlushie
-  id: BrighteyesPlushie
+  id: PlushieBrighteyes
   name: Brighteyes Plushie
   description:  It's Brighteyes, Sentinel Pack, now in adorable marketable plushie form! This tiny kitty always packs a fiery punch to protect the station, particularly her family and friends. She won't let you give her uppies, but at least this plush will.
   components:
