@@ -27,7 +27,7 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Slash: 10
+        Slash: 15
         Structural: 40
   - type: Item
     size: Ginormous
@@ -66,3 +66,4 @@
     quickEquip: false
     slots:
     - back
+    - suitStorage
