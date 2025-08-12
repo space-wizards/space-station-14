@@ -20,10 +20,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesMatthew
-    - type: TextToSpeech
-      voice: sampo
+      - type: DatasetVocalizer
+        dataset: PlushiesMatthew
+      - type: TextToSpeech
+        voice: sampo
 
 - type: entity
   parent: BaseResomiPlushie
@@ -46,10 +46,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesEmmie
-    - type: TextToSpeech
-      voice: ganyu
+      - type: DatasetVocalizer
+        dataset: PlushiesEmmie
+      - type: TextToSpeech
+        voice: ganyu
 
 - type: entity
   parent: BaseVulpkaninPlushie
@@ -70,10 +70,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesTrystan
-    - type: TextToSpeech
-      voice: barneycalhoun
+      - type: DatasetVocalizer
+        dataset: PlushiesTrystan
+      - type: TextToSpeech
+        voice: barneycalhoun
 
 - type: entity
   parent: BaseResomiPlushie
@@ -94,10 +94,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesMorgana
-    - type: TextToSpeech
-      voice: bettylabomba
+      - type: DatasetVocalizer
+        dataset: PlushiesMorgana
+      - type: TextToSpeech
+        voice: bettylabomba
 
 - type: entity
   parent: BaseResomiPlushie
@@ -118,10 +118,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesMorgana
-    - type: TextToSpeech
-      voice: bettylabomba
+      - type: DatasetVocalizer
+        dataset: PlushiesMorgana
+      - type: TextToSpeech
+        voice: bettylabomba
 
 - type: entity
   parent: BaseResomiPlushie
@@ -142,10 +142,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesKiosha
-    - type: TextToSpeech
-      voice: skye-valorant
+      - type: DatasetVocalizer
+        dataset: PlushiesKiosha
+      - type: TextToSpeech
+        voice: skye-valorant
 
 - type: entity
   parent: BaseVulpkaninPlushie
@@ -168,10 +168,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesLance
-    - type: TextToSpeech
-      voice: barneycalhoun
+      - type: DatasetVocalizer
+        dataset: PlushiesLance
+      - type: TextToSpeech
+        voice: barneycalhoun
 
 - type: entity
   parent: BaseVulpkaninPlushie
@@ -194,10 +194,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesKiller
-    - type: TextToSpeech
-      voice: heavy
+      - type: DatasetVocalizer
+        dataset: PlushiesKiller
+      - type: TextToSpeech
+        voice: heavy
 
 - type: entity
   parent: PlushieHuman
@@ -241,10 +241,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesAmali
-    - type: TextToSpeech
-      voice: ganyu
+      - type: DatasetVocalizer
+        dataset: PlushiesAmali
+      - type: TextToSpeech
+        voice: ganyu
 
 - type: entity
   parent: PlushieHuman
@@ -265,10 +265,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesOog
-    - type: TextToSpeech
-      voice: heavy
+      - type: DatasetVocalizer
+        dataset: PlushiesOog
+      - type: TextToSpeech
+        voice: heavy
 
 - type: entity
   parent: BaseVulpkaninPlushie
@@ -289,10 +289,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesVanilla
-    - type: TextToSpeech
-      voice: layla
+      - type: DatasetVocalizer
+        dataset: PlushiesVanilla
+      - type: TextToSpeech
+        voice: layla
 #end region
 
 - type: entity
@@ -314,10 +314,10 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: DatasetVocalizer
-      dataset: PlushiesOp
-    - type: TextToSpeech
-      voice: duelist
+      - type: DatasetVocalizer
+        dataset: PlushiesOp
+      - type: TextToSpeech
+        voice: duelist
 
 - type: entity
   parent: BaseMothPlushie
@@ -1322,37 +1322,37 @@
           voice: himeko
 
 
-### will reenable when i get a batter sprite
-#- type: entity
-  #parent: PlushieHuman
-  #id: PlushieRomero
-  #name: Die-cast Romero "Plushie"
-  #description: A steel cast "plushie" of an infamous Head of Security. He looks angry and has a faint smell of ash. His gun and knife are sold separetly.
-  #components:
-    #- type: Item
-      #size: Small
-      #sprite: _Starlight/Objects/Fun/Plushies/romero_plushie.rsi
-    #- type: Sprite
-      #sprite: _Starlight/Objects/Fun/Plushies/romero_plushie.rsi
-      #layers:
-        #- state: icon
-    #- type: MeleeWeapon
-      #wideAnimationRotation: -135
-      #damage:
-        #types:
-          #Blunt: 8
-      #soundHit:
-        #collection: MetalThud
-    #- type: ItemToggle
-      #onUse: false
-      #verbToggleOn: plushie-voicebox-activate
-      #verbToggleOff: plushie-voicebox-deactivate
-    #- type: ComponentToggler
-      #components:
-        #- type: DatasetVocalizer
-          #dataset: PlushiesRomero
-        #- type: TextToSpeech
-          #voice: volition
+# will reenable when i get a batter sprite ## got a better sprite, so reenabling
+- type: entity
+  parent: PlushieHuman
+  id: PlushieRomero
+  name: Die-cast Romero "Plushie"
+  description: A steel cast "plushie" of an infamous Head of Security. He looks angry and has a faint smell of ash. His gun and knife are sold separetly.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/romero_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/romero_plushie.rsi
+      layers:
+        - state: icon
+    - type: MeleeWeapon
+      wideAnimationRotation: -135
+      damage:
+        types:
+          Blunt: 8
+      soundHit:
+        collection: MetalThud
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesRomero
+        - type: TextToSpeech
+          voice: volition
 
 - type: entity
   parent: PlushieHuman
@@ -1377,3 +1377,268 @@
           dataset: PlushiesPoley
         - type: TextToSpeech
           voice: neon
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieGalio #Weh!
+  name: tiny galio plushie
+  description: A galio you can carry with you to feel silly wherever you go!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/galio_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/galio_plushie.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/lizard_happy.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/lizard_happy.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: FootstepClown
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: _Starlight/Objects/Fun/Plushies/galio_plushie.rsi
+    slots:
+    - HEAD
+  - type: Speech
+    speechVerb: Reptilian # for pais (In the secret stash)
+  - type: Tag
+    tags:
+    - ClothMade
+    - Payload
+    - PlushieLizard
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: LizardPlushie
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesGalio
+      - type: TextToSpeech
+        voice: batman
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieRedwoods
+  name: Redwoods Plushie
+  description: From being turned into a female vulpkanin and into a marketable plushie, they really can't catch a break. Studies show hugging it improves morale.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/redwoods_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/redwoods_plushie.rsi
+      layers:
+        - state: icon
+    - type: ItemToggle
+      onUse: true
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesRedwoods
+        - type: TextToSpeech
+          voice: klaasjeamandou
+
+- type: entity
+  parent: BaseShadekinPlushie
+  id: PlushieVirus
+  name: Virus Plushie
+  description: BEST SALESWOMAN, resgistered 2525, now in a pocket version! # spamton ass character :sob:
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/virus_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/virus_plushie.rsi
+      layers:
+        - state: icon
+    - type: Clothing
+      sprite: _Starlight/Objects/Fun/Plushies/virus_plushie.rsi
+      slots:
+      - HEAD
+      clothingVisuals:
+        head:
+        - state: equipped-HELMET
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesVirus
+        - type: TextToSpeech
+          voice: neon
+
+- type: entity
+  parent: BaseMothPlushie
+  id: PlushieMahio
+  name: Mahio Plushie
+  description: Is this moth even RD?
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/mahio_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/mahio_plushie.rsi
+    state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesMahio
+      - type: TextToSpeech
+        voice: engineer
+
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieRhea
+  name: Rhea Plushie
+  description: Our beloved Urlunete Salvie is now made out of pure polyester! Hug them while fucking over xenos.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/rhea_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/rhea_plushie.rsi
+    state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesRhea
+      - type: TextToSpeech
+        voice: kamisatoayaka
+
+- type: entity
+  parent: BaseResomiPlushie # Temporary until I make a Avali plushie base...... fml
+  id: PlushieMalachi
+  name: Malachi Plushie
+  description: Small but can REALLY fuck up your mischiefs and now she watches you as a plushie, a reminder that she is still there.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/malachi_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/malachi_plushie.rsi
+    state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesMalachi
+      - type: TextToSpeech
+        voice: clementine
+
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieRemiie
+  name: Remiie Plushie
+  description: Beta sector's favourite veteran head of personnel! Now turned into a marketable plushie and is extremely huggable!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/remiie_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/remiie_plushie.rsi
+    state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesRemiie
+      - type: TextToSpeech
+        voice: judy
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieBrighteyes
+  name: Brighteyes Plushie
+  description:  It's Brighteyes, Sentinel Pack, now in adorable marketable plushie form! This tiny kitty always packs a fiery punch to protect the station, particularly her family and friends. She won't let you give her uppies, but at least this plush will.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/brighteyes_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/brighteyes_plushie.rsi
+    state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+      - type: DatasetVocalizer
+        dataset: PlushiesBrighteyes
+      - type: TextToSpeech
+        voice: clara
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/cat_meow2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/cat_meow2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/cat_hiss.ogg
