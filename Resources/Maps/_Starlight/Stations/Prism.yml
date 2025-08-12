@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 08/11/2025 02:10:59
-  entityCount: 24860
+  time: 08/12/2025 00:22:40
+  entityCount: 24865
 maps:
 - 1
 grids:
@@ -8846,7 +8846,8 @@ entities:
           10,12:
             0: 62207
           11,9:
-            0: 65520
+            0: 65008
+            8: 512
           11,10:
             0: 65535
           11,11:
@@ -10065,6 +10066,21 @@ entities:
           moles:
           - 27.225372
           - 102.419266
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.813705
+          - 82.06108
           - 0
           - 0
           - 0
@@ -12629,6 +12645,8 @@ entities:
     - type: Transform
       pos: 4.5,-6.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 199
     components:
     - type: Transform
@@ -12778,7 +12796,7 @@ entities:
       pos: 19.5,52.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -83207.25
+      secondsUntilStateChange: -84053.37
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -12852,7 +12870,7 @@ entities:
       pos: 72.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -167282.73
+      secondsUntilStateChange: -168128.84
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -13092,7 +13110,7 @@ entities:
       pos: 9.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -126319.12
+      secondsUntilStateChange: -127165.234
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -13102,7 +13120,7 @@ entities:
       pos: -2.5,11.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -282810.03
+      secondsUntilStateChange: -283656.12
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -13148,7 +13166,7 @@ entities:
       pos: 3.5,11.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -303798.75
+      secondsUntilStateChange: -304644.84
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -13250,7 +13268,7 @@ entities:
       pos: -8.5,11.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -276972.22
+      secondsUntilStateChange: -277818.3
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -13663,7 +13681,7 @@ entities:
       pos: -60.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -256435.06
+      secondsUntilStateChange: -257281.17
     - type: DeviceLinkSink
       invokeCounter: 1
     - type: DeviceLinkSource
@@ -13785,7 +13803,7 @@ entities:
       pos: 86.5,29.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -208012.62
+      secondsUntilStateChange: -208858.73
     - type: DeviceLinkSink
       invokeCounter: 1
     - type: DeviceLinkSource
@@ -14238,7 +14256,7 @@ entities:
       pos: 53.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -8770.351
+      secondsUntilStateChange: -9616.463
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14249,7 +14267,7 @@ entities:
       pos: 53.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -8770.55
+      secondsUntilStateChange: -9616.662
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14613,7 +14631,7 @@ entities:
       pos: 2.5,18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -293154.2
+      secondsUntilStateChange: -294000.28
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -14791,7 +14809,7 @@ entities:
       pos: 10.5,-2.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -112273.99
+      secondsUntilStateChange: -113120.11
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -15166,7 +15184,7 @@ entities:
       pos: 32.5,16.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -236140.52
+      secondsUntilStateChange: -236986.62
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -15308,7 +15326,7 @@ entities:
       pos: 10.5,48.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -47230.332
+      secondsUntilStateChange: -48076.445
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -18483,6 +18501,8 @@ entities:
   entities:
   - uid: 1080
     components:
+    - type: MetaData
+      name: snake eater
     - type: Transform
       pos: 76.607346,5.533638
       parent: 2
@@ -20055,6 +20075,8 @@ entities:
       parent: 2
   - uid: 1360
     components:
+    - type: MetaData
+      name: vent burn chamber button
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -8.5,27.5
@@ -71346,7 +71368,7 @@ entities:
       pos: 16.5,4.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -4402.322
+      secondsUntilStateChange: -5248.4346
       state: Opening
 - proto: FenceMetalStraight
   entities:
@@ -73395,7 +73417,7 @@ entities:
       pos: 76.5,2.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -111288.42
+      secondsUntilStateChange: -112134.54
       state: Closing
   - uid: 11066
     components:
@@ -75036,7 +75058,7 @@ entities:
       pos: 68.5,32.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -43680.906
+      secondsUntilStateChange: -44527.02
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -112919,6 +112941,8 @@ entities:
       connected: True
   - uid: 15192
     components:
+    - type: MetaData
+      name: hot line release
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,21.5
@@ -125715,8 +125739,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.8856695
-        - 7.0937095
+        - 1.8968438
+        - 7.1357465
         - 0
         - 0
         - 0
@@ -125733,15 +125757,15 @@ entities:
           showEnts: False
           occludes: True
           ents:
+          - 16970
           - 16969
-          - 16981
           - 16971
           - 16968
           - 16980
           - 16979
           - 16982
           - 16972
-          - 16970
+          - 16981
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -127454,6 +127478,8 @@ entities:
   entities:
   - uid: 17216
     components:
+    - type: MetaData
+      name: vent burn chamber button
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -8.5,27.5
@@ -127471,6 +127497,8 @@ entities:
           - Toggle
   - uid: 17217
     components:
+    - type: MetaData
+      name: vent burn chamber button
     - type: Transform
       pos: -19.5,44.5
       parent: 2
@@ -127487,6 +127515,8 @@ entities:
           - Toggle
   - uid: 17218
     components:
+    - type: MetaData
+      name: vent burn chamber button
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -17.5,50.5
@@ -127504,6 +127534,8 @@ entities:
           - Toggle
   - uid: 17219
     components:
+    - type: MetaData
+      name: vent burn chamber button
     - type: Transform
       pos: -8.5,23.5
       parent: 2
@@ -127522,6 +127554,8 @@ entities:
   entities:
   - uid: 17220
     components:
+    - type: MetaData
+      name: radiation shutter toggle
     - type: Transform
       pos: -61.5,4.5
       parent: 2
@@ -127546,6 +127580,8 @@ entities:
   entities:
   - uid: 17221
     components:
+    - type: MetaData
+      name: shutter control
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 50.5,24.5
@@ -127560,10 +127596,14 @@ entities:
           - Toggle
   - uid: 17222
     components:
+    - type: MetaData
+      name: shutter control
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 50.5,24.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         19878:
@@ -127576,6 +127616,8 @@ entities:
   entities:
   - uid: 17223
     components:
+    - type: MetaData
+      name: vent test chamber button
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 34.5,2.5
@@ -127587,6 +127629,8 @@ entities:
           - Toggle
   - uid: 17224
     components:
+    - type: MetaData
+      name: vent test chamber button
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 37.5,2.5
@@ -127598,6 +127642,8 @@ entities:
           - Toggle
   - uid: 17225
     components:
+    - type: MetaData
+      name: shutter control
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 42.5,11.5
@@ -127615,6 +127661,8 @@ entities:
           - Toggle
   - uid: 17226
     components:
+    - type: MetaData
+      name: shutter control
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 42.5,15.5
@@ -143676,12 +143724,16 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 50.5,23.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 19879
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 50.5,22.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 19880
     components:
     - type: Transform
@@ -144025,12 +144077,16 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 48.5,32.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 19939
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 48.5,33.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
 - proto: SignAi
   entities:
   - uid: 19940
@@ -144059,6 +144115,8 @@ entities:
   entities:
   - uid: 19944
     components:
+    - type: MetaData
+      name: shutter control
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 18.5,48.5
@@ -144076,6 +144134,8 @@ entities:
           - Toggle
   - uid: 19945
     components:
+    - type: MetaData
+      name: shutter toggle
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -59.5,-1.5
@@ -144096,6 +144156,8 @@ entities:
           - Toggle
   - uid: 19946
     components:
+    - type: MetaData
+      name: shutter toggle
     - type: Transform
       pos: -59.5,4.5
       parent: 2
@@ -144141,6 +144203,8 @@ entities:
           - Toggle
   - uid: 19949
     components:
+    - type: MetaData
+      name: open cell door to courtroom
     - type: Transform
       pos: 47.5,-19.5
       parent: 2
@@ -144151,6 +144215,8 @@ entities:
           - Open
   - uid: 19950
     components:
+    - type: MetaData
+      name: shutter control
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 26.5,32.5
@@ -144186,6 +144252,8 @@ entities:
           - Toggle
   - uid: 19951
     components:
+    - type: MetaData
+      name: shutter control
     - type: Transform
       pos: 67.5,-1.5
       parent: 2
@@ -144232,6 +144300,8 @@ entities:
           - Toggle
   - uid: 19952
     components:
+    - type: MetaData
+      name: shutter control
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 18.5,49.5
@@ -144260,6 +144330,8 @@ entities:
   entities:
   - uid: 19953
     components:
+    - type: MetaData
+      name: bathroom lock
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,-5.5
@@ -144271,6 +144343,8 @@ entities:
           - DoorBolt
   - uid: 19954
     components:
+    - type: MetaData
+      name: bathroom lock
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 7.5,-5.5
@@ -144282,6 +144356,8 @@ entities:
           - DoorBolt
   - uid: 19955
     components:
+    - type: MetaData
+      name: shutter control
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,27.5
@@ -144299,6 +144375,8 @@ entities:
           - Toggle
   - uid: 19956
     components:
+    - type: MetaData
+      name: shutter control
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 75.5,43.5
@@ -144322,6 +144400,8 @@ entities:
           - Toggle
   - uid: 19957
     components:
+    - type: MetaData
+      name: exterior shutter control
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 43.5,29.5
@@ -144345,10 +144425,14 @@ entities:
           - Toggle
   - uid: 19958
     components:
+    - type: MetaData
+      name: brig shutter control
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 48.5,34.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         19938:
@@ -144359,10 +144443,14 @@ entities:
           - Toggle
   - uid: 19959
     components:
+    - type: MetaData
+      name: bathroom lock
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,-5.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         198:
@@ -144370,6 +144458,8 @@ entities:
           - DoorBolt
   - uid: 19960
     components:
+    - type: MetaData
+      name: bathroom lock
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,-9.5
@@ -144381,6 +144471,8 @@ entities:
           - DoorBolt
   - uid: 19961
     components:
+    - type: MetaData
+      name: open blast door button
     - type: Transform
       pos: 79.5,38.5
       parent: 2
@@ -144391,6 +144483,8 @@ entities:
           - Toggle
   - uid: 19962
     components:
+    - type: MetaData
+      name: push here to open door
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 65.5,27.5
@@ -147754,6 +147848,33 @@ entities:
     components:
     - type: Transform
       pos: 23.5,35.5
+      parent: 2
+  - uid: 24861
+    components:
+    - type: Transform
+      pos: 22.5,36.5
+      parent: 2
+  - uid: 24862
+    components:
+    - type: Transform
+      pos: 24.5,39.5
+      parent: 2
+- proto: SpawnMobButterfly
+  entities:
+  - uid: 24863
+    components:
+    - type: Transform
+      pos: 20.5,36.5
+      parent: 2
+  - uid: 24864
+    components:
+    - type: Transform
+      pos: 24.5,36.5
+      parent: 2
+  - uid: 24865
+    components:
+    - type: Transform
+      pos: 25.5,33.5
       parent: 2
 - proto: SpawnMobCatBingus
   entities:
@@ -154276,6 +154397,8 @@ entities:
   entities:
   - uid: 21436
     components:
+    - type: MetaData
+      name: canister transport conveyor control
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,28.5
@@ -154496,6 +154619,8 @@ entities:
           - Close
   - uid: 21437
     components:
+    - type: MetaData
+      name: express conveyor control
     - type: Transform
       pos: 61.5,58.5
       parent: 2
@@ -154629,6 +154754,8 @@ entities:
           - Off
   - uid: 21438
     components:
+    - type: MetaData
+      name: mail carousel control
     - type: Transform
       pos: 51.5,67.5
       parent: 2
@@ -154706,6 +154833,8 @@ entities:
           - Off
   - uid: 21439
     components:
+    - type: MetaData
+      name: recycler control
     - type: Transform
       pos: 70.5,60.5
       parent: 2
@@ -154734,6 +154863,8 @@ entities:
           - Off
   - uid: 21440
     components:
+    - type: MetaData
+      name: recycler control
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 79.5,34.5
@@ -154777,6 +154908,8 @@ entities:
           - Off
   - uid: 21441
     components:
+    - type: MetaData
+      name: Conveyor Control
     - type: Transform
       pos: -27.5,2.5
       parent: 2
@@ -155106,6 +155239,8 @@ entities:
           - Off
   - uid: 21442
     components:
+    - type: MetaData
+      name: dump conveyor control
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 79.5,36.5
@@ -170618,6 +170753,10 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+    - type: Contraband
+      allowedDepartments:
+      - Security
+      severity: Restricted
 - proto: WeaponSubMachineGunWt550
   entities:
   - uid: 24380
@@ -171951,7 +172090,7 @@ entities:
       pos: 38.5,-15.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -172652.92
+      secondsUntilStateChange: -173499.03
   - uid: 24597
     components:
     - type: Transform
