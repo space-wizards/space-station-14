@@ -39,13 +39,6 @@ namespace Content.Shared.Stacks
         [DataField]
         public bool Unlimited { get; set; }
 
-        /// <summary>
-        ///     Lingering stacks will remain present even when there are no items.
-        ///     Instead, they will become transparent.
-        /// </summary>
-        [DataField]
-        public bool Lingering;
-
         [DataField]
         public bool ThrowIndividually { get; set; } = false;
 
@@ -99,13 +92,10 @@ namespace Content.Shared.Stacks
         public int Count { get; }
         public int? MaxCount { get; }
 
-        public bool Lingering;
-
-        public StackComponentState(int count, int? maxCount, bool lingering)
+        public StackComponentState(int count, int? maxCount)
         {
             Count = count;
             MaxCount = maxCount;
-            Lingering = lingering;
         }
     }
 

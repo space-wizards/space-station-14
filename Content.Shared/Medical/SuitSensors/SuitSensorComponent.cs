@@ -1,14 +1,16 @@
 using Content.Shared.Medical.SuitSensor;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Medical.SuitSensors;
+namespace Content.Shared.Medical.SuitSensors;
 
 /// <summary>
 ///     Tracking device, embedded in almost all uniforms and jumpsuits.
 ///     If enabled, will report to crew monitoring console owners position and status.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(SuitSensorSystem))]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedSuitSensorSystem))]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class SuitSensorComponent : Component
 {
     /// <summary>
@@ -20,7 +22,7 @@ public sealed partial class SuitSensorComponent : Component
     /// <summary>
     ///     If true user can't change suit sensor mode
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool ControlsLocked = false;
 
     /// <summary>
@@ -32,7 +34,7 @@ public sealed partial class SuitSensorComponent : Component
     /// <summary>
     ///     Current sensor mode. Can be switched by user verbs.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SuitSensorMode Mode = SuitSensorMode.SensorOff;
 
     /// <summary>
@@ -56,7 +58,7 @@ public sealed partial class SuitSensorComponent : Component
     /// <summary>
     ///     Current user that wears suit sensor. Null if nobody wearing it.
     /// </summary>
-    [ViewVariables]
+    [DataField, AutoNetworkedField]
     public EntityUid? User = null;
 
     /// <summary>
@@ -69,7 +71,7 @@ public sealed partial class SuitSensorComponent : Component
     /// <summary>
     ///     The station this suit sensor belongs to. If it's null the suit didn't spawn on a station and the sensor doesn't work.
     /// </summary>
-    [DataField("station")]
+    [DataField("station"), AutoNetworkedField]
     public EntityUid? StationId = null;
 
     /// <summary>

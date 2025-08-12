@@ -34,7 +34,7 @@ namespace Content.Server.Stack
             base.SetCount(ent, amount);
 
             // Queue delete stack if count reaches zero.
-            if (ent.Comp.Count <= 0 && !ent.Comp.Lingering)
+            if (ent.Comp.Count <= 0)
                 QueueDel(ent.Owner);
         }
 

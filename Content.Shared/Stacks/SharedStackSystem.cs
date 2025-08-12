@@ -103,8 +103,6 @@ namespace Content.Shared.Stacks
 
         private void OnStackStarted(Entity<StackComponent> ent, ref ComponentStartup args)
         {
-            UpdateLingering(ent);
-
             if (!TryComp(ent.Owner, out AppearanceComponent? appearance))
                 return;
 
@@ -122,7 +120,7 @@ namespace Content.Shared.Stacks
 
         private void OnStackGetState(Entity<StackComponent> ent, ref ComponentGetState args)
         {
-            args.State = new StackComponentState(ent.Comp.Count, ent.Comp.MaxCountOverride, ent.Comp.Lingering);
+            args.State = new StackComponentState(ent.Comp.Count, ent.Comp.MaxCountOverride);
         }
 
         private void OnStackHandleState(Entity<StackComponent> ent, ref ComponentHandleState args)
@@ -131,7 +129,6 @@ namespace Content.Shared.Stacks
                 return;
 
             ent.Comp.MaxCountOverride = cast.MaxCount;
-            ent.Comp.Lingering = cast.Lingering;
             // This will change the count and call events.
             SetCount(ent.AsNullable(), cast.Count);
         }
@@ -184,7 +181,7 @@ namespace Content.Shared.Stacks
                 return;
 
             // We haven't eaten the whole stack yet or are unable to eat it completely.
-            if (eaten.Comp.Count > 0 || eaten.Comp.Lingering)
+            if (eaten.Comp.Count > 0)
             {
                 args.Refresh = true;
                 return;

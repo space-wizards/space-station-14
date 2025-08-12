@@ -32,8 +32,6 @@ namespace Content.Client.Stack
 
             base.SetCount(ent, amount);
 
-            UpdateLingering(ent!); // Danger! We already resolved the nullable so we're safe
-
             // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
             if (ent.Comp.Count <= 0 && !ent.Comp.Lingering)
             {
@@ -42,26 +40,6 @@ namespace Content.Client.Stack
             }
 
             ent.Comp.UiUpdateNeeded = true;
-        }
-
-        /// <summary>
-        ///     Updates the visuals for lingering stacks.
-        /// </summary>
-        protected override void UpdateLingering(Entity<StackComponent> ent)
-        {
-            if (!ent.Comp.Lingering ||
-                !TryComp<SpriteComponent>(ent.Owner, out var sprite))
-                return;
-
-            // tint the stack gray and make it transparent if it's lingering.
-            var color = ent.Comp.Count == 0
-                      ? Color.DarkGray.WithAlpha(0.65f)
-                      : Color.White;
-
-            for (var i = 0; i < sprite.AllLayers.Count(); i++)
-            {
-                _sprite.LayerSetColor((ent.Owner, sprite), i, color);
-            }
         }
 
         /// <inheritdoc cref="SetCount(Entity{StackComponent?}, int)"/>
