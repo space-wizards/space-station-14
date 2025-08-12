@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: thetolbean
-  changes:
-  - message: Specific outer clothing now correctly blocks your identity.
-    type: Fix
-  id: 8336
-  time: '2025-04-24T23:42:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33085
 - author: SlamBamActionman
   changes:
   - message: Changed 2 posters to be rules-compliant.
@@ -3945,3 +3938,11 @@
   id: 8848
   time: '2025-08-12T22:21:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38668
+- author: perryprog
+  changes:
+  - message: Fixed lights sometimes not emitting light when spawning them or when
+      they enter PVS.
+    type: Fix
+  id: 8849
+  time: '2025-08-12T23:00:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39585
