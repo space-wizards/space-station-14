@@ -19,6 +19,6 @@
               icon:
                sprite: Objects/Weapons/Bombs/ied.rsi
                state: icon
-              name: Fire Bomb
+              name: construction-graph-tag-firebomb
     - node: grenade
       entity: GrenadeHandmad
