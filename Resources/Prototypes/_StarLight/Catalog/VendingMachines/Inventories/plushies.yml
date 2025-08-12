@@ -602,7 +602,7 @@
   productEntity: PlushieRhea
   cost:
     NTCredit: 20
-  catagories:
+  categories:
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
@@ -613,7 +613,7 @@
   productEntity: PlushieRemiie
   cost:
     NTCredit: 20
-  catagories:
+  categories:
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
@@ -624,7 +624,7 @@
   productEntity: PlushieMalachi
   cost:
     NTCredit: 20
-  catagories:
+  categories:
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
@@ -635,7 +635,7 @@
   productEntity: PlushieBrighteyes
   cost:
     NTCredit: 20
-  catagories:
+  categories:
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
