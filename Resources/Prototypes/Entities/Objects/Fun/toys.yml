@@ -975,6 +975,14 @@
   - type: Tag
     tags:
     - DrinkSpaceGlue
+  - type: BoneGel # 🌟Starlight🌟
+  - type: SurgeryTool # 🌟Starlight🌟
+    successRate: 0.4 # really not ideal, but in a pinch...
+    speed: 1.5
+    startSound:
+      path: "/Audio/Items/bikehorn.ogg"
+    endSound:
+      path: "/Audio/Items/Toys/pushHornHonk.ogg"
 
 - type: entity
   parent: BaseItem
