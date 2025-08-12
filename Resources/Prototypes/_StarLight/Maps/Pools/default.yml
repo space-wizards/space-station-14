@@ -1,7 +1,7 @@
 - type: gameMapPool
   id: DefaultStarlightMapPool
   maps:
-  - Bagel
+  - StarlightBagel
   - Barratry
   - StarlightCog
   - Cork
