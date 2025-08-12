@@ -55,9 +55,9 @@ public sealed class StationAiSystem : SharedStationAiSystem
         base.Initialize();
 
         SubscribeLocalEvent<StationAiCoreComponent, ContainerSpawnEvent>(OnContainerSpawn);
+        SubscribeLocalEvent<StationAiCoreComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<StationAiCoreComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<StationAiCoreComponent, DamageChangedEvent>(OnDamageChanged);
-        SubscribeLocalEvent<StationAiCoreComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<StationAiCoreComponent, DoAfterAttemptEvent<IntellicardDoAfterEvent>>(OnDoAfterAttempt);
         SubscribeLocalEvent<ExpandICChatRecipientsEvent>(OnExpandICChatRecipients);
         SubscribeLocalEvent<StationAiTurretComponent, AmmoShotEvent>(OnAmmoShot);
@@ -124,53 +124,6 @@ public sealed class StationAiSystem : SharedStationAiSystem
         UpdateDamagedAccent(entity);
     }
 
-    private void UpdateDamagedAccent(Entity<StationAiCoreComponent> ent)
-    {
-        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
-            return;
-
-        if (!TryComp<DamagedSiliconAccentComponent>(held, out var accent))
-            return;
-
-        if (TryComp<BatteryComponent>(ent, out var battery))
-            accent.OverrideChargeLevel = battery.CurrentCharge / battery.MaxCharge;
-
-        if (TryComp<DamageableComponent>(ent, out var damageable))
-            accent.OverrideTotalDamage = damageable.TotalDamage;
-
-        if (TryComp<DestructibleComponent>(ent, out var destructible))
-            accent.DamageAtMaxCorruption = _destructible.DestroyedAt(ent, destructible);
-
-        Dirty(held, accent);
-    }
-
-    private void UpdateBatteryAlert(Entity<StationAiCoreComponent> ent)
-    {
-        if (!TryComp<BatteryComponent>(ent, out var battery))
-            return;
-
-        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
-            return;
-
-        var chargePercent = (short)MathF.Round(battery.CurrentCharge / battery.MaxCharge * 10f);
-        _alerts.ShowAlert(held, _batteryAlert, chargePercent);
-    }
-
-    private void UpdateCoreIntegrityAlert(Entity<StationAiCoreComponent> ent)
-    {
-        if (!TryComp<DamageableComponent>(ent, out var damageable))
-            return;
-
-        if (!TryComp<DestructibleComponent>(ent, out var destructible))
-            return;
-
-        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
-            return;
-
-        var damagePercent = (short)MathF.Round(damageable.TotalDamage.Float() / _destructible.DestroyedAt(ent, destructible).Float() * 4f);
-        _alerts.ShowAlert(held, _integrityAlert, damagePercent);
-    }
-
     private void OnDoAfterAttempt(Entity<StationAiCoreComponent> ent, ref DoAfterAttemptEvent<IntellicardDoAfterEvent> args)
     {
         // Do not allow an AI to be uploaded into a currently unpowered or broken AI core.
@@ -193,19 +146,6 @@ public sealed class StationAiSystem : SharedStationAiSystem
             args.Cancel();
             return;
         }
-    }
-
-    public override void KillHeldAi(Entity<StationAiCoreComponent> ent)
-    {
-        base.KillHeldAi(ent);
-
-        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
-            return;
-
-        if (!_mind.TryGetMind(held, out var mindId, out var mind))
-            return;
-
-        _ghost.OnGhostAttempt(mindId, false, mind: mind);
     }
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)
@@ -258,6 +198,67 @@ public sealed class StationAiSystem : SharedStationAiSystem
             RaiseLocalEvent(ai, ref ev);
         }
     }
+
+    private void UpdateDamagedAccent(Entity<StationAiCoreComponent> ent)
+    {
+        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
+            return;
+
+        if (!TryComp<DamagedSiliconAccentComponent>(held, out var accent))
+            return;
+
+        if (TryComp<BatteryComponent>(ent, out var battery))
+            accent.OverrideChargeLevel = battery.CurrentCharge / battery.MaxCharge;
+
+        if (TryComp<DamageableComponent>(ent, out var damageable))
+            accent.OverrideTotalDamage = damageable.TotalDamage;
+
+        if (TryComp<DestructibleComponent>(ent, out var destructible))
+            accent.DamageAtMaxCorruption = _destructible.DestroyedAt(ent, destructible);
+
+        Dirty(held, accent);
+    }
+
+    private void UpdateBatteryAlert(Entity<StationAiCoreComponent> ent)
+    {
+        if (!TryComp<BatteryComponent>(ent, out var battery))
+            return;
+
+        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
+            return;
+
+        var chargePercent = (short)MathF.Round(battery.CurrentCharge / battery.MaxCharge * 10f);
+        _alerts.ShowAlert(held, _batteryAlert, chargePercent);
+    }
+
+    private void UpdateCoreIntegrityAlert(Entity<StationAiCoreComponent> ent)
+    {
+        if (!TryComp<DamageableComponent>(ent, out var damageable))
+            return;
+
+        if (!TryComp<DestructibleComponent>(ent, out var destructible))
+            return;
+
+        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
+            return;
+
+        var damagePercent = (short)MathF.Round(damageable.TotalDamage.Float() / _destructible.DestroyedAt(ent, destructible).Float() * 4f);
+        _alerts.ShowAlert(held, _integrityAlert, damagePercent);
+    }
+
+    public override void KillHeldAi(Entity<StationAiCoreComponent> ent)
+    {
+        base.KillHeldAi(ent);
+
+        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
+            return;
+
+        if (!_mind.TryGetMind(held, out var mindId, out var mind))
+            return;
+
+        _ghost.OnGhostAttempt(mindId, false, mind: mind);
+    }
+
 
     public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
