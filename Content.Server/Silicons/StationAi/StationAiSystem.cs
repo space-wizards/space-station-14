@@ -11,6 +11,7 @@ using Content.Shared.Damage;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Silicons.StationAi;
+using Content.Shared.Speech.Components;
 using Content.Shared.StationAi;
 using Content.Shared.Turrets;
 using Content.Shared.Weapons.Ranged.Events;
@@ -74,6 +75,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         UpdateBatteryAlert(ent);
         UpdateCoreIntegrityAlert(ent);
+        UpdateDamagedAccent(ent);
     }
 
     protected override void OnAiRemove(Entity<StationAiCoreComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -82,16 +84,45 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         _alerts.ClearAlert(args.Entity, _batteryAlert);
         _alerts.ClearAlert(args.Entity, _integrityAlert);
+
+        if (TryComp<DamagedSiliconAccentComponent>(args.Entity, out var accent))
+        {
+            accent.OverrideChargeLevel = null;
+            accent.OverrideTotalDamage = null;
+            accent.DamageAtMaxCorruption = null;
+        }
     }
 
     private void OnChargeChanged(Entity<StationAiCoreComponent> entity, ref ChargeChangedEvent args)
     {
         UpdateBatteryAlert(entity);
+        UpdateDamagedAccent(entity);
     }
 
     private void OnDamageChanged(Entity<StationAiCoreComponent> entity, ref DamageChangedEvent args)
     {
         UpdateCoreIntegrityAlert(entity);
+        UpdateDamagedAccent(entity);
+    }
+
+    private void UpdateDamagedAccent(Entity<StationAiCoreComponent> ent)
+    {
+        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
+            return;
+
+        if (!TryComp<DamagedSiliconAccentComponent>(held, out var accent))
+            return;
+
+        if (TryComp<BatteryComponent>(ent, out var battery))
+            accent.OverrideChargeLevel = battery.CurrentCharge / battery.MaxCharge;
+
+        if (TryComp<DamageableComponent>(ent, out var damageable))
+            accent.OverrideTotalDamage = damageable.TotalDamage;
+
+        if (TryComp<DestructibleComponent>(ent, out var destructible))
+            accent.DamageAtMaxCorruption = _destructible.DestroyedAt(ent, destructible);
+
+        Dirty(held, accent);
     }
 
     private void UpdateBatteryAlert(Entity<StationAiCoreComponent> ent)
