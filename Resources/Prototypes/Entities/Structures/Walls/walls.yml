@@ -1235,6 +1235,41 @@
             acts: [ "Destruction" ]
 
 - type: entity
+  parent: WallDiagonalBase
+  id: WallXenoborgDiagonal
+  name: xenoborg wall
+  suffix: diagonal
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Structures/Walls/xenoborg_diagonal.rsi
+    state: state0
+  - type: Icon
+    sprite: Structures/Walls/xenoborg_diagonal.rsi
+    state: state0
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: RadiationBlocker
+    resistance: 5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            Girder:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalSlam
+
+- type: entity
   parent: BaseWall
   id: WallUranium
   name: uranium wall
@@ -1738,6 +1773,6 @@
   - type: IconSmooth
     key: cards
     base: card
-  - type: Occluder 
+  - type: Occluder
   - type: BlockWeather
   - type: SunShadowCast
