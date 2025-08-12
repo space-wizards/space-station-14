@@ -360,7 +360,7 @@
     sprite: Objects/Weapons/Melee/utility_knife.rsi
   - type: PhysicalComposition
     materialComposition:
-      Steel: 100
+      Steel: 50
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/change_drill.ogg
