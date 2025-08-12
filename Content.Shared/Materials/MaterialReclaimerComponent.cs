@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -127,7 +127,7 @@ public sealed partial class MaterialReclaimerComponent : Component
     
     //Starlight
     [DataField, AutoNetworkedField]
-    public DamageSpecifier EmagDamage = new() { DamageDict = { ["Blunt"] = 200 } };
+    public DamageSpecifier EmagDamage = new() { DamageDict = { ["Blunt"] = 350 } };
     //Starlight
 }
 
