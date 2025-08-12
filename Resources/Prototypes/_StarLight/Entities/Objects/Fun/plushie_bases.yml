@@ -184,27 +184,27 @@
   components:
   - type: EmitSoundOnUse
     sound:
-      collection: /Audio/Voice/Felinoid/cat_meow1.ogg
+      collection: /Audio/Animals/cat_meow.ogg
   - type: EmitSoundOnLand
     sound:
-      collection: /Audio/Voice/Felinoid/cat_purr1.ogg
+      collection: /Audio/Animals/cat_meow2.ogg
   - type: EmitSoundOnActivate
     sound:
-      collection: /Audio/Voice/Felinoid/cat_meow2.ogg
+      collection: /Audio/Animals/cat_meow.ogg
   - type: EmitSoundOnCollide
     sound:
-      path: /Audio/Voice/Felinoid/cat_mew1.ogg
+      path: /Audio/Animals/cat_meow.ogg
   - type: EmitSoundOnTrigger
     sound:
-      collection: /Audio/Voice/Felinoid/cat_meow3.ogg
+      collection: /Audio/Animals/cat_meow2.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
-      collection: /Audio/Voice/Felinoid/cat_meow1.ogg
+      collection: /Audio/Items/Toys/toysqueak3.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
-      path: /Audio/Voice/Felinoid/cat_scream1.ogg
+      path: /Audio/Animals/cat_hiss.ogg
 
 - type: entity
   parent: BasePlushieVocalizer
