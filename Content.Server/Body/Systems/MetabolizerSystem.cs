@@ -1,4 +1,5 @@
 using Content.Server.Body.Components;
+using Content.Shared._Starlight.Railroading.Events; // Starlight-edit
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
@@ -139,6 +140,8 @@ namespace Content.Server.Body.Systems
             var list = solution.Contents.ToArray();
             _random.Shuffle(list);
 
+            var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value; // Starlight-edit
+
             int reagents = 0;
             foreach (var (reagent, quantity) in list)
             {
@@ -150,7 +153,15 @@ namespace Content.Server.Body.Systems
                 {
                     if (ent.Comp1.RemoveEmpty)
                     {
-                        solution.RemoveReagent(reagent, FixedPoint2.New(1));
+                        // Starlight-start: Railroading Metabolized
+
+                        mostToRemove = FixedPoint2.Clamp(quantity, 0, 1);
+
+                        var @event = new RailroadingReagentMetabolizedEvent(new ReagentQuantity(reagent, mostToRemove));
+                        RaiseLocalEvent(actualEntity, ref @event);
+
+                        solution.RemoveReagent(reagent, mostToRemove); // Wizdens code: Changed from FixedPoint2.New to mostToRemove.
+                        // Starlight-end
                     }
 
                     continue;
@@ -186,7 +197,7 @@ namespace Content.Server.Body.Systems
                             continue;
                     }
 
-                    var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
+                    // Starlight-edit: Moved actualEntity up from ForEach to use it in another places. 
                     var args = new EntityEffectReagentArgs(actualEntity, EntityManager, ent, solution, mostToRemove, proto, null, scale);
 
                     // do all effects, if conditions apply
@@ -214,6 +225,13 @@ namespace Content.Server.Body.Systems
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
                 {
+                    // Starlight-start: Railroading Metabolized
+
+                    var @event = new RailroadingReagentMetabolizedEvent(new ReagentQuantity(reagent, mostToRemove));
+                    RaiseLocalEvent(actualEntity, ref @event);
+
+                    // Starlight-end
+
                     solution.RemoveReagent(reagent, mostToRemove);
 
                     // We have processed a reagant, so count it towards the cap

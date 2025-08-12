@@ -1067,6 +1067,7 @@
 - type: entity
   parent: ClearPDA
   id: VisitorPDA
+  suffix: Visitor # Starlight
   components:
   - type: Pda
     id: VisitorIDCard

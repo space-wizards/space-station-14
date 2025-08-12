@@ -1,0 +1,6 @@
+- type: roleRequirementPrototype
+  id: ManagerReq
+  roles:
+  - 1305377009735700501 # --Server Leadership--
+  discord: roles-req-discord-starlight
+  rolesLoc: roles-req-manager-roles

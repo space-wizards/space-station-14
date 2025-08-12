@@ -1,0 +1,17 @@
+<Document>
+# Surgeon
+
+<GuideEntityEmbed Entity="ToyFigurineMedicalDoctor" Caption="Surgeon"/>
+
+1. Surgeons report directly to the Chief Medical Officer.
+
+2. Patients must fill out and sign a [italic]surgery consent form[/italic] for any elective surgeries. This form must be stamped by the Chief Medical Officer.
+
+3. Surgeons should wear masks, sterile gloves and scrubs when possible, while operating.
+
+4. The surgery room must be kept clean and tidy for patient hygiene.
+
+5. Surgeons are permitted to harvest organs and limbs from deceased patients who have been considered unrecoverable.
+
+6. Live patients must be given a sedative during the duration of their surgery, unless they request otherwise. Any requests must be documented on their [italic]surgery consent form[/italic].
+</Document>
