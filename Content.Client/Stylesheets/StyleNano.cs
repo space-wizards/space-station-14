@@ -1023,53 +1023,27 @@ namespace Content.Client.Stylesheets
                 }),
 
                 // SwitchButton
-                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, null), new[]
-                {
-                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureUnchecked),
-                }),
+                Element<SwitchButton>().Prop(SwitchButton.StylePropertySeparation, 10),
 
-                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, new[] { SwitchButton.StylePseudoClassPressed }), new[]
-                {
-                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureChecked),
-                }),
+                Child().Parent(Element<SwitchButton>())
+                    .Child(Element<TextureRect>())
+                    .Prop(TextureRect.StylePropertyTexture, switchButtonTextureUnchecked),
 
-                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, new[] { SwitchButton.StylePseudoClassDisabled }), new[]
-                {
-                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureDisabledUnchecked),
-                    new StyleProperty("font-color", DisabledFore),
-                }),
+                Child().Parent(Element<SwitchButton>().Pseudo(SwitchButton.StylePseudoClassPressed))
+                    .Child(Element<TextureRect>())
+                    .Prop(TextureRect.StylePropertyTexture, switchButtonTextureChecked),
 
-                new StyleRule(new SelectorElement(typeof(SwitchButton), null, null, new[] { SwitchButton.StylePseudoClassDisabled, SwitchButton.StylePseudoClassPressed }), new[]
-                {
-                    new StyleProperty(SwitchButton.StylePropertyIconTexture,  switchButtonTextureDisabledChecked),
-                    new StyleProperty("font-color", DisabledFore),
-                }),
+                Child().Parent(Element<SwitchButton>().Pseudo(SwitchButton.StylePseudoClassDisabled))
+                    .Child(Element<TextureRect>())
+                    .Prop(TextureRect.StylePropertyTexture, switchButtonTextureDisabledUnchecked),
 
-                new StyleRule(new SelectorElement(typeof(BoxContainer), new [] { SwitchButton.StyleClassSwitchButton }, null, null), new[]
-                {
-                    new StyleProperty(BoxContainer.StylePropertySeparation, 10),
-                }),
+                Child().Parent(Element<SwitchButton>().Pseudo(SwitchButton.StylePseudoClassPressed).Pseudo(SwitchButton.StylePseudoClassDisabled))
+                    .Child(Element<TextureRect>())
+                    .Prop(TextureRect.StylePropertyTexture, switchButtonTextureDisabledChecked),
 
-                // Tooltip
-                new StyleRule(new SelectorElement(typeof(Tooltip), null, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
-                }),
-
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new [] { StyleClassTooltipPanel }, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
-                }),
-
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "sayBox"}, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
-                }),
-
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "whisperBox"}, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, whisperBox)
-                }),
+                Child().Parent(Element<SwitchButton>().Pseudo(SwitchButton.StylePseudoClassDisabled))
+                    .Child(Element<Label>())
+                    .Prop(Label.StylePropertyFontColor, DisabledFore),
 
                 new StyleRule(new SelectorChild(
                     new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "whisperBox"}, null, null),
