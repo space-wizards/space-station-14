@@ -60,7 +60,7 @@ public abstract class AlertsSystem : EntitySystem
             }
 
             if (!removed)
-                return;
+                continue;
 
             foreach (var alertKey in removeList)
             {
