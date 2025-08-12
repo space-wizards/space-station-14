@@ -175,7 +175,8 @@ namespace Content.Server.Atmos.EntitySystems
                     Temperature = temperature,
                     SkippedFirstProcess = tile.CurrentCycle > gridAtmosphere.UpdateCounter,
                     Valid = true,
-                    State = (byte)(puddleFlammability > 0 ? 4 : 1)
+                    State = 1,
+                    Type = puddleFlammability > 0 ? HotspotType.Puddle : HotspotType.Gas
                 };
 
                 AddActiveTile(gridAtmosphere, tile);
