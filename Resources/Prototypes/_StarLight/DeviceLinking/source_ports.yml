@@ -2,4 +2,4 @@
   id: BodyScannerSender
   name: signal-port-name-body-scanner-sender
   description: signal-port-description-body-scanner-sender
-  defaultLinks: [ OperatingTableReceiver ]
+  defaultLinks: [ BodyScannerReceiver ]
