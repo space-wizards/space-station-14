@@ -1622,7 +1622,7 @@
         dataset: PlushiesRemiie
       - type: TextToSpeech
         voice: clara
- - type: EmitSoundOnUse
+- type: EmitSoundOnUse
     sound:
       path: /Audio/Animals/cat_meow.ogg
 - type: EmitSoundOnLand
