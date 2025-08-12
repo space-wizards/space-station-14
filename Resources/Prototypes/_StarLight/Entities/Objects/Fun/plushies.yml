@@ -1533,7 +1533,7 @@
 
 - type: entity
   parent: BaseResomiPlushie
-  id: RheaPlushie
+  id: PlushieRhea
   name: Rhea Plushie
   description: Our beloved Urlunete Salvie is now made out of pure polyester! Hug them while fucking over xenos.
   components:
