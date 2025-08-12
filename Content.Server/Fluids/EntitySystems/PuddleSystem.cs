@@ -438,8 +438,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (maxViscosity > 0)
         {
             var comp = EnsureComp<SpeedModifierContactsComponent>(ent);
-            var speed = 1 - solution.Volume / ent.Comp.OverflowVolume * maxViscosity;
-            _speedModContacts.ChangeSpeedModifiers(ent, speed.Float(), comp);
+            var speed = 1 - Math.Min((solution.Volume / ent.Comp.OverflowVolume).Float(), 1) * maxViscosity;
+            _speedModContacts.ChangeSpeedModifiers(ent, speed, comp);
         }
         else
         {
