@@ -354,7 +354,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 5
+        Slash: 4
   - type: Item
     size: Tiny
     sprite: Objects/Weapons/Melee/utility_knife.rsi
