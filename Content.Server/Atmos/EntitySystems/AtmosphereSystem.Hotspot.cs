@@ -26,6 +26,9 @@ namespace Content.Server.Atmos.EntitySystems
         [ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier? HotspotSound { get; private set; } = new SoundCollectionSpecifier(DefaultHotspotSounds);
 
+        /// <summary>
+        /// Run every tick on every hotspot
+        /// </summary>
         private void ProcessHotspot(
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
             TileAtmosphere tile)
@@ -48,6 +51,7 @@ namespace Content.Server.Atmos.EntitySystems
             if(tile.ExcitedGroup != null)
                 ExcitedGroupResetCooldowns(tile.ExcitedGroup);
 
+            // If the hotspot is too weak to exist/doesn't have the correct conditions, yeet it for deletion at the end of the tick
             if ((tile.Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (tile.Hotspot.Volume <= 1f)
                 || tile.Air == null || tile.Air.GetMoles(Gas.Oxygen) < 0.5f || (tile.Air.GetMoles(Gas.Plasma) < 0.5f && tile.Air.GetMoles(Gas.Tritium) < 0.5f) && tile.PuddleSolutionFlammability == 0)
             {
@@ -56,8 +60,6 @@ namespace Content.Server.Atmos.EntitySystems
                 InvalidateVisuals(ent, tile);
                 return;
             }
-
-
 
             PerformHotspotExposure(tile);
 
@@ -129,6 +131,9 @@ namespace Content.Server.Atmos.EntitySystems
             // TODO ATMOS Maybe destroy location here?
         }
 
+        /// <summary>
+        /// Run whenever you want to try start a hotspot: run every tick by ignition sources, and also ran on tiles whenever a fire/hotspot is spreading
+        /// </summary>
         private void HotspotExpose(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile,
             float exposedTemperature, float exposedVolume, bool soh = false, EntityUid? sparkSourceUid = null)
         {
@@ -144,6 +149,7 @@ namespace Content.Server.Atmos.EntitySystems
             var tritium = tile.Air.GetMoles(Gas.Tritium);
             var puddleFlammability = tile.PuddleSolutionFlammability;
 
+            // If a hotspot already exists on this tile, just strengthen it and return early.
             if (tile.Hotspot.Valid)
             {
                 if (soh)
@@ -161,7 +167,8 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
-            if (((exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature) && (plasma > 0.5f || tritium > 0.5f)) || (puddleFlammability > 0 && exposedTemperature > 573.15 - 50 * puddleFlammability) )
+            // If the conditions are right for a hotspot to be created, do so!
+            if ((exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature && (plasma > 0.5f || tritium > 0.5f)) || (puddleFlammability > 0 && exposedTemperature > 573.15 - 50 * puddleFlammability) )
             {
                 if (sparkSourceUid.HasValue)
                     _adminLog.Add(LogType.Flammable, LogImpact.High, $"Heat/spark of {ToPrettyString(sparkSourceUid.Value)} caused atmos ignition of gas: {tile.Air.Temperature.ToString():temperature}K - {oxygen}mol Oxygen, {plasma}mol Plasma, {tritium}mol Tritium");
@@ -184,11 +191,15 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
+        /// <summary>
+        /// The actual meat of how a hotspot reacts with the atmos system is done here, called via ProcessHotspot once a tick
+        /// </summary>
         private void PerformHotspotExposure(TileAtmosphere tile)
         {
             if (tile.Air == null || !tile.Hotspot.Valid)
                 return;
 
+            // A bypassing hotspot does NOT interact with atmos (intended for plasma/trit fires "carrying" the hotspot with them)
             tile.Hotspot.Bypassing = tile.Hotspot.SkippedFirstProcess && tile.Hotspot.Volume > tile.Air.Volume*0.95f && tile.PuddleSolutionFlammability == 0;
 
             if (tile.Hotspot.Bypassing)
@@ -217,7 +228,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
-        /// Adds some kelvin to a temperature, but only up to a certain limit, and doesn't affect the temperature if it's already above said limit.
+        /// Used for reagent fires to ensure the temperature doesn't get too far out of control.
         /// </summary>
         private float AddClampedTemperature(float temperature, float kelvinToAdd, float clampTemperature)
         {
