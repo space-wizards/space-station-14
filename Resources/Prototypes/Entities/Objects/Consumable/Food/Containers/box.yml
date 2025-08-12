@@ -723,8 +723,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: FoodBurgerCrazy
-        orGroup: Burgers
       - id: FoodBurgerCheese
         orGroup: Burgers
       - id: DrinkColaCan
