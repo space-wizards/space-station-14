@@ -80,7 +80,8 @@ public sealed partial class AnchorableSystem : EntitySystem
         // Log unanchor attempt (server only)
         _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to unanchor {ToPrettyString(uid):entity} from {transform.Coordinates:targetlocation}");
 
-        var attempt = RaiseAnchorAttemptEvent(uid, userUid, usingUid, false);
+        var attempt = new UnanchorAttemptEvent(userUid, usingUid);
+        RaiseLocalEvent(uid, attempt);
         if (attempt.Cancelled)
             return;
 
@@ -245,31 +246,14 @@ public sealed partial class AnchorableSystem : EntitySystem
             return;
         }
 
-        var attempt = RaiseAnchorAttemptEvent(uid, userUid, usingUid, true);
+        var attempt = new AnchorAttemptEvent(userUid, usingUid);
+        RaiseLocalEvent(uid, attempt);
         if (attempt.Cancelled)
             return;
 
         delay += attempt.Delay;
 
         _tool.UseTool(usingUid, userUid, uid, delay, usingTool.Qualities, new TryAnchorCompletedEvent());
-    }
-
-    private BaseAnchoredAttemptEvent RaiseAnchorAttemptEvent(
-        EntityUid uid,
-        EntityUid userUid,
-        EntityUid usingUid,
-        bool anchoring)
-    {
-        BaseAnchoredAttemptEvent attempt =
-            anchoring ? new AnchorAttemptEvent(userUid, usingUid) : new UnanchorAttemptEvent(userUid, usingUid);
-
-        // Need to cast the event, or it will be raised as BaseAnchoredAttemptEvent.
-        if (anchoring)
-            RaiseLocalEvent(uid, (AnchorAttemptEvent)attempt);
-        else
-            RaiseLocalEvent(uid, (UnanchorAttemptEvent)attempt);
-
-        return attempt;
     }
 
     private bool Valid(
