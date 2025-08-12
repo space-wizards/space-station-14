@@ -25,12 +25,14 @@
     soundHit:
       path: "/Audio/Weapons/bladeslice.ogg"
   - type: Scalpel
-  - type: Hemostat # 🌟Starlight🌟
-  - type: SurgeryTool # 🌟Starlight🌟
+  # 🌟Starlight-start🌟
+  - type: Hemostat
+  - type: SurgeryTool
     successRate: 0.2 # Using something sharp as a hemostat is very dangerous
     speed: 1.5
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/hemostat1.ogg
+  # 🌟Starlight-end🌟
   - type: PhysicalComposition
     materialComposition:
       Steel: 200

@@ -40,14 +40,16 @@
       - DrinkSpaceGlue
   - type: TrashOnSolutionEmpty
     solution: drink
-  - type: BoneGel # 🌟Starlight🌟
-  - type: SurgeryTool # 🌟Starlight🌟
+  # 🌟Starlight-start🌟
+  - type: BoneGel
+  - type: SurgeryTool
     successRate: 0.4 # really not ideal, but in a pinch...
     speed: 1.5
     startSound:
       path: /Audio/Items/Medical/ointment_begin.ogg
     endSound:
       path: /Audio/Items/Medical/ointment_end.ogg
+  # 🌟Starlight-end🌟
 
 - type: entity
   parent: DrinkBase
