@@ -9,7 +9,7 @@ namespace Content.Shared.Trigger.Components.Conditions;
 public sealed partial class RandomChanceTriggerConditionComponent : BaseTriggerConditionComponent
 {
     /// <summary>
-    /// Chance for the trigger to be cancelled and not go through.
+    /// Chance for the trigger to succeed.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float SuccessChance = .9f;

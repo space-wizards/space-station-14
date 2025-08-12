@@ -70,7 +70,6 @@ public sealed partial class TriggerSystem
                 (int)_timing.CurTick.Value,
                 GetNetEntity(ent).Id,
                 args.User == null ? 0 : GetNetEntity(args.User.Value).Id,
-                args.Key == null ? 0 : args.Key.GetHashCode(),
             };
             var seed = SharedRandomExtensions.HashCodeCombine(hash);
             var rand = new System.Random(seed);
