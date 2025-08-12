@@ -13,16 +13,28 @@
 
 - type: entity
   name: NT-NC Consortium Blueshield
-  id: RandomHumanoidNTNCConsortiumBlueshieldSpawner
+  suffix: Basic
+  id: RandomHumanoidNTNCConsortiumBlueshieldSpawnerBasic
   components:
     - type: Sprite
       sprite: _Starlight/Markers/jobs.rsi
       state: obs
     - type: RandomHumanoidSpawner
-      settings: NTNCConsortiumBlueshield
+      settings: NTNCConsortiumBlueshieldBasic
+
+- type: entity
+  name: NT-NC Consortium Blueshield
+  suffix: Hardsuit
+  id: RandomHumanoidNTNCConsortiumBlueshieldSpawnerEVA
+  components:
+    - type: Sprite
+      sprite: _Starlight/Markers/jobs.rsi
+      state: obs
+    - type: RandomHumanoidSpawner
+      settings: NTNCConsortiumBlueshieldEVA
 
 - type: randomHumanoidSettings
-  id: NTNCConsortiumBlueshield
+  id: NTNCConsortiumBlueshieldBasic
   parent: EventHumanoidNTNC
   randomizeName: false
   components:
@@ -40,7 +52,34 @@
         role: JobSecurityOfficer
         time: 18000 # 5h
     - type: Loadout
-      prototypes: [ NTNCBlueShieldGear ]
+      prototypes: [ NTNCBasicGear ]
+      roleLoadout: [ RoleSurvivalStandard ]
+    - type: RandomMetadata
+      nameSegments:
+        - NamesMilitaryFirstLeader
+        - NamesMilitaryLast
+      nameFormat: name-format-ert
+
+- type: randomHumanoidSettings
+  id: NTNCConsortiumBlueshieldEVA
+  parent: EventHumanoidNTNC
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ntnc-consortium-officer-name
+      description: ghost-role-information-ntnc-consortium-officer-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: default
+      job: NTNCBlueshield
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 72000 # 20h
+      - !type:RoleTimeRequirement
+        role: JobSecurityOfficer
+        time: 18000 # 5h
+    - type: Loadout
+      prototypes: [ NTNCHardsuitGear ]
       roleLoadout: [ RoleSurvivalStandard ]
     - type: RandomMetadata
       nameSegments:
