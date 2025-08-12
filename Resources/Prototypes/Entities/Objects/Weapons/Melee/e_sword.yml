@@ -70,13 +70,14 @@
   - type: Reflect
   - type: IgnitionSource
     temperature: 700
-  - type: SurgeryTool
+  - type: SurgeryTool # 🌟Starlight🌟
     successRate: 0.8
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/cautery1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/cautery2.ogg
-  - type: Cautery
+  - type: Cautery # 🌟Starlight🌟
+  - type: Scalpel # 🌟Starlight🌟
 
 - type: entity
   name: energy sword

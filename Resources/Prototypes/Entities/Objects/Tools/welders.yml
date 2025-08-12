@@ -105,6 +105,13 @@
     price: 40
   - type: IgnitionSource
     temperature: 700
+  - type: SurgeryTool # 🌟Starlight🌟
+    successRate: 0.75
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/cautery1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/cautery2.ogg
+  - type: Cautery # 🌟Starlight🌟
 
 - type: entity
   name: industrial welding tool

@@ -49,6 +49,14 @@
         Blunt: 10
     soundHit:
       collection: MetalThud
+  - type: SurgeryTool # 🌟Starlight🌟
+    successRate: 0.8
+    speed: 0.8
+    startSound:
+      path: /Audio/Items/jaws_cut.ogg
+    endSound:
+      path: /Audio/Items/change_jaws.ogg
+  - type: BoneSaw # 🌟Starlight🌟
 
 - type: entity
   name: syndicate jaws of life

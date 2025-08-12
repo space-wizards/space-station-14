@@ -53,13 +53,13 @@
     netsync: false
   - type: IgnitionSource
     temperature: 1000
-  - type: SurgeryTool
+  - type: SurgeryTool # 🌟Starlight🌟
     successRate: 0.1
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/cautery1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/cautery2.ogg
-  - type: Cautery
+  - type: Cautery # 🌟Starlight🌟
   - type: LightBehaviour
     behaviours:
       - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
