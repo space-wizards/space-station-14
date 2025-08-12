@@ -11292,5 +11292,26 @@ Entries:
   id: 94012
   time: '2025-08-12T18:10:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/940
+- author: Trep_Maul
+  changes:
+  - message: Leth Station. Pop 15-65
+    type: Add
+  id: 127700
+  time: '2025-08-12T20:13:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1277
+- author: Trep_Maul
+  changes:
+  - message: '[Off] proto for thrusters and gyros'
+    type: Add
+  id: 127701
+  time: '2025-08-12T20:13:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1277
+- author: Trep_Maul
+  changes:
+  - message: emptied build.json that was causing downstream hosting errors.
+    type: Fix
+  id: 127702
+  time: '2025-08-12T20:13:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1277
 Order: -1
 
