@@ -1479,7 +1479,7 @@
           
 - type: entity
   parent: BasePlushie
-  id: FixesPlush
+  id: PlushieFixes
   name: Fixes Plushie
   description: Your beloved Chief Engineer. Definitely performing their job and not just making a shittle again.
   components:
