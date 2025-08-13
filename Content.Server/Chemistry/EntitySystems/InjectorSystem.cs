@@ -302,7 +302,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
     {
         // Automatically set syringe to draw after completely draining it, IF AutoToggle is true
         if (injector.Comp.AutoToggle && SolutionContainers.TryGetSolution(injector.Owner, injector.Comp.SolutionName, out _,
-                out var solution) && solution.Volume == 0) // Starlight edit
+                out var solution) && solution.Volume == 0)
         {
             SetMode(injector, InjectorToggleMode.Draw);
         }
@@ -316,7 +316,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
     {
         // Automatically set syringe to inject after completely filling it, IF AutoToggle is true
         if (injector.Comp.AutoToggle && SolutionContainers.TryGetSolution(injector.Owner, injector.Comp.SolutionName, out _,
-                out var solution) && solution.AvailableVolume == 0) // Starlight edit
+                out var solution) && solution.AvailableVolume == 0)
         {
             SetMode(injector, InjectorToggleMode.Inject);
         }
