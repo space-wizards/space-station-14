@@ -1,15 +1,15 @@
-using Content.Server.Mind;
-using Content.Server.Objectives.Components;
-using Content.Server.Thief.Components;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Components;
+using Content.Shared.Roles;
+using Content.Shared.Thief.Components;
 using Content.Shared.Examine;
 using Content.Shared.Foldable;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Robust.Shared.Audio.Systems;
 
-namespace Content.Server.Thief.Systems;
+namespace Content.Shared.Thief.Systems;
 
 /// <summary>
 /// <see cref="ThiefBeaconComponent"/>
@@ -18,7 +18,7 @@ public sealed class ThiefBeaconSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     public override void Initialize()
     {
@@ -46,7 +46,7 @@ public sealed class ThiefBeaconSystem : EntitySystem
         {
             Act = () =>
             {
-                SetCoordinate(beacon, mind.Value);
+                SetCoordinate(beacon, mind.Value, user);
             },
             Message = Loc.GetString("thief-fulton-verb-message"),
             Text = Loc.GetString("thief-fulton-verb-text"),
@@ -56,7 +56,7 @@ public sealed class ThiefBeaconSystem : EntitySystem
     private void OnFolded(Entity<ThiefBeaconComponent> beacon, ref FoldedEvent args)
     {
         if (args.IsFolded)
-            ClearCoordinate(beacon);
+            ClearCoordinate(beacon, args.User);
     }
 
     private void OnExamined(Entity<ThiefBeaconComponent> beacon, ref ExaminedEvent args)
@@ -64,23 +64,25 @@ public sealed class ThiefBeaconSystem : EntitySystem
         if (!TryComp<StealAreaComponent>(beacon, out var area))
             return;
 
-        args.PushText(Loc.GetString(area.Owners.Count == 0
+        args.PushText(Loc.GetString(area.OwnerCount == 0
             ? "thief-fulton-examined-unset"
             : "thief-fulton-examined-set"));
     }
 
-    private void SetCoordinate(Entity<ThiefBeaconComponent> beacon, EntityUid mind)
+    private void SetCoordinate(Entity<ThiefBeaconComponent> beacon, EntityUid mind, EntityUid? user = null)
     {
         if (!TryComp<StealAreaComponent>(beacon, out var area))
             return;
 
-        _audio.PlayPvs(beacon.Comp.LinkSound, beacon);
-        _popup.PopupEntity(Loc.GetString("thief-fulton-set"), beacon);
-        area.Owners.Clear(); //We only reconfigure the beacon for ourselves, we don't need multiple thieves to steal from the same beacon.
+        _audio.PlayPredicted(beacon.Comp.LinkSound, beacon, user);
+        _popup.PopupClient(Loc.GetString("thief-fulton-set"), beacon, user);
+        area.Owners.Clear(); // We only reconfigure the beacon for ourselves, we don't need multiple thieves to steal from the same beacon.
         area.Owners.Add(mind);
+        area.OwnerCount = area.Owners.Count;
+        Dirty(beacon.Owner, area);
     }
 
-    private void ClearCoordinate(Entity<ThiefBeaconComponent> beacon)
+    private void ClearCoordinate(Entity<ThiefBeaconComponent> beacon, EntityUid? user = null)
     {
         if (!TryComp<StealAreaComponent>(beacon, out var area))
             return;
@@ -88,8 +90,10 @@ public sealed class ThiefBeaconSystem : EntitySystem
         if (area.Owners.Count == 0)
             return;
 
-        _audio.PlayPvs(beacon.Comp.UnlinkSound, beacon);
-        _popup.PopupEntity(Loc.GetString("thief-fulton-clear"), beacon);
+        _audio.PlayPredicted(beacon.Comp.UnlinkSound, beacon, user);
+        _popup.PopupClient(Loc.GetString("thief-fulton-clear"), beacon, user);
         area.Owners.Clear();
+        area.OwnerCount = area.Owners.Count;
+        Dirty(beacon.Owner, area);
     }
 }
