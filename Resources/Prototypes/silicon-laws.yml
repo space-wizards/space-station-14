@@ -98,28 +98,28 @@
   obeysTo: laws-owner-crew
 
 #Drone
-# Starlight- type: siliconLaw
-# Starlight  id: Drone1
-# Starlight  order: 1
-# Starlight  lawString: law-drone-1
+- type: siliconLaw
+  id: Drone1
+  order: 1
+  lawString: law-drone-1
 
-# Starlight- type: siliconLaw
-# Starlight  id: Drone2
-# Starlight  order: 2
-# Starlight  lawString: law-drone-2
+- type: siliconLaw
+  id: Drone2
+  order: 2
+  lawString: law-drone-2
 
-# Starlight- type: siliconLaw
-# Starlight  id: Drone3
-# Starlight  order: 3
-# Starlight  lawString: law-drone-3
-# Starlight
-# Starlight- type: siliconLawset
-# Starlight  id: Drone
-# Starlight  laws:
-# Starlight  - Drone1
-# Starlight  - Drone2
-# Starlight  - Drone3
-# Starlight  obeysTo: laws-owner-beings
+- type: siliconLaw
+  id: Drone3
+  order: 3
+  lawString: law-drone-3
+
+- type: siliconLawset
+  id: Drone
+  laws:
+  - Drone1
+  - Drone2
+  - Drone3
+  obeysTo: laws-owner-beings
 
 # Syndicate
 # region starlight
