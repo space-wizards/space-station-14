@@ -63,7 +63,7 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
         Assert.That(binComp.Items, Has.Count.EqualTo(initialCount), "Number of cups in cooler bin did not return to initial count");
 
         // Make sure the cup is in the cooler
-        Assert.That(binComp.Items, Contains.Item(ToServer(cup)), "Cup was not returned to cooler");
+        Assert.That(binComp.Items, Contains.Item(cup), "Cup was not returned to cooler");
     }
 
     /// <summary>
