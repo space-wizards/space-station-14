@@ -50,6 +50,11 @@
     ThiefObjectiveGroupItem: 1
 
 - type: weightedRandom
+  id: ThiefObjectiveGroupMoney
+  weights:
+    StealMoneyObjective: 1
+
+- type: weightedRandom
   id: ThiefBigObjectiveGroups
   weights:
     ThiefObjectiveGroupStructure: 1
