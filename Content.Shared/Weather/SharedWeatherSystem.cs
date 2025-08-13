@@ -224,6 +224,9 @@ public abstract class SharedWeatherSystem : EntitySystem
         return data;
     }
 
+    /// <remarks>
+    /// On client, will return early if the current tick has not been predicted for the first time.
+    /// </remarks>
     protected virtual bool SetState(EntityUid uid, WeatherState state, WeatherComponent component, WeatherData weather, WeatherPrototype weatherProto)
     {
         if (weather.State.Equals(state))

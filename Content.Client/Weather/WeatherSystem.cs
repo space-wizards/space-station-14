@@ -141,8 +141,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
         if (base.EndWeather(uid, component, proto) is not { } data)
             return null;
 
-        // `QueueDel(stream)` is effectively an analogue to `_audio.Stop(stream)` here,
-        // however the difference being that the former doesn't care about prediction.
         _audio.Stop(data.Stream);
         return data;
     }
