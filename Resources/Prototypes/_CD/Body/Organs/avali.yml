@@ -7,7 +7,7 @@
   suffix: avali # Ronstation
   components:
   - type: Metabolizer
-    updateIntercal: 0.7 # Ronstation
+    updateInterval: 0.7 # Ronstation
     metabolizerTypes: [Avali]
 
 - type: entity
