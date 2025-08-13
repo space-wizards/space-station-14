@@ -6,6 +6,9 @@ objective-condition-steal-description = We need you to steal {$itemName}. Don't 
 objective-condition-steal-station = station
 objective-condition-steal-Ian = head of personnel's corgi
 
+objective-steal-currency-title = Steal 10,000 spesos
+objective-steal-currency-desc = Some people on the station are too rich for their own good. Luckily they have me to give them a hand.
+
 objective-condition-thief-description = The {$itemName} would be a great addition to my collection!
 objective-condition-thief-animal-description = The {$itemName} would be a great addition to my collection! Most importantly, alive.
 objective-condition-thief-multiply-description = I need to get {$count} {MAKEPLURAL($itemName)} (any) and take them with me.
