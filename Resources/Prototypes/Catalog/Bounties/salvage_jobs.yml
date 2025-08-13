@@ -28,7 +28,7 @@
     state: metal-1
   entries:
   - name: bounty-item-scrap
-    amount: 15
+    amount: 10
     whitelist:
       tags:
       - SalvageScrap
@@ -43,7 +43,7 @@
     state: gold
   entries:
   - name: bounty-item-ore-gold
-    amount: 90
+    amount: 45
     whitelist:
       tags:
       - OreGold
@@ -58,7 +58,7 @@
     state: silver
   entries:
   - name: bounty-item-ore-silver
-    amount: 90
+    amount: 45
     whitelist:
       tags:
       - OreSilver
@@ -105,7 +105,7 @@
     state: uranium
   entries:
   - name: bounty-item-ore-uranium
-    amount: 45
+    amount: 30
     whitelist:
       tags:
       - OreUranium

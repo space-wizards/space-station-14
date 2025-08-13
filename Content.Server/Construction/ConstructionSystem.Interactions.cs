@@ -273,7 +273,7 @@ namespace Content.Server.Construction
 
                     // Since many things inherit this step, we delegate the "is this entity valid?" logic to them.
                     // While this is very OOP and I find it icky, I must admit that it simplifies the code here a lot.
-                    if(!insertStep.EntityValid(insert, EntityManager, _factory))
+                    if(!insertStep.EntityValid(insert, EntityManager, Factory))
                         return HandleResult.False;
 
                     // Unremovable items can't be inserted, unless they are a lingering stack
