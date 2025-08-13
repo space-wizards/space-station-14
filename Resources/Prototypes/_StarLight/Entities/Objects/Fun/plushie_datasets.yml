@@ -122,34 +122,34 @@
   id: PlushiesVirus
   values:
     prefix: plushie-virus-
-    count: 9
+    count: 5
 
 - type: localizedDataset
   id: PlushiesMahio
   values:
     prefix: plushie-mahio-
-    count: 9
+    count: 6
 
 - type: localizedDataset
   id: PlushiesRhea
   values:
     prefix: plushie-rhea-
-    count: 9
+    count: 6
 
 - type: localizedDataset
   id: PlushiesRemiie
   values:
     prefix: plushie-remiie-
-    count: 9
+    count: 6
 
 - type: localizedDataset
   id: PlushiesMalachi
   values:
     prefix: plushie-malachi-
-    count: 9
+    count: 10
 
 - type: localizedDataset
   id: PlushiesBrighteyes
   values:
     prefix: plushie-brighteyes-
-    count: 9
+    count: 10
