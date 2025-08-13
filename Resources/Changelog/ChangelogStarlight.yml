@@ -11103,7 +11103,6 @@ Entries:
   id: 1527
   time: '2025-08-09T10:58:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1267
- Staff-Ghost-Themes
 - author: Walksanatora
   changes:
   - message: Apply patch from wizden for dionae exploit
@@ -11321,6 +11320,5 @@ Entries:
   id: 127702
   time: '2025-08-12T20:13:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1277
-starlight-dev
 Order: -1
 
