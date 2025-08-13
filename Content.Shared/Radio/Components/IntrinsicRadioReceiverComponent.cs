@@ -1,4 +1,4 @@
-namespace Content.Server.Radio.Components;
+namespace Content.Shared.Radio.Components;
 
 /// <summary>
 ///     This component allows an entity to directly translate radio messages into chat messages. Note that this does not
