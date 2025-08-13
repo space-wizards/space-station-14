@@ -6,6 +6,8 @@
   - type: Tag
     tags:
     - BorgModulePurrfus
+  - type: Sprite
+    sprite: Objects/Specific/Robotics/borgmodule.rsi
   - type: Item
     inhandVisuals:
       left:
@@ -37,6 +39,7 @@
     freeHands: 1
     items:
     - LuxuryPen
+    - BoxFolderCyborgClipboard
     - RubberStampApproved
     - RubberStampDenied
     - HandLabeler

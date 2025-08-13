@@ -21,19 +21,6 @@
   - Science
   - Law
 
-  addComponents:
-  - type: UserInterface
-    interfaces:
-      enum.StorageUiKey.Key:
-        type: StorageBoundUserInterface
-  - type: Storage
-    clickInsert: false
-    openOnActivate: false
-    showVerb: true
-    grid:
-    - 0,0,2,2
-    maxItemSize: Huge
-
   # Visual
   inventoryTemplateId: borgTall
   spriteBodyState: purrfus
