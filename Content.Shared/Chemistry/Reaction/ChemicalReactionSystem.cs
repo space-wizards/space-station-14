@@ -106,7 +106,7 @@ namespace Content.Shared.Chemistry.Reaction
                 lowestUnitReactions = FixedPoint2.Zero;
                 return false;
             }
-            if (solution.Temperature > reaction.MaximumTemperature)
+            if (solution.Temperature >= reaction.MaximumTemperature && !float.IsPositiveInfinity(reaction.MaximumTemperature))
             {
                 lowestUnitReactions = FixedPoint2.Zero;
                 return false;

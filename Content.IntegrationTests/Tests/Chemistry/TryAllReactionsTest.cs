@@ -55,6 +55,8 @@ namespace Content.IntegrationTests.Tests.Chemistry
 #pragma warning disable NUnit2045
                         Assert.That(solutionContainerSystem
                             .TryAddReagent(solutionEnt.Value, id, reactant.Amount, out var quantity));
+                        // We set the temperature here to the reaction's minimum temperature
+                        solutionContainerSystem.SetTemperature(solutionEnt.Value, reactionPrototype.MinimumTemperature);
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
 #pragma warning restore NUnit2045
                     }
@@ -82,9 +84,6 @@ namespace Content.IntegrationTests.Tests.Chemistry
                         }
                     }
 
-                    //Now safe set the temperature and mix the reagents
-                    solutionContainerSystem.SetTemperature(solutionEnt.Value, reactionPrototype.MinimumTemperature);
-
                     if (reactionPrototype.MixingCategories != null)
                     {
                         var dummyEntity = entityManager.SpawnEntity(null, MapCoordinates.Nullspace);
@@ -103,9 +102,11 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     var foundProductsMap = reactionPrototype.Products
                         .Concat(reactionPrototype.Reactants.Where(x => x.Value.Catalyst).ToDictionary(x => x.Key, x => x.Value.Amount))
                         .ToDictionary(x => x, _ => false);
+
                     foreach (var (reagent, quantity) in solution.Contents)
                     {
-                        Assert.That(foundProductsMap.TryFirstOrNull(x => x.Key.Key == reagent.Prototype && x.Key.Value == quantity, out var foundProduct));
+                        if (!foundProductsMap.TryFirstOrNull(x => x.Key.Key == reagent.Prototype && x.Key.Value == quantity, out var foundProduct))
+                            Assert.Fail($"Reagent {reagent.Prototype} of quantity {quantity} remained in reaction {reactionPrototype.ID} with temperature {solution.Temperature}");
                         foundProductsMap[foundProduct.Value.Key] = true;
                     }
 
