@@ -4,8 +4,8 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
-/// Will damage an entity when triggered.
-/// If TargetUser is true it the user will take damage instead.
+/// Will add stamina to an entity when triggered.
+/// If TargetUser is true it the user will have stamina added instead.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class InflictStaminaOnTriggerComponent : BaseXOnTriggerComponent
@@ -16,9 +16,8 @@ public sealed partial class InflictStaminaOnTriggerComponent : BaseXOnTriggerCom
     [DataField, AutoNetworkedField]
     public bool IgnoreResistances;
 
-
     /// <summary>
-    /// The stamina amount that is dealt.
+    /// The stamina amount that is added to the target.
     /// May be further modified by <see cref="Systems.BeforeDamageOnTriggerEvent"/> subscriptions.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
