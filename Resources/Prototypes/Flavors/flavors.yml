@@ -1488,3 +1488,13 @@
   id: motivating
   flavorType: Base
   description: flavor-base-motivating
+
+- type: flavor
+  id: corpsereviver1
+  flavorType: Complex
+  description: flavor-complex-corpse-reviver-1
+
+- type: flavor
+  id: corpsereviver2
+  flavorType: Complex
+  description: flavor-complex-corpse-reviver-2

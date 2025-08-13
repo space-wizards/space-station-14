@@ -684,6 +684,39 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkCorpseReviver1
+  suffix: "corpse reviver #1"
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: CorpseReviver1
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/corpsereviver1.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkCorpseReviver2
+  suffix: "corpse reviver #2"
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: CorpseReviver2
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/corpsereviver2.rsi
+    state: icon
+
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkCream
   suffix: cream
   components:
