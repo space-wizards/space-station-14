@@ -8,8 +8,6 @@
     containers:
       key_slots: !type:Container
   - type: ContainerFill
-    containers:
-      key_slots:
   - type: Headset
   - type: EncryptionKeyHolder
     keySlots: 4
