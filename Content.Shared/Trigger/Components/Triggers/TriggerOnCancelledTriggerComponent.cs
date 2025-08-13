@@ -17,5 +17,5 @@ public sealed partial class TriggerOnCancelledTriggerComponent : Component
     /// KeyOut: The trigger key that will activate.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<string, string> KeyInOut = new(){ [TriggerSystem.DefaultTriggerKey] = TriggerSystem.CancelledTriggerKey };
+    public Dictionary<string, string> KeysInOut = new(){ [TriggerSystem.DefaultTriggerKey] = TriggerSystem.CancelledTriggerKey };
 }

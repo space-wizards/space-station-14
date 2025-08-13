@@ -28,7 +28,7 @@ public sealed partial class TriggerSystem
         if (args.Key == null)
             return;
 
-        if (!ent.Comp.KeyInOut.TryGetValue(args.Key, out var keyOut))
+        if (!ent.Comp.KeysInOut.TryGetValue(args.Key, out var keyOut))
             return;
 
         // Can easily create an infinite loop
