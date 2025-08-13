@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/13/2025 01:01:58
+  time: 08/13/2025 01:10:47
   entityCount: 415
 maps: []
 grids:
@@ -684,7 +684,7 @@ entities:
     - type: Transform
       pos: -7.5,1.5
       parent: 1
-  - uid: 415
+  - uid: 414
     components:
     - type: Transform
       pos: -9.5,0.5
@@ -1117,7 +1117,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -10.5,0.5
       parent: 1
-  - uid: 414
+  - uid: 371
     components:
     - type: Transform
       rot: 3.141592653589793 rad
@@ -1938,10 +1938,10 @@ entities:
           - Forward
         - - Middle
           - Off
-  - uid: 371
+  - uid: 415
     components:
     - type: Transform
-      pos: -1.5,-3.5
+      pos: -2.5,-4.5
       parent: 1
     - type: DeviceLinkSource
       linkedPorts:
