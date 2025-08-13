@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Random.Helpers;
 using Content.Shared.Trigger.Components.Conditions;
+using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Verbs;
 using Robust.Shared.Random;
 
@@ -9,6 +10,8 @@ public sealed partial class TriggerSystem
 {
     private void InitializeCondition()
     {
+        SubscribeLocalEvent<TriggerOnCancelledTriggerComponent, CancelledTriggerEvent>(OnCancelledTrigger);
+
         SubscribeLocalEvent<WhitelistTriggerConditionComponent, AttemptTriggerEvent>(OnWhitelistTriggerAttempt);
 
         SubscribeLocalEvent<UseDelayTriggerConditionComponent, AttemptTriggerEvent>(OnUseDelayTriggerAttempt);
@@ -17,6 +20,22 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<ToggleTriggerConditionComponent, GetVerbsEvent<AlternativeVerb>>(OnToggleGetAltVerbs);
 
         SubscribeLocalEvent<RandomChanceTriggerConditionComponent, AttemptTriggerEvent>(OnRandomChanceTriggerAttempt);
+    }
+
+    private void OnCancelledTrigger(Entity<TriggerOnCancelledTriggerComponent> ent, ref CancelledTriggerEvent args)
+    {
+        // Ignored unlike other triggers, as it can recursively trigger a trigger guaranteed to fail
+        if (args.Key == null)
+            return;
+
+        if (!ent.Comp.KeyInOut.TryGetValue(args.Key, out var keyOut))
+            return;
+
+        // Can easily create an infinite loop
+        if (keyOut == args.Key)
+            return;
+
+        Trigger(ent.Owner, args.User, keyOut);
     }
 
     private void OnWhitelistTriggerAttempt(Entity<WhitelistTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
