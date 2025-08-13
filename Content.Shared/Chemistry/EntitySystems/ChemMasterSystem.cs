@@ -43,7 +43,7 @@ public sealed class ChemMasterSystem : EntitySystem
         SubscribeLocalEvent<ChemMasterComponent, SolutionContainerChangedEvent>(SubscribeUpdateUiState);
         SubscribeLocalEvent<ChemMasterComponent, EntInsertedIntoContainerMessage>(SubscribeUpdateUiState);
         SubscribeLocalEvent<ChemMasterComponent, EntRemovedFromContainerMessage>(SubscribeUpdateUiState);
-        SubscribeLocalEvent<ChemMasterComponent, BoundUIOpenedEvent>(SubscribeUpdateUiState);
+        SubscribeLocalEvent<ChemMasterComponent, BoundUIOpenedEvent>(OnUiOpened);
 
         Subs.BuiEvents<ChemMasterComponent>(ChemMasterUiKey.Key,
             subs =>
@@ -55,6 +55,20 @@ public sealed class ChemMasterSystem : EntitySystem
                 subs.Event<ChemMasterCreatePillsMessage>(OnCreatePillsMessage);
                 subs.Event<ChemMasterOutputToBottleMessage>(OnOutputToBottleMessage);
             });
+    }
+
+    private void OnUiOpened(Entity<ChemMasterComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        // FIXME this is a temporary workaround to deal with a mispredict due to
+        // the solution buffer not networking its contents when entering PVS for
+        // the first time. It'll be fixed when we go to component states (or
+        // when I figure out the right solution).
+        if (_solutionContainerSystem.TryGetSolution(ent.Owner,
+                ChemMasterComponent.BufferSolutionName,
+                out var buffer))
+            Dirty(buffer.Value);
+
+        UpdateUiState(ent);
     }
 
     private void SubscribeUpdateUiState<T>(Entity<ChemMasterComponent> ent, ref T ev)
@@ -242,7 +256,10 @@ public sealed class ChemMasterSystem : EntitySystem
             _storageSystem.Insert(container, item, out _, user: user, storage);
             _labelSystem.Label(item, message.Label);
 
-            _solutionContainerSystem.EnsureSolutionEntity(item, ChemMasterComponent.PillSolutionName,out var itemSolution ,message.Dosage);
+            _solutionContainerSystem.EnsureSolutionEntity(item,
+                ChemMasterComponent.PillSolutionName,
+                out var itemSolution,
+                message.Dosage);
             if (!itemSolution.HasValue)
                 return;
 
