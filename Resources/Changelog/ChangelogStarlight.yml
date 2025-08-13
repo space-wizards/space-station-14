@@ -11313,5 +11313,12 @@ Entries:
   id: 127702
   time: '2025-08-12T20:13:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1277
+- author: walksanatora
+  changes:
+  - message: Nukeops now properly call evac shuttle once everyone is dead.
+    type: Fix
+  id: 132900
+  time: '2025-08-13T21:54:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1329
 Order: -1
 
