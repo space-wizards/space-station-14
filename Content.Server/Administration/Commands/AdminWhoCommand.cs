@@ -8,32 +8,30 @@ using Robust.Shared.Utility;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.AdminWho)]
-public sealed class AdminWhoCommand : IConsoleCommand
+public sealed class AdminWhoCommand : LocalizedCommands
 {
-    public string Command => "adminwho";
-    public string Description => "Returns a list of all admins on the server";
-    public string Help => "Usage: adminwho";
+    [Dependency] private readonly IAfkManager _afkManager = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "adminwho";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var adminMgr = IoCManager.Resolve<IAdminManager>();
-        var afk = IoCManager.Resolve<IAfkManager>();
-
         var seeStealth = true;
 
         // If null it (hopefully) means it is being called from the console.
         if (shell.Player != null)
         {
-            var playerData = adminMgr.GetAdminData(shell.Player);
+            var playerData = _adminManager.GetAdminData(shell.Player);
 
             seeStealth = playerData != null && playerData.CanStealth();
         }
 
         var sb = new StringBuilder();
         var first = true;
-        foreach (var admin in adminMgr.ActiveAdmins)
+        foreach (var admin in _adminManager.ActiveAdmins)
         {
-            var adminData = adminMgr.GetAdminData(admin)!;
+            var adminData = _adminManager.GetAdminData(admin)!;
             DebugTools.AssertNotNull(adminData);
 
             if (adminData.Stealth && !seeStealth)
@@ -50,9 +48,9 @@ public sealed class AdminWhoCommand : IConsoleCommand
             if (adminData.Stealth)
                 sb.Append(" (S)");
 
-            if (shell.Player is { } player && adminMgr.HasAdminFlag(player, AdminFlags.Admin))
+            if (shell.Player is { } player && _adminManager.HasAdminFlag(player, AdminFlags.Admin))
             {
-                if (afk.IsAfk(admin))
+                if (_afkManager.IsAfk(admin))
                     sb.Append(" [AFK]");
             }
         }

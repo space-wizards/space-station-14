@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprite edited by Flareguy for SS14, original unedited sprite can be found in https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a",
+  "copyright": "Sprite edited by Flareguy for SS14, modified from space suit sprites taken from tgstation at commit https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a. Vox state based off of biosuit, taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/31d6576ba8102135d058ef49c3cb6ecbe8db8a79",
   "size": {
     "x": 32,
     "y": 32

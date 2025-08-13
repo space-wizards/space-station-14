@@ -13,7 +13,7 @@ public interface INanoTaskUiMessagePayload
 ///     Dispatched when a new task is created
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed class NanoTaskAddTask : INanoTaskUiMessagePayload
+public sealed partial class NanoTaskAddTask : INanoTaskUiMessagePayload
 {
     /// <summary>
     ///     The newly created task
@@ -30,7 +30,7 @@ public sealed class NanoTaskAddTask : INanoTaskUiMessagePayload
 ///     Dispatched when an existing task is modified
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed class NanoTaskUpdateTask : INanoTaskUiMessagePayload
+public sealed partial class NanoTaskUpdateTask : INanoTaskUiMessagePayload
 {
     /// <summary>
     ///     The task that was updated and its ID
@@ -47,7 +47,7 @@ public sealed class NanoTaskUpdateTask : INanoTaskUiMessagePayload
 ///     Dispatched when an existing task is deleted
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed class NanoTaskDeleteTask : INanoTaskUiMessagePayload
+public sealed partial class NanoTaskDeleteTask : INanoTaskUiMessagePayload
 {
     /// <summary>
     ///     The ID of the task to delete
@@ -64,7 +64,7 @@ public sealed class NanoTaskDeleteTask : INanoTaskUiMessagePayload
 ///     Dispatched when a task is requested to be printed
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed class NanoTaskPrintTask : INanoTaskUiMessagePayload
+public sealed partial class NanoTaskPrintTask : INanoTaskUiMessagePayload
 {
     /// <summary>
     ///     The NanoTask to print
