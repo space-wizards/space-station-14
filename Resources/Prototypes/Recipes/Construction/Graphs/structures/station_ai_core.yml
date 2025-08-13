@@ -51,7 +51,7 @@
           steps:
             - component: BorgBrain
               name: construction-graph-component-borg-brain
-              store: brain
+              store: mmi
               icon:
                 sprite: "Objects/Specific/Robotics/mmi.rsi"
                 state: "mmi_icon"
@@ -76,6 +76,4 @@
               doAfter: 2
 
     - node: stationAiCore
-      entity: PlayerStationAi
-      actions:
-      - !type:TransferAiToCore
+      entity: PlayerStationAiEmpty
