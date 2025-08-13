@@ -1662,8 +1662,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Critical
-      200: Dead
+      60: Critical
+      125: Dead
   - type: NpcFactionMember
     factions:
     - Syndicate
