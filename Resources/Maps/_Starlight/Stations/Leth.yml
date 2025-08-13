@@ -12458,8 +12458,6 @@ entities:
       pos: 1.5,-67.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 16652
   - uid: 3867
