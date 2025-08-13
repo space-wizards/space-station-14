@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: reagent
   id: EZNutrient
   name: reagent-name-e-z-nutrient
@@ -214,25 +216,9 @@
     Poison:
       effects:
       - !type:HealthChange
-        # start harmony change
-        conditions:
-        - !type:OrganType
-          type: Avali
-          shouldHave: false
-        # end harmony change
         damage:
           types:
             Caustic: 1
-        # start harmony change
-    Drink:
-      effects:
-      - !type:ModifyBloodLevel
-        conditions:
-        - !type:OrganType
-          type: Avali
-          shouldHave: true
-        amount: 6
-        # end harmony change
     Gas:
       effects:
       - !type:HealthChange
@@ -256,6 +242,11 @@
         - !type:OrganType
           type: Vox
           shouldHave: false
+        # start of modifications
+        - !type:OrganType
+          type: Avali
+          shouldHave: false
+        # end of modifications
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 0.8

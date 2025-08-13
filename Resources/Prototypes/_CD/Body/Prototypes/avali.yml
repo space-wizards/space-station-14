@@ -19,10 +19,10 @@
       - left_leg
       organs:
         heart: OrganAvaliHeart # harmony - replaced human heart with avali heart
-        lungs: OrganHumanLungs
+        lungs: OrganAvaliLungs  # Ronstation - replaced human heart with av- wait, no license header?
         stomach: OrganAvaliStomach # harmony - replaced human stomach with avali stomach
-        liver: OrganHumanLiver
-        kidneys: OrganHumanKidneys
+        liver: OrganAvaliLiver # Ronstation - repla- you get the idea.
+        kidneys: OrganAvaliKidneys # Ronstation - i'm honestly not sure what to do with licensing comments in this file
     right_arm:
       part: RightArmAvali
       connections:
