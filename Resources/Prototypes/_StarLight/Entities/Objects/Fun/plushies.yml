@@ -1467,7 +1467,7 @@
       layers:
         - state: icon
     - type: ItemToggle
-      onUse: true
+      onUse: false
       verbToggleOn: plushie-voicebox-activate
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
@@ -1626,12 +1626,6 @@
     sound:
       path: /Audio/Animals/cat_meow.ogg
   - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Animals/cat_meow2.ogg
-  - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Animals/cat_meow.ogg
-  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Animals/cat_meow2.ogg
   - type: Food
