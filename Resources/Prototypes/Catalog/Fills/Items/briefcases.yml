@@ -55,7 +55,6 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesSunglasses
-      - id: IngotGold
-        amount: 30
+      - id: SpaceCash1000
       - id: ClothingOuterCoatJensen
       - id: ClothingHandsGlovesColorBlack
