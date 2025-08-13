@@ -92,13 +92,58 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         Updated?.Invoke();
     }
 
+    public bool IsAllowed(
+        List<ProtoId<JobPrototype>>? jobs,
+        List<ProtoId<AntagPrototype>>? antags,
+        HumanoidCharacterProfile? profile,
+        [NotNullWhen(false)] out FormattedMessage? reason)
+    {
+        reason = null;
+
+        if (antags is not null)
+        {
+            foreach (var proto in antags)
+            {
+                if (_prototypes.TryIndex(proto, out var antag) && !IsAllowed(antag, profile, out reason))
+                    return false;
+            }
+        }
+
+        if (jobs is not null)
+        {
+            foreach (var proto in jobs)
+            {
+                if (_prototypes.TryIndex(proto, out var job) && !IsAllowed(job, profile, out reason))
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
     /// <summary>
     /// Check the job prototype against the current player, for requirements and bans
     /// </summary>
     public bool IsAllowed(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
-        var list = new List<string>{job.ID};
-        return IsAllowed(list, profile, out reason);
+        // Check the player's bans
+        if (_roleBans.Contains(PrefixJob + job.ID))
+        {
+            reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
+            return false;
+        }
+
+        // Check whitelist requirements
+        if (!CheckWhitelist(job, out reason))
+            return false;
+
+        // Check other role requirements
+        var reqs = _entManager.System<SharedRoleSystem>().GetRoleRequirements(job);
+        if (!CheckRoleRequirements(reqs, profile, out reason))
+            return false;
+
+
+        return true;
     }
 
     /// <summary>
@@ -106,57 +151,39 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     /// </summary>
     public bool IsAllowed(AntagPrototype antag, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
-        var list = new List<string>{antag.ID};
-        return IsAllowed(list, profile, out reason);
+        // Check the player's bans
+        if (_roleBans.Contains(PrefixAntag + antag.ID))
+        {
+            reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
+            return false;
+        }
+
+        // TODO AntagPrototype whitelist check
+
+        // Check other role requirements
+        var reqs = _entManager.System<SharedRoleSystem>().GetRoleRequirements(antag);
+        if (!CheckRoleRequirements(reqs, profile, out reason))
+            return false;
+
+        return true;
     }
 
     /// <summary>
     /// Check a list of job/antag prototypes against the current player, for requirements and bans.
     /// </summary>
     /// <returns>Returns True if all prototypes passed.</returns>
+    [Obsolete("Use the typed variants")]
     public bool IsAllowed(List<string> prototypes, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
         foreach (var proto in prototypes)
         {
-            JobPrototype? job = null;
-            AntagPrototype? antag = null;
-
-            // The database stores roles with prefixes to distinguish them, so we must add them to the IDs before comparison
-            var prefixedProto = proto;
-
-            if (_prototypes.TryIndex(proto, out job))
-                prefixedProto = PrefixJob + proto;
-            else if (_prototypes.TryIndex(proto, out antag))
-                prefixedProto = PrefixAntag + proto;
-            else
-                _sawmill.Error($"Role prototype '{proto}' could not be indexed as either a Job or an Antag");
-
-            // Check the player's bans
-            if (_roleBans.Contains(prefixedProto))
-            {
-                reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
-                return false;
-            }
-
-            //TODO antagPrototype whitelist check?
-            if (job is not null && !CheckWhitelist(job, out reason))
+            if (_prototypes.TryIndex<JobPrototype>(proto, out var job) && !IsAllowed(job, profile, out reason))
                 return false;
 
-            var player = _playerManager.LocalSession;
-            if (player == null)
-                return true;
-
-            var reqs = new HashSet<JobRequirement>();
-
-            // Check other role requirements
-            if (job is not null)
-                reqs = _entManager.System<SharedRoleSystem>().GetJobRequirement(job);
-            else if (antag is not null)
-                reqs = _entManager.System<SharedRoleSystem>().GetAntagRequirement(antag);
-
-            return CheckRoleRequirements(reqs, profile, out reason);
+            if (_prototypes.TryIndex<AntagPrototype>(proto, out var antag) && !IsAllowed(antag, profile, out reason))
+                return false;
         }
 
         return true;

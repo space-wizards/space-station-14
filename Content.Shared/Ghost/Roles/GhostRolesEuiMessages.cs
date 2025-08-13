@@ -1,4 +1,6 @@
 using Content.Shared.Eui;
+using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ghost.Roles
@@ -14,7 +16,7 @@ namespace Content.Shared.Ghost.Roles
         /// <summary>
         /// A list of all antag and job prototype IDs of the ghost role and its mind role(s).
         /// </summary>
-        public List<string> RolePrototypes;
+        public (List<ProtoId<JobPrototype>>?,List<ProtoId<AntagPrototype>>?)  RolePrototypes;
 
         /// <inheritdoc cref="GhostRoleKind"/>
         public GhostRoleKind Kind { get; set; }

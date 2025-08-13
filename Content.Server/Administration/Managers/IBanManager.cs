@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Net;
 using System.Threading.Tasks;
 using Content.Shared.Database;
@@ -25,23 +24,31 @@ public interface IBanManager
     /// <param name="severity">Severity of the resulting ban note</param>
     /// <param name="reason">Reason for the ban</param>
     public void CreateServerBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, uint? minutes, NoteSeverity severity, string reason);
+
+    /// <summary>
+    /// Gets a list of prefixed prototype IDs with the player's role bans.
+    /// </summary>
     public HashSet<string>? GetRoleBans(NetUserId playerUserId);
 
     /// <summary>
     /// Checks if the player is currently banned from any of the listed roles.
     /// </summary>
     /// <param name="player">The player.</param>
-    /// <param name="roles">A list of antag and/or job prototype IDs, with or without role prefixes.</param>
+    /// <param name="antags">A list of valid antag prototype IDs.</param>
     /// <returns>Returns True if an active role ban is found for this player for any of the listed roles.</returns>
-    public bool IsRoleBanned(ICommonSession player, List<string> roles);
+    public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> antags);
 
     /// <summary>
     /// Checks if the player is currently banned from any of the listed roles.
     /// </summary>
     /// <param name="player">The player.</param>
-    /// <param name="prototypes">A list of valid antag prototype IDs.</param>
+    /// <param name="jobs">A list of valid job prototype IDs.</param>
     /// <returns>Returns True if an active role ban is found for this player for any of the listed roles.</returns>
-    public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> prototypes);
+    public bool IsRoleBanned(ICommonSession player, List<ProtoId<JobPrototype>> jobs);
+
+    /// <summary>
+    /// Gets a list of prototype IDs with the player's job bans.
+    /// </summary>
     public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
 
     /// <summary>
@@ -53,7 +60,6 @@ public interface IBanManager
     /// <param name="reason">Reason for the ban</param>
     /// <param name="minutes">Number of minutes to ban for. 0 and null mean permanent</param>
     /// <param name="timeOfBan">Time when the ban was applied, used for grouping role bans</param>
-    /// TODO: Phase out string-typed roles, take/pass indexed prototypes.
     public void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan);
 
     /// <summary>

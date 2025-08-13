@@ -24,7 +24,7 @@ public static class JobRequirements
         HumanoidCharacterProfile? profile)
     {
         var sys = entManager.System<SharedRoleSystem>();
-        var requirements = sys.GetJobRequirement(job);
+        var requirements = sys.GetRoleRequirements(job);
         return TryRequirementsMet(requirements, playTimes, out reason, entManager, protoManager, profile);
     }
 

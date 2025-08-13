@@ -511,17 +511,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 fallbackBlocked = true;
 
             // Check if the player meets all requirements for the roles
-            foreach (var antag in def.PrefRoles)
-            {
-                if (!_playTime.IsAllowed(session, antag))
-                    blocked = true;
-            }
+            if (!_playTime.IsAllowed(session, def.PrefRoles))
+                blocked = true;
 
-            foreach (var antag in def.FallbackRoles)
-            {
-                if (!_playTime.IsAllowed(session, antag))
-                    fallbackBlocked = true;
-            }
+            if (!_playTime.IsAllowed(session, def.FallbackRoles))
+                fallbackBlocked = true;
 
             // Add player to the appropriate antag pool
             if (HasPrimaryAntagPreference(session, def) && !blocked)

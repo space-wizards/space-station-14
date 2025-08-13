@@ -93,30 +93,6 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         _cachedBanExemptions.Remove(player);
     }
 
-    private async Task<bool> AddRoleBan(ServerRoleBanDef banDef)
-    {
-        banDef = await _db.AddServerRoleBanAsync(banDef);
-
-        if (banDef.UserId != null
-            && _playerManager.TryGetSessionById(banDef.UserId, out var player)
-            && _cachedRoleBans.TryGetValue(player, out var cachedBans))
-        {
-            cachedBans.Add(banDef);
-        }
-
-        return true;
-    }
-
-    public HashSet<string>? GetRoleBans(NetUserId playerUserId)
-    {
-        if (!_playerManager.TryGetSessionById(playerUserId, out var session))
-            return null;
-
-        return _cachedRoleBans.TryGetValue(session, out var roleBans)
-            ? roleBans.Select(banDef => banDef.Role).ToHashSet()
-            : null;
-    }
-
     public void Restart()
     {
         // Clear out players that have disconnected.
@@ -234,7 +210,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
     #endregion
 
-    #region Job Bans
+    #region Role Bans
 
     // If you are trying to remove timeOfBan, please don't. It's there because the note system groups role bans by time, reason and banning admin.
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
@@ -300,6 +276,20 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         }
     }
 
+    private async Task<bool> AddRoleBan(ServerRoleBanDef banDef)
+    {
+        banDef = await _db.AddServerRoleBanAsync(banDef);
+
+        if (banDef.UserId != null
+            && _playerManager.TryGetSessionById(banDef.UserId, out var player)
+            && _cachedRoleBans.TryGetValue(player, out var cachedBans))
+        {
+            cachedBans.Add(banDef);
+        }
+
+        return true;
+    }
+
     public async Task<string> PardonRoleBan(int banId, NetUserId? unbanningAdmin, DateTimeOffset unbanTime)
     {
         var ban = await _db.GetServerRoleBanAsync(banId);
@@ -348,54 +338,47 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             .Select(ban => new ProtoId<JobPrototype>(ban.Role[PrefixJob.Length..]))
             .ToHashSet();
     }
-    #endregion
 
-    /// <summary>
-    /// Checks if the player is currently banned from any of the listed roles.
-    /// </summary>
-    /// <param name="player">The player.</param>
-    /// <param name="roles">A list of antag and/or job prototype IDs. If they can be indexed as a job or antag prototype, they will be added the appropriate prefix. If they can't, then they will still be compared against the ban list, so prefixed IDs will also work.</param>
-    /// <returns>Returns True if an active role ban is found for this player for any of the listed roles.</returns>>
-    public bool IsRoleBanned(ICommonSession player, List<string> roles)
+    public HashSet<string>? GetRoleBans(NetUserId playerUserId)
+    {
+        if (!_playerManager.TryGetSessionById(playerUserId, out var session))
+            return null;
+
+        return _cachedRoleBans.TryGetValue(session, out var roleBans)
+            ? roleBans.Select(banDef => banDef.Role).ToHashSet()
+            : null;
+    }
+
+    public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> antags)
     {
         var bans = GetRoleBans(player.UserId);
 
         if (bans is null || bans.Count == 0)
             return false;
 
-        foreach (var role in roles)
+        foreach (var antag in antags)
         {
-            var roleId = role;
-
-            // The database stores roles with prefixes to distinguish them, so we must add them to the IDs before comparison
-            if (_prototypeManager.TryIndex<JobPrototype>(role, out _ ))
-                roleId = PrefixJob + role;
-            else if (_prototypeManager.TryIndex<AntagPrototype>(role, out _ ))
-                roleId = PrefixAntag + role;
-
-            if (bans.Contains(roleId))
+            if (bans.Contains(PrefixAntag + antag))
                 return true;
         }
 
         return false;
     }
 
-    /// <summary>
-    /// Checks if any roles on the list are banned for the specified player.
-    /// </summary>
-    /// <param name="player">The player.</param>
-    /// <param name="prototypes">A list of antag prototype IDs.</param>
-    /// <returns>True if any of the roles are banned.</returns>>
-    public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> prototypes)
+    public bool IsRoleBanned(ICommonSession player, List<ProtoId<JobPrototype>> jobs)
     {
-        var list = new List<string>();
+        var bans = GetRoleBans(player.UserId);
 
-        foreach (var proto in prototypes)
+        if (bans is null || bans.Count == 0)
+            return false;
+
+        foreach (var job in jobs)
         {
-            list.Add(PrefixAntag + proto);
+            if (bans.Contains(PrefixJob + job))
+                return true;
         }
 
-        return IsRoleBanned(player, list);
+        return false;
     }
 
     public void SendRoleBans(ICommonSession pSession)
@@ -409,6 +392,8 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         _sawmill.Debug($"Sent rolebans to {pSession.Name}");
         _netManager.ServerSendMessage(bans, pSession.Channel);
     }
+
+    #endregion
 
     public void PostInject()
     {

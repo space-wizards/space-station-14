@@ -5,7 +5,6 @@ using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 {
@@ -97,7 +96,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                     role.Name,
                     role.Description,
                     //  Check the prototypes for role requirements and bans
-                    requirementsManager.IsAllowed(role.RolePrototypes, null, out var reason),
+                    requirementsManager.IsAllowed(role.RolePrototypes.Item1, role.RolePrototypes.Item2, null, out var reason),
                     reason));
 
             // Add a new entry for each role group
