@@ -2,10 +2,10 @@ meta:
   format: 7
   category: Grid
   engineVersion: 264.0.0
-  forkId: starlight
-  forkVersion: 91f66d7714b054a56bcf2d7a8d67c189efa0fda8
-  time: 08/11/2025 21:09:40
-  entityCount: 1366
+  forkId: Starlight
+  forkVersion: 1732131340
+  time: 08/13/2025 22:13:44
+  entityCount: 1370
 maps: []
 grids:
 - 1
@@ -874,7 +874,7 @@ entities:
       pos: 19.5,-10.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -27322.64
+      secondsUntilStateChange: -27392.297
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -998,6 +998,30 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 19.5,-4.5
+      parent: 1
+- proto: AtmosFixNitrogenMarker
+  entities:
+  - uid: 1367
+    components:
+    - type: Transform
+      pos: -5.5,1.5
+      parent: 1
+  - uid: 1368
+    components:
+    - type: Transform
+      pos: -4.5,1.5
+      parent: 1
+- proto: AtmosFixOxygenMarker
+  entities:
+  - uid: 1369
+    components:
+    - type: Transform
+      pos: -5.5,-0.5
+      parent: 1
+  - uid: 1370
+    components:
+    - type: Transform
+      pos: -4.5,-0.5
       parent: 1
 - proto: BackgammonBoard
   entities:
