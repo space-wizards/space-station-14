@@ -26,9 +26,7 @@ internal sealed class StunOnCollideSystem : EntitySystem
 
         if (ent.Comp.Refresh)
         {
-            _stunSystem.TryUpdateStunDuration(target, component.StunAmount);
-
-            _stunSystem.TryKnockdown(target, component.KnockdownAmount, component.Refresh, component.AutoStand, drop: component.ItemDrop, force: true);
+            _stunSystem.TryUpdateStunDuration(target, ent.Comp.StunAmount);
 
             _movementMod.TryUpdateMovementSpeedModDuration(
                 target,
