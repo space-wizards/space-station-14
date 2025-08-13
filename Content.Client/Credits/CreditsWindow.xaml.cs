@@ -356,6 +356,7 @@ public sealed partial class CreditsWindow : DefaultWindow
         AddSection(Loc.GetString("credits-window-contributors-section-title"), "GitHub.txt");
         AddSection(Loc.GetString("credits-window-codebases-section-title"), "SpaceStation13.txt");
         AddSection(Loc.GetString("credits-window-original-remake-team-section-title"), "OriginalRemake.txt");
+        AddSection(Loc.GetString("credits-window-immortals-title"), "Immortals.txt", true);
         AddSection(Loc.GetString("credits-window-special-thanks-section-title"), "SpecialThanks.txt", true);
 
         var linkGithub = _cfg.GetCVar(CCVars.InfoLinksGithub);
