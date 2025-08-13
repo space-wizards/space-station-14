@@ -446,39 +446,6 @@
     Bruizine: 2
 
 - type: reaction
-  id: BicarLacerinol # mixing any two brute medications will make Razorium
-  impact: Medium
-  reactants:
-    Lacerinol:
-      amount: 1
-    Bicaridine:
-      amount: 1
-  products:
-    Razorium: 1
-
-- type: reaction
-  id: BicarPuncturase # mixing any two brute medications will make Razorium
-  impact: Medium
-  reactants:
-    Puncturase:
-      amount: 1
-    Bicaridine:
-      amount: 1
-  products:
-    Razorium: 1
-
-- type: reaction
-  id: BicarBruizine # mixing any two brute medications will make Razorium
-  impact: Medium
-  reactants:
-    Bruizine:
-      amount: 1
-    Bicaridine:
-      amount: 1
-  products:
-    Razorium: 1
-
-- type: reaction
   id: BruizineLacerinol # mixing any two brute medications will make Razorium
   impact: Medium
   reactants:
@@ -561,7 +528,7 @@
   id: Opporozidone
   minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
   reactants:
-    Cognizine: 
+    Cognizine:
       amount: 1
     Plasma:
       amount: 2
@@ -589,10 +556,10 @@
   impact: Medium
   reactants:
     Cryoxadone:
-      amount: 1
-    Aloe:
       amount: 2
-    Sigynate:
+    Aloe:
+      amount: 1
+    Leporazine:
       amount: 2
   products:
       Aloxadone: 4

@@ -1,4 +1,5 @@
 using Content.Shared.DoAfter;
+using Content.Shared.Inventory;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Forensics;
@@ -67,4 +68,17 @@ public record struct GenerateDnaEvent()
     /// The generated DNA.
     /// </summary>
     public required string DNA;
+}
+
+/// <summary>
+/// An event to check if the fingerprint is accessible.
+/// </summary>
+public sealed class TryAccessFingerprintEvent : CancellableEntityEventArgs, IInventoryRelayEvent
+{
+    SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;
+
+    /// <summary>
+    ///     Entity that blocked access.
+    /// </summary>
+    public EntityUid? Blocker;
 }

@@ -88,6 +88,18 @@
     prototype: MobUraniumCrab
 
 - type: entity
+  id: MobSpawnCrabBananium
+  parent: MobSpawnCrabQuartz
+  name: mobspawner bananiumcrab
+  categories: [ HideSpawnMenu, Spawner ]
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/mobspawn.rsi
+    state: crab_bananium
+  - type: SpawnOnDespawn
+    prototype: MobBananiumCrab
+
+- type: entity
   id: EffectAnomalyFloraBulb
   categories: [ HideSpawnMenu ]
   components:

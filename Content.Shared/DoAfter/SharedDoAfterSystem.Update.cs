@@ -184,34 +184,24 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             }
         }
 
-        // Whether the user and the target are too far apart.
+        // Whether the user and the target are too far apart or they are inaccessible.
         if (args.Target != null)
         {
             if (args.DistanceThreshold != null)
             {
-                if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value, args.DistanceThreshold.Value))
-                    return true;
-            }
-            else
-            {
-                if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
+                if (!_interaction.InRangeAndAccessible(args.User, args.Target.Value, args.DistanceThreshold.Value))
                     return true;
             }
         }
 
-        // Whether the distance between the tool and the user has grown too much.
+        // Whether the distance between the tool and the user has grown too much or they became inaccessible.
         if (args.Used != null)
         {
             if (args.DistanceThreshold != null)
             {
-                if (!_interaction.InRangeUnobstructed(args.User,
+                if (!_interaction.InRangeAndAccessible(args.User,
                         args.Used.Value,
                         args.DistanceThreshold.Value))
-                    return true;
-            }
-            else
-            {
-                if (!_interaction.InRangeUnobstructed(args.User,args.Used.Value))
                     return true;
             }
         }
@@ -233,7 +223,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                     return true;
 
             // If the user changes which hand is active at all, interrupt the do-after
-            if (args.BreakOnHandChange && hands.ActiveHand?.Name != doAfter.InitialHand)
+            if (args.BreakOnHandChange && hands.ActiveHandId != doAfter.InitialHand)
                 return true;
         }
 

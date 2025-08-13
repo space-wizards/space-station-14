@@ -135,6 +135,8 @@
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
       params:
         volume: 2.25
+  - type: StaticPrice
+    price: 1500 # Botany can shit these out like candy, but let's see how it goes
 
 - type: entity
   parent: WeaponRevolverPython
@@ -170,10 +172,8 @@
     ammoSlots: [ null, null, null, null, null ]
 
 - type: entity
-  name: pirate revolver
   parent: WeaponRevolverPirate
   id: WeaponRevolverPirateEmpty
-  description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
   suffix: Empty
   components:
   - type: RevolverAmmoProvider
@@ -181,4 +181,4 @@
     capacity: 5
     chambers: [ null, null, null, null, null ]
     ammoSlots: [ null, null, null, null, null ]
-    
+
