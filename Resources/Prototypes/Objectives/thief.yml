@@ -152,6 +152,21 @@
     difficulty: 0.5 # just for fun, collectings LAMP on Moth
 
 # steal item
+- type: entity
+  parent: BaseThiefStealObjective
+  id: StealMoneyObjective
+  description: Steal 10,000 Spesos
+  components:
+  - type: Objective
+    difficulty: 0                         # doesn't contribute toward difficulty score since all thieves will have this objective
+  - type: StealCondition
+    stealGroup: Money
+    currencyStackId: Credit               # must match your money's StackTypeId (!!!!)
+    currencyTargetAmount: 10000
+    currencyValuePerUnit: 1
+    verifyMapExistence: false
+    objectiveNoOwnerText: objective-steal-currency-title
+    descriptionText: objective-steal-currency-desc
 
 - type: entity                                      #Security subgroup
   parent: BaseThiefStealObjective
