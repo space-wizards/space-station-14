@@ -97,6 +97,30 @@
   - NTDefault4
   obeysTo: laws-owner-crew
 
+#Drone
+# Starlight- type: siliconLaw
+# Starlight  id: Drone1
+# Starlight  order: 1
+# Starlight  lawString: law-drone-1
+
+# Starlight- type: siliconLaw
+# Starlight  id: Drone2
+# Starlight  order: 2
+# Starlight  lawString: law-drone-2
+
+# Starlight- type: siliconLaw
+# Starlight  id: Drone3
+# Starlight  order: 3
+# Starlight  lawString: law-drone-3
+# Starlight
+# Starlight- type: siliconLawset
+# Starlight  id: Drone
+# Starlight  laws:
+# Starlight  - Drone1
+# Starlight  - Drone2
+# Starlight  - Drone3
+# Starlight  obeysTo: laws-owner-beings
+
 # Syndicate
 # region starlight
 - type: siliconLaw
@@ -593,5 +617,6 @@
     PainterLawset: 1
     AntimovLawset: 0.25
     NutimovLawset: 0.5
+# Starlight    Drone: 0.5
     Ninja: 0.25
     BorgiLawset: 1.0 # Starlight
