@@ -8,6 +8,7 @@ using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Benchmarks;
 
@@ -23,7 +24,7 @@ public class DeltaPressureBenchmark
     /// <summary>
     /// Number of entities (windows, really) to spawn with a <see cref="DeltaPressureComponent"/>.
     /// </summary>
-    [Params(1, 10, 100, 1000, 5000, 10000, 50000, 100000)]
+    [Params(1, 10, 100, 1000, 5000, 10000, 50000)]
     public int EntityCount;
 
     /// <summary>
@@ -31,6 +32,9 @@ public class DeltaPressureBenchmark
     /// </summary>
     [Params(30)]
     public int Ticks;
+
+    private EntProtoId WindowProtoId = "Window";
+    private EntProtoId WallProtoId = "ReinforcedWall";
 
     [GlobalSetup]
     public async Task SetupAsync()
@@ -78,14 +82,14 @@ public class DeltaPressureBenchmark
                     var isPerimeter = x == 0 || x == length - 1 || y == 0 || y == height - 1;
                     if (isPerimeter)
                     {
-                        entMan.SpawnEntity("WallSolid", coords);
+                        entMan.SpawnEntity(WallProtoId, coords);
                         continue;
                     }
 
                     // Spawn windows only on the middle row, spanning interior (excluding side walls)
                     if (y == midY)
                     {
-                        entMan.SpawnEntity("Window", coords);
+                        entMan.SpawnEntity(WindowProtoId, coords);
                     }
                 }
             }
