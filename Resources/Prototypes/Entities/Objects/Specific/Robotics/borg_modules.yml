@@ -865,6 +865,8 @@
         whitelist:
           components:
           - FitsInDispenser
+    - item: BorgSyringeTricordrazineRegenerative
+    - item: BorgSyringeInaprovalineRegenerative
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: chem-module }
 
