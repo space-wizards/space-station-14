@@ -5,6 +5,7 @@
   - type: ThiefRule
   - type: AntagObjectives
     objectives:
+    - StealMoneyObjective
     - EscapeThiefShuttleObjective
   - type: AntagRandomObjectives
     sets:
