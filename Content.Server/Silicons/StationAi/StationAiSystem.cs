@@ -4,6 +4,7 @@ using Content.Server.Ghost;
 using Content.Server.Mind;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Spawners.Components;
 using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Alert;
@@ -109,7 +110,8 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (station == null)
             return;
 
-        _stationJobs.TryAdjustJobSlot(station.Value, _stationAiJob, -1, false, true);
+        if (TryComp<ContainerSpawnPointComponent>(ent, out var container) && container.Job == _stationAiJob)
+            _stationJobs.TryAdjustJobSlot(station.Value, _stationAiJob, -1, false, true);
     }
 
     private void OnChargeChanged(Entity<StationAiCoreComponent> entity, ref ChargeChangedEvent args)
