@@ -28,7 +28,7 @@ public sealed class StaminaDamageOnTriggerSystem : EntitySystem
         var ev = new BeforeStaminaDamageOnTriggerEvent(ent.Comp.Stamina, target.Value);
         RaiseLocalEvent(ent.Owner, ref ev);
 
-        _stamina.TakeStaminaDamage(target.Value, ev.Stamina, source: ent.Owner, ignoreResist: ent.Comp.IgnoreResistances);
+        _stamina.TakeStaminaDamage(target.Value, ev.Stamina, source: args.User, with: ent.Owner, ignoreResist: ent.Comp.IgnoreResistances);
 
         args.Handled = true;
     }
