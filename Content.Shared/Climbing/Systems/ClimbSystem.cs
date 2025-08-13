@@ -61,8 +61,8 @@ public sealed partial class ClimbSystem : VirtualController
         SubscribeLocalEvent<ClimbingComponent, EntParentChangedMessage>(OnParentChange);
         SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
-        SubscribeLocalEvent<ClimbingComponent, BuckledEvent>(OnBuckled);
-        SubscribeLocalEvent<ClimbingComponent, EntGotInsertedIntoContainerMessage>(OnStored);
+        SubscribeLocalEvent<ClimbingComponent, BuckledEvent>((uid, comp, _) => StopClimb(uid, comp));
+        SubscribeLocalEvent<ClimbingComponent, EntGotInsertedIntoContainerMessage>((uid, comp, _) => StopClimb(uid, comp));
 
         SubscribeLocalEvent<ClimbableComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
@@ -103,12 +103,8 @@ public sealed partial class ClimbSystem : VirtualController
         Dirty(uid, comp);
 
         // Stop if necessary.
-        if (!_fixturesQuery.TryGetComponent(uid, out var fixtures) ||
-            !IsClimbing(uid, fixtures))
-        {
+        if (!IsClimbing(uid))
             StopClimb(uid, comp);
-            return;
-        }
     }
 
     /// <summary>
@@ -237,17 +233,12 @@ public sealed partial class ClimbSystem : VirtualController
         _audio.PlayPredicted(comp.StartClimbSound, climbable, user);
         var success = _doAfterSystem.TryStartDoAfter(args, out id);
 
-        if (success)
-            climbing.DoAfter = id;
-
         return success;
 
     }
 
     private void OnDoAfter(EntityUid uid, ClimbingComponent component, ClimbDoAfterEvent args)
     {
-        component.DoAfter = null;
-
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
@@ -425,7 +416,10 @@ public sealed partial class ClimbSystem : VirtualController
 
     private void StopClimb(EntityUid uid, ClimbingComponent? climbing = null, FixturesComponent? fixtures = null)
     {
-        if (!Resolve(uid, ref climbing, ref fixtures, false))
+        if (!Resolve(uid, ref climbing, ref fixtures))
+            return;
+
+        if (!climbing.IsClimbing)
             return;
 
         foreach (var (name, fixtureMask) in climbing.DisabledFixtureMasks)
@@ -537,31 +531,6 @@ public sealed partial class ClimbSystem : VirtualController
     public void ForciblySetClimbing(EntityUid uid, EntityUid climbable, ClimbingComponent? component = null)
     {
         Climb(uid, uid, climbable, true, component);
-    }
-
-    private void OnBuckled(EntityUid uid, ClimbingComponent component, ref BuckledEvent args)
-    {
-        StopOrCancelClimb(uid, component);
-    }
-
-    private void OnStored(EntityUid uid, ClimbingComponent component, ref EntGotInsertedIntoContainerMessage args)
-    {
-        StopOrCancelClimb(uid, component);
-    }
-
-    private void StopOrCancelClimb(EntityUid uid, ClimbingComponent component)
-    {
-        if (component.IsClimbing)
-        {
-            StopClimb(uid, component);
-            return;
-        }
-
-        if (component.DoAfter != null)
-        {
-            _doAfterSystem.Cancel(component.DoAfter);
-            component.DoAfter = null;
-        }
     }
 
     private void OnGlassClimbed(EntityUid uid, GlassTableComponent component, ref ClimbedOnEvent args)

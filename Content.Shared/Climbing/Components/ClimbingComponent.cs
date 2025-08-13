@@ -1,4 +1,3 @@
-using Content.Shared.DoAfter;
 using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -25,12 +24,6 @@ public sealed partial class ClimbingComponent : Component
     /// </summary>
     [AutoNetworkedField, DataField]
     public bool IsClimbing;
-
-    /// <summary>
-    /// The Climbing DoAfter.
-    /// </summary>
-    [DataField]
-    public DoAfterId? DoAfter;
 
     /// <summary>
     /// Whether the owner is being moved onto the climbed entity.
