@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/13/2025 00:06:37
-  entityCount: 399
+  time: 08/13/2025 00:20:53
+  entityCount: 413
 maps: []
 grids:
 - 1
@@ -557,6 +557,76 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-2.5
+      parent: 1
+  - uid: 400
+    components:
+    - type: Transform
+      pos: 4.5,2.5
+      parent: 1
+  - uid: 401
+    components:
+    - type: Transform
+      pos: 5.5,2.5
+      parent: 1
+  - uid: 402
+    components:
+    - type: Transform
+      pos: 6.5,2.5
+      parent: 1
+  - uid: 403
+    components:
+    - type: Transform
+      pos: 4.5,-1.5
+      parent: 1
+  - uid: 404
+    components:
+    - type: Transform
+      pos: 5.5,-1.5
+      parent: 1
+  - uid: 405
+    components:
+    - type: Transform
+      pos: 6.5,-1.5
+      parent: 1
+  - uid: 406
+    components:
+    - type: Transform
+      pos: -3.5,-1.5
+      parent: 1
+  - uid: 407
+    components:
+    - type: Transform
+      pos: -4.5,-1.5
+      parent: 1
+  - uid: 408
+    components:
+    - type: Transform
+      pos: -3.5,2.5
+      parent: 1
+  - uid: 409
+    components:
+    - type: Transform
+      pos: -4.5,2.5
+      parent: 1
+  - uid: 410
+    components:
+    - type: Transform
+      pos: -8.5,-0.5
+      parent: 1
+  - uid: 411
+    components:
+    - type: Transform
+      pos: -8.5,-1.5
+      parent: 1
+  - uid: 412
+    components:
+    - type: Transform
+      pos: 1.5,-6.5
+      parent: 1
+  - uid: 413
+    components:
+    - type: Transform
+      pos: 2.5,-6.5
       parent: 1
 - proto: CableApcStack
   entities:
