@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   save: false
   name: Urist McRaptor
@@ -8,6 +10,7 @@
   - type: HumanoidAppearance
     species: Avali
   - type: Hunger
+    baseDecayRate: 0.05 # Ronstation - this component makes no fucking sense to me. just slap on the same number as scurrets. what could go wrong
   - type: Thirst
   - type: Icon
     sprite: _Starlight/Mobs/Species/Avali/parts.rsi # Ronstation - Using Starlight Avali sprites
@@ -52,7 +55,7 @@
     bloodReagent: AmmoniaBlood
   - type: MeleeWeapon
     soundHit:
-      path: /Audio/Weapons/pierce.ogg
+      collection: AlienClaw # Ronstation
     angle: 30
     animation: WeaponArcClaw
     damage:
@@ -82,15 +85,6 @@
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 296.15
     thermalRegulationTemperatureThreshold: 10
-# Start harmony change
-#  - type: Metabolizer
-#    solutionOnBody: false
-#    updateInterval: 0.7 #Matches Arachnids but in reverse
-#    groups:
-#      - id: Medicine
-#      - id: Poison
-#      - id: Drink
-# End harmony change
 
 - type: entity
   parent: BaseSpeciesDummy

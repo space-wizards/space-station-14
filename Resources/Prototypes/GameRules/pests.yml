@@ -35,6 +35,9 @@
       - id: MobMouse
       - id: MobMouse1
       - id: MobMouse2
+    ceiling: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
+    playerRatio: 17
+    floor: 1 # Ronstation - Mice can be annoying so we add some variance into how many they can spawn at lower pops
       #- id: MobMouseCancer DeltaV - No
 # Events always spawn a critter regardless of Probability https://github.com/space-wizards/space-station-14/issues/28480 I added the Rat King to their own event with a player cap.
 
@@ -57,6 +60,9 @@
       - id: MobMouse1
       - id: MobMouse2
       - id: MobMouseCancer
+    ceiling: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
+    playerRatio: 17
+    floor: 1 # Ronstation - Mice can be annoying so we add some variance into how many they can spawn at lower pops
     specialEntries:
     - id: SpawnPointGhostRatKing
       prob: 0.001
@@ -82,6 +88,8 @@
         weight: 0.008
       - id: MobMoproach
         weight: 0.004
+    ceiling: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
+    playerRatio: 17
 
 - type: entity
   id: SnailMigrationLowPop
@@ -99,6 +107,8 @@
       - id: MobSnail
       - id: MobSnailSpeed
       - id: MobSnailMoth
+    ceiling: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
+    playerRatio: 17
 
 - type: entity
   id: SnailMigration
@@ -122,3 +132,5 @@
       - id: MobSnailMoth
         weight: 0.08
       # - id: MobSnailInstantDeath DeltaV - No
+    ceiling: 10 # Ronstation - Pests have a higher ceiling and lower PR to spawn more critters
+    playerRatio: 17

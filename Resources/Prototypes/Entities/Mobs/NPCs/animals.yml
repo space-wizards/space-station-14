@@ -2627,7 +2627,7 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        180: Dead
+        80: Dead # Ronstation - Clownspiders should be WEAKER than Tarantulas, not stronger
     - type: Spider
       webPrototype: SpiderWebClown
     - type: MeleeWeapon

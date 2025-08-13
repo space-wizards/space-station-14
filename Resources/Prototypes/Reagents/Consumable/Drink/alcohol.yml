@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 
 # Base Alcohol
 
@@ -191,6 +192,16 @@
         damage:
           groups:
             Brute: -1
+      # start of modifications
+      # overworks the overworked avali organs
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Avali
+        damage:
+          types:
+            Bloodloss: 0.5
+      # end of modifications
       - !type:ChemVomit
         probability: 0.04
         conditions:
