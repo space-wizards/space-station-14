@@ -116,9 +116,6 @@
     sprite: Objects/Tools/welder_industrial.rsi
   - type: Item
     sprite: Objects/Tools/welder_industrial.rsi
-    shape:
-    - 0,0,1,0
-    - 0,1,0,1
   - type: SolutionContainerManager
     solutions:
       Welder:
@@ -157,7 +154,6 @@
     sprite: Objects/Tools/welder_experimental.rsi
   - type: Item
     sprite: Objects/Tools/welder_experimental.rsi
-    size: Normal
   - type: SolutionContainerManager
     solutions:
       Welder:
