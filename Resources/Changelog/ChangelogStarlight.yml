@@ -11327,5 +11327,12 @@ Entries:
   id: 133000
   time: '2025-08-13T21:57:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1330
+- author: TheRealSlimRedwoods
+  changes:
+  - message: Fixed plushies spewing out "phantom voicelines"
+    type: Fix
+  id: 132700
+  time: '2025-08-13T22:03:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1327
 Order: -1
 
