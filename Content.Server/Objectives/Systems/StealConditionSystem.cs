@@ -12,6 +12,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Stacks;
+using Content.Server.Inventory; // NEW: for CarryCounterSystem
 
 namespace Content.Server.Objectives.Systems;
 
@@ -24,6 +25,7 @@ public sealed class StealConditionSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly CarryCounterSystem _carryCounter = default!; // NEW
 
     private EntityQuery<ContainerManagerComponent> _containerQuery;
 
@@ -91,6 +93,7 @@ public sealed class StealConditionSystem : EntitySystem
         _metaData.SetEntityDescription(condition.Owner, description, args.Meta);
         _objectives.SetIcon(condition.Owner, group.Sprite, args.Objective);
     }
+
     private void OnGetProgress(Entity<StealConditionComponent> condition, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = GetProgress((args.MindId, args.Mind), condition);
@@ -98,6 +101,32 @@ public sealed class StealConditionSystem : EntitySystem
 
     private float GetProgress(Entity<MindComponent> mind, StealConditionComponent condition)
     {
+        // Currency/stacked-item mode (optional)
+        // If the component has the new currency fields set, compute progress by
+        // counting carried stacks via CarryCounterSystem and return early.
+        if (condition.CurrencyStackId is not null && condition.CurrencyTargetAmount is int targetAmount)
+        {
+
+            var maybeMob = mind.Comp.OwnedEntity;
+            if (!maybeMob.HasValue)
+                return 0f;
+
+            var mob = maybeMob.Value;
+
+            if (!_containerQuery.TryGetComponent(mob, out _))
+                return 0f;
+
+            var have = _carryCounter.CountByStackType(
+                mob,
+                condition.CurrencyStackId,
+                Math.Max(1, condition.CurrencyValuePerUnit));
+
+            var need = Math.Max(1, targetAmount);
+            var frac = have / (float)need;
+            return Math.Clamp(frac, 0f, 1f);
+        }
+
+
         if (!_containerQuery.TryGetComponent(mind.Comp.OwnedEntity, out var currentManager))
             return 0;
 
