@@ -332,7 +332,7 @@ public sealed class SpreaderSystem : EntitySystem
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
             var direction = (AtmosDirection) (1 << i);
-            var adjacentTile = tile.Offset(direction.ToDirection());
+            var adjacentTile = SharedMapSystem.GetDirection(tile, direction.ToDirection());
             anchored = _map.GetAnchoredEntitiesEnumerator(ent, grid, adjacentTile);
 
             while (anchored.MoveNext(out var entity))
