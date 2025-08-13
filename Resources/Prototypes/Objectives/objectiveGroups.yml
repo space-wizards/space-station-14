@@ -48,6 +48,7 @@
   weights:
     ThiefObjectiveGroupCollection: 1
     ThiefObjectiveGroupItem: 1
+    ThiefObjectiveGroupMoney: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupMoney
