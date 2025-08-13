@@ -61,6 +61,8 @@ public sealed partial class ClimbSystem : VirtualController
         SubscribeLocalEvent<ClimbingComponent, EntParentChangedMessage>(OnParentChange);
         SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
+
+        // TODO: Special behavior for buckled entities?
         SubscribeLocalEvent<ClimbingComponent, BuckledEvent>((uid, comp, _) => StopClimb(uid, comp));
         SubscribeLocalEvent<ClimbingComponent, EntGotInsertedIntoContainerMessage>((uid, comp, _) => StopClimb(uid, comp));
 
