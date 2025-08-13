@@ -149,24 +149,27 @@ public sealed partial class TriggerSystem
                 SetProximityAppearance((uid, trigger));
             }
 
-            // Continue if we're disabled or on cooldown.
+            var colliding = trigger.Colliding;
+
+            // Continue if we're disabled, on cooldown, or the list of colliding objects is empty.
             if (!trigger.Enabled ||
-                curTime < trigger.NextTrigger)
+                curTime < trigger.NextTrigger ||
+                colliding.Count == 0)
                 continue;
 
-            var ourSpeed = _physicsQuery.TryGetComponent(uid, out var physicsComponent) ?
+            var ourVelocity = _physicsQuery.TryGetComponent(uid, out var physicsComponent) ?
                 physicsComponent.LinearVelocity :
                 Vector2.Zero;
 
             var triggerSpeed = trigger.TriggerSpeed;
 
             // Check for anything colliding and moving fast enough, relative to us.
-            foreach (var (collidingUid, colliding) in trigger.Colliding)
+            foreach (var (collidingUid, collidingPhysics) in colliding)
             {
                 if (TerminatingOrDeleted(collidingUid))
                     continue;
 
-                if ((colliding.LinearVelocity - ourSpeed).Length() < triggerSpeed)
+                if ((collidingPhysics.LinearVelocity - ourVelocity).Length() < triggerSpeed)
                     continue;
 
                 if (trigger.RequiresLineOfSight && !_examineSystem.InRangeUnOccluded(uid, collidingUid, range: trigger.Shape.Radius))
