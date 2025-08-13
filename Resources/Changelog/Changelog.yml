@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Changed 2 posters to be rules-compliant.
-    type: Tweak
-  id: 8337
-  time: '2025-04-24T23:44:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32734
 - author: Nox38
   changes:
   - message: Rebalanced cyborg modules and made more of them starting equipment.
@@ -3946,3 +3939,10 @@
   id: 8849
   time: '2025-08-12T23:00:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39585
+- author: Nox38
+  changes:
+  - message: Resized every firearm.
+    type: Tweak
+  id: 8850
+  time: '2025-08-13T17:13:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36473
