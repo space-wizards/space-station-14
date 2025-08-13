@@ -9,10 +9,8 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
-using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Pulling.Events;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
@@ -65,7 +63,6 @@ public sealed partial class ClimbSystem : VirtualController
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckledEvent>(OnBuckled);
         SubscribeLocalEvent<ClimbingComponent, EntGotInsertedIntoContainerMessage>(OnStored);
-        SubscribeLocalEvent<ClimbingComponent, BeingPulledAttemptEvent>(OnBeingPulledAttempt); // STARLIGHT
 
         SubscribeLocalEvent<ClimbableComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
@@ -140,7 +137,6 @@ public sealed partial class ClimbSystem : VirtualController
         // Can't move when transition.
         if (component.NextTransition != null)
             args.Cancel();
-
     }
 
     private void OnParentChange(EntityUid uid, ClimbingComponent component, ref EntParentChangedMessage args)
@@ -552,17 +548,6 @@ public sealed partial class ClimbSystem : VirtualController
     {
         StopOrCancelClimb(uid, component);
     }
-
-    // STARLIGHT START
-    private void OnBeingPulledAttempt(EntityUid uid, ClimbingComponent component, BeingPulledAttemptEvent args)
-    {
-        if (!TryComp(uid, out PullableComponent? pullableComp))
-            return;
-
-        if (pullableComp.BeingPulled)
-            StopOrCancelClimb(uid, component);
-    }
-    // STARLIGHT END
 
     private void StopOrCancelClimb(EntityUid uid, ClimbingComponent component)
     {
