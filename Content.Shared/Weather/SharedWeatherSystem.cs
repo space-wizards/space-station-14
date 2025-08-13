@@ -225,7 +225,7 @@ public abstract class SharedWeatherSystem : EntitySystem
     }
 
     /// <remarks>
-    /// On client, will return early if the current tick has already been predicted.
+    /// On client, will do nothing and return true if the current tick has already been predicted.
     /// </remarks>
     protected virtual bool SetState(EntityUid uid, WeatherState state, WeatherComponent component, WeatherData weather, WeatherPrototype weatherProto)
     {
