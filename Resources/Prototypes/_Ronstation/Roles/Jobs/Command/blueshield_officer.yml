@@ -35,7 +35,7 @@
   id: BlueshieldOfficerGear
   equipment:
     id: BlueshieldPDA
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesCommand
     gloves: ClothingHandsGlovesCombat
     ears: ClothingHeadsetBlueshield
     pocket1: WeaponPistolMk58
