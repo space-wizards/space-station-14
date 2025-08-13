@@ -10,7 +10,6 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyCommon
   - type: Headset
   - type: EncryptionKeyHolder
     keySlots: 4
