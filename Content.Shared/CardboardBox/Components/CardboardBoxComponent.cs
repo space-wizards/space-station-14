@@ -12,12 +12,6 @@ namespace Content.Shared.CardboardBox.Components;
 public sealed partial class CardboardBoxComponent : Component
 {
     /// <summary>
-    /// The person in control of this box
-    /// </summary>
-    [DataField("mover")]
-    public EntityUid? Mover;
-
-    /// <summary>
     /// The entity used for the box opening effect
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]

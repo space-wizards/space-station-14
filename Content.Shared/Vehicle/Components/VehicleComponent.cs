@@ -33,7 +33,7 @@ public sealed partial class VehicleComponent : Component
     /// This damage is modified by <see cref="TransferDamageModifier"/>
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool TransferDamage;
+    public bool TransferDamage = true;
 
     /// <summary>
     /// A damage modifier set that adjusts the damage passed from the vehicle to the operator.

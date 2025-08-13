@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Access.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Movement.Components;
@@ -34,19 +35,22 @@ public sealed partial class VehicleSystem : EntitySystem
         SubscribeLocalEvent<VehicleComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
         SubscribeLocalEvent<VehicleComponent, UpdateCanMoveEvent>(OnVehicleUpdateCanMove);
         SubscribeLocalEvent<VehicleComponent, ComponentShutdown>(OnVehicleShutdown);
+        SubscribeLocalEvent<VehicleComponent, GetAdditionalAccessEvent>(OnVehicleGetAdditionalAccess);
 
         SubscribeLocalEvent<VehicleOperatorComponent, ComponentShutdown>(OnOperatorShutdown);
+        SubscribeLocalEvent<VehicleOperatorComponent, GetAdditionalAccessEvent>(OnOperatorGetAdditionalAccess);
     }
 
     /// <remarks>
-    /// We subscribe to BeforeDamageChangedEvent so that we can access the damage value before the container is added.
+    /// We subscribe to BeforeDamageChangedEvent so that we can access the damage value before the container is applied.
     /// </remarks>
     private void OnBeforeDamageChanged(Entity<VehicleComponent> ent, ref BeforeDamageChangedEvent args)
     {
-        if (!ent.Comp.TransferDamage || args.Damage.AnyPositive() || ent.Comp.Operator is not { } operatorUid)
+        if (!ent.Comp.TransferDamage || !args.Damage.AnyPositive() || ent.Comp.Operator is not { } operatorUid)
             return;
 
-        var damage = args.Damage;
+        var damage = DamageSpecifier.GetPositive(args.Damage);
+
         if (_prototype.TryIndex(ent.Comp.TransferDamageModifier, out var modifierSet))
         {
             // Reduce damage to via the specified modifier, if provided.
@@ -76,9 +80,24 @@ public sealed partial class VehicleSystem : EntitySystem
         TryRemoveOperator(ent);
     }
 
+    private void OnVehicleGetAdditionalAccess(Entity<VehicleComponent> ent, ref GetAdditionalAccessEvent args)
+    {
+        // Vehicles inherit access from whoever is driving them
+        if (ent.Comp.Operator is { } operatorUid)
+            args.Entities.Add(operatorUid);
+    }
+
     private void OnOperatorShutdown(Entity<VehicleOperatorComponent> ent, ref ComponentShutdown args)
     {
         TryRemoveOperator((ent, ent));
+    }
+
+    private void OnOperatorGetAdditionalAccess(Entity<VehicleOperatorComponent> ent, ref GetAdditionalAccessEvent args)
+    {
+        // Operators inherit access from whatever the vehicle has
+        // (Used to support vehicles having intrinsic access associated with them)
+        if (ent.Comp.Vehicle is { } vehicle)
+            args.Entities.Add(vehicle);
     }
 
     /// <summary>
@@ -190,6 +209,14 @@ public sealed partial class VehicleSystem : EntitySystem
 
         operatorEnt = (operatorUid, operatorComponent);
         return true;
+    }
+
+    /// <summary>
+    /// Checks if the current vehicle has an operator.
+    /// </summary>
+    public bool HasOperator(Entity<VehicleComponent?> entity)
+    {
+        return TryGetOperator(entity, out _);
     }
 
     /// <summary>
