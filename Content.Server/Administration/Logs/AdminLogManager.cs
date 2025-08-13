@@ -316,7 +316,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             Type = type,
             Impact = impact,
             Date = DateTime.UtcNow,
-            CurTime = _timing.CurTime.Ticks,
+            CurTime = _timing.CurTime.Subtract(_timing.RoundStartTimeSpan),
             Message = message,
             Json = json,
             Players = new List<AdminLogPlayer>(players.Count)
