@@ -8,9 +8,9 @@
   forcedColoring: true
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_parts.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_avalibase_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_parts.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_avalibase_secondary
 
 - type: marking
@@ -21,7 +21,7 @@
   forcedColoring: true
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_parts.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi # Ronstation - Using Starlight Avali sprites
     state: tail_avalibase
 
 # Stripe one
@@ -32,17 +32,17 @@
   markingCategory: HeadSide
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_parts.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_avalibase_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_top_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_top_secondary
-  - sprite: _CD/Mobs/Customization/Avali/avali_parts.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_avalibase_secondary
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_bottom_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_bottom_secondary
 
 - type: marking
@@ -51,9 +51,9 @@
   markingCategory: Head
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: head_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: head_secondary
 
 - type: marking
@@ -62,9 +62,9 @@
   markingCategory: Chest
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: torso_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: torso_secondary
 
 - type: marking
@@ -73,9 +73,9 @@
   markingCategory: Arms
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: larm_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: larm_secondary
 
 - type: marking
@@ -84,9 +84,9 @@
   markingCategory: Arms
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: rarm_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: rarm_secondary
 
 - type: marking
@@ -95,9 +95,9 @@
   markingCategory: Arms
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: lhand_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: lhand_secondary
 
 - type: marking
@@ -106,9 +106,9 @@
   markingCategory: Arms
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: rhand_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: rhand_secondary
 
 - type: marking
@@ -117,7 +117,7 @@
   markingCategory: Legs
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: lleg
 
 - type: marking
@@ -126,7 +126,7 @@
   markingCategory: Legs
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: rleg
 
 - type: marking
@@ -135,11 +135,11 @@
   markingCategory: Tail
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_parts.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi # Ronstation - Using Starlight Avali sprites
     state: tail_avalibase
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: tail_avali_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_stripes_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_stripes_one.rsi # Ronstation - Using Starlight Avali sprites
     state: tail_avali_secondary
 
 # Trim one
@@ -150,17 +150,17 @@
   markingCategory: HeadSide
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_parts.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_avalibase_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_top_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_top_secondary
-  - sprite: _CD/Mobs/Customization/Avali/avali_parts.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_avalibase_secondary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_bottom_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_bottom_secondary
 
 - type: marking
@@ -169,9 +169,9 @@
   markingCategory: Head
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: head_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: head_secondary
 
 - type: marking
@@ -180,9 +180,9 @@
   markingCategory: Chest
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: torso_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: torso_secondary
 
 - type: marking
@@ -191,9 +191,9 @@
   markingCategory: Arms
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: larm_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: larm_secondary
 
 - type: marking
@@ -202,9 +202,9 @@
   markingCategory: Arms
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: rarm_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: rarm_secondary
 
 - type: marking
@@ -213,9 +213,9 @@
   markingCategory: Arms
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: rhand_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: rhand_secondary
 
 - type: marking
@@ -224,9 +224,9 @@
   markingCategory: Arms
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: lhand_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: lhand_secondary
 
 - type: marking
@@ -235,9 +235,9 @@
   markingCategory: Legs
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: lleg_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: lleg_secondary
 
 - type: marking
@@ -246,9 +246,9 @@
   markingCategory: Legs
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: rleg_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: rleg_secondary
 
 - type: marking
@@ -257,11 +257,11 @@
   markingCategory: Tail
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_parts.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi # Ronstation - Using Starlight Avali sprites
     state: tail_avalibase
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: tail_avali_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_one.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_one.rsi # Ronstation - Using Starlight Avali sprites
     state: tail_avali_secondary
 
 # Trim two
@@ -272,17 +272,17 @@
   markingCategory: HeadSide
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_parts.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_avalibase_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_top_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_top_secondary
-  - sprite: _CD/Mobs/Customization/Avali/avali_parts.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_avalibase_secondary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_bottom_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: ears_bottom_secondary
 
 - type: marking
@@ -291,9 +291,9 @@
   markingCategory: Head
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: head_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: head_secondary
 
 - type: marking
@@ -302,9 +302,9 @@
   markingCategory: Chest
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: torso_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: torso_secondary
 
 - type: marking
@@ -313,9 +313,9 @@
   markingCategory: Arms
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: larm_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: larm_secondary
 
 - type: marking
@@ -324,9 +324,9 @@
   markingCategory: Arms
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: rarm_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: rarm_secondary
 
 - type: marking
@@ -335,9 +335,9 @@
   markingCategory: Arms
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: lhand_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: lhand_secondary
 
 - type: marking
@@ -346,9 +346,9 @@
   markingCategory: Arms
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: rhand_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: rhand_secondary
 
 - type: marking
@@ -357,9 +357,9 @@
   markingCategory: Tail
   speciesRestriction: [ Avali ]
   sprites:
-  - sprite: _CD/Mobs/Customization/Avali/avali_parts.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_parts.rsi # Ronstation - Using Starlight Avali sprites
     state: tail_avalibase
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: tail_avali_primary
-  - sprite: _CD/Mobs/Customization/Avali/avali_trim_two.rsi
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_trim_two.rsi # Ronstation - Using Starlight Avali sprites
     state: tail_avali_secondary
