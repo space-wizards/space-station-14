@@ -416,7 +416,7 @@ public sealed partial class ClimbSystem : VirtualController
 
     private void StopClimb(EntityUid uid, ClimbingComponent? climbing = null, FixturesComponent? fixtures = null)
     {
-        if (!Resolve(uid, ref climbing, ref fixtures))
+        if (!Resolve(uid, ref climbing, ref fixtures, false))
             return;
 
         if (!climbing.IsClimbing)
