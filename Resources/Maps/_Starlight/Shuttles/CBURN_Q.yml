@@ -4,7 +4,7 @@ meta:
   engineVersion: 264.0.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 08/13/2025 22:13:44
+  time: 08/13/2025 22:31:30
   entityCount: 1370
 maps: []
 grids:
@@ -874,7 +874,7 @@ entities:
       pos: 19.5,-10.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -27392.297
+      secondsUntilStateChange: -27449.836
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -3350,11 +3350,13 @@ entities:
   - uid: 494
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: 9.5,-10.5
       parent: 1
   - uid: 495
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: 12.5,-10.5
       parent: 1
 - proto: ClothingBackpackWaterTank
