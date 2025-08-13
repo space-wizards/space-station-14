@@ -112,7 +112,7 @@ public sealed partial class ClimbSystem : VirtualController
     /// </summary>
     private bool IsClimbing(EntityUid uid, FixturesComponent? fixturesComp = null)
     {
-        if (!_fixturesQuery.Resolve(uid, ref fixturesComp) || !fixturesComp.Fixtures.TryGetValue(ClimbingFixtureName, out var climbFixture))
+        if (!_fixturesQuery.Resolve(uid, ref fixturesComp, false) || !fixturesComp.Fixtures.TryGetValue(ClimbingFixtureName, out var climbFixture))
             return false;
 
         foreach (var contact in climbFixture.Contacts.Values)
