@@ -68,7 +68,10 @@ public sealed class CrematoriumSystem : EntitySystem
 
     private void OnAttemptOpen(EntityUid uid, ActiveCrematoriumComponent component, ref StorageOpenAttemptEvent args)
     {
-        args.Cancelled = true;
+        _appearance.SetData(uid, CrematoriumVisuals.Burning, false);
+        component.CrematingSoundUid = _audio.Stop(component.CrematingSoundUid);
+        RemComp<ActiveCrematoriumComponent>(uid);
+
     }
 
     private void AddCremateVerb(EntityUid uid, CrematoriumComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -103,9 +106,10 @@ public sealed class CrematoriumSystem : EntitySystem
         _audio.PlayPvs(component.CremateStartSound, uid);
         _appearance.SetData(uid, CrematoriumVisuals.Burning, true);
 
-        _audio.PlayPvs(component.CrematingSound, uid);
+        var activeComp = AddComp<ActiveCrematoriumComponent>(uid);
+        _audio.Stop(activeComp.CrematingSoundUid);
+        activeComp.CrematingSoundUid = _audio.PlayPvs(component.CrematingSound, uid)?.Entity;
 
-        AddComp<ActiveCrematoriumComponent>(uid);
         return true;
     }
 

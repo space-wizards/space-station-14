@@ -8,4 +8,10 @@ public sealed partial class ActiveCrematoriumComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public float Accumulator = 0;
+
+    /// <summary>
+    /// The sound entity of <see cref="CrematoriumComponent.CrematingSound"/>.
+    /// </summary>
+    [DataField]
+    public EntityUid? CrematingSoundUid;
 }
