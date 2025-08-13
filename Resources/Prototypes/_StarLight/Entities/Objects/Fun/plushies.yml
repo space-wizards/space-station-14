@@ -1188,10 +1188,6 @@
       sprite: _Starlight/Objects/Fun/Plushies/percy_plushie.rsi
       layers:
         - state: icon
-    - type: Insulated
-      coefficient: 0.2
-    - type: Clothing
-      slots: [gloves]
     - type: ItemToggle
       onUse: false
       verbToggleOn: plushie-voicebox-activate
@@ -1467,7 +1463,7 @@
       layers:
         - state: icon
     - type: ItemToggle
-      onUse: true
+      onUse: false
       verbToggleOn: plushie-voicebox-activate
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
@@ -1626,12 +1622,6 @@
     sound:
       path: /Audio/Animals/cat_meow.ogg
   - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Animals/cat_meow2.ogg
-  - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Animals/cat_meow.ogg
-  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Animals/cat_meow2.ogg
   - type: Food

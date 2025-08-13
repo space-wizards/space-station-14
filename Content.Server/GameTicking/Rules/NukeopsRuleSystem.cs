@@ -36,7 +36,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     private static readonly Gauge NukeopsCount = Metrics.CreateGauge( // Startlight
         "nukie_count",
         "Number of all nukies Win/Loses Count.",
-        Enum.GetNames<WinType>());
+        ["results"]);
 
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
