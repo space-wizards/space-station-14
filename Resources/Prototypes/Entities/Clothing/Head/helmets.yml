@@ -74,6 +74,8 @@
     sprite: Clothing/Head/Helmets/swat.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/swat.rsi
+  - type: Contraband # Ronstation
+    allowedDepartments: [ Security, CentralCommand ] # Ronstation
   - type: Armor #This is intentionally not spaceproof, when the time comes to port the values from SS13 this should be buffed from what it was.
     modifiers:
       coefficients:

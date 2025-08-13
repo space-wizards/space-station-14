@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   id: BaseCartridgePistol
   name: cartridge (.35 auto)
@@ -15,6 +17,8 @@
     layers:
       - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: Contraband # Ronstation
+    allowedJobs: [ BlueshieldOfficer ] # Ronstation
   - type: Appearance
   - type: SpentAmmoVisuals
 

@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   parent: BaseItem
   id: BaseKnife
@@ -88,6 +90,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/combat_knife.rsi
     state: icon
+  - type: Contraband  # Ronstation
+    allowedJobs: [ BlueshieldOfficer ] # Ronstation
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1.5

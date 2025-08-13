@@ -39,6 +39,8 @@
     tags:
     - CorgiWearable
     - WhitelistChameleon
+  - type: Contraband # Ronstation
+    allowedJobs: [ Bartender, BlueshieldOfficer ] # Ronstation
 
 #Alternate / slim basic armor vest
 - type: entity
