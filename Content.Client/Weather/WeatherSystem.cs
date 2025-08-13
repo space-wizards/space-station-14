@@ -143,7 +143,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
         // `QueueDel(stream)` is effectively an analogue to `_audio.Stop(stream)` here,
         // however the difference being that the former doesn't care about prediction.
-        QueueDel(data.Stream);
+        _audio.Stop(data.Stream);
         return data;
     }
 

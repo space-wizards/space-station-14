@@ -231,6 +231,7 @@ public abstract class SharedWeatherSystem : EntitySystem
 
         weather.State = state;
         Dirty(uid, component);
+
         return true;
     }
 
