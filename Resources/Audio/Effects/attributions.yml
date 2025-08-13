@@ -256,3 +256,8 @@
   license: "CC-BY-4.0"
   copyright: "Clipped by FairlySadPanda (Github) from a sound created by CheChoDj (Freesound)"
   source: "https://freesound.org/people/CheChoDj/sounds/609353/"
+
+- files: [flatline.ogg]
+  license: CC0-1.0
+  copyright: "Original by shanedk, slightly modified by pheenty"
+  source: https://freesound.org/s/398637/

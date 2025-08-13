@@ -73,6 +73,14 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Dead
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Effects/flatline.ogg
+      params:
+        volume: -2
   - type: Tag
     tags:
     - CorgiWearable

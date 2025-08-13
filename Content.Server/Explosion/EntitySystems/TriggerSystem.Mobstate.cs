@@ -2,6 +2,7 @@
 using Content.Shared.Explosion.Components;
 using Content.Shared.Implants;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -13,8 +14,11 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<TriggerOnMobstateChangeComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<TriggerOnMobstateChangeComponent, SuicideEvent>(OnSuicide);
 
-        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<SuicideEvent>>(OnSuicideRelay);
-        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<MobStateChangedEvent>>(OnMobStateRelay);
+        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<SuicideEvent>>(OnSuicideImplantRelay);
+        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<MobStateChangedEvent>>(OnMobStateImplantRelay);
+
+        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, InventoryRelayedEvent<SuicideEvent>>(OnSuicideInventoryRelay);
+        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, InventoryRelayedEvent<MobStateChangedEvent>>(OnMobStateInventoryRelay);
     }
 
     private void OnMobStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
@@ -54,13 +58,23 @@ public sealed partial class TriggerSystem
         args.Handled = true;
     }
 
-    private void OnSuicideRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<SuicideEvent> args)
+    private void OnSuicideImplantRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<SuicideEvent> args)
     {
         OnSuicide(uid, component, args.Event);
     }
 
-    private void OnMobStateRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<MobStateChangedEvent> args)
+    private void OnMobStateImplantRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<MobStateChangedEvent> args)
     {
         OnMobStateChanged(uid, component, args.Event);
+    }
+
+    private void OnSuicideInventoryRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, InventoryRelayedEvent<SuicideEvent> args)
+    {
+        OnSuicide(uid, component, args.Args);
+    }
+
+    private void OnMobStateInventoryRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, InventoryRelayedEvent<MobStateChangedEvent> args)
+    {
+        OnMobStateChanged(uid, component, args.Args);
     }
 }

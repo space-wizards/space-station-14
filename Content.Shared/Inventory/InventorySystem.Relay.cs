@@ -16,6 +16,7 @@ using Content.Shared.Gravity;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Implants;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Mobs;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NameModifier.EntitySystems;
@@ -56,6 +57,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, IsUnequippingTargetAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ChameleonControllerOutfitSelectedEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, BeforeEmoteEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, MobStateChangedEvent>(RelayInventoryEvent);
 
         // by-ref events
         SubscribeLocalEvent<InventoryComponent, RefreshFrictionModifiersEvent>(RefRelayInventoryEvent);
