@@ -17,6 +17,9 @@
   id: BladeSteel
 
 - type: Tag
+  id: Bola
+
+- type: Tag
   id: CantInteract
 
 - type: Tag

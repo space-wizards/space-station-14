@@ -12,6 +12,10 @@
     belt: ClothingBeltNTNCRigFilled
     gloves: ClothingHandsGlovesCombat
     suitstorage: WeaponSubMachineGunWt550
+    pocket1: MindShieldImplanter
+    pocket2: DeathRattleImplanterCentcomm
+  inhand: 
+  - RadioImplanterCentcomm
 
 - type: startingGear
   id: NTNCTrainerGear
@@ -28,6 +32,10 @@
     belt: ClothingBeltNTNCRigFilled
     gloves: ClothingHandsGlovesCombat
     suitstorage: WeaponSubMachineGunWt550
+    pocket1: MindShieldImplanter
+    pocket2: DeathRattleImplanterCentcomm
+  inhand: 
+  - RadioImplanterCentcomm
 
 - type: startingGear
   id: NTNCBasicGear
@@ -44,6 +52,10 @@
     belt: ClothingBeltNTNCRigFilled
     gloves: ClothingHandsGlovesCombat
     suitstorage: WeaponSubMachineGunWt550
+    pocket1: MindShieldImplanter
+    pocket2: DeathRattleImplanterCentcomm
+  inhand: 
+  - RadioImplanterCentcomm
 
 - type: startingGear
   id: NTNCMedicGear
@@ -59,3 +71,7 @@
     belt: ClothingBeltNTNCRigFilledMed
     gloves: ClothingHandsGlovesCombat
     suitstorage: WeaponSubMachineGunWt550
+    pocket1: MindShieldImplanter
+    pocket2: DeathRattleImplanterCentcomm
+  inhand: 
+  - RadioImplanterCentcomm

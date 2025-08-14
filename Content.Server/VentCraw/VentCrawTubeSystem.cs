@@ -87,7 +87,7 @@ namespace Content.Server.VentCraw
             var args = new DoAfterArgs(EntityManager, user, crawler.EnterDelay, new EnterVentDoAfterEvent(), user, uid, user)
             {
                 BreakOnMove = true,
-                BreakOnDamage = false
+                BreakOnDamage = true // STARLIGHT
             };
 
             _doAfterSystem.TryStartDoAfter(args);
