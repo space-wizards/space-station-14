@@ -8,6 +8,7 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
@@ -178,6 +179,13 @@ public abstract partial class SharedBuckleSystem
 
     private void OnBuckleUpdateCanMove(EntityUid uid, BuckleComponent component, UpdateCanMoveEvent args)
     {
+        // If we're relaying then don't cancel.
+        // NOTE: I don't love this solution. It's by far the easiest but i hate having it be a consideration.
+        // We need to have a more logical way of distinguishing between a "physical" movement being blocked
+        // And simply being unable to move due to being unconscious, dead, etc. -EMO
+        if (HasComp<RelayInputMoverComponent>(uid))
+            return;
+
         if (component.Buckled)
             args.Cancel();
     }

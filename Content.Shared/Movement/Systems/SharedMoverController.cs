@@ -153,12 +153,6 @@ public abstract partial class SharedMoverController : VirtualController
                 dirtied = true;
             }
 
-            if (relayTargetMover.CanMove != mover.CanMove)
-            {
-                relayTargetMover.CanMove = mover.CanMove;
-                dirtied = true;
-            }
-
             if (dirtied)
             {
                 Dirty(relay.RelayEntity, relayTargetMover);

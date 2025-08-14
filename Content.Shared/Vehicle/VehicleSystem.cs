@@ -36,7 +36,6 @@ public sealed partial class VehicleSystem : EntitySystem
         SubscribeLocalEvent<VehicleComponent, GetAdditionalAccessEvent>(OnVehicleGetAdditionalAccess);
 
         SubscribeLocalEvent<VehicleOperatorComponent, ComponentShutdown>(OnOperatorShutdown);
-        SubscribeLocalEvent<VehicleOperatorComponent, GetAdditionalAccessEvent>(OnOperatorGetAdditionalAccess);
     }
 
     /// <remarks>
@@ -81,14 +80,6 @@ public sealed partial class VehicleSystem : EntitySystem
     private void OnOperatorShutdown(Entity<VehicleOperatorComponent> ent, ref ComponentShutdown args)
     {
         TryRemoveOperator((ent, ent));
-    }
-
-    private void OnOperatorGetAdditionalAccess(Entity<VehicleOperatorComponent> ent, ref GetAdditionalAccessEvent args)
-    {
-        // Operators inherit access from whatever the vehicle has
-        // (Used to support vehicles having intrinsic access associated with them)
-        if (ent.Comp.Vehicle is { } vehicle)
-            args.Entities.Add(vehicle);
     }
 
     /// <summary>
