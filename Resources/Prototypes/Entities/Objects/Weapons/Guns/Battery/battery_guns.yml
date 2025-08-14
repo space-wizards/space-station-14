@@ -342,7 +342,7 @@
   components:
   - type: Item
     size: Huge
-    bulk: 15
+    bulk: 10
     shape:
     - 0,0,4,1
   - type: Sprite
@@ -379,7 +379,7 @@
   components:
   - type: Item
     size: Huge
-    bulk: 15
+    bulk: 10
     shape:
     - 0,0,4,1
   - type: Sprite
@@ -447,7 +447,7 @@
   components:
   - type: Item
     size: Huge
-    bulk: 15
+    bulk: 10
     shape:
     - 0,0,4,1
   - type: Sprite

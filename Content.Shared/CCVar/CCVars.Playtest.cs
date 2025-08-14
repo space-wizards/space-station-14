@@ -91,4 +91,24 @@ public sealed partial class CCVars
         public static readonly CVarDef<float> PlaytestStaminaDamageModifier =
             CVarDef.Create("playtest.stamina_damage_modifier", 1f, CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        ///     Minimum bulk required for modifiers to be applied, also subtracted from total item bulk
+        /// </summary>
+        [CVarControl(AdminFlags.VarEdit)]
+        public static readonly CVarDef<float> CrawlingMinBulk =
+            CVarDef.Create("playtest.crawling_min_bulk", 4f, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        ///     Scales the stamina damage dealt the game.
+        /// </summary>
+        [CVarControl(AdminFlags.VarEdit)]
+        public static readonly CVarDef<float> CrawlingMaxBulk =
+            CVarDef.Create("playtest.crawling_max_bulk", 40f, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        ///     Ghost bulk is a phantom bulk amount added to all items with a bulk penalty. Min bulk is subtracted from this value. Does not count towards min bulk.
+        /// </summary>
+        [CVarControl(AdminFlags.VarEdit)]
+        public static readonly CVarDef<float> CrawlingGhostBulk =
+            CVarDef.Create("playtest.crawling_ghost_bulk", 8f, CVar.SERVER | CVar.REPLICATED);
 }

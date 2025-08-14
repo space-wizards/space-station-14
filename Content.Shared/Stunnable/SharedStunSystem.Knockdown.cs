@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
@@ -14,6 +15,7 @@ using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Standing;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -27,14 +29,19 @@ namespace Content.Shared.Stunnable;
 /// </summary>
 public abstract partial class SharedStunSystem
 {
-    // TODO: THESE SHOULD BE CVARS
+
     // Mininum weight for modifiers
-    private static readonly int MinWeight = 0;
+    private static int _minWeight;
+
+    // Amount of extra bulk we add or subtract to the bulk used in slowdown calculations
+    private static int _weightMod;
+
     // Maximum adjusted weight (so weight minus minweight) for maximum penalty
-    private static readonly float MaxAdjustedWeight = 32f;
+    private static float _maxWeight;
 
     private EntityQuery<CrawlerComponent> _crawlerQuery;
 
+    [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -80,6 +87,10 @@ public abstract partial class SharedStunSystem
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ToggleKnockdown, InputCmdHandler.FromDelegate(HandleToggleKnockdown, handle: false))
             .Register<SharedStunSystem>();
+
+        Subs.CVar(_config, CCVars.CrawlingMinBulk, value => { _minWeight = (int)value; }, true);
+        Subs.CVar(_config, CCVars.CrawlingGhostBulk, value => { _weightMod = (int)value - _minWeight; }, true);
+        Subs.CVar(_config, CCVars.CrawlingMaxBulk, value => { _maxWeight = value; }, true);
     }
 
     public override void Update(float frameTime)
@@ -536,7 +547,7 @@ public abstract partial class SharedStunSystem
         var weight = _hands.CountHeldItemsWeight((ent, ent.Comp));
 
         // If we're below the weight where we start taking speed penalties, just fuggetabout it!
-        if (weight <= MinWeight)
+        if (weight <= _minWeight)
             return;
 
         // If all our hands are free or weight is less than min weight we shouldn't be here.
@@ -545,7 +556,7 @@ public abstract partial class SharedStunSystem
         // And the other is our hand count minus free hands.
         // We multiply these values together to get an encumbrance, if you have more hands free you can better manage the weight you're carrying.
         // Then we divide by the max adjusted weight and clamp to get our modifier.
-        var modifier =  Math.Max(0f, 1f - (weight - MinWeight) * (ent.Comp.Count - free) / MaxAdjustedWeight);
+        var modifier =  Math.Max(0f, 1f - (weight + _weightMod) * (ent.Comp.Count - free) / _maxWeight);
         Log.Debug($"Appliyng a speed modifier of {modifier} to {ToPrettyString(ent)} from an item weight total of {weight} and empty hand count of {free}");
 
         args.SpeedModifier *= modifier;
@@ -553,7 +564,7 @@ public abstract partial class SharedStunSystem
 
     #endregion
 
-    #region Action Blockers
+    #region Action Blockers`
 
     private void OnStandAttempt(Entity<KnockedDownComponent> entity, ref StandAttemptEvent args)
     {
