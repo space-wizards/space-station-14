@@ -1671,4 +1671,4 @@
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
-      path: Audio/Effects/Lightning
+      path: Audio/Effects/Lightning/lightningshock.ogg
