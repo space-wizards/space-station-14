@@ -231,6 +231,8 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     {
         var pos = Transform(user).Coordinates;
         virtualItem = PredictedSpawnAttachedTo(VirtualItem, pos);
+        _itemSystem.SetBulk(virtualItem.Value, 0);
+
         var virtualItemComp = Comp<VirtualItemComponent>(virtualItem.Value);
         virtualItemComp.BlockingEntity = blockingEnt;
         Dirty(virtualItem.Value, virtualItemComp);

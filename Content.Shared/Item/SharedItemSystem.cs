@@ -60,6 +60,17 @@ public abstract class SharedItemSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev, broadcast: true);
     }
 
+    public void SetBulk(Entity<ItemComponent?> item, int bulk)
+    {
+        if (!Resolve(item, ref item.Comp, false) || GetItemSizeWeight(item.Comp) == bulk)
+            return;
+
+        item.Comp.Bulk = bulk;
+        Dirty(item);
+        var ev = new ItemBulkChangedEvent();
+        RaiseLocalEvent(item, ref ev, broadcast: true);
+    }
+
     /// <summary>
     /// Sets the offset used for the item's sprite inside the storage UI.
     /// Dirties.

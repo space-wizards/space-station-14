@@ -5,5 +5,5 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Item
-    size: Virtual
+    size: Ginormous # no storage insertion visuals
   - type: VirtualItem

@@ -45,11 +45,3 @@
   name: item-component-size-Ginormous
   defaultShape:
   - 0,0,5,5
-
-# Items that shouldn't exist
-- type: itemSize
-  id: Virtual
-  weight: 0 # Doesn't exist so no weight
-  name: item-component-size-Virtual
-  defaultShape:
-  - 0,0,5,5
