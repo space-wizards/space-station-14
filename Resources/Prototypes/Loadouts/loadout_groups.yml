@@ -3,7 +3,7 @@
   id: Trinkets
   name: loadout-group-trinkets
   minLimit: 0
-  maxLimit: 4
+  maxLimit: 5
   loadouts:
   - FlowerWreath
   - Hairflower
@@ -65,7 +65,6 @@
   - HonkImplant #SL
   - TromboneImplant #SL
   - NewtonsCradle #SL
-  - POrb #SL
   - BBall #SL
   - RubberQuack #SL
   - GatchaBox #SL
@@ -83,6 +82,12 @@
   - PaperFolder6 #SL
   - PaperFolder7 #SL
   - PaperClipboard #SL
+  - HonoredClownMask #SL
+  - MedRollies #SL
+  - RollerSkates #SL
+  - DaBling #SL
+  - CrapPlushie #SL ##not a typo
+  - LighterGatcha #SL
 
 - type: loadoutGroup
   id: Glasses
@@ -1147,6 +1152,7 @@
   loadouts:
   - SecurityGlasses
   - SecurityHud
+  - DetectiveNoirGlasses
 
 - type: loadoutGroup
   id: BrigmedicHead
