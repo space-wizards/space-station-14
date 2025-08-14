@@ -292,9 +292,6 @@
     - !type:RoleTimeRequirement
       role: JobBorg
       time: 21600 # 6h STARLIGHT
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 21600 # 6h STARLIGHT
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
