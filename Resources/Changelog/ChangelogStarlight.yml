@@ -11502,5 +11502,12 @@ Entries:
   id: 101902
   time: '2025-08-14T20:23:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1019
+- author: Fractalflower
+  changes:
+  - message: Leather satchels on roundstart
+    type: Add
+  id: 117500
+  time: '2025-08-14T20:26:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1175
 Order: -1
 
