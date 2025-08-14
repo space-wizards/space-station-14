@@ -28,12 +28,18 @@ public sealed class TriggerOnContainerInteractionSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
+        if (ent.Comp.ContainerId != null && ent.Comp.ContainerId != args.Container.ID)
+            return;
+
         _trigger.Trigger(ent.Owner, args.Entity, ent.Comp.KeyOut);
     }
 
     private void OnRemovedFromContainer(Entity<TriggerOnRemovedFromContainerComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         if (_timing.ApplyingState)
+            return;
+
+        if (ent.Comp.ContainerId != null && ent.Comp.ContainerId != args.Container.ID)
             return;
 
         _trigger.Trigger(ent.Owner, args.Entity, ent.Comp.KeyOut);
@@ -45,12 +51,18 @@ public sealed class TriggerOnContainerInteractionSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
+        if (ent.Comp.ContainerId != null && ent.Comp.ContainerId != args.Container.ID)
+            return;
+
         _trigger.Trigger(ent.Owner, args.Container.Owner, ent.Comp.KeyOut);
     }
 
     private void OnGotRemovedFromContainer(Entity<TriggerOnGotRemovedFromContainerComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
         if (_timing.ApplyingState)
+            return;
+
+        if (ent.Comp.ContainerId != null && ent.Comp.ContainerId != args.Container.ID)
             return;
 
         _trigger.Trigger(ent.Owner, args.Container.Owner, ent.Comp.KeyOut);
