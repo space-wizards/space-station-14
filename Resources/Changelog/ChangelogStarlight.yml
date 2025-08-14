@@ -11364,5 +11364,99 @@ Entries:
   id: 132501
   time: '2025-08-13T22:13:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1325
+- author: CrazyPhantom
+  changes:
+  - message: Removed "Drone" Lawset from available lawsets
+    type: Remove
+  id: 131300
+  time: '2025-08-13T22:32:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1313
+- author: Aurallianz
+  changes:
+  - message: Gibbing has been replaced in the emagged recycler, dealing 350 damage.
+      It will not damage dead mobs.
+    type: Tweak
+  id: 110300
+  time: '2025-08-14T01:35:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1103
+- author: stickycheZ101
+  changes:
+  - message: ported over new AI holograms and core icons from cosmatic drift
+    type: Add
+  id: 117300
+  time: '2025-08-14T01:37:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1173
+- author: stickycheZ101
+  changes:
+  - message: ported over randomised coloured coats from cosmatic drift
+    type: Add
+  id: 117301
+  time: '2025-08-14T01:37:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1173
+- author: stickycheZ101
+  changes:
+  - message: mimes can now write again
+    type: Tweak
+  id: 117302
+  time: '2025-08-14T01:37:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1173
+- author: Trep_Maul
+  changes:
+  - message: borg names (a bunch)
+    type: Add
+  id: 128300
+  time: '2025-08-14T01:40:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1283
+- author: Trep_Maul
+  changes:
+  - message: borg names (bob, joe, butt-bot)
+    type: Remove
+  id: 128301
+  time: '2025-08-14T01:40:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1283
+- author: PubliclyExecutedPig
+  changes:
+  - message: Re-added Bagel to the map pool
+    type: Add
+  id: 130200
+  time: '2025-08-14T01:44:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1302
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added Exo to the map pool
+    type: Add
+  id: 130201
+  time: '2025-08-14T01:44:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1302
+- author: RoadTrain
+  changes:
+  - message: Adds 5 presets for use by the GMN in naval events. Glory to the sti-
+      I mean syndicate!
+    type: Add
+  id: 127400
+  time: '2025-08-14T01:47:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1274
+- author: RoadTrain
+  changes:
+  - message: NT-NC presets now get mindshield, radio and death rattle implants upon
+      spawning in so they can use them.
+    type: Tweak
+  id: 127401
+  time: '2025-08-14T01:47:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1274
+- author: Aedler
+  changes:
+  - message: Increased the tropical kits healing speed.
+    type: Tweak
+  id: 119200
+  time: '2025-08-14T01:51:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1192
+- author: Walksanatora
+  changes:
+  - message: Apply patch from wizden for dionae exploit
+    type: Fix
+  id: 1528
+  time: '2025-08-11T21:13:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1306
 Order: -1
 

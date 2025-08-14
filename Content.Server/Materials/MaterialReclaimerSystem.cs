@@ -25,6 +25,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared._Starlight.Materials;
 using Content.Shared.Humanoid;
 
 namespace Content.Server.Materials;
@@ -186,20 +187,29 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);
 
+        //Starlight
+        var ev = new RecyclerTryGibEvent(item);
+        RaiseLocalEvent(uid, ref ev);
+        //Starlight
         if (CanGib(uid, item, component))
         {
             var logImpact = HasComp<HumanoidAppearanceComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
             _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
             SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
-            _body.GibBody(item, true);
+            //Starlight
+            if (!ev.Handled)
+                _body.GibBody(item, true);
+            //Starlight
             _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
         }
         else
         {
             SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
         }
-
-        QueueDel(item);
+        //Starlight
+        if (!ev.Handled)
+            QueueDel(item);
+        //Starlight
     }
 
     private void SpawnMaterialsFromComposition(EntityUid reclaimer,
