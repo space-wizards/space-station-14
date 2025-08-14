@@ -5,7 +5,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
 /// Adds or removes the specified components when triggered.
-/// If TargetUser is true they will be added to the user.
+/// If TargetUser is true they will be added to or removed from the user instead.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ToggleComponentsOnTriggerComponent : BaseXOnTriggerComponent

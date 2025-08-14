@@ -5,7 +5,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
 /// Removes the specified components when triggered.
-/// If TargetUser is true they will be added to the user.
+/// If TargetUser is true they will be from the user instead.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RemoveComponentsOnTriggerComponent : BaseXOnTriggerComponent
