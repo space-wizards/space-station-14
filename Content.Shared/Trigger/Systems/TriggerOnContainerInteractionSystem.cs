@@ -6,7 +6,7 @@ namespace Content.Shared.Trigger.Systems;
 /// <summary>
 /// System for creating triggers when entities are inserted into or removed from containers.
 /// </summary>
-public sealed class TriggerOnContainerInteraction : EntitySystem
+public sealed class TriggerOnContainerInteractionSystem : EntitySystem
 {
     [Dependency] private readonly TriggerSystem _trigger = default!;
 
