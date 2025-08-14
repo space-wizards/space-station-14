@@ -4,6 +4,9 @@
   id: Bola
   description: Linked together with some spare cuffs and metal.
   components:
+  - type: Tag
+    tags:
+    - Bola
   - type: Item
     size: Normal
   - type: Sprite
