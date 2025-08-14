@@ -318,7 +318,7 @@ public sealed class PaperSystem : EntitySystem
         var signature = GetPlayerSignature(args.Actor);
         var newText = ReplaceNthSignatureTag(entity.Comp.Content, args.SignatureIndex, signature);
         SetContent(entity, newText);
-        
+
         _adminLogger.Add(LogType.Chat, LogImpact.Low,
             $"{ToPrettyString(args.Actor):player} signed {ToPrettyString(entity):entity} with signature: {signature}");
     }
