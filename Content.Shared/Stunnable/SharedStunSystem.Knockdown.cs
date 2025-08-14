@@ -552,10 +552,10 @@ public abstract partial class SharedStunSystem
 
         // If all our hands are free or weight is less than min weight we shouldn't be here.
         // Effectively We get two values:
-        // One is the total weight minus min weight
+        // One is the total weight plus our weight modifier (which is ghost weight minus min weight)
         // And the other is our hand count minus free hands.
         // We multiply these values together to get an encumbrance, if you have more hands free you can better manage the weight you're carrying.
-        // Then we divide by the max adjusted weight and clamp to get our modifier.
+        // Then we divide by the max weight and clamp to get our modifier.
         var modifier =  Math.Max(0f, 1f - (weight + _weightMod) * (ent.Comp.Count - free) / _maxWeight);
         Log.Debug($"Appliyng a speed modifier of {modifier} to {ToPrettyString(ent)} from an item weight total of {weight} and empty hand count of {free}");
 
