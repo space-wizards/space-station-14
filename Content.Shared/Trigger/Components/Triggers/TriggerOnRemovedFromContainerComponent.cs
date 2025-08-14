@@ -10,7 +10,7 @@ namespace Content.Shared.Trigger.Components.Triggers;
 public sealed partial class TriggerOnRemovedFromContainerComponent : BaseTriggerOnXComponent
 {
     /// <summary>
-    /// The container to the entity has to be inserted into.
+    /// The container to the entity has to be removed from.
     /// Null will allow all containers.
     /// </summary>
     [DataField, AutoNetworkedField]
