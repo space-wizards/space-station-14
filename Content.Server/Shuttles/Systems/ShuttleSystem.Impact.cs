@@ -249,7 +249,7 @@ public sealed partial class ShuttleSystem
 
             if (direction.LengthSquared() > minsq)
             {
-                _stuns.TryKnockdown(uid, knockdownTime, true);
+                _stuns.TryCrawling(uid, knockdownTime);
                 _throwing.TryThrow(uid, direction, physics, Transform(uid), _projQuery, direction.Length(), playSound: false);
             }
             else
@@ -275,7 +275,7 @@ public sealed partial class ShuttleSystem
 
         foreach (var tileRef in _mapSystem.GetLocalTilesIntersecting(uid, grid, new Circle(centerTile, radius)))
         {
-            var def = (ContentTileDefinition)_tileDefManager[tileRef.Tile.TypeId];
+            var def = _turf.GetContentTileDefinition(tileRef);
             mass += def.Mass;
             tileCount++;
 
@@ -402,7 +402,7 @@ public sealed partial class ShuttleSystem
                 continue;
 
             // Mark tiles for breaking/effects
-            var def = (ContentTileDefinition)_tileDefManager[_mapSystem.GetTileRef(uid, grid, tileData.Tile).Tile.TypeId];
+            var def = _turf.GetContentTileDefinition(_mapSystem.GetTileRef(uid, grid, tileData.Tile));
             if (tileData.Energy > def.Mass * _tileBreakEnergyMultiplier)
                 brokenTiles.Add((tileData.Tile, Tile.Empty));
 
