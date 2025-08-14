@@ -41,6 +41,8 @@
         amount: 2
       - id: CigaretteFilter
         amount: 2
+  - type: ItemPrice
+    priceCategory: miscellaneous
 
 - type: entity
   id: PaperRolling

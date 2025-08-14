@@ -1,52 +1,66 @@
-// ItemPriceManager.cs
-using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
+using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.IoC;
 using System.Collections.Generic;
-using Content.Shared.Economy; 
+using Content.Shared.Economy;
+using Content.Shared.Procedural.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.Economy
 {
-    public sealed class ItemPriceManager
+    public sealed class ItemPriceManager : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IComponentFactory _componentFactory = default!; 
-        public Dictionary<string, int> CurrentPrices { get; private set; } = new();
+        public Dictionary<EntityUid, int> CurrentPrices { get; private set; } = new();
+        private readonly Dictionary<string, int> _prototypePrices = new();
         
-        private readonly Dictionary<string, (int min, int max)> _priceCategories = new()
+        private readonly Dictionary<string, MinMax> _priceCategories = new()
         {
-            ["food_cheap"] = (2, 5),
-            ["food_medium"] = (5, 10),
-            ["drink"] = (5, 10),
-            ["tool_basic"] = (25, 50),
-            ["medical"] = (40, 60),
-            ["clothing"] = (5, 10)
+            ["food_cheap"] = new MinMax(2, 5),
+            ["food_medium"] = new MinMax(5, 10),
+            ["cigaretes"] = new MinMax(10, 15),
+            ["drink"] = new MinMax(5, 10),
+            ["tool_basic"] = new MinMax(25, 50),
+            ["medical"] = new MinMax(15, 25),
+            ["clothing"] = new MinMax(5, 10),
+            ["miscellaneous"] = new MinMax(2, 6),
         };
 
         public void RecalculatePricesForRound()
         {
             CurrentPrices.Clear();
+            _prototypePrices.Clear();
 
-            foreach (var proto in _prototype.EnumeratePrototypes<EntityPrototype>())
+            var query = EntityQueryEnumerator<ItemPriceComponent>();
+
+            while (query.MoveNext(out var uid, out var pricecomp))
             {
-                
-                if (!proto.TryGetComponent(out ItemPriceComponent? priceComp, _componentFactory))
-                    continue;
-
-                if (!_priceCategories.TryGetValue(priceComp.PriceCategory, out var range))
+                if (!_priceCategories.TryGetValue(pricecomp.PriceCategory, out var minmax))
                 {
-                    range = (priceComp.FallbackPrice, priceComp.FallbackPrice);
+                    continue;
                 }
-
-                int newPrice = _random.Next(range.min, range.max + 1);
-                CurrentPrices[proto.ID] = newPrice;
+                int newprice = _random.Next(minmax.Min, minmax.Max + 1);
+                CurrentPrices[uid] = newprice;
             }
         }
 
-        public int? GetPrice(string prototypeId)
+        /// <summary>
+        /// Generate or retrieve a consistent price for a specific item prototype
+        /// </summary>
+        public int? GetPriceForPrototype(string prototypeId, string category)
         {
-            return CurrentPrices.TryGetValue(prototypeId, out var price) ? price : null;
+            if (_prototypePrices.TryGetValue(prototypeId, out var price))
+            {
+                return price;
+            }
+
+            if (!_priceCategories.TryGetValue(category, out var minMax))
+            {
+                return null;
+            }
+
+            var newPrice = _random.Next(minMax.Min, minMax.Max + 1);
+            _prototypePrices[prototypeId] = newPrice;
+            return newPrice;
         }
     }
 }

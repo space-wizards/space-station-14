@@ -13,10 +13,6 @@ namespace Content.Server.Economy
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         }
 
-        private void OnRoundRestart(RoundRestartCleanupEvent args)
-        {
-            _priceManager.RecalculatePricesForRound();
-            Logger.InfoS("economy", $"Prices recalculated for {_priceManager.CurrentPrices.Count} items.");
-        }
+        private void OnRoundRestart(RoundRestartCleanupEvent args) => _priceManager.RecalculatePricesForRound();
     }
 }

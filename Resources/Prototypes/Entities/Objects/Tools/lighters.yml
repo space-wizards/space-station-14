@@ -99,6 +99,8 @@
   - type: Tag
     tags:
       - Lighters
+  - type: ItemPrice
+    priceCategory: cigaretes
 
 - type: entity
   name: cheap lighter

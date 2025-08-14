@@ -34,3 +34,5 @@
   - type: Tag
     tags:
     - Trash
+  - type: ItemPrice
+    priceCategory: miscellaneous

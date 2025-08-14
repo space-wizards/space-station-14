@@ -135,6 +135,8 @@
     state: pink
   - type: Item
     heldPrefix: pink
+  - type: ItemPrice
+    priceCategory: food_cheap
 
 - type: entity
   name: spaceman's donut
@@ -158,6 +160,8 @@
       - apple
   - type: Sprite
     state: green
+  - type: ItemPrice
+    priceCategory: food_cheap
 # Tastes like donut, green apples.
 
 - type: entity
@@ -190,6 +194,8 @@
           Quantity: 3
         - ReagentId: Theobromine
           Quantity: 1
+  - type: ItemPrice
+    priceCategory: food_cheap
 # Tastes like donut, bitterness.
 
 - type: entity
@@ -218,6 +224,8 @@
       - bungo
   - type: Sprite
     state: yellow
+  - type: ItemPrice
+    priceCategory: food_cheap
 # Tastes like donut, tropical sweetness.
 
 - type: entity

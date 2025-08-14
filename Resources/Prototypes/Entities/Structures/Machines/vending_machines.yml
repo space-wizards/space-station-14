@@ -1222,6 +1222,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: true  # Public machine - charges for items
   - type: DatasetVocalizer
     dataset: VendomatAds
   - type: SpeakOnUIClosed
@@ -1291,6 +1292,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/youtool.rsi
     layers:

@@ -7,3 +7,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Vapes/vape-standard.rsi
     state: icon
+  - type: ItemPrice
+    fallbackPrice: 15
+  

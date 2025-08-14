@@ -61,6 +61,8 @@
   - type: Food
     trash:
     - FoodPacketCnDsTrash
+  - type: ItemPrice
+    priceCategory: food_cheap
 
 - type: entity
   name: cheesie honkers
@@ -120,6 +122,8 @@
       - id: FoodSnackChocolateBar
     sound:
       path: /Audio/Effects/unwrap.ogg
+  - type: ItemPrice
+    priceCategory: food_medium
 
 - type: entity
   name: chocolate bar
@@ -205,6 +209,8 @@
     tags:
     - Fruit # Seed of a fruit, you can yell at me
     - Pistachios # Added tag due to CrateFoodGetMore interaction with BountyFruit.
+  - type: ItemPrice
+    priceCategory: food_cheap
 
 - type: entity
   name: popcorn
@@ -244,6 +250,8 @@
   - type: Tag
     tags:
     - Fruit
+  - type: ItemPrice
+    priceCategory: food_cheap
 
 - type: entity
   name: bob's semki sunflower seeds
@@ -261,6 +269,8 @@
   - type: Food
     trash:
     - FoodPacketSemkiTrash
+  - type: ItemPrice
+    priceCategory: food_cheap
 
 - type: entity
   name: sus jerky
@@ -281,6 +291,8 @@
   - type: Tag
     tags:
     - Meat
+  - type: ItemPrice
+    priceCategory: food_cheap
 
 - type: entity
   name: syndi-cakes
@@ -325,6 +337,8 @@
     - FoodPacketCupRamenTrash
   - type: Item
     heldPrefix: ramen
+  - type: ItemPrice
+    priceCategory: food_cheap
 
 - type: entity
   parent: DrinkRamen
@@ -369,6 +383,8 @@
   - type: Food
     trash:
     - FoodPacketChowMeinTrash
+  - type: ItemPrice
+    priceCategory: food_cheap
 
 - type: entity
   name: dan dan noodles
@@ -399,6 +415,8 @@
   - type: Food
     trash:
     - FoodPacketDanDanTrash
+  - type: ItemPrice
+    priceCategory: food_medium
 
 - type: entity
   name: fortune cookie
@@ -425,6 +443,8 @@
   - type: Food
     trash:
     - FoodCookieFortune
+  - type: ItemPrice
+    priceCategory: food_cheap
 
 - type: entity
   id: FoodSnackNutribrick
@@ -741,6 +761,7 @@
       right:
       - state: trash-inhand-right
         color: "#FF0033"
+
 
 - type: entity
   categories: [ HideSpawnMenu ]

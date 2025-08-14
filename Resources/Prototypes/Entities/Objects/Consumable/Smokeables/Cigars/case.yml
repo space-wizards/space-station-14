@@ -62,6 +62,8 @@
     - cigar7
     - cigar8
   - type: Appearance
+  - type: ItemPrice
+    priceCategory: miscellaneous
 
 - type: entity
   id: CigarGoldCase

@@ -69,6 +69,8 @@
   - type: Tag
     tags:
       - Packet
+  - type: ItemPrice
+    priceCategory: miscellaneous
 
 - type: entity
   parent: BaseFoodCondimentPacket
