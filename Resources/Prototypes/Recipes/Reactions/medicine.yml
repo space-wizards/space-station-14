@@ -411,23 +411,22 @@
 - type: reaction
   id: Lacerinol
   impact: Medium
-  maxTemp: 315 # Easiest to achieve by heating bicar + hydrogen + oxygen at the same time, or mixing bicar with low-temp hydroxide. Reaction makes mix container hotter, likely into Bruizine range!
+  minTemp: 335
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
       amount: 1
-    Hydroxide:
-      amount: 0.8
+    Benzene:
+      amount: 1
   products:
-    Lacerinol: 1.6 # If you do the recipe at 1/4th the amount, you get enough for a complete 200u.
+    Lacerinol: 2
 
 - type: reaction
   id: Puncturase
   impact: Medium
-  minTemp: 315 # Easiest to achieve by heating hydroxide in a separate beaker and mixing with a normal-temp bicar. Reaction makes mix container cooler, but it can be sneaky! See below.
-  maxTemp: 345
+  minTemp: 325
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
-      amount: 0.7 # Unless precisely measured, this will cause some razorium byproduct. This will also heat the container, due to how razorium reacts! Lands around the mixing temp range.
+      amount: 1
     Hydroxide:
       amount: 1
   products:
@@ -436,11 +435,12 @@
 - type: reaction
   id: Bruizine
   impact: Medium
-  minTemp: 345 # Easiest to achieve by blasting hydroxide with heat before mixing.
   reactants:
     Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
-      amount: 0.8
-    Hydroxide:
+      amount: 1
+    Lithium:
+      amount: 0.9
+    Sugar:
       amount: 1
   products:
     Bruizine: 2
