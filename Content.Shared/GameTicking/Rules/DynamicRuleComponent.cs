@@ -16,6 +16,12 @@ public sealed partial class DynamicRuleComponent : Component
     public float Budget;
 
     /// <summary>
+    /// The last time budget was updated.
+    /// </summary>
+    [DataField]
+    public TimeSpan LastBudgetUpdate;
+
+    /// <summary>
     /// The amount of budget accumulated every second.
     /// </summary>
     [DataField]

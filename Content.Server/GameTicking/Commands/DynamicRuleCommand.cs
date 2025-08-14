@@ -75,5 +75,29 @@ public sealed class DynamicRuleCommand : ToolshedCommand
 
         return _dynamicRuleSystem.DryRun(input);
     }
+
+    [CommandImplementation("executenow")]
+    public IEnumerable<IEnumerable<EntityUid>> ExecuteNow([PipedArgument] IEnumerable<EntityUid> input)
+        => input.Select(ExecuteNow);
+
+    [CommandImplementation("executenow")]
+    public IEnumerable<EntityUid> ExecuteNow([PipedArgument] EntityUid input)
+    {
+        _dynamicRuleSystem ??= GetSys<DynamicRuleSystem>();
+
+        return _dynamicRuleSystem.ExecuteNow(input);
+    }
+
+    [CommandImplementation("rules")]
+    public IEnumerable<IEnumerable<EntityUid>> Rules([PipedArgument] IEnumerable<EntityUid> input)
+        => input.Select(Rules);
+
+    [CommandImplementation("rules")]
+    public IEnumerable<EntityUid> Rules([PipedArgument] EntityUid input)
+    {
+        _dynamicRuleSystem ??= GetSys<DynamicRuleSystem>();
+
+        return _dynamicRuleSystem.Rules(input);
+    }
 }
 

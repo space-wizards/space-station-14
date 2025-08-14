@@ -29,7 +29,11 @@ public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
     protected override void Started(EntityUid uid, DynamicRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
-        RunRule((uid, component, gameRule));
+
+        // Since we don't know how long until this rule is activated, we need to
+        // set the last budget update to now so it doesn't immediately give the component a bunch of points.
+        component.LastBudgetUpdate = Timing.CurTime;
+        Execute((uid, component));
     }
 
     protected override void Ended(EntityUid uid, DynamicRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
@@ -49,47 +53,73 @@ public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
         if (Timing.CurTime < component.NextRuleTime)
             return;
 
-        component.NextRuleTime = Timing.CurTime + RobustRandom.Next(component.MinRuleInterval, component.MaxRuleInterval);
-
         // don't spawn antags during evac
         if (_roundEnd.IsRoundEndRequested())
             return;
 
-        RunRule((uid, component, gameRule));
+        Execute((uid, component));
     }
 
-    private IEnumerable<EntProtoId> GetRuleSpawns(Entity<DynamicRuleComponent> ent)
+    /// <summary>
+    /// Generates and returns a list of randomly selected,
+    /// valid rules to spawn based on <see cref="DynamicRuleComponent.Table"/>.
+    /// </summary>
+    private IEnumerable<EntProtoId> GetRuleSpawns(Entity<DynamicRuleComponent> entity)
     {
+        UpdateBudget((entity.Owner, entity.Comp));
         var ctx = new EntityTableContext(new Dictionary<string, object>
         {
-            { HasBudgetCondition.BudgetContextKey, ent.Comp.Budget },
+            { HasBudgetCondition.BudgetContextKey, entity.Comp.Budget },
         });
 
-        return _entityTable.GetSpawns(ent.Comp.Table, ctx: ctx);
+        return _entityTable.GetSpawns(entity.Comp.Table, ctx: ctx);
     }
 
-    private void RunRule(Entity<DynamicRuleComponent, GameRuleComponent> ent)
+    /// <summary>
+    /// Updates the budget of the provided dynamic rule component based on the amount of time since the last update
+    /// multiplied by the <see cref="DynamicRuleComponent.BudgetPerSecond"/> value.
+    /// </summary>
+    private void UpdateBudget(Entity<DynamicRuleComponent> entity)
     {
-        var duration = (Timing.CurTime - ent.Comp2.ActivatedAt).TotalSeconds;
-        var budget = ent.Comp1.Budget + duration * ent.Comp1.BudgetPerSecond;
+        var duration = (float) (Timing.CurTime - entity.Comp.LastBudgetUpdate).TotalSeconds;
 
-        foreach (var rule in GetRuleSpawns(ent))
+        entity.Comp.Budget += duration * entity.Comp.BudgetPerSecond;
+        entity.Comp.LastBudgetUpdate = Timing.CurTime;
+    }
+
+    /// <summary>
+    /// Executes this rule, generating new dynamic rules and starting them.
+    /// </summary>
+    /// <returns>
+    /// Returns a list of the rules that were executed.
+    /// </returns>
+    private List<EntityUid> Execute(Entity<DynamicRuleComponent> entity)
+    {
+        entity.Comp.NextRuleTime =
+            Timing.CurTime + RobustRandom.Next(entity.Comp.MinRuleInterval, entity.Comp.MaxRuleInterval);
+
+        var executedRules = new List<EntityUid>();
+
+        foreach (var rule in GetRuleSpawns(entity))
         {
             var res = GameTicker.StartGameRule(rule, out var ruleUid);
             Debug.Assert(res);
 
-            ent.Comp1.Rules.Add(ruleUid);
+            executedRules.Add(ruleUid);
 
             if (TryComp<DynamicRuleCostComponent>(ruleUid, out var cost))
             {
-                ent.Comp1.Budget -= cost.Cost;
-                _adminLog.Add(LogType.EventRan, LogImpact.High, $"{ToPrettyString(ent)} ran rule {ToPrettyString(ruleUid)} with cost {cost.Cost} on budget {budget}.");
+                entity.Comp.Budget -= cost.Cost;
+                _adminLog.Add(LogType.EventRan, LogImpact.High, $"{ToPrettyString(entity)} ran rule {ToPrettyString(ruleUid)} with cost {cost.Cost} on budget {entity.Comp.Budget}.");
             }
             else
             {
-                _adminLog.Add(LogType.EventRan, LogImpact.High, $"{ToPrettyString(ent)} ran rule {ToPrettyString(ruleUid)} which had no cost.");
+                _adminLog.Add(LogType.EventRan, LogImpact.High, $"{ToPrettyString(entity)} ran rule {ToPrettyString(ruleUid)} which had no cost.");
             }
         }
+
+        entity.Comp.Rules.AddRange(executedRules);
+        return executedRules;
     }
 
     #region Command Methods
@@ -113,6 +143,7 @@ public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
         if (!Resolve(entity, ref entity.Comp))
             return null;
 
+        UpdateBudget((entity.Owner, entity.Comp));
         return entity.Comp.Budget;
     }
 
@@ -121,6 +152,7 @@ public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
         if (!Resolve(entity, ref entity.Comp))
             return null;
 
+        UpdateBudget((entity.Owner, entity.Comp));
         entity.Comp.Budget += amount;
         return entity.Comp.Budget;
     }
@@ -130,6 +162,7 @@ public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
         if (!Resolve(entity, ref entity.Comp))
             return null;
 
+        entity.Comp.LastBudgetUpdate = Timing.CurTime;
         entity.Comp.Budget = amount;
         return entity.Comp.Budget;
     }
@@ -141,5 +174,22 @@ public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
 
         return GetRuleSpawns((entity.Owner, entity.Comp));
     }
+
+    public IEnumerable<EntityUid> ExecuteNow(Entity<DynamicRuleComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return new List<EntityUid>();
+
+        return Execute((entity.Owner, entity.Comp));
+    }
+
+    public IEnumerable<EntityUid> Rules(Entity<DynamicRuleComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return new List<EntityUid>();
+
+        return entity.Comp.Rules;
+    }
+
     #endregion
 }
