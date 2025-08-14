@@ -696,10 +696,10 @@
     inhandVisuals:
       left:
       - state: trash-inhand-left
-        color: "#008000"
+        color: "#000080"
       right:
       - state: trash-inhand-right
-        color: "#008000"
+        color: "#000080"
 
 - type: entity
   categories: [ HideSpawnMenu ]
