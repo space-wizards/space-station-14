@@ -11,8 +11,8 @@
   - type: GameRule
     minPlayers: 5 # <5 is greenshift hours, buddy.
   - type: DynamicRule
-    startingBudgetRangeMin: 200
-    startingBudgetRangeMax: 350
+    StartingBudgetMin: 200
+    startingBudgetMax: 350
     table: !type:GroupSelector
       children:
       # Roundstart Rules
