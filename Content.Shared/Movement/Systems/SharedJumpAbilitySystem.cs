@@ -93,13 +93,13 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
-        var targetComp = EnsureComp<JumpAbilityComponent>(args.CloneUid);
+        var targetComp = Factory.GetComponent<JumpAbilityComponent>();
         targetComp.Action = ent.Comp.Action;
         targetComp.CanCollide = ent.Comp.CanCollide;
         targetComp.JumpSound = ent.Comp.JumpSound;
         targetComp.CollideKnockdown = ent.Comp.CollideKnockdown;
         targetComp.JumpDistance = ent.Comp.JumpDistance;
         targetComp.JumpThrowSpeed = ent.Comp.JumpThrowSpeed;
-        Dirty(args.CloneUid, targetComp);
+        AddComp(args.CloneUid, targetComp, true);
     }
 }
