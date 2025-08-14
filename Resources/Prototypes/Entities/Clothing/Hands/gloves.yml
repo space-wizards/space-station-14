@@ -522,6 +522,7 @@
     damage:
       types:
         Blunt: 14
+        Structural: 10 #Starlight
     soundHit:
       collection: Knuckles #Starlight
       params:

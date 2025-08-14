@@ -65,6 +65,24 @@
     - id: TearGasGrenade
     - id: MedkitCombatFilled
 
+- type: entity
+  id: ClothingBeltNTNCRigFilled
+  parent: ClothingBeltNTNCRig
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: Handcuffs
+    - id: Handcuffs
+    - id: Stunbaton
+    - id: GrenadeFlashBang
+    - id: TearGasGrenade
+    - id: MedkitCombatFilled
+    
+- type: entity
+  id: ClothingBeltNTNCRigFilledMed
+  parent: ClothingBeltNTNCRig
+
 # GMN webbings
 - type: entity
   id: ClothingOuterVestWebEliteFilledMAA
@@ -150,6 +168,13 @@
   components:
   - type: StorageFill
     contents:
+    - id: Handcuffs
+    - id: Handcuffs
+    - id: Stunbaton
+    - id: MedkitCombatFilled
+    - id: Brutepack
+    - id: Ointment
+    - id: Gauze
     - id: MedkitCombatFilled
     - id: CombatMedipen
     - id: CrowbarRed

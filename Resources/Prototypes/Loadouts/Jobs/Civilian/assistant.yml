@@ -92,6 +92,13 @@
   equipment:
     back: ClothingBackpackDuffel
 
+# starlight start
+- type: loadout
+  id: LeatherSatchel
+  equipment:
+    back: ClothingBackpackSatchelLeather
+# starlight end
+
 # Gloves
 - type: loadout
   id: AssistantGloves
