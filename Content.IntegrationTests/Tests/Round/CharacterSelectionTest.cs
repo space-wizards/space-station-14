@@ -107,6 +107,7 @@ public sealed class CharacterSelectionTest
         public List<TestCharacter> Characters = [];
         public ProtoId<JobPrototype>? ExpectedJob;
         public bool ExpectTraitor;
+        public int? SetSeed;
 
         public SelectionTestData WithCharacters(IEnumerable<TestCharacter> newCharacters)
         {
@@ -118,7 +119,8 @@ public sealed class CharacterSelectionTest
                 LowPrioJobs = LowPrioJobs,
                 Characters = newCharacters.ToList(),
                 ExpectedJob = ExpectedJob,
-                ExpectTraitor = ExpectTraitor
+                ExpectTraitor = ExpectTraitor,
+                SetSeed = SetSeed,
             };
         }
 
@@ -340,7 +342,11 @@ public sealed class CharacterSelectionTest
         ticker.SetGamePreset(TraitorsMode);
 
         var cPref = pair.Client.ResolveDependency<IClientPreferencesManager>();
-        pair.Server.ResolveDependency<IRobustRandom>().SetSeed(0);
+
+        if(data.SetSeed is not null)
+        {
+            pair.Server.ResolveDependency<IRobustRandom>().SetSeed(data.SetSeed.Value);
+        }
 
         await pair.ReallyBeIdle();
 
@@ -404,6 +410,11 @@ public sealed class CharacterSelectionTest
 
     // Run multiple round starts with the same set of characters, all of which are valid to select,
     // and verify that which character is selected varies
+    // This uses a random seed and theoretically has a chance of randomly failing naturally.
+    // The probability of this test failing is (1 - 1/c)^n where c is the number of characters and n is the maximum
+    // number of rounds to run.
+    // Currently this test is set to 4 characters, with a max of 48 rounds, making the probability of
+    // failing one in a million. If you manage this, go buy a lottery ticket.
     [Test]
     public async Task VarietyTest()
     {
@@ -420,7 +431,6 @@ public sealed class CharacterSelectionTest
         ticker.SetGamePreset(TraitorsMode);
 
         var cPref = pair.Client.ResolveDependency<IClientPreferencesManager>();
-        pair.Server.ResolveDependency<IRobustRandom>().SetSeed(0);
 
         await pair.ReallyBeIdle();
 
