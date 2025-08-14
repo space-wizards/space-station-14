@@ -18,7 +18,6 @@ namespace Content.Benchmarks;
 /// simulates them for a number of ticks M.
 /// </summary>
 [Virtual]
-[EventPipeProfiler(EventPipeProfile.CpuSampling)]
 public class DeltaPressureBenchmark
 {
     private TestPair _pair = default!;
@@ -26,7 +25,7 @@ public class DeltaPressureBenchmark
     /// <summary>
     /// Number of entities (windows, really) to spawn with a <see cref="DeltaPressureComponent"/>.
     /// </summary>
-    [Params(50000)]
+    [Params(1, 10, 100, 1000, 5000, 10000, 50000)]
     public int EntityCount;
 
     /// <summary>
