@@ -10,7 +10,6 @@ public sealed class TriggerOnGotRemovedFromContainer : EntitySystem
 {
     [Dependency] private readonly TriggerSystem _trigger = default!;
 
-    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();

@@ -10,7 +10,6 @@ public sealed class TriggerOnGotInsertedIntoContainer : EntitySystem
 {
     [Dependency] private readonly TriggerSystem _trigger = default!;
 
-    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
