@@ -1,14 +1,13 @@
 <Document>
-    #Station Damage
+# Station Damage
 
-    <GuideEntityEmbed Entity="MeteorLarge" Caption="A big scary meteor!"/>
+<GuideEntityEmbed Entity="MeteorLarge" Caption="A big scary meteor!"/>
 
-    1. Damage to the Bridge, Evac, Arrivals, and Secure Areas should be prioritized for repairs. Following these areas is the Medical and Security departments.
+1. Damage to the bridge, evac, arrivals and secure areas should be prioritized for repairs. Following these areas is the medical and the security departments.
 
-    2. Should repairs be required with no appropriate personnel around, engineering personnel may hack doors to repair the area. These doors must be returned to their original condition once repairs are complete.
+2. Should repairs be required with no appropriate personnel around, engineering personnel may hack doors to repair the area. These doors must be returned to their original condition once repairs are complete.
 
-    3. Should no station damage be present, Engineers may take on solo projects, reconstructions, or shuttle building.
+3. Should no station damage be present, Engineers may take on solo projects, reconstructions or shuttle building.
 
-    4. Security should be contacted to establish a perimeter around especially damaged areas of the station.
-
+4. Security should be contacted to establish a perimeter around especially damaged areas of the station.
 </Document> 

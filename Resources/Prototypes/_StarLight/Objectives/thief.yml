@@ -1,0 +1,10 @@
+- type: entity
+  parent: BaseThiefStealObjective
+  id: SalvageShuttleCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: CargoTechnician
+  - type: StealCondition
+    stealGroup: SalvageShuttleConsoleCircuitboard
+  - type: Objective
+    difficulty: 0.7

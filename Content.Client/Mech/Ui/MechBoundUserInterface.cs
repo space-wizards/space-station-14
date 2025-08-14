@@ -24,14 +24,14 @@ public sealed class MechBoundUserInterface : BoundUserInterface
         _menu = this.CreateWindowCenteredLeft<MechMenu>();
         _menu.SetEntity(Owner);
         _menu.OpenCenteredLeft();
-        
+
         _menu.UpdateMaintenanceButtons();
 
         _menu.OnRemoveButtonPressed += uid =>
         {
             SendMessage(new MechEquipmentRemoveMessage(EntMan.GetNetEntity(uid)));
         };
-        
+
         _menu.OnMaintenanceModeChanged += toggle =>
         {
             SendMessage(new MechMaintenanceUiMessage(toggle));
@@ -45,8 +45,8 @@ public sealed class MechBoundUserInterface : BoundUserInterface
         if (state is not MechBoundUiState msg)
             return;
         UpdateEquipmentControls(msg);
-        _menu?.UpdateMechStats();
-        _menu?.UpdateEquipmentView();
+        _menu?.UpdateMechStats(msg.Equipment.Count); // Starlight-edit: Correct equipment update
+        _menu?.UpdateEquipmentView(msg.Equipment); // Starlight-edit: Correct equipment update
         _menu?.UpdateMaintenanceButtons();
     }
 

@@ -59,6 +59,10 @@ namespace Content.Server.Dragon
                 Params = AudioParams.Default.WithVolume(3f),
             };
 
+        //starlight
+        [DataField]
+        public string NoRiftDeathEffect = "EffectFlashDragonDisappear";
+
         /// <summary>
         /// NPC faction to re-add after being zombified.
         /// Prevents zombie dragon from being attacked by its own carp.

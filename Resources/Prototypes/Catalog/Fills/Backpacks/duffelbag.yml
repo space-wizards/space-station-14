@@ -144,6 +144,8 @@
         amount: 4
       - id: MagazineRifleSP
         amount: 3
+      - id: MagazineRifleSP #Starlight, for the estoc
+        amount: 2 
       - id: MagazineLightRifleBoxSP
         amount: 3
       - id: MagazineShotgunSlug
@@ -383,3 +385,4 @@
       - id: EmpImplanter
       - id: ClothingShoesBootsMagSyndie
       - id: AgentIDCard
+

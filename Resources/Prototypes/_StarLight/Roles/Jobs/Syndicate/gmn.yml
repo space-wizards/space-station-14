@@ -1,0 +1,93 @@
+- type: startingGear
+  id: GMNMAAGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSyndieFormal
+    back: ClothingBackpackSyndicate
+    shoes: ClothingShoesBootsJackFilled
+    outerClothing: ClothingOuterHardsuitSyndie
+    id: CommanderPDA
+    eyes: ClothingEyesHudSyndicate
+    ears: ClothingHeadsetAltSyndicateCommander
+    mask: ClothingMaskGasSyndicate
+    neck: CommanderWhistle
+    belt: ClothingOuterVestWebEliteFilledMAA
+    gloves: ClothingHandsGlovesCombat
+    pocket1: EmpImplanter
+    pocket2: FreedomImplanter
+
+- type: startingGear
+  id: GMNDamageControlGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitRepairmanSyndie
+    back: ClothingBackpackSyndicateGMNDamageControl
+    shoes: ClothingShoesBootsJackFilled
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    id: SyndiPDA
+    eyes: ClothingEyesHudSyndicate
+    ears: ClothingHeadsetAltSyndicate
+    mask: ClothingMaskGasSyndicate
+    belt: ClothingBeltMilitaryWebbingFilledDamageControle
+    gloves: ClothingHandsGlovesCombat
+    
+- type: entity
+  id: ClothingBackpackSyndicateGMNDamageControl
+  parent: ClothingBackpackSyndicate
+  components:
+  - type: StorageFill
+    contents:
+    - id: SheetSteel
+    - id: SheetPlasteel
+    - id: SheetRPGlass
+
+- type: startingGear
+  id: GMNNavigatorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCommandGeneric
+    back: ClothingBackpackSyndicate
+    shoes: ClothingShoesBootsMagSyndie
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    id: CommanderPDA
+    head: ClothingHeadHatSyndie
+    eyes: ClothingEyesHudSyndicate
+    ears: ClothingHeadsetAltSyndicate
+    mask: ClothingMaskGasSyndicate
+    belt: ClothingBeltMilitaryWebbingFilledNavigator
+    gloves: ClothingHandsGlovesCombat
+
+- type: startingGear
+  id: GMNMedicalTechnicianGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCorpsman
+    back: ClothingBackpackDuffelSyndicateMedical
+    shoes: ClothingShoesBootsMagSyndie
+    outerClothing: ClothingOuterHardsuitSyndieMedic
+    id: SyndiAgentPDA
+    eyes: ClothingEyesHudSyndicateAgent
+    ears: ClothingHeadsetAltSyndicateAgent
+    mask: ClothingMaskGasSyndicate
+    belt: ClothingBeltMilitaryWebbingMedFilled
+    pocket1: SyndiHypo
+    pocket2: DefibrillatorSyndicate
+    gloves: ClothingHandsGlovesCombat
+
+- type: startingGear
+  id: GMNGunnerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackSyndicateGMNGunner
+    shoes: ClothingShoesBootsJackFilled
+    outerClothing: ClothingOuterHardsuitJuggernaut
+    id: SyndiPDA
+    eyes: ClothingEyesHudSyndicate
+    ears: ClothingHeadsetAltSyndicate
+    mask: ClothingMaskGasSyndicate
+    belt: ClothingBeltMilitaryWebbingFilledGunner
+    gloves: ClothingHandsGlovesCombat
+
+- type: entity
+  id: ClothingBackpackSyndicateGMNGunner
+  parent: ClothingBackpackSyndicate
+  components:
+  - type: StorageFill
+    contents:
+    - id: SheetSteel10

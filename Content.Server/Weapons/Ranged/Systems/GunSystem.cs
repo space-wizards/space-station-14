@@ -549,7 +549,15 @@ public sealed partial class GunSystem : SharedGunSystem
 
                 var hitName = ToPrettyString(hitEntity);
                 if (dmg != null)
-                    dmg = Damageable.TryChangeDamage(hitEntity, dmg, ignoreResistances: hitscan.IgnoreResistances, origin: user, armorPenetration: hitscan.ArmorPenetration);
+                    dmg = Damageable.TryChangeDamage
+                        (
+                            hitEntity,
+                            dmg,
+                            ignoreResistances: hitscan.IgnoreResistances,
+                            origin: user,
+                            armorPenetration: hitscan.ArmorPenetration,
+                            canHeal: false
+                        );
 
                 // check null again, as TryChangeDamage returns modified damage values
                 if (dmg != null)

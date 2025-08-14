@@ -87,8 +87,8 @@
 
 - type: entity
   parent: [ IDCardStandard, BaseCommandContraband ]
-  id: NTCCBlueShieldIDCard
-  name: NT-CC consortium officer's ID card
+  id: NTNCBlueShieldIDCard
+  name: Nanotrasen Navy Corps Marine's ID card
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Misc/id_cards.rsi
@@ -96,7 +96,7 @@
     - state: gold
     - state: idblueshield
   - type: PresetIdCard
-    job: NTCCBlueshield
+    job: NTNCBlueshield
 
 - type: entity
   parent: [ IDCardStandard, BaseCargoContraband ]
