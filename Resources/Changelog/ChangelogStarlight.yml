@@ -11473,5 +11473,12 @@ Entries:
   id: 131100
   time: '2025-08-14T19:59:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1311
+- author: Happyrobot33
+  changes:
+  - message: Removed demeaning comments about your playtime.
+    type: Tweak
+  id: 130100
+  time: '2025-08-14T20:02:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1301
 Order: -1
 
