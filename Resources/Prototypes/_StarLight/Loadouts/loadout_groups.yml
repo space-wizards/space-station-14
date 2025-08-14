@@ -32,6 +32,7 @@
   - CommonBackpack
   - CommonSatchel
   - CommonDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: RoboticistJumpsuit
@@ -81,7 +82,8 @@
   - RoboticistBackpack
   - RoboticistSatchel
   - RoboticistDuffel
-
+  - LeatherSatchel
+  
 - type: loadoutGroup
   id: NanoTrasenRepresentativeJumpsuit
   name: loadout-group-nanotrasenrepresentative-jumpsuit
@@ -104,6 +106,7 @@
   - BlueShieldBackpack
   - BlueShieldSatchel
   - BlueShieldDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: BlueShieldJumpsuit
@@ -243,4 +246,3 @@
   loadouts:
   - CombatBoots
   - HighHeelBootsFilled
-
