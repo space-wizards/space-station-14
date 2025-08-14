@@ -1177,7 +1177,7 @@
 
 - type: entity
   parent: PlushieHuman
-  id: PlushiePercy
+  id: PlushiePercy #greytide worldwide
   name: Percy Plushie
   description: A cute plushie of the Vassal to the Grey King himself, Percival Beck. It smells faintly of old cigarettes.
   components:
@@ -1188,10 +1188,6 @@
       sprite: _Starlight/Objects/Fun/Plushies/percy_plushie.rsi
       layers:
         - state: icon
-    - type: Insulated
-      coefficient: 0.2
-    - type: Clothing
-      slots: [gloves]
     - type: ItemToggle
       onUse: false
       verbToggleOn: plushie-voicebox-activate
@@ -1467,7 +1463,7 @@
       layers:
         - state: icon
     - type: ItemToggle
-      onUse: true
+      onUse: false
       verbToggleOn: plushie-voicebox-activate
       verbToggleOff: plushie-voicebox-deactivate
     - type: ComponentToggler
@@ -1601,7 +1597,7 @@
         voice: judy
 
 - type: entity
-  parent: BasePlushie
+  parent: BaseFelionoidPlushie
   id: PlushieBrighteyes
   name: Brighteyes Plushie
   description:  It's Brighteyes, Sentinel Pack, now in adorable marketable plushie form! This tiny kitty always packs a fiery punch to protect the station, particularly her family and friends. She won't let you give her uppies, but at least this plush will.

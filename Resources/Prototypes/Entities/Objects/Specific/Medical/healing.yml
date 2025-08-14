@@ -30,6 +30,7 @@
   - type: Healing
     damageContainers:
       - Biological
+    delay: 1.6 # STARLIGHT
     damage:
       types:
         Heat: -5
@@ -87,6 +88,7 @@
   - type: Healing
     damageContainers:
       - Biological
+    delay: 1.6 # STARLIGHT
     damage:
       types:
         Heat: -10
@@ -144,6 +146,7 @@
   - type: Healing
     damageContainers:
       - Biological
+    delay: 1.6 # STARLIGHT
     damage:
       groups:
         Brute: -15 # 5 for each type in the group
@@ -199,6 +202,7 @@
   - type: Healing
     damageContainers:
       - Biological
+    delay: 1.6 # STARLIGHT
     damage:
       groups:
         Brute: -30 # 10 for each type in the group
@@ -257,6 +261,7 @@
     damage:
       types:
         Bloodloss: -0.5 #lowers bloodloss damage
+    delay: 1.6 # STARLIGHT
     modifyBloodLevel: 15 #restores about 5% blood per use on standard humanoids.
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
@@ -346,6 +351,7 @@
   - type: Healing
     damageContainers:
       - Biological
+    delay: 1.6 # STARLIGHT
     damage:
       types:
         Slash: -5
