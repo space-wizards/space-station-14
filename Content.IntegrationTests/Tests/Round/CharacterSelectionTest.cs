@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
-using Castle.Components.DictionaryAdapter.Xml;
 using Content.Client.Lobby;
 using Content.Server.Antag;
 using Content.Server.GameTicking;
