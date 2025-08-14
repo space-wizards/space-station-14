@@ -586,6 +586,17 @@
     - !type:ListingLimitedStockCondition
 
 - type: listing
+  id: VendorPlushieFixes
+  productEntity: PlushieFixes
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
   id: VendorPlushieVirus
   productEntity: PlushieVirus
   cost:
