@@ -11444,5 +11444,12 @@ Entries:
   id: 127401
   time: '2025-08-14T01:47:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1274
+- author: Aedler
+  changes:
+  - message: Increased the tropical kits healing speed.
+    type: Tweak
+  id: 119200
+  time: '2025-08-14T01:51:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1192
 Order: -1
 
