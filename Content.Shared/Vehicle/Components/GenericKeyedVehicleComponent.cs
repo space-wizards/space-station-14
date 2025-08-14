@@ -23,7 +23,7 @@ public sealed partial class GenericKeyedVehicleComponent : Component
     public EntityWhitelist KeyWhitelist = new();
 
     /// <summary>
-    /// If true, prevents kys which do not pass the <see cref="KeyWhitelist"/> from being inserted into <see cref="ContainerId"/>
+    /// If true, prevents keys which do not pass the <see cref="KeyWhitelist"/> from being inserted into <see cref="ContainerId"/>
     /// </summary>
     [DataField]
     public bool PreventInvalidInsertion = true;

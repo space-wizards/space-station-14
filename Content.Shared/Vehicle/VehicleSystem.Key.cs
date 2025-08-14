@@ -15,10 +15,7 @@ public sealed partial class VehicleSystem
 
     private void OnGenericKeyedInsertAttempt(Entity<GenericKeyedVehicleComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
-        if (args.Cancelled)
-            return;
-
-        if (args.Container.ID != ent.Comp.ContainerId)
+        if (args.Cancelled || !ent.Comp.PreventInvalidInsertion || args.Container.ID != ent.Comp.ContainerId)
             return;
 
         if (_entityWhitelist.IsWhitelistPass(ent.Comp.KeyWhitelist, args.EntityUid))
