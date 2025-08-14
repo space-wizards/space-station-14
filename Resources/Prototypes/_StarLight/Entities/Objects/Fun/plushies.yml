@@ -1668,3 +1668,7 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: Audio/Effects/Lightning
