@@ -1638,9 +1638,7 @@
     verbToggleOff: plushie-voicebox-deactivate
   - type: ComponentToggler
     components:
-    - type: Advertise
+    - type: DatasetVocalizer
       pack: PlushiesKilla
-      minimumWait: 120
-      maximumWait: 240
     - type: TextToSpeech
       voice: heavy
