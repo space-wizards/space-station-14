@@ -11,7 +11,7 @@ public sealed partial class ReoccurrenceDelayCondition : EntityTableCondition
     /// <summary>
     /// The maximum amount of times this rule can have already be run.
     /// </summary>
-    [DataField, Required]
+    [DataField]
     public TimeSpan Delay = TimeSpan.Zero;
 
     /// <summary>
