@@ -1,8 +1,9 @@
 using System.Diagnostics;
-using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
-using static System.Runtime.CompilerServices.Unsafe;
+using Robust.Shared.Random;
+using Robust.Shared.Threading;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -15,6 +16,16 @@ public sealed partial class AtmosphereSystem
     /// Used to determine the size of the opposing groups when processing delta pressure entities.
     /// </summary>
     private const int DeltaPressurePairCount = Atmospherics.Directions / 2;
+
+    public readonly record struct DeltaPressureDamageResult(Entity<DeltaPressureComponent> Ent, float Pressure, float DeltaPressure);
+
+    private void EnqueueDeltaPressureDamage(Entity<DeltaPressureComponent> ent,
+        GridAtmosphereComponent gridAtmosComp,
+        float pressure,
+        float delta)
+    {
+        gridAtmosComp.DeltaPressureDamageResults.Enqueue(new DeltaPressureDamageResult(ent, pressure, delta));
+    }
 
     /// <summary>
     /// Processes a singular entity, determining the pressures it's experiencing and applying damage based on that.
@@ -36,11 +47,10 @@ public sealed partial class AtmosphereSystem
         Debug.Assert(opposingGroupB.Length == DeltaPressurePairCount);
         Debug.Assert(opposingGroupMax.Length == DeltaPressurePairCount);
 
-        if (ent.Comp.RandomDamageChance is not 1f &&
-            _random.NextFloat() >= ent.Comp.RandomDamageChance)
-        {
+        // Need to use system prob instead of robust prob
+        // for thread safety.
+        if (!Random.Shared.Prob(ent.Comp.RandomDamageChance))
             return;
-        }
 
         // Retrieve the current tile coords of this ent, use cached lookup.
         // This ent could also just not exist anymore when we finally got around to processing it
@@ -82,19 +92,22 @@ public sealed partial class AtmosphereSystem
         NumericsHelpers.Abs(opposingGroupA);
 
         var maxPressure = 0f;
-        for (var i = 0; i < DeltaPressurePairCount; i++)
-        {
-            maxPressure = Math.Max(maxPressure, opposingGroupMax[i]);
-        }
-
-        // Find maximum pressure difference
         var maxDelta = 0f;
         for (var i = 0; i < DeltaPressurePairCount; i++)
         {
-            maxDelta = Math.Max(maxDelta, opposingGroupA[i]);
+            var curMax = opposingGroupMax[i];
+            if (curMax > maxPressure)
+                maxPressure = curMax;
+
+            var curDelta = opposingGroupA[i];
+            if (curDelta > maxDelta)
+                maxDelta = curDelta;
         }
 
-        _deltaPressure.PerformDamage(ent, maxPressure, maxDelta);
+        EnqueueDeltaPressureDamage(ent,
+            gridAtmosComp,
+            maxPressure,
+            maxDelta);
     }
 
     /// <summary>
@@ -103,28 +116,34 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     /// <param name="gridAtmosComp">The grid to check.</param>
     /// <param name="indices">The indices to check.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static float GetTilePressure(GridAtmosphereComponent gridAtmosComp, Vector2i indices)
     {
-        // First try and retrieve the tile atmosphere for the given indices from our cache.
-        // Use a safe lookup method because we're going to be writing to the dictionary.
-        if (gridAtmosComp.DeltaPressureCache.TryGetValue(indices, out var cachedFloat))
+        return gridAtmosComp.Tiles.TryGetValue(indices, out var tile) && tile.Air != null ? tile.Air.Pressure : 0f;
+    }
+
+    private sealed class DeltaPressureParallelJob(
+        AtmosphereSystem system,
+        GridAtmosphereComponent atmosphere,
+        int startIndex)
+        : IParallelRobustJob
+    {
+        // Process entities one-by-one per batch element.
+        public int BatchSize => 100;
+
+        public void Execute(int index)
         {
-            return cachedFloat;
+            var actualIndex = startIndex + index;
+            if (actualIndex < 0 || actualIndex >= atmosphere.DeltaPressureEntities.Count)
+                return;
+
+            var ent = atmosphere.DeltaPressureEntities[actualIndex];
+
+            Span<float> opposingGroupA = stackalloc float[DeltaPressurePairCount];
+            Span<float> opposingGroupB = stackalloc float[DeltaPressurePairCount];
+            Span<float> opposingGroupMax = stackalloc float[DeltaPressurePairCount];
+
+            system.ProcessDeltaPressureEntity(ent, atmosphere, opposingGroupA, opposingGroupB, opposingGroupMax);
         }
-
-        // Didn't hit the cache.
-        // Since we're not writing to this dict, we can use an unsafe lookup method.
-        // Supposed to be a bit faster, though we need to check for null refs.
-        ref var tileA = ref CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices);
-        var newFloat = 0f;
-
-        if (!IsNullRef(ref tileA) && tileA.Air != null)
-        {
-            // Cache the pressure value for this tile index.
-            newFloat = tileA.Air.Pressure;
-        }
-
-        gridAtmosComp.DeltaPressureCache[indices] = newFloat;
-        return newFloat;
     }
 }

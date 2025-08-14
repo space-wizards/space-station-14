@@ -336,10 +336,15 @@ public partial class AtmosphereSystem
         if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
             return false;
 
-        if (!grid.Comp.DeltaPressureEntities.Add(ent))
+        if (grid.Comp.DeltaPressureEntityLookup.ContainsKey(ent.Owner))
+        {
             return false;
+        }
 
+        grid.Comp.DeltaPressureEntityLookup[ent.Owner] = grid.Comp.DeltaPressureEntities.Count;
+        grid.Comp.DeltaPressureEntities.Add(ent);
         ent.Comp.InProcessingList = true;
+
         return true;
     }
 
@@ -356,8 +361,25 @@ public partial class AtmosphereSystem
         if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
             return false;
 
-        if (!grid.Comp.DeltaPressureEntities.Remove(ent))
+        if (!grid.Comp.DeltaPressureEntityLookup.TryGetValue(ent.Owner, out var index))
             return false;
+
+        var lastIndex = grid.Comp.DeltaPressureEntities.Count - 1;
+        if (lastIndex < 0)
+            return false;
+
+        if (index != lastIndex)
+        {
+            var lastEnt = grid.Comp.DeltaPressureEntities[lastIndex];
+            grid.Comp.DeltaPressureEntities[index] = lastEnt;
+            grid.Comp.DeltaPressureEntityLookup[lastEnt.Owner] = index;
+        }
+
+        grid.Comp.DeltaPressureEntities.RemoveAt(lastIndex);
+        grid.Comp.DeltaPressureEntityLookup.Remove(ent.Owner);
+
+        if (grid.Comp.DeltaPressureCursor > grid.Comp.DeltaPressureEntities.Count)
+            grid.Comp.DeltaPressureCursor = grid.Comp.DeltaPressureEntities.Count;
 
         ent.Comp.InProcessingList = false;
         return true;

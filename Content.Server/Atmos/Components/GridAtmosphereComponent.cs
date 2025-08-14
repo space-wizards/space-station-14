@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Serialization;
@@ -62,22 +63,35 @@ namespace Content.Server.Atmos.Components
         public int HighPressureDeltaCount => HighPressureDelta.Count;
 
         /// <summary>
-        /// A set of entities that have a <see cref="DeltaPressureComponent"/> and are to
+        /// A list of entities that have a <see cref="DeltaPressureComponent"/> and are to
         /// be processed by the <see cref="DeltaPressureSystem"/>, if enabled.
+        ///
+        /// To prevent massive bookkeeping overhead, this list is processed in-place,
+        /// with add/remove/find operations helped via a dict.
         /// </summary>
+        /// <remarks>If you want to add/remove/find entities in this list,
+        /// use the <see cref="DeltaPressureEntityLookup"/> dict instead!</remarks>
         [ViewVariables]
-        public readonly HashSet<Entity<DeltaPressureComponent>> DeltaPressureEntities = new();
+        public readonly List<Entity<DeltaPressureComponent>> DeltaPressureEntities = new(1000);
 
         /// <summary>
-        /// A dictionary of coordinates and the current pressures at those coordinates.
-        /// Used by the <see cref="DeltaPressureSystem"/> to cache pressure values for fast lookup
-        /// later (as many entities can share the same tiles that we need to check).
-        /// Faster to store and access than using the <see cref="TileAtmosphere"/> directly,
-        /// as we have to get the tile, nullcheck it, and then get the pressure
-        /// (which is a get method in of itself!).
+        /// An index lookup for the <see cref="DeltaPressureEntities"/> list.
+        /// Used for add/remove/find operations to speed up processing.
+        /// </summary>
+        public readonly Dictionary<EntityUid, int> DeltaPressureEntityLookup = new();
+
+        /// <summary>
+        /// Integer that indicates the current position in the
+        /// <see cref="DeltaPressureEntities"/> list that is being processed.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public int DeltaPressureCursor;
+
+        /// <summary>
+        /// Queue of entities that need to have damage applied to them.
         /// </summary>
         [ViewVariables]
-        public readonly Dictionary<Vector2i, float> DeltaPressureCache = new(1000);
+        public readonly ConcurrentQueue<AtmosphereSystem.DeltaPressureDamageResult> DeltaPressureDamageResults = new();
 
         [ViewVariables]
         public readonly HashSet<IPipeNet> PipeNets = new();

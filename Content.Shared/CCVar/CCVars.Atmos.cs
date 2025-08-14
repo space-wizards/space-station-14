@@ -159,4 +159,12 @@ public sealed partial class CCVars
     // TODO: Needs CVARs for global configuration, like min pressure, max damage, etc.
     public static readonly CVarDef<bool> DeltaPressureDamage =
         CVarDef.Create("atmos.delta_pressure_damage", true, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Maximum number of delta-pressure entities to batch-process per atmos subtick.
+    /// Note that parallel solve does not activate until the number of entities exceeds a value
+    /// measured to show a performance benefit.
+    /// </summary>
+    public static readonly CVarDef<int> DeltaPressureParallelBatch =
+        CVarDef.Create("atmos.delta_pressure_parallel_batch", 500, CVar.SERVERONLY);
 }

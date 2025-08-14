@@ -475,30 +475,42 @@ namespace Content.Server.Atmos.EntitySystems
         /// otherwise, false.</returns>
         private bool ProcessDeltaPressure(GridAtmosphereComponent atmosphere)
         {
+            var count = atmosphere.DeltaPressureEntities.Count;
             if (!atmosphere.ProcessingPaused)
             {
-                atmosphere.CurrentRunDeltaPressureEntities.Clear();
-                atmosphere.DeltaPressureCache.Clear();
-                atmosphere.CurrentRunDeltaPressureEntities.EnsureCapacity(atmosphere.DeltaPressureEntities.Count);
-                foreach (var ent in atmosphere.DeltaPressureEntities)
-                {
-                    atmosphere.CurrentRunDeltaPressureEntities.Enqueue(ent);
-                }
+                atmosphere.DeltaPressureCursor = 0;
+                atmosphere.DeltaPressureDamageResults.Clear();
             }
 
-            Span<float> opposingGroupA = stackalloc float[DeltaPressurePairCount];
-            Span<float> opposingGroupB = stackalloc float[DeltaPressurePairCount];
-            Span<float> opposingGroupMax = stackalloc float[DeltaPressurePairCount];
+            var remaining = count - atmosphere.DeltaPressureCursor;
+            var batchSize = Math.Max(50, DeltaPressureParallelBatchSize);
+            var toProcess = Math.Min(batchSize, remaining);
 
-            var iterations = 0;
-            while (atmosphere.CurrentRunDeltaPressureEntities.TryDequeue(out var ent))
+            var timeCheck1 = 0;
+            while (atmosphere.DeltaPressureCursor != count)
             {
-                ProcessDeltaPressureEntity(ent, atmosphere, opposingGroupA, opposingGroupB, opposingGroupMax);
+                var job = new DeltaPressureParallelJob(this, atmosphere, atmosphere.DeltaPressureCursor);
+                _parallel.ProcessNow(job, toProcess);
 
-                if (iterations++ < LagCheckIterations)
+                atmosphere.DeltaPressureCursor += toProcess;
+
+                if (timeCheck1++ < LagCheckIterations)
                     continue;
 
-                iterations = 0;
+                timeCheck1 = 0;
+                if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
+                    return false;
+            }
+
+            var timeCheck2 = 0;
+            while (atmosphere.DeltaPressureDamageResults.TryDequeue(out var result))
+            {
+                _deltaPressure.PerformDamage(result.Ent, result.Pressure, result.DeltaPressure);
+
+                if (timeCheck2++ < LagCheckIterations)
+                    continue;
+
+                timeCheck2 = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
                 {
