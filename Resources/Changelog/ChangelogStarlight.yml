@@ -11465,5 +11465,13 @@ Entries:
   id: 134200
   time: '2025-08-14T19:37:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1342
+- author: Citrea
+  changes:
+  - message: Quartermasters can now destroy asteroids with the power of pure rage
+      (and their knuckle dusters)
+    type: Tweak
+  id: 131100
+  time: '2025-08-14T19:59:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1311
 Order: -1
 
