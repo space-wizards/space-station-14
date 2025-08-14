@@ -12,6 +12,17 @@
         state: telescreen_frame
       - map: ["computerLayerScreen"]
         state: telescreen
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
   - type: Construction
     graph: WallmountTelescreen
     node: Telescreen
