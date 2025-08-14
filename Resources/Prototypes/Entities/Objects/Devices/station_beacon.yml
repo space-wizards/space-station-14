@@ -455,6 +455,7 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-solars
+  - type: BombingTargetBlocker
 
 - type: entity
   parent: DefaultStationBeaconEngineering
