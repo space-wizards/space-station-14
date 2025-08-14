@@ -7,7 +7,7 @@
   name: avali body part
   components:
   - type: Sprite
-    sprite: _CD/Mobs/Species/Avali/parts.rsi
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi # Ronstation - Using Starlight Avali sprites
   - type: Extractable
     juiceSolution:
       reagents:

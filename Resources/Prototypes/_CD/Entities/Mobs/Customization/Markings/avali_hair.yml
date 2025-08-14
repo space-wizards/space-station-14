@@ -4,11 +4,11 @@
   markingCategory: HeadTop
   speciesRestriction: [ Avali ]
   sprites:
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_bigponytail_primary
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_bigponytail_secondary
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_bigponytail_tertiary
 
 - type: marking
@@ -17,9 +17,9 @@
   markingCategory: HeadTop
   speciesRestriction: [ Avali ]
   sprites:
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_cockatiel_primary
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_cockatiel_secondary
 
 - type: marking
@@ -28,9 +28,9 @@
   markingCategory: HeadTop
   speciesRestriction: [ Avali ]
   sprites:
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_cockatoo_primary
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_cockatoo_secondary
 
 - type: marking
@@ -39,9 +39,9 @@
   markingCategory: HeadTop
   speciesRestriction: [ Avali ]
   sprites:
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_dualfeather_primary
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_dualfeather_secondary
 
 - type: marking
@@ -50,9 +50,9 @@
   markingCategory: HeadTop
   speciesRestriction: [ Avali ]
   sprites:
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_hooked_primary
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_hooked_secondary
 
 - type: marking
@@ -61,9 +61,9 @@
   markingCategory: HeadTop
   speciesRestriction: [ Avali ]
   sprites:
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_jay_primary
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_jay_secondary
 
 - type: marking
@@ -72,9 +72,9 @@
   markingCategory: HeadTop
   speciesRestriction: [ Avali ]
   sprites:
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_longfeather_primary
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_longfeather_secondary
 
 - type: marking
@@ -83,7 +83,7 @@
   markingCategory: HeadTop
   speciesRestriction: [ Avali ]
   sprites:
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_punk_primary
-    - sprite: _CD/Mobs/Customization/Avali/avali_crests.rsi
+    - sprite: _Starlight/Mobs/Customization/Avali/avali_crests.rsi # Ronstation - Using Starlight Avali sprites
       state: avali_crest_punk_secondary
