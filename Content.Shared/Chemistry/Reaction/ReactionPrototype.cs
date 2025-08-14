@@ -40,7 +40,7 @@ namespace Content.Shared.Chemistry.Reaction
         public bool ConserveEnergy = true;
 
         /// <summary>
-        ///     The maximum temperature the reaction can occur at. Not inclusive, unless set at infinity.
+        ///     The maximum temperature the reaction can occur at.
         /// </summary>
         [DataField("maxTemp")]
         public float MaximumTemperature = float.PositiveInfinity;
