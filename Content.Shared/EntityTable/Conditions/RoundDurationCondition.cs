@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityTable.Conditions;
 
 /// <summary>
-/// Condition that passes only if the server player count is within a certain range.
+/// Condition that passes only if the current round time falls between the minimum and maximum time values.
 /// </summary>
 public sealed partial class RoundDurationCondition : EntityTableCondition
 {

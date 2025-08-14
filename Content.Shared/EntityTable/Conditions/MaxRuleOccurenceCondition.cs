@@ -32,20 +32,20 @@ public sealed partial class MaxRuleOccurenceCondition : EntityTableCondition
         IPrototypeManager proto,
         EntityTableContext ctx)
     {
-        if (root is not EntSelector && RuleOverride == null)
-            return false;
-
-        var entSelector = root as EntSelector;
-
         string rule;
-        if (RuleOverride != null)
+        if (RuleOverride is { } ruleOverride)
         {
-            rule = RuleOverride.Value;
+            rule = ruleOverride;
         }
         else
         {
-            rule = entSelector!.Id;
+            rule = root is EntSelector entSelector
+                ? entSelector.Id
+                : string.Empty;
         }
+
+        if (rule == string.Empty)
+            return false;
 
         var gameTicker = entMan.System<SharedGameTicker>();
 

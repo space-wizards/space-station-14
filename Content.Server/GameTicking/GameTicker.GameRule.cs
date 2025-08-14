@@ -15,9 +15,13 @@ namespace Content.Server.GameTicking;
 
 public sealed partial class GameTicker
 {
-    public override IReadOnlyList<(TimeSpan, string)> AllPreviousGameRules => _allPreviousGameRules;
-
     [ViewVariables] private readonly List<(TimeSpan, string)> _allPreviousGameRules = new();
+
+    /// <summary>
+    ///     A list storing the start times of all game rules that have been started this round.
+    ///     Game rules can be started and stopped at any time, including midround.
+    /// </summary>
+    public override IReadOnlyList<(TimeSpan, string)> AllPreviousGameRules => _allPreviousGameRules;
 
     private void InitializeGameRules()
     {

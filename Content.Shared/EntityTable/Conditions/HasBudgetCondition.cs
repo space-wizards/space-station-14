@@ -26,11 +26,6 @@ public sealed partial class HasBudgetCondition : EntityTableCondition
         if (!ctx.TryGetData<float>(BudgetContextKey, out var budget))
             return false;
 
-        if (root is not EntSelector && CostOverride == null)
-            return false;
-
-        var entSelector = root as EntSelector;
-
         int cost;
         if (CostOverride != null)
         {
@@ -38,7 +33,10 @@ public sealed partial class HasBudgetCondition : EntityTableCondition
         }
         else
         {
-            if (!proto.Index(entSelector!.Id).TryGetComponent(out DynamicRuleCostComponent? costComponent, entMan.ComponentFactory))
+            if (root is not EntSelector entSelector)
+                return false;
+
+            if (!proto.Index(entSelector.Id).TryGetComponent(out DynamicRuleCostComponent? costComponent, entMan.ComponentFactory))
             {
                 var log = Logger.GetSawmill("HasBudgetCondition");
                 log.Error($"Rule {entSelector.Id} does not have a DynamicRuleCostComponent.");

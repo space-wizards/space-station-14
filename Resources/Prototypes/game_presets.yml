@@ -101,6 +101,7 @@
   alias:
   - dynamic
   - multiantag
+  - director
   name: dynamic-title
   showInVote: true
   description: dynamic-description

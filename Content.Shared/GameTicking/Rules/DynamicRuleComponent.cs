@@ -1,4 +1,3 @@
-using Content.Shared.Destructible.Thresholds;
 using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -20,13 +19,19 @@ public sealed partial class DynamicRuleComponent : Component
     /// The amount of budget accumulated every second.
     /// </summary>
     [DataField]
-    public float BudgetPerSecond = 0.04167f;
+    public float BudgetPerSecond = 0.1f;
 
     /// <summary>
-    /// The range the budget can initialize at
+    /// The minimum or lower bound for budgets to start at.
     /// </summary>
     [DataField]
-    public MinMax StartingBudgetRange = new();
+    public int StartingBudgetMin = 200;
+
+    /// <summary>
+    /// The maximum or upper bound for budgets to start at.
+    /// </summary>
+    [DataField]
+    public int StartingBudgetMax = 350;
 
     /// <summary>
     /// The time at which the next rule will start
