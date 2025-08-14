@@ -1,36 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Changed 2 posters to be rules-compliant.
-    type: Tweak
-  id: 8337
-  time: '2025-04-24T23:44:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32734
-- author: Nox38
-  changes:
-  - message: Rebalanced cyborg modules and made more of them starting equipment.
-    type: Tweak
-  - message: Added new advanced mining and advanced chemical modules.
-    type: Add
-  id: 8338
-  time: '2025-04-25T02:29:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34186
-- author: AgentSmithRadio
-  changes:
-  - message: Reptilians can now eat orange creamsicles.
-    type: Tweak
-  - message: Berry creamsicles can no longer be used in cargo's generic fruit bounty.
-    type: Fix
-  id: 8339
-  time: '2025-04-25T03:53:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36890
-- author: Vexerot
-  changes:
-  - message: Goliaths now have a bloodstream and can bleed.
-    type: Tweak
-  id: 8340
-  time: '2025-04-25T04:02:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33305
 - author: Blackern5000
   changes:
   - message: The mining hardsuit has had it's armor tweaked to be more effective against
@@ -3946,3 +3914,37 @@
   id: 8849
   time: '2025-08-12T23:00:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39585
+- author: Nox38
+  changes:
+  - message: Resized every firearm.
+    type: Tweak
+  id: 8850
+  time: '2025-08-13T17:13:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36473
+- author: slarticodefast
+  changes:
+  - message: Fixed light bulb color.
+    type: Fix
+  id: 8851
+  time: '2025-08-13T22:45:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39623
+- author: Bhijn and Myr
+  changes:
+  - message: Those within the SS13 and SS14 community who have passed are now explicitly
+      memorialized within the game's credits, accessible within the lobby. May their
+      names and legacies live on.
+    type: Add
+  id: 8852
+  time: '2025-08-14T01:21:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39621
+- author: rumaks-xyz, SlamBamActionman
+  changes:
+  - message: Advanced Brute chemicals, Insuzine, Ultravasculine and Sigynate have
+      had changes to their healing, metabolism rates and behaviors.
+    type: Tweak
+  - message: Bicardine and Advanced Brute Chemicals once again create Razorium when
+      mixed.
+    type: Tweak
+  id: 8853
+  time: '2025-08-14T17:32:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39472
