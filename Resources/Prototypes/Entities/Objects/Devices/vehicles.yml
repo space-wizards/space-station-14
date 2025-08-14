@@ -150,6 +150,10 @@
         whitelist:
           tags:
           - TrashBag
+  - type: ContainerContainer
+    containers:
+      key_slot: !type:ContainerSlot
+      trashbag_slot: !type:ContainerSlot
   - type: ItemMapper
     mapLayers:
       storage:
