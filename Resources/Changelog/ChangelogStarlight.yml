@@ -11465,5 +11465,12 @@ Entries:
   id: 133600
   time: '2025-08-14T03:42:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1336
+- author: Trep_Maul
+  changes:
+  - message: Leth to Map pool
+    type: Add
+  id: 134500
+  time: '2025-08-14T19:52:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1345
 Order: -1
 
