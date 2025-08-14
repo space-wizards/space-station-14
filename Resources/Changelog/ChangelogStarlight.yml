@@ -11472,5 +11472,12 @@ Entries:
   id: 134500
   time: '2025-08-14T19:52:34.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1345
+- author: walksanatora
+  changes:
+  - message: Added dragon consumption and uplink purchase statistics tracking
+    type: Add
+  id: 133900
+  time: '2025-08-14T20:07:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1339
 Order: -1
 
