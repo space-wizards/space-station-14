@@ -5,7 +5,10 @@
   description: Linked together with some spare cuffs and metal.
   components:
   - type: Item
-    size: Normal
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
   - type: Sprite
     sprite: Objects/Weapons/Throwable/bola.rsi
     state: icon
