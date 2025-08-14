@@ -11458,5 +11458,12 @@ Entries:
   id: 1528
   time: '2025-08-11T21:13:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1306
+- author: CrazyPhantom
+  changes:
+  - message: Zookeeper name displaying wrong
+    type: Fix
+  id: 134200
+  time: '2025-08-14T19:37:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1342
 Order: -1
 
