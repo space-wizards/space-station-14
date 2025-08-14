@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Robust.Shared.Random;
@@ -17,14 +18,31 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     private const int DeltaPressurePairCount = Atmospherics.Directions / 2;
 
-    public readonly record struct DeltaPressureDamageResult(Entity<DeltaPressureComponent> Ent, float Pressure, float DeltaPressure);
+    public readonly record struct DeltaPressureDamageResult(
+        Entity<DeltaPressureComponent> Ent,
+        float Pressure,
+        float DeltaPressure,
+        bool aboveMinPressure = false,
+        bool aboveMinDeltaPressure = false);
 
-    private void EnqueueDeltaPressureDamage(Entity<DeltaPressureComponent> ent,
+    private static void EnqueueDeltaPressureDamage(Entity<DeltaPressureComponent> ent,
         GridAtmosphereComponent gridAtmosComp,
         float pressure,
         float delta)
     {
-        gridAtmosComp.DeltaPressureDamageResults.Enqueue(new DeltaPressureDamageResult(ent, pressure, delta));
+        var aboveMinPressure = pressure > ent.Comp.MinPressure;
+        var aboveMinDeltaPressure = delta > ent.Comp.MinPressureDelta;
+        if (!aboveMinPressure && !aboveMinDeltaPressure)
+        {
+            ent.Comp.IsTakingDamage = false;
+            return;
+        }
+
+        gridAtmosComp.DeltaPressureDamageResults.Enqueue(new DeltaPressureDamageResult(ent,
+            pressure,
+            delta,
+            aboveMinPressure,
+            aboveMinDeltaPressure));
     }
 
     /// <summary>
@@ -49,7 +67,7 @@ public sealed partial class AtmosphereSystem
 
         // Need to use system prob instead of robust prob
         // for thread safety.
-        if (!Random.Shared.Prob(ent.Comp.RandomDamageChance))
+        if (!_random.Prob(ent.Comp.RandomDamageChance))
             return;
 
         // Retrieve the current tile coords of this ent, use cached lookup.
@@ -95,13 +113,8 @@ public sealed partial class AtmosphereSystem
         var maxDelta = 0f;
         for (var i = 0; i < DeltaPressurePairCount; i++)
         {
-            var curMax = opposingGroupMax[i];
-            if (curMax > maxPressure)
-                maxPressure = curMax;
-
-            var curDelta = opposingGroupA[i];
-            if (curDelta > maxDelta)
-                maxDelta = curDelta;
+            maxPressure = MathF.Max(maxPressure, opposingGroupMax[i]);
+            maxDelta = MathF.Max(maxDelta, opposingGroupA[i]);
         }
 
         EnqueueDeltaPressureDamage(ent,
@@ -116,10 +129,13 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     /// <param name="gridAtmosComp">The grid to check.</param>
     /// <param name="indices">The indices to check.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static float GetTilePressure(GridAtmosphereComponent gridAtmosComp, Vector2i indices)
     {
-        return gridAtmosComp.Tiles.TryGetValue(indices, out var tile) && tile.Air != null ? tile.Air.Pressure : 0f;
+        ref var tile = ref CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices);
+        if (Unsafe.IsNullRef(ref tile))
+            return 0f;
+
+        return tile.Air?.Pressure ?? 0f;
     }
 
     private sealed class DeltaPressureParallelJob(

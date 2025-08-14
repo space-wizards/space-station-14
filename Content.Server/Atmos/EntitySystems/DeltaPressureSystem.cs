@@ -136,17 +136,11 @@ public sealed class DeltaPressureSystem : EntitySystem
     /// <param name="ent">The entity to apply damage to.</param>
     /// <param name="pressure">The absolute pressure being exerted on the entity.</param>
     /// <param name="deltaPressure">The delta pressure being exerted on the entity.</param>
+    /// <param name="aboveMinPressure">If the entity is currently above the minimum pressure.</param>
+    /// <param name="aboveMinDeltaPressure">If the entity is currently above the minimum delta pressure.</param>
     [PublicAPI]
-    public void PerformDamage(Entity<DeltaPressureComponent> ent, float pressure, float deltaPressure)
+    public void PerformDamage(Entity<DeltaPressureComponent> ent, float pressure, float deltaPressure, bool aboveMinPressure, bool aboveMinDeltaPressure)
     {
-        var aboveMinPressure = pressure > ent.Comp.MinPressure;
-        var aboveMinDeltaPressure = deltaPressure > ent.Comp.MinPressureDelta;
-        if (!aboveMinPressure && !aboveMinDeltaPressure)
-        {
-            ent.Comp.IsTakingDamage = false;
-            return;
-        }
-
         var baseDamage = ent.Comp.BaseDamage;
         var appliedDamage = ent.Comp.BaseDamage;
         if (aboveMinPressure)
