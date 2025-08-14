@@ -114,10 +114,12 @@
   - type: Item
     heldPrefix: chits
   - type: Food
+    requiresSpecialDigestion: true
     trash:
     - FoodPacketChitsTrash
   - type: Tag
     tags:
+    - FoodSnack
     - ClothMade
   - type: SolutionContainerManager
     solutions:
@@ -696,10 +698,10 @@
     inhandVisuals:
       left:
       - state: trash-inhand-left
-        color: "#000080"
+        color: "#8080F0"
       right:
       - state: trash-inhand-right
-        color: "#000080"
+        color: "#8080F0"
 
 - type: entity
   categories: [ HideSpawnMenu ]
