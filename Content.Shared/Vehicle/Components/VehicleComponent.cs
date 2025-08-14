@@ -1,8 +1,7 @@
-using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Vehicle.Components;
@@ -39,7 +38,7 @@ public sealed partial class VehicleComponent : Component
     /// A damage modifier set that adjusts the damage passed from the vehicle to the operator.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<DamageModifierSetPrototype>? TransferDamageModifier;
+    public DamageModifierSet? TransferDamageModifier;
 }
 
 [Serializable, NetSerializable]
@@ -68,7 +67,7 @@ public readonly record struct OnVehicleExitedEvent(Entity<VehicleComponent> Vehi
 /// New operator can be null.
 /// </summary>
 [ByRefEvent, UsedImplicitly]
-public readonly record struct VehicleOperatorSetEvent(EntityUid? NewOperator);
+public readonly record struct VehicleOperatorSetEvent(EntityUid? NewOperator, EntityUid? OldOperator);
 
 /// <summary>
 /// Event raised on a vehicle to check if it can run/move around.

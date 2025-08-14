@@ -9,7 +9,6 @@ using Content.Shared.Vehicle.Components;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Vehicle;
 
@@ -18,7 +17,6 @@ namespace Content.Shared.Vehicle;
 /// </summary>
 public sealed partial class VehicleSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -51,7 +49,7 @@ public sealed partial class VehicleSystem : EntitySystem
 
         var damage = DamageSpecifier.GetPositive(args.Damage);
 
-        if (_prototype.TryIndex(ent.Comp.TransferDamageModifier, out var modifierSet))
+        if (ent.Comp.TransferDamageModifier is { } modifierSet)
         {
             // Reduce damage to via the specified modifier, if provided.
             damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
@@ -62,13 +60,6 @@ public sealed partial class VehicleSystem : EntitySystem
 
     private void OnVehicleUpdateCanMove(Entity<VehicleComponent> ent, ref UpdateCanMoveEvent args)
     {
-        // TODO: determine if this check is necessary
-        // if (ent.Comp.Operator is null)
-        // {
-        //     args.Cancel();
-        //     return;
-        // }
-
         var ev = new VehicleCanRunEvent(ent);
         RaiseLocalEvent(ent, ref ev);
         if (!ev.CanRun)
@@ -120,8 +111,10 @@ public sealed partial class VehicleSystem : EntitySystem
         if (!removeExisting && entity.Comp.Operator is not null)
             return false;
 
-        if (uid != null && !CanOperate(entity, uid.Value))
+        if (uid != null && !CanOperate(entity.AsNullable(), uid.Value))
             return false;
+
+        var oldOperator = entity.Comp.Operator;
 
         if (entity.Comp.Operator is { } currentOperator && TryComp<VehicleOperatorComponent>(currentOperator, out var currentOperatorComponent))
         {
@@ -154,7 +147,7 @@ public sealed partial class VehicleSystem : EntitySystem
 
         RefreshCanRun((entity, entity.Comp));
 
-        var setEvent = new VehicleOperatorSetEvent(uid);
+        var setEvent = new VehicleOperatorSetEvent(uid, oldOperator);
         RaiseLocalEvent(entity, ref setEvent);
 
         Dirty(entity);
@@ -212,8 +205,18 @@ public sealed partial class VehicleSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns the operator of the vehicle or none if there isn't one present
+    /// </summary>
+    public EntityUid? GetOperatorOrNull(Entity<VehicleComponent?> entity)
+    {
+        TryGetOperator(entity, out var operatorEnt);
+        return operatorEnt;
+    }
+
+    /// <summary>
     /// Checks if the current vehicle has an operator.
     /// </summary>
+    [PublicAPI]
     public bool HasOperator(Entity<VehicleComponent?> entity)
     {
         return TryGetOperator(entity, out _);
@@ -224,8 +227,11 @@ public sealed partial class VehicleSystem : EntitySystem
     /// Note that the general ability for a vehicle to run (keys, fuel, etc.) is not checked here.
     /// This is *only* for checks on the user.
     /// </summary>
-    public bool CanOperate(Entity<VehicleComponent> entity, EntityUid uid)
+    public bool CanOperate(Entity<VehicleComponent?> entity, EntityUid uid)
     {
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
         if (_entityWhitelist.IsWhitelistFail(entity.Comp.OperatorWhitelist, uid))
             return false;
 
