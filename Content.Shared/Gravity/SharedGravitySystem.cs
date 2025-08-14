@@ -277,8 +277,9 @@ public abstract partial class SharedGravitySystem : EntitySystem
 
     private void OnGetStandUpTime(Entity<WeightlessnessComponent> entity, ref GetStandUpTimeEvent args)
     {
-        // Get up instantly
-        args.DoAfterTime = TimeSpan.Zero;
+        // Get up instantly if weightless
+        if (entity.Comp.Weightless)
+            args.DoAfterTime = TimeSpan.Zero;
     }
 }
 

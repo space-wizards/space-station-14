@@ -60,7 +60,7 @@ public abstract partial class SharedStunSystem
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
 
         // Crawling
-        SubscribeLocalEvent<KnockedDownComponent, DamageChangedEvent>(OnDamaged);
+        SubscribeLocalEvent<CrawlerComponent, DamageChangedEvent>(OnDamaged);
         SubscribeLocalEvent<CrawlerComponent, KnockedDownRefreshEvent>(OnKnockdownRefresh);
         SubscribeLocalEvent<KnockedDownComponent, WeightlessnessChangedEvent>(OnWeightlessnessChanged);
 
