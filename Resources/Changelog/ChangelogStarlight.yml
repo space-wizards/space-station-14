@@ -11552,5 +11552,13 @@ Entries:
   id: 128100
   time: '2025-08-14T20:44:55.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1281
+- author: Conflee & Abby
+  changes:
+  - message: Added the NTNC Chest Rig and NTNC Backpack, for Navy Admemes. Included
+      in the Loadouts for rapid-equipping.
+    type: Add
+  id: 124000
+  time: '2025-08-14T21:00:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1240
 Order: -1
 
