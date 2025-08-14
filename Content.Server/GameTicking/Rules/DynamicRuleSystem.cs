@@ -23,7 +23,7 @@ public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
         base.Added(uid, component, gameRule, args);
 
         component.Budget = _random.Next(component.StartingBudgetMin, component.StartingBudgetMax);;
-        component.NextRuleTime = Timing.CurTime + RobustRandom.Next(component.MinRuleInterval, component.MaxRuleInterval);
+        component.NextRuleTime = Timing.CurTime + _random.Next(component.MinRuleInterval, component.MaxRuleInterval);
     }
 
     protected override void Started(EntityUid uid, DynamicRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -96,7 +96,7 @@ public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
     private List<EntityUid> Execute(Entity<DynamicRuleComponent> entity)
     {
         entity.Comp.NextRuleTime =
-            Timing.CurTime + RobustRandom.Next(entity.Comp.MinRuleInterval, entity.Comp.MaxRuleInterval);
+            Timing.CurTime + _random.Next(entity.Comp.MinRuleInterval, entity.Comp.MaxRuleInterval);
 
         var executedRules = new List<EntityUid>();
 

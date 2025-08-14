@@ -49,7 +49,7 @@ public sealed partial class DynamicRuleComponent : Component
     /// Minimum delay between rules
     /// </summary>
     [DataField]
-    public TimeSpan MinRuleInterval = TimeSpan.FromMinutes(15);
+    public TimeSpan MinRuleInterval = TimeSpan.FromMinutes(10);
 
     /// <summary>
     /// Maximum delay between rules

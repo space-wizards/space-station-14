@@ -11,9 +11,8 @@
   - type: GameRule
     minPlayers: 5 # <5 is greenshift hours, buddy.
   - type: DynamicRule
-    startingBudgetRange:
-      min: 200
-      max: 350
+    startingBudgetRangeMin: 200
+    startingBudgetRangeMax: 350
     table: !type:GroupSelector
       children:
       # Roundstart Rules
@@ -64,21 +63,21 @@
         - !type:HasBudgetCondition
         - !type:MaxRuleOccurenceCondition
         - !type:RoundDurationCondition
-          min: 1 # do not use this variant round-start
+          min: 900 # 15 minutes
       - id: DragonSpawn
         weight: 15
         conditions:
         - !type:HasBudgetCondition
         - !type:MaxRuleOccurenceCondition
         - !type:RoundDurationCondition
-          min: 1 # do not use this round-start
+          min: 900 # 15 minutes
       - id: NinjaSpawn
         weight: 20
         conditions:
         - !type:HasBudgetCondition
         - !type:MaxRuleOccurenceCondition
         - !type:RoundDurationCondition
-          min: 1 # do not use this round-start
+          min: 900 # 15 minutes
       - id: ParadoxCloneSpawn
         weight: 25
         conditions:
@@ -86,7 +85,7 @@
         - !type:MaxRuleOccurenceCondition
           max: 2
         - !type:RoundDurationCondition
-          min: 1 # do not use this round-start
+          min: 900 # 15 minutes
       - id: ZombieOutbreak
         weight: 2.5
         conditions:
@@ -95,7 +94,7 @@
         - !type:PlayerCountCondition
           min: 20
         - !type:RoundDurationCondition
-          min: 1 # do not use this variant round-start
+          min: 2700 # 45 minutes
       - id: LoneOpsSpawn
         weight: 5
         conditions:
