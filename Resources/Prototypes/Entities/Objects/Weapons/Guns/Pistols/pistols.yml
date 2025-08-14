@@ -12,6 +12,7 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Item
+    bulk: 3
     size: Small
     shape:
     - 0,0,1,0

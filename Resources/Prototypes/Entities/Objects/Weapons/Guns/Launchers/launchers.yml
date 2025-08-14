@@ -37,6 +37,7 @@
     - Back
     - suitStorage
   - type: Item
+    bulk: 15
     size: Huge
     shape:
     - 0,0,4,2

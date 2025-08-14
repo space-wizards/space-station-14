@@ -96,6 +96,7 @@
   description: For when you absolutely, positively need to make someone regret their life choices from a safe distance. Uses .60 anti-materiel ammo.
   components:
   - type: Item
+    bulk: 15
     size: Huge
     shape:
     - 0,0,5,1

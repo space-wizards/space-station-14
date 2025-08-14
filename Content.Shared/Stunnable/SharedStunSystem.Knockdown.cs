@@ -4,6 +4,8 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Movement.Events;
@@ -25,6 +27,12 @@ namespace Content.Shared.Stunnable;
 /// </summary>
 public abstract partial class SharedStunSystem
 {
+    // TODO: THESE SHOULD BE CVARS
+    // Mininum weight for modifiers
+    private static readonly int MinWeight = 0;
+    // Maximum adjusted weight (so weight minus minweight) for maximum penalty
+    private static readonly float MaxAdjustedWeight = 32f;
+
     private EntityQuery<CrawlerComponent> _crawlerQuery;
 
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
@@ -60,6 +68,10 @@ public abstract partial class SharedStunSystem
         // Crawling
         SubscribeLocalEvent<CrawlerComponent, KnockedDownRefreshEvent>(OnKnockdownRefresh);
         SubscribeLocalEvent<CrawlerComponent, DamageChangedEvent>(OnDamaged);
+        SubscribeLocalEvent<KnockedDownComponent, DidEquipHandEvent>(OnHandEquipped);
+        SubscribeLocalEvent<KnockedDownComponent, DidUnequipHandEvent>(OnHandUnequipped);
+        SubscribeLocalEvent<HandsComponent, GetStandUpTimeEvent>(OnGetStandUpTime);
+        SubscribeLocalEvent<HandsComponent, KnockedDownRefreshEvent>(OnHandsKnockdownRefresh);
 
         // Handling Alternative Inputs
         SubscribeAllEvent<ForceStandUpEvent>(OnForceStandup);
@@ -486,6 +498,57 @@ public abstract partial class SharedStunSystem
     {
         args.FrictionModifier *= entity.Comp.FrictionModifier;
         args.SpeedModifier *= entity.Comp.SpeedModifier;
+    }
+
+    /// <summary>
+    /// Reduces the time it takes to stand up based on the number of hands we have available.
+    /// </summary>
+    private void OnGetStandUpTime(Entity<HandsComponent> ent, ref GetStandUpTimeEvent time)
+    {
+        if (!HasComp<KnockedDownComponent>(ent))
+            return;
+
+        var hands = _hands.CountFreeHands(ent.Owner);
+
+        if (hands == 0)
+            return;
+
+        time.DoAfterTime *= (float)ent.Comp.Count / (hands + ent.Comp.Count);
+    }
+
+    private void OnHandEquipped(Entity<KnockedDownComponent> entity, ref DidEquipHandEvent args)
+    {
+        RefreshKnockedMovement(entity);
+    }
+
+    private void OnHandUnequipped(Entity<KnockedDownComponent> entity, ref DidUnequipHandEvent args)
+    {
+        RefreshKnockedMovement(entity);
+    }
+
+    private void OnHandsKnockdownRefresh(Entity<HandsComponent> ent, ref KnockedDownRefreshEvent args)
+    {
+        var free = _hands.CountFreeHands((ent, ent.Comp));
+        // If all our hands are empty, full move speed!
+        if (free == ent.Comp.Count)
+            return;
+
+        var weight = _hands.CountHeldItemsWeight((ent, ent.Comp));
+
+        // If we're below the weight where we start taking speed penalties, just fuggetabout it!
+        if (weight <= MinWeight)
+            return;
+
+        // If all our hands are free or weight is less than min weight we shouldn't be here.
+        // Effectively We get two values:
+        // One is the total weight minus min weight
+        // And the other is our hand count minus free hands.
+        // We multiply these values together to get an encumbrance, if you have more hands free you can better manage the weight you're carrying.
+        // Then we divide by the max adjusted weight and clamp to get our modifier.
+        var modifier =  Math.Max(0f, 1f - (weight - MinWeight) * (ent.Comp.Count - free) / MaxAdjustedWeight);
+        Log.Debug($"Appliyng a speed modifier of {modifier} to {ToPrettyString(ent)} from an item weight total of {weight} and empty hand count of {free}");
+
+        args.SpeedModifier *= modifier;
     }
 
     #endregion
