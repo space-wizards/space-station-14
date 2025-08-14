@@ -20,16 +20,16 @@ namespace Content.IntegrationTests.Tests.Round;
 public sealed class CharacterSelectionTest
 {
     // this map has slots for captain, mime, unlimited passengers, and no clowns
-    private static readonly string _map = "CharacterSelectionTestMap";
+    private const string Map = "CharacterSelectionTestMap";
 
     // this game mode attempts to make everyone a traitor
-    private static readonly string _traitorsMode = "OopsAllTraitors";
+    private const string TraitorsMode = "OopsAllTraitors";
 
     [TestPrototypes]
     private static readonly string Prototypes = $@"
 - type: entity
   parent: BaseTraitorRule
-  id: {_traitorsMode}
+  id: {TraitorsMode}
   components:
   - type: GameRule
     minPlayers: 0
@@ -50,21 +50,21 @@ public sealed class CharacterSelectionTest
       - MindRoleTraitor
 
 - type: gamePreset
-  id: {_traitorsMode}
+  id: {TraitorsMode}
   name: traitor-title
   description: traitor-description
   showInVote: false
   rules:
-  - {_traitorsMode}
+  - {TraitorsMode}
 
 - type: gameMap
-  id: {_map}
-  mapName: {_map}
+  id: {Map}
+  mapName: {Map}
   mapPath: /Maps/Test/empty.yml
   minPlayers: 0
   stations:
     Empty:
-      mapNameTemplate: {_map}
+      mapNameTemplate: {Map}
       stationProto: StandardNanotrasenStation
       components:
         - type: StationJobs
@@ -75,16 +75,17 @@ public sealed class CharacterSelectionTest
 ";
 
     // some constants to help test case readability & also make the compiler catch typos
-    public static readonly ProtoId<JobPrototype> Captain = "Captain";
-    public static readonly ProtoId<JobPrototype> Passenger = "Passenger";
-    public static readonly ProtoId<JobPrototype> Mime = "Mime";
-    public static readonly ProtoId<JobPrototype> Clown = "Clown";
+    private static readonly ProtoId<JobPrototype> Captain = "Captain";
+    private static readonly ProtoId<JobPrototype> Passenger = "Passenger";
+    private static readonly ProtoId<JobPrototype> Mime = "Mime";
+    private static readonly ProtoId<JobPrototype> Clown = "Clown";
+    private static readonly ProtoId<AntagPrototype> Traitor = "Traitor";
 
     // helper structs for test case definition readability
     public sealed class TestCharacter
     {
         public List<ProtoId<JobPrototype>> Jobs;
-        public bool Traitor;
+        public bool IsTraitor;
         public bool ExpectToSpawn;
         public bool Enabled = true;
 
@@ -124,7 +125,7 @@ public sealed class CharacterSelectionTest
         public ProtoId<JobPrototype>? ExpectedJob;
         public bool ExpectTraitor;
 
-        public SelectionTestData WithCharacters(IEnumerable<TestCharacter> new_characters)
+        public SelectionTestData WithCharacters(IEnumerable<TestCharacter> newCharacters)
         {
             return new SelectionTestData()
             {
@@ -132,7 +133,7 @@ public sealed class CharacterSelectionTest
                 HighPrioJob = HighPrioJob,
                 MediumPrioJobs = MediumPrioJobs,
                 LowPrioJobs = LowPrioJobs,
-                Characters = new_characters.ToList(),
+                Characters = newCharacters.ToList(),
                 ExpectedJob = ExpectedJob,
                 ExpectTraitor = ExpectTraitor
             };
@@ -173,7 +174,7 @@ public sealed class CharacterSelectionTest
             HighPrioJob = Passenger,
             Characters =
             [
-                new() { Jobs = [ Passenger ], Traitor = true, ExpectToSpawn = true}
+                new() { Jobs = [ Passenger ], IsTraitor = true, ExpectToSpawn = true}
             ],
             ExpectedJob = Passenger,
             ExpectTraitor = true
@@ -186,7 +187,7 @@ public sealed class CharacterSelectionTest
             HighPrioJob = Clown,
             Characters =
             [
-                new() { Jobs = [ Clown ], Traitor = true }
+                new() { Jobs = [ Clown ], IsTraitor = true }
             ]
         },
         // disabled characters should be ignored
@@ -240,14 +241,16 @@ public sealed class CharacterSelectionTest
             ExpectedJob = Passenger
         },
         // adapted from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-2926983119
+        // Since the game mode tries to make every player an antag, Captain should be excluded even if traitor is
+        // selected on the Captain character.
         new()
         {
             Description = "Antag chars, one command",
             MediumPrioJobs = [ Captain, Passenger ],
             Characters =
             [
-                new() { Jobs = [ Captain ], Traitor = true },
-                new() { Jobs = [ Passenger ], Traitor = true, ExpectToSpawn = true }
+                new() { Jobs = [ Captain ], IsTraitor = true },
+                new() { Jobs = [ Passenger ], IsTraitor = true, ExpectToSpawn = true }
             ],
             ExpectedJob = Passenger,
             ExpectTraitor = true
@@ -256,14 +259,17 @@ public sealed class CharacterSelectionTest
         // BUT the behaviour described there was later changed as described in case 1 in
         // https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219,
         // so this tests the updated behaviour
+        // Since this player has no enabled characters that are eligible to be a traitor, their session will not be
+        // selector to be an antag, and thus the Captain character will be eligible to spawn, even if the Captain
+        // character has traitor enabled.
         new()
         {
             Description = "Only antag captain enabled",
             MediumPrioJobs = [ Captain, Passenger ],
             Characters =
             [
-                new() { Jobs = [ Captain ], Traitor = true, ExpectToSpawn = true },
-                new() { Jobs = [ Passenger ], Traitor = true, Enabled = false }
+                new() { Jobs = [ Captain ], IsTraitor = true, ExpectToSpawn = true },
+                new() { Jobs = [ Passenger ], IsTraitor = true, Enabled = false }
             ],
             ExpectedJob = Captain
         },
@@ -274,7 +280,7 @@ public sealed class CharacterSelectionTest
             HighPrioJob = Captain,
             Characters =
             [
-                new() { Jobs = [ Captain ], Traitor = true, ExpectToSpawn = true }
+                new() { Jobs = [ Captain ], IsTraitor = true, ExpectToSpawn = true }
             ],
             ExpectedJob = Captain,
             ExpectTraitor = false
@@ -282,13 +288,16 @@ public sealed class CharacterSelectionTest
         // Case 2 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
         // a player that is selected as an antag should always roll a character & job compatible with that
         // antag selection
+        // Put another way, a player should only be pre-selected to be an antag if they have characters to be eligible
+        // to be an antag. Thus if a player is pre-selected to be an antag, they should then only be eligible for the
+        // set of antag-compatible jobs made from enabled characters.
         new()
         {
             Description = "Many chars, one antag",
             MediumPrioJobs = [ Mime, Passenger ],
             Characters =
             [
-                new() { Jobs = [ Mime ], Traitor = true, ExpectToSpawn = true },
+                new() { Jobs = [ Mime ], IsTraitor = true, ExpectToSpawn = true },
                 new() { Jobs = [ Passenger ] },
                 new() { Jobs = [ Passenger ] },
                 new() { Jobs = [ Passenger ] },
@@ -341,11 +350,11 @@ public sealed class CharacterSelectionTest
             Connected = true,
             InLobby = true,
         });
-        pair.Server.CfgMan.SetCVar(CCVars.GameMap, _map);
+        pair.Server.CfgMan.SetCVar(CCVars.GameMap, Map);
 
         var ticker = pair.Server.System<GameTicker>();
 
-        ticker.SetGamePreset(_traitorsMode);
+        ticker.SetGamePreset(TraitorsMode);
 
         var cPref = pair.Client.ResolveDependency<IClientPreferencesManager>();
         pair.Server.ResolveDependency<IRobustRandom>().SetSeed(0);
@@ -410,7 +419,7 @@ public sealed class CharacterSelectionTest
         await pair.CleanReturnAsync();
     }
 
-    // run multiple round starts with the same set of characters, all of which are valid to select,
+    // Run multiple round starts with the same set of characters, all of which are valid to select,
     // and verify that which character is selected varies
     [Test]
     public async Task VarietyTest()
@@ -421,11 +430,11 @@ public sealed class CharacterSelectionTest
             Connected = true,
             InLobby = true,
         });
-        pair.Server.CfgMan.SetCVar(CCVars.GameMap, _map);
+        pair.Server.CfgMan.SetCVar(CCVars.GameMap, Map);
 
         var ticker = pair.Server.System<GameTicker>();
 
-        ticker.SetGamePreset(_traitorsMode);
+        ticker.SetGamePreset(TraitorsMode);
 
         var cPref = pair.Client.ResolveDependency<IClientPreferencesManager>();
         pair.Server.ResolveDependency<IRobustRandom>().SetSeed(0);
@@ -447,7 +456,7 @@ public sealed class CharacterSelectionTest
         HashSet<int> selectedCharacterSlots = new();
         var humanoidAppearanceSystem = pair.Server.System<HumanoidAppearanceSystem>();
 
-        for (var i = 0; i < 20; i++)
+        foreach (var i in Enumerable.Range(0, 48))
         {
             await pair.ReallyBeIdle();
 
@@ -478,7 +487,7 @@ public sealed class CharacterSelectionTest
                 break;
             }
         }
-        Assert.That(selectedCharacterSlots.Count, Is.EqualTo(cPref.Preferences.Characters.Count));
+        Assert.That(selectedCharacterSlots, Has.Count.EqualTo(cPref.Preferences.Characters.Count));
 
         await pair.CleanReturnAsync();
     }
