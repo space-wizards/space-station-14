@@ -91,27 +91,10 @@ public sealed class CharacterSelectionTest
 
         public HumanoidCharacterProfile ToProfile()
         {
-            var profile = HumanoidCharacterProfile.Random();
-
-            if (Enabled)
-            {
-                profile = profile.AsEnabled();
-            }
-
-            // passenger is present by default, remove it first
-            profile = profile.WithoutJob(Passenger);
-
-            foreach (var job in Jobs)
-            {
-                profile = profile.WithJob(job);
-            }
-
-            if (Traitor)
-            {
-                profile = profile.WithAntagPreference("Traitor", true);
-            }
-
-            return profile;
+            return HumanoidCharacterProfile.Random()
+                .AsEnabled(Enabled)
+                .WithJobPreferences(Jobs)
+                .WithAntagPreferences(IsTraitor ? [Traitor] : []);
         }
     }
 
@@ -443,14 +426,15 @@ public sealed class CharacterSelectionTest
 
         await pair.Client.WaitAssertion(() =>
         {
-            cPref.UpdateJobPriorities( new() {
+            cPref.UpdateJobPriorities( new()
+            {
                 { Passenger, JobPriority.Medium },
-                { Mime, JobPriority.Medium }
+                { Mime, JobPriority.Medium },
             });
-            cPref.CreateCharacter(HumanoidCharacterProfile.Random().AsEnabled().WithJob(Passenger));
-            cPref.CreateCharacter(HumanoidCharacterProfile.Random().AsEnabled().WithJob(Passenger));
-            cPref.CreateCharacter(HumanoidCharacterProfile.Random().AsEnabled().WithJob(Mime));
-            cPref.CreateCharacter(HumanoidCharacterProfile.Random().AsEnabled().WithoutJob(Passenger).WithJob(Mime));
+            cPref.CreateCharacter(HumanoidCharacterProfile.Random().AsEnabled().WithJobPreferences([Passenger]));
+            cPref.CreateCharacter(HumanoidCharacterProfile.Random().AsEnabled().WithJobPreferences([Passenger]));
+            cPref.CreateCharacter(HumanoidCharacterProfile.Random().AsEnabled().WithJobPreferences([Passenger, Mime]));
+            cPref.CreateCharacter(HumanoidCharacterProfile.Random().AsEnabled().WithJobPreferences([Mime]));
         });
 
         HashSet<int> selectedCharacterSlots = new();
@@ -468,17 +452,11 @@ public sealed class CharacterSelectionTest
             await pair.RunTicksSync(30);
 
             Assert.That(ticker.PlayerGameStatuses[pair.Client.User!.Value], Is.EqualTo(PlayerGameStatus.JoinedGame));
-            bool foundSelectedSlot = false;
-            foreach (var slot in cPref.Preferences.Characters.Keys)
-            {
-                if (cPref.Preferences.Characters[slot]
-                    .MemberwiseEquals(humanoidAppearanceSystem.GetBaseProfile(pair.Player!.AttachedEntity.Value)))
-                {
-                    foundSelectedSlot = true;
-                    selectedCharacterSlots.Add(slot);
-                }
-            }
-            Assert.That(foundSelectedSlot, Is.True);
+            var baseProfile = humanoidAppearanceSystem.GetBaseProfile(pair.Player!.AttachedEntity.Value);
+            var foundSlot = cPref.Preferences.Characters.FirstOrNull(kvp => kvp.Value.MemberwiseEquals(baseProfile))?.Key;
+
+            Assert.That(foundSlot, Is.Not.Null);
+            selectedCharacterSlots.Add(foundSlot.Value);
 
             await pair.Server.WaitPost(() => ticker.RestartRound());
 
