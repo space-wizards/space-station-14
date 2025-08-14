@@ -4,6 +4,7 @@ using Content.Shared.Objectives.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Roles;
 using Content.Shared.Warps;
+using Content.Shared.Whitelist;
 using Robust.Shared.Random;
 
 namespace Content.Server.Objectives.Systems;
@@ -14,6 +15,7 @@ namespace Content.Server.Objectives.Systems;
 /// </summary>
 public sealed class NinjaConditionsSystem : EntitySystem
 {
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly NumberObjectiveSystem _number = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -36,13 +38,13 @@ public sealed class NinjaConditionsSystem : EntitySystem
         args.Progress = DoorjackProgress(comp, _number.GetTarget(uid));
     }
 
-    private float DoorjackProgress(DoorjackConditionComponent comp, int target)
+    private static float DoorjackProgress(DoorjackConditionComponent comp, int target)
     {
         // prevent divide-by-zero
         if (target == 0)
             return 1f;
 
-        return MathF.Min(comp.DoorsJacked / (float) target, 1f);
+        return MathF.Min(comp.DoorsJacked / (float)target, 1f);
     }
 
     // spider charge
@@ -53,10 +55,12 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
         // choose spider charge detonation point
         var warps = new List<EntityUid>();
-        var query = EntityQueryEnumerator<BombingTargetComponent, WarpPointComponent>();
-        while (query.MoveNext(out var warpUid, out _, out var warp))
+        var query = EntityQueryEnumerator<WarpPointComponent>();
+        while (query.MoveNext(out var warpUid, out var warp))
         {
-            if (warp.Location != null)
+            if (_whitelist.IsBlacklistPass(warp.Blacklist, warpUid)
+                || string.IsNullOrWhiteSpace(warp.Location)
+                || !HasComp<BombingTargetBlockerComponent>(warpUid))
             {
                 warps.Add(warpUid);
             }
@@ -92,12 +96,12 @@ public sealed class NinjaConditionsSystem : EntitySystem
         args.Progress = StealResearchProgress(comp, _number.GetTarget(uid));
     }
 
-    private float StealResearchProgress(StealResearchConditionComponent comp, int target)
+    private static float StealResearchProgress(StealResearchConditionComponent comp, int target)
     {
         // prevent divide-by-zero
         if (target == 0)
             return 1f;
 
-        return MathF.Min(comp.DownloadedNodes.Count / (float) target, 1f);
+        return MathF.Min(comp.DownloadedNodes.Count / (float)target, 1f);
     }
 }
