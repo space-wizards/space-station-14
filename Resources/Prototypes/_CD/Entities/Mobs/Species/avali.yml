@@ -18,6 +18,21 @@
   - type: Body
     prototype: Avali
     requiredLegs: 2
+    # start of modifications
+  - type: Inventory
+    speciesId: moth
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi # Harmony change added displacements
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi # Harmony change added displacements
+            state: mask
+    # end of modifications
   - type: Butcherable
     butcheringType: Spike
     spawned:
