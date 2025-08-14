@@ -23,7 +23,23 @@ lobby-state-song-unknown-title = [color=dimgray]Unknown title[/color]
 lobby-state-song-unknown-artist = [color=dimgray]Unknown artist[/color]
 
 #starlight edit remove demeaning comments
-lobby-state-playtime-comment-normal = You've spent {$hours} {$hours ->[1]hour*[other]hours} ingame today.
-lobby-state-playtime-comment-concerning = You've spent {$hours} {$hours ->[1]hour*[other]hours} ingame today.
-lobby-state-playtime-comment-grasstouchless = You've spent {$hours} {$hours ->[1]hour*[other]hours} ingame today.
-lobby-state-playtime-comment-selfdestructive = You've spent {$hours} {$hours ->[1]hour*[other]hours} ingame today.
+lobby-state-playtime-comment-normal =
+    You've spent {$hours} {$hours ->
+    [1]hour
+    *[other]hours
+    } ingame today.
+lobby-state-playtime-comment-concerning =
+    You've spent {$hours} {$hours ->
+    [1]hour
+    *[other]hours
+    } ingame today.
+lobby-state-playtime-comment-grasstouchless =
+    You've spent {$hours} {$hours ->
+    [1]hour
+    *[other]hours
+    } ingame today.
+lobby-state-playtime-comment-selfdestructive =
+    You've spent {$hours} {$hours ->
+    [1]hour
+    *[other]hours
+    } ingame today.
