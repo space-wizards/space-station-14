@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnosers;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
 using Content.Server.Atmos.Components;
@@ -17,6 +18,7 @@ namespace Content.Benchmarks;
 /// simulates them for a number of ticks M.
 /// </summary>
 [Virtual]
+[EventPipeProfiler(EventPipeProfile.CpuSampling)]
 public class DeltaPressureBenchmark
 {
     private TestPair _pair = default!;
@@ -24,7 +26,7 @@ public class DeltaPressureBenchmark
     /// <summary>
     /// Number of entities (windows, really) to spawn with a <see cref="DeltaPressureComponent"/>.
     /// </summary>
-    [Params(1, 10, 100, 1000, 5000, 10000, 50000)]
+    [Params(50000)]
     public int EntityCount;
 
     /// <summary>
@@ -33,8 +35,8 @@ public class DeltaPressureBenchmark
     [Params(30)]
     public int Ticks;
 
-    private EntProtoId WindowProtoId = "Window";
-    private EntProtoId WallProtoId = "ReinforcedWall";
+    private readonly EntProtoId _windowProtoId = "Window";
+    private readonly EntProtoId _wallProtoId = "WallReinforced";
 
     [GlobalSetup]
     public async Task SetupAsync()
@@ -82,14 +84,14 @@ public class DeltaPressureBenchmark
                     var isPerimeter = x == 0 || x == length - 1 || y == 0 || y == height - 1;
                     if (isPerimeter)
                     {
-                        entMan.SpawnEntity(WallProtoId, coords);
+                        entMan.SpawnEntity(_wallProtoId, coords);
                         continue;
                     }
 
                     // Spawn windows only on the middle row, spanning interior (excluding side walls)
                     if (y == midY)
                     {
-                        entMan.SpawnEntity(WindowProtoId, coords);
+                        entMan.SpawnEntity(_windowProtoId, coords);
                     }
                 }
             }
