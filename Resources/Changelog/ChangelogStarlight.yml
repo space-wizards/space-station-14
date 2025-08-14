@@ -11560,5 +11560,14 @@ Entries:
   id: 124000
   time: '2025-08-14T21:00:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1240
+- author: Conflee
+  changes:
+  - message: Added Shit Station gamemode, a mostly normal gamemode except there is
+      more dirt, trash, spills, and broken lights round start (has vent events, mid
+      round antags, etc too)
+    type: Add
+  id: 133700
+  time: '2025-08-14T21:11:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1337
 Order: -1
 
