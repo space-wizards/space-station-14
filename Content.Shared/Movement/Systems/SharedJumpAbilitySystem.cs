@@ -1,5 +1,6 @@
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
+using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 
@@ -10,6 +11,7 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly StandingStateSystem _standing = default!;
 
     public override void Initialize()
     {
@@ -20,7 +22,7 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
 
     private void OnGravityJump(Entity<JumpAbilityComponent> entity, ref GravityJumpEvent args)
     {
-        if (_gravity.IsWeightless(args.Performer))
+        if (_gravity.IsWeightless(args.Performer) || _standing.IsDown(entity.Owner))
             return;
 
         var xform = Transform(args.Performer);
