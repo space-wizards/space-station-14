@@ -104,7 +104,7 @@
 - type: loadout
   id: SecurityJumpsuitBlue
   equipment:
-    jumpsuit: ClothingUniformJunpsuitSecBlue
+    jumpsuit: ClothingUniformJumpsuitSecBlue
 
 # Back
 - type: loadout
