@@ -1108,8 +1108,8 @@
   - HeadofSecurityTurtleneckSkirt
   - HeadofSecurityFormalSuit
   - HeadofSecurityFormalSkirt
-  - ClothingUniformJumpsuitHoSGrey
-  - ClothingUniformJumpsuitHoSBlue
+  - HeadofSecurityBlueJumpsuit
+  - HeadofSecurityGreyJumpsuit
 
 - type: loadoutGroup
   id: HeadofSecurityNeck
