@@ -1,6 +1,6 @@
 # Abyss
 - type: biomeTemplate
-  id: Abyss
+  id: TrueAbyss
   layers:
     # Sparse vegetation
     - !type:BiomeDecalLayer
@@ -139,3 +139,151 @@
         octaves: 5
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
+
+# Abyss Touched
+- type: biomeTemplate
+  id: Abyss
+  layers:
+    # Sparse vegetation
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorAbyss
+        - FloorAbyss2
+      divisions: 2
+      threshold: 0.8
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        frequency: 0.1
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      decals:
+        - AbyssBushOne
+        - AbyssBushTwo
+        - AbyssBushThree
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorAbyss2
+      noise:
+        seed: 0
+        noiseType: OpenSimplex2
+        frequency: 1
+      divisions: 1
+      threshold: 0.8
+      decals:
+        - Basalt1
+        - Basalt2
+        - Basalt3
+        - Basalt4
+        - Basalt5
+        - Basalt6
+        - Basalt7
+        - Basalt8
+        - Basalt9
+    - !type:BiomeEntityLayer
+      threshold: 0.5
+      noise:
+        seed: 0
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
+      allowedTiles:
+        - FloorAbyss2
+      entities:
+        - FloraRockSolid
+        - AbyssOne
+        - AbyssTwo
+        - AbyssThree
+        - AbyssFour
+        - AbyssFive
+    # Rock formations
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - FloorAbyss
+        - FloorAbyss2
+      threshold: 0.995
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        frequency: 0.96
+        lacunarity: 0.10
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloraObelisk01
+        - FloraObelisk02
+        - FloraObelisk03
+    - !type:BiomeDummyLayer
+      id: Loot
+    # Rock walls
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - FloorAbyss
+        - FloorAbyss2
+      threshold: -0.30
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 0.05
+        lacunarity: 2
+        fractalType: FBm
+        octaves: 5
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
+      entities:
+        - WallRockChromite
+    - !type:BiomeDummyLayer
+      id: Loot
+    # Water
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - FloorAbyss
+        - FloorAbyss2
+      threshold: 0.95
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        frequency: 0.005
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloorWaterEntity
+    # Fill remainder with dirt.
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: FloorAbyss2
+    - !type:BiomeTileLayer
+      threshold: -0.90
+      tile: FloorAbyss2
+      noise:
+        seed: 0
+        frequency: 0.02
+        fractalType: None
+    # Rock formation sand
+    - !type:BiomeTileLayer
+      tile: FloorAbyss
+      threshold: -0.30
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 0.05
+        lacunarity: 2
+        fractalType: FBm
+        octaves: 5
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
+    # Dark trees
+    - !type:BiomeEntityLayer
+      threshold: 0.7
+      noise:
+        seed: 0
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
+      allowedTiles:
+        - FloorAbyss2
+      entities:
+        - LightTree
+        - ShadowTree
