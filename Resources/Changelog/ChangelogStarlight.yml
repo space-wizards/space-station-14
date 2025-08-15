@@ -11625,5 +11625,47 @@ Entries:
   id: 135101
   time: '2025-08-15T09:14:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1351
+- author: STARLIGHT TEAM
+  changes:
+  - message: The maximum pressure for the supermatter has been increased by 60.
+    type: Tweak
+  id: 135200
+  time: '2025-08-15T09:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1352
+- author: STARLIGHT TEAM
+  changes:
+  - message: The maximum temperature has been increased to 200.
+    type: Tweak
+  id: 135201
+  time: '2025-08-15T09:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1352
+- author: STARLIGHT TEAM
+  changes:
+  - message: Crystal destruction now lasts at least 3 minutes instead of 2.
+    type: Tweak
+  id: 135202
+  time: '2025-08-15T09:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1352
+- author: STARLIGHT TEAM
+  changes:
+  - message: Maximum radiation is capped at 50 instead of 100.
+    type: Tweak
+  id: 135203
+  time: '2025-08-15T09:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1352
+- author: STARLIGHT TEAM
+  changes:
+  - message: The supermatter cascade no longer destroys items on the tiles it fills.
+    type: Tweak
+  id: 135204
+  time: '2025-08-15T09:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1352
+- author: STARLIGHT TEAM
+  changes:
+  - message: But it does explode instead.
+    type: Tweak
+  id: 135205
+  time: '2025-08-15T09:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1352
 Order: -1
 
