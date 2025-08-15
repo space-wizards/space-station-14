@@ -273,7 +273,7 @@ public sealed class CharacterSelectionTest
         // antag selection
         // Put another way, a player should only be pre-selected to be an antag if they have characters to be eligible
         // to be an antag. Thus if a player is pre-selected to be an antag, they should then only be eligible for the
-        // set of antag-compatible jobs made from enabled characters.
+        // set of antag-compatible jobs made from enabled characters that have that antag enabled.
         new()
         {
             Description = "Many chars, one antag",
