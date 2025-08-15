@@ -212,8 +212,8 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
             _speciesJobsSpawns
                 .WithLabels(
-                    speciesProto.Name,
-                    jobProto.Name,
+                    Loc.GetString(speciesProto.Name),
+                    jobProto.LocalizedName,
                     _gameTicker.RunLevel.ToString())
                 .Inc();
         }
