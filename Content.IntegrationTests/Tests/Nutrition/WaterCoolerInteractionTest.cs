@@ -43,7 +43,7 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
         await Interact();
 
         // Make sure the player is now holding a cup
-        var cup = HandSys.GetActiveItem((ToServer(Player), Hands));
+        var cup = HandSys.GetActiveItem((SPlayer, Hands));
         Assert.That(cup, Is.Not.Null, "Player's hand is empty");
         AssertPrototype(PaperCup, SEntMan.GetNetEntity(cup));
 
@@ -57,7 +57,7 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
         await Interact(altInteract: true);
 
         // Make sure the player's hand is empty
-        Assert.That(HandSys.ActiveHandIsEmpty((ToServer(Player), Hands)), "Player's hand is not empty");
+        Assert.That(HandSys.ActiveHandIsEmpty((SPlayer, Hands)), "Player's hand is not empty");
 
         // Make sure the count has gone back up by one
         Assert.That(binComp.Items, Has.Count.EqualTo(initialCount), "Number of cups in cooler bin did not return to initial count");
