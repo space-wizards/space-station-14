@@ -21,7 +21,7 @@ public sealed class SpawnPointSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private static readonly ProtoId<SpeciesPrototype> FallbackSpecies = "Human";
     private static readonly ProtoId<JobPrototype> FallbackJob = "Assistant";
-    private static readonly Histogram _speciesJobsSpawns = Metrics.CreateHistogram(
+    private static readonly Gauge _speciesJobsSpawns = Metrics.CreateGauge(
         "sl_species_jobs_spawns",
         "Contains info on species and jobs spawned at and during the round.",
         ["species", "job", "spawn_time"]
@@ -122,7 +122,7 @@ public sealed class SpawnPointSystem : EntitySystem
                     speciesProto.Name,
                     jobProto.Name,
                     _gameTicker.RunLevel.ToString())
-                .Observe(1);
+                .Inc();
         }
         #endregion
     }
