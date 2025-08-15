@@ -483,13 +483,16 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             var remaining = count - atmosphere.DeltaPressureCursor;
-            var batchSize = Math.Max(50, DeltaPressureParallelBatchSize);
+            var batchSize = Math.Max(50, DeltaPressureParallelProcessPerIteration);
             var toProcess = Math.Min(batchSize, remaining);
 
             var timeCheck1 = 0;
             while (atmosphere.DeltaPressureCursor != count)
             {
-                var job = new DeltaPressureParallelJob(this, atmosphere, atmosphere.DeltaPressureCursor);
+                var job = new DeltaPressureParallelJob(this,
+                    atmosphere,
+                    atmosphere.DeltaPressureCursor,
+                    DeltaPressureParallelBatchSize);
                 _parallel.ProcessNow(job, toProcess);
 
                 atmosphere.DeltaPressureCursor += toProcess;

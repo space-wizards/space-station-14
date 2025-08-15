@@ -161,10 +161,20 @@ public sealed partial class CCVars
         CVarDef.Create("atmos.delta_pressure_damage", true, CVar.SERVERONLY);
 
     /// <summary>
-    /// Number of entities to batch for parallel processing per processing run.
+    /// Number of entities to submit for parallel processing per processing run.
     /// Low numbers may suffer from thinning out the work per job and leading to threads waiting,
-    /// high numbers may cause Atmospherics to exceed its time budget per tick.
+    /// or seeing a lot of threading overhead.
+    /// High numbers may cause Atmospherics to exceed its time budget per tick, as it will not
+    /// check its time often enough to know if it's exceeding it.
     /// </summary>
-    public static readonly CVarDef<int> DeltaPressureParallelBatch =
-        CVarDef.Create("atmos.delta_pressure_parallel_batch", 1000, CVar.SERVERONLY);
+    public static readonly CVarDef<int> DeltaPressureParallelToProcessPerIteration =
+        CVarDef.Create("atmos.delta_pressure_parallel_process_per_iteration", 1000, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Number of entities to process per processing job.
+    /// Low numbers may cause Atmospherics to see high threading overhead,
+    /// high numbers may cause Atmospherics to distribute the work unevenly.
+    /// </summary>
+    public static readonly CVarDef<int> DeltaPressureParallelBatchSize =
+        CVarDef.Create("atmos.delta_pressure_parallel_batch_size", 100, CVar.SERVERONLY);
 }
