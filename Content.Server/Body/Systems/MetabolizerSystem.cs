@@ -174,6 +174,14 @@ namespace Content.Server.Body.Systems
                     var processedQuantity = FixedPoint2.Clamp(rate, 0, quantity);
                     var scale = processedQuantity / rate;
 
+                    // If all conditions fail (say it's just a reagent threshold
+                    // effect) we need to make sure we still remove something.
+                    // Ideally there'd be a distinction between "this effect
+                    // will never succeed for this organ" and "this effect COULD
+                    // apply to this organ."
+                    if (mostToRemove == FixedPoint2.Zero)
+                        mostToRemove = processedQuantity;
+
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
                     // still remove reagents
