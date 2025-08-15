@@ -7,7 +7,7 @@
     <LineEdit PlaceHolder="{Loc 'ui-options-custom-command-binding-command-placeholder'}"
               Name="CommandTextEdit"
               StyleClasses="chatLineEdit"
-              MinSize="290,10"
+              MinSize="200,10"
               HorizontalExpand="True"
               Margin="10,0,0,0"/>
     <tabs:BindButton Name="BindButton"

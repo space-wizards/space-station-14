@@ -40,7 +40,6 @@ public sealed partial class CustomCommandBindingControl : BoxContainer, IKeyBind
             var bindArguments = new CustomCommandBindArguments(Function, Bind1, GetCommandText());
             OnBind(BindButton, bindArguments);
         };
-        ResetButton.Disabled = true;
     }
 
     public IKeyBinding? Bind1
