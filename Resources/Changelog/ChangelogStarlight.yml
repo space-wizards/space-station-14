@@ -11465,6 +11465,20 @@ Entries:
   id: 133600
   time: '2025-08-14T03:42:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1336
+- author: Trep_Maul
+  changes:
+  - message: Leth to Map pool
+    type: Add
+  id: 134500
+  time: '2025-08-14T19:52:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1345
+- author: walksanatora
+  changes:
+  - message: Added dragon consumption and uplink purchase statistics tracking
+    type: Add
+  id: 133900
+  time: '2025-08-14T20:07:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1339
 - author: CrazyPhantom
   changes:
   - message: Zookeeper name displaying wrong
@@ -11576,5 +11590,12 @@ Entries:
   id: 133700
   time: '2025-08-14T21:11:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1337
+- author: Happyrobot33
+  changes:
+  - message: Added species/job statistics
+    type: Add
+  id: 134700
+  time: '2025-08-15T01:10:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1347
 Order: -1
 
