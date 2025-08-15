@@ -801,7 +801,7 @@
   components:
   - type: StationEvent
     weight: 2.5
-    earliestStart: 15
+    earliestStart: 25
     reoccurrenceDelay: 20
     minimumPlayers: 15
     duration: null
