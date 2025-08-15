@@ -43,7 +43,7 @@ public sealed partial class CCVars
     /// 1009555
     /// </example>
     public static readonly CVarDef<string> GithubAppId =
-        CVarDef.Create("github.github_app_id", "", CVar.SERVERONLY);
+        CVarDef.Create("github.github_app_id", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
     /// <summary>
     /// Name of the targeted GitHub repository.
