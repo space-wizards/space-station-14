@@ -168,7 +168,7 @@ public sealed partial class CCVars
     /// check its time often enough to know if it's exceeding it.
     /// </summary>
     public static readonly CVarDef<int> DeltaPressureParallelToProcessPerIteration =
-        CVarDef.Create("atmos.delta_pressure_parallel_batch", 1000, CVar.SERVERONLY);
+        CVarDef.Create("atmos.delta_pressure_parallel_process_per_iteration", 1000, CVar.SERVERONLY);
 
     /// <summary>
     /// Number of entities to process per processing job.
