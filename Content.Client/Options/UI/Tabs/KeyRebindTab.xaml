@@ -1,7 +1,7 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">
-        <ScrollContainer VerticalExpand="True">
+        <ScrollContainer VerticalExpand="True" Name="MainScroll">
             <BoxContainer Orientation="Vertical">
                 <BoxContainer Name="KeybindsContainer" Orientation="Vertical" Margin="8 8 8 8">
 
@@ -16,6 +16,7 @@
 
                     </BoxContainer>
                     <Button Text="{Loc 'ui-options-add-custom-command-binding'}"
+                            Margin="0 8 0 0"
                             Name="AddCustomBindingButton"
                             HorizontalAlignment="Left" />
                 </BoxContainer>

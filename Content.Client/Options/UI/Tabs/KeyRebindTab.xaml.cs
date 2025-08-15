@@ -27,11 +27,10 @@ namespace Content.Client.Options.UI.Tabs
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        private (BoundKeyFunction Function, IKeyBinding? Binding) _currentlyRebinding;
+        private IKeyBindArguments? _currentlyRebinding;
         private bool _isFirstHeader = true;
 
-        private readonly Dictionary<BoundKeyFunction, KeyControl> _keyControls =
-            new();
+        private readonly Dictionary<BoundKeyFunction, IKeyBindingControl> _keyControls = new();
 
         private readonly List<Action> _deferCommands = new();
 
@@ -44,7 +43,10 @@ namespace Content.Client.Options.UI.Tabs
             {
                 _deferCommands.Add(() =>
                 {
+                    // Reset all bindings in the input manager
                     _inputManager.ResetAllBindings();
+
+                    // Save changes
                     _inputManager.SaveToUserData();
                 });
             };
@@ -213,31 +215,17 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.TextCompleteNext);
             AddButton(EngineKeyFunctions.TextCompletePrev);
 
-
+            foreach (var function in _inputManager.GetCustomCommands())
+            {
+                if(_inputManager.TryGetKeyBinding(function, out var keyBinding))
+                    AddCustomBindingControl(function, keyBinding);
+            }
 
             foreach (var (function, control) in _keyControls)
             {
                 UpdateBindingsData(function, control);
             }
             #endregion
-        }
-
-        private void AddCustomBindingControl(BaseButton.ButtonEventArgs obj)
-        {
-            foreach (var existingControls in CustomBindingsContainer.Children)
-            {
-                if(existingControls is not CustomCommandBindingControl customBinding)
-                    continue;
-
-                if(!customBinding.IsComplete)
-                    return;
-            }
-            
-            var customCommandBindingControl = new CustomCommandBindingControl();
-            CustomBindingsContainer.AddChild(customCommandBindingControl);
-
-            AddCustomBindingButton.ToolTip = Loc.GetString("ui-options-add-custom-command-binding-disable-tooltip");
-            AddCustomBindingButton.Disabled = true;
         }
 
         private void HandleToggleUSQWERTYCheckbox(BaseButton.ButtonToggledEventArgs args)
@@ -405,7 +393,8 @@ namespace Content.Client.Options.UI.Tabs
 
         private void OnKeyBindModified(IKeyBinding bind, bool removal)
         {
-            if (!_keyControls.TryGetValue(bind.Function, out var keyControl))
+            if (!_keyControls.TryGetValue(bind.Function, out var keyControl)
+                || _currentlyRebinding == null)
             {
                 return;
             }
@@ -479,7 +468,7 @@ namespace Content.Client.Options.UI.Tabs
                 bindType = KeyBindingType.Toggle;
             }
 
-            var bindingPriority = _currentlyRebinding.Binding?.Priority;
+            var bindingPriority = _currentlyRebinding.ExistingBinding?.Priority;
             if (bindingPriority is null)
             {
                 if (_keyControls.TryGetValue(function, out var control) && control.Bind1 != null)
@@ -497,34 +486,124 @@ namespace Content.Client.Options.UI.Tabs
                 Mod3 = mods[2],
                 Priority = bindingPriority ?? 0,
                 Type = bindType,
-                CanFocus = key == Keyboard.Key.MouseLeft
-                           || key == Keyboard.Key.MouseRight
-                           || key == Keyboard.Key.MouseMiddle,
+                CanFocus = key is Keyboard.Key.MouseLeft
+                    or Keyboard.Key.MouseRight
+                    or Keyboard.Key.MouseMiddle,
                 CanRepeat = false
             };
+
+            if(_currentlyRebinding is CustomCommandBindArguments args)
+            {
+                registration.FunctionCommand = args.CommandText;
+                registration.Type = KeyBindingType.Command;
+            }
 
             _inputManager.RegisterBinding(registration);
             // OnKeyBindModified will cause _currentlyRebinding to be reset and the UI to update.
             _inputManager.SaveToUserData();
         }
 
-        private void RebindButtonPressed(BindButton button, BoundKeyFunction function, IKeyBinding? binding)
+        private void CustomCommandChanged(IKeyBinding keyBinding, string commandText)
         {
-            if (_currentlyRebinding != default)
+            _deferCommands.Add(() =>
+            {
+                _inputManager.RemoveBinding(keyBinding);
+
+                var registration = new KeyBindingRegistration
+                {
+                    Function = keyBinding.Function,
+                    BaseKey = keyBinding.BaseKey,
+                    Mod1 = keyBinding.Mod1,
+                    Mod2 = keyBinding.Mod2,
+                    Mod3 = keyBinding.Mod3,
+                    Priority = keyBinding.Priority,
+                    Type = keyBinding.BindingType,
+                    CanFocus = keyBinding.CanFocus,
+                    CanRepeat = keyBinding.CanRepeat,
+                    FunctionCommand = commandText,
+                };
+
+                _inputManager.RegisterBinding(registration);
+                _inputManager.SaveToUserData();
+            });
+        }
+
+        private void RebindButtonPressed(BindButton button, IKeyBindArguments args)
+        {
+            if (_currentlyRebinding != null)
                 return;
 
-            _currentlyRebinding = (function, binding);
+            _currentlyRebinding = args;
             button.Text = Loc.GetString("ui-options-key-prompt");
 
-            if (binding != null)
+            if (args.ExistingBinding != null)
             {
                 _deferCommands.Add(() =>
                 {
                     // Have to do defer this or else there will be an exception in InputManager.
                     // Because this IS fired from an input event.
-                    _inputManager.RemoveBinding(binding);
+                    _inputManager.RemoveBinding(args.ExistingBinding);
                 });
             }
+        }
+
+        private void AddCustomBindingControl(BaseButton.ButtonEventArgs _)
+        {
+            foreach (var existingControls in CustomBindingsContainer.Children)
+            {
+                if (existingControls is not CustomCommandBindingControl customBinding)
+                    continue;
+
+                if (!customBinding.IsComplete)
+                    return;
+            }
+
+            if (!_inputManager.TryGetUnusedCustomCommand(out var function))
+            {
+                AddCustomBindingButton.ToolTip = Loc.GetString("ui-options-add-custom-command-binding-disable-tooltip");
+                AddCustomBindingButton.Disabled = true;
+                return;
+            }
+
+            AddCustomBindingControl(function.Value);
+        }
+
+        private void AddCustomBindingControl(BoundKeyFunction function, IKeyBinding? keyBinding = null)
+        {
+
+            var customCommandBindingControl = new CustomCommandBindingControl
+            {
+                Function = function,
+                Bind1 = keyBinding,
+                OnBind = RebindButtonPressed,
+                OnReset = () =>
+                {
+                    _deferCommands.Add(() =>
+                    {
+                        _inputManager.ResetBindingsFor(function);
+                        _inputManager.SaveToUserData();
+                    });
+                    _keyControls.Remove(function);
+                },
+                ButtonOnKeyBindingDown = (args, binding) =>
+                {
+                    if (args.Function == EngineKeyFunctions.UIRightClick && binding != null)
+                    {
+                        _deferCommands.Add(() =>
+                        {
+                            _inputManager.RemoveBinding(binding);
+                            _inputManager.SaveToUserData();
+                        });
+
+                        args.Handle();
+                    }
+                },
+                OnDataChanged = CustomCommandChanged
+            };
+
+            CustomBindingsContainer.AddChild(customCommandBindingControl);
+
+            _keyControls.Add(function, customCommandBindingControl);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -552,7 +631,7 @@ namespace Content.Client.Options.UI.Tabs
             }
         }
 
-        private void UpdateBindingsData(BoundKeyFunction function, KeyControl control)
+        private void UpdateBindingsData(BoundKeyFunction function, IKeyBindingControl control)
         {
             var isModified = !_inputManager.IsKeyFunctionModified(function);
             var activeBinds = _inputManager.GetKeyBindings(function);

@@ -1,6 +1,6 @@
+using System.Numerics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
-using System.Numerics;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Options.UI.Tabs;

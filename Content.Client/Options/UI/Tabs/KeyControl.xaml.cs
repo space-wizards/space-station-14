@@ -11,12 +11,12 @@ namespace Content.Client.Options.UI.Tabs;
 /// Control for keybinding of certain bindable function.
 /// </summary>
 [GenerateTypedNameReferences]
-public sealed partial class KeyControl : Control
+public sealed partial class KeyControl : Control, IKeyBindingControl
 {
     private readonly BoundKeyFunction _function;
 
-    public IKeyBinding? Bind1;
-    public IKeyBinding? Bind2;
+    public IKeyBinding? Bind1 { get; set; }
+    public IKeyBinding? Bind2 { get; set; }
 
     /// <inheritdoc />
     public KeyControl()
@@ -56,12 +56,12 @@ public sealed partial class KeyControl : Control
     /// <summary>
     /// Action to invoke on BindButton click.
     /// </summary>
-    public required Action<BindButton, BoundKeyFunction, IKeyBinding?> OnBind
+    public required Action<BindButton, IKeyBindArguments> OnBind
     {
         init
         {
-            BindButton1.OnPressed += _ => value(BindButton1, _function, Bind1);
-            BindButton2.OnPressed += _ => value(BindButton2, _function, Bind2);
+            BindButton1.OnPressed += _ => value(BindButton1, new SimpleKeyBindArguments(_function, Bind1));
+            BindButton2.OnPressed += _ => value(BindButton2, new SimpleKeyBindArguments(_function, Bind2));
         }
     }
 

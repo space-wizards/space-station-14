@@ -1,15 +1,20 @@
 <tabs:CustomCommandBindingControl xmlns="https://spacestation14.io"
                                   xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs"
                                   Orientation="Horizontal">
-
-    <Button Text="Action:" HorizontalAlignment="Left"></Button>
-    <OptionButton Name="OptionsDropDown"></OptionButton>
-    <LineEdit Text="Enter your custom command..."
-              Name="NewBindingCommandText"
+    <OptionButton Name="OptionsDropDown"
+                  MinSize="150,0"
+                  Margin="10,0,0,0" />
+    <LineEdit PlaceHolder="{Loc 'ui-options-custom-command-binding-command-placeholder'}"
+              Name="CommandTextEdit"
               StyleClasses="chatLineEdit"
-              MinSize="400,10"
-              HorizontalExpand="True" />
-    <Control HorizontalExpand="True"></Control>
-
-    <tabs:BindButton HorizontalAlignment="Right"></tabs:BindButton>
+              MinSize="290,10"
+              HorizontalExpand="True"
+              Margin="10,0,0,0"/>
+    <tabs:BindButton Name="BindButton"
+                     HorizontalAlignment="Right"
+                     Margin="10,0,0,0" />
+    <Button Name="ResetButton"
+            Text="{Loc 'ui-options-add-custom-command-binding-remove-button'}"
+            StyleClasses="Caution"
+            Margin="10,0,0,0" />
 </tabs:CustomCommandBindingControl>
