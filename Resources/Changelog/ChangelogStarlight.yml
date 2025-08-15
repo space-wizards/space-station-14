@@ -11597,5 +11597,19 @@ Entries:
   id: 134700
   time: '2025-08-15T01:10:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1347
+- author: MaxAlpine
+  changes:
+  - message: removed duplicated service request computer (dumb)
+    type: Fix
+  id: 135300
+  time: '2025-08-15T09:12:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1353
+- author: MaxAlpine
+  changes:
+  - message: some missing floor tiles under doors too
+    type: Fix
+  id: 135301
+  time: '2025-08-15T09:12:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1353
 Order: -1
 
