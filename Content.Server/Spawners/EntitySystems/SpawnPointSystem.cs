@@ -17,17 +17,6 @@ public sealed class SpawnPointSystem : EntitySystem
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
 
-    #region Starlight
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    private static readonly ProtoId<SpeciesPrototype> FallbackSpecies = "Human";
-    private static readonly ProtoId<JobPrototype> FallbackJob = "Assistant";
-    private static readonly Gauge _speciesJobsSpawns = Metrics.CreateGauge(
-        "sl_species_jobs_spawns",
-        "Contains info on species and jobs spawned at and during the round.",
-        ["species", "job", "spawn_time"]
-    );
-    #endregion
-
     public override void Initialize()
     {
         SubscribeLocalEvent<PlayerSpawningEvent>(OnPlayerSpawning);
@@ -101,29 +90,5 @@ public sealed class SpawnPointSystem : EntitySystem
             args.Job,
             args.HumanoidCharacterProfile,
             args.Station);
-
-        #region StarlightStats
-        if (args.SpawnResult != null)
-        {
-            if (!_prototypeManager.TryIndex(args.HumanoidCharacterProfile?.Species, out SpeciesPrototype? speciesProto))
-            {
-                speciesProto = _prototypeManager.Index(FallbackSpecies);
-                Log.Warning($"Unable to find species {args.HumanoidCharacterProfile?.Species}, falling back to {FallbackSpecies}");
-            }
-
-            if (args.Job == null || !_prototypeManager.TryIndex(args.Job, out JobPrototype? jobProto))
-            {
-                jobProto = _prototypeManager.Index(FallbackJob);
-                Log.Warning($"Unable to find job {args.Job}, falling back to {FallbackJob}");
-            }
-
-            _speciesJobsSpawns
-                .WithLabels(
-                    speciesProto.Name,
-                    jobProto.Name,
-                    _gameTicker.RunLevel.ToString())
-                .Inc();
-        }
-        #endregion
     }
 }
