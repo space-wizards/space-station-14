@@ -50,6 +50,7 @@ job-name-station-ai = Station AI
 job-name-technical-assistant = Technical Assistant
 job-name-visitor = Visitor
 job-name-cluwne = Cluwne
+job-name-zookeeper = Zookeeper
 
 # unused jobs
 # these are required for the agent ID job icon tooltips
