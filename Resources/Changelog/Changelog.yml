@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: The mining hardsuit has had it's armor tweaked to be more effective against
-      fish and less effective against bullets and/or bombs
-    type: Tweak
-  id: 8341
-  time: '2025-04-25T04:05:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31450
 - author: Krzeszny
   changes:
   - message: Rewrote the controls guide.
@@ -3948,3 +3940,11 @@
   id: 8853
   time: '2025-08-14T17:32:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39472
+- author: ScholarNZL
+  changes:
+  - message: Added IC visibility of "animal organs", e.g "animal lungs" etc, to facilitate
+      recipe creation.
+    type: Tweak
+  id: 8854
+  time: '2025-08-15T04:21:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39228
