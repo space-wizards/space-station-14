@@ -288,14 +288,23 @@ public sealed partial class CreditsWindow : DefaultWindow
         }
 
         var first = true;
-        foreach (var tier in patrons.GroupBy(p => p.Tier).OrderBy(p => PatronTierPriority[p.Key]))
+
+        var grouped = patrons
+            .Where(p => !string.IsNullOrWhiteSpace(p.Tier) && PatronTierPriority.ContainsKey(p.Tier))
+            .GroupBy(p => p.Tier)
+            .OrderBy(g => PatronTierPriority[g.Key]);
+
+        foreach (var tier in grouped)
         {
             if (!first)
                 patronsContainer.AddChild(new Control { MinSize = new Vector2(0, 10) });
 
             first = false;
             patronsContainer.AddChild(new Label
-                { StyleClasses = { StyleBase.StyleClassLabelHeading }, Text = $"{tier.Key}" });
+            {
+                StyleClasses = { StyleBase.StyleClassLabelHeading },
+                Text = $"{tier.Key}"
+            });
 
             var msg = string.Join(", ", tier.OrderBy(p => p.Name).Select(p => p.Name));
 
