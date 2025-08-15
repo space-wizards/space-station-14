@@ -26,3 +26,7 @@
     - type: Tag
       tags:
       - MicroManipulatorStockPart
+    # Starlight-start: Vending Machines Prices
+    - type: ItemPrice
+      priceCategory: tool_cheap
+    # Starlight-end

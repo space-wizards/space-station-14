@@ -11,9 +11,9 @@ public sealed partial class PriceCategoryPrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField("min", required: true)]
-    public int Min;
+    [DataField]
+    public int Min = 0;
 
-    [DataField("max", required: true)]
+    [DataField]
     public int Max;
 }

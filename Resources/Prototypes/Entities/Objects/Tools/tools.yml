@@ -50,6 +50,10 @@
       path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: tool_basic
+  # Starlight-end
 
 - type: entity
   name: screwdriver
@@ -94,6 +98,10 @@
       Steel: 100
   - type: StaticPrice
     price: 30
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: tool_basic
+  # Starlight-end
 
 - type: entity
   name: wrench
@@ -136,6 +144,10 @@
   - type: GuideHelp
     guides:
     - Construction
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: tool_basic
+  # Starlight-end
 
 - type: entity
   name: multitool

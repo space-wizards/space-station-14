@@ -5,8 +5,6 @@
   abstract: true
   suffix: Full
   components:
-  - type: ItemPrice
-    priceCategory: drink
   - type: Tag
     tags:
     - DrinkBottle
@@ -45,6 +43,10 @@
   - type: PressurizedSolution
     solution: drink
   - type: Shakeable
+  # Starlight-edit: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: drink
+  # Starlight-end
 
 - type: entity
   parent: DrinkBase
@@ -54,8 +56,6 @@
   components:
   - type: Item
     size: Small
-  - type: ItemPrice
-    priceCategory: drink
   - type: Tag
     tags:
       - DrinkCup
@@ -144,8 +144,6 @@
   id: DrinkBottleGlassBaseFull
   abstract: true
   components:
-  - type: ItemPrice
-    priceCategory: drink
   - type: Sprite
     state: icon
   - type: DamageOnLand

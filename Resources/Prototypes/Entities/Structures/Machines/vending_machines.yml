@@ -112,6 +112,7 @@
   description: Slather these thick gooey substances on your food for a full flavor effect.
   components:
   - type: VendingMachine
+    showPrices: false # Starlight-edit: Vending Machines Prices
     pack: CondimentInventory
     offState: off
   - type: Sprite
@@ -1609,6 +1610,7 @@
   - type: VendingMachine
     pack: BarDrobeInventory
     offState: off
+    showPrices: false # Starlight-edit: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
   - type: DatasetVocalizer

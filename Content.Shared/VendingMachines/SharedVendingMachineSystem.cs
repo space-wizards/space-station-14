@@ -193,6 +193,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     /// <summary>
     /// Handles balance request from client. Override on server to provide actual balance data
     /// </summary>
+    //  Starlight-edit
     protected virtual void OnRequestBalanceMessage(Entity<VendingMachineComponent> entity, ref VendingMachineRequestBalanceMessage args)
     {
     }
@@ -351,7 +352,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     /// <param name="type">The type of inventory the item is from</param>
     /// <param name="itemId">The prototype ID of the item</param>
     /// <param name="component"></param>
-    public virtual void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
+    public virtual void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component) // Starlight-edit
     {
         if (IsAuthorized(uid, sender, component))
         {

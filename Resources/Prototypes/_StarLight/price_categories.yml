@@ -19,6 +19,11 @@
   max: 10
 
 - type: priceCategory
+  id: tool_cheap
+  min: 10
+  max: 20
+
+- type: priceCategory
   id: tool_basic
   min: 25
   max: 50
