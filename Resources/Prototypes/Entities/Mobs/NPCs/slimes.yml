@@ -36,9 +36,8 @@
     tags:
     - FootstepSound
     - DoorBumpOpener
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatSlime
       amount: 2
   - type: Respirator

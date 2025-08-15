@@ -15,6 +15,13 @@ public sealed partial class KitchenSpikeComponent : Component
     [DataField("sound")]
     public SoundSpecifier SpikeSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
+    /// <summary>
+    /// Tool quality that required if "piece" of the victim should got with specified tool.
+    /// Can be null.
+    /// </summary>
+    [DataField]
+    public string? RequiredToolQuality = "Slicing";
+
     public List<string>? PrototypesToSpawn;
 
     // TODO: Spiking alive mobs? (Replace with uid) (deal damage to their limbs on spiking, kill on first butcher attempt?)
