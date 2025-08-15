@@ -76,12 +76,11 @@
   - type: Bloodstream
     bloodReagent: InsectBlood
   - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 0.5
-    damageRecovery:
-      types:
-        Asphyxiation: -0.5
+    minSaturation: 5.0
+  - type: PressureImmunity
+  - type: Temperature
+    heatDamageThreshold: 423
+    coldDamageThreshold: 0
   - type: CombatMode
   - type: Butcherable
     spawned:
@@ -100,12 +99,13 @@
       Unsexed: UnisexMoth
     wilhelmProbability: 0.001
   - type: MobPrice
-    price: 200
+    price: 700
   - type: Tag
     tags:
     - Trash
     - CannotSuicide
     - VimPilot
+    - Unimplantable # better than syndicat when microbomb
   - type: CanEscapeInventory
   - type: NpcFactionMember
     factions:
@@ -130,8 +130,9 @@
     damage:
       types:
         Slash: 4
-        Piercing: 4
-        Structural: 6
+        Piercing: 6
+        Structural: 15
+  - type: Insulated
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
