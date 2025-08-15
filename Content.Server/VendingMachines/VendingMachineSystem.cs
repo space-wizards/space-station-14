@@ -611,6 +611,11 @@ namespace Content.Server.VendingMachines
             if (id.Contains("snack") || id.Contains("chips") || id.Contains("donk") || id.Contains("candy") || id.Contains("bar"))
                 return "food_cheap";
 
+            if (proto.TryGetComponent<Content.Shared.Clothing.Components.ClothingComponent>(out _, _componentFactory))
+                return "clothing";
+            if (id.StartsWith("clothing") || id.Contains("uniform") || id.Contains("shoes") || id.Contains("gloves") || id.Contains("belt") || id.Contains("backpack") || id.Contains("hat") || id.Contains("mask") || id.Contains("coat") || id.Contains("jacket"))
+                return "clothing";
+
             return null;
         }
     #endregion

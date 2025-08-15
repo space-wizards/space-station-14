@@ -21,15 +21,17 @@ namespace Content.Client.VendingMachines.UI
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly Dictionary<EntProtoId, EntityUid> _dummies = [];
-    private readonly Dictionary<EntProtoId, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new(); // 🌟Starlight🌟
-    private readonly Dictionary<EntProtoId, uint> _amounts = new(); // 🌟Starlight🌟
-    private readonly Dictionary<EntProtoId, int> _prices = new(); // 🌟Starlight🌟
+         // 🌟Starlight start🌟
+        private readonly Dictionary<EntProtoId, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
+        private readonly Dictionary<EntProtoId, uint> _amounts = new(); 
+        private readonly Dictionary<EntProtoId, int> _prices = new(); 
+         // 🌟Starlight end🌟
 
         /// <summary>
         /// Whether the vending machine is able to be interacted with or not.
         /// </summary>
-    private bool _enabled; // 🌟Starlight🌟
-    private bool _showPrices; // 🌟Starlight🌟
+        private bool _enabled; // 🌟Starlight🌟
+        private bool _showPrices; // 🌟Starlight🌟
 
         public event Action<GUIBoundKeyEventArgs, ListData>? OnItemSelected;
 
@@ -39,26 +41,12 @@ namespace Content.Client.VendingMachines.UI
         /// Updates the balance display
         /// </summary>
         /// <param name="balance">Current player balance</param>
-        public void UpdateBalance(int balance)
-        {
-            BalanceLabel.Text = $"Balance: {balance}₡";
-        }
-
+        public void UpdateBalance(int balance) => BalanceLabel.Text = $"Balance: {balance}₡";
+        
         /// <summary>
-        /// Hides the balance display
+        /// Toggles the balance display
         /// </summary>
-        public void HideBalance()
-        {
-            BalanceContainer.Visible = false;
-        }
-
-        /// <summary>
-        /// Shows the balance display
-        /// </summary>
-        public void ShowBalance()
-        {
-            BalanceContainer.Visible = true;
-        }
+         public void ToggleBalance(bool? enable = null) => BalanceContainer.Visible = enable ?? !BalanceContainer.Visible;
         // 🌟Starlight🌟 end
 
         public VendingMachineMenu()

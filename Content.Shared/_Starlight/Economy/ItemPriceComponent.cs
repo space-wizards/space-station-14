@@ -7,6 +7,6 @@ namespace Content.Shared.Economy
         public string PriceCategory = string.Empty;
 
         [DataField]
-        public int FallbackPrice = 1488;
+        public int FallbackPrice = 200;
     }
 }

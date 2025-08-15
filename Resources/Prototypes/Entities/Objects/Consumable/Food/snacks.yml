@@ -6,6 +6,10 @@
   id: FoodSnackBase
   abstract: true
   components:
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_cheap
+  # Starlight-end
   - type: Food
   - type: Tag
     tags:
@@ -61,8 +65,6 @@
   - type: Food
     trash:
     - FoodPacketCnDsTrash
-  - type: ItemPrice
-    priceCategory: food_cheap
 
 - type: entity
   name: cheesie honkers
@@ -122,8 +124,10 @@
       - id: FoodSnackChocolateBar
     sound:
       path: /Audio/Effects/unwrap.ogg
+  # Starlight-start: Vending Machines Prices
   - type: ItemPrice
     priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   name: chocolate bar
@@ -209,8 +213,6 @@
     tags:
     - Fruit # Seed of a fruit, you can yell at me
     - Pistachios # Added tag due to CrateFoodGetMore interaction with BountyFruit.
-  - type: ItemPrice
-    priceCategory: food_cheap
 
 - type: entity
   name: popcorn
@@ -250,8 +252,6 @@
   - type: Tag
     tags:
     - Fruit
-  - type: ItemPrice
-    priceCategory: food_cheap
 
 - type: entity
   name: bob's semki sunflower seeds
@@ -269,8 +269,6 @@
   - type: Food
     trash:
     - FoodPacketSemkiTrash
-  - type: ItemPrice
-    priceCategory: food_cheap
 
 - type: entity
   name: sus jerky
@@ -291,8 +289,6 @@
   - type: Tag
     tags:
     - Meat
-  - type: ItemPrice
-    priceCategory: food_cheap
 
 - type: entity
   name: syndi-cakes
@@ -310,6 +306,10 @@
   - type: Food
     trash:
     - FoodPacketSyndiTrash
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   parent: FoodSnackBase
@@ -337,8 +337,6 @@
     - FoodPacketCupRamenTrash
   - type: Item
     heldPrefix: ramen
-  - type: ItemPrice
-    priceCategory: food_cheap
 
 - type: entity
   parent: DrinkRamen
@@ -383,8 +381,6 @@
   - type: Food
     trash:
     - FoodPacketChowMeinTrash
-  - type: ItemPrice
-    priceCategory: food_cheap
 
 - type: entity
   name: dan dan noodles
@@ -415,8 +411,10 @@
   - type: Food
     trash:
     - FoodPacketDanDanTrash
+  # Starlight-start: Vending Machines Prices
   - type: ItemPrice
     priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   name: fortune cookie
@@ -443,8 +441,6 @@
   - type: Food
     trash:
     - FoodCookieFortune
-  - type: ItemPrice
-    priceCategory: food_cheap
 
 - type: entity
   id: FoodSnackNutribrick
@@ -467,6 +463,10 @@
       - id: FoodSnackNutribrickOpen
     sound:
       path: /Audio/Effects/unwrap.ogg
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   id: FoodSnackNutribrickOpen
@@ -494,6 +494,10 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   id: FoodSnackMREBrownie
@@ -540,6 +544,10 @@
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 3
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   name: swirl lollipop

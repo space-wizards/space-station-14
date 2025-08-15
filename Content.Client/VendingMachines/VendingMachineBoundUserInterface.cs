@@ -62,20 +62,21 @@ namespace Content.Client.VendingMachines
             _cachedInventory = system.GetAllInventory(Owner);
 
             _menu?.Populate(_cachedInventory, enabled, _showPrices);
-            
-            // 🌟Starlight🌟 
+
+            // 🌟Starlight start🌟 
             if (_menu != null)
             {
                 if (_showPrices)
                 {
-                    _menu.ShowBalance();
-                    RequestBalance();  // 🌟Starlight🌟
+                    _menu.ToggleBalance(true);
+                    RequestBalance();
                 }
                 else
                 {
-                    _menu.HideBalance();
+                    _menu.ToggleBalance();
                 }
             }
+            //  // 🌟Starlight end🌟
         }
 
         public void UpdateAmounts()
@@ -86,20 +87,21 @@ namespace Content.Client.VendingMachines
             var system = EntMan.System<VendingMachineSystem>();
             _cachedInventory = system.GetAllInventory(Owner);
             _menu?.UpdateAmounts(_cachedInventory, enabled, _showPrices); // 🌟Starlight🌟
-            
-            // 🌟Starlight🌟 
+
+            // 🌟Starlight start🌟 
             if (_menu != null)
             {
                 if (_showPrices)
                 {
-                    _menu.ShowBalance();
-                    RequestBalance();  // 
+                    _menu.ToggleBalance(true);
+                    RequestBalance();
                 }
                 else
                 {
-                    _menu.HideBalance();
+                    _menu.ToggleBalance();
                 }
             }
+             // 🌟Starlight end🌟 
         }
 
         private void OnItemSelected(GUIBoundKeyEventArgs args, ListData data)

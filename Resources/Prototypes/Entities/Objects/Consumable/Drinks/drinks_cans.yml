@@ -75,6 +75,10 @@
     tags:
     - DrinkCan
   - type: DnaSubstanceTrace
+  # Starlight-edit: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: drink
+  # Starlight-end
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -104,8 +108,6 @@
     sprite: Objects/Consumable/Drinks/cola.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/cola.rsi
-  - type: ItemPrice
-    priceCategory: drink
 
 # created when taking apart an ied
 - type: entity
@@ -161,8 +163,6 @@
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -187,8 +187,6 @@
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -246,8 +244,6 @@
       types:
         Blunt: 1
         Cold: 2 # Refreshing
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -272,8 +268,6 @@
     sprite: Objects/Consumable/Drinks/purple_can.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/purple_can.rsi
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -301,8 +295,6 @@
   - type: Tag
     tags:
     - Beer
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -398,8 +390,6 @@
     sprite: Objects/Consumable/Drinks/sol_dry.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/sol_dry.rsi
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -471,8 +461,6 @@
     sprite: Objects/Consumable/Drinks/fourteen_loko.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/fourteen_loko.rsi
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -523,8 +511,6 @@
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkCanBaseFull

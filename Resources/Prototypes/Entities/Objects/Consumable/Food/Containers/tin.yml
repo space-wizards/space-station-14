@@ -50,6 +50,8 @@
     damageContainer: Inorganic
   - type: StaticPrice
     price: 50
+  - type: ItemPrice
+    priceCategory: food_medium
 
 - type: entity
   abstract: true

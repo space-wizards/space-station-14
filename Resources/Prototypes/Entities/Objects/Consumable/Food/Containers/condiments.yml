@@ -69,8 +69,10 @@
   - type: Tag
     tags:
       - Packet
+  # Starlight-start: Vending Machines Prices
   - type: ItemPrice
     priceCategory: miscellaneous
+  # Starlight-end
 
 - type: entity
   parent: BaseFoodCondimentPacket

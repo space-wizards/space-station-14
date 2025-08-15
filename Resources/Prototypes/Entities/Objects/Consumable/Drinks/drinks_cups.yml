@@ -42,6 +42,10 @@
   - type: Tag
     tags:
     - DrinkCup
+  # Starlight-edit: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: drink
+  # Starlight-end
 
 - type: entity
   parent: DrinkBaseCup
@@ -208,8 +212,6 @@
     fillBaseName: icon-
   - type: TrashOnSolutionEmpty
     solution: drink
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkBaseCup
@@ -238,8 +240,6 @@
     fillBaseName: icon-
   - type: TrashOnSolutionEmpty
     solution: drink
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkBaseCup
@@ -266,8 +266,6 @@
     changeColor: false
   - type: TrashOnSolutionEmpty
     solution: drink
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkBaseCup
@@ -296,8 +294,6 @@
     fillBaseName: icon-
   - type: TrashOnSolutionEmpty
     solution: drink
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkBaseCup
@@ -326,8 +322,6 @@
     fillBaseName: icon-
   - type: TrashOnSolutionEmpty
     solution: drink
-  - type: ItemPrice
-    priceCategory: drink
 
 - type: entity
   parent: DrinkBaseCup

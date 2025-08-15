@@ -5,6 +5,8 @@
   abstract: true
   suffix: Full
   components:
+  - type: ItemPrice
+    priceCategory: drink
   - type: Tag
     tags:
     - DrinkBottle
@@ -52,6 +54,8 @@
   components:
   - type: Item
     size: Small
+  - type: ItemPrice
+    priceCategory: drink
   - type: Tag
     tags:
       - DrinkCup
@@ -140,6 +144,8 @@
   id: DrinkBottleGlassBaseFull
   abstract: true
   components:
+  - type: ItemPrice
+    priceCategory: drink
   - type: Sprite
     state: icon
   - type: DamageOnLand
