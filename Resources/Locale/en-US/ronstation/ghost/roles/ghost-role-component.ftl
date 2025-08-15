@@ -9,5 +9,4 @@ ghost-role-information-centcom-blueshield-officer-description = Become bodyguard
 
 ghost-role-information-SyndiMothroach-name = SyndiMothroach
 ghost-role-information-SyndiMothroach-description = You're a highly engineered pest, pet of syndicate agents. Serve your master to the death and bite through whatever or whoever you have to.
-ghost-role-information-SyndiMothroach-rules = You are a [color=red][bold]Team Antagonist[/bold][/color
-] with the agent who summoned you.
+ghost-role-information-SyndiMothroach-rules = You are a [color=red][bold]Team Antagonist[/bold][/color] with the agent who summoned you.
