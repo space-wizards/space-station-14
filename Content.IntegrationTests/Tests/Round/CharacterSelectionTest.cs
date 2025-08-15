@@ -243,7 +243,7 @@ public sealed class CharacterSelectionTest
         // https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219,
         // so this tests the updated behaviour
         // Since this player has no enabled characters that are eligible to be a traitor, their session will not be
-        // selector to be an antag, and thus the Captain character will be eligible to spawn, even if the Captain
+        // selected to be an antag, and thus the Captain character will be eligible to spawn, even if the Captain
         // character has traitor enabled.
         new()
         {
