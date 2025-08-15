@@ -2,9 +2,9 @@
 # TODO: Find empty containers (e.g. mug, pitcher) and move to their own yml
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_glass.yml
 - type: entity
+  abstract: true
   parent: BaseItem
   id: DrinkBase
-  abstract: true
   components:
   - type: SolutionContainerManager
     solutions:
@@ -14,7 +14,10 @@
     solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
-  - type: Drink
+  - type: Edible
+    edible: Drink
+    solution: drink
+    destroyOnEmpty: false
   - type: Sprite
     state: icon
   - type: MeleeWeapon
@@ -30,6 +33,8 @@
   - type: RefillableSolution
     solution: drink
   - type: DrainableSolution
+    solution: drink
+  - type: ExaminableSolution
     solution: drink
   - type: UserInterface
     interfaces:
@@ -75,8 +80,6 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 25
-  - type: ExaminableSolution
-    solution: drink
   - type: FitsInDispenser
     solution: drink
   - type: Tag
