@@ -171,10 +171,8 @@ namespace Content.Server.Body.Systems
 
                     var rate = entry.MetabolismRate * group.MetabolismRateModifier;
 
-                    // Remove $rate, as long as there's enough reagent there to actually remove that much
-                    mostToRemove = FixedPoint2.Clamp(rate, 0, quantity);
-
-                    float scale = (float) mostToRemove / (float) rate;
+                    var processedQuantity = FixedPoint2.Clamp(rate, 0, quantity);
+                    var scale = processedQuantity / rate;
 
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
@@ -186,13 +184,25 @@ namespace Content.Server.Body.Systems
                     }
 
                     var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
-                    var args = new EntityEffectReagentArgs(actualEntity, EntityManager, ent, solution, mostToRemove, proto, null, scale);
+                    var args = new EntityEffectReagentArgs(actualEntity,
+                        EntityManager,
+                        ent,
+                        solution,
+                        processedQuantity,
+                        proto,
+                        null,
+                        scale);
 
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
                         if (!effect.ShouldApply(args, _random))
                             continue;
+
+                        // We've "used" this reagent to do something, so we
+                        // use the max of its metabolism rate versus all the
+                        // other rates from different metabolic groups.
+                        mostToRemove = FixedPoint2.Max(mostToRemove, processedQuantity);
 
                         if (effect.ShouldLog)
                         {
