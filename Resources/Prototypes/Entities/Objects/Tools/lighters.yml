@@ -225,6 +225,9 @@
   - type: UseDelay
   - type: IgnitionSource
     ignited: false
+  - type: Tag
+    tags:
+    - Lighters #SL
 
 - type: entity
   name: flippo engraved lighter
@@ -324,6 +327,9 @@
   - type: UseDelay
   - type: IgnitionSource
     ignited: false
+  - type: Tag #SL
+    tags: #SL
+      - Lighters #SL
 
 - type: entity
   parent: [BaseBrandedLighter, BaseSyndicateContraband]
@@ -623,6 +629,7 @@
     tags:
     - DonkPocket
     - Meat
+    - Lighters #SL
   - type: SolutionContainerManager
     solutions:
       Welder:

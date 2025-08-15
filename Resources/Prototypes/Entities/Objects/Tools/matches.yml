@@ -107,6 +107,7 @@
   - type: Tag
     tags:
     - Trash
+    - Lighters #SL
   - type: SpaceGarbage
   # Starlight-start: Vending Machines Prices
   - type: ItemPrice
