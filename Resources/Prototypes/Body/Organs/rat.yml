@@ -1,24 +1,16 @@
 - type: entity
+
+  parent: [ BaseAnimalOrgan, BaseOrganLungs ]
   id: OrganRatLungs
-  parent: OrganHumanLungs
   suffix: "rat"
   components:
   - type: Metabolizer
     metabolizerTypes: [ Rat ]
 
 - type: entity
+  parent: [ BaseAnimalOrgan, BaseOrganStomach ]
   id: OrganRatStomach
-  parent: OrganAnimalStomach
   suffix: "rat"
   components:
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 50
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
-  - type: Sprite
-    state: stomach
+  - type: Metabolizer
+    metabolizerTypes: [ Rat ]

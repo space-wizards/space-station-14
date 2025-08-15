@@ -1,37 +1,33 @@
 ﻿- type: entity
+  parent: [BaseHumanOrgan, BaseOrganHeart]
   id: OrganDwarfHeart
-  parent: OrganHumanHeart
   name: dwarf heart
   components:
   - type: Metabolizer
     metabolizerTypes: [Dwarf]
 
 - type: entity
+  parent: [BaseHumanOrgan, BaseOrganLiver]
   id: OrganDwarfLiver
-  parent: OrganHumanLiver
   name: dwarf liver
   components:
   - type: Metabolizer
     metabolizerTypes: [Dwarf]
 
 - type: entity
+  parent: [BaseHumanOrgan, BaseOrganStomach]
   id: OrganDwarfStomach
-  parent: OrganHumanStomach
   name: dwarf stomach
   components:
-  - type: Sprite
-    state: stomach
-  - type: Organ
   - type: SolutionContainerManager
     solutions:
       stomach:
-        maxVol: 75
+        maxVol: 75 # Big eaters
       food:
         maxVol: 5
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Stomach
   - type: Metabolizer
     # mm very yummy
     maxReagents: 5

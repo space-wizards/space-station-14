@@ -6,7 +6,7 @@
   components:
     - type: Sprite
       sprite: Mobs/Species/Slime/organs.rsi
-      state: brain-slime
+      state: brain
     - type: Stomach
     - type: Metabolizer
       maxReagents: 3
@@ -34,8 +34,8 @@
     - type: Sprite
       sprite: Mobs/Species/Slime/organs.rsi
       layers:
-        - state: lung-l-slime
-        - state: lung-r-slime
+        - state: lung-l
+        - state: lung-r
     - type: Lung
       alert: LowNitrogen
     - type: Metabolizer
