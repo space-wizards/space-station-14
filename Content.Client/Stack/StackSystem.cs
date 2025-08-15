@@ -28,13 +28,6 @@ namespace Content.Client.Stack
 
             base.SetCount(uid, amount, component);
 
-            // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
-            if (component.Count <= 0)
-            {
-                Xform.DetachEntity(uid, Transform(uid));
-                return;
-            }
-
             component.UiUpdateNeeded = true;
         }
 

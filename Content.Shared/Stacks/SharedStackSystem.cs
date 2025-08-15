@@ -6,8 +6,10 @@ using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
 using Content.Shared.Popups;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -29,6 +31,8 @@ namespace Content.Shared.Stacks
         [Dependency] protected readonly SharedPopupSystem Popup = default!;
         [Dependency] private readonly SharedStorageSystem _storage = default!;
 
+        public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
+
         public override void Initialize()
         {
             base.Initialize();
@@ -40,6 +44,7 @@ namespace Content.Shared.Stacks
             SubscribeLocalEvent<StackComponent, InteractUsingEvent>(OnStackInteractUsing);
             SubscribeLocalEvent<StackComponent, BeforeIngestedEvent>(OnBeforeEaten);
             SubscribeLocalEvent<StackComponent, IngestedEvent>(OnEaten);
+            SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
 
             _vvm.GetTypeHandler<StackComponent>()
                 .AddPath(nameof(StackComponent.Count), (_, comp) => comp.Count, SetCount);
@@ -182,6 +187,12 @@ namespace Content.Shared.Stacks
 
             Appearance.SetData(uid, StackVisuals.Actual, component.Count);
             RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
+
+            // Queue delete stack if count reaches zero.
+            if (component.Count <= 0)
+            {
+                PredictedQueueDel(uid);
+            }
         }
 
         /// <summary>
@@ -411,7 +422,7 @@ namespace Content.Shared.Stacks
             The easiest and safest option is and always will be Option 1 otherwise we risk reagent deletion or duplication.
             That is why we cancel if we cannot set the minimum to the entire volume of the solution.
             */
-            if(args.TryNewMinimum(sol.Volume))
+            if (args.TryNewMinimum(sol.Volume))
                 return;
 
             args.Cancelled = true;
@@ -432,6 +443,97 @@ namespace Content.Shared.Stacks
             // Here to tell the food system to do destroy stuff.
             args.Destroy = true;
         }
+
+        private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null || stack.Count == 1)
+                return;
+
+            AlternativeVerb halve = new()
+            {
+                Text = Loc.GetString("comp-stack-split-halve"),
+                Category = VerbCategory.Split,
+                Act = () => UserSplit(uid, args.User, stack.Count / 2, stack),
+                Priority = 1
+            };
+            args.Verbs.Add(halve);
+
+            var priority = 0;
+            foreach (var amount in DefaultSplitAmounts)
+            {
+                if (amount >= stack.Count)
+                    continue;
+
+                AlternativeVerb verb = new()
+                {
+                    Text = amount.ToString(),
+                    Category = VerbCategory.Split,
+                    Act = () => UserSplit(uid, args.User, amount, stack),
+                    // we want to sort by size, not alphabetically by the verb text.
+                    Priority = priority
+                };
+
+                priority--;
+
+                args.Verbs.Add(verb);
+            }
+        }
+
+        private void UserSplit(EntityUid uid, EntityUid userUid, int amount,
+            StackComponent? stack = null,
+            TransformComponent? userTransform = null)
+        {
+            if (!Resolve(uid, ref stack))
+                return;
+
+            if (!Resolve(userUid, ref userTransform))
+                return;
+
+            if (amount <= 0)
+            {
+                Popup.PopupPredictedCursor(Loc.GetString("comp-stack-split-too-small"), userUid, PopupType.Medium);
+                return;
+            }
+
+            if (Split(uid, amount, userTransform.Coordinates, stack) is not { } split)
+                return;
+
+            Hands.PickupOrDrop(userUid, split);
+
+            Popup.PopupPredictedCursor(Loc.GetString("comp-stack-split"), userUid);
+        }
+
+        /// <summary>
+        ///     Try to split this stack into two. Returns a non-null <see cref="Robust.Shared.GameObjects.EntityUid"/> if successful.
+        /// </summary>
+        public virtual EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, StackComponent? stack = null)
+        {
+            if (!Resolve(uid, ref stack))
+                return null;
+
+            // Try to remove the amount of things we want to split from the original stack...
+            if (!Use(uid, amount, stack))
+                return null;
+
+            // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
+            var prototype = _prototype.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
+                ? stackType.Spawn.ToString()
+                : Prototype(uid)?.ID;
+
+            // Set the output parameter in the event instance to the newly split stack.
+            var entity = PredictedSpawnAtPosition(prototype, spawnPosition);
+
+            if (TryComp(entity, out StackComponent? stackComp))
+            {
+                // Set the split stack's count.
+                SetCount(entity, amount, stackComp);
+                // Don't let people dupe unlimited stacks
+                stackComp.Unlimited = false;
+            }
+
+            return entity;
+        }
+
     }
 
     /// <summary>
