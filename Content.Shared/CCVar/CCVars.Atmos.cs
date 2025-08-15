@@ -161,10 +161,10 @@ public sealed partial class CCVars
         CVarDef.Create("atmos.delta_pressure_damage", true, CVar.SERVERONLY);
 
     /// <summary>
-    /// Maximum number of delta-pressure entities to batch-process per atmos subtick.
-    /// Note that parallel solve does not activate until the number of entities exceeds a value
-    /// measured to show a performance benefit.
+    /// Number of entities to batch for parallel processing per processing run.
+    /// Low numbers may suffer from thinning out the work per job and leading to threads waiting,
+    /// high numbers may cause Atmospherics to exceed its time budget per tick.
     /// </summary>
     public static readonly CVarDef<int> DeltaPressureParallelBatch =
-        CVarDef.Create("atmos.delta_pressure_parallel_batch", 500, CVar.SERVERONLY);
+        CVarDef.Create("atmos.delta_pressure_parallel_batch", 1000, CVar.SERVERONLY);
 }
