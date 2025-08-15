@@ -37,7 +37,7 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
         // Record how many paper cups are in the cooler
         var binComp = Comp<BinComponent>(cooler);
         var initialCount = binComp.Items.Count;
-        Assert.That(initialCount, Is.GreaterThan(0), "Water cooler didn't start with any cups");
+        Assert.That(binComp.Items, Is.Not.Empty, "Water cooler didn't start with any cups");
 
         // Interact with the water cooler using an empty hand to grab a paper cup
         await Interact();
