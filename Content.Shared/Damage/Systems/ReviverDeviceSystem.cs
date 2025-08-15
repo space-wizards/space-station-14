@@ -40,11 +40,6 @@ public sealed partial class ReviverDeviceSystem : EntitySystem
         StopRestoration(ent);
     }
 
-    private void OnExamine(Entity<ReviverDeviceComponent> ent, ref ExaminedEvent args)
-    {
-
-    }
-
     private void OnRemoved(Entity<ReviverDeviceComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         StopRestoration(ent);
@@ -54,7 +49,20 @@ public sealed partial class ReviverDeviceSystem : EntitySystem
     {
         UpdateAppearance(ent);
 
+        /*
+        // DEBUGGING
+        if (TryGetRestorationTarget(ent, out var target))
+        {
+            if (TryComp<DamageableComponent>(target, out var targetDamageable))
+                _damageable.SetAllDamage(target.Value, targetDamageable, 25);
+
+            if (TryComp<MobStateComponent>(target, out var targetMobState))
+                _mobState.ChangeMobState(target.Value, MobState.Dead);
+        }
+
         StartRestoration(ent);
+        // DEBUGGING
+        */
     }
 
     private void OnInitiateRepair(Entity<ReviverDeviceComponent> ent, ref InitiateReviverDeviceRestorationEvent ev)
@@ -68,16 +76,15 @@ public sealed partial class ReviverDeviceSystem : EntitySystem
     /// <param name="ent">The restoring entity.</param>
     private void StartRestoration(Entity<ReviverDeviceComponent> ent)
     {
-        if (ent.Comp.RestorationInProgress)
-            return;
-
-        if (!TryGetRestorationTarget(ent, out var target))
-            return;
-
-        ent.Comp.RestorationInProgress = true;
-        ent.Comp.RestorationStartTime = _timing.CurTime;
-        ent.Comp.RestorationEndTime = CalculateRecoveryEndTime(ent, target.Value);
-        Dirty(ent);
+        if (!ent.Comp.RestorationInProgress &&
+            TryGetRestorationTarget(ent, out var target) &&
+            IsTargetValidForRestoration(ent, target.Value))
+        {
+            ent.Comp.RestorationInProgress = true;
+            ent.Comp.RestorationStartTime = _timing.CurTime;
+            ent.Comp.RestorationEndTime = CalculateRecoveryEndTime(ent, target.Value);
+            Dirty(ent);
+        }
 
         UpdateAppearance(ent);
     }
@@ -88,19 +95,19 @@ public sealed partial class ReviverDeviceSystem : EntitySystem
     /// <param name="ent">The restoring entity.</param>
     private void UpdateRestoration(Entity<ReviverDeviceComponent> ent)
     {
-        if (!ent.Comp.RestorationInProgress)
-            return;
-
-        if (!TryGetRestorationTarget(ent, out var target))
+        if (ent.Comp.RestorationInProgress)
         {
-            StopRestoration(ent);
-            return;
-        }
+            if (!TryGetRestorationTarget(ent, out var target))
+            {
+                StopRestoration(ent);
+                return;
+            }
 
-        if (_timing.CurTime >= ent.Comp.RestorationEndTime)
-        {
-            FinalizeRestoration(ent);
-            return;
+            if (_timing.CurTime >= ent.Comp.RestorationEndTime)
+            {
+                FinalizeRestoration(ent);
+                return;
+            }
         }
 
         UpdateAppearance(ent);
@@ -112,11 +119,11 @@ public sealed partial class ReviverDeviceSystem : EntitySystem
     /// <param name="ent">The restoring entity.</param>
     private void StopRestoration(Entity<ReviverDeviceComponent> ent)
     {
-        if (!ent.Comp.RestorationInProgress)
-            return;
-
-        ent.Comp.RestorationInProgress = false;
-        Dirty(ent);
+        if (ent.Comp.RestorationInProgress)
+        {
+            ent.Comp.RestorationInProgress = false;
+            Dirty(ent);
+        }
 
         UpdateAppearance(ent);
     }
@@ -128,23 +135,18 @@ public sealed partial class ReviverDeviceSystem : EntitySystem
     /// <param name="ent">The restoring entity.</param>
     private void FinalizeRestoration(Entity<ReviverDeviceComponent> ent)
     {
-        if (!ent.Comp.RestorationInProgress)
-            return;
-
-        if (!TryGetRestorationTarget(ent, out var target))
+        if (ent.Comp.RestorationInProgress &&
+            TryGetRestorationTarget(ent, out var target))
         {
-            StopRestoration(ent);
-            return;
-        }
+            if (TryComp<DamageableComponent>(target, out var targetDamageable))
+            {
+                _damageable.SetAllDamage(target.Value, targetDamageable, 0);
+            }
 
-        if (TryComp<DamageableComponent>(target, out var targetDamageable))
-        {
-            _damageable.SetAllDamage(target.Value, targetDamageable, 0);
-        }
-
-        if (ent.Comp.ResurrectTarget && TryComp<MobStateComponent>(target, out var targetMobState))
-        {
-            _mobState.ChangeMobState(target.Value, MobState.Alive);
+            if (ent.Comp.ResurrectTarget && TryComp<MobStateComponent>(target, out var targetMobState))
+            {
+                _mobState.ChangeMobState(target.Value, MobState.Alive);
+            }
         }
 
         StopRestoration(ent);
@@ -159,24 +161,34 @@ public sealed partial class ReviverDeviceSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(ent, out var entAppearance))
             return;
 
-        _appearance.RemoveData(ent, ReviverDeviceVisuals.MobState);
-        _appearance.RemoveData(ent, ReviverDeviceVisuals.RestorationProgress);
-
-        if (!TryGetRestorationTarget(ent, out var target) ||
-            !TryComp<MobStateComponent>(target, out var mobState))
-        {
-            _appearance.SetData(ent, ReviverDeviceVisuals.MobState, MobState.Invalid);
-            return;
-        }
-
         if (ent.Comp.RestorationInProgress)
         {
-            var stage = CalculateRecoveryStage(ent);
-            _appearance.SetData(ent, ReviverDeviceVisuals.RestorationProgress, stage);
+            var currentStage = CalculateRecoveryStage(ent);
+
+            if (!_appearance.TryGetData(ent, ReviverDeviceVisuals.RestorationProgress, out int oldStage) ||
+                oldStage != currentStage)
+            {
+                _appearance.RemoveData(ent, ReviverDeviceVisuals.MobState);
+                _appearance.SetData(ent, ReviverDeviceVisuals.RestorationProgress, currentStage);
+            }
+
             return;
         }
 
-        _appearance.SetData(ent, ReviverDeviceVisuals.RestorationProgress, mobState.CurrentState);
+        var currentMobState = MobState.Invalid;
+
+        if (TryGetRestorationTarget(ent, out var target) &&
+            TryComp<MobStateComponent>(target, out var mobState))
+        {
+            currentMobState = mobState.CurrentState;
+        }
+
+        if (!_appearance.TryGetData(ent, ReviverDeviceVisuals.MobState, out MobState oldMobState) ||
+                oldMobState != currentMobState)
+        {
+            _appearance.RemoveData(ent, ReviverDeviceVisuals.RestorationProgress);
+            _appearance.SetData(ent, ReviverDeviceVisuals.MobState, currentMobState);
+        }
     }
 
     /// <summary>
@@ -218,18 +230,60 @@ public sealed partial class ReviverDeviceSystem : EntitySystem
     {
         target = null;
 
-        if (!_container.TryGetContainer(ent, ent.Comp.RestorationContainer, out var container))
+        if (!_container.TryGetContainer(ent, ent.Comp.RestorationContainer, out var restorationContainer))
             return false;
 
-        if (container.Count == 0)
+        if (restorationContainer.Count == 0)
             return false;
 
-        target = container.ContainedEntities[0];
+        foreach (var potentialTarget in restorationContainer.ContainedEntities)
+        {
+            if (HasComp<DamageableComponent>(potentialTarget) &&
+                HasComp<MobStateComponent>(potentialTarget))
+            {
+                target = potentialTarget;
+                return true;
+            }
 
-        if (!HasComp<DamageableComponent>(target) || !HasComp<MobStateComponent>(target))
-            return false;
+            foreach (var targetContainerName in ent.Comp.TargetContainers)
+            {
+                if (!_container.TryGetContainer(potentialTarget, targetContainerName, out var targetContainer) ||
+                    targetContainer.Count == 0)
+                {
+                    continue;
+                }
 
-        return true;
+                foreach (var otherPotentialTarget in targetContainer.ContainedEntities)
+                {
+                    if (HasComp<DamageableComponent>(otherPotentialTarget) &&
+                        HasComp<MobStateComponent>(otherPotentialTarget))
+                    {
+                        target = otherPotentialTarget;
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private bool IsTargetValidForRestoration(Entity<ReviverDeviceComponent> ent, EntityUid target)
+    {
+        if (TryComp<DamageableComponent>(target, out var targetDamageable) &&
+            targetDamageable.TotalDamage > 0)
+        {
+            return true;
+        }
+
+        if (ent.Comp.ResurrectTarget &&
+            TryComp<MobStateComponent>(target, out var targetMobState) &&
+            targetMobState.CurrentState == MobState.Dead)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public override void Update(float frameTime)

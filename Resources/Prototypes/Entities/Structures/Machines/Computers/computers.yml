@@ -1623,7 +1623,6 @@
           1: { state: ai-fixer-progress-1 }
           2: { state: ai-fixer-progress-2 }
           3: { state: ai-fixer-progress-3 }
-          4: { state: ai-fixer-progress-4 }
       enum.ReviverDeviceVisuals.MobState:
         computerLayerScreen:
           Invalid: { state: ai-fixer-empty }
@@ -1642,10 +1641,12 @@
   - type: Lock
     unlockOnClick: false
   - type: ReviverDevice
-    restorationStageCount: 5
+    restorationStageCount: 4
     restorationRate: 1.6667
     resurrectTarget: true
     restorationContainer: intellicard_holder
+    targetContainers:
+    - station_ai_mind_slot
   - type: ItemSlotsLock
     slots:
     - intellicard_holder

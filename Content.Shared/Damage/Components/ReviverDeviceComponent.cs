@@ -17,11 +17,11 @@ public sealed partial class ReviverDeviceComponent : Component
     /// before being healed.
     /// </summary>
     [DataField]
-    public int RestorationStageCount = 5;
+    public int RestorationStageCount = 4;
 
     /// <summary>
     /// Determines how much damage can be healed per second by this device.
-    /// Note that healing is only applied to a target once
+    /// Note that any and all healing is only applied to a target once
     /// <see cref="RestorationEndTime"/> has been reached.
     /// </summary>
     [DataField]
@@ -40,6 +40,14 @@ public sealed partial class ReviverDeviceComponent : Component
     /// </summary>
     [DataField]
     public string RestorationContainer = string.Empty;
+
+    /// <summary>
+    /// If an entity inserted into <see cref="RestorationContainer"/> is not
+    /// a valid target for restoration, the inserted entity will be searched
+    /// for any containers on this list to see if an valid target can be found.
+    /// </summary>
+    [DataField]
+    public List<string> TargetContainers = new();
 
     /// <summary>
     /// The time at which the restoration commenced.
