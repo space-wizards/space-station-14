@@ -555,7 +555,7 @@
         factions:
         - Syndicate
       mindRoles:
-      - MindRoleNukeops
+      - MindRoleLoneops
 
 - type: entity
   parent: BaseTraitorRule
