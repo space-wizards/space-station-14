@@ -196,13 +196,16 @@ namespace Content.Server.Body.Systems
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
-                        if (!effect.ShouldApply(args, _random))
+                        if (!effect.CheckEffectConditions(args))
                             continue;
 
-                        // We've "used" this reagent to do something, so we
-                        // use the max of its metabolism rate versus all the
-                        // other rates from different metabolic groups.
+                        // We met the conditions for this metabolic group, so
+                        // this counts towards getting the highest quantity used
+                        // of this reagent by any metabolic group.
                         mostToRemove = FixedPoint2.Max(mostToRemove, processedQuantity);
+
+                        if (!effect.RollEffectProbability(_random))
+                            continue;
 
                         if (effect.ShouldLog)
                         {

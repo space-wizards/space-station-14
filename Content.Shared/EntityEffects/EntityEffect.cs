@@ -67,25 +67,34 @@ public abstract partial class EntityEffect
 
 public static class EntityEffectExt
 {
-    public static bool ShouldApply(this EntityEffect effect, EntityEffectBaseArgs args,
-        IRobustRandom? random = null)
+    /// <summary>
+    /// Rolls this effect's <see cref="EntityEffect.Probability"/>.
+    /// </summary>
+    /// <returns>True if the effect would have been applied.</returns>
+    public static bool RollEffectProbability(this EntityEffect effect, IRobustRandom? random = null)
     {
-        if (random == null)
-            random = IoCManager.Resolve<IRobustRandom>();
+        random ??= IoCManager.Resolve<IRobustRandom>();
+        return effect.Probability >= 1 || random.Prob(effect.Probability);
+    }
 
-        if (effect.Probability < 1.0f && !random.Prob(effect.Probability))
-            return false;
+    /// <summary>
+    /// Checks that each <see cref="EntityEffect.Conditions"/> passes. True if
+    /// it has no conditions.
+    /// </summary>
+    public static bool CheckEffectConditions(this EntityEffect effect, EntityEffectBaseArgs args)
+    {
+        return (effect.Conditions ?? []).All(cond => cond.Condition(args));
+    }
 
-        if (effect.Conditions != null)
-        {
-            foreach (var cond in effect.Conditions)
-            {
-                if (!cond.Condition(args))
-                    return false;
-            }
-        }
-
-        return true;
+    /// <summary>
+    /// Rolls if this effect should be actually applied. Combination of
+    /// <see cref="RollEffectProbability"/> and
+    /// <see cref="CheckEffectConditions"/>.
+    /// </summary>
+    /// <returns>True if it should be applied.</returns>
+    public static bool ShouldApply(this EntityEffect effect, EntityEffectBaseArgs args, IRobustRandom? random = null)
+    {
+        return RollEffectProbability(effect, random) && CheckEffectConditions(effect, args);
     }
 }
 
