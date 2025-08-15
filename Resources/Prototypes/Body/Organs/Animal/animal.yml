@@ -96,7 +96,6 @@
 - type: entity
   id: OrganMouseStomach
   parent: OrganAnimalStomach
-  name: animal stomach
   categories: [ HideSpawnMenu ]
   components:
   - type: SolutionContainerManager
