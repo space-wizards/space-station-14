@@ -2,7 +2,7 @@
   id: ChemDispenserEmpty
   name: chemical dispenser
   suffix: Empty
-  parent: ReagentDispenserBase
+  parent: ReagentDispenserBasePowerCell # Starlight-edit: power cell chem dispenser
   description: An industrial grade chemical dispenser.
   components:
   - type: Sprite
