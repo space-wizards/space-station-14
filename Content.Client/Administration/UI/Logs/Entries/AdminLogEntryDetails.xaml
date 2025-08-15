@@ -5,13 +5,13 @@
           StyleClasses="BackgroundDark">
      <BoxContainer Orientation="Vertical" Margin="4">
         <BoxContainer Orientation="Vertical">
-            <Label Text="{Loc admin-logs-field-type}"/>
-            <Label Name="Type" Text="None" Access="Public"/>
+            <Label Text="{Loc admin-logs-field-type}" Margin="0 0 4 0"/>
+            <Label Name="Type" Text="None" StyleClasses="LabelSecondaryColor" Access="Public"/>
         </BoxContainer>
         <cc:HSeparator/>
         <BoxContainer Orientation="Vertical">
-            <Label Text="{Loc admin-logs-field-impact}"/>
-            <Label Name="Impact" Text="None" Access="Public"/>
+            <Label Text="{Loc admin-logs-field-impact}" Margin="0 0 4 0"/>
+            <Label Name="Impact" Text="None" StyleClasses="LabelSecondaryColor" Access="Public"/>
         </BoxContainer>
     </BoxContainer>
     <cc:VSeparator/>
@@ -20,17 +20,17 @@
         <cc:HSeparator/>
         <BoxContainer>
             <Label Text="{Loc admin-logs-field-time-local}" Margin="0 0 4 0" HorizontalExpand="True"/>
-            <Label Name="LocalTime" Text="None" Access="Public" HorizontalExpand="True"/>
+            <Label Name="LocalTime" Text="None" StyleClasses="LabelSecondaryColor" Access="Public" HorizontalExpand="True"/>
         </BoxContainer>
         <cc:HSeparator/>
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc admin-logs-field-time-utc}" Margin="0 0 4 0" HorizontalExpand="True"/>
-            <Label Name="UTCTime" Text="None" Access="Public" HorizontalExpand="True"/>
+            <Label Name="UTCTime" Text="None" StyleClasses="LabelSecondaryColor" Access="Public" HorizontalExpand="True"/>
         </BoxContainer>
         <cc:HSeparator/>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc admin-logs-field-time-current}" Margin="0 0 4 0" HorizontalExpand="True"/>
-            <Label Name="CurTime" Text="None" Access="Public" HorizontalExpand="True"/>
+            <Label Text="{Loc admin-logs-field-time-round}" Margin="0 0 4 0" HorizontalExpand="True"/>
+            <Label Name="CurTime" Text="None" StyleClasses="LabelSecondaryColor" Access="Public" HorizontalExpand="True"/>
         </BoxContainer>
     </BoxContainer>
     <cc:VSeparator/>

@@ -14,7 +14,7 @@ namespace Content.Client.Administration.UI.Logs.Entries;
 public sealed partial class AdminLogEntry : BoxContainer
 {
     private readonly IConfigurationManager _cfgManager;
-    private int ClipLength;
+
     public SharedAdminLog Log { get; }
 
     private readonly string _rawMessage;

@@ -33,7 +33,7 @@ public sealed partial class AdminLogEntryDetails : BoxContainer
         LocalTime.Text = $"{log.Date.ToLocalTime():HH:mm:ss}";
         UTCTime.Text = $"{log.Date:HH:mm:ss}";
         // TimeSpan and DateTime use different formatting string conventions for some completely logical reason
-        // that mere mortals such as myself will never be able to understand.);
+        // that mere mortals such as myself will never be able to understand.
         CurTime.Text = new TimeSpan(log.CurTime).ToString(@"hh\:mm\:ss");
 
         PlayerListContainer.ItemKeyBindDown += PlayerListItemKeyBindDown;
@@ -73,7 +73,9 @@ public sealed partial class AdminLogEntryDetails : BoxContainer
         if (args == null || data is not PlayerListData { Info: var selectedPlayer })
             return;
 
-        if (args.Function != EngineKeyFunctions.UIRightClick || selectedPlayer.NetEntity == null)
+        if (!(args.Function == EngineKeyFunctions.UIRightClick
+            || args.Function == EngineKeyFunctions.UIClick)
+            || selectedPlayer.NetEntity == null)
             return;
 
         _uiManager.GetUIController<VerbMenuUIController>().OpenVerbMenu(selectedPlayer.NetEntity.Value, true);
