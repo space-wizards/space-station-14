@@ -96,7 +96,7 @@ public sealed partial class CCVars
         /// </summary>
         [CVarControl(AdminFlags.VarEdit)]
         public static readonly CVarDef<float> CrawlingMinBulk =
-            CVarDef.Create("playtest.crawling_min_bulk", 4f, CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("playtest.crawling_min_bulk", 2f, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         ///     Scales the stamina damage dealt the game.
@@ -110,5 +110,5 @@ public sealed partial class CCVars
         /// </summary>
         [CVarControl(AdminFlags.VarEdit)]
         public static readonly CVarDef<float> CrawlingGhostBulk =
-            CVarDef.Create("playtest.crawling_ghost_bulk", 8f, CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("playtest.crawling_ghost_bulk", 4f, CVar.SERVER | CVar.REPLICATED);
 }

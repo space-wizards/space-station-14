@@ -89,7 +89,7 @@ public abstract partial class SharedStunSystem
             .Register<SharedStunSystem>();
 
         Subs.CVar(_config, CCVars.CrawlingMinBulk, value => { _minWeight = (int)value; }, true);
-        Subs.CVar(_config, CCVars.CrawlingGhostBulk, value => { _weightMod = (int)value - _minWeight; }, true);
+        Subs.CVar(_config, CCVars.CrawlingGhostBulk, value => { _weightMod = (int)value; }, true);
         Subs.CVar(_config, CCVars.CrawlingMaxBulk, value => { _maxWeight = value; }, true);
     }
 
