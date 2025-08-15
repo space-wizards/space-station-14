@@ -93,7 +93,7 @@
       - id: MindShieldImplanter
         amount: 4
       - id: TrackingImplanter
-        amount: 4
+        amount: 3
 
 - type: entity
   parent: CrateSecgear

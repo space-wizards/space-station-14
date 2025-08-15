@@ -34,7 +34,7 @@
     sprite: Objects/Specific/Medical/implanter.rsi
     state: implanter0
   product: CrateTrackingImplants
-  cost: 1000
+  cost: 2950
   category: cargoproduct-category-name-armory
   group: market
 
