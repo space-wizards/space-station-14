@@ -7,6 +7,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Vocalization.Systems;
 using Content.Server.Administration.Managers; // 🌟Starlight🌟 
 using Content.Shared.Cargo;
+using Content.Shared.Cargo.Components; // 🌟Starlight🌟 
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
@@ -42,6 +43,8 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly IComponentFactory _componentFactory = default!; 
         [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!; 
         [Dependency] private readonly TagSystem _tag = default!; 
+        [Dependency] private readonly CargoSystem _cargoSystem = default!;
+        [Dependency] private readonly Content.Server.Station.Systems.StationSystem _stationSystem = default!;
         // 🌟Starlight🌟 end 
 
         private const float WallVendEjectDistanceFromWall = 1f;
@@ -570,7 +573,6 @@ namespace Content.Server.VendingMachines
 
             // Try to start ejection, only one call will succeed while others will early-out due to Ejecting flag
             var wasEjecting = component.Ejecting;
-            var prevNext = component.NextItemToEject;
             TryEjectVendorItem(uid, type, itemId, component.CanShoot, sender, component);
             var started = !wasEjecting && component.Ejecting && component.NextItemToEject == itemId;
 
@@ -584,6 +586,16 @@ namespace Content.Server.VendingMachines
                 playerData.Balance -= entry.Price;
                 Popup.PopupEntity($"Debited {entry.Price}\u20a1. Balance: {playerData.Balance}\u20a1", uid, sender);
                 SendBalanceUpdate(uid, sender, playerData.Balance);
+
+                var stationUid = _stationSystem.GetOwningStation(uid);
+                if (stationUid != null && TryComp<StationBankAccountComponent>(stationUid, out var bank))
+                {
+                    var creditLong = (long) entry.Price * 10L; // idk really, it just works
+                    var toCredit = creditLong > int.MaxValue ? int.MaxValue: creditLong < int.MinValue ? int.MinValue : (int) creditLong;
+
+                    if (toCredit > 0)
+                        _cargoSystem.UpdateBankAccount((stationUid.Value, bank), toCredit, bank.PrimaryAccount);
+                }
             }
         }
 
