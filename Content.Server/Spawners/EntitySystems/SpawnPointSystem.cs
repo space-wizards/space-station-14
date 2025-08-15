@@ -1,7 +1,11 @@
 ﻿using Content.Server.GameTicking;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Roles;
+using Prometheus;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Spawners.EntitySystems;
@@ -12,6 +16,17 @@ public sealed class SpawnPointSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
+
+    #region Starlight
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    private static readonly ProtoId<SpeciesPrototype> FallbackSpecies = "Human";
+    private static readonly ProtoId<JobPrototype> FallbackJob = "Assistant";
+    private static readonly Histogram _speciesJobsSpawns = Metrics.CreateHistogram(
+        "sl_species_jobs_spawns",
+        "Contains info on species and jobs spawned at and during the round.",
+        ["species", "job", "spawn_time"]
+    );
+    #endregion
 
     public override void Initialize()
     {
@@ -27,7 +42,7 @@ public sealed class SpawnPointSystem : EntitySystem
         var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
         var possiblePositions = new List<EntityCoordinates>();
 
-        while ( points.MoveNext(out var uid, out var spawnPoint, out var xform))
+        while (points.MoveNext(out var uid, out var spawnPoint, out var xform))
         {
             if (args.Station != null && _stationSystem.GetOwningStation(uid, xform) != args.Station)
                 continue;
@@ -86,5 +101,29 @@ public sealed class SpawnPointSystem : EntitySystem
             args.Job,
             args.HumanoidCharacterProfile,
             args.Station);
+
+        #region StarlightStats
+        if (args.SpawnResult != null)
+        {
+            if (!_prototypeManager.TryIndex(args.HumanoidCharacterProfile?.Species, out SpeciesPrototype? speciesProto))
+            {
+                speciesProto = _prototypeManager.Index(FallbackSpecies);
+                Log.Warning($"Unable to find species {args.HumanoidCharacterProfile?.Species}, falling back to {FallbackSpecies}");
+            }
+
+            if (args.Job == null || !_prototypeManager.TryIndex(args.Job, out JobPrototype? jobProto))
+            {
+                jobProto = _prototypeManager.Index(FallbackJob);
+                Log.Warning($"Unable to find job {args.Job}, falling back to {FallbackJob}");
+            }
+
+            _speciesJobsSpawns
+                .WithLabels(
+                    speciesProto.Name,
+                    jobProto.Name,
+                    _gameTicker.RunLevel.ToString())
+                .Observe(1);
+        }
+        #endregion
     }
 }
