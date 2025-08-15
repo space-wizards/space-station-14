@@ -2146,6 +2146,7 @@
   - type: VendingMachine
     pack: PrideDrobeInventory
     offState: off
+    showPrices: false # Starlight-start: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
   - type: DatasetVocalizer

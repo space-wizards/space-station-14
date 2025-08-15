@@ -16,7 +16,6 @@ namespace Content.Server.Economy
         private Dictionary<string, MinMax>? _protoPriceCategoriesCache;
         private IReadOnlyDictionary<string, MinMax> GetPriceCategories()
         {
-            // Cache once per session. If prototypes change at runtime, you can clear this manually
             if (_protoPriceCategoriesCache != null)
                 return _protoPriceCategoriesCache;
 
