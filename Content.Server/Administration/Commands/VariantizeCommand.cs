@@ -44,7 +44,7 @@ public sealed class VariantizeCommand : IConsoleCommand
         foreach (var tile in mapsSystem.GetAllTiles(euid.Value, gridComp))
         {
             var def = turfSystem.GetContentTileDefinition(tile);
-            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, tileSystem.PickVariant(def));
+            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, tileSystem.PickVariant(def), tile.Tile.RotationMirroring);
             mapsSystem.SetTile(euid.Value, gridComp, tile.GridIndices, newTile);
         }
     }
