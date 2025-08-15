@@ -19,7 +19,7 @@ namespace Content.Client.Chemistry.UI
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        public event Action<ItemStorageLocation>? OnDispenseReagentButtonPressed;
+        public event Action<ReagentDispenseData>? OnDispenseReagentButtonPressed; // Starlight-edit
         public event Action<ItemStorageLocation>? OnEjectJugButtonPressed;
 
         /// <summary>
