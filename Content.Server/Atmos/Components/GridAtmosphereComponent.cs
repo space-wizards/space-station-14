@@ -78,7 +78,7 @@ namespace Content.Server.Atmos.Components
         /// An index lookup for the <see cref="DeltaPressureEntities"/> list.
         /// Used for add/remove/find operations to speed up processing.
         /// </summary>
-        public readonly Dictionary<EntityUid, int> DeltaPressureEntityLookup = new();
+        public readonly Dictionary<EntityUid, int> DeltaPressureEntityLookup = new(1000);
 
         /// <summary>
         /// Integer that indicates the current position in the

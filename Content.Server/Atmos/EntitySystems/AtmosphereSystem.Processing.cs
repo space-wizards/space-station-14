@@ -508,8 +508,8 @@ namespace Content.Server.Atmos.EntitySystems
                 _deltaPressure.PerformDamage(result.Ent,
                     result.Pressure,
                     result.DeltaPressure,
-                    result.aboveMinPressure,
-                    result.aboveMinDeltaPressure);
+                    result.AboveMinPressure,
+                    result.AboveMinDeltaPressure);
 
                 if (timeCheck2++ < LagCheckIterations)
                     continue;

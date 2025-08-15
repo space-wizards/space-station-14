@@ -18,13 +18,6 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     private const int DeltaPressurePairCount = Atmospherics.Directions / 2;
 
-    public readonly record struct DeltaPressureDamageResult(
-        Entity<DeltaPressureComponent> Ent,
-        float Pressure,
-        float DeltaPressure,
-        bool aboveMinPressure = false,
-        bool aboveMinDeltaPressure = false);
-
     private static void EnqueueDeltaPressureDamage(Entity<DeltaPressureComponent> ent,
         GridAtmosphereComponent gridAtmosComp,
         float pressure,
@@ -50,21 +43,9 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     /// <param name="ent">The entity to process.</param>
     /// <param name="gridAtmosComp">The <see cref="GridAtmosphereComponent"/> that belongs to the entity's GridUid.</param>
-    /// <param name="opposingGroupA">Span containing the pressures in one set of opposing directions for comparison.</param>
-    /// <param name="opposingGroupB">Span containing the pressures in the opposite set of directions to <paramref name="opposingGroupA"/>.</param>
-    /// <param name="opposingGroupMax">Span to store the maximum pressures between each pair of opposing directions.</param>
     private void ProcessDeltaPressureEntity(Entity<DeltaPressureComponent> ent,
-        GridAtmosphereComponent gridAtmosComp,
-        Span<float> opposingGroupA,
-        Span<float> opposingGroupB,
-        Span<float> opposingGroupMax)
+        GridAtmosphereComponent gridAtmosComp)
     {
-        // These should be of length Atmospherics.Directions / 2, so we can use them to compare opposing directions.
-        // If not, then someone messed up somehow.
-        Debug.Assert(opposingGroupA.Length == DeltaPressurePairCount);
-        Debug.Assert(opposingGroupB.Length == DeltaPressurePairCount);
-        Debug.Assert(opposingGroupMax.Length == DeltaPressurePairCount);
-
         // Need to use system prob instead of robust prob
         // for thread safety.
         if (!_random.Prob(ent.Comp.RandomDamageChance))
@@ -88,6 +69,9 @@ public sealed partial class AtmosphereSystem
 
         // Directions are always in pairs: the number of directions is always even
         // (we must consider the future where Multi-Z is real)
+        Span<float> opposingGroupA = stackalloc float[DeltaPressurePairCount];
+        Span<float> opposingGroupB = stackalloc float[DeltaPressurePairCount];
+        Span<float> opposingGroupMax = stackalloc float[DeltaPressurePairCount];
 
         // First, we null check data and prep it for comparison
         for (var i = 0; i < DeltaPressurePairCount; i++)
@@ -131,6 +115,8 @@ public sealed partial class AtmosphereSystem
     /// <param name="indices">The indices to check.</param>
     private static float GetTilePressure(GridAtmosphereComponent gridAtmosComp, Vector2i indices)
     {
+        // Since we're not writing to this dict, we can use an unsafe method to get the value.
+        // Was ever so slightly faster than using TryGetValue.
         ref var tile = ref CollectionsMarshal.GetValueRefOrNullRef(gridAtmosComp.Tiles, indices);
         if (Unsafe.IsNullRef(ref tile))
             return 0f;
@@ -138,28 +124,47 @@ public sealed partial class AtmosphereSystem
         return tile.Air?.Pressure ?? 0f;
     }
 
+    /// <summary>
+    /// Job for solving DeltaPressure entities in parallel.
+    /// Batches are given some index to start from, so each thread can simply just start at that index
+    /// and process the next n entities in the list.
+    /// </summary>
     private sealed class DeltaPressureParallelJob(
         AtmosphereSystem system,
         GridAtmosphereComponent atmosphere,
         int startIndex)
         : IParallelRobustJob
     {
-        // Process entities one-by-one per batch element.
         public int BatchSize => 100;
 
         public void Execute(int index)
         {
+            // The index is relative to the startIndex (because we can pause and resume computation),
+            // so we need to add it to the startIndex.
             var actualIndex = startIndex + index;
+
+            // Index can occasionally be out of bounds. :)
             if (actualIndex < 0 || actualIndex >= atmosphere.DeltaPressureEntities.Count)
                 return;
 
             var ent = atmosphere.DeltaPressureEntities[actualIndex];
-
-            Span<float> opposingGroupA = stackalloc float[DeltaPressurePairCount];
-            Span<float> opposingGroupB = stackalloc float[DeltaPressurePairCount];
-            Span<float> opposingGroupMax = stackalloc float[DeltaPressurePairCount];
-
-            system.ProcessDeltaPressureEntity(ent, atmosphere, opposingGroupA, opposingGroupB, opposingGroupMax);
+            system.ProcessDeltaPressureEntity(ent, atmosphere);
         }
     }
+
+    /// <summary>
+    /// Struct that holds the result of delta pressure damage processing for an entity.
+    /// This is only created and enqueued when the entity needs to take damage.
+    /// </summary>
+    /// <param name="Ent"></param>
+    /// <param name="Pressure"></param>
+    /// <param name="DeltaPressure"></param>
+    /// <param name="AboveMinPressure"></param>
+    /// <param name="AboveMinDeltaPressure"></param>
+    public readonly record struct DeltaPressureDamageResult(
+        Entity<DeltaPressureComponent> Ent,
+        float Pressure,
+        float DeltaPressure,
+        bool AboveMinPressure = false,
+        bool AboveMinDeltaPressure = false);
 }
