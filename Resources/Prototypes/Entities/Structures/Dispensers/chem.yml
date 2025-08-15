@@ -54,7 +54,6 @@
   suffix: Filled
   parent: ChemDispenserEmpty
   components:
-  - type: ReagentDispenser
   - type: StorageFill
     contents:
       - id: JugAluminium

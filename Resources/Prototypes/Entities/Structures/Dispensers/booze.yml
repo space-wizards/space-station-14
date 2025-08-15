@@ -1,9 +1,9 @@
 - type: entity
-  id: BoozeDispenser
+  id: BoozeDispenserEmpty # Starlight-edit: Fix Empty Dispensers
   name: booze dispenser
-  suffix: Filled
   description: A booze dispenser with a single slot for a container to be filled.
   parent: ReagentDispenserBase
+  suffix: Empty # Starlight-edit: Fix Empty Dispensers
   components:
   - type: Rotatable
   - type: Sprite
@@ -15,7 +15,23 @@
     whitelist:
       tags:
       - DrinkBottle
-  - type: StorageFill
+  - type: Transform
+    noRot: false
+  - type: Machine
+    board: BoozeDispenserMachineCircuitboard
+  - type: GuideHelp
+    guides:
+    - Bartender
+    - Drinks
+  - type: StealTarget
+    stealGroup: BoozeDispenser
+
+- type: entity
+  id: BoozeDispenser # Starlight-edit: Fix Empty Dispensers
+  parent: BoozeDispenserEmpty # Starlight-edit: Fix Empty Dispensers
+  suffix: Filled # Starlight-edit: Fix Empty Dispensers
+  components:
+  - type: StorageFill # Starlight-edit: Fix Empty Dispensers
     contents:
     - id: DrinkAleBottleFullGrowler
     - id: DrinkBeerGrowler
@@ -29,23 +45,3 @@
     - id: DrinkVodkaBottleFull
     - id: DrinkWhiskeyBottleFull
     - id: DrinkWineBottleFull
-  - type: Transform
-    noRot: false
-  - type: Machine
-    board: BoozeDispenserMachineCircuitboard
-  - type: GuideHelp
-    guides:
-    - Bartender
-    - Drinks
-  - type: StealTarget
-    stealGroup: BoozeDispenser
-
-- type: entity
-  id: BoozeDispenserEmpty
-  suffix: Empty
-  parent: BoozeDispenser
-  components:
-  - type: Storage
-    whitelist:
-      tags:
-      - DrinkBottle

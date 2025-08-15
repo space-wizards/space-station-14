@@ -13,9 +13,11 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Containers; // Starlight-edit: Empty container on destruct
 using Content.Shared.Labels.Components;
 using Content.Shared.Storage;
 using Content.Server.Hands.Systems;
+using Content.Shared.Destructible; // Starlight-edit: Empty container on destruct
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -34,6 +36,8 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly OpenableSystem _openable = default!;
         [Dependency] private readonly HandsSystem _handsSystem = default!;
+        
+        [Dependency] private readonly SharedContainerSystem _container = default!; // Starlight-edit
 
         public override void Initialize()
         {
@@ -49,9 +53,19 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserDispenseReagentMessage>(OnDispenseReagentMessage);
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserEjectContainerMessage>(OnEjectReagentMessage);
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserClearContainerSolutionMessage>(OnClearContainerSolutionMessage);
+            
+            SubscribeLocalEvent<ReagentDispenserComponent, DestructionEventArgs>(OnDestruction);  // Starlight-edit: Empty container on destruct
 
             SubscribeLocalEvent<ReagentDispenserComponent, MapInitEvent>(OnMapInit, before: new[] { typeof(ItemSlotsSystem) });
         }
+        
+        // Starlight-start: Empty container on destruct
+        private void OnDestruction(EntityUid uid, ReagentDispenserComponent component, DestructionEventArgs args)
+        {
+            if (TryComp<StorageComponent>(uid, out var storage))
+                _container.EmptyContainer(storage.Container, destination: Transform(uid).Coordinates);
+        }
+        // Starlight-end
 
         private void SubscribeUpdateUiState<T>(Entity<ReagentDispenserComponent> ent, ref T ev)
         {
