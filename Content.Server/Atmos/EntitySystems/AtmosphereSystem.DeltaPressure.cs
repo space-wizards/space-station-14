@@ -131,10 +131,11 @@ public sealed partial class AtmosphereSystem
     private sealed class DeltaPressureParallelJob(
         AtmosphereSystem system,
         GridAtmosphereComponent atmosphere,
-        int startIndex)
+        int startIndex,
+        int cvarBatchSize)
         : IParallelRobustJob
     {
-        public int BatchSize => 100;
+        public int BatchSize => cvarBatchSize;
 
         public void Execute(int index)
         {
