@@ -22,6 +22,6 @@
       sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
       state: lit-icon
   - type: RailroadDeliveryReward
-    delivery: PackageDeliveryReward
+    delivery: PackageDeliveryRewardPlush
     dataset: railroadingDeliveryMessages
     wrappedDataset: railroadingDeliveryWrappedMessages

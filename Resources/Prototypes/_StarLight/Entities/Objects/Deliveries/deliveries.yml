@@ -1,7 +1,8 @@
 - type: entity
   parent: BaseDelivery
-  id: PackageDeliveryReward
+  id: BasePackageDeliveryReward
   name: package
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Specific/Cargo/mail_large.rsi
@@ -44,7 +45,12 @@
     speechVerb: Robotic
   - type: SimpleToolUsage
     doAfter: 6
+      
+- type: entity
+  parent: BasePackageDeliveryReward
+  id: PackageDeliveryRewardPlush
+  components:
   - type: ContainerFill
     containers:
       delivery:
-      - WeaponShotgunMinotaur
+      - PlushieCarp
