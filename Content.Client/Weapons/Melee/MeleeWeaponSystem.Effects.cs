@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Animations;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -35,7 +36,25 @@ public sealed partial class MeleeWeaponSystem
         if (!_xformQuery.TryGetComponent(user, out var userXform) || userXform.MapID == MapId.Nullspace)
             return;
 
-        var animationUid = Spawn(animation, userXform.Coordinates);
+        // Allow systems to override how visuals are spawned/tracked
+        var prepare = new PrepareMeleeLungeEvent(user, weapon, angle, localPos, animation)
+        {
+            SpawnAtMap = false,
+            DisableTracking = false
+        };
+        RaiseLocalEvent(user, ref prepare);
+
+        EntityUid animationUid;
+        if (prepare.SpawnAtMap)
+        {
+            var (mapPos, _) = TransformSystem.GetWorldPositionRotation(userXform);
+            var spawnCoords = new MapCoordinates(mapPos, userXform.MapID);
+            animationUid = Spawn(animation, spawnCoords);
+        }
+        else
+        {
+            animationUid = Spawn(animation, userXform.Coordinates);
+        }
 
         if (!TryComp<SpriteComponent>(animationUid, out var sprite)
             || !TryComp<WeaponArcVisualsComponent>(animationUid, out var arcComponent))
@@ -60,20 +79,25 @@ public sealed partial class MeleeWeaponSystem
         var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);
 
         var xform = _xformQuery.GetComponent(animationUid);
-        TrackUserComponent track;
 
         switch (arcComponent.Animation)
         {
             case WeaponArcAnimation.Slash:
-                track = EnsureComp<TrackUserComponent>(animationUid);
-                track.User = user;
+                if (!prepare.DisableTracking)
+                {
+                    var track = EnsureComp<TrackUserComponent>(animationUid);
+                    track.User = user;
+                }
                 _animation.Play(animationUid, GetSlashAnimation(sprite, angle, spriteRotation), SlashAnimationKey);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.065f, 0.065f + 0.05f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.Thrust:
-                track = EnsureComp<TrackUserComponent>(animationUid);
-                track.User = user;
+                if (!prepare.DisableTracking)
+                {
+                    var track = EnsureComp<TrackUserComponent>(animationUid);
+                    track.User = user;
+                }
                 _animation.Play(animationUid, GetThrustAnimation((animationUid, sprite), distance, spriteRotation), ThrustAnimationKey);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
