@@ -306,6 +306,24 @@
   id: CigPack
 
 - type: Tag
+  id: ClarkeCentralControlModule
+
+- type: Tag
+  id: ClarkePeripheralsControlModule
+
+- type: Tag
+  id: ClarkeHead
+
+- type: Tag
+  id: ClarkeLArm
+
+- type: Tag
+  id: ClarkeRArm
+
+- type: Tag
+  id: ClarkeTreads
+
+- type: Tag
   id: Cleaver
 
 - type: Tag
@@ -510,6 +528,33 @@
   id: Duck
 
 - type: Tag
+  id: DurandArmor
+
+- type: Tag
+  id: DurandCentralControlModule
+
+- type: Tag
+  id: DurandPeripheralsControlModule
+
+- type: Tag
+  id: DurandTargetingControlModule
+
+- type: Tag
+  id: DurandHead
+
+- type: Tag
+  id: DurandLArm
+
+- type: Tag
+  id: DurandLLeg
+
+- type: Tag
+  id: DurandRArm
+
+- type: Tag
+  id: DurandRLeg
+
+- type: Tag
   id: Ectoplasm
 
 - type: Tag
@@ -662,6 +707,33 @@
 
 - type: Tag
   id: GrenadeFlashBang
+
+- type: Tag
+  id: GygaxArmor
+
+- type: Tag
+  id: GygaxCentralControlModule
+
+- type: Tag
+  id: GygaxPeripheralsControlModule
+
+- type: Tag
+  id: GygaxTargetingControlModule
+
+- type: Tag
+  id: GygaxHead
+
+- type: Tag
+  id: GygaxLArm
+
+- type: Tag
+  id: GygaxLLeg
+
+- type: Tag
+  id: GygaxRArm
+
+- type: Tag
+  id: GygaxRLeg
 
 - type: Tag
   id: HudMedical
@@ -921,6 +993,12 @@
 
 - type: Tag
   id: Meat
+
+- type: Tag
+  id: MechAirTank
+
+- type: Tag
+  id: MechThruster
 
 - type: Tag
   id: Medal
@@ -1188,6 +1266,9 @@
   id: RipleyLLeg
 
 - type: Tag
+  id: RipleyMKIIUpgradeKit
+
+- type: Tag
   id: RipleyRArm
 
 - type: Tag
@@ -1285,6 +1366,16 @@
 
 - type: Tag
   id: SmallMech
+
+- type: Tag
+  id: IndustrialMech
+
+- type: Tag
+  id: CombatMech
+# TODO: Make medical mech
+
+- type: Tag
+  id: SpecialMech
 
 - type: Tag
   id: Smokable

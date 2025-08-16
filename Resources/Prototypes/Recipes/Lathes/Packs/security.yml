@@ -140,3 +140,16 @@
   recipes:
   - WeaponDisabler
   - WeaponDisablerSMG
+
+- type: latheRecipePack
+  id: SecurityMechEquipment
+  recipes:
+  - WeaponMechCombatImmolationGun
+  - WeaponMechCombatSolarisLaser
+  - WeaponMechCombatFiredartLaser
+  - WeaponMechCombatUltraRifle
+  - WeaponMechCombatShotgun
+  - WeaponMechCombatShotgunIncendiary
+  - WeaponMechCombatDisabler
+  - WeaponMechCombatFlashbangLauncher
+  - WeaponMechCombatMissileRack8
