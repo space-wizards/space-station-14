@@ -4,6 +4,8 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Gravity;
+using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Movement.Events;
@@ -58,8 +60,9 @@ public abstract partial class SharedStunSystem
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
 
         // Crawling
-        SubscribeLocalEvent<CrawlerComponent, KnockedDownRefreshEvent>(OnKnockdownRefresh);
         SubscribeLocalEvent<CrawlerComponent, DamageChangedEvent>(OnDamaged);
+        SubscribeLocalEvent<CrawlerComponent, KnockedDownRefreshEvent>(OnKnockdownRefresh);
+        SubscribeLocalEvent<KnockedDownComponent, WeightlessnessChangedEvent>(OnWeightlessnessChanged);
 
         // Handling Alternative Inputs
         SubscribeAllEvent<ForceStandUpEvent>(OnForceStandup);
@@ -486,6 +489,18 @@ public abstract partial class SharedStunSystem
     {
         args.FrictionModifier *= entity.Comp.FrictionModifier;
         args.SpeedModifier *= entity.Comp.SpeedModifier;
+    }
+
+    private void OnWeightlessnessChanged(Entity<KnockedDownComponent> entity, ref WeightlessnessChangedEvent args)
+    {
+        // I probably don't need this check since weightless -> non-weightless you shouldn't be knocked down
+        // But you never know.
+        if (!args.Weightless)
+            return;
+
+        // Targeted moth attack
+        CancelKnockdownDoAfter((entity, entity.Comp));
+        RemComp<KnockedDownComponent>(entity);
     }
 
     #endregion
