@@ -331,6 +331,49 @@
   - type: Item
     size: Small
     sprite: _Starlight/Objects/Fun/Plushies/mozan_plushie.rsi
+    
+- type: entity
+  parent: BaseMothPlushie
+  id: PlushieKoni
+  name: koni plushie
+  description: Some sort of moth-cat hybrid. You can't help but find it really cute. Can squeak and meow!
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/koni_plush.rsi
+      state: icon
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/koni_plush.rsi
+    - type: EmitSoundOnUse
+      sound:
+        collection: CatMothSounds
+    - type: EmitSoundOnActivate
+      sound:
+        collection: CatMothSounds
+    - type: EmitSoundOnCollide
+      sound:
+        collection: CatMothSounds
+    - type: EmitSoundOnLand
+      sound:
+        collection: CatMothScreams
+    - type: EmitSoundOnTrigger
+      sound:
+        collection: CatMothSounds
+    - type: MeleeWeapon
+      soundHit:
+        collection: CatMothSounds
+    - type: Food
+      useSound:
+        collection: CatMothScreams
+    - type: Clothing
+      quickEquip: false
+      sprite: _Starlight/Objects/Fun/Plushies/koni_plush.rsi
+      slots:
+        - HEAD
+      clothingVisuals:
+        head:
+          - state: equipped-HELMET
+      
 
 - type: entity
   parent: BasePlushie
