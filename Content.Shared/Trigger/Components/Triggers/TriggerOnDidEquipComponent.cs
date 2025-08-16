@@ -11,7 +11,7 @@ namespace Content.Shared.Trigger.Components.Triggers;
 public sealed partial class TriggerOnDidEquipComponent : BaseTriggerOnXComponent
 {
     /// <summary>
-    /// The slots entities being equipped to will trigger the entity
+    /// The slots entities being equipped to will trigger the entity.
     /// </summary>
     [DataField, AutoNetworkedField]
     public SlotFlags SlotFlags;
