@@ -7,3 +7,5 @@ gases-water-vapor = Water Vapor
 gases-ammonia = Ammonia
 gases-n2o = Nitrous Oxide
 gases-frezon = Frezon
+gases-electrovae = Electrovae
+gases-charged-electrovae = Charged Electrovae
