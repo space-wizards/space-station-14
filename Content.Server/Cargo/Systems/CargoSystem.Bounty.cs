@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.NameIdentifier;
 using Content.Shared.Access.Components;
@@ -28,6 +29,7 @@ public sealed partial class CargoSystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly NameIdentifierSystem _nameIdentifier = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSys = default!;
+    [Dependency] private readonly IdCardSystem _idCard = default!;
 
     private static readonly ProtoId<NameIdentifierGroupPrototype> BountyNameIdentifierGroup = "Bounty";
 
@@ -40,6 +42,8 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoBountyConsoleComponent, BoundUIOpenedEvent>(OnBountyConsoleOpened);
         SubscribeLocalEvent<CargoBountyConsoleComponent, BountyPrintLabelMessage>(OnPrintLabelMessage);
         SubscribeLocalEvent<CargoBountyConsoleComponent, BountySkipMessage>(OnSkipBountyMessage);
+        SubscribeLocalEvent<CargoBountyConsoleComponent, BountyClaimedMessage>(OnBountyClaimedMessage);
+        SubscribeLocalEvent<CargoBountyConsoleComponent, BountySetStatusMessage>(OnSetBountyStatusMessage);
         SubscribeLocalEvent<CargoBountyLabelComponent, PriceCalculationEvent>(OnGetBountyPrice);
         SubscribeLocalEvent<EntitySoldEvent>(OnSold);
         SubscribeLocalEvent<StationCargoBountyDatabaseComponent, MapInitEvent>(OnMapInit);
@@ -109,6 +113,70 @@ public sealed partial class CargoSystem
         var untilNextSkip = db.NextSkipTime - Timing.CurTime;
         _uiSystem.SetUiState(uid, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(db.Bounties, db.History, untilNextSkip));
         _audio.PlayPvs(component.SkipSound, uid);
+    }
+
+        private void OnSetBountyStatusMessage(Entity<CargoBountyConsoleComponent> ent, ref BountySetStatusMessage args)
+    {
+        if (_station.GetOwningStation(ent.Owner) is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp))
+            return;
+
+        for (var i = 0; i < bountyDbComp.Bounties.Count; i++)
+        {
+            var bounty = bountyDbComp.Bounties[i];
+
+            if (bounty.Id != args.BountyId)
+                continue;
+
+            var newData = new CargoBountyData
+            {
+                Id = bounty.Id,
+                Bounty = bounty.Bounty,
+                ClaimedBy = bounty.ClaimedBy,
+                Status = (CargoBountyStatus)args.Status,
+            };
+
+            bountyDbComp.Bounties[i] = newData;
+        }
+
+        var untilNextSkip = bountyDbComp.NextSkipTime - Timing.CurTime;
+        _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, untilNextSkip));
+    }
+
+    private void OnBountyClaimedMessage(Entity<CargoBountyConsoleComponent> ent, ref BountyClaimedMessage args)
+    {
+        if (_station.GetOwningStation(ent.Owner) is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp))
+            return;
+
+        for (var i = 0; i < bountyDbComp.Bounties.Count; i++)
+        {
+            var bounty = bountyDbComp.Bounties[i];
+
+            if (bounty.Id != args.BountyId)
+                continue;
+
+            string name;
+            if (_idCard.TryFindIdCard(args.Actor, out var idCard) && idCard.Comp.FullName != null)
+            {
+                name = idCard.Comp.FullName;
+            }
+            else
+            {
+                name = Loc.GetString("bounty-console-claimed-by-unknown");
+            }
+
+            var newData = new CargoBountyData
+            {
+                Id = bounty.Id,
+                Bounty = bounty.Bounty,
+                ClaimedBy = name.Equals(bounty.ClaimedBy) ? string.Empty : name,
+                Status = bounty.Status,
+            };
+
+            bountyDbComp.Bounties[i] = newData;
+        }
+
+        var untilNextSkip = bountyDbComp.NextSkipTime - Timing.CurTime;
+        _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, untilNextSkip));
     }
 
     public void SetupBountyLabel(EntityUid uid, EntityUid stationId, CargoBountyData bounty, PaperComponent? paper = null, CargoBountyLabelComponent? label = null)
