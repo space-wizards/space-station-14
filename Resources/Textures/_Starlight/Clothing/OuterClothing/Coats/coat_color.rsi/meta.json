@@ -1,0 +1,27 @@
+﻿{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Greyscale version based on the Space Asshole coat made by Github user Psychpsyo for Space Station 14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "equipped-OUTERCLOTHING",
+            "directions": 4
+        },
+        {
+            "name": "trinkets-equipped-OUTERCLOTHING",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

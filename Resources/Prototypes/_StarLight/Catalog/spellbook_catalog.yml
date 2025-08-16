@@ -1,0 +1,26 @@
+- type: listing
+  id: SpellbookStaffHealing
+  name: spellbook-staff-healing-name
+  description: spellbook-staff-healing-description
+  productEntity: WeaponStaffHealing
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookSpellSummonCheese
+  name: spellbook-event-summon-cheese-name
+  description: spellbook-event-summon-cheese-description
+  productAction: ActionSummonCheese
+  cost:
+    WizCoin: 0 #ITS FREE
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  disableRefund: true

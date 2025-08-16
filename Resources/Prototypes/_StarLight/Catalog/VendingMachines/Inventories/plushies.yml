@@ -298,6 +298,17 @@
     stock: 1
 
 - type: listing
+  id: VendorPlushieKoni
+  productEntity: PlushieKoni
+  cost:
+    NTCredit: 10
+  categories:
+    - SLPlushies
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
   id: VendorPlushieXeno
   productEntity: PlushieXeno
   cost:
@@ -574,6 +585,27 @@
   conditions:
     - !type:ListingLimitedStockCondition
       stock: 1
+ 
+- type: listing
+  id: VendorPlushieDoxesTheCaptain
+  productEntity: PlushieDoxesTheCaptain
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+
+- type: listing
+  id: VendorPlushieFixes
+  productEntity: PlushieFixes
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
 
 - type: listing
   id: VendorPlushieVirus
@@ -633,6 +665,17 @@
 - type: listing
   id: VendorPlushieBrighteyes
   productEntity: PlushieBrighteyes
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: VendorPlushieKilla
+  productEntity: PlushieKilla
   cost:
     NTCredit: 20
   categories:

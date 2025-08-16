@@ -382,6 +382,13 @@
   description:  A cursed pair of cluwne hands.
   components:
   - type: Unremoveable
+  #region Starlight
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
+  #endregion Starlight
 
 - type: entity
   parent: [ClothingHandsButcherable, BaseSyndicateContraband]
@@ -522,6 +529,7 @@
     damage:
       types:
         Blunt: 14
+        Structural: 10 #Starlight
     soundHit:
       collection: Knuckles #Starlight
       params:
