@@ -32,6 +32,11 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     private void OnHandleState(EntityUid uid, HumanoidAppearanceComponent component, ref AfterAutoHandleStateEvent args)
     {
         UpdateSprite((uid, component, Comp<SpriteComponent>(uid)));
+
+        if (UI.TryGetOpenUi<HumanoidMarkingModifierBoundUserInterface>(uid,
+                HumanoidMarkingModifierKey.Key,
+                out var bui))
+            bui.Update();
     }
 
     private void OnCvarChanged(bool value)
@@ -117,7 +122,8 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         var proto = _prototypeManager.Index<HumanoidSpeciesSpriteLayer>(protoId);
         component.BaseLayers[key] = proto;
 
-        if (proto.MatchSkin)
+        // Don't override custom colors
+        if (proto.MatchSkin && color is null)
             layer.Color = component.SkinColor.WithAlpha(proto.LayerAlpha);
 
         if (proto.BaseSprite != null)

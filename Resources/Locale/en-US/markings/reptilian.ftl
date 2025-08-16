@@ -1,119 +1,138 @@
-marking-LizardFrillsShort-frills_short = Lizard Frills (Short)
 marking-LizardFrillsShort = Lizard Frills (Short)
+marking-LizardFrillsShort-frills_short = Frill color:
 
-marking-LizardFrillsSimple-frills_simple = Lizard Frills (Simple)
 marking-LizardFrillsSimple = Lizard Frills (Simple)
+marking-LizardFrillsSimple-frills_simple = Frill color:
 
-marking-LizardFrillsAquatic-frills_aquatic = Lizard Frills (Aquatic)
 marking-LizardFrillsAquatic = Lizard Frills (Aquatic)
+marking-LizardFrillsAquatic-frills_aquatic = Frill color:
 
-marking-LizardHornsAngler-horns_angler = Lizard Horns (Angler)
 marking-LizardHornsAngler = Lizard Horns (Angler)
+marking-LizardHornsAngler-horns_angler = Horn color:
 
-marking-LizardHornsCurled-horns_curled = Lizard Horns (Curled)
 marking-LizardHornsCurled = Lizard Horns (Curled)
+marking-LizardHornsCurled-horns_curled = Horn color:
 
-marking-LizardHornsRam-horns_ram = Lizard Horns (Ram)
 marking-LizardHornsRam = Lizard Horns (Ram)
+marking-LizardHornsRam-horns_ram = Horn color:
 
-marking-LizardHornsShort-horns_short = Lizard Horns (Short)
 marking-LizardHornsShort = Lizard Horns (Short)
+marking-LizardHornsShort-horns_short = Horn color:
 
-marking-LizardHornsSimple-horns_simple = Lizard Horns
 marking-LizardHornsSimple = Lizard Horns
+marking-LizardHornsSimple-horns_simple = Horn color:
 
-marking-LizardTailSmooth-tail_smooth_primary = Lizard Tail
-marking-LizardTailSmooth-tail_smooth_secondary = Under Tone
 marking-LizardTailSmooth = Lizard Tail (Smooth)
+marking-LizardTailSmooth-tail_smooth_primary = Primary color:
+marking-LizardTailSmooth-tail_smooth_secondary = Undertone color:
 
-marking-LizardTailLarge-tail_large = Lizard Tail (Large)
+marking-LizardTailSmoothAnimated = Lizard Tail (Smooth, Wagging)
+marking-LizardTailSmoothAnimated-tail_smooth_wagging_primary = Primary color:
+marking-LizardTailSmoothAnimated-tail_smooth_wagging_secondary = Undertone color:
+
 marking-LizardTailLarge = Lizard Tail (Large)
+marking-LizardTailLarge-tail_large = Tail color:
 
-marking-LizardTailSpikes-tail_spikes = Lizard Tail (Spiky)
+marking-LizardTailLargeAnimated = Lizard Tail (Large, Wagging)
+marking-LizardTailLargeAnimated-tail_large_wagging = Tail color:
+
 marking-LizardTailSpikes = Lizard Tail (Spiky)
+marking-LizardTailSpikes-tail_spikes = Tail color:
 
-marking-LizardTailLTiger-tail_ltiger = Lizard Tail (Light Tiger Stripes)
+marking-LizardTailSpikesAnimated = Lizard Tail (Spiky, Wagging)
+marking-LizardTailSpikesAnimated-tail_spikes_wagging = Tail color:
+
 marking-LizardTailLTiger = Lizard Tail (Light Tiger Stripes)
+marking-LizardTailLTiger-tail_ltiger = Tail color:
 
-marking-LizardTailDTiger-tail_dtiger = Lizard Tail (Dark Tiger Stripes)
+marking-LizardTailLTigerAnimated = Lizard Tail (Light Tiger Stripes, Wagging)
+marking-LizardTailLTigerAnimated-tail_ltiger_wagging = Tail color:
+
 marking-LizardTailDTiger = Lizard Tail (Dark Tiger Stripes)
+marking-LizardTailDTiger-tail_dtiger = Tail color:
 
-marking-LizardTailAquatic-tail_aquatic = Lizard Tail (Aquatic)
+marking-LizardTailDTigerAnimated = Lizard Tail (Dark Tiger Stripes, Wagging)
+marking-LizardTailDTigerAnimated-tail_dtiger_wagging = Tail color:
+
 marking-LizardTailAquatic = Lizard Tail (Aquatic)
+marking-LizardTailAquatic-tail_aquatic = Tail color:
 
-marking-LizardSnoutRound-snout_round = Lizard Snout (Round)
+marking-LizardTailAquaticAnimated = Lizard Tail (Aquatic, Wagging)
+marking-LizardTailAquaticAnimated-tail_aquatic_wagging = Tail color:
+
 marking-LizardSnoutRound = Lizard Snout (Round)
+marking-LizardSnoutRound-snout_round = Snout color:
 
-marking-LizardSnoutSharp-snout_sharp = Lizard Snout (Sharp)
 marking-LizardSnoutSharp = Lizard Snout (Sharp)
+marking-LizardSnoutSharp-snout_sharp = Snout color:
 
-marking-LizardChestTiger-body_tiger = Lizard Chest (Tiger)
 marking-LizardChestTiger = Lizard Chest (Tiger)
+marking-LizardChestTiger-body_tiger = Chest color:
 
-marking-LizardHeadTiger-head_tiger = Lizard Head (Tiger)
 marking-LizardHeadTiger = Lizard Head (Tiger)
+marking-LizardHeadTiger-head_tiger = Head color:
 
-marking-LizardLArmTiger-l_arm_tiger = Lizard Left Arm (Tiger)
 marking-LizardLArmTiger = Lizard Left Arm (Tiger)
+marking-LizardLArmTiger-l_arm_tiger = Arm color:
 
-marking-LizardLLegTiger-l_leg_tiger = Lizard Left Leg (Tiger)
 marking-LizardLLegTiger = Lizard Left Leg (Tiger)
+marking-LizardLLegTiger-l_leg_tiger = Leg color:
 
-marking-LizardRArmTiger-r_arm_tiger = Lizard Right Arm (Tiger)
 marking-LizardRArmTiger = Lizard Right Arm (Tiger)
+marking-LizardRArmTiger-r_arm_tiger = Arm color:
 
-marking-LizardRLegTiger-r_leg_tiger = Lizard Right Leg (Tiger)
 marking-LizardRLegTiger = Lizard Right Leg (Tiger)
+marking-LizardRLegTiger-r_leg_tiger = Leg color:
 
-marking-LizardFrillsDivinity-frills_divinity = Lizard Frills (Divinity)
 marking-LizardFrillsDivinity = Lizard Frills (Divinity)
+marking-LizardFrillsDivinity-frills_divinity = Frill color:
 
-marking-LizardFrillsBig-frills_big = Lizard Frills (Big)
 marking-LizardFrillsBig = Lizard Frills (Big)
+marking-LizardFrillsBig-frills_big = Frill color:
 
-marking-LizardFrillsNeckfull-frills_neckfull = Lizard Frills (Neckfull)
 marking-LizardFrillsNeckfull = Lizard Frills (Neckfull)
+marking-LizardFrillsNeckfull-frills_neckfull = Frill color:
 
-marking-LizardHornsDouble-horns_double = Lizard Horns (Double)
 marking-LizardHornsDouble = Lizard Horns (Double)
+marking-LizardHornsDouble-horns_double = Horn color:
 
-marking-LizardFrillsAxolotl-frills_axolotl = Lizard Frills (Axolotl)
 marking-LizardFrillsAxolotl = Lizard Frills (Axolotl)
+marking-LizardFrillsAxolotl-frills_axolotl = Frill color:
 
-marking-LizardFrillsHood-frills_hood_primary = Outer Hood
-marking-LizardFrillsHood-frills_hood_secondary = Inner Hood
 marking-LizardFrillsHood = Lizard Frills (Hood)
+marking-LizardFrillsHood-frills_hood_primary = Outer hood color:
+marking-LizardFrillsHood-frills_hood_secondary = Inner hood color:
 
-marking-LizardHornsArgali-horns_argali = Lizard Horns (Argali)
 marking-LizardHornsArgali = Lizard Horns (Argali)
+marking-LizardHornsArgali-horns_argali = Horn color:
 
-marking-LizardHornsAyrshire-horns_ayrshire = Lizard Horns (Ayrshire)
 marking-LizardHornsAyrshire = Lizard Horns (Ayrshire)
+marking-LizardHornsAyrshire-horns_ayrshire = Horn color:
 
-marking-LizardHornsMyrsore-horns_myrsore = Lizard Horns (Myrsore)
 marking-LizardHornsMyrsore = Lizard Horns (Myrsore)
+marking-LizardHornsMyrsore-horns_myrsore = Horn color:
 
-marking-LizardHornsBighorn-horns_bighorn = Lizard Horns (Bighorn)
 marking-LizardHornsBighorn = Lizard Horns (Bighorn)
+marking-LizardHornsBighorn-horns_bighorn = Horn color:
 
-marking-LizardHornsDemonic-horns_demonic = Lizard Horns (Demonic)
 marking-LizardHornsDemonic = Lizard Horns (Demonic)
+marking-LizardHornsDemonic-horns_demonic = Horn color:
 
-marking-LizardHornsKoboldEars-horns_kobold_ears = Lizard Ears (Kobold)
 marking-LizardHornsKoboldEars = Lizard Ears (Kobold)
+marking-LizardHornsKoboldEars-horns_kobold_ears = Ear color:
 
-marking-LizardHornsFloppyKoboldEars-horns_floppy_kobold_ears = Lizard Ears (Floppy Kobold)
 marking-LizardHornsFloppyKoboldEars = Lizard Ears (Floppy Kobold)
+marking-LizardHornsFloppyKoboldEars-horns_floppy_kobold_ears = Ear color:
 
-marking-LizardChestUnderbelly-body_underbelly = Lizard Chest (Underbelly)
 marking-LizardChestUnderbelly = Lizard Chest (Underbelly)
+marking-LizardChestUnderbelly-body_underbelly = Chest color:
 
-marking-LizardChestBackspikes-body_backspikes = Lizard Back spikes (Four)
-marking-LizardChestBackspikes = Lizard Back spikes (Four)
+marking-LizardChestBackspikes = Lizard Back Spikes (Four)
+marking-LizardChestBackspikes-body_backspikes = Spike color:
 
-marking-LizardChestFin-body_fin = Lizard Fin
 marking-LizardChestFin = Lizard Fin
+marking-LizardChestFin-body_fin = Fin color:
 
 marking-LizardSnoutSplotch = Lizard Snout (Splotch)
-marking-LizardSnoutSplotch-snout_splotch_primary = Muzzle
-marking-LizardSnoutSplotch-snout_splotch_secondary = Snoot
+marking-LizardSnoutSplotch-snout_splotch_primary = Muzzle color:
+marking-LizardSnoutSplotch-snout_splotch_secondary = Snoot color:
