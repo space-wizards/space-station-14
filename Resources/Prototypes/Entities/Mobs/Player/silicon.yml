@@ -467,7 +467,7 @@
         - BorgModuleTool
         - BorgModuleChemical
         - BorgModuleTopicals
-        - BorgModuleRescue
+        - BorgModuleSyndicateWeapon
   - type: ItemSlots
     slots:
       cell_slot:
