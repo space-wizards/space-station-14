@@ -245,7 +245,7 @@
 
 - type: entity
   parent: LockableButton
-  id: LockableButtonCryogenics
+  id: LockableButtonHypersleep
   suffix: Cryogenics
   components:
   - type: AccessReader
