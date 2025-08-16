@@ -11823,5 +11823,13 @@ Entries:
   id: 105000
   time: '2025-08-16T07:52:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1050
+- author: walksanatora
+  changes:
+  - message: Cargo's Mail teleporter can now be emagged to re-weight it's tables towards
+      more chaotic and evil items
+    type: Add
+  id: 120000
+  time: '2025-08-16T08:03:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1200
 Order: -1
 
