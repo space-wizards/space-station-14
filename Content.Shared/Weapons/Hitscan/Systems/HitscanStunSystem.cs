@@ -20,6 +20,6 @@ public sealed class HitscanStunSystem : EntitySystem
         if (args.Canceled || args.HitEntity == null)
             return;
 
-        _stamina.TakeStaminaDamage(args.HitEntity.Value, hitscan.Comp.StaminaDamage, source: args.Shooter);
+        _stamina.TakeStaminaDamage(args.HitEntity.Value, hitscan.Comp.StaminaDamage, source: args.Shooter ?? args.Gun);
     }
 }

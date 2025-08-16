@@ -23,7 +23,7 @@ public sealed class HitscanReflectSystem : EntitySystem
         if (hitscan.Comp.CurrentReflections >= hitscan.Comp.MaxReflections)
             return;
 
-        var ev = new HitScanReflectAttemptEvent(args.Shooter, args.Gun, hitscan.Comp.ReflectiveType, args.ShotDirection, false);
+        var ev = new HitScanReflectAttemptEvent(args.Shooter ?? args.Gun, args.Gun, hitscan.Comp.ReflectiveType, args.ShotDirection, false);
         RaiseLocalEvent(args.HitEntity.Value, ref ev);
 
         if (!ev.Reflected)

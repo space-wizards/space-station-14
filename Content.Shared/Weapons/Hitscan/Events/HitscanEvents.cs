@@ -29,7 +29,7 @@ public record struct HitscanTraceEvent
     /// <summary>
     /// Player who shot the gun, if null the gun was fired by itself.
     /// </summary>
-    public EntityUid Shooter;
+    public EntityUid? Shooter;
 
     /// <summary>
     /// Target that was being aimed at (Not necessarily hit).
@@ -67,7 +67,7 @@ public record struct HitscanRaycastFiredEvent
     /// <summary>
     /// Player who shot the gun, if null the gun was fired by itself.
     /// </summary>
-    public EntityUid Shooter;
+    public EntityUid? Shooter;
 
     /// <summary>
     /// How far the hitscan tried to go to intersect with a target.

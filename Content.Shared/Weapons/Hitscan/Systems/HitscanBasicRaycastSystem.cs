@@ -27,16 +27,17 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
 
     private void OnHitscanFired(Entity<HitscanBasicRaycastComponent> ent, ref HitscanTraceEvent args)
     {
+        var shooter = args.Shooter ?? args.Gun;
         var mapCords = _transform.ToMapCoordinates(args.FromCoordinates);
         var ray = new CollisionRay(mapCords.Position, args.ShotDirection, (int) ent.Comp.CollisionMask);
-        var rayCastResults = _physics.IntersectRay(mapCords.MapId, ray, ent.Comp.MaxDistance, args.Shooter, false).ToList();
+        var rayCastResults = _physics.IntersectRay(mapCords.MapId, ray, ent.Comp.MaxDistance, shooter, false).ToList();
 
         var target = args.Target;
         // If you are in a container, use the raycast result
         // Otherwise:
         //  1.) Hit the first entity that you targeted.
         //  2.) Hit the first entity that doesn't require you to aim at it specifically to be hit.
-        var result = _container.IsEntityOrParentInContainer(args.Shooter)
+        var result = _container.IsEntityOrParentInContainer(shooter)
             ? rayCastResults.FirstOrNull()
             : rayCastResults.FirstOrNull(hit => hit.HitEntity == target
                                                 || CompOrNull<RequireProjectileTargetComponent>(hit.HitEntity)?.Active != true);
@@ -57,7 +58,7 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
             return;
 
         _log.Add(LogType.HitScanHit,
-            $"{ToPrettyString(args.Shooter):user} hit {ToPrettyString(result.Value.HitEntity):target}"
+            $"{ToPrettyString(shooter):user} hit {ToPrettyString(result.Value.HitEntity):target}"
             + $" using {ToPrettyString(args.Gun):entity}.");
     }
 }

@@ -142,7 +142,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         FromCoordinates = fromCoordinates,
                         ShotDirection = mapDirection.Normalized(),
                         Gun = gunUid,
-                        Shooter = user ?? gunUid,
+                        Shooter = user,
                         Target = gun.Target,
                     };
                     RaiseLocalEvent(ent.Value, ref hitscanEv);
