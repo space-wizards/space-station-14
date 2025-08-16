@@ -1,5 +1,27 @@
 - type: entity
   parent: BaseDelivery
+  id: PackageDeliveryEvil
+  name: package
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      delivery: !type:NestedSelector
+        tableId: PackageDeliveryRewardsEvil
+
+- type: entity
+  parent: BaseDelivery
+  id: LetterDeliveryEvil
+  name: letter
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      delivery: !type:NestedSelector
+        tableId: LetterDeliveryRewardsEvil
+
+# Railroading
+
+- type: entity
+  parent: BaseDelivery
   id: BasePackageDeliveryReward
   name: package
   abstract: true

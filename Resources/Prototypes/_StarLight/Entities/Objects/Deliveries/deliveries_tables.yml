@@ -16,7 +16,7 @@
   id: RandomDeliveryLetterEvil
   table: !type:GroupSelector
     children:
-    - id: LetterDelivery
+    - id: LetterDeliveryEvil
 
 # Packages
 
@@ -24,7 +24,7 @@
   id: RandomDeliveryPackageEvil
   table: !type:GroupSelector
     children:
-    - id: PackageDelivery
+    - id: PackageDeliveryEvil
 
 ### Reward Tables
 
