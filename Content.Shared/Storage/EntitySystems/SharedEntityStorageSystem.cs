@@ -127,7 +127,8 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     protected void OnRelayMovement(EntityUid uid, SharedEntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
     {
-        if (!HasComp<HandsComponent>(args.Entity))
+        if (!component.Contents.Contains(args.Entity) &&
+            !HasComp<HandsComponent>(args.Entity))
             return;
 
         if (!_actionBlocker.CanMove(args.Entity))
@@ -392,7 +393,8 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (!ResolveStorage(target, ref component))
             return false;
 
-        if (!HasComp<HandsComponent>(user))
+        if (!component.Contents.Contains(user) &&
+            !HasComp<HandsComponent>(user))
             return false;
 
         if (_weldable.IsWelded(target))
