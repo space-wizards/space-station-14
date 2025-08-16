@@ -65,9 +65,6 @@ public sealed partial class PathfindingSystem
                 {
                     for (var y = -1; y <= 1; y++)
                     {
-                        if (x == 0 && y == 0)
-                            continue;
-
                         var neighbor = node + new Vector2i(x, y);
                         var neighborCost = OctileDistance(node, neighbor) * args.TileCost?.Invoke(neighbor) ?? 1f;
 
@@ -124,7 +121,8 @@ public sealed partial class PathfindingSystem
                         cameFrom[neighbor] = node;
                         costSoFar[neighbor] = gScore;
 
-                        var hScore = ManhattanDistance(args.End, neighbor);
+                        // Still use octile even for manhattan distance.
+                        var hScore = OctileDistance(args.End, neighbor) * 1.001f;
                         var fScore = gScore + hScore;
                         frontier.Enqueue(neighbor, fScore);
                     }

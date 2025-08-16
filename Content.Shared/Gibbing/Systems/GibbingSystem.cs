@@ -292,7 +292,7 @@ public sealed class GibbingSystem : EntitySystem
         var gibbedEvent = new EntityGibbedEvent(gibbable, localGibs);
         RaiseLocalEvent(gibbable, ref gibbedEvent);
         if (deleteTarget)
-            QueueDel(gibbable);
+            PredictedQueueDel(gibbable.Owner);
         return localGibs;
     }
 

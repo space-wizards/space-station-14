@@ -1,8 +1,8 @@
 # Asteroid
-- type: dungeonConfig
+- type: biomeTemplate
   id: SpaceDebris
   layers:
-  - !type:SampleEntityDunGen
+  - !type:BiomeEntityLayer
     threshold: 0.20
     noise:
       seed: 0
@@ -23,7 +23,7 @@
     - WallReinforced
     - WallSolid
     - WallSolid
-  - !type:SampleEntityDunGen
+  - !type:BiomeEntityLayer
     threshold: 0.5
     noise:
       seed: 0
@@ -41,7 +41,7 @@
     - Grille
     - Grille
     - GrilleBroken
-  - !type:SampleDecalDunGen
+  - !type:BiomeDecalLayer
     allowedTiles:
     - FloorSteel
     threshold: -0.5
@@ -56,7 +56,7 @@
     - DirtMedium
     - DirtMedium
     - DirtLight
-  - !type:SampleEntityDunGen
+  - !type:BiomeEntityLayer
     threshold: 0.45
     noise:
       seed: 1
@@ -71,7 +71,7 @@
     - FloorSteel
     entities:
     - SalvageSpawnerStructuresVarious
-  - !type:SampleEntityDunGen
+  - !type:BiomeEntityLayer
     allowedTiles:
     - FloorSteel
     - Plating
@@ -85,7 +85,7 @@
     - SalvageSpawnerScrapCommon
     - SalvageSpawnerScrapCommon
     - SalvageSpawnerScrapCommon75
-  - !type:SampleEntityDunGen
+  - !type:BiomeEntityLayer
     allowedTiles:
     - FloorSteel
     - Plating
@@ -97,7 +97,7 @@
     - SalvageSpawnerTreasure
     - SalvageSpawnerTreasure
     - SalvageSpawnerTreasureValuable
-  - !type:SampleEntityDunGen
+  - !type:BiomeEntityLayer
     allowedTiles:
     - FloorSteel
     - Plating

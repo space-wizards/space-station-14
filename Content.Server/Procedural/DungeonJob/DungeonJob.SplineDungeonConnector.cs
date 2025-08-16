@@ -2,7 +2,6 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Procedural;
-using Content.Shared.Procedural.DungeonLayers;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -12,10 +11,10 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="Shared.Procedural.DungeonLayers.SplineDungeonConnectorDunGen"/>
+    /// <see cref="SplineDungeonConnectorDunGen"/>
     /// </summary>
     private async Task<Dungeon> PostGen(
-        Shared.Procedural.DungeonLayers.SplineDungeonConnectorDunGen gen,
+        SplineDungeonConnectorDunGen gen,
         List<Dungeon> dungeons,
         HashSet<Vector2i> reservedTiles,
         Random random)
@@ -60,7 +59,6 @@ public sealed partial class DungeonJob
                 {
                     Start = pair.Start,
                     End = pair.End,
-                    Diagonals = false,
                     TileCost = node =>
                     {
                         // We want these to get prioritised internally and into space if it's a space dungeon.
@@ -112,7 +110,6 @@ public sealed partial class DungeonJob
                 }
 
                 tiles.Add((node, tile));
-                AddLoadedTile(node, tile);
             }
 
             _maps.SetTiles(_gridUid, _grid, tiles);
@@ -126,7 +123,6 @@ public sealed partial class DungeonJob
 
                 allTiles.Add(node);
                 tiles.Add((node, pathTile));
-                AddLoadedTile(node, pathTile);
             }
 
             _maps.SetTiles(_gridUid, _grid, tiles);
