@@ -64,6 +64,9 @@ spellbook-wand-locker-description = Shoot cursed lockers at your enemies and loc
 spellbook-hammer-mjollnir-name = Mjollnir
 spellbook-hammer-mjollnir-description = Wield the power of THUNDER in your hands. Send foes flying with a mighty swing or by throwing it right at em!
 
+spellbook-spellblade-name = Spellblade
+spellbook-spellblade-description = Capable of cutting enemies and shooting magical lava clots. There are only 4 lava charges, but they are self-repairing.
+
 spellbook-hammer-singularity-name = Singularity Hammer
 spellbook-hammer-singularity-description = Ever wonder what it'd be like to be the singularity? Swing this hammer to draw in your surroundings, even works if you miss!
 
