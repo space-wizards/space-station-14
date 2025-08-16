@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Implants;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Trigger.Components.Triggers;
@@ -18,8 +19,11 @@ public sealed partial class TriggerOnMobstateChangeSystem : EntitySystem
         SubscribeLocalEvent<TriggerOnMobstateChangeComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<TriggerOnMobstateChangeComponent, SuicideEvent>(OnSuicide);
 
-        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<MobStateChangedEvent>>(OnMobStateRelay);
-        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<SuicideEvent>>(OnSuicideRelay);
+        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<SuicideEvent>>(OnSuicideImplantRelay);
+        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<MobStateChangedEvent>>(OnMobStateImplantRelay);
+
+        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, InventoryRelayedEvent<SuicideEvent>>(OnSuicideInventoryRelay);
+        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, InventoryRelayedEvent<MobStateChangedEvent>>(OnMobStateInventoryRelay);
     }
 
     private void OnMobStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
@@ -30,12 +34,14 @@ public sealed partial class TriggerOnMobstateChangeSystem : EntitySystem
         _trigger.Trigger(uid, component.TargetMobstateEntity ? uid : args.Origin, component.KeyOut);
     }
 
-    private void OnMobStateRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<MobStateChangedEvent> args)
+    private void OnMobStateImplantRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<MobStateChangedEvent> args)
     {
-        if (!component.MobState.Contains(args.Event.NewMobState))
-            return;
+        OnMobStateChanged(uid, component, args.Event);
+    }
 
-        _trigger.Trigger(uid, component.TargetMobstateEntity ? args.ImplantedEntity : args.Event.Origin, component.KeyOut);
+    private void OnMobStateInventoryRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, InventoryRelayedEvent<MobStateChangedEvent> args)
+    {
+        OnMobStateChanged(uid, component, args.Args);
     }
 
     /// <summary>
@@ -55,15 +61,13 @@ public sealed partial class TriggerOnMobstateChangeSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnSuicideRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<SuicideEvent> args)
+    private void OnSuicideImplantRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<SuicideEvent> args)
     {
-        if (args.Event.Handled)
-            return;
+        OnSuicide(uid, component, args.Event);
+    }
 
-        if (!component.PreventSuicide)
-            return;
-
-        _popup.PopupClient(Loc.GetString("suicide-prevented"), args.Event.Victim);
-        args.Event.Handled = true;
+    private void OnSuicideInventoryRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, InventoryRelayedEvent<SuicideEvent> args)
+    {
+        OnSuicide(uid, component, args.Args);
     }
 }
