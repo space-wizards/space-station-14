@@ -26,6 +26,7 @@
     - id: ClothingOuterHardsuitLuxmax #starlight
     - id: SalvageShuttleConsoleCircuitboard #starlight
     - id: MiningShuttleConsoleCircuitboard #starlight
+    - id: EncryptionKeySalvage #starlight
 
 - type: entity
   id: LockerQuarterMasterFilled

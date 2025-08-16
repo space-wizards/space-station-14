@@ -7,3 +7,13 @@
     contents:
     - id: EncryptionKeyExpedition
       amount: 4
+
+- type: entity
+  name: salvage encryption key box
+  parent: BoxEncryptionKeyAssistant
+  id: BoxEncryptionKeySalvage
+  components:
+    - type: StorageFill
+      contents:
+        - id: EncryptionKeySalvage
+          amount: 4
