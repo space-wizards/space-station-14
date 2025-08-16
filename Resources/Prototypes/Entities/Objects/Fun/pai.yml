@@ -60,6 +60,7 @@
   - type: DoAfter
   - type: Actions
   - type: Store
+    name: store-preset-name-pai #Starlight name change for data purity
     categories:
     - PAIAbilities
     currencyWhitelist:
