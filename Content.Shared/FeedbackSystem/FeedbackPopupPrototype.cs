@@ -29,7 +29,7 @@ public sealed partial class  FeedbackPopupPrototype : IPrototype
     /// feedback on here!
     /// </summary>
     [DataField(required: true)]
-    public List<string> Description = new();
+    public string Description = "";
 
     /// <summary>
     /// A link leading to where you want players to give feedback. Discord channel, form etc...

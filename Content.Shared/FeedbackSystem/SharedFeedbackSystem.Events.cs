@@ -15,7 +15,7 @@ public sealed partial class SharedFeedbackSystem
 
     private List<string> _validOrigins = [];
 
-    public override void Initialize()
+    public void EventInitialize()
     {
         base.Initialize();
         SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEnd);
