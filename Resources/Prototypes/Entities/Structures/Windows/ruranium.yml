@@ -71,7 +71,7 @@
     state: uranium_reinforced_window
   - type: Construction
     graph: WindowDirectional
-    node: uraniumReinforcedWindowDirectional
+    node: reinforcedUraniumWindowDirectional
   - type: Appearance
   - type: DamageVisuals
     thresholds: [5, 10, 20]
