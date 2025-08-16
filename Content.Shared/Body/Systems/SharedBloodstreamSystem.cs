@@ -409,26 +409,25 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
             return false;
 
+        var data = GetEntityBloodData(ent);
+
         if (amount >= 0)
-            return SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, amount, null, GetEntityBloodData(ent));
+            return SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, amount, null, data);
 
-        amount *= -1;
+        var bloodRef = new ReagentId(ent.Comp.BloodReagent, data);
 
-        for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
+        foreach (var (reagentId, _) in bloodSolution.Contents)
         {
-            var (reagentId, quantity) = bloodSolution.Contents[i];
-            if (reagentId.Prototype == ent.Comp.BloodReagent)
-            {
-                var delta = FixedPoint2.Min(amount, quantity);
-                SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, delta);
-                amount -= delta;
+            // Only remove our blood specifically.
+            if (reagentId != bloodRef)
+                continue;
 
-                if (amount <= 0)
-                    return true;
-            }
+            SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, -amount);
+            return true;
         }
 
-        return true;
+        // If we didn't add or remove blood we couldn't modify blood level...
+        return false;
     }
 
     /// <summary>
