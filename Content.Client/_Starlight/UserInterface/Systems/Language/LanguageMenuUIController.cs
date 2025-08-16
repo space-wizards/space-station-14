@@ -9,7 +9,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.UserInterface.Systems.Language;
+namespace Content.Client._Starlight.UserInterface.Systems.Language;
 
 [UsedImplicitly]
 public sealed class LanguageMenuUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
