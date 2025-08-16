@@ -9,3 +9,8 @@ examine-verb-name = Basic
 examinable-anchored = It is [color=darkgreen]anchored[/color] to the floor.
 
 examinable-unanchored = It is [color=darkred]unanchored[/color] from the floor.
+
+examinable-show-despawn = It will disappear in [color=lightblue]{$seconds}[/color] {$seconds ->
+    [one] second
+    *[other] seconds
+    }.
