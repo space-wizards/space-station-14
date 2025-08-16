@@ -38,7 +38,7 @@ namespace Content.Shared.Construction.Components
     public abstract class BaseAnchoredAttemptEvent : CancellableEntityEventArgs
     {
         public EntityUid User { get; }
-        public EntityUid Tool { get; }
+        public EntityUid? Tool { get; }
 
         /// <summary>
         ///     Extra delay to add to the do_after.
@@ -47,7 +47,7 @@ namespace Content.Shared.Construction.Components
         /// </summary>
         public float Delay { get; set; } = 0f;
 
-        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool)
+        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid? tool)
         {
             User = user;
             Tool = tool;
@@ -56,20 +56,20 @@ namespace Content.Shared.Construction.Components
 
     public sealed class AnchorAttemptEvent : BaseAnchoredAttemptEvent
     {
-        public AnchorAttemptEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
+        public AnchorAttemptEvent(EntityUid user, EntityUid? tool) : base(user, tool) { }
     }
 
     public sealed class UnanchorAttemptEvent : BaseAnchoredAttemptEvent
     {
-        public UnanchorAttemptEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
+        public UnanchorAttemptEvent(EntityUid user, EntityUid? tool) : base(user, tool) { }
     }
 
     public abstract class BaseAnchoredEvent : EntityEventArgs
     {
         public EntityUid User { get; }
-        public EntityUid Tool { get; }
+        public EntityUid? Tool { get; }
 
-        protected BaseAnchoredEvent(EntityUid user, EntityUid tool)
+        protected BaseAnchoredEvent(EntityUid user, EntityUid? tool)
         {
             User = user;
             Tool = tool;
@@ -81,7 +81,7 @@ namespace Content.Shared.Construction.Components
     /// </summary>
     public sealed class BeforeAnchoredEvent : BaseAnchoredEvent
     {
-        public BeforeAnchoredEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
+        public BeforeAnchoredEvent(EntityUid user, EntityUid? tool) : base(user, tool) { }
     }
 
     /// <summary>
@@ -91,7 +91,7 @@ namespace Content.Shared.Construction.Components
     /// </summary>
     public sealed class UserAnchoredEvent : BaseAnchoredEvent
     {
-        public UserAnchoredEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
+        public UserAnchoredEvent(EntityUid user, EntityUid? tool) : base(user, tool) { }
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ namespace Content.Shared.Construction.Components
     /// </summary>
     public sealed class BeforeUnanchoredEvent : BaseAnchoredEvent
     {
-        public BeforeUnanchoredEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
+        public BeforeUnanchoredEvent(EntityUid user, EntityUid? tool) : base(user, tool) { }
     }
 
     /// <summary>
@@ -110,6 +110,6 @@ namespace Content.Shared.Construction.Components
     /// </summary>
     public sealed class UserUnanchoredEvent : BaseAnchoredEvent
     {
-        public UserUnanchoredEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
+        public UserUnanchoredEvent(EntityUid user, EntityUid? tool) : base(user, tool) { }
     }
 }
