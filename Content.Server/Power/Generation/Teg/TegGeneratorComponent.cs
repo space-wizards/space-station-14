@@ -77,8 +77,9 @@ public sealed partial class TegGeneratorComponent : Component
     public float VolumeMax = -4;
 
     /// <summary>
-    /// Smoothing factor used to smooth out power generation.
+    /// The absolute difference in temperatures between the hot and cold side of the TEG
+    /// required to start generating power.
     /// </summary>
     [DataField]
-    public float PowerSmoothingFactor = 0.2f;
+    public float TemperatureTolerance = 1f;
 }
