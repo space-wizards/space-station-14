@@ -11881,5 +11881,27 @@ Entries:
   id: 131200
   time: '2025-08-16T08:20:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1312
+- author: RoadTrain
+  changes:
+  - message: Adv. chem module now gets automenders
+    type: Add
+  id: 124200
+  time: '2025-08-16T08:22:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1242
+- author: RoadTrain
+  changes:
+  - message: Removed diagnosis module (stethoscope is in the rescue module). It wasn't
+      being used anyway and was literally useless.
+    type: Remove
+  id: 124201
+  time: '2025-08-16T08:22:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1242
+- author: RoadTrain
+  changes:
+  - message: Syndie mediborg loses rescue module, gains weapon module.
+    type: Tweak
+  id: 124202
+  time: '2025-08-16T08:22:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1242
 Order: -1
 
