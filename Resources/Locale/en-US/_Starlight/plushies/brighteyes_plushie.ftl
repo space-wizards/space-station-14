@@ -1,0 +1,10 @@
+plushie-brighteyes-1 = Meowdy!
+plushie-brighteyes-2 = Good meowning, crew.
+plushie-brighteyes-3 = Has anyone seen my wife?
+plushie-brighteyes-4 = Sentinel pack!
+plushie-brighteyes-5 = I did it, Lanard, I killed the dragon!
+plushie-brighteyes-6 = I don't need a search warrant, I've got purrobable clawse!
+plushie-brighteyes-7 = Bitchin'
+plushie-brighteyes-8 = I'm not some scared little kitten!
+plushie-brighteyes-9 = If command can't get it together, I'll step up.
+plushie-brighteyes-10 = You doing okay, Jimshow?

@@ -253,6 +253,7 @@
 
 - type: entity
   parent: BaseStationBorgiChassis
+  description: A smart dog, loves stating it's laws.
   id: StationBorgiChassis
   components:
     - type: ReplacementAccent
