@@ -132,18 +132,14 @@ public sealed class AmeNodeGroup : BaseNodeGroup
             return 0;
 
         var powerOutput = CalculatePower(fuel, CoreCount);
+        var stabilityAdjust;
 
-        //Safe fuel is stable
-        if (fuel == SafeFuelLimit)
-            return powerOutput;
-
-        var stabilityAdjust = 0;
-
-        // The AME regains Stability when below SafeFuelLimit.
+        // The AME regains Stability when at or below SafeFuelLimit.
         // Regaining stability is predictable and slow.
-        if (fuel < SafeFuelLimit)
+        // Bigger AMEs can regain faster when underloaded more.
+        if (fuel <= SafeFuelLimit)
         {
-            stabilityAdjust = SafeFuelLimit - fuel;
+            stabilityAdjust = SafeFuelLimit - fuel + 1; //1 per injection at SafeFuelLimit
         }
 
         // The AME is being overloaded and loses stability when above SafeFuelLimit.
