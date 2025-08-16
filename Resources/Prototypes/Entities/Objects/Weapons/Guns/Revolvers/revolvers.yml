@@ -8,6 +8,7 @@
   - type: Sprite
     state: icon
   - type: Item
+    bulk: 3
     size: Small
     shape:
     - 0,0,1,0
