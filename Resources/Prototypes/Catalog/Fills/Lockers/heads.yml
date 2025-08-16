@@ -62,6 +62,7 @@
     - id: ClothingEyesGlassesCommand
     - id: ClothingEyesHudCommand
     - id: HeadSkeleton # A skull to accompany your skeleton crew
+    - id: EncryptionKeyExpedition #starlight
       conditions:
       - !type:PlayerCountCondition
         max: 15

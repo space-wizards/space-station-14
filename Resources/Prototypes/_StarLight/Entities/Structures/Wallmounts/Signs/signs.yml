@@ -67,3 +67,23 @@
   - type: Sprite
     sprite: _Starlight/Structures/Wallmounts/signs.rsi
     state: yessmoking
+    
+- type: entity
+  parent: BaseSignDirectional
+  id: SignDirectionalMining
+  name: mining sign
+  description: A direction sign, pointing out which way the Mining department is.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Structures/Wallmounts/signs.rsi
+      state: direction_mining
+
+- type: entity
+  parent: BaseSign
+  id: SignMining
+  name: mining sign
+  description: A sign indicating the mining area.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Structures/Wallmounts/signs.rsi
+      state: mining

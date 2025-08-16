@@ -7,9 +7,9 @@
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
       time: 36000 # 10 hours
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 28800 # 8 hrs
+    - !type:RoleTimeRequirement
+      role: JobParamedic
+      time: 18000 # 5 hours
   icon: "JobIconSalvageMedic"
   startingGear: SalvageMedicGear
   supervisors: job-supervisors-qm

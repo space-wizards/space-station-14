@@ -278,7 +278,7 @@
 #Spationaut Medic Hardsuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
-  id: ClothingOuterHardsuitSpatioMedic
+  id: ClothingHeadHelmetHardsuitSpatioMedic
   name: spationaut medic hardsuit helmet
   description: A sturdy white trimmed helmet designed for complex industrial operations in space.
   components:
