@@ -28,6 +28,14 @@
     {
       "name": "on-equipped-HELMET-vox",
       "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-vulpkanin",
+      "directions": 4
     }
   ]
 }
