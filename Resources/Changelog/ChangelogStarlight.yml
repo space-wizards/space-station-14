@@ -11674,5 +11674,19 @@ Entries:
   id: 133800
   time: '2025-08-16T06:03:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1338
+- author: Quini98
+  changes:
+  - message: Alternative CBURN Shuttle
+    type: Add
+  id: 133100
+  time: '2025-08-16T06:57:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1331
+- author: Quini98
+  changes:
+  - message: Gamerule to call new Shuttle
+    type: Add
+  id: 133101
+  time: '2025-08-16T06:57:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1331
 Order: -1
 
