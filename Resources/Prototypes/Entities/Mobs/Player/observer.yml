@@ -51,7 +51,7 @@
     visuals:
       enum.GhostVisuals.Damage:
         ghostVariant:
-          ghost_blunt1: { state: ghost_blunt1 } #this is an icki way of doing this u.u -Thinbug
+          ghost_blunt1: { state: ghost_blunt1 } # this is an icki way of doing this u.u -Thinbug
           ghost_blunt2: { state: ghost_blunt2 }
           ghost_blunt3: { state: ghost_blunt3 }
           ghost_slash1: { state: ghost_slash1 }
