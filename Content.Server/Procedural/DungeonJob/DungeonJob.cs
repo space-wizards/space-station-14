@@ -190,7 +190,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
         foreach (var npc in npcs)
         {
-            npcSystem.WakeNPC(npc.Owner, npc.Comp);
+            npcSystem.WakeNPC(npc.Owner, null, npc.Comp);
         }
 
         _sawmill.Info($"Finished generating dungeon {_gen} with seed {_seed}");

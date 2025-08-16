@@ -9,6 +9,7 @@
   - type: NpcFactionMember
     factions:
     - Xeno
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: SimpleHostileCompound #todo custom argocyte AI
@@ -67,6 +68,7 @@
         Base: slurva
       Dead:
         Base: slurva_dead
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: IdleCompound
@@ -101,6 +103,7 @@
         Base: barrier
       Dead:
         Base: barrier_dead
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: IdleCompound
