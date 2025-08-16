@@ -149,7 +149,7 @@ public sealed partial class BloodstreamComponent : Component
     /// gives maximum volume for bloodstream.
     /// </summary>
     [DataField]
-    public float BloodMaxFactor = 2f;
+    public float MaxVolumeFactor = 2f;
 
     /// <summary>
     /// Which reagent is considered this entities 'blood'?
