@@ -56,7 +56,7 @@ public sealed class BanListCommand : LocalizedCommands
             return;
         }
 
-        var ui = new BanListEui();
+        var ui = new BanListEui(0);
         _eui.OpenEui(ui, player);
         await ui.ChangeBanListPlayer(data.UserId);
     }
