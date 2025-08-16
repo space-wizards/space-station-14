@@ -1,5 +1,6 @@
 ﻿using Content.Server.Hands.Systems;
 using Content.Server.Popups;
+using Content.Shared.Holiday;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
 using Robust.Shared.Player;
@@ -12,7 +13,7 @@ namespace Content.Server.Holiday.Christmas;
 public sealed class LimitedItemGiverSystem : EntitySystem
 {
     [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly HolidaySystem _holiday = default!;
+    [Dependency] private readonly SharedHolidaySystem _holiday = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     /// <inheritdoc/>
     public override void Initialize()
