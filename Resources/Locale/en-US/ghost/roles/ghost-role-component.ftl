@@ -244,8 +244,23 @@ ghost-role-information-syndicate-cyborg-assault-name = Syndicate Assault Cyborg
 ghost-role-information-syndicate-cyborg-saboteur-name = Syndicate Saboteur Cyborg
 ghost-role-information-syndicate-cyborg-description = The Syndicate needs reinforcements. You, a cold silicon killing machine, will help them.
 
-ghost-role-information-derelict-cyborg-name = Derelict Cyborg
+ghost-role-information-derelict-engineering-cyborg-name = Derelict Engineer Cyborg
+ghost-role-information-derelict-engineering-cyborg-description = You are an engineer cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
+
+ghost-role-information-derelict-cyborg-name = Derelict Generic Cyborg
 ghost-role-information-derelict-cyborg-description = You are a regular cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
+
+ghost-role-information-derelict-janitor-cyborg-name = Derelict Janitor Cyborg
+ghost-role-information-derelict-janitor-cyborg-description = You are a janitor cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
+
+ghost-role-information-derelict-medical-cyborg-name = Derelict Medical Cyborg
+ghost-role-information-derelict-medical-cyborg-description = You are a medical cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
+
+ghost-role-information-derelict-mining-cyborg-name = Derelict Salvage Cyborg
+ghost-role-information-derelict-mining-cyborg-description = You are a salvage cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
+
+ghost-role-information-derelict-syndicate-assault-cyborg-name = Derelict Syndicate Assault Cyborg
+ghost-role-information-derelict-syndicate-assault-cyborg-description = You are an early model syndicate assault cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
 
 ghost-role-information-security-name = Security
 ghost-role-information-security-description = You are part of a security task force, but seem to have found yourself in a strange situation...
