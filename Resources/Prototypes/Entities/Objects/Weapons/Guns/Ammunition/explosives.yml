@@ -51,6 +51,7 @@
   - type: Tag
     tags:
     - Grenade
+    - Cartridge
   - type: Item
     size: Small
   - type: Sprite
