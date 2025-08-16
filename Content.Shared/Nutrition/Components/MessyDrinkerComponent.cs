@@ -1,30 +1,31 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.Prototypes;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Nutrition.Components;
+namespace Content.Shared.Nutrition.Components;
 
 /// <summary>
 /// Entities with this component occasionally spill some of the solution they're ingesting.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MessyDrinkerComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float SpillChance = 0.2f;
 
     /// <summary>
     /// The amount of solution that is spilled when <see cref="SpillChance"/> procs.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 SpillAmount = 1.0;
 
     /// <summary>
     /// The types of food prototypes we can spill
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public List<ProtoId<EdiblePrototype>> SpillableTypes = new List<ProtoId<EdiblePrototype>> { "Drink" };
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId? SpillMessagePopup;
 }

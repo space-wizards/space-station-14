@@ -1,18 +1,18 @@
-using Content.Server.Fluids.EntitySystems;
-using Content.Server.Nutrition.Components;
-using Content.Shared.Nutrition;
-using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Fluids;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
-namespace Content.Server.Nutrition.EntitySystems;
+namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed class MessyDrinkerSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IngestionSystem _ingestion = default!;
-    [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -35,11 +35,14 @@ public sealed class MessyDrinkerSystem : EntitySystem
         if (ev.ForceFed)
             return;
 
-        if (!_random.Prob(ent.Comp.SpillChance))
+        // TODO: Replace with RandomPredicted once the engine PR is merged
+        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
+        var rand = new System.Random(seed);
+        if (!rand.Prob(ent.Comp.SpillChance))
             return;
 
         if (ent.Comp.SpillMessagePopup != null)
-            _popup.PopupEntity(Loc.GetString(ent.Comp.SpillMessagePopup), ent, ent, PopupType.MediumCaution);
+            _popup.PopupPredicted(Loc.GetString(ent.Comp.SpillMessagePopup), null, ent, ent, PopupType.MediumCaution);
 
         var split = ev.Split.SplitSolution(ent.Comp.SpillAmount);
 
