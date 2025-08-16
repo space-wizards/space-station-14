@@ -40,6 +40,8 @@ public sealed class AmeNodeGroup : BaseNodeGroup
 
     public int CoreCount => _cores.Count;
 
+    public int SafeFuelLimit => CoreCount * 2;
+
     public override void LoadNodes(List<Node> groupNodes)
     {
         base.LoadNodes(groupNodes);
@@ -127,15 +129,13 @@ public sealed class AmeNodeGroup : BaseNodeGroup
         if (fuel <= 0 || CoreCount <= 0)
             return 0;
 
-        var safeFuelLimit = CoreCount * 2;
-
         var powerOutput = CalculatePower(fuel, CoreCount);
-        if (fuel <= safeFuelLimit)
+        if (fuel <= SafeFuelLimit)
             return powerOutput;
 
         // The AME is being overloaded.
         // Note about these maths: I would assume the general idea here is to make larger engines less safe to overload.
-        // In other words, yes, those are supposed to be CoreCount, not safeFuelLimit.
+        // In other words, yes, those are supposed to be CoreCount, not SafeFuelLimit.
         var overloadVsSizeResult = fuel - CoreCount;
 
         var instability = overloadVsSizeResult / CoreCount;
