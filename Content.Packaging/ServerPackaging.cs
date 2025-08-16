@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO.Compression;
+using System.Text.Json;
 using Robust.Packaging;
 using Robust.Packaging.AssetProcessing;
 using Robust.Packaging.AssetProcessing.Passes;
@@ -183,6 +184,29 @@ public static class ServerPackaging
         // Additional assemblies that need to be copied such as EFCore.
         var sourcePath = Path.Combine(contentDir, "bin", "Content.Server");
 
+        var serverExtraAssemblies = new List<string>(ServerExtraAssemblies);
+        var dependenciesFile = File.OpenRead(Path.Combine("bin", "Content.Server", "Content.Server.deps.json"));
+        var serverProj = await JsonDocument.ParseAsync(dependenciesFile, cancellationToken: cancel);
+        var targets = serverProj.RootElement.GetProperty("targets");
+        foreach (var target in targets.EnumerateObject())
+        {
+            foreach (var project in target.Value.EnumerateObject())
+            {
+                if (!project.Name.Contains("Content.Server"))
+                    continue;
+
+                if (!project.Value.TryGetProperty("dependencies", out var dependencies))
+                    continue;
+
+                foreach (var dependency in dependencies.EnumerateObject())
+                {
+                    var dependencyName = dependency.Name;
+                    if (!serverExtraAssemblies.Contains(dependencyName))
+                        serverExtraAssemblies.Add(dependencyName);
+                }
+            }
+        }
+
         // Should this be an asset pass?
         // For future archaeologists I just want audio rework to work and need the audio pass so
         // just porting this as is from python.
@@ -190,7 +214,7 @@ public static class ServerPackaging
         {
             var fileName = Path.GetFileNameWithoutExtension(fullPath);
 
-            if (!ServerNotExtraAssemblies.Any(o => fileName.StartsWith(o)) && ServerExtraAssemblies.Any(o => fileName.StartsWith(o)))
+            if (!ServerNotExtraAssemblies.Any(o => fileName.StartsWith(o)) && serverExtraAssemblies.Any(o => fileName.StartsWith(o)))
             {
                 contentAssemblies.Add(fileName);
             }
