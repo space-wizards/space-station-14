@@ -11873,5 +11873,13 @@ Entries:
   id: 131402
   time: '2025-08-16T08:17:55.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1314
+- author: Citrea
+  changes:
+  - message: Several items can now be used as *very* inefficient surgery tools to
+      enable full back-alley surgeries.
+    type: Tweak
+  id: 131200
+  time: '2025-08-16T08:20:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1312
 Order: -1
 
