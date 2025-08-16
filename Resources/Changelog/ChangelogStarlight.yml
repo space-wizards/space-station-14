@@ -11769,5 +11769,20 @@ Entries:
   id: 132300
   time: '2025-08-16T07:25:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1323
+- author: walksanatora
+  changes:
+  - message: mentors can now mghost and tpto the subject of tickets to aid in providing
+      support
+    type: Add
+  id: 109700
+  time: '2025-08-16T07:30:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1097
+- author: walksanatora
+  changes:
+  - message: mentors can now turn off mentor pings.
+    type: Add
+  id: 109701
+  time: '2025-08-16T07:30:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1097
 Order: -1
 
