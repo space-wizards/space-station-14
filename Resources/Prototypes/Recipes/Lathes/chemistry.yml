@@ -73,6 +73,13 @@
     Plastic: 100
 
 - type: latheRecipe
+  id: MedicalPouch
+  result: MedicalPouch
+  completetime: 3
+  materials:
+    Plastic: 200
+
+- type: latheRecipe
   id: ChemistryEmptyBottle01
   result: ChemistryEmptyBottle01
   completetime: 2
