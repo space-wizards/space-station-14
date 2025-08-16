@@ -22,6 +22,7 @@
         type: CrayonBoundUserInterface
   - type: Crayon
     capacity: 25
+    charges: 25
   - type: Food
   - type: FlavorProfile
     flavors:
@@ -89,6 +90,7 @@
     color: Red
     selectableColor: true
     capacity: 30
+    charges: 30
   - type: Tag
     tags:
     - Write
