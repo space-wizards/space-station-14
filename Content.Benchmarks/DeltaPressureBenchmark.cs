@@ -4,12 +4,15 @@ using BenchmarkDotNet.Diagnosers;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
 using Content.Server.Atmos.Components;
+using Content.Shared.CCVar;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Benchmarks;
 
@@ -20,12 +23,10 @@ namespace Content.Benchmarks;
 [Virtual]
 public class DeltaPressureBenchmark
 {
-    private TestPair _pair = default!;
-
     /// <summary>
     /// Number of entities (windows, really) to spawn with a <see cref="DeltaPressureComponent"/>.
     /// </summary>
-    [Params(1, 10, 100, 1000, 5000, 10000, 50000)]
+    [Params(1, 10, 100, 1000, 5000, 10000, 50000, 100000)]
     public int EntityCount;
 
     /// <summary>
@@ -34,8 +35,28 @@ public class DeltaPressureBenchmark
     [Params(30)]
     public int Ticks;
 
+    /// <summary>
+    /// Number of entities that each parallel processing job will handle.
+    /// </summary>
+    [Params(100)]
+    public int BatchSize;
+
+    /// <summary>
+    /// Number of entities to process per iteration in the DeltaPressure
+    /// processing loop.
+    /// </summary>
+    [Params(1000)]
+    public int EntitiesPerIteration;
+
     private readonly EntProtoId _windowProtoId = "Window";
-    private readonly EntProtoId _wallProtoId = "WallReinforced";
+    private readonly EntProtoId _wallProtoId = "WallPlastitaniumIndestructible";
+
+    private TestPair _pair = default!;
+    private IEntityManager _entMan = default!;
+    private SharedMapSystem _map = default!;
+    private IRobustRandom _random = default!;
+    private IConfigurationManager _cvar = default!;
+    private ITileDefinitionManager _tileDefMan = default!;
 
     [GlobalSetup]
     public async Task SetupAsync()
@@ -47,16 +68,24 @@ public class DeltaPressureBenchmark
 
         var mapdata = await _pair.CreateTestMap();
 
+        _entMan = server.ResolveDependency<IEntityManager>();
+        _map = _entMan.System<SharedMapSystem>();
+        _random = server.ResolveDependency<IRobustRandom>();
+        _cvar = server.ResolveDependency<IConfigurationManager>();
+        _tileDefMan = server.ResolveDependency<ITileDefinitionManager>();
+
+        _random.SetSeed(69420); // Randomness needs to be deterministic for benchmarking.
+
+        _cvar.SetCVar(CCVars.DeltaPressureParallelToProcessPerIteration, EntitiesPerIteration);
+        _cvar.SetCVar(CCVars.DeltaPressureParallelBatchSize, BatchSize);
+
+        var plating = _tileDefMan["Plating"].TileId;
+
         /*
          Basically, we want to have a 5-wide grid of tiles.
          Edges are walled, and the length of the grid is determined by N + 2.
          Windows should only touch the top and bottom walls, and each other.
          */
-
-        var entMan = server.EntMan;
-        var mapSys = entMan.System<SharedMapSystem>();
-        var tileDefMan = server.ResolveDependency<ITileDefinitionManager>();
-        var plating = tileDefMan["Plating"].TileId;
 
         var length = EntityCount + 2; // ensures we can spawn exactly N windows between side walls
         const int height = 5;
@@ -68,7 +97,7 @@ public class DeltaPressureBenchmark
             {
                 for (var y = 0; y < height; y++)
                 {
-                    mapSys.SetTile(mapdata.Grid, mapdata.Grid, new Vector2i(x, y), new Tile(plating));
+                    _map.SetTile(mapdata.Grid, mapdata.Grid, new Vector2i(x, y), new Tile(plating));
                 }
             }
 
@@ -83,14 +112,14 @@ public class DeltaPressureBenchmark
                     var isPerimeter = x == 0 || x == length - 1 || y == 0 || y == height - 1;
                     if (isPerimeter)
                     {
-                        entMan.SpawnEntity(_wallProtoId, coords);
+                        _entMan.SpawnEntity(_wallProtoId, coords);
                         continue;
                     }
 
                     // Spawn windows only on the middle row, spanning interior (excluding side walls)
                     if (y == midY)
                     {
-                        entMan.SpawnEntity(_windowProtoId, coords);
+                        _entMan.SpawnEntity(_windowProtoId, coords);
                     }
                 }
             }
