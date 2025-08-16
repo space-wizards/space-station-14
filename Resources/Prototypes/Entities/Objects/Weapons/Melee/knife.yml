@@ -334,3 +334,36 @@
         - ItemMask
         restitution: 0.3
         friction: 0.2
+
+- type: entity
+  name: utility knife
+  parent: BaseKnife
+  id: UtilityKnife
+  description: A knife with a tiny blade. Useful for opening mail, and in a pinch, butchering space carp.
+  components:
+  - type: Tag
+    tags:
+    - Knife
+    - UtilityKnife
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/utility_knife.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 4
+  - type: Item
+    size: Tiny
+    sprite: Objects/Weapons/Melee/utility_knife.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/change_drill.ogg
+      params:
+        volume: -4
+        maxDistance: 2
+  - type: UseDelay
+    delay: 1.5
