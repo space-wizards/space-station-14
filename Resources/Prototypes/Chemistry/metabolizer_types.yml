@@ -44,3 +44,37 @@
 - type: metabolizerType
   id: Arachnid
   name: metabolizer-type-arachnid
+
+# New Metabolizers for lungs, hopefully all content above can eventually be replaced with tags
+
+- type: metabolizerType
+  id: OxygenBreather
+  name: metabolizer-type-oxygen-breather
+
+- type: metabolizerType
+  id: NitrogenBreather
+  name: metabolizer-type-nitrogen-breather
+
+- type: metabolizerType
+  id: OxygenAllergic
+  name: metabolizer-type-oxygen-allergic
+
+- type: metabolizerType
+  id: CarbonDioxideBreather
+  name: metabolizer-type-carbon-dioxide-breather
+
+- type: metabolizerType
+  id: CarbonDioxideImmune
+  name: metabolizer-type-carbon-dioxide-immune
+
+- type: metabolizerType
+  id: AmmoniaHealer
+  name: metabolizer-type-ammonia-healer
+
+- type: metabolizerType
+  id: AmmoniaResistant
+  name: metabolizer-type-ammonia-resistant
+
+- type: metabolizerType
+  id: NitrousOxideImmune
+  name: metabolizer-type-nitrous-oxide-immune
