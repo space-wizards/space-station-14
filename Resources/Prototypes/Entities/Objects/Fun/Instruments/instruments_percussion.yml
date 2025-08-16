@@ -54,7 +54,9 @@
     instrumentList:
       "Aah": {52: 0}
       "Ooh": {53: 0}
-      "Kweh": {4: 1}
+      "Kweh": {4: 10}
+      "Waa": {5: 10}
+      "Wah": {6: 10}
   - type: Sprite
     sprite: Objects/Fun/Instruments/microphone.rsi
   - type: Item
