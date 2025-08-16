@@ -209,7 +209,9 @@
     amount: 5
     whitelist:
       components:
-        - Sharp
+      - Sharp
+      tags:
+      - UtilityKnife # required because retracted utility knives are not Sharp
 
 - type: cargoBounty
   id: BountyLemon
