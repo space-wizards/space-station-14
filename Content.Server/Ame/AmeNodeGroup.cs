@@ -132,7 +132,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
             return 0;
 
         var powerOutput = CalculatePower(fuel, CoreCount);
-        var stabilityAdjust;
+        int stabilityAdjust;
 
         // The AME regains Stability when at or below SafeFuelLimit.
         // Regaining stability is predictable and slow.
