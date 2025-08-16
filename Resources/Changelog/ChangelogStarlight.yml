@@ -11724,5 +11724,28 @@ Entries:
   id: 127300
   time: '2025-08-16T07:05:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1273
+- author: walksanatora
+  changes:
+  - message: Staff of healing can now be bought by the wizard for 2wc
+    type: Add
+  id: 113400
+  time: '2025-08-16T07:10:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1134
+- author: walksanatora
+  changes:
+  - message: free wizard spell. it summons a slice of cheese ever 15 seconds. savor
+      it.
+    type: Add
+  id: 113401
+  time: '2025-08-16T07:10:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1134
+- author: walksanatora
+  changes:
+  - message: Event spells only turn 10% of the station into free-agents (not that
+      you can get them)
+    type: Tweak
+  id: 113402
+  time: '2025-08-16T07:10:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1134
 Order: -1
 
