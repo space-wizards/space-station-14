@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Interdyne cigs now cost 1TC instead of 2TC.
-    type: Tweak
-  id: 8343
-  time: '2025-04-25T04:52:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36841
 - author: lzk228
   changes:
   - message: Seashell is small size.
@@ -3954,3 +3947,10 @@
   id: 8855
   time: '2025-08-15T05:56:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39457
+- author: CoolioDudio
+  changes:
+  - message: Added baby and cube hair
+    type: Add
+  id: 8856
+  time: '2025-08-16T01:50:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39680
