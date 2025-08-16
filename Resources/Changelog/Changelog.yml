@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Inaprovaline now heals slower, but lingers in the bloodstream for much
-      longer, making it much more useful for stabilizing critical patients for an
-      extended duration rather than outright treating damage.
-    type: Tweak
-  id: 8345
-  time: '2025-04-25T06:03:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32293
 - author: kosticia
   changes:
   - message: Moths can no longer eat rubber toys.
@@ -3956,3 +3947,10 @@
   id: 8857
   time: '2025-08-16T06:59:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39303
+- author: youtissoum
+  changes:
+  - message: The usage delay of the bananium horn is now 3 seconds.
+    type: Tweak
+  id: 8858
+  time: '2025-08-16T23:04:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39674
