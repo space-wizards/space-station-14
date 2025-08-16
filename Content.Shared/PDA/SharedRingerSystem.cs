@@ -197,7 +197,6 @@ public abstract class SharedRingerSystem : EntitySystem
     /// </summary>
     private void OnCurrencyInsert(Entity<RingerComponent> ent, ref CurrencyInsertAttemptEvent args)
     {
-        // TODO: Store isn't predicted, can't move it to shared
         if (!TryComp<RingerUplinkComponent>(ent, out var uplink))
         {
             args.Cancel();

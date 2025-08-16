@@ -45,8 +45,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
         _menu.OnWithdrawAttempt += (_, type, amount) =>
         {
-            // TODO: Make this predicted after StackSystem will support full prediction
-            SendMessage(new StoreRequestWithdrawMessage(type, amount));
+            SendPredictedMessage(new StoreRequestWithdrawMessage(type, amount));
         };
 
         _menu.SearchTextUpdated += (_, search) =>
