@@ -195,6 +195,9 @@ namespace Content.Client.Changelog
 
             [DataField("changes")]
             public List<ChangelogChange> Changes { get; private set; } = default!;
+
+            [DataField("labels")]
+            public List<string> Labels { get; private set; } = default!;
         }
 
         [DataDefinition]
