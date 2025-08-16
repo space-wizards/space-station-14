@@ -22,6 +22,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Preferences;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tiles;
@@ -92,7 +93,8 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PlayerSpawningEvent>(HandlePlayerSpawning, before: new []{ typeof(SpawnPointSystem)}, after: new [] { typeof(ContainerSpawnPointSystem)});
+        // Order is arrivals → container spawn (cryosleep) → spawn points (includes fallback)
+        SubscribeLocalEvent<PlayerSpawningEvent>(HandlePlayerSpawning, before: [typeof(SpawnPointSystem)]);
 
         SubscribeLocalEvent<StationArrivalsComponent, StationPostInitEvent>(OnStationPostInit);
 
@@ -332,16 +334,23 @@ public sealed class ArrivalsSystem : EntitySystem
 
     public void HandlePlayerSpawning(PlayerSpawningEvent ev)
     {
+        // Someone already set a spawn result
         if (ev.SpawnResult != null)
             return;
 
-        // We use arrivals as the default spawn so don't check for job prio.
+        // Arrivals is checked as long as the spawn preference isn't explicitly set to cryosleep
+        if (ev.HumanoidCharacterProfile?.SpawnPriority == SpawnPriorityPreference.Cryosleep)
+            return;
 
         // Only works on latejoin even if enabled.
         if (!Enabled || _ticker.RunLevel != GameRunLevel.InRound)
             return;
 
         if (!HasComp<StationArrivalsComponent>(ev.Station))
+            return;
+
+        // If you aren't allowed in arrivals, begone.
+        if (!_protoManager.TryIndex(ev.Job, out var jobProto) || !jobProto.CanSpawnInArrivals)
             return;
 
         TryGetArrivals(out var arrivals);
