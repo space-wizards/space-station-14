@@ -73,6 +73,7 @@
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
+    <!-- Starlight-start: Languages -->
     <ui:MenuButton
         Name="LanguageButton"
         Access="Internal"
@@ -83,6 +84,7 @@
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
+    <!-- Starlight-end -->
     <ui:MenuButton
         Name="AdminButton"
         Access="Internal"

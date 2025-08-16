@@ -51,9 +51,11 @@ namespace Content.Server.Speech.Muting
         {
             // TODO something better than this.
 
+            // Starlight-start: Cannot mute if there's no speech involved
             var language = _languages.GetLanguage(uid);
             if (!language.SpeechOverride.RequireSpeech)
-                return; // Starlight - Cannot mute if there's no speech involved
+                return;
+            // Starlight-end
 
             if (HasComp<MimePowersComponent>(uid))
                 _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);

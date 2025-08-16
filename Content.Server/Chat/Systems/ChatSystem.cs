@@ -613,7 +613,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
             return;
 
-        var message = TransformSpeech(source, originalMessage, language);
+        var message = TransformSpeech(source, originalMessage, language); // Starlight-edit: Languages
 
         if (message.Length == 0)
             return;
@@ -646,11 +646,11 @@ public sealed partial class ChatSystem : SharedChatSystem
         || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en"));
         // The language-obfuscated message wrapped in a "x says y" string.
         var wrappedObfuscated = WrapPublicMessage(source, name, obfuscated, language: language, obfuscated: true);
-
-        SendInVoiceRange(ChatChannel.Local, name, message, wrappedMessage, obfuscated, wrappedObfuscated, source, range, languageOverride: language);
-
-        var ev = new EntitySpokeEvent(source, message, null, false, language);
         // Starlight End
+
+        SendInVoiceRange(ChatChannel.Local, name, message, wrappedMessage, obfuscated, wrappedObfuscated, source, range, languageOverride: language); // Starlight-edit: Languages
+
+        var ev = new EntitySpokeEvent(source, message, null, false, language); // Starlight-edit: Languages
         RaiseLocalEvent(source, ev, true);
 
         // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
@@ -717,7 +717,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         foreach (var (session, data) in GetRecipients(source, WhisperMuffledRange))
         {
-            if (session.AttachedEntity is not { Valid: true } listener)
+            if (session.AttachedEntity is not { Valid: true } listener) // Starlight-edit: Languages
                 continue;
 
             if (MessageRangeCheck(session, data, range) != MessageRangeCheckResult.Full)
@@ -755,10 +755,10 @@ public sealed partial class ChatSystem : SharedChatSystem
             // Starlight - End
         }
 
-       var replayWrap = WrapWhisperMessage(source, "chat-manager-entity-whisper-wrap-message", name, message, language);
-        _replay.RecordServerMessage(new ChatMessage(ChatChannel.Whisper, message, replayWrap, GetNetEntity(source), null, MessageRangeHideChatForReplay(range))); // Starlight
+       var replayWrap = WrapWhisperMessage(source, "chat-manager-entity-whisper-wrap-message", name, message, language); // Starlight-edit: Languages
+        _replay.RecordServerMessage(new ChatMessage(ChatChannel.Whisper, message, replayWrap, GetNetEntity(source), null, MessageRangeHideChatForReplay(range))); // Starlight-edit: Languages
 
-        var ev = new EntitySpokeEvent(source, message, channel, true, language);
+        var ev = new EntitySpokeEvent(source, message, channel, true, language); // Starlight-edit: Languages
         RaiseLocalEvent(source, ev, true);
         if (!hideLog)
             if (originalMessage == message)
@@ -784,7 +784,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         string action,
         ChatTransmitRange range,
         string? nameOverride,
-        LanguagePrototype language,
+        LanguagePrototype language, // Starlight-edit: Languages
         bool hideLog = false,
         bool checkEmote = true,
         bool ignoreActionBlocker = false,
@@ -1252,6 +1252,6 @@ public sealed class EntitySpokeEvent : EntityEventArgs
         Message = message;
         Channel = channel;
         IsWhisper = isWhisper;
-        Language = language;
+        Language = language; // Starlight-edit: Languages
     }
 }

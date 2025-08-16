@@ -212,7 +212,7 @@ public sealed class RadioSystem : EntitySystem
         {
             Source = messageSource,
             Message = message,
-            Language = language,
+            Language = language, // Starlight-edit: Languages
             Receivers = [.. ev.Receivers]
         });
 
@@ -221,7 +221,7 @@ public sealed class RadioSystem : EntitySystem
         else
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} on {channel.LocalizedName}: {message}");
 
-        _replay.RecordServerMessage(msg);
+        _replay.RecordServerMessage(msg); // Starlight-edit: Languages
         _messages.Remove(message);
     }
 

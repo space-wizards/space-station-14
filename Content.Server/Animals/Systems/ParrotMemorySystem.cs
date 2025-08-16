@@ -1,4 +1,4 @@
-using Content.Server._Starlight.Language;
+using Content.Server._Starlight.Language; // Starlight-edit: Languages
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
@@ -9,7 +9,7 @@ using Content.Server.Radio;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Server.Vocalization.Systems;
-using Content.Shared._Starlight.Language;
+using Content.Shared._Starlight.Language; // Starlight-edit: Languages
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
@@ -37,7 +37,7 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly LanguageSystem _language = default!; // Starlight
+    [Dependency] private readonly LanguageSystem _language = default!; // Starlight-edit: Languages
 
     public override void Initialize()
     {
@@ -91,15 +91,15 @@ public sealed partial class ParrotMemorySystem : EntitySystem
             Log.Warning($"Entity {ToPrettyString(entity)} has a ParrotListenerComponent but was not given an ActiveListenerComponent");
     }
 
-    private void OnListen(Entity<ParrotListenerComponent> entity, ref ListenEvent args) => TryLearn(entity.Owner, args.Message, args.Source, _language.GetLanguage(args.Source));
+    private void OnListen(Entity<ParrotListenerComponent> entity, ref ListenEvent args) => TryLearn(entity.Owner, args.Message, args.Source, _language.GetLanguage(args.Source)); // Starlight-edit: Languages
 
     private void OnHeadsetReceive(Entity<ParrotListenerComponent> entity, ref HeadsetRadioReceiveRelayEvent args)
     {
-        var message = args.RelayedEvent.OriginalChatMsg.Message;
+        var message = args.RelayedEvent.OriginalChatMsg.Message; // Starlight-edit: Languages
         var source = args.RelayedEvent.MessageSource;
         var language = args.RelayedEvent.Language;
 
-        TryLearn(entity.Owner, message, source, language);
+        TryLearn(entity.Owner, message, source, language); // Starlight-edit: Languages
     }
 
     /// <summary>
@@ -130,7 +130,7 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     /// <param name="entity">Entity learning a new word</param>
     /// <param name="incomingMessage">Message to learn</param>
     /// <param name="source">Source EntityUid of the message</param>
-    public void TryLearn(Entity<ParrotMemoryComponent?, ParrotListenerComponent?> entity, string incomingMessage, EntityUid source, LanguagePrototype language)
+    public void TryLearn(Entity<ParrotMemoryComponent?, ParrotListenerComponent?> entity, string incomingMessage, EntityUid source, LanguagePrototype language) // Starlight-edit: Languages
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
             return;

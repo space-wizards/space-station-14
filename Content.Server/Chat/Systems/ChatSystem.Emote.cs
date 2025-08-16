@@ -6,7 +6,7 @@ using Content.Shared.Speech;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Chat;
+using Content.Shared.Chat; // Starlight-edit: Languages
 
 namespace Content.Server.Chat.Systems;
 
@@ -103,8 +103,8 @@ public partial class ChatSystem
         {
             // not all emotes are loc'd, but for the ones that are we pass in entity
             var action = Loc.GetString(_random.Pick(emote.ChatMessages), ("entity", source));
-            var language = _language.GetLanguage(source); // Starlight
-            SendEntityEmote(source, action, range, nameOverride, language, hideLog: hideLog, checkEmote: false, ignoreActionBlocker: ignoreActionBlocker); // Starlight
+            var language = _language.GetLanguage(source); // Starlight-edit: Languages
+            SendEntityEmote(source, action, range, nameOverride, language, hideLog: hideLog, checkEmote: false, ignoreActionBlocker: ignoreActionBlocker); // Starlight-edit: Languages
         }
 
         return didEmote;
